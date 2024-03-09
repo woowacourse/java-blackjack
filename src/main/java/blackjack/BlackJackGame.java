@@ -1,4 +1,4 @@
-package blackjack.controller;
+package blackjack;
 
 import static blackjack.domain.DrawDecision.YES;
 
@@ -19,12 +19,12 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 
-public class BlackJackController {
+public class BlackJackGame {
 
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackJackController(InputView inputView, OutputView outputView) {
+    public BlackJackGame(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }

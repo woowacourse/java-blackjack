@@ -1,4 +1,4 @@
-package blackjack.controller;
+package blackjack;
 
 import blackjack.domain.DrawDecision;
 import blackjack.domain.player.PlayerName;

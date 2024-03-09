@@ -1,6 +1,5 @@
 package blackjack;
 
-import blackjack.controller.BlackJackController;
 import blackjack.view.InputView;
 import blackjack.view.MessageResolver;
 import blackjack.view.OutputView;
@@ -12,7 +11,7 @@ public class Application {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView(new MessageResolver());
 
-        BlackJackController blackJackController = new BlackJackController(inputView, outputView);
-        blackJackController.run();
+        BlackJackGame blackJackGame = new BlackJackGame(inputView, outputView);
+        blackJackGame.run();
     }
 }
