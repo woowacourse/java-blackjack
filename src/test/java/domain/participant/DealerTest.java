@@ -3,15 +3,22 @@ package domain.participant;
 import domain.Deck;
 import domain.GameResults;
 import domain.PlayingCard;
+import domain.PlayingCardValue;
+import domain.constant.GameResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static domain.PlayingCardShape.DIAMOND;
-import static domain.PlayingCardValue.EIGHT;
-import static domain.PlayingCardValue.NINE;
+import static domain.PlayingCardValue.*;
+import static domain.constant.GameResult.LOSE;
+import static domain.constant.GameResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
@@ -59,13 +66,14 @@ public class DealerTest {
     }
 
     @DisplayName("딜러와 플레이어의 게임 결과를 반환한다.")
-    @Test
-    void getGameResultsTest() {
+    @ParameterizedTest
+    @MethodSource("getGameResultsTestParameters")
+    void getGameResultsTest(PlayingCardValue playingCardValue, List<GameResult> dealerGameResult) {
         // Given
         Hand playerHand = Hand.init();
         List.of(new PlayingCard(DIAMOND, NINE)).forEach(playerHand::addCard);
         Hand dealerHand = Hand.init();
-        List.of(new PlayingCard(DIAMOND, EIGHT)).forEach(dealerHand::addCard);
+        List.of(new PlayingCard(DIAMOND, playingCardValue)).forEach(dealerHand::addCard);
         List<Player> players = List.of(new Player(new PlayerName("kelly"), playerHand));
         Dealer dealer = new Dealer(dealerHand);
 
@@ -73,6 +81,13 @@ public class DealerTest {
         GameResults gameResults = dealer.getGameResults(players);
 
         // Then
-        Assertions.assertThat(gameResults).isNotNull();
+        Assertions.assertThat(gameResults.dealerGameResult()).isEqualTo(dealerGameResult);
+    }
+
+    private static Stream<Arguments> getGameResultsTestParameters() {
+        return Stream.of(
+                Arguments.of(EIGHT, List.of(LOSE)),
+                Arguments.of(TEN, List.of(WIN))
+        );
     }
 }
