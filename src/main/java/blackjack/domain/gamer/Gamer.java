@@ -16,12 +16,12 @@ public abstract class Gamer {
     private final String name;
 
     protected Gamer(String name) {
-        validate(name);
+        validateBlank(name);
         this.name = name;
         this.cards = new Cards();
     }
 
-    private void validate(String name) {
+    private void validateBlank(String name) {
         if (name.isBlank()) {
             throw new IllegalArgumentException(NAME_EMPTY_ERROR);
         }
