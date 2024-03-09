@@ -43,7 +43,7 @@ public class Hand {
                 .sum();
         int aceCardCount = 0;
         for (Card card : cards) {
-            aceCardCount = getAceCardCount(card, aceCardCount);
+            increaseCountIfAceCard(card, aceCardCount);
         }
         while (aceCardCount > 0 && sum > blackJackScore) {
             aceCardCount--;
@@ -52,11 +52,10 @@ public class Hand {
         return sum;
     }
 
-    private int getAceCardCount(final Card card, int aceCardCount) {
+    private void increaseCountIfAceCard(final Card card, int aceCardCount) {
         if (card.isAceCard()) {
             aceCardCount++;
         }
-        return aceCardCount;
     }
 
     public int size() {
