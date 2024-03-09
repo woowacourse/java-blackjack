@@ -2,6 +2,7 @@ package domain.participant;
 
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiConsumer;
 
 public class Participants {
 
@@ -35,5 +36,11 @@ public class Participants {
 
     public List<Participant> getValue() {
         return value;
+    }
+
+    public void prHit(BiConsumer<Participant, Dealer> participantConsumer, Dealer dealer) {
+        for (Participant participant : value) {
+            participantConsumer.accept(participant, dealer);
+        }
     }
 }

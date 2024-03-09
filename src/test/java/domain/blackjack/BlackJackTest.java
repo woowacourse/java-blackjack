@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,7 +23,12 @@ class BlackJackTest {
         Dealer dealer = new Dealer();
         Participants participants = new Participants(List.of("one", "two"));
         BlackJack blackJack = new BlackJack(dealer, participants);
-        blackJack.beginDealing();
+        blackJack.beginDealing(new BiConsumer<Participants, Dealer>() {
+            @Override
+            public void accept(Participants participants, Dealer dealer) {
+                return;
+            }
+        });
 
         Assertions.assertAll(
                 () -> assertThat(dealer.getCardCount()).isEqualTo(2),

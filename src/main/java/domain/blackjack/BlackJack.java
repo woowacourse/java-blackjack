@@ -5,6 +5,7 @@ import domain.participant.Participant;
 import domain.participant.Participants;
 
 import java.util.LinkedHashMap;
+import java.util.function.BiConsumer;
 
 public class BlackJack {
 
@@ -16,7 +17,7 @@ public class BlackJack {
         this.participants = participants;
     }
 
-    public void beginDealing() {
+    public void beginDealing(BiConsumer<Participants, Dealer> beginBlackJack) {
         dealer.receiveCard(dealer.draw());
         dealer.receiveCard(dealer.draw());
 
@@ -24,6 +25,21 @@ public class BlackJack {
             participant.receiveCard(dealer.draw());
             participant.receiveCard(dealer.draw());
         }
+
+        beginBlackJack.accept(participants, dealer);
+    }
+
+    public void play(BiConsumer<Participant, Dealer> participantConsumer) {
+        participants.prHit(participantConsumer, dealer);
+    }
+
+    public int dealerHit() {
+        int count = 0;
+        while (dealer.shouldHit()) {
+            dealer.receiveCard(dealer.draw());
+            count++;
+        }
+        return count;
     }
 
     public BlackJackResult saveParticipantResult() {

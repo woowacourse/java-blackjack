@@ -20,16 +20,17 @@ public class BlackJackController {
         Dealer dealer = new Dealer();
         BlackJack blackJack = new BlackJack(dealer, participants);
 
-        beginBlackJack(blackJack, participants, dealer);
-        askParticipantHit(participants, dealer);
-        dealerHit(dealer);
+
+        blackJack.beginDealing(this::beginBlackJack);
+        //askParticipantHit(participants, dealer);
+        blackJack.play(this::participantHit);
+        dealerHit(blackJack);
 
         printScore(dealer, participants);
         printResult(blackJack);
     }
 
-    private void beginBlackJack(BlackJack blackJack, Participants participants, Dealer dealer) {
-        blackJack.beginDealing();
+    private void beginBlackJack(Participants participants, Dealer dealer) {
         OutputView.printBeginDealingInformation(participants);
         OutputView.printDealerHands(dealer);
         for (Participant participant : participants.getValue()) {
@@ -38,9 +39,9 @@ public class BlackJackController {
     }
 
     private void askParticipantHit(Participants participants, Dealer dealer) {
-        for (Participant participant : participants.getValue()) {
+        /*for (Participant participant : participants.getValue()) {
             participantHit(participant, dealer);
-        }
+        }*/
     }
 
     private void participantHit(Participant participant, Dealer dealer) {
@@ -54,11 +55,8 @@ public class BlackJackController {
         return participant.canHit() && HIT_OPTION.equals(InputView.inputHitOption(participant.getName()));
     }
 
-    private void dealerHit(Dealer dealer) {
-        while (dealer.shouldHit()) {
-            OutputView.printDealerHit();
-            dealer.receiveCard(dealer.draw());
-        }
+    private void dealerHit(BlackJack blackJack) {
+        OutputView.printDealerHit(blackJack.dealerHit());
     }
 
     private void printScore(Dealer dealer, Participants participants) {

@@ -38,10 +38,12 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printDealerHit() {
+    public static void printDealerHit(int count) {
         System.out.println();
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-        System.out.println();
+        for(int i = 0; i < count; i++) {
+            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+            System.out.println();
+        }
     }
 
     public static void printParticipantResult(Participant participant) {
