@@ -18,10 +18,6 @@ public abstract class Participant {
         hand.addCard(deck.drawn());
     }
 
-    public boolean isDealer() {
-        return this instanceof Dealer;
-    }
-
     public int getHandSum() {
         return hand.getCardsNumberSum();
     }
