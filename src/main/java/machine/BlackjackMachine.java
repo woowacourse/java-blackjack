@@ -24,7 +24,7 @@ public class BlackjackMachine {
     public void run() {
         BlackjackGame game = initializeGame();
         distributeStartingCards(game);
-        playPlayerTurns(game);
+        playPlayersTurn(game);
         playDealerTurn(game);
         printCardsAndScores(game);
         printResult(game);
@@ -44,7 +44,7 @@ public class BlackjackMachine {
         return new BlackjackGame(Participants.of(players), new RandomCardGenerator());
     }
 
-    private void playPlayerTurns(BlackjackGame game) {
+    private void playPlayersTurn(BlackjackGame game) {
         for (Player player : game.getPlayers()) {
             playPlayerTurn(game, player);
         }
