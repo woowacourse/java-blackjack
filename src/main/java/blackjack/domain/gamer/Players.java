@@ -42,8 +42,8 @@ public class Players {
 		}
 	}
 
-	public void initAllPlayersCard(Deck deck) {
-		players.forEach(player -> player.initCard(deck));
+	public void initAllPlayersCard(Deck deck, int initialCardCount) {
+		players.forEach(player -> player.initCard(deck, initialCardCount));
 	}
 
 	public List<Player> getPlayers() {

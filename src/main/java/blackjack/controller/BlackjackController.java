@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import java.util.List;
 
+import blackjack.domain.BlackjackConstants;
 import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
@@ -47,8 +48,8 @@ public class BlackjackController {
 	}
 
 	private void setUpInitialHands(Players players, Deck deck, Dealer dealer) {
-		players.initAllPlayersCard(deck);
-		dealer.initCard(deck);
+		players.initAllPlayersCard(deck, BlackjackConstants.INITIAL_CARD_COUNT.getValue());
+		dealer.initCard(deck, BlackjackConstants.INITIAL_CARD_COUNT.getValue());
 		printInitialHands(players, dealer);
 	}
 

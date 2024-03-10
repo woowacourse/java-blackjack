@@ -17,9 +17,10 @@ public abstract class BlackjackGamer {
 
 	public abstract boolean canReceiveCard();
 
-	public void initCard(Deck deck) {
-		addCard(deck.draw());
-		addCard(deck.draw());
+	public void initCard(Deck deck, int initialCardCount) {
+		for (int i = 0; i < initialCardCount; i++) {
+			addCard(deck.draw());
+		}
 	}
 
 	public void addCard(Card card) {
