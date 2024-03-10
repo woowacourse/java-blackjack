@@ -1,18 +1,14 @@
 package blackjack.model.participant;
 
-import static blackjack.model.deck.Score.ACE;
-
 import blackjack.model.deck.Card;
+import blackjack.model.deck.Score;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
     private static final int MIN_INITIAL_CARD_SIZE = 2;
     private static final int BLACKJACK_SCORE = 21;
-    private static final int ADDITIONAL_ACE_SCORE = 10;
     private static final int BLACKJACK_CARD_SIZE = 2;
-    private static final int SOFT_ACE_COUNT = 1;
-    private static final int SOFT_MAX_SCORE_WITHOUT_ACE = 10;
 
     private final List<Card> cards;
 
@@ -32,14 +28,10 @@ public class Hand {
     }
 
     public int calculateScore() {
-        int totalScoreWithoutAce = calculateBaseScore();
         int aceCount = countAce();
+        int totalScoreWithoutAce = calculateBaseScore();
 
-        if (isSoft(aceCount, totalScoreWithoutAce)) {
-            totalScoreWithoutAce += aceCount * ADDITIONAL_ACE_SCORE;
-        }
-
-        return totalScoreWithoutAce + aceCount * ACE.getValue();
+        return Score.calculateAceScore(aceCount, totalScoreWithoutAce) + totalScoreWithoutAce;
     }
 
     private int calculateBaseScore() {
@@ -53,10 +45,6 @@ public class Hand {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
-    }
-
-    private boolean isSoft(final int aceCount, final int baseScore) {
-        return aceCount == SOFT_ACE_COUNT && baseScore <= SOFT_MAX_SCORE_WITHOUT_ACE;
     }
 
     public boolean isBust() {

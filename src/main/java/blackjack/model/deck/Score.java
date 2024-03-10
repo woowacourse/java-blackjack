@@ -16,6 +16,9 @@ public enum Score {
     JACK(10),
     ;
 
+    private static final int ACE_OPTIONAL_SCORE = 11;
+    private static final int MAX_SCORE_WITHOUT_ONE_ACE = 10;
+
     private final int value;
 
     Score(final int value) {
@@ -24,6 +27,17 @@ public enum Score {
 
     public boolean isAce() {
         return this == ACE;
+    }
+
+    public static int calculateAceScore(final int aceCount, final int otherCardsScore) {
+        if (aceCount == 0) {
+            return 0;
+        }
+        final int aceScoreExceptOne = (aceCount - 1) * ACE.value;
+        if (otherCardsScore + aceScoreExceptOne <= MAX_SCORE_WITHOUT_ONE_ACE) {
+            return ACE_OPTIONAL_SCORE + aceScoreExceptOne;
+        }
+        return ACE.value + aceScoreExceptOne;
     }
 
     public int getValue() {
