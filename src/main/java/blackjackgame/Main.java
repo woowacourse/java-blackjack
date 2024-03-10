@@ -1,12 +1,12 @@
 package blackjackgame;
 
-import controller.BlackjackController;
-import domain.blackjack.Gamer;
-import domain.blackjack.HoldingCards;
-import domain.card.Deck;
+import blackjackgame.controller.BlackjackController;
+import blackjackgame.domain.blackjack.Gamer;
+import blackjackgame.domain.blackjack.HoldingCards;
+import blackjackgame.domain.card.Deck;
 import java.util.List;
-import view.NameInputView;
-import view.OutputView;
+import blackjackgame.view.NameInputView;
+import blackjackgame.view.OutputView;
 
 public class Main {
     private static final String DEALER_NAME = "딜러";
