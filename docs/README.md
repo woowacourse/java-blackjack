@@ -1,18 +1,22 @@
 ## 도메인 용어 정리
 
-- 게임(Game)
-- 참여자들(Participants)
 - 참여자(Participant)
-- 딜러(Dealer)
-- 사용자(Player)
+  - 딜러(Dealer)
+  - 플레이어(Player)
+- 참여자들(Participants)
 - 카드(Card)
+    - 카드 랭크(CardRank)
+    - 카드 모양(CardShape)
 - 덱(Deck)
 - 패(Hand)
+- 게임결과(GameResult)
 
 ## 블랙잭 승패 규칙
+
 - 플레이어의 승패 규칙
-- ![AC6A3FA1-F3D0-4D3B-8404-4691B8A72BE8_1_201_a](https://github.com/woowacourse/java-blackjack/assets/75781414/851dc9aa-9011-41cf-8342-f6772dd5a2cf)
-- 
+
+<img src="https://github.com/woowacourse/java-blackjack/assets/75781414/851dc9aa-9011-41cf-8342-f6772dd5a2cf" width="50%" alt="blackjack-rule">
+
 ## 구현 기능 목록
 
 ### 입출력 기능
@@ -51,9 +55,6 @@
     - [x] 딜러의 이름은 '딜러'이다.
 - [x] 딜러는 카드 한 장을 숨긴다.
 - [x] 딜러는 사용자와 승패를 겨룰 수 있다.
-    - [x] 둘 다 버스트되지 않으면, 점수가 더 높은 쪽이 이긴다.
-    - [x] 둘 다 블랙잭이면, 무승부이다.
-    - [x] 둘 다 버스트되면, 딜러가 이긴다.
 
 ### 패
 
