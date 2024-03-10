@@ -4,8 +4,10 @@ import domain.card.Card;
 import java.util.List;
 
 public abstract class Gamer {
-    protected Name name;
-    protected Hand hand;
+    private static final int BLACK_JACK_NUMBER = 21;
+    private static final int BLACK_JACK_CARD_COUNT = 2;
+    private final Name name;
+    private final Hand hand;
 
     public Gamer(final Name name) {
         this.name = name;
@@ -18,6 +20,12 @@ public abstract class Gamer {
         hand.add(card);
     }
 
+    public void receiveInitialCards(final List<Card> cards) {
+        for (final Card card : cards) {
+            hand.add(card);
+        }
+    }
+
     public int calculateTotalScore() {
         return hand.sum();
     }
@@ -27,13 +35,7 @@ public abstract class Gamer {
     }
 
     public boolean isBlackJack() {
-        return hand.sum() == 21 && hand.getCards().size() == 2;
-    }
-
-    public void receiveInitialCards(final List<Card> cards) {
-        for (final Card card : cards) {
-            hand.add(card);
-        }
+        return hand.sum() == BLACK_JACK_NUMBER && hand.getCards().size() == BLACK_JACK_CARD_COUNT;
     }
 
     public List<Card> getHand() {
