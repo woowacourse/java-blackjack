@@ -1,10 +1,12 @@
 package blackjack.model.result;
 
+import static blackjack.model.deck.Score.ACE;
+import static blackjack.model.deck.Score.TEN;
+import static blackjack.model.deck.Shape.DIA;
+import static blackjack.model.deck.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.deck.Card;
-import blackjack.model.deck.Score;
-import blackjack.model.deck.Shape;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Hand;
 import blackjack.model.participant.Player;
@@ -18,9 +20,9 @@ class RuleTest {
     @DisplayName("딜러와 비교하여 결과를 계산한다.")
     void calculateResult() {
         Rule rule = new Rule(
-                new Dealer(new Hand(List.of(new Card(Shape.DIA, Score.TEN), new Card(Shape.SPADE, Score.TEN)))));
+                new Dealer(new Hand(List.of(new Card(DIA, TEN), new Card(SPADE, TEN)))));
         Player player = new Player("리브",
-                new Hand(List.of(new Card(Shape.DIA, Score.ACE), new Card(Shape.SPADE, Score.TEN))));
+                new Hand(List.of(new Card(DIA, ACE), new Card(SPADE, TEN))));
         assertThat(rule.calculateResult(player)).isEqualTo(ResultCommand.WIN);
     }
 
