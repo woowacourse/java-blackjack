@@ -15,6 +15,6 @@ public enum Command {
         return Arrays.stream(values())
                 .filter(command -> command.command.equals(input))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("명령어는 y,n만 가능합니다."));
+                .orElseThrow(() -> new BlackjackException("명령어는 y,n만 가능합니다."));
     }
 }
