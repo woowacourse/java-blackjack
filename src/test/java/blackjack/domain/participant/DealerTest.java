@@ -40,7 +40,7 @@ class DealerTest {
 
         List<String> cardSignatures = dealer.getInitialOpenedCards()
                 .stream()
-                .map(Card::getSignature)
+                .map(card -> card.getSymbol() + card.getShape())
                 .toList();
 
         assertThat(cardSignatures).containsExactly("A스페이드");

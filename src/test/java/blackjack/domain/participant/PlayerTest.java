@@ -41,7 +41,7 @@ class PlayerTest {
 
         List<String> cardSignatures = player.getInitialOpenedCards()
                 .stream()
-                .map(Card::getSignature)
+                .map(card -> card.getSymbol() + card.getShape())
                 .toList();
 
         assertThat(cardSignatures).containsExactly("A스페이드", "8클로버");

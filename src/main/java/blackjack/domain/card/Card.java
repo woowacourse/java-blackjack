@@ -9,8 +9,12 @@ public class Card {
         this.shape = shape;
     }
 
-    public String getSignature() {
-        return number.getSymbol() + shape.getValue();
+    public String getSymbol() {
+        return number.getSymbol();
+    }
+
+    public String getShape() {
+        return shape.getValue();
     }
 
     public int getScore() {

@@ -28,7 +28,7 @@ class ParticipantTest {
 
         List<String> cardSignatures = participant.getCardsByCount(1)
                 .stream()
-                .map(Card::getSignature)
+                .map(card -> card.getSymbol() + card.getShape())
                 .toList();
 
         assertThat(cardSignatures).containsExactly("A스페이드");

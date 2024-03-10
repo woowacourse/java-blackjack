@@ -7,13 +7,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class CardTest {
-    @DisplayName("올바르게 카드 시그니처를 반환한다.")
+    @DisplayName("올바르게 카드의 Number와 Shape를 반환한다.")
     @Test
-    void getSignatureTest() {
+    void getSymbolAndShapeTest() {
         Number number = Number.EIGHT;
         Shape shape = Shape.CLOVER;
         Card card = new Card(number, shape);
-        assertThat(card.getSignature()).isEqualTo("8클로버");
+        assertThat(card.getSymbol() + card.getShape()).isEqualTo("8클로버");
     }
 
     @DisplayName("올바르게 점수를 반환한다.")

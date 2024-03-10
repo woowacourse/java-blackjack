@@ -89,7 +89,7 @@ public class OutputView {
 
     private void printParticipantsInitialHand(Participant participant) {
         List<Card> cards = participant.getInitialOpenedCards();
-        String cardSignatures = getCardSignatures(cards);
+        String cardSignatures = getCardSymbolAndShape(cards);
         String participantName = participant.getName();
         String cardsWithName = String.format(PARTICIPANT_HAND, participantName, cardSignatures);
         System.out.println(cardsWithName);
@@ -124,13 +124,13 @@ public class OutputView {
     private String getParticipantHand(Participant participant) {
         String participantName = participant.getName();
         List<Card> cards = participant.getCards();
-        String cardSignatures = getCardSignatures(cards);
+        String cardSignatures = getCardSymbolAndShape(cards);
         return String.format(PARTICIPANT_HAND, participantName, cardSignatures);
     }
 
-    private String getCardSignatures(List<Card> cards) {
+    private String getCardSymbolAndShape(List<Card> cards) {
         return cards.stream()
-                .map(Card::getSignature)
+                .map(card -> card.getSymbol() + card.getShape())
                 .collect(Collectors.joining(DELIMITER));
     }
 
