@@ -19,17 +19,13 @@ public class Participants {
     }
 
     public void receiveDealerCard(Card card) {
-        dealer.receiveCard(card);
+        dealer.hit(card);
     }
 
-    public void receiveInitialHands(List<Hands> AllHands) {
-        Hands dealerHands = extractOneHands(AllHands);
+    public void receiveInitialHands(List<Hands> allHands) {
+        Hands dealerHands = extractOneHands(allHands);
         dealer.receiveHands(dealerHands);
-
-        for (int index = 0; index < players.size(); index++) {
-            Hands currentHands = AllHands.get(index);
-            players.receiveOnePlayerHands(currentHands, index);
-        }
+        players.distributeHands(allHands);
     }
 
     private Hands extractOneHands(List<Hands> hands) {
@@ -41,7 +37,7 @@ public class Participants {
     }
 
     public boolean isDealerNotOver() {
-        return dealer.canReceiveCard();
+        return dealer.canHit();
     }
 
     public int count() {

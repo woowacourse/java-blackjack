@@ -1,15 +1,12 @@
 package blackjack.domain.participants;
 
 
-import blackjack.domain.Card;
 import blackjack.domain.Hands;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Players {
-
-    public static final int MAX_SCORE = 21;
 
     private final List<Player> players;
 
@@ -23,28 +20,16 @@ public class Players {
         return result;
     }
 
-    public void receiveOnePlayerCard(Card card, int playerIndex) {
-        players.get(playerIndex).receiveCard(card);
-    }
-
-    public void receiveOnePlayerHands(Hands hands, int playerIndex) {
-        players.get(playerIndex).receiveHands(hands);
-    }
-
-    public boolean isOnePlayerNotOver(int playerIndex) {
-        return players.get(playerIndex).isNotOver(MAX_SCORE);
+    public void distributeHands(List<Hands> allHands) {
+        for (int index = 0; index < players.size(); index++) {
+            Hands hands = allHands.get(index);
+            Player player = players.get(index);
+            player.receiveHands(hands);
+        }
     }
 
     public int size() {
         return players.size();
-    }
-
-    public Name getOnePlayerName(int playerIndex) {
-        return players.get(playerIndex).getName();
-    }
-
-    public Player getOnePlayer(int playerIndex) {
-        return players.get(playerIndex);
     }
 
     public List<Player> getPlayers() {

@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
-import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -41,7 +40,7 @@ public class PlayerTest {
                 new Card(Shape.HEART, Rank.TWO))
         );
         player.receiveHands(hands);
-        assertThat(player.canReceiveCard()).isTrue();
+        assertThat(player.canHit()).isTrue();
     }
 
     @Test
@@ -49,7 +48,7 @@ public class PlayerTest {
     void playerReceiveCardTest() {
         Player player = new Player(new Name("이름"));
         Assertions.assertThatNoException()
-                .isThrownBy(() -> player.receiveCard(new Card(Shape.HEART, Rank.ACE)));
+                .isThrownBy(() -> player.hit(new Card(Shape.HEART, Rank.ACE)));
     }
 
     @Test
@@ -72,8 +71,8 @@ public class PlayerTest {
     void isNotOverTrueTest() {
         Player player = new Player(new Name("이름"));
 
-        player.receiveCard(new Card(Shape.HEART, Rank.ACE));
-        player.receiveCard(new Card(Shape.HEART, Rank.NINE));
+        player.hit(new Card(Shape.HEART, Rank.ACE));
+        player.hit(new Card(Shape.HEART, Rank.NINE));
 
         assertThat(player.isNotOver(21)).isTrue();
     }
@@ -83,10 +82,61 @@ public class PlayerTest {
     void isNotOverFalseTest() {
         Player player = new Player(new Name("이름"));
 
-        player.receiveCard(new Card(Shape.HEART, Rank.NINE));
-        player.receiveCard(new Card(Shape.SPADE, Rank.NINE));
-        player.receiveCard(new Card(Shape.DIAMOND, Rank.FOUR));
+        player.hit(new Card(Shape.HEART, Rank.NINE));
+        player.hit(new Card(Shape.SPADE, Rank.NINE));
+        player.hit(new Card(Shape.DIAMOND, Rank.FOUR));
 
         assertThat(player.isNotOver(21)).isFalse();
+    }
+
+    @Test
+    @DisplayName("딜러가 터지고 플레이어가 안터진 경우 플레이어가 이긴다.")
+    void isWinWithDealerBurstTest() {
+        Player player = new Player(new Name("이름"));
+        player.hit(new Card(Shape.HEART, Rank.NINE));
+        player.hit(new Card(Shape.SPADE, Rank.NINE));
+
+        assertThat(player.isWin(25)).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러와 플레이어가 터진 경우 딜러가 이긴다.")
+    void isWinWithBothBurstTest() {
+        Player player = new Player(new Name("이름"));
+        player.hit(new Card(Shape.HEART, Rank.NINE));
+        player.hit(new Card(Shape.SPADE, Rank.NINE));
+        player.hit(new Card(Shape.SPADE, Rank.NINE));
+
+        assertThat(player.isWin(25)).isFalse();
+    }
+
+    @Test
+    @DisplayName("둘 다 터지지 않고 딜러 점수가 더 높은 경우 딜러가 이긴다..")
+    void isWinWithDealerWinTest() {
+        Player player = new Player(new Name("이름"));
+        player.hit(new Card(Shape.HEART, Rank.NINE));
+        player.hit(new Card(Shape.SPADE, Rank.NINE));
+
+        assertThat(player.isWin(21)).isFalse();
+    }
+
+    @Test
+    @DisplayName("딜러와 플레이어 점수가 같은 경우 딜러가 이긴다..")
+    void isWinWithSameScoreTest() {
+        Player player = new Player(new Name("이름"));
+        player.hit(new Card(Shape.HEART, Rank.TEN));
+        player.hit(new Card(Shape.SPADE, Rank.ACE));
+
+        assertThat(player.isWin(21)).isFalse();
+    }
+
+    @Test
+    @DisplayName("둘 다 터지지 않고 플레이어 점수가 더 높은 경우 플레이어가 이긴다..")
+    void isWinWithPlayerWinTest() {
+        Player player = new Player(new Name("이름"));
+        player.hit(new Card(Shape.HEART, Rank.KING));
+        player.hit(new Card(Shape.SPADE, Rank.ACE));
+
+        assertThat(player.isWin(20)).isTrue();
     }
 }

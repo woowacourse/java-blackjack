@@ -64,10 +64,10 @@ public class GameBoardTest {
     @Test
     @DisplayName("딜러가 카드를 더 가질 수 있다.")
     void isDealerNotOverTest() {
-        dealer.receiveCard(new Card(Shape.HEART, Rank.SEVEN));
-        dealer.receiveCard(new Card(Shape.HEART, Rank.SIX));
+        dealer.hit(new Card(Shape.HEART, Rank.SEVEN));
+        dealer.hit(new Card(Shape.HEART, Rank.SIX));
 
-        boolean result = dealer.canReceiveCard();
+        boolean result = dealer.canHit();
 
         assertThat(result).isTrue();
     }
@@ -99,8 +99,8 @@ public class GameBoardTest {
     @Test
     @DisplayName("플레이어가 모두 패배한 테스트")
     void victoryLoseTest() {
-        dealer.receiveCard(new Card(Shape.HEART, Rank.ACE));
-        dealer.receiveCard(new Card(Shape.HEART, Rank.JACK));
+        dealer.hit(new Card(Shape.HEART, Rank.ACE));
+        dealer.hit(new Card(Shape.HEART, Rank.JACK));
 
         Map<Player, Boolean> victoryResult = gameBoard.calculateWinOrLose();
 
@@ -112,8 +112,8 @@ public class GameBoardTest {
     @Test
     @DisplayName("플레이어의 승리가 포함된 테스트")
     void victoryWinTest() {
-        dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
-        dealer.receiveCard(new Card(Shape.HEART, Rank.JACK));
+        dealer.hit(new Card(Shape.HEART, Rank.QUEEN));
+        dealer.hit(new Card(Shape.HEART, Rank.JACK));
 
         Map<Player, Boolean> victoryResult = gameBoard.calculateWinOrLose();
 

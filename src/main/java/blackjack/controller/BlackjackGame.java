@@ -73,7 +73,7 @@ public class BlackjackGame {
     }
 
     private void proceedOnePlayerTurn(GameBoard gameBoard, Player player) {
-        while (player.canReceiveCard() &&
+        while (player.canHit() &&
                 inputView.readCommand(player.getName().getName())) {
             gameBoard.addCardToPlayer(player);
             outputView.printCurrentCard(ParticipantDto.from(player));

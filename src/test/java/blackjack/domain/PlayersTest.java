@@ -58,14 +58,6 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("한 플레이어는 하나의 카드를 받는다.")
-    void receiveOnePlayerCardTest() {
-        players.receiveOnePlayerCard(new Card(Shape.DIAMOND, Rank.TWO), 0);
-
-        Assertions.assertThat(siso.getHands().size()).isEqualTo(3);
-    }
-
-    @Test
     @DisplayName("한 플레이어는 기준 점수보다 낮은 점수다.")
     void isOnePlayerNotOverTest() {
         Assertions.assertThat(siso.isNotOver(17)).isTrue();

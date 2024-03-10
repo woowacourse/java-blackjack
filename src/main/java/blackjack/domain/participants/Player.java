@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Player implements GameParticipant{
 
-    private static final int MAX_RECEIVE_SCORE = 21;
+    private static final int MAX_SCORE = 21;
 
     private final Name name;
     private Hands hands;
@@ -22,7 +22,7 @@ public class Player implements GameParticipant{
     }
 
     @Override
-    public void receiveCard(Card card) {
+    public void hit(Card card) {
         if (hands == null) {
             hands = new Hands(new ArrayList<>());
         }
@@ -35,8 +35,8 @@ public class Player implements GameParticipant{
     }
 
     @Override
-    public boolean canReceiveCard() {
-        return calculateScore() < MAX_RECEIVE_SCORE;
+    public boolean canHit() {
+        return calculateScore() < MAX_SCORE;
     }
 
     public boolean isNotOver(int boundaryScore) { // TODO delete
@@ -44,7 +44,14 @@ public class Player implements GameParticipant{
     }
 
     public boolean isWin(int dealerScore) {
-        return hands.calculateScore() > dealerScore;
+        int score = hands.calculateScore();
+        if (score > MAX_SCORE) {
+            return false;
+        }
+        if (dealerScore > MAX_SCORE) {
+            return true;
+        }
+        return dealerScore < score;
     }
 
     public Name getName() {

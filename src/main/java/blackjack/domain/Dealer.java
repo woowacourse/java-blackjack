@@ -21,7 +21,7 @@ public class Dealer implements GameParticipant {
     }
 
     @Override
-    public void receiveCard(Card card) {
+    public void hit(Card card) {
         if (hands == null) {
             hands = new Hands(new ArrayList<>());
         }
@@ -34,7 +34,7 @@ public class Dealer implements GameParticipant {
     }
 
     @Override
-    public boolean canReceiveCard() {
+    public boolean canHit() {
         return calculateScore() < MAX_RECEIVE_SCORE;
     }
 

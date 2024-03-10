@@ -5,9 +5,9 @@ import blackjack.domain.Hands;
 
 public interface GameParticipant {
     void receiveHands(Hands hands);
-    void receiveCard(Card card);
+    void hit(Card card);
     int calculateScore();
-    boolean canReceiveCard();
+    boolean canHit();
     Name getName();
     Hands getHands();
 }

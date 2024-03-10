@@ -65,7 +65,7 @@ public class GameBoard {
     }
 
     public void addCardToPlayer(Player player) {
-        player.receiveCard(deck.pickRandomCard());
+        player.hit(deck.pickRandomCard());
     }
 
     public Map<Player, Boolean> calculateWinOrLose() {
