@@ -13,15 +13,15 @@ import org.junit.jupiter.api.Test;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Rank;
+import blackjack.domain.card.ShuffledDeckGenerator;
 import blackjack.domain.card.Suit;
-import blackjack.domain.card.UnShuffledDeckGenerator;
 
 public class DealerTest {
 	private Deck deck;
 
 	@BeforeEach
 	void init() {
-		UnShuffledDeckGenerator deckGenerator = UnShuffledDeckGenerator.getInstance();
+		ShuffledDeckGenerator deckGenerator = ShuffledDeckGenerator.getInstance();
 
 		deck = deckGenerator.generate();
 	}

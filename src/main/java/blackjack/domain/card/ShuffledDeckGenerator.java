@@ -3,18 +3,20 @@ package blackjack.domain.card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UnShuffledDeckGenerator {
-	private static final UnShuffledDeckGenerator INSTANCE = new UnShuffledDeckGenerator();
+public class ShuffledDeckGenerator {
+	private static final ShuffledDeckGenerator INSTANCE = new ShuffledDeckGenerator();
 
-	private UnShuffledDeckGenerator() {
+	private ShuffledDeckGenerator() {
 	}
 
-	public static UnShuffledDeckGenerator getInstance() {
+	public static ShuffledDeckGenerator getInstance() {
 		return INSTANCE;
 	}
 
 	public Deck generate() {
-		return new Deck(createCards());
+		Deck deck = new Deck(createCards());
+		deck.shuffle();
+		return deck;
 	}
 
 	private List<Card> createCards() {

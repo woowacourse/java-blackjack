@@ -15,7 +15,6 @@ public class Dealer extends Gamer {
 	private Dealer(Deck deck, CardHand cardHand) {
 		super(cardHand);
 		this.deck = deck;
-		this.deck.shuffle();
 	}
 
 	public static Dealer newInstance(Deck deck) {
