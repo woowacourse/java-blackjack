@@ -80,17 +80,16 @@ class DealerTest {
     @Test
     void allBlackJack() {
         Dealer dealer = new Dealer();
-        dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-        dealer.hit(new Card(CardRank.FOUR, CardShape.DIAMOND));
-        dealer.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
+        dealer.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
+        dealer.hit(new Card(CardRank.JACK, CardShape.DIAMOND));
 
         Player player = new Player("pobi");
-        player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-        player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
+        player.hit(new Card(CardRank.KING, CardShape.CLOVER));
+        player.hit(new Card(CardRank.ACE, CardShape.CLOVER));
 
         GameResult gameResult = dealer.judge(player);
 
-        assertThat(gameResult).isEqualTo(GameResult.TIE);
+        assertThat(gameResult).isEqualTo(GameResult.PUSH);
     }
 
     @DisplayName("둘 다 버스트되지 않고, 딜러 점수가 더 낮으면 진다.")
