@@ -62,6 +62,9 @@ public class BlackjackGame {
     }
 
     public int giveDealerMoreCard() {
+        if (players.isAllDead()) {
+            return 0;
+        }
         int count = 0;
 
         while (dealer.needMoreCard()) {

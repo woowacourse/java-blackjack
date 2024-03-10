@@ -101,6 +101,14 @@ public class Players {
                 .toList();
     }
 
+    public boolean isAllDead() {
+        if (players.stream().anyMatch(Participant::isNotDead)) {
+            return false;
+        }
+
+        return true;
+    }
+
     public int count() {
         return players.size();
     }
