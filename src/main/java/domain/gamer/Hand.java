@@ -2,10 +2,10 @@ package domain.gamer;
 
 import domain.card.Card;
 import domain.card.Rank;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Hand {
     private static final int BLACK_JACK = 21;
@@ -30,32 +30,25 @@ public class Hand {
 
     public int sum() {
         int totalScore = sumExceptAceCards();
-        List<Card> aceCards = filterAceCards();
 
-        for (Card aceCard : aceCards) {
-            totalScore = accumulateScore(aceCard, totalScore);
+        int aceCardsCount = countAceCards();
+        for (int count = 0; count < aceCardsCount; count++) {
+            totalScore = totalScore + Rank.selectAceScore(totalScore);
         }
+
         return totalScore;
-    }
-
-    private int accumulateScore(final Card card, final int sum) {
-        if (sum + card.getScore() <= BLACK_JACK) {
-            return sum + card.getScore();
-        }
-        return sum + Rank.SMALL_ACE.getScore();
-    }
-
-    private List<Card> filterAceCards() {
-        List<Card> aceCards = cards.stream()
-                .filter(card -> card.getRank().isAce())
-                .collect(Collectors.toList());
-        return aceCards;
     }
 
     private int sumExceptAceCards() {
         return cards.stream()
                 .filter(card -> !card.getRank().isAce())
                 .mapToInt(Card::getScore).sum();
+    }
+
+    private int countAceCards() {
+        return (int) cards.stream()
+                .filter(card -> card.getRank().isAce())
+                .count();
     }
 
     public List<Card> getCards() {

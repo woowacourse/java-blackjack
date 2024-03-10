@@ -19,6 +19,7 @@ public enum Rank {
     KING("K", 10),
     BIG_ACE("A", 11);
 
+    private static final int BLACK_JACK = 21;
     private final String name;
     private final int score;
 
@@ -35,6 +36,13 @@ public enum Rank {
 
     public boolean isAce() {
         return this == SMALL_ACE || this == BIG_ACE;
+    }
+
+    public static int selectAceScore(int score){
+        if(score + BIG_ACE.score>BLACK_JACK){
+            return SMALL_ACE.score;
+        }
+        return BIG_ACE.score;
     }
 
     public String getName() {
