@@ -15,11 +15,11 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackJackGame {
-    private static final ConsoleReader CONSOLE_READER = new ConsoleReader();
+    private static final ConsoleReader consoleReader = new ConsoleReader();
 
     public void run() {
         final Deck deck = Deck.createByRandomOrder();
-        final Players players = initPlayers(InputView.readPlayerNames(CONSOLE_READER), deck);
+        final Players players = initPlayers(InputView.readPlayerNames(consoleReader), deck);
         final Dealer dealer = new Dealer(deck.distributeInitialCard());
         final Referee referee = new Referee(new Rule(dealer), players);
 
@@ -47,7 +47,7 @@ public class BlackJackGame {
 
     private void playPlayerTurn(final Player player, final Deck deck) {
         if (!player.isBust() && player.canHit()) {
-            final boolean isHit = InputView.readHitOrNot(player.getName(), CONSOLE_READER);
+            final boolean isHit = InputView.readHitOrNot(player.getName(), consoleReader);
             distributeIfPlayerWant(isHit, player, deck);
         }
     }
