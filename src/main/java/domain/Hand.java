@@ -1,8 +1,8 @@
 package domain;
 
-import java.util.List;
-
 import static domain.Player.BLACK_JACK;
+
+import java.util.List;
 
 public class Hand {
 
@@ -14,7 +14,7 @@ public class Hand {
 
     public int calculateSum() {
         return cards.stream()
-                .mapToInt(Card::getLetterValue)
+                .mapToInt(Card::getRankValue)
                 .sum();
     }
 
@@ -39,6 +39,7 @@ public class Hand {
 
         return sum;
     }
+
     private boolean isBustWithAce(int sum, int aceCount) {
         return sum > BLACK_JACK && aceCount > 0;
     }

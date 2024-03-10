@@ -2,27 +2,27 @@ package domain;
 
 public class Card {
 
-    private final Letter letter;
-    private final Mark mark;
+    private final Rank rank;
+    private final Suit suit;
 
-    public Card(Letter letter, Mark mark) {
-        this.letter = letter;
-        this.mark = mark;
+    public Card(Rank rank, Suit suit) {
+        this.rank = rank;
+        this.suit = suit;
     }
 
     public boolean isAceCard() {
-        return this.letter.isAce();
+        return this.rank.isAce();
     }
 
-    public int getLetterValue() {
-        return letter.getValue();
+    public int getRankValue() {
+        return rank.getValue();
     }
 
-    public String getLetterText() {
-        return letter.getText();
+    public String getRankText() {
+        return rank.getText();
     }
 
-    public String getMark() {
-        return mark.getName();
+    public String getSuit() {
+        return suit.getName();
     }
 }

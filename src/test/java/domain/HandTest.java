@@ -1,34 +1,36 @@
 package domain;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import static domain.FixtureCard.ACE_HEARTS;
+import static domain.FixtureCard.SEVEN_HEARTS;
+import static domain.FixtureCard.TEN_HEARTS;
+import static domain.FixtureCard.TWO_HEARTS;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static domain.FixtureCard.*;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 class HandTest {
 
     @DisplayName("손에 들고 있는 카드의 합계를 반환한다.")
     @Test
     void calculateSum() {
-        List<Card> cards = List.of(SEVEN_HEART, TEN_HEART);
+        List<Card> cards = List.of(SEVEN_HEARTS, TEN_HEARTS);
 
         Hand hand = new Hand(cards);
 
         assertThat(hand.calculateSum())
-                .isEqualTo(SEVEN_HEART.getLetterValue() + TEN_HEART.getLetterValue());
+                .isEqualTo(SEVEN_HEARTS.getRankValue() + TEN_HEARTS.getRankValue());
     }
 
     @DisplayName("카드 한 장을 손 패로 가지고 온다.")
     @Test
     void add() {
-        List<Card> cards = new ArrayList<>(List.of(SEVEN_HEART, TEN_HEART));
+        List<Card> cards = new ArrayList<>(List.of(SEVEN_HEARTS, TEN_HEARTS));
         Hand hand = new Hand(cards);
-        Card addCard = TWO_HEART;
+        Card addCard = TWO_HEARTS;
 
         hand.add(addCard);
 
@@ -38,7 +40,7 @@ class HandTest {
     @DisplayName("손 패에 Ace카드가 몇개 있는지 반환한다.")
     @Test
     void containAce() {
-        List<Card> hasAceCard = List.of(ACE_HEART, TEN_HEART);
+        List<Card> hasAceCard = List.of(ACE_HEARTS, TEN_HEARTS);
         Hand hasAceHand = new Hand(hasAceCard);
         int actual1 = hasAceHand.countAceCard();
 
@@ -53,8 +55,8 @@ class HandTest {
         @Test
         void blackJack() {
             List<Card> cards = List.of(
-                    ACE_HEART,
-                    TEN_HEART
+                    ACE_HEARTS,
+                    TEN_HEARTS
             );
 
             Hand hand = new Hand(cards);
@@ -67,9 +69,9 @@ class HandTest {
         @Test
         void oneAceOneRegard() {
             List<Card> cards = List.of(
-                    ACE_HEART,
-                    TEN_HEART,
-                    TEN_HEART
+                    ACE_HEARTS,
+                    TEN_HEARTS,
+                    TEN_HEARTS
             );
 
             Hand hand = new Hand(cards);
@@ -82,9 +84,9 @@ class HandTest {
         @Test
         void TwoAceTwoRegard() {
             List<Card> cards = List.of(
-                    ACE_HEART,
-                    ACE_HEART,
-                    TEN_HEART
+                    ACE_HEARTS,
+                    ACE_HEARTS,
+                    TEN_HEARTS
             );
 
             Hand hand = new Hand(cards);
@@ -97,9 +99,9 @@ class HandTest {
         @Test
         void ThreeAceTwoRegard() {
             List<Card> cards = List.of(
-                    ACE_HEART,
-                    ACE_HEART,
-                    TWO_HEART
+                    ACE_HEARTS,
+                    ACE_HEARTS,
+                    TWO_HEARTS
             );
 
             Hand hand = new Hand(cards);
@@ -112,9 +114,9 @@ class HandTest {
         @Test
         void NoAceBust() {
             List<Card> cards = List.of(
-                    TEN_HEART,
-                    TEN_HEART,
-                    TWO_HEART
+                    TEN_HEARTS,
+                    TEN_HEARTS,
+                    TWO_HEARTS
             );
 
             Hand hand = new Hand(cards);
@@ -127,8 +129,8 @@ class HandTest {
         @Test
         void NoAceNotBust() {
             List<Card> cards = List.of(
-                    TEN_HEART,
-                    TEN_HEART
+                    TEN_HEARTS,
+                    TEN_HEARTS
             );
 
             Hand hand = new Hand(cards);
@@ -141,10 +143,10 @@ class HandTest {
         @Test
         void HasAceBust() {
             List<Card> cards = List.of(
-                    ACE_HEART,
-                    TWO_HEART,
-                    TEN_HEART,
-                    TEN_HEART
+                    ACE_HEARTS,
+                    TWO_HEARTS,
+                    TEN_HEARTS,
+                    TEN_HEARTS
             );
 
             Hand hand = new Hand(cards);

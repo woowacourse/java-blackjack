@@ -1,15 +1,17 @@
 package domain;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import static domain.FixtureCard.ACE_HEARTS;
+import static domain.FixtureCard.SEVEN_HEARTS;
+import static domain.FixtureCard.TEN_HEARTS;
+import static domain.FixtureCard.TWO_HEARTS;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static domain.FixtureCard.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
@@ -17,7 +19,7 @@ class PlayerTest {
     @Test
     void createSuccess() {
         Name name = new Name("wiib");
-        List<Card> cards = List.of(TEN_HEART, TWO_HEART);
+        List<Card> cards = List.of(TEN_HEARTS, TWO_HEARTS);
         Hand hand = new Hand(cards);
 
         assertThatCode(() -> new Player(name, hand))
@@ -27,13 +29,13 @@ class PlayerTest {
     @DisplayName("손 패 값의 합을 반환한다.")
     @Test
     void getTotalScore() {
-        List<Card> cards = List.of(SEVEN_HEART, TEN_HEART);
+        List<Card> cards = List.of(SEVEN_HEARTS, TEN_HEARTS);
 
         Hand hand = new Hand(cards);
         Name name = new Name("산초");
         Player player = new Player(name, hand);
         int actual = player.getTotalScore();
-        int expected = SEVEN_HEART.getLetterValue() + TEN_HEART.getLetterValue();
+        int expected = SEVEN_HEARTS.getRankValue() + TEN_HEARTS.getRankValue();
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -41,10 +43,10 @@ class PlayerTest {
     @DisplayName("참가자가 카드를 손 패로 가져온다.")
     @Test
     void hit() {
-        List<Card> cards = new ArrayList<>(List.of(SEVEN_HEART, TEN_HEART));
+        List<Card> cards = new ArrayList<>(List.of(SEVEN_HEARTS, TEN_HEARTS));
         Hand hand = new Hand(cards);
         Name name = new Name("wiib");
-        Card newCard = TWO_HEART;
+        Card newCard = TWO_HEARTS;
 
         Player player = new Player(name, hand);
         player.hit(newCard);
@@ -59,7 +61,7 @@ class PlayerTest {
         @Test
         @DisplayName("Bust가 아니면 false를 반환한다.")
         void isBust_false() {
-            List<Card> cards = new ArrayList<>(List.of(SEVEN_HEART, TEN_HEART));
+            List<Card> cards = new ArrayList<>(List.of(SEVEN_HEARTS, TEN_HEARTS));
             Hand hand = new Hand(cards);
             Name name = new Name("wiib");
             Player player = new Player(name, hand);
@@ -72,7 +74,7 @@ class PlayerTest {
         @Test
         @DisplayName("Bust이면 true를 반환한다.")
         void isBust_true() {
-            List<Card> cards = new ArrayList<>(List.of(TEN_HEART, TEN_HEART, TWO_HEART));
+            List<Card> cards = new ArrayList<>(List.of(TEN_HEARTS, TEN_HEARTS, TWO_HEARTS));
             Hand hand = new Hand(cards);
             Name name = new Name("wiib");
             Player player = new Player(name, hand);
@@ -90,7 +92,7 @@ class PlayerTest {
         @Test
         @DisplayName("더 이상 뽑을 수 없으면 false를 반환한다.")
         void isHittable_false() {
-            List<Card> cards = new ArrayList<>(List.of(ACE_HEART, TEN_HEART));
+            List<Card> cards = new ArrayList<>(List.of(ACE_HEARTS, TEN_HEARTS));
             Hand hand = new Hand(cards);
             Name name = new Name("wiib");
             Player player = new Player(name, hand);
@@ -103,7 +105,7 @@ class PlayerTest {
         @Test
         @DisplayName("Hit할 수 있으면 true를 반환한다.")
         void isHittable_true() {
-            List<Card> cards = new ArrayList<>(List.of(TEN_HEART, TEN_HEART));
+            List<Card> cards = new ArrayList<>(List.of(TEN_HEARTS, TEN_HEARTS));
             Hand hand = new Hand(cards);
             Name name = new Name("wiib");
             Player player = new Player(name, hand);

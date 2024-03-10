@@ -1,12 +1,13 @@
 package domain;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static domain.FixtureCard.SEVEN_HEARTS;
+import static domain.FixtureCard.SIX_HEARTS;
+import static domain.FixtureCard.TEN_HEARTS;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-
-import static domain.FixtureCard.*;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
@@ -21,7 +22,7 @@ class DealerTest {
     @DisplayName("손패가 16이하이면 히트한다.")
     @Test
     void canHit() {
-        Dealer dealer = new Dealer(List.of(TEN_HEART, SIX_HEART));
+        Dealer dealer = new Dealer(List.of(TEN_HEARTS, SIX_HEARTS));
 
         boolean canHit = dealer.isHittable();
 
@@ -31,7 +32,7 @@ class DealerTest {
     @DisplayName("손패가 17이상이면 스테이해야 한다.")
     @Test
     void cantHit() {
-        Dealer dealer = new Dealer(List.of(TEN_HEART, SEVEN_HEART));
+        Dealer dealer = new Dealer(List.of(TEN_HEARTS, SEVEN_HEARTS));
 
         boolean canHit = dealer.isHittable();
 

@@ -3,7 +3,7 @@ package domain;
 import java.util.Arrays;
 import java.util.List;
 
-public enum Letter {
+public enum Rank {
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -13,26 +13,26 @@ public enum Letter {
     EIGHT("8", 8),
     NINE("9", 9),
     TEN("10", 10),
-    J("J", 10),
-    Q("Q", 10),
-    K("K", 10),
-    A("A", 11);
+    JACK("J", 10),
+    QUEEN("Q", 10),
+    KING("K", 10),
+    ACE("A", 11);
 
     private final String text;
     private final int value;
 
-    Letter(String text, int value) {
+    Rank(String text, int value) {
         this.text = text;
         this.value = value;
     }
 
-    public static List<Letter> getValues() {
-        return Arrays.stream(Letter.values())
+    public static List<Rank> getValues() {
+        return Arrays.stream(Rank.values())
                 .toList();
     }
 
     public boolean isAce() {
-        return this == A;
+        return this == ACE;
     }
 
     public String getText() {
