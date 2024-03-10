@@ -2,9 +2,12 @@ package domain;
 
 import domain.cards.Card;
 import domain.cards.CardPack;
+import domain.cards.gamercards.DealerCards;
+import domain.cards.gamercards.PlayerCards;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackGame {
@@ -18,7 +21,12 @@ public class BlackJackGame {
     }
 
     public void prepareGamers(List<String> rawPlayersNames) {
-        this.gamers = new Gamers(rawPlayersNames);
+        List<Player> players = rawPlayersNames.stream()
+                .map(rawPlayersName -> new Player(rawPlayersName, new PlayerCards(new ArrayList<>())))
+                .toList();
+        Dealer dealer = new Dealer(new DealerCards(new ArrayList<>()));
+        this.gamers = new Gamers(players, dealer);
+        // TODO: 테스트 해야되니까 여기서 까서 주입
     }
 
     public void prepareCardPack() {

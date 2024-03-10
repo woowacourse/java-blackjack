@@ -1,8 +1,6 @@
 package domain.gamer;
 
 import domain.cards.CardPack;
-import domain.cards.gamercards.DealerCards;
-import domain.cards.gamercards.PlayerCards;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,20 +12,19 @@ public class Gamers {
     private static final int DEALER_INDEX = 0;
     private static final String DEALER_NAME = "딜러";
 
-    private final Dealer dealer;
     private final List<Player> players;
+    private final Dealer dealer;
 
-    public Gamers(List<String> playersNames) {
-        validate(playersNames);
-        this.players = new ArrayList<>();
-        this.dealer = new Dealer(new DealerCards(new ArrayList<>()));
-        addPlayers(playersNames);
+    public Gamers(List<Player> players, Dealer dealer) {
+        validate(players);
+        this.players = players;
+        this.dealer = dealer;
     }
 
-    private void validate(List<String> playersNames) {
-        validateSize(playersNames.size());
-        validateDuplicatedNames(playersNames);
-        validateNotDealerName(playersNames);
+    private void validate(List<Player> players) {
+        validateSize(players.size());
+        validateNotDealerName(players);
+        validateDuplicatedNames(players);
     }
 
     private void validateSize(int size) {
@@ -37,25 +34,21 @@ public class Gamers {
         }
     }
 
-    private void validateDuplicatedNames(List<String> players) {
-        long nonDuplicatedCount = players.stream()
-                .distinct()
-                .count();
-        if (nonDuplicatedCount != players.size()) {
-            throw new IllegalArgumentException("[ERROR] 플레이어 간 중복된 이름을 가질 수 없습니다.");
-        }
-    }
-
-    private void validateNotDealerName(List<String> playersNames) {
-        if (playersNames.contains(DEALER_NAME)) {
+    private void validateNotDealerName(List<Player> players) {
+        boolean hasDealerName = players.stream()
+                .anyMatch(player -> player.getPlayerName().equals(DEALER_NAME));
+        if (hasDealerName) {
             throw new IllegalArgumentException("[ERROR] 플레이어의 이름은 \"" + DEALER_NAME + "\"가 될 수 없습니다.");
         }
     }
 
-    private void addPlayers(List<String> playersNames) {
-        for (String playerName : playersNames) {
-            PlayerCards emptyCards = new PlayerCards(new ArrayList<>());
-            players.add(new Player(playerName, emptyCards));
+    private void validateDuplicatedNames(List<Player> players) {
+        long nonDuplicatedCount = players.stream()
+                .map(Player::getPlayerName)
+                .distinct()
+                .count();
+        if (nonDuplicatedCount != players.size()) {
+            throw new IllegalArgumentException("[ERROR] 플레이어 간 중복된 이름을 가질 수 없습니다.");
         }
     }
 
