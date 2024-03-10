@@ -7,10 +7,12 @@ import java.util.function.BiPredicate;
 
 public enum Result {
     DEALER_WIN(
-            (dealer, player) -> player.isBust() || !dealer.isBust() && dealer.getTotalScore() > player.getTotalScore()),
+            (dealer, player) -> player.isBust()
+                    || !dealer.isBust() && dealer.getTotalScore().compareTo(player.getTotalScore()) > 0),
     PLAYER_WIN(
-            (dealer, player) -> dealer.isBust() || !player.isBust() && dealer.getTotalScore() < player.getTotalScore()),
-    PUSH((dealer, player) -> dealer.getTotalScore() == player.getTotalScore());
+            (dealer, player) -> dealer.isBust()
+                    || !player.isBust() && dealer.getTotalScore().compareTo(player.getTotalScore()) < 0),
+    PUSH((dealer, player) -> dealer.getTotalScore().compareTo(player.getTotalScore()) == 0);
 
     private final BiPredicate<Dealer, Player> judgeResult;
 

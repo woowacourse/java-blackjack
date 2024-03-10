@@ -33,6 +33,6 @@ public class Dealer extends Player {
 
     @Override
     public boolean isHittable() {
-        return this.getTotalScore() <= MAX_SCORE_TO_HIT;
+        return this.getTotalScore().compareTo(MAX_SCORE_TO_HIT) <= 0;
     }
 }

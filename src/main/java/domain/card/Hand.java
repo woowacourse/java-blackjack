@@ -1,7 +1,6 @@
 package domain.card;
 
-import static domain.player.Player.BLACK_JACK;
-
+import domain.game.Score;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,20 +28,8 @@ public class Hand {
                 .count();
     }
 
-    public int calculateScore() {
-        int aceCount = countAceCard();
-        int sum = calculateSum();
-
-        while (isBustWithAce(sum, aceCount)) {
-            aceCount--;
-            sum -= 10;
-        }
-
-        return sum;
-    }
-
-    private boolean isBustWithAce(int sum, int aceCount) {
-        return sum > BLACK_JACK && aceCount > 0;
+    public Score calculateScore() {
+        return Score.from(this);
     }
 
     public List<Card> getCards() {

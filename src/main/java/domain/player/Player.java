@@ -2,6 +2,7 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.Hand;
+import domain.game.Score;
 import java.util.List;
 
 public class Player {
@@ -26,14 +27,14 @@ public class Player {
     }
 
     public boolean isBust() {
-        return getTotalScore() > BLACK_JACK;
+        return getTotalScore().isBust();
     }
 
     public boolean isHittable() {
-        return getTotalScore() < BLACK_JACK;
+        return getTotalScore().compareTo(BLACK_JACK) < 0;
     }
 
-    public int getTotalScore() {
+    public Score getTotalScore() {
         return hand.calculateScore();
     }
 

@@ -10,7 +10,7 @@ public record PlayerDto(String name, List<String> hands, int score) {
         List<String> hands = player.getHand().getCards().stream()
                 .map(card -> RankDisplay.from(card.getRank()).getText() + SuitDiplay.from(card.getSuit()).getText())
                 .toList();
-        int score = player.getTotalScore();
+        int score = player.getTotalScore().get();
         return new PlayerDto(name, hands, score);
     }
 
