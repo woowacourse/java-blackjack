@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 
 public class BlackjackController {
     private static final int EXECUTION_COUNT = 2;
-    private static final boolean NO = false;
 
     private final Gamer dealer;
     private final List<Gamer> players;
@@ -102,14 +101,15 @@ public class BlackjackController {
     }
 
     private void playerTryDraw(Deck deck, Gamer player) {
-        while(!player.isDead()) {
-            OutputView.printPlayerAdditionalCardMessage(player.getRawName());
-            if (YesOrNoInputView.getYNAsBoolean() == NO) {
-                break;
-            }
+        while(!player.isDead() && inputYesOrNo(player)) {
             playerDraw(deck, player);
             printPlayer(player);
         }
+    }
+
+    private static boolean inputYesOrNo(Gamer player) {
+        OutputView.printPlayerAdditionalCardMessage(player.getRawName());
+        return YesOrNoInputView.getYNAsBoolean();
     }
 
     private void dealerTryDraw(Deck deck) {
