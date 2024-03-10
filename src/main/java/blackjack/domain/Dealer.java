@@ -47,7 +47,7 @@ public class Dealer extends Participant {
             return GameResult.WIN;
         }
 
-        if (dealerScore > playerScore) {
+        if (isBlackJack() || playerScore < dealerScore) {
             return GameResult.LOSE;
         }
 

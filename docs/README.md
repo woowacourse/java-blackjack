@@ -11,8 +11,8 @@
 
 ## 블랙잭 승패 규칙
 - 플레이어의 승패 규칙
-- ![D10C1A98-9626-415B-89F6-7F847F6CCA68_1_201_a](https://github.com/woowacourse/java-blackjack/assets/75781414/d0e031dd-9f0b-4122-b59c-d37a134395e8)
-
+- ![AC6A3FA1-F3D0-4D3B-8404-4691B8A72BE8_1_201_a](https://github.com/woowacourse/java-blackjack/assets/75781414/851dc9aa-9011-41cf-8342-f6772dd5a2cf)
+- 
 ## 구현 기능 목록
 
 ### 입출력 기능
