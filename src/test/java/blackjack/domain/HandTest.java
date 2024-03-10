@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 
 class HandTest {
 
-    @DisplayName("생성 테스트")
+    @DisplayName("초기 패에는 아무 카드도 존재하지 않는다.")
     @Test
-    void create() {
+    void initialHandIsEmpty() {
         Hand hand = new Hand();
 
         List<Card> cards = hand.getCards();
