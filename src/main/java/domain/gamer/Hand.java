@@ -41,10 +41,9 @@ public class Hand {
     }
 
     private List<Card> filterAceCards() {
-        List<Card> aceCards = cards.stream()
+        return cards.stream()
                 .filter(card -> card.getRank().isAce())
-                .collect(Collectors.toList());
-        return aceCards;
+                .toList();
     }
 
     private int sumExceptAceCards() {

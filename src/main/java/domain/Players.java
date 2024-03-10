@@ -24,7 +24,10 @@ public class Players {
     }
 
     private void validateDuplicatedPlayer(final List<Player> players) {
-        int deduplicatedCount = (int) players.stream().map(player -> player.getName()).distinct().count();
+        int deduplicatedCount = (int) players.stream()
+                .map(Player::getName)
+                .distinct()
+                .count();
         if (players.size() != deduplicatedCount) {
             throw new IllegalArgumentException(DUPLICATED_PLAYER_NAME);
         }

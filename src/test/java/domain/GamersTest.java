@@ -32,7 +32,7 @@ class GamersTest {
     @Test
     void findDealerTest() {
         // given
-        Name expectedName = new Name("딜러");
+        String expectedName = "딜러";
 
         // when
         Dealer result = gamers.findDealer();

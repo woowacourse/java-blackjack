@@ -10,7 +10,9 @@ import domain.gamer.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 public class OutputView {
     private static final int INITIAL_CARD_COUNT = 2;
@@ -31,10 +33,10 @@ public class OutputView {
     }
 
     private static void printHandOutMessage(final Dealer dealer, final List<Player> players) {
-        String dealerName = dealer.getName().getValue();
+        String dealerName = dealer.getName();
         StringJoiner playerNames = new StringJoiner(",");
         for (Player player : players) {
-            playerNames.add(player.getName().getValue());
+            playerNames.add(player.getName());
         }
         String message = String.format(System.lineSeparator() + "%s와 %s에게 %d장을 나누었습니다.", dealerName, playerNames,
                 INITIAL_CARD_COUNT);
@@ -42,7 +44,7 @@ public class OutputView {
     }
 
     private static void printDealerCard(final Dealer dealer) {
-        System.out.println(dealer.getName().getValue() + ": " + printCardInfo(dealer.getHand().get(0)));
+        System.out.println(dealer.getName() + ": " + printCardInfo(dealer.getHand().get(0)));
     }
 
     private static void printPlayersCards(final List<Player> players) {
@@ -53,12 +55,12 @@ public class OutputView {
 
     public static void printAllCards(final Player player) {
         String cardInfos = String.join(", ", printCardInfos(player.getHand()));
-        String message = String.format("%s카드: %s", player.getName().getValue(), cardInfos);
+        String message = String.format("%s카드: %s", player.getName(), cardInfos);
         System.out.println(message);
     }
 
     public static void printDealerHit(final Dealer dealer) {
-        String dealerName = dealer.getName().getValue();
+        String dealerName = dealer.getName();
         String message = String.format(System.lineSeparator() + "%s는 %d이하라 한장의 카드를 더 받았습니다.", dealerName,
                 DEALER_HIT_CONDITION);
         System.out.println(message);
@@ -67,7 +69,7 @@ public class OutputView {
     public static void printCardsAndResult(final Gamers gamers) {
         StringBuilder builder = new StringBuilder();
         for (Gamer gamer : gamers.getGamers()) {
-            String gamerName = gamer.getName().getValue();
+            String gamerName = gamer.getName();
             int totalScore = gamer.calculateTotalScore();
             String cardInfos = String.join(", ", printCardInfos(gamer.getHand()));
             builder.append(String.format("%s 카드: %s - 결과: %d", gamerName, cardInfos, totalScore))
@@ -101,13 +103,11 @@ public class OutputView {
     }
 
     private static void printPlayerResults(final PlayerResults playerResults) {
-        StringBuilder builder = new StringBuilder();
-        for (Entry<Player, Result> player : playerResults.getResults().entrySet()) {
-            String playerName = player.getKey().getName().getValue();
-            String result = player.getValue().getName();
-            String message = String.format("%s: %s", playerName, result);
-            builder.append(message).append(System.lineSeparator());
-        }
-        System.out.println(builder);
+        Set<Entry<Player, Result>> resultEntrySet = playerResults.getResults().entrySet();
+        String resultString = resultEntrySet.stream()
+                .map(entry -> String.format("%s: %s", entry.getKey().getName(), entry.getValue().getName()))
+                .collect(Collectors.joining(System.lineSeparator()));
+
+        System.out.println(resultString);
     }
 }

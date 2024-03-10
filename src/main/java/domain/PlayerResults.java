@@ -13,15 +13,21 @@ public class PlayerResults {
     }
 
     public int findWinCount() {
-        return (int) results.values().stream().filter(result -> result.equals(Result.WIN)).count();
+        return (int) results.values().stream()
+                .filter(result -> result.equals(Result.WIN))
+                .count();
     }
 
     public int findLoseCount() {
-        return (int) results.values().stream().filter(result -> result.equals(Result.LOSE)).count();
+        return (int) results.values().stream()
+                .filter(result -> result.equals(Result.LOSE))
+                .count();
     }
 
     public int findTieCount() {
-        return (int) results.values().stream().filter(result -> result.equals(Result.TIE)).count();
+        return (int) results.values().stream()
+                .filter(result -> result.equals(Result.TIE))
+                .count();
     }
 
     public Map<Player, Result> getResults() {

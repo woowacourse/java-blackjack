@@ -40,7 +40,7 @@ public abstract class Gamer {
         return hand.getCards();
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.getValue();
     }
 }

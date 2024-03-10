@@ -40,7 +40,7 @@ public class InputView {
 
     public static boolean readSelectionOf(final Player player) {
         String message = String.format(System.lineSeparator() + "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)",
-                player.getName().getValue());
+                player.getName());
         System.out.println(message);
         String input = scanner.nextLine().trim();
         validateInvalidSelection(input);
