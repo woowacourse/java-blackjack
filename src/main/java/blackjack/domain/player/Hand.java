@@ -8,6 +8,9 @@ import java.util.List;
 
 public class Hand {
 
+    private static final int BLACK_JACK = 21;
+    private static final int ACE_WEIGHT = 10;
+
     private final List<Card> cards;
     private final ScoreCalculateStrategy scoreCalculateStrategy;
 
@@ -38,7 +41,13 @@ public class Hand {
     }
 
     public Score calculateScore() {
-        return scoreCalculateStrategy.calculate(this);
+        int aceCount = countAce();
+        int sum = calculateCardSummation();
+        while (aceCount > 0 && (sum + ACE_WEIGHT) <= BLACK_JACK) {
+            sum += ACE_WEIGHT;
+            aceCount--;
+        }
+        return new Score(sum);
     }
 
     public List<Card> getCards() {

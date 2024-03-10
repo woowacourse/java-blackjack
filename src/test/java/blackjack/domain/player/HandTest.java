@@ -37,4 +37,32 @@ class HandTest {
 
         assertThat(hand.countAce()).isEqualTo(3);
     }
+
+    @DisplayName("적절한 점수를 계산할 수 있다 - Ace 카드 없음")
+    @Test
+    void testCalculateScoreWithNoAce() {
+        Hand hand = HandFixture.of(2, 3, 4, 5);
+        assertThat(hand.calculateScore().getValue()).isEqualTo(14);
+    }
+
+    @DisplayName("적절한 점수를 계산할 수 있다 - Ace 카드가 11로 이용됨")
+    @Test
+    void testCalculateScoreWithBigAce() {
+        Hand hand = HandFixture.of(1, 10);
+        assertThat(hand.calculateScore().getValue()).isEqualTo(21);
+    }
+
+    @DisplayName("적절한 점수를 계산할 수 있다 - Ace 카드가 1로 이용됨")
+    @Test
+    void testCalculateScoreWithLowAce() {
+        Hand hand = HandFixture.of(1, 10, 2);
+        assertThat(hand.calculateScore().getValue()).isEqualTo(13);
+    }
+
+    @DisplayName("적절한 점수를 계산할 수 있다 - Ace 카드 두개 이상")
+    @Test
+    void testCalculateScoreWithMultipleAce() {
+        Hand hand = HandFixture.of(1, 1, 1);
+        assertThat(hand.calculateScore().getValue()).isEqualTo(13);
+    }
 }
