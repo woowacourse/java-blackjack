@@ -19,9 +19,10 @@ public class OutputView {
     public void printInitialDeal(Dealer dealer, List<Player> players) {
         System.out.println();
         System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), buildPlayerNameMessage(players));
-        System.out.printf("%s카드: %s%n", dealer.getName(), buildDealerInitialDealMessage(dealer.getCards()));
+
+        printCards(dealer.getName(), dealer.getVisibleCards());
         for (Player player : players) {
-            printCards(player);
+            printCards(player.getName(), player.getCards());
         }
     }
 
@@ -31,12 +32,8 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
     }
 
-    private String buildDealerInitialDealMessage(List<Card> cards) {
-        return buildCardsMessage(cards.subList(1, cards.size()));
-    }
-
-    public void printCards(Player player) {
-        System.out.printf("%s카드: %s%n", player.getName(), buildCardsMessage(player.getCards()));
+    public void printCards(String name, List<Card> cards) {
+        System.out.printf("%s카드: %s%n", name, buildCardsMessage(cards));
     }
 
     public void printDealerHitMessage() {

@@ -65,12 +65,12 @@ public class BlackjackController {
         boolean wannaHit = inputView.readCommand(player.getName());
         if (wannaHit) {
             player.hit(deck.draw());
-            outputView.printCards(player);
+            outputView.printCards(player.getName(), player.getCards());
             playerTurn(player, deck);
             return;
         }
 
-        outputView.printCards(player);
+        outputView.printCards(player.getName(), player.getCards());
     }
 
     private void dealerTurn(Dealer dealer, Deck deck) {
