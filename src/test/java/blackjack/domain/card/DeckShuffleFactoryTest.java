@@ -8,19 +8,22 @@ import org.junit.jupiter.api.Test;
 
 class DeckShuffleFactoryTest {
 
-    @DisplayName("모든 종류의 카드가 한 장씩만 덱에 포함된다.")
+    @DisplayName("52장으로 구성된 덱에는 모든 종류의 카드가 한 장씩만 포함된다.")
     @Test
     void createDistinctCards() {
         Stack<Card> expectedCards = new Stack<>();
-        for (Number number : Number.values()) {
-            for (Suit suit : Suit.values()) {
+        for (final Number number : Number.values()) {
+            for (final Suit suit : Suit.values()) {
                 expectedCards.push(new Card(number, suit));
             }
         }
-        DeckFactory deckFactory = new DeckShuffleFactory();
 
-        final Stack<Card> resultCards = deckFactory.generate();
+        final Deck actual = new DeckShuffleFactory().create();
+        final Stack<Card> actualCards = new Stack<>();
+        for (int cardIndex = 0; cardIndex < 52; cardIndex++) {
+            actualCards.push(actual.pop());
+        }
 
-        assertThat(resultCards).containsExactlyInAnyOrderElementsOf(expectedCards);
+        assertThat(actualCards).containsExactlyInAnyOrderElementsOf(expectedCards);
     }
 }

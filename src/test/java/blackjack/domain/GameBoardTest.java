@@ -21,7 +21,8 @@ class GameBoardTest {
     @DisplayName("딜러의 최종 승패를 알려준다.")
     @Test
     void informDealerOutcome() {
-        final Deck deck = new Deck(new TestDeckFactory());
+        final TestDeckFactory testDeckFactory = new TestDeckFactory();
+        final Deck deck = testDeckFactory.create();
         final Players players = Players.from(List.of("pobi"));
         final Dealer dealer = Dealer.create();
         final Referee referee = new Referee(dealer.getCards());
@@ -37,7 +38,8 @@ class GameBoardTest {
     @DisplayName("모든 플레이어의 최종 승패를 알려준다.")
     @Test
     void informPlayersOutcome() {
-        final Deck deck = new Deck(new TestDeckFactory());
+        final TestDeckFactory testDeckFactory = new TestDeckFactory();
+        final Deck deck = testDeckFactory.create();
         final Players players = Players.from(List.of("pobi"));
         final Dealer dealer = Dealer.create();
         final Referee referee = new Referee(dealer.getCards());

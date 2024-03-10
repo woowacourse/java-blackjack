@@ -6,17 +6,17 @@ import java.util.Stack;
 public class DeckShuffleFactory implements DeckFactory {
 
     @Override
-    public Stack<Card> generate() {
-        Stack<Card> deck = new Stack<>();
-        for (Number number : Number.values()) {
+    public Deck create() {
+        final Stack<Card> deck = new Stack<>();
+        for (final Number number : Number.values()) {
             pushSuits(number, deck);
         }
         Collections.shuffle(deck);
-        return deck;
+        return new Deck(deck);
     }
 
     private void pushSuits(final Number number, final Stack<Card> deck) {
-        for (Suit suit : Suit.values()) {
+        for (final Suit suit : Suit.values()) {
             deck.push(new Card(number, suit));
         }
     }

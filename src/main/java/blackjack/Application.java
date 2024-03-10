@@ -32,7 +32,7 @@ public class Application {
     }
 
     private static GameBoard createGameBoard() {
-        Deck deck = new Deck(new DeckShuffleFactory());
+        Deck deck = new DeckShuffleFactory().create();
         Dealer dealer = Dealer.create();
         Players players = Players.from(InputView.readPlayerNames());
         return new GameBoard(deck, dealer, players);

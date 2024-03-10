@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Suit;
@@ -13,16 +14,16 @@ public class TestDeckFactory implements DeckFactory {
      * DIAMOND
      */
     @Override
-    public Stack<Card> generate() {
-        Stack<Card> deck = new Stack<>();
-        for (Suit suit : Suit.values()) {
+    public Deck create() {
+        final Stack<Card> deck = new Stack<>();
+        for (final Suit suit : Suit.values()) {
             pushNumbersOfSuit(deck, suit);
         }
-        return deck;
+        return new Deck(deck);
     }
 
-    private void pushNumbersOfSuit(Stack<Card> deck, Suit suit) {
-        for (Number number : Number.values()) {
+    private void pushNumbersOfSuit(final Stack<Card> deck, final Suit suit) {
+        for (final Number number : Number.values()) {
             deck.push(new Card(number, suit));
         }
     }

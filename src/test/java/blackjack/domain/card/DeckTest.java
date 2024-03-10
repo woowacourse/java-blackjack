@@ -11,7 +11,7 @@ class DeckTest {
     @DisplayName("카드 덱에서 카드를 한 장 뽑는다.")
     @Test
     void drawCard() {
-        Deck deck = new Deck(new TestDeckFactory());
+        Deck deck = new TestDeckFactory().create();
 
         Card card = deck.pop();
 
