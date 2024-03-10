@@ -26,8 +26,8 @@ public class Player extends Participant {
     }
 
     private ResultStatus compareScore(Cards otherCards) {
-        int calculatedScore = cards.getCardsScore();
-        int otherScore = otherCards.getCardsScore();
+        int calculatedScore = cards.getScore();
+        int otherScore = otherCards.getScore();
 
         if (calculatedScore > otherScore) {
             return ResultStatus.WIN;

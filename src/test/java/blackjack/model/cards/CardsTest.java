@@ -18,7 +18,7 @@ class CardsTest {
         Cards given = new Cards();
         given.add(cards);
 
-        int score = given.getCardsScore();
+        int score = given.getScore();
 
         assertThat(score).isEqualTo(18);
     }
@@ -33,7 +33,7 @@ class CardsTest {
         );
         Cards given = new Cards();
         given.add(cards);
-        int score = given.getCardsScore();
+        int score = given.getScore();
 
         assertThat(score).isEqualTo(12);
     }

@@ -43,10 +43,10 @@ public class OutputView {
         System.out.println();
         List<Player> players = blackJackGame.getPlayers();
         Dealer dealer = blackJackGame.getDealer();
-        System.out.print(getParticipantScoreFormat(DEALER_NAME, dealer.getCards(), dealer.getCards().getCardsScore()));
+        System.out.print(getParticipantScoreFormat(DEALER_NAME, dealer.getCards(), dealer.getCards().getScore()));
         players.forEach(player -> System.out.printf(
                 getParticipantScoreFormat(player.getName(), player.getCards(),
-                        player.getCards().getCardsScore())));
+                        player.getCards().getScore())));
     }
 
     public void printGameResults(GameResults gameResults) {

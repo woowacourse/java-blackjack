@@ -13,23 +13,23 @@ public class Cards {
 
     public void add(Card card) {
         cards.add(card);
-        score += card.getScore();
+        updateCardsScore();
     }
 
     public void add(List<Card> cardsToAdd) {
         cards.addAll(cardsToAdd);
-        score += calculate(cardsToAdd);
+        updateCardsScore();
     }
 
     public boolean isGreaterThanWinningScore() {
         return score > WINNING_SCORE;
     }
 
-    public int getCardsScore() {
+    private void updateCardsScore() {
+        score = calculate(cards);
         if (hasAce() && score <= BOUNDARY_SCORE) {
-            return score + EXTRA_SCORE;
+            score += EXTRA_SCORE;
         }
-        return score;
     }
 
     private boolean hasAce() {
@@ -41,6 +41,10 @@ public class Cards {
         return cardsToAdd.stream()
                 .mapToInt(Card::getScore)
                 .sum();
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public List<Card> getCards() {
