@@ -17,20 +17,20 @@ public enum MatchResult {
     }
 
     private static boolean isPlayerWinningCondition(int playerScore, int dealerScore) {
-        if (isBurst(playerScore)) {
+        if (isBust(playerScore)) {
             return false;
         }
-        return isBurst(dealerScore) || playerScore > dealerScore;
+        return isBust(dealerScore) || playerScore > dealerScore;
     }
 
     private static boolean isDealerWinningCondition(int playerScore, int dealerScore) {
-        if (isBurst(playerScore)) {
+        if (isBust(playerScore)) {
             return true;
         }
-        return !isBurst(dealerScore) && dealerScore > playerScore;
+        return !isBust(dealerScore) && dealerScore > playerScore;
     }
 
-    private static boolean isBurst(int score) {
+    private static boolean isBust(int score) {
         return score > BlackJackGame.BLACKJACK_MAX_SCORE;
     }
 }
