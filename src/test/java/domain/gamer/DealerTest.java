@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -27,7 +28,6 @@ public class DealerTest {
         dealer = new Dealer();
     }
 
-    //TODO : 생성 부분 리팩터링
     @DisplayName("딜러가 카드를 뽑아서 저장한다.")
     @Test
     void hitTest() {
@@ -36,6 +36,16 @@ public class DealerTest {
 
         // then
         assertThat(dealer.getHand()).hasSize(1);
+    }
+
+    @DisplayName("딜러가 주어진 카드들을 받아서 저장한다.")
+    @Test
+    void receiveTest(){
+        //when
+        dealer.receive(List.of(cards.pop(),cards.pop()));
+
+        //then
+        assertThat(dealer.getHand()).hasSize(2);
     }
 
     @DisplayName("딜러가 가진 카드의 점수를 알 수 있다.")

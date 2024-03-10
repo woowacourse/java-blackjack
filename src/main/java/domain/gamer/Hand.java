@@ -16,13 +16,6 @@ public class Hand {
         cards = new ArrayList<>();
     }
 
-    private static int accumulateScore(final Card card, final int sum) {
-        if (sum + card.getScore() <= BLACK_JACK) {
-            return sum + card.getScore();
-        }
-        return sum + Rank.SMALL_ACE.getScore();
-    }
-
     public void add(final Card card) {
         cards.add(card);
     }
@@ -43,6 +36,13 @@ public class Hand {
             totalScore = accumulateScore(aceCard, totalScore);
         }
         return totalScore;
+    }
+
+    private int accumulateScore(final Card card, final int sum) {
+        if (sum + card.getScore() <= BLACK_JACK) {
+            return sum + card.getScore();
+        }
+        return sum + Rank.SMALL_ACE.getScore();
     }
 
     private List<Card> filterAceCards() {
