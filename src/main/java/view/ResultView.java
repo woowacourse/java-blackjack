@@ -109,11 +109,8 @@ public class ResultView {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(LINE_SEPARATOR);
         for (Player gamer : gamers) {
-            stringBuilder.append(resolvePlayerCards(gamer.getPlayerName(), gamer.getCards()));
-            stringBuilder.append(" - ");
-            stringBuilder.append("결과: ");
-            stringBuilder.append(gamer.finalizeCardsScore());
-            stringBuilder.append(LINE_SEPARATOR);
+            stringBuilder.append(String.format("%s - 결과: %d\n",
+                    resolvePlayerCards(gamer.getPlayerName(), gamer.getCards()), gamer.finalizeCardsScore()));
         }
         return stringBuilder.toString();
     }
