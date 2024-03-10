@@ -5,8 +5,6 @@ import domain.Players;
 import view.InputView;
 import view.OutputView;
 
-import java.util.List;
-
 public class Application {
     public static void main(final String[] args) {
         final Blackjack blackjack = createBlackjack();
@@ -33,9 +31,11 @@ public class Application {
     }
 
     private static Blackjack createBlackjack() {
-        final List<String> inputtedNames = InputView.inputNames();
-        final Players players = Players.from(inputtedNames);
-        return new Blackjack(players);
+        return new Blackjack(createPlayers());
+    }
+
+    private static Players createPlayers() {
+        return Players.from(InputView.inputNames());
     }
 
     private static void drawCardDuringPlayerTurn(final Player player, final Blackjack blackjack) {
