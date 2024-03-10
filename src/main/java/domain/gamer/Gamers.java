@@ -2,7 +2,6 @@ package domain.gamer;
 
 import domain.cards.gamercards.DealerCards;
 import domain.cards.gamercards.PlayerCards;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,11 +16,12 @@ public class Gamers {
     private static final int PLAYER_FIRST_INDEX = 1;
     private static final String DEALER_NAME = "딜러";
 
-    private final List<Gamer> gamers;
+    private final List<Player> players;
+    // TODO: add dealer
 
     public Gamers(List<String> playersNames) {
         validate(playersNames);
-        this.gamers = new ArrayList<>();
+        this.players = new ArrayList<>();
         addGamers(playersNames);
     }
 
@@ -33,7 +33,8 @@ public class Gamers {
 
     private void validateSize(int size) {
         if (size < MIN_SIZE || size > MAX_SIZE) {
-            throw new IllegalArgumentException("[ERROR] 플레이어는 최소 " + MIN_SIZE + "명에서 최대 " + MAX_SIZE + "명까지 참여할 수 있습니다.");
+            throw new IllegalArgumentException(
+                    "[ERROR] 플레이어는 최소 " + MIN_SIZE + "명에서 최대 " + MAX_SIZE + "명까지 참여할 수 있습니다.");
         }
     }
 
@@ -53,24 +54,24 @@ public class Gamers {
     }
 
     private void addGamers(List<String> playersNames) {
-        gamers.add(new Dealer(new DealerCards(new ArrayList<>())));
+        players.add(new Dealer(new DealerCards(new ArrayList<>())));
         for (String playerName : playersNames) {
             PlayerCards emptyHand = new PlayerCards(new ArrayList<>());
-            gamers.add(new Player(playerName, emptyHand));
+            players.add(new Player(playerName, emptyHand));
         }
     }
 
     public Dealer callDealer() {
-        return (Dealer) gamers.get(DEALER_INDEX);
+        return (Dealer) players.get(DEALER_INDEX);
     }
 
     public List<Player> callPlayers() {
-        return IntStream.range(PLAYER_FIRST_INDEX, gamers.size())
-                .mapToObj(index -> (Player) gamers.get(index))
+        return IntStream.range(PLAYER_FIRST_INDEX, players.size())
+                .mapToObj(index -> (Player) players.get(index))
                 .collect(Collectors.toList());
     }
 
-    public List<Gamer> getGamers() {
-        return Collections.unmodifiableList(gamers);
+    public List<Player> getGamers() {
+        return Collections.unmodifiableList(players);
     }
 }

@@ -1,7 +1,6 @@
 package view;
 
-import domain.gamer.Gamer;
-
+import domain.gamer.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -18,7 +17,7 @@ public class InputView {
                 .toList();
     }
 
-    public String readHitOrNot(Gamer player) {
+    public String readHitOrNot(Player player) {
         System.out.println(player.getPlayerName() + "은/는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return scanner.nextLine();
     }

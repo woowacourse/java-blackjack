@@ -3,8 +3,8 @@ package domain;
 import domain.cards.Card;
 import domain.cards.CardPack;
 import domain.gamer.Dealer;
-import domain.gamer.Gamer;
 import domain.gamer.Gamers;
+import domain.gamer.Player;
 import java.util.List;
 
 public class BlackJackGame {
@@ -26,18 +26,18 @@ public class BlackJackGame {
     }
 
     public void setUpGame() {
-        for (Gamer gamer : gamers.getGamers()) {
-            shareInitCards(gamer);
+        for (Player player : gamers.getGamers()) {
+            shareInitCards(player);
         }
     }
 
-    private void shareInitCards(Gamer gamer) {
+    private void shareInitCards(Player gamer) {
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
             gamer.hit(cardPack.pickOneCard());
         }
     }
 
-    public boolean hitByPlayer(String rawHitOption, Gamer player) {
+    public boolean hitByPlayer(String rawHitOption, Player player) {
         HitOption hitOption = new HitOption(rawHitOption);
         if (hitOption.doHit()) {
             player.hit(cardPack.pickOneCard());

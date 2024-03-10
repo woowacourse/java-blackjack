@@ -1,16 +1,14 @@
 package domain.gamer;
 
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+
 import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
 import domain.cards.cardinfo.CardShape;
 import domain.cards.gamercards.DealerCards;
-import domain.gamer.Dealer;
+import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-
-import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class DealerTest {
 

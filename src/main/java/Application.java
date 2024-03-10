@@ -2,7 +2,6 @@ import domain.BlackJackGame;
 import domain.Judge;
 import domain.cards.Card;
 import domain.gamer.Dealer;
-import domain.gamer.Gamer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
 import java.util.List;
@@ -49,7 +48,7 @@ public class Application { // TODO: refactoring
         }
     }
 
-    private static void printPlayerHitCard(Gamer player, boolean doPlayerHit) {
+    private static void printPlayerHitCard(Player player, boolean doPlayerHit) {
         if (doPlayerHit) {
             resultView.printPlayerCards(player);
         }

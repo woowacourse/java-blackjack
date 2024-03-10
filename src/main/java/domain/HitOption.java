@@ -4,6 +4,7 @@ public class HitOption {
 
     private static final String YES = "y";
     private static final String NO = "n";
+
     private final String value;
 
     public HitOption(String value) {
@@ -17,7 +18,7 @@ public class HitOption {
         }
     }
 
-    public boolean doHit() {
+    public boolean doHit() { //Todo: isHit
         return value.equalsIgnoreCase(YES);
     }
 }
