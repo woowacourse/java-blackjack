@@ -23,11 +23,11 @@ class DealerTest {
     @Test
     void hitOneCard() {
         Dealer dealer = new Dealer();
-        Card card = new Card(CardRank.EIGHT, CardShape.DIAMOND);
+        Card givenCard = new Card(CardRank.EIGHT, CardShape.DIAMOND);
 
-        dealer.hit(card);
+        dealer.hit(givenCard);
 
-        assertThat(dealer.getCards()).isEqualTo(List.of(card));
+        assertThat(dealer.getCards()).containsExactly(givenCard);
     }
 
     @DisplayName("딜러는 17점 이상이 되면, 더 이상 카드를 받을 수 없다.")

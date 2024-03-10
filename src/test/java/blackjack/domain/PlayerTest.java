@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,11 +20,11 @@ class PlayerTest {
     @Test
     void hitOneCard() {
         Player player = new Player("atom");
-        Card card = new Card(CardRank.EIGHT, CardShape.DIAMOND);
+        Card givenCard = new Card(CardRank.EIGHT, CardShape.DIAMOND);
 
-        player.hit(card);
+        player.hit(givenCard);
 
-        assertThat(player.getCards()).isEqualTo(List.of(card));
+        assertThat(player.getCards()).containsExactly(givenCard);
     }
 
     @DisplayName("플레이어가 버스트되거나, 블랙잭인 상태면 더 이상 카드를 받을 수 없다")

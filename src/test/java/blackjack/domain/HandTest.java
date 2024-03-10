@@ -22,11 +22,11 @@ class HandTest {
     @Test
     void add() {
         Hand hand = new Hand();
+        Card givenCard = new Card(CardRank.EIGHT, CardShape.DIAMOND);
 
-        hand.add(new Card(CardRank.EIGHT, CardShape.DIAMOND));
+        hand.add(givenCard);
 
-        List<Card> cards = hand.getCards();
-        assertThat(cards).hasSize(1);
+        assertThat(hand.getCards()).containsExactly(givenCard);
     }
 
     @DisplayName("패는 총 점수를 계산할 수 있다.")
