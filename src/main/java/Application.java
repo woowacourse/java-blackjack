@@ -42,7 +42,7 @@ public class Application {
 
     private static void askForGamer(GamerDto gamer, BlackJackGame blackJackGame) {
         boolean isFirstTurn = true;
-        String answer = "y";
+        boolean answer = true;
         while (isGamerTurnEnded(blackJackGame, gamer, answer)) {
             answer = InputView.readAnswer(CONSOLE_READER, gamer.getName());
             drawIfAnswerIsYes(answer, gamer, blackJackGame);
@@ -51,18 +51,18 @@ public class Application {
         }
     }
 
-    private static boolean isGamerTurnEnded(BlackJackGame blackJackGame, GamerDto gamer, String answer) {
-        return (!blackJackGame.isBustFromName(gamer.getName()) && answer.equals("y"));
+    private static boolean isGamerTurnEnded(BlackJackGame blackJackGame, GamerDto gamer, boolean answer) {
+        return (!blackJackGame.isBustFromName(gamer.getName()) && answer);
     }
 
-    private static void drawIfAnswerIsYes(String answer, GamerDto gamerDto, BlackJackGame blackJackGame) {
-        if (answer.equals("y")) {
+    private static void drawIfAnswerIsYes(boolean answer, GamerDto gamerDto, BlackJackGame blackJackGame) {
+        if (answer) {
             blackJackGame.drawCardFromName(gamerDto.getName());
         }
     }
 
-    private static void printPlayerStatus(String answer, GamerDto gamer, boolean isFirstTurn) {
-        if (isFirstTurn || answer.equals("y")) {
+    private static void printPlayerStatus(boolean answer, GamerDto gamer, boolean isFirstTurn) {
+        if (isFirstTurn || answer) {
             OutputView.printGamerStatus(gamer);
         }
     }

@@ -37,12 +37,12 @@ public class InputView {
         }
     }
 
-    public static String readAnswer(Supplier<String> input, String name) {
+    public static boolean readAnswer(Supplier<String> input, String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
         String result = input.get();
         validateEmpty(result);
         validateAnswer(result);
-        return result;
+        return (result.equals("y"));
     }
 
     private static void validateAnswer(String input) {
