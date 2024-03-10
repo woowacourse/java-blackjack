@@ -1,23 +1,23 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Deck {
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
 
     public Deck() {
-        initialize();
+        cards = initialize();
     }
 
-    private void initialize() {
-        for (final Denomination denomination : Denomination.values()) {
-            Arrays.stream(Symbol.values())
-                    .map(symbol -> new Card(denomination, symbol))
-                    .forEach(cards::add);
-        }
+    private List<Card> initialize() {
+        return Arrays.stream(Denomination.values())
+                .flatMap(denomination ->
+                        Arrays.stream(Symbol.values())
+                                .map(symbol -> new Card(denomination, symbol)))
+                .collect(Collectors.toList());
     }
 
     public Card draw() {
