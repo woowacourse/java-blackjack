@@ -1,5 +1,5 @@
 import domain.BlackjackGame;
-import domain.Casino;
+import controller.Casino;
 import view.InputView;
 import view.ResultView;
 

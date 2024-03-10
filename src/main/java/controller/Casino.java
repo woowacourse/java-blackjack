@@ -1,4 +1,4 @@
-package domain;
+package controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,6 +6,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Stream;
 
+import domain.BlackjackGame;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
