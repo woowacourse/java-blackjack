@@ -19,11 +19,11 @@ public enum Rank {
     KING("K", 10),
     BIG_ACE("A", 11);
 
-    private final String name;
+    private final String value;
     private final int score;
 
-    Rank(final String name, final int score) {
-        this.name = name;
+    Rank(final String value, final int score) {
+        this.value = value;
         this.score = score;
     }
 
@@ -34,11 +34,11 @@ public enum Rank {
     }
 
     public boolean isAce() {
-        return name().contains("ACE");
+        return value.equals("A");
     }
 
-    public String getName() {
-        return name;
+    public String getValue() {
+        return value;
     }
 
     public int getScore() {

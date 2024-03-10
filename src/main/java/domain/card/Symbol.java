@@ -6,13 +6,13 @@ public enum Symbol {
     SPADE("스페이드"),
     DIAMOND("다이아몬드");
 
-    private final String name;
+    private final String value;
 
-    Symbol(final String name) {
-        this.name = name;
+    Symbol(final String value) {
+        this.value = value;
     }
 
-    public String getName() {
-        return name;
+    public String getValue() {
+        return value;
     }
 }
