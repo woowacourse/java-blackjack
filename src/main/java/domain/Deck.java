@@ -9,10 +9,11 @@ public class Deck {
     private final List<Card> cards;
 
     public Deck() {
-        cards = initialize();
+        cards = createCards();
+        Collections.shuffle(cards);
     }
 
-    private List<Card> initialize() {
+    private List<Card> createCards() {
         return Arrays.stream(Denomination.values())
                 .flatMap(denomination ->
                         Arrays.stream(Symbol.values())
@@ -24,7 +25,6 @@ public class Deck {
         if (cards.isEmpty()) {
             throw new IllegalStateException("덱이 비어있습니다");
         }
-        Collections.shuffle(cards);
         return pollLastCard();
     }
 
