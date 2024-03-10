@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 public class Hand {
     private static final int BLACK_JACK = 21;
+    private static final int BLACK_JACK_CARD_COUNT = 2;
     private final List<Card> cards;
 
     public Hand() {
@@ -26,8 +27,12 @@ public class Hand {
         cards.add(card);
     }
 
-    public boolean isOverBlackJack() {
+    public boolean isBust() {
         return sum() > BLACK_JACK;
+    }
+
+    public boolean isBlackJack() {
+        return sum() == BLACK_JACK && cards.size() == BLACK_JACK_CARD_COUNT;
     }
 
     public int sum() {

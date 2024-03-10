@@ -4,8 +4,6 @@ import domain.card.Card;
 import java.util.List;
 
 public abstract class Gamer {
-    private static final int BLACK_JACK_NUMBER = 21;
-    private static final int BLACK_JACK_CARD_COUNT = 2;
     private final Name name;
     private final Hand hand;
 
@@ -31,11 +29,11 @@ public abstract class Gamer {
     }
 
     public boolean isBust() {
-        return hand.isOverBlackJack();
+        return hand.isBust();
     }
 
     public boolean isBlackJack() {
-        return hand.sum() == BLACK_JACK_NUMBER && hand.getCards().size() == BLACK_JACK_CARD_COUNT;
+        return hand.isBlackJack();
     }
 
     public List<Card> getHand() {

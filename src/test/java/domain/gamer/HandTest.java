@@ -73,7 +73,7 @@ public class HandTest {
         hand.add(cards.pop());
 
         // when
-        boolean result = hand.isOverBlackJack();
+        boolean result = hand.isBust();
 
         // then
         assertThat(result).isFalse();
@@ -88,7 +88,7 @@ public class HandTest {
         hand.add(cards.pop());
 
         // when
-        boolean result = hand.isOverBlackJack();
+        boolean result = hand.isBust();
 
         // then
         assertThat(result).isTrue();
