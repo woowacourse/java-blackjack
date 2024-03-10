@@ -14,16 +14,17 @@ public class Deck {
     private final List<Card> cards;
 
     public Deck() {
-        cards = new ArrayList<>();
-        init();
+        cards = init();
     }
 
-    private void init() {
+    private List<Card> init() {
+        List<Card> initialCards = new ArrayList<>();
         for (Shape shape : Shape.values()) {
             Arrays.stream(Rank.values())
-                    .forEach(rank -> cards.add(new Card(shape, rank)));
+                    .forEach(rank -> initialCards.add(new Card(shape, rank)));
         }
-        Collections.shuffle(cards);
+        Collections.shuffle(initialCards);
+        return initialCards;
     }
 
     public Card draw() {
