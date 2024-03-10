@@ -1,6 +1,7 @@
 package domain;
 
 import controller.dto.HandStatus;
+import controller.dto.InitialCardStatus;
 import controller.dto.JudgeResult;
 import domain.constants.CardCommand;
 import domain.participant.Participant;
@@ -13,7 +14,7 @@ import java.util.function.Supplier;
 public class BlackJackGame {
     // TODO: 딜러와 플레이어가 알 수 있도록 접근제어자를 public으로 변경하였다. 옳은가?
     public static final int BLACKJACK_SCORE = 21;
-    private static final int CARD_INITIAL_SIZE = 2;
+    private static final int INITIAL_CARD_SIZE = 2;
     private static final int CARD_PICK_SIZE = 1;
 
     private final Participants participants;
@@ -28,13 +29,13 @@ public class BlackJackGame {
         return new BlackJackGame(Participants.from(playerNames), new Deck());
     }
 
-    public List<HandStatus> initialize() {
+    public InitialCardStatus initialize() {
         List<HandStatus> status = new ArrayList<>();
         for (Participant participant : participants.getParticipants()) {
-            participant.pickCard(deck, CARD_INITIAL_SIZE);
+            participant.pickCard(deck, INITIAL_CARD_SIZE);
             status.add(participant.createHandStatus());
         }
-        return status;
+        return new InitialCardStatus(INITIAL_CARD_SIZE, status);
     }
 
     // TODO: 함수형 인터페이스를 Wrapping하기

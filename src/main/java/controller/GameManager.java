@@ -32,7 +32,7 @@ public class GameManager {
      */
     private BlackJackGame start() {
         BlackJackGame blackJackGame = BlackJackGame.from(inputView.enterPlayerNames());
-        outputView.printInitialStatus(blackJackGame.initialize());
+        outputView.printInitialHandStatus(blackJackGame.initialize());
         return blackJackGame;
     }
 

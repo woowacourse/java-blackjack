@@ -1,6 +1,7 @@
 package view;
 
 import controller.dto.HandStatus;
+import controller.dto.InitialCardStatus;
 import controller.dto.JudgeResult;
 import controller.dto.ParticipantOutcome;
 import domain.card.Card;
@@ -9,29 +10,32 @@ import domain.participant.Hand;
 import java.util.List;
 
 public class OutputView {
-
-    private static final String RESULT_HAND_STATUS_MESSAGE = "%s카드: %s - 결과 : %d";
+    private static final String INITIAL_HAND_STATUS_MESSAGE = "%s에게 %d장을 나누었습니다.";
+    private static final String NAME_SEPARATOR = ",";
+    private static final String HAND_STATUS_MESSAGE = "%s카드: %s";
+    private static final String RESULT_HAND_STATUS_MESSAGE = HAND_STATUS_MESSAGE + " - 결과 : %d";
     private static final String CARD_STATUS_MESSAGE = "%d%s";
     private static final String CARD_SEPARATOR = ",";
 
-    public void printInitialStatus(final List<HandStatus> statuses) {
-        System.out.println();
-        StringBuilder builder = new StringBuilder("딜러와 ");
+    public void printInitialHandStatus(final InitialCardStatus initialCardStatus) {
+        List<String> names = generateParticipantNames(initialCardStatus);
+        System.out.printf(
+                INITIAL_HAND_STATUS_MESSAGE,
+                String.join(NAME_SEPARATOR, names),
+                initialCardStatus.initialCardSize()
+        );
 
-        List<String> playerNames = getPlayerNames(statuses);
-        builder.append(String.join(", ", playerNames));
-        builder.append("에게 2장을 나누었습니다.\n");
-
-        for (HandStatus handStatus : statuses) {
-            builder.append(handStatus.getCardInitStatus());
-            builder.append("\n");
+        for (HandStatus handStatus : initialCardStatus.statuses()) {
+            System.out.printf(
+                    HAND_STATUS_MESSAGE,
+                    handStatus.name(),
+                    generateCardsStatusMessage(handStatus.hand())
+            );
         }
-
-        System.out.println(builder);
     }
 
-    private List<String> getPlayerNames(final List<HandStatus> statuses) {
-        return statuses.subList(1, statuses.size()).stream()
+    private List<String> generateParticipantNames(final InitialCardStatus initialCardStatus) {
+        return initialCardStatus.statuses().stream()
                 .map(HandStatus::name)
                 .toList();
     }
