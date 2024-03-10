@@ -1,10 +1,10 @@
-package blackjack.domain.participants;
+package blackjack.domain;
 
-import blackjack.domain.deck.Card;
-import blackjack.domain.deck.Hands;
+import blackjack.domain.participants.GameParticipant;
+import blackjack.domain.participants.Name;
 import java.util.ArrayList;
 
-public class Dealer implements GameParticipant{
+public class Dealer implements GameParticipant {
 
     private static final int MAX_RECEIVE_SCORE = 17;
 

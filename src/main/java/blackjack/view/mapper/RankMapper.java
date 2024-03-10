@@ -1,6 +1,6 @@
 package blackjack.view.mapper;
 
-import blackjack.domain.deck.Rank;
+import blackjack.domain.Rank;
 import java.util.Arrays;
 
 public enum RankMapper {

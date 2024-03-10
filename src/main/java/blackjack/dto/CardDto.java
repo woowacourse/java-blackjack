@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.domain.deck.Card;
+import blackjack.domain.Card;
 import blackjack.view.mapper.RankMapper;
 import blackjack.view.mapper.ShapeMapper;
 

@@ -1,4 +1,4 @@
-package blackjack.domain.deck;
+package blackjack.domain;
 
 public enum Rank {
 

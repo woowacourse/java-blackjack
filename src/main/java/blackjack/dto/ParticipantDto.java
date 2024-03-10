@@ -1,9 +1,8 @@
 package blackjack.dto;
 
-import blackjack.domain.deck.Hands;
+import blackjack.domain.Hands;
 import blackjack.domain.participants.GameParticipant;
 import blackjack.domain.participants.Name;
-import blackjack.domain.participants.Player;
 import java.util.List;
 
 public record ParticipantDto(String playerName, List<String> allHands, int score) {

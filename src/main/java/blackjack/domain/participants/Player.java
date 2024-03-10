@@ -1,8 +1,8 @@
 package blackjack.domain.participants;
 
 
-import blackjack.domain.deck.Card;
-import blackjack.domain.deck.Hands;
+import blackjack.domain.Card;
+import blackjack.domain.Hands;
 import java.util.ArrayList;
 
 public class Player implements GameParticipant{
