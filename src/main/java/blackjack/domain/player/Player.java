@@ -1,32 +1,23 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.rule.Score;
-import blackjack.domain.rule.ScoreCalculateStrategy;
 
 import java.util.Objects;
 
-public class Player {
+public class Player extends Participant {
 
-    private final PlayerName name;
-    private final Hand hand;
+    private static final int HIT_THRESHOLD = 21;
 
-    public Player(PlayerName name, Hand hand) {
-        this.name = name;
-        this.hand = hand;
+    private final PlayerName playerName;
+
+    public Player(Hand hand, PlayerName playerName) {
+        super(hand);
+        this.playerName = playerName;
     }
 
-    public void appendCard(Card card) {
-        hand.append(card);
-    }
-
-    public Score calculateHandScore(ScoreCalculateStrategy scoreCalculateStrategy) {
-        return scoreCalculateStrategy.calculate(hand);
-    }
-
-    public int handSize() {
-        return hand.countCard();
+    @Override
+    protected boolean canHit(int score) {
+        return score <= HIT_THRESHOLD;
     }
 
     @Override
@@ -38,19 +29,15 @@ public class Player {
             return false;
         }
         Player player = (Player) o;
-        return Objects.equals(name, player.name);
+        return Objects.equals(playerName, player.playerName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(playerName);
     }
 
-    public String getName() {
-        return name.getValue();
-    }
-
-    public Hand getHand() {
-        return hand;
+    public String getPlayerName() {
+        return playerName.getValue();
     }
 }

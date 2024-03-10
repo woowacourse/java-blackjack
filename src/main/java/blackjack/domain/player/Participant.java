@@ -2,30 +2,24 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.rule.HitStrategy;
 
-public class Participant {
+public abstract class Participant {
 
     private static final int BLACKJACK = 21;
 
     private final Hand hand;
-    private final ParticipantType participantType;
 
-    public Participant(Hand hand, ParticipantType participantType) {
+    public Participant(Hand hand) {
         this.hand = hand;
-        this.participantType = participantType;
     }
 
     public void hit(Card card) {
-        if (canHit()) {
+        if (canHit(calculateHandTotalClosestToBlackjack())) {
             hand.append(card);
         }
     }
 
-    private boolean canHit() {
-        HitStrategy hitStrategy = participantType.getHitStrategy();
-        return hitStrategy.canHit(calculateHandTotalClosestToBlackjack());
-    }
+    protected abstract boolean canHit(int score);
 
     public boolean isBust() {
         return calculateHandTotalClosestToBlackjack() > BLACKJACK;
@@ -33,5 +27,9 @@ public class Participant {
 
     public int calculateHandTotalClosestToBlackjack() {
         return hand.calculateScoreTotalClosestToThreshold(BLACKJACK);
+    }
+
+    public Hand getHand() {
+        return hand;
     }
 }

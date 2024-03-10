@@ -1,5 +1,7 @@
 package blackjack.domain.player;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
@@ -9,9 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-class PlayerTest {
+class DealerTest {
 
     private Card card;
 
@@ -20,32 +20,32 @@ class PlayerTest {
         card = new Card(CardRank.ACE, CardSuit.DIAMOND);
     }
 
-    @DisplayName("플레이어는 21을 넘지 않을 경우 핸드에 카드를 추가한다.")
+    @DisplayName("딜러는 16 이하이면 핸드에 카드를 추가한다.")
     @Test
-    void testHit() {
+    void testDealerHit() {
         // given
-        Hand hand = HandFixture.createHandWithScoreTotal21();
+        Hand hand = HandFixture.createHandWithScoreTotal16();
 
-        Player player = new Player(hand, new PlayerName("pobi"));
+        Dealer dealer = new Dealer(hand);
 
         // when
-        player.hit(card);
+        dealer.hit(card);
 
         // then
         assertThat(hand.getCards()).contains(card);
     }
 
-    @DisplayName("플레이어는 21을 넘을 경우 핸드에 카드를 추가하지 않는다.")
+    @DisplayName("딜러는 17점 이상이면 핸드에 카드를 추가하지 않는다.")
     @Test
-    void testNotHit() {
+    void testDealerNotHit() {
         // given
-        Hand hand = HandFixture.createHandWithScoreTotal21();
+        Hand hand = HandFixture.createHandWithScoreTotal16();
         hand.append(new Card(CardRank.ACE, CardSuit.HEART));
 
-        Player player = new Player(hand, new PlayerName("pobi"));
+        Dealer dealer = new Dealer(hand);
 
         // when
-        player.hit(card);
+        dealer.hit(card);
 
         // then
         assertThat(hand.getCards()).doesNotContain(card);
