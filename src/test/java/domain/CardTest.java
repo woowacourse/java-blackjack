@@ -14,13 +14,16 @@ public class CardTest {
     @Test
     void createCardTest() {
         // given
-        Symbol expectedSymbol = Symbol.HEART;
-        Rank expectedRank = Rank.QUEEN;
+        Symbol heart = Symbol.HEART;
+        Rank queen = Rank.QUEEN;
+
+        String expectedSymbol = Symbol.HEART.getValue();
+        String expectedRank = Rank.QUEEN.getValue();
 
         // when
-        Card card = new Card(expectedSymbol, expectedRank);
-        Symbol symbol = card.getSymbol();
-        Rank rank = card.getRank();
+        Card card = new Card(heart, queen);
+        String symbol = card.getSymbolValue();
+        String rank = card.getRankValue();
 
         // then
         assertThat(symbol).isEqualTo(expectedSymbol);
