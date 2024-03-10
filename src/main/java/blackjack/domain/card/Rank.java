@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import java.util.Collections;
 import java.util.List;
 
 public enum Rank {
@@ -26,6 +25,6 @@ public enum Rank {
     }
 
     public List<Integer> getScore() {
-        return Collections.unmodifiableList(score);
+        return score;
     }
 }
