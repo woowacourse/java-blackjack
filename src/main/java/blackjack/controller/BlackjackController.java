@@ -1,11 +1,9 @@
 package blackjack.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.GameResult;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.dto.DealerInitialHandDto;
@@ -54,10 +52,12 @@ public class BlackjackController {
 	}
 
 	private void printInitialHands(Players players, Dealer dealer) {
-		DealerInitialHandDto dealerInitialHandDto = dealer.convertDealerToInitialHandDto();
-		List<GamerHandDto> playersInitialHandDto = players.convertPlayersToDto();
+		DealerInitialHandDto dealerInitialHandDto = DealerInitialHandDto.fromDealerEntity(dealer);
+		List<GamerHandDto> playerInitialHandDto = players.getPlayers().stream()
+			.map(GamerHandDto::fromGamerEntity)
+			.toList();
 
-		outputView.printInitialHands(dealerInitialHandDto, playersInitialHandDto);
+		outputView.printInitialHands(dealerInitialHandDto, playerInitialHandDto);
 	}
 
 	private void distributeCardToPlayers(Players players, Deck deck) {
@@ -69,7 +69,7 @@ public class BlackjackController {
 	private void distributeCardToPlayer(Deck deck, Player player) {
 		while (canDistribute(player)) {
 			player.addCard(deck.draw());
-			outputView.printPlayerHand(player.convertGamerToDto());
+			outputView.printPlayerHand(GamerHandDto.fromGamerEntity(player));
 		}
 	}
 
@@ -94,20 +94,19 @@ public class BlackjackController {
 
 	private void printAllGamerScores(Dealer dealer, Players players) {
 		outputView.printEmptyLine();
-		outputView.printScore(dealer.convertGamerToDto(), dealer.getScore());
+		outputView.printScore(GamerHandDto.fromGamerEntity(dealer), dealer.getScore());
 		printPlayersScores(players);
 	}
 
 	private void printPlayersScores(Players players) {
-		for (Player player : players.getPlayers()) {
-			outputView.printScore(player.convertGamerToDto(), player.getScore());
-		}
+		players.getPlayers().forEach(player -> outputView.printScore(
+			GamerHandDto.fromGamerEntity(player), player.getScore()
+		));
 	}
 
 	private void printResult(Dealer dealer, Players players) {
-		PlayerResultsDto playerResultsDto = players.convertPlayersToResultDto(dealer.getScore());
-		List<GameResult> playerResults = new ArrayList<>(playerResultsDto.resultMap().values());
-		DealerResultDto dealerResultDto = dealer.convertDealerToResultDto(playerResults);
+		PlayerResultsDto playerResultsDto = PlayerResultsDto.fromPlayersWithDealerScore(players, dealer.getScore());
+		DealerResultDto dealerResultDto = DealerResultDto.fromPlayers(dealer, players);
 
 		outputView.printResult(dealerResultDto, playerResultsDto);
 	}

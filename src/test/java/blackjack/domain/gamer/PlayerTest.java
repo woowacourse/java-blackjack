@@ -50,7 +50,7 @@ class PlayerTest {
 			player.addCard(new Card(CardShape.HEART, CardNumber.FOUR));
 			player.addCard(new Card(CardShape.HEART, CardNumber.SEVEN));
 
-			assertThat(player.isWin(20)).isEqualTo(GameResult.WIN);
+			assertThat(player.getGameResult(20)).isEqualTo(GameResult.WIN);
 		}
 
 		@Test
@@ -59,7 +59,7 @@ class PlayerTest {
 			player.addCard(new Card(CardShape.CLOVER, CardNumber.KING));
 			player.addCard(new Card(CardShape.HEART, CardNumber.FIVE));
 
-			assertThat(player.isWin(22)).isEqualTo(GameResult.WIN);
+			assertThat(player.getGameResult(22)).isEqualTo(GameResult.WIN);
 		}
 	}
 
@@ -74,8 +74,8 @@ class PlayerTest {
 			player.addCard(new Card(CardShape.HEART, CardNumber.FIVE));
 			player.addCard(new Card(CardShape.HEART, CardNumber.SEVEN));
 
-			assertThat(player.isWin(21)).isEqualTo(GameResult.LOSE);
-			assertThat(player.isWin(22)).isEqualTo(GameResult.LOSE);
+			assertThat(player.getGameResult(21)).isEqualTo(GameResult.LOSE);
+			assertThat(player.getGameResult(22)).isEqualTo(GameResult.LOSE);
 		}
 
 		@Test
@@ -84,7 +84,7 @@ class PlayerTest {
 			player.addCard(new Card(CardShape.CLOVER, CardNumber.KING));
 			player.addCard(new Card(CardShape.HEART, CardNumber.SIX));
 
-			assertThat(player.isWin(17)).isEqualTo(GameResult.LOSE);
+			assertThat(player.getGameResult(17)).isEqualTo(GameResult.LOSE);
 		}
 
 		@Test
@@ -93,7 +93,7 @@ class PlayerTest {
 			player.addCard(new Card(CardShape.CLOVER, CardNumber.KING));
 			player.addCard(new Card(CardShape.HEART, CardNumber.SEVEN));
 
-			assertThat(player.isWin(17)).isEqualTo(GameResult.LOSE);
+			assertThat(player.getGameResult(17)).isEqualTo(GameResult.LOSE);
 		}
 	}
 }

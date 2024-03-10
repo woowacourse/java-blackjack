@@ -1,12 +1,9 @@
 package blackjack.domain.gamer;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.dto.CardDto;
-import blackjack.dto.GamerHandDto;
 
 public abstract class BlackjackGamer {
 
@@ -41,10 +38,7 @@ public abstract class BlackjackGamer {
 		return name;
 	}
 
-	public GamerHandDto convertGamerToDto() {
-		String playerName = name.value();
-		List<CardDto> gamerHand = hand.convertHandToDto();
-
-		return new GamerHandDto(playerName, gamerHand);
+	public Hand getHand() {
+		return hand;
 	}
 }

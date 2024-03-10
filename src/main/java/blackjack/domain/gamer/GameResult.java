@@ -11,6 +11,10 @@ public enum GameResult {
 		this.name = name;
 	}
 
+	public boolean isWin() {
+		return this == WIN;
+	}
+
 	public boolean isLose() {
 		return this == LOSE;
 	}

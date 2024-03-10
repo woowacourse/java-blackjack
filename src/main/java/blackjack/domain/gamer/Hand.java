@@ -3,18 +3,11 @@ package blackjack.domain.gamer;
 import java.util.List;
 
 import blackjack.domain.card.Card;
-import blackjack.dto.CardDto;
 
-public class Hand {
+public record Hand(List<Card> cards) {
 
 	private static final int BLACKJACK_MAX_SCORE = 21;
 	private static final int ACE_VALUE_MODIFIER = 10;
-
-	private final List<Card> cards;
-
-	public Hand(List<Card> cards) {
-		this.cards = cards;
-	}
 
 	public void add(Card card) {
 		cards.add(card);
@@ -62,11 +55,5 @@ public class Hand {
 
 	public Card getFirstCard() {
 		return cards.get(0);
-	}
-
-	public List<CardDto> convertHandToDto() {
-		return cards.stream()
-			.map(Card::convertCardToDto)
-			.toList();
 	}
 }

@@ -13,7 +13,7 @@ public class Player extends BlackjackGamer {
 		return getScore() <= BLACKJACK_MAX_SCORE;
 	}
 
-	public GameResult isWin(int dealerScore) {
+	public GameResult getGameResult(int dealerScore) {
 		int playerScore = getScore();
 
 		if (playerScore > BLACKJACK_MAX_SCORE) {

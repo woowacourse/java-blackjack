@@ -1,14 +1,10 @@
 package blackjack.domain.gamer;
 
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import blackjack.domain.card.Deck;
-import blackjack.dto.GamerHandDto;
-import blackjack.dto.PlayerResultsDto;
 
 public class Players {
 
@@ -54,16 +50,9 @@ public class Players {
 		return List.copyOf(players);
 	}
 
-	public List<GamerHandDto> convertPlayersToDto() {
+	public List<GameResult> getAllPlayerGameResults(int dealerScore) {
 		return players.stream()
-			.map(Player::convertGamerToDto)
+			.map(player -> player.getGameResult(dealerScore))
 			.toList();
-	}
-
-	public PlayerResultsDto convertPlayersToResultDto(int dealerScore) {
-		Map<Name, GameResult> resultMap = new LinkedHashMap<>();
-		players.forEach(player -> resultMap.put(player.getName(), player.isWin(dealerScore)));
-
-		return new PlayerResultsDto(resultMap);
 	}
 }
