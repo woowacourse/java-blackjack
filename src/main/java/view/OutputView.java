@@ -85,8 +85,8 @@ public class OutputView {
     }
 
     private static String printCardInfo(final Card card) {
-        String symbol = card.getSymbol().getName();
-        String rank = card.getRank().getName();
+        String symbol = SymbolView.findName(card.getSymbol());
+        String rank = RankView.findName(card.getRank());
         return rank + symbol;
     }
 
@@ -104,7 +104,7 @@ public class OutputView {
         StringBuilder builder = new StringBuilder();
         for (Entry<Player, Result> player : playerResults.getResults().entrySet()) {
             String playerName = player.getKey().getName().getValue();
-            String result = player.getValue().getName();
+            String result = ResultView.findName(player.getValue());
             String message = String.format("%s: %s", playerName, result);
             builder.append(message).append(System.lineSeparator());
         }
