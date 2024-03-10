@@ -26,11 +26,11 @@ class BlackjackTest {
 
         var result = blackjack.acceptPlayers(names);
 
-        assertPlayer(result.getDealer(), 8);
+        assertPlayer(result.dealer(), 8);
 
-        assertPlayer(result.getGamePlayers()
+        assertPlayer(result.gamePlayers()
                            .get(0), 13);
-        assertPlayer(result.getGamePlayers()
+        assertPlayer(result.gamePlayers()
                            .get(1), 15);
     }
 

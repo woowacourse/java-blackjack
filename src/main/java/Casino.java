@@ -31,19 +31,19 @@ public class Casino {
     private Players joinPlayer() {
         final Names names = Names.from(InputView.inputPlayerNames());
         final Players players = blackjack.acceptPlayers(names);
-        PlayerView.printPlayers(players.getDealer(), players.getGamePlayers());
+        PlayerView.printPlayers(players.dealer(), players.gamePlayers());
         return players;
     }
 
     private void processGame(final Players players) {
-        players.getGamePlayers()
+        players.gamePlayers()
                .forEach(gamePlayer -> processGamePlayer(blackjack, gamePlayer));
-        processDealer(blackjack, players.getDealer());
+        processDealer(blackjack, players.dealer());
         PlayerView.printPlayersWithScore(players);
     }
 
     private void checkGameResult(final Players players) {
-        final Result result = blackjack.checkPlayersResult(players.getDealer(), players.getGamePlayers());
+        final Result result = blackjack.checkPlayersResult(players.dealer(), players.gamePlayers());
         ResultView.printResult(result);
     }
 

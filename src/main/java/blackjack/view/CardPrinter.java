@@ -19,7 +19,7 @@ public class CardPrinter {
     }
 
     public static String printCard(final Card card) {
-        return valueBoard.get(card.getCardValue()) + symbolBoard.get(card.getCardSymbol());
+        return valueBoard.get(card.cardValue()) + symbolBoard.get(card.cardSymbol());
     }
 
     private static EnumMap<CardSymbol, String> initializeSymbol() {

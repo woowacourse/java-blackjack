@@ -48,8 +48,8 @@ public class PlayerView {
 
 
     public static void printPlayersWithScore(final Players players) {
-        printPlayerWithScore(players.getDealer());
-        players.getGamePlayers()
+        printPlayerWithScore(players.dealer());
+        players.gamePlayers()
                .forEach(PlayerView::printPlayerWithScore);
     }
 
