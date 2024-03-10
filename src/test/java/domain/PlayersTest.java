@@ -28,7 +28,7 @@ class PlayersTest {
         // then
         assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Players.INVALID_PLAYER_COUNT);
+                .hasMessage("플레이어는 2명에서 8명까지만 참가 가능합니다.");
     }
 
     @DisplayName("플레이어의 이름이 중복되면 예외를 던진다.")
@@ -44,6 +44,6 @@ class PlayersTest {
         // then
         assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Players.DUPLICATED_PLAYER_NAME);
+                .hasMessage("플레이어의 이름은 중복될 수 없습니다.");
     }
 }

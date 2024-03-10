@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Name {
     private static final int MINIMUM_NAME_LENGTH = 1;
     private static final int MAXIMUM_NAME_LENGTH = 5;
-    public static final String INVALID_NAME_LENGTH = String.format("이름은 %d글자 이상, %d글자 이하 이어야 합니다.", MINIMUM_NAME_LENGTH,
+    private static final String INVALID_NAME_LENGTH = String.format("이름은 %d글자 이상, %d글자 이하 이어야 합니다.", MINIMUM_NAME_LENGTH,
             MAXIMUM_NAME_LENGTH);
     private final String value;
 

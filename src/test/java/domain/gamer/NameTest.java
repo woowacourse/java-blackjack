@@ -14,7 +14,7 @@ class NameTest {
     void invalidNameLengthTest(String name) {
         assertThatThrownBy(() -> new Name(name))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Name.INVALID_NAME_LENGTH);
+                .hasMessage("이름은 1글자 이상, 5글자 이하 이어야 합니다.");
     }
 
 }

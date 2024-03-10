@@ -1,14 +1,15 @@
 package domain;
 
+import domain.gamer.Gamer;
 import domain.gamer.Player;
 import java.util.List;
 
 public class Players {
     public static final int MINIMUM_PLAYER_COUNT = 2;
     public static final int MAXIMUM_PLAYER_COUNT = 8;
-    public static final String INVALID_PLAYER_COUNT = String.format("플레이어는 %d명에서 %d명까지만 참가 가능합니다.",
+    private static final String INVALID_PLAYER_COUNT = String.format("플레이어는 %d명에서 %d명까지만 참가 가능합니다.",
             MINIMUM_PLAYER_COUNT, MAXIMUM_PLAYER_COUNT);
-    public static final String DUPLICATED_PLAYER_NAME = "플레이어의 이름은 중복될 수 없습니다.";
+    private static final String DUPLICATED_PLAYER_NAME = "플레이어의 이름은 중복될 수 없습니다.";
     private final List<Player> players;
 
     public Players(final List<Player> players) {
@@ -24,7 +25,7 @@ public class Players {
     }
 
     private void validateDuplicatedPlayer(final List<Player> players) {
-        int deduplicatedCount = (int) players.stream().map(player -> player.getName()).distinct().count();
+        int deduplicatedCount = (int) players.stream().map(Gamer::getName).distinct().count();
         if (players.size() != deduplicatedCount) {
             throw new IllegalArgumentException(DUPLICATED_PLAYER_NAME);
         }

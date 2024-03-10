@@ -110,6 +110,6 @@ public class PlayerTest {
         // then
         assertThatThrownBy(() -> new Player(name))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Player.NOT_ALLOWED_NAME);
+                .hasMessage("'딜러'는 사용할 수 없는 이름입니다.");
     }
 }
