@@ -8,8 +8,6 @@ import java.util.Scanner;
 
 public class InputView {
 
-    private static final String POSITIVE = "y";
-
     private Scanner scanner = new Scanner(System.in);
 
     public List<String> readPlayerNames() {
@@ -22,6 +20,31 @@ public class InputView {
         System.out.println();
         System.out.println(name + "는(은) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String opinion = scanner.nextLine();
-        return POSITIVE.equals(opinion);
+        try {
+            return Opinion.from(opinion).value;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return readHitOpinion(name);
+        }
+    }
+
+    private enum Opinion {
+        POSITIVE("y", true),
+        NEGATIVE("n", false);
+
+        private String key;
+        private boolean value;
+
+        Opinion(String key, boolean value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        private static Opinion from(String opinion) {
+            return Arrays.stream(values())
+                    .filter(v -> v.key.equals(opinion))
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 값입니다."));
+        }
     }
 }
