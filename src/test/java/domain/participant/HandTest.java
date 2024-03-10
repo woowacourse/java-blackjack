@@ -31,7 +31,7 @@ public class HandTest {
         Hand hand = new Hand(playingCards);
 
         // When
-        int result = hand.getCardsNumberSum();
+        int result = hand.getTotalScore().value();
 
         // Then
         assertThat(result).isEqualTo(11);
@@ -56,14 +56,14 @@ public class HandTest {
     void addCardTest() {
         // Given
         Hand hand = Hand.init();
-        int initCardNumberSum = hand.getCardsNumberSum();
+        int totalScore = hand.getTotalScore().value();
         PlayingCard card = new PlayingCard(DIAMOND, NINE);
 
         // When
         hand.addCard(card);
 
         // Then
-        assertThat(initCardNumberSum).isNotEqualTo(hand.getCardsNumberSum());
+        assertThat(totalScore).isNotEqualTo(hand.getTotalScore());
     }
 
     @DisplayName("손패가 블랙잭이면 true를 반환한다.")

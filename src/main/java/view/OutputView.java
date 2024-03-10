@@ -73,10 +73,10 @@ public class OutputView {
             final List<PlayerHandStatusDto> playerHandStatuses
     ) {
         System.out.println("딜러 카드: " + convertPlayingCardsToPrintMessage(dealerHandStatus.playingCards())
-                + " - 결과: " + dealerHandStatus.playingCardSum());
+                + " - 결과: " + dealerHandStatus.playerTotalScore().value());
         playerHandStatuses.forEach(playerHandStatus -> {
             System.out.println(convertPlayerCardsToPrintMessage(playerHandStatus.playerName(), playerHandStatus.playingCards())
-                    + " - 결과: " + playerHandStatus.playingCardSum());
+                    + " - 결과: " + playerHandStatus.playerTotalScore().value());
         });
         System.out.println();
     }

@@ -20,16 +20,17 @@ public class Hand {
         return new Hand(new ArrayList<>());
     }
 
-    public int getCardsNumberSum() {
+    public Score getTotalScore() {
         int result = 0;
         for (PlayingCard playingCard : playingCards) {
             result = playingCard.addValue(result);
         }
-        return result;
+
+        return new Score(result);
     }
 
     public boolean isBust() {
-        return getCardsNumberSum() > BLACKJACK_CONDITION;
+        return getTotalScore().isBigger(BLACKJACK_CONDITION);
     }
 
     public void addCard(final PlayingCard card) {
@@ -49,6 +50,6 @@ public class Hand {
     }
 
     public boolean isLowerToBlackjackConditionValue() {
-        return getCardsNumberSum() < BLACKJACK_CONDITION;
+        return getTotalScore().isLower(BLACKJACK_CONDITION);
     }
 }

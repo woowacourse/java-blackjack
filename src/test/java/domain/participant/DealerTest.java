@@ -44,13 +44,13 @@ public class DealerTest {
         // Given
         Deck deck = Deck.init();
         Hand initHand = Hand.init();
-        int initCardNumberSum = initHand.getCardsNumberSum();
+        int totalScore = initHand.getTotalScore().value();
         Dealer dealer = new Dealer(initHand);
 
         // When
         dealer.draw(deck);
 
         // Then
-        assertThat(initCardNumberSum).isNotEqualTo(initHand.getCardsNumberSum());
+        assertThat(totalScore).isNotEqualTo(initHand.getTotalScore());
     }
 }

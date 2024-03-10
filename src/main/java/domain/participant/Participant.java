@@ -22,8 +22,8 @@ public abstract class Participant {
         return this instanceof Dealer;
     }
 
-    public int getHandSum() {
-        return hand.getCardsNumberSum();
+    public Score getTotalScore() {
+        return hand.getTotalScore();
     }
 
     public List<PlayingCard> getHandCards() {

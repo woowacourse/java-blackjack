@@ -47,13 +47,13 @@ public class GameResults {
     private static boolean isDealerWin(Dealer dealer, Player player) {
         return player.isBust()
                 || (dealer.isBlackJack() && !player.isBlackJack())
-                || (!dealer.isBust() && dealer.getHandSum() > player.getHandSum());
+                || (!dealer.isBust() && dealer.getTotalScore().isBigger(player.getTotalScore().value()));
     }
 
     private static boolean isPlayerWin(Dealer dealer, Player player) {
         return (dealer.isBust() && !player.isBust())
                 || (player.isBlackJack() && !dealer.isBlackJack())
-                || player.getHandSum() > dealer.getHandSum();
+                || player.getTotalScore().isBigger(dealer.getTotalScore().value());
     }
 
     private static void addGameResult(

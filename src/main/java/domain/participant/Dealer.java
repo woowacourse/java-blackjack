@@ -13,6 +13,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isDrawable() {
-        return hand.getCardsNumberSum() <= MAX_DEALER_HAND_VALUE;
+        return hand.getTotalScore().isLowerOrEqual(MAX_DEALER_HAND_VALUE);
     }
 }

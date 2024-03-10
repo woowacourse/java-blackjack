@@ -47,13 +47,13 @@ public class PlayerTest {
         // Given
         Deck deck = Deck.init();
         Hand initHand = Hand.init();
-        int initCardNumberSum = initHand.getCardsNumberSum();
+        int totalScore = initHand.getTotalScore().value();
         Player player = new Player(new PlayerName("kelly"), initHand);
 
         // When
         player.draw(deck);
 
         // Then
-        assertThat(initCardNumberSum).isNotEqualTo(initHand.getCardsNumberSum());
+        assertThat(totalScore).isNotEqualTo(initHand.getTotalScore());
     }
 }
