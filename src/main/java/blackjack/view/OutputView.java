@@ -19,7 +19,7 @@ public class OutputView {
 	private static final String CARD_INFO_MESSAGE = "%s%s";
 	private static final String PLAYER_CARD_INFO_MESSAGE = "%s카드: %s";
 	private static final String PLAYER_GAME_RESULT_MESSAGE = "%s: %s";
-	private static final Map<GameResult, String> gameResultTexts = new HashMap<>();
+	private static final Map<GameResult, String> gameResultTexts = new EnumMap<>(GameResult.class);
 
 	static {
 		gameResultTexts.put(GameResult.WIN, "승");
