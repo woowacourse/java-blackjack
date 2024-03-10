@@ -1,19 +1,14 @@
-package blackjack.domain.card.factory;
-
-import blackjack.domain.card.Rank;
-import blackjack.domain.card.Suit;
-import blackjack.domain.card.TrumpCard;
+package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TrumpCardFactory implements CardFactory {
+public class TrumpCardFactory {
 
-    public TrumpCardFactory() {
+    private TrumpCardFactory() {
     }
 
-    @Override
-    public List<TrumpCard> createCards() {
+    public static List<TrumpCard> createCards() {
         List<TrumpCard> trumpCards = new ArrayList<>();
 
         trumpCards.addAll(createSpadeCards());

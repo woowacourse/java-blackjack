@@ -3,7 +3,7 @@ package blackjack.domain.card;
 import java.util.List;
 import java.util.Objects;
 
-public class TrumpCard implements Card {
+public class TrumpCard {
 
     private final Rank rank;
     private final Suit suit;
@@ -21,7 +21,6 @@ public class TrumpCard implements Card {
         return suit;
     }
 
-    @Override
     public List<Integer> getScore() {
         return rank.getScore();
     }

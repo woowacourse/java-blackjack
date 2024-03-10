@@ -1,8 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.TrumpCard;
-import blackjack.domain.card.factory.CardFactory;
-import blackjack.domain.card.factory.TrumpCardFactory;
+import blackjack.domain.card.TrumpCardFactory;
 import blackjack.strategy.ShuffleStrategy;
 
 import java.util.LinkedList;
@@ -16,8 +15,7 @@ public class Deck {
     private final Queue<TrumpCard> trumpCards;
 
     public Deck(final ShuffleStrategy shuffleStrategy) {
-        CardFactory cardFactory = new TrumpCardFactory();
-        List<TrumpCard> trumpCards = cardFactory.createCards();
+        List<TrumpCard> trumpCards = TrumpCardFactory.createCards();
 
         shuffleStrategy.shuffle(trumpCards);
 
