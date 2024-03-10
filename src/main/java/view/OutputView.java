@@ -44,7 +44,7 @@ public class OutputView {
     }
 
     private static void printDealerCard(final Dealer dealer) {
-        System.out.println(dealer.getName() + ": " + printCardInfo(dealer.getHand().get(0)));
+        System.out.println(dealer.getName() + ": " + printCardInfo(dealer.openFirstCard()));
     }
 
     private static void printPlayersCards(final List<Player> players) {
