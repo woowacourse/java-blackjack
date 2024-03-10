@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
@@ -14,11 +13,11 @@ public class GameBoard {
     public static final int INITIAL_CARD_COUNT = 2;
 
     private final Participants participants;
-    private final Deck allCardDeck;
+    private final Deck deck;
 
     public GameBoard(Dealer dealer, Players players) {
         this.participants = new Participants(dealer, players);
-        this.allCardDeck = new Deck();
+        this.deck = new Deck();
         addAllCard();
     }
 
@@ -29,7 +28,7 @@ public class GameBoard {
 
     private void addAllShape(Rank rank) {
         Arrays.stream(Shape.values())
-                .forEach((shape) -> allCardDeck.addCard(new Card(shape, rank)));
+                .forEach((shape) -> deck.addCard(new Card(shape, rank)));
     }
 
     public int countPlayers() {
@@ -41,40 +40,40 @@ public class GameBoard {
     }
 
     public void distributeInitialHands() {
-        List<Hands> initialDecks = makeInitialDecks();
+        List<Hands> initialDecks = makeInitialHands();
         participants.receiveInitialHands(initialDecks);
     }
 
-    private List<Hands> makeInitialDecks() {
+    private List<Hands> makeInitialHands() {
         List<Hands> initialDecks = new ArrayList<>();
         for (int participantsCount = 0; participantsCount < participants.count(); participantsCount++) {
-            initialDecks.add(makeInitialDeck());
+            initialDecks.add(makeHands());
         }
         return initialDecks;
     }
 
-    private Hands makeInitialDeck() {
+    private Hands makeHands() {
         Hands hands = new Hands(new ArrayList<>());
         for (int cardCount = 0; cardCount < INITIAL_CARD_COUNT; cardCount++) {
-            hands.addCard(allCardDeck.pickRandomCard());
+            hands.addCard(deck.pickRandomCard());
         }
         return hands;
     }
 
     public void addCardToDealer() {
-        participants.receiveDealerCard(allCardDeck.pickRandomCard());
+        participants.receiveDealerCard(deck.pickRandomCard());
     }
 
     public void addCardToPlayer(Player player) {
-        player.receiveCard(allCardDeck.pickRandomCard());
+        player.receiveCard(deck.pickRandomCard());
     }
 
     public Map<Player, Boolean> calculateWinOrLose() {
         return participants.calculateWinOrLose();
     }
 
-    public Deck getAllCardDeck() {
-        return allCardDeck;
+    public Deck getDeck() {
+        return deck;
     }
 
     public Players getPlayers() {

@@ -48,7 +48,7 @@ public class GameBoardTest {
     @Test
     @DisplayName("52장 카드 생성한다.")
     void makeAllCardTest() {
-        int result = gameBoard.getAllCardDeck().size();
+        int result = gameBoard.getDeck().size();
 
         assertThat(result).isEqualTo(52);
     }
