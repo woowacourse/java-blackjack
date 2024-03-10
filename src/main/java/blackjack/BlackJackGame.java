@@ -6,9 +6,10 @@ import blackjack.domain.DealerGameResult;
 import blackjack.domain.DrawDecision;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.HandCreator;
 import blackjack.domain.player.Participant;
-import blackjack.domain.player.PlayerCreator;
+import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
 import blackjack.domain.rule.Judge;
@@ -31,7 +32,7 @@ public class BlackJackGame {
     public void run() {
         CardDeck cardDeck = CardDeck.createShuffledDeck();
         Players players = initPlayers(cardDeck);
-        Participant dealer = initDealer(cardDeck);
+        Dealer dealer = initDealer(cardDeck);
         printPlayersInformation(players, dealer);
 
         completePlayersHand(players, cardDeck);
@@ -47,17 +48,17 @@ public class BlackJackGame {
 
     private Players initPlayers(CardDeck cardDeck) {
         InputMapper inputMapper = new InputMapper();
-        PlayerCreator playerCreator = new PlayerCreator(new HandCreator());
+        HandCreator handCreator = new HandCreator();
         List<PlayerName> playerNames = inputMapper.mapToPlayers(inputView.readNames());
 
         return new Players(playerNames.stream()
-                .map(playerName -> playerCreator.createPlayerFrom(playerName, cardDeck))
+                .map(playerName -> new Player(playerName, handCreator.createHandFrom(cardDeck)))
                 .toList());
     }
 
-    private Participant initDealer(CardDeck cardDeck) {
-        PlayerCreator playerCreator = new PlayerCreator(new HandCreator());
-        return playerCreator.createDealerFrom(cardDeck);
+    private Dealer initDealer(CardDeck cardDeck) {
+        HandCreator handCreator = new HandCreator();
+        return new Dealer(handCreator.createHandFrom(cardDeck));
     }
 
     private void printPlayersInformation(Players players, Participant dealer) {

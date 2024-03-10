@@ -17,7 +17,7 @@ public class HandCreator {
         return new Hand(cardDeck.popCards(INITIAL_HAND_SIZE), new ScoreCalculateStrategy(), new DealerHitStrategy());
     }
 
-    public Hand createHand(CardDeck cardDeck) {
+    public Hand createHandFrom(CardDeck cardDeck) {
         return new Hand(cardDeck.popCards(INITIAL_HAND_SIZE), new ScoreCalculateStrategy());
     }
 }
