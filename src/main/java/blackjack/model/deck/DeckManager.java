@@ -14,8 +14,9 @@ public class DeckManager {
     private final Queue<Card> cardDeck;
 
     public DeckManager(List<Card> generatedCards) {
-        Collections.shuffle(new ArrayList<>(generatedCards));
-        this.cardDeck = new LinkedList<>(generatedCards);
+        List<Card> shuffledCards = new ArrayList<>(generatedCards);
+        Collections.shuffle(shuffledCards);
+        this.cardDeck = new LinkedList<>(shuffledCards);
     }
 
     public Card drawCard() {
