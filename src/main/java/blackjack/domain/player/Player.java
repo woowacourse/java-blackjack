@@ -9,6 +9,7 @@ import java.util.List;
 public abstract class Player implements CardReceivable {
     private static final int BUST_SIZE = 21;
     private static final int CHANGE_A_VALUE = 10;
+
     protected final Name name;
     protected final Cards cards;
 
