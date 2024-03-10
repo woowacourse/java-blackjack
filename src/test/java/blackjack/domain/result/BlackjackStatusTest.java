@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class BlackjackStatusTest {
+
     @DisplayName("숫자에 따른 블랙잭 상태를 반환한다.")
     @ParameterizedTest
     @CsvSource(value = {"20, ALIVE", "21, BLACKJACK", "22, DEAD"})

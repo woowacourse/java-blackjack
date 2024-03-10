@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class ParticipantNameTest {
+
     @DisplayName("이름이 공백일 수 없다.")
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "   "})

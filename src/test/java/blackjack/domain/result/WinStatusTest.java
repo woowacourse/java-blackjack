@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class WinStatusTest {
+
     @DisplayName("딜러와 참여자의 점수로 승패를 계산한다.")
     @ParameterizedTest
     @CsvSource(value = {        // 딜러 | 참여자 | 참여자 승패

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ScoreTest {
+
     @DisplayName("다른 스코어보다 큰지 확인한다.")
     @Test
     void isBiggerThan() {

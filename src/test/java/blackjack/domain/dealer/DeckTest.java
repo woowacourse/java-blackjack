@@ -7,11 +7,11 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import java.util.List;
-import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DeckTest {
+
     @DisplayName("빈덱에서 카드를 뽑을 수 없다.")
     @Test
     void validateEmpty() {
