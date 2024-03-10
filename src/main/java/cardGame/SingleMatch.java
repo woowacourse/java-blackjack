@@ -14,7 +14,7 @@ public class SingleMatch {
         this.dealer = dealer;
     }
 
-    public void playRound() {
+    public void getMoreCard() {
         giveCard();
     }
 

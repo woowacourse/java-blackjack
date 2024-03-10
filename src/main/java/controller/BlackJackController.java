@@ -54,7 +54,7 @@ public class BlackJackController {
 
         for (SingleMatch singleMatch : matches) {
             Player player = singleMatch.getPlayer();
-            retry(singleMatch, player);
+            playMatch(singleMatch, player);
 
             boolean isPlayerWins = singleMatch.isPlayerWins();
             gameResults.add(new SinglePlayerResultDto(player.getName(), isPlayerWins));
@@ -71,11 +71,15 @@ public class BlackJackController {
         return playersWinningInfo;
     }
 
-    private void retry(SingleMatch singleMatch, Player player) {
-        while (!singleMatch.isCanPlayGamePlayer() && inputView.inputPlayerCommand(player.getName())) {
-            singleMatch.playRound();
+    private void playMatch(SingleMatch singleMatch, Player player) {
+        while (isCanPlayPlayer(singleMatch, player)) {
+            singleMatch.getMoreCard();
             outputView.printCardsStatus(SinglePlayerStatusDto.from(player));
         }
+    }
+
+    private boolean isCanPlayPlayer(SingleMatch singleMatch, Player player) {
+        return !singleMatch.isCanPlayGamePlayer() && inputView.inputPlayerCommand(player.getName());
     }
 
     private int countDealerWinning(List<Boolean> playersWinningInfo) {
