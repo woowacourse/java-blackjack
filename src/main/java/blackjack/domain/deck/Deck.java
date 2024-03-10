@@ -9,6 +9,7 @@ public class Deck {
 
     private static final Random RANDOM  = new Random();
     private static final int ACE_BONUS_SCORE = 10;
+    private static final int NO_BONUS_SCORE = 0;
 
     private final List<Card> cards;
 
@@ -28,14 +29,22 @@ public class Deck {
 
     public int calculateTotalScore() {
         validateDeck();
-        int totalScore = cards.stream()
+        int middleScore = calculateMiddleScore();
+        return middleScore + addBonusScore(middleScore);
+    }
+
+    private int calculateMiddleScore() {
+        return cards.stream()
                 .map(Card::getRank)
                 .mapToInt(Rank::getScore)
                 .sum();
-        if (hasAce() && canAddAceBonusScore(totalScore)) {
-            totalScore += ACE_BONUS_SCORE;
+    }
+
+    private int addBonusScore(int middleScore) {
+        if (hasAce() && canAddAceBonusScore(middleScore)) {
+            return ACE_BONUS_SCORE;
         }
-        return totalScore;
+        return NO_BONUS_SCORE;
     }
 
     private static boolean canAddAceBonusScore(int totalScore) {
