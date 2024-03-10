@@ -22,7 +22,7 @@ public class Deck {
         List<Card> originDeck = Arrays.stream(Shape.values())
                 .flatMap(this::matchScore)
                 .collect(Collectors.toList());
-        return new ArrayDeque<>(shuffleDeck(originDeck));
+        return shuffleDeck(originDeck);
     }
 
     private Stream<Card> matchScore(Shape shape) {
