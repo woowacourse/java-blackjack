@@ -16,14 +16,22 @@ public class Participants {
                 .toList();
     }
 
-    private static void validate(List<String> names) {
-        if (names.size() < MIN_PARTICIPANT_COUNT || names.size() > MAX_PARTICIPANT_COUNT) {
-            throw new IllegalArgumentException(String.format("최소 %d명 최대 %d명까지 입력받을 수 있습니다.", MIN_PARTICIPANT_COUNT, MAX_PARTICIPANT_COUNT));
-        }
+    private void validate(List<String> names) {
+        checkParticipantCount(names);
+        checkDuplicateParticipant(names);
+    }
+
+    private void checkDuplicateParticipant(List<String> names) {
         Set<String> distinctNames = Set.copyOf(names);
 
         if (distinctNames.size() != names.size()) {
             throw new IllegalArgumentException("이름은 중복될 수 없습니다.");
+        }
+    }
+
+    private void checkParticipantCount(List<String> names) {
+        if (names.size() < MIN_PARTICIPANT_COUNT || names.size() > MAX_PARTICIPANT_COUNT) {
+            throw new IllegalArgumentException(String.format("최소 %d명 최대 %d명까지 입력받을 수 있습니다.", MIN_PARTICIPANT_COUNT, MAX_PARTICIPANT_COUNT));
         }
     }
 
