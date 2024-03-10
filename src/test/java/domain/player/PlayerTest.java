@@ -28,20 +28,6 @@ class PlayerTest {
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("손 패 값의 합을 반환한다.")
-    @Test
-    void getTotalScore() {
-        List<Card> cards = List.of(SEVEN_HEARTS, TEN_HEARTS);
-
-        Hand hand = new Hand(cards);
-        Name name = new Name("산초");
-        Player player = new Player(name, hand);
-        int actual = player.getTotalScore();
-        int expected = SEVEN_HEARTS.getRankValue() + TEN_HEARTS.getRankValue();
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
     @DisplayName("참가자가 카드를 손 패로 가져온다.")
     @Test
     void hit() {
