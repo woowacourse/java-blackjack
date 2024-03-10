@@ -5,20 +5,18 @@ import blackjack.domain.participant.ParticipantName;
 import java.util.List;
 import java.util.Map;
 
-public record StartCardsDto(List<PlayerCardsDto> playersCards, List<CardDto> dealerCards) {
-    public static StartCardsDto of(final Map<ParticipantName, Hands> playersCards, final Hands dealerHands) {
-        return new StartCardsDto(convertToPlayersCardDto(playersCards), convertToCardDto(dealerHands));
+public record StartCardsDto(List<PlayerCardsDto> playersCards, PlayerCardsDto dealerCards) {
+    public static StartCardsDto of(final Map<ParticipantName, Hands> playersCards, final Hands dealerHands, final ParticipantName dealerName) {
+        return new StartCardsDto(convertToPlayersCardDto(playersCards), convertToPlayerCardDto(dealerHands, dealerName));
     }
 
     private static List<PlayerCardsDto> convertToPlayersCardDto(final Map<ParticipantName, Hands> playersCards) {
         return playersCards.entrySet().stream()
-                .map(entry -> PlayerCardsDto.of(entry.getKey(), convertToCardDto(entry.getValue())))
+                .map(entry -> PlayerCardsDto.of(entry.getKey(), entry.getValue()))
                 .toList();
     }
 
-    private static List<CardDto> convertToCardDto(final Hands hands) {
-        return hands.getCards().stream()
-                .map(CardDto::from)
-                .toList();
+    private static PlayerCardsDto convertToPlayerCardDto(final Hands dealerHands, final ParticipantName dealerName) {
+        return PlayerCardsDto.of(dealerName, dealerHands);
     }
 }

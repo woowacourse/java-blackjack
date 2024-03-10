@@ -77,6 +77,11 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException("없는 참가자 입니다."));
     }
 
+    public boolean hasName(final ParticipantName name) {
+        return players.stream()
+                .anyMatch(player -> player.isName(name.getName()));
+    }
+
     public Hands getHandsOf(final String name) {
         final Participant findedParticipant = findParticipant(name);
         return findedParticipant.getHands();

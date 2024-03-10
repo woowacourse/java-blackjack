@@ -11,6 +11,7 @@ import blackjack.dto.FinalHandsScoreDto;
 import blackjack.dto.PlayerCardsDto;
 import blackjack.dto.StartCardsDto;
 import blackjack.dto.WinningResultDto;
+import blackjack.exception.NeedRetryException;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,16 @@ public class BlackjackGame {
     public BlackjackGame(final List<String> playersName) {
         this.players = Players.from(playersName);
         this.dealer = new Dealer(Deck.create());
+
+        validateDateDealerName();
+    }
+
+    private void validateDateDealerName() {
+        final ParticipantName dealerName = dealer.getName();
+
+        if (players.hasName(dealerName)) {
+            throw new NeedRetryException(dealerName.getName() + "를 이름으로 사용할 수 없습니다.");
+        }
     }
 
     public boolean isNotDealerBlackjack() {
@@ -38,10 +49,8 @@ public class BlackjackGame {
     }
 
     private StartCardsDto getStartCards() {
-        final Map<ParticipantName, Hands> playersCard = players.getPlayersHands();
-        final Hands dealerHands = dealer.getOpenedHands();
-
-        return StartCardsDto.of(playersCard, dealerHands);
+        final Hands dealerOpenedHands = dealer.getOpenedHands();
+        return StartCardsDto.of(players.getPlayersHands(), dealerOpenedHands, dealer.getName());
     }
 
     public List<String> getPlayersName() {
@@ -75,10 +84,7 @@ public class BlackjackGame {
     }
 
     public FinalHandsScoreDto getFinalHandsScore() {
-        final Map<ParticipantName, Hands> participantsHands = players.getPlayersHands();
-        final Hands dealerHands = dealer.getHands();
-
-        return FinalHandsScoreDto.of(participantsHands, dealerHands);
+        return FinalHandsScoreDto.of(players.getPlayersHands(), dealer);
     }
 
     public WinningResultDto getWinningResults() {
@@ -86,6 +92,10 @@ public class BlackjackGame {
         final Map<ParticipantName, WinStatus> playerWinningResults = winningResult.getParticipantsWinStatus();
         final Map<WinStatus, Long> dealerWinningResult = winningResult.summarizeDealerWinningResult();
 
-        return WinningResultDto.of(playerWinningResults, dealerWinningResult);
+        return WinningResultDto.of(playerWinningResults, dealerWinningResult, dealer.getName());
+    }
+
+    public String getDealerName() {
+        return dealer.getName().getName();
     }
 }

@@ -45,7 +45,7 @@ public class BlackjackController {
         }
 
         final int count = blackjackGame.giveDealerMoreCard();
-        outputView.printDealerMoreCard(count);
+        outputView.printDealerMoreCard(count, blackjackGame.getDealerName());
     }
 
     private void runPlayerTurn(final BlackjackGame blackjackGame, final String name) {

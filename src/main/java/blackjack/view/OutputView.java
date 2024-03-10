@@ -3,7 +3,6 @@ package blackjack.view;
 import blackjack.dto.CardDto;
 import blackjack.dto.DealerWinningResultDto;
 import blackjack.dto.FinalHandsScoreDto;
-import blackjack.dto.HandsScoreDto;
 import blackjack.dto.PlayerCardsDto;
 import blackjack.dto.PlayerHandsScoreDto;
 import blackjack.dto.PlayerWinningResultDto;
@@ -17,18 +16,17 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    static final String DEALER_NAME = "딜러";
     private static final String DELIMITER = ", ";
 
     public void printStartCards(final StartCardsDto startCards) {
         final List<PlayerCardsDto> playersCards = startCards.playersCards();
-        final List<CardDto> dealerCards = startCards.dealerCards();
+        final PlayerCardsDto dealerCards = startCards.dealerCards();
 
-        System.out.printf("%n%s와 %s에게 2장을 나누었습니다.%n", DEALER_NAME,
+        System.out.printf("%n%s와 %s에게 2장을 나누었습니다.%n", dealerCards.name(),
                 String.join(DELIMITER, playersCards.stream().map(PlayerCardsDto::name).toList()));
 
-        System.out.printf("%s: %s%n", DEALER_NAME,
-                convertToCardsFormat(dealerCards));
+        System.out.printf("%s: %s%n", dealerCards.name(),
+                convertToCardsFormat(dealerCards.cards()));
 
         playersCards.forEach(this::printPlayerCard);
     }
@@ -56,11 +54,11 @@ public class OutputView {
         printPlayersCardScore(finalHandsScore.playersHandsScore());
     }
 
-    private void printDealerCardScore(final HandsScoreDto dealerCardScore) {
+    private void printDealerCardScore(final PlayerHandsScoreDto dealerCardScore) {
         System.out.printf("%n%s 카드: %s - 결과 : %d%n",
-                DEALER_NAME,
-                convertToCardsFormat(dealerCardScore.cards()),
-                dealerCardScore.score());
+                dealerCardScore.name(),
+                convertToCardsFormat(dealerCardScore.handsScore().cards()),
+                dealerCardScore.handsScore().score());
     }
 
     private void printPlayersCardScore(final List<PlayerHandsScoreDto> playersHandsScore) {
@@ -76,12 +74,12 @@ public class OutputView {
 
     private void printWinningResult(final WinningResultDto winningResult) {
         System.out.printf("%n## 최종 승패%n");
-        printDealerWinningResult(winningResult.dealerWinningResults());
+        printDealerWinningResult(winningResult.dealerWinningResults(), winningResult.dealerName());
         printPlayersWinningResult(winningResult.playersWinningResult());
     }
 
-    private void printDealerWinningResult(final List<DealerWinningResultDto> dealerWinningResult) {
-        System.out.printf("%s: %s%n", DEALER_NAME, convertToWinningResult(dealerWinningResult));
+    private void printDealerWinningResult(final List<DealerWinningResultDto> dealerWinningResult, final String dealerName) {
+        System.out.printf("%s: %s%n", dealerName, convertToWinningResult(dealerWinningResult));
 
     }
 
@@ -100,9 +98,9 @@ public class OutputView {
 
     }
 
-    public void printDealerMoreCard(int count) {
+    public void printDealerMoreCard(int count, final String dealerName) {
         while (count-- > 0) {
-            System.out.printf("%s는 16이하라 한장의 카드를 더 받았습니다.%n", DEALER_NAME);
+            System.out.printf("%s는 16이하라 한장의 카드를 더 받았습니다.%n", dealerName);
         }
     }
 

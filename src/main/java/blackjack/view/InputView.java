@@ -15,26 +15,14 @@ public class InputView {
         final String input = SCANNER.nextLine();
 
         validateDelimiter(input);
-        final List<String> names = Arrays.asList(input.split(DELIMITER));
-        validateDealerSignal(names);
-        return names;
+
+        return Arrays.asList(input.split(DELIMITER));
     }
 
     private void validateDelimiter(final String input) {
         if (input.endsWith(DELIMITER)) {
             throw new NeedRetryException(DELIMITER + " 로 끝날 수 없습니다.");
         }
-    }
-
-    private void validateDealerSignal(final List<String> names) {
-        if (hasDealerSignal(names)) {
-            throw new NeedRetryException(OutputView.DEALER_NAME + " 라는 이름을 사용할 수 없습니다.");
-        }
-    }
-
-    private boolean hasDealerSignal(final List<String> names) {
-        return names.stream()
-                .anyMatch(OutputView.DEALER_NAME::equals);
     }
 
     public boolean readNeedMoreCard(final String name) {

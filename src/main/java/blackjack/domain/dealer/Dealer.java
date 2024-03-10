@@ -10,14 +10,14 @@ import java.util.stream.Stream;
 
 public class Dealer {
     private static final Score NEED_CARD_CRITERION = new Score(17);
-    private static final String DEALER_SIGNAL = "DEALER";
+    private static final String DEALER_NAME = "딜러";
 
     private final Deck deck;
     private final Participant participant;
 
     public Dealer(final Deck deck) {
         this.deck = deck;
-        this.participant = Participant.from(DEALER_SIGNAL);
+        this.participant = Participant.from(DEALER_NAME);
     }
 
     public boolean needMoreCard() {

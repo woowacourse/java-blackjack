@@ -7,12 +7,17 @@ import java.util.Map;
 
 public record WinningResultDto(
         List<PlayerWinningResultDto> playersWinningResult,
-        List<DealerWinningResultDto> dealerWinningResults
+        List<DealerWinningResultDto> dealerWinningResults,
+        String dealerName
 ) {
 
-    public static WinningResultDto of(final Map<ParticipantName, WinStatus> playersWinningResult,
-            final Map<WinStatus, Long> dealerWinningResults) {
-        return new WinningResultDto(convertToPlayersDto(playersWinningResult), convertToDealerDto(dealerWinningResults));
+    public static WinningResultDto of(
+            final Map<ParticipantName, WinStatus> playersWinningResult,
+            final Map<WinStatus, Long> dealerWinningResults,
+            final ParticipantName dealerName
+    ) {
+        return new WinningResultDto(convertToPlayersDto(playersWinningResult), convertToDealerDto(dealerWinningResults),
+                dealerName.getName());
     }
 
     private static List<PlayerWinningResultDto> convertToPlayersDto(
