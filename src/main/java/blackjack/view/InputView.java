@@ -2,16 +2,14 @@ package blackjack.view;
 
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 
 import blackjack.domain.gamer.Player;
+import blackjack.view.command.Command;
 
 public class InputView {
 	private static final InputView INSTANCE = new InputView(new Scanner(System.in));
 
 	private static final String PLAYER_NAME_DELIMITER = ",";
-	private static final String COMMAND_YES = "y";
-	private static final String COMMAND_NO = "n";
 	private final Scanner scanner;
 
 	private InputView(Scanner scanner) {
@@ -36,18 +34,11 @@ public class InputView {
 		}
 	}
 
-	public String readHitOrStand(Player player) {
+	public Command readHitOrStand(Player player) {
 		System.out.println(
-			String.format("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)", player.getName(), COMMAND_YES, COMMAND_NO));
+			String.format("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)", player.getName(), Command.YES, Command.NO));
 		String command = scanner.nextLine();
-		validateCommand(command);
 
-		return command;
-	}
-
-	private void validateCommand(String command) {
-		if (!Set.of(COMMAND_YES, COMMAND_NO).contains(command)) {
-			throw new IllegalArgumentException(String.format("%s 또는 %s만 입력할 수 있습니다.", COMMAND_YES, COMMAND_NO));
-		}
+		return Command.fromText(command);
 	}
 }

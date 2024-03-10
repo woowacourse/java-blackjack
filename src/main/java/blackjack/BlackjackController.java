@@ -13,6 +13,7 @@ import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import blackjack.view.command.Command;
 
 public class BlackjackController {
 	private final InputView inputView;
@@ -65,7 +66,7 @@ public class BlackjackController {
 	}
 
 	private boolean isPlayerInputHit(Player player) {
-		return inputView.readHitOrStand(player).equals("y");
+		return inputView.readHitOrStand(player).equals(Command.YES);
 	}
 
 	private void receiveDealerAdditionalCard(Dealer dealer) {
