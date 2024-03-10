@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ResultView {
     private static final EnumMap<ResultStatus, String> resultBoard = initializeResultStatus();
@@ -40,7 +39,7 @@ public class ResultView {
 
     private static String formatDealerResultStatus(final DealerResult dealerResult,
                                                    final ResultStatus resultStatus) {
-        return dealerResult.getResultWithResultStatus(resultStatus) + resultBoard.get(resultStatus);
+        return dealerResult.getCountWithResultStatus(resultStatus) + resultBoard.get(resultStatus);
     }
 
     private static EnumMap<ResultStatus, String> initializeResultStatus() {

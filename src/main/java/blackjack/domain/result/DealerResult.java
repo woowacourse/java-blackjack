@@ -7,16 +7,15 @@ import java.util.List;
 
 public class DealerResult {
     private final Name name;
-    private final EnumMap<ResultStatus, Integer> resultStatusBoard;
+    private final EnumMap<ResultStatus, Count> resultStatusBoard;
 
-    public DealerResult(final Name name, final EnumMap<ResultStatus, Integer> resultStatusBoard) {
+    public DealerResult(final Name name, final EnumMap<ResultStatus, Count> resultStatusBoard) {
         this.name = name;
         this.resultStatusBoard = resultStatusBoard;
     }
 
     public static DealerResult of(final Name name, final List<GamePlayerResult> gamePlayerResults) {
-        final EnumMap<ResultStatus, Integer> resultStatusBoard = new EnumMap<ResultStatus, Integer>(
-                ResultStatus.class);
+        final EnumMap<ResultStatus, Count> resultStatusBoard = new EnumMap(ResultStatus.class);
 
         for (final GamePlayerResult gamePlayerResult : gamePlayerResults) {
             increment(resultStatusBoard, gamePlayerResult.getResultStatus()
@@ -26,16 +25,18 @@ public class DealerResult {
         return new DealerResult(name, resultStatusBoard);
     }
 
-    private static void increment(final EnumMap<ResultStatus, Integer> resultStatusBoard,
+    private static void increment(final EnumMap<ResultStatus, Count> resultStatusBoard,
                                   final ResultStatus resultStatus) {
-        resultStatusBoard.put(resultStatus, resultStatusBoard.getOrDefault(resultStatus, 0) + 1);
+        resultStatusBoard.put(resultStatus, resultStatusBoard.getOrDefault(resultStatus, Count.initialValue())
+                                                             .increment());
     }
 
     public String getName() {
         return name.asString();
     }
 
-    public int getResultWithResultStatus(final ResultStatus resultStatus) {
-        return resultStatusBoard.get(resultStatus);
+    public int getCountWithResultStatus(final ResultStatus resultStatus) {
+        return resultStatusBoard.get(resultStatus)
+                                .toInt();
     }
 }

@@ -4,9 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.domain.common.Name;
-import blackjack.domain.result.DealerResult;
-import blackjack.domain.result.GamePlayerResult;
-import blackjack.domain.result.ResultStatus;
+
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +19,7 @@ public class DealerResultTest {
         
         assertThatCode(() -> {
             var sut = DealerResult.of(new Name("딜러"), List.of(gamePlayerResult));
-            assertThat(sut.getResultWithResultStatus(ResultStatus.DRAW)).isEqualTo(1);
+            assertThat(sut.getCountWithResultStatus(ResultStatus.DRAW)).isEqualTo(1);
         }).doesNotThrowAnyException();
     }
 }
