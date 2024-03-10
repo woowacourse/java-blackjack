@@ -1,6 +1,7 @@
 package blackjack.domain.gamer;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class Players {
@@ -27,9 +28,9 @@ public class Players {
 	}
 
 	private void validateDuplication(List<String> players) {
-		long distinctCount = players.stream()
-			.distinct().count();
-		if (players.size() != distinctCount) {
+		int distinctSize = new HashSet<>(players).size();
+
+		if (players.size() != distinctSize) {
 			throw new IllegalArgumentException(DUPLICATION_ERROR_MESSAGE);
 		}
 	}

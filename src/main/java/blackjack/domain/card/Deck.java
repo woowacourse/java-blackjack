@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 public class Deck {
@@ -21,11 +22,9 @@ public class Deck {
 	}
 
 	private void validateDuplicate(List<Card> cards) {
-		long distinctCount = cards.stream()
-			.distinct()
-			.count();
+		int distinctSize = new HashSet<>(cards).size();
 
-		if (cards.size() != distinctCount) {
+		if (cards.size() != distinctSize) {
 			throw new IllegalArgumentException("카드는 중복될 수 없습니다.");
 		}
 	}
