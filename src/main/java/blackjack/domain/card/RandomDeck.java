@@ -1,23 +1,17 @@
 package blackjack.domain.card;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class RandomDeck implements Deck {
     private static final RandomDeck INSTANCE = new RandomDeck();
     private static final Random RANDOM = new Random();
 
-    private final Map<Integer, Number> numberByOrder = new HashMap<>();
-    private final Map<Integer, Shape> shapeByOrder = new HashMap<>();
+    private final List<Number> numbers;
+    private final List<Shape> shapes;
 
     private RandomDeck() {
-        for (Number number : Number.values()) {
-            numberByOrder.put(numberByOrder.size(), number);
-        }
-        for (Shape cardShape : Shape.values()) {
-            shapeByOrder.put(shapeByOrder.size(), cardShape);
-        }
+        this.numbers = Arrays.asList(Number.values());
+        this.shapes = Arrays.asList(Shape.values());
     }
 
     public static RandomDeck getInstance() {
@@ -26,11 +20,11 @@ public class RandomDeck implements Deck {
 
     @Override
     public Card drawCard() {
-        int orderOfNumber = RANDOM.nextInt(numberByOrder.size());
-        int orderOfShape = RANDOM.nextInt(shapeByOrder.size());
+        int orderOfNumber = RANDOM.nextInt(numbers.size());
+        int orderOfShape = RANDOM.nextInt(shapes.size());
 
-        Number number = numberByOrder.get(orderOfNumber);
-        Shape shape = shapeByOrder.get(orderOfShape);
+        Number number = numbers.get(orderOfNumber);
+        Shape shape = shapes.get(orderOfShape);
 
         return new Card(number, shape);
     }
