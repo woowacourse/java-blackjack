@@ -29,6 +29,9 @@ public class Participants {
     }
 
     private Hands extractOneHands(List<Hands> hands) {
+        if (hands.isEmpty()) {
+            throw new IllegalArgumentException("손패 리스트가 비어 있습니다.");
+        }
         return hands.remove(hands.size() - 1);
     }
 
@@ -40,12 +43,12 @@ public class Participants {
         return dealer.canHit();
     }
 
-    public int count() {
-        return countPlayers() + DEALER_COUNT;
-    }
-
     public int countPlayers() {
         return players.size();
+    }
+
+    public int count() {
+        return countPlayers() + DEALER_COUNT;
     }
 
     public Dealer getDealer() {

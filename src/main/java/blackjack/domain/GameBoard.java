@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class GameBoard {
 
-    public static final int INITIAL_CARD_COUNT = 2;
+    private static final int INITIAL_CARD_COUNT = 2;
 
     private final Participants participants;
     private final Deck deck;
