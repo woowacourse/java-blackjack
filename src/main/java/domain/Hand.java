@@ -42,6 +42,7 @@ public class Hand {
         return cards.stream().anyMatch(Card::isAce);
     }
 
+    public boolean isBust() { return getResultScore() > BUST_THRESHOLD; }
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

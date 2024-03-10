@@ -33,6 +33,6 @@ public class Gamer {
     }
 
     public boolean isBust() {
-        return (hand.getResultScore() > BUST_THRESHOLD);
+        return hand.isBust();
     }
 }
