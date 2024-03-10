@@ -51,7 +51,7 @@ public class BlackJackGame {
                 .toList());
     }
 
-    private void printPlayersInformation(Players players, Participant dealer) {
+    private void printPlayersInformation(Players players, Dealer dealer) {
         outputView.printHandOutEvent(players, 2);
         outputView.printDealerInitialHand(dealer);
         players.getPlayers().forEach(outputView::printPlayerHand);
@@ -85,7 +85,7 @@ public class BlackJackGame {
     }
 
     private void printParticipantScore(Participant participant) {
-        outputView.printPlayerScore(participant, participant.calculateHandScore());
+        outputView.printParticipantScore(participant, participant.calculateHandScore());
     }
 
     private void printDealerGameResult(Dealer dealer, Players players) {

@@ -1,7 +1,9 @@
 package blackjack.view;
 
 import blackjack.domain.DealerGameResult;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
+import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.rule.Score;
 
@@ -17,7 +19,7 @@ public class OutputView {
         System.out.println(messageResolver.resolveHandOutEventMessage(players, handedCount));
     }
 
-    public void printPlayerHand(Participant participant) {
+    public void printPlayerHand(Player participant) {
         System.out.println(messageResolver.resolvePlayerHandMessage(participant));
     }
 
@@ -25,11 +27,11 @@ public class OutputView {
         System.out.println(messageResolver.resolveDealerPopCountMessage(dealerPopThreshold, count));
     }
 
-    public void printPlayerScore(Participant participant, Score score) {
-        System.out.println(messageResolver.resolvePlayerScoreMessage(participant, score));
+    public void printParticipantScore(Participant participant, Score score) {
+        System.out.println(messageResolver.resolveParticipantScoreMessage(participant, score));
     }
 
-    public void printPlayerGameResult(Participant participant, boolean win) {
+    public void printPlayerGameResult(Player participant, boolean win) {
         System.out.println(messageResolver.resolvePlayerGameResult(participant, win));
     }
 
@@ -37,7 +39,7 @@ public class OutputView {
         System.out.println(messageResolver.resolveDealerGameResult(dealerGameResult));
     }
 
-    public void printDealerInitialHand(Participant dealer) {
+    public void printDealerInitialHand(Dealer dealer) {
         System.out.println(messageResolver.resolveDealerHandMessage(dealer));
     }
 }

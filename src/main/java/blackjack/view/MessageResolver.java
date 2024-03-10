@@ -7,8 +7,10 @@ import blackjack.domain.DealerGameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Hand;
 import blackjack.domain.player.Participant;
+import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.rule.Score;
 import java.util.stream.Collectors;
@@ -26,7 +28,7 @@ public class MessageResolver {
 
     private String resolveNamesMessage(Players players) {
         return players.getPlayers().stream()
-                .map(Participant::getName)
+                .map(Player::getName)
                 .collect(Collectors.joining(SEPARATOR));
     }
 
@@ -46,7 +48,7 @@ public class MessageResolver {
         return String.format("%s%s", NUMBER_NAME.get(cardNumber), SHAPE_NAME.get(cardShape));
     }
 
-    public String resolveDealerHandMessage(Participant dealer) {
+    public String resolveDealerHandMessage(Dealer dealer) {
         Card card = dealer.getHand().getCards().get(0);
         return String.format("%s: %s", dealer.getName(), resolveCardMessage(card));
     }
@@ -59,12 +61,12 @@ public class MessageResolver {
         return "";
     }
 
-    public String resolvePlayerScoreMessage(Participant participant, Score score) {
+    public String resolveParticipantScoreMessage(Participant participant, Score score) {
         String handMessage = resolvePlayerHandMessage(participant);
         return String.format("%s - 결과: %d", handMessage, score.getValue());
     }
 
-    public String resolvePlayerGameResult(Participant participant, boolean win) {
+    public String resolvePlayerGameResult(Player participant, boolean win) {
         return String.format("%s: %s", participant.getName(), resolveGameResultMessage(win));
     }
 
