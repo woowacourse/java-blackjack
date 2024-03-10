@@ -29,12 +29,12 @@ public class Card {
         return rank.getValue();
     }
 
-    public String getRankText() {
-        return rank.name();
+    public Rank getRank() {
+        return rank;
     }
 
-    public String getSuit() {
-        return suit.name();
+    public Suit getSuit() {
+        return suit;
     }
 
     @Override
