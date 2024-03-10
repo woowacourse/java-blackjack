@@ -1,8 +1,7 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Deck;
+import blackjack.domain.card.Deck;
 import java.util.List;
-import java.util.function.BiConsumer;
 
 public class Players {
 

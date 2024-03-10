@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -16,6 +16,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 public class CardTest {
 
+    // TODO HandFixture 로 변경 (클래스 분리)
     public static final List<Card> CARDS_SCORE_4 = List.of(
             new Card(Value.TWO, Shape.HEART),
             new Card(Value.TWO, Shape.SPADE)

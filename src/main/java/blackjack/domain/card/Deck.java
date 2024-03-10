@@ -1,21 +1,19 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Shape;
-import blackjack.domain.card.Value;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+// TODO 패키지 변경
 public class Deck {
 
     private final Queue<Card> cards;
 
-    Deck(List<Card> cards) {
+    private Deck(List<Card> cards) {
         this.cards = new LinkedList<>(cards);
     }
 
