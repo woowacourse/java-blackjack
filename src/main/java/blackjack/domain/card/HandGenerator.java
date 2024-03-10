@@ -5,6 +5,7 @@ import java.util.List;
 
 public class HandGenerator {
     private static final int INITIAL_CARD_COUNT = 2;
+
     private final Deck deck;
 
     public HandGenerator(Deck deck) {
