@@ -15,7 +15,7 @@ import view.OutputView;
 
 public class BlackJackController {
 
-    public void start() {
+    public void play() {
         Gamers gamers = readGamers();
         BlackJackGame blackJackGame = new BlackJackGame(Decks.createByStrategy(new ShuffledDecksGenerator()));
         blackJackGame.prepareCards(gamers);
