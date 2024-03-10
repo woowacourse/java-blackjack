@@ -6,8 +6,8 @@ import java.util.Objects;
 
 public class Participant {
 
-    private final PlayerName name;
-    private final Hand hand;
+    protected final PlayerName name;
+    protected final Hand hand;
 
     public Participant(PlayerName name, Hand hand) {
         this.name = name;
