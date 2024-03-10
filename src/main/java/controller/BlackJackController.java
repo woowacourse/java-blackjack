@@ -20,9 +20,7 @@ public class BlackJackController {
         Dealer dealer = new Dealer();
         BlackJack blackJack = new BlackJack(dealer, participants);
 
-
         blackJack.beginDealing(this::beginBlackJack);
-        //askParticipantHit(participants, dealer);
         blackJack.play(this::participantHit);
         dealerHit(blackJack);
 
@@ -36,12 +34,6 @@ public class BlackJackController {
         for (Participant participant : participants.getValue()) {
             OutputView.printParticipantHands(participant);
         }
-    }
-
-    private void askParticipantHit(Participants participants, Dealer dealer) {
-        /*for (Participant participant : participants.getValue()) {
-            participantHit(participant, dealer);
-        }*/
     }
 
     private void participantHit(Participant participant, Dealer dealer) {

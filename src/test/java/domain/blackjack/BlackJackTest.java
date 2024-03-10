@@ -11,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.function.BiConsumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,12 +22,7 @@ class BlackJackTest {
         Dealer dealer = new Dealer();
         Participants participants = new Participants(List.of("one", "two"));
         BlackJack blackJack = new BlackJack(dealer, participants);
-        blackJack.beginDealing(new BiConsumer<Participants, Dealer>() {
-            @Override
-            public void accept(Participants participants, Dealer dealer) {
-                return;
-            }
-        });
+        blackJack.beginDealing((testParticipants, testDealer) -> {});
 
         Assertions.assertAll(
                 () -> assertThat(dealer.getCardCount()).isEqualTo(2),
@@ -37,7 +31,7 @@ class BlackJackTest {
         );
     }
 
-    @DisplayName("참가자의 승패를 결정한다.")
+    @DisplayName("참가자와 딜러 중 점수가 높은 사람이 승리한다.")
     @Test
     void isWinner() {
         Dealer dealer = new Dealer();
@@ -54,7 +48,7 @@ class BlackJackTest {
         assertThat(winStatus).isEqualTo(WinStatus.WIN);
     }
 
-    @DisplayName("참가자와 딜러의 점수가 같은경우 ")
+    @DisplayName("참가자와 딜러의 점수가 같은 경우 카드의 장수가 더 적은 사람이 승리한다.")
     @Test
     void isWinnerWhenSameScore() {
         Dealer dealer = new Dealer();
