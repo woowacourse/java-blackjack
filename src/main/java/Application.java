@@ -42,27 +42,27 @@ public class Application {
 
     private static void askForGamer(GamerDto gamer, BlackJackGame blackJackGame) {
         boolean isFirstTurn = true;
-        boolean answer = true;
-        while (isGamerTurnEnded(blackJackGame, gamer, answer)) {
-            answer = InputView.readAnswer(CONSOLE_READER, gamer.getName());
-            drawIfAnswerIsYes(answer, gamer, blackJackGame);
-            printPlayerStatus(answer, gamer, isFirstTurn);
+        boolean isDraw = true;
+        while (isGamerTurnEnded(blackJackGame, gamer, isDraw)) {
+            isDraw = InputView.readAnswer(CONSOLE_READER, gamer.getName());
+            drawIfAnswerIsYes(isDraw, gamer, blackJackGame);
+            printPlayerStatus(isDraw, gamer, isFirstTurn);
             isFirstTurn = false;
         }
     }
 
-    private static boolean isGamerTurnEnded(BlackJackGame blackJackGame, GamerDto gamer, boolean answer) {
-        return (!blackJackGame.isBustFromName(gamer.getName()) && answer);
+    private static boolean isGamerTurnEnded(BlackJackGame blackJackGame, GamerDto gamer, boolean isDraw) {
+        return (!blackJackGame.isBustFromName(gamer.getName()) && isDraw);
     }
 
-    private static void drawIfAnswerIsYes(boolean answer, GamerDto gamerDto, BlackJackGame blackJackGame) {
-        if (answer) {
+    private static void drawIfAnswerIsYes(boolean isDraw, GamerDto gamerDto, BlackJackGame blackJackGame) {
+        if (isDraw) {
             blackJackGame.drawCardFromName(gamerDto.getName());
         }
     }
 
-    private static void printPlayerStatus(boolean answer, GamerDto gamer, boolean isFirstTurn) {
-        if (isFirstTurn || answer) {
+    private static void printPlayerStatus(boolean isDraw, GamerDto gamer, boolean isFirstTurn) {
+        if (isFirstTurn || isDraw) {
             OutputView.printGamerStatus(gamer);
         }
     }
