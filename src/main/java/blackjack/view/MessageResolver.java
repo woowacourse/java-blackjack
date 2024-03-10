@@ -52,8 +52,11 @@ public class MessageResolver {
     }
 
     public String resolveDealerPopCountMessage(int dealerDrawThreshold, int popCount) {
-        String message = String.format("딜러는 %d이하라 %d장의 카드를 더 받았습니다.", dealerDrawThreshold, popCount);
-        return String.join("", LINE_SEPARATOR, message, LINE_SEPARATOR);
+        if (popCount > 0) {
+            String message = String.format("딜러는 %d이하라 %d장의 카드를 더 받았습니다.", dealerDrawThreshold, popCount);
+            return String.join("", LINE_SEPARATOR, message, LINE_SEPARATOR);
+        }
+        return "";
     }
 
     public String resolvePlayerScoreMessage(Participant participant, Score score) {

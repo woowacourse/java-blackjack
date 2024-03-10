@@ -36,8 +36,7 @@ public class BlackJackGame {
 
         completePlayersHand(players, cardDeck);
         completeDealerHand(dealer, cardDeck);
-
-        printDealerPopCount(dealer);
+        outputView.printDealerPopCount(Dealer.HIT_THRESHOLD, dealer.countPop());
 
         printPlayerScore(dealer);
         printPlayersScore(players);
@@ -80,13 +79,6 @@ public class BlackJackGame {
         while (dealer.canHit()) {
             Card card = cardDeck.popCard();
             dealer.appendCard(card);
-        }
-    }
-
-    private void printDealerPopCount(Participant dealer) {
-        int dealerPopCount = dealer.handSize() - 2;
-        if (dealerPopCount > 0) {
-            outputView.printDealerPopCount(16, dealerPopCount);
         }
     }
 
