@@ -26,7 +26,7 @@ public class Casino {
     private Players joinPlayer() {
         Names names = Names.from(InputView.inputPlayerNames());
         Players players = blackjack.acceptPlayers(names);
-        PlayerView.printPlayers(players.getDealer(), players.getGamePlayers());
+        PlayerView.printPlayers(players);
         return players;
     }
 
@@ -56,7 +56,7 @@ public class Casino {
         while (gamePlayer.isReceivable() && isHit(gamePlayer)) {
             Card card = blackjack.draw();
             gamePlayer.drawCard(card);
-            PlayerView.printGamePlayer(gamePlayer);
+            PlayerView.printPlayerOpenCards(gamePlayer);
         }
     }
 

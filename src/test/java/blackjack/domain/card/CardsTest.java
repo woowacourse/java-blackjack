@@ -73,7 +73,7 @@ public class CardsTest {
 
         var result = sut.getFirstCard();
 
-        assertThat(result).isEqualTo(cards.get(0));
+        assertThat(result).isEqualTo(List.of(cards.get(0)));
     }
 
     @Test

@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.common.Name;
 import blackjack.domain.result.ResultStatus;
+import java.util.List;
 
 public class Dealer extends Player implements CardReceivable {
     public static final Integer RECEIVE_SIZE = 16;
@@ -38,7 +39,8 @@ public class Dealer extends Player implements CardReceivable {
         return ResultStatus.LOSE;
     }
 
-    public Card getFirstCard() {
+    @Override
+    public List<Card> getOpenCards() {
         return cards.getFirstCard();
     }
 

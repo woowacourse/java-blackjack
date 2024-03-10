@@ -5,7 +5,7 @@ import blackjack.domain.common.Name;
 import blackjack.domain.card.Cards;
 import java.util.List;
 
-public class Player {
+public abstract class Player {
     protected final Name name;
     protected final Cards cards;
 
@@ -18,9 +18,15 @@ public class Player {
         return cards.calculateScore();
     }
 
+    public boolean isBust() {
+        return cards.isBust();
+    }
+
     public void drawCard(Card card) {
         cards.add(card);
     }
+
+    public abstract List<Card> getOpenCards();
 
     public String getNameAsString() {
         return name.asString();
@@ -34,7 +40,4 @@ public class Player {
         return cards.toList();
     }
 
-    public boolean isBust() {
-        return cards.isBust();
-    }
 }

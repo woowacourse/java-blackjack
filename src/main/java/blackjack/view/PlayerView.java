@@ -9,10 +9,9 @@ import java.util.stream.Collectors;
 
 public class PlayerView {
 
-    public static void printPlayers(Dealer dealer, List<GamePlayer> gamePlayers) {
-        printPlayersPreview(dealer, gamePlayers);
-        printDealerCard(dealer);
-        printGamePlayersCard(gamePlayers);
+    public static void printPlayers(Players players) {
+        printPlayersPreview(players.getDealer(), players.getGamePlayers());
+        printPlayersFirstOpenCard(players.getPlayers());
     }
 
     public static void printDealerDrawMessage() {
@@ -23,7 +22,6 @@ public class PlayerView {
         System.out.println(String.format("딜러는 %d를 초과하므로 카드를 받지 않았습니다.", Dealer.RECEIVE_SIZE));
     }
 
-
     private static void printPlayersPreview(Dealer dealer, List<GamePlayer> gamePlayers) {
         String result = gamePlayers.stream()
                                    .map(GamePlayer::getNameAsString)
@@ -32,20 +30,14 @@ public class PlayerView {
                 String.format("%s와 %s에게 2장을 나누었습니다.", dealer.getNameAsString(), result));
     }
 
-    private static void printDealerCard(Dealer dealer) {
-        String result = CardPrinter.printCard(dealer.getFirstCard());
-        System.out.println(String.format("%s: %s", dealer.getNameAsString(), result));
+    private static void printPlayersFirstOpenCard(List<Player> players) {
+        players.forEach(PlayerView::printPlayerOpenCards);
     }
 
-    private static void printGamePlayersCard(List<GamePlayer> gamePlayers) {
-        gamePlayers.forEach(PlayerView::printGamePlayer);
+    public static void printPlayerOpenCards(Player player) {
+        String result = CardPrinter.printCards(player.getOpenCards());
+        System.out.println(String.format("%s카드: %s", player.getNameAsString(), result));
     }
-
-    public static void printGamePlayer(GamePlayer gamePlayer) {
-        String result = CardPrinter.printCards(gamePlayer.getCards());
-        System.out.println(String.format("%s카드: %s", gamePlayer.getNameAsString(), result));
-    }
-
 
     public static void printPlayersWithScore(Players players) {
         printPlayerWithScore(players.getDealer());

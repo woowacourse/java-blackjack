@@ -35,6 +35,6 @@ public class DealerResult {
     }
 
     public int getResultWithResultStatus(ResultStatus resultStatus) {
-        return resultStatusBoard.get(resultStatus);
+        return resultStatusBoard.getOrDefault(resultStatus, 0);
     }
 }

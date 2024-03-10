@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Players {
@@ -17,5 +18,13 @@ public class Players {
 
     public List<GamePlayer> getGamePlayers() {
         return gamePlayers;
+    }
+
+    public List<Player> getPlayers() {
+        List<Player> players = new ArrayList<>();
+        players.add(dealer);
+        gamePlayers.forEach(players::add);
+
+        return players;
     }
 }
