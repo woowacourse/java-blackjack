@@ -1,13 +1,12 @@
-package domain;
+package domain.blackjack;
 
+import domain.player.Player;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 public class BlackjackRule {
-    private static final int BUST_CONDITION = 21;
-
     private final Map<Player, Entry<Integer, Integer>> results = new LinkedHashMap<>();
 
     public BlackjackResult finishGame(final List<Player> players, final Player dealer) {
@@ -24,11 +23,11 @@ public class BlackjackRule {
             calculate(dealer, player, 0, 1);
             return;
         }
-        if (dealer.calculateScore() > BUST_CONDITION) {
+        if (dealer.isBust()) {
             calculate(dealer, player, 1, 0);
             return;
         }
-        if (dealer.calculateScore() >= player.calculateScore()) {
+        if (dealer.isGreaterOrEqualThan(player)) {
             calculate(dealer, player, 0, 1);
         }
     }

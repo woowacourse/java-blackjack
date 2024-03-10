@@ -1,5 +1,6 @@
-package domain;
+package domain.blackjack;
 
+import domain.player.Player;
 import java.util.Map;
 import java.util.Map.Entry;
 

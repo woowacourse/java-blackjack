@@ -1,9 +1,9 @@
 package view;
 
-import domain.BlackjackResult;
-import domain.Denomination;
-import domain.Player;
-import domain.Symbol;
+import domain.blackjack.BlackjackResult;
+import domain.card.Denomination;
+import domain.player.Player;
+import domain.card.Symbol;
 
 import java.util.ArrayList;
 import java.util.List;

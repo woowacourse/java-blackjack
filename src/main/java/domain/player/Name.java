@@ -1,8 +1,10 @@
-package domain;
+package domain.player;
 
 import java.util.Objects;
 
 public class Name {
+    public static final Name DEALER_NAME = new Name("딜러");
+
     private final String name;
 
     public Name(final String name) {

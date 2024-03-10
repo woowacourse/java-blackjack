@@ -1,7 +1,7 @@
-import domain.Blackjack;
-import domain.BlackjackResult;
-import domain.Player;
-import domain.Players;
+import domain.blackjack.Blackjack;
+import domain.blackjack.BlackjackResult;
+import domain.player.Player;
+import domain.player.Players;
 import view.InputView;
 import view.OutputView;
 

@@ -1,5 +1,7 @@
-package domain;
+package domain.player;
 
+import domain.card.Card;
+import domain.card.Denomination;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -7,8 +9,8 @@ import java.util.Objects;
 public abstract class Player {
     private static final int ACE_LOW = 1;
     private static final int ACE_HIGH = 11;
-    private static final int BUST_CONDITION = 21;
-    protected static final String DEALER_NAME = "딜러";
+    static final int PERFECT_SCORE = 21;
+    static final String DEALER_NAME = "딜러";
 
     private final Name name;
     private final List<Card> cards = new ArrayList<>();
@@ -17,13 +19,20 @@ public abstract class Player {
         this.name = name;
     }
 
-    public void hit(final Card card) {
-        cards.add(card);
-    }
-
     public abstract boolean isNotBust();
 
-    
+    public abstract boolean isBust();
+
+    public abstract boolean canHit();
+
+    public abstract boolean canNotHit();
+
+
+    public void hit(final Card card) {
+        cards.add(card);
+
+    }
+
 
     public int calculateScore() {
         int score = 0;
@@ -41,7 +50,7 @@ public abstract class Player {
     }
 
     private int determineAceScore(final int score) {
-        if (score + ACE_HIGH <= BUST_CONDITION) {
+        if (score + ACE_HIGH <= PERFECT_SCORE) {
             return ACE_HIGH;
         }
         return ACE_LOW;
@@ -79,5 +88,9 @@ public abstract class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public boolean isGreaterOrEqualThan(final Player player) {
+        return this.calculateScore() >= player.calculateScore();
     }
 }

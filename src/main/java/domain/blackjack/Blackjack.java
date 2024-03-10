@@ -1,5 +1,9 @@
-package domain;
+package domain.blackjack;
 
+import domain.card.Deck;
+import domain.player.Dealer;
+import domain.player.Player;
+import domain.player.Players;
 import java.util.List;
 
 public class Blackjack {
