@@ -12,7 +12,6 @@ public abstract class Participant {
     private final Hand hand;
 
     protected Participant(final String name) {
-
         Validator.validateName(name);
         this.name = name;
         this.hand = new Hand();
@@ -29,7 +28,7 @@ public abstract class Participant {
         return hand.calculateScore() > BlackJackGame.BLACKJACK_SCORE;
     }
 
-    protected boolean isNotBusted() {
+    public boolean isNotBusted() {
         return !isBusted();
     }
 
@@ -45,19 +44,15 @@ public abstract class Participant {
         return new HandStatus(name, hand);
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public boolean isNotSameScoreAs(final Player other) {
+    public boolean isNotSameScoreAs(final Participant other) {
         return calculateResultScore() != other.calculateResultScore();
     }
 
-    public boolean hasMoreScoreThan(final Player other) {
+    public boolean hasMoreScoreThan(final Participant other) {
         return calculateResultScore() > other.calculateResultScore();
     }
 
-    public boolean hasLessOrSameCardThan(final Player other) {
+    public boolean hasLessOrSameCardThan(final Participant other) {
         return getCardSize() <= other.getCardSize();
     }
 
@@ -66,10 +61,9 @@ public abstract class Participant {
     }
 
 
-    public Hand getHand() {
-        return this.hand;
+    public String getName() {
+        return this.name;
     }
-
 
     abstract public boolean canPickCard(final CardCommand cardCommand);
 

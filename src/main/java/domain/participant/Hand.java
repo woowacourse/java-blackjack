@@ -20,10 +20,6 @@ public class Hand {
         cards.add(card);
     }
 
-    public void saveCards(final List<Card> cards) {
-        this.cards.addAll(cards);
-    }
-
     public int calculateScore() {
         int sum = 0;
         for (Card card : cards) {
