@@ -10,10 +10,10 @@ import blackjack.view.InputView;
 import blackjack.view.PlayerView;
 import blackjack.view.ResultView;
 
-public class Casino {
+public class BlackjackController {
     private final Blackjack blackjack;
 
-    public Casino(final Blackjack blackjack) {
+    public BlackjackController(final Blackjack blackjack) {
         this.blackjack = blackjack;
     }
 
