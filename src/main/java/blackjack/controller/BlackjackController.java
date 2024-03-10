@@ -71,7 +71,7 @@ public class BlackjackController {
 	private void distributeCardToPlayer(Deck deck, Player player) {
 		while (canDistribute(player)) {
 			player.addCard(deck.draw());
-			outputView.printPlayerHand(GamerHandDto.fromGamer(player));
+			outputView.printGamerNameAndHand(GamerHandDto.fromGamer(player));
 		}
 		outputView.printEmptyLine();
 	}
@@ -112,6 +112,6 @@ public class BlackjackController {
 		PlayerResultsDto playerResultsDto = PlayerResultsDto.ofPlayersAndDealerScore(players, dealer.getScore());
 		DealerResultDto dealerResultDto = DealerResultDto.ofDealerAndPlayers(dealer, players);
 
-		outputView.printResult(dealerResultDto, playerResultsDto);
+		outputView.printFinalResult(dealerResultDto, playerResultsDto);
 	}
 }
