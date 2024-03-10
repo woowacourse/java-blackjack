@@ -2,14 +2,14 @@ package controller;
 
 import domain.BlackJackGame;
 import domain.card.Deck;
-import domain.gamer.Gamers;
-import domain.result.PlayerResults;
-import domain.gamer.Players;
 import domain.card.ShuffledCardsGenerator;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
+import domain.gamer.Gamers;
 import domain.gamer.Name;
 import domain.gamer.Player;
+import domain.gamer.Players;
+import domain.result.PlayerResults;
 import java.util.List;
 import view.InputView;
 import view.OutputView;

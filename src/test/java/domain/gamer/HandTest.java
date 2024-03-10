@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
-import domain.gamer.Hand;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;

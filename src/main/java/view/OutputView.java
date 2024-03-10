@@ -1,12 +1,12 @@
 package view;
 
-import domain.gamer.Gamers;
-import domain.result.PlayerResults;
-import domain.result.Result;
 import domain.card.Card;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
+import domain.gamer.Gamers;
 import domain.gamer.Player;
+import domain.result.PlayerResults;
+import domain.result.Result;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;

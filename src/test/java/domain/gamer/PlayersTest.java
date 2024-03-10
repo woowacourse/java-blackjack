@@ -2,9 +2,6 @@ package domain.gamer;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.gamer.Name;
-import domain.gamer.Player;
-import domain.gamer.Players;
 import exception.DuplicatedNameException;
 import exception.PlayerCountException;
 import java.util.ArrayList;

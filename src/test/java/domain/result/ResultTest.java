@@ -9,7 +9,6 @@ import domain.card.Symbol;
 import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Player;
-import domain.result.Result;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

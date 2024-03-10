@@ -6,8 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
-import domain.gamer.Name;
-import domain.gamer.Player;
 import exception.NotAllowedNameException;
 import java.util.ArrayDeque;
 import java.util.Deque;

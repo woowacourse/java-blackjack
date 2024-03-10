@@ -1,8 +1,5 @@
 package domain.card;
 
-import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Symbol;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;

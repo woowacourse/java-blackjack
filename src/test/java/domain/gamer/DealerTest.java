@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
-import domain.gamer.Dealer;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.stream.Collectors;

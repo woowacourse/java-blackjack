@@ -9,7 +9,6 @@ import domain.card.Deck;
 import domain.card.Rank;
 import domain.card.Symbol;
 import domain.gamer.Dealer;
-import domain.gamer.Gamer;
 import domain.gamer.Gamers;
 import domain.gamer.Name;
 import domain.gamer.Player;
