@@ -13,4 +13,10 @@ public record PlayerDto(String name, List<String> hands, int score) {
         int score = player.getTotalScore();
         return new PlayerDto(name, hands, score);
     }
+
+    public static List<PlayerDto> from(List<Player> players) {
+        return players.stream()
+                .map(PlayerDto::from)
+                .toList();
+    }
 }

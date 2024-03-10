@@ -41,7 +41,7 @@ public class BlackJackController {
 
     private void printInitialDealAndHand(BlackJackGame blackJackGame) {
         List<Player> initialParticipants = blackJackGame.getEveryParticipants();
-        List<PlayerDto> playerInitDtos = toPlayerDtos(initialParticipants);
+        List<PlayerDto> playerInitDtos = PlayerDto.from(initialParticipants);
 
         outputView.printInitialDeal(playerInitDtos);
         outputView.printInitialHand(playerInitDtos);
@@ -70,16 +70,10 @@ public class BlackJackController {
     }
 
     private void printGameResult(BlackJackGame blackJackGame) {
-        List<PlayerDto> playerDtos = toPlayerDtos(blackJackGame.getEveryParticipants());
+        List<PlayerDto> playerDtos = PlayerDto.from(blackJackGame.getEveryParticipants());
         ResultDto resultDto = ResultDto.from(blackJackGame.getGameResults());
 
         outputView.printFinalHandAndScore(playerDtos);
         outputView.printWinLoss(resultDto);
-    }
-
-    private List<PlayerDto> toPlayerDtos(List<Player> players) {
-        return players.stream()
-                .map(PlayerDto::from)
-                .toList();
     }
 }
