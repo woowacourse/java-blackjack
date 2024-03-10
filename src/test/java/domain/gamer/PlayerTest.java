@@ -44,9 +44,9 @@ public class PlayerTest {
 
     @DisplayName("플레이어가 주어진 카드들을 받아서 저장한다.")
     @Test
-    void receiveTest(){
+    void receiveTest() {
         //when
-        player.receive(List.of(cards.pop(),cards.pop()));
+        player.receive(List.of(cards.pop(), cards.pop()));
 
         //then
         assertThat(player.getHand()).hasSize(2);

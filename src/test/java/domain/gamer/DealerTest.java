@@ -40,9 +40,9 @@ public class DealerTest {
 
     @DisplayName("딜러가 주어진 카드들을 받아서 저장한다.")
     @Test
-    void receiveTest(){
+    void receiveTest() {
         //when
-        dealer.receive(List.of(cards.pop(),cards.pop()));
+        dealer.receive(List.of(cards.pop(), cards.pop()));
 
         //then
         assertThat(dealer.getHand()).hasSize(2);

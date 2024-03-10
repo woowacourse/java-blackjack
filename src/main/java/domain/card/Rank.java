@@ -32,15 +32,15 @@ public enum Rank {
                 .toList();
     }
 
-    public boolean isAce() {
-        return this == SMALL_ACE || this == BIG_ACE;
-    }
-
-    public static int selectAceScore(int score){
-        if(score + BIG_ACE.score>BLACK_JACK){
+    public static int selectAceScore(int score) {
+        if (score + BIG_ACE.score > BLACK_JACK) {
             return SMALL_ACE.score;
         }
         return BIG_ACE.score;
+    }
+
+    public boolean isAce() {
+        return this == SMALL_ACE || this == BIG_ACE;
     }
 
     public int getScore() {

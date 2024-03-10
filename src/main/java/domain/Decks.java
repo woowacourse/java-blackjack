@@ -1,6 +1,7 @@
 package domain;
 
 import domain.card.Card;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
@@ -19,7 +20,7 @@ public class Decks {
     }
 
     public Card draw() {
-        if(cards.empty()){
+        if (cards.empty()) {
             throw new IllegalArgumentException(NO_CARDS);
         }
         return cards.pop();

@@ -1,17 +1,14 @@
 package controller;
 
-import domain.BlackJackGame;
-import domain.Decks;
-import domain.Gamers;
-import domain.PlayerResults;
-import domain.Players;
+import domain.*;
 import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Player;
 import domain.strategy.ShuffledDecksGenerator;
-import java.util.List;
 import view.InputView;
 import view.OutputView;
+
+import java.util.List;
 
 public class BlackJackController {
 

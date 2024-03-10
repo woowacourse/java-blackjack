@@ -33,7 +33,7 @@ public class DecksTest {
     @Test
     void emptyDecksTest() {
         // given
-        SettedDecksGenerator decksGenerator = new SettedDecksGenerator(List.of(new Card(Symbol.CLOVER,Rank.BIG_ACE)));
+        SettedDecksGenerator decksGenerator = new SettedDecksGenerator(List.of(new Card(Symbol.CLOVER, Rank.BIG_ACE)));
         Decks decks = Decks.createByStrategy(decksGenerator);
         decks.draw();
 

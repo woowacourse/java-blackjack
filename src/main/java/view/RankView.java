@@ -1,10 +1,8 @@
 package view;
 
 import domain.card.Rank;
-import domain.card.Symbol;
 
 import java.util.Arrays;
-import java.util.List;
 
 public enum RankView {
 
@@ -30,7 +28,7 @@ public enum RankView {
         this.viewName = viewName;
     }
 
-    public static String findName(final Rank rank){
+    public static String findName(final Rank rank) {
         return Arrays.stream(values())
                 .filter(rankView -> rankView.name().equals(rank.name()))
                 .findFirst()

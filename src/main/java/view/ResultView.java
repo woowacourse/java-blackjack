@@ -1,7 +1,6 @@
 package view;
 
 import domain.Result;
-import domain.card.Rank;
 
 import java.util.Arrays;
 
@@ -17,7 +16,7 @@ public enum ResultView {
         this.viewName = viewName;
     }
 
-    public static String findName(final Result result){
+    public static String findName(final Result result) {
         return Arrays.stream(values())
                 .filter(resultView -> resultView.name().equals(result.name()))
                 .findFirst()

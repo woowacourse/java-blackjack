@@ -3,6 +3,7 @@ package domain;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +17,7 @@ public class Gamers {
     public static Gamers of(final Players players, final Dealer dealer) {
         List<Gamer> gamers = new ArrayList<>();
         gamers.add(dealer);
-        for (Player player : players.getPlayers()) {
-            gamers.add(player);
-        }
+        gamers.addAll(players.getPlayers());
         return new Gamers(gamers);
     }
 

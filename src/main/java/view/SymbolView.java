@@ -3,7 +3,6 @@ package view;
 import domain.card.Symbol;
 
 import java.util.Arrays;
-import java.util.function.Supplier;
 
 public enum SymbolView {
 
@@ -19,7 +18,7 @@ public enum SymbolView {
         this.viewName = viewName;
     }
 
-    public static String findName(final Symbol symbol){
+    public static String findName(final Symbol symbol) {
         return Arrays.stream(values())
                 .filter(symbolView -> symbolView.name().equals(symbol.name()))
                 .findFirst()

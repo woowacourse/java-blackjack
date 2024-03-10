@@ -1,6 +1,7 @@
 package domain.gamer;
 
 import domain.card.Card;
+
 import java.util.List;
 
 public abstract class Gamer {
