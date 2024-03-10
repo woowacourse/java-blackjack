@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TrumpCardFactory {
@@ -11,51 +12,15 @@ public class TrumpCardFactory {
     public static List<TrumpCard> createCards() {
         List<TrumpCard> trumpCards = new ArrayList<>();
 
-        trumpCards.addAll(createSpadeCards());
-        trumpCards.addAll(createDiamondCards());
-        trumpCards.addAll(createHeartCards());
-        trumpCards.addAll(createCloverCards());
+        Arrays.stream(Suit.values())
+                .forEach(suit -> trumpCards.addAll(createCardsBySuit(suit)));
 
         return trumpCards;
     }
 
-    private static List<TrumpCard> createHeartCards() {
-        List<TrumpCard> trumpCards = new ArrayList<>();
-
-        for (Rank rank : Rank.values()) {
-            trumpCards.add(new TrumpCard(rank, Suit.HEART));
-        }
-
-        return trumpCards;
-    }
-
-    private static List<TrumpCard> createSpadeCards() {
-        List<TrumpCard> trumpCards = new ArrayList<>();
-
-        for (Rank rank : Rank.values()) {
-            trumpCards.add(new TrumpCard(rank, Suit.SPADE));
-        }
-
-        return trumpCards;
-    }
-
-    private static List<TrumpCard> createCloverCards() {
-        List<TrumpCard> trumpCards = new ArrayList<>();
-
-        for (Rank rank : Rank.values()) {
-            trumpCards.add(new TrumpCard(rank, Suit.CLOVER));
-        }
-
-        return trumpCards;
-    }
-
-    private static List<TrumpCard> createDiamondCards() {
-        List<TrumpCard> trumpCards = new ArrayList<>();
-
-        for (Rank rank : Rank.values()) {
-            trumpCards.add(new TrumpCard(rank, Suit.DIAMOND));
-        }
-
-        return trumpCards;
+    private static List<TrumpCard> createCardsBySuit(Suit suit) {
+        return Arrays.stream(Rank.values())
+                .map(rank -> new TrumpCard(rank, suit))
+                .toList();
     }
 }
