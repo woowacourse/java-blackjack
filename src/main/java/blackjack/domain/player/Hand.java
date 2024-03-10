@@ -1,12 +1,14 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.rule.Score;
 import java.util.List;
 
 public class Hand {
 
+    private static final int INITIAL_HAND_SIZE = 2;
     private static final int BLACK_JACK = 21;
     private static final int ACE_WEIGHT = 10;
 
@@ -14,6 +16,10 @@ public class Hand {
 
     public Hand(List<Card> cards) {
         this.cards = cards;
+    }
+
+    public static Hand createHandFrom(CardDeck cardDeck) {
+        return new Hand(cardDeck.popCards(INITIAL_HAND_SIZE));
     }
 
     public int calculateCardSummation() {

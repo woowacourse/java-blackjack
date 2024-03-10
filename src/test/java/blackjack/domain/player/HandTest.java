@@ -3,6 +3,7 @@ package blackjack.domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
 import fixture.CardFixture;
 import fixture.HandFixture;
 import org.junit.jupiter.api.DisplayName;
@@ -11,13 +12,18 @@ import org.junit.jupiter.api.Test;
 @DisplayName("참가자 소유 카드 테스트")
 class HandTest {
 
+    @DisplayName("초기 핸드의 사이즈는 2이다")
+    @Test
+    void testCreateInitialHandSize() {
+        Hand hand = Hand.createHandFrom(CardDeck.createShuffledDeck());
+        assertThat(hand.getCards().size()).isEqualTo(2);
+    }
+
     @DisplayName("카드의 합을 계산할 수 있다.")
     @Test
     void testHandSummation() {
         Hand hand = HandFixture.of(2, 2, 2);
-        int expected = hand.calculateCardSummation();
-
-        assertThat(expected).isEqualTo(6);
+        assertThat(hand.calculateCardSummation()).isEqualTo(6);
     }
 
     @DisplayName("특정 카드를 핸드에 추가할 수 있다")
@@ -26,7 +32,6 @@ class HandTest {
         Card card = CardFixture.from(2);
         Hand hand = HandFixture.of();
         hand.appendCard(card);
-
         assertThat(hand.getCards()).containsExactly(card);
     }
 
@@ -34,7 +39,6 @@ class HandTest {
     @Test
     void testCountAceInHand() {
         Hand hand = HandFixture.of(1, 1, 1, 3, 4, 5);
-
         assertThat(hand.countAce()).isEqualTo(3);
     }
 
