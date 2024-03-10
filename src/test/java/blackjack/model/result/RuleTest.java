@@ -19,7 +19,7 @@ class RuleTest {
     void calculateResult() {
         Rule rule = new Rule(
                 new Dealer(new Hand(List.of(new Card(Shape.DIA, Score.TEN), new Card(Shape.SPADE, Score.TEN)))));
-        Player player = new Player("리브",
+        Player player = Player.of("리브",
                 new Hand(List.of(new Card(Shape.DIA, Score.ACE), new Card(Shape.SPADE, Score.TEN))));
         assertThat(rule.calculateResult(player)).isEqualTo(ResultCommand.WIN);
     }

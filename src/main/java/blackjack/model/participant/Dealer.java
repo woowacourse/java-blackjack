@@ -7,7 +7,7 @@ public class Dealer extends Player {
     private static final int HITTABLE_THRESHOLD = 16;
 
     public Dealer(final Hand hand) {
-        super("딜러", hand);
+        super(new Name("딜러"), hand);
     }
 
     @Override

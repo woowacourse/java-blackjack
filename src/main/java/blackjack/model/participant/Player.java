@@ -7,19 +7,16 @@ import java.util.Objects;
 public class Player {
     private static final int HITTABLE_THRESHOLD = 21;
 
-    protected final String name;
+    protected final Name name;
     protected Hand hand;
 
-    public Player(final String name, final Hand hand) {
-        validateNullAndEmptyName(name);
+    Player(final Name name, final Hand hand) {
         this.name = name;
         this.hand = hand;
     }
 
-    private void validateNullAndEmptyName(final String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("이름에는 공백을 사용할 수 없습니다.");
-        }
+    public static Player of(final String rawName, final Hand hand) {
+        return new Player(new Name(rawName), hand);
     }
 
     public void receiveCard(final Card card) {
@@ -47,7 +44,7 @@ public class Player {
     }
 
     public String getName() {
-        return name;
+        return name.getValue();
     }
 
     @Override

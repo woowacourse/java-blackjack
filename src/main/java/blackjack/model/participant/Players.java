@@ -23,7 +23,7 @@ public class Players {
     public static Players of(final List<String> names, final List<Hand> cards) {
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < names.size(); i++) {
-            players.add(new Player(names.get(i), cards.get(i)));
+            players.add(Player.of(names.get(i), cards.get(i)));
         }
         return new Players(players);
     }
