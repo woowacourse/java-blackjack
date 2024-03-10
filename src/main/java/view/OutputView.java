@@ -1,8 +1,7 @@
 package view;
 
-import dto.DealerResultDto;
 import dto.PlayerDto;
-import dto.PlayersResultDto;
+import dto.ResultDto;
 import java.util.List;
 import java.util.Map;
 
@@ -56,29 +55,29 @@ public class OutputView {
         return playerDto.name() + ": " + hands;
     }
 
-    public void printWinLoss(DealerResultDto dealerResultDto, PlayersResultDto playersResultDto) {
+    public void printWinLoss(ResultDto resultDto) {
         System.out.println("\n## 최종 승패");
-        printDealerWinLoss(dealerResultDto);
-        printPlayerWinLoss(playersResultDto);
+        printDealerWinLoss(resultDto.getDealerResult());
+        printPlayerWinLoss(resultDto);
     }
 
-    private void printDealerWinLoss(DealerResultDto dealerResultDto) {
+    private void printDealerWinLoss(Map<String, Integer> result) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("딜러: ");
-        stringBuilder.append(dealerResultDto.winCount())
+        stringBuilder.append(result.get("DEALER_WIN"))
                 .append("승 ");
-        stringBuilder.append(dealerResultDto.lossCount())
+        stringBuilder.append(result.get("PLAYER_WIN"))
                 .append("패 ");
-        if (dealerResultDto.pushCount() != 0) {
-            stringBuilder.append(dealerResultDto.winCount())
+        if (result.get("PUSH") != 0) {
+            stringBuilder.append(result.get("PUSH"))
                     .append("무");
         }
         System.out.println(stringBuilder);
     }
 
-    private void printPlayerWinLoss(PlayersResultDto playersResultDto) {
+    private void printPlayerWinLoss(ResultDto resultDto) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Map.Entry<String, String> playerResult : playersResultDto.playerResults().entrySet()) {
+        for (Map.Entry<String, String> playerResult : resultDto.getPlayerResult().entrySet()) {
             stringBuilder.append(playerResult.getKey())
                     .append(": ")
                     .append(playerResult.getValue())
