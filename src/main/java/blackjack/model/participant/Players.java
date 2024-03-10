@@ -21,11 +21,18 @@ public class Players {
 
     public static Players of(final List<String> rawNames, final List<Hand> cards) {
         validateNotDuplicateName(rawNames);
+        validateNamesInitialCardsSize(rawNames, cards);
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < rawNames.size(); i++) {
             players.add(Player.of(rawNames.get(i), cards.get(i)));
         }
         return new Players(players);
+    }
+
+    private static void validateNamesInitialCardsSize(final List<String> rawNames, final List<Hand> cards) {
+        if (rawNames.size() != cards.size()) {
+            throw new IllegalArgumentException("플레이어 인원과 초기 카드 목록의 사이즈가 다릅니다.");
+        }
     }
 
     private static void validateNotDuplicateName(final List<String> names) {

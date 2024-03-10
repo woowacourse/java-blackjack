@@ -8,6 +8,7 @@ import static blackjack.model.deck.Shape.CLOVER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.model.deck.Card;
 import java.util.LinkedHashMap;
@@ -46,24 +47,18 @@ class PlayersTest {
                 .withMessage("중복되는 이름을 입력할 수 없습니다.");
     }
 
+    @Test
+    @DisplayName("플레이어 인원과 초기 카드 목록의 사이즈가 다른 경우 예외를 던진다.")
+    void createPlayersByDifferCardsSize() {
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> Players.of(List.of("몰리", "파랑"), List.of()))
+                .withMessage("플레이어 인원과 초기 카드 목록의 사이즈가 다릅니다.");
+    }
+
     @ParameterizedTest
     @MethodSource("InvalidNames")
     @DisplayName("플레이어의 이름이 1개 이상 10개 이하가 아니면 예외를 던진다.")
-    void createPlayersByOutBound(List<String> names) {
-        List<Hand> cards = List.of(
-                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
-                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
-                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
-                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
-                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
-                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
-                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
-                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
-                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
-                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
-                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
-        );
-
+    void createPlayersByOutBound(List<String> names, List<Hand> cards) {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> Players.of(names, cards))
                 .withMessage("참여할 인원의 수는 최소 1명 최대 10명이어야 합니다.");
@@ -71,9 +66,22 @@ class PlayersTest {
 
     private static Stream<Arguments> InvalidNames() {
         return Stream.of(
-                Arguments.arguments(List.of()),
-                Arguments.arguments(List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"))
-        );
+                Arguments.arguments(List.of(), List.of()),
+                Arguments.arguments(List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"),
+                        List.of(
+                                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))),
+                                new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
+                        )
+                ));
     }
 
     @Test
