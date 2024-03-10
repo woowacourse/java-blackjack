@@ -10,7 +10,7 @@ public class CardDeck {
 
     private final List<Card> cards;
 
-    public CardDeck(List<Card> cards) {
+    CardDeck(List<Card> cards) {
         this.cards = cards;
     }
 
