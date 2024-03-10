@@ -27,7 +27,7 @@ class DealerTest {
 
         dealer.hit(card);
 
-        assertThat(dealer.getCards()).isEqualTo(List.of(card));
+        assertThat(dealer.getCards()).containsExactly(card);
     }
 
     @DisplayName("딜러는 17점 이상이 되면, 더 이상 카드를 받을 수 없다.")

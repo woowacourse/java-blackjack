@@ -58,9 +58,8 @@ public class OutputView {
         System.out.println();
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %s%n", buildDealerResult(dealerGameResult));
-        playerGameResults.forEach((player, gameResult) -> {
-            System.out.printf("%s: %s%n", player.getName(), gameResult.getValue());
-        });
+        playerGameResults.forEach((player, gameResult) ->
+                System.out.printf("%s: %s%n", player.getName(), gameResult.getValue()));
 
     }
 
