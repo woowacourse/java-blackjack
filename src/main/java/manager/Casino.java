@@ -5,7 +5,7 @@ import domain.Names;
 import domain.card.DealerCards;
 import domain.card.Deck;
 import domain.card.PlayerCards;
-import domain.game.Rule;
+import domain.game.Referee;
 import domain.score.ScoreBoard;
 import view.InputView;
 import view.OutputView;
@@ -16,38 +16,25 @@ public class Casino {
 
     private final OutputView outputView = new OutputView();
     private final InputView inputView = new InputView();
-    private final Deck deck = new Deck();
 
     public void run() {
         Names names = readNames();
 
+        Deck deck = new Deck();
         DealerCards dealerCards = new DealerCards(deck.drawInitialHands());
-        List<PlayerCards> playerCardsBundle = makePlayerCards(names);
+        List<PlayerCards> playerCardsBundle = makePlayerCards(names, deck);
         outputView.printInitialCards(dealerCards, playerCardsBundle);
 
-        ScoreBoard scoreBoard = playGame(names, dealerCards, playerCardsBundle);
-        outputView.printResults(dealerCards, playerCardsBundle);
-
-        outputView.printScores(scoreBoard);
-    }
-
-    private ScoreBoard playGame(Names names, DealerCards dealerCards, List<PlayerCards> playerCardsBundle) {
+        playGame(deck, dealerCards, playerCardsBundle);
         ScoreBoard scoreBoard = ScoreBoard.from(names);
-        Rule rule = new Rule(scoreBoard);
-
-        for (PlayerCards playerCards : playerCardsBundle) {
-            drawByOpinion(playerCards);
-        }
-        drawDealerCards(dealerCards);
-
-        rule.decideResult(dealerCards, playerCardsBundle);
-        return scoreBoard;
+        determineOutcome(dealerCards, playerCardsBundle, scoreBoard);
     }
 
-    private List<PlayerCards> makePlayerCards(Names names) {
-        return names.getNames().stream()
-                .map(name -> new PlayerCards(name, deck.drawInitialHands()))
-                .toList();
+    private void determineOutcome(DealerCards dealerCards, List<PlayerCards> playerCardsBundle, ScoreBoard scoreBoard) {
+        Referee referee = new Referee(scoreBoard);
+        referee.decideResult(dealerCards, playerCardsBundle);
+        outputView.printResults(dealerCards, playerCardsBundle);
+        outputView.printScores(scoreBoard);
     }
 
     private Names readNames() {
@@ -63,26 +50,39 @@ public class Casino {
         }
     }
 
-    private void drawDealerCards(DealerCards dealerCards) {
+    private List<PlayerCards> makePlayerCards(Names names, Deck deck) {
+        return names.getNames().stream()
+                .map(name -> new PlayerCards(name, deck.drawInitialHands()))
+                .toList();
+    }
+
+    private void playGame(Deck deck, DealerCards dealerCards, List<PlayerCards> playerCardsBundle) {
+        for (PlayerCards playerCards : playerCardsBundle) {
+            drawByOpinion(deck, playerCards);
+        }
+        drawDealerCards(deck, dealerCards);
+    }
+
+    private void drawByOpinion(Deck deck, PlayerCards playerCards) {
+        boolean opinion = inputView.readHitOpinion(playerCards.getPlayerName());
+        if (!opinion) {
+            return;
+        }
+        drawPlayerCards(deck, playerCards);
+        outputView.printPlayerCards(playerCards);
+        if (playerCards.canDraw()) {
+            drawByOpinion(deck, playerCards);
+        }
+    }
+
+    private void drawDealerCards(Deck deck, DealerCards dealerCards) {
         while (dealerCards.canDraw()) {
             dealerCards.receive(deck.draw());
             outputView.printDealerGivenCard();
         }
     }
 
-    private void drawByOpinion(PlayerCards playerCards) {
-        boolean opinion = inputView.readHitOpinion(playerCards.getPlayerName());
-        if (!opinion) {
-            return;
-        }
-        draw(playerCards);
-        outputView.printPlayerCards(playerCards);
-        if (playerCards.canDraw()) {
-            drawByOpinion(playerCards);
-        }
-    }
-
-    private void draw(PlayerCards playerCards) {
+    private void drawPlayerCards(Deck deck, PlayerCards playerCards) {
         if (playerCards.canDraw()) {
             playerCards.receive(deck.draw());
         }

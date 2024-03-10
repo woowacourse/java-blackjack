@@ -1,10 +1,12 @@
 package domain.game;
 
 import domain.Name;
+import domain.Names;
 import domain.card.Card;
 import domain.card.DealerCards;
 import domain.card.PlayerCards;
 import domain.card.Shape;
+import domain.score.ScoreBoard;
 import domain.score.Status;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,16 +17,16 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class RuleTest {
+class RefereeTest {
 
+    private final Name capy = new Name("capy");
     private DealerCards dealerCards;
     private PlayerCards playerCards;
-    private Rule rule;
+    private ScoreBoard scoreBoard;
+    private Referee referee;
 
     @BeforeEach
     void setUp() {
-        Name capy = new Name("capy");
-
         dealerCards = new DealerCards(List.of(
                 new Card(6, Shape.CLUB),
                 new Card(10, Shape.CLUB)
@@ -35,18 +37,21 @@ class RuleTest {
                 new Card(11, Shape.CLUB)
         ));
 
-        rule = new Rule();
+        Names names = new Names(List.of(capy));
+        scoreBoard = ScoreBoard.from(names);
+        referee = new Referee(scoreBoard);
     }
 
     @Test
-    @DisplayName("타겟 카드의 승무패를 결정한다.")
-    void decideStatus() {
-        Status dealerStatus = rule.decideStatus(dealerCards, playerCards);
-        Status playerStatus = rule.decideStatus(playerCards, dealerCards);
+    @DisplayName("플레이어와 딜러의 승패를 반영한다.")
+    void decideResult() {
+        referee.decideResult(dealerCards, List.of(playerCards));
 
         assertAll(
-                () -> assertThat(dealerStatus).isEqualTo(Status.LOSE),
-                () -> assertThat(playerStatus).isEqualTo(Status.WIN)
+                () -> assertThat(scoreBoard.getDealerScore().getScore(Status.WIN)).isEqualTo(0),
+                () -> assertThat(scoreBoard.getDealerScore().getScore(Status.TIE)).isEqualTo(0),
+                () -> assertThat(scoreBoard.getDealerScore().getScore(Status.LOSE)).isEqualTo(1),
+                () -> assertThat(scoreBoard.getPlayerScore().get(capy)).isEqualTo(Status.WIN)
         );
     }
 }
