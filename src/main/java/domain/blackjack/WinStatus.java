@@ -9,10 +9,10 @@ public enum WinStatus {
     LOSE;
 
     public static WinStatus of(Participant participant, Dealer dealer) {
-        if (!participant.canHit()) {
+        if (participant.isBust()) {
             return LOSE;
         }
-        if (!dealer.canHit()) {
+        if (dealer.isBust()) {
             return WIN;
         }
         return isWinnerWhenNotBust(participant, dealer);
