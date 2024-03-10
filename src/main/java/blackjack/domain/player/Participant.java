@@ -4,12 +4,12 @@ import blackjack.domain.card.Card;
 import blackjack.domain.rule.Score;
 import java.util.Objects;
 
-public class Player {
+public class Participant {
 
     private final PlayerName name;
     private final Hand hand;
 
-    public Player(PlayerName name, Hand hand) {
+    public Participant(PlayerName name, Hand hand) {
         this.name = name;
         this.hand = hand;
     }
@@ -38,8 +38,8 @@ public class Player {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Player player = (Player) o;
-        return Objects.equals(name, player.name);
+        Participant participant = (Participant) o;
+        return Objects.equals(name, participant.name);
     }
 
     @Override

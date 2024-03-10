@@ -12,11 +12,11 @@ public class PlayerCreator {
         this.handCreator = handCreator;
     }
 
-    public Player createPlayerFrom(PlayerName playerName, CardDeck cardDeck) {
-        return new Player(playerName, handCreator.createPlayerHandFrom(cardDeck));
+    public Participant createPlayerFrom(PlayerName playerName, CardDeck cardDeck) {
+        return new Participant(playerName, handCreator.createPlayerHandFrom(cardDeck));
     }
 
-    public Player createDealerFrom(CardDeck cardDeck) {
-        return new Player(new PlayerName(DEALER_NAME), handCreator.createDealerHandFrom(cardDeck));
+    public Participant createDealerFrom(CardDeck cardDeck) {
+        return new Participant(new PlayerName(DEALER_NAME), handCreator.createDealerHandFrom(cardDeck));
     }
 }

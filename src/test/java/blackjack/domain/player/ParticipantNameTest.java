@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("참가자 이름 테스트")
-class PlayerNameTest {
+class ParticipantNameTest {
 
     @DisplayName("이름은 빈 문자열일 수 없다")
     @Test

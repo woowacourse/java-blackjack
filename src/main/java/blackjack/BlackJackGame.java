@@ -7,7 +7,7 @@ import blackjack.domain.DrawDecision;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.player.HandCreator;
-import blackjack.domain.player.Player;
+import blackjack.domain.player.Participant;
 import blackjack.domain.player.PlayerCreator;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
@@ -31,7 +31,7 @@ public class BlackJackGame {
     public void run() {
         CardDeck cardDeck = CardDeck.createShuffledDeck();
         Players players = initPlayers(cardDeck);
-        Player dealer = initDealer(cardDeck);
+        Participant dealer = initDealer(cardDeck);
         printPlayersInformation(players, dealer);
 
         completePlayersHand(players, cardDeck);
@@ -55,12 +55,12 @@ public class BlackJackGame {
                 .toList());
     }
 
-    private Player initDealer(CardDeck cardDeck) {
+    private Participant initDealer(CardDeck cardDeck) {
         PlayerCreator playerCreator = new PlayerCreator(new HandCreator());
         return playerCreator.createDealerFrom(cardDeck);
     }
 
-    private void printPlayersInformation(Players players, Player dealer) {
+    private void printPlayersInformation(Players players, Participant dealer) {
         outputView.printHandOutEvent(players, 2);
         outputView.printDealerInitialHand(dealer);
         players.getPlayers().forEach(outputView::printPlayerHand);
@@ -70,26 +70,26 @@ public class BlackJackGame {
         players.getPlayers().forEach(player -> completePlayerHand(player, cardDeck));
     }
 
-    private void completePlayerHand(Player player, CardDeck cardDeck) {
-        while (player.canHit() && readHitDecision(player) == YES) {
-            player.appendCard(cardDeck.popCard());
-            outputView.printPlayerHand(player);
+    private void completePlayerHand(Participant participant, CardDeck cardDeck) {
+        while (participant.canHit() && readHitDecision(participant) == YES) {
+            participant.appendCard(cardDeck.popCard());
+            outputView.printPlayerHand(participant);
         }
     }
 
-    private DrawDecision readHitDecision(Player player) {
+    private DrawDecision readHitDecision(Participant participant) {
         InputMapper inputMapper = new InputMapper();
-        return inputMapper.mapToDrawDecision(inputView.readDrawPlan(player.getName()));
+        return inputMapper.mapToDrawDecision(inputView.readDrawPlan(participant.getName()));
     }
 
-    private void completeDealerHand(Player dealer, CardDeck cardDeck) {
+    private void completeDealerHand(Participant dealer, CardDeck cardDeck) {
         while (dealer.canHit()) {
             Card card = cardDeck.popCard();
             dealer.appendCard(card);
         }
     }
 
-    private void printDealerPopCount(Player dealer) {
+    private void printDealerPopCount(Participant dealer) {
         int dealerPopCount = dealer.handSize() - 2;
         if (dealerPopCount > 0) {
             outputView.printDealerPopCount(16, dealerPopCount);
@@ -100,11 +100,11 @@ public class BlackJackGame {
         players.getPlayers().forEach(this::printPlayerScore);
     }
 
-    private void printPlayerScore(Player player) {
-        outputView.printPlayerScore(player, player.calculateHandScore());
+    private void printPlayerScore(Participant participant) {
+        outputView.printPlayerScore(participant, participant.calculateHandScore());
     }
 
-    private void printDealerGameResult(Player dealer, Players players) {
+    private void printDealerGameResult(Participant dealer, Players players) {
         Score dealerScore = dealer.calculateHandScore();
         int playerWinCount = players.countPlayerWithScoreAbove(dealerScore, new ScoreCalculateStrategy());
         int dealerWinCount = players.countPlayer() - playerWinCount;
@@ -113,7 +113,7 @@ public class BlackJackGame {
         outputView.printDealerGameResult(dealerGameResult);
     }
 
-    private void printPlayersGameResult(Players players, Player dealer) {
+    private void printPlayersGameResult(Players players, Participant dealer) {
         Judge judge = new Judge();
         Score dealerScore = dealer.calculateHandScore();
         players.getPlayers()

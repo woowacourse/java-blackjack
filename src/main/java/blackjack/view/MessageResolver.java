@@ -8,7 +8,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.player.Hand;
-import blackjack.domain.player.Player;
+import blackjack.domain.player.Participant;
 import blackjack.domain.player.Players;
 import blackjack.domain.rule.Score;
 import java.util.stream.Collectors;
@@ -26,12 +26,12 @@ public class MessageResolver {
 
     private String resolveNamesMessage(Players players) {
         return players.getPlayers().stream()
-                .map(Player::getName)
+                .map(Participant::getName)
                 .collect(Collectors.joining(SEPARATOR));
     }
 
-    public String resolvePlayerHandMessage(Player player) {
-        return String.format("%s 카드: %s", player.getName(), resolveHandMessage(player.getHand()));
+    public String resolvePlayerHandMessage(Participant participant) {
+        return String.format("%s 카드: %s", participant.getName(), resolveHandMessage(participant.getHand()));
     }
 
     private String resolveHandMessage(Hand hand) {
@@ -46,7 +46,7 @@ public class MessageResolver {
         return String.format("%s%s", NUMBER_NAME.get(cardNumber), SHAPE_NAME.get(cardShape));
     }
 
-    public String resolveDealerHandMessage(Player dealer) {
+    public String resolveDealerHandMessage(Participant dealer) {
         Card card = dealer.getHand().getCards().get(0);
         return String.format("%s: %s", dealer.getName(), resolveCardMessage(card));
     }
@@ -56,13 +56,13 @@ public class MessageResolver {
         return String.join("", LINE_SEPARATOR, message, LINE_SEPARATOR);
     }
 
-    public String resolvePlayerScoreMessage(Player player, Score score) {
-        String handMessage = resolvePlayerHandMessage(player);
+    public String resolvePlayerScoreMessage(Participant participant, Score score) {
+        String handMessage = resolvePlayerHandMessage(participant);
         return String.format("%s - 결과: %d", handMessage, score.getValue());
     }
 
-    public String resolvePlayerGameResult(Player player, boolean win) {
-        return String.format("%s: %s", player.getName(), resolveGameResultMessage(win));
+    public String resolvePlayerGameResult(Participant participant, boolean win) {
+        return String.format("%s: %s", participant.getName(), resolveGameResultMessage(win));
     }
 
     private String resolveGameResultMessage(boolean win) {
