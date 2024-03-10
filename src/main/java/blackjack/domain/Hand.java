@@ -39,11 +39,7 @@ class Hand {
     }
 
     public boolean isBust() {
-        return isBust(calculateScore());
-    }
-
-    private boolean isBust(int score) {
-        return score > BLACKJACK_SCORE;
+        return calculateScore() > BLACKJACK_SCORE;
     }
 
     public boolean isBlackJack() {

@@ -89,7 +89,7 @@ public class BlackjackController {
     }
 
     private Map<GameResult, Integer> createDealerGameResult(Map<Player, GameResult> playerGameResults) {
-        EnumMap<GameResult, Integer> dealerGameResults = new EnumMap<>(GameResult.class);
+        Map<GameResult, Integer> dealerGameResults = new EnumMap<>(GameResult.class);
 
         for (GameResult gameResult : GameResult.values()) {
             dealerGameResults.put(gameResult, 0);
