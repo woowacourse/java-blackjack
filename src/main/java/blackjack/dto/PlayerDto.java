@@ -5,13 +5,13 @@ import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Player;
 import java.util.List;
 
-public class PlayerResponseDto {
+public class PlayerDto {
 
     private final Name name;
     private final List<Card> cards;
     private final int score;
 
-    public PlayerResponseDto(final Name name, final List<Card> cards, final int score) {
+    public PlayerDto(final Name name, final List<Card> cards, final int score) {
         this.name = name;
         this.cards = cards;
         this.score = score;
@@ -29,7 +29,7 @@ public class PlayerResponseDto {
         return score;
     }
 
-    public static PlayerResponseDto toDto(final Player player) {
-        return new PlayerResponseDto(player.getName(), player.getCards(), player.calculateScore());
+    public static PlayerDto toDto(final Player player) {
+        return new PlayerDto(player.getName(), player.getCards(), player.calculateScore());
     }
 }

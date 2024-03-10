@@ -3,12 +3,12 @@ package blackjack.dto;
 import blackjack.domain.gamer.Name;
 import blackjack.domain.Outcome;
 
-public class PlayerOutcomeResponseDto {
+public class PlayerOutcomeDto {
 
     private final Name name;
     private final Outcome outcome;
 
-    public PlayerOutcomeResponseDto(final Name name, final Outcome outcome) {
+    public PlayerOutcomeDto(final Name name, final Outcome outcome) {
         this.name = name;
         this.outcome = outcome;
     }
@@ -21,7 +21,7 @@ public class PlayerOutcomeResponseDto {
         return outcome;
     }
 
-    public static PlayerOutcomeResponseDto toDto(final Name name, final Outcome outcome) {
-        return new PlayerOutcomeResponseDto(name, outcome);
+    public static PlayerOutcomeDto toDto(final Name name, final Outcome outcome) {
+        return new PlayerOutcomeDto(name, outcome);
     }
 }

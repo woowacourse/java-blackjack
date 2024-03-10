@@ -1,12 +1,12 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.dto.DealerOutcomeResponseDto;
-import blackjack.dto.DealerResponseDto;
-import blackjack.dto.PlayerOutcomeResponseDto;
-import blackjack.dto.PlayerResponseDto;
-import blackjack.dto.PlayersOutcomeResponseDto;
-import blackjack.dto.PlayersResponseDto;
+import blackjack.dto.DealerOutcomeDto;
+import blackjack.dto.DealerDto;
+import blackjack.dto.PlayerOutcomeDto;
+import blackjack.dto.PlayerDto;
+import blackjack.dto.PlayersOutcomeDto;
+import blackjack.dto.PlayersDto;
 import blackjack.view.mapper.OutcomeMapper;
 import blackjack.view.mapper.SuitMapper;
 import java.util.List;
@@ -17,20 +17,20 @@ public class OutputView {
     private static final String DEALER = "딜러";
 
     public static void printInitialState(
-            final DealerResponseDto dealerResponseDto,
-            final PlayersResponseDto playersResponseDto
+            final DealerDto dealerResponseDto,
+            final PlayersDto playersResponseDto
     ) {
         System.out.println(System.lineSeparator() + DEALER + "와 " + makePlayerName(playersResponseDto) + "에게 2장을 나누었습니다.");
         System.out.println(DEALER + "카드: " + makeCardsState(dealerResponseDto.getCards()));
-        for (PlayerResponseDto playerResponseDto : playersResponseDto.getValues()) {
+        for (PlayerDto playerResponseDto : playersResponseDto.getValues()) {
             System.out.println(playerResponseDto.getName().value() + "카드: " + makeCardsState(playerResponseDto.getCards()));
         }
         System.out.println();
     }
 
-    private static String makePlayerName(final PlayersResponseDto playersResponseDto) {
+    private static String makePlayerName(final PlayersDto playersResponseDto) {
         final StringJoiner nameJoiner = new StringJoiner(", ");
-        for (PlayerResponseDto playerResponseDto : playersResponseDto.getValues()) {
+        for (PlayerDto playerResponseDto : playersResponseDto.getValues()) {
             nameJoiner.add(playerResponseDto.getName().value());
         }
         return nameJoiner.toString();
@@ -44,7 +44,7 @@ public class OutputView {
         return cardJoiner.toString();
     }
 
-    public static void printCurrentState(final PlayerResponseDto playerResponseDto) {
+    public static void printCurrentState(final PlayerDto playerResponseDto) {
         System.out.println(playerResponseDto.getName().value() + "카드: " + makeCardsState(playerResponseDto.getCards()));
     }
 
@@ -52,10 +52,10 @@ public class OutputView {
         System.out.println(System.lineSeparator() + DEALER + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printFinalState(final DealerResponseDto dealerResponseDto, final PlayersResponseDto playersResponseDto) {
+    public static void printFinalState(final DealerDto dealerResponseDto, final PlayersDto playersResponseDto) {
         System.out.println(System.lineSeparator() + DEALER + "카드: " + makeCardsState(dealerResponseDto.getCards())
                 + " - 결과: " + dealerResponseDto.getScore());
-        for (PlayerResponseDto playerResponseDto : playersResponseDto.getValues()) {
+        for (PlayerDto playerResponseDto : playersResponseDto.getValues()) {
             System.out.println(playerResponseDto.getName().value() + "카드: " + makeCardsState(playerResponseDto.getCards())
                     + " - 결과: " + playerResponseDto.getScore());
         }
@@ -63,15 +63,15 @@ public class OutputView {
     }
 
     public static void printFinalOutcomes(
-            final DealerOutcomeResponseDto dealerDealerOutcomeResponseDto,
-            final PlayersOutcomeResponseDto playersOutcomeResponseDto
+            final DealerOutcomeDto dealerDealerOutcomeResponseDto,
+            final PlayersOutcomeDto playersOutcomeResponseDto
     ) {
         System.out.println("## 최종 승패");
         printDealerFinalOutcome(dealerDealerOutcomeResponseDto);
         printPlayersFinalOutcome(playersOutcomeResponseDto);
     }
 
-    private static void printDealerFinalOutcome(final DealerOutcomeResponseDto dealerDealerOutcomeResponseDto) {
+    private static void printDealerFinalOutcome(final DealerOutcomeDto dealerDealerOutcomeResponseDto) {
         System.out.print(
                 DEALER + ": " + dealerDealerOutcomeResponseDto.getWinCount() + "승 "
                         + dealerDealerOutcomeResponseDto.getLoseCount() + "패 ");
@@ -81,8 +81,8 @@ public class OutputView {
         System.out.println();
     }
 
-    private static void printPlayersFinalOutcome(final PlayersOutcomeResponseDto playersOutcomeResponseDto) {
-        for (PlayerOutcomeResponseDto playerOutcomeResponseDto : playersOutcomeResponseDto.getValues()) {
+    private static void printPlayersFinalOutcome(final PlayersOutcomeDto playersOutcomeResponseDto) {
+        for (PlayerOutcomeDto playerOutcomeResponseDto : playersOutcomeResponseDto.getValues()) {
             System.out.println(
                 playerOutcomeResponseDto.getName().value()
                         + ": " + OutcomeMapper.mapToViewName(playerOutcomeResponseDto.getOutcome()));
