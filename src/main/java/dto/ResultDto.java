@@ -36,18 +36,8 @@ public record ResultDto(Map<String, String> gameResults) {
     public Map<String, String> getPlayerResult() {
         Map<String, String> results = new LinkedHashMap<>();
         for (Map.Entry<String, String> result : gameResults.entrySet()) {
-            results.put(result.getKey(), convertPlayerWinLoss(result.getValue()));
+            results.put(result.getKey(), result.getValue());
         }
         return results;
-    }
-
-    private String convertPlayerWinLoss(String resultText) {
-        if (resultText.equals("PLAYER_WIN")) {
-            return "승";
-        }
-        if (resultText.equals("DEALER_WIN")) {
-            return "패";
-        }
-        return "무";
     }
 }
