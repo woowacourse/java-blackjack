@@ -36,10 +36,6 @@ public class BlackjackGame {
         }
     }
 
-    public boolean isNotDealerBlackjack() {
-        return dealer.isNotBlackjack();
-    }
-
     public StartCardsDto start() {
         dealer.addCard(START_CARD_COUNT);
 
@@ -53,10 +49,8 @@ public class BlackjackGame {
         return StartCardsDto.of(players.getPlayersHands(), dealerOpenedHands, dealer.getName());
     }
 
-    public List<String> getPlayersName() {
-        return players.getNames().stream()
-                .map(ParticipantName::getName)
-                .toList();
+    public boolean isNotDealerBlackjack() {
+        return dealer.isNotBlackjack();
     }
 
     public boolean isPlayerAliveByName(final String name) {
@@ -93,6 +87,12 @@ public class BlackjackGame {
         final Map<WinStatus, Long> dealerWinningResult = winningResult.summarizeDealerWinningResult();
 
         return WinningResultDto.of(playerWinningResults, dealerWinningResult, dealer.getName());
+    }
+
+    public List<String> getPlayersName() {
+        return players.getNames().stream()
+                .map(ParticipantName::getName)
+                .toList();
     }
 
     public String getDealerName() {

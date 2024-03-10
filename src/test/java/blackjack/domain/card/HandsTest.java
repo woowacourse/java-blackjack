@@ -67,4 +67,21 @@ class HandsTest {
         // then
         assertThat(hands.getCards()).containsExactly(card1, card2, card3);
     }
+
+    @DisplayName("첫번째 카드를 반환한다.")
+    @Test
+    void getFirstCard() {
+        // given
+        Card card1 = new Card(CardNumber.ACE, CardShape.HEART);
+        Card card2 = new Card(CardNumber.ACE, CardShape.SPADE);
+        Hands hands = new Hands(List.of(card1, card2));
+
+        // when
+        final Hands firstCard = hands.getFirstCard();
+
+        // then
+        assertThat(firstCard.getCards())
+                .hasSize(1)
+                .containsExactly(card1);
+    }
 }

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
+
     @Test
     @DisplayName("딜러는 카드의 합이 17 미만인 경우 카드가 더 필요하다.")
     void needMoreCard() {
@@ -36,5 +37,26 @@ class DealerTest {
         boolean needMoreCard = dealer.needMoreCard();
 
         assertThat(needMoreCard).isFalse();
+    }
+
+    @DisplayName("플레이어의 수와 각 카드 수에 맞게 카드를 뽑는다.")
+    @Test
+    void drawCard() {
+        // given
+        final List<Card> expected = List.of(new Card(CardNumber.NINE, CardShape.HEART),
+                new Card(CardNumber.EIGHT, CardShape.HEART));
+
+        Dealer dealer = new Dealer(new Deck(expected));
+
+        final int playerSize = 1;
+        final int eachCardCount = 2;
+
+        // when
+        final List<List<Card>> cards = dealer.drawCards(playerSize, eachCardCount);
+
+        // then
+        assertThat(cards).hasSize(playerSize)
+                .containsExactly(expected);
+
     }
 }
