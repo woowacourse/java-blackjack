@@ -1,5 +1,6 @@
 package blackjack.service;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
 import blackjack.domain.dealer.Deck;
@@ -40,7 +41,8 @@ public class BlackjackGame {
     public StartCardsDto start() {
         dealer.addCard(START_CARD_COUNT);
 
-        players.divideCard(dealer.drawCards(players.count(), START_CARD_COUNT));
+        final List<List<Card>> cards = dealer.drawCards(players.count(), START_CARD_COUNT);
+        players.divideCard(cards);
 
         return getStartCards();
     }

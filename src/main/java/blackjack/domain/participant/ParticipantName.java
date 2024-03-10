@@ -18,7 +18,7 @@ public class ParticipantName {
         }
     }
 
-    public boolean is(final String otherName) {
+    public boolean isSameName(final String otherName) {
         return name.equals(otherName);
     }
 
