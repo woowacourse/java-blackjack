@@ -53,6 +53,7 @@ public class Hand {
                 .filter(Card::isAce)
                 .count();
         int cardTotalScore = getCardTotalScore();
-        return Math.min(aceCount, (BLACKJACK - cardTotalScore) / ACE_ALTERNATIVE_SCORE);
+        int availableAceAlterCount = (BLACKJACK - cardTotalScore) / ACE_ALTERNATIVE_SCORE;
+        return Math.min(aceCount, availableAceAlterCount);
     }
 }
