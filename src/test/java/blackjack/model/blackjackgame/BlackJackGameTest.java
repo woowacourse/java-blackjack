@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.model.cards.Card;
 import blackjack.model.cards.Cards;
-import blackjack.model.generator.CardGenerator;
-import blackjack.model.generator.IndexGenerator;
+import blackjack.model.deck.DeckGenerator;
+import blackjack.model.deck.DeckManager;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
 import java.util.List;
@@ -18,16 +18,13 @@ class BlackJackGameTest {
     @DisplayName("카드 두장을 지급한다.")
     @Test
     void distributeCards() {
-        IndexGenerator indexGenerator = (maxRange) -> 2;
-        CardGenerator cardGenerator = new CardGenerator(indexGenerator);
-
         Dealer dealer = new Dealer();
         List<Player> players = List.of(
                 new Player("daon"),
                 new Player("ella")
         );
-
-        BlackJackGame blackJackGame = new BlackJackGame(dealer, players, cardGenerator);
+        DeckGenerator deckGenerator = new DeckGenerator();
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, players, new DeckManager(deckGenerator.generate()));
 
         blackJackGame.distributeCards();
         List<Card> dealerCards = dealer.getCards().getCards();
@@ -46,16 +43,14 @@ class BlackJackGameTest {
     @DisplayName("플레이어 카드상태를 업데이트 한다")
     @Test
     void update() {
-        IndexGenerator indexGenerator = (maxRange) -> 2;
-        CardGenerator cardGenerator = new CardGenerator(indexGenerator);
-
         Dealer dealer = new Dealer();
         Player player = new Player("daon");
         List<Player> players = List.of(
                 player,
                 new Player("ella")
         );
-        BlackJackGame blackJackGame = new BlackJackGame(dealer, players, cardGenerator);
+        DeckGenerator deckGenerator = new DeckGenerator();
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, players, new DeckManager(deckGenerator.generate()));
 
         blackJackGame.update(0);
         Player findPlayer = blackJackGame.getPlayers().get(0);

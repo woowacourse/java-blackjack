@@ -1,6 +1,6 @@
 package blackjack.model.blackjackgame;
 
-import blackjack.model.generator.CardGenerator;
+import blackjack.model.deck.DeckManager;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
 import java.util.ArrayList;
@@ -11,22 +11,22 @@ import java.util.Map;
 public class BlackJackGame {
     private final Dealer dealer;
     private final List<Player> players;
-    private final CardGenerator cardGenerator;
+    private final DeckManager deckManager;
 
-    public BlackJackGame(Dealer dealer, List<Player> players, CardGenerator cardGenerator) {
+    public BlackJackGame(Dealer dealer, List<Player> players, DeckManager deckManager) {
         this.dealer = dealer;
-        this.cardGenerator = cardGenerator;
+        this.deckManager = deckManager;
         this.players = new ArrayList<>(players);
     }
 
     public void distributeCards() {
-        dealer.addCards(cardGenerator.drawCards());
-        players.forEach(player -> player.addCards(cardGenerator.drawCards()));
+        dealer.addCards(deckManager.drawCards());
+        players.forEach(player -> player.addCards(deckManager.drawCards()));
     }
 
     public void update(int index) {
         Player player = players.get(index);
-        player.addCard(cardGenerator.drawCard());
+        player.addCard(deckManager.drawCard());
     }
 
     public boolean checkDealerState() {
@@ -34,7 +34,7 @@ public class BlackJackGame {
     }
 
     public void updateDealer() {
-        dealer.addCard(cardGenerator.drawCard());
+        dealer.addCard(deckManager.drawCard());
     }
 
     public GameResults calculateFinalResults() {

@@ -1,4 +1,4 @@
-package blackjack.model.generator;
+package blackjack.model.deck;
 
 import blackjack.model.cards.Card;
 import blackjack.model.cards.CardNumber;

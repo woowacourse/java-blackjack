@@ -2,8 +2,8 @@ package blackjack.controller;
 
 import blackjack.model.blackjackgame.BlackJackGame;
 import blackjack.model.blackjackgame.GameResults;
-import blackjack.model.generator.CardGenerator;
-import blackjack.model.generator.RandomIndexGenerator;
+import blackjack.model.deck.DeckGenerator;
+import blackjack.model.deck.DeckManager;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
 import blackjack.view.Command;
@@ -24,7 +24,8 @@ public class BlackJackController {
     public void run() {
         Dealer dealer = new Dealer();
         List<Player> players = inputView.readPlayers();
-        BlackJackGame blackJackGame = new BlackJackGame(dealer, players, new CardGenerator(new RandomIndexGenerator()));
+        DeckGenerator deckGenerator = new DeckGenerator();
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, players, new DeckManager(deckGenerator.generate()));
         blackJackGame.distributeCards();
         outputView.printDistributedCardsInfo(blackJackGame);
 

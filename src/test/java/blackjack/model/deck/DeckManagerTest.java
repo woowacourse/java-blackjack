@@ -1,10 +1,11 @@
-package blackjack.model.cards;
+package blackjack.model.deck;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.model.generator.DeckGenerator;
-import blackjack.model.generator.DeckManager;
+import blackjack.model.cards.Card;
+import blackjack.model.cards.CardNumber;
+import blackjack.model.cards.CardShape;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;

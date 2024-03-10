@@ -7,7 +7,6 @@ import blackjack.model.cards.Card;
 import blackjack.model.cards.CardNumber;
 import blackjack.model.cards.CardShape;
 import blackjack.model.cards.Cards;
-import blackjack.model.generator.CardGenerator;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,9 +24,9 @@ class PlayerTest {
 
         Player player = new Player("daon");
         player.addCards(given);
-        CardGenerator cardGenerator = new CardGenerator(maxRange -> 3);
+        Card cardToAdd = new Card(CardNumber.FIVE, CardShape.DIAMOND);
 
-        player.addCard(cardGenerator.drawCard());
+        player.addCard(cardToAdd);
         assertThat(player.getCards().getCards()).hasSize(3);
     }
 
