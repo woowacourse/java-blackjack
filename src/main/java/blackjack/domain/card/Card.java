@@ -18,12 +18,16 @@ public class Card {
 		return cardNumber == CardNumber.ACE;
 	}
 
-	public int getNumber() {
+	public int getNumberValue() {
 		return cardNumber.getValue();
 	}
 
-	public CardDto convertCardToDto() {
-		return new CardDto(cardNumber.getName(), cardShape.getName());
+	public CardShape getCardShape() {
+		return cardShape;
+	}
+
+	public CardNumber getCardNumber() {
+		return cardNumber;
 	}
 
 	@Override
