@@ -8,14 +8,14 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
+    private static final List<Card> CARDS_CACHE = Arrays.stream(CardType.values())
+            .flatMap(type -> Arrays.stream(CardNumber.values())
+                    .map(number -> new Card(type, number)))
+            .toList();
     private final List<Card> cards;
 
     public Deck() {
-        cards = new ArrayList<>();
-        for (CardType type : CardType.values()) {
-            Arrays.stream(CardNumber.values())
-                    .forEach(number -> cards.add(new Card(type, number)));
-        }
+        cards = new ArrayList<>(CARDS_CACHE);
     }
 
     public Card draw() {
