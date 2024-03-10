@@ -11,8 +11,8 @@ public class CardDeck {
 
     public CardDeck() {
         List<Card> cards = Suit.getValues().stream()
-                .flatMap(mark -> Rank.getValues().stream()
-                        .map(letter -> new Card(letter, mark)))
+                .flatMap(suit -> Rank.getValues().stream()
+                        .map(rank -> Card.of(rank, suit)))
                 .toList();
         deck = new Stack<>();
         deck.addAll(cards);
