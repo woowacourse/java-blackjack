@@ -1,24 +1,17 @@
 package domain.player;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Players {
-    private static final int MAX_PLAYER_NUMBER = 8;
-    private final List<Player> value;
+    private final List<Player> players;
 
-    public Players(final List<Player> value) {
-        validate(value);
-        this.value = value;
-    }
-
-    public static Players fromNames(final List<String> names) {
-        return new Players(names.stream()
-                .map(name -> new Player(new Name(name)))
-                .collect(Collectors.toList()));
+    public Players(final List<Player> players) {
+        validate(players);
+        this.players = players;
     }
 
     private void validate(final List<Player> players) {
@@ -33,7 +26,7 @@ public class Players {
     }
 
     private boolean isInvalidPlayersNumber(final List<Player> players) {
-        return players.size() > MAX_PLAYER_NUMBER;
+        return players.size() > 8;
     }
 
     private void validateDuplicate(final List<Player> players) {
@@ -46,19 +39,26 @@ public class Players {
         return Set.copyOf(players).size() != players.size();
     }
 
-    public Player findPlayerByName(final String name) {
-        return this.value.stream()
-                .filter(r -> r.getName().equals(name))
+    public static Players from(final String[] names) {
+        return new Players(Arrays.stream(names)
+                .map(name -> new Participant(new Name(name)))
+                .collect(Collectors.toList()));
+    }
+
+    public Player getDealer() {
+        return players.stream()
+                .filter(Player::isDealer)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("플레이어가 존재하지 않습니다."));
+                .orElseThrow(() -> new NoSuchElementException("플레이어 목록에 딜러가 존재하지 않습니다."));
     }
 
-    public Stream<Player> stream() {
-        return this.value.stream();
+    public List<Player> getParticipants() {
+        return players.stream()
+                .filter(Player::isParticipant)
+                .collect(Collectors.toList());
     }
 
-    public List<Player> getValue() {
-        return Collections.unmodifiableList(value);
+    public List<Player> getAllPlayers() {
+        return players;
     }
-
 }

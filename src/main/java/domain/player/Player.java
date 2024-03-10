@@ -1,37 +1,77 @@
 package domain.player;
 
 import domain.card.Card;
-import dto.PlayerResponse;
-import dto.PlayerResult;
+import domain.card.Denomination;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Player extends Participant {
-    private static final int HIT_UPPER_BOUND = 21;
+public abstract class Player {
+    private static final int ACE_LOW = 1;
+    private static final int ACE_HIGH = 11;
+    static final int PERFECT_SCORE = 21;
+    static final String DEALER_NAME = "딜러";
 
     private final Name name;
+    private final List<Card> cards = new ArrayList<>();
 
     public Player(final Name name) {
-        super();
         this.name = name;
     }
 
-    public PlayerResult obtainResultBy(final Dealer dealer) {
-        return PlayerResult.reverse(dealer.compareHandsWith(this));
+    public abstract boolean isNotBust();
+
+    public abstract boolean isBust();
+
+    public abstract boolean canHit();
+
+    public abstract boolean canNotHit();
+
+
+    public void hit(final Card card) {
+        cards.add(card);
+
     }
 
-    public PlayerResponse toPlayerResponse() {
-        return new PlayerResponse(getName(), getHands().stream().map(Card::toCardResponse).toList(),
-                calculateScore());
+
+    public int calculateScore() {
+        int score = 0;
+        for (final Card card : cards) {
+            score += determineScore(card, score);
+        }
+        return score;
     }
 
-    @Override
-    public boolean canHit() {
-        return calculateScore() < HIT_UPPER_BOUND;
+    private int determineScore(final Card card, final int score) {
+        if (card.getDenomination() == Denomination.ACE) {
+            return determineAceScore(score);
+        }
+        return card.getValue();
+    }
+
+    private int determineAceScore(final int score) {
+        if (score + ACE_HIGH <= PERFECT_SCORE) {
+            return ACE_HIGH;
+        }
+        return ACE_LOW;
+    }
+
+    public boolean isDealer() {
+        return this.name.equals(new Name(DEALER_NAME));
+    }
+
+    public boolean isParticipant() {
+        return !this.isDealer();
     }
 
     public String getName() {
-        return name.getValue();
+        return name.getName();
     }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
 
     @Override
     public boolean equals(final Object o) {
@@ -48,5 +88,9 @@ public class Player extends Participant {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public boolean isGreaterOrEqualThan(final Player player) {
+        return this.calculateScore() >= player.calculateScore();
     }
 }

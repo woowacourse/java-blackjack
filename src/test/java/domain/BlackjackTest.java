@@ -1,5 +1,15 @@
 package domain;
 
+import domain.blackjack.Blackjack;
+import domain.blackjack.BlackjackResult;
+import domain.card.Card;
+import domain.card.Denomination;
+import domain.card.Symbol;
+import domain.player.Dealer;
+import domain.player.Name;
+import domain.player.Participant;
+import domain.player.Player;
+import domain.player.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -41,7 +51,7 @@ class BlackjackTest {
         final Player dealer = new Dealer();
         final Player teba = new Participant(new Name("테바"));
         final Player jonge = new Participant(new Name("종이"));
-        teba.hit(new Card(Denomination.ACE,Symbol.CLOVER));
+        teba.hit(new Card(Denomination.ACE, Symbol.CLOVER));
         jonge.hit(new Card(Denomination.ACE,Symbol.HEART));
         final Blackjack blackjack = new Blackjack(new Players(new ArrayList<>(List.of(teba, jonge))), dealer);
 

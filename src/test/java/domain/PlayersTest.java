@@ -1,5 +1,9 @@
 package domain;
 
+import domain.player.Name;
+import domain.player.Participant;
+import domain.player.Player;
+import domain.player.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -7,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PlayersTest {
 
