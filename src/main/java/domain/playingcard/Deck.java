@@ -1,5 +1,6 @@
 package domain.playingcard;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -23,18 +24,16 @@ public class Deck {
     }
 
     private static List<PlayingCard> generateCardByShape(final PlayingCardShape playingCardShape) {
-        return Arrays.stream(values())
+        List<PlayingCard> playingCards = new ArrayList<>(Arrays.stream(values())
                 .filter(playingCardValue -> playingCardValue != SMALL_ACE)
                 .map(playingCardValue -> new PlayingCard(playingCardShape, playingCardValue))
-                .toList();
+                .toList());
+        Collections.shuffle(playingCards);
+
+        return playingCards;
     }
 
     public PlayingCard drawn() {
-        Collections.shuffle(playingCards);
-
-        PlayingCard card = playingCards.get(0);
-        playingCards.remove(0);
-
-        return card;
+        return playingCards.remove(0);
     }
 }
