@@ -3,17 +3,17 @@ package domain.dto;
 import java.util.Collections;
 import java.util.List;
 
-public class GameStatusDto {
+public class GameStatus {
     private final List<GamerDto> gamerDtos;
     private final GamerDto dealerDto;
 
-    private GameStatusDto(GamerDto dealerDto, List<GamerDto> gamerDtos) {
+    private GameStatus(GamerDto dealerDto, List<GamerDto> gamerDtos) {
         this.gamerDtos = gamerDtos;
         this.dealerDto = dealerDto;
     }
 
-    public static GameStatusDto of(GamerDto dealerDto, List<GamerDto> gamerDtos) {
-        return new GameStatusDto(dealerDto, gamerDtos);
+    public static GameStatus of(GamerDto dealerDto, List<GamerDto> gamerDtos) {
+        return new GameStatus(dealerDto, gamerDtos);
     }
 
     public List<GamerDto> getGamerDtos() {

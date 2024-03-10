@@ -3,7 +3,7 @@ package view;
 import domain.BlackJackResult;
 import domain.Card;
 import domain.constant.GamerResult;
-import domain.dto.GameStatusDto;
+import domain.dto.GameStatus;
 import domain.dto.GamerDto;
 import java.util.Arrays;
 import java.util.List;
@@ -11,9 +11,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    public static void printInitialStatus(GameStatusDto gameStatusDto) {
-        GamerDto dealerDto = gameStatusDto.getDealerDto();
-        List<GamerDto> gamerDtos = gameStatusDto.getGamerDtos();
+    public static void printInitialStatus(GameStatus gameStatus) {
+        GamerDto dealerDto = gameStatus.getDealerDto();
+        List<GamerDto> gamerDtos = gameStatus.getGamerDtos();
         System.out.println("%n딜러와 %s에게 2장을 나누었습니다.".formatted(buildGamerNames(gamerDtos)));
         System.out.println(buildDealerInitialStatus(dealerDto));
         System.out.println(buildPlayersInitialStatus(gamerDtos) + "\n");
@@ -51,9 +51,9 @@ public class OutputView {
         System.out.print("딜러는 16이하라 한장의 카드를 더 받았습니다.\n".repeat(dealerDrawCount));
     }
 
-    public static void printTotalStatus(GameStatusDto gameStatusDto) {
-        GamerDto dealerDto = gameStatusDto.getDealerDto();
-        List<GamerDto> playersDto = gameStatusDto.getGamerDtos();
+    public static void printTotalStatus(GameStatus gameStatus) {
+        GamerDto dealerDto = gameStatus.getDealerDto();
+        List<GamerDto> playersDto = gameStatus.getGamerDtos();
         System.out.println();
         System.out.println(buildTotalStatus(dealerDto));
         playersDto.stream().map(OutputView::buildTotalStatus)

@@ -1,7 +1,7 @@
 import domain.BlackJackGame;
 import domain.Gamer;
 import domain.Name;
-import domain.dto.GameStatusDto;
+import domain.dto.GameStatus;
 import domain.dto.GamerDto;
 import java.util.List;
 import util.ConsoleReader;
@@ -29,7 +29,7 @@ public class Application {
 
     private static List<GamerDto> showInitialStatus(BlackJackGame blackJackGame) {
         blackJackGame.initialDealing();
-        GameStatusDto gameInitStatusDto = blackJackGame.getGameStatusDto();
+        GameStatus gameInitStatusDto = blackJackGame.getGameStatusDto();
         OutputView.printInitialStatus(gameInitStatusDto);
         return gameInitStatusDto.getGamerDtos();
     }

@@ -1,6 +1,6 @@
 package domain;
 
-import domain.dto.GameStatusDto;
+import domain.dto.GameStatus;
 import domain.dto.GamerDto;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,8 +37,8 @@ public class BlackJackGame {
         gamer.takeCard(deck.draw());
     }
 
-    public GameStatusDto getGameStatusDto() {
-        return GameStatusDto.of(GamerDto.from(dealer), toGamerDto());
+    public GameStatus getGameStatusDto() {
+        return GameStatus.of(GamerDto.from(dealer), toGamerDto());
     }
 
     public List<GamerDto> toGamerDto() {
