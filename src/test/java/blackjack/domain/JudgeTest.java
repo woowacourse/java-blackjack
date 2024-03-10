@@ -270,7 +270,7 @@ class JudgeTest {
 
     private void deckDrawLoop(final int count) {
         IntStream.range(0, count)
-                .forEach(i -> deck.drawn());
+                .forEach(i -> deck.draw());
     }
 
     private boolean isDealerResultWin(final DealerResult dealerResult) {

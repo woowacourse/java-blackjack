@@ -21,7 +21,7 @@ public class Deck {
         this.trumpCards = new LinkedList<>(trumpCards);
     }
 
-    public TrumpCard drawn() {
+    public TrumpCard draw() {
         if (trumpCards.isEmpty()) {
             throw new IllegalStateException(NO_CARD_EXCEPTION);
         }

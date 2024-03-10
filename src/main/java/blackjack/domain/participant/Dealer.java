@@ -24,7 +24,7 @@ public class Dealer extends Gamer {
     }
 
     public TrumpCard draw() {
-        return deck.drawn();
+        return deck.draw();
     }
 
     public boolean drawExtraCard() {
