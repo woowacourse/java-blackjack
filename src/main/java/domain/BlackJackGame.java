@@ -16,11 +16,11 @@ public class BlackJackGame {
 
     public void prepareCards(final Gamers gamers) {
         for (Gamer gamer : gamers.getGamers()) {
-            drawTwoCardsForGamer(gamer);
+            giveInitialCards(gamer);
         }
     }
 
-    private void drawTwoCardsForGamer(final Gamer gamer) {
+    private void giveInitialCards(final Gamer gamer) {
         for (int count = 0; count < INITIAL_CARD_COUNT; count++) {
             gamer.receiveInitialCard(deck.draw());
         }

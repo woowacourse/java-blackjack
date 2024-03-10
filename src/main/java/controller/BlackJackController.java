@@ -5,11 +5,13 @@ import domain.Deck;
 import domain.Gamers;
 import domain.PlayerResults;
 import domain.Players;
+import domain.ShuffledCardsGenerator;
 import domain.gamer.Dealer;
+import domain.gamer.Gamer;
 import domain.gamer.Name;
 import domain.gamer.Player;
-import domain.ShuffledCardsGenerator;
 import java.util.List;
+import java.util.function.Supplier;
 import view.InputView;
 import view.OutputView;
 
@@ -67,16 +69,24 @@ public class BlackJackController {
     }
 
     private boolean isRetry(final BlackJackGame blackJackGame, final Player player) {
-        boolean retry = InputView.readSelectionOf(player);
-        if (!retry) {
+        if (!InputView.readSelectionOf(player)) {
             return false;
         }
-        return blackJackGame.succeededGiving(player);
+        return tryGiveCard(blackJackGame, player);
     }
 
     private void askDealerHit(final BlackJackGame blackJackGame, final Dealer dealer) {
-        while (blackJackGame.succeededGiving(dealer)) {
+        while (tryGiveCard(blackJackGame, dealer)) {
             OutputView.printDealerHit(dealer);
+        }
+    }
+
+    private boolean tryGiveCard(final BlackJackGame blackJackGame, final Gamer gamer) {
+        try {
+            blackJackGame.giveCard(gamer);
+            return true;
+        } catch (IllegalArgumentException exception) {
+            return false;
         }
     }
 }
