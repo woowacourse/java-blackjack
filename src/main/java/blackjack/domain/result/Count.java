@@ -10,7 +10,11 @@ public class Count {
     }
 
     public int toInt() {
-        return value;
+        return this.value;
+    }
+
+    public Count increment() {
+        return new Count(this.value + 1);
     }
 
     @Override

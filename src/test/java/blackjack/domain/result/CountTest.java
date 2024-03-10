@@ -19,7 +19,11 @@ public class CountTest {
 
     @Test
     @DisplayName("횟수를 1 증가시킨다.")
-    public void Count_increment_1_count() {
+    public void Count_increment_1() {
+        final var sut = new Count(2);
 
+        final var result = sut.increment();
+
+        assertThat(result.toInt()).isEqualTo(3);
     }
 }
