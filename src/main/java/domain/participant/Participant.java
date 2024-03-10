@@ -1,25 +1,25 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.CardHand;
+import domain.card.Cards;
 import java.util.List;
 import java.util.Objects;
 
 public class Participant {
     private final Name name;
-    private final CardHand cardHand;
+    private final Cards cards;
 
     public Participant(String name) {
         this.name = new Name(name);
-        this.cardHand = new CardHand();
+        this.cards = new Cards();
     }
 
     public void add(Card card) {
-        cardHand.addCard(card);
+        cards.addCard(card);
     }
 
     public int calculateScore() {
-        return cardHand.sumAll();
+        return cards.sumAll();
     }
 
     public String getName() {
@@ -27,7 +27,7 @@ public class Participant {
     }
 
     public List<Card> getCardHand() {
-        return cardHand.getCards();
+        return cards.getCards();
     }
 
     @Override
