@@ -1,20 +1,14 @@
 package controller;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
-
 import domain.blackjackgame.BlackjackAction;
 import domain.blackjackgame.BlackjackGame;
 import domain.blackjackgame.GameResult;
 import domain.blackjackgame.ResultStatus;
 import domain.card.CardDeck;
 import domain.card.CardFactory;
-import domain.card.Emblem;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import ui.InputView;
@@ -39,15 +33,8 @@ public class BlackjackController {
     }
 
     private Dealer generateDealer() {
-        CardDeck cardDeck = generateCardDeck();
+        CardDeck cardDeck = CardFactory.createCardDeck();
         return new Dealer(cardDeck, Collections::shuffle);
-    }
-
-    private CardDeck generateCardDeck() {
-        return Arrays.stream(Emblem.values())
-                .map(CardFactory::create)
-                .flatMap(Collection::stream)
-                .collect(collectingAndThen(toList(), CardDeck::new));
     }
 
     private GameResult playBlackjackGame(Dealer dealer, Players players, BlackjackGame blackjackGame) {

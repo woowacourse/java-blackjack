@@ -1,16 +1,25 @@
 package domain.card;
 
-import java.util.ArrayList;
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
+
+import java.util.Arrays;
 import java.util.List;
 
 public class CardFactory {
-    public static List<Card> create(Emblem emblem) {
-        List<Card> cards = new ArrayList<>();
+    private CardFactory() {
+    }
 
-        for (Denomination denomination : Denomination.values()) {
-            cards.add(new Card(denomination, emblem));
-        }
+    public static CardDeck createCardDeck() {
+        return Arrays.stream(Emblem.values())
+                .map(CardFactory::createCards)
+                .flatMap(List::stream)
+                .collect(collectingAndThen(toList(), CardDeck::new));
+    }
 
-        return cards;
+    private static List<Card> createCards(Emblem emblem) {
+        return Arrays.stream(Denomination.values())
+                .map(denomination -> new Card(denomination, emblem))
+                .collect(toList());
     }
 }
