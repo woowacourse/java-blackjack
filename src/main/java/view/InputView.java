@@ -22,13 +22,13 @@ public class InputView {
     }
 
     private static List<String> parseName(final String userNames) {
-        validate(userNames);
+        validateInputDelimiter(userNames);
         return Arrays.stream(userNames.split(DELIMITER))
                 .map(String::trim)
                 .toList();
     }
 
-    private static void validate(String input) {
+    private static void validateInputDelimiter(String input) {
         if (input.startsWith(DELIMITER) || input.endsWith(DELIMITER)) {
             throw new IllegalArgumentException("입력은 구분자로 시작하거나 끝날 수 없습니다.");
         }
