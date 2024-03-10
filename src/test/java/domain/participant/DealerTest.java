@@ -5,7 +5,6 @@ import domain.GameResults;
 import domain.PlayingCard;
 import domain.PlayingCardValue;
 import domain.constant.GameResult;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -81,7 +80,7 @@ public class DealerTest {
         GameResults gameResults = dealer.getGameResults(players);
 
         // Then
-        Assertions.assertThat(gameResults.dealerGameResult()).isEqualTo(dealerGameResult);
+        assertThat(gameResults.dealerGameResult()).isEqualTo(dealerGameResult);
     }
 
     private static Stream<Arguments> getGameResultsTestParameters() {
