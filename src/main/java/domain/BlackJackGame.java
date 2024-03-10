@@ -9,7 +9,7 @@ import java.util.List;
 
 public class BlackJackGame {
 
-    private static final int INIT_CARD_COUNT = 2;
+    private static final int INIT_CARDS_AMOUNT = 2;
 
     private Gamers gamers;
     private CardPack cardPack;
@@ -26,15 +26,7 @@ public class BlackJackGame {
     }
 
     public void setUpGame() {
-        for (Player player : gamers.getGamers()) {
-            shareInitCards(player);
-        }
-    }
-
-    private void shareInitCards(Player gamer) {
-        for (int i = 0; i < INIT_CARD_COUNT; i++) {
-            gamer.hit(cardPack.pickOneCard());
-        }
+        gamers.shareInitCards(cardPack, INIT_CARDS_AMOUNT);
     }
 
     public boolean hitByPlayer(String rawHitOption, Player player) {

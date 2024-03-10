@@ -1,5 +1,6 @@
 package domain.gamer;
 
+import domain.cards.CardPack;
 import domain.cards.gamercards.DealerCards;
 import domain.cards.gamercards.PlayerCards;
 import java.util.ArrayList;
@@ -55,6 +56,12 @@ public class Gamers {
         for (String playerName : playersNames) {
             PlayerCards emptyCards = new PlayerCards(new ArrayList<>());
             players.add(new Player(playerName, emptyCards));
+        }
+    }
+
+    public void shareInitCards(CardPack cardPack, int count) {
+        for (Player gamer : getGamers()) {
+            gamer.receiveCards(cardPack, count);
         }
     }
 

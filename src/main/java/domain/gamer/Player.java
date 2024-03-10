@@ -1,6 +1,7 @@
 package domain.gamer;
 
 import domain.cards.Card;
+import domain.cards.CardPack;
 import domain.cards.gamercards.PlayerCards;
 import java.util.Collections;
 import java.util.List;
@@ -13,6 +14,12 @@ public class Player {
     public Player(String name, PlayerCards cards) {
         this.name = new GamerName(name);
         this.cards = cards;
+    }
+
+    public void receiveCards(CardPack cardPack, int count) {
+        for (int i = 0; i < count; i++) {
+            hit(cardPack.pickOneCard());
+        }
     }
 
     public void hit(Card card) {
