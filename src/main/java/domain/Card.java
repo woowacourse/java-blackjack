@@ -17,7 +17,7 @@ public class Card {
     }
 
     public static Card of(Rank rank, Suit suit) {
-        String cardKey = rank.getText() + "-" + suit.getName();
+        String cardKey = rank.name() + "-" + suit.name();
         return CARD_CACHE.computeIfAbsent(cardKey, key -> new Card(rank, suit));
     }
 
@@ -30,11 +30,11 @@ public class Card {
     }
 
     public String getRankText() {
-        return rank.getText();
+        return rank.name();
     }
 
     public String getSuit() {
-        return suit.getName();
+        return suit.name();
     }
 
     @Override
