@@ -3,6 +3,7 @@ package blackjack.model.cards;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.model.generator.DeckGenerator;
 import blackjack.model.generator.DeckManager;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,5 +39,16 @@ class DeckManagerTest {
         DeckManager deckManager = new DeckManager(emptyCards);
 
         assertThatThrownBy(deckManager::drawCard).isInstanceOf(NoSuchElementException.class);
+    }
+
+    @DisplayName("카드 여러장을 발급한다")
+    @Test
+    void drawCards() {
+        DeckGenerator deckGenerator = new DeckGenerator();
+        DeckManager deckManager = new DeckManager(deckGenerator.generate());
+
+        List<Card> cards = deckManager.drawCards();
+
+        assertThat(cards).hasSize(2);
     }
 }

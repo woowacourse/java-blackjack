@@ -9,6 +9,8 @@ import java.util.NoSuchElementException;
 import java.util.Queue;
 
 public class DeckManager {
+    private static final int INITIAL_CARD_SIZE = 2;
+
     private final Queue<Card> cardDeck;
 
     public DeckManager(List<Card> generatedCards) {
@@ -19,6 +21,14 @@ public class DeckManager {
     public Card drawCard() {
         validateEmptyDeck();
         return cardDeck.poll();
+    }
+
+    public List<Card> drawCards() {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < INITIAL_CARD_SIZE; i++) {
+            cards.add(drawCard());
+        }
+        return cards;
     }
 
     private void validateEmptyDeck() {
