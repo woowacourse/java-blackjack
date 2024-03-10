@@ -8,6 +8,7 @@ import domain.player.Player;
 import domain.player.PlayerNames;
 import dto.PlayerDto;
 import dto.ResultDto;
+import dto.ScoreDto;
 import java.io.IOException;
 import java.util.List;
 import view.InputView;
@@ -72,8 +73,9 @@ public class BlackJackController {
     private void printGameResult(BlackJackGame blackJackGame) {
         List<PlayerDto> playerDtos = PlayerDto.from(blackJackGame.getEveryParticipants());
         ResultDto resultDto = ResultDto.from(blackJackGame.getGameResults());
+        ScoreDto scoreDto = ScoreDto.from(blackJackGame.getScores());
 
-        outputView.printFinalHandAndScore(playerDtos);
+        outputView.printFinalHandAndScore(playerDtos, scoreDto);
         outputView.printWinLoss(resultDto);
     }
 }
