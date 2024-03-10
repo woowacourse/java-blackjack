@@ -1,6 +1,6 @@
 package domain.card;
 
-import domain.Name;
+import domain.player.Name;
 
 import java.util.List;
 

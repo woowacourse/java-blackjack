@@ -1,4 +1,4 @@
-package domain;
+package domain.player;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;

@@ -1,7 +1,7 @@
 package domain.score;
 
-import domain.Name;
-import domain.Names;
+import domain.player.Name;
+import domain.player.Names;
 
 import java.util.Collections;
 import java.util.Map;

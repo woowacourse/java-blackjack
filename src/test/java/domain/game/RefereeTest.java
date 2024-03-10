@@ -1,11 +1,11 @@
 package domain.game;
 
-import domain.Name;
-import domain.Names;
 import domain.card.Card;
 import domain.card.DealerCards;
 import domain.card.PlayerCards;
 import domain.card.Shape;
+import domain.player.Name;
+import domain.player.Names;
 import domain.score.ScoreBoard;
 import domain.score.Status;
 import org.junit.jupiter.api.BeforeEach;

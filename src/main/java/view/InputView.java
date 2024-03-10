@@ -1,6 +1,6 @@
 package view;
 
-import domain.Name;
+import domain.player.Name;
 
 import java.util.Arrays;
 import java.util.List;

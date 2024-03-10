@@ -1,9 +1,9 @@
 package view;
 
-import domain.Name;
 import domain.card.Cards;
 import domain.card.DealerCards;
 import domain.card.PlayerCards;
+import domain.player.Name;
 import domain.score.Score;
 import domain.score.ScoreBoard;
 import domain.score.Status;

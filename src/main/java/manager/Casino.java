@@ -1,11 +1,11 @@
 package manager;
 
-import domain.Name;
-import domain.Names;
 import domain.card.DealerCards;
 import domain.card.Deck;
 import domain.card.PlayerCards;
 import domain.game.Referee;
+import domain.player.Name;
+import domain.player.Names;
 import domain.score.ScoreBoard;
 import view.InputView;
 import view.OutputView;
