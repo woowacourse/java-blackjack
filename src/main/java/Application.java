@@ -2,7 +2,7 @@ import blackjack.domain.Blackjack;
 
 public class Application {
     public static void main(String[] args) {
-        Casino casino = new Casino(new Blackjack());
-        casino.playBlackJack();
+        BlackjackController blackjackController = new BlackjackController(new Blackjack());
+        blackjackController.playBlackJack();
     }
 }
