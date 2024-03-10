@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -12,6 +11,12 @@ public class Players {
     public Players(final List<Player> players) {
         validate(players);
         this.players = players;
+    }
+
+    public static Players from(final List<String> inputtedNames) {
+        return new Players(inputtedNames.stream()
+                .map(inputtedName -> new Participant(new Name(inputtedName)))
+                .collect(Collectors.toList()));
     }
 
     private void validate(final List<Player> players) {
@@ -37,12 +42,6 @@ public class Players {
 
     private boolean hasDuplicatePlayers(final List<Player> players) {
         return Set.copyOf(players).size() != players.size();
-    }
-
-    public static Players from(final String[] names) {
-        return new Players(Arrays.stream(names)
-                .map(name -> new Participant(new Name(name)))
-                .collect(Collectors.toList()));
     }
 
     public Player getDealer() {
