@@ -28,6 +28,8 @@ public abstract class Player {
 
     public abstract List<Card> getOpenCards();
 
+    public abstract boolean isReceivable();
+
     public String getNameAsString() {
         return name.asString();
     }
