@@ -31,6 +31,7 @@ public class BlackjackController {
 		Dealer dealer = new Dealer();
 		Deck deck = new Deck();
 		deck.shuffle();
+		outputView.printEmptyLine();
 
 		setUpInitialHands(players, deck, dealer);
 		distributeCardToPlayers(players, deck);
@@ -58,6 +59,7 @@ public class BlackjackController {
 			.toList();
 
 		outputView.printInitialHands(dealerInitialHandDto, playerInitialHandDto);
+		outputView.printEmptyLine();
 	}
 
 	private void distributeCardToPlayers(Players players, Deck deck) {
@@ -71,6 +73,7 @@ public class BlackjackController {
 			player.addCard(deck.draw());
 			outputView.printPlayerHand(GamerHandDto.fromGamer(player));
 		}
+		outputView.printEmptyLine();
 	}
 
 	private boolean canDistribute(Player player) {
@@ -90,12 +93,13 @@ public class BlackjackController {
 			dealer.addCard(deck.draw());
 			outputView.printDealerMessage(dealer.getName().value());
 		}
+		outputView.printEmptyLine();
 	}
 
 	private void printAllGamerScores(Dealer dealer, Players players) {
-		outputView.printEmptyLine();
 		outputView.printScore(GamerHandDto.fromGamer(dealer), dealer.getScore());
 		printPlayersScores(players);
+		outputView.printEmptyLine();
 	}
 
 	private void printPlayersScores(Players players) {

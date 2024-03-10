@@ -10,11 +10,14 @@ import blackjack.dto.PlayerResultsDto;
 
 public class OutputView {
 
+	private static final String LINE_SEPARATOR = System.lineSeparator();
+
 	public void printInitialHands(DealerInitialHandDto dealerInitialHandDto, List<GamerHandDto> playersInitialHandDto) {
-		System.out.printf("\n%s와 %s에게 2장을 나누었습니다.\n", dealerInitialHandDto.name(),
+		System.out.printf("%s와 %s에게 2장을 나누었습니다." + LINE_SEPARATOR, dealerInitialHandDto.name(),
 			joinPlayerNames(playersInitialHandDto));
 
-		System.out.printf("%s 카드: %s\n", dealerInitialHandDto.name(), formatCardName(dealerInitialHandDto.firstCard()));
+		System.out.printf("%s 카드: %s" + LINE_SEPARATOR, dealerInitialHandDto.name(),
+			formatCardName(dealerInitialHandDto.firstCard()));
 		printAllPlayerHands(playersInitialHandDto);
 	}
 
@@ -32,7 +35,6 @@ public class OutputView {
 
 	private void printAllPlayerHands(List<GamerHandDto> playersInitialHandDto) {
 		playersInitialHandDto.forEach(this::printPlayerHand);
-		System.out.println();
 	}
 
 	public void printPlayerHand(GamerHandDto playerHandDto) {
@@ -56,7 +58,7 @@ public class OutputView {
 	}
 
 	public void printDealerMessage(String dealerName) {
-		System.out.printf("\n%s는 16이하라 한장의 카드를 더 받았습니다.\n", dealerName);
+		System.out.printf("%s는 16이하라 한장의 카드를 더 받았습니다." + LINE_SEPARATOR, dealerName);
 	}
 
 	public void printScore(GamerHandDto gamerHandDto, int score) {
@@ -68,7 +70,7 @@ public class OutputView {
 	}
 
 	public void printResult(DealerResultDto dealerResultDto, PlayerResultsDto playerResultsDto) {
-		System.out.println("\n## 최종 승패");
+		System.out.println("## 최종 승패");
 		printDealerResult(dealerResultDto);
 		printPlayerResults(playerResultsDto);
 	}
@@ -79,12 +81,10 @@ public class OutputView {
 		StringBuilder stringBuilder = new StringBuilder(dealerResultDto.name()).append(": ");
 
 		if (winCount > 0) {
-			stringBuilder.append(winCount)
-				.append("승 ");
+			stringBuilder.append(winCount).append("승 ");
 		}
 		if (loseCount > 0) {
-			stringBuilder.append(loseCount)
-				.append("패");
+			stringBuilder.append(loseCount).append("패");
 		}
 		System.out.println(stringBuilder);
 	}
