@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.GamePlayer;
-import blackjack.domain.player.Player;
+import blackjack.domain.player.Participant;
 import blackjack.domain.player.Players;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -53,10 +53,10 @@ public class PlayerView {
                .forEach(PlayerView::printPlayerWithScore);
     }
 
-    private static void printPlayerWithScore(final Player player) {
-        final String result = CardPrinter.printCards(player.getCards());
-        System.out.println(String.format("%s 카드: %s - 결과 : %d", player.getNameAsString(), result,
-                player.calculateScore()));
+    private static void printPlayerWithScore(final Participant participant) {
+        final String result = CardPrinter.printCards(participant.getCards());
+        System.out.println(String.format("%s 카드: %s - 결과 : %d", participant.getNameAsString(), result,
+                participant.calculateScore()));
     }
 
 }

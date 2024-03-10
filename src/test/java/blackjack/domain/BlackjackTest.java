@@ -8,7 +8,7 @@ import blackjack.domain.common.Name;
 import blackjack.domain.common.Names;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.GamePlayer;
-import blackjack.domain.player.Player;
+import blackjack.domain.player.Participant;
 import blackjack.domain.result.ResultStatus;
 import blackjack.fixture.CardFixture;
 import blackjack.fixture.PlayerFixture;
@@ -52,8 +52,8 @@ class BlackjackTest {
                          .getCountWithResultStatus(ResultStatus.WIN)).isEqualTo(1);
     }
 
-    private void assertPlayer(Player player, int value) {
-        assertThat(player.calculateScore()).isEqualTo(value);
+    private void assertPlayer(Participant participant, int value) {
+        assertThat(participant.calculateScore()).isEqualTo(value);
     }
 
 }

@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class PlayerTest {
+public class ParticipantTest {
     @Test
     @DisplayName("이름과 카드 일급 컬렉션을 통해서 플레이어를 생성 한다.")
     public void GamePlayer_Instance_create_with_name_and_cards() {

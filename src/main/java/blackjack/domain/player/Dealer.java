@@ -5,7 +5,7 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.common.Name;
 import blackjack.domain.result.ResultStatus;
 
-public class Dealer extends Player {
+public class Dealer extends Participant {
     public static final Integer RECEIVE_SIZE = 16;
     private static final String DEFAULT_DEALER_NAME = "딜러";
 
