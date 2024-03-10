@@ -1,11 +1,11 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.dto.DealerDto;
+import blackjack.domain.dto.DealerResponseDto;
 import blackjack.domain.dto.OutcomeDto;
 import blackjack.domain.dto.OutcomesDto;
-import blackjack.domain.dto.PlayerDto;
-import blackjack.domain.dto.PlayersDto;
+import blackjack.domain.dto.PlayerResponseDto;
+import blackjack.domain.dto.PlayersResponseDto;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -13,19 +13,19 @@ public class OutputView {
 
     private static final String DEALER = "딜러";
 
-    public static void printInitialState(final DealerDto dealerDto, final PlayersDto playersDto) {
-        System.out.println(System.lineSeparator() + DEALER + "와 " + makePlayerName(playersDto) + "에게 2장을 나누었습니다.");
-        System.out.println(DEALER + "카드: " + makeCardsState(dealerDto.getCards()));
-        for (PlayerDto playerDto : playersDto.getValues()) {
-            System.out.println(playerDto.getName().value() + "카드: " + makeCardsState(playerDto.getCards()));
+    public static void printInitialState(final DealerResponseDto dealerResponseDto, final PlayersResponseDto playersResponseDto) {
+        System.out.println(System.lineSeparator() + DEALER + "와 " + makePlayerName(playersResponseDto) + "에게 2장을 나누었습니다.");
+        System.out.println(DEALER + "카드: " + makeCardsState(dealerResponseDto.getCards()));
+        for (PlayerResponseDto playerResponseDto : playersResponseDto.getValues()) {
+            System.out.println(playerResponseDto.getName().value() + "카드: " + makeCardsState(playerResponseDto.getCards()));
         }
         System.out.println();
     }
 
-    private static String makePlayerName(final PlayersDto playersDto) {
+    private static String makePlayerName(final PlayersResponseDto playersResponseDto) {
         final StringJoiner nameJoiner = new StringJoiner(", ");
-        for (PlayerDto playerDto : playersDto.getValues()) {
-            nameJoiner.add(playerDto.getName().value());
+        for (PlayerResponseDto playerResponseDto : playersResponseDto.getValues()) {
+            nameJoiner.add(playerResponseDto.getName().value());
         }
         return nameJoiner.toString();
     }
@@ -38,20 +38,20 @@ public class OutputView {
         return cardJoiner.toString();
     }
 
-    public static void printCurrentState(final PlayerDto playerDto) {
-        System.out.println(playerDto.getName().value() + "카드: " + makeCardsState(playerDto.getCards()));
+    public static void printCurrentState(final PlayerResponseDto playerResponseDto) {
+        System.out.println(playerResponseDto.getName().value() + "카드: " + makeCardsState(playerResponseDto.getCards()));
     }
 
     public static void printDealerDrawMessage() {
         System.out.println(System.lineSeparator() + DEALER + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printFinalState(final DealerDto dealerDto, final PlayersDto playersDto) {
-        System.out.println(System.lineSeparator() + DEALER + "카드: " + makeCardsState(dealerDto.getCards())
-                + " - 결과: " + dealerDto.getScore());
-        for (PlayerDto playerDto : playersDto.getValues()) {
-            System.out.println(playerDto.getName().value() + "카드: " + makeCardsState(playerDto.getCards())
-                    + " - 결과: " + playerDto.getScore());
+    public static void printFinalState(final DealerResponseDto dealerResponseDto, final PlayersResponseDto playersResponseDto) {
+        System.out.println(System.lineSeparator() + DEALER + "카드: " + makeCardsState(dealerResponseDto.getCards())
+                + " - 결과: " + dealerResponseDto.getScore());
+        for (PlayerResponseDto playerResponseDto : playersResponseDto.getValues()) {
+            System.out.println(playerResponseDto.getName().value() + "카드: " + makeCardsState(playerResponseDto.getCards())
+                    + " - 결과: " + playerResponseDto.getScore());
         }
         System.out.println();
     }

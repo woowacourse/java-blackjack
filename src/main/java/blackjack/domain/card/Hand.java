@@ -2,14 +2,14 @@ package blackjack.domain.card;
 
 import java.util.List;
 
-public class Cards {
+public class Hand {
 
     private static final int BLACKJACK_CANDIDATE = 21;
     private static final int INITIAL_CARD_SIZE = 2;
 
     private final List<Card> cards;
 
-    public Cards(final List<Card> cards) {
+    public Hand(final List<Card> cards) {
         this.cards = cards;
     }
 

@@ -1,25 +1,25 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 
 public class Referee {
 
     private static final int BLACKJACK_CANDIDATE = 21;
 
-    private final Cards dealerCards;
+    private final Hand dealerHand;
 
-    public Referee(final Cards dealerCards) {
-        this.dealerCards = dealerCards;
+    public Referee(final Hand dealerHand) {
+        this.dealerHand = dealerHand;
     }
 
-    public Outcome doesPlayerWin(final Cards playerCards) {
-        if (isBust(playerCards.sum()) || isBust(dealerCards.sum())) {
-            return calculateBustCase(playerCards.sum());
+    public Outcome doesPlayerWin(final Hand playerHand) {
+        if (isBust(playerHand.sum()) || isBust(dealerHand.sum())) {
+            return calculateBustCase(playerHand.sum());
         }
-        if (isBlackJack(dealerCards) || isBlackJack(playerCards)) {
-            return calculateBlackJackCase(playerCards);
+        if (isBlackJack(dealerHand) || isBlackJack(playerHand)) {
+            return calculateBlackJackCase(playerHand);
         }
-        return calculateNormalCase(playerCards);
+        return calculateNormalCase(playerHand);
     }
 
     private boolean isBust(final int score) {
@@ -27,34 +27,34 @@ public class Referee {
     }
 
     private Outcome calculateBustCase(final int playerScore) {
-        if (isBust(dealerCards.sum()) && isBust(playerScore)) {
+        if (isBust(dealerHand.sum()) && isBust(playerScore)) {
             return Outcome.PUSH;
         }
-        if (isBust(dealerCards.sum())) {
+        if (isBust(dealerHand.sum())) {
             return Outcome.WIN;
         }
         return Outcome.LOSE;
     }
 
-    private boolean isBlackJack(final Cards cards) {
-        return cards.sum() == BLACKJACK_CANDIDATE && cards.hasOnlyInitialCard();
+    private boolean isBlackJack(final Hand hand) {
+        return hand.sum() == BLACKJACK_CANDIDATE && hand.hasOnlyInitialCard();
     }
 
-    private Outcome calculateBlackJackCase(final Cards playerCards) {
-        if (isBlackJack(dealerCards) && isBlackJack(playerCards)) {
+    private Outcome calculateBlackJackCase(final Hand playerHand) {
+        if (isBlackJack(dealerHand) && isBlackJack(playerHand)) {
             return Outcome.PUSH;
         }
-        if (isBlackJack(dealerCards)) {
+        if (isBlackJack(dealerHand)) {
             return Outcome.LOSE;
         }
         return Outcome.WIN;
     }
 
-    private Outcome calculateNormalCase(final Cards playerCards) {
-        if (dealerCards.sum() < playerCards.sum()) {
+    private Outcome calculateNormalCase(final Hand playerHand) {
+        if (dealerHand.sum() < playerHand.sum()) {
             return Outcome.WIN;
         }
-        if (dealerCards.sum() > playerCards.sum()) {
+        if (dealerHand.sum() > playerHand.sum()) {
             return Outcome.LOSE;
         }
         return Outcome.PUSH;

@@ -7,6 +7,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.dto.OutcomeDto;
 import java.util.List;
 import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamers;
 import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Players;
 import org.junit.jupiter.api.DisplayName;
@@ -27,10 +28,10 @@ class GameBoardTest {
         final Deck deck = new Deck(new TestDeckFactory());
         final Players players = Players.from(List.of("pobi"));
         final Dealer dealer = new Dealer();
-        final Referee referee = new Referee(dealer.getCards());
-        final GameBoard gameBoard = new GameBoard(deck, dealer, players);
-        gameBoard.drawInitialPlayersCards();
-        gameBoard.drawInitialDealerCards();
+        final Gamers gamers = new Gamers(dealer, players);
+        final Referee referee = new Referee(dealer.getHand());
+        final GameBoard gameBoard = new GameBoard(deck, gamers);
+        gameBoard.drawInitialCards();
 
         final List<Outcome> dealerOutcome = gameBoard.getDealerOutcome(referee);
 
@@ -43,10 +44,10 @@ class GameBoardTest {
         final Deck deck = new Deck(new TestDeckFactory());
         final Players players = Players.from(List.of("pobi"));
         final Dealer dealer = new Dealer();
-        final Referee referee = new Referee(dealer.getCards());
-        final GameBoard gameBoard = new GameBoard(deck, dealer, players);
-        gameBoard.drawInitialPlayersCards();
-        gameBoard.drawInitialDealerCards();
+        final Gamers gamers = new Gamers(dealer, players);
+        final Referee referee = new Referee(dealer.getHand());
+        final GameBoard gameBoard = new GameBoard(deck, gamers);
+        gameBoard.drawInitialCards();
 
         final List<OutcomeDto> playerOutcomeDtos = gameBoard.getPlayerOutcomeDtos(referee);
 

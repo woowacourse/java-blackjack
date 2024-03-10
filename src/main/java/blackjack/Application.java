@@ -5,16 +5,17 @@ import blackjack.domain.Outcome;
 import blackjack.domain.Referee;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckShuffleFactory;
-import blackjack.domain.dto.DealerDto;
+import blackjack.domain.dto.DealerResponseDto;
 import blackjack.domain.dto.OutcomeDto;
 import blackjack.domain.dto.OutcomesDto;
-import blackjack.domain.dto.PlayersDto;
+import blackjack.domain.dto.PlayerResponseDto;
+import blackjack.domain.dto.PlayersResponseDto;
 import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamers;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-
 import java.util.List;
 
 public class Application {
@@ -24,9 +25,10 @@ public class Application {
         drawInitialCard(gameBoard);
 
         hit(gameBoard);
-        OutputView.printFinalState(gameBoard.getDealerFinalState(), gameBoard.getPlayersFinalState());
+        OutputView.printFinalState(DealerResponseDto.allCardToDto(gameBoard.getDealer()),
+                PlayersResponseDto.toDto(gameBoard.getPlayers()));
 
-        final Referee referee = new Referee(gameBoard.getDealerCards());
+        final Referee referee = new Referee(gameBoard.getDealerHand());
         final OutcomesDto dealerOutcome = Outcome.toDto(gameBoard.getDealerOutcome(referee));
         final List<OutcomeDto> playerOutcomes = gameBoard.getPlayerOutcomeDtos(referee);
         OutputView.printFinalOutcomes(dealerOutcome, playerOutcomes);
@@ -36,37 +38,37 @@ public class Application {
         final Deck deck = new Deck(new DeckShuffleFactory());
         final Dealer dealer = new Dealer();
         final Players players = Players.from(InputView.readPlayerNames());
-        return new GameBoard(deck, dealer, players);
+        final Gamers gamers = new Gamers(dealer, players);
+        return new GameBoard(deck, gamers);
     }
 
     private static void drawInitialCard(final GameBoard gameBoard) {
-        final DealerDto dealerDto = gameBoard.drawInitialDealerCards();
-        final PlayersDto playersDto = gameBoard.drawInitialPlayersCards();
-
-        OutputView.printInitialState(dealerDto, playersDto);
+        gameBoard.drawInitialCards();
+        OutputView.printInitialState(DealerResponseDto.firstCardToDto(gameBoard.getDealer()),
+                PlayersResponseDto.toDto(gameBoard.getPlayers()));
     }
 
     private static void hit(final GameBoard gameBoard) {
-        hitPlayers(gameBoard, gameBoard.getPlayers());
-        hitDealer(gameBoard, gameBoard.getDealer());
+        hitPlayers(gameBoard);
+        hitDealer(gameBoard);
     }
 
-    private static void hitPlayers(final GameBoard gameBoard, final Players players) {
-        for (final Player player : players.getPlayers()) {
+    private static void hitPlayers(final GameBoard gameBoard) {
+        for (final Player player : gameBoard.getPlayers()) {
             hitPlayer(gameBoard, player);
         }
     }
 
     private static void hitPlayer(final GameBoard gameBoard, final Player player) {
-        while (gameBoard.isHit(player) && InputView.readDoesWantHit(player.getName())) {
+        while (gameBoard.canHit(player) && InputView.readDoesWantHit(player.getName())) {
             gameBoard.hit(player);
-            OutputView.printCurrentState(player.toDto());
+            OutputView.printCurrentState(PlayerResponseDto.toDto(player));
         }
     }
 
-    private static void hitDealer(final GameBoard gameBoard, final Dealer dealer) {
-        while (gameBoard.isHit(dealer)) {
-            gameBoard.hit(dealer);
+    private static void hitDealer(final GameBoard gameBoard) {
+        while (gameBoard.canHit(gameBoard.getDealer())) {
+            gameBoard.hit(gameBoard.getDealer());
             OutputView.printDealerDrawMessage();
         }
     }
