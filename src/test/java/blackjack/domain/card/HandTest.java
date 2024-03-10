@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -109,6 +110,26 @@ class HandTest {
 
             assertThat(blackjackHand.isBlackjack()).isFalse();
         }
+    }
 
+    @DisplayName("빈 손패인지 확인할 수 있다.")
+    @Nested
+    class EmptyHandTest {
+
+        @DisplayName("아무 카드도 존재하지 않으면 빈 손패이다.")
+        @Test
+        void whenEmptyHand_returnTrue() {
+            Hand emptyHand = new Hand(Collections.emptyList());
+
+            assertThat(emptyHand.isEmpty()).isTrue();
+        }
+
+        @DisplayName("카드가 한 장이라도 존재하면 빈 손패가 아니다.")
+        @Test
+        void whenCardExists_returnFalse() {
+            Hand emptyHand = new Hand(List.of(new Card(Value.ACE, Shape.HEART)));
+
+            assertThat(emptyHand.isEmpty()).isFalse();
+        }
     }
 }

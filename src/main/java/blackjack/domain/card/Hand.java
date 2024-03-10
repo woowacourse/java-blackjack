@@ -10,7 +10,7 @@ public class Hand {
     private static final int BLACKJACK_SIZE = 2;
     private final List<Card> cards;
 
-    Hand(List<Card> cards) {
+    public Hand(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
 
@@ -45,5 +45,9 @@ public class Hand {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public boolean isEmpty() {
+        return cards.isEmpty();
     }
 }
