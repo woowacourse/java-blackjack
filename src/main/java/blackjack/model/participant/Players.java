@@ -53,7 +53,7 @@ public class Players {
 
     public List<NameCardsScore> collectFinalResults() {
         return players.stream()
-                .map(player -> new NameCardsScore(player.getName(), player.openCards(), player.notifyScore()))
+                .map(player -> new NameCardsScore(player.getName(), player.openCards(), player.getScore()))
                 .toList();
     }
 

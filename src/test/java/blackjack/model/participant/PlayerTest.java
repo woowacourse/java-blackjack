@@ -13,8 +13,6 @@ import blackjack.model.deck.Card;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 class PlayerTest {
 
@@ -61,6 +59,6 @@ class PlayerTest {
         Hand hand = new Hand(List.of(new Card(CLOVER, ACE), new Card(CLOVER, TEN)));
         Player player = Player.of("몰리", hand);
 
-        assertThat(player.announceCardCount()).isEqualTo(2);
+        assertThat(player.getCardCount()).isEqualTo(2);
     }
 }

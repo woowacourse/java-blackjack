@@ -23,10 +23,6 @@ public class Player {
         this.hand = hand.addCard(card);
     }
 
-    public int notifyScore() {
-        return hand.calculateScore();
-    }
-
     public List<Card> openCards() {
         return hand.getCards();
     }
@@ -39,7 +35,11 @@ public class Player {
         return hand.isBust();
     }
 
-    public int announceCardCount() {
+    public int getScore() {
+        return hand.calculateScore();
+    }
+
+    public int getCardCount() {
         return hand.countSize();
     }
 

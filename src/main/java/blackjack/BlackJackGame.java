@@ -79,7 +79,7 @@ public class BlackJackGame {
     private void printFinalCardsAndScores(final Dealer dealer, final Players players) {
         OutputView.println();
         NameCardsScore dealerNameCardsScore = new NameCardsScore(dealer.getName(), dealer.openCards(),
-                dealer.notifyScore());
+                dealer.getScore());
         List<NameCardsScore> playerNameCardsScore = players.collectFinalResults();
         OutputView.printFinalCardsAndScore(dealerNameCardsScore);
         OutputView.printFinalCardsAndScore(playerNameCardsScore);

@@ -28,18 +28,18 @@ public class Rule {
         if (player.isBust()) {
             return ResultCommand.LOSE;
         }
-        if (player.notifyScore() > dealer.notifyScore()) {
+        if (player.getScore() > dealer.getScore()) {
             return ResultCommand.WIN;
         }
-        if (player.notifyScore() < dealer.notifyScore()) {
+        if (player.getScore() < dealer.getScore()) {
             return ResultCommand.LOSE;
         }
         return judgePlayerResultWhenSameScore(player);
     }
 
     private ResultCommand judgePlayerResultWhenSameScore(final Player player) {
-        int playerCardCount = player.announceCardCount();
-        int dealerCardCount = dealer.announceCardCount();
+        int playerCardCount = player.getCardCount();
+        int dealerCardCount = dealer.getCardCount();
         if (playerCardCount < dealerCardCount) {
             return ResultCommand.WIN;
         }
