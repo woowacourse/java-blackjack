@@ -18,10 +18,10 @@ public class Dealer extends Participant {
     }
 
     public boolean isWin(Player player) {
-        if (player.isBusted()) {
+        if (player.isBusted() || this.isBlackjack()) {
             return true;
         }
-        if (this.isBusted()) {
+        if (this.isBusted() || player.isBlackjack()) {
             return false;
         }
         return this.calculateScore() >= player.calculateScore();

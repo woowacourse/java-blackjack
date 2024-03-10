@@ -24,7 +24,9 @@ public abstract class Participant {
         return calculateScore() <= getMaxDrawableScore();
     }
 
-    // TODO isBlackjack 추가
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
 
     public final boolean isBusted() {
         return hand.isBusted();

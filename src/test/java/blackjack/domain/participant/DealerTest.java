@@ -24,6 +24,7 @@ class DealerTest {
     private static final List<Card> SCORE_13_WITH_ACE = CardTest.SCORE_13_WITH_ACE;
     private static final List<Card> CARDS_SCORE_16 = CardTest.CARDS_SCORE_16;
     private static final List<Card> CARDS_SCORE_17 = CardTest.CARDS_SCORE_17;
+    private static final List<Card> CARDS_SCORE_21 = CardTest.CARDS_SCORE_21;
     private static final List<Card> BLACKJACK = CardTest.BLACKJACK;
     private static final List<Card> BUSTED = CardTest.BUSTED;
     private static final Name DEFAULT_NAME = NameTest.DEFAULT_NAME;
@@ -113,7 +114,7 @@ class DealerTest {
     @Nested
     class IsWinTest {
 
-        @DisplayName("플레이어가 21일 넘을 경우, 딜러가 이긴다.")
+        @DisplayName("플레이어가 21을 넘을 경우, 딜러가 이긴다.")
         @ParameterizedTest
         @MethodSource("dealerCards")
         void whenPlayerBusted_dealerWin(List<Card> cards) {
@@ -141,7 +142,39 @@ class DealerTest {
             return Stream.of(BLACKJACK, CARDS_SCORE_4, CARDS_SCORE_16);
         }
 
-        @DisplayName("둘 다 21을 넘기지 않을 경우, 플레이어가 딜러의 숫자보다 크다면 플레이어가 이긴다.")
+        @DisplayName("플레이어만 블랙잭일 경우, 플레이어가 이긴다.")
+        @Test
+        void whenPlayerOnlyBlackjack_playerWin() {
+            Player player = new Player(BLACKJACK, DEFAULT_NAME);
+            Dealer dealer = new Dealer(CARDS_SCORE_21);
+
+            assertThat(dealer.isWin(player)).isFalse();
+        }
+
+        @DisplayName("딜러만 블랙잭일 경우, 딜러가 이긴다.")
+        @Test
+        void whenDealerOnlyBlackjack_dealerWin() {
+            Player player = new Player(CARDS_SCORE_21, DEFAULT_NAME);
+            Dealer dealer = new Dealer(BLACKJACK);
+
+            assertThat(dealer.isWin(player)).isTrue();
+        }
+
+        @DisplayName("둘 다 21을 넘지 않을 경우, 플레이어가 딜러의 숫자보다 같다면 딜러가 이긴다.")
+        @ParameterizedTest
+        @MethodSource("sameCards")
+        void whenPlayerScoreIsEqualToDealerScore_dealerWin(List<Card> cards) {
+            Player player = new Player(cards, DEFAULT_NAME);
+            Dealer dealer = new Dealer(cards);
+
+            assertThat(dealer.isWin(player)).isTrue();
+        }
+
+        static Stream<List<Card>> sameCards() {
+            return Stream.of(BLACKJACK, CARDS_SCORE_21, CARDS_SCORE_16);
+        }
+
+        @DisplayName("둘 다 21보다 작을 경우, 플레이어가 딜러의 숫자보다 크다면 플레이어가 이긴다.")
         @Test
         void whenPlayerScoreIsBiggerThanDealerScore_playerWin() {
             Player player = new Player(CARDS_SCORE_17, DEFAULT_NAME);
@@ -150,16 +183,7 @@ class DealerTest {
             assertThat(dealer.isWin(player)).isFalse();
         }
 
-        @DisplayName("둘 다 21을 넘기지 않을 경우, 플레이어가 딜러의 숫자보다 같다면 딜러가 이긴다.")
-        @Test
-        void whenPlayerScoreIsEqualToDealerScore_dealerWin() {
-            Player player = new Player(CARDS_SCORE_17, DEFAULT_NAME);
-            Dealer dealer = new Dealer(CARDS_SCORE_17);
-
-            assertThat(dealer.isWin(player)).isTrue();
-        }
-
-        @DisplayName("둘 다 21을 넘기지 않을 경우, 플레이어가 딜러의 숫자보다 작다면 딜러가 이긴다.")
+        @DisplayName("둘 다 21보다 작을 경우, 플레이어가 딜러의 숫자보다 작다면 딜러가 이긴다.")
         @Test
         void whenPlayerScoreIsSmallerThanDealerScore_dealerWin() {
             Player player = new Player(CARDS_SCORE_16, DEFAULT_NAME);
