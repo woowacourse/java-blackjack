@@ -16,11 +16,11 @@ public class Controller {
         Users users = ExceptionHandler.handle(InputView::inputNames);
         Game game = new Game(new TotalDeck(TotalDeckGenerator.generate()), users);
         ResultView.showStartStatus(users);
-        run(game);
+        hitOrStay(game);
         showGameResult(users, game);
     }
 
-    private void run(Game game) {
+    private void hitOrStay(Game game) {
         while (game.continueInput()) {
             hitOrStayOnce(game);
         }
