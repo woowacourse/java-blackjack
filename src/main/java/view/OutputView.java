@@ -1,15 +1,15 @@
 package view;
 
 import domain.constant.GameResult;
+import domain.game.GameResults;
 import domain.participant.PlayerName;
 import dto.DealerHandStatusDto;
-import dto.PlayerGameResultDto;
 import dto.PlayerHandStatusDto;
 import dto.PlayingCardDto;
 
 import java.util.List;
 
-import static domain.constant.GameResult.WIN;
+import static domain.constant.GameResult.*;
 import static view.OutputFormatConverter.*;
 
 public class OutputView {
@@ -68,7 +68,10 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printFinalHandStatus(final DealerHandStatusDto dealerHandStatus, final List<PlayerHandStatusDto> playerHandStatuses) {
+    public static void printFinalHandStatus(
+            final DealerHandStatusDto dealerHandStatus,
+            final List<PlayerHandStatusDto> playerHandStatuses
+    ) {
         System.out.println("딜러 카드: " + convertPlayingCardsToPrintMessage(dealerHandStatus.playingCards())
                 + " - 결과: " + dealerHandStatus.playingCardSum());
         playerHandStatuses.forEach(playerHandStatus -> {
@@ -78,18 +81,25 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printGameResult(final List<GameResult> dealerGameResult, final List<PlayerGameResultDto> playerGameResults) {
+    public static void printGameResult(final GameResults gameResults) {
         System.out.println("## 최종 승패");
-        long dealerWinCount = dealerGameResult.stream()
-                .filter(gameResult -> gameResult == WIN)
-                .count();
-        long dealerLoseCount = dealerGameResult.size() - dealerWinCount;
-        System.out.println("딜러: " + dealerWinCount + "승 " + dealerLoseCount + "패");
-        playerGameResults.forEach(playerGameResult -> System.out.println(convertPlayerGameResultToPrintMessage(playerGameResult)));
+        List<GameResult> dealerGameResults = gameResults.getDealerGameResults();
+        System.out.println("딜러: "
+                + getDealerGameResultCount(dealerGameResults, WIN) + "승 "
+                + getDealerGameResultCount(dealerGameResults, LOSE) + "패 "
+                + getDealerGameResultCount(dealerGameResults, DRAW) + "무");
+        gameResults.getPlayerGameResults()
+                .forEach((key, value) ->
+                        System.out.println(convertPlayerGameResultToPrintMessage(key, value)));
     }
 
-    private static String convertPlayerGameResultToPrintMessage(PlayerGameResultDto playerGameResult) {
-        return playerGameResult.playerName().value() + ": "
-                + convertGameResultToString(playerGameResult.gameResult());
+    private static int getDealerGameResultCount(final List<GameResult> dealerGameResults, final GameResult findResult) {
+        return (int) dealerGameResults.stream()
+                .filter(gameResult -> gameResult == findResult)
+                .count();
+    }
+
+    private static String convertPlayerGameResultToPrintMessage(final PlayerName playerName, final GameResult gameResult) {
+        return playerName.value() + ": " + convertGameResultToString(gameResult);
     }
 }

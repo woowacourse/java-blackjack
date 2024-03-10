@@ -12,7 +12,7 @@ public class Hand {
 
     private final List<PlayingCard> playingCards;
 
-    Hand(final List<PlayingCard> playingCards) {
+    public Hand(final List<PlayingCard> playingCards) {
         this.playingCards = playingCards;
     }
 
@@ -46,5 +46,9 @@ public class Hand {
 
         return (firstCard.isAce() && secondCard.isTenValueCard())
                 || (firstCard.isTenValueCard() || secondCard.isAce());
+    }
+
+    public boolean isLowerToBlackjackConditionValue() {
+        return getCardsNumberSum() < BLACKJACK_CONDITION;
     }
 }

@@ -2,7 +2,6 @@ package domain.participant;
 
 import domain.playingcard.Deck;
 import domain.playingcard.PlayingCard;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +9,6 @@ import java.util.List;
 
 import static domain.playingcard.PlayingCardShape.DIAMOND;
 import static domain.playingcard.PlayingCardValue.EIGHT;
-import static domain.playingcard.PlayingCardValue.NINE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
@@ -54,21 +52,5 @@ public class DealerTest {
 
         // Then
         assertThat(initCardNumberSum).isNotEqualTo(initHand.getCardsNumberSum());
-    }
-
-    @DisplayName("딜러와 플레이어의 게임 결과를 반환한다.")
-    @Test
-    void getGameResultsTest() {
-        // Given
-        Hand playerHand = new Hand(List.of(new PlayingCard(DIAMOND, NINE)));
-        Hand dealerHand = new Hand(List.of(new PlayingCard(DIAMOND, EIGHT)));
-        List<Player> players = List.of(new Player(new PlayerName("kelly"), playerHand));
-        Dealer dealer = new Dealer(dealerHand);
-
-        // When
-        GameResults gameResults = dealer.determineGameResults(players);
-
-        // Then
-        Assertions.assertThat(gameResults).isNotNull();
     }
 }

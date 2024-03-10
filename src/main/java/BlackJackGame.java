@@ -1,5 +1,5 @@
+import domain.game.GameResults;
 import domain.playingcard.Deck;
-import domain.participant.GameResults;
 import dto.DealerHandStatusDto;
 import dto.PlayerHandStatusDto;
 import dto.PlayingCardDto;
@@ -21,8 +21,9 @@ public class BlackJackGame {
 
         play(deck, dealer, players);
 
-        GameResults gameResults = dealer.determineGameResults(players);
-        OutputView.printGameResult(gameResults.dealerGameResult(), gameResults.getPlayerGameResultDto());
+//        GameResults gameResults = dealer.determineGameResults(players);
+        GameResults gameResults = GameResults.of(dealer, players);
+        OutputView.printGameResult(gameResults);
     }
 
     private List<Player> initPlayers() {

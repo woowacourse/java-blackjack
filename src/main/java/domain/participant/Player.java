@@ -3,7 +3,7 @@ package domain.participant;
 public class Player extends Participant {
     private final PlayerName playerName;
 
-    Player(final PlayerName playerName, final Hand hand) {
+    public Player(final PlayerName playerName, final Hand hand) {
         super(hand);
         this.playerName = playerName;
     }
@@ -14,7 +14,7 @@ public class Player extends Participant {
 
     @Override
     public boolean isDrawable() {
-        return !hand.isBust() && !hand.isBlackJack();
+        return hand.isLowerToBlackjackConditionValue();
     }
 
     public PlayerName getPlayerName() {
