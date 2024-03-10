@@ -26,7 +26,7 @@ public class CardHand {
 		cards.add(card);
 	}
 
-	public void add(List<Card> cards) {
+	public void addAll(List<Card> cards) {
 		this.cards.addAll(cards);
 	}
 

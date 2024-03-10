@@ -13,7 +13,7 @@ public class Gamer {
 	}
 
 	public void receiveInitCards(List<Card> cards) {
-		cardHand.add(cards);
+		cardHand.addAll(cards);
 	}
 
 	public int getScore() {
