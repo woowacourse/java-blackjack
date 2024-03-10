@@ -29,8 +29,8 @@ public class Gamers {
 
     private void validateSize(int size) {
         if (size < MIN_SIZE || size > MAX_SIZE) {
-            throw new IllegalArgumentException(
-                    "[ERROR] 플레이어는 최소 " + MIN_SIZE + "명에서 최대 " + MAX_SIZE + "명까지 참여할 수 있습니다.");
+            String errorMessage = "[ERROR] 플레이어는 최소 " + MIN_SIZE + "명에서 최대 " + MAX_SIZE + "명까지 참여할 수 있습니다.";
+            throw new IllegalArgumentException(errorMessage);
         }
     }
 
