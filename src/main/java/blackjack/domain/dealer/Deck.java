@@ -36,7 +36,7 @@ public class Deck {
         final List<CardNumber> numbers = Arrays.asList(CardNumber.values());
 
         return Arrays.stream(CardShape.values())
-                .flatMap(shape -> numbers.stream().map(number -> new Card(number, shape)))
+                .flatMap(shape -> numbers.stream().map(number -> Card.valueOf(number, shape)))
                 .collect(Collectors.toList());
     }
 

@@ -1,21 +1,45 @@
 package blackjack.domain.card;
 
-import java.util.Objects;
+import static java.util.stream.Collectors.toMap;
 
-public class Card {
-    private final CardNumber number;
-    private final CardShape shape;
+import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
-    public Card(final CardNumber number, final CardShape shape) {
-        this.number = number;
-        this.shape = shape;
+public record Card(CardNumber number, CardShape shape) {
+
+    private static class CardCache {
+
+        static final Map<CardShape, Map<CardNumber, Card>> cache;
+        static Map<CardShape, Map<CardNumber, Card>> archivedCache;
+
+        static {
+            archivedCache = new EnumMap<>(CardShape.class);
+
+            final List<CardNumber> numbers = Arrays.asList(CardNumber.values());
+
+            Arrays.stream(CardShape.values()).forEach(shape -> archivedCache.put(shape, numbers.stream().collect(
+                    toMap(Function.identity(), number -> new Card(number, shape), (v1, v2) -> v1,
+                            () -> new EnumMap<>(CardNumber.class)))));
+
+            cache = archivedCache;
+        }
+
+        private CardCache() {
+        }
+    }
+
+    public static Card valueOf(final CardNumber number, final CardShape shape) {
+        return CardCache.cache.get(shape).get(number);
     }
 
     public boolean isAce() {
         return number.isAce();
     }
 
-    public int getRealNumber() {
+    public int getNumber() {
         return number.getNumber();
     }
 
@@ -25,22 +49,5 @@ public class Card {
 
     public String getShapeName() {
         return shape.name();
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final Card card = (Card) o;
-        return number == card.number && shape == card.shape;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(number, shape);
     }
 }
