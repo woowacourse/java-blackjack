@@ -1,12 +1,20 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class HandTest {
+
+    @DisplayName("생성 테스트")
+    @Test
+    void create() {
+        assertThatCode(() -> new Hand())
+                .doesNotThrowAnyException();
+    }
 
     @DisplayName("초기 패에는 아무 카드도 존재하지 않는다.")
     @Test

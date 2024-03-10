@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
@@ -9,9 +10,16 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    @DisplayName("딜러의 이름은 '딜러'이다.")
+    @DisplayName("생성 테스트")
     @Test
     void create() {
+        assertThatCode(() -> new Dealer())
+                .doesNotThrowAnyException();
+    }
+
+    @DisplayName("딜러의 이름은 '딜러'이다.")
+    @Test
+    void initialDealerName() {
         Dealer dealer = new Dealer();
 
         String result = dealer.getName();

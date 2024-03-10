@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
@@ -8,6 +9,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DeckTest {
+
+    @DisplayName("생성 테스트")
+    @Test
+    void create() {
+        List<Card> cards = List.of(new Card(CardRank.THREE, CardShape.CLOVER));
+
+        assertThatCode(() -> new Deck(cards))
+                .doesNotThrowAnyException();
+    }
 
     @DisplayName("카드 한장을 뽑을 수 있다.")
     @Test
