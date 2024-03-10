@@ -1,5 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
+import blackjack.domain.player.Score;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Player;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

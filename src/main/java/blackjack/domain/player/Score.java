@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
 public record Score(int value) {
     private static final int MINIMUM_VALUE = 0;
