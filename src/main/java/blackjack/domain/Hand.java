@@ -1,15 +1,16 @@
 package blackjack.domain;
 
-import blackjack.domain.card.TrumpCard;
 import blackjack.domain.card.Rank;
-import blackjack.util.Constants;
+import blackjack.domain.card.TrumpCard;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Hand {
 
-    public static final int BLACKJACK_CARD_SIZE = 2;
+    public static final int BLACKJACK_BOUND = 21;
+    private static final int BLACKJACK_CARD_SIZE = 2;
     private static final int MAX_ACE_SCORE = 11;
 
     private final List<TrumpCard> trumpCards;
@@ -26,7 +27,7 @@ public class Hand {
         long aceCount = countAce();
         int scoreWithoutAce = calculateScoreWithoutAce();
 
-        int residualScore = Constants.BLACKJACK_BOUND - scoreWithoutAce;
+        int residualScore = BLACKJACK_BOUND - scoreWithoutAce;
 
         int quotient = residualScore / MAX_ACE_SCORE;
         long minAceCount = Math.min(quotient, aceCount);
@@ -55,8 +56,12 @@ public class Hand {
         return scoreWithoutAce;
     }
 
+    public boolean isBust() {
+        return calculateScore() > BLACKJACK_BOUND;
+    }
+
     public boolean isBlackjack() {
-        return calculateScore() == Constants.BLACKJACK_BOUND && trumpCards.size() == BLACKJACK_CARD_SIZE;
+        return calculateScore() == BLACKJACK_BOUND && trumpCards.size() == BLACKJACK_CARD_SIZE;
     }
 
     public TrumpCard getFirstCard() {

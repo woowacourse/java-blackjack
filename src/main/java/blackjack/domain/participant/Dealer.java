@@ -2,11 +2,12 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Deck;
 import blackjack.domain.card.TrumpCard;
-import blackjack.util.Constants;
 
 import java.util.stream.IntStream;
 
 public class Dealer extends Gamer {
+
+    public static final int DEALER_BOUND = 16;
 
     private final Deck deck;
 
@@ -37,7 +38,7 @@ public class Dealer extends Gamer {
 
     @Override
     boolean canReceiveCard() {
-        return hand.calculateScore() <= Constants.DEALER_BOUND;
+        return hand.calculateScore() <= DEALER_BOUND;
     }
 
     public TrumpCard showFirstCard() {

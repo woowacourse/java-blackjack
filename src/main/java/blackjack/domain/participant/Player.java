@@ -1,7 +1,8 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Hand;
 import blackjack.domain.card.TrumpCard;
-import blackjack.util.Constants;
+
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
@@ -39,7 +40,7 @@ public class Player extends Gamer {
 
     @Override
     public boolean canReceiveCard() {
-        return hand.calculateScore() < Constants.BLACKJACK_BOUND;
+        return hand.calculateScore() < Hand.BLACKJACK_BOUND;
     }
 
     public String getName() {
