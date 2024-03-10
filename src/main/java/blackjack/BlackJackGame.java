@@ -6,7 +6,6 @@ import blackjack.domain.DealerGameResult;
 import blackjack.domain.DrawDecision;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.CardDeckCreator;
 import blackjack.domain.player.HandCreator;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerCreator;
@@ -30,7 +29,7 @@ public class BlackJackGame {
     }
 
     public void run() {
-        CardDeck cardDeck = initCardDeck();
+        CardDeck cardDeck = CardDeck.createShuffledDeck();
         Players players = initPlayers(cardDeck);
         Player dealer = initDealer(cardDeck);
         printPlayersInformation(players, dealer);
@@ -44,11 +43,6 @@ public class BlackJackGame {
         printPlayersScore(players);
         printDealerGameResult(dealer, players);
         printPlayersGameResult(players, dealer);
-    }
-
-    private CardDeck initCardDeck() {
-        CardDeckCreator cardDeckCreator = new CardDeckCreator();
-        return cardDeckCreator.create();
     }
 
     private Players initPlayers(CardDeck cardDeck) {

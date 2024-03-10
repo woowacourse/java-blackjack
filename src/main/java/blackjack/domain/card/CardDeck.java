@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -10,6 +12,15 @@ public class CardDeck {
 
     public CardDeck(List<Card> cards) {
         this.cards = cards;
+    }
+
+    public static CardDeck createShuffledDeck() {
+        List<Card> cards = Arrays.stream(CardShape.values())
+                .flatMap(shape -> Arrays.stream(CardNumber.values())
+                        .map(number -> new Card(shape, number)))
+                .collect(Collectors.toList());
+        Collections.shuffle(cards);
+        return new CardDeck(cards);
     }
 
     public Card popCard() {
