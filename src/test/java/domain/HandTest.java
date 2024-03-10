@@ -6,7 +6,6 @@ import static domain.FixtureCard.TEN_HEARTS;
 import static domain.FixtureCard.TWO_HEARTS;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -28,7 +27,7 @@ class HandTest {
     @DisplayName("카드 한 장을 손 패로 가지고 온다.")
     @Test
     void add() {
-        List<Card> cards = new ArrayList<>(List.of(SEVEN_HEARTS, TEN_HEARTS));
+        List<Card> cards = List.of(SEVEN_HEARTS, TEN_HEARTS);
         Hand hand = new Hand(cards);
         Card addCard = TWO_HEARTS;
 

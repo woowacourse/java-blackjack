@@ -2,6 +2,7 @@ package domain;
 
 import static domain.Player.BLACK_JACK;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
@@ -9,7 +10,7 @@ public class Hand {
     private final List<Card> cards;
 
     public Hand(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public int calculateSum() {
