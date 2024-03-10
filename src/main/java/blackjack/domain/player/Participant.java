@@ -9,11 +9,11 @@ public class Participant {
     private static final int BLACKJACK = 21;
 
     private final Hand hand;
-    private final HitStrategy hitStrategy;
+    private final ParticipantType participantType;
 
-    public Participant(Hand hand, HitStrategy hitStrategy) {
+    public Participant(Hand hand, ParticipantType participantType) {
         this.hand = hand;
-        this.hitStrategy = hitStrategy;
+        this.participantType = participantType;
     }
 
     public void hit(Card card) {
@@ -23,6 +23,7 @@ public class Participant {
     }
 
     private boolean canHit() {
+        HitStrategy hitStrategy = participantType.getHitStrategy();
         return hitStrategy.canHit(calculateHandTotalClosestToBlackjack());
     }
 

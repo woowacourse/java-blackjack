@@ -7,8 +7,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
 import blackjack.domain.card.Hand;
-import blackjack.domain.rule.DealerHitStrategy;
-import blackjack.domain.rule.PlayerHitStrategy;
 import fixture.HandFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,7 +27,7 @@ class ParticipantTest {
         // given
         Hand hand = HandFixture.createHandWithScoreTotal21();
 
-        Participant player = new Participant(hand, new PlayerHitStrategy());
+        Participant player = new Participant(hand, ParticipantType.PLAYER);
 
         // when
         player.hit(card);
@@ -45,7 +43,7 @@ class ParticipantTest {
         Hand hand = HandFixture.createHandWithScoreTotal21();
         hand.append(new Card(CardRank.ACE, CardSuit.HEART));
 
-        Participant player = new Participant(hand, new PlayerHitStrategy());
+        Participant player = new Participant(hand, ParticipantType.PLAYER);
 
         // when
         player.hit(card);
@@ -60,7 +58,7 @@ class ParticipantTest {
         // given
         Hand hand = HandFixture.createHandWithScoreTotal16();
 
-        Participant dealer = new Participant(hand, new DealerHitStrategy());
+        Participant dealer = new Participant(hand, ParticipantType.DEALER);
 
         // when
         dealer.hit(card);
@@ -76,7 +74,7 @@ class ParticipantTest {
         Hand hand = HandFixture.createHandWithScoreTotal16();
         hand.append(new Card(CardRank.ACE, CardSuit.HEART));
 
-        Participant dealer = new Participant(hand, new DealerHitStrategy());
+        Participant dealer = new Participant(hand, ParticipantType.DEALER);
 
         // when
         dealer.hit(card);
@@ -92,8 +90,8 @@ class ParticipantTest {
         Hand hand = HandFixture.createHandWithScoreTotal21();
         hand.append(new Card(CardRank.ACE, CardSuit.HEART));
 
-        Participant player = new Participant(hand, new PlayerHitStrategy());
-        Participant dealer = new Participant(hand, new DealerHitStrategy());
+        Participant player = new Participant(hand, ParticipantType.PLAYER);
+        Participant dealer = new Participant(hand, ParticipantType.DEALER);
 
         // when & then
         assertAll(
@@ -108,8 +106,8 @@ class ParticipantTest {
         // given
         Hand hand = HandFixture.createHandWithScoreTotal21();
 
-        Participant player = new Participant(hand, new PlayerHitStrategy());
-        Participant dealer = new Participant(hand, new DealerHitStrategy());
+        Participant player = new Participant(hand, ParticipantType.PLAYER);
+        Participant dealer = new Participant(hand, ParticipantType.DEALER);
 
         // when & then
         assertAll(
