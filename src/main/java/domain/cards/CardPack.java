@@ -17,7 +17,7 @@ public class CardPack {
         generateRandomCards();
     }
 
-    public void generateRandomCards() {
+    private void generateRandomCards() {
         generateByNumberAndShape();
         Collections.shuffle(cards);
     }
