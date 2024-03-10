@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class Dealer {
+
     private static final Score NEED_CARD_CRITERION = new Score(17);
     private static final String DEALER_NAME = "딜러";
 

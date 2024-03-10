@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Participant {
+
     private final Hands hands;
     private final ParticipantName name;
 

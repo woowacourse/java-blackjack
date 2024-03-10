@@ -4,6 +4,7 @@ import blackjack.exception.NeedRetryException;
 import java.util.Objects;
 
 public class ParticipantName {
+
     private final String name;
 
     public ParticipantName(final String input) {

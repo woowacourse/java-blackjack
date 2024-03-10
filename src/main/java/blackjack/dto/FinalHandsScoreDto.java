@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public record FinalHandsScoreDto(List<PlayerHandsScoreDto> playersHandsScore, PlayerHandsScoreDto dealerHandsScore) {
+
     public static FinalHandsScoreDto of(final Map<ParticipantName, Hands> playersHands, final Dealer dealer) {
         final List<PlayerHandsScoreDto> handsScores = playersHands.entrySet().stream()
                 .map(entry -> PlayerHandsScoreDto.of(entry.getKey(), entry.getValue()))

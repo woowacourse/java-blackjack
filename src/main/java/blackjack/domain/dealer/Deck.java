@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Deck {
+
     private static final List<Card> CACHED_CARDS = cacheCards();
 
     private final Deque<Card> cards;

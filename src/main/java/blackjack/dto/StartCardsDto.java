@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 public record StartCardsDto(List<PlayerCardsDto> playersCards, PlayerCardsDto dealerCards) {
-    public static StartCardsDto of(final Map<ParticipantName, Hands> playersCards, final Hands dealerHands, final ParticipantName dealerName) {
-        return new StartCardsDto(convertToPlayersCardDto(playersCards), convertToPlayerCardDto(dealerHands, dealerName));
+
+    public static StartCardsDto of(final Map<ParticipantName, Hands> playersCards, final Hands dealerHands,
+            final ParticipantName dealerName) {
+        return new StartCardsDto(convertToPlayersCardDto(playersCards),
+                convertToPlayerCardDto(dealerHands, dealerName));
     }
 
     private static List<PlayerCardsDto> convertToPlayersCardDto(final Map<ParticipantName, Hands> playersCards) {

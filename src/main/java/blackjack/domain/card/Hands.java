@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Hands {
+
     private static final int ACE_SCORE_GAP = 10;
 
     private final List<Card> cards;
@@ -42,15 +43,11 @@ public class Hands {
     }
 
     private int sum() {
-        return cards.stream()
-                .mapToInt(Card::getRealNumber)
-                .sum();
+        return cards.stream().mapToInt(Card::getNumber).sum();
     }
 
     private int countAce() {
-        return (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
+        return (int) cards.stream().filter(Card::isAce).count();
     }
 
     private boolean isDeadScore(final int sum) {
@@ -70,9 +67,7 @@ public class Hands {
     }
 
     public Hands getFirstCard() {
-        return cards.stream()
-                .limit(1)
-                .collect(collectingAndThen(toList(), Hands::new));
+        return cards.stream().limit(1).collect(collectingAndThen(toList(), Hands::new));
     }
 
     public List<Card> getCards() {

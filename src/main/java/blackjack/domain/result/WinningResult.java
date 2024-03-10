@@ -8,6 +8,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class WinningResult {
+
     private final Map<ParticipantName, WinStatus> participantsWinStatus;
 
     private WinningResult(final Map<ParticipantName, WinStatus> participantsWinStatus) {

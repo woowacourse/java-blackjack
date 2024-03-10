@@ -3,6 +3,7 @@ package blackjack.domain.result;
 import java.util.Objects;
 
 public class Score {
+
     private static final int VALUE_MIN = 2;
 
     private final int value;

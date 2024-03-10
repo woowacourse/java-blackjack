@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackjackGame {
+
     private static final int START_CARD_COUNT = 2;
 
     private final Players players;
