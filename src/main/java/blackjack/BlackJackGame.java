@@ -1,8 +1,8 @@
 package blackjack;
 
 import blackjack.dto.NameCardsScore;
-import blackjack.model.participant.Dealer;
 import blackjack.model.deck.Deck;
+import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
 import blackjack.model.result.Referee;
@@ -50,8 +50,16 @@ public class BlackJackGame {
 
     private void playPlayerTurn(final Player player, final Deck deck) {
         if (!player.isBust() && player.canHit()) {
-            final boolean isHit = InputView.readHitOrNot(player.getName(), CONSOLE_READER);
-            distributeIfPlayerWant(isHit, player, deck);
+            distributeIfPlayerWant(isPlayerWantHit(player.getName()), player, deck);
+        }
+    }
+
+    private boolean isPlayerWantHit(final String name) {
+        try {
+            return InputView.readHitOrNot(name, CONSOLE_READER);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return isPlayerWantHit(name);
         }
     }
 
