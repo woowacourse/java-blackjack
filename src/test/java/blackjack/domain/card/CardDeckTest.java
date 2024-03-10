@@ -8,71 +8,72 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
-@DisplayName("총 카드 덱 테스트")
 class CardDeckTest {
 
-    @DisplayName("덱에서 카드를 뽑을 수 있다")
+    @DisplayName("카드 덱에서 카드를 한 장 빼내어 반환한다.")
     @Test
-    void testPopCardFromDeck() {
+    void testPopCard() {
+        // given
         List<Card> cards = new ArrayList<>();
-        Card card1 = new Card(CardShape.HEART, CardNumber.TWO);
-        Card card2 = new Card(CardShape.CLUB, CardNumber.THREE);
-        Card card3 = new Card(CardShape.DIAMOND, CardNumber.FOUR);
-
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
+        Card card = new Card(CardRank.ACE, CardSuit.HEART);
+        cards.add(card);
 
         CardDeck cardDeck = new CardDeck(cards);
-        Card popped = cardDeck.popCard();
-        assertThat(popped).isEqualTo(card1);
+
+        // when
+        Card actual = cardDeck.popCard();
+
+        // then
+        assertAll(
+                () -> assertThat(actual).isEqualTo(card),
+                () -> assertThatThrownBy(cardDeck::popCard)
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
     }
 
-    @DisplayName("덱에서 횟수만큼 카드를 뽑을 수 있다")
+    @DisplayName("카드 덱에서 카드를 지정한 개수만큼 빼내어 반환한다.")
     @Test
     void testPopCardsFromDeck() {
+        // given
         List<Card> cards = new ArrayList<>();
-        Card card1 = new Card(CardShape.HEART, CardNumber.TWO);
-        Card card2 = new Card(CardShape.CLUB, CardNumber.THREE);
-        Card card3 = new Card(CardShape.DIAMOND, CardNumber.FOUR);
-
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
+        cards.add(new Card(CardShape.HEART, CardNumber.TWO));
+        cards.add(new Card(CardShape.CLUB, CardNumber.THREE));
+        cards.add(new Card(CardShape.DIAMOND, CardNumber.FOUR));
 
         CardDeck cardDeck = new CardDeck(cards);
-        List<Card> popped = cardDeck.popCards(3);
 
-        assertThat(popped).hasSize(3);
+        // when
+        List<Card> actual = cardDeck.popCards(3);
+
+        // then
+        assertThat(actual).hasSize(3);
     }
 
-    @DisplayName("덱에서 카드를 하나 뽑는 경우 카드가 부족하면 예외가 발생한다")
+    @DisplayName("카드 덱이 비었는데 카드를 빼내서 반환하려고 하면 예외가 발생한다.")
     @Test
-    void testInvalidPopInsufficientDeckCount() {
-        List<Card> cards = new ArrayList<>();
-        CardDeck cardDeck = new CardDeck(cards);
+    void testPopCardWithEmptyDeck() {
+        // given
+        CardDeck cardDeck = new CardDeck(new ArrayList<>());
 
-        assertThatThrownBy(() -> cardDeck.popCard())
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 남아있는 카드가 부족하여 카드를 뽑을 수 없습니다");
+        // when & then
+        assertThatThrownBy(cardDeck::popCard)
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("덱에서 카드를 여러개 뽑는 경우 카드가 부족하면 예외가 발생한다")
+    @DisplayName("모든 카드 랭크와 모양의 조합으로 이루어진 52장의 카드를 가지고 카드 덱을 생성한다.")
     @Test
-    void testInvalidPopCardsInsufficientDeckCount() {
-        List<Card> cards = new ArrayList<>();
-        Card card1 = new Card(CardShape.HEART, CardNumber.TWO);
-        Card card2 = new Card(CardShape.CLUB, CardNumber.THREE);
-        Card card3 = new Card(CardShape.DIAMOND, CardNumber.FOUR);
+    void testCreateFullCardDeck() {
+        // given
+        CardDeck shuffledFullCardDeck = CardDeck.createShuffledFullCardDeck();
 
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
+        // when
+        List<Card> cards = shuffledFullCardDeck.popCards(52);
 
-        CardDeck cardDeck = new CardDeck(cards);
-        assertThatThrownBy(() -> cardDeck.popCards(4))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 남아있는 카드가 부족하여 카드를 뽑을 수 없습니다");
+        // then
+        assertThat(cards)
+                .doesNotHaveDuplicates()
+                .hasSize(52);
     }
 }

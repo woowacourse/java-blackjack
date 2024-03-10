@@ -1,5 +1,8 @@
 package blackjack.domain.card;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum CardRank {
 
     ACE(1, 11),
@@ -27,6 +30,10 @@ public enum CardRank {
     CardRank(int score, int specialScore) {
         this.score = score;
         this.specialScore = specialScore;
+    }
+
+    public static List<CardRank> getAllCardRanks() {
+        return Arrays.stream(values()).toList();
     }
 
     public boolean isAce() {
