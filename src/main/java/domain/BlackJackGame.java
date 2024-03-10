@@ -14,7 +14,8 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJackGame {
-    private static final int THRESHOLD = 16;
+    private static final int BLACKJACK_SCORE = 16;
+    private static final int CARD_INITIAL_SIZE = 2;
 
     private final Participants participants;
     private final Deck deck;
@@ -30,21 +31,24 @@ public class BlackJackGame {
 
     public List<HandStatus> initialize() {
         List<HandStatus> status = new ArrayList<>();
-
-        // TODO: 모든 플레이어에 대한 다형성으로 처리할 수 있지 않을까? 동작이 모두 같잖아.
-        for (Player player : participants.getParticipants()) {
-            player.pickTwoCards(deck);
-            status.add(new HandStatus(player.getName(), player.getHand()));
+        for (Participant participant : participants.getParticipants()) {
+            participant.pickCard(deck, CARD_INITIAL_SIZE);
+            status.add(createHandStatus(participant));
         }
         return status;
     }
+
+    private HandStatus createHandStatus(final Participant participant) {
+        return new HandStatus(participant.getName(), participant.getHand());
+    }
+
 
     public void giveCardToPlayer(final String name, final OutputView outputView, final InputView inputView) {
         Player player = getPlayer(name);
         HandStatus currentHand = new HandStatus(player.getName(), player.getHand());
         CardCommand command = inputCommand(name, inputView);
         while (HIT.equals(command)) {
-            currentHand = createHandStatusAfterPick(player);
+            currentHand = createHandStatus(player);
             outputView.printCardStatus(currentHand);
             if (player.cannotDraw()) {
                 break;
@@ -54,11 +58,6 @@ public class BlackJackGame {
         if (STAND.equals(command)) {
             outputView.printCardStatus(currentHand);
         }
-    }
-
-    private HandStatus createHandStatusAfterPick(final Player player) {
-        player.pickOneCard(deck);
-        return new HandStatus(player.getName(), player.getHand());
     }
 
     private CardCommand inputCommand(final String name, final InputView inputView) {
@@ -107,7 +106,7 @@ public class BlackJackGame {
         Dealer dealer = participants.dealer();
 
         int currentScore = dealer.calculateResultScore();
-        while (currentScore <= THRESHOLD) {
+        while (currentScore <= BLACKJACK_SCORE) {
             dealer.pickOneCard(deck);
             outputView.printDealerPickMessage();
             currentScore = dealer.calculateResultScore();

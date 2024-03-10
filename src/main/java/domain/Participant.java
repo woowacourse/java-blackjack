@@ -20,6 +20,14 @@ public abstract class Participant {
         return hand.getCards();
     }
 
+    public String getName() {
+        return this.name;
+    }
+
+    public Hand getHand() {
+        return this.hand;
+    }
+
     private static class Validator {
         private static void validateName(final String name) {
             if (name == null || name.isBlank()) {
