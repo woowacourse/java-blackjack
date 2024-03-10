@@ -1,18 +1,19 @@
 package blackjack.domain.participant;
 
-import static blackjack.fixture.PlayerFixture.playerChoco;
-import static blackjack.fixture.PlayerFixture.playerClover;
-import static blackjack.fixture.TrumpCardFixture.threeSpadeKingCard;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import blackjack.domain.Deck;
 import blackjack.domain.card.TrumpCard;
 import blackjack.domain.stategy.TestShuffleStrategy;
 import blackjack.strategy.ShuffleStrategy;
-import java.util.stream.IntStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.stream.IntStream;
+
+import static blackjack.fixture.PlayerFixture.playerChoco;
+import static blackjack.fixture.PlayerFixture.playerClover;
+import static blackjack.fixture.TrumpCardFixture.threeSpadeKingCard;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("플레이어")
 public class PlayerTest {
@@ -31,17 +32,24 @@ public class PlayerTest {
         clover = playerClover(dealer);
     }
 
-    @DisplayName("플레이어에게 카드를 더 뽑을지 물어본다.")
+    @DisplayName("버스트 되지 않은 플레이어는 카드를 한장 더 뽑을 수 있다.")
     @Test
     void canReceiveCard() {
-        //given & when
+        // when
         choco.draw(dealer);
 
+        //then
+        assertThat(choco.canReceiveCard()).isTrue();
+    }
+
+    @DisplayName("버스트 된 플레이어는 카드를 한장 더 뽑을 수 없다.")
+    @Test
+    void cantReceiveCard() {
+        // when
         IntStream.range(0, 6)
                 .forEach(i -> clover.draw(dealer));
 
         //then
-        assertThat(choco.canReceiveCard()).isTrue();
         assertThat(clover.canReceiveCard()).isFalse();
     }
 

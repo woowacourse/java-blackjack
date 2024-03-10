@@ -1,9 +1,10 @@
 package blackjack.domain.card;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("카드")
 public class TrumpCardTest {
@@ -19,9 +20,9 @@ public class TrumpCardTest {
         TrumpCard trumpCard = new TrumpCard(rank, suit);
 
         //then
-        assertThat(trumpCard.getRank())
-                .isEqualTo(rank);
-        assertThat(trumpCard.getSuit())
-                .isEqualTo(suit);
+        assertAll(
+                () -> assertThat(trumpCard.getRank()).isEqualTo(rank),
+                () -> assertThat(trumpCard.getSuit()).isEqualTo(suit)
+        );
     }
 }

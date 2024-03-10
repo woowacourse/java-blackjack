@@ -1,16 +1,11 @@
 package blackjack.domain;
 
-import static blackjack.fixture.TrumpCardFixture.aceCloverTrumpCard;
-import static blackjack.fixture.TrumpCardFixture.aceDiamondTrumpCard;
-import static blackjack.fixture.TrumpCardFixture.aceSpadeTrumpCard;
-import static blackjack.fixture.TrumpCardFixture.fiveSpadeKingCard;
-import static blackjack.fixture.TrumpCardFixture.fiveSpadeTrumpCard;
-import static blackjack.fixture.TrumpCardFixture.fourSpadeTrumpCard;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import blackjack.domain.card.TrumpCard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static blackjack.fixture.TrumpCardFixture.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("카드 손패")
 public class HandTest {
@@ -21,10 +16,11 @@ public class HandTest {
     @DisplayName("패에 카드를 추가한다.")
     @Test
     void addCard() {
-        //given & when
+        //given
         Hand hand = new Hand();
-        hand.add(trumpCardFourSpade);
-        hand.add(trumpCardFiveSpade);
+
+        //when
+        hand.add(trumpCardFourSpade, trumpCardFiveSpade);
 
         //then
         assertThat(hand.getCards())
@@ -34,14 +30,14 @@ public class HandTest {
     @DisplayName("패에 있는 카드들의 점수를 반환한다.")
     @Test
     void calculateScore() {
-        //given & when
+        //given
         Hand hand = new Hand();
-        hand.add(trumpCardFourSpade);
-        hand.add(trumpCardFiveSpade);
+
+        //when
+        hand.add(trumpCardFourSpade, trumpCardFiveSpade);
 
         //then
-        assertThat(hand.calculateScore())
-                .isEqualTo(9);
+        assertThat(hand.calculateScore()).isEqualTo(9);
     }
 
     @DisplayName("에이스가 포함된 패의 점수를 반환한다.")
@@ -64,11 +60,8 @@ public class HandTest {
         hand3.add(trumpCardKingSpade, trumpCardFourSpade, trumpCardAceClover, trumpCardAceDiamond, trumpCardAceSpade);
 
         //then
-        assertThat(hand1.calculateScore())
-                .isEqualTo(12);
-        assertThat(hand2.calculateScore())
-                .isEqualTo(17);
-        assertThat(hand3.calculateScore())
-                .isEqualTo(17);
+        assertThat(hand1.calculateScore()).isEqualTo(12);
+        assertThat(hand2.calculateScore()).isEqualTo(17);
+        assertThat(hand3.calculateScore()).isEqualTo(17);
     }
 }

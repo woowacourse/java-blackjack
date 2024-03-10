@@ -29,7 +29,7 @@ public class DealerTest {
     @DisplayName("딜러는 한 장을 뽑아서 손패에 넣는다.")
     @Test
     void draw() {
-        //given & when
+        //when
         dealer.drawExtraCard();
 
         //then
@@ -39,7 +39,7 @@ public class DealerTest {
     @DisplayName("딜러의 첫번째 카드를 공개한다.")
     @Test
     void showFirstCard() {
-        //given & when & then
+        //when & then
         assertThat(dealer.showFirstCard()).isEqualTo(trumpCardAceSpade);
     }
 }

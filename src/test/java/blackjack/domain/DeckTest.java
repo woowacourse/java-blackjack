@@ -15,13 +15,12 @@ public class DeckTest {
     @DisplayName("원하는 순서로 생성에 성공한다.")
     @Test
     void shuffleCardInMyOrder() {
-        //given
+        // given
         ShuffleStrategy shuffleStrategy = new TestShuffleStrategy();
         Deck deck = new Deck(shuffleStrategy);
         TrumpCard trumpCardAceSpade = aceSpadeTrumpCard();
 
-        //when & then
-        assertThat(deck.getCards().poll())
-                .isEqualTo(trumpCardAceSpade);
+        // when & then
+        assertThat(deck.getCards().poll()).isEqualTo(trumpCardAceSpade);
     }
 }
