@@ -4,7 +4,6 @@ import blackjack.domain.DealerGameResult;
 import blackjack.domain.DrawDecision;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.CardDeckCreator;
 import blackjack.domain.card.Hand;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerName;
@@ -28,7 +27,7 @@ public class BlackJackController {
 
     public void run() {
         Players players = initPlayers();
-        CardDeck cardDeck = initCardDeck();
+        CardDeck cardDeck = CardDeck.createShuffledFullCardDeck();
         Player dealer = initDealer();
 
         prepareGame(players, cardDeck, dealer);
@@ -48,11 +47,6 @@ public class BlackJackController {
         InputMapper inputMapper = new InputMapper();
         List<PlayerName> playerNames = inputMapper.mapToPlayers(inputView.readNames());
         return Players.from(playerNames);
-    }
-
-    private CardDeck initCardDeck() {
-        CardDeckCreator cardDeckCreator = new CardDeckCreator();
-        return cardDeckCreator.create();
     }
 
     private Player initDealer() {
