@@ -29,7 +29,7 @@ public class BlackJackGame {
                 .toList();
     }
 
-    public boolean succeededGiving(final Gamer gamer) {
+    public boolean takeTurn(final Gamer gamer) {
         if (!gamer.isStay()) {
             gamer.hit(decks.draw());
             return true;

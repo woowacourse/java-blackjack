@@ -65,11 +65,11 @@ public class BlackJackController {
         if (!retry) {
             return false;
         }
-        return blackJackGame.succeededGiving(player);
+        return blackJackGame.takeTurn(player);
     }
 
     private void askDealerHit(final BlackJackGame blackJackGame, final Dealer dealer) {
-        while (blackJackGame.succeededGiving(dealer)) {
+        while (blackJackGame.takeTurn(dealer)) {
             OutputView.printDealerHit(dealer);
         }
     }

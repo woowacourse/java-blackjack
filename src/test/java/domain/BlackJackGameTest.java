@@ -68,12 +68,12 @@ public class BlackJackGameTest {
 
         BlackJackGame blackJackGame = new BlackJackGame(decks);
 
-        blackJackGame.succeededGiving(dealer); // 3 다이아몬드
-        blackJackGame.succeededGiving(dealer); // 9 클로버
-        blackJackGame.succeededGiving(dealer); // 2 하트
+        blackJackGame.takeTurn(dealer); // 3 다이아몬드
+        blackJackGame.takeTurn(dealer); // 9 클로버
+        blackJackGame.takeTurn(dealer); // 2 하트
 
         // when
-        boolean dealerResult = blackJackGame.succeededGiving(dealer);
+        boolean dealerResult = blackJackGame.takeTurn(dealer);
 
         int expectedDealerSize = 4;
 
@@ -93,12 +93,12 @@ public class BlackJackGameTest {
 
         BlackJackGame blackJackGame = new BlackJackGame(decks);
 
-        blackJackGame.succeededGiving(player); // 3 다이아몬드
-        blackJackGame.succeededGiving(player); // 9 클로버
-        blackJackGame.succeededGiving(player); // 2 하트
+        blackJackGame.takeTurn(player); // 3 다이아몬드
+        blackJackGame.takeTurn(player); // 9 클로버
+        blackJackGame.takeTurn(player); // 2 하트
 
         // when
-        boolean playerResult = blackJackGame.succeededGiving(player);
+        boolean playerResult = blackJackGame.takeTurn(player);
 
         int expectedPlayerSize = 4;
 
@@ -118,13 +118,13 @@ public class BlackJackGameTest {
 
         BlackJackGame blackJackGame = new BlackJackGame(decks);
 
-        blackJackGame.succeededGiving(dealer); // 3 다이아몬드
-        blackJackGame.succeededGiving(dealer); // 9 클로버
-        blackJackGame.succeededGiving(dealer); // 2 하트
-        blackJackGame.succeededGiving(dealer); // 8 스페이드
+        blackJackGame.takeTurn(dealer); // 3 다이아몬드
+        blackJackGame.takeTurn(dealer); // 9 클로버
+        blackJackGame.takeTurn(dealer); // 2 하트
+        blackJackGame.takeTurn(dealer); // 8 스페이드
 
         // when
-        boolean dealerResult = blackJackGame.succeededGiving(dealer);
+        boolean dealerResult = blackJackGame.takeTurn(dealer);
 
         int expectedDealerSize = 4;
 
@@ -144,13 +144,13 @@ public class BlackJackGameTest {
 
         BlackJackGame blackJackGame = new BlackJackGame(decks);
 
-        blackJackGame.succeededGiving(player); // 3 다이아몬드
-        blackJackGame.succeededGiving(player); // 9 클로버
-        blackJackGame.succeededGiving(player); // 2 하트
-        blackJackGame.succeededGiving(player); // 8 스페이드
+        blackJackGame.takeTurn(player); // 3 다이아몬드
+        blackJackGame.takeTurn(player); // 9 클로버
+        blackJackGame.takeTurn(player); // 2 하트
+        blackJackGame.takeTurn(player); // 8 스페이드
 
         // when
-        boolean playerResult = blackJackGame.succeededGiving(player);
+        boolean playerResult = blackJackGame.takeTurn(player);
 
         int expectedPlayerSize = 4;
 
@@ -178,8 +178,8 @@ public class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame(decks);
         blackJackGame.prepareCards(gamers);
 
-        blackJackGame.succeededGiving(pobi);
-        blackJackGame.succeededGiving(dealer);
+        blackJackGame.takeTurn(pobi);
+        blackJackGame.takeTurn(dealer);
 
         // when
         PlayerResults playerResults = blackJackGame.findPlayerResult(gamers);
