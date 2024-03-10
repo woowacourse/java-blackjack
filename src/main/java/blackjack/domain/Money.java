@@ -40,4 +40,8 @@ class Money {
     public int hashCode() {
         return Objects.hash(money);
     }
+
+    public int getValue() {
+        return money;
+    }
 }
