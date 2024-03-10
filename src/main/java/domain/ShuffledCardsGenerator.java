@@ -1,6 +1,5 @@
-package domain.strategy;
+package domain;
 
-import domain.CardsGenerator;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
@@ -10,10 +9,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ShuffledCardsGenerator implements CardsGenerator {
+public class ShuffledCardsGenerator {
     private static final int DUPLICATES_COUNT = 6;
 
-    @Override
     public List<Card> generate() {
         List<Card> cards = Stream.generate(() ->
                         Stream.of(Symbol.values())
