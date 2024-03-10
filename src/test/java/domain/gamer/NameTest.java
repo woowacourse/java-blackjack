@@ -12,8 +12,8 @@ class NameTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "liniri"})
     void invalidNameLengthTest(String name) {
-        assertThatThrownBy(() -> new Name(name)).isInstanceOf(IllegalArgumentException.class)
+        assertThatThrownBy(() -> new Name(name))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(Name.INVALID_NAME_LENGTH);
     }
-
 }

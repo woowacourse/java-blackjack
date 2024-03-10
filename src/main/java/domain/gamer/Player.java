@@ -14,7 +14,7 @@ public class Player extends Gamer {
     }
 
     private void validateInvalidName(final Name name) {
-        if (name.getValue().equals(DEALER_NAME)) {
+        if (name.isSame(DEALER_NAME)) {
             throw new IllegalArgumentException(NOT_ALLOWED_NAME);
         }
     }
