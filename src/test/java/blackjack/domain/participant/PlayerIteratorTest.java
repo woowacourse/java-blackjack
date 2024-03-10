@@ -35,6 +35,11 @@ class PlayerIteratorTest {
         assertThat(playerIterator.getPlayer()).isEqualTo(expectedPlayer);
     }
 
+    private static void bustFirstPlayer(Players players) {
+        Player firstPlayer = getPlayerByIndex(players, 0);
+        firstPlayer.addCard(new CustomDeck(List.of(Number.EIGHT)));
+    }
+
     @DisplayName("모든 플레이어를 순회하면 hasNext()가 거짓을 반환한다.")
     @Test
     void hasNextTest() {
@@ -56,10 +61,5 @@ class PlayerIteratorTest {
 
     private static Player getPlayerByIndex(Players players, int index) {
         return players.getValues().get(index);
-    }
-
-    private static void bustFirstPlayer(Players players) {
-        Player firstPlayer = getPlayerByIndex(players, 0);
-        firstPlayer.addCard(new CustomDeck(List.of(Number.EIGHT)));
     }
 }

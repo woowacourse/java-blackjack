@@ -14,13 +14,13 @@ public class PlayerIterator {
         return order < players.size();
     }
 
-    public Player getPlayer() {
-        return players.get(order);
-    }
-
     public void increaseOrderByActionAndHand(PlayerAction playerAction) {
         if (playerAction.equals(PlayerAction.STAND) || !getPlayer().canHit()) {
             order++;
         }
+    }
+
+    public Player getPlayer() {
+        return players.get(order);
     }
 }

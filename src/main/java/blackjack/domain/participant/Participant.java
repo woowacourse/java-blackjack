@@ -29,14 +29,6 @@ public abstract class Participant {
         return hand.getOptimizedScore();
     }
 
-    public String getName() {
-        return name.getValue();
-    }
-
-    public List<Card> getCards() {
-        return hand.getCards();
-    }
-
     public abstract List<Card> getInitialOpenedCards();
 
     public abstract boolean canHit();
@@ -52,5 +44,13 @@ public abstract class Participant {
 
     protected boolean isTotalScoreGreaterThan(int score) {
         return hand.isTotalScoreGreaterThan(score);
+    }
+
+    public String getName() {
+        return name.getValue();
+    }
+
+    public List<Card> getCards() {
+        return hand.getCards();
     }
 }

@@ -18,14 +18,6 @@ public class Participants {
         this.dealer = new Dealer(handGenerator);
     }
 
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    public Players getPlayers() {
-        return players;
-    }
-
     public BlackjackResult generateResult(Referee referee) {
         Map<Player, HandResult> playerResults = new LinkedHashMap<>();
         for (Player player : players.getValues()) {
@@ -33,5 +25,13 @@ public class Participants {
             playerResults.put(player, playerResult);
         }
         return new BlackjackResult(playerResults);
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public Players getPlayers() {
+        return players;
     }
 }

@@ -29,41 +29,6 @@ public class OutputView {
         printParticipantsHand(dealer, players);
     }
 
-    public void printPlayerHand(Player player) {
-        String playerHand = getParticipantHand(player);
-        System.out.println(playerHand);
-    }
-
-    public void printDealerHitCount(int hitCount) {
-        printNewLine();
-        if (hitCount == 0) {
-            System.out.println(DEALER_NO_HIT);
-            return;
-        }
-        String dealerHitCountMessage = String.format(DEALER_HIT_COUNT, hitCount);
-        System.out.println(dealerHitCountMessage);
-    }
-
-    public void printParticipantsHandWithScore(Participants participants) {
-        printNewLine();
-        Dealer dealer = participants.getDealer();
-        printParticipantHandWithScore(dealer);
-        participants.getPlayers()
-                .getValues()
-                .forEach(this::printParticipantHandWithScore);
-    }
-
-    public void printBlackjackResult(BlackjackResult blackjackResult) {
-        printNewLine();
-        System.out.println(GAME_RESULT_PREFIX);
-        printDealerResults(blackjackResult.getDealerResults());
-        printPlayersResult(blackjackResult.getPlayersResult());
-    }
-
-    public void printException(IllegalArgumentException e) {
-        System.out.println(ERROR_PREFIX + e.getMessage());
-    }
-
     private void printHandOutMessage(Dealer dealer, Players players) {
         String playersName = formatPlayersName(players);
         String handOutMessage = String.format(HAND_OUT_MESSAGE, dealer.getName(), playersName);
@@ -98,11 +63,9 @@ public class OutputView {
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    private void printParticipantHandWithScore(Participant participant) {
-        String participantHand = getParticipantHand(participant);
-        String participantHandWithScore = String.format(HAND_WITH_SCORE_FORMAT, participantHand,
-                participant.getScore());
-        System.out.println(participantHandWithScore);
+    public void printPlayerHand(Player player) {
+        String playerHand = getParticipantHand(player);
+        System.out.println(playerHand);
     }
 
     private String getParticipantHand(Participant participant) {
@@ -110,6 +73,39 @@ public class OutputView {
         List<Card> cards = participant.getCards();
         String cardSignatures = getCardSignatures(cards);
         return String.format(PARTICIPANT_HAND, participantName, cardSignatures);
+    }
+
+    public void printDealerHitCount(int hitCount) {
+        printNewLine();
+        if (hitCount == 0) {
+            System.out.println(DEALER_NO_HIT);
+            return;
+        }
+        String dealerHitCountMessage = String.format(DEALER_HIT_COUNT, hitCount);
+        System.out.println(dealerHitCountMessage);
+    }
+
+    public void printParticipantsHandWithScore(Participants participants) {
+        printNewLine();
+        Dealer dealer = participants.getDealer();
+        printParticipantHandWithScore(dealer);
+        participants.getPlayers()
+                .getValues()
+                .forEach(this::printParticipantHandWithScore);
+    }
+
+    private void printParticipantHandWithScore(Participant participant) {
+        String participantHand = getParticipantHand(participant);
+        String participantHandWithScore = String.format(HAND_WITH_SCORE_FORMAT, participantHand,
+                participant.getScore());
+        System.out.println(participantHandWithScore);
+    }
+
+    public void printBlackjackResult(BlackjackResult blackjackResult) {
+        printNewLine();
+        System.out.println(GAME_RESULT_PREFIX);
+        printDealerResults(blackjackResult.getDealerResults());
+        printPlayersResult(blackjackResult.getPlayersResult());
     }
 
     private void printDealerResults(Map<HandResult, Integer> dealerResults) {
@@ -134,6 +130,10 @@ public class OutputView {
             String formattedPlayerResult = String.format(PLAYER_RESULT_FORMAT, playerName, playerResult.getName());
             System.out.println(formattedPlayerResult);
         }
+    }
+
+    public void printException(IllegalArgumentException e) {
+        System.out.println(ERROR_PREFIX + e.getMessage());
     }
 
     private void printNewLine() {

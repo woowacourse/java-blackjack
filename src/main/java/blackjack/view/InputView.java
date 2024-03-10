@@ -25,17 +25,17 @@ public class InputView {
                 .toList();
     }
 
+    private void validateDelimiter(String input) {
+        if (input.startsWith(DELIMITER) || input.endsWith(DELIMITER)) {
+            throw new DelimiterFormatException();
+        }
+    }
+
     public boolean dosePlayerWantHit(String playerName) {
         System.out.println(playerName + PLAYER_HIT_REQUEST);
         String input = scanner.nextLine();
         validateHitRequest(input);
         return REQUEST_HIT.equals(input);
-    }
-
-    private void validateDelimiter(String input) {
-        if (input.startsWith(DELIMITER) || input.endsWith(DELIMITER)) {
-            throw new DelimiterFormatException();
-        }
     }
 
     private void validateHitRequest(String input) {

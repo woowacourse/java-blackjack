@@ -18,30 +18,6 @@ class HandTest {
         assertThat(hand.isBlackjack()).isEqualTo(isBlackjack);
     }
 
-    @DisplayName("최적의 점수를 계산한다.")
-    @ParameterizedTest
-    @MethodSource("provideCardsWithOptimizedScore")
-    void getOptimizedScoreTest(List<Card> cards, int score) {
-        Hand hand = new Hand(cards);
-        assertThat(hand.getOptimizedScore()).isEqualTo(score);
-    }
-
-    @DisplayName("카드의 합이 입력된 값을 넘는 지 판단한다.")
-    @ParameterizedTest
-    @MethodSource("provideCardsWithScoreGreaterThan")
-    void isTotalScoreGreaterThanTest(List<Card> cards, int score, boolean isGreaterThan) {
-        Hand hand = new Hand(cards);
-        assertThat(hand.isTotalScoreGreaterThan(score)).isEqualTo(isGreaterThan);
-    }
-
-    @DisplayName("Bust 여부를 판단한다.")
-    @ParameterizedTest
-    @MethodSource("provideCardsWithBust")
-    void isBustTest(List<Card> cards, boolean isBust) {
-        Hand hand = new Hand(cards);
-        assertThat(hand.isBust()).isEqualTo(isBust);
-    }
-
     private static Stream<Arguments> provideCardsWithBlackjack() {
         return Stream.of(
                 Arguments.of(createCards(List.of(Number.ACE, Number.JACK)), true),
@@ -50,6 +26,14 @@ class HandTest {
                 Arguments.of(createCards(List.of(Number.ACE, Number.ACE, Number.ACE, Number.EIGHT)), true),
                 Arguments.of(createCards(List.of(Number.ACE, Number.FOUR, Number.EIGHT)), false)
         );
+    }
+
+    @DisplayName("최적의 점수를 계산한다.")
+    @ParameterizedTest
+    @MethodSource("provideCardsWithOptimizedScore")
+    void getOptimizedScoreTest(List<Card> cards, int score) {
+        Hand hand = new Hand(cards);
+        assertThat(hand.getOptimizedScore()).isEqualTo(score);
     }
 
     private static Stream<Arguments> provideCardsWithOptimizedScore() {
@@ -62,11 +46,27 @@ class HandTest {
         );
     }
 
+    @DisplayName("카드의 합이 입력된 값을 넘는 지 판단한다.")
+    @ParameterizedTest
+    @MethodSource("provideCardsWithScoreGreaterThan")
+    void isTotalScoreGreaterThanTest(List<Card> cards, int score, boolean isGreaterThan) {
+        Hand hand = new Hand(cards);
+        assertThat(hand.isTotalScoreGreaterThan(score)).isEqualTo(isGreaterThan);
+    }
+
     private static Stream<Arguments> provideCardsWithScoreGreaterThan() {
         return Stream.of(Arguments.of(createCards(List.of(Number.TWO, Number.THREE)), 5, false),
                 Arguments.of(createCards(List.of(Number.QUEEN, Number.JACK)), 20, false),
                 Arguments.of(createCards(List.of(Number.FIVE, Number.SIX, Number.ACE)), 11, true)
         );
+    }
+
+    @DisplayName("Bust 여부를 판단한다.")
+    @ParameterizedTest
+    @MethodSource("provideCardsWithBust")
+    void isBustTest(List<Card> cards, boolean isBust) {
+        Hand hand = new Hand(cards);
+        assertThat(hand.isBust()).isEqualTo(isBust);
     }
 
     private static Stream<Arguments> provideCardsWithBust() {

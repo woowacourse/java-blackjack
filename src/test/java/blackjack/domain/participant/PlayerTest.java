@@ -33,6 +33,12 @@ class PlayerTest {
         assertThat(cardSignatures).containsExactly("A스페이드", "8클로버");
     }
 
+    private static Player createPlayer(List<Number> numbers, List<Shape> shapes, String name) {
+        Deck deck = new CustomDeck(numbers, shapes);
+        HandGenerator handGenerator = new HandGenerator(deck);
+        return new Player(new Name(name), handGenerator);
+    }
+
     @DisplayName("플레이어가 Hit을 할 수 있는지 판단한다.")
     @ParameterizedTest
     @MethodSource("provideNumbersWithCanHit")
@@ -42,12 +48,6 @@ class PlayerTest {
         Player player = new Player(new Name("gamza"), handGenerator);
         CardDrawer.addAllCards(deck, player);
         assertThat(player.canHit()).isEqualTo(canHit);
-    }
-
-    private static Player createPlayer(List<Number> numbers, List<Shape> shapes, String name) {
-        Deck deck = new CustomDeck(numbers, shapes);
-        HandGenerator handGenerator = new HandGenerator(deck);
-        return new Player(new Name(name), handGenerator);
     }
 
     private static Stream<Arguments> provideNumbersWithCanHit() {

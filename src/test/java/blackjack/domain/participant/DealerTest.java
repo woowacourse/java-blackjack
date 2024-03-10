@@ -32,6 +32,12 @@ class DealerTest {
         assertThat(cardSignatures).containsExactly("A스페이드");
     }
 
+    private static Dealer createDealer(List<Number> numbers, List<Shape> shapes) {
+        Deck deck = new CustomDeck(numbers, shapes);
+        HandGenerator handGenerator = new HandGenerator(deck);
+        return new Dealer(handGenerator);
+    }
+
     @DisplayName("딜러가 Hit을 할 수 있는지 판단한다.")
     @ParameterizedTest
     @MethodSource("provideNumbersWithCanHit")
@@ -41,12 +47,6 @@ class DealerTest {
         Dealer dealer = new Dealer(handGenerator);
 
         assertThat(dealer.canHit()).isEqualTo(canHit);
-    }
-
-    private static Dealer createDealer(List<Number> numbers, List<Shape> shapes) {
-        Deck deck = new CustomDeck(numbers, shapes);
-        HandGenerator handGenerator = new HandGenerator(deck);
-        return new Dealer(handGenerator);
     }
 
     private static Stream<Arguments> provideNumbersWithCanHit() {
