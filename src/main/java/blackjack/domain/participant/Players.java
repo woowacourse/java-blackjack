@@ -52,9 +52,9 @@ public class Players {
         return players;
     }
 
-    public void play(BiConsumer<Player, Deck> playTurn, Deck deck) {
+    public void play(PlayerTurn playTurn, Deck deck) {
         for (Player player : players) {
-            playTurn.accept(player, deck);
+            playTurn.play(player, deck);
         }
     }
 }
