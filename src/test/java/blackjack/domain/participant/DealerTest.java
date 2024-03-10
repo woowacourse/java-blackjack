@@ -1,8 +1,5 @@
 package blackjack.domain.participant;
 
-import static blackjack.fixture.TrumpCardFixture.aceSpadeTrumpCard;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import blackjack.domain.Deck;
 import blackjack.domain.card.TrumpCard;
 import blackjack.domain.stategy.TestShuffleStrategy;
@@ -10,6 +7,9 @@ import blackjack.strategy.ShuffleStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static blackjack.fixture.TrumpCardFixture.aceSpadeTrumpCard;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("딜러")
 public class DealerTest {
@@ -30,7 +30,7 @@ public class DealerTest {
     @Test
     void draw() {
         //given & when
-        dealer.draw();
+        dealer.drawExtraCard();
 
         //then
         assertThat(dealer.getHandCards()).contains(trumpCardAceSpade);

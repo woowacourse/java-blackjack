@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.TrumpCard;
 import blackjack.util.Constants;
 import java.util.regex.Pattern;
+import java.util.stream.IntStream;
 
 public class Player extends Gamer {
 
@@ -17,14 +18,18 @@ public class Player extends Gamer {
         validate(name);
         this.name = name;
 
-        draw(dealer);
-        draw(dealer);
+        initialDraw(dealer);
     }
 
     private void validate(final String name) {
         if (!PATTERN.matcher(name).matches()) {
             throw new IllegalArgumentException(INVALID_NAME_FORMAT_EXCEPTION);
         }
+    }
+
+    private void initialDraw(final Dealer dealer) {
+        IntStream.range(0, 2)
+                .forEach(i -> draw(dealer));
     }
 
     public void draw(final Dealer dealer) {
