@@ -18,16 +18,16 @@ public class DeckCards {
         return new DeckCards(generatedCards);
     }
 
+    public List<Card> drawStartingCards(int amount) {
+        return IntStream.range(0, amount)
+            .mapToObj(i -> draw())
+            .toList();
+    }
+
     public Card draw() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("[ERROR] 카드를 모두 사용하였습니다.");
         }
         return cards.remove(cards.size() - 1);
-    }
-
-    public List<Card> drawStartingCards(int amount) {
-        return IntStream.range(0, amount)
-            .mapToObj(i -> draw())
-            .toList();
     }
 }
