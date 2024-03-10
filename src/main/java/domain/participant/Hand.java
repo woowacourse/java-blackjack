@@ -41,6 +41,10 @@ public class Hand {
     }
 
     public boolean isBlackJack() {
-        return getCardsNumberSum() == BLACKJACK_CONDITION;
+        PlayingCard firstCard = playingCards.get(0);
+        PlayingCard secondCard = playingCards.get(1);
+
+        return (firstCard.isAce() && secondCard.isTenValueCard())
+                || (firstCard.isTenValueCard() || secondCard.isAce());
     }
 }

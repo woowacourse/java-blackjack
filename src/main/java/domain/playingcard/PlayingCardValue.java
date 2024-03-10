@@ -17,4 +17,8 @@ public enum PlayingCardValue {
     public boolean isAce() {
         return this == DEFAULT_ACE;
     }
+
+    public boolean isTenValueCard() {
+        return this == TEN || this == JACK || this == QUEEN || this == KING;
+    }
 }

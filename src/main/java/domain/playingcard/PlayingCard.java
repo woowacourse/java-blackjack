@@ -33,4 +33,12 @@ public class PlayingCard {
     public PlayingCardValue getPlayingCardValue() {
         return playingCardValue;
     }
+
+    public boolean isAce() {
+        return playingCardValue.isAce();
+    }
+
+    public boolean isTenValueCard() {
+        return playingCardValue.isTenValueCard();
+    }
 }
