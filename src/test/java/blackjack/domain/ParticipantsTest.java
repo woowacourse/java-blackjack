@@ -12,7 +12,8 @@ class ParticipantsTest {
     @DisplayName("생성 테스트")
     @Test
     void create() {
-        assertThatCode(() -> new Participants(List.of("아톰", "구름")));
+        assertThatCode(() -> new Participants(List.of("아톰", "구름")))
+                .doesNotThrowAnyException();
     }
 
     @DisplayName("참여자들은 딜러 포함 최소 2명 이상이어야 한다.")
