@@ -2,10 +2,8 @@ package domain.card;
 
 import static domain.card.CardNumber.ACE;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class Cards {
 
@@ -18,6 +16,18 @@ public class Cards {
     public Cards(final Collection<Card> cards) {
         this.cards = new Stack<>();
         this.cards.addAll(cards);
+    }
+    public static Cards deck() {
+        List<Card> cards = Arrays.stream(CardShape.values())
+                                 .flatMap(Cards::addCard)
+                                 .toList();
+        return new Cards(cards);
+    }
+
+    private static Stream<Card> addCard(final CardShape cardShape) {
+        return EnumSet.allOf(CardNumber.class)
+                      .stream()
+                      .map(cardNumber -> new Card(cardShape, cardNumber));
     }
 
     public void add(final Card card) {

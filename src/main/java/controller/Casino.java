@@ -33,7 +33,7 @@ public class Casino {
     }
 
     public void play(final BlackjackGame game) {
-        Dealer dealer = new Dealer(createCards());
+        Dealer dealer = new Dealer(Cards.deck());
         dealer.shuffleCards();
         Players players = new Players(inputView.askPlayerNames());
         game.ready(dealer, players);
@@ -67,18 +67,5 @@ public class Casino {
             resultView.printParticipantHand(new PlayerDto(player));
             askReceiveMoreCard(dealer, player);
         }
-    }
-
-    private Cards createCards() {
-        List<Card> cards = Arrays.stream(CardShape.values())
-                .flatMap(this::addCard)
-                .toList();
-        return new Cards(cards);
-    }
-
-    private Stream<Card> addCard(final CardShape cardShape) {
-        return EnumSet.allOf(CardNumber.class)
-                .stream()
-                .map(cardNumber -> new Card(cardShape, cardNumber));
     }
 }
