@@ -51,7 +51,7 @@ public class Gamer {
     }
 
     boolean isDead() {
-        return holdingCards.calculateTotalPoint().isDeadPoint();
+        return getSummationCardPoint().isDeadPoint();
     }
 
     boolean hasAceInHoldingCards() {
