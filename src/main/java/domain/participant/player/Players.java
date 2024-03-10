@@ -1,9 +1,9 @@
-package domain.participant;
+package domain.participant.player;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
-
-import view.dto.participant.PlayersDto;
+import java.util.stream.Stream;
 
 public class Players {
 
@@ -12,19 +12,16 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(final List<Player> players) {
+    private Players(final Collection<Player> players) {
         validateSize(players);
         this.players = List.copyOf(players);
     }
 
-    public Players(final PlayersDto playersDto) {
-        this(playersDto.players()
-                .stream()
-                .map(Player::new)
-                .toList());
+    public static Players from(final Collection<Player> players) {
+        return new Players(players);
     }
 
-    private void validateSize(final List<Player> players) {
+    private void validateSize(final Collection<Player> players) {
         if (players.isEmpty() || players.size() > MAX_SIZE) {
             throw new IllegalArgumentException("플레이어의 수는 최소 %d명 최대 %d명입니다 : 현재 %d명"
                     .formatted(MIN_SIZE, MAX_SIZE, players.size()));
@@ -35,7 +32,7 @@ public class Players {
         players.forEach(action);
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    public Stream<Player> stream() {
+        return players.stream();
     }
 }

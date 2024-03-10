@@ -7,8 +7,8 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import domain.participant.Player;
-import domain.participant.Players;
+import domain.participant.player.Player;
+import domain.participant.player.Players;
 
 class PlayersTest {
 
@@ -16,7 +16,7 @@ class PlayersTest {
     @Test
     void validateSize() {
         List<Player> players = List.of();
-        assertThatThrownBy(() -> new Players(players))
+        assertThatThrownBy(() -> Players.from(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 수는 최소 1명 최대 8명입니다 : 현재 %d명".formatted(0));
     }
