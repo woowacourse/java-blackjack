@@ -1,6 +1,6 @@
 package blackjack.domain.rule;
 
-import blackjack.domain.player.Hand;
+import blackjack.domain.card.Hand;
 
 public class ScoreCalculateStrategy {
 

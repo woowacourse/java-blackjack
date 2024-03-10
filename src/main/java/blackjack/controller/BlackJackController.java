@@ -5,7 +5,7 @@ import blackjack.domain.DrawDecision;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardDeckCreator;
-import blackjack.domain.player.Hand;
+import blackjack.domain.card.Hand;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;

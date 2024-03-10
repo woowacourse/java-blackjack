@@ -1,6 +1,6 @@
 package fixture;
 
-import blackjack.domain.player.Hand;
+import blackjack.domain.card.Hand;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;

@@ -4,16 +4,24 @@ import java.util.Objects;
 
 public class Card {
 
-    private final CardShape cardShape;
-    private final CardNumber cardNumber;
+    // TODO: final 추가 및 cardShape, cardNumber 제거
+    private CardShape cardShape;
+    private CardNumber cardNumber;
+    private CardRank cardRank;
+    private CardSuit cardSuit;
 
     public Card(CardShape cardShape, CardNumber cardNumber) {
         this.cardShape = cardShape;
         this.cardNumber = cardNumber;
     }
 
+    public Card(CardRank cardRank, CardSuit cardSuit) {
+        this.cardRank = cardRank;
+        this.cardSuit = cardSuit;
+    }
+
     public boolean isAce() {
-        return cardNumber.isAce();
+        return cardRank.isAce();
     }
 
     @Override
@@ -25,12 +33,12 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return cardShape == card.cardShape && cardNumber == card.cardNumber;
+        return cardSuit == card.cardSuit && cardRank == card.cardRank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardShape, cardNumber);
+        return Objects.hash(cardSuit, cardRank);
     }
 
     public int getCardNumber() {
@@ -43,5 +51,13 @@ public class Card {
 
     public String getCardShape() {
         return cardShape.getName();
+    }
+
+    public CardRank getCardRank() {
+        return cardRank;
+    }
+
+    public CardSuit getCardSuit() {
+        return cardSuit;
     }
 }

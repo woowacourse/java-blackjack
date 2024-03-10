@@ -29,6 +29,10 @@ public enum CardRank {
         this.specialScore = specialScore;
     }
 
+    public boolean isAce() {
+        return this == ACE;
+    }
+
     public int getScore() {
         return score;
     }
