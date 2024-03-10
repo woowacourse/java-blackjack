@@ -25,12 +25,12 @@ public class Application { // TODO: refactoring
         game.setUpGame();
         resultView.printInitialCards(gamers);
 
-        progressPlayersGame(game, gamers.callPlayers());
-        progressDealerGame(game, gamers.callDealer());
+        progressPlayersGame(game, gamers.getPlayers());
+        progressDealerGame(game, gamers.getDealer());
         resultView.printAllGamersCardsResult(gamers);
 
         Judge judge = game.makeFinalResult();
-        resultView.printFinalResults(gamers.callDealer(), judge);
+        resultView.printFinalResults(gamers.getDealer(), judge);
     }
 
     private static void progressPlayersGame(BlackJackGame game, List<Player> players) {

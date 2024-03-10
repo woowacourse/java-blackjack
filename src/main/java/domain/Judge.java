@@ -18,8 +18,8 @@ public class Judge {
     }
 
     public void decideResult(Gamers gamers) {
-        for (Player player : gamers.callPlayers()) {
-            decidePlayerResult(player, gamers.callDealer());
+        for (Player player : gamers.getPlayers()) {
+            decidePlayerResult(player, gamers.getDealer());
         }
         decideDealerResult();
     }

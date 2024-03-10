@@ -5,24 +5,22 @@ import domain.cards.gamercards.PlayerCards;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Gamers {
 
     private static final int MIN_SIZE = 1;
     private static final int MAX_SIZE = 8;
     private static final int DEALER_INDEX = 0;
-    private static final int PLAYER_FIRST_INDEX = 1;
     private static final String DEALER_NAME = "딜러";
 
+    private final Dealer dealer;
     private final List<Player> players;
-    // TODO: add dealer
 
     public Gamers(List<String> playersNames) {
         validate(playersNames);
         this.players = new ArrayList<>();
-        addGamers(playersNames);
+        this.dealer = new Dealer(new DealerCards(new ArrayList<>()));
+        addPlayers(playersNames);
     }
 
     private void validate(List<String> playersNames) {
@@ -53,25 +51,24 @@ public class Gamers {
         }
     }
 
-    private void addGamers(List<String> playersNames) {
-        players.add(new Dealer(new DealerCards(new ArrayList<>())));
+    private void addPlayers(List<String> playersNames) {
         for (String playerName : playersNames) {
-            PlayerCards emptyHand = new PlayerCards(new ArrayList<>());
-            players.add(new Player(playerName, emptyHand));
+            PlayerCards emptyCards = new PlayerCards(new ArrayList<>());
+            players.add(new Player(playerName, emptyCards));
         }
     }
 
-    public Dealer callDealer() {
-        return (Dealer) players.get(DEALER_INDEX);
-    }
-
-    public List<Player> callPlayers() {
-        return IntStream.range(PLAYER_FIRST_INDEX, players.size())
-                .mapToObj(index -> (Player) players.get(index))
-                .collect(Collectors.toList());
-    }
-
     public List<Player> getGamers() {
+        List<Player> gamers = new ArrayList<>(List.copyOf(players));
+        gamers.add(DEALER_INDEX, dealer);
+        return gamers;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 }

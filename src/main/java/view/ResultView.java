@@ -19,8 +19,8 @@ public class ResultView {
     private static final String DELIMITER = ", ";
 
     public void printInitialCards(Gamers gamers) {
-        Dealer dealer = gamers.callDealer();
-        List<Player> players = gamers.callPlayers();
+        Dealer dealer = gamers.getDealer();
+        List<Player> players = gamers.getPlayers();
         printSharingCardsMessage(dealer, players);
         printDealerCard(dealer);
         printPlayersCards(gamers);
@@ -40,7 +40,7 @@ public class ResultView {
     }
 
     private void printPlayersCards(Gamers gamers) {
-        for (Player player : gamers.callPlayers()) {
+        for (Player player : gamers.getPlayers()) {
             printPlayerCards(player);
         }
         System.out.print(LINE_SEPARATOR);
