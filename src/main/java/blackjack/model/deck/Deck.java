@@ -12,10 +12,20 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Deck {
+    private static final int BLACKJACK_CARD_COUNT = 52;
+    
     private final Deque<Card> deck;
 
     public Deck() {
+        final Deque<Card> newDeck = makeDeck();
+        validateSize(newDeck);
         this.deck = makeDeck();
+    }
+
+    private void validateSize(final Deque<Card> deck) {
+        if (deck.size() != BLACKJACK_CARD_COUNT) {
+            throw new IllegalStateException("카드의 수가 52개가 아닙니다.");
+        }
     }
 
     private Deque<Card> makeDeck() {
