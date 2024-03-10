@@ -16,6 +16,7 @@ import domain.gamer.Player;
 import domain.gamer.Players;
 import domain.result.PlayerResults;
 import domain.result.Result;
+import exception.CardReceiveException;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -129,8 +130,8 @@ public class BlackJackGameTest {
         // then
         assertAll(
                 () -> assertThatThrownBy(() -> blackJackGame.giveCard(dealer))
-                        .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage(Gamer.CAN_NOT_RECEIVE_CARD),
+                        .isInstanceOf(CardReceiveException.class)
+                        .hasMessage(CardReceiveException.CAN_NOT_RECEIVE_CARD),
                 () -> assertThat(dealer.getHand()).hasSize(expectedPlayerSize)
         );
     }
@@ -156,8 +157,8 @@ public class BlackJackGameTest {
         // then
         assertAll(
                 () -> assertThatThrownBy(() -> blackJackGame.giveCard(player))
-                        .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage(Gamer.CAN_NOT_RECEIVE_CARD),
+                        .isInstanceOf(CardReceiveException.class)
+                        .hasMessage(CardReceiveException.CAN_NOT_RECEIVE_CARD),
                 () -> assertThat(player.getHand()).hasSize(expectedPlayerSize)
         );
     }

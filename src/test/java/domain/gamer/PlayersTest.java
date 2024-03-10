@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import domain.gamer.Name;
 import domain.gamer.Player;
 import domain.gamer.Players;
+import exception.DuplicatedNameException;
+import exception.PlayerCountException;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -27,8 +29,8 @@ class PlayersTest {
 
         // then
         assertThatThrownBy(() -> new Players(players))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Players.INVALID_PLAYER_COUNT);
+                .isInstanceOf(PlayerCountException.class)
+                .hasMessage(PlayerCountException.INVALID_PLAYER_COUNT);
     }
 
     @DisplayName("플레이어의 이름이 중복되면 예외를 던진다.")
@@ -43,7 +45,7 @@ class PlayersTest {
 
         // then
         assertThatThrownBy(() -> new Players(players))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Players.DUPLICATED_PLAYER_NAME);
+                .isInstanceOf(DuplicatedNameException.class)
+                .hasMessage(DuplicatedNameException.DUPLICATED_PLAYER_NAME);
     }
 }

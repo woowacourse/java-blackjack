@@ -84,7 +84,7 @@ public class BlackJackController {
         try {
             blackJackGame.giveCard(gamer);
             return true;
-        } catch (IllegalArgumentException exception) {
+        } catch (Exception exception) {
             return false;
         }
     }

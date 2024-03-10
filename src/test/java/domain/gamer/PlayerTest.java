@@ -8,6 +8,7 @@ import domain.card.Rank;
 import domain.card.Symbol;
 import domain.gamer.Name;
 import domain.gamer.Player;
+import exception.NotAllowedNameException;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.stream.Collectors;
@@ -111,7 +112,7 @@ public class PlayerTest {
 
         // then
         assertThatThrownBy(() -> new Player(name))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Player.NOT_ALLOWED_NAME);
+                .isInstanceOf(NotAllowedNameException.class)
+                .hasMessage(NotAllowedNameException.NOT_ALLOWED_NAME);
     }
 }

@@ -1,10 +1,10 @@
 package domain.gamer;
 
 import domain.card.Card;
+import exception.CardReceiveException;
 import java.util.List;
 
 public abstract class Gamer {
-    public static final String CAN_NOT_RECEIVE_CARD = "더 이상 카드를 받을 수 없습니다.";
     protected Hand hand;
     private Name name;
 
@@ -25,7 +25,7 @@ public abstract class Gamer {
 
     public void hit(final Card card) {
         if (isOverTurn()) {
-            throw new IllegalArgumentException(CAN_NOT_RECEIVE_CARD);
+            throw new CardReceiveException(CardReceiveException.CAN_NOT_RECEIVE_CARD);
         }
         hand.add(card);
     }
