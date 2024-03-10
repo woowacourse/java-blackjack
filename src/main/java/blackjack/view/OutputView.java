@@ -1,10 +1,11 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.dto.DealerOutcomeResponseDto;
 import blackjack.dto.DealerResponseDto;
-import blackjack.dto.OutcomeDto;
-import blackjack.dto.OutcomesDto;
+import blackjack.dto.PlayerOutcomeResponseDto;
 import blackjack.dto.PlayerResponseDto;
+import blackjack.dto.PlayersOutcomeResponseDto;
 import blackjack.dto.PlayersResponseDto;
 import blackjack.view.mapper.OutcomeMapper;
 import blackjack.view.mapper.SuitMapper;
@@ -15,7 +16,10 @@ public class OutputView {
 
     private static final String DEALER = "딜러";
 
-    public static void printInitialState(final DealerResponseDto dealerResponseDto, final PlayersResponseDto playersResponseDto) {
+    public static void printInitialState(
+            final DealerResponseDto dealerResponseDto,
+            final PlayersResponseDto playersResponseDto
+    ) {
         System.out.println(System.lineSeparator() + DEALER + "와 " + makePlayerName(playersResponseDto) + "에게 2장을 나누었습니다.");
         System.out.println(DEALER + "카드: " + makeCardsState(dealerResponseDto.getCards()));
         for (PlayerResponseDto playerResponseDto : playersResponseDto.getValues()) {
@@ -58,25 +62,30 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printFinalOutcomes(final OutcomesDto dealerOutcomesDto, final List<OutcomeDto> outcomeDtos) {
+    public static void printFinalOutcomes(
+            final DealerOutcomeResponseDto dealerDealerOutcomeResponseDto,
+            final PlayersOutcomeResponseDto playersOutcomeResponseDto
+    ) {
         System.out.println("## 최종 승패");
-        printDealerFinalOutcome(dealerOutcomesDto);
-        printPlayersFinalOutcome(outcomeDtos);
+        printDealerFinalOutcome(dealerDealerOutcomeResponseDto);
+        printPlayersFinalOutcome(playersOutcomeResponseDto);
     }
 
-    private static void printDealerFinalOutcome(final OutcomesDto dealerOutcomesDto) {
+    private static void printDealerFinalOutcome(final DealerOutcomeResponseDto dealerDealerOutcomeResponseDto) {
         System.out.print(
-                DEALER + ": " + dealerOutcomesDto.getWinCount() + "승 " + dealerOutcomesDto.getLoseCount() + "패 ");
-        if (dealerOutcomesDto.getPushCount() > 0) {
-            System.out.print(dealerOutcomesDto.getPushCount() + "무");
+                DEALER + ": " + dealerDealerOutcomeResponseDto.getWinCount() + "승 "
+                        + dealerDealerOutcomeResponseDto.getLoseCount() + "패 ");
+        if (dealerDealerOutcomeResponseDto.getPushCount() > 0) {
+            System.out.print(dealerDealerOutcomeResponseDto.getPushCount() + "무");
         }
         System.out.println();
     }
 
-    private static void printPlayersFinalOutcome(final List<OutcomeDto> outcomeDtos) {
-        for (OutcomeDto outcomeDto : outcomeDtos) {
+    private static void printPlayersFinalOutcome(final PlayersOutcomeResponseDto playersOutcomeResponseDto) {
+        for (PlayerOutcomeResponseDto playerOutcomeResponseDto : playersOutcomeResponseDto.getValues()) {
             System.out.println(
-                    outcomeDto.getName().value() + ": " + OutcomeMapper.mapToViewName(outcomeDto.getOutcome()));
+                playerOutcomeResponseDto.getName().value()
+                        + ": " + OutcomeMapper.mapToViewName(playerOutcomeResponseDto.getOutcome()));
         }
     }
 }

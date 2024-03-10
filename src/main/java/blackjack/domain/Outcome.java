@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.dto.OutcomesDto;
 import java.util.List;
 
 public enum Outcome {
@@ -23,28 +22,9 @@ public enum Outcome {
         return Outcome.PUSH;
     }
 
-    public static OutcomesDto toDto(final List<Outcome> outcomes) {
-        return new OutcomesDto(
-                calculateWinCount(outcomes),
-                calculateLoseCount(outcomes),
-                calculatePushCount(outcomes));
-    }
-
-    private static int calculateWinCount(final List<Outcome> outcomes) {
+    public static int calculateOutcomeCount(final List<Outcome> outcomes, final Outcome target) {
         return (int) outcomes.stream()
-                .filter(outcome -> outcome == Outcome.WIN)
-                .count();
-    }
-
-    private static int calculateLoseCount(final List<Outcome> outcomes) {
-        return (int) outcomes.stream()
-                .filter(outcome -> outcome == Outcome.LOSE)
-                .count();
-    }
-
-    private static int calculatePushCount(final List<Outcome> outcomes) {
-        return (int) outcomes.stream()
-                .filter(outcome -> outcome == Outcome.PUSH)
+                .filter(outcome -> outcome == target)
                 .count();
     }
 }

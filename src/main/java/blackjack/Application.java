@@ -1,22 +1,20 @@
 package blackjack;
 
 import blackjack.domain.GameBoard;
-import blackjack.domain.Outcome;
 import blackjack.domain.Referee;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckShuffleFactory;
-import blackjack.dto.DealerResponseDto;
-import blackjack.dto.OutcomeDto;
-import blackjack.dto.OutcomesDto;
-import blackjack.dto.PlayerResponseDto;
-import blackjack.dto.PlayersResponseDto;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamers;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import blackjack.dto.DealerOutcomeResponseDto;
+import blackjack.dto.DealerResponseDto;
+import blackjack.dto.PlayerResponseDto;
+import blackjack.dto.PlayersOutcomeResponseDto;
+import blackjack.dto.PlayersResponseDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.List;
 
 public class Application {
 
@@ -29,9 +27,9 @@ public class Application {
                 PlayersResponseDto.toDto(gameBoard.getPlayers()));
 
         final Referee referee = new Referee(gameBoard.getDealerHand());
-        final OutcomesDto dealerOutcome = Outcome.toDto(gameBoard.getDealerOutcome(referee));
-        final List<OutcomeDto> playerOutcomes = gameBoard.getPlayerOutcomeDtos(referee);
-        OutputView.printFinalOutcomes(dealerOutcome, playerOutcomes);
+        final DealerOutcomeResponseDto dealerOutcome = DealerOutcomeResponseDto.toDto(gameBoard.getDealerOutcome(referee));
+        final PlayersOutcomeResponseDto playersOutcome = PlayersOutcomeResponseDto.toDto(gameBoard.getPlayersOutcome(referee));
+        OutputView.printFinalOutcomes(dealerOutcome, playersOutcome);
     }
 
     private static GameBoard createGameBoard() {

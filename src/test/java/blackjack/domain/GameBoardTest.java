@@ -4,11 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Deck;
-import blackjack.dto.OutcomeDto;
 import java.util.List;
+import java.util.Map;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamers;
-import blackjack.domain.gamer.Name;
+import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,14 +49,13 @@ class GameBoardTest {
         final GameBoard gameBoard = new GameBoard(deck, gamers);
         gameBoard.drawInitialCards();
 
-        final List<OutcomeDto> playerOutcomeDtos = gameBoard.getPlayerOutcomeDtos(referee);
+        final Map<Player, Outcome> playerOutcomeMap = gameBoard.getPlayersOutcome(referee);
 
-        final Name name = playerOutcomeDtos.get(0).getName();
-        final Outcome outcome = playerOutcomeDtos.get(0).getOutcome();
+        final Player firstPlayer = gameBoard.getPlayers().get(0);
+        final Outcome outcome = playerOutcomeMap.get(firstPlayer);
 
         assertAll(
-                () -> assertThat(playerOutcomeDtos.size()).isEqualTo(players.getPlayers().size()),
-                () -> assertThat(name).isEqualTo(new Name("pobi")),
+                () -> assertThat(playerOutcomeMap.size()).isEqualTo(players.getPlayers().size()),
                 () -> assertThat(outcome).isEqualTo(Outcome.PUSH)
         );
     }
