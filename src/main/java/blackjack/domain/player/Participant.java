@@ -26,6 +26,10 @@ public class Participant {
         return hitStrategy.canHit(calculateHandTotalClosestToBlackjack());
     }
 
+    public boolean isBust() {
+        return calculateHandTotalClosestToBlackjack() > BLACKJACK;
+    }
+
     public int calculateHandTotalClosestToBlackjack() {
         return hand.calculateScoreTotalClosestToThreshold(BLACKJACK);
     }
