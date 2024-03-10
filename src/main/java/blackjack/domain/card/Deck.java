@@ -3,23 +3,22 @@ package blackjack.domain.card;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Deck {
 
-	private final LinkedList<Card> cards;
+	private final List<Card> cards;
 
 	public Deck() {
 		this.cards = initAllCards();
 	}
 
-	private static LinkedList<Card> initAllCards() {
+	private List<Card> initAllCards() {
 		return Arrays.stream(CardShape.values())
 			.flatMap(cardShape -> Arrays.stream(CardNumber.values())
 				.map(number -> new Card(cardShape, number)))
-			.collect(Collectors.toCollection(LinkedList::new));
+			.collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	public void shuffle() {
@@ -27,7 +26,11 @@ public class Deck {
 	}
 
 	public Card draw() {
-		return cards.poll();
+		if (cards.isEmpty()) {
+			throw new IllegalStateException("모든 카드가 사용되었습니다.");
+		}
+
+		return cards.remove(0);
 	}
 
 	public List<Card> getCards() {
