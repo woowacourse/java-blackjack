@@ -90,7 +90,7 @@ public class OutputView {
 	}
 
 	private void printPlayerResults(PlayerResultsDto playerResultsDto) {
-		playerResultsDto.resultMap().forEach((name, result) ->
+		playerResultsDto.playerNameResults().forEach((name, result) ->
 			System.out.println(name + ": " + result)
 		);
 	}

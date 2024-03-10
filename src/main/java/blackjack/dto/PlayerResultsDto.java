@@ -5,7 +5,7 @@ import java.util.Map;
 
 import blackjack.domain.gamer.Players;
 
-public record PlayerResultsDto(Map<String, String> resultMap) {
+public record PlayerResultsDto(Map<String, String> playerNameResults) {
 
 	public static PlayerResultsDto ofPlayersAndDealerScore(Players players, int dealerScore) {
 		Map<String, String> nameResults = new LinkedHashMap<>();
