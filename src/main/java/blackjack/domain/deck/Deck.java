@@ -1,6 +1,7 @@
 package blackjack.domain.deck;
 
 import blackjack.domain.participants.Players;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -66,6 +67,6 @@ public class Deck {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 }
