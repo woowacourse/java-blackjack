@@ -11,13 +11,15 @@ import org.junit.jupiter.api.Test;
 
 class GameBoardTest {
 
+    //@formatter:off
     /**
-     * 카드 순서 :
-     * Ace - HEART, SPADE, CLOVER, DIAMOND
-     * 2 - HEART, SPADE, CLOVER, DIAMOND
+     * 카드 순서
+     * Ace카드 HEART, SPADE, CLOVER, DIAMOND 순서대로 4장
+     * 2카드 HEART, SPADE, CLOVER, DIAMOND 순서대로 4장
      * ...
-     * KING - HEART, SPADE, CLOVER, DIAMOND
+     * KING카드 HEART, SPADE, CLOVER, DIAMOND 순서대로 4장
      */
+    //@formatter:on
     @DisplayName("딜러의 최종 승패를 알려준다.")
     @Test
     void informDealerOutcome() {
