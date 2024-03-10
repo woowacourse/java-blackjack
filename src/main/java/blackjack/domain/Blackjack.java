@@ -32,12 +32,12 @@ public class Blackjack {
         return new Players(dealer, gamePlayers);
     }
 
-    public Result checkPlayersResult(Dealer dealer, List<GamePlayer> gamePlayers) {
+    public Result compareResults(Dealer dealer, List<GamePlayer> gamePlayers) {
         List<GamePlayerResult> gamePlayerResults = new ArrayList<>();
 
         for (GamePlayer gamePlayer : gamePlayers) {
             gamePlayerResults.add(
-                    new GamePlayerResult(gamePlayer.getName(), dealer.checkPlayer(gamePlayer)));
+                    new GamePlayerResult(gamePlayer.getName(), dealer.compareResult(gamePlayer)));
         }
 
         return new Result(gamePlayerResults, DealerResult.of(dealer.getName(), gamePlayerResults));

@@ -43,7 +43,7 @@ class BlackjackTest {
         Dealer dealer = new Dealer(name, cards);
         var sut = new Blackjack();
 
-        var result = sut.checkPlayersResult(dealer, List.of(gamePlayer));
+        var result = sut.compareResults(dealer, List.of(gamePlayer));
 
         assertThat(result.getGamePlayerResults()
                          .get(0)

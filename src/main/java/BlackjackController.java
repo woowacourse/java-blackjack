@@ -38,7 +38,7 @@ public class BlackjackController {
     }
 
     private void checkGameResult(Players players) {
-        Result result = blackjack.checkPlayersResult(players.getDealer(), players.getGamePlayers());
+        Result result = blackjack.compareResults(players.getDealer(), players.getGamePlayers());
         ResultView.printResult(result);
     }
 

@@ -20,7 +20,7 @@ public class Dealer extends Player {
     }
 
 
-    public ResultStatus checkPlayer(GamePlayer gamePlayer) {
+    public ResultStatus compareResult(GamePlayer gamePlayer) {
         int playerScore = gamePlayer.calculateScore();
         int dealerScore = calculateScore();
 
