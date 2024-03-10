@@ -5,6 +5,7 @@ import java.util.List;
 public class Hand {
 
     private static final int BLACKJACK_SCORE = 21;
+    private static final int BLACKJACK_SIZE = 2;
     private final List<Card> cards;
 
     Hand(List<Card> cards) {
@@ -30,5 +31,9 @@ public class Hand {
 
     public boolean isBusted() {
         return calculateScore() > BLACKJACK_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_SIZE && calculateScore() == BLACKJACK_SCORE;
     }
 }

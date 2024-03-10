@@ -56,4 +56,45 @@ class HandTest {
             assertThat(hand.isBusted()).isFalse();
         }
     }
+
+    @DisplayName("카드의 블랙잭 상태를 판단할 수 있다.")
+    @Nested
+    class BlackjackTest {
+
+        @DisplayName("21점이면서 2장의 카드라면 블랙잭이다.")
+        @Test
+        void whenBlackjack_returnTrue() {
+            Hand blackjackHand = new Hand(BLACKJACK);
+
+            assertThat(blackjackHand.isBlackjack()).isTrue();
+        }
+
+        @DisplayName("21점 미만 점수는 블랙잭이 아니다.")
+        @Test
+        void whenUnderScore_returnFalse() {
+            Hand blackjackHand = new Hand(List.of(
+                    new Card(Value.KING, Shape.HEART),
+                    new Card(Value.QUEEN, Shape.HEART)
+            ));
+
+            assertThat(blackjackHand.isBlackjack()).isFalse();
+        }
+
+        @DisplayName("21점이지만 3장의 카드라면 블랙잭이 아니다.")
+        @Test
+        void whenOverSize_returnFalse() {
+            Hand blackjackHand = new Hand(CARDS_SCORE_21);
+
+            assertThat(blackjackHand.isBlackjack()).isFalse();
+        }
+
+        @DisplayName("21점 초과 점수는 블랙잭이 아니다.")
+        @Test
+        void whenOverScore_returnFalse() {
+            Hand blackjackHand = new Hand(CARDS_SCORE_22);
+
+            assertThat(blackjackHand.isBlackjack()).isFalse();
+        }
+
+    }
 }
