@@ -2,7 +2,6 @@ package blackjack;
 
 import static blackjack.domain.DrawDecision.YES;
 
-import blackjack.domain.DealerGameResult;
 import blackjack.domain.DrawDecision;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
@@ -13,7 +12,6 @@ import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
 import blackjack.domain.rule.Judge;
-import blackjack.domain.rule.Score;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -38,7 +36,7 @@ public class BlackJackGame {
         completeDealerHand(dealer, cardDeck);
         outputView.printDealerPopCount(Dealer.HIT_THRESHOLD, dealer.countPop());
 
-        printPlayerScore(dealer);
+        printParticipantScore(dealer);
         printPlayersScore(players);
         printDealerGameResult(dealer, players);
         printPlayersGameResult(players, dealer);
@@ -63,19 +61,19 @@ public class BlackJackGame {
         players.getPlayers().forEach(player -> completePlayerHand(player, cardDeck));
     }
 
-    private void completePlayerHand(Participant participant, CardDeck cardDeck) {
+    private void completePlayerHand(Player participant, CardDeck cardDeck) {
         while (participant.canHit() && readHitDecision(participant) == YES) {
             participant.appendCard(cardDeck.popCard());
             outputView.printPlayerHand(participant);
         }
     }
 
-    private DrawDecision readHitDecision(Participant participant) {
+    private DrawDecision readHitDecision(Player participant) {
         InputMapper inputMapper = new InputMapper();
         return inputMapper.mapToDrawDecision(inputView.readDrawPlan(participant.getName()));
     }
 
-    private void completeDealerHand(Participant dealer, CardDeck cardDeck) {
+    private void completeDealerHand(Dealer dealer, CardDeck cardDeck) {
         while (dealer.canHit()) {
             Card card = cardDeck.popCard();
             dealer.appendCard(card);
@@ -83,29 +81,21 @@ public class BlackJackGame {
     }
 
     private void printPlayersScore(Players players) {
-        players.getPlayers().forEach(this::printPlayerScore);
+        players.getPlayers().forEach(this::printParticipantScore);
     }
 
-    private void printPlayerScore(Participant participant) {
+    private void printParticipantScore(Participant participant) {
         outputView.printPlayerScore(participant, participant.calculateHandScore());
     }
 
-    private void printDealerGameResult(Participant dealer, Players players) {
-        Score dealerScore = dealer.calculateHandScore();
-        int playerWinCount = players.countPlayerWithScoreAbove(dealerScore);
-        int dealerWinCount = players.countPlayer() - playerWinCount;
-
-        DealerGameResult dealerGameResult = new DealerGameResult(dealerWinCount, playerWinCount);
-        outputView.printDealerGameResult(dealerGameResult);
+    private void printDealerGameResult(Dealer dealer, Players players) {
+        Judge judge = new Judge();
+        outputView.printDealerGameResult(judge.calculateDealerGameResult(dealer, players));
     }
 
-    private void printPlayersGameResult(Players players, Participant dealer) {
+    private void printPlayersGameResult(Players players, Dealer dealer) {
         Judge judge = new Judge();
-        Score dealerScore = dealer.calculateHandScore();
         players.getPlayers()
-                .forEach(player -> {
-                    Score playerScore = player.calculateHandScore();
-                    outputView.printPlayerGameResult(player, judge.isPlayerWin(dealerScore, playerScore));
-                });
+                .forEach(player -> outputView.printPlayerGameResult(player, judge.isPlayerWin(dealer, player)));
     }
 }
