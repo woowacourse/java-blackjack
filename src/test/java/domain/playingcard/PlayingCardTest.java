@@ -1,8 +1,5 @@
 package domain.playingcard;
 
-import domain.playingcard.PlayingCard;
-import domain.playingcard.PlayingCardShape;
-import domain.playingcard.PlayingCardValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

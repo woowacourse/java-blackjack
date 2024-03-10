@@ -1,7 +1,5 @@
 package domain.playingcard;
 
-import domain.playingcard.Deck;
-import domain.playingcard.PlayingCard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
