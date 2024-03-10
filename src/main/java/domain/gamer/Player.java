@@ -19,7 +19,7 @@ public class Player extends Gamer {
 
     @Override
     public boolean isStay() {
-        return hand.isOverBlackJack();
+        return hand.isBust();
     }
 
     @Override

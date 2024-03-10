@@ -5,10 +5,10 @@ import domain.card.Rank;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Hand {
-    private static final int BLACK_JACK = 21;
+    private static final int MAX_SUM = 21;
+    private static final int BLACKJACK_CARD_COUNT_COND = 2;
     private final List<Card> cards;
 
     public Hand() {
@@ -16,7 +16,7 @@ public class Hand {
     }
 
     private static int accumulateScore(final Card card, final int sum) {
-        if (sum + card.getScore() <= BLACK_JACK) {
+        if (sum + card.getScore() <= MAX_SUM) {
             return sum + card.getScore();
         }
         return sum + Rank.SMALL_ACE.getScore();
@@ -26,8 +26,12 @@ public class Hand {
         cards.add(card);
     }
 
-    public boolean isOverBlackJack() {
-        return sum() > BLACK_JACK;
+    public boolean isBust() {
+        return sum() > MAX_SUM;
+    }
+
+    public boolean isBlackJack() {
+        return sum() == MAX_SUM && cards.size() == BLACKJACK_CARD_COUNT_COND;
     }
 
     public int sum() {
@@ -42,13 +46,13 @@ public class Hand {
 
     private List<Card> filterAceCards() {
         return cards.stream()
-                .filter(card -> card.getRank().isAce())
+                .filter(Card::isAce)
                 .toList();
     }
 
     private int sumExceptAceCards() {
         return cards.stream()
-                .filter(card -> !card.getRank().isAce())
+                .filter(card -> !card.isAce())
                 .mapToInt(Card::getScore).sum();
     }
 
