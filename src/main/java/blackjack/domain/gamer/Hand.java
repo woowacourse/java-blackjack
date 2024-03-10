@@ -30,7 +30,8 @@ public record Hand(List<Card> cards) {
 	}
 
 	/**
-	 * ACE가 포함된 경우, 21 이하이면서 가장 가능한 큰 값으로 계산한다.
+	 * 21 이하이면서 가장 큰 값을 찾습니다.
+	 * Ace는 CardNumber에 11로 지정하였기에, 합계가 21을 초과하면 Ace의 개수만큼 10씩 빼는 방법으로 Ace를 1로 계산합니다.
 	 */
 	private int adjustSumWithAce(int sum) {
 		int aceCount = (int)cards.stream()
@@ -43,9 +44,6 @@ public record Hand(List<Card> cards) {
 		return sum;
 	}
 
-	/**
-	 * Ace는 기본적으로 11로 계산되나, 합계가 21을 초과할 경우 1로 계산한다.
-	 */
 	private int adjust(int sum) {
 		if (sum > BLACKJACK_MAX_SCORE) {
 			sum -= ACE_VALUE_MODIFIER;
