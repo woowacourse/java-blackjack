@@ -1,9 +1,9 @@
 package domain.score;
 
 import domain.Name;
+import domain.Names;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -16,8 +16,8 @@ public class ScoreBoard {
         this.playerStatus = playerStatus;
     }
 
-    public static ScoreBoard from(List<Name> names) {
-        Map<Name, Status> scoreBoard = names.stream()
+    public static ScoreBoard from(Names names) {
+        Map<Name, Status> scoreBoard = names.getNames().stream()
                 .collect(Collectors.toMap(
                         name -> name,
                         name -> Status.TIE

@@ -1,6 +1,7 @@
 package domain.game;
 
 import domain.Name;
+import domain.Names;
 import domain.card.Card;
 import domain.card.DealerCards;
 import domain.card.PlayerCards;
@@ -36,7 +37,8 @@ class RuleTest {
                 new Card(11, Shape.CLUB)
         ));
 
-        scoreBoard = ScoreBoard.from(List.of(capy));
+        Names names = new Names(List.of(capy));
+        scoreBoard = ScoreBoard.from(names);
         rule = new Rule(scoreBoard);
     }
 

@@ -1,6 +1,7 @@
 package manager;
 
 import domain.Name;
+import domain.Names;
 import domain.card.DealerCards;
 import domain.card.Deck;
 import domain.card.PlayerCards;
@@ -18,7 +19,7 @@ public class Casino {
     private final Deck deck = new Deck();
 
     public void run() {
-        List<Name> names = readNames();
+        Names names = readNames();
 
         DealerCards dealerCards = new DealerCards(deck.drawInitialHands());
         List<PlayerCards> playerCardsBundle = makePlayerCards(names);
@@ -30,7 +31,7 @@ public class Casino {
         outputView.printScores(scoreBoard);
     }
 
-    private ScoreBoard playGame(List<Name> names, DealerCards dealerCards, List<PlayerCards> playerCardsBundle) {
+    private ScoreBoard playGame(Names names, DealerCards dealerCards, List<PlayerCards> playerCardsBundle) {
         ScoreBoard scoreBoard = ScoreBoard.from(names);
         Rule rule = new Rule(scoreBoard);
 
@@ -43,17 +44,23 @@ public class Casino {
         return scoreBoard;
     }
 
-    private List<PlayerCards> makePlayerCards(List<Name> names) {
-        return names.stream()
+    private List<PlayerCards> makePlayerCards(Names names) {
+        return names.getNames().stream()
                 .map(name -> new PlayerCards(name, deck.drawInitialHands()))
                 .toList();
     }
 
-    private List<Name> readNames() {
-        return inputView.readPlayerNames()
-                .stream()
-                .map(Name::new)
-                .toList();
+    private Names readNames() {
+        try {
+            List<Name> names = inputView.readPlayerNames()
+                    .stream()
+                    .map(Name::new)
+                    .toList();
+            return new Names(names);
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return readNames();
+        }
     }
 
     private void drawDealerCards(DealerCards dealerCards) {
