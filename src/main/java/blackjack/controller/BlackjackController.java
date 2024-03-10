@@ -110,7 +110,7 @@ public class BlackjackController {
 	}
 
 	private void printResult(Dealer dealer, Players players) {
-		PlayerResultsDto playerResultsDto = PlayerResultsDto.ofPlayersAndDealerScore(players, dealer.getScore());
+		PlayerResultsDto playerResultsDto = PlayerResultsDto.ofPlayersAndDealerScore(players, dealer);
 		DealerResultDto dealerResultDto = DealerResultDto.ofDealerAndPlayers(dealer, players);
 
 		outputView.printFinalResult(dealerResultDto, playerResultsDto);

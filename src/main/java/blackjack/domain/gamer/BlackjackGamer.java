@@ -27,6 +27,14 @@ public abstract class BlackjackGamer {
 		hand.add(card);
 	}
 
+	public boolean isBust() {
+		return hand.checkIfBust();
+	}
+
+	public boolean isBlackJack() {
+		return hand.checkIfBlackjack();
+	}
+
 	public Card getFirstCard() {
 		return hand.getFirstCard();
 	}

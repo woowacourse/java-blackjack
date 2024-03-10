@@ -50,9 +50,9 @@ public class Players {
 		return List.copyOf(players);
 	}
 
-	public List<GameResult> getAllPlayerGameResults(int dealerScore) {
+	public List<GameResult> getAllPlayerGameResults(Dealer dealer) {
 		return players.stream()
-			.map(player -> player.getGameResult(dealerScore))
+			.map(player -> player.getGameResult(dealer))
 			.toList();
 	}
 }

@@ -51,6 +51,15 @@ public record Hand(List<Card> cards) {
 		return sum;
 	}
 
+	public boolean checkIfBust() {
+		return calculateScore() > BlackjackConstants.BLACKJACK_VALUE.getValue();
+	}
+
+	public boolean checkIfBlackjack() {
+		return cards.size() == BlackjackConstants.INITIAL_CARD_COUNT.getValue()
+			&& calculateScore() == BlackjackConstants.BLACKJACK_VALUE.getValue();
+	}
+
 	public Card getFirstCard() {
 		return cards.get(0);
 	}
