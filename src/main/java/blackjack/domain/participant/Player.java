@@ -18,6 +18,6 @@ public class Player extends Participant {
 
     @Override
     public boolean canHit() {
-        return !isBust();
+        return !isBust() && !isBlackjack();
     }
 }

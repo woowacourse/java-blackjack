@@ -26,7 +26,7 @@ class PlayerTest {
 
     private static Stream<Arguments> provideNumbersWithCanHit() {
         return Stream.of(
-                Arguments.of(List.of(Number.ACE, Number.JACK), true),
+                Arguments.of(List.of(Number.ACE, Number.JACK), false),
                 Arguments.of(List.of(Number.EIGHT, Number.NINE), true),
                 Arguments.of(List.of(Number.EIGHT, Number.NINE, Number.QUEEN), false)
         );
