@@ -2,7 +2,6 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import controller.Round;
 import controller.dto.HandStatus;
 import domain.constants.Score;
 import domain.constants.Shape;
@@ -19,9 +18,9 @@ class RoundTest {
     @Test
     void startBlackJack() {
         List<String> playerNames = Arrays.asList("pobi", "jason");
-        Round round = Round.from(playerNames);
+        BlackJackGame blackJackGame = BlackJackGame.from(playerNames);
 
-        List<HandStatus> statuses = round.initiateGameCondition();
+        List<HandStatus> statuses = blackJackGame.initiateGameCondition();
 
         for (HandStatus status : statuses) {
             assertThat(status.hand().getCards()).hasSize(2);
@@ -36,18 +35,18 @@ class RoundTest {
         dealer.drawCards(createNormalWithTwoCards());
 
         List<Player> players = List.of(new Player("pobi"));
-        Participants participants = new Participants(dealer, players);
+        Players participants = new Players(dealer, players);
 
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Score.THREE, Shape.DIAMOND));
 
-        Round round = new Round(participants, new Deck(cards));
+        BlackJackGame blackJackGame = new BlackJackGame(participants, new Deck(cards));
 
         // when
-        round.giveCardsToDealer(new OutputView());
+        blackJackGame.giveCardsToDealer(new OutputView());
 
         // then
-        assertThat(round.getDealer().getHand().size()).isEqualTo(3);
+        assertThat(blackJackGame.getDealer().getHand().size()).isEqualTo(3);
     }
 
     private List<Card> createNormalWithTwoCards() {

@@ -5,19 +5,19 @@ import java.util.List;
 
 public class GameRule {
     private static final int BLACKJACK_SCORE = 21;
-    private final Participants participants;
+    private final Players players;
 
-    public GameRule(final Participants participants) {
-        this.participants = participants;
+    public GameRule(final Players players) {
+        this.players = players;
     }
 
     public List<Outcome> judge() {
-        if (isBusted(participants.getDealer())) {
-            return participants.getOutcomesIf(
+        if (isBusted(players.getDealer())) {
+            return players.getOutcomesIf(
                     player -> isNotBusted(player)
             );
         }
-        return participants.getOutcomesIf(
+        return players.getOutcomesIf(
                 player -> isWinner(player)
         );
     }
@@ -30,10 +30,10 @@ public class GameRule {
         if (isBusted(player)) {
             return true;
         }
-        if (player.isNotSameScoreAs(participants.getDealer())) {
-            return player.hasMoreScoreThan(participants.getDealer());
+        if (player.isNotSameScoreAs(players.getDealer())) {
+            return player.hasMoreScoreThan(players.getDealer());
         }
-        return player.hasLessOrSameCardThan(participants.getDealer());
+        return player.hasLessOrSameCardThan(players.getDealer());
     }
 
     private boolean isBusted(final Player player) {

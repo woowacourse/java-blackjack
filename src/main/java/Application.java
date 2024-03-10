@@ -1,4 +1,4 @@
-import controller.Game;
+import controller.GameManager;
 import view.InputView;
 import view.OutputView;
 
@@ -7,7 +7,7 @@ public class Application {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
 
-        Game game = new Game(inputView, outputView);
-        game.run();
+        GameManager gameManager = new GameManager(inputView, outputView);
+        gameManager.run();
     }
 }
