@@ -1,7 +1,7 @@
 package domain.playingcard;
 
+import static domain.participant.Hand.BLACKJACK_CONDITION;
 import static domain.playingcard.PlayingCardValue.SMALL_ACE;
-import static domain.constant.GameOption.BLACKJACK_CONDITION;
 
 public class PlayingCard {
     private final PlayingCardShape playingCardShape;

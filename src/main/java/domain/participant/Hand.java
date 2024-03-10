@@ -5,10 +5,11 @@ import domain.playingcard.PlayingCard;
 import java.util.ArrayList;
 import java.util.List;
 
-import static domain.constant.GameOption.BLACKJACK_CONDITION;
 import static java.util.Collections.unmodifiableList;
 
 public class Hand {
+    public static final int BLACKJACK_CONDITION = 21;
+
     private final List<PlayingCard> playingCards;
 
     Hand(final List<PlayingCard> playingCards) {
