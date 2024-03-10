@@ -17,9 +17,9 @@ public class Player implements Gamer {
         this.cards = cards;
     }
 
-    public static Player from(final Name name) {
+    public static Player from(final String name) {
         final Cards cards = new Cards(new ArrayList<>());
-        return new Player(name, cards);
+        return new Player(new Name(name), cards);
     }
 
     @Override

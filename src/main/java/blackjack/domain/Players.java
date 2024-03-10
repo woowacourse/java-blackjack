@@ -17,8 +17,8 @@ public class Players {
 
     public static Players from(final List<String> names) {
         final List<Player> players = new ArrayList<>();
-        for (String name : names) {
-            players.add(Player.from(new Name(name)));
+        for (final String name : names) {
+            players.add(Player.from(name));
         }
         return new Players(players);
     }
