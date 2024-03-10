@@ -1,11 +1,7 @@
 package domain.blackjack;
 
 import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Shape;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,15 +10,11 @@ public class Deck {
     private final List<Card> cards;
 
     public Deck() {
-        cards = new ArrayList<>();
+        cards = Card.getCache();
         init();
     }
 
     private void init() {
-        for (Shape shape : Shape.values()) {
-            Arrays.stream(Rank.values())
-                    .forEach(rank -> cards.add(new Card(shape, rank)));
-        }
         Collections.shuffle(cards);
     }
 

@@ -1,8 +1,17 @@
 package domain.card;
 
-import java.util.Objects;
+import java.util.*;
 
 public class Card {
+
+    private static final List<Card> CACHE = new ArrayList<>();
+
+    static {
+        for (Shape shape : Shape.values()) {
+            Arrays.stream(Rank.values())
+                    .forEach(rank -> CACHE.add(new Card(shape, rank)));
+        }
+    }
 
     private final Shape shape;
     private final Rank rank;
@@ -10,6 +19,10 @@ public class Card {
     public Card(final Shape shape, final Rank rank) {
         this.shape = shape;
         this.rank = rank;
+    }
+
+    public static List<Card> getCache() {
+        return CACHE;
     }
 
     public boolean isAce() {
