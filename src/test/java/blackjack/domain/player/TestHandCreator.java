@@ -1,14 +1,14 @@
-package fixture;
+package blackjack.domain.player;
 
-import blackjack.domain.player.Hand;
+import blackjack.domain.card.TestCardCreator;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class HandFixture {
+public class TestHandCreator {
 
     public static Hand of(int... numbers) {
         return new Hand(Arrays.stream(numbers)
-                .mapToObj(CardFixture::from)
+                .mapToObj(TestCardCreator::from)
                 .collect(Collectors.toList()));
     }
 }

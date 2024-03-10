@@ -1,12 +1,10 @@
-package fixture;
+package blackjack.domain.card;
 
 import static blackjack.domain.card.CardShape.HEART;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
 import java.util.Arrays;
 
-public class CardFixture {
+public class TestCardCreator {
 
     public static Card from(int number) {
         CardNumber cardNumber = Arrays.stream(CardNumber.values())

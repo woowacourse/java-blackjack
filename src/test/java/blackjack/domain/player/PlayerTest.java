@@ -2,7 +2,6 @@ package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import fixture.HandFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -14,7 +13,7 @@ class PlayerTest {
     @ParameterizedTest
     @CsvSource(value = {"2, 10, 10", "3, 10, 10", "4, 10, 10"})
     void testCannotHit(int card1, int card2, int card3) {
-        Player player = new Player(new PlayerName("썬"), HandFixture.of(card1, card2, card3));
+        Player player = new Player(new PlayerName("썬"), TestHandCreator.of(card1, card2, card3));
         assertThat(player.canHit()).isFalse();
     }
 
@@ -22,7 +21,7 @@ class PlayerTest {
     @ParameterizedTest
     @CsvSource(value = {"1, 10, 10", "2, 8, 10", "2, 7, 10"})
     void testCanHit(int card1, int card2, int card3) {
-        Player player = new Player(new PlayerName("썬"), HandFixture.of(card1, card2, card3));
+        Player player = new Player(new PlayerName("썬"), TestHandCreator.of(card1, card2, card3));
         assertThat(player.canHit()).isTrue();
     }
 }
