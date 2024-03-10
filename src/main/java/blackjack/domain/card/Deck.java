@@ -36,13 +36,8 @@ public class Deck {
 		}
 	}
 
-	public List<Card> drawCards(int count) {
-		List<Card> cards = new ArrayList<>();
-		for (int i = 0; i < count; i++) {
-			cards.add(drawCard());
-		}
-
-		return cards;
+	public List<Card> drawInitCards() {
+		return List.of(drawCard(), drawCard());
 	}
 
 	public Card drawCard() {

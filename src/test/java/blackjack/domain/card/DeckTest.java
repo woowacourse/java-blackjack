@@ -62,14 +62,14 @@ class DeckTest {
 			.isNotIn(card);
 	}
 
-	@DisplayName("카드 n장을 드로우한다.")
+	@DisplayName("초기 카드 2장을 드로우한다.")
 	@Test
 	void dealCardsTest() {
 		// given
 		Deck deck = new Deck(cards);
 
 		// when
-		List<Card> cards = deck.drawCards(2);
+		List<Card> cards = deck.drawInitCards();
 
 		// then
 		// CONCERN POINT: contains 메서드를 만들 지, Extract 방식을 사용할 지 고민해보기
@@ -83,7 +83,9 @@ class DeckTest {
 	void emptyDeckDrawTest() {
 		// given
 		Deck deck = new Deck(cards);
-		deck.drawCards(Deck.INIT_SIZE);
+		for (int i = 0; i < 52; i++) {
+			deck.drawCard();
+		}
 
 		// when & then
 		assertThatThrownBy(deck::drawCard)

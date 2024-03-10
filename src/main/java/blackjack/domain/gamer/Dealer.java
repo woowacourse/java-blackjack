@@ -26,7 +26,7 @@ public class Dealer extends Gamer {
 	}
 
 	public List<Card> dealInit() {
-		return deck.drawCards(INIT_CARD_COUNT);
+		return deck.drawInitCards();
 	}
 
 	public Card dealCard() {
