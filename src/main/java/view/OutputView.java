@@ -13,6 +13,7 @@ public class OutputView {
     private static final String INITIAL_HAND_STATUS_MESSAGE = "%s에게 %d장을 나누었습니다.";
     private static final String NAME_SEPARATOR = ",";
     private static final String HAND_STATUS_MESSAGE = "%s카드: %s";
+    private static final String DEALER_CARD_SAVED_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String RESULT_HAND_STATUS_MESSAGE = HAND_STATUS_MESSAGE + " - 결과 : %d";
     private static final String CARD_STATUS_MESSAGE = "%d%s";
     private static final String CARD_SEPARATOR = ",";
@@ -26,11 +27,7 @@ public class OutputView {
         );
 
         for (HandStatus handStatus : initialCardStatus.statuses()) {
-            System.out.printf(
-                    HAND_STATUS_MESSAGE,
-                    handStatus.name(),
-                    generateCardsStatusMessage(handStatus.hand())
-            );
+            printHandStatus(handStatus);
         }
     }
 
@@ -40,12 +37,16 @@ public class OutputView {
                 .toList();
     }
 
-    public void printCardStatus(final HandStatus status) {
-        System.out.println(status.getCardInitStatus());
+    public void printHandStatus(final HandStatus handStatus) {
+        System.out.printf(
+                HAND_STATUS_MESSAGE,
+                handStatus.name(),
+                generateCardsStatusMessage(handStatus.hand())
+        );
     }
 
-    public void printDealerPickMessage() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    public void printDealerCardSavedMessage() {
+        System.out.println(DEALER_CARD_SAVED_MESSAGE);
     }
 
     public void printResultHandStatus(final List<HandStatus> handStatuses) {
@@ -73,7 +74,6 @@ public class OutputView {
                 )
                 .toList();
     }
-
 
     public void printGameResult(final JudgeResult results) {
         System.out.println();

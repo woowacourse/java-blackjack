@@ -52,9 +52,9 @@ public class GameManager {
 
     private Consumer<HandStatus> getAction(final Participant participant) {
         if (participant instanceof Player) {
-            return handStatus -> outputView.printCardStatus(handStatus);
+            return handStatus -> outputView.printHandStatus(handStatus);
         }
-        return handStatus -> outputView.printDealerPickMessage();
+        return handStatus -> outputView.printDealerCardSavedMessage();
     }
 
     private Supplier<CardCommand> getSupplier(final Participant participant) {
