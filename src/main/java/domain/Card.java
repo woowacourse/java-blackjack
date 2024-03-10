@@ -7,6 +7,7 @@ import java.util.Objects;
 public class Card {
 
     private static final Map<String, Card> CARD_CACHE = new HashMap<>();
+
     private final Rank rank;
     private final Suit suit;
 
