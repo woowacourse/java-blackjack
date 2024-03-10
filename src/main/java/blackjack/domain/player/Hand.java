@@ -43,6 +43,10 @@ public class Hand {
         return cards.size();
     }
 
+    public int countPop() {
+        return cards.size() - INITIAL_HAND_SIZE;
+    }
+
     public Score calculateScore() {
         int aceCount = countAce();
         int sum = calculateCardSummation();
