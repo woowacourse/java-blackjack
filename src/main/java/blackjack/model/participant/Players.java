@@ -2,11 +2,12 @@ package blackjack.model.participant;
 
 import blackjack.dto.NameCardsScore;
 import blackjack.model.deck.Card;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Players {
     private static final int MINIMUM_PLAYER_SIZE = 1;
@@ -22,11 +23,9 @@ public class Players {
     public static Players of(final List<String> rawNames, final List<Hand> cards) {
         validateNotDuplicateName(rawNames);
         validateNamesInitialCardsSize(rawNames, cards);
-        List<Player> players = new ArrayList<>();
-        for (int i = 0; i < rawNames.size(); i++) {
-            players.add(Player.of(rawNames.get(i), cards.get(i)));
-        }
-        return new Players(players);
+        return IntStream.range(0, rawNames.size())
+                .mapToObj(index -> new Player(new Name(rawNames.get(index)), cards.get(index)))
+                .collect(Collectors.collectingAndThen(Collectors.toList(), Players::new));
     }
 
     private static void validateNamesInitialCardsSize(final List<String> rawNames, final List<Hand> cards) {
