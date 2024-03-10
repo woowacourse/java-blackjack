@@ -50,7 +50,9 @@ public class BlackJackController {
 
         List<SinglePlayerResultDto> gameResults = new ArrayList<>();
 
-        for (SingleMatch singleMatch : blackJackGame.startGame()) {
+        List<SingleMatch> matches = blackJackGame.readySingleMatches();
+
+        for (SingleMatch singleMatch : matches) {
             Player player = singleMatch.getPlayer();
             retry(singleMatch, player);
 

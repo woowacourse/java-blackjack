@@ -37,13 +37,13 @@ public class BlackJackGame {
         return players;
     }
 
-    public List<SingleMatch> startGame() {
-        ArrayList<SingleMatch> singleMatches = new ArrayList<>();
+    public List<SingleMatch> readySingleMatches() {
+        ArrayList<SingleMatch> matches = new ArrayList<>();
 
         for (Player player : players.getPlayers()) {
-            singleMatches.add(new SingleMatch(player, dealer));
+            matches.add(new SingleMatch(player, dealer));
         }
-        return singleMatches;
+        return matches;
     }
 
     public BlackJackGameStatusDto getBackJackGameStatus() {
