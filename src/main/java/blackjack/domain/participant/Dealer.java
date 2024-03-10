@@ -4,6 +4,8 @@ import blackjack.domain.Deck;
 import blackjack.domain.card.TrumpCard;
 import blackjack.util.Constants;
 
+import java.util.stream.IntStream;
+
 public class Dealer extends Gamer {
 
     private final Deck deck;
@@ -12,31 +14,30 @@ public class Dealer extends Gamer {
         super();
 
         this.deck = deck;
+        initialDraw();
+    }
 
-        selfDraw();
-        selfDraw();
+    private void initialDraw() {
+        IntStream.range(0, 2)
+                .forEach(i -> hand.add(draw()));
     }
 
     public TrumpCard draw() {
         return deck.drawn();
     }
 
-    public boolean extraCard() {
+    public boolean drawExtraCard() {
         if (canReceiveCard()) {
-            selfDraw();
+            hand.add(draw());
             return true;
         }
+
         return false;
     }
 
     @Override
     boolean canReceiveCard() {
         return hand.calculateScore() <= Constants.DEALER_BOUND;
-    }
-
-    private void selfDraw() {
-        TrumpCard trumpCard = this.deck.drawn();
-        hand.add(trumpCard);
     }
 
     public TrumpCard showFirstCard() {

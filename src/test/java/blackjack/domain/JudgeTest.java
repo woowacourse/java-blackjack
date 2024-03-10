@@ -1,19 +1,20 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.stategy.TestShuffleStrategy;
 import blackjack.dto.DealerResult;
 import blackjack.dto.PlayerResult;
 import blackjack.strategy.ShuffleStrategy;
-import java.util.List;
-import java.util.stream.IntStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.stream.IntStream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("결과 판단")
 class JudgeTest {
@@ -264,7 +265,7 @@ class JudgeTest {
     }
 
     private void bustDealer() {
-        dealer.extraCard();
+        dealer.drawExtraCard();
     }
 
     private void deckDrawLoop(final int count) {
