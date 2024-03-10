@@ -4,7 +4,7 @@ import model.blackjackgame.BlackjackGame;
 import model.blackjackgame.GameResult;
 import model.blackjackgame.HitAnswer;
 import model.card.Card;
-import model.card.RandomCardPicker;
+import model.card.RandomCard;
 import model.card.Cards;
 import model.dealer.Dealer;
 import model.player.Player;
@@ -14,7 +14,7 @@ import view.OutputView;
 
 public class BlackjackController {
 
-    private final RandomCardPicker randomCardPicker = RandomCardPicker.getRandomCardPicker();
+    private final RandomCard randomCardPicker = RandomCard.getRandomCard();
 
     public void run() {
         Players players = InputView.preparePlayers();
