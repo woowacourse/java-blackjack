@@ -2,8 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import java.util.ArrayList;
-import java.util.Collections;
+import blackjack.domain.card.Hand;
 import java.util.List;
 
 public abstract class Participant {
@@ -11,39 +10,28 @@ public abstract class Participant {
     protected static final int BLACKJACK_SCORE = 21;
     private static final int START_CARDS_SIZE = 2;
 
-    private final List<Card> cards;
+    private final Hand hand;
 
     protected Participant(List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
+        this.hand = new Hand(cards);
     }
 
     public final int calculateScore() {
-        int score = getMaxScore();
-        int cardIndex = 0;
-        while (score > BLACKJACK_SCORE && cardIndex < cards.size()) {
-            Card card = cards.get(cardIndex);
-            score = score + card.getMinScore() - card.getMaxScore();
-            cardIndex++;
-        }
-        return score;
-    }
-
-    private int getMaxScore() {
-        return cards.stream()
-                .mapToInt(Card::getMaxScore)
-                .sum();
+        return hand.calculateScore();
     }
 
     public final boolean isDrawable() {
         return calculateScore() <= getMaxDrawableScore();
     }
 
+    // TODO isBlackjack 추가
+
     public final boolean isBusted() {
-        return calculateScore() > BLACKJACK_SCORE;
+        return hand.isBusted();
     }
 
-    public void drawStartCards(Deck deck) {
-        if (!cards.isEmpty()) {
+    public final void drawStartCards(Deck deck) {
+        if (!hand.isEmpty()) {
             throw new IllegalStateException("이미 시작 카드를 뽑았습니다.");
         }
         for (int i = 0; i < START_CARDS_SIZE; i++) {
@@ -55,11 +43,12 @@ public abstract class Participant {
         if (!isDrawable()) {
             throw new IllegalStateException("더 이상 카드를 추가할 수 없습니다.");
         }
-        cards.add(card);
+        hand.add(card);
     }
 
+    // TODO getStartCards() 도입
     public final List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return hand.getCards();
     }
 
     protected abstract int getMaxDrawableScore();
