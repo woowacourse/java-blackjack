@@ -48,6 +48,14 @@ public class BlackJackGame {
         return results;
     }
 
+    public Map<Player, Score> getScores() {
+        Map<Player, Score> scores = new LinkedHashMap<>();
+        for (Player player : getEveryParticipants()) {
+            scores.put(player, player.getTotalScore());
+        }
+        return scores;
+    }
+
     public List<Player> getEveryParticipants() {
         List<Player> participants = new LinkedList<>(players);
         participants.add(0, dealer);
@@ -57,4 +65,5 @@ public class BlackJackGame {
     public List<Player> getPlayers() {
         return players;
     }
+
 }
