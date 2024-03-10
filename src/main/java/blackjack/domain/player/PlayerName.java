@@ -7,12 +7,8 @@ public class PlayerName {
     private final String value;
 
     public PlayerName(String value) {
-        validate(value);
-        this.value = value;
-    }
-
-    private void validate(String value) {
         validateNotEmpty(value);
+        this.value = value;
     }
 
     private void validateNotEmpty(String value) {
