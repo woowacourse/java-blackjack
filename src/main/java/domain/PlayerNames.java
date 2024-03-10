@@ -1,5 +1,7 @@
 package domain;
 
+import static domain.Dealer.DEALER_NAME;
+
 import java.util.List;
 
 public record PlayerNames(List<String> names) {
@@ -17,7 +19,7 @@ public record PlayerNames(List<String> names) {
     }
 
     private void validateNotDealerName(List<String> names) {
-        if (names.contains("딜러")) {
+        if (names.contains(DEALER_NAME)) {
             throw new IllegalArgumentException(DEALER_NAME_MESSAGE);
         }
     }

@@ -1,6 +1,7 @@
 package domain;
 
-import static domain.Name.DEALER_NAME_MESSAGE;
+import static domain.Dealer.DEALER_NAME;
+import static domain.PlayerNames.DEALER_NAME_MESSAGE;
 import static domain.PlayerNames.NAMES_SIZE_INVALID_MESSAGE;
 import static domain.PlayerNames.NAME_DUPLICATE_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -73,7 +74,7 @@ class PlayerNamesTest {
     @DisplayName("플레이어 이름은 딜러가 될 수 없습니다.")
     @Test
     void validateNotDealerName() {
-        assertThatThrownBy(() -> new PlayerNames(List.of("위브", "산초", "딜러")))
+        assertThatThrownBy(() -> new PlayerNames(List.of("위브", "산초", DEALER_NAME)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(DEALER_NAME_MESSAGE);
     }
