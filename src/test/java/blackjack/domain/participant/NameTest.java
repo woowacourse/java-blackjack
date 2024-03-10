@@ -10,8 +10,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class NameTest {
 
-    public static final Name DEFAULT_NAME = new Name("name");
-
     @DisplayName("이름은 적어도 한 글자를 가져야 한다.")
     @ParameterizedTest
     @NullAndEmptySource

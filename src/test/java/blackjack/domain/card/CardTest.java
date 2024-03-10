@@ -3,7 +3,6 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -12,48 +11,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 
 public class CardTest {
-
-    // TODO HandFixture 로 변경 (클래스 분리)
-    public static final List<Card> CARDS_SCORE_4 = List.of(
-            new Card(Value.TWO, Shape.HEART),
-            new Card(Value.TWO, Shape.SPADE)
-    );
-    public static final List<Card> TWO_ACE = List.of(
-            new Card(Value.ACE, Shape.HEART),
-            new Card(Value.ACE, Shape.SPADE)
-    );
-    public static final List<Card> SCORE_13_WITH_ACE = List.of(
-            new Card(Value.ACE, Shape.HEART),
-            new Card(Value.KING, Shape.HEART),
-            new Card(Value.TWO, Shape.HEART)
-    );
-    public static final List<Card> CARDS_SCORE_16 = List.of(
-            new Card(Value.JACK, Shape.HEART),
-            new Card(Value.SIX, Shape.HEART)
-    );
-    public static final List<Card> CARDS_SCORE_17 = List.of(
-            new Card(Value.JACK, Shape.HEART),
-            new Card(Value.SEVEN, Shape.HEART)
-    );
-    public static final List<Card> CARDS_SCORE_21 = List.of(
-            new Card(Value.JACK, Shape.HEART),
-            new Card(Value.EIGHT, Shape.HEART),
-            new Card(Value.THREE, Shape.HEART)
-    );
-    public static final List<Card> BLACKJACK = List.of(
-            new Card(Value.ACE, Shape.HEART),
-            new Card(Value.KING, Shape.HEART)
-    );
-    public static final List<Card> CARDS_SCORE_22 = List.of(
-            new Card(Value.JACK, Shape.HEART),
-            new Card(Value.SEVEN, Shape.HEART),
-            new Card(Value.FIVE, Shape.HEART)
-    );
-    public static final List<Card> BUSTED = List.of(
-            new Card(Value.KING, Shape.DIAMOND),
-            new Card(Value.QUEEN, Shape.DIAMOND),
-            new Card(Value.JACK, Shape.DIAMOND)
-    );
 
     @DisplayName("카드 값에 따라 점수를 확인할 수 있다")
     @Nested
