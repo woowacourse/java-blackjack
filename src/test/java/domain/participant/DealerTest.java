@@ -1,5 +1,6 @@
 package domain.participant;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import domain.card.Card;
@@ -34,5 +35,16 @@ public class DealerTest {
         assertThatCode(() -> dealer.receive(new Card(Rank.QUEEN, Symbol.DIAMOND)))
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("[ERROR] 카드를 받을 수 없는 상태입니다.");
+    }
+
+    @Test
+    @DisplayName("성공: 딜러의 첫 번째 카드를 찾을 수 있다.")
+    void findShowingCard_noException() {
+        Dealer dealer = new Dealer();
+        Card card1 = new Card(Rank.KING, Symbol.CLUB);
+        Card card2 = new Card(Rank.SEVEN, Symbol.HEART);
+        dealer.receive(List.of(card1, card2));
+
+        assertThat(dealer.findShowingCard()).isEqualTo(card1);
     }
 }
