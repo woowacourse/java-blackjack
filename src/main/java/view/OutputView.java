@@ -1,7 +1,7 @@
 package view;
 
-import domain.Gamers;
 import domain.PlayerResults;
+import domain.Players;
 import domain.Result;
 import domain.card.Card;
 import domain.gamer.Dealer;
@@ -21,20 +21,17 @@ public class OutputView {
 
     }
 
-    public static void printInitialCardsMessage(final Gamers gamers) {
-        Dealer dealer = gamers.findDealer();
-        List<Player> players = gamers.findPlayers();
-
+    public static void printInitialCardsMessage(final Dealer dealer, final Players players) {
         printHandOutMessage(dealer, players);
         printDealerCard(dealer);
         printPlayersCards(players);
         System.out.println();
     }
 
-    private static void printHandOutMessage(final Dealer dealer, final List<Player> players) {
+    private static void printHandOutMessage(final Dealer dealer, final Players players) {
         String dealerName = dealer.getName().getValue();
         StringJoiner playerNames = new StringJoiner(",");
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             playerNames.add(player.getName().getValue());
         }
         String message = String.format(System.lineSeparator() + "%s와 %s에게 %d장을 나누었습니다.", dealerName, playerNames,
@@ -46,8 +43,8 @@ public class OutputView {
         System.out.println(dealer.getName().getValue() + ": " + printCardInfo(dealer.getHand().get(0)));
     }
 
-    private static void printPlayersCards(final List<Player> players) {
-        for (Player player : players) {
+    private static void printPlayersCards(final Players players) {
+        for (Player player : players.getPlayers()) {
             printAllCards(player);
         }
     }
@@ -65,9 +62,9 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printCardsAndResult(final Gamers gamers) {
+    public static void printCardsAndResult(final Dealer dealer, final Players players) {
         StringBuilder builder = new StringBuilder();
-        for (Gamer gamer : gamers.getGamers()) {
+        for (Gamer gamer : getGamers(dealer, players)) {
             String gamerName = gamer.getName().getValue();
             int totalScore = gamer.calculateTotalScore();
             String cardInfos = String.join(", ", printCardInfos(gamer.getHand()));
@@ -75,6 +72,13 @@ public class OutputView {
                     .append(System.lineSeparator());
         }
         System.out.println(builder);
+    }
+
+    private static List<Gamer> getGamers(final Dealer dealer, final Players players) {
+        List<Gamer> gamers = new ArrayList<>();
+        gamers.addAll(players.getPlayers());
+        gamers.add(dealer);
+        return gamers;
     }
 
     private static List<String> printCardInfos(final List<Card> cards) {

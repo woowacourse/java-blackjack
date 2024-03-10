@@ -18,9 +18,10 @@ public class BlackJackGame {
         this.decks = decks;
     }
 
-    public void prepareCards(final Gamers gamers) {
-        for (Gamer gamer : gamers.getGamers()) {
-            gamer.receive(drawTwoCards());
+    public void prepareCards(final Dealer dealer, final Players players) {
+        dealer.receive(drawTwoCards());
+        for (final Player player : players.getPlayers()) {
+            player.receive(drawTwoCards());
         }
     }
 
@@ -38,10 +39,9 @@ public class BlackJackGame {
         return false;
     }
 
-    public PlayerResults findPlayerResult(final Gamers gamers) {
-        Dealer dealer = gamers.findDealer();
+    public PlayerResults findPlayerResult(final Dealer dealer, Players players) {
         Map<Player, Result> playerResults = new LinkedHashMap<>();
-        for (Player player : gamers.findPlayers()) {
+        for (Player player : players.getPlayers()) {
             Result playerResult = isPlayerWin(dealer, player);
             playerResults.put(player, playerResult);
         }

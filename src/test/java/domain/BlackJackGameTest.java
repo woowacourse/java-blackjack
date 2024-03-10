@@ -45,18 +45,16 @@ public class BlackJackGameTest {
         Player player2 = new Player(name2);
         Dealer dealer = new Dealer();
         Players players = new Players(List.of(player1, player2));
-
-        Gamers gamers = Gamers.of(players, dealer);
         BlackJackGame blackJackGame = new BlackJackGame(decks);
 
         // when
-        blackJackGame.prepareCards(gamers);
+        blackJackGame.prepareCards(dealer,players);
 
         // then
         assertAll(
-                () -> assertThat(gamers.getGamers().get(0).getHand()).hasSize(2),
-                () -> assertThat(gamers.getGamers().get(1).getHand()).hasSize(2),
-                () -> assertThat(gamers.getGamers().get(2).getHand()).hasSize(2)
+                () -> assertThat(dealer.getHand()).hasSize(2),
+                () -> assertThat(player1.getHand()).hasSize(2),
+                () -> assertThat(player2.getHand()).hasSize(2)
         );
     }
 
@@ -173,16 +171,15 @@ public class BlackJackGameTest {
         Player jason = new Player(name2);
 
         Players players = new Players(List.of(pobi, jason));
-        Gamers gamers = Gamers.of(players, dealer);
 
         BlackJackGame blackJackGame = new BlackJackGame(decks);
-        blackJackGame.prepareCards(gamers);
+        blackJackGame.prepareCards(dealer, players);
 
         blackJackGame.takeTurn(pobi);
         blackJackGame.takeTurn(dealer);
 
         // when
-        PlayerResults playerResults = blackJackGame.findPlayerResult(gamers);
+        PlayerResults playerResults = blackJackGame.findPlayerResult(dealer, players);
 
         // then
         assertAll(
