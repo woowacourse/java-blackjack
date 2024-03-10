@@ -3,7 +3,6 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.rule.Score;
-import blackjack.domain.rule.ScoreCalculateStrategy;
 import java.util.List;
 
 public class Hand {
@@ -12,11 +11,9 @@ public class Hand {
     private static final int ACE_WEIGHT = 10;
 
     private final List<Card> cards;
-    private final ScoreCalculateStrategy scoreCalculateStrategy;
 
-    public Hand(List<Card> cards, ScoreCalculateStrategy scoreCalculateStrategy) {
+    public Hand(List<Card> cards) {
         this.cards = cards;
-        this.scoreCalculateStrategy = scoreCalculateStrategy;
     }
 
     public int calculateCardSummation() {

@@ -1,7 +1,6 @@
 package blackjack.domain.player;
 
 import blackjack.domain.rule.Score;
-import blackjack.domain.rule.ScoreCalculateStrategy;
 import java.util.List;
 
 public class Players {
@@ -19,7 +18,7 @@ public class Players {
         return players.size();
     }
 
-    public int countPlayerWithScoreAbove(Score target, ScoreCalculateStrategy scoreCalculateStrategy) {
+    public int countPlayerWithScoreAbove(Score target) {
         return (int) players.stream()
                 .map(Participant::calculateHandScore)
                 .filter(playerScore -> playerScore.isAbove(target))

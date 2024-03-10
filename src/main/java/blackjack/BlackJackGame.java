@@ -14,7 +14,6 @@ import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
 import blackjack.domain.rule.Judge;
 import blackjack.domain.rule.Score;
-import blackjack.domain.rule.ScoreCalculateStrategy;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -107,7 +106,7 @@ public class BlackJackGame {
 
     private void printDealerGameResult(Participant dealer, Players players) {
         Score dealerScore = dealer.calculateHandScore();
-        int playerWinCount = players.countPlayerWithScoreAbove(dealerScore, new ScoreCalculateStrategy());
+        int playerWinCount = players.countPlayerWithScoreAbove(dealerScore);
         int dealerWinCount = players.countPlayer() - playerWinCount;
 
         DealerGameResult dealerGameResult = new DealerGameResult(dealerWinCount, playerWinCount);
