@@ -15,7 +15,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class DealerCardDrawStrategyTest {
+class DealerCardDrawConditionTest {
+
     public static Stream<Arguments> canDrawParameters() {
         return Stream.of(
                 Arguments.of(HoldingCards.of(new Card(ACE, HEART), new Card(SIX, HEART)), false),
@@ -29,7 +30,7 @@ class DealerCardDrawStrategyTest {
     @DisplayName("딜러의 드로우 여부가 제대로 판단되는지 검증")
     void canDraw(HoldingCards holdingCards, boolean expected) {
         Gamer dealer = new Gamer("딜러", holdingCards);
-        Assertions.assertThat(new DealerRandomCardDrawStrategy(dealer).canDraw())
+        Assertions.assertThat(new DealerCardDrawCondition(dealer).canDraw())
                 .isEqualTo(expected);
     }
 }

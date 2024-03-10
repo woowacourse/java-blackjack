@@ -12,7 +12,7 @@ public record SummationCardPoint(int summationCardPoint) {
         return new SummationCardPoint(summationCardPoint);
     }
 
-    public boolean isBiggerThan(SummationCardPoint other) {
+    boolean isBiggerThan(SummationCardPoint other) {
         int otherPoint = other.summationCardPoint();
         return summationCardPoint > otherPoint;
     }

@@ -11,6 +11,7 @@ import static domain.card.CardType.SPADE;
 
 import domain.card.Card;
 import domain.card.Deck;
+import domain.card.FirstCardSelectStrategy;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -34,12 +35,14 @@ class GamerTest {
         );
     }
 
+    private static final FirstCardSelectStrategy FIRST_CARD_SELECT_STRATEGY = new FirstCardSelectStrategy();
+
     @Test
     @DisplayName("게임 참가자가 카드를 뽑았을 때 점수가 올바르게 계산되는지 검증")
     void draw() {
         Gamer gamer = new Gamer("robin", HoldingCards.of());
         Deck deck = Deck.of(new Card(JACK, HEART), new Card(EIGHT, HEART));
-        gamer.draw(deck, new TestPlayerCardDrawStrategy(gamer));
+        gamer.draw(deck, FIRST_CARD_SELECT_STRATEGY, new PlayerCardDrawCondition(gamer));
 
         SummationCardPoint actual = gamer.getSummationCardPoint();
         SummationCardPoint expected = new SummationCardPoint(10);
@@ -57,7 +60,7 @@ class GamerTest {
         Deck deck = Deck.of(
                 new Card(TWO, SPADE)
         );
-        DrawResult drawResult = gamer.draw(deck, new TestPlayerCardDrawStrategy(gamer));
+        DrawResult drawResult = gamer.draw(deck, FIRST_CARD_SELECT_STRATEGY, new PlayerCardDrawCondition(gamer));
         Assertions.assertThat(drawResult.getFailCause())
                 .isEqualTo("카드를 더이상 뽑을 수 없습니다.");
     }
@@ -72,7 +75,7 @@ class GamerTest {
                 new Card(TWO, SPADE)
         );
 
-        DrawResult drawResult = gamer.draw(deck, new TestDealerCardDrawStrategy(gamer));
+        DrawResult drawResult = gamer.draw(deck, FIRST_CARD_SELECT_STRATEGY, new DealerCardDrawCondition(gamer));
         Assertions.assertThat(drawResult.getFailCause())
                 .isEqualTo("카드를 더이상 뽑을 수 없습니다.");
     }
@@ -95,7 +98,8 @@ class GamerTest {
         Gamer gamer = new Gamer("robin", HoldingCards.of(
                 new Card(JACK, HEART), new Card(QUEEN, HEART)
         ));
-        DrawResult drawResult = gamer.draw(Deck.of(cardInDeck), new TestPlayerCardDrawStrategy(gamer));
+        DrawResult drawResult = gamer.draw(Deck.of(cardInDeck), FIRST_CARD_SELECT_STRATEGY,
+                new PlayerCardDrawCondition(gamer));
         Assertions.assertThat(drawResult.hasNextChance())
                 .isEqualTo(expected);
     }

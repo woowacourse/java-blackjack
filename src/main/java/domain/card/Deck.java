@@ -40,12 +40,12 @@ public class Deck {
         }
     }
 
-    public Card draw(CardDrawStrategy cardDrawStrategy) {
+    public Card draw(CardSelectStrategy cardSelectStrategy) {
         if (cards.isEmpty()) {
             throw new IllegalArgumentException("덱이 비어있습니다.");
         }
 
-        Card card = cardDrawStrategy.nextCard(cards);
+        Card card = cardSelectStrategy.select(cards);
         cards.remove(card);
 
         return card;

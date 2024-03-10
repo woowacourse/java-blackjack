@@ -8,11 +8,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DeckTest {
+
+    private static final FirstCardSelectStrategy FIRST_CARD_SELECT_STRATEGY = new FirstCardSelectStrategy();
+
     @Test
     @DisplayName("원하는 방식대로 카드가 뽑히는지 검증")
     void validateDraw() {
         Deck deck = Deck.of(new Card(ACE, HEART));
-        Card card = deck.draw(cards -> cards.get(0));
+        Card card = deck.draw(FIRST_CARD_SELECT_STRATEGY);
         Assertions.assertThat(card)
                 .isEqualTo(new Card(ACE, HEART));
     }
@@ -31,7 +34,7 @@ class DeckTest {
         Deck deck = Deck.of(new Card(ACE, HEART));
         deck.draw(cards -> cards.get(0));
 
-        Assertions.assertThatThrownBy(() -> deck.draw(cards -> cards.get(0)))
+        Assertions.assertThatThrownBy(() -> deck.draw(FIRST_CARD_SELECT_STRATEGY))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("덱이 비어있습니다.");
     }

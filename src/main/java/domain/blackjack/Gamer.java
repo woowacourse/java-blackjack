@@ -3,7 +3,8 @@ package domain.blackjack;
 import static domain.card.CardName.TEN;
 
 import domain.card.Card;
-import domain.card.CardDrawStrategy;
+import domain.card.CardDrawCondition;
+import domain.card.CardSelectStrategy;
 import domain.card.Deck;
 import java.util.List;
 
@@ -16,12 +17,12 @@ public class Gamer {
         this.holdingCards = holdingCards;
     }
 
-    public DrawResult draw(Deck deck, CardDrawStrategy cardDrawStrategy) {
-        if (isDead()) {
+    public DrawResult draw(Deck deck, CardSelectStrategy cardSelectStrategy, CardDrawCondition cardDrawCondition) {
+        if (isDead() || !cardDrawCondition.canDraw()) {
             return DrawResult.fail("카드를 더이상 뽑을 수 없습니다.", false);
         }
         try {
-            Card draw = deck.draw(cardDrawStrategy);
+            Card draw = deck.draw(cardSelectStrategy);
             holdingCards.add(draw);
             return DrawResult.success(!isDead());
         } catch (IllegalArgumentException | IllegalStateException e) {
@@ -58,8 +59,8 @@ public class Gamer {
         return getSummationCardPoint().summationCardPoint();
     }
 
-    boolean isDead() {
-        return holdingCards.calculateTotalPoint().isDeadPoint();
+    public boolean isDead() {
+        return getSummationCardPoint().isDeadPoint();
     }
 
     boolean hasAceInHoldingCards() {
