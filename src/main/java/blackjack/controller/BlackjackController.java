@@ -1,12 +1,5 @@
 package blackjack.controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import blackjack.domain.Card;
 import blackjack.domain.CardRank;
 import blackjack.domain.CardShape;
@@ -18,6 +11,13 @@ import blackjack.domain.Participants;
 import blackjack.domain.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class BlackjackController {
 
@@ -30,13 +30,17 @@ public class BlackjackController {
     }
 
     public void run() {
-        Participants participants = createParticipants();
-        Deck deck = new Deck(createCards());
+        try {
+            Participants participants = createParticipants();
+            Deck deck = new Deck(createCards());
 
-        initialDeal(participants, deck);
-        playersTurn(participants.getPlayers(), deck);
-        dealerTurn(participants.getDealer(), deck);
-        printResult(participants);
+            initialDeal(participants, deck);
+            playersTurn(participants.getPlayers(), deck);
+            dealerTurn(participants.getDealer(), deck);
+            printResult(participants);
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+        }
     }
 
     private Participants createParticipants() {

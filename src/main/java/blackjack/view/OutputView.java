@@ -1,15 +1,20 @@
 package blackjack.view;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.Participant;
 import blackjack.domain.Player;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
+    private static final String ERROR_PREFIX = "[ERROR]";
+
+    public void printErrorMessage(String message) {
+        System.out.printf("%s %s%n", ERROR_PREFIX, message);
+    }
 
     public void printInitialDeal(Dealer dealer, List<Player> players) {
         System.out.println();
