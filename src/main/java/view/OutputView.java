@@ -1,6 +1,7 @@
 package view;
 
 import domain.card.Card;
+import domain.card.Symbol;
 import domain.game.BlackjackGame;
 import domain.game.Result;
 import domain.game.WinLose;
@@ -8,6 +9,7 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -67,7 +69,20 @@ public class OutputView {
     }
 
     private String cardText(Card card) {
-        return card.getRank().getDisplayName() + card.getSymbol().getDisplayName();
+        return card.getRank().getDescription() + symbolText(card.getSymbol());
+    }
+
+    private String symbolText(Symbol symbol) {
+        Map<Symbol, String> symbolTextMap = Map.of(
+            Symbol.CLUB, "클로버", Symbol.DIAMOND, "다이아몬드",
+            Symbol.HEART, "하트", Symbol.SPADE, "스페이드"
+        );
+
+        try {
+            return symbolTextMap.get(symbol);
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException("[ERROR] 올바른 Symbol이 아닙니다.");
+        }
     }
 
     public void printDealerDrawMessage() {

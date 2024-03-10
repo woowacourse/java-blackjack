@@ -17,18 +17,18 @@ public enum Rank {
     ACE(1, "A");
 
     private final int score;
-    private final String displayName;
+    private final String description;
 
-    Rank(int score, String displayName) {
+    Rank(int score, String description) {
         this.score = score;
-        this.displayName = displayName;
+        this.description = description;
     }
 
     public int getScore() {
         return score;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public String getDescription() {
+        return description;
     }
 }
