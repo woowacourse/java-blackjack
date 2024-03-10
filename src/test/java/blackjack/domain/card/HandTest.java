@@ -63,7 +63,7 @@ class HandTest {
     @MethodSource("provideCardsWithOptimizedScore")
     void getOptimizedScoreTest(List<Card> cards, int score) {
         Hand hand = new Hand(cards);
-        assertThat(hand.getOptimizedScore()).isEqualTo(score);
+        assertThat(hand.calculateOptimizedScore()).isEqualTo(score);
     }
 
     @DisplayName("카드의 합이 입력된 값을 넘는 지 판단한다.")

@@ -18,14 +18,14 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return getOptimizedScore() > BLACKJACK;
+        return calculateOptimizedScore() > BLACKJACK;
     }
 
     public boolean isBlackjack() {
-        return getOptimizedScore() == BLACKJACK;
+        return calculateOptimizedScore() == BLACKJACK;
     }
 
-    public int getOptimizedScore() {
+    public int calculateOptimizedScore() {
         int cardTotalScore = getCardTotalScore();
         if (cardTotalScore >= BLACKJACK) {
             return cardTotalScore;
@@ -35,7 +35,7 @@ public class Hand {
     }
 
     public boolean isTotalScoreGreaterThan(int score) {
-        return getOptimizedScore() > score;
+        return calculateOptimizedScore() > score;
     }
 
     public void addCard(Card card) {

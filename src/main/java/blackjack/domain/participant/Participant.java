@@ -37,7 +37,7 @@ public abstract class Participant {
     }
 
     public int getScore() {
-        return hand.getOptimizedScore();
+        return hand.calculateOptimizedScore();
     }
 
     protected List<Card> getCardsByCount(int count) {
