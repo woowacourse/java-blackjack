@@ -14,11 +14,9 @@ public class Application { // TODO: refactoring
     private static final ResultView resultView = new ResultView();
 
     public static void main(String[] args) {
-        BlackJackGame game = new BlackJackGame();
-
         List<String> rawPlayersNames = inputView.readPlayersNames();
-        game.prepareGamers(rawPlayersNames);
-        game.prepareCardPack();
+
+        BlackJackGame game = new BlackJackGame(rawPlayersNames);
 
         Gamers gamers = game.getGamers();
 

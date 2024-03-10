@@ -14,23 +14,20 @@ public class BlackJackGame {
 
     private static final int INIT_CARDS_AMOUNT = 2;
 
-    private Gamers gamers;
+    private final Gamers gamers;
     private CardPack cardPack;
 
-    public BlackJackGame() {
+    public BlackJackGame(List<String> rawPlayersNames) {
+        this.gamers = makeGamers(rawPlayersNames);
+        this.cardPack = new CardPack();
     }
 
-    public void prepareGamers(List<String> rawPlayersNames) {
+    private Gamers makeGamers(List<String> rawPlayersNames) {
         List<Player> players = rawPlayersNames.stream()
                 .map(rawPlayersName -> new Player(rawPlayersName, new PlayerCards(new ArrayList<>())))
                 .toList();
         Dealer dealer = new Dealer(new DealerCards(new ArrayList<>()));
-        this.gamers = new Gamers(players, dealer);
-        // TODO: 테스트 해야되니까 여기서 까서 주입
-    }
-
-    public void prepareCardPack() {
-        this.cardPack = new CardPack();
+        return new Gamers(players, dealer);
     }
 
     public void setUpGame() {
