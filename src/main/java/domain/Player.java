@@ -14,33 +14,16 @@ public class Player extends Participant {
         return CardCommand.HIT.equals(cardCommand) && isNotBusted();
     }
 
-    public boolean isNotSameScoreAs(final Player other) {
-        return calculateResultScore() != other.calculateResultScore();
-    }
-
-    public boolean hasMoreScoreThan(final int otherScore) {
-        return calculateResultScore() > otherScore;
-    }
-
-    public boolean hasMoreScoreThan(final Player other) {
-        return calculateResultScore() > other.calculateResultScore();
-    }
 
     public int calculateResultScore() {
         return hand.calculateResultScore();
     }
 
-    public boolean hasLessOrSameCardThan(final Player other) {
-        return getTotalSize() <= other.getTotalSize();
-    }
 
     public boolean cannotDraw() {
         return hand.calculateResultScore() > BLACKJACK_SCORE;
     }
 
-    public int getTotalSize() {
-        return hand.size();
-    }
 
     public String getName() {
         return name;

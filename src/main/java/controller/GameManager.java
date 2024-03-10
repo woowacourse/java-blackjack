@@ -1,6 +1,7 @@
 package controller;
 
 import controller.dto.HandStatus;
+import controller.dto.JudgeResult;
 import domain.BlackJackGame;
 import domain.Participant;
 import domain.Player;
@@ -71,5 +72,8 @@ public class GameManager {
     private void finish(final BlackJackGame blackJackGame) {
         List<HandStatus> handStatuses = blackJackGame.createHandStatuses();
         outputView.printResultHandStatus(handStatuses);
+
+        JudgeResult judgeResult = blackJackGame.judge();
+        outputView.printGameResult(judgeResult);
     }
 }

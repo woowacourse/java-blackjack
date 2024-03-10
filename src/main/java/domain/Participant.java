@@ -22,28 +22,56 @@ public abstract class Participant {
         return hand.getCards();
     }
 
+    public boolean isBusted() {
+        return hand.calculateScore() > BlackJackGame.BLACKJACK_SCORE;
+    }
+
     protected boolean isNotBusted() {
-        return hand.calculateScore() <= BlackJackGame.BLACKJACK_SCORE;
+        return !isBusted();
     }
 
     protected int calculateScore() {
         return hand.calculateScore();
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public Hand getHand() {
-        return this.hand;
+    private int calculateResultScore() {
+        return hand.calculateResultScore();
     }
 
     public HandStatus createHandStatus() {
         return new HandStatus(name, hand);
     }
 
+    public String getName() {
+        return this.name;
+    }
+
+    public boolean isNotSameScoreAs(final Player other) {
+        return calculateResultScore() != other.calculateResultScore();
+    }
+
+    public boolean hasMoreScoreThan(final Player other) {
+        return calculateResultScore() > other.calculateResultScore();
+    }
+
+    public boolean hasLessOrSameCardThan(final Player other) {
+        return getCardSize() <= other.getCardSize();
+    }
+
+    public int getCardSize() {
+        return hand.size();
+    }
+
+
+    public Hand getHand() {
+        return this.hand;
+    }
+
+
     abstract public boolean canPickCard(final CardCommand cardCommand);
 
+
+    // TODO: 검증 로직을 뷰 단으로 옮기기
     private static class Validator {
         private static void validateName(final String name) {
             if (name == null || name.isBlank()) {

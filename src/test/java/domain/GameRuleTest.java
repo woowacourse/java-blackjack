@@ -21,7 +21,7 @@ class GameRuleTest {
         Player player = new Player("pobi");
         player.drawCards(createNormalWithThreeCards());
 
-        GameRule rule = createGameRule(player, dealer);
+        Referee rule = createGameRule(player, dealer);
 
         // when
         List<Outcome> isWinner = rule.judge();
@@ -42,7 +42,7 @@ class GameRuleTest {
             Player player = new Player("pobi");
             player.drawCards(createBustedCards());
 
-            GameRule rule = createGameRule(player, dealer);
+            Referee rule = createGameRule(player, dealer);
 
             List<Outcome> gameResult = rule.judgePlayersWhenDealerBusted();
 
@@ -60,7 +60,7 @@ class GameRuleTest {
             Player player = new Player("pobi");
             player.drawCards(createNormalWithTwoCards());
 
-            GameRule rule = createGameRule(player, dealer);
+            Referee rule = createGameRule(player, dealer);
 
             List<Outcome> gameResult = rule.judgePlayersWhenDealerBusted();
 
@@ -82,7 +82,7 @@ class GameRuleTest {
             Player player = new Player("pobi");
             player.drawCards(createBlackJackWithThreeCards());
 
-            GameRule rule = createGameRule(player, dealer);
+            Referee rule = createGameRule(player, dealer);
 
             List<Outcome> gameResult = rule.judge();
 
@@ -100,7 +100,7 @@ class GameRuleTest {
             Player player = new Player("pobi");
             player.drawCards(createNormalWithTwoCards());
 
-            GameRule rule = createGameRule(player, dealer);
+            Referee rule = createGameRule(player, dealer);
 
             List<Outcome> gameResult = rule.judge();
 
@@ -122,7 +122,7 @@ class GameRuleTest {
             Player player = new Player("pobi");
             player.drawCards(createBlackJackWithTwoCards());
 
-            GameRule rule = createGameRule(player, dealer);
+            Referee rule = createGameRule(player, dealer);
 
             List<Outcome> gameResult = rule.judge();
 
@@ -140,7 +140,7 @@ class GameRuleTest {
             Player player = new Player("pobi");
             player.drawCards(createNormalWithThreeCards());
 
-            GameRule rule = createGameRule(player, dealer);
+            Referee rule = createGameRule(player, dealer);
 
             List<Outcome> gameResult = rule.judge();
 
@@ -158,7 +158,7 @@ class GameRuleTest {
             Player player = new Player("pobi");
             player.drawCards(createSameScoreNormalWithTwoCards());
 
-            GameRule rule = createGameRule(player, dealer);
+            Referee rule = createGameRule(player, dealer);
 
             List<Outcome> gameResult = rule.judge();
 
@@ -168,11 +168,11 @@ class GameRuleTest {
         }
     }
 
-    private GameRule createGameRule(final Player player, final Dealer dealer) {
+    private Referee createGameRule(final Player player, final Dealer dealer) {
         List<Player> players = List.of(player);
         Participants participant = new Participants(dealer, players);
 
-        return new GameRule(participant);
+        return new Referee(participant);
     }
 
     private List<Card> createBlackJackWithTwoCards() {

@@ -2,7 +2,7 @@ package controller.dto;
 
 import domain.constants.Outcome;
 
-public record PlayerResult(
+public record ParticipantOutcome(
         String name,
         Outcome outcome
 ) {

@@ -1,8 +1,8 @@
 package view;
 
-import controller.dto.GameResult;
 import controller.dto.HandStatus;
-import controller.dto.PlayerResult;
+import controller.dto.JudgeResult;
+import controller.dto.ParticipantOutcome;
 import domain.Card;
 import domain.Hand;
 import domain.constants.Outcome;
@@ -71,16 +71,17 @@ public class OutputView {
     }
 
 
-    public void printGameResult(final GameResult results) {
+    public void printGameResult(final JudgeResult results) {
         System.out.println();
         System.out.println("## 최종 승패");
-        List<PlayerResult> playerResults = results.results();
-        int loseCount = (int) playerResults.stream()
-                .filter(playerResult -> playerResult.outcome().equals(Outcome.LOSE))
+        List<ParticipantOutcome> participantOutcomes = results.results();
+        int loseCount = (int) participantOutcomes.stream()
+                .filter(participantOutcome -> participantOutcome.outcome().equals(Outcome.LOSE))
                 .count();
-        System.out.println("딜러: " + (playerResults.size() - loseCount) + "승 " + loseCount + "패");
-        for (PlayerResult playerResult : playerResults) {
-            System.out.println(playerResult.name() + ": " + checkIsWin(playerResult.outcome().equals(Outcome.WIN)));
+        System.out.println("딜러: " + (participantOutcomes.size() - loseCount) + "승 " + loseCount + "패");
+        for (ParticipantOutcome participantOutcome : participantOutcomes) {
+            System.out.println(
+                    participantOutcome.name() + ": " + checkIsWin(participantOutcome.outcome().equals(Outcome.WIN)));
         }
     }
 

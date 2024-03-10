@@ -66,8 +66,4 @@ public class Hand {
     public List<Card> getCards() {
         return cards;
     }
-
-    public boolean isNotSameAs(final Hand hand) {
-        return getTotalSize
-    }
 }

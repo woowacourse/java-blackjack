@@ -1,5 +1,6 @@
 package domain;
 
+import controller.dto.ParticipantOutcome;
 import domain.constants.Outcome;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,9 +23,12 @@ public class Participants {
         return new Participants(participants);
     }
 
-    public List<Outcome> getOutcomesIf(final Function<Player, Boolean> function) {
+    public List<ParticipantOutcome> getParticipantOutcomesIf(final Function<Participant, Boolean> function) {
         return participants.stream()
-                .map(player -> Outcome.from(function.apply(player)))
+                .map(participant -> new ParticipantOutcome(
+                        participant.getName(),
+                        Outcome.from(function.apply(participant))
+                ))
                 .toList();
     }
 
@@ -32,8 +36,8 @@ public class Participants {
         return Collections.unmodifiableList(participants);
     }
 
-    public Player getDealer() {
-        return participants.stream()
+    public Dealer getDealer() {
+        return (Dealer) participants.stream()
                 .filter(player -> player instanceof Dealer)
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
