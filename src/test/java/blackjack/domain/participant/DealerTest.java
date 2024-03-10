@@ -3,9 +3,9 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardTest;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Shape;
 import blackjack.domain.card.Value;
 import java.util.List;
@@ -76,9 +76,8 @@ class DealerTest {
     @DisplayName("이미 카드를 가지고 있는 경우, 시작 카드를 뽑을 수 없다.")
     @Test
     void drawStartCardsTest_whenAlreadyStarted_throwException() {
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(CARDS_SCORE_16);
         Deck deck = Deck.createShuffledDeck();
-        dealer.drawStartCards(deck);
 
         assertThatThrownBy(() -> dealer.drawStartCards(deck))
                 .isInstanceOf(IllegalStateException.class)
@@ -89,8 +88,8 @@ class DealerTest {
     @Test
     void addTest_whenScoreIsUnderBound() {
         Dealer dealer = new Dealer(CARDS_SCORE_16);
-
         Card additionalCard = new Card(Value.ACE, Shape.HEART);
+
         dealer.add(additionalCard);
 
         assertThat(dealer.getCards())
@@ -132,7 +131,6 @@ class DealerTest {
         @ParameterizedTest
         @MethodSource("playerCards")
         void whenOnlyDealerBusted_playerWin(List<Card> cards) {
-
             Dealer dealer = new Dealer(BUSTED);
             Player player = new Player(cards, DEFAULT_NAME);
 

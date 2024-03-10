@@ -74,9 +74,8 @@ class PlayerTest {
     @DisplayName("이미 카드를 가지고 있는 경우, 시작 카드를 뽑을 수 없다.")
     @Test
     void drawStartCardsTest_whenAlreadyStarted_throwException() {
-        Player player = Player.from("name");
+        Player player = new Player(CARDS_SCORE_16, DEFAULT_NAME);
         Deck deck = Deck.createShuffledDeck();
-        player.drawStartCards(deck);
 
         assertThatThrownBy(() -> player.drawStartCards(deck))
                 .isInstanceOf(IllegalStateException.class)
