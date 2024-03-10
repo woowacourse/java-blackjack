@@ -78,7 +78,7 @@ public class BlackjackGame {
                 .toList();
     }
 
-    public FinalHandsScoreDTO getFinalResults() {
+    public FinalHandsScoreDTO getFinalHandsScore() {
         final Map<ParticipantName, Hands> participantsHands = players.getPlayersHands();
         final Map<ParticipantName, Score> participantsScores = players.getPlayersScore();
 

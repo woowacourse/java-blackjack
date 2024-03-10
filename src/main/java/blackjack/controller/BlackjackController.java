@@ -76,7 +76,7 @@ public class BlackjackController {
     }
 
     private void finishGame(final BlackjackGame blackjackGame) {
-        final FinalHandsScoreDTO finalHandsScoreDTO = blackjackGame.getFinalResults();
+        final FinalHandsScoreDTO finalHandsScoreDTO = blackjackGame.getFinalHandsScore();
         final WinningResultDTO winningResults = blackjackGame.getWinningResults();
         outputView.printFinalResult(finalHandsScoreDTO, winningResults);
     }
