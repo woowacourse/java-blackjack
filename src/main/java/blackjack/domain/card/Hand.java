@@ -35,7 +35,7 @@ public class Hand {
     }
 
     public boolean isTotalScoreGreaterThan(int score) {
-        return getCardTotalScore() > score;
+        return getOptimizedScore() > score;
     }
 
     public void addCard(Card card) {

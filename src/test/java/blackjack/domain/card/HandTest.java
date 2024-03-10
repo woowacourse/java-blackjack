@@ -32,7 +32,7 @@ class HandTest {
 
     private static Stream<Arguments> provideCardsWithScoreGreaterThan() {
         return Stream.of(
-                Arguments.of(createCards(List.of(Number.ACE, Number.JACK)), 17, false),
+                Arguments.of(createCards(List.of(Number.ACE, Number.JACK)), 17, true),
                 Arguments.of(createCards(List.of(Number.FIVE, Number.SIX, Number.ACE)), 4, true)
         );
     }
