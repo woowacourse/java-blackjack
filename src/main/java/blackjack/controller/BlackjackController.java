@@ -52,9 +52,9 @@ public class BlackjackController {
 	}
 
 	private void printInitialHands(Players players, Dealer dealer) {
-		DealerInitialHandDto dealerInitialHandDto = DealerInitialHandDto.fromDealerEntity(dealer);
+		DealerInitialHandDto dealerInitialHandDto = DealerInitialHandDto.fromDealer(dealer);
 		List<GamerHandDto> playerInitialHandDto = players.getPlayers().stream()
-			.map(GamerHandDto::fromGamerEntity)
+			.map(GamerHandDto::fromGamer)
 			.toList();
 
 		outputView.printInitialHands(dealerInitialHandDto, playerInitialHandDto);
@@ -69,7 +69,7 @@ public class BlackjackController {
 	private void distributeCardToPlayer(Deck deck, Player player) {
 		while (canDistribute(player)) {
 			player.addCard(deck.draw());
-			outputView.printPlayerHand(GamerHandDto.fromGamerEntity(player));
+			outputView.printPlayerHand(GamerHandDto.fromGamer(player));
 		}
 	}
 
@@ -94,19 +94,19 @@ public class BlackjackController {
 
 	private void printAllGamerScores(Dealer dealer, Players players) {
 		outputView.printEmptyLine();
-		outputView.printScore(GamerHandDto.fromGamerEntity(dealer), dealer.getScore());
+		outputView.printScore(GamerHandDto.fromGamer(dealer), dealer.getScore());
 		printPlayersScores(players);
 	}
 
 	private void printPlayersScores(Players players) {
 		players.getPlayers().forEach(player -> outputView.printScore(
-			GamerHandDto.fromGamerEntity(player), player.getScore()
+			GamerHandDto.fromGamer(player), player.getScore()
 		));
 	}
 
 	private void printResult(Dealer dealer, Players players) {
-		PlayerResultsDto playerResultsDto = PlayerResultsDto.fromPlayersWithDealerScore(players, dealer.getScore());
-		DealerResultDto dealerResultDto = DealerResultDto.fromPlayers(dealer, players);
+		PlayerResultsDto playerResultsDto = PlayerResultsDto.ofPlayersAndDealerScore(players, dealer.getScore());
+		DealerResultDto dealerResultDto = DealerResultDto.ofDealerAndPlayers(dealer, players);
 
 		outputView.printResult(dealerResultDto, playerResultsDto);
 	}

@@ -8,7 +8,7 @@ import blackjack.domain.gamer.Players;
 
 public record DealerResultDto(String name, int winCount, int loseCount) {
 
-	public static DealerResultDto fromPlayers(Dealer dealer, Players players) {
+	public static DealerResultDto ofDealerAndPlayers(Dealer dealer, Players players) {
 		String dealerName = dealer.getName().value();
 		List<GameResult> allPlayerGameResults = players.getAllPlayerGameResults(dealer.getScore());
 		int dealerWinCount = dealer.calculateWinCount(allPlayerGameResults);
