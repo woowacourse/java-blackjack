@@ -13,7 +13,9 @@ public class InputView {
     public List<String> readPlayersNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String rawNames = scanner.nextLine();
-        return Arrays.asList(rawNames.split(","));
+        return Arrays.stream(rawNames.split(","))
+                .map(String::trim)
+                .toList();
     }
 
     public String readHitOrNot(Gamer player) {
