@@ -18,7 +18,7 @@ public abstract class Gamer {
         hand.add(card);
     }
 
-    public void receiveInitialCards(final List<Card> cards) {
+    public void receive(final List<Card> cards) {
         for (final Card card : cards) {
             hand.add(card);
         }

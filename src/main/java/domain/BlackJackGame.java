@@ -19,7 +19,7 @@ public class BlackJackGame {
 
     public void prepareCards(final Gamers gamers) {
         for (Gamer gamer : gamers.getGamers()) {
-            gamer.receiveInitialCards(drawTwoCards());
+            gamer.receive(drawTwoCards());
         }
     }
 
