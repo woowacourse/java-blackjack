@@ -20,17 +20,13 @@ public class BlackJack {
     public void beginDealing(BiConsumer<Participants, Dealer> beginBlackJack) {
         dealer.receiveCard(dealer.draw());
         dealer.receiveCard(dealer.draw());
-
-        for (Participant participant : participants.getValue()) {
-            participant.receiveCard(dealer.draw());
-            participant.receiveCard(dealer.draw());
-        }
+        participants.beginDealing(dealer);
 
         beginBlackJack.accept(participants, dealer);
     }
 
     public void play(BiConsumer<Participant, Dealer> participantConsumer) {
-        participants.prHit(participantConsumer, dealer);
+        participants.participantHit(participantConsumer, dealer);
     }
 
     public int dealerHit() {

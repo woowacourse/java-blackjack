@@ -28,6 +28,19 @@ public class Participants {
         }
     }
 
+    public void beginDealing(Dealer dealer) {
+        for (Participant participant : value) {
+            participant.receiveCard(dealer.draw());
+            participant.receiveCard(dealer.draw());
+        }
+    }
+
+    public void participantHit(BiConsumer<Participant, Dealer> participantConsumer, Dealer dealer) {
+        for (Participant participant : value) {
+            participantConsumer.accept(participant, dealer);
+        }
+    }
+
     public List<Name> getNames() {
         return value.stream()
                 .map(Participant::getName)
@@ -36,11 +49,5 @@ public class Participants {
 
     public List<Participant> getValue() {
         return value;
-    }
-
-    public void prHit(BiConsumer<Participant, Dealer> participantConsumer, Dealer dealer) {
-        for (Participant participant : value) {
-            participantConsumer.accept(participant, dealer);
-        }
     }
 }
