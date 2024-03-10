@@ -20,6 +20,6 @@ public class GamePlayer extends Player {
 
     @Override
     public boolean isReceivable() {
-        return cards.sum() < RECEIVE_SIZE;
+        return cards.sum() < RECEIVE_SIZE && !isBlackjack();
     }
 }

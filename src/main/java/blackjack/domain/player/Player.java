@@ -30,6 +30,10 @@ public abstract class Player {
 
     public abstract boolean isReceivable();
 
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
+
     public String getNameAsString() {
         return name.asString();
     }
@@ -41,5 +45,4 @@ public abstract class Player {
     public List<Card> getCards() {
         return cards.toList();
     }
-
 }

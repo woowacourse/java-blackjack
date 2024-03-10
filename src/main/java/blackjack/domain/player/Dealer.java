@@ -30,6 +30,9 @@ public class Dealer extends Player {
         if (isBust()) {
             return ResultStatus.WIN;
         }
+        if (gamePlayer.isBlackjack() && !isBlackjack()) {
+            return ResultStatus.WIN;
+        }
         if (playerScore > dealerScore) {
             return ResultStatus.WIN;
         }
@@ -46,6 +49,6 @@ public class Dealer extends Player {
 
     @Override
     public boolean isReceivable() {
-        return cards.sum() <= RECEIVE_SIZE;
+        return cards.sum() <= RECEIVE_SIZE && !isBlackjack();
     }
 }

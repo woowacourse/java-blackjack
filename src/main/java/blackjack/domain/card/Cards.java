@@ -7,6 +7,7 @@ import java.util.List;
 public class Cards {
     private static final int BUST_SIZE = 21;
     private static final int CHANGE_A_VALUE = 10;
+    private static final int BLACKJACK = 21;
 
     private List<Card> cards;
 
@@ -47,5 +48,9 @@ public class Cards {
 
     public boolean isBust() {
         return sum() > BUST_SIZE;
+    }
+
+    public boolean isBlackjack() {
+        return (cards.size() == 2) && (calculateScore() == BLACKJACK);
     }
 }
