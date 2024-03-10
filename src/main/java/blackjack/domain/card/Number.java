@@ -33,10 +33,10 @@ public enum Number {
     }
 
     public static int sumOneAceToSoftHand(final List<Number> numbers) {
-        if (numbers.contains(ACE)) {
-            return sum(numbers) + VALUE_FOR_SOFT_HAND;
+        if (!numbers.contains(ACE)) {
+            throw new IllegalArgumentException("에이스가 없다면 소프트핸드 계산법을 사용할 수 없습니다.");
         }
-        throw new IllegalArgumentException("에이스가 없다면 소프트핸드 계산법을 사용할 수 없습니다.");
+        return sum(numbers) + VALUE_FOR_SOFT_HAND;
     }
 
     public int getValue() {
