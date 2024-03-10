@@ -6,6 +6,7 @@ import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Hands;
 import blackjack.domain.deck.Rank;
 import blackjack.domain.deck.Shape;
+import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
@@ -21,7 +22,7 @@ class ParticipantsTest {
 
     private Player siso;
     private Player tacan;
-    private Player dealer;
+    private Dealer dealer;
     private Players players;
     private Participants participants;
 
@@ -29,7 +30,7 @@ class ParticipantsTest {
     void beforeEach() {
         siso = new Player(new Name("시소"));
         tacan = new Player(new Name("타칸"));
-        dealer = new Player(new Name("딜러"));
+        dealer = new Dealer(new Name("딜러"));
         List<Player> playerList = List.of(siso, tacan);
         players = new Players(playerList);
         participants = new Participants(dealer, players);

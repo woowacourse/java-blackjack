@@ -3,10 +3,12 @@ package blackjack.controller;
 import static blackjack.view.InputView.DEALER_NAME;
 
 import blackjack.domain.GameBoard;
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.GameParticipant;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
-import blackjack.dto.PlayerDto;
+import blackjack.dto.ParticipantDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.LinkedHashMap;
@@ -20,7 +22,7 @@ public class BlackjackGame {
 
     public void run() {
         Players players = createPlayers();
-        Player dealer = new Player(new Name(DEALER_NAME));
+        Dealer dealer = new Dealer(new Name(DEALER_NAME));
         GameBoard gameBoard = new GameBoard(dealer, players);
         play(gameBoard);
     }
@@ -43,12 +45,12 @@ public class BlackjackGame {
 
     private void startSetting(GameBoard gameBoard) {
         gameBoard.distributeInitialHands();
-        Player dealer = gameBoard.getDealer();
-        PlayerDto dealerDto = PlayerDto.from(dealer);
-        List<PlayerDto> playersDto = gameBoard.getPlayers()
+        GameParticipant dealer = gameBoard.getDealer();
+        ParticipantDto dealerDto = ParticipantDto.from(dealer);
+        List<ParticipantDto> playersDto = gameBoard.getPlayers()
                 .getPlayers()
                 .stream()
-                .map(PlayerDto::from)
+                .map(ParticipantDto::from)
                 .toList();
         outputView.printSetting(dealerDto, playersDto);
         outputView.printNewLine();
@@ -74,18 +76,18 @@ public class BlackjackGame {
                 inputView.readCommand(gameBoard.getPlayerName(playerIndex).getName())) {
             gameBoard.addCardToPlayer(playerIndex);
             Player player = gameBoard.getPlayer(playerIndex);
-            outputView.printCurrentCard(PlayerDto.from(player));
+            outputView.printCurrentCard(ParticipantDto.from(player));
             outputView.printNewLine();
         }
     }
 
     private void handleResult(GameBoard gameBoard) {
-        Player dealer = gameBoard.getDealer();
-        PlayerDto dealerDto = PlayerDto.from(dealer);
-        List<PlayerDto> playersDto = gameBoard.getPlayers()
+        GameParticipant dealer = gameBoard.getDealer();
+        ParticipantDto dealerDto = ParticipantDto.from(dealer);
+        List<ParticipantDto> playersDto = gameBoard.getPlayers()
                 .getPlayers()
                 .stream()
-                .map(PlayerDto::from)
+                .map(ParticipantDto::from)
                 .toList();
         outputView.printScoreResult(dealerDto, playersDto);
     }

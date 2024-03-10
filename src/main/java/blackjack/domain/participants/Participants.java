@@ -8,12 +8,11 @@ import java.util.Map;
 public class Participants {
 
     private static final int DEALER_COUNT = 1;
-    private static final int DEALER_BOUNDARY_SCORE = 17;
 
-    private final Player dealer;
+    private final Dealer dealer;
     private final Players players;
 
-    public Participants(Player dealer, Players players) {
+    public Participants(Dealer dealer, Players players) {
         this.dealer = dealer;
         this.players = players;
     }
@@ -49,7 +48,7 @@ public class Participants {
     }
 
     public boolean isDealerNotOver() {
-        return dealer.isNotOver(DEALER_BOUNDARY_SCORE);
+        return dealer.canReceiveCard();
     }
 
     public int count() {
@@ -68,7 +67,7 @@ public class Participants {
         return players.getOnePlayer(playerIndex);
     }
 
-    public Player getDealer() {
+    public Dealer getDealer() {
         return dealer;
     }
 

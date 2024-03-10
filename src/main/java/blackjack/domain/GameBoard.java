@@ -5,6 +5,7 @@ import blackjack.domain.deck.Deck;
 import blackjack.domain.deck.Hands;
 import blackjack.domain.deck.Rank;
 import blackjack.domain.deck.Shape;
+import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
@@ -21,7 +22,7 @@ public class GameBoard {
     private final Participants participants;
     private final Deck allCardDeck;
 
-    public GameBoard(Player dealer, Players players) {
+    public GameBoard(Dealer dealer, Players players) {
         this.participants = new Participants(dealer, players);
         this.allCardDeck = new Deck();
         addAllCard();
@@ -98,7 +99,7 @@ public class GameBoard {
         return participants.getOnePlayer(playerIndex);
     }
 
-    public Player getDealer() {
+    public Dealer getDealer() {
         return participants.getDealer();
     }
 }

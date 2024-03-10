@@ -1,18 +1,17 @@
 package blackjack.domain.participants;
 
-
 import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Hands;
 import java.util.ArrayList;
 
-public class Player implements GameParticipant{
+public class Dealer implements GameParticipant{
 
-    private static final int MAX_RECEIVE_SCORE = 21;
+    private static final int MAX_RECEIVE_SCORE = 17;
 
     private final Name name;
     private Hands hands;
 
-    public Player(Name name) {
+    public Dealer(Name name) {
         this.name = name;
     }
 
@@ -37,14 +36,6 @@ public class Player implements GameParticipant{
     @Override
     public boolean canReceiveCard() {
         return calculateScore() < MAX_RECEIVE_SCORE;
-    }
-
-    public boolean isNotOver(int boundaryScore) { // TODO delete
-        return hands.calculateScore() < boundaryScore;
-    }
-
-    public boolean isWin(int dealerScore) {
-        return hands.calculateScore() > dealerScore;
     }
 
     public Name getName() {

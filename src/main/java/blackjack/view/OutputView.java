@@ -1,13 +1,13 @@
 package blackjack.view;
 
-import blackjack.dto.PlayerDto;
+import blackjack.dto.ParticipantDto;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public void printSetting(PlayerDto dealer, List<PlayerDto> players) {
+    public void printSetting(ParticipantDto dealer, List<ParticipantDto> players) {
         String playerNames = playerNameToString(players);
         System.out.printf("\n%s와 %s에게 2장을 나누었습니다.\n", dealer.playerName(), playerNames);
         printDealerCard(dealer);
@@ -17,17 +17,17 @@ public class OutputView {
         });
     }
 
-    private String playerNameToString(List<PlayerDto> players) {
+    private String playerNameToString(List<ParticipantDto> players) {
         return players.stream()
-                .map(PlayerDto::playerName)
+                .map(ParticipantDto::playerName)
                 .collect(Collectors.joining(", "));
     }
 
-    private void printDealerCard(PlayerDto dealer) {
+    private void printDealerCard(ParticipantDto dealer) {
         System.out.printf("%s: %s\n", dealer.playerName(), dealer.allHands().get(0));
     }
 
-    public void printCurrentCard(PlayerDto player) {
+    public void printCurrentCard(ParticipantDto player) {
         System.out.printf("%s카드 : %s", player.playerName(), deckWithDelimiter(player.allHands()));
     }
 
@@ -35,7 +35,7 @@ public class OutputView {
         return String.join(", ", cards);
     }
 
-    public void printScoreResult(PlayerDto dealer, List<PlayerDto> playerList) {
+    public void printScoreResult(ParticipantDto dealer, List<ParticipantDto> playerList) {
         printCurrentCard(dealer);
         printScore(dealer);
         playerList.forEach(player -> {
@@ -45,7 +45,7 @@ public class OutputView {
         System.out.println();
     }
 
-    private void printScore(PlayerDto player) {
+    private void printScore(ParticipantDto player) {
         System.out.printf(" - 결과: %d\n", player.score());
     }
 
