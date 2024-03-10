@@ -2,11 +2,11 @@ package blackjack.domain.gamer;
 
 import java.util.List;
 
+import blackjack.domain.BlackjackConstants;
 import blackjack.domain.card.Card;
 
 public record Hand(List<Card> cards) {
 
-	private static final int BLACKJACK_MAX_SCORE = 21;
 	private static final int ACE_VALUE_MODIFIER = 10;
 
 	public void add(Card card) {
@@ -45,7 +45,7 @@ public record Hand(List<Card> cards) {
 	}
 
 	private int adjust(int sum) {
-		if (sum > BLACKJACK_MAX_SCORE) {
+		if (sum > BlackjackConstants.BLACKJACK_VALUE.getValue()) {
 			sum -= ACE_VALUE_MODIFIER;
 		}
 		return sum;

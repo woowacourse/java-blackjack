@@ -1,8 +1,8 @@
 package blackjack.domain.gamer;
 
-public class Player extends BlackjackGamer {
+import blackjack.domain.BlackjackConstants;
 
-	private static final int BLACKJACK_MAX_SCORE = 21;
+public class Player extends BlackjackGamer {
 
 	public Player(Name name) {
 		super(name);
@@ -10,16 +10,16 @@ public class Player extends BlackjackGamer {
 
 	@Override
 	public boolean canReceiveCard() {
-		return getScore() <= BLACKJACK_MAX_SCORE;
+		return getScore() <= BlackjackConstants.BLACKJACK_VALUE.getValue();
 	}
 
 	public GameResult getGameResult(int dealerScore) {
 		int playerScore = getScore();
 
-		if (playerScore > BLACKJACK_MAX_SCORE) {
+		if (playerScore > BlackjackConstants.BLACKJACK_VALUE.getValue()) {
 			return GameResult.LOSE;
 		}
-		if (dealerScore > BLACKJACK_MAX_SCORE || playerScore > dealerScore) {
+		if (dealerScore > BlackjackConstants.BLACKJACK_VALUE.getValue() || playerScore > dealerScore) {
 			return GameResult.WIN;
 		}
 		return GameResult.LOSE;
