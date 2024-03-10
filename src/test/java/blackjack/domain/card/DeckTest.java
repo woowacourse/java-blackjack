@@ -28,16 +28,16 @@ public class DeckTest {
 	}
 
 	@Test
-	@DisplayName("카드는 52장까지 뽑을 수 있다.")
+	@DisplayName("52장의 카드를 모두 뽑으면, 새로 52장의 카드를 세팅한다.")
 	void addAfterDrawTest() {
 		// 52장의 카드를 모두 뽑는다.
 		for (int i = 0; i < 52; i++) {
 			deck.draw();
 		}
 
-		// 52장을 뽑은 상태에서 한번 더 뽑으면 예외가 발생해야 한다.
-		assertThatThrownBy(deck::draw)
-			.isInstanceOf(IllegalStateException.class)
-			.hasMessage("모든 카드가 사용되었습니다.");
+		// 52장을 다 뽑고, 한 장을 더 뽑으면 뽑기 전에 패를 초기화한다.
+		deck.draw();
+		
+		assertThat(deck.getCards().size()).isEqualTo(51);
 	}
 }

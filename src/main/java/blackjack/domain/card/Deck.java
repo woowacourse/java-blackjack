@@ -27,7 +27,8 @@ public class Deck {
 
 	public Card draw() {
 		if (cards.isEmpty()) {
-			throw new IllegalStateException("모든 카드가 사용되었습니다.");
+			cards.addAll(initAllCards());
+			shuffle();
 		}
 
 		return cards.remove(0);
