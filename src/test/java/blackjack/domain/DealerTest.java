@@ -72,7 +72,7 @@ class DealerTest {
         assertThat(result).containsExactly(card2);
     }
 
-    @DisplayName("둘 다 버스트되면, 딜러가 이긴다.")
+    @DisplayName("플레이어와 딜러가 둘 다 버스트되면, 플레이어가 진다.")
     @Test
     void allBust() {
         Dealer dealer = new Dealer();
@@ -90,7 +90,7 @@ class DealerTest {
         assertThat(gameResult).isEqualTo(GameResult.LOSE);
     }
 
-    @DisplayName("둘 다 블랙잭이면, 무승부이다.")
+    @DisplayName("플레이어와 딜러가 둘 다 블랙잭이면, 무승부이다.")
     @Test
     void allBlackJack() {
         Dealer dealer = new Dealer();
@@ -107,7 +107,40 @@ class DealerTest {
         assertThat(gameResult).isEqualTo(GameResult.TIE);
     }
 
-    @DisplayName("둘 다 버스트되지 않고, 딜러 점수가 더 낮으면 진다.")
+    @DisplayName("딜러만 버스트되면, 플레이어가 이긴다.")
+    @Test
+    void onlyDealerBust() {
+        Dealer dealer = new Dealer();
+        dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+        dealer.hit(new Card(CardRank.FOUR, CardShape.DIAMOND));
+        dealer.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
+
+        Player player = new Player("pobi");
+        player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+
+        GameResult gameResult = dealer.judge(player);
+
+        assertThat(gameResult).isEqualTo(GameResult.WIN);
+    }
+
+    @DisplayName("플레이어만 버스트되면, 딜러가 이긴다.")
+    @Test
+    void onlyPlayerBust() {
+        Dealer dealer = new Dealer();
+        dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+        dealer.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
+
+        Player player = new Player("pobi");
+        player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+        player.hit(new Card(CardRank.FOUR, CardShape.DIAMOND));
+        player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
+
+        GameResult gameResult = dealer.judge(player);
+
+        assertThat(gameResult).isEqualTo(GameResult.LOSE);
+    }
+
+    @DisplayName("플레이어와 딜러가 둘 다 버스트되지 않고, 딜러 점수가 더 낮으면 플레이어가 이긴다.")
     @Test
     void whenDealerLose() {
         Dealer dealer = new Dealer();
@@ -123,7 +156,7 @@ class DealerTest {
         assertThat(gameResult).isEqualTo(GameResult.WIN);
     }
 
-    @DisplayName("둘 다 버스트되지 않고, 딜러 점수가 더 높으면 이긴다.")
+    @DisplayName("플레이어와 딜러가 둘 다 버스트되지 않고, 딜러 점수가 더 높으면 플레이어가 진다.")
     @Test
     void whenDealerWin() {
         Dealer dealer = new Dealer();
