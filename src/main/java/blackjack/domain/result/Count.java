@@ -23,6 +23,10 @@ public record Count(int value) {
         return new Count(value);
     }
 
+    public Count increment() {
+        return Count.valueOf(value + 1);
+    }
+
     public int toInt() {
         return this.value;
     }

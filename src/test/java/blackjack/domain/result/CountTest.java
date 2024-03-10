@@ -26,4 +26,13 @@ public class CountTest {
         }).doesNotThrowAnyException();
     }
 
+    @Test
+    @DisplayName("횟수를 1 증가시킨다")
+    public void Count_increase_1() {
+        final Count count = Count.valueOf(4);
+
+        final var sut = count.increment();
+
+        assertThat(sut).isEqualTo(Count.valueOf(5));
+    }
 }
