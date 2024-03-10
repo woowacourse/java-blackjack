@@ -34,7 +34,7 @@ public enum Rank {
     }
 
     public boolean isAce() {
-        return name().contains("ACE");
+        return this == SMALL_ACE || this == BIG_ACE;
     }
 
     public String getName() {
