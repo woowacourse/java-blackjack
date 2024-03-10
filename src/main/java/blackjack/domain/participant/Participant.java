@@ -10,6 +10,10 @@ public abstract class Participant {
     private final Name name;
     private final Hand hand;
 
+    public abstract List<Card> getInitialOpenedCards();
+
+    public abstract boolean canHit();
+
     public Participant(Name name, HandGenerator handGenerator) {
         this.name = name;
         this.hand = handGenerator.generate();
@@ -35,10 +39,6 @@ public abstract class Participant {
     public int getScore() {
         return hand.getOptimizedScore();
     }
-
-    public abstract List<Card> getInitialOpenedCards();
-
-    public abstract boolean canHit();
 
     protected List<Card> getCardsByCount(int count) {
         List<Card> cards = getCards();
