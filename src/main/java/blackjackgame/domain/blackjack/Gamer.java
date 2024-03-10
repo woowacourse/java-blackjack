@@ -50,7 +50,7 @@ public class Gamer {
         return getSummationCardPoint().summationCardPoint();
     }
 
-    boolean isDead() {
+    public boolean isDead() {
         return getSummationCardPoint().isDeadPoint();
     }
 

@@ -7,6 +7,7 @@ import blackjackgame.domain.blackjack.Gamer;
 import blackjackgame.domain.blackjack.PlayerRandomCardDrawStrategy;
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.Deck;
+import blackjackgame.dto.CardDTO;
 import blackjackgame.dto.DealerGameResultDTO;
 import blackjackgame.dto.GamerDTO;
 import blackjackgame.dto.PlayerGameResultDTO;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 public class BlackjackController {
     private static final int EXECUTION_COUNT = 2;
+    private static final boolean NO = false;
 
     private final Gamer dealer;
     private final List<Gamer> players;
@@ -76,18 +78,23 @@ public class BlackjackController {
         players.forEach(this::printPlayer);
     }
 
+    private GamerDTO makeGamerDTO(Gamer gamer) {
+        List<Card> rawHoldingCards = new ArrayList<>(gamer.getRawHoldingCards());
+        List<CardDTO> cardDTOs = rawHoldingCards.stream()
+                .map(card -> new CardDTO(card.name(), card.cardType()))
+                .toList();
+        return new GamerDTO(gamer.getRawName(), cardDTOs,
+                gamer.getRawSummationCardPoint());
+    }
+
     private void printDealer(Gamer dealer) {
-        List<Card> rawHoldingCards = new ArrayList<>(dealer.getRawHoldingCards());
-        rawHoldingCards.remove(0);
-        GamerDTO gamerDTO = new GamerDTO(dealer.getRawName(), rawHoldingCards,
-                dealer.getRawSummationCardPoint());
-        GamerOutputView.printWithoutSummationCardPoint(gamerDTO);
+        GamerDTO dealerDTO = makeGamerDTO(dealer);
+        GamerOutputView.printOutputWithoutSummationCardPoint(dealerDTO);
     }
 
     private void printPlayer(Gamer player) {
-        GamerDTO gamerDTO = new GamerDTO(player.getRawName(), player.getRawHoldingCards(),
-                player.getRawSummationCardPoint());
-        GamerOutputView.printWithoutSummationCardPoint(gamerDTO);
+        GamerDTO playerDTO = makeGamerDTO(player);
+        GamerOutputView.printOutputWithoutSummationCardPoint(playerDTO);
     }
 
     private void playersTryDraw(Deck deck) {
@@ -95,40 +102,32 @@ public class BlackjackController {
     }
 
     private void playerTryDraw(Deck deck, Gamer player) {
-        OutputView.printPlayerAdditionalCardMessage(player.getRawName());
-        while (YesOrNoInputView.getYNAsBoolean() && playerTryDrawOnce(deck, player)) {
+        while(!player.isDead()) {
             OutputView.printPlayerAdditionalCardMessage(player.getRawName());
-        }
-    }
-
-    private boolean playerTryDrawOnce(Deck deck, Gamer player) {
-        try {
+            if (YesOrNoInputView.getYNAsBoolean() == NO) {
+                break;
+            }
             playerDraw(deck, player);
             printPlayer(player);
-        } catch (IllegalStateException ignored) {
-            return false;
         }
-        return true;
     }
 
     private void dealerTryDraw(Deck deck) {
         try {
             dealerDraw(deck);
             OutputView.printDealerAdditionalCardMessage();
-        } catch (IllegalStateException ignored) {
+        } catch (IllegalStateException e) {
             OutputView.printDealerNoAdditionalCardMessage();
         }
     }
 
     private void printDealerAndPlayersWithPoint() {
-        GamerDTO dealerDTO = new GamerDTO(dealer.getRawName(), dealer.getRawHoldingCards(),
-                dealer.getRawSummationCardPoint());
-        GamerOutputView.print(dealerDTO);
+        GamerDTO dealerDTO = makeGamerDTO(dealer);
+        GamerOutputView.generateOutputWithSummationCardPoint(dealerDTO);
 
         for (Gamer player : players) {
-            GamerDTO playerDTO = new GamerDTO(player.getRawName(), player.getRawHoldingCards(),
-                    player.getRawSummationCardPoint());
-            GamerOutputView.print(playerDTO);
+            GamerDTO playerDTO = makeGamerDTO(player);
+            GamerOutputView.generateOutputWithSummationCardPoint(playerDTO);
         }
     }
 

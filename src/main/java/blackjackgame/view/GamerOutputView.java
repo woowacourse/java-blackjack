@@ -1,8 +1,8 @@
 package blackjackgame.view;
 
-import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.CardName;
 import blackjackgame.domain.card.CardType;
+import blackjackgame.dto.CardDTO;
 import blackjackgame.dto.GamerDTO;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,14 +10,9 @@ import java.util.stream.Collectors;
 public class GamerOutputView {
     private static final String JOIN_DELIMITER = ", ";
     private static final String CARD_POSTFIX = "카드";
+    private static final String DEALER_NAME = "딜러";
 
     private GamerOutputView() {
-    }
-
-    public static void print(GamerDTO gamerDTO) {
-        String outputWithoutSummationCardPoint = generateOutputWithoutSummationCardPoint(gamerDTO);
-        String summationCardPointOutput = "결과: %d".formatted(gamerDTO.getSummationCardPoint());
-        System.out.printf("%s - %s\n", outputWithoutSummationCardPoint, summationCardPointOutput);
     }
 
     private static String mapToString(CardType cardType) {
@@ -52,18 +47,35 @@ public class GamerOutputView {
         return String.valueOf(cardName.getCardNumber());
     }
 
-    public static void printWithoutSummationCardPoint(GamerDTO gamerDTO) {
-        String outputWithoutSummationCardPoint = generateOutputWithoutSummationCardPoint(gamerDTO);
-        System.out.println(outputWithoutSummationCardPoint);
+    private static String generateGamerOutputOnlyOneCard(GamerDTO gamerDTO) {
+        List<CardDTO> cardDTOS = gamerDTO.getHoldingCardsDto();
+        return cardDTOS.stream()
+                .map(cardDTO -> mapToString(cardDTO.getCardType()) + mapToString(cardDTO.getName()))
+                .limit(1)
+                .collect(Collectors.joining(JOIN_DELIMITER));
     }
 
-    private static String generateOutputWithoutSummationCardPoint(GamerDTO gamerDTO) {
-        String name = gamerDTO.getName();
-        List<Card> cards = gamerDTO.getHoldingCards();
-        String nameOutput = name + CARD_POSTFIX;
-        String cardsOutput = cards.stream()
-                .map(card -> mapToString(card.cardType()) + mapToString(card.name()))
+    private static String generateGamerOutput(GamerDTO dealerDTO) {
+        List<CardDTO> cardDTOS = dealerDTO.getHoldingCardsDto();
+        return cardDTOS.stream()
+                .map(cardDTO -> mapToString(cardDTO.getCardType()) + mapToString(cardDTO.getName()))
                 .collect(Collectors.joining(JOIN_DELIMITER));
-        return "%s: %s".formatted(nameOutput, cardsOutput);
+    }
+
+    public static void printOutputWithoutSummationCardPoint(GamerDTO gamerDTO) {
+        String name = gamerDTO.getName();
+        String nameOutput = name + CARD_POSTFIX;
+        String cardsOutput = generateGamerOutput(gamerDTO);
+        if (name.equals(DEALER_NAME)) {
+            cardsOutput = generateGamerOutputOnlyOneCard(gamerDTO);
+        }
+        System.out.printf("%s: %s%n", nameOutput, cardsOutput);
+    }
+
+    public static void generateOutputWithSummationCardPoint(GamerDTO gamerDTO) {
+        String nameOutput = gamerDTO.getName() + CARD_POSTFIX;
+        String cardsOutput = generateGamerOutput(gamerDTO);
+        String summationCardPointOutput = "결과: %d".formatted(gamerDTO.getSummationCardPoint());
+        System.out.printf("%s: %s - %s%n", nameOutput, cardsOutput, summationCardPointOutput);
     }
 }

@@ -1,16 +1,15 @@
 package blackjackgame.dto;
 
-import blackjackgame.domain.card.Card;
 import java.util.List;
 
 public class GamerDTO {
     private final String name;
-    private final List<Card> holdingCards;
+    private final List<CardDTO> holdingCardsDto;
     private final int summationCardPoint;
 
-    public GamerDTO(String name, List<Card> holdingCards, int summationCardPoint) {
+    public GamerDTO(String name, List<CardDTO> holdingCardsDto, int summationCardPoint) {
         this.name = name;
-        this.holdingCards = holdingCards;
+        this.holdingCardsDto = holdingCardsDto;
         this.summationCardPoint = summationCardPoint;
     }
 
@@ -18,8 +17,8 @@ public class GamerDTO {
         return name;
     }
 
-    public List<Card> getHoldingCards() {
-        return holdingCards;
+    public List<CardDTO> getHoldingCardsDto() {
+        return holdingCardsDto;
     }
 
     public int getSummationCardPoint() {
