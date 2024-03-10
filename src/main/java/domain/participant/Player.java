@@ -11,4 +11,7 @@ public class Player extends Participant {
     public Player(final PlayerDto playerDto) {
         this(new Name(playerDto.name()));
     }
+    public boolean canReceiveMoreCard(){
+        return !isBust() && !isBlackjack();
+    }
 }

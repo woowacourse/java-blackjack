@@ -43,7 +43,7 @@ public class Casino {
 
     private void proceed(final Dealer dealer, final Players players) {
         resultView.printInitialCards(new DealerDto(dealer, dealer.peek()), new PlayersDto(players));
-        players.forEach(player -> askAndDealMoreCard(dealer, player));
+        players.forEach(player -> askReceiveMoreCard(dealer, player));
         if (dealer.canHit()) {
             resultView.printDealerCardMessage(new DealerDto(dealer));
             dealer.deal(dealer);
@@ -57,15 +57,15 @@ public class Casino {
         resultView.printResults(dealerAndPlayers, game.resultsOf(dealer, players));
     }
 
-    private void askAndDealMoreCard(final Dealer dealer, final Player player) {
-        if (player.isBust() || player.isBlackjack()) {
-            return;
+    private void askReceiveMoreCard(final Dealer dealer, final Player player) {
+        if (!player.canReceiveMoreCard()) {
+            return ;
         }
         BlackJackGameCommand command = inputView.askMoreCard(new PlayerDto(player));
         if (command.yes()) {
             dealer.deal(player);
             resultView.printParticipantHand(new PlayerDto(player));
-            askAndDealMoreCard(dealer, player);
+            askReceiveMoreCard(dealer, player);
         }
     }
 
