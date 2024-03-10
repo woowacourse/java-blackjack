@@ -4,6 +4,8 @@ import domain.card.Card;
 import java.util.List;
 
 public abstract class Gamer {
+    private static final int BLACKJACK_SUM_COND = 21;
+    private static final int BLACKJACK_CARD_COUNT_COND = 2;
     protected Name name;
     protected Hand hand;
 
@@ -27,7 +29,7 @@ public abstract class Gamer {
     }
 
     public boolean isBlackJack() {
-        return hand.sum() == 21 && hand.getCards().size() == 2;
+        return hand.sum() == BLACKJACK_SUM_COND && hand.getCards().size() == BLACKJACK_CARD_COUNT_COND;
     }
 
     public List<Card> getHand() {
