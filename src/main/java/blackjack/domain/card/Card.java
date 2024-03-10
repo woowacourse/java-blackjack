@@ -23,7 +23,11 @@ public class Card {
 		return rank.getName();
 	}
 
-	public boolean isRank(final Rank rank) {
+	public boolean isAce() {
+		return isRank(Rank.ACE);
+	}
+
+	private boolean isRank(final Rank rank) {
 		return this.rank == rank;
 	}
 

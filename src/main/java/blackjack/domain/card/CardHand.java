@@ -40,7 +40,7 @@ public class CardHand {
 
 	private int calculateAceScore(final int totalScore) {
 		boolean hasAceCard = cards.stream()
-			.anyMatch(card -> card.isRank(Rank.ACE));
+			.anyMatch(Card::isAce);
 
 		if (hasAceCard && totalScore + ACE_BONUS_SCORE <= BLACKJACK_SCORE) {
 			return totalScore + ACE_BONUS_SCORE;
