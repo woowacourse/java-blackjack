@@ -20,6 +20,10 @@ public class OutputView {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
+    public static void printDealerNoAdditionalCardMessage() {
+        System.out.println("\n딜러는 16초과라 추가 카드를 받지 않습니다.");
+    }
+
     public static void printPlayerAdditionalCardMessage(String playerName) {
         System.out.printf("\n%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", playerName);
     }

@@ -116,7 +116,7 @@ public class BlackjackController {
             dealerDraw(deck);
             OutputView.printDealerAdditionalCardMessage();
         } catch (IllegalStateException ignored) {
-
+            OutputView.printDealerNoAdditionalCardMessage();
         }
     }
 
