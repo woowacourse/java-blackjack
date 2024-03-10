@@ -3,6 +3,7 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.rule.HitStrategy;
+import blackjack.domain.rule.PlayerHitStrategy;
 import blackjack.domain.rule.Score;
 import blackjack.domain.rule.ScoreCalculateStrategy;
 import java.util.List;
@@ -17,6 +18,12 @@ public class Hand {
         this.cards = cards;
         this.scoreCalculateStrategy = scoreCalculateStrategy;
         this.hitStrategy = hitStrategy;
+    }
+
+    public Hand(List<Card> cards, ScoreCalculateStrategy scoreCalculateStrategy) {
+        this.cards = cards;
+        this.scoreCalculateStrategy = scoreCalculateStrategy;
+        this.hitStrategy = new PlayerHitStrategy();
     }
 
     public int calculateCardSummation() {
