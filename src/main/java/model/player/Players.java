@@ -76,6 +76,12 @@ public class Players {
             .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_PLAYER));
     }
 
+    public List<String> names() {
+        return elements.stream()
+            .map(Player::getName)
+            .toList();
+    }
+
     public int count() {
         return elements.size();
     }

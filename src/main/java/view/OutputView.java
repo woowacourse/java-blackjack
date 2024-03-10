@@ -46,10 +46,7 @@ public class OutputView {
     }
 
     private static void printInitCardsIntro(Players players) {
-        String playerNames = players.getElements()
-            .stream()
-            .map(Player::getName)
-            .collect(collectingAndThen(toList(), names -> String.join(DELIMITER, names)));
+        String playerNames = String.join(DELIMITER, players.names());
         System.out.printf(INIT_CARDS_INTRO, playerNames);
     }
 
