@@ -1,0 +1,19 @@
+package blackjack.domain;
+
+public enum PlayerGameResult {
+    WIN(1.0),
+    LOSE(-1.0),
+    PUSH(0.0),
+    BLACKJACK_WIN(1.5),
+    ;
+
+    private final double ratio;
+
+    PlayerGameResult(double ratio) {
+        this.ratio = ratio;
+    }
+
+    public double getRatio() {
+        return ratio;
+    }
+}
