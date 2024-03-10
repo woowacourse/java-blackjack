@@ -16,10 +16,6 @@ public class Hand {
         this.cards = new LinkedList<>();
     }
 
-    private static boolean canAddAceBonusScore(int totalScore) {
-        return totalScore + ACE_BONUS_SCORE <= Players.MAX_SCORE;
-    }
-
     public void addCard(Card card) {
         cards.add(card);
     }
@@ -44,15 +40,19 @@ public class Hand {
         return NO_BONUS_SCORE;
     }
 
-    private void validateDeck() {
-        if (cards.isEmpty()) {
-            throw new IllegalArgumentException("카드가 없습니다.");
-        }
+    private static boolean canAddAceBonusScore(int totalScore) {
+        return totalScore + ACE_BONUS_SCORE <= Players.MAX_SCORE;
     }
 
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    private void validateDeck() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("카드가 없습니다.");
+        }
     }
 
     public int size() {
