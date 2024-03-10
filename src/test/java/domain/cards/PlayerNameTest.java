@@ -1,5 +1,6 @@
 package domain.cards;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -24,5 +25,6 @@ public class PlayerNameTest {
     @ValueSource(strings = {"1", "12345678901234567890"})
     void createNameByValidLengthTest(String name) {
         assertThatCode(() -> new GamerName(name)).doesNotThrowAnyException();
+        assertThat(new GamerName(name).getValue()).isEqualTo(name);
     }
 }
