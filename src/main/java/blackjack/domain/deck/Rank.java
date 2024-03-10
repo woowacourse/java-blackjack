@@ -16,8 +16,8 @@ public enum Rank {
         return this == ACE;
     }
 
-    public String getName() {
-        return this.name();
+    public boolean isSameName(String name) {
+        return this.name().equals(name);
     }
 
     public int getScore(int totalScore) { // TODO 시소랑 토의
