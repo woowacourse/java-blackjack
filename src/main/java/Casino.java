@@ -18,13 +18,10 @@ public class Casino {
     }
 
     public void playBlackJack() {
-        // 게임 참여 하는 Player 참여
         final Players players = joinPlayer();
 
-        // 게임 진행 로직 , Players 진행
         processGame(players);
 
-        // 결과
         checkGameResult(players);
     }
 
