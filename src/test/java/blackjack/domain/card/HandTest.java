@@ -35,7 +35,7 @@ class HandTest {
         Hand hand = new Hand(List.of(card1, card2, card3));
 
         // when
-        int actual = hand.calculateScoreSumClosestToThreshold(21);
+        int actual = hand.calculateScoreTotalClosestToThreshold(21);
 
         // then
         assertThat(actual).isEqualTo(21);

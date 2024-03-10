@@ -14,19 +14,19 @@ public class Hand {
         cards.add(card);
     }
 
-    public int calculateScoreSumClosestToThreshold(int threshold) {
-        int scoreSum = calculateScoreSum();
+    public int calculateScoreTotalClosestToThreshold(int threshold) {
+        int scoreTotal = calculateScoreTotal();
         int aceCount = countAce();
         int aceScoreDifference = CardRank.ACE.getSpecialScore() - CardRank.ACE.getScore();
 
-        while (aceCount > 0 && scoreSum + aceScoreDifference <= threshold) {
-            scoreSum += aceScoreDifference;
+        while (aceCount > 0 && scoreTotal + aceScoreDifference <= threshold) {
+            scoreTotal += aceScoreDifference;
             aceCount--;
         }
-        return scoreSum;
+        return scoreTotal;
     }
 
-    private int calculateScoreSum() {
+    private int calculateScoreTotal() {
         return cards.stream()
                 .map(Card::getCardRank)
                 .mapToInt(CardRank::getScore)
