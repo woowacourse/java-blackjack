@@ -14,7 +14,9 @@ public class Deck {
 
     private void initialize() {
         for (final Denomination denomination : Denomination.values()) {
-            Arrays.stream(Symbol.values()).map(symbol -> new Card(denomination, symbol)).forEach(cards::add);
+            Arrays.stream(Symbol.values())
+                    .map(symbol -> new Card(denomination, symbol))
+                    .forEach(cards::add);
         }
     }
 
