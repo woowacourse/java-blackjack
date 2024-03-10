@@ -14,7 +14,7 @@ public enum PlayerAction {
     }
 
     public static PlayerAction getAction(String command) {
-        return Arrays.stream(PlayerAction.values())
+        return Arrays.stream(values())
                 .filter(playerAction -> playerAction.isMatch(command))
                 .findFirst()
                 .orElseThrow(InvalidHitCommandException::new);
