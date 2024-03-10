@@ -20,7 +20,7 @@ public class BlackjackRule {
     }
 
     private void judgeWinningHand(final Player dealer, final Player player) {
-        if (player.calculateScore() > BUST_CONDITION) {
+        if (player.isBust()) {
             calculate(dealer, player, 0, 1);
             return;
         }
