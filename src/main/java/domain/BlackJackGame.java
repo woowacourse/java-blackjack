@@ -25,15 +25,8 @@ public class BlackJackGame {
     }
 
     public static BlackJackGame from(final List<String> playerNames) {
-        List<Player> players = playerNames.stream()
-                .map(Player::new)
-                .toList(); // 게임이 변환을 해주는 게 맞나?
-        return new BlackJackGame(
-                new Participants(players),
-                new Deck()
-        );
+        return new BlackJackGame(Participants.from(playerNames), new Deck());
     }
-
 
     public List<HandStatus> initialize() {
         List<HandStatus> status = new ArrayList<>();

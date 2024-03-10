@@ -1,34 +1,8 @@
 package domain;
 
-import java.util.List;
-
-public class Player {
-    private static final int BLACKJACK_SCORE = 21;
-
-    private final String name;
-    private final Hand hand;
-
+public class Player extends Participant {
     public Player(final String name) {
-        this.name = name;
-        hand = new Hand();
-    }
-
-    public List<Card> pickTwoCards(final Deck deck) {
-        hand.saveCards(List.of(deck.pick(), deck.pick()));
-        return hand.getCards();
-    }
-
-    public List<Card> pickOneCard(final Deck deck) {
-        hand.saveCard(deck.pick());
-        return hand.getCards();
-    }
-
-    public void drawCard(final Card card) {
-        hand.saveCard(card);
-    }
-
-    public void drawCards(final List<Card> cards) {
-        hand.saveCards(cards);
+        super(name);
     }
 
     public int calculateScoreWhileDraw() {

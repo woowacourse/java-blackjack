@@ -13,9 +13,12 @@ public class Participants {
         this.participants = participants;
     }
 
-    public Participants from(final List<Player> players) {
-        List<Player> participants = new ArrayList<>(players);
+    public static Participants from(final List<String> playerNames) {
+        List<Participant> participants = new ArrayList<>();
         participants.add(new Dealer());
+        for (String playerName : playerNames) {
+            participants.add(new Player(playerName));
+        }
         return new Participants(participants);
     }
 
