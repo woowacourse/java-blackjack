@@ -5,7 +5,6 @@ import java.util.Map;
 
 import static domain.score.Status.*;
 
-
 public class Score {
 
     private final Map<Status, Integer> score;
