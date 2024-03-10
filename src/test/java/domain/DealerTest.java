@@ -8,8 +8,6 @@ import domain.card.Symbol;
 import domain.gamer.Dealer;
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.List;
-import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
@@ -78,7 +76,7 @@ public class DealerTest {
         dealer.hit(cards.removeLast());
 
         // when
-        boolean stay = dealer.isStay();
+        boolean stay = dealer.isOverTurn();
 
         // then
         assertThat(stay).isFalse();
@@ -93,7 +91,7 @@ public class DealerTest {
         dealer.hit(cards.removeLast());
 
         // when
-        boolean stay = dealer.isStay();
+        boolean stay = dealer.isOverTurn();
 
         // then
         assertThat(stay).isTrue();

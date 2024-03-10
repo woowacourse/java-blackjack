@@ -4,8 +4,7 @@ import domain.card.Card;
 import java.util.List;
 
 public abstract class Gamer {
-    private static final int BLACKJACK_SUM_COND = 21;
-    private static final int BLACKJACK_CARD_COUNT_COND = 2;
+    public static final String CAN_NOT_RECEIVE_CARD = "더 이상 카드를 받을 수 없습니다.";
     private Name name;
     protected Hand hand;
 
@@ -14,26 +13,34 @@ public abstract class Gamer {
         this.hand = new Hand();
     }
 
-    public abstract boolean isStay();
+    public abstract boolean isOverTurn();
 
     public abstract boolean isDealer();
 
     public abstract boolean isPlayer();
 
-    public void hit(final Card card) {
+    public void receiveInitialCard(final Card card) {
         hand.add(card);
     }
 
-    public int calculateTotalScore() {
-        return hand.sum();
+    public void hit(final Card card) {
+        if (isOverTurn()) {
+            throw new IllegalArgumentException(CAN_NOT_RECEIVE_CARD);
+        }
+        hand.add(card);
     }
 
     public boolean isBust() {
-        return hand.isOverBlackJack();
+        return hand.isBust();
     }
 
     public boolean isBlackJack() {
-        return hand.sum() == BLACKJACK_SUM_COND && hand.getCards().size() == BLACKJACK_CARD_COUNT_COND;
+        return hand.isBlackJack();
+    }
+
+
+    public int calculateTotalScore() {
+        return hand.sum();
     }
 
     public List<Card> getHand() {

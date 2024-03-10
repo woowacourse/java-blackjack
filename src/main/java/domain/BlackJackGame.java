@@ -22,16 +22,12 @@ public class BlackJackGame {
 
     private void drawTwoCardsForGamer(final Gamer gamer) {
         for (int count = 0; count < INITIAL_CARD_COUNT; count++) {
-            gamer.hit(deck.draw());
+            gamer.receiveInitialCard(deck.draw());
         }
     }
 
-    public boolean succeededGiving(final Gamer gamer) {
-        if (!gamer.isStay()) {
-            gamer.hit(deck.draw());
-            return true;
-        }
-        return false;
+    public void giveCard(final Gamer gamer) {
+        gamer.hit(deck.draw());
     }
 
     public PlayerResults findPlayerResult(final Gamers gamers) {

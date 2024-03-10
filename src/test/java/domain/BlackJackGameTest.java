@@ -1,12 +1,14 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
 import domain.gamer.Dealer;
+import domain.gamer.Gamer;
 import domain.gamer.Name;
 import domain.gamer.Player;
 import java.util.List;
@@ -18,7 +20,7 @@ public class BlackJackGameTest {
     Deck deck;
 
     @BeforeEach
-    void  init(){
+    void init() {
         Card card1 = new Card(Symbol.DIAMOND, Rank.EIGHT);
         Card card2 = new Card(Symbol.CLOVER, Rank.BIG_ACE);
         Card card3 = new Card(Symbol.SPADE, Rank.KING);
@@ -65,17 +67,16 @@ public class BlackJackGameTest {
 
         BlackJackGame blackJackGame = new BlackJackGame(deck);
 
-        blackJackGame.succeededGiving(dealer); // 3 다이아몬드
-        blackJackGame.succeededGiving(dealer); // 9 클로버
+        blackJackGame.giveCard(dealer); // 3 다이아몬드
+        blackJackGame.giveCard(dealer); // 9 클로버
 
         // when
-        boolean dealerResult = blackJackGame.succeededGiving(dealer); // 5 하트
+        blackJackGame.giveCard(dealer); // 5 하트
 
         int expectedDealerSize = 3;
 
         // then
         assertAll(
-                () -> assertThat(dealerResult).isTrue(),
                 () -> assertThat(dealer.getHand()).hasSize(expectedDealerSize)
         );
     }
@@ -89,18 +90,17 @@ public class BlackJackGameTest {
 
         BlackJackGame blackJackGame = new BlackJackGame(deck);
 
-        blackJackGame.succeededGiving(player); // 3 다이아몬드
-        blackJackGame.succeededGiving(player); // 9 클로버
-        blackJackGame.succeededGiving(player); // 5 하트
+        blackJackGame.giveCard(player); // 3 다이아몬드
+        blackJackGame.giveCard(player); // 9 클로버
+        blackJackGame.giveCard(player); // 5 하트
 
         // when
-        boolean playerResult = blackJackGame.succeededGiving(player); // A 스페이드
+        blackJackGame.giveCard(player); // A 스페이드
 
         int expectedPlayerSize = 4;
 
         // then
         assertAll(
-                () -> assertThat(playerResult).isTrue(),
                 () -> assertThat(player.getHand()).hasSize(expectedPlayerSize)
         );
     }
@@ -114,19 +114,19 @@ public class BlackJackGameTest {
 
         BlackJackGame blackJackGame = new BlackJackGame(deck);
 
-        blackJackGame.succeededGiving(dealer); // 3 다이아몬드
-        blackJackGame.succeededGiving(dealer); // 9 클로버
-        blackJackGame.succeededGiving(dealer); // 5 하트
+        blackJackGame.giveCard(dealer); // 3 다이아몬드
+        blackJackGame.giveCard(dealer); // 9 클로버
+        blackJackGame.giveCard(dealer); // 5 하트
 
         // when
-        boolean dealerResult = blackJackGame.succeededGiving(dealer); // A 스페이드
-
-        int expectedDealerSize = 3;
+        int expectedPlayerSize = 3;
 
         // then
         assertAll(
-                () -> assertThat(dealerResult).isFalse(),
-                () -> assertThat(dealer.getHand()).hasSize(expectedDealerSize)
+                () -> assertThatThrownBy(() -> blackJackGame.giveCard(dealer))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage(Gamer.CAN_NOT_RECEIVE_CARD),
+                () -> assertThat(dealer.getHand()).hasSize(expectedPlayerSize)
         );
     }
 
@@ -139,20 +139,20 @@ public class BlackJackGameTest {
 
         BlackJackGame blackJackGame = new BlackJackGame(deck);
 
-        blackJackGame.succeededGiving(player); // 3 다이아몬드
-        blackJackGame.succeededGiving(player); // 9 클로버
-        blackJackGame.succeededGiving(player); // 5 하트
-        blackJackGame.succeededGiving(player); // A 스페이드
-        blackJackGame.succeededGiving(player); // 7 클로버
+        blackJackGame.giveCard(player); // 3 다이아몬드
+        blackJackGame.giveCard(player); // 9 클로버
+        blackJackGame.giveCard(player); // 5 하트
+        blackJackGame.giveCard(player); // A 스페이드
+        blackJackGame.giveCard(player); // 7 클로버
 
         // when
-        boolean playerResult = blackJackGame.succeededGiving(player); // 10 스페이드
-
         int expectedPlayerSize = 5;
 
         // then
         assertAll(
-                () -> assertThat(playerResult).isFalse(),
+                () -> assertThatThrownBy(() -> blackJackGame.giveCard(player))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage(Gamer.CAN_NOT_RECEIVE_CARD),
                 () -> assertThat(player.getHand()).hasSize(expectedPlayerSize)
         );
     }
@@ -174,8 +174,8 @@ public class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame(deck);
         blackJackGame.prepareCards(gamers);
 
-        blackJackGame.succeededGiving(pobi);
-        blackJackGame.succeededGiving(dealer);
+        blackJackGame.giveCard(pobi);
+        blackJackGame.giveCard(dealer);
         // 딜러 : 3 다이아몬드, 9클로버, 8 다이아 (합계 : 20)
         // 포비 : 7 하트, A 스페이드, A 클로버 (합계 : 18)
         // 제이슨 : 7 클로버, K 스페이드 (합계 : 17)

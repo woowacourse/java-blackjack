@@ -9,7 +9,7 @@ public class Dealer extends Gamer {
     }
 
     @Override
-    public boolean isStay() {
+    public boolean isOverTurn() {
         return hand.sum() >= STAY_CONDITION;
     }
 

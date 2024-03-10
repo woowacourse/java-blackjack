@@ -10,12 +10,8 @@ import domain.gamer.Name;
 import domain.gamer.Player;
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.List;
-import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import net.bytebuddy.build.ToStringPlugin.Enhance;
-import net.bytebuddy.dynamic.loading.InjectionClassLoader.Strategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -87,7 +83,7 @@ public class PlayerTest {
         player.hit(cards.removeLast());
 
         // when
-        boolean stay = player.isStay();
+        boolean stay = player.isOverTurn();
 
         // then
         assertThat(stay).isTrue();
@@ -101,7 +97,7 @@ public class PlayerTest {
         player.hit(cards.removeLast());
 
         // when
-        boolean stay = player.isStay();
+        boolean stay = player.isOverTurn();
 
         // then
         assertThat(stay).isFalse();

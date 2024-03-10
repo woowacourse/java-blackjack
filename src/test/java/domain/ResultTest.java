@@ -66,8 +66,7 @@ class ResultTest {
         neo.hit(clover6); // neo 점수 총합 : 21
 
         dealer.hit(clover9);
-        dealer.hit(diamond8);
-        dealer.hit(diamond3); // 딜러 점수 총합 : 20
+        dealer.hit(diamond8); // 딜러 점수 총합 : 17
 
         // when
         Result pobiResult = Result.getPlayerResultWith(pobi, dealer);
@@ -79,7 +78,7 @@ class ResultTest {
         assertAll(
                 () -> assertThat(pobiResult).isEqualTo(Result.LOSE),
                 () -> assertThat(jasonResult).isEqualTo(Result.LOSE),
-                () -> assertThat(solarResult).isEqualTo(Result.LOSE),
+                () -> assertThat(solarResult).isEqualTo(Result.WIN),
                 () -> assertThat(neoResult).isEqualTo(Result.WIN)
         );
     }
@@ -105,9 +104,8 @@ class ResultTest {
         neo.hit(clover6); // neo 점수 총합 : 21
 
         dealer.hit(clover9);
-        dealer.hit(diamond8);
-        dealer.hit(heart2);
-        dealer.hit(diamond3); // 딜러 점수 총합 : 22
+        dealer.hit(heart6);
+        dealer.hit(diamond8); // 딜러 점수 총합 : 23
 
         // when
         Result pobiResult = Result.getPlayerResultWith(pobi, dealer);

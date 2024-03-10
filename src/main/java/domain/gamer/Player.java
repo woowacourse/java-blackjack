@@ -1,5 +1,7 @@
 package domain.gamer;
 
+import domain.card.Card;
+
 public class Player extends Gamer {
 
     public static final String DEALER_NAME = "딜러";
@@ -18,7 +20,7 @@ public class Player extends Gamer {
     }
 
     @Override
-    public boolean isStay() {
+    public boolean isOverTurn() {
         return hand.isBust();
     }
 
