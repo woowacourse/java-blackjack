@@ -10,18 +10,18 @@ public class Deck {
 
 	private final List<Card> cards;
 
-	public Deck(List<Card> cards) {
+	public Deck(final List<Card> cards) {
 		List<Card> copyDeck = new ArrayList<>(cards);
 		validate(copyDeck);
 		this.cards = copyDeck;
 	}
 
-	private void validate(List<Card> cards) {
+	private void validate(final List<Card> cards) {
 		validateDuplicate(cards);
 		validateSize(cards);
 	}
 
-	private void validateDuplicate(List<Card> cards) {
+	private void validateDuplicate(final List<Card> cards) {
 		int distinctSize = new HashSet<>(cards).size();
 
 		if (cards.size() != distinctSize) {
@@ -29,7 +29,7 @@ public class Deck {
 		}
 	}
 
-	private void validateSize(List<Card> deck) {
+	private void validateSize(final List<Card> deck) {
 		if (deck.size() != INIT_SIZE) {
 			throw new IllegalArgumentException(String.format("덱의 사이즈가 %d장이 아닙니다.", INIT_SIZE));
 		}

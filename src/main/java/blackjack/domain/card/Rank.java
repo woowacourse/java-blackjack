@@ -18,7 +18,7 @@ public enum Rank {
 	private final String name;
 	private final int score;
 
-	Rank(String name, int score) {
+	Rank(final String name, final int score) {
 		this.name = name;
 		this.score = score;
 	}

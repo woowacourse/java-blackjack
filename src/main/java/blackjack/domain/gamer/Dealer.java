@@ -12,16 +12,16 @@ public class Dealer extends Gamer {
 
 	private final Deck deck;
 
-	private Dealer(Deck deck, CardHand cardHand) {
+	private Dealer(final Deck deck, final CardHand cardHand) {
 		super(cardHand);
 		this.deck = deck;
 	}
 
-	public static Dealer newInstance(Deck deck) {
+	public static Dealer newInstance(final Deck deck) {
 		return new Dealer(deck, CardHand.createEmpty());
 	}
 
-	public static Dealer of(Deck deck, List<Card> cards) {
+	public static Dealer of(final Deck deck, final List<Card> cards) {
 		return new Dealer(deck, CardHand.from(cards));
 	}
 

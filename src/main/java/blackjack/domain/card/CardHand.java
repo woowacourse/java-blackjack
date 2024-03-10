@@ -10,7 +10,7 @@ public class CardHand {
 
 	private final List<Card> cards;
 
-	private CardHand(List<Card> cards) {
+	private CardHand(final List<Card> cards) {
 		this.cards = new ArrayList<>(cards);
 	}
 
@@ -18,15 +18,15 @@ public class CardHand {
 		return new CardHand(new ArrayList<>());
 	}
 
-	public static CardHand from(List<Card> cards) {
+	public static CardHand from(final List<Card> cards) {
 		return new CardHand(cards);
 	}
 
-	public void add(Card card) {
+	public void add(final Card card) {
 		cards.add(card);
 	}
 
-	public void addAll(List<Card> cards) {
+	public void addAll(final List<Card> cards) {
 		this.cards.addAll(cards);
 	}
 
@@ -56,7 +56,7 @@ public class CardHand {
 		return Collections.unmodifiableList(cards);
 	}
 
-	public boolean isScoreLessOrEqual(int value) {
+	public boolean isScoreLessOrEqual(final int value) {
 		int score = calculateScore();
 		return value >= score;
 	}

@@ -12,12 +12,14 @@ public enum Command {
 		this.text = value;
 	}
 
-	public static Command fromText(String text) {
+	public static Command fromText(final String text) {
 		return Arrays.stream(values())
 			.filter(value -> value.text.equals(text))
 			.findFirst()
-			.orElseThrow(() -> {
-				throw new IllegalArgumentException("존재하지 않는 키워드입니다.");
-			});
+			.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 키워드입니다."));
+	}
+
+	public String getText() {
+		return text;
 	}
 }

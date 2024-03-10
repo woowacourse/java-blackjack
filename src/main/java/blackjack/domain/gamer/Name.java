@@ -8,12 +8,12 @@ public class Name {
 
 	private final String value;
 
-	public Name(String value) {
+	public Name(final String value) {
 		validateLength(value);
 		this.value = value;
 	}
 
-	private void validateLength(String value) {
+	private void validateLength(final String value) {
 		if (value.length() < MIN_LENGTH || value.length() > MAX_LENGTH) {
 			throw new IllegalArgumentException(LENGTH_ERROR_MESSAGE);
 		}

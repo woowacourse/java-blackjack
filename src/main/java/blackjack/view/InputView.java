@@ -12,7 +12,7 @@ public class InputView {
 	private static final String PLAYER_NAME_DELIMITER = ",";
 	private final Scanner scanner;
 
-	private InputView(Scanner scanner) {
+	private InputView(final Scanner scanner) {
 		this.scanner = scanner;
 	}
 
@@ -28,15 +28,16 @@ public class InputView {
 		return List.of(names.split(PLAYER_NAME_DELIMITER));
 	}
 
-	private void validatePlayerNamesFormat(String names) {
+	private void validatePlayerNamesFormat(final String names) {
 		if (names.startsWith(PLAYER_NAME_DELIMITER) || names.endsWith(PLAYER_NAME_DELIMITER)) {
 			throw new IllegalArgumentException("플레이어의 이름은 쉼표(,)로 시작하거나 끝날 수 없습니다.");
 		}
 	}
 
-	public Command readHitOrStand(Player player) {
+	public Command readHitOrStand(final Player player) {
 		System.out.println(
-			String.format("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)", player.getName(), Command.YES, Command.NO));
+			String.format("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)", player.getName(), Command.YES.getText(),
+				Command.NO.getText()));
 		String command = scanner.nextLine();
 
 		return Command.fromText(command);

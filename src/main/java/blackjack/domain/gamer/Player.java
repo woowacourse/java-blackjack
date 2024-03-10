@@ -6,16 +6,16 @@ import blackjack.domain.card.CardHand;
 public class Player extends Gamer {
 	private final Name name;
 
-	private Player(String name, CardHand cardHand) {
+	private Player(final String name, final CardHand cardHand) {
 		super(cardHand);
 		this.name = new Name(name);
 	}
 
-	public static Player newInstance(String name) {
+	public static Player newInstance(final String name) {
 		return new Player(name, CardHand.createEmpty());
 	}
 
-	public void receiveCard(Card card) {
+	public void receiveCard(final Card card) {
 		cardHand.add(card);
 	}
 

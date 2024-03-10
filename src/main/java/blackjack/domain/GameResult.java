@@ -7,7 +7,7 @@ public enum GameResult {
 	WIN,
 	LOSE;
 
-	public static GameResult of(Dealer dealer, Player player) {
+	public static GameResult of(final Dealer dealer, final Player player) {
 		if (player.isBust() || player.getScore() <= dealer.getScore()) {
 			return GameResult.LOSE;
 		}
