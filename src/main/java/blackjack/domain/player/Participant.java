@@ -28,10 +28,6 @@ public abstract class Participant {
 
     public abstract boolean canHit();
 
-    public int handSize() {
-        return hand.countCard();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
