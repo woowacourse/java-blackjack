@@ -33,7 +33,7 @@ public class OutputView {
     private static final int DEALER_START_CARDS_SIZE = 1;
     private static final int PLAYER_START_CARDS_SIZE = 2;
 
-    public void printStartCards(Dealer dealer, Players players) {
+    public void printStartStatus(Dealer dealer, Players players) {
         System.out.println();
         System.out.println("딜러와 " + toPrintedFormat(players) + "에게 2장을 나누었습니다.");
         printDealerCards(dealer.getCards().subList(0, DEALER_START_CARDS_SIZE));
@@ -42,14 +42,17 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printResultCardAndScore(Dealer dealer, Players players) {
+    public void printEndingStatus(Dealer dealer, Players players) {
         System.out.println();
         System.out.println();
-        printDealerCards(dealer.getCards());
-        printScore(dealer.calculateScore());
+        printDealerEndingStatus(dealer);
+        printPlayersEndingStatus(players);
         System.out.println();
-        printPlayersCardAndScore(players);
-        System.out.println();
+    }
+
+    private void printDealerCards(List<Card> cards) {
+        System.out.print("딜러 카드: ");
+        printCards(cards);
     }
 
     private void printPlayersCards(Players players) {
@@ -59,9 +62,10 @@ public class OutputView {
         }
     }
 
-    private void printDealerCards(List<Card> cards) {
-        System.out.print("딜러 카드: ");
-        printCards(cards);
+    private void printDealerEndingStatus(Dealer dealer) {
+        printDealerCards(dealer.getCards());
+        printScore(dealer.calculateScore());
+        System.out.println();
     }
 
     private void printPlayerCards(String name, List<Card> cards) {
@@ -69,7 +73,7 @@ public class OutputView {
         printCards(cards);
     }
 
-    private void printPlayersCardAndScore(Players players) {
+    private void printPlayersEndingStatus(Players players) {
         for (Player player : players.getPlayers()) {
             printPlayerCards(player.getName(), player.getCards());
             printScore(player.calculateScore());

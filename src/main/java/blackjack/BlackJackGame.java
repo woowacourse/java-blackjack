@@ -30,7 +30,7 @@ public class BlackJackGame {
     private void drawStartCards(Dealer dealer, Players players, Deck deck) {
         dealer.drawStartCards(deck);
         players.drawStartCards(deck);
-        outputView.printStartCards(dealer, players);
+        outputView.printStartStatus(dealer, players);
     }
 
     private void play(Players players, Dealer dealer, Deck deck) {
@@ -49,7 +49,7 @@ public class BlackJackGame {
     }
 
     private void printResult(Dealer dealer, Players players) {
-        outputView.printResultCardAndScore(dealer, players);
+        outputView.printEndingStatus(dealer, players);
         outputView.printDealerMatchResult(dealer.match(players));
         for (Player player : players.getPlayers()) {
             outputView.printPlayerMatchResult(player.getName(), player.isWin(dealer));
