@@ -21,7 +21,7 @@ public class Hand {
         this.cards.addAll(cards);
     }
 
-    public int calculateScoreWhileDraw() {
+    public int calculateScore() {
         int sum = 0;
         for (Card card : cards) {
             sum += getScoreToAdd(card);
@@ -36,7 +36,7 @@ public class Hand {
         return card.getScore();
     }
 
-    public int calculateScore(final int blackJackScore) {
+    public int calculateResultScore(final int blackJackScore) {
         int sum = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();

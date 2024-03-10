@@ -1,7 +1,13 @@
 package controller;
 
+import controller.dto.HandStatus;
 import domain.BlackJackGame;
+import domain.Participant;
+import domain.Player;
+import domain.constants.CardCommand;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 import view.InputView;
 import view.OutputView;
 
@@ -16,33 +22,40 @@ public class GameManager {
 
     public void run() {
         BlackJackGame blackJackGame = start();
-        blackJackGame.rotate();
+        rotate(blackJackGame);
         blackJackGame.finish();
     }
 
     private BlackJackGame start() {
         BlackJackGame blackJackGame = BlackJackGame.from(inputView.enterPlayerNames());
-        blackJackGame.initialize();
-        initializeGame();
-        List<String> names = inputView.enterPlayerNames();
-        BlackJackGame blackJackGame = BlackJackGame.from(names);
-        outputView.printAfterStartGame(blackJackGame.initiateGameCondition());
+        outputView.printInitialStatus(blackJackGame.initialize());
         return blackJackGame;
     }
 
-    public void run() {
-        BlackJackGame blackJackGame = start();
-        startRound(blackJackGame);
-        blackJackGame.finish(outputView);
+    private void rotate(final BlackJackGame blackJackGame) {
+        List<Participant> participants = blackJackGame.getParticipants();
+        for (Participant participant : participants) {
+            blackJackGame.giveCard(
+                    participant,
+                    getAction(participant),
+                    getSupplier(participant)
+            );
+        }
     }
 
-
-    private void startRound(final BlackJackGame blackJackGame) {
-        List<String> names = blackJackGame.getPlayerNames();
-        for (String name : names) {
-            blackJackGame.giveCardToPlayer(name, outputView, inputView);
+    private Consumer<HandStatus> getAction(final Participant participant) {
+        if (participant instanceof Player) {
+            return handStatus -> outputView.printCardStatus(handStatus);
         }
+        return handStatus -> outputView.printDealerPickMessage();
+    }
 
-        blackJackGame.giveCardsToDealer(outputView);
+    private Supplier<CardCommand> getSupplier(final Participant participant) {
+        if (participant instanceof Player) {
+            return () -> CardCommand.from(
+                    inputView.decideToGetMoreCard(participant.getName())
+            );
+        }
+        return () -> CardCommand.HIT;
     }
 }

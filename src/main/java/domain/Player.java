@@ -1,12 +1,17 @@
 package domain;
 
+import static domain.BlackJackGame.BLACKJACK_SCORE;
+
+import domain.constants.CardCommand;
+
 public class Player extends Participant {
     public Player(final String name) {
         super(name);
     }
 
-    public int calculateScoreWhileDraw() {
-        return hand.calculateScoreWhileDraw();
+    @Override
+    public boolean canPickCard(CardCommand cardCommand) {
+        return CardCommand.HIT.equals(cardCommand) && isNotBusted();
     }
 
     public boolean isNotSameScoreAs(final Player other) {
@@ -22,7 +27,7 @@ public class Player extends Participant {
     }
 
     public int calculateResultScore() {
-        return hand.calculateScore(BLACKJACK_SCORE);
+        return hand.calculateResultScore();
     }
 
     public boolean hasLessOrSameCardThan(final Player other) {
@@ -30,7 +35,7 @@ public class Player extends Participant {
     }
 
     public boolean cannotDraw() {
-        return hand.calculateScore(BLACKJACK_SCORE) > BLACKJACK_SCORE;
+        return hand.calculateResultScore() > BLACKJACK_SCORE;
     }
 
     public int getTotalSize() {

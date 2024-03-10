@@ -1,5 +1,7 @@
 package domain;
 
+import controller.dto.HandStatus;
+import domain.constants.CardCommand;
 import java.util.List;
 
 public abstract class Participant {
@@ -20,6 +22,14 @@ public abstract class Participant {
         return hand.getCards();
     }
 
+    protected boolean isNotBusted() {
+        return hand.calculateScore() <= BlackJackGame.BLACKJACK_SCORE;
+    }
+
+    protected int calculateScore() {
+        return hand.calculateScore();
+    }
+
     public String getName() {
         return this.name;
     }
@@ -27,6 +37,12 @@ public abstract class Participant {
     public Hand getHand() {
         return this.hand;
     }
+
+    public HandStatus createHandStatus() {
+        return new HandStatus(name, hand);
+    }
+
+    abstract public boolean canPickCard(final CardCommand cardCommand);
 
     private static class Validator {
         private static void validateName(final String name) {

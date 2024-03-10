@@ -7,7 +7,7 @@ import domain.constants.Outcome;
 import java.util.List;
 
 public class OutputView {
-    public void printAfterStartGame(final List<HandStatus> statuses) {
+    public void printInitialStatus(final List<HandStatus> statuses) {
         System.out.println();
         StringBuilder builder = new StringBuilder("딜러와 ");
 

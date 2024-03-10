@@ -54,7 +54,7 @@ class PlayerTest {
         player.drawCard(new Card(Score.THREE, Shape.CLOVER));
         player.drawCard(new Card(Score.ACE, Shape.CLOVER));
 
-        int totalScore = player.calculateScoreWhileDraw();
+        int totalScore = player.calculateScore();
         assertThat(totalScore).isEqualTo(12);
     }
 

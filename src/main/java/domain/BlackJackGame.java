@@ -10,12 +10,16 @@ import domain.constants.CardCommand;
 import domain.constants.Outcome;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 import view.InputView;
 import view.OutputView;
 
 public class BlackJackGame {
-    private static final int BLACKJACK_SCORE = 16;
+    // TODO: 딜러와 플레이어가 알 수 있도록 접근제어자를 public으로 변경하였다. 옳은가?
+    public static final int BLACKJACK_SCORE = 21;
     private static final int CARD_INITIAL_SIZE = 2;
+    private static final int CARD_PICK_SIZE = 1;
 
     private final Participants participants;
     private final Deck deck;
@@ -33,15 +37,23 @@ public class BlackJackGame {
         List<HandStatus> status = new ArrayList<>();
         for (Participant participant : participants.getParticipants()) {
             participant.pickCard(deck, CARD_INITIAL_SIZE);
-            status.add(createHandStatus(participant));
+            status.add(participant.createHandStatus());
         }
         return status;
     }
 
-    private HandStatus createHandStatus(final Participant participant) {
-        return new HandStatus(participant.getName(), participant.getHand());
+    // TODO: 함수형 인터페이스를 Wrapping하기
+    public void giveCard(
+            final Participant participant,
+            final Consumer<HandStatus> action, // 출력
+            final Supplier<CardCommand> supplier // 딜러는 아무런 입력도 받지 않고 무조건 HIT
+    ) {
+        while (participant.canPickCard(supplier.get())) {
+            participant.pickCard(deck, CARD_PICK_SIZE);
+            HandStatus currentStatus = participant.createHandStatus();
+            action.accept(currentStatus);
+        }
     }
-
 
     public void giveCardToPlayer(final String name, final OutputView outputView, final InputView inputView) {
         Player player = getPlayer(name);
@@ -102,6 +114,7 @@ public class BlackJackGame {
                 .toList();
     }
 
+    /*
     public void giveCardsToDealer(final OutputView outputView) {
         Dealer dealer = participants.dealer();
 
@@ -111,7 +124,7 @@ public class BlackJackGame {
             outputView.printDealerPickMessage();
             currentScore = dealer.calculateResultScore();
         }
-    }
+    }*/
 
     public Player getPlayer(final String name) {
         return participants.players()
@@ -124,4 +137,9 @@ public class BlackJackGame {
     public Dealer getDealer() {
         return participants.dealer();
     }
+
+    public List<Participant> getParticipants() {
+        return participants.getParticipants();
+    }
+
 }

@@ -28,7 +28,7 @@ public class Participants {
                 .toList();
     }
 
-    public List<Player> getParticipants() {
+    public List<Participant> getParticipants() {
         return Collections.unmodifiableList(participants);
     }
 
