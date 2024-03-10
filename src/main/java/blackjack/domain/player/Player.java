@@ -6,8 +6,6 @@ import blackjack.domain.card.Cards;
 import java.util.List;
 
 public class Player {
-    private static final int BUST_SIZE = 21;
-    private static final int CHANGE_A_VALUE = 10;
     protected final Name name;
     protected final Cards cards;
 
@@ -17,11 +15,7 @@ public class Player {
     }
 
     public int calculateScore() {
-        int sum = cards.sum();
-        if (cards.containAce() && sum + CHANGE_A_VALUE <= BUST_SIZE) {
-            return sum + CHANGE_A_VALUE;
-        }
-        return sum;
+        return cards.calculateScore();
     }
 
     public void drawCard(Card card) {
@@ -41,6 +35,6 @@ public class Player {
     }
 
     public boolean isBust() {
-        return cards.sum() > BUST_SIZE;
+        return cards.isBust();
     }
 }

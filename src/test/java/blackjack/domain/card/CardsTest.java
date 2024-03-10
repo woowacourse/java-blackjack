@@ -75,5 +75,54 @@ public class CardsTest {
 
         assertThat(result).isEqualTo(cards.get(0));
     }
-    
+
+    @Test
+    @DisplayName("플레이어는 카드들 숫자 합 중 최대값을 결정한다.")
+    public void GamePlayer_Determine_max_number_sum_of_cards() {
+        var sut = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
+
+        var result = sut.calculateScore();
+
+        assertThat(result).isEqualTo(12);
+    }
+
+    @Test
+    @DisplayName("숫자 합이 21이 넘지 않으면 플레이어는 에이스를 11로 결정한다.")
+    public void GamePlayer_Determine_ace_is_11_if_not_exceed_21() {
+        var sut = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.ACE));
+
+        var result = sut.calculateScore();
+
+        assertThat(result).isEqualTo(19);
+    }
+
+    @Test
+    @DisplayName("숫자 합이 21이 넘으면 플레이어는 에이스를 1로 결정한다.")
+    public void GamePlayer_Determine_ace_is_1_if_exceed_21() {
+        var sut = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.TEN, CardValue.ACE));
+
+        var result = sut.calculateScore();
+
+        assertThat(result).isEqualTo(19);
+    }
+
+    @Test
+    @DisplayName("숫자 합이 21을 넘으면 버스트다.")
+    public void GamePlayer_Bust_if_exceed_21() {
+        var sut = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.TEN, CardValue.SEVEN));
+
+        var result = sut.isBust();
+
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("숫자 합이 21을 넘지 않으면 버스트가 아니다.")
+    public void GamePlayer_Not_bust_if_under_21() {
+        var sut = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.TEN));
+
+        var result = sut.isBust();
+
+        assertFalse(result);
+    }
 }
