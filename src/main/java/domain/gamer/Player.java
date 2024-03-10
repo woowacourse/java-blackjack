@@ -26,6 +26,10 @@ public class Player {
         cards.addCard(card);
     }
 
+    public boolean isBust() {
+        return !cards.hasScoreUnderBustThreshold();
+    }
+
     public boolean isNotBust() {
         return cards.hasScoreUnderBustThreshold();
     }
