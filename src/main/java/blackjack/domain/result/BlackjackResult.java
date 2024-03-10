@@ -2,9 +2,10 @@ package blackjack.domain.result;
 
 import blackjack.domain.participant.Player;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Function;
+
+import static java.util.stream.Collectors.*;
 
 public class BlackjackResult {
     private final Map<Player, HandResult> playersResult;
@@ -14,23 +15,18 @@ public class BlackjackResult {
     }
 
     public Map<HandResult, Integer> getDealerResults() {
-        Map<HandResult, Integer> dealerResults = initializeDealerResults();
-        for (HandResult playerResult : playersResult.values()) {
-            HandResult dealerResult = playerResult.getOpposite();
-            dealerResults.computeIfPresent(dealerResult, (handResult, count) -> count + 1);
-        }
-        return dealerResults;
+        return playersResult.values()
+                .stream()
+                .map(HandResult::getOpposite)
+                .sorted(Comparator.comparingInt(HandResult::ordinal))
+                .collect(groupingBy(
+                        Function.identity(),
+                        LinkedHashMap::new,
+                        collectingAndThen(counting(), Long::intValue)
+                ));
     }
 
     public Map<Player, HandResult> getPlayersResult() {
         return playersResult;
-    }
-
-    private Map<HandResult, Integer> initializeDealerResults() {
-        Map<HandResult, Integer> dealerResults = new LinkedHashMap<>();
-        for (HandResult handResult : HandResult.values()) {
-            dealerResults.put(handResult, 0);
-        }
-        return dealerResults;
     }
 }

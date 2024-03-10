@@ -115,7 +115,6 @@ public class OutputView {
     private void printDealerResults(Map<HandResult, Integer> dealerResults) {
         String formattedDealerResults = dealerResults.entrySet()
                 .stream()
-                .filter((dealerResult) -> dealerResult.getValue() > 0)
                 .map(this::getFormattedDealerResult)
                 .collect(Collectors.joining());
         System.out.printf(DEALER_RESULTS_FORMAT, formattedDealerResults);
