@@ -17,12 +17,10 @@ import java.util.Map;
 public class BlackJackGame {
     private static final ConsoleReader CONSOLE_READER = new ConsoleReader();
 
+    private Deck deck;
+
     public void run() {
-        final Deck deck = new Deck();
-
-        final List<String> names = InputView.readPlayerNames(CONSOLE_READER);
-        final Players players = Players.of(names, deck.distributeInitialCard(names.size()));
-
+        final Players players = registerPlayers();
         final Dealer dealer = new Dealer(deck.distributeInitialCard());
         final Referee referee = new Referee(new Rule(dealer), players);
 
@@ -33,6 +31,17 @@ public class BlackJackGame {
         playDealerTurn(dealer, deck);
 
         printFinalResult(dealer, players, referee);
+    }
+
+    private Players registerPlayers() {
+        try {
+            deck = new Deck();
+            final List<String> names = InputView.readPlayerNames(CONSOLE_READER);
+            return Players.of(names, deck.distributeInitialCard(names.size()));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return registerPlayers();
+        }
     }
 
     private void printInitialCards(final Dealer dealer, final Players players) {
