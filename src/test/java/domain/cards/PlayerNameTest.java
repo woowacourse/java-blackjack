@@ -16,14 +16,13 @@ public class PlayerNameTest {
     void createNameByInvalidLengthTest(String name) {
         assertThatThrownBy(() -> new GamerName(name))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이름의 길이는 1 ~ 20 글자 사이로 입력해주세요.");
+                .hasMessage("[INPUT] " + name + "\n[ERROR] 이름의 길이는 1 ~ 20 글자 사이로 입력해주세요.");
     }
 
     @DisplayName("이름의 길이가 1글자 이상이거나 20글자 이하면 생성에 성공한다.")
     @ParameterizedTest
     @ValueSource(strings = {"1", "12345678901234567890"})
     void createNameByValidLengthTest(String name) {
-        assertThatCode(() -> new GamerName(name))
-                .doesNotThrowAnyException();
+        assertThatCode(() -> new GamerName(name)).doesNotThrowAnyException();
     }
 }

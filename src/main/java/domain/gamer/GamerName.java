@@ -16,8 +16,9 @@ public class GamerName {
 
     private void validateLength(String value) {
         if (value.length() < MIN_LENGTH || value.length() > MAX_LENGTH) {
-            throw new IllegalArgumentException(
-                    "[ERROR] 이름의 길이는 " + MIN_LENGTH + " ~ " + MAX_LENGTH + " 글자 사이로 입력해주세요.");
+            String errorMessage = String.format("[INPUT] %s\n[ERROR] 이름의 길이는 %d ~ %d 글자 사이로 입력해주세요.",
+                    value, MIN_LENGTH, MAX_LENGTH);
+            throw new IllegalArgumentException(errorMessage);
         }
     }
 
