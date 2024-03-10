@@ -23,8 +23,12 @@ public class BetMoney {
     }
 
     private void validateAmountDivisibleByUnit(int amount) {
-        if (amount % BET_MONEY_UNIT != 0) {
+        if (isNotDivisibleByUnit(amount)) {
             throw new IllegalArgumentException("[ERROR] 베팅은 1,000원 단위로만 가능합니다.");
         }
+    }
+
+    private boolean isNotDivisibleByUnit(int amount) {
+        return amount % BET_MONEY_UNIT != 0;
     }
 }
