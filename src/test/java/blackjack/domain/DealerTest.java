@@ -58,6 +58,18 @@ class DealerTest {
         assertThat(result).isFalse();
     }
 
+    @DisplayName("딜러의 카드 중 첫 번째 카드는 가려져 있다.")
+    @Test
+    void getVisibleCards() {
+        Dealer dealer = new Dealer();
+        Card card1 = new Card(CardRank.KING, CardShape.DIAMOND);
+        Card card2 = new Card(CardRank.SEVEN, CardShape.DIAMOND);
+        dealer.hit(card1);
+        dealer.hit(card2);
+
+        assertThat(dealer.getVisibleCards()).containsExactly(card2);
+    }
+
     @Nested
     @DisplayName("딜러의 점수가 21점 이하이고, ")
     class DealerScoreLessThan21 {
