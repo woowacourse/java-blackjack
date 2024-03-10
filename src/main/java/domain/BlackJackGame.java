@@ -30,7 +30,7 @@ public class BlackJackGame {
     }
 
     public boolean takeTurn(final Gamer gamer) {
-        if (!gamer.isStay()) {
+        if (!gamer.shouldStay()) {
             gamer.hit(decks.draw());
             return true;
         }

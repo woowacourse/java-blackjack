@@ -9,7 +9,7 @@ public class Dealer extends Gamer {
     }
 
     @Override
-    public boolean isStay() {
+    public boolean shouldStay() {
         return calculateTotalScore() >= STAY_CONDITION;
     }
 }

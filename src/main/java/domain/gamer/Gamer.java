@@ -12,7 +12,7 @@ public abstract class Gamer {
         this.hand = new Hand();
     }
 
-    public abstract boolean isStay();
+    public abstract boolean shouldStay();
 
     public void hit(final Card card) {
         hand.add(card);

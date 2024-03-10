@@ -81,7 +81,7 @@ public class PlayerTest {
         player.hit(cards.pop());
 
         // when
-        boolean stay = player.isStay();
+        boolean stay = player.shouldStay();
 
         // then
         assertThat(stay).isTrue();
@@ -95,7 +95,7 @@ public class PlayerTest {
         player.hit(cards.pop());
 
         // when
-        boolean stay = player.isStay();
+        boolean stay = player.shouldStay();
 
         // then
         assertThat(stay).isFalse();

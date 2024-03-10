@@ -2,7 +2,7 @@ package domain.gamer;
 
 public class Player extends Gamer {
 
-    public static final String DEALER_NAME = "딜러";
+    private static final String DEALER_NAME = "딜러";
     public static final String NOT_ALLOWED_NAME = String.format("%s는 사용할 수 없는 이름입니다.", DEALER_NAME);
 
 
@@ -18,7 +18,7 @@ public class Player extends Gamer {
     }
 
     @Override
-    public boolean isStay() {
+    public boolean shouldStay() {
         return isBust();
     }
 }

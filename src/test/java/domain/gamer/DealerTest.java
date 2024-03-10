@@ -76,7 +76,7 @@ public class DealerTest {
         dealer.hit(cards.pop());
 
         // when
-        boolean stay = dealer.isStay();
+        boolean stay = dealer.shouldStay();
 
         // then
         assertThat(stay).isFalse();
@@ -91,7 +91,7 @@ public class DealerTest {
         dealer.hit(cards.pop());
 
         // when
-        boolean stay = dealer.isStay();
+        boolean stay = dealer.shouldStay();
 
         // then
         assertThat(stay).isTrue();
