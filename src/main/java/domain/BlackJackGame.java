@@ -16,20 +16,20 @@ import view.OutputView;
 public class BlackJackGame {
     private static final int THRESHOLD = 16;
 
-    private final Players players;
+    private final Participants participants;
     private final Deck deck;
 
-    public BlackJackGame(final Players players, final Deck deck) {
-        this.players = players;
+    public BlackJackGame(final Participants participants, final Deck deck) {
+        this.participants = participants;
         this.deck = deck;
     }
 
     public static BlackJackGame from(final List<String> playerNames) {
         List<Player> players = playerNames.stream()
                 .map(Player::new)
-                .toList();
+                .toList(); // 게임이 변환을 해주는 게 맞나?
         return new BlackJackGame(
-                new Players(new Dealer(), players),
+                new Participants(players),
                 new Deck()
         );
     }
@@ -39,7 +39,7 @@ public class BlackJackGame {
         List<HandStatus> status = new ArrayList<>();
 
         // TODO: 모든 플레이어에 대한 다형성으로 처리할 수 있지 않을까? 동작이 모두 같잖아.
-        for (Player player : players.getPlayers()) {
+        for (Player player : participants.getParticipants()) {
             player.pickTwoCards(deck);
             status.add(new HandStatus(player.getName(), player.getHand()));
         }
@@ -74,8 +74,8 @@ public class BlackJackGame {
 
     public void finish(final OutputView outputView) {
         List<Integer> scores = new ArrayList<>();
-        scores.add(players.dealer().calculateResultScore());
-        for (Player player : players.players()) {
+        scores.add(participants.dealer().calculateResultScore());
+        for (Player player : participants.players()) {
             scores.add(player.calculateResultScore());
         }
         outputView.printResult(getCurrentHandStatus(), scores);
@@ -84,15 +84,15 @@ public class BlackJackGame {
 
     public List<HandStatus> getCurrentHandStatus() {
         List<HandStatus> handStatuses = new ArrayList<>();
-        handStatuses.add(new HandStatus(players.dealer().getName(), players.dealer().getHand()));
-        for (Player player : players.players()) {
+        handStatuses.add(new HandStatus(participants.dealer().getName(), participants.dealer().getHand()));
+        for (Player player : participants.players()) {
             handStatuses.add(new HandStatus(player.getName(), player.getHand()));
         }
         return handStatuses;
     }
 
     public GameResult getGameResult() {
-        GameRule rule = new GameRule(players);
+        GameRule rule = new GameRule(participants);
         List<Outcome> results = rule.judge();
         List<String> names = getPlayerNames();
 
@@ -104,14 +104,14 @@ public class BlackJackGame {
     }
 
     public List<String> getPlayerNames() {
-        List<Player> players = this.players.players();
+        List<Player> players = this.participants.players();
         return players.stream()
                 .map(Player::getName)
                 .toList();
     }
 
     public void giveCardsToDealer(final OutputView outputView) {
-        Dealer dealer = players.dealer();
+        Dealer dealer = participants.dealer();
 
         int currentScore = dealer.calculateResultScore();
         while (currentScore <= THRESHOLD) {
@@ -122,7 +122,7 @@ public class BlackJackGame {
     }
 
     public Player getPlayer(final String name) {
-        return players.players()
+        return participants.players()
                 .stream()
                 .filter(player -> player.getName().equals(name))
                 .findFirst()
@@ -130,6 +130,6 @@ public class BlackJackGame {
     }
 
     public Dealer getDealer() {
-        return players.dealer();
+        return participants.dealer();
     }
 }

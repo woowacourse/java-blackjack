@@ -9,15 +9,8 @@ public class Player {
     private final Hand hand;
 
     public Player(final String name) {
-        validateName(name);
         this.name = name;
         hand = new Hand();
-    }
-
-    private void validateName(final String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("이름으로 빈 문자열이 입력되었습니다.");
-        }
     }
 
     public List<Card> pickTwoCards(final Deck deck) {

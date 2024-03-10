@@ -35,7 +35,7 @@ class RoundTest {
         dealer.drawCards(createNormalWithTwoCards());
 
         List<Player> players = List.of(new Player("pobi"));
-        Players participants = new Players(dealer, players);
+        Participants participants = new Participants(dealer, players);
 
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Score.THREE, Shape.DIAMOND));
