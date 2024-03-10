@@ -13,9 +13,7 @@ public class BlackJackGame {
 
     private static final int INIT_CARD_COUNT = 2;
 
-    // TODO: remove to 2
     private Gamers gamers;
-    private Judge judge = new Judge();
     private CardPack cardPack;
 
     public BlackJackGame() {
@@ -57,11 +55,9 @@ public class BlackJackGame {
         return pickedCard;
     }
 
-    public void makeFinalResult() {
+    public Judge makeFinalResult() {
+        Judge judge = new Judge();
         judge.decideResult(gamers);
-    }
-
-    public Judge getJudge() {
         return judge;
     }
 

@@ -1,4 +1,5 @@
 import domain.BlackJackGame;
+import domain.Judge;
 import domain.cards.Card;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
@@ -29,8 +30,8 @@ public class Application { // TODO: refactoring
         progressDealerGame(game, gamers.callDealer());
         resultView.printAllGamersCardsResult(gamers);
 
-        game.makeFinalResult();
-        resultView.printFinalResults(gamers.callDealer(), game.getJudge()); // TODO
+        Judge judge = game.makeFinalResult();
+        resultView.printFinalResults(gamers.callDealer(), judge);
     }
 
     private static void progressPlayersGame(BlackJackGame game, List<Player> players) {
