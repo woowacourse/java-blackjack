@@ -21,14 +21,14 @@ public class Application { // TODO: refactoring
         Gamers gamers = game.getGamers();
 
         game.setUpGame();
-        resultView.printInitialCards(gamers);
+        resultView.printInitialCards(gamers.getDealer(), gamers.getPlayers());
 
         progressPlayersGame(game, gamers.getPlayers());
         progressDealerGame(game, gamers.getDealer());
-        resultView.printAllGamersCardsResult(gamers);
+        resultView.printGamersCardsScore(gamers);
 
         Judge judge = game.makeFinalResult();
-        resultView.printFinalResults(gamers.getDealer(), judge);
+        resultView.printFinalResult(gamers.getDealer(), judge);
     }
 
     private static void progressPlayersGame(BlackJackGame game, List<Player> players) {
