@@ -1,5 +1,9 @@
 package domain.cards;
 
+import domain.cards.cardinfo.CardNumber;
+import domain.cards.cardinfo.CardShape;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CardPack {
@@ -8,8 +12,26 @@ public class CardPack {
 
     private final List<Card> cards;
 
-    public CardPack(List<Card> cards) {
-        this.cards = cards;
+    public CardPack() {
+        this.cards = new ArrayList<>();
+        generateRandomCards();
+    }
+
+    public void generateRandomCards() {
+        generateByNumberAndShape();
+        Collections.shuffle(cards);
+    }
+
+    private void generateByNumberAndShape() {
+        for (CardNumber cardNumber : CardNumber.values()) {
+            generateByShape(cardNumber);
+        }
+    }
+
+    private void generateByShape(CardNumber cardNumber) {
+        for (CardShape cardShape : CardShape.values()) {
+            cards.add(new Card(cardNumber, cardShape));
+        }
     }
 
     public Card pickOneCard() {

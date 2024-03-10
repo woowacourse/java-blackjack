@@ -2,11 +2,9 @@ package domain;
 
 import domain.cards.Card;
 import domain.cards.CardPack;
-import domain.cards.CardsGenerator;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Gamers;
-
 import java.util.List;
 
 public class BlackJackGame {
@@ -24,8 +22,7 @@ public class BlackJackGame {
     }
 
     public void prepareCardPack() {
-        List<Card> cards = CardsGenerator.generateRandomCards();
-        this.cardPack = new CardPack(cards);
+        this.cardPack = new CardPack();
     }
 
     public void setUpGame() {
