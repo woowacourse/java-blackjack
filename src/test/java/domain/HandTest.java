@@ -50,4 +50,25 @@ public class HandTest {
         Assertions.assertThat(hand.getResultScore())
                 .isEqualTo(22);
     }
+
+    @Test
+    @DisplayName("현재 상태가 bust가 아니면 false를 반환한다")
+    void isBustFalse() {
+        Hand hand = new Hand();
+        hand.add(new Card(CardType.DIAMOND, CardNumber.ACE));
+        hand.add(new Card(CardType.DIAMOND, CardNumber.TEN));
+        Assertions.assertThat(hand.isBust())
+                .isFalse();
+    }
+
+    @Test
+    @DisplayName("현재 상태가 bust이면 true를 반환한다")
+    void isBustTrue() {
+        Hand hand = new Hand();
+        hand.add(new Card(CardType.DIAMOND, CardNumber.TEN));
+        hand.add(new Card(CardType.DIAMOND, CardNumber.TEN));
+        hand.add(new Card(CardType.DIAMOND, CardNumber.TEN));
+        Assertions.assertThat(hand.isBust())
+                .isTrue();
+    }
 }

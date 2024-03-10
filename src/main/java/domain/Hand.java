@@ -37,6 +37,9 @@ public class Hand {
                 .orElse(0);
     }
 
+    public boolean isBust() {
+        return getResultScore() > BUST_THRESHOLD;
+    }
 
     private boolean containsAce() {
         return cards.stream().anyMatch(Card::isAce);
