@@ -3,8 +3,6 @@ package domain.participant;
 import java.util.List;
 import java.util.function.Consumer;
 
-import view.dto.participant.PlayersDto;
-
 public class Players {
 
     private static final int MIN_SIZE = 1;
@@ -15,13 +13,6 @@ public class Players {
     public Players(final List<Player> players) {
         validateSize(players);
         this.players = List.copyOf(players);
-    }
-
-    public Players(final PlayersDto playersDto) {
-        this(playersDto.players()
-                .stream()
-                .map(Player::new)
-                .toList());
     }
 
     private void validateSize(final List<Player> players) {

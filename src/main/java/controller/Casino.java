@@ -1,15 +1,6 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.stream.Stream;
-
 import domain.BlackjackGame;
-import domain.card.Card;
-import domain.card.CardNumber;
-import domain.card.CardShape;
 import domain.card.Cards;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -21,6 +12,9 @@ import view.dto.participant.DealerDto;
 import view.dto.participant.ParticipantDto;
 import view.dto.participant.PlayerDto;
 import view.dto.participant.PlayersDto;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Casino {
 
@@ -35,7 +29,8 @@ public class Casino {
     public void play(final BlackjackGame game) {
         Dealer dealer = new Dealer(Cards.deck());
         dealer.shuffleCards();
-        Players players = new Players(inputView.askPlayerNames());
+        PlayersDto playersDto = inputView.askPlayerNames();
+        Players players = playersDto.toDomain();
         game.ready(dealer, players);
         proceed(dealer, players);
         result(game, dealer, players);
@@ -59,7 +54,7 @@ public class Casino {
 
     private void askReceiveMoreCard(final Dealer dealer, final Player player) {
         if (!player.canReceiveMoreCard()) {
-            return ;
+            return;
         }
         BlackJackGameCommand command = inputView.askMoreCard(new PlayerDto(player));
         if (command.yes()) {
