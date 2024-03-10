@@ -20,12 +20,12 @@ public class Deck {
 
     private Deque<Card> makeDeck() {
         List<Card> originDeck = Arrays.stream(Shape.values())
-                .flatMap(Deck::matchScore)
+                .flatMap(this::matchScore)
                 .collect(Collectors.toList());
         return new ArrayDeque<>(shuffleDeck(originDeck));
     }
 
-    private static Stream<Card> matchScore(Shape shape) {
+    private Stream<Card> matchScore(Shape shape) {
         return Arrays.stream(Score.values())
                 .map(score -> new Card(shape, score));
     }
