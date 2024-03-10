@@ -50,7 +50,7 @@ class CardsTest {
         Cards given = new Cards();
         given.add(cards);
 
-        boolean result = given.isGreaterThanWinningScore();
+        boolean result = given.isBust();
 
         assertThat(result).isTrue();
     }

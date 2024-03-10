@@ -15,9 +15,9 @@ public enum CardNumberSymbol {
     EIGHT("8"),
     NINE("9"),
     TEN("10"),
-    JACK("10"),
-    QUEEN("10"),
-    KING("10");
+    JACK("J"),
+    QUEEN("Q"),
+    KING("K");
 
     private final String symbol;
 

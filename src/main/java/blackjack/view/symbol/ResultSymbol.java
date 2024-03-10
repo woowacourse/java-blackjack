@@ -5,8 +5,9 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public enum ResultSymbol {
-
-    WIN("승"), PUSH("무"), LOSE("패");
+    WIN("승"),
+    PUSH("무"),
+    LOSE("패");
 
     private final String symbol;
 

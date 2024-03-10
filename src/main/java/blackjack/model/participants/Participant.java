@@ -11,7 +11,7 @@ public abstract class Participant {
         this.cards = new Cards();
     }
 
-    public abstract boolean checkDrawCardState();
+    public abstract boolean canHit();
 
     public void addCard(Card card) {
         cards.add(card);

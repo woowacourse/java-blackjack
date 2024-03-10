@@ -61,7 +61,7 @@ public class OutputView {
         printPlayerResultsFormat(gameResult);
     }
 
-    public void printInvalidDrawCardState() {
+    public void printBustState() {
         System.out.println("카드 합계가 21을 초과하였습니다. 턴을 종료합니다.");
     }
 

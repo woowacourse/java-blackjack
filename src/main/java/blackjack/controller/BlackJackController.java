@@ -32,9 +32,7 @@ public class BlackJackController {
 
         executeMultipleTurns(players, blackJackGame);
         outputView.printFinalScore(blackJackGame);
-        PlayerResult playerResult = blackJackGame.calculatePlayerResults();
-        DealerResult dealerResult = blackJackGame.calculateDealerResults(playerResult);
-        outputView.printGameResults(playerResult, dealerResult);
+        printGameResults(blackJackGame);
     }
 
     private void executeMultipleTurns(List<Player> players, BlackJackGame blackJackGame) {
@@ -56,9 +54,15 @@ public class BlackJackController {
     }
 
     private boolean checkDrawCardState(Player player) {
-        if (!player.checkDrawCardState()) {
-            outputView.printInvalidDrawCardState();
+        if (!player.canHit()) {
+            outputView.printBustState();
         }
-        return player.checkDrawCardState();
+        return player.canHit();
+    }
+
+    private void printGameResults(BlackJackGame blackJackGame) {
+        PlayerResult playerResult = blackJackGame.calculatePlayerResults();
+        DealerResult dealerResult = blackJackGame.calculateDealerResults(playerResult);
+        outputView.printGameResults(playerResult, dealerResult);
     }
 }

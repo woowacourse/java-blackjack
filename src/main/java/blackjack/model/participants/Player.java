@@ -11,15 +11,15 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean checkDrawCardState() {
-        return !cards.isGreaterThanWinningScore();
+    public boolean canHit() {
+        return !cards.isBust();
     }
 
     public Result getResult(Cards otherCards) {
-        if (cards.isGreaterThanWinningScore()) {
+        if (cards.isBust()) {
             return Result.LOSE;
         }
-        if (otherCards.isGreaterThanWinningScore()) {
+        if (otherCards.isBust()) {
             return Result.WIN;
         }
         return compareScore(otherCards);

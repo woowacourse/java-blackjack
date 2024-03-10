@@ -14,13 +14,13 @@ public class DealerResult {
     private Map<Result, Long> calculateDealerResult(PlayerResult playerResult) {
         return playerResult.getResult().values().stream()
                 .collect(Collectors.groupingBy(
-                        this::calculateDealerResult,
+                        this::convertToDealerResult,
                         () -> new EnumMap<>(Result.class),
                         Collectors.counting()
                 ));
     }
 
-    private Result calculateDealerResult(Result playerResult) {
+    private Result convertToDealerResult(Result playerResult) {
         if (playerResult == Result.WIN) {
             return Result.LOSE;
         }

@@ -21,7 +21,7 @@ public class Cards {
         updateCardsScore();
     }
 
-    public boolean isGreaterThanWinningScore() {
+    public boolean isBust() {
         return score > WINNING_SCORE;
     }
 

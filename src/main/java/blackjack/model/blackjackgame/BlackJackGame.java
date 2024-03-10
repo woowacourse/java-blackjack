@@ -33,7 +33,7 @@ public class BlackJackGame {
     }
 
     public boolean checkDealerState() {
-        return dealer.checkDrawCardState();
+        return dealer.canHit();
     }
 
     public void updateDealer() {
