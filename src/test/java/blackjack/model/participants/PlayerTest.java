@@ -2,11 +2,11 @@ package blackjack.model.participants;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-import blackjack.model.blackjackgame.ResultStatus;
 import blackjack.model.cards.Card;
 import blackjack.model.cards.CardNumber;
 import blackjack.model.cards.CardShape;
 import blackjack.model.cards.Cards;
+import blackjack.model.results.Result;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -75,8 +75,8 @@ class PlayerTest {
 
         Player player = new Player("daon");
         player.addCards(given);
-        ResultStatus resultStatus = player.getResultStatus(comparisonCards);
-        assertThat(resultStatus).isEqualTo(ResultStatus.LOSE);
+        Result playerResultStatus = player.getResult(comparisonCards);
+        assertThat(playerResultStatus).isEqualTo(Result.LOSE);
     }
 
     @DisplayName("플레이어 카드가 기준 점수보다 낮고 비교 카드 점수가 기준 점수보다 크면 이긴다.")
@@ -97,14 +97,14 @@ class PlayerTest {
 
         Player player = new Player("daon");
         player.addCards(given);
-        ResultStatus resultStatus = player.getResultStatus(comparisonCards);
-        assertThat(resultStatus).isEqualTo(ResultStatus.WIN);
+        Result playerResultStatus = player.getResult(comparisonCards);
+        assertThat(playerResultStatus).isEqualTo(Result.WIN);
     }
 
     @DisplayName("플레이어 카드와 비교 카드 점수가 기준 점수보다 낮으면 두 점수의 대소관계로 결과를 낸다.")
     @ParameterizedTest
     @CsvSource(value = {"ACE,TWO,LOSE", "THREE,TWO,WIN", "FOUR,FOUR,PUSH"})
-    void compareScore3(CardNumber cardNumber, CardNumber otherNumber, ResultStatus expected) {
+    void compareScore3(CardNumber cardNumber, CardNumber otherNumber, Result expected) {
         List<Card> given = List.of(
                 new Card(cardNumber, CardShape.HEART),
                 new Card(CardNumber.TWO, CardShape.CLOVER),
@@ -120,7 +120,7 @@ class PlayerTest {
 
         Player player = new Player("daon");
         player.addCards(given);
-        ResultStatus resultStatus = player.getResultStatus(comparisonCards);
-        assertThat(resultStatus).isEqualTo(expected);
+        Result playerResultStatus = player.getResult(comparisonCards);
+        assertThat(playerResultStatus).isEqualTo(expected);
     }
 }

@@ -1,7 +1,7 @@
 package blackjack.model.participants;
 
-import blackjack.model.blackjackgame.ResultStatus;
 import blackjack.model.cards.Cards;
+import blackjack.model.results.Result;
 
 public class Player extends Participant {
     private final String name;
@@ -15,27 +15,27 @@ public class Player extends Participant {
         return !cards.isGreaterThanWinningScore();
     }
 
-    public ResultStatus getResultStatus(Cards otherCards) {
+    public Result getResult(Cards otherCards) {
         if (cards.isGreaterThanWinningScore()) {
-            return ResultStatus.LOSE;
+            return Result.LOSE;
         }
         if (otherCards.isGreaterThanWinningScore()) {
-            return ResultStatus.WIN;
+            return Result.WIN;
         }
         return compareScore(otherCards);
     }
 
-    private ResultStatus compareScore(Cards otherCards) {
+    private Result compareScore(Cards otherCards) {
         int calculatedScore = cards.getScore();
         int otherScore = otherCards.getScore();
 
         if (calculatedScore > otherScore) {
-            return ResultStatus.WIN;
+            return Result.WIN;
         }
         if (calculatedScore < otherScore) {
-            return ResultStatus.LOSE;
+            return Result.LOSE;
         }
-        return ResultStatus.PUSH;
+        return Result.PUSH;
     }
 
     public String getName() {

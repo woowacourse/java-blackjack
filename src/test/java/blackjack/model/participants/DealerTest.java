@@ -2,15 +2,12 @@ package blackjack.model.participants;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.model.blackjackgame.ResultStatus;
 import blackjack.model.cards.Card;
 import blackjack.model.cards.CardNumber;
 import blackjack.model.cards.CardShape;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 class DealerTest {
 
@@ -28,26 +25,5 @@ class DealerTest {
         dealer.addCard(card);
 
         assertThat(dealer.getCards().getCards()).hasSize(3);
-    }
-
-    @DisplayName("플레이어 점수와 비교하여 승패를 겨룬다.")
-    @ParameterizedTest
-    @CsvSource(value = {"SEVEN,PUSH", "SIX,LOSE", "EIGHT,WIN"})
-    void determineWinner(CardNumber givenNumber, ResultStatus expected) {
-        List<Card> given = List.of(
-                new Card(CardNumber.SEVEN, CardShape.HEART),
-                new Card(CardNumber.TEN, CardShape.CLOVER)
-        );
-        Dealer dealer = new Dealer();
-        dealer.addCards(given);
-        Player player = new Player("daon");
-
-        List<Card> playerCards = List.of(
-                new Card(givenNumber, CardShape.HEART),
-                new Card(CardNumber.TEN, CardShape.CLOVER)
-        );
-        player.addCards(playerCards);
-
-        assertThat(dealer.determineWinner(player)).isEqualTo(expected);
     }
 }

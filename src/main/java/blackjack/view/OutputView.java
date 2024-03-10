@@ -1,14 +1,18 @@
 package blackjack.view;
 
 import blackjack.model.blackjackgame.BlackJackGame;
-import blackjack.model.blackjackgame.GameResults;
-import blackjack.model.blackjackgame.ResultStatus;
 import blackjack.model.cards.Card;
 import blackjack.model.cards.CardNumber;
 import blackjack.model.cards.CardShape;
 import blackjack.model.cards.Cards;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
+import blackjack.model.results.DealerResult;
+import blackjack.model.results.PlayerResult;
+import blackjack.model.results.Result;
+import blackjack.view.symbol.CardNumberSymbol;
+import blackjack.view.symbol.CardShapeSymbol;
+import blackjack.view.symbol.ResultSymbol;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -49,12 +53,11 @@ public class OutputView {
                         player.getCards().getScore())));
     }
 
-    public void printGameResults(GameResults gameResults) {
+    public void printGameResults(PlayerResult playerResult, DealerResult dealerResult) {
         System.out.println();
         System.out.println("### 최종 승패");
-        Map<ResultStatus, Long> dealerResult = gameResults.getDealerResult();
         System.out.printf("%s: %s%n", DEALER_NAME, getDealerResultFormat(dealerResult));
-        Map<Player, ResultStatus> gameResult = gameResults.getResult();
+        Map<Player, Result> gameResult = playerResult.getResult();
         printPlayerResultsFormat(gameResult);
     }
 
@@ -74,10 +77,11 @@ public class OutputView {
         return String.format("%s: %s - 결과: %d%n", name, getCardsText(cards), score);
     }
 
-    private void printPlayerResultsFormat(Map<Player, ResultStatus> gameResult) {
+    private void printPlayerResultsFormat(Map<Player, Result> gameResult) {
         gameResult.entrySet()
                 .stream()
-                .map(entry -> getPlayerResultFormat(entry.getKey().getName(), entry.getValue().getPlayerResult()))
+                .map(entry -> getPlayerResultFormat(entry.getKey().getName(),
+                        ResultSymbol.convertToSymbol(entry.getValue())))
                 .forEach(System.out::print);
     }
 
@@ -85,10 +89,10 @@ public class OutputView {
         return String.format("%s: %s%n", name, result);
     }
 
-    private String getDealerResultFormat(Map<ResultStatus, Long> dealerResult) {
-        return dealerResult.entrySet()
+    private String getDealerResultFormat(DealerResult dealerResult) {
+        return dealerResult.getDealerResult().entrySet()
                 .stream()
-                .map(entry -> String.format("%d%s", entry.getValue(), entry.getKey().getDealerResult()))
+                .map(entry -> String.format("%d%s", entry.getValue(), ResultSymbol.convertToSymbol(entry.getKey())))
                 .collect(Collectors.joining(" "));
     }
 

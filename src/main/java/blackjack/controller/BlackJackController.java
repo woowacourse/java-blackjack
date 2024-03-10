@@ -1,11 +1,12 @@
 package blackjack.controller;
 
 import blackjack.model.blackjackgame.BlackJackGame;
-import blackjack.model.blackjackgame.GameResults;
 import blackjack.model.deck.DeckGenerator;
 import blackjack.model.deck.DeckManager;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
+import blackjack.model.results.DealerResult;
+import blackjack.model.results.PlayerResult;
 import blackjack.view.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -31,8 +32,9 @@ public class BlackJackController {
 
         executeMultipleTurns(players, blackJackGame);
         outputView.printFinalScore(blackJackGame);
-        GameResults gameResults = blackJackGame.calculateFinalResults();
-        outputView.printGameResults(gameResults);
+        PlayerResult playerResult = blackJackGame.calculatePlayerResults();
+        DealerResult dealerResult = blackJackGame.calculateDealerResults(playerResult);
+        outputView.printGameResults(playerResult, dealerResult);
     }
 
     private void executeMultipleTurns(List<Player> players, BlackJackGame blackJackGame) {

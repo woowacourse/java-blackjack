@@ -3,6 +3,9 @@ package blackjack.model.blackjackgame;
 import blackjack.model.deck.DeckManager;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
+import blackjack.model.results.DealerResult;
+import blackjack.model.results.PlayerResult;
+import blackjack.model.results.Result;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -37,10 +40,14 @@ public class BlackJackGame {
         dealer.addCard(deckManager.drawCard());
     }
 
-    public GameResults calculateFinalResults() {
-        Map<Player, ResultStatus> result = new LinkedHashMap<>();
-        players.forEach(player -> result.put(player, dealer.determineWinner(player)));
-        return new GameResults(result);
+    public PlayerResult calculatePlayerResults() {
+        Map<Player, Result> result = new LinkedHashMap<>();
+        players.forEach(player -> result.put(player, player.getResult(dealer.getCards())));
+        return new PlayerResult(result);
+    }
+
+    public DealerResult calculateDealerResults(PlayerResult playerResult) {
+        return new DealerResult(playerResult);
     }
 
     public Dealer getDealer() {
