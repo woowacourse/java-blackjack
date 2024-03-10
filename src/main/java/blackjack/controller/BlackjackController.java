@@ -1,8 +1,5 @@
 package blackjack.controller;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardRank;
-import blackjack.domain.CardShape;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.GameResult;
@@ -11,8 +8,6 @@ import blackjack.domain.Participants;
 import blackjack.domain.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -32,7 +27,7 @@ public class BlackjackController {
     public void run() {
         try {
             Participants participants = createParticipants();
-            Deck deck = new Deck(createCards());
+            Deck deck = Deck.createShuffledDeck();
 
             initialDeal(participants, deck);
             playersTurn(participants.getPlayers(), deck);
@@ -119,27 +114,5 @@ public class BlackjackController {
         }
 
         return playerGameResults;
-    }
-
-    private List<Card> createCards() {
-        List<Card> cards = new ArrayList<>();
-
-        for (CardRank rank : CardRank.values()) {
-            cards.addAll(createRankCards(rank));
-        }
-
-        Collections.shuffle(cards);
-
-        return cards;
-    }
-
-    private List<Card> createRankCards(CardRank rank) {
-        List<Card> cards = new ArrayList<>();
-
-        for (CardShape shape : CardShape.values()) {
-            cards.add(new Card(rank, shape));
-        }
-
-        return cards;
     }
 }
