@@ -1,4 +1,4 @@
-package domain;
+package domain.gamer;
 
 import domain.gamer.Player;
 import java.util.List;

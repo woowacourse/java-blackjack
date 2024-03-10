@@ -1,11 +1,13 @@
-package domain;
+package domain.gamer;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.gamer.Dealer;
+import domain.gamer.Gamers;
 import domain.gamer.Name;
 import domain.gamer.Player;
+import domain.gamer.Players;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

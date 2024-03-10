@@ -1,8 +1,8 @@
 package view;
 
-import domain.Gamers;
-import domain.PlayerResults;
-import domain.Result;
+import domain.gamer.Gamers;
+import domain.result.PlayerResults;
+import domain.result.Result;
 import domain.card.Card;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;

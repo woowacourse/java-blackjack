@@ -1,8 +1,12 @@
 package domain;
 
+import domain.card.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
+import domain.gamer.Gamers;
 import domain.gamer.Player;
+import domain.result.PlayerResults;
+import domain.result.Result;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

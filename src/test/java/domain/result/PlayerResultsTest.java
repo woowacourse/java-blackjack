@@ -1,9 +1,11 @@
-package domain;
+package domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.gamer.Name;
 import domain.gamer.Player;
+import domain.result.PlayerResults;
+import domain.result.Result;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;

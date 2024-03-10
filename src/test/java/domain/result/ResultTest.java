@@ -1,4 +1,4 @@
-package domain;
+package domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -9,6 +9,7 @@ import domain.card.Symbol;
 import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Player;
+import domain.result.Result;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
