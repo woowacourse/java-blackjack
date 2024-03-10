@@ -15,6 +15,10 @@ public class Card {
         return rank.getScore();
     }
 
+    public boolean isAce() {
+        return rank.isAce();
+    }
+
     public Symbol getSymbol() {
         return symbol;
     }
