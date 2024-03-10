@@ -90,14 +90,6 @@ public class Players {
                         LinkedHashMap::new));
     }
 
-    public Map<ParticipantName, Score> getPlayersScore() {
-        return players.stream()
-                .collect(toMap(Participant::getName,
-                        Participant::calculateScore,
-                        (v1, v2) -> v1,
-                        LinkedHashMap::new));
-    }
-
     public List<ParticipantName> getNames() {
         return players.stream()
                 .map(Participant::getName)

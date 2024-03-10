@@ -1,17 +1,16 @@
 package blackjack.service;
 
+import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
 import blackjack.domain.dealer.Deck;
-import blackjack.domain.card.Hands;
 import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.participant.Players;
-import blackjack.domain.result.Score;
 import blackjack.domain.result.WinStatus;
 import blackjack.domain.result.WinningResult;
-import blackjack.dto.CardDTO;
-import blackjack.dto.FinalHandsScoreDTO;
-import blackjack.dto.StartCardsDTO;
-import blackjack.dto.WinningResultDTO;
+import blackjack.dto.FinalHandsScoreDto;
+import blackjack.dto.PlayerCardsDto;
+import blackjack.dto.StartCardsDto;
+import blackjack.dto.WinningResultDto;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +29,7 @@ public class BlackjackGame {
         return dealer.isNotBlackjack();
     }
 
-    public StartCardsDTO start() {
+    public StartCardsDto start() {
         dealer.addCard(START_CARD_COUNT);
 
         players.divideCard(dealer.drawCards(players.count(), START_CARD_COUNT));
@@ -38,13 +37,11 @@ public class BlackjackGame {
         return getStartCards();
     }
 
-    private StartCardsDTO getStartCards() {
+    private StartCardsDto getStartCards() {
         final Map<ParticipantName, Hands> playersCard = players.getPlayersHands();
-
         final Hands dealerHands = dealer.getOpenedHands();
-        playersCard.put(dealer.getName(), dealerHands);
 
-        return StartCardsDTO.from(playersCard);
+        return StartCardsDto.of(playersCard, dealerHands);
     }
 
     public List<String> getPlayersName() {
@@ -72,30 +69,23 @@ public class BlackjackGame {
         return count;
     }
 
-    public List<CardDTO> getCardsOf(final String name) {
-        return players.getHandsOf(name).getCards().stream()
-                .map(CardDTO::from)
-                .toList();
+    public PlayerCardsDto getCardsOf(final String name) {
+        final Hands hands = players.getHandsOf(name);
+        return PlayerCardsDto.of(name, hands);
     }
 
-    public FinalHandsScoreDTO getFinalHandsScore() {
+    public FinalHandsScoreDto getFinalHandsScore() {
         final Map<ParticipantName, Hands> participantsHands = players.getPlayersHands();
-        final Map<ParticipantName, Score> participantsScores = players.getPlayersScore();
-
         final Hands dealerHands = dealer.getHands();
-        final Score dealerScore = dealer.calculateScore();
 
-        participantsHands.put(dealer.getName(), dealerHands);
-        participantsScores.put(dealer.getName(), dealerScore);
-
-        return FinalHandsScoreDTO.of(participantsHands, participantsScores);
+        return FinalHandsScoreDto.of(participantsHands, dealerHands);
     }
 
-    public WinningResultDTO getWinningResults() {
+    public WinningResultDto getWinningResults() {
         final WinningResult winningResult = WinningResult.of(players, dealer.calculateScore());
         final Map<ParticipantName, WinStatus> playerWinningResults = winningResult.getParticipantsWinStatus();
         final Map<WinStatus, Long> dealerWinningResult = winningResult.summarizeDealerWinningResult();
 
-        return WinningResultDTO.of(playerWinningResults, dealerWinningResult);
+        return WinningResultDto.of(playerWinningResults, dealerWinningResult);
     }
 }

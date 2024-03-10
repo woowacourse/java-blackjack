@@ -1,9 +1,9 @@
 package blackjack.controller;
 
-import blackjack.dto.CardDTO;
-import blackjack.dto.FinalHandsScoreDTO;
-import blackjack.dto.StartCardsDTO;
-import blackjack.dto.WinningResultDTO;
+import blackjack.dto.FinalHandsScoreDto;
+import blackjack.dto.PlayerCardsDto;
+import blackjack.dto.StartCardsDto;
+import blackjack.dto.WinningResultDto;
 import blackjack.exception.ExceptionHandler;
 import blackjack.service.BlackjackGame;
 import blackjack.view.InputView;
@@ -23,7 +23,7 @@ public class BlackjackController {
     public void run() {
         final BlackjackGame blackjackGame = initGame();
 
-        final StartCardsDTO startCardsDTO = blackjackGame.start();
+        final StartCardsDto startCardsDTO = blackjackGame.start();
         outputView.printStartCards(startCardsDTO);
 
         if (blackjackGame.isNotDealerBlackjack()) {
@@ -71,13 +71,13 @@ public class BlackjackController {
     }
 
     private void showPlayerCards(final BlackjackGame blackjackGame, final String name) {
-        final List<CardDTO> cards = blackjackGame.getCardsOf(name);
-        outputView.printPlayerCard(name, cards);
+        final PlayerCardsDto playersCards = blackjackGame.getCardsOf(name);
+        outputView.printPlayerCard(playersCards);
     }
 
     private void finishGame(final BlackjackGame blackjackGame) {
-        final FinalHandsScoreDTO finalHandsScoreDTO = blackjackGame.getFinalHandsScore();
-        final WinningResultDTO winningResults = blackjackGame.getWinningResults();
+        final FinalHandsScoreDto finalHandsScoreDTO = blackjackGame.getFinalHandsScore();
+        final WinningResultDto winningResults = blackjackGame.getWinningResults();
         outputView.printFinalResult(finalHandsScoreDTO, winningResults);
     }
 }
