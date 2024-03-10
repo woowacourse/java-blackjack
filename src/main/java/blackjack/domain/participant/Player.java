@@ -7,6 +7,7 @@ import java.util.Objects;
 
 public class Player extends Participant {
 
+    private static final int START_CARD_SIZE = 2;
     private final Name name;
 
     Player(List<Card> cards, Name name) {
@@ -25,6 +26,11 @@ public class Player extends Participant {
     @Override
     protected int getMaxDrawableScore() {
         return BLACKJACK_SCORE;
+    }
+
+    @Override
+    protected int getStartCardSize() {
+        return START_CARD_SIZE;
     }
 
     public String getName() {

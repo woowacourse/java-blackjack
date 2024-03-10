@@ -48,10 +48,15 @@ public abstract class Participant {
         hand.add(card);
     }
 
-    // TODO getStartCards() 도입
+    public final List<Card> getStartCards() {
+        return getCards().subList(0, getStartCardSize());
+    }
+
     public final List<Card> getCards() {
         return hand.getCards();
     }
 
     protected abstract int getMaxDrawableScore();
+
+    protected abstract int getStartCardSize();
 }

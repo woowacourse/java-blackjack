@@ -30,13 +30,10 @@ public class OutputView {
             Map.entry(Value.KING, "K")
     );
 
-    private static final int DEALER_START_CARDS_SIZE = 1;
-    private static final int PLAYER_START_CARDS_SIZE = 2;
-
     public void printStartStatus(Dealer dealer, Players players) {
         System.out.println();
         System.out.println("딜러와 " + toPrintedFormat(players) + "에게 2장을 나누었습니다.");
-        printDealerCards(dealer.getCards().subList(0, DEALER_START_CARDS_SIZE));
+        printDealerCards(dealer.getStartCards());
         System.out.println();
         printPlayersCards(players);
         System.out.println();
@@ -57,7 +54,7 @@ public class OutputView {
 
     private void printPlayersCards(Players players) {
         for (Player player : players.getPlayers()) {
-            printPlayerCards(player.getName(), player.getCards().subList(0, PLAYER_START_CARDS_SIZE));
+            printPlayerCards(player.getName(), player.getStartCards());
             System.out.println();
         }
     }
