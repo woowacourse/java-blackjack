@@ -10,11 +10,11 @@ public enum ResultCommandDisplay {
     ;
 
     private final ResultCommand result;
-    private final String value;
+    private final String displayName;
 
-    ResultCommandDisplay(final ResultCommand result, final String value) {
+    ResultCommandDisplay(final ResultCommand result, final String displayName) {
         this.result = result;
-        this.value = value;
+        this.displayName = displayName;
     }
 
     public static String getValue(final ResultCommand result) {
@@ -22,6 +22,6 @@ public enum ResultCommandDisplay {
                 .filter(resultCommandDisplay -> resultCommandDisplay.result == result)
                 .findFirst()
                 .get()
-                .value;
+                .displayName;
     }
 }

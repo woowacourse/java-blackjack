@@ -20,11 +20,11 @@ public enum ScoreDisplay {
     ;
 
     private final Score score;
-    private final String value;
+    private final String displayName;
 
-    ScoreDisplay(final Score score, final String value) {
+    ScoreDisplay(final Score score, final String displayName) {
         this.score = score;
-        this.value = value;
+        this.displayName = displayName;
     }
 
     public static String getValue(final Score score) {
@@ -32,6 +32,6 @@ public enum ScoreDisplay {
                 .filter(scoreDisplay -> scoreDisplay.score == score)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 카드 점수에 매칭되는 출력 문자가 없습니다."))
-                .value;
+                .displayName;
     }
 }

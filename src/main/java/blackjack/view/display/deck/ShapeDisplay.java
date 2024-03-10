@@ -11,11 +11,11 @@ public enum ShapeDisplay {
     ;
 
     private final Shape shape;
-    private final String value;
+    private final String displayName;
 
-    ShapeDisplay(final Shape shape, final String value) {
+    ShapeDisplay(final Shape shape, final String displayName) {
         this.shape = shape;
-        this.value = value;
+        this.displayName = displayName;
     }
 
     public static String getValue(final Shape shape) {
@@ -23,6 +23,6 @@ public enum ShapeDisplay {
                 .filter(converter -> converter.shape == shape)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 카드 모양에 매칭되는 출력 문자가 없습니다."))
-                .value;
+                .displayName;
     }
 }
