@@ -3,7 +3,6 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.deck.Card;
-import blackjack.domain.deck.Deck;
 import blackjack.domain.deck.Hands;
 import blackjack.domain.deck.Rank;
 import blackjack.domain.deck.Shape;
@@ -49,7 +48,7 @@ class PlayersTest {
     @Test
     @DisplayName("딜러보다 점수가 낮은 플레이어는 패배한다.")
     void calculateResultFailTest() {
-        Map<Player, Boolean> result = players.calculateVictory(20);
+        Map<Player, Boolean> result = players.calculateWinOrLose(20);
 
         assertThat(result.get(siso)).isFalse();
     }
@@ -57,7 +56,7 @@ class PlayersTest {
     @Test
     @DisplayName("딜러보다 점수가 높은 플레이어는 승리한다.")
     void calculateResultSuccessTest() {
-        Map<Player, Boolean> result = players.calculateVictory(20);
+        Map<Player, Boolean> result = players.calculateWinOrLose(20);
 
         assertThat(result.get(takan)).isTrue();
     }

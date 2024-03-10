@@ -3,7 +3,6 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.deck.Card;
-import blackjack.domain.deck.Deck;
 import blackjack.domain.deck.Hands;
 import blackjack.domain.deck.Rank;
 import blackjack.domain.deck.Shape;
@@ -115,7 +114,7 @@ public class GameBoardTest {
         dealer.receiveCard(new Card(Shape.HEART, Rank.ACE));
         dealer.receiveCard(new Card(Shape.HEART, Rank.JACK));
 
-        Map<Player, Boolean> victoryResult = gameBoard.calculateVictory();
+        Map<Player, Boolean> victoryResult = gameBoard.calculateWinOrLose();
 
 
         assertThat(victoryResult.get(siso)).isFalse();
@@ -128,7 +127,7 @@ public class GameBoardTest {
         dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
         dealer.receiveCard(new Card(Shape.HEART, Rank.JACK));
 
-        Map<Player, Boolean> victoryResult = gameBoard.calculateVictory();
+        Map<Player, Boolean> victoryResult = gameBoard.calculateWinOrLose();
 
         assertThat(victoryResult.get(takan)).isTrue();
         assertThat(victoryResult.get(siso)).isFalse();

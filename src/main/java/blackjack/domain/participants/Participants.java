@@ -40,8 +40,8 @@ public class Participants {
         return hands.remove(hands.size() - 1);
     }
 
-    public Map<Player, Boolean> calculateVictory() {
-        return players.calculateVictory(dealer.calculateScore());
+    public Map<Player, Boolean> calculateWinOrLose() {
+        return players.calculateWinOrLose(dealer.calculateScore());
     }
 
     public boolean isPlayerNotOver(int playerIndex) {

@@ -34,6 +34,10 @@ public class Player {
         return hands.calculateScore() < boundaryScore;
     }
 
+    public boolean isWin(int dealerScore) {
+        return hands.calculateScore() > dealerScore;
+    }
+
     public Name getName() {
         return name;
     }

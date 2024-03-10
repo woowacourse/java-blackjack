@@ -78,8 +78,8 @@ public class GameBoard {
         participants.receiveDealerCard(allCardDeck.pickRandomCard());
     }
 
-    public Map<Player, Boolean> calculateVictory() {
-        return participants.calculateVictory();
+    public Map<Player, Boolean> calculateWinOrLose() {
+        return participants.calculateWinOrLose();
     }
 
     public Deck getAllCardDeck() {

@@ -2,7 +2,6 @@ package blackjack.domain.participants;
 
 
 import blackjack.domain.deck.Card;
-import blackjack.domain.deck.Deck;
 import blackjack.domain.deck.Hands;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -18,20 +17,10 @@ public class Players {
         this.players = players;
     }
 
-    public Map<Player, Boolean> calculateVictory(int dealerScore) {
+    public Map<Player, Boolean> calculateWinOrLose(int dealerScore) {
         Map<Player, Boolean> result = new LinkedHashMap<>();
-        players.forEach(player -> result.put(player, isPlayerWin(player, dealerScore)));
+        players.forEach(player -> result.put(player, player.isWin(dealerScore)));
         return result;
-    }
-
-    private boolean isPlayerWin(Player player, int dealerScore) {
-        if (player.calculateScore() > MAX_SCORE) {
-            return false;
-        }
-        if (dealerScore > MAX_SCORE) {
-            return true;
-        }
-        return dealerScore < player.calculateScore();
     }
 
     public void receiveOnePlayerCard(Card card, int playerIndex) {
