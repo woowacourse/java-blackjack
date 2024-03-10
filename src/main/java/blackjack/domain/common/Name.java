@@ -16,7 +16,7 @@ public class Name {
 
     private void validateContainBlank(final String value) {
         if (value.contains(" ")) {
-            throw new IllegalArgumentException(String.format("%s 는 공백을 포함 하고 있습니다", value));
+            throw new IllegalArgumentException("플레이어 이름에는 공백이 포함될 수 없습니다.");
         }
     }
 
