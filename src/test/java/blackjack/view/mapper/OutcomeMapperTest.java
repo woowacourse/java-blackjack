@@ -1,4 +1,4 @@
-package blackjack.view;
+package blackjack.view.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -8,14 +8,14 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class OutcomeTranslatorTest {
+class OutcomeMapperTest {
 
     @DisplayName("OutcomeTranslator는 Outcome의 멤버를 모두 알고 있다.")
     @Test
     void knowAllValuesOfOutcome() {
         final List<Outcome> expected = List.of(Outcome.values());
-        final List<Outcome> actual = Arrays.stream(OutcomeTranslator.values())
-                .map(OutcomeTranslator::getOutcome)
+        final List<Outcome> actual = Arrays.stream(OutcomeMapper.values())
+                .map(OutcomeMapper::getOutcome)
                 .toList();
 
         assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
@@ -26,7 +26,7 @@ class OutcomeTranslatorTest {
     void findViewName() {
         final String expected = "승";
 
-        final String actual = OutcomeTranslator.translate(Outcome.WIN);
+        final String actual = OutcomeMapper.mapToViewName(Outcome.WIN);
 
         assertThat(actual).isEqualTo(expected);
     }

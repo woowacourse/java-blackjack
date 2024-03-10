@@ -1,11 +1,13 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.dto.DealerResponseDto;
-import blackjack.domain.dto.OutcomeDto;
-import blackjack.domain.dto.OutcomesDto;
-import blackjack.domain.dto.PlayerResponseDto;
-import blackjack.domain.dto.PlayersResponseDto;
+import blackjack.dto.DealerResponseDto;
+import blackjack.dto.OutcomeDto;
+import blackjack.dto.OutcomesDto;
+import blackjack.dto.PlayerResponseDto;
+import blackjack.dto.PlayersResponseDto;
+import blackjack.view.mapper.OutcomeMapper;
+import blackjack.view.mapper.SuitMapper;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -33,7 +35,7 @@ public class OutputView {
     private static String makeCardsState(final List<Card> cards) {
         final StringJoiner cardJoiner = new StringJoiner(", ");
         for (Card card : cards) {
-            cardJoiner.add(card.number().getValue() + SuitTranslator.translate(card.suit()));
+            cardJoiner.add(card.number().getValue() + SuitMapper.mapToViewName(card.suit()));
         }
         return cardJoiner.toString();
     }
@@ -74,7 +76,7 @@ public class OutputView {
     private static void printPlayersFinalOutcome(final List<OutcomeDto> outcomeDtos) {
         for (OutcomeDto outcomeDto : outcomeDtos) {
             System.out.println(
-                    outcomeDto.getName().value() + ": " + OutcomeTranslator.translate(outcomeDto.getOutcome()));
+                    outcomeDto.getName().value() + ": " + OutcomeMapper.mapToViewName(outcomeDto.getOutcome()));
         }
     }
 }

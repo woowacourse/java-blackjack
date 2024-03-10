@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.dto.OutcomesDto;
+import blackjack.dto.OutcomesDto;
 import java.util.List;
 
 public enum Outcome {
