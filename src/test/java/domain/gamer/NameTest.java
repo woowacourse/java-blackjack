@@ -1,10 +1,10 @@
 package domain.gamer;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class NameTest {
 
@@ -12,7 +12,8 @@ class NameTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "liniri"})
     void invalidNameLengthTest(String name) {
-        assertThatThrownBy(() -> new Name(name)).isInstanceOf(IllegalArgumentException.class)
+        assertThatThrownBy(() -> new Name(name))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(Name.INVALID_NAME_LENGTH);
     }
 

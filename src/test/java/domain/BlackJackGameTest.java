@@ -1,8 +1,5 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
@@ -10,16 +7,20 @@ import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Player;
 import domain.strategy.SettedDecksGenerator;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class BlackJackGameTest {
     Decks decks;
 
     @BeforeEach
-    void  init(){
+    void init() {
         Card card1 = new Card(Symbol.DIAMOND, Rank.EIGHT);
         Card card2 = new Card(Symbol.CLOVER, Rank.BIG_ACE);
         Card card3 = new Card(Symbol.SPADE, Rank.KING);

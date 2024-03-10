@@ -1,11 +1,11 @@
 package domain.strategy;
 
-import domain.card.Card;
 import domain.DecksGenerator;
+import domain.card.Card;
+
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 public class SettedDecksGenerator implements DecksGenerator {

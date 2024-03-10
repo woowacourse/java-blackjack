@@ -1,22 +1,18 @@
-package domain;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+package domain.gamer;
 
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
-import domain.gamer.Name;
-import domain.gamer.Player;
-import java.util.List;
-import java.util.Stack;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import net.bytebuddy.build.ToStringPlugin.Enhance;
-import net.bytebuddy.dynamic.loading.InjectionClassLoader.Strategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Stack;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayerTest {
     Stack<Card> cards;
@@ -107,7 +103,7 @@ public class PlayerTest {
 
     @DisplayName("플레이어는 '딜러'와 동일한 이름을 사용하면 예외를 던진다.")
     @Test
-    void invalidNameTest(){
+    void invalidNameTest() {
         // given
         Name name = new Name("딜러");
 

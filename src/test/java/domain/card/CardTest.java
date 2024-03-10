@@ -1,12 +1,9 @@
-package domain;
+package domain.card;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Symbol;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardTest {
 
