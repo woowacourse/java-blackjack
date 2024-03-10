@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import blackjack.domain.result.Score;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Participant {
     private final Hands hands;
@@ -49,5 +50,21 @@ public class Participant {
 
     public ParticipantName getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof final Participant that)) {
+            return false;
+        }
+        return Objects.equals(getName(), that.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName());
     }
 }

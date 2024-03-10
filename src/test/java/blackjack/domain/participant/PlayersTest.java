@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import blackjack.exception.NeedRetryException;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,13 +17,9 @@ class PlayersTest {
     @DisplayName("중복된 플레이어를 생성할 수 없다.")
     @Test
     void validateDuplicate() {
-        // given
-        Participant participant = Participant.from("kirby");
-        List<Participant> participants = List.of(participant, participant);
-
-        // when & then
-        assertThatThrownBy(() -> new Players(participants))
-                .isInstanceOf(IllegalArgumentException.class)
+        final List<String> names = List.of("kirby", "kirby");
+        assertThatThrownBy(() -> Players.from(names))
+                .isInstanceOf(NeedRetryException.class)
                 .hasMessage("중복된 이름의 참여자는 참여할 수 없습니다.");
     }
 
@@ -33,7 +29,7 @@ class PlayersTest {
         // given
         String kirby = "kirby";
         String pobi = "pobi";
-        Players players = new Players(List.of(new Participant(kirby), new Participant(pobi)));
+        Players players = Players.from(List.of(kirby, pobi));
         Card card1 = new Card(CardNumber.ACE, CardShape.SPADE);
         Card card2 = new Card(CardNumber.TWO, CardShape.SPADE);
         Card card3 = new Card(CardNumber.THREE, CardShape.SPADE);
@@ -57,7 +53,7 @@ class PlayersTest {
     @Test
     void validateCardSize() {
         // given
-        Players players = new Players(List.of(new Participant("kirby"), new Participant("pobi")));
+        Players players = Players.from(List.of("kirby", "pobi"));
         List<List<Card>> cards = List.of(List.of(new Card(CardNumber.ACE, CardShape.SPADE),
                 new Card(CardNumber.TWO, CardShape.SPADE)));
 

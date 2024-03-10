@@ -1,7 +1,5 @@
 package blackjack.domain.dealer;
 
-import static java.util.stream.Collectors.*;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
