@@ -4,6 +4,8 @@ import blackjack.model.blackjackgame.BlackJackGame;
 import blackjack.model.blackjackgame.GameResults;
 import blackjack.model.blackjackgame.ResultStatus;
 import blackjack.model.cards.Card;
+import blackjack.model.cards.CardNumber;
+import blackjack.model.cards.CardShape;
 import blackjack.model.cards.Cards;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
@@ -110,8 +112,10 @@ public class OutputView {
     }
 
     private String convertCardText(Card card) {
-        String cardNumberText = card.getCardNumber().getText();
-        String cardShapeText = card.getCardShape().getText();
-        return cardNumberText + cardShapeText;
+        CardNumber cardNumber = card.getCardNumber();
+        CardShape cardShape = card.getCardShape();
+        String cardNumberSymbol = CardNumberSymbol.convertToSymbol(cardNumber);
+        String cardShapeSymbol = CardShapeSymbol.convertToSymbol(cardShape);
+        return cardNumberSymbol + cardShapeSymbol;
     }
 }
