@@ -43,7 +43,7 @@ public class BlackjackGame {
         outputView.printHandCards(makeCardOutput(dealer.showFirstCard()));
 
         for (Player player : players.getPlayers()) {
-            outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
+            printHandCards(player);
         }
         outputView.printNewLine();
     }
@@ -80,14 +80,19 @@ public class BlackjackGame {
         String choice = inputView.readMoreCardChoice(player.getName());
 
         if (!outputView.isMoreChoice(choice)) {
-            outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
+            printHandCards(player);
             return;
         }
 
+        boolean isNotBust = true;
         do {
-            player.draw(dealer);
-            outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
-        } while ((player.canReceiveCard()) && outputView.isMoreChoice(inputView.readMoreCardChoice(player.getName())));
+            isNotBust = player.draw(dealer);
+            printHandCards(player);
+        } while ((isNotBust) && outputView.isMoreChoice(inputView.readMoreCardChoice(player.getName())));
+    }
+
+    private void printHandCards(Player player) {
+        outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
     }
 
     private List<String> makeCardOutput(final List<TrumpCard> trumpCards) {
