@@ -5,12 +5,12 @@ import domain.constant.CardType;
 
 public class Card {
     private final CardType cardType;
-    private final CardNumber cardNubmer;
+    private final CardNumber cardNumber;
 
     public Card(CardType cardType, CardNumber cardNumber) {
         validateNull(cardType, cardNumber);
         this.cardType = cardType;
-        this.cardNubmer = cardNumber;
+        this.cardNumber = cardNumber;
     }
 
     private void validateNull(CardType cardType, CardNumber cardNumber) {
@@ -20,7 +20,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return cardNubmer.equals(CardNumber.ACE);
+        return cardNumber.equals(CardNumber.ACE);
     }
 
     public CardType getCardType() {
@@ -28,11 +28,11 @@ public class Card {
     }
 
     public CardNumber getCardNumber() {
-        return cardNubmer;
+        return cardNumber;
     }
 
     @Override
     public String toString() {
-        return cardNubmer.getSymbol() + cardType.getType();
+        return cardNumber.getSymbol() + cardType.getType();
     }
 }
