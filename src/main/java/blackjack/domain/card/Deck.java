@@ -29,9 +29,8 @@ public class Deck {
     }
 
     private static Stream<Card> addCard(final CardSymbol cardSymbol) {
-        return EnumSet.allOf(CardValue.class)
-                      .stream()
-                      .map(cardNumber -> new Card(cardNumber, cardSymbol));
+        return Arrays.stream(CardValue.values())
+                     .map(cardNumber -> new Card(cardNumber, cardSymbol));
     }
 
     public Card draw() {
