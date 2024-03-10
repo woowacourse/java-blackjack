@@ -28,13 +28,13 @@ public class BlackjackController {
 		return new Players(inputView.readPlayerNames());
 	}
 
+	public Dealer createDealer() {
+		return Dealer.newInstance(createDeck());
+	}
+
 	public Deck createDeck() {
 		ShuffledDeckGenerator deckGenerator = ShuffledDeckGenerator.getInstance();
 		return deckGenerator.generate();
-	}
-
-	public Dealer createDealer(Deck deck) {
-		return Dealer.newInstance(deck);
 	}
 
 	public void startGame(Dealer dealer, Players players) {
