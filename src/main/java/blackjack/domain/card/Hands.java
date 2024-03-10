@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class Hands {
 
-    private static final int ACE_SCORE_GAP = 10;
+    private static final int ACE_SCORE_GAP = CardNumber.ACE.getNumber() - CardNumber.ACE_BONUS_NUMBER;
 
     private final List<Card> cards;
 

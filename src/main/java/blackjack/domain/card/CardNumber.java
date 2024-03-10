@@ -15,6 +15,7 @@ public enum CardNumber {
     KING(10),
     ACE(11);
 
+    static final int ACE_BONUS_NUMBER = 1;
     private final int number;
 
     CardNumber(final int number) {
