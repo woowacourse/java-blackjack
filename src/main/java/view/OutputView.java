@@ -14,6 +14,12 @@ import java.util.StringJoiner;
 
 public class OutputView {
 
+    private static final Map<Status, String> outcome = Map.of(
+            Status.WIN, "승",
+            Status.TIE, "무",
+            Status.LOSE, "패"
+    );
+
     public void printInitialCards(DealerCards dealerCards, List<PlayerCards> playerCards) {
         List<String> names = playerCards.stream()
                 .map(playerCard -> playerCard.getPlayerName().toString())
@@ -34,13 +40,11 @@ public class OutputView {
 
     public void printPlayerCards(PlayerCards cards) {
         Name playerName = cards.getPlayerName();
-        System.out.print(playerName + "카드: ");
-        System.out.print(formatCards(cards));
+        System.out.print(playerName + "카드: " + formatCards(cards));
     }
 
-    private String formatCards(Cards playerCard) {
-        List<String> cards = playerCard.getCards();
-        return String.join(", ", cards);
+    private String formatCards(Cards cards) {
+        return String.join(", ", cards.getCards());
     }
 
     public void printResults(DealerCards dealerCards, List<PlayerCards> playerCards) {
@@ -70,13 +74,13 @@ public class OutputView {
 
         StringJoiner stringJoiner = new StringJoiner(" ");
         for (Status status : Status.values()) {
-            String score = dealerScore.getScore(status) + status.getStatus();
+            String score = dealerScore.getScore(status) + outcome.get(status);
             stringJoiner.add(score);
         }
         System.out.println(stringJoiner);
 
         Map<Name, Status> playerStatus = scoreBoard.getPlayerScore();
-        playerStatus.forEach((name, status) -> System.out.println(name + ": " + status.getStatus()));
+        playerStatus.forEach((name, status) -> System.out.println(name + ": " + outcome.get(status)));
     }
 
     public void printDealerGivenCard() {
