@@ -1,7 +1,5 @@
 package blackjack.model.participant;
 
-import static blackjack.model.deck.Score.FIVE;
-import static blackjack.model.deck.Score.FOUR;
 import static blackjack.model.deck.Score.SIX;
 import static blackjack.model.deck.Score.TEN;
 import static blackjack.model.deck.Shape.CLOVER;
@@ -14,12 +12,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
-    private Hand hand;
     private Dealer dealer;
 
     @BeforeEach
     void init() {
-        hand = new Hand(List.of(new Card(CLOVER, TEN), new Card(CLOVER, SIX)));
+        Hand hand = new Hand(List.of(new Card(CLOVER, TEN), new Card(CLOVER, SIX)));
         dealer = new Dealer(hand);
     }
 
