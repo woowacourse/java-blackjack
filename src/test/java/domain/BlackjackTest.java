@@ -42,7 +42,7 @@ class BlackjackTest {
         final Player dealer = new Dealer();
         final Player teba = new Participant(new Name("테바"));
         final Player jonge = new Participant(new Name("종이"));
-        teba.hit(new Card(Denomination.ACE, Symbol.CLOVER));
+        teba.hit(new Card(Denomination.ACE, Symbol.CLUBS));
         jonge.hit(new Card(Denomination.ACE, Symbol.HEART));
         final Blackjack blackjack = new Blackjack(new Players(new ArrayList<>(List.of(teba, jonge))), dealer);
 

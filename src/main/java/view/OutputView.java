@@ -100,7 +100,7 @@ public class OutputView {
         if (symbol == Symbol.HEART) {
             return "하트";
         }
-        if (symbol == Symbol.CLOVER) {
+        if (symbol == Symbol.CLUBS) {
             return "클로버";
         }
         if (symbol == Symbol.SPADE) {

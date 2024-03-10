@@ -3,6 +3,6 @@ package domain;
 public enum Symbol {
     HEART,
     SPADE,
-    CLOVER,
+    CLUBS,
     DIAMOND;
 }
