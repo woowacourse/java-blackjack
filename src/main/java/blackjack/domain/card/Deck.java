@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-// TODO 패키지 변경
 public class Deck {
 
     private final Queue<Card> cards;
