@@ -35,7 +35,7 @@ public class OutputFormat {
     }
 
     public String formatCard(Card card) {
-        return card.getRank().getName() + card.getShape().getName();
+        return RankFormat.from(card.getRank()).getName() + ShapeFormat.from(card.getShape()).getName();
     }
 
     public String formatDealerResult(BlackJackResult blackJackResult) {
