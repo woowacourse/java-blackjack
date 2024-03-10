@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.rule.Score;
 import java.util.Objects;
 
-public class Participant {
+public abstract class Participant {
 
     protected final PlayerName name;
     protected final Hand hand;
@@ -22,9 +22,7 @@ public class Participant {
         return hand.calculateScore();
     }
 
-    public boolean canHit() {
-        return hand.canHit();
-    }
+    public abstract boolean canHit();
 
     public int handSize() {
         return hand.countCard();
