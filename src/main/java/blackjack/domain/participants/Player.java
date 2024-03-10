@@ -5,7 +5,6 @@ import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Deck;
 
 public class Player {
-
     private final Name name;
     private final Deck deck;
 

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Participants {
-
     private static final int DEALER_COUNT = 1;
     private static final int DEALER_BOUNDARY_SCORE = 17;
 

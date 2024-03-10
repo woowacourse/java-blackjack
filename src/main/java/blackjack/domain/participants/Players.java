@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Players {
-
     public static final int MAX_SCORE = 21;
 
     private final List<Player> players;

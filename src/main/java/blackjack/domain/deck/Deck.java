@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Deck {
-
-    private static final Random RANDOM  = new Random();
+    private static final Random RANDOM = new Random();
     private static final int ACE_BONUS_SCORE = 10;
     private static final int NO_BONUS_SCORE = 0;
 
@@ -15,6 +14,10 @@ public class Deck {
 
     public Deck() {
         this.cards = new LinkedList<>();
+    }
+
+    private static boolean canAddAceBonusScore(int totalScore) {
+        return totalScore + ACE_BONUS_SCORE <= Players.MAX_SCORE;
     }
 
     public void addCard(Card card) {
@@ -45,10 +48,6 @@ public class Deck {
             return ACE_BONUS_SCORE;
         }
         return NO_BONUS_SCORE;
-    }
-
-    private static boolean canAddAceBonusScore(int totalScore) {
-        return totalScore + ACE_BONUS_SCORE <= Players.MAX_SCORE;
     }
 
     private void validateDeck() {
