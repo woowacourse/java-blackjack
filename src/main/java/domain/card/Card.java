@@ -19,12 +19,12 @@ public class Card {
         return rank.isAce();
     }
 
-    public Symbol getSymbol() {
-        return symbol;
+    public String getSymbolValue() {
+        return symbol.getValue();
     }
 
-    public Rank getRank() {
-        return rank;
+    public String getRankValue() {
+        return rank.getValue();
     }
 
     @Override

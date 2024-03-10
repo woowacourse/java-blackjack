@@ -87,8 +87,8 @@ public class OutputView {
     }
 
     private static String printCardInfo(final Card card) {
-        String symbol = card.getSymbol().getName();
-        String rank = card.getRank().getName();
+        String symbol = card.getSymbolValue();
+        String rank = card.getRankValue();
         return rank + symbol;
     }
 
