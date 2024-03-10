@@ -3,7 +3,7 @@ package blackjack.domain.card.factory;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import blackjack.domain.card.TrumpCard;
-import blackjack.domain.card.factory.CardFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
