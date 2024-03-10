@@ -8,6 +8,8 @@ import domain.card.Rank;
 import domain.card.Symbol;
 import domain.gamer.Name;
 import domain.gamer.Player;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
@@ -19,7 +21,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
-    Stack<Card> cards;
+    Deque<Card> cards;
     Player player;
 
     @BeforeEach
@@ -29,7 +31,7 @@ public class PlayerTest {
         Card card3 = new Card(Symbol.SPADE, Rank.THREE);
 
         cards = Stream.of(card1, card2, card3)
-                .collect(Collectors.toCollection(Stack::new));
+                .collect(Collectors.toCollection(ArrayDeque::new));
 
         Name name = new Name("lini");
         player = new Player(name);
@@ -39,7 +41,7 @@ public class PlayerTest {
     @Test
     void hitTest() {
         // when
-        player.hit(cards.pop());
+        player.hit(cards.removeLast());
 
         // then
         assertThat(player.getHand()).hasSize(1);
@@ -49,8 +51,8 @@ public class PlayerTest {
     @Test
     void calculateTotalScoreTest() {
         // given
-        player.hit(cards.pop());
-        player.hit(cards.pop());
+        player.hit(cards.removeLast());
+        player.hit(cards.removeLast());
 
         int expectedScore = 13;
 
@@ -65,9 +67,9 @@ public class PlayerTest {
     @Test
     void isBust() {
         // given
-        player.hit(cards.pop());
-        player.hit(cards.pop());
-        player.hit(cards.pop());
+        player.hit(cards.removeLast());
+        player.hit(cards.removeLast());
+        player.hit(cards.removeLast());
 
         // when
         boolean bust = player.isBust();
@@ -80,9 +82,9 @@ public class PlayerTest {
     @Test
     void isNotStayTest() {
         // given
-        player.hit(cards.pop());
-        player.hit(cards.pop());
-        player.hit(cards.pop());
+        player.hit(cards.removeLast());
+        player.hit(cards.removeLast());
+        player.hit(cards.removeLast());
 
         // when
         boolean stay = player.isStay();
@@ -95,8 +97,8 @@ public class PlayerTest {
     @Test
     void isStayTest() {
         // given
-        player.hit(cards.pop());
-        player.hit(cards.pop());
+        player.hit(cards.removeLast());
+        player.hit(cards.removeLast());
 
         // when
         boolean stay = player.isStay();

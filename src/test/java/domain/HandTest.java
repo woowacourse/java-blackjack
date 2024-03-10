@@ -7,18 +7,17 @@ import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
 import domain.gamer.Hand;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 public class HandTest {
-    Stack<Card> cards;
+    Deque<Card> cards;
     Hand hand;
 
     @BeforeEach
@@ -28,7 +27,7 @@ public class HandTest {
         Card card3 = new Card(Symbol.CLOVER, Rank.NINE);
 
         cards = Stream.of(card1, card2, card3)
-                .collect(Collectors.toCollection(Stack::new));
+                .collect(Collectors.toCollection(ArrayDeque::new));
         hand = new Hand();
     }
 
@@ -39,7 +38,7 @@ public class HandTest {
         Card expectedCard = new Card(Symbol.CLOVER, Rank.NINE);
 
         // when
-        hand.add(cards.pop());
+        hand.add(cards.removeLast());
         List<Card> result = hand.getCards();
 
         // then
@@ -55,8 +54,8 @@ public class HandTest {
         // given
         Card aceCard = new Card(Symbol.CLOVER, Rank.BIG_ACE);
         hand.add(aceCard);
-        hand.add(cards.pop());
-        hand.add(cards.pop());
+        hand.add(cards.removeLast());
+        hand.add(cards.removeLast());
 
         int expectedScore = 13;
 
@@ -71,8 +70,8 @@ public class HandTest {
     @Test
     void isNotBustTest() {
         // given
-        hand.add(cards.pop());
-        hand.add(cards.pop());
+        hand.add(cards.removeLast());
+        hand.add(cards.removeLast());
 
         // when
         boolean result = hand.isOverBlackJack();
@@ -85,9 +84,9 @@ public class HandTest {
     @Test
     void isBustTest() {
         // given
-        hand.add(cards.pop());
-        hand.add(cards.pop());
-        hand.add(cards.pop());
+        hand.add(cards.removeLast());
+        hand.add(cards.removeLast());
+        hand.add(cards.removeLast());
 
         // when
         boolean result = hand.isOverBlackJack();

@@ -6,6 +6,8 @@ import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
 import domain.gamer.Dealer;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
@@ -15,7 +17,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
-    Stack<Card> cards;
+    Deque<Card> cards;
     Dealer dealer;
 
     @BeforeEach
@@ -24,16 +26,15 @@ public class DealerTest {
         Card card2 = new Card(Symbol.SPADE, Rank.QUEEN);
         Card card3 = new Card(Symbol.SPADE, Rank.THREE);
 
-        cards = Stream.of(card1, card2, card3).collect(Collectors.toCollection(Stack::new));
+        cards = Stream.of(card1, card2, card3).collect(Collectors.toCollection(ArrayDeque::new));
         dealer = new Dealer();
     }
 
-    //TODO : 생성 부분 리팩터링
     @DisplayName("딜러가 카드를 뽑아서 저장한다.")
     @Test
     void hitTest() {
         // when
-        dealer.hit(cards.pop());
+        dealer.hit(cards.removeLast());
 
         // then
         assertThat(dealer.getHand()).hasSize(1);
@@ -43,8 +44,8 @@ public class DealerTest {
     @Test
     void calculateTotalScoreTest() {
         // given
-        dealer.hit(cards.pop());
-        dealer.hit(cards.pop());
+        dealer.hit(cards.removeLast());
+        dealer.hit(cards.removeLast());
         int expectedScore = 13;
 
         // when
@@ -58,9 +59,9 @@ public class DealerTest {
     @Test
     void isBust() {
         // given
-        dealer.hit(cards.pop());
-        dealer.hit(cards.pop());
-        dealer.hit(cards.pop());
+        dealer.hit(cards.removeLast());
+        dealer.hit(cards.removeLast());
+        dealer.hit(cards.removeLast());
 
         // when
         boolean bust = dealer.isBust();
@@ -73,8 +74,8 @@ public class DealerTest {
     @Test
     void isNotStayTest() {
         // given
-        dealer.hit(cards.pop());
-        dealer.hit(cards.pop());
+        dealer.hit(cards.removeLast());
+        dealer.hit(cards.removeLast());
 
         // when
         boolean stay = dealer.isStay();
@@ -87,9 +88,9 @@ public class DealerTest {
     @Test
     void isStayTest() {
         // given
-        dealer.hit(cards.pop());
-        dealer.hit(cards.pop());
-        dealer.hit(cards.pop());
+        dealer.hit(cards.removeLast());
+        dealer.hit(cards.removeLast());
+        dealer.hit(cards.removeLast());
 
         // when
         boolean stay = dealer.isStay();
