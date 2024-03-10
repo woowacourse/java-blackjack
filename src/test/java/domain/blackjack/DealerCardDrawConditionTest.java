@@ -1,13 +1,11 @@
 package domain.blackjack;
 
-import static domain.card.CardName.ACE;
-import static domain.card.CardName.FIVE;
-import static domain.card.CardName.JACK;
-import static domain.card.CardName.QUEEN;
-import static domain.card.CardName.SIX;
-import static domain.card.CardType.HEART;
+import static domain.card.Card.ACE_HEART;
+import static domain.card.Card.FIVE_HEART;
+import static domain.card.Card.JACK_HEART;
+import static domain.card.Card.SEVEN_HEART;
+import static domain.card.Card.SIX_HEART;
 
-import domain.card.Card;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -19,9 +17,10 @@ class DealerCardDrawConditionTest {
 
     public static Stream<Arguments> canDrawParameters() {
         return Stream.of(
-                Arguments.of(HoldingCards.of(new Card(ACE, HEART), new Card(SIX, HEART)), false),
-                Arguments.of(HoldingCards.of(new Card(ACE, HEART), new Card(FIVE, HEART)), true),
-                Arguments.of(HoldingCards.of(new Card(JACK, HEART), new Card(QUEEN, HEART)), false)
+                Arguments.of(HoldingCards.of(ACE_HEART, SIX_HEART), false),
+                Arguments.of(HoldingCards.of(ACE_HEART, FIVE_HEART), true),
+                Arguments.of(HoldingCards.of(JACK_HEART, SEVEN_HEART), false),
+                Arguments.of(HoldingCards.of(JACK_HEART, SIX_HEART), true)
         );
     }
 

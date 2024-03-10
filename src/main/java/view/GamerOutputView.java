@@ -57,7 +57,7 @@ public class GamerOutputView {
         List<Card> cards = gamerDTO.getHoldingCards();
         String nameOutput = name + "카드";
         String cardsOutput = cards.stream()
-                .map(card -> mapToString(card.cardType()) + mapToString(card.name()))
+                .map(card -> mapToString(card.cardType()) + mapToString(card.cardName()))
                 .collect(Collectors.joining(", "));
         return "%s: %s".formatted(nameOutput, cardsOutput);
     }

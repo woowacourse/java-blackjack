@@ -4,10 +4,7 @@ import static domain.card.CardName.TEN;
 
 import domain.card.Card;
 import domain.card.CardName;
-import domain.card.CardType;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -17,17 +14,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class CardPointCalculatorTest {
     static Stream<Arguments> calculateParameter() {
-        return Stream.of(Arrays.stream(CardType.values())
-                .map(CardPointCalculatorTest::makeSameTypeCards)
-                .flatMap(Collection::stream)
-                .map(card -> Arguments.of(card, makeCardPoint(card.name())))
+        return Stream.of(Arrays.stream(Card.values())
+                .map(card -> Arguments.of(card, makeCardPoint(card.cardName())))
                 .toArray(Arguments[]::new));
-    }
-
-    private static List<Card> makeSameTypeCards(CardType cardType) {
-        return Arrays.stream(CardName.values())
-                .map(cardName -> new Card(cardName, cardType))
-                .toList();
     }
 
     private static CardPoint makeCardPoint(CardName cardName) {

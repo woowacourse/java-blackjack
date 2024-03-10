@@ -3,17 +3,15 @@ package domain.blackjack;
 import static domain.blackjack.GameResult.LOSE;
 import static domain.blackjack.GameResult.TIE;
 import static domain.blackjack.GameResult.WIN;
-import static domain.card.CardName.ACE;
-import static domain.card.CardName.JACK;
-import static domain.card.CardName.NINE;
-import static domain.card.CardName.QUEEN;
-import static domain.card.CardName.SEVEN;
-import static domain.card.CardName.SIX;
-import static domain.card.CardName.TWO;
-import static domain.card.CardType.DIAMOND;
-import static domain.card.CardType.HEART;
+import static domain.card.Card.ACE_HEART;
+import static domain.card.Card.JACK_HEART;
+import static domain.card.Card.NINE_HEART;
+import static domain.card.Card.QUEEN_HEART;
+import static domain.card.Card.SEVEN_HEART;
+import static domain.card.Card.SIX_DIAMOND;
+import static domain.card.Card.SIX_HEART;
+import static domain.card.Card.TWO_HEART;
 
-import domain.card.Card;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -22,23 +20,15 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class GameResultCalculatorTest {
-    private static final HoldingCards ONLY_SIX_HEART = HoldingCards.of(new Card(SIX, HEART));
-    private static final HoldingCards ONLY_SEVEN_HEART = HoldingCards.of(new Card(SEVEN, HEART));
-    private static final HoldingCards DEAD_CARDS = HoldingCards.of(
-            new Card(JACK, HEART), new Card(QUEEN, HEART), new Card(TWO, HEART)
-    );
+    private static final HoldingCards ONLY_SIX_HEART = HoldingCards.of(SIX_HEART);
+    private static final HoldingCards ONLY_SEVEN_HEART = HoldingCards.of(SEVEN_HEART);
+    private static final HoldingCards DEAD_CARDS = HoldingCards.of(TWO_HEART, JACK_HEART, QUEEN_HEART);
 
-    private static final HoldingCards WIN_CARDS_WITH_ACE = HoldingCards.of(
-            new Card(ACE, HEART), new Card(QUEEN, HEART)
-    );
+    private static final HoldingCards WIN_CARDS_WITH_ACE = HoldingCards.of(ACE_HEART, QUEEN_HEART);
 
-    private static final HoldingCards WIN_CARDS_WITHOUT_ACE = HoldingCards.of(
-            new Card(JACK, HEART), new Card(NINE, HEART), new Card(TWO, HEART)
-    );
+    private static final HoldingCards WIN_CARDS_WITHOUT_ACE = HoldingCards.of(TWO_HEART, JACK_HEART, NINE_HEART);
 
-    private static final HoldingCards TWO_SIX_CARDS = HoldingCards.of(
-            new Card(SIX, HEART), new Card(SIX, DIAMOND)
-    );
+    private static final HoldingCards TWO_SIX_CARDS = HoldingCards.of(SIX_HEART, SIX_DIAMOND);
 
     public static Stream<Arguments> getGameResultParameters() {
         return Stream.of(

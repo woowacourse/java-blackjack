@@ -35,6 +35,6 @@ public class HoldingCards {
 
     boolean hasAce() {
         return holdingCards.stream()
-                .anyMatch(card -> card.name() == CardName.ACE);
+                .anyMatch(card -> card.cardName() == CardName.ACE);
     }
 }
