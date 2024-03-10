@@ -9,7 +9,7 @@ import model.player.Players;
 
 public class BlackjackGame {
 
-    private static final int SETTING_CARD_COUNT = 2;
+    private static final int INITIAL_CARD_COUNT = 2;
     private static final int DEALER_COUNT = 1;
 
     private Dealer dealer;
@@ -20,10 +20,10 @@ public class BlackjackGame {
         this.players = players;
     }
 
-    public void distributeCardsForSetting(Cards cards) {
+    public void initCards(Cards cards) {
         List<Card> cardsElement = cards.getElements();
-        dealer = dealer.addCards(cardsElement.subList(0, SETTING_CARD_COUNT));
-        players = players.addCards(cardsElement.subList(SETTING_CARD_COUNT, cardsElement.size()));
+        dealer = dealer.addCards(cardsElement.subList(0, INITIAL_CARD_COUNT));
+        players = players.addCards(cardsElement.subList(INITIAL_CARD_COUNT, cardsElement.size()));
     }
 
     public Player hitForPlayer(Player player, Card card) {
@@ -39,8 +39,8 @@ public class BlackjackGame {
         return false;
     }
 
-    public int countSettingCard() {
-        return (players.count() + DEALER_COUNT) * SETTING_CARD_COUNT;
+    public int determineInitCardCount() {
+        return (players.count() + DEALER_COUNT) * INITIAL_CARD_COUNT;
     }
 
     public Dealer getDealer() {

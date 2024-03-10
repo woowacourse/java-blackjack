@@ -8,20 +8,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-public class CardDispenser {
+public class RandomCardPicker {
 
     private static final int END_OFFSET = 1;
-    private static CardDispenser cardDispenser = new CardDispenser();
+    private static RandomCardPicker randomCardPicker = new RandomCardPicker();
 
     private final Map<Integer, CardNumber> cardNumbers;
     private final Map<Integer, CardShape> cardShapes;
 
-    private CardDispenser() {
-        cardNumbers = initialCardNumbers();
-        cardShapes = initialCardShapes();
+    private RandomCardPicker() {
+        cardNumbers = initCardNumbers();
+        cardShapes = initCardShapes();
     }
 
-    private Map<Integer, CardNumber> initialCardNumbers() {
+    private Map<Integer, CardNumber> initCardNumbers() {
         Map<Integer, CardNumber> numbers = new HashMap<>();
         int index = 0;
         for (CardNumber cardNumber : CardNumber.values()) {
@@ -30,7 +30,7 @@ public class CardDispenser {
         return numbers;
     }
 
-    private Map<Integer, CardShape> initialCardShapes() {
+    private Map<Integer, CardShape> initCardShapes() {
         Map<Integer, CardShape> shapes = new HashMap<>();
         int index = 0;
         for (CardShape cardShape : CardShape.values()) {
@@ -39,20 +39,20 @@ public class CardDispenser {
         return shapes;
     }
 
-    public static CardDispenser getCardDispenser() {
-        if (cardDispenser == null) {
-            cardDispenser = new CardDispenser();
+    public static RandomCardPicker getRandomCardPicker() {
+        if (randomCardPicker == null) {
+            randomCardPicker = new RandomCardPicker();
         }
-        return cardDispenser;
+        return randomCardPicker;
     }
 
-    public Cards dispenseCards(int count) {
+    public Cards pickCards(int count) {
         return IntStream.range(0, count)
-            .mapToObj(i -> dispenseCard())
+            .mapToObj(i -> pickCard())
             .collect(collectingAndThen(toList(), Cards::new));
     }
 
-    public Card dispenseCard() {
+    public Card pickCard() {
         CardNumber cardNumber = cardNumbers.get(pickRandomNumber(cardNumbers.size()));
         CardShape cardShape = cardShapes.get(pickRandomNumber(cardShapes.size()));
         return new Card(cardNumber, cardShape);

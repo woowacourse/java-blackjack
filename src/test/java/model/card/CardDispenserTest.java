@@ -9,12 +9,12 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class CardDispenserTest {
 
-    CardDispenser cardDispenser = CardDispenser.getCardDispenser();
+    RandomCardPicker cardDispenser = RandomCardPicker.getRandomCardPicker();
 
     @DisplayName("랜덤으로 숫자와 모양을 뽑아 카드 1장을 지급한다")
     @Test
     void testDispenseCard() {
-        Card card = cardDispenser.dispenseCard();
+        Card card = cardDispenser.pickCard();
         assertThat(card.getNumber()).isNotNull();
         assertThat(card.getShape()).isNotNull();
     }
@@ -23,7 +23,7 @@ class CardDispenserTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 5, 10, 29, 60})
     void testDispenseCards(int count) {
-        Cards cards = cardDispenser.dispenseCards(count);
+        Cards cards = cardDispenser.pickCards(count);
         assertThat(cards.getElements()).hasSize(count);
         cards.getElements().forEach(card -> {
             assertThat(card.getNumber()).isNotNull();

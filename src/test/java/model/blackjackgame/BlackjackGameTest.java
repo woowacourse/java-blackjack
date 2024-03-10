@@ -36,7 +36,7 @@ class BlackjackGameTest {
                 new Card(SEVEN, CLOVER), new Card(SIX, DIAMOND), new Card(ACE, SPADE))
         );
 
-        blackjackGame.distributeCardsForSetting(cards);
+        blackjackGame.initCards(cards);
 
         Dealer updatedDealer = blackjackGame.getDealer();
         Players updatedPlayers = blackjackGame.getPlayers();

@@ -4,7 +4,7 @@ import model.blackjackgame.BlackjackGame;
 import model.blackjackgame.GameResult;
 import model.blackjackgame.HitAnswer;
 import model.card.Card;
-import model.card.CardDispenser;
+import model.card.RandomCardPicker;
 import model.card.Cards;
 import model.dealer.Dealer;
 import model.player.Player;
@@ -14,27 +14,24 @@ import view.OutputView;
 
 public class BlackjackController {
 
-    private final CardDispenser cardDispenser = CardDispenser.getCardDispenser();
+    private final RandomCardPicker randomCardPicker = RandomCardPicker.getRandomCardPicker();
 
     public void run() {
-        BlackjackGame blackjackGame = start();
-        setting(blackjackGame);
+        Players players = InputView.preparePlayers();
+        Dealer dealer = new Dealer();
+        BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
+
+        initGame(blackjackGame);
         executeGame(blackjackGame);
         finishGameWithResult(blackjackGame);
     }
 
-    private BlackjackGame start() {
-        Players players = InputView.preparePlayers();
-        Dealer dealer = new Dealer();
-        return new BlackjackGame(dealer, players);
-    }
+    private void initGame(BlackjackGame blackjackGame) {
+        int cardCount = blackjackGame.determineInitCardCount();
+        Cards cards = randomCardPicker.pickCards(cardCount);
 
-    private void setting(BlackjackGame blackjackGame) {
-        int cardCount = blackjackGame.countSettingCard();
-        Cards cardsForSetting = cardDispenser.dispenseCards(cardCount);
-
-        blackjackGame.distributeCardsForSetting(cardsForSetting);
-        OutputView.printCardsAfterSetting(blackjackGame);
+        blackjackGame.initCards(cards);
+        OutputView.printInitCards(blackjackGame);
     }
 
     private void executeGame(BlackjackGame blackjackGame) {
@@ -42,7 +39,7 @@ public class BlackjackController {
         for (Player player : players.getElements()) {
             continueHit(blackjackGame, player);
         }
-        Card card = cardDispenser.dispenseCard();
+        Card card = randomCardPicker.pickCard();
         if (blackjackGame.hitForDealer(card)) {
             OutputView.printAfterDealerHit();
         }
@@ -61,7 +58,7 @@ public class BlackjackController {
     }
 
     private Player hit(BlackjackGame blackjackGame, Player player) {
-        Card card = cardDispenser.dispenseCard();
+        Card card = randomCardPicker.pickCard();
         return blackjackGame.hitForPlayer(player, card);
     }
 

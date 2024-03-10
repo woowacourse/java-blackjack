@@ -24,7 +24,7 @@ public class OutputView {
     private static final String DELIMITER = ", ";
     private static final String DELIMITER_GAME_RESULT = " ";
     private static final String DEALER_NAME = "딜러";
-    private static final String AFTER_SETTING_INTRO =
+    private static final String INIT_CARDS_INTRO =
         NEWLINE + DEALER_NAME + "와 %s에게 2장을 나누었습니다." + NEWLINE;
     private static final String DEALER_CARD_FORMAT = DEALER_NAME + ": %s" + NEWLINE;
     private static final String CARDS_FORMAT = "%s카드: %s" + NEWLINE;
@@ -37,20 +37,20 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printCardsAfterSetting(BlackjackGame blackjackGame) {
+    public static void printInitCards(BlackjackGame blackjackGame) {
         Dealer dealer = blackjackGame.getDealer();
         Players players = blackjackGame.getPlayers();
-        printAfterSettingIntro(players);
+        printInitCardsIntro(players);
         printDealerCard(dealer);
         printPlayersCards(players);
     }
 
-    private static void printAfterSettingIntro(Players players) {
+    private static void printInitCardsIntro(Players players) {
         String playerNames = players.getElements()
             .stream()
             .map(Player::getName)
             .collect(collectingAndThen(toList(), names -> String.join(DELIMITER, names)));
-        System.out.printf(AFTER_SETTING_INTRO, playerNames);
+        System.out.printf(INIT_CARDS_INTRO, playerNames);
     }
 
     private static void printDealerCard(Dealer dealer) {
