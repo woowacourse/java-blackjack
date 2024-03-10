@@ -14,7 +14,7 @@ public class Card {
     }
 
     public String getShape() {
-        return shape.getValue();
+        return shape.getName();
     }
 
     public int getScore() {

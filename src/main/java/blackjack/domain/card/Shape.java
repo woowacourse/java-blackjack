@@ -6,13 +6,13 @@ public enum Shape {
     HEART("하트"),
     CLOVER("클로버");
 
-    private final String value;
+    private final String name;
 
-    Shape(String value) {
-        this.value = value;
+    Shape(String name) {
+        this.name = name;
     }
 
-    public String getValue() {
-        return value;
+    public String getName() {
+        return name;
     }
 }
