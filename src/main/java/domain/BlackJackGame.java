@@ -8,10 +8,10 @@ import java.util.Map;
 
 public class BlackJackGame {
     private static final int INITIAL_CARD_COUNT = 2;
-    private final Decks decks;
+    private final Deck deck;
 
-    public BlackJackGame(final Decks decks) {
-        this.decks = decks;
+    public BlackJackGame(final Deck deck) {
+        this.deck = deck;
     }
 
     public void prepareCards(final Gamers gamers) {
@@ -22,13 +22,13 @@ public class BlackJackGame {
 
     private void drawTwoCardsForGamer(final Gamer gamer) {
         for (int count = 0; count < INITIAL_CARD_COUNT; count++) {
-            gamer.hit(decks.draw());
+            gamer.hit(deck.draw());
         }
     }
 
     public boolean succeededGiving(final Gamer gamer) {
         if (!gamer.isStay()) {
-            gamer.hit(decks.draw());
+            gamer.hit(deck.draw());
             return true;
         }
         return false;

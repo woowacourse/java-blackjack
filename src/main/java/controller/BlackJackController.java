@@ -1,14 +1,14 @@
 package controller;
 
 import domain.BlackJackGame;
-import domain.Decks;
+import domain.Deck;
 import domain.Gamers;
 import domain.PlayerResults;
 import domain.Players;
 import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Player;
-import domain.strategy.ShuffledDecksGenerator;
+import domain.strategy.ShuffledCardsGenerator;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -17,7 +17,7 @@ public class BlackJackController {
 
     public void start() {
         Gamers gamers = readGamers();
-        BlackJackGame blackJackGame = new BlackJackGame(Decks.createByStrategy(new ShuffledDecksGenerator()));
+        BlackJackGame blackJackGame = new BlackJackGame(Deck.createByStrategy(new ShuffledCardsGenerator()));
         blackJackGame.prepareCards(gamers);
         OutputView.printInitialCardsMessage(gamers);
         handOutCard(blackJackGame, gamers);

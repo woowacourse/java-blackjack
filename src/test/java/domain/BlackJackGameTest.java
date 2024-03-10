@@ -16,7 +16,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BlackJackGameTest {
-    Decks decks;
+    Deck deck;
 
     @BeforeEach
     void  init(){
@@ -31,7 +31,7 @@ public class BlackJackGameTest {
 
         List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8);
         SettedCardsGenerator settedCardsGenerator = new SettedCardsGenerator(cards);
-        decks = Decks.createByStrategy(settedCardsGenerator);
+        deck = Deck.createByStrategy(settedCardsGenerator);
     }
 
     @DisplayName("딜러와 플레이어에게 카드를 2장씩 준다.")
@@ -46,7 +46,7 @@ public class BlackJackGameTest {
         Players players = new Players(List.of(player1, player2));
 
         Gamers gamers = Gamers.of(players, dealer);
-        BlackJackGame blackJackGame = new BlackJackGame(decks);
+        BlackJackGame blackJackGame = new BlackJackGame(deck);
 
         // when
         blackJackGame.prepareCards(gamers);
@@ -65,7 +65,7 @@ public class BlackJackGameTest {
         // given
         Dealer dealer = new Dealer();
 
-        BlackJackGame blackJackGame = new BlackJackGame(decks);
+        BlackJackGame blackJackGame = new BlackJackGame(deck);
 
         blackJackGame.succeededGiving(dealer); // 3 다이아몬드
         blackJackGame.succeededGiving(dealer); // 9 클로버
@@ -89,7 +89,7 @@ public class BlackJackGameTest {
         Name name = new Name("lini");
         Player player = new Player(name);
 
-        BlackJackGame blackJackGame = new BlackJackGame(decks);
+        BlackJackGame blackJackGame = new BlackJackGame(deck);
 
         blackJackGame.succeededGiving(player); // 3 다이아몬드
         blackJackGame.succeededGiving(player); // 9 클로버
@@ -114,7 +114,7 @@ public class BlackJackGameTest {
         // given
         Dealer dealer = new Dealer();
 
-        BlackJackGame blackJackGame = new BlackJackGame(decks);
+        BlackJackGame blackJackGame = new BlackJackGame(deck);
 
         blackJackGame.succeededGiving(dealer); // 3 다이아몬드
         blackJackGame.succeededGiving(dealer); // 9 클로버
@@ -139,7 +139,7 @@ public class BlackJackGameTest {
         Name name = new Name("lini");
         Player player = new Player(name);
 
-        BlackJackGame blackJackGame = new BlackJackGame(decks);
+        BlackJackGame blackJackGame = new BlackJackGame(deck);
 
         blackJackGame.succeededGiving(player); // 3 다이아몬드
         blackJackGame.succeededGiving(player); // 9 클로버
@@ -173,7 +173,7 @@ public class BlackJackGameTest {
         Players players = new Players(List.of(pobi, jason));
         Gamers gamers = Gamers.of(players, dealer);
 
-        BlackJackGame blackJackGame = new BlackJackGame(decks);
+        BlackJackGame blackJackGame = new BlackJackGame(deck);
         blackJackGame.prepareCards(gamers);
 
         blackJackGame.succeededGiving(pobi);

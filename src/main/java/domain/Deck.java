@@ -1,24 +1,23 @@
 package domain;
 
 import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Symbol;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Deck {
-    private final List<Card> cards;
+    private final Deque<Card> cards;
 
-    public Deck() {
-        List<Card> deck = Stream.of(Symbol.values())
-                .flatMap(symbol -> Rank.getRanks().stream()
-                        .map(rank -> new Card(symbol, rank)))
-                .collect(Collectors.toList());
-        this.cards = deck;
+    private Deck(Deque<Card> cards) {
+        this.cards = cards;
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public static Deck createByStrategy(final CardsGenerator cardsGenerator) {
+        List<Card> cards = cardsGenerator.generate();
+        return new Deck(new ArrayDeque<>(cards));
+    }
+
+    public Card draw() {
+        return cards.removeLast();
     }
 }
