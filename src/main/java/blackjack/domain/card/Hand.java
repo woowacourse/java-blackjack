@@ -27,4 +27,8 @@ public class Hand {
                 .mapToInt(Card::getMaxScore)
                 .sum();
     }
+
+    public boolean isBusted() {
+        return calculateScore() > BLACKJACK_SCORE;
+    }
 }
