@@ -12,18 +12,18 @@ public class CountTest {
     @DisplayName("숫자 값을 통해 횟수를 생성한다.")
     public void Count_Instance_create_with_integer() {
         assertThatCode(() -> {
-            final var sut = new Count(3);
+            final var sut = Count.valueOf(3);
             assertThat(sut.toInt()).isEqualTo(3);
         }).doesNotThrowAnyException();
     }
 
     @Test
-    @DisplayName("횟수를 1 증가시킨다.")
-    public void Count_increment_1() {
-        final var sut = new Count(2);
-
-        final var result = sut.increment();
-
-        assertThat(result.toInt()).isEqualTo(3);
+    @DisplayName("같은 숫자로 생성된 횟수는 동일하다")
+    public void Count_Instance_is_value_object() {
+        assertThatCode(() -> {
+            final var sut = Count.valueOf(3);
+            assertThat(sut).isEqualTo(new Count(3));
+        }).doesNotThrowAnyException();
     }
+
 }

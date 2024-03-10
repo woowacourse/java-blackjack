@@ -1,31 +1,29 @@
 package blackjack.domain.result;
 
-import java.util.Objects;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-public class Count {
-    private final int value;
+public record Count(int value) {
+    private static final int CACHE_MIN = 0;
+    private static final int CACHE_MAX = 5;
+    private static final Map<Integer, Count> COUNT_CACHE = initializeCache();
 
-    public Count(final int value) {
-        this.value = value;
+    private static Map<Integer, Count> initializeCache() {
+        return IntStream.range(CACHE_MIN, CACHE_MAX)
+                        .boxed()
+                        .collect(Collectors.toMap(Function.identity(), Count::new));
+    }
+
+    public static Count valueOf(final int value) {
+        if (COUNT_CACHE.containsKey(value)) {
+            return COUNT_CACHE.get(value);
+        }
+        return new Count(value);
     }
 
     public int toInt() {
         return this.value;
-    }
-
-    public Count increment() {
-        return new Count(this.value + 1);
-    }
-
-    @Override
-    public boolean equals(final Object object) {
-        if (this == object) return true;
-        if (!(object instanceof final Count count)) return false;
-        return this.value == count.value;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.value);
     }
 }
