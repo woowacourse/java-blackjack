@@ -39,7 +39,7 @@ public class Score {
         return SCORE_CACHE.get(sum);
     }
 
-    public static Score from(final int value) {
+    static Score from(final int value) {
         validateRange(value);
         return SCORE_CACHE.get(value);
     }
