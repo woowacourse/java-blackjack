@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("참가자 이름 테스트")
 class PlayerNameTest {
 
-    @DisplayName("이름은 빈 문자열일 수 없다")
+    @DisplayName("이름은 빈 문자열일 수 없다.")
     @Test
-    void testCreatePlayerNameWithEmpty() {
+    void testCreateEmptyPlayerName() {
+        // when & then
         assertThatThrownBy(() -> new PlayerName(""))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이름이 빈 문자열입니다.");
