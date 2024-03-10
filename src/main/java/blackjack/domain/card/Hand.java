@@ -18,7 +18,7 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return isTotalScoreGreaterThan(BLACKJACK);
+        return getOptimizedScore() > BLACKJACK;
     }
 
     public boolean isBlackjack() {
