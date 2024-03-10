@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,12 +19,12 @@ import blackjack.domain.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-class Controller {
+public class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
 
-    public Controller(InputView inputView, OutputView outputView) {
+    public BlackjackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
