@@ -2,7 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.strategy.ShuffledDecksGenerator;
+import domain.strategy.ShuffledCardsGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +15,8 @@ public class DecksTest {
         int expectedSize = 312;
 
         // when
-        ShuffledDecksGenerator decksGenerator = new ShuffledDecksGenerator();
-        Decks decks = Decks.createByStrategy(decksGenerator);
+        ShuffledCardsGenerator cardsGenerator = new ShuffledCardsGenerator();
+        Decks decks = Decks.createByStrategy(cardsGenerator);
 
         // then
         assertThat(decks.getCards()).hasSize(expectedSize);
