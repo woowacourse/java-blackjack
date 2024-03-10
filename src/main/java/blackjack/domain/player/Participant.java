@@ -9,7 +9,7 @@ public abstract class Participant {
     protected final PlayerName name;
     protected final Hand hand;
 
-    public Participant(PlayerName name, Hand hand) {
+    protected Participant(PlayerName name, Hand hand) {
         this.name = name;
         this.hand = hand;
     }
