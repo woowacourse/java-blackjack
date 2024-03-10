@@ -3,8 +3,8 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
@@ -58,69 +58,177 @@ class DealerTest {
         assertThat(result).isFalse();
     }
 
-    @DisplayName("둘 다 버스트되면, 딜러가 이긴다.")
-    @Test
-    void allBust() {
-        Dealer dealer = new Dealer();
-        dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-        dealer.hit(new Card(CardRank.FOUR, CardShape.DIAMOND));
-        dealer.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
+    @Nested
+    @DisplayName("딜러의 카드가 21점보다 작고, ")
+    class DealerScoreLessThan21 {
+        private final Dealer dealer = new Dealer();
 
-        Player player = new Player("pobi");
-        player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-        player.hit(new Card(CardRank.JACK, CardShape.DIAMOND));
-        player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
+        public DealerScoreLessThan21() {
+            dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+            dealer.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
+        }
 
-        GameResult gameResult = dealer.judge(player);
+        @Nested
+        @DisplayName("플레이어의 카드가 21점보다 작고, ")
+        class PlayerScoreLessThan21 {
+            @DisplayName("플레이어의 점수가 딜러의 점수보다 높으면 플레이어가 이긴다.")
+            @Test
+            void playerWin() {
+                Player player = new Player("pobi");
+                player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+                player.hit(new Card(CardRank.EIGHT, CardShape.DIAMOND));
 
-        assertThat(gameResult).isEqualTo(GameResult.LOSE);
+                GameResult gameResult = dealer.judge(player);
+
+                assertThat(gameResult).isEqualTo(GameResult.WIN);
+            }
+
+            @DisplayName("플레이어의 점수가 딜러의 점수보다 낮으면 플레이어가 진다.")
+            @Test
+            void playerLose() {
+                Player player = new Player("pobi");
+                player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+                player.hit(new Card(CardRank.SIX, CardShape.DIAMOND));
+
+                GameResult gameResult = dealer.judge(player);
+
+                assertThat(gameResult).isEqualTo(GameResult.LOSE);
+            }
+
+            @DisplayName("플레이어의 점수가 딜러의 점수와 같으면 무승부이다.")
+            @Test
+            void playerPush() {
+                Player player = new Player("pobi");
+                player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+                player.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
+
+                GameResult gameResult = dealer.judge(player);
+
+                assertThat(gameResult).isEqualTo(GameResult.PUSH);
+            }
+        }
+
+        @DisplayName("플레이어의 카드가 블랙잭이면 플레이어가 이긴다.")
+        @Test
+        void playerBlackjack() {
+            Player player = new Player("pobi");
+            player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+            player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
+
+            GameResult gameResult = dealer.judge(player);
+
+            assertThat(gameResult).isEqualTo(GameResult.WIN);
+        }
+
+        @DisplayName("플레이어가 버스트이면 플레이어가 진다.")
+        @Test
+        void playerBust() {
+            Player player = new Player("pobi");
+            player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+            player.hit(new Card(CardRank.SIX, CardShape.DIAMOND));
+            player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
+
+            GameResult gameResult = dealer.judge(player);
+
+            assertThat(gameResult).isEqualTo(GameResult.LOSE);
+        }
+
     }
 
-    @DisplayName("둘 다 블랙잭이면, 무승부이다.")
-    @Test
-    void allBlackJack() {
-        Dealer dealer = new Dealer();
-        dealer.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
-        dealer.hit(new Card(CardRank.JACK, CardShape.DIAMOND));
+    @Nested
+    @DisplayName("딜러의 카드가 블래잭이고, ")
+    class DealerBlackjack {
+        private final Dealer dealer = new Dealer();
 
-        Player player = new Player("pobi");
-        player.hit(new Card(CardRank.KING, CardShape.CLOVER));
-        player.hit(new Card(CardRank.ACE, CardShape.CLOVER));
+        public DealerBlackjack() {
+            dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+            dealer.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
+        }
 
-        GameResult gameResult = dealer.judge(player);
+        @DisplayName("플레이어의 카드가 21점보다 작으면 플레이어가 진다.")
+        @Test
+        void playerScoreLessThan21() {
+            Player player = new Player("pobi");
+            player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+            player.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
 
-        assertThat(gameResult).isEqualTo(GameResult.PUSH);
+            GameResult gameResult = dealer.judge(player);
+
+            assertThat(gameResult).isEqualTo(GameResult.LOSE);
+        }
+
+        @DisplayName("플레이어의 카드가 블랙잭이면 비긴다.")
+        @Test
+        void playerBlackjack() {
+            Player player = new Player("pobi");
+            player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
+            player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+
+            GameResult gameResult = dealer.judge(player);
+
+            assertThat(gameResult).isEqualTo(GameResult.PUSH);
+        }
+
+        @DisplayName("플레이어의 카드가 버스트이면 플레이어가 진다.")
+        @Test
+        void playerBust() {
+            Player player = new Player("pobi");
+            player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+            player.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
+            player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
+
+            GameResult gameResult = dealer.judge(player);
+
+            assertThat(gameResult).isEqualTo(GameResult.LOSE);
+        }
     }
 
-    @DisplayName("둘 다 버스트되지 않고, 딜러 점수가 더 낮으면 진다.")
-    @Test
-    void whenDealerLose() {
-        Dealer dealer = new Dealer();
-        dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-        dealer.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
+    @Nested
+    @DisplayName("딜러의 카드가 버스트이고, ")
+    class DealerBust {
+        private final Dealer dealer = new Dealer();
 
-        Player player = new Player("pobi");
-        player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-        player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
+        public DealerBust() {
+            dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+            dealer.hit(new Card(CardRank.SIX, CardShape.DIAMOND));
+            dealer.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
+        }
 
-        GameResult gameResult = dealer.judge(player);
+        @DisplayName("플레이어의 카드가 21점보다 작으면 플레이어가 이긴다.")
+        @Test
+        void playerWin() {
+            Player player = new Player("pobi");
+            player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+            player.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
 
-        assertThat(gameResult).isEqualTo(GameResult.WIN);
-    }
+            GameResult gameResult = dealer.judge(player);
 
-    @DisplayName("둘 다 버스트되지 않고, 딜러 점수가 더 높으면 이긴다.")
-    @Test
-    void whenDealerWin() {
-        Dealer dealer = new Dealer();
-        dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-        dealer.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
+            assertThat(gameResult).isEqualTo(GameResult.WIN);
+        }
 
-        Player player = new Player("pobi");
-        player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-        player.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
+        @DisplayName("플레이어의 카드가 블랙잭이면, 플레이어가 이긴다.")
+        @Test
+        void playerBlackjack() {
+            Player player = new Player("pobi");
+            player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+            player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
 
-        GameResult gameResult = dealer.judge(player);
+            GameResult gameResult = dealer.judge(player);
 
-        assertThat(gameResult).isEqualTo(GameResult.LOSE);
+            assertThat(gameResult).isEqualTo(GameResult.WIN);
+        }
+
+        @DisplayName("플레이어의 카드가 버스트이면, 플레이어가 진다.")
+        @Test
+        void playerBust() {
+            Player player = new Player("pobi");
+            player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+            player.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
+            player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
+
+            GameResult gameResult = dealer.judge(player);
+
+            assertThat(gameResult).isEqualTo(GameResult.LOSE);
+        }
     }
 }

@@ -9,6 +9,10 @@
 - 덱(Deck)
 - 패(Hand)
 
+## 블랙잭 승패 규칙
+- 플레이어의 승패 규칙
+- ![D10C1A98-9626-415B-89F6-7F847F6CCA68_1_201_a](https://github.com/woowacourse/java-blackjack/assets/75781414/d0e031dd-9f0b-4122-b59c-d37a134395e8)
+
 ## 구현 기능 목록
 
 ### 입출력 기능
