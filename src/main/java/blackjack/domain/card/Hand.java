@@ -30,7 +30,7 @@ public class Hand {
         if (cardTotalScore >= BLACKJACK) {
             return cardTotalScore;
         }
-        int aceCountForAlter = countAceForAlter();
+        int aceCountForAlter = countAceForAlter(cardTotalScore);
         return aceCountForAlter * ACE_ALTERNATIVE_SCORE + cardTotalScore;
     }
 
@@ -48,11 +48,10 @@ public class Hand {
                 .sum();
     }
 
-    private int countAceForAlter() {
+    private int countAceForAlter(int cardTotalScore) {
         int aceCount = (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
-        int cardTotalScore = getCardTotalScore();
         int availableAceAlterCount = (BLACKJACK - cardTotalScore) / ACE_ALTERNATIVE_SCORE;
         return Math.min(aceCount, availableAceAlterCount);
     }
