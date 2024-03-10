@@ -21,15 +21,15 @@ public class Cards {
         int aceCardCount = countAceCard();
         int maxResultScore = countMatchScore();
 
-        for (int aceCard = 0; aceCard < aceCardCount; aceCard++) {
-            maxResultScore = convertAceScore(maxResultScore);
+        if (aceCardCount > 1) {
+            return convertAceScore(maxResultScore);
         }
         return maxResultScore;
     }
 
     private int convertAceScore(int maxResultScore) {
         if (maxResultScore + ADDITIONAL_ACE_CARD_SCORE <= MAX_BLACK_JACK_SCORE) {
-            maxResultScore += ADDITIONAL_ACE_CARD_SCORE;
+            return maxResultScore + ADDITIONAL_ACE_CARD_SCORE;
         }
         return maxResultScore;
     }
@@ -55,4 +55,9 @@ public class Cards {
     public int countCard() {
         return cards.size();
     }
+
+    public Card getFirstCard() {
+        return cards.get(0);
+    }
+
 }
