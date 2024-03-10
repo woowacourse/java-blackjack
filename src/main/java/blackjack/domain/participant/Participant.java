@@ -1,9 +1,8 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.result.BlackjackStatus;
-import blackjack.domain.result.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
+import blackjack.domain.result.Score;
 import java.util.ArrayList;
 
 public class Participant {
@@ -32,16 +31,13 @@ public class Participant {
     }
 
     public boolean isNotBlackjack() {
-        return !getStatus().isBlackjack();
+        return hands.isNotBlackjack();
     }
 
     public boolean isNotDead() {
-        return !getStatus().isDead();
+        return hands.isNotDead();
     }
 
-    private BlackjackStatus getStatus() {
-        return BlackjackStatus.from(calculateScore());
-    }
 
     public Hands getHands() {
         return new Hands(hands.getCards());
