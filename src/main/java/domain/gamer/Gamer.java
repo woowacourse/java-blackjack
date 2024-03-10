@@ -6,7 +6,7 @@ import java.util.List;
 public abstract class Gamer {
     private static final int BLACKJACK_SUM_COND = 21;
     private static final int BLACKJACK_CARD_COUNT_COND = 2;
-    protected Name name;
+    private Name name;
     protected Hand hand;
 
     public Gamer(final Name name) {
@@ -15,6 +15,10 @@ public abstract class Gamer {
     }
 
     public abstract boolean isStay();
+
+    public abstract boolean isDealer();
+
+    public abstract boolean isPlayer();
 
     public void hit(final Card card) {
         hand.add(card);

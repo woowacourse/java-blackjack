@@ -21,4 +21,14 @@ public class Player extends Gamer {
     public boolean isStay() {
         return hand.isOverBlackJack();
     }
+
+    @Override
+    public boolean isDealer() {
+        return false;
+    }
+
+    @Override
+    public boolean isPlayer() {
+        return true;
+    }
 }

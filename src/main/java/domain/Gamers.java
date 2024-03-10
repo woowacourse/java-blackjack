@@ -23,16 +23,16 @@ public class Gamers {
     }
 
     public List<Player> findPlayers() {
-        List<Player> players = new ArrayList<>();
-        gamers.stream()
-                .filter(gamer -> gamer instanceof Player)
-                .forEach(gamer -> players.add((Player) gamer));
-        return players;
+        return gamers.stream()
+                .filter(Gamer::isPlayer)
+                .map(gamer -> (Player) gamer)
+                .toList();
     }
 
     public Dealer findDealer() {
-        return (Dealer) gamers.stream()
-                .filter(gamer -> gamer instanceof Dealer)
+        return gamers.stream()
+                .filter(Gamer::isDealer)
+                .map(gamer -> (Dealer) gamer)
                 .findFirst()
                 .orElseThrow();
     }
