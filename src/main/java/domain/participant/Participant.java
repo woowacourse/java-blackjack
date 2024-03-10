@@ -1,40 +1,57 @@
 package domain.participant;
 
+import static domain.BlackjackResultStatus.LOSE;
+import static domain.BlackjackResultStatus.PUSH;
+import static domain.BlackjackResultStatus.WIN;
+import static game.BlackjackGame.BLACKJACK_SCORE;
+
+import domain.BlackjackResultStatus;
 import domain.card.Card;
 import domain.card.Cards;
 
-public class Participant {
+public abstract class Participant {
 
     protected final Name name;
     protected final Cards hand;
 
     public Participant(final Name name) {
         this.name = name;
-        hand = new Cards();
+        hand = Cards.create();
     }
 
     public void receive(final Card card) {
         hand.add(card);
     }
 
-    public int cardSum() {
-        int total = hand.sum();
-        if (hasAceAsEleven(total)) {
-            return total + 10;
-        }
-        return total;
-    }
-
-    private boolean hasAceAsEleven(final int total) {
-        return hand.hasAce() && total + 10 <= 21;
-    }
-
     public boolean isBust() {
-        return hand.sum() > 21;
+        return score() > BLACKJACK_SCORE;
     }
 
     public boolean isBlackjack() {
-        return hand.sum() == 21;
+        return score() == BLACKJACK_SCORE;
+    }
+
+    public BlackjackResultStatus resultStatusAgainst(final Participant opponent) {
+        if (isPush(opponent)) {
+            return PUSH;
+        }
+        if (isLose(opponent)) {
+            return LOSE;
+        }
+        return WIN;
+    }
+
+    private boolean isPush(final Participant opponent) {
+        return isBothBust(opponent) || score() == opponent.score();
+    }
+
+    private boolean isLose(final Participant opponent) {
+        return !opponent.isBust()
+                && (isBust() || (score() < opponent.score()));
+    }
+
+    private boolean isBothBust(final Participant opponent) {
+        return isBust() && opponent.isBust();
     }
 
     public Name name() {
@@ -44,4 +61,6 @@ public class Participant {
     public Cards hand() {
         return hand;
     }
+
+    public abstract int score();
 }
