@@ -8,13 +8,9 @@ public class Player {
     private final PlayerName playerName;
     private final PlayerCards playerCards;
 
-    public Player(PlayerName playerName) {
-        this.playerName = playerName;
+    public Player(String name) {
+        this.playerName = new PlayerName(name);
         this.playerCards = PlayerCards.createEmptyCards();
-    }
-
-    public static Player fromName(String name) {
-        return new Player(new PlayerName(name));
     }
 
     public void draw(Deck deck) {

@@ -28,7 +28,7 @@ class PlayerTest {
     @ValueSource(strings = {"", " ", "      ", "\n"})
     @DisplayName("공백 이름으로는 플레이어를 생성하면 예외가 발생한다.")
     void throwsExceptionWhenNameIsBlankTest(String blankName) {
-        assertThatThrownBy(() -> Player.fromName(blankName))
+        assertThatThrownBy(() -> new Player(blankName))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름이 비어있습니다.");
     }
@@ -39,7 +39,7 @@ class PlayerTest {
         List<Card> cards = List.of(new Card(DIAMOND, TWO), new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR));
         Deck deck = new Deck(cards);
 
-        Player player = Player.fromName("pedro");
+        Player player = new Player("pedro");
         player.draw(deck);
 
         List<Card> playerCards = player.getCards();
@@ -52,7 +52,7 @@ class PlayerTest {
         List<Card> cards = List.of(new Card(DIAMOND, TWO), new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR));
         Deck deck = new Deck(cards);
 
-        Player player = Player.fromName("pedro");
+        Player player = new Player("pedro");
         for (int i = 0; i < cards.size(); i++) {
             player.draw(deck);
         }
@@ -69,7 +69,7 @@ class PlayerTest {
     void checkBustTest(List<Card> cards, boolean expected) {
         Deck deck = new Deck(cards);
 
-        Player player = Player.fromName("pedro");
+        Player player = new Player("pedro");
         for (int i = 0; i < cards.size(); i++) {
             player.draw(deck);
         }

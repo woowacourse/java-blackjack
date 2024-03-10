@@ -10,7 +10,7 @@ public class Dealer {
     private final Player player;
 
     public Dealer() {
-        this.player = Player.fromName(DEALER_NAME);
+        this.player = new Player(DEALER_NAME);
     }
 
     public void draw(Deck deck) {
