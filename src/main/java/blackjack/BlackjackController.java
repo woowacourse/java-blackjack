@@ -44,9 +44,9 @@ public class BlackjackController {
 
 	private void dealInitCards(Dealer dealer, Players players) {
 		for (Player player : players.getPlayers()) {
-			player.receiveInitCards(dealer.dealInit());
+			player.receiveInitCards(dealer.dealInitCards());
 		}
-		dealer.receiveInitCards(dealer.dealInit());
+		dealer.receiveInitCards(dealer.dealInitCards());
 
 		outputView.printInitCardStatus(dealer, players);
 	}
@@ -70,7 +70,8 @@ public class BlackjackController {
 	}
 
 	private void receiveDealerAdditionalCard(Dealer dealer) {
-		while (dealer.tryHit()) {
+		while (dealer.hasHitScore()) {
+			dealer.drawCard();
 			outputView.printDealerHitMessage();
 		}
 	}

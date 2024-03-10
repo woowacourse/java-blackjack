@@ -43,7 +43,7 @@ public class DealerTest {
 		Dealer dealer = Dealer.newInstance(deck);
 
 		// when
-		List<Card> cards = dealer.dealInit();
+		List<Card> cards = dealer.dealInitCards();
 
 		// then
 		assertThat(cards).hasSize(2);
@@ -56,7 +56,7 @@ public class DealerTest {
 		Dealer dealer = Dealer.newInstance(deck);
 
 		// when
-		dealer.receiveInitCards(dealer.dealInit());
+		dealer.receiveInitCards(dealer.dealInitCards());
 
 		// then
 		assertThat(dealer.getCardHand()).hasSize(2);
@@ -84,12 +84,11 @@ public class DealerTest {
 		// given
 		Dealer dealer = Dealer.of(deck,
 			new ArrayList<>(List.of(new Card(Suit.HEART, Rank.TEN), new Card(Suit.HEART, Rank.SIX))));
-		int beforeDeckSize = dealer.deckSize();
 
-		// when & then
+		// then
 		Assertions.assertAll(
-			() -> assertThat(dealer.tryHit()).isTrue(),
-			() -> assertThat(dealer.deckSize()).isEqualTo(beforeDeckSize - 1)
+			() -> assertThat(dealer.getScore()).isLessThanOrEqualTo(16),
+			() -> assertThat(dealer.hasHitScore()).isTrue()
 		);
 	}
 
@@ -99,12 +98,11 @@ public class DealerTest {
 		// given
 		Dealer dealer = Dealer.of(deck,
 			new ArrayList<>(List.of(new Card(Suit.HEART, Rank.TEN), new Card(Suit.HEART, Rank.SEVEN))));
-		int beforeDeckSize = dealer.deckSize();
 
-		// when & then
+		// then
 		Assertions.assertAll(
-			() -> assertThat(dealer.tryHit()).isFalse(),
-			() -> assertThat(dealer.deckSize()).isEqualTo(beforeDeckSize)
+			() -> assertThat(dealer.getScore()).isGreaterThan(16),
+			() -> assertThat(dealer.hasHitScore()).isFalse()
 		);
 	}
 }

@@ -25,7 +25,7 @@ public class Dealer extends Gamer {
 		return new Dealer(deck, CardHand.from(cards));
 	}
 
-	public List<Card> dealInit() {
+	public List<Card> dealInitCards() {
 		return deck.drawInitCards();
 	}
 
@@ -33,19 +33,15 @@ public class Dealer extends Gamer {
 		return deck.drawCard();
 	}
 
+	public void drawCard() {
+		cardHand.add(deck.drawCard());
+	}
+
 	public int deckSize() {
 		return deck.size();
 	}
 
-	private boolean hasHitScore() {
+	public boolean hasHitScore() {
 		return cardHand.isScoreLessOrEqual(MAX_HIT_SCORE);
-	}
-
-	public boolean tryHit() {
-		if (hasHitScore()) {
-			cardHand.add(dealCard());
-			return true;
-		}
-		return false;
 	}
 }
