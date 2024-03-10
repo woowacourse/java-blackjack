@@ -1,5 +1,9 @@
-package domain;
+package domain.game;
 
+import domain.player.Dealer;
+import domain.player.Name;
+import domain.player.Player;
+import domain.player.PlayerNames;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;

@@ -1,6 +1,6 @@
-package domain;
+package domain.player;
 
-import static domain.Name.NAME_LENGTH_MESSAGE;
+import static domain.player.Name.NAME_LENGTH_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

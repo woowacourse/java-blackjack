@@ -1,6 +1,6 @@
 package dto;
 
-import domain.Suit;
+import domain.card.Suit;
 import java.util.Arrays;
 
 public enum SuitDiplay {

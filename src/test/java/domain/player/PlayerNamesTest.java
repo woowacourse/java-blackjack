@@ -1,9 +1,9 @@
-package domain;
+package domain.player;
 
-import static domain.Dealer.DEALER_NAME;
-import static domain.PlayerNames.DEALER_NAME_MESSAGE;
-import static domain.PlayerNames.NAMES_SIZE_INVALID_MESSAGE;
-import static domain.PlayerNames.NAME_DUPLICATE_MESSAGE;
+import static domain.player.Dealer.DEALER_NAME;
+import static domain.player.PlayerNames.DEALER_NAME_MESSAGE;
+import static domain.player.PlayerNames.NAMES_SIZE_INVALID_MESSAGE;
+import static domain.player.PlayerNames.NAME_DUPLICATE_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

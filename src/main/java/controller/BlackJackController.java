@@ -1,11 +1,11 @@
 package controller;
 
-import domain.BlackJackGame;
-import domain.CardDeck;
-import domain.Command;
-import domain.Dealer;
-import domain.Player;
-import domain.PlayerNames;
+import domain.card.CardDeck;
+import domain.game.BlackJackGame;
+import domain.game.Command;
+import domain.player.Dealer;
+import domain.player.Player;
+import domain.player.PlayerNames;
 import dto.PlayerDto;
 import dto.ResultDto;
 import java.io.IOException;

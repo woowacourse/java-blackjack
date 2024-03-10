@@ -1,11 +1,13 @@
-package domain;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
+package domain.game;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
+
+import domain.card.CardDeck;
+import domain.player.Dealer;
+import domain.player.PlayerNames;
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class BlackJackGameTest {
 

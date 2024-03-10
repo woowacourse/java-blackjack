@@ -1,10 +1,12 @@
-package domain;
+package domain.player;
 
+import domain.card.Card;
+import domain.card.Hand;
 import java.util.List;
 
 public class Player {
 
-    protected static final int BLACK_JACK = 21;
+    public static final int BLACK_JACK = 21;
 
     private final Name name;
     private final Hand hand;
@@ -14,7 +16,7 @@ public class Player {
         this.hand = hand;
     }
 
-    Player(List<Card> cards) {
+    public Player(List<Card> cards) {
         this.name = new Name("Test");
         this.hand = new Hand(cards);
     }

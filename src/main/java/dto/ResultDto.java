@@ -1,7 +1,7 @@
 package dto;
 
-import domain.Player;
-import domain.Result;
+import domain.game.Result;
+import domain.player.Player;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;

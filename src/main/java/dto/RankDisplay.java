@@ -1,6 +1,6 @@
 package dto;
 
-import domain.Rank;
+import domain.card.Rank;
 import java.util.Arrays;
 
 public enum RankDisplay {

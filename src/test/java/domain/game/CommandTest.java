@@ -1,6 +1,6 @@
-package domain;
+package domain.game;
 
-import static domain.Command.INVALID_COMMAND_MESSAGE;
+import static domain.game.Command.INVALID_COMMAND_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertAll;

@@ -1,6 +1,6 @@
-package domain;
+package domain.player;
 
-import static domain.Dealer.DEALER_NAME;
+import static domain.player.Dealer.DEALER_NAME;
 
 import java.util.List;
 

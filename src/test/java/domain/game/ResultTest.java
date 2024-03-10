@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 import static domain.FixtureCard.ACE_HEARTS;
 import static domain.FixtureCard.TEN_HEARTS;
@@ -6,6 +6,9 @@ import static domain.FixtureCard.TWO_HEARTS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import domain.card.Card;
+import domain.player.Dealer;
+import domain.player.Player;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package domain;
+package domain.player;
 
 import static domain.FixtureCard.ACE_HEARTS;
 import static domain.FixtureCard.SEVEN_HEARTS;
@@ -7,6 +7,8 @@ import static domain.FixtureCard.TWO_HEARTS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import domain.card.Card;
+import domain.card.Hand;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

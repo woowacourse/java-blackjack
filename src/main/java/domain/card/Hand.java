@@ -1,6 +1,6 @@
-package domain;
+package domain.card;
 
-import static domain.Player.BLACK_JACK;
+import static domain.player.Player.BLACK_JACK;
 
 import java.util.ArrayList;
 import java.util.List;

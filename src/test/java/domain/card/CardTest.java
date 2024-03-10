@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import static domain.FixtureCard.ACE_HEARTS;
 import static domain.FixtureCard.TEN_HEARTS;

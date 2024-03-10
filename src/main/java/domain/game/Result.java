@@ -1,5 +1,7 @@
-package domain;
+package domain.game;
 
+import domain.player.Dealer;
+import domain.player.Player;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 

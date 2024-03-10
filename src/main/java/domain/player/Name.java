@@ -1,4 +1,4 @@
-package domain;
+package domain.player;
 
 public record Name(String name) {
     static final int MIN_NAME_LENGTH = 1;

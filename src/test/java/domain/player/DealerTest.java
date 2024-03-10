@@ -1,10 +1,11 @@
-package domain;
+package domain.player;
 
 import static domain.FixtureCard.SEVEN_HEARTS;
 import static domain.FixtureCard.SIX_HEARTS;
 import static domain.FixtureCard.TEN_HEARTS;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.CardDeck;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

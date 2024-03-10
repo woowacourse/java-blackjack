@@ -1,5 +1,8 @@
-package domain;
+package domain.player;
 
+import domain.card.Card;
+import domain.card.CardDeck;
+import domain.card.Hand;
 import java.util.List;
 
 public class Dealer extends Player {
@@ -15,7 +18,7 @@ public class Dealer extends Player {
         this.cardDeck = cardDeck;
     }
 
-    Dealer(List<Card> cards) {
+    public Dealer(List<Card> cards) {
         super(new Name(DEALER_NAME), new Hand(cards));
         this.cardDeck = null;
     }

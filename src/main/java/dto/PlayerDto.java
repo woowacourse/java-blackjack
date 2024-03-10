@@ -1,6 +1,6 @@
 package dto;
 
-import domain.Player;
+import domain.player.Player;
 import java.util.List;
 
 public record PlayerDto(String name, List<String> hands, int score) {
