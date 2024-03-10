@@ -4,7 +4,6 @@ import domain.Name;
 import domain.card.DealerCards;
 import domain.card.Deck;
 import domain.card.PlayerCards;
-import domain.card.RandomDrawStrategy;
 import domain.game.Rule;
 import domain.score.ScoreBoard;
 import view.InputView;
@@ -16,7 +15,7 @@ public class Casino {
 
     private final OutputView outputView = new OutputView();
     private final InputView inputView = new InputView();
-    private final Deck deck = new Deck(new RandomDrawStrategy());
+    private final Deck deck = new Deck();
 
     public void run() {
         List<Name> names = readNames();

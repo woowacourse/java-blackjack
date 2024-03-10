@@ -7,11 +7,10 @@ import java.util.stream.IntStream;
 public class Deck {
 
     private final List<Card> deck;
-    private final DrawStrategy strategy;
+    private final RandomDrawStrategy strategy = new RandomDrawStrategy();
 
-    public Deck(DrawStrategy strategy) {
+    public Deck() {
         this.deck = createDeck();
-        this.strategy = strategy;
     }
 
     private List<Card> createDeck() {

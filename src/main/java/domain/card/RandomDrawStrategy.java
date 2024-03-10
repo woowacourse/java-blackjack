@@ -2,10 +2,11 @@ package domain.card;
 
 import java.util.Random;
 
-public class RandomDrawStrategy implements DrawStrategy {
+public class RandomDrawStrategy {
+    
+    private final Random random = new Random();
 
-    @Override
     public int generateNumber(int size) {
-        return new Random().nextInt(size);
+        return random.nextInt(size);
     }
 }
