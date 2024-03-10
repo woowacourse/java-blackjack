@@ -2,6 +2,7 @@ package controller;
 
 import domain.BlackJackGame;
 import domain.CardDeck;
+import domain.Command;
 import domain.Dealer;
 import domain.Player;
 import domain.PlayerNames;
@@ -57,7 +58,7 @@ public class BlackJackController {
     }
 
     private void repeatHitUntilPlayerStand(BlackJackGame blackJackGame, Player player) throws IOException {
-        while (player.isHittable() && inputView.readCommand(player.getName()).equals("y")) {
+        while (player.isHittable() && Command.from(inputView.readCommand(player.getName())).isProceed()) {
             blackJackGame.hitPlayer(player);
             outputView.printHandAfterHit(PlayerDto.from(player));
         }
