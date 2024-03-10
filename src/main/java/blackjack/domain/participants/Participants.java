@@ -18,10 +18,6 @@ public class Participants {
         this.players = players;
     }
 
-    public void receivePlayerCard(Card card, int playerIndex) {
-        players.receiveOnePlayerCard(card, playerIndex);
-    }
-
     public void receiveDealerCard(Card card) {
         dealer.receiveCard(card);
     }
@@ -44,10 +40,6 @@ public class Participants {
         return players.calculateWinOrLose(dealer.calculateScore());
     }
 
-    public boolean isPlayerNotOver(int playerIndex) {
-        return players.isOnePlayerNotOver(playerIndex);
-    }
-
     public boolean isDealerNotOver() {
         return dealer.canReceiveCard();
     }
@@ -58,14 +50,6 @@ public class Participants {
 
     public int countPlayers() {
         return players.size();
-    }
-
-    public Name getOnePlayerName(int playerIndex) {
-        return players.getOnePlayerName(playerIndex);
-    }
-
-    public Player getOnePlayer(int playerIndex) {
-        return players.getOnePlayer(playerIndex);
     }
 
     public Dealer getDealer() {

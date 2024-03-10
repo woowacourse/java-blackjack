@@ -32,16 +32,6 @@ class ParticipantsTest {
     }
 
     @Test
-    @DisplayName("게임 참가자가 하나의 카드를 받는다.")
-    void receivePlayerCardTest() {
-        Card card = new Card(Shape.HEART, Rank.FIVE);
-
-        participants.receivePlayerCard(card, 0);
-
-        assertThat(participants.getOnePlayer(0).getHands().size()).isEqualTo(1);
-    }
-
-    @Test
     @DisplayName("딜러가 하나의 카드를 받는다.")
     void receiveDealerCardTest() {
         Card card = new Card(Shape.HEART, Rank.FIVE);
@@ -104,31 +94,7 @@ class ParticipantsTest {
         assertThat(result.get(siso)).isFalse();
     }
 
-    @Test
-    @DisplayName("참가자가 카드를 더 받을 수 있다.")
-    void isPlayerNotOverTest() {
-        Hands hands1 = new Hands(List.of(
-                new Card(Shape.HEART, Rank.ACE),
-                new Card(Shape.HEART, Rank.TWO))
-        );
 
-        Hands hands2 = new Hands(List.of(
-                new Card(Shape.SPADE, Rank.ACE),
-                new Card(Shape.SPADE, Rank.TWO))
-        );
-
-        Hands hands3 = new Hands(List.of(
-                new Card(Shape.DIAMOND, Rank.ACE),
-                new Card(Shape.DIAMOND, Rank.TWO))
-        );
-
-
-        participants.receiveInitialHands(
-                new ArrayList<>(List.of(hands1, hands2, hands3))
-        );
-
-        assertThat(participants.isPlayerNotOver(0)).isTrue();
-    }
 
     @Test
     @DisplayName("딜러가 카드를 더 받을 수 있다.")

@@ -36,10 +36,6 @@ public class GameBoard {
         return participants.countPlayers();
     }
 
-    public boolean isPlayerNotOver(int playerIndex) {
-        return participants.isPlayerNotOver(playerIndex);
-    }
-
     public boolean isDealerNotOver() {
         return participants.isDealerNotOver();
     }
@@ -60,17 +56,17 @@ public class GameBoard {
     private Hands makeInitialDeck() {
         Hands hands = new Hands(new ArrayList<>());
         for (int cardCount = 0; cardCount < INITIAL_CARD_COUNT; cardCount++) {
-            hands.addCard(this.allCardDeck.pickRandomCard());
+            hands.addCard(allCardDeck.pickRandomCard());
         }
         return hands;
     }
 
-    public void addCardToPlayer(int playerIndex) {
-        participants.receivePlayerCard(allCardDeck.pickRandomCard(), playerIndex);
-    }
-
     public void addCardToDealer() {
         participants.receiveDealerCard(allCardDeck.pickRandomCard());
+    }
+
+    public void addCardToPlayer(Player player) {
+        player.receiveCard(allCardDeck.pickRandomCard());
     }
 
     public Map<Player, Boolean> calculateWinOrLose() {
@@ -81,16 +77,8 @@ public class GameBoard {
         return allCardDeck;
     }
 
-    public Name getPlayerName(int playerIndex) {
-        return participants.getOnePlayerName(playerIndex);
-    }
-
     public Players getPlayers() {
         return participants.getPlayers();
-    }
-
-    public Player getPlayer(int playerIndex) {
-        return participants.getOnePlayer(playerIndex);
     }
 
     public Dealer getDealer() {

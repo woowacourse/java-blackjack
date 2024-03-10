@@ -62,20 +62,12 @@ public class GameBoardTest {
     }
 
     @Test
-    @DisplayName("플레이어가 카드를 더 가질 수 있다.")
-    void isPlayerNotOverTest() {
-        boolean result = gameBoard.isPlayerNotOver(0);
-
-        assertThat(result).isTrue();
-    }
-
-    @Test
     @DisplayName("딜러가 카드를 더 가질 수 있다.")
     void isDealerNotOverTest() {
         dealer.receiveCard(new Card(Shape.HEART, Rank.SEVEN));
         dealer.receiveCard(new Card(Shape.HEART, Rank.SIX));
 
-        boolean result = gameBoard.isDealerNotOver();
+        boolean result = dealer.canReceiveCard();
 
         assertThat(result).isTrue();
     }
@@ -91,7 +83,7 @@ public class GameBoardTest {
     @Test
     @DisplayName("플레이어가 카드 한 장을 더 받는다.")
     void addCardToPlayerTest() {
-        gameBoard.addCardToPlayer(0);
+        gameBoard.addCardToPlayer(siso);
 
         assertThat(siso.getHands().size()).isEqualTo(3);
     }

@@ -16,7 +16,7 @@ public enum RankMapper {
 
     public static RankMapper findByRank(Rank rank) {
         return Arrays.stream(values())
-                .filter(rankMapper -> rank.isSameName(rankMapper.getRankName()))
+                .filter(rankMapper -> rank.isSameName(rankMapper.name()))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("일치하는 등급이 없습니다."));
     }

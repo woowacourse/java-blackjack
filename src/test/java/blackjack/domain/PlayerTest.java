@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
+import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -29,6 +30,18 @@ public class PlayerTest {
         player.receiveHands(hands);
 
         assertThat(player.getHands().size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("플레이어가 카드를 더 받을 수 있다.")
+    void isPlayerNotOverTest() {
+        Player player = new Player(new Name("이름"));
+        Hands hands = new Hands(List.of(
+                new Card(Shape.HEART, Rank.ACE),
+                new Card(Shape.HEART, Rank.TWO))
+        );
+        player.receiveHands(hands);
+        assertThat(player.canReceiveCard()).isTrue();
     }
 
     @Test

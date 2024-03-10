@@ -57,8 +57,9 @@ public class BlackjackGame {
     }
 
     private void proceedPlayerTurn(GameBoard gameBoard) {
-        for (int playerIndex = 0; playerIndex < gameBoard.countPlayers(); playerIndex++) {
-            proceedOnePlayerTurn(gameBoard, playerIndex);
+        List<Player> players = gameBoard.getPlayers().getPlayers();
+        for (Player player : players) {
+            proceedOnePlayerTurn(gameBoard, player);
         }
     }
 
@@ -71,11 +72,10 @@ public class BlackjackGame {
         outputView.printNewLine();
     }
 
-    private void proceedOnePlayerTurn(GameBoard gameBoard, int playerIndex) {
-        while (gameBoard.isPlayerNotOver(playerIndex) &&
-                inputView.readCommand(gameBoard.getPlayerName(playerIndex).getName())) {
-            gameBoard.addCardToPlayer(playerIndex);
-            Player player = gameBoard.getPlayer(playerIndex);
+    private void proceedOnePlayerTurn(GameBoard gameBoard, Player player) {
+        while (player.canReceiveCard() &&
+                inputView.readCommand(player.getName().getName())) {
+            gameBoard.addCardToPlayer(player);
             outputView.printCurrentCard(ParticipantDto.from(player));
             outputView.printNewLine();
         }
