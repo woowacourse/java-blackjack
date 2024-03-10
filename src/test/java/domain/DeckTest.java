@@ -5,8 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
-import domain.strategy.SettedCardsGenerator;
-import domain.strategy.ShuffledCardsGenerator;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +20,7 @@ public class DeckTest {
         Card card3 = new Card(Symbol.SPADE, Rank.KING);
 
         List<Card> cards = List.of(card1, card2, card3);
-        Deck deck = Deck.createByStrategy(new SettedCardsGenerator(cards));
+        Deck deck = Deck.from(cards);
 
         // when
         Card drawedCard = deck.draw();

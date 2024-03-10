@@ -12,8 +12,7 @@ public class Deck {
         this.cards = cards;
     }
 
-    public static Deck createByStrategy(final CardsGenerator cardsGenerator) {
-        List<Card> cards = cardsGenerator.generate();
+    public static Deck from(final List<Card> cards) {
         return new Deck(new ArrayDeque<>(cards));
     }
 

@@ -8,7 +8,7 @@ import domain.Players;
 import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Player;
-import domain.strategy.ShuffledCardsGenerator;
+import domain.ShuffledCardsGenerator;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -17,7 +17,8 @@ public class BlackJackController {
 
     public void start() {
         Gamers gamers = readGamers();
-        BlackJackGame blackJackGame = new BlackJackGame(Deck.createByStrategy(new ShuffledCardsGenerator()));
+        Deck deck = createDeck();
+        BlackJackGame blackJackGame = new BlackJackGame(deck);
         blackJackGame.prepareCards(gamers);
         OutputView.printInitialCardsMessage(gamers);
         handOutCard(blackJackGame, gamers);
@@ -31,6 +32,11 @@ public class BlackJackController {
         Players players = createPlayers(names);
         Dealer dealer = new Dealer();
         return Gamers.of(players, dealer);
+    }
+
+    private Deck createDeck() {
+        ShuffledCardsGenerator shuffledCardsGenerator = new ShuffledCardsGenerator();
+        return Deck.from(shuffledCardsGenerator.generate());
     }
 
     private Players createPlayers(final List<String> names) {
