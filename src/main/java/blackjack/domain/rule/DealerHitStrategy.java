@@ -8,4 +8,9 @@ public class DealerHitStrategy implements HitStrategy {
     public boolean canHit(Score score) {
         return score.getValue() < HIT_THRESHOLD;
     }
+
+    @Override
+    public boolean canHit(int score) {
+        return score < HIT_THRESHOLD;
+    }
 }
