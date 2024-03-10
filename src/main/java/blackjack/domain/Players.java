@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.dto.PlayerDto;
-import blackjack.domain.dto.PlayersDto;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,14 +31,6 @@ public class Players {
             names.add(player.getName());
         }
         return names;
-    }
-
-    public PlayersDto toDto() {
-        final List<PlayerDto> playerDtos = new ArrayList<>();
-        for (final Player player : players) {
-            playerDtos.add(player.toDto());
-        }
-        return new PlayersDto(playerDtos);
     }
 
     public Player findByName(final Name name) {

@@ -2,9 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.dto.DealerDto;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Dealer implements Gamer {
 
@@ -37,14 +35,6 @@ public class Dealer implements Gamer {
 
     public Card findFaceUpCard() {
         return cards.findFirst();
-    }
-
-    public DealerDto firstCardToDto() {
-        return new DealerDto(List.of(this.findFaceUpCard()), calculateScore());
-    }
-
-    public DealerDto allCardToDto() {
-        return new DealerDto(cards.getCards(), calculateScore());
     }
 
     public Cards getCards() {

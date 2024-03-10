@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.dto.PlayerDto;
 import java.util.ArrayList;
 
 public class Player implements Gamer {
@@ -43,9 +42,5 @@ public class Player implements Gamer {
 
     public Cards getCards() {
         return cards;
-    }
-
-    public PlayerDto toDto() {
-        return new PlayerDto(name, cards.getCards(), calculateScore());
     }
 }

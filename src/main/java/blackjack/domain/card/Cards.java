@@ -45,7 +45,7 @@ public class Cards {
         return cards.size() == INITIAL_CARD_SIZE;
     }
 
-    public List<Card> getCards() {
+    public List<Card> toList() {
         return cards;
     }
 }

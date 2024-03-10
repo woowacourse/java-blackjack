@@ -2,9 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
-import blackjack.domain.dto.DealerDto;
-import blackjack.domain.dto.OutcomeDto;
-import blackjack.domain.dto.PlayersDto;
+import blackjack.dto.OutcomeDto;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,16 +18,16 @@ public class GameBoard {
         this.players = players;
     }
 
-    public DealerDto drawInitialDealerCards() {
+    public Cards drawInitialDealerCards() {
         drawTwoCards(dealer);
-        return dealer.firstCardToDto();
+        return new Cards(List.of(dealer.findFaceUpCard()));
     }
 
-    public PlayersDto drawInitialPlayersCards() {
+    public Players drawInitialPlayersCards() {
         for (Player player : players.getPlayers()) {
             drawTwoCards(player);
         }
-        return players.toDto();
+        return players;
     }
 
     private void drawTwoCards(Gamer gamer) {
@@ -45,15 +43,7 @@ public class GameBoard {
         return gamer.canDraw();
     }
 
-    public DealerDto getDealerFinalState() {
-        return dealer.allCardToDto();
-    }
-
-    public PlayersDto getPlayersFinalState() {
-        return players.toDto();
-    }
-
-    public List<Outcome> getDealerOutcome(final Referee referee) {
+    public List<Outcome> getDealerOutcomes(final Referee referee) {
         return Outcome.reverse(calculateOutcomes(referee));
     }
 

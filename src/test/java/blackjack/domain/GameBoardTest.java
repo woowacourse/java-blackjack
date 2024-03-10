@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.dto.OutcomeDto;
+import blackjack.dto.OutcomeDto;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ class GameBoardTest {
         gameBoard.drawInitialPlayersCards();
         gameBoard.drawInitialDealerCards();
 
-        final List<Outcome> dealerOutcome = gameBoard.getDealerOutcome(referee);
+        final List<Outcome> dealerOutcome = gameBoard.getDealerOutcomes(referee);
 
         assertThat(dealerOutcome).containsExactly(Outcome.PUSH);
     }
