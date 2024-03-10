@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class HandsTest {
 
-    @DisplayName("사용자의 점수를 계산한다.")
+    @DisplayName("참가자의 점수를 계산한다.")
     @Test
     void calculateScore() {
         Hands hands = new Hands();
@@ -19,7 +19,7 @@ class HandsTest {
         assertThat(score).isEqualTo(10);
     }
 
-    @DisplayName("ace를 11로 결정한다.")
+    @DisplayName("ace를 11로 계산했을 때 21을 초과하지 않을 경우 ace를 11로 결정한다.")
     @Test
     void calculateAceIsEleven() {
         Hands hands = new Hands();
@@ -31,7 +31,7 @@ class HandsTest {
         Assertions.assertThat(totalScore).isEqualTo(21);
     }
 
-    @DisplayName("ace를 1로 결정한다.")
+    @DisplayName("ace를 11로 계산했을 때 21을 초과할 경우 ace를 11로 결정한다.")
     @Test
     void calculateAceIsOne() {
         Hands hands = new Hands();

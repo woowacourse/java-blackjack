@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 class RankTest {
 
-    @DisplayName("점수 반환")
+    @DisplayName("카드의 점수를 반환한다.")
     @Test
     void getScore() {
         Assertions.assertThat(Rank.TWO.getScore()).isEqualTo(2);

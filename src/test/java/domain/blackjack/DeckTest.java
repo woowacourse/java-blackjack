@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 class DeckTest {
 
-    @DisplayName("카드 덱 초기화")
+    @DisplayName("총 52장의 카드를 가지고 있는 덱을 생성한다.")
     @Test
     void initDeck() {
         Deck deck = new Deck();
