@@ -41,7 +41,15 @@ public class Hand {
         return Number.sum(numbers);
     }
 
-    public boolean hasOnlyInitialCard() {
+    public boolean isBust() {
+        return sum() > BLACKJACK_CANDIDATE;
+    }
+
+    public boolean isBlackJack() {
+        return sum() == BLACKJACK_CANDIDATE && hasOnlyInitialCard();
+    }
+
+    private boolean hasOnlyInitialCard() {
         return cards.size() == INITIAL_CARD_SIZE;
     }
 

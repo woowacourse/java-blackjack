@@ -4,8 +4,6 @@ import blackjack.domain.card.Hand;
 
 public class Referee {
 
-    private static final int BLACKJACK_CANDIDATE = 21;
-
     private final Hand dealerHand;
 
     public Referee(final Hand dealerHand) {
@@ -13,8 +11,8 @@ public class Referee {
     }
 
     public Outcome doesPlayerWin(final Hand playerHand) {
-        if (isBust(playerHand.sum()) || isBust(dealerHand.sum())) {
-            return calculateBustCase(playerHand.sum());
+        if (isBust(dealerHand) || isBust(playerHand)) {
+            return calculateBustCase(playerHand);
         }
         if (isBlackJack(dealerHand) || isBlackJack(playerHand)) {
             return calculateBlackJackCase(playerHand);
@@ -22,22 +20,22 @@ public class Referee {
         return calculateNormalCase(playerHand);
     }
 
-    private boolean isBust(final int score) {
-        return score > BLACKJACK_CANDIDATE;
+    private boolean isBust(final Hand hand) {
+        return hand.isBust();
     }
 
-    private Outcome calculateBustCase(final int playerScore) {
-        if (isBust(dealerHand.sum()) && isBust(playerScore)) {
+    private Outcome calculateBustCase(final Hand playerHand) {
+        if (isBust(dealerHand) && isBust(playerHand)) {
             return Outcome.PUSH;
         }
-        if (isBust(dealerHand.sum())) {
+        if (isBust(dealerHand)) {
             return Outcome.WIN;
         }
         return Outcome.LOSE;
     }
 
     private boolean isBlackJack(final Hand hand) {
-        return hand.sum() == BLACKJACK_CANDIDATE && hand.hasOnlyInitialCard();
+        return hand.isBlackJack();
     }
 
     private Outcome calculateBlackJackCase(final Hand playerHand) {
