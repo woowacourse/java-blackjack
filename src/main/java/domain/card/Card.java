@@ -1,7 +1,7 @@
 package domain.card;
 
-public record Card(CardShape shape, CardNumber number) {
-    public int value() {
-        return number.value();
+public record Card(CardSuit suit, CardRank rank) {
+    public int score() {
+        return rank.getScore();
     }
 }
