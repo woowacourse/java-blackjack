@@ -34,9 +34,9 @@ class DeckTest {
     @Test
     void validateDuplicated() {
         Card card = new Card(CardRank.EIGHT, CardShape.DIAMOND);
-        List<Card> cards = List.of(card, card);
+        List<Card> duplicatedCards = List.of(card, card);
 
-        assertThatThrownBy(() -> new Deck(cards))
+        assertThatThrownBy(() -> new Deck(duplicatedCards))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
