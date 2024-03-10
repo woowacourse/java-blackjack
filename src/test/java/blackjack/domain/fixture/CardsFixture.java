@@ -14,11 +14,6 @@ public class CardsFixture {
             new Card(Value.ACE, Shape.HEART),
             new Card(Value.ACE, Shape.SPADE)
     );
-    public static final List<Card> SCORE_13_WITH_ACE = List.of(
-            new Card(Value.ACE, Shape.HEART),
-            new Card(Value.KING, Shape.HEART),
-            new Card(Value.TWO, Shape.HEART)
-    );
     public static final List<Card> CARDS_SCORE_16 = List.of(
             new Card(Value.JACK, Shape.HEART),
             new Card(Value.SIX, Shape.HEART)

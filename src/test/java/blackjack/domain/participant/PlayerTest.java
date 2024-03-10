@@ -33,9 +33,31 @@ class PlayerTest {
         return Stream.of(
                 Arguments.of(CardsFixture.BLACKJACK, 21),
                 Arguments.of(CardsFixture.TWO_ACE, 12),
-                Arguments.of(CardsFixture.SCORE_13_WITH_ACE, 13),
                 Arguments.of(CardsFixture.CARDS_SCORE_16, 16)
         );
+    }
+
+    @DisplayName("ACE가 11로 계산되었을 때 버스트가 되지 않는다면, ACE를 그대로 계산한다.")
+    @Test
+    void calculateScoreTest_usingAceMaxScoreCase() {
+        Player player = new Player(List.of(
+                new Card(Value.ACE, Shape.HEART),
+                new Card(Value.TWO, Shape.HEART)
+        ), DEFAULT_NAME);
+
+        assertThat(player.calculateScore()).isEqualTo(13);
+    }
+
+    @DisplayName("ACE가 11로 계산되었을 때 버스트가 된다면, ACE를 1로 계산한다.")
+    @Test
+    void calculateScoreTest_usingAceMinScoreCase() {
+        Player player = new Player(List.of(
+                new Card(Value.ACE, Shape.HEART),
+                new Card(Value.KING, Shape.HEART),
+                new Card(Value.TWO, Shape.HEART)
+        ), DEFAULT_NAME);
+
+        assertThat(player.calculateScore()).isEqualTo(13);
     }
 
     @DisplayName("카드의 총 점수가 21을 넘지 않으면, 카드를 더 뽑을 수 있다")

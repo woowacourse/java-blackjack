@@ -27,7 +27,6 @@ class HandTest {
     static Stream<Arguments> cardsAndScore() {
         return Stream.of(Arguments.of(CardsFixture.BLACKJACK, 21),
                 Arguments.of(CardsFixture.TWO_ACE, 12),
-                Arguments.of(CardsFixture.SCORE_13_WITH_ACE, 13),
                 Arguments.of(CardsFixture.CARDS_SCORE_16, 16));
     }
 
