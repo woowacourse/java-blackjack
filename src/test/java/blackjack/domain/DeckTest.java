@@ -20,8 +20,8 @@ public class DeckTest {
     }
 
     @Test
-    @DisplayName("랜덤 카드를 선택한다.")
-    void pickRandomCardTest() {
+    @DisplayName("댁에서 카드를 선택한다.")
+    void pickCardTest() {
         Deck deck = new Deck();
         Card card = new Card(Shape.HEART, Rank.EIGHT);
 
