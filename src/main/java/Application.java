@@ -43,12 +43,16 @@ public class Application {
     private static void askForGamer(GamerDto gamer, BlackJackGame blackJackGame) {
         boolean isFirstTurn = true;
         String answer = "y";
-        while (!blackJackGame.isBustFromName(gamer.getName()) && answer.equals("y")) {
+        while (isGamerTurnEnded(blackJackGame, gamer, answer)) {
             answer = InputView.readAnswer(CONSOLE_READER, gamer.getName());
             drawIfAnswerIsYes(answer, gamer, blackJackGame);
             printPlayerStatus(answer, gamer, isFirstTurn);
             isFirstTurn = false;
         }
+    }
+
+    private static boolean isGamerTurnEnded(BlackJackGame blackJackGame, GamerDto gamer, String answer) {
+        return (!blackJackGame.isBustFromName(gamer.getName()) && answer.equals("y"));
     }
 
     private static void drawIfAnswerIsYes(String answer, GamerDto gamerDto, BlackJackGame blackJackGame) {
