@@ -24,7 +24,7 @@ public class BlackJackController {
         BlackJackGame blackJackGame = getBlackJackGame();
         int dealerExtraCardCount = blackJackGame.countDealerExtraCard();
 
-        List<SinglePlayerResultDto> winOrNotResults = runGame(blackJackGame, new ArrayList<>());
+        List<SinglePlayerResultDto> winOrNotResults = runGame(blackJackGame);
         List<Boolean> playersWinningInfo = getPlayersWinningInfo(winOrNotResults);
 
         outputView.printExtraCardInfo(dealerExtraCardCount);
@@ -46,16 +46,18 @@ public class BlackJackController {
         return blackJackGame;
     }
 
-    private List<SinglePlayerResultDto> runGame(BlackJackGame blackJackGame,
-                                                List<SinglePlayerResultDto> winOrNotResults) {
+    private List<SinglePlayerResultDto> runGame(BlackJackGame blackJackGame) {
+
+        List<SinglePlayerResultDto> gameResults = new ArrayList<>();
+
         for (SingleMatch singleMatch : blackJackGame.startGame()) {
             Player player = singleMatch.getPlayer();
             retry(singleMatch, player);
 
             boolean isPlayerWins = singleMatch.isPlayerWins();
-            winOrNotResults.add(new SinglePlayerResultDto(player.getName(), isPlayerWins));
+            gameResults.add(new SinglePlayerResultDto(player.getName(), isPlayerWins));
         }
-        return winOrNotResults;
+        return gameResults;
     }
 
     private List<Boolean> getPlayersWinningInfo(List<SinglePlayerResultDto> singlePlayerResultDtos) {
