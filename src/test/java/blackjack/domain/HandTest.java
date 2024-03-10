@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -79,5 +78,18 @@ class HandTest {
         boolean result = hand.isBlackJack();
 
         assertThat(result).isTrue();
+    }
+
+    @DisplayName("점수가 21점이라도 카드가 2장 넘으면 블랙잭 상태가 아니다.")
+    @Test
+    void isNotBlackJack() {
+        Hand hand = new Hand();
+        hand.add(new Card(CardRank.TWO, CardShape.DIAMOND));
+        hand.add(new Card(CardRank.KING, CardShape.CLOVER));
+        hand.add(new Card(CardRank.NINE, CardShape.DIAMOND));
+
+        boolean result = hand.isBlackJack();
+
+        assertThat(result).isFalse();
     }
 }

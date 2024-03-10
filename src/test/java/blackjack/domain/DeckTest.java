@@ -37,7 +37,7 @@ class DeckTest {
         Deck deck = new Deck(List.of(card));
         deck.draw();
 
-        assertThatThrownBy(() -> deck.draw())
+        assertThatThrownBy(deck::draw)
                 .isInstanceOf(IllegalStateException.class);
     }
 }

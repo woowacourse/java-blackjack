@@ -31,7 +31,7 @@ public class Deck {
     private static List<Card> createRankCards(CardRank rank) {
         return Arrays.stream(CardShape.values())
                 .map(shape -> new Card(rank, shape))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private void validateDuplicated(List<Card> cards) {
