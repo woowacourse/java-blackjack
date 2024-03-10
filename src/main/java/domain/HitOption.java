@@ -18,7 +18,7 @@ public class HitOption {
         }
     }
 
-    public boolean doHit() { //Todo: isHit
+    public boolean isHit() {
         return value.equalsIgnoreCase(YES);
     }
 }

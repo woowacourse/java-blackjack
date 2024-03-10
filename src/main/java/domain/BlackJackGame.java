@@ -36,7 +36,7 @@ public class BlackJackGame {
 
     public boolean hitByPlayer(String rawHitOption, Player player) {
         HitOption hitOption = new HitOption(rawHitOption);
-        if (hitOption.doHit()) {
+        if (hitOption.isHit()) {
             player.hit(cardPack.pickOneCard());
             return true;
         }
