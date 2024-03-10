@@ -38,34 +38,9 @@ public class BlackJackGame {
         Dealer dealer = gamers.findDealer();
         Map<Player, Result> playerResults = new LinkedHashMap<>();
         for (Player player : gamers.findPlayers()) {
-            Result playerResult = isPlayerWin(dealer, player);
+            Result playerResult = Result.getPlayerResultWith(player, dealer);
             playerResults.put(player, playerResult);
         }
         return new PlayerResults(playerResults);
-    }
-
-    private Result isPlayerWin(final Dealer dealer, final Player player) {
-        if (player.isBust()) {
-            return Result.LOSE;
-        }
-        if (dealer.isBust()) {
-            return Result.WIN;
-        }
-        if (player.isBlackJack()) {
-            if (dealer.isBlackJack()) {
-                return Result.TIE;
-            }
-            return Result.WIN;
-        }
-        if (dealer.isBlackJack()) {
-            return Result.LOSE;
-        }
-        if (player.calculateTotalScore() > dealer.calculateTotalScore()) {
-            return Result.WIN;
-        }
-        if (player.calculateTotalScore() == dealer.calculateTotalScore()) {
-            return Result.TIE;
-        }
-        return Result.LOSE;
     }
 }
