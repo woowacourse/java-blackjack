@@ -23,6 +23,8 @@ public abstract class Player {
 
     public abstract boolean isNotBust();
 
+    
+
     public int calculateScore() {
         int score = 0;
         for (final Card card : cards) {
@@ -49,6 +51,10 @@ public abstract class Player {
         return this.name.equals(new Name(DEALER_NAME));
     }
 
+    public boolean isParticipant() {
+        return !this.isDealer();
+    }
+
     public String getName() {
         return name.getName();
     }
@@ -56,6 +62,7 @@ public abstract class Player {
     public List<Card> getCards() {
         return cards;
     }
+
 
     @Override
     public boolean equals(final Object o) {
