@@ -1,8 +1,5 @@
 package domain;
 
-import static domain.constants.CardCommand.HIT;
-import static domain.constants.CardCommand.STAND;
-
 import controller.dto.GameResult;
 import controller.dto.HandStatus;
 import controller.dto.PlayerResult;
@@ -55,6 +52,24 @@ public class BlackJackGame {
         }
     }
 
+    public List<HandStatus> createHandStatuses() {
+        return participants.getParticipants()
+                .stream()
+                .map(participant -> participant.createHandStatus())
+                .toList();
+    }
+
+    public void finish(final OutputView outputView) {
+        List<Integer> scores = new ArrayList<>();
+        scores.add(participants.dealer().calculateResultScore());
+        for (Player player : participants.players()) {
+            scores.add(player.calculateResultScore());
+        }
+        outputView.printResult(getCurrentHandStatus(), scores);
+        outputView.printGameResult(getGameResult());
+    }
+
+    /*
     public void giveCardToPlayer(final String name, final OutputView outputView, final InputView inputView) {
         Player player = getPlayer(name);
         HandStatus currentHand = new HandStatus(player.getName(), player.getHand());
@@ -70,20 +85,10 @@ public class BlackJackGame {
         if (STAND.equals(command)) {
             outputView.printCardStatus(currentHand);
         }
-    }
+    }*/
 
     private CardCommand inputCommand(final String name, final InputView inputView) {
         return CardCommand.from(inputView.decideToGetMoreCard(name));
-    }
-
-    public void finish(final OutputView outputView) {
-        List<Integer> scores = new ArrayList<>();
-        scores.add(participants.dealer().calculateResultScore());
-        for (Player player : participants.players()) {
-            scores.add(player.calculateResultScore());
-        }
-        outputView.printResult(getCurrentHandStatus(), scores);
-        outputView.printGameResult(getGameResult());
     }
 
     public List<HandStatus> getCurrentHandStatus() {
@@ -141,5 +146,4 @@ public class BlackJackGame {
     public List<Participant> getParticipants() {
         return participants.getParticipants();
     }
-
 }

@@ -23,15 +23,21 @@ public class GameManager {
     public void run() {
         BlackJackGame blackJackGame = start();
         rotate(blackJackGame);
-        blackJackGame.finish();
+        finish(blackJackGame);
     }
 
+    /**
+     * 게임의 참가자를 생성하고 2장 씩 나누어주어 게임을 초기 세팅하는 메서드
+     */
     private BlackJackGame start() {
         BlackJackGame blackJackGame = BlackJackGame.from(inputView.enterPlayerNames());
         outputView.printInitialStatus(blackJackGame.initialize());
         return blackJackGame;
     }
 
+    /**
+     * 딜러와 플레이어에게 돌아가며 카드를 나누어주는 메서드
+     */
     private void rotate(final BlackJackGame blackJackGame) {
         List<Participant> participants = blackJackGame.getParticipants();
         for (Participant participant : participants) {
@@ -57,5 +63,13 @@ public class GameManager {
             );
         }
         return () -> CardCommand.HIT;
+    }
+
+    /**
+     * 게임의 결과를 출력하고 최종 승패를 출력하는 메서드
+     */
+    private void finish(final BlackJackGame blackJackGame) {
+        List<HandStatus> handStatuses = blackJackGame.createHandStatuses();
+        outputView.printResultHandStatus(handStatuses);
     }
 }

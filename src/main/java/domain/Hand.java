@@ -1,5 +1,7 @@
 package domain;
 
+import static domain.BlackJackGame.BLACKJACK_SCORE;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class Hand {
         return card.getScore();
     }
 
-    public int calculateResultScore(final int blackJackScore) {
+    public int calculateResultScore() {
         int sum = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
@@ -44,7 +46,7 @@ public class Hand {
         for (Card card : cards) {
             increaseCountIfAceCard(card, aceCardCount);
         }
-        while (aceCardCount > 0 && sum > blackJackScore) {
+        while (aceCardCount > 0 && sum > BLACKJACK_SCORE) {
             aceCardCount--;
             sum -= ALTER_ACE_GAP;
         }
