@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.domain.deck.Rank;
+import blackjack.domain.Cards.Rank;
 
 public enum RankDto {
     ACE("A"), TWO("2"), THREE("3"), FOUR("4"), FIVE("5"),

@@ -2,10 +2,10 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.deck.Card;
-import blackjack.domain.deck.Deck;
-import blackjack.domain.deck.Rank;
-import blackjack.domain.deck.Shape;
+import blackjack.domain.Cards.Card;
+import blackjack.domain.Cards.Deck;
+import blackjack.domain.Cards.Rank;
+import blackjack.domain.Cards.Shape;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import org.assertj.core.api.Assertions;
@@ -30,7 +30,7 @@ public class PlayerTest {
         deck.addCard(new Card(Shape.HEART, Rank.TWO));
         player.receiveDeck(deck);
 
-        assertThat(player.getDeck().size()).isEqualTo(2);
+        assertThat(player.getHand().size()).isEqualTo(2);
     }
 
     @Test

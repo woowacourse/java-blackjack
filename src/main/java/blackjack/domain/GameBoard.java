@@ -1,9 +1,9 @@
 package blackjack.domain;
 
-import blackjack.domain.deck.Card;
-import blackjack.domain.deck.Deck;
-import blackjack.domain.deck.Rank;
-import blackjack.domain.deck.Shape;
+import blackjack.domain.Cards.Card;
+import blackjack.domain.Cards.Deck;
+import blackjack.domain.Cards.Rank;
+import blackjack.domain.Cards.Shape;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;

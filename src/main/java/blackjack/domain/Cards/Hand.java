@@ -1,19 +1,18 @@
-package blackjack.domain.deck;
+package blackjack.domain.Cards;
 
 import blackjack.domain.participants.Players;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
-public class Deck {
-    private static final Random RANDOM = new Random();
+public class Hand {
+
     private static final int ACE_BONUS_SCORE = 10;
     private static final int NO_BONUS_SCORE = 0;
 
     private final List<Card> cards;
 
-    public Deck() {
+    public Hand() {
         this.cards = new LinkedList<>();
     }
 
@@ -23,12 +22,6 @@ public class Deck {
 
     public void addCard(Card card) {
         cards.add(card);
-    }
-
-    public Card pickRandomCard() {
-        validateDeck();
-        int pickCardIndex = RANDOM.nextInt(cards.size());
-        return cards.remove(pickCardIndex);
     }
 
     public int calculateTotalScore() {

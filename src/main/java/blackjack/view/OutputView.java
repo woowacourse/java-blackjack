@@ -25,11 +25,11 @@ public class OutputView {
     }
 
     private void printDealerCard(PlayerDto dealer) {
-        System.out.printf("%s: %s\n", dealer.playerName(), dealer.deck().get(0));
+        System.out.printf("%s: %s\n", dealer.playerName(), dealer.hand().get(0));
     }
 
     public void printCurrentCard(PlayerDto player) {
-        System.out.printf("%s카드 : %s", player.playerName(), deckWithDelimiter(player.deck()));
+        System.out.printf("%s카드 : %s", player.playerName(), deckWithDelimiter(player.hand()));
     }
 
     public void printScoreResult(PlayerDto dealer, List<PlayerDto> playerList) {

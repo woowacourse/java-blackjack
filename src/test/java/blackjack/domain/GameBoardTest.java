@@ -2,10 +2,10 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.deck.Card;
-import blackjack.domain.deck.Deck;
-import blackjack.domain.deck.Rank;
-import blackjack.domain.deck.Shape;
+import blackjack.domain.Cards.Card;
+import blackjack.domain.Cards.Deck;
+import blackjack.domain.Cards.Rank;
+import blackjack.domain.Cards.Shape;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
@@ -87,7 +87,7 @@ public class GameBoardTest {
     void initialDistributeTest() {
         gameBoard.distributeInitialDecks();
 
-        assertThat(dealer.getDeck().size()).isEqualTo(2);
+        assertThat(dealer.getHand().size()).isEqualTo(2);
     }
 
     @Test
@@ -95,7 +95,7 @@ public class GameBoardTest {
     void addCardToPlayerTest() {
         gameBoard.addCardToPlayer(0);
 
-        assertThat(siso.getDeck().size()).isEqualTo(3);
+        assertThat(siso.getHand().size()).isEqualTo(3);
     }
 
     @Test
@@ -103,7 +103,7 @@ public class GameBoardTest {
     void addCardToDealerTest() {
         gameBoard.addCardToDealer();
 
-        assertThat(dealer.getDeck().size()).isEqualTo(1);
+        assertThat(dealer.getHand().size()).isEqualTo(1);
     }
 
     @Test

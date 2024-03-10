@@ -1,42 +1,43 @@
 package blackjack.domain.participants;
 
 
-import blackjack.domain.deck.Card;
-import blackjack.domain.deck.Deck;
+import blackjack.domain.Cards.Card;
+import blackjack.domain.Cards.Deck;
+import blackjack.domain.Cards.Hand;
 
 public class Player {
     private final Name name;
-    private final Deck deck;
+    private final Hand hand;
 
     public Player(Name name) {
         this.name = name;
-        this.deck = new Deck();
+        this.hand = new Hand();
     }
 
     public void receiveDeck(Deck tempDeck) {
         int tempDeckSize = tempDeck.size();
         for (int i = 0; i < tempDeckSize; i++) {
-            deck.addCard(tempDeck.pickRandomCard());
+            hand.addCard(tempDeck.pickRandomCard());
         }
     }
 
     public void receiveCard(Card card) {
-        deck.addCard(card);
+        hand.addCard(card);
     }
 
     public int calculateScore() {
-        return deck.calculateTotalScore();
+        return hand.calculateTotalScore();
     }
 
     public boolean isNotOver(int boundaryScore) {
-        return deck.calculateTotalScore() < boundaryScore;
+        return hand.calculateTotalScore() < boundaryScore;
     }
 
     public Name getName() {
         return name;
     }
 
-    public Deck getDeck() {
-        return deck;
+    public Hand getHand() {
+        return hand;
     }
 }

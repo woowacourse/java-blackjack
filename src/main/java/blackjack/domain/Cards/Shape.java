@@ -1,4 +1,4 @@
-package blackjack.domain.deck;
+package blackjack.domain.Cards;
 
 public enum Shape {
     HEART, DIAMOND, CLOVER, SPADE;
