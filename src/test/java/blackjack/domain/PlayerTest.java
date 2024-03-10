@@ -27,9 +27,26 @@ class PlayerTest {
         assertThat(player.getCards()).containsExactly(givenCard);
     }
 
-    @DisplayName("플레이어가 버스트되거나, 블랙잭인 상태면 더 이상 카드를 받을 수 없다")
+    @DisplayName("플레이어가 버스트 상태면 더 이상 카드를 받을 수 없다")
     @Test
-    void hitWhenIsNotPlayable() {
+    void hitWhenBust() {
+        Player player = new Player("atom");
+        Card card1 = new Card(CardRank.KING, CardShape.DIAMOND);
+        Card card2 = new Card(CardRank.QUEEN, CardShape.DIAMOND);
+        Card card3 = new Card(CardRank.JACK, CardShape.DIAMOND);
+        Card card4 = new Card(CardRank.ACE, CardShape.DIAMOND);
+
+        player.hit(card1);
+        player.hit(card2);
+        player.hit(card3);
+
+        assertThatThrownBy(() -> player.hit(card4))
+                .isInstanceOf(IllegalStateException.class);
+    }
+
+    @DisplayName("플레이어가 블랙잭 상태면 더 이상 카드를 받을 수 없다")
+    @Test
+    void hitWhenBlackjack() {
         Player player = new Player("atom");
         Card card1 = new Card(CardRank.KING, CardShape.DIAMOND);
         Card card2 = new Card(CardRank.ACE, CardShape.DIAMOND);
