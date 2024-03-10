@@ -1,7 +1,8 @@
-package domain;
+package domain.participant;
 
 import static domain.BlackJackGame.BLACKJACK_SCORE;
 
+import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 

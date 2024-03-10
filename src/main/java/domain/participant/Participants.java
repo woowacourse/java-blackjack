@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import controller.dto.ParticipantOutcome;
 import domain.constants.Outcome;

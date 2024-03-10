@@ -1,7 +1,8 @@
 package domain;
 
-import domain.constants.Score;
-import domain.constants.Shape;
+import domain.card.Card;
+import domain.card.Score;
+import domain.card.Shape;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

@@ -1,7 +1,5 @@
-package domain;
+package domain.card;
 
-import domain.constants.Score;
-import domain.constants.Shape;
 import java.util.Objects;
 
 public class Card {

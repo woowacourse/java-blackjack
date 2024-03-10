@@ -3,8 +3,12 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import controller.dto.HandStatus;
-import domain.constants.Score;
-import domain.constants.Shape;
+import domain.card.Card;
+import domain.card.Score;
+import domain.card.Shape;
+import domain.participant.Dealer;
+import domain.participant.Participants;
+import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

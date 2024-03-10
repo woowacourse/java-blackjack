@@ -3,6 +3,8 @@ package domain;
 import controller.dto.HandStatus;
 import controller.dto.JudgeResult;
 import domain.constants.CardCommand;
+import domain.participant.Participant;
+import domain.participant.Participants;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -60,6 +62,9 @@ public class BlackJackGame {
         return referee.judge();
     }
 
+    public List<Participant> getParticipants() {
+        return participants.getParticipants();
+    }
     /*
     public void finish(final OutputView outputView) {
         List<Integer> scores = new ArrayList<>();
@@ -100,8 +105,4 @@ public class BlackJackGame {
             currentScore = dealer.calculateResultScore();
         }
     }*/
-
-    public List<Participant> getParticipants() {
-        return participants.getParticipants();
-    }
 }

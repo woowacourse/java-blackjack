@@ -3,9 +3,9 @@ package view;
 import controller.dto.HandStatus;
 import controller.dto.JudgeResult;
 import controller.dto.ParticipantOutcome;
-import domain.Card;
-import domain.Hand;
+import domain.card.Card;
 import domain.constants.Outcome;
+import domain.participant.Hand;
 import java.util.List;
 
 public class OutputView {

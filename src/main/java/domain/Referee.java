@@ -1,6 +1,8 @@
 package domain;
 
 import controller.dto.JudgeResult;
+import domain.participant.Participant;
+import domain.participant.Participants;
 
 public class Referee {
     private static final int BLACKJACK_SCORE = 21;

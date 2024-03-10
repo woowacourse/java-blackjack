@@ -1,6 +1,9 @@
-package domain;
+package domain.participant;
 
 import controller.dto.HandStatus;
+import domain.BlackJackGame;
+import domain.Deck;
+import domain.card.Card;
 import domain.constants.CardCommand;
 import java.util.List;
 

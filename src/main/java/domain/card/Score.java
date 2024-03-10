@@ -1,4 +1,4 @@
-package domain.constants;
+package domain.card;
 
 public enum Score {
     ACE(11, "A"),

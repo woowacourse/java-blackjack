@@ -2,8 +2,10 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.constants.Score;
-import domain.constants.Shape;
+import domain.card.Card;
+import domain.card.Score;
+import domain.card.Shape;
+import domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static domain.BlackJackGame.BLACKJACK_SCORE;
 

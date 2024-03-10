@@ -1,4 +1,4 @@
-package domain.constants;
+package domain.card;
 
 public enum Shape {
     SPADE("스페이드"),

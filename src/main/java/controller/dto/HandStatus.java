@@ -1,6 +1,6 @@
 package controller.dto;
 
-import domain.Hand;
+import domain.participant.Hand;
 
 public record HandStatus(
         String name,

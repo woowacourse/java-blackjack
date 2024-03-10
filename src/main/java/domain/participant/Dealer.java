@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import domain.constants.CardCommand;
 
