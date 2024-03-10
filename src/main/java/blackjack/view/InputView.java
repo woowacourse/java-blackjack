@@ -2,6 +2,7 @@ package blackjack.view;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import blackjack.domain.gamer.Player;
 
@@ -45,7 +46,7 @@ public class InputView {
 	}
 
 	private void validateCommand(String command) {
-		if (!List.of(COMMAND_YES, COMMAND_NO).contains(command)) {
+		if (!Set.of(COMMAND_YES, COMMAND_NO).contains(command)) {
 			throw new IllegalArgumentException(String.format("%s 또는 %s만 입력할 수 있습니다.", COMMAND_YES, COMMAND_NO));
 		}
 	}
