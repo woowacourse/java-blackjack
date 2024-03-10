@@ -30,6 +30,12 @@ public abstract class Gamer {
         return hand.sum() == 21 && hand.getCards().size() == 2;
     }
 
+    public void receiveInitialCards(final List<Card> cards) {
+        for (final Card card : cards) {
+            hand.add(card);
+        }
+    }
+
     public List<Card> getHand() {
         return hand.getCards();
     }

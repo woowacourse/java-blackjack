@@ -1,10 +1,13 @@
 package domain;
 
+import domain.card.Card;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Player;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class BlackJackGame {
     private static final int INITIAL_CARD_COUNT = 2;
@@ -16,14 +19,14 @@ public class BlackJackGame {
 
     public void prepareCards(final Gamers gamers) {
         for (Gamer gamer : gamers.getGamers()) {
-            drawTwoCardsForGamer(gamer);
+            gamer.receiveInitialCards(drawTwoCards());
         }
     }
 
-    private void drawTwoCardsForGamer(final Gamer gamer) {
-        for (int count = 0; count < INITIAL_CARD_COUNT; count++) {
-            gamer.hit(decks.draw());
-        }
+    private List<Card> drawTwoCards() {
+        return Stream.generate(decks::draw)
+                .limit(INITIAL_CARD_COUNT)
+                .toList();
     }
 
     public boolean succeededGiving(final Gamer gamer) {
