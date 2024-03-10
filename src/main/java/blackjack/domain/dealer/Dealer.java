@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class Dealer {
-    public static final Score NEED_CARD_CRITERION = new Score(17);
+    private static final Score NEED_CARD_CRITERION = new Score(17);
     private static final String DEALER_SIGNAL = "DEALER";
 
     private final Deck deck;

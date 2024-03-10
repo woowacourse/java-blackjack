@@ -9,7 +9,7 @@ public class Participant {
     private final Hands hands;
     private final ParticipantName name;
 
-    protected Participant(final String name) {
+    private Participant(final String name) {
         this.name = new ParticipantName(name);
         this.hands = new Hands(new ArrayList<>());
     }

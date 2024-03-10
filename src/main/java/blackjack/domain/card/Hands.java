@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Set;
 
 public class Hands {
+    private static final int ACE_SCORE_GAP = 10;
+
     private final List<Card> cards;
 
     public Hands(final List<Card> cards) {
@@ -33,7 +35,7 @@ public class Hands {
         int aceCount = countAce();
 
         while (isDeadScore(sum) && aceCount-- > 0) {
-            sum -= 10;
+            sum -= ACE_SCORE_GAP;
         }
 
         return new Score(sum);

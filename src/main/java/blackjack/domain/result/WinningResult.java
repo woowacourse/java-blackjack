@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class WinningResult {
     private final Map<ParticipantName, WinStatus> participantsWinStatus;
 
-    public WinningResult(final Map<ParticipantName, WinStatus> participantsWinStatus) {
+    private WinningResult(final Map<ParticipantName, WinStatus> participantsWinStatus) {
         this.participantsWinStatus = participantsWinStatus;
     }
 

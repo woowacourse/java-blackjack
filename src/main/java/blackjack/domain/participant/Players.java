@@ -16,7 +16,7 @@ import java.util.Set;
 public class Players {
     private final List<Participant> players;
 
-    public Players(final List<Participant> players) {
+    private Players(final List<Participant> players) {
         validateDuplicate(players);
         this.players = players;
     }
