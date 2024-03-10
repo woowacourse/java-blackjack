@@ -12,12 +12,12 @@ import java.util.stream.Stream;
 public class Deck {
     private final ArrayDeque<Card> deck;
 
-    public Deck(ArrayDeque<Card> cards) {
+    public Deck(final ArrayDeque<Card> cards) {
         this.deck = cards;
     }
 
     public static Deck createPack() {
-        List<Card> cards = createCards();
+        final List<Card> cards = createCards();
         Collections.shuffle(cards);
         return new Deck(new ArrayDeque<>(cards));
     }

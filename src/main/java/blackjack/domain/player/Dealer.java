@@ -10,18 +10,18 @@ public class Dealer extends Player implements CardReceivable {
     private static final String DEFAULT_DEALER_NAME = "딜러";
 
 
-    public Dealer(Name name, Cards cards) {
+    public Dealer(final Name name, final Cards cards) {
         super(name, cards);
     }
 
-    public static Dealer createDefaultDealer(Cards cards) {
+    public static Dealer createDefaultDealer(final Cards cards) {
         return new Dealer(new Name(DEFAULT_DEALER_NAME), cards);
     }
 
 
-    public ResultStatus checkPlayer(GamePlayer gamePlayer) {
-        int playerScore = gamePlayer.calculateScore();
-        int dealerScore = calculateScore();
+    public ResultStatus checkPlayer(final GamePlayer gamePlayer) {
+        final int playerScore = gamePlayer.calculateScore();
+        final int dealerScore = calculateScore();
 
         if (gamePlayer.isBust()) {
             return ResultStatus.LOSE;

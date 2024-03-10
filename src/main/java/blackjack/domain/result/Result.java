@@ -6,7 +6,7 @@ public class Result {
     private final List<GamePlayerResult> gamePlayerResults;
     private final DealerResult dealerResult;
 
-    public Result(List<GamePlayerResult> gamePlayerResults, DealerResult dealerResult) {
+    public Result(final List<GamePlayerResult> gamePlayerResults, final DealerResult dealerResult) {
         this.gamePlayerResults = gamePlayerResults;
         this.dealerResult = dealerResult;
     }

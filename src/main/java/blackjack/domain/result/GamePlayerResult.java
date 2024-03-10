@@ -6,7 +6,7 @@ public class GamePlayerResult {
     private final Name name;
     private final ResultStatus resultStatus;
 
-    public GamePlayerResult(Name name, ResultStatus resultStatus) {
+    public GamePlayerResult(final Name name, final ResultStatus resultStatus) {
         this.name = name;
         this.resultStatus = resultStatus;
     }

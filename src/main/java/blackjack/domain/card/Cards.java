@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
-    private List<Card> cards;
+    private final List<Card> cards;
 
-    public Cards(List<Card> cards) {
+    public Cards(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
 
@@ -22,7 +22,7 @@ public class Cards {
                     .anyMatch(Card::isAce);
     }
 
-    public void add(Card card) {
+    public void add(final Card card) {
         cards.add(card);
     }
 

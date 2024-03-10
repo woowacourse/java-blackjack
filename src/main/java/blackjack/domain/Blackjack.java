@@ -16,7 +16,7 @@ import java.util.List;
 public class Blackjack {
     private final Deck deck;
 
-    public Blackjack(Deck deck) {
+    public Blackjack(final Deck deck) {
         this.deck = deck;
     }
 
@@ -24,18 +24,18 @@ public class Blackjack {
         deck = Deck.createPack();
     }
 
-    public Players acceptPlayers(Names names) {
-        Dealer dealer = Dealer.createDefaultDealer(drawTwo());
-        List<GamePlayer> gamePlayers = names.stream()
-                                            .map(name -> new GamePlayer(name, drawTwo()))
-                                            .toList();
+    public Players acceptPlayers(final Names names) {
+        final Dealer dealer = Dealer.createDefaultDealer(drawTwo());
+        final List<GamePlayer> gamePlayers = names.stream()
+                                                  .map(name -> new GamePlayer(name, drawTwo()))
+                                                  .toList();
         return new Players(dealer, gamePlayers);
     }
 
-    public Result checkPlayersResult(Dealer dealer, List<GamePlayer> gamePlayers) {
-        List<GamePlayerResult> gamePlayerResults = new ArrayList<>();
+    public Result checkPlayersResult(final Dealer dealer, final List<GamePlayer> gamePlayers) {
+        final List<GamePlayerResult> gamePlayerResults = new ArrayList<>();
 
-        for (GamePlayer gamePlayer : gamePlayers) {
+        for (final GamePlayer gamePlayer : gamePlayers) {
             gamePlayerResults.add(
                     new GamePlayerResult(gamePlayer.getName(), dealer.checkPlayer(gamePlayer)));
         }

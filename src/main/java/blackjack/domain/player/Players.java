@@ -6,7 +6,7 @@ public class Players {
     private final Dealer dealer;
     private final List<GamePlayer> gamePlayers;
 
-    public Players(Dealer dealer, List<GamePlayer> gamePlayers) {
+    public Players(final Dealer dealer, final List<GamePlayer> gamePlayers) {
         this.dealer = dealer;
         this.gamePlayers = gamePlayers;
     }

@@ -12,18 +12,18 @@ public class CardPrinter {
     private static final EnumMap<CardValue, String> valueBoard = initializeValue();
     private static final String JOIN_SPLITER = ", ";
 
-    public static String printCards(List<Card> cards) {
+    public static String printCards(final List<Card> cards) {
         return cards.stream()
                     .map(CardPrinter::printCard)
                     .collect(Collectors.joining(JOIN_SPLITER));
     }
 
-    public static String printCard(Card card) {
+    public static String printCard(final Card card) {
         return valueBoard.get(card.getCardValue()) + symbolBoard.get(card.getCardSymbol());
     }
 
     private static EnumMap<CardSymbol, String> initializeSymbol() {
-        EnumMap<CardSymbol, String> symbolBoard = new EnumMap<>(CardSymbol.class);
+        final EnumMap<CardSymbol, String> symbolBoard = new EnumMap<>(CardSymbol.class);
         symbolBoard.put(CardSymbol.HEART, "하트");
         symbolBoard.put(CardSymbol.SPADE, "스페이드");
         symbolBoard.put(CardSymbol.CLOVER, "클로버");
@@ -32,7 +32,7 @@ public class CardPrinter {
     }
 
     private static EnumMap<CardValue, String> initializeValue() {
-        EnumMap<CardValue, String> valueBoard = new EnumMap<>(CardValue.class);
+        final EnumMap<CardValue, String> valueBoard = new EnumMap<>(CardValue.class);
         valueBoard.put(CardValue.ACE, "A");
         valueBoard.put(CardValue.TWO, "2");
         valueBoard.put(CardValue.THREE, "3");

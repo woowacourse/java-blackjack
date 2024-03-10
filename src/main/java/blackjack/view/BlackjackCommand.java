@@ -8,11 +8,11 @@ public enum BlackjackCommand {
 
     private final String value;
 
-    private BlackjackCommand(String value) {
+    private BlackjackCommand(final String value) {
         this.value = value;
     }
 
-    public static BlackjackCommand from(String value) {
+    public static BlackjackCommand from(final String value) {
         return Arrays.stream(BlackjackCommand.values())
                      .filter(command -> value.equals(command.value))
                      .findFirst()

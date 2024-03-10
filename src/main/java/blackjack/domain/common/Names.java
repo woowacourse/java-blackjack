@@ -6,13 +6,13 @@ import java.util.stream.Stream;
 
 public class Names {
     private static final Integer MAX_SIZE = 7;
-    private List<Name> value;
+    private final List<Name> value;
 
-    private Names(List<Name> value) {
+    private Names(final List<Name> value) {
         this.value = value;
     }
 
-    public static Names from(List<String> names) {
+    public static Names from(final List<String> names) {
         validate(names);
         return new Names(names.stream()
                               .map(Name::new)
