@@ -19,6 +19,9 @@ public class DeckCards {
     }
 
     public List<Card> drawStartingCards(int amount) {
+        if (amount < 1) {
+            throw new IllegalArgumentException("[ERROR] 카드는 1장 이상 뽑아야 합니다.");
+        }
         return IntStream.range(0, amount)
             .mapToObj(i -> draw())
             .toList();
