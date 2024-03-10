@@ -1,5 +1,6 @@
 package blackjack.model.participants;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 import blackjack.model.cards.Card;
@@ -14,6 +15,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class PlayerTest {
+    @DisplayName("플레이어 이름은 공백일 수 없다")
+    @Test
+    void validateName() {
+        String emptyName = "";
+
+        assertThatThrownBy(() -> new Player(emptyName)).isInstanceOf(IllegalArgumentException.class);
+    }
+
     @DisplayName("플레이어가 카드 한장을 지급받는다")
     @Test
     void addCard() {
