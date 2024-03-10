@@ -15,24 +15,24 @@ public class Players {
     private final List<Player> players;
 
     private Players(final List<Player> players) {
-        validateNotDuplicateName(players);
         validatePlayerSize(players);
         this.players = players;
     }
 
-    public static Players of(final List<String> names, final List<Hand> cards) {
+    public static Players of(final List<String> rawNames, final List<Hand> cards) {
+        validateNotDuplicateName(rawNames);
         List<Player> players = new ArrayList<>();
-        for (int i = 0; i < names.size(); i++) {
-            players.add(Player.of(names.get(i), cards.get(i)));
+        for (int i = 0; i < rawNames.size(); i++) {
+            players.add(Player.of(rawNames.get(i), cards.get(i)));
         }
         return new Players(players);
     }
 
-    private void validateNotDuplicateName(final List<Player> players) {
-        long uniqueNameSize = players.stream()
+    private static void validateNotDuplicateName(final List<String> names) {
+        long uniqueNameSize = names.stream()
                 .distinct()
                 .count();
-        if (players.size() != uniqueNameSize) {
+        if (names.size() != uniqueNameSize) {
             throw new IllegalArgumentException("중복되는 이름을 입력할 수 없습니다.");
         }
     }
