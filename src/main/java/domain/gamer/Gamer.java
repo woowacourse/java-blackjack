@@ -5,8 +5,8 @@ import java.util.List;
 
 public abstract class Gamer {
     public static final String CAN_NOT_RECEIVE_CARD = "더 이상 카드를 받을 수 없습니다.";
-    private Name name;
     protected Hand hand;
+    private Name name;
 
     public Gamer(final Name name) {
         this.name = name;
@@ -37,7 +37,6 @@ public abstract class Gamer {
     public boolean isBlackJack() {
         return hand.isBlackJack();
     }
-
 
     public int calculateTotalScore() {
         return hand.sum();

@@ -2,7 +2,6 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.ShuffledCardsGenerator;
 import domain.card.Card;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

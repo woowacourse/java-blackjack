@@ -105,7 +105,7 @@ public class PlayerTest {
 
     @DisplayName("플레이어는 '딜러'와 동일한 이름을 사용하면 예외를 던진다.")
     @Test
-    void invalidNameTest(){
+    void invalidNameTest() {
         // given
         Name name = new Name("딜러");
 

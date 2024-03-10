@@ -15,13 +15,6 @@ public class Hand {
         cards = new ArrayList<>();
     }
 
-    private static int accumulateScore(final Card card, final int sum) {
-        if (sum + card.getScore() <= MAX_SUM) {
-            return sum + card.getScore();
-        }
-        return sum + Rank.SMALL_ACE.getScore();
-    }
-
     public void add(final Card card) {
         cards.add(card);
     }
@@ -44,16 +37,23 @@ public class Hand {
         return totalScore;
     }
 
+    private int sumExceptAceCards() {
+        return cards.stream()
+                .filter(card -> !card.isAce())
+                .mapToInt(Card::getScore).sum();
+    }
+
     private List<Card> filterAceCards() {
         return cards.stream()
                 .filter(Card::isAce)
                 .toList();
     }
 
-    private int sumExceptAceCards() {
-        return cards.stream()
-                .filter(card -> !card.isAce())
-                .mapToInt(Card::getScore).sum();
+    private int accumulateScore(final Card card, final int sum) {
+        if (sum + card.getScore() <= MAX_SUM) {
+            return sum + card.getScore();
+        }
+        return sum + Rank.SMALL_ACE.getScore();
     }
 
     public List<Card> getCards() {

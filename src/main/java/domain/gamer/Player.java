@@ -1,7 +1,5 @@
 package domain.gamer;
 
-import domain.card.Card;
-
 public class Player extends Gamer {
 
     public static final String DEALER_NAME = "딜러";
