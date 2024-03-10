@@ -19,14 +19,14 @@ public class Hand {
         this.hitStrategy = hitStrategy;
     }
 
-    public int sum() {
+    public int calculateCardSummation() {
         return cards.stream()
                 .map(Card::getCardNumber)
                 .mapToInt(CardNumber::getValue)
                 .sum();
     }
 
-    public void append(Card card) {
+    public void appendCard(Card card) {
         cards.add(card);
     }
 

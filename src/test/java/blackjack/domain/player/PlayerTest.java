@@ -21,6 +21,6 @@ class PlayerTest {
         Card card = CardFixture.from(2);
         player.appendCard(card);
 
-        assertThat(hand.sum()).isEqualTo(21);
+        assertThat(hand.calculateCardSummation()).isEqualTo(21);
     }
 }

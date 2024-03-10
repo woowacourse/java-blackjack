@@ -15,7 +15,7 @@ class HandTest {
     @Test
     void testHandSummation() {
         Hand hand = HandFixture.of(2, 2, 2);
-        int expected = hand.sum();
+        int expected = hand.calculateCardSummation();
 
         assertThat(expected).isEqualTo(6);
     }
@@ -25,7 +25,7 @@ class HandTest {
     void testAppendCard() {
         Card card = CardFixture.from(2);
         Hand hand = HandFixture.of();
-        hand.append(card);
+        hand.appendCard(card);
 
         assertThat(hand.getCards()).containsExactly(card);
     }

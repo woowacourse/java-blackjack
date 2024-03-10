@@ -15,7 +15,7 @@ public class Player {
     }
 
     public void appendCard(Card card) {
-        hand.append(card);
+        hand.appendCard(card);
     }
 
     public Score calculateHandScore() {
