@@ -24,7 +24,7 @@ public class Dealer extends Participant {
             return GameResult.WIN;
         }
 
-        if (player.isBlackJack()) {
+        if (playerScore == dealerScore) {
             return GameResult.TIE;
         }
 

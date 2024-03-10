@@ -171,4 +171,20 @@ class DealerTest {
 
         assertThat(gameResult).isEqualTo(GameResult.LOSE);
     }
+
+    @DisplayName("플레이어와 딜러가 둘 다 버스트되지 않고, 같은 점수라면 무승부다.")
+    @Test
+    void whenTie() {
+        Dealer dealer = new Dealer();
+        dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+        dealer.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
+
+        Player player = new Player("pobi");
+        player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+        player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
+
+        GameResult gameResult = dealer.judge(player);
+
+        assertThat(gameResult).isEqualTo(GameResult.TIE);
+    }
 }
