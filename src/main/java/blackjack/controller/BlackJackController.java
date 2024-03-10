@@ -24,7 +24,7 @@ public class BlackJackController {
 
     public void start() {
         Dealer dealer = new Dealer();
-        Players players = Players.from(inputView.inputPlayerNames());
+        Players players = new Players(inputView.inputPlayerNames());
         Deck deck = Deck.createShuffledDeck();
 
         playGame(dealer, players, deck);

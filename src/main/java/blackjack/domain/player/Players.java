@@ -5,32 +5,25 @@ import java.util.List;
 public class Players {
     private final List<Player> playerGroup;
 
-    public Players(List<Player> playerGroup) {
-        validate(playerGroup);
-        this.playerGroup = playerGroup;
+    public Players(List<String> names) {
+        validate(names);
+        this.playerGroup = names.stream()
+                .map(Player::new)
+                .toList();
     }
 
-    private static void validate(List<Player> players) {
-        if (duplicatedNameExist(players)) {
+    private void validate(List<String> names) {
+        if (duplicatedNameExist(names)) {
             throw new IllegalArgumentException("중복된 이름이 존재합니다.");
         }
     }
 
-    private static boolean duplicatedNameExist(List<Player> players) {
-        int distinctCount = (int) players.stream()
-                .map(Player::getName)
+    private boolean duplicatedNameExist(List<String> names) {
+        int distinctCount = (int) names.stream()
                 .distinct()
                 .count();
 
-        return distinctCount != players.size();
-    }
-
-    public static Players from(List<String> names) {
-        List<Player> players = names.stream()
-                .map(Player::new)
-                .toList();
-
-        return new Players(players);
+        return distinctCount != names.size();
     }
 
     public List<Player> getPlayers() {

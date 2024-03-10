@@ -14,7 +14,7 @@ class PlayersTest {
     void duplicatedNamesTest() {
         List<String> names = List.of("loki", "pedro", "loki");
 
-        assertThatThrownBy(() -> Players.from(names))
+        assertThatThrownBy(() -> new Players(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복된 이름이 존재합니다.");
     }
