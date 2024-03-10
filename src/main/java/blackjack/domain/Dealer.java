@@ -24,24 +24,28 @@ public class Dealer extends Participant {
             return GameResult.LOSE;
         }
 
-        if (isBust()) {
-            return GameResult.WIN;
+        if (player.isBlackJack()) {
+            return judgeWhenPlayerIsBlackjack();
         }
 
-        if (player.isBlackJack() && isBlackJack()) {
+        return judgeWhenPlayerNormalScore(playerScore, dealerScore);
+    }
+
+    private GameResult judgeWhenPlayerIsBlackjack() {
+        if (isBlackJack()) {
             return GameResult.PUSH;
         }
 
-        if (player.isBlackJack()) {
+        return GameResult.WIN;
+    }
+
+    private GameResult judgeWhenPlayerNormalScore(int playerScore, int dealerScore) {
+        if (isBust() || playerScore > dealerScore) {
             return GameResult.WIN;
         }
 
-        if (playerScore < dealerScore) {
+        if (dealerScore > playerScore) {
             return GameResult.LOSE;
-        }
-
-        if (playerScore > dealerScore) {
-            return GameResult.WIN;
         }
 
         return GameResult.PUSH;
