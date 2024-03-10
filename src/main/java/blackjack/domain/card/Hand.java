@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Hand {
@@ -9,7 +11,11 @@ public class Hand {
     private final List<Card> cards;
 
     Hand(List<Card> cards) {
-        this.cards = List.copyOf(cards);
+        this.cards = new ArrayList<>(cards);
+    }
+
+    public void add(Card card) {
+        cards.add(card);
     }
 
     public int calculateScore() {
@@ -35,5 +41,9 @@ public class Hand {
 
     public boolean isBlackjack() {
         return cards.size() == BLACKJACK_SIZE && calculateScore() == BLACKJACK_SCORE;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

@@ -36,6 +36,20 @@ class HandTest {
                 Arguments.of(CARDS_SCORE_16, 16));
     }
 
+    @DisplayName("카드를 한 장 뽑는다")
+    @Test
+    void addTest() {
+        Hand hand = new Hand(CARDS_SCORE_16);
+
+        Card additionalCard = new Card(Value.ACE, Shape.HEART);
+        hand.add(additionalCard);
+
+        assertThat(hand.getCards())
+                .containsAll(CARDS_SCORE_16)
+                .contains(additionalCard)
+                .hasSize(CARDS_SCORE_16.size() + 1);
+    }
+
     @DisplayName("카드의 버스트 상태를 알 수 있다.")
     @Nested
     class BustTest {
