@@ -2,9 +2,9 @@ package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import static domain.GameResultStatus.PUSH;
-import static domain.GameResultStatus.LOSE;
-import static domain.GameResultStatus.WIN;
+import static domain.result.GameResultStatus.PUSH;
+import static domain.result.GameResultStatus.LOSE;
+import static domain.result.GameResultStatus.WIN;
 import static domain.card.CardNumber.ACE;
 import static domain.card.CardNumber.FIVE;
 import static domain.card.CardNumber.KING;
@@ -20,7 +20,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import domain.GameResultStatus;
+import domain.result.GameResultStatus;
 import domain.card.Card;
 import domain.card.Cards;
 

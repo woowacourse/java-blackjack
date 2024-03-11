@@ -1,13 +1,13 @@
 package domain.participant;
 
 import static domain.BlackjackGame.DEALER_HIT_THRESHOLD;
-import static domain.GameResultStatus.PUSH;
-import static domain.GameResultStatus.LOSE;
-import static domain.GameResultStatus.WIN;
+import static domain.result.GameResultStatus.PUSH;
+import static domain.result.GameResultStatus.LOSE;
+import static domain.result.GameResultStatus.WIN;
 
 import domain.card.Card;
 import domain.card.Cards;
-import domain.GameResultStatus;
+import domain.result.GameResultStatus;
 
 public class Dealer extends Participant {
 

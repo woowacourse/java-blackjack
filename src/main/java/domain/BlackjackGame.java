@@ -1,6 +1,8 @@
 package domain;
 
 import domain.participant.*;
+import domain.result.GameResult;
+import domain.result.GameResultStatus;
 import view.dto.result.GameResultDto;
 
 import java.util.stream.IntStream;

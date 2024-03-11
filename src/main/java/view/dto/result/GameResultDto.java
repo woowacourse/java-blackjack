@@ -1,7 +1,7 @@
 package view.dto.result;
 
-import domain.GameResultStatus;
-import domain.participant.GameResult;
+import domain.result.GameResultStatus;
+import domain.result.GameResult;
 import domain.participant.Player;
 
 import java.util.LinkedHashMap;

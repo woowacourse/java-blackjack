@@ -1,6 +1,6 @@
-package domain.participant;
+package domain.result;
 
-import domain.GameResultStatus;
+import domain.participant.Player;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
