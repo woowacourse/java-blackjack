@@ -1,6 +1,7 @@
 package player;
 
 import card.Card;
+import card.CardDeck;
 import card.CardNumber;
 import card.CardPattern;
 import org.assertj.core.api.Assertions;
@@ -14,9 +15,9 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        Name name = new Name("pola");
+        String name = "pola";
 
-        player = new Player(name);
+        player = Player.joinGame(name, new CardDeck());
     }
 
     @DisplayName("Player가 들고 있는 카드가 최고점을 넘을경우 true를 return한다.")
@@ -30,7 +31,7 @@ public class PlayerTest {
         player.receiveCard(queenCard);
         player.receiveCard(jackCard);
 
-        Assertions.assertThat(player.isOverMaxCardScore()).isTrue();
+        Assertions.assertThat(player.isBust()).isTrue();
     }
 
     @DisplayName("Player가 들고 있는 카드가 최고점을 넘지 않을경우 false를 return한다.")
@@ -40,6 +41,33 @@ public class PlayerTest {
 
         player.receiveCard(kingCard);
 
-        Assertions.assertThat(player.isOverMaxCardScore()).isFalse();
+        Assertions.assertThat(player.isBust()).isFalse();
+    }
+
+    @DisplayName("Player가 딜러의 점수보다 높고 BUST가 아닐 경우 우승자다.")
+    @Test
+    void isWinnerPlayer() {
+        Assertions.assertThat(player.isWinner(1)).isTrue();
+    }
+
+    @DisplayName("Player가 딜러의 점수보다 낮거나 같을 경우 우승하지 못한다.")
+    @Test
+    void isNotWinnerPlayer() {
+        Assertions.assertThat(player.isWinner(21)).isFalse();
+    }
+
+    @DisplayName("Plyaer의 카드 스코어가 bust인 경우 점수가 더 높더라도 우승하지 못한다.")
+    @Test
+    void isBustPlayer() {
+        player.receiveCard(new Card(CardNumber.JACK, CardPattern.DIA_PATTERN));
+        player.receiveCard(new Card(CardNumber.QUEEN, CardPattern.DIA_PATTERN));
+
+        Assertions.assertThat(player.isWinner(1)).isFalse();
+    }
+
+    @DisplayName("게임에 참가하는 경우, 카드 두장을 받고 시작한다.")
+    @Test
+    void getCardWhenPlay() {
+        Assertions.assertThat(player.getCards().countCard()).isEqualTo(2);
     }
 }
