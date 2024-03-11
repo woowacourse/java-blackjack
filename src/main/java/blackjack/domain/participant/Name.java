@@ -7,16 +7,16 @@ public class Name {
     private static final int MAX_NAME_LENGTH = 5;
     private static final String NAME_FORMAT = "^[a-zA-Z가-힣]*$";
 
-    private final String value;
+    private final String name;
 
     public Name(String value) {
         validateNameLength(value);
         validateIsAlphabetic(value);
-        this.value = value;
+        this.name = value;
     }
 
-    public String getValue() {
-        return value;
+    public String getName() {
+        return name;
     }
 
     private void validateNameLength(String name) {

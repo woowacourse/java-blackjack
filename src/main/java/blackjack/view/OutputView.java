@@ -52,7 +52,7 @@ public class OutputView {
         Dealer dealer = participants.getDealer();
         printParticipantHandWithScore(dealer);
         participants.getPlayers()
-                .getValues()
+                .getPlayers()
                 .forEach(this::printParticipantHandWithScore);
     }
 
@@ -76,12 +76,12 @@ public class OutputView {
 
     private void printParticipantsHandWithScore(Dealer dealer, Players players) {
         printParticipantsInitialHand(dealer);
-        players.getValues()
+        players.getPlayers()
                 .forEach(this::printParticipantsInitialHand);
     }
 
     private String formatPlayersName(Players players) {
-        return players.getValues()
+        return players.getPlayers()
                 .stream()
                 .map(Participant::getName)
                 .collect(Collectors.joining(DELIMITER));

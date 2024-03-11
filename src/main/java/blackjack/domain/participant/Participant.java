@@ -20,7 +20,7 @@ public abstract class Participant {
     }
 
     public String getName() {
-        return name.getValue();
+        return name.getName();
     }
 
     public List<Card> getCards() {

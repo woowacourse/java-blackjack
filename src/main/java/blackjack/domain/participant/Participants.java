@@ -17,7 +17,7 @@ public class Participants {
 
     public BlackjackResult generateResult(Referee referee) {
         Map<Player, HandResult> playerResults = new LinkedHashMap<>();
-        for (Player player : players.getValues()) {
+        for (Player player : players.getPlayers()) {
             HandResult playerResult = referee.getPlayerResult(player, dealer);
             playerResults.put(player, playerResult);
         }

@@ -7,7 +7,7 @@ public class PlayerIterator {
     private int order = 0;
 
     public PlayerIterator(Players players) {
-        this.players = players.getValues();
+        this.players = players.getPlayers();
     }
 
     public boolean hasNext() {

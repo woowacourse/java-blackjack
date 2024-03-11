@@ -5,11 +5,11 @@ import blackjack.exception.InvalidPlayerCountException;
 import java.util.List;
 
 public class Players {
-    private final List<Player> values;
+    private final List<Player> players;
 
     public Players(List<Name> playerNames, HandGenerator handGenerator) {
         checkPlayersEmpty(playerNames);
-        this.values = playerNames.stream()
+        this.players = playerNames.stream()
                 .map(playerName -> new Player(playerName, handGenerator))
                 .toList();
     }
@@ -20,7 +20,7 @@ public class Players {
         }
     }
 
-    public List<Player> getValues() {
-        return values;
+    public List<Player> getPlayers() {
+        return players;
     }
 }
