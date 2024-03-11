@@ -10,8 +10,15 @@ public class Hand {
 
     public int calculate() {
         int aceCounts = getAceCounts();
-
         return calculateCardNumber(aceCounts);
+    }
+
+    public void put(Card card) {
+        hand.add(card);
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(hand);
     }
 
     private int getAceCounts() {
@@ -36,13 +43,5 @@ public class Hand {
 
     private boolean isAceAddable(int sum) {
         return sum + 10 > 21;
-    }
-
-    public void put(Card card) {
-        hand.add(card);
-    }
-
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(hand);
     }
 }

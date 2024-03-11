@@ -19,6 +19,10 @@ public class Player {
         return hand.calculate();
     }
 
+    public boolean canHit() {
+        return hand.calculate() <= 21;
+    }
+
     public void putCard(Card card) {
         hand.put(card);
     }
@@ -29,9 +33,5 @@ public class Player {
 
     public String getName() {
         return name;
-    }
-
-    public boolean canHit() {
-        return hand.calculate() <= 21;
     }
 }

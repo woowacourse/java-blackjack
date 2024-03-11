@@ -12,16 +12,16 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
+    public boolean isAce() {
+        return cardNumber.isAce();
+    }
+
     public CardNumber getNumber() {
         return cardNumber;
     }
 
     public CardSuit getSymbol() {
         return cardSuit;
-    }
-
-    public boolean isAce() {
-        return cardNumber.isAce();
     }
 
     @Override

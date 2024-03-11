@@ -11,13 +11,13 @@ public class Result {
         this.results = results;
     }
 
-    public Map<Player, ResultStatus> getResults() {
-        return results;
-    }
-
     public Map<ResultStatus, Long> calculateDealerResult() {
         return results.values().stream()
                 .collect(Collectors.groupingBy(ResultStatus::swap, Collectors.counting()));
+    }
+
+    public Map<Player, ResultStatus> getResults() {
+        return results;
     }
 
 }

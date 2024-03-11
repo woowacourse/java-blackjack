@@ -27,17 +27,6 @@ public class InputView {
         }
     }
 
-    private static void validateBlank(List<String> splitNames) {
-        if (hasBlank(splitNames)) {
-            throw new IllegalArgumentException("공백은 입력할 수 없습니다.");
-        }
-    }
-
-    private static boolean hasBlank(List<String> splitNames) {
-        return splitNames.stream()
-                .anyMatch(name -> name.isEmpty() || name.isBlank());
-    }
-
     public static boolean readHitOrStand(Player player) {
         System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getName()));
         try {
@@ -48,6 +37,17 @@ public class InputView {
             OutputView.printError(e.getMessage());
             throw new IllegalStateException("입력도중 에러가 발생했습니다.");
         }
+    }
+
+    private static void validateBlank(List<String> splitNames) {
+        if (hasBlank(splitNames)) {
+            throw new IllegalArgumentException("공백은 입력할 수 없습니다.");
+        }
+    }
+
+    private static boolean hasBlank(List<String> splitNames) {
+        return splitNames.stream()
+                .anyMatch(name -> name.isEmpty() || name.isBlank());
     }
 
     private static void validateHitOrStand(String input) {

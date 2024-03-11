@@ -53,13 +53,12 @@ public class OutputView {
         System.out.println(message);
     }
 
-    private static String allCardInHand(Player player) {
-        List<Card> cards = player.getHand().getCards();
-        String hand = cards.stream()
-                .map(OutputView::extractCardName)
+    private static String dealOutMessage(Dealer dealer, List<Player> players) {
+        String commaSeparatePlayerNames = players.stream()
+                .map(Player::getName)
                 .collect(Collectors.joining(", "));
 
-        return String.format("%s: %s", player.getName(), hand);
+        return String.format("%s와 %s에게 2장을 나누었습니다.", dealer.getName(), commaSeparatePlayerNames);
     }
 
     private static String dealerSingleCard(Dealer dealer) {
@@ -71,12 +70,13 @@ public class OutputView {
         return String.format("%s: %s", dealer.getName(), extractCardName(cards.get(0)));
     }
 
-    private static String dealOutMessage(Dealer dealer, List<Player> players) {
-        String commaSeparatePlayerNames = players.stream()
-                .map(Player::getName)
+    private static String allCardInHand(Player player) {
+        List<Card> cards = player.getHand().getCards();
+        String hand = cards.stream()
+                .map(OutputView::extractCardName)
                 .collect(Collectors.joining(", "));
 
-        return String.format("%s와 %s에게 2장을 나누었습니다.", dealer.getName(), commaSeparatePlayerNames);
+        return String.format("%s: %s", player.getName(), hand);
     }
 
     private static String extractCardName(Card card) {

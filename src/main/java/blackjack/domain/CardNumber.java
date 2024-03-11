@@ -23,15 +23,15 @@ public enum CardNumber {
         this.value = value;
     }
 
-    public int getValue() {
-        return value;
-    }
-
     public boolean isAce() {
         return this == ACE;
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getValue() {
+        return value;
     }
 }
