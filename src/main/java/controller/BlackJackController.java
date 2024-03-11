@@ -1,12 +1,13 @@
 package controller;
 
-import cardGame.BlackJackGame;
-import cardGame.SingleMatch;
-import controller.dto.SinglePlayerResultDto;
-import java.util.ArrayList;
-import java.util.List;
-import player.Player;
-import player.dto.SinglePlayerStatusDto;
+import domain.gamer.Dealer;
+import domain.gamer.Player;
+import domain.gamer.Players;
+import dto.AllPlayerResultDto;
+import dto.DealerResultDto;
+import dto.GameResultDto;
+import dto.InitCardDto;
+import dto.PlayerCardStateDto;
 import view.InputView;
 import view.OutputView;
 
@@ -20,63 +21,45 @@ public class BlackJackController {
         this.outputView = outputView;
     }
 
-    public void playGame() {
-        BlackJackGame blackJackGame = getBlackJackGame();
-        int dealerExtraCardCount = blackJackGame.countDealerExtraCard();
+    public void run() {
+        Players players = Players.settingPlayers(inputView.inputPlayerNames());
+        Dealer dealer = new Dealer();
 
-        List<SinglePlayerResultDto> winOrNotResults = runGame(blackJackGame, new ArrayList<>());
-        List<Boolean> playersWinningInfo = getPlayersWinningInfo(winOrNotResults);
-
-        outputView.printExtraCardInfo(dealerExtraCardCount);
-        outputView.printPariticipantsScore(blackJackGame.getParticipantScore());
-        outputView.printDealerResult(countDealerWinning(playersWinningInfo), countDealerFail(playersWinningInfo));
-        outputView.printPlayerResult(winOrNotResults);
+        settingGame(players, dealer);
+        playGame(players, dealer);
+        showResult(players, dealer);
     }
 
-    private int countDealerFail(List<Boolean> playersWinningInfo) {
-        return playersWinningInfo.size() - countDealerWinning(playersWinningInfo);
+    private void settingGame(Players players, Dealer dealer) {
+        initCard(players, dealer);
+        outputView.printInitCard(InitCardDto.makeInitCard(players, dealer));
     }
 
-    private BlackJackGame getBlackJackGame() {
-        List<String> nameString = inputView.inputPlayerNames();
-
-        BlackJackGame blackJackGame = new BlackJackGame(nameString);
-        outputView.printInitCardStatus(blackJackGame.getBackJackGameStatus());
-
-        return blackJackGame;
-    }
-
-    private List<SinglePlayerResultDto> runGame(BlackJackGame blackJackGame,
-                                                List<SinglePlayerResultDto> winOrNotResults) {
-        for (SingleMatch singleMatch : blackJackGame.startGame()) {
-            Player player = singleMatch.getPlayer();
-            retry(singleMatch, player);
-
-            boolean isPlayerWins = singleMatch.isPlayerWins();
-            winOrNotResults.add(new SinglePlayerResultDto(player.getName(), isPlayerWins));
-        }
-        return winOrNotResults;
-    }
-
-    private List<Boolean> getPlayersWinningInfo(List<SinglePlayerResultDto> singlePlayerResultDtos) {
-        List<Boolean> playersWinningInfo = new ArrayList<>();
-
-        for (SinglePlayerResultDto singleResult : singlePlayerResultDtos) {
-            playersWinningInfo.add(singleResult.isWinner());
-        }
-        return playersWinningInfo;
-    }
-
-    private void retry(SingleMatch singleMatch, Player player) {
-        while (!singleMatch.isCanPlayGamePlayer() && inputView.inputPlayerCommand(player.getName())) {
-            singleMatch.playRound();
-            outputView.printCardsStatus(SinglePlayerStatusDto.from(player));
+    private static void initCard(Players players, Dealer dealer) {
+        for (Player player : players.getPlayers()) {
+            player.receiveCard(dealer.dealCard());
+            player.receiveCard(dealer.dealCard());
         }
     }
 
-    private int countDealerWinning(List<Boolean> playersWinningInfo) {
-        return (int) playersWinningInfo.stream()
-                .filter(winInfo -> !winInfo)
-                .count();
+    private void playGame(Players players, Dealer dealer) {
+        players.play(this::playTurn, dealer);
+        while (dealer.isDrawable()) {
+            dealer.receiveCard();
+            outputView.printDealerAddCard();
+        }
+    }
+
+    private void playTurn(Player player, Dealer dealer) {
+        while (player.isDrawable() && inputView.inputPlayerCommand(player.getName())) {
+            player.receiveCard(dealer.dealCard());
+            outputView.printCardsStatus(PlayerCardStateDto.makePlayerCardState(player));
+        }
+    }
+
+    private void showResult(Players players, Dealer dealer) {
+        outputView.printDealerScore(DealerResultDto.makeDealerResultDto(dealer));
+        outputView.printPlayersScore(AllPlayerResultDto.makeAllPlayerResultDto(players));
+        outputView.printResult(GameResultDto.makeGameResultDto(players, dealer), players.getNames());
     }
 }
