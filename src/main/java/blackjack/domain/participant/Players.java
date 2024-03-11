@@ -36,6 +36,10 @@ public class Players {
         }
     }
 
+    public void saveBetAmountByName(final int betAmount, final String name) {
+
+    }
+
     public void divideCard(final List<List<Card>> cards) {
         validateCardSize(cards);
         final Iterator<List<Card>> cardIterator = cards.iterator();

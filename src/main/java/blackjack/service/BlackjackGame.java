@@ -46,6 +46,10 @@ public class BlackjackGame {
         return getStartCards();
     }
 
+    public void saveBetAmountByName(final int betAmount, final String name) {
+        players.saveBetAmountByName(betAmount, name);
+    }
+
     private StartCardsDto getStartCards() {
         final Hands dealerOpenedHands = dealer.getOpenedHands();
         return StartCardsDto.of(players.getPlayersHands(), dealerOpenedHands, dealer.getName());
@@ -102,9 +106,5 @@ public class BlackjackGame {
 
     public String getDealerName() {
         return dealer.getName().getName();
-    }
-
-    public void saveBetAmountByName(final int betAmount, final String name) {
-
     }
 }

@@ -1,5 +1,6 @@
 package blackjack.domain.betting;
 
+import blackjack.exception.NeedRetryException;
 import java.util.Objects;
 
 public class BetAmount {
@@ -13,7 +14,7 @@ public class BetAmount {
 
     private void validatePositive(final int value) {
         if (value < 0) {
-            throw new IllegalArgumentException("배팅 금액은 양수만 가능합니다.");
+            throw new NeedRetryException("배팅 금액은 양수만 가능합니다.");
         }
     }
 
