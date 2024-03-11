@@ -27,12 +27,11 @@ class GameBoardTest {
         final Deck deck = testDeckFactory.create();
         final Players players = Players.from(List.of("pobi"));
         final Dealer dealer = Dealer.create();
-        final Referee referee = new Referee(dealer.getCards());
         final GameBoard gameBoard = new GameBoard(deck, dealer, players);
         gameBoard.drawInitialPlayersCards();
         gameBoard.drawInitialDealerCards();
 
-        final List<Outcome> dealerOutcome = gameBoard.getDealerOutcomes(referee);
+        final List<Outcome> dealerOutcome = gameBoard.getDealerOutcomes();
 
         assertThat(dealerOutcome).containsExactly(Outcome.PUSH);
     }
@@ -44,12 +43,11 @@ class GameBoardTest {
         final Deck deck = testDeckFactory.create();
         final Players players = Players.from(List.of("pobi"));
         final Dealer dealer = Dealer.create();
-        final Referee referee = new Referee(dealer.getCards());
         final GameBoard gameBoard = new GameBoard(deck, dealer, players);
         gameBoard.drawInitialPlayersCards();
         gameBoard.drawInitialDealerCards();
 
-        final List<OutcomeDto> playerOutcomeDtos = gameBoard.getPlayerOutcomeDtos(referee);
+        final List<OutcomeDto> playerOutcomeDtos = gameBoard.getPlayerOutcomeDtos();
         final Name name = playerOutcomeDtos.get(0).getName();
         final Outcome outcome = playerOutcomeDtos.get(0).getOutcome();
 

@@ -43,29 +43,21 @@ public class GameBoard {
         return gamer.canDraw();
     }
 
-    public List<Outcome> getDealerOutcomes(final Referee referee) {
-        return Outcome.reverse(calculateOutcomes(referee));
-    }
-
-    private List<Outcome> calculateOutcomes(final Referee referee) {
-        final List<Outcome> outcomes = new ArrayList<>();
-        for (Player player : players.getPlayers()) {
-            outcomes.add(calculateOutcome(referee, player.getName()));
+    public List<Outcome> getDealerOutcomes() {
+        final List<Outcome> playerOutcomes = new ArrayList<>();
+        for (final Player player : players.getPlayers()) {
+            playerOutcomes.add(Outcome.doesPlayerWin(dealer.getCards(), player.getCards()));
         }
-        return outcomes;
+        return Outcome.reverse(playerOutcomes);
     }
 
-    public List<OutcomeDto> getPlayerOutcomeDtos(final Referee referee) {
+    public List<OutcomeDto> getPlayerOutcomeDtos() {
         final List<OutcomeDto> playerOutcomes = new ArrayList<>();
-        for (Name name : players.getNames()) {
-            playerOutcomes.add(new OutcomeDto(name, calculateOutcome(referee, name)));
+        for (final Player player : players.getPlayers()) {
+            final Outcome playerOutcome = Outcome.doesPlayerWin(dealer.getCards(), player.getCards());
+            playerOutcomes.add(new OutcomeDto(player.getName(), playerOutcome));
         }
         return playerOutcomes;
-    }
-
-    private Outcome calculateOutcome(final Referee referee, final Name name) {
-        final Player player = players.findByName(name);
-        return referee.doesPlayerWin(player.getCards());
     }
 
     public Cards getDealerCards() {

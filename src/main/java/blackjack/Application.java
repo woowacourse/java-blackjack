@@ -5,7 +5,6 @@ import blackjack.domain.GameBoard;
 import blackjack.domain.Outcome;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
-import blackjack.domain.Referee;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckShuffleFactory;
@@ -28,9 +27,8 @@ public class Application {
         OutputView.printFinalState(createDealerDto(gameBoard.getDealerCards()),
                 toDtos(gameBoard.getPlayers()));
 
-        Referee referee = new Referee(gameBoard.getDealerCards());
-        final OutcomesDto dealerOutcome = createOutcomesDto(gameBoard.getDealerOutcomes(referee));
-        final List<OutcomeDto> playerOutcomes = gameBoard.getPlayerOutcomeDtos(referee);
+        final OutcomesDto dealerOutcome = createOutcomesDto(gameBoard.getDealerOutcomes());
+        final List<OutcomeDto> playerOutcomes = gameBoard.getPlayerOutcomeDtos();
         OutputView.printFinalOutcomes(dealerOutcome, playerOutcomes);
     }
 

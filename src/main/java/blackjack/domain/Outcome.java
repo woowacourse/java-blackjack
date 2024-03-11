@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Cards;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,58 @@ import java.util.stream.Collectors;
 public enum Outcome {
 
     WIN, LOSE, PUSH;
+
+    private static final int BLACKJACK_CANDIDATE = 21;
+
+    public static Outcome doesPlayerWin(final Cards dealerCards, final Cards playerCards) {
+        final int dealerScore = dealerCards.calculateOptimalSum();
+        final int playerScore = playerCards.calculateOptimalSum();
+        if (isBust(dealerScore) || isBust(playerScore)) {
+            return calculateBustCase(dealerCards, playerCards);
+        }
+        if (isBlackJack(dealerCards) || isBlackJack(playerCards)) {
+            return calculateBlackJackCase(dealerCards, playerCards);
+        }
+        return calculateNormalCase(dealerScore, playerScore);
+    }
+
+    private static boolean isBust(int score) {
+        return score > BLACKJACK_CANDIDATE;
+    }
+
+    private static Outcome calculateBustCase(final Cards dealerCards, final Cards playerCards) {
+        if (isBust(dealerCards.calculateOptimalSum()) && isBust(playerCards.calculateOptimalSum())) {
+            return Outcome.PUSH;
+        }
+        if (isBust(dealerCards.calculateOptimalSum())) {
+            return Outcome.WIN;
+        }
+        return Outcome.LOSE;
+    }
+
+    private static boolean isBlackJack(Cards cards) {
+        return cards.calculateOptimalSum() == BLACKJACK_CANDIDATE && cards.hasOnlyInitialCard();
+    }
+
+    private static Outcome calculateBlackJackCase(final Cards dealerCards, final Cards playerCards) {
+        if (isBlackJack(dealerCards) && isBlackJack(playerCards)) {
+            return Outcome.PUSH;
+        }
+        if (isBlackJack(dealerCards)) {
+            return Outcome.LOSE;
+        }
+        return Outcome.WIN;
+    }
+
+    private static Outcome calculateNormalCase(final int dealerScore, final int playerScore) {
+        if (dealerScore < playerScore) {
+            return Outcome.WIN;
+        }
+        if (dealerScore > playerScore) {
+            return Outcome.LOSE;
+        }
+        return Outcome.PUSH;
+    }
 
     public static List<Outcome> reverse(final List<Outcome> outcomes) {
         return outcomes.stream()
