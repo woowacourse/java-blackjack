@@ -1,8 +1,8 @@
-package domain;
+package domain.judge;
 
 import domain.gamer.Dealer;
-import domain.gamer.Gamers;
 import domain.gamer.Player;
+import domain.gamer.Players;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -18,19 +18,19 @@ public class Judge {
         this.dealerResult = new LinkedHashMap<>();
     }
 
-    public void decideResult(Gamers gamers) {
-        for (Player player : gamers.callPlayers()) {
-            decidePlayerResult(player, gamers.callDealer());
+    public void decideResult(Players players, Dealer dealer) {
+        for (Player player : players.getPlayers()) {
+            decidePlayerResult(player, dealer);
         }
         decideDealerResult();
     }
 
     private void decidePlayerResult(Player player, Dealer dealer) {
-        if (!player.isNotBust()) {
+        if (player.isBust()) {
             playerResult.put(player, WinState.LOSE);
             return;
         }
-        if (!dealer.isNotBust()) {
+        if (dealer.isBust()) {
             playerResult.put(player, WinState.WIN);
             return;
         }

@@ -1,14 +1,14 @@
 package view;
 
-import domain.Judge;
-import domain.WinState;
 import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
 import domain.cards.cardinfo.CardShape;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
-import domain.gamer.Gamers;
 import domain.gamer.Player;
+import domain.gamer.Players;
+import domain.judge.Judge;
+import domain.judge.WinState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +20,10 @@ public class ResultView {
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String DELIMITER = ", ";
 
-    public void printInitialCards(Gamers gamers) {
-        Dealer dealer = gamers.callDealer();
-        List<Player> players = gamers.callPlayers();
+    public void printInitialCards(Dealer dealer, List<Player> players) {
         printSharingCardsMessage(dealer, players);
         printDealerCard(dealer);
-        printPlayersCards(gamers);
+        printPlayersCards(players);
     }
 
     private void printSharingCardsMessage(Dealer dealer, List<Player> players) {
@@ -41,9 +39,9 @@ public class ResultView {
         System.out.println(dealer.getPlayerName() + ": " + resolveCardExpression(dealerCard));
     }
 
-    private void printPlayersCards(Gamers gamers) {
-        for (Gamer gamer : gamers.callPlayers()) {
-            printPlayerCards(gamer);
+    private void printPlayersCards(List<Player> players) {
+        for (Player player : players) {
+            printPlayerCards(player);
         }
         System.out.print(LINE_SEPARATOR);
     }
@@ -68,9 +66,17 @@ public class ResultView {
     }
 
     private String resolveCardNumber(CardNumber cardNumber) {
-        if (cardNumber.equals(CardNumber.ACE) || cardNumber.equals(CardNumber.JACK)
-                || cardNumber.equals(CardNumber.QUEEN) || cardNumber.equals(CardNumber.KING)) {
-            return cardNumber.name();
+        if (cardNumber.equals(CardNumber.ACE)) {
+            return "A";
+        }
+        if (cardNumber.equals(CardNumber.JACK)) {
+            return "J";
+        }
+        if (cardNumber.equals(CardNumber.QUEEN)) {
+            return "Q";
+        }
+        if (cardNumber.equals(CardNumber.KING)) {
+            return "K";
         }
         return String.valueOf(cardNumber.getScore());
     }
@@ -97,10 +103,13 @@ public class ResultView {
                 dealer.getPlayerName(), resolveCardExpression(card));
     }
 
-    public void printAllGamersCardsResult(Gamers gamers) {
+    public void printAllGamersCardsResult(Dealer dealer, Players players) {
+        List<Gamer> gamers = new ArrayList<>(players.getPlayers());
+        gamers.add(0, dealer);
+
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(LINE_SEPARATOR);
-        for (Gamer gamer : gamers.getGamers()) {
+        for (Gamer gamer : gamers) {
             stringBuilder.append(String.format("%s카드: ", gamer.getPlayerName()));
             stringBuilder.append(resolvePlayerCards(gamer));
             stringBuilder.append(" - 결과: ");

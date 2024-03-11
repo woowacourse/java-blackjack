@@ -1,91 +1,52 @@
 package domain;
 
 import domain.cards.Card;
-import domain.cards.CardsGenerator;
 import domain.cards.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
-import domain.gamer.Gamers;
 import domain.gamer.Player;
-import view.InputView;
-import view.ResultView;
+import domain.gamer.Players;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackGame {
 
     private static final int INIT_CARD_COUNT = 2;
 
-    private final InputView inputView;
-    private final ResultView resultView;
+    private final Players players;
+    private final Dealer dealer;
 
-    public BlackJackGame(InputView inputView, ResultView resultView) {
-        this.inputView = inputView;
-        this.resultView = resultView;
+    public BlackJackGame(Players players, Dealer dealer) {
+        this.players = players;
+        this.dealer = dealer;
     }
 
-    public void play() {
-        Gamers gamers = new Gamers(inputView.readPlayersNames());
-        Deck deck = generateDeck();
-
-        configureSetup(gamers, deck);
-        progressGame(gamers, deck);
-
-        makeFinalResult(gamers);
-    }
-
-    private Deck generateDeck() {
-        List<Card> cards = CardsGenerator.generateRandomCards();
-        return new Deck(cards);
-    }
-
-    private void configureSetup(Gamers gamers, Deck deck) {
-        for (Gamer gamer : gamers.getGamers()) {
-            shareInitCards(gamer, deck);
+    public void shareInitCards(Deck deck) {
+        List<Gamer> gamers = new ArrayList<>(players.getPlayers());
+        gamers.add(dealer);
+        for (Gamer gamer : gamers) {
+            hitInitCards(gamer, deck);
         }
-        resultView.printInitialCards(gamers);
     }
 
-    private void shareInitCards(Gamer gamer, Deck deck) {
+    private void hitInitCards(Gamer gamer, Deck deck) {
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
             gamer.hit(deck.pickOneCard());
         }
     }
 
-    private void progressGame(Gamers gamers, Deck deck) {
-        progressPlayersGame(gamers.callPlayers(), deck);
-        progressDealerGame(gamers.callDealer(), deck);
-        resultView.printAllGamersCardsResult(gamers);
+    public boolean canPlayerMoreHit(Player player, HitOption hitOption) {
+        return player.isNotBust() && hitOption.doHit();
     }
 
-    private void progressPlayersGame(List<Player> players, Deck deck) {
-        for (Gamer player : players) {
-            progressPlayerGame(player, deck);
-        }
+    public Card allowHit(Gamer gamer, Deck deck) {
+        Card pickedCard = deck.pickOneCard();
+        gamer.hit(pickedCard);
+        return pickedCard;
     }
 
-    private void progressPlayerGame(Gamer player, Deck deck) {
-        while (player.isNotBust()) {
-            HitOption hitOption = new HitOption(inputView.readHitOrNot(player));
-            if (!hitOption.doHit()) {
-                break;
-            }
-            player.hit(deck.pickOneCard());
-            resultView.printPlayerCards(player);
-        }
-    }
-
-    private void progressDealerGame(Dealer dealer, Deck deck) {
-        while (dealer.canHit()) {
-            Card pickedCard = deck.pickOneCard();
-            dealer.hit(pickedCard);
-            resultView.printDealerHitMessage(dealer, pickedCard);
-        }
-    }
-
-    private void makeFinalResult(Gamers gamers) {
-        Judge judge = new Judge();
-        judge.decideResult(gamers);
-        resultView.printFinalResults(gamers.callDealer(), judge);
+    public boolean canDealerMoreHit(Dealer dealer) {
+        return dealer.canHit();
     }
 }

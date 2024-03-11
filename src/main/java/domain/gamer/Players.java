@@ -1,28 +1,23 @@
 package domain.gamer;
 
-import domain.cards.gamercards.DealerCards;
 import domain.cards.gamercards.PlayerCards;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
-public class Gamers {
+public class Players {
 
     private static final int MIN_SIZE = 1;
     private static final int MAX_SIZE = 8;
-    private static final int DEALER_INDEX = 0;
-    private static final int PLAYER_FIRST_INDEX = 1;
     private static final String DEALER_NAME = "딜러";
 
-    private final List<Gamer> gamers;
+    private final List<Player> players;
 
-    public Gamers(List<String> playersNames) {
+    public Players(List<String> playersNames) {
         validate(playersNames);
-        this.gamers = new ArrayList<>();
-        addGamers(playersNames);
+        this.players = new ArrayList<>();
+        addPlayers(playersNames);
     }
 
     private void validate(List<String> playersNames) {
@@ -52,25 +47,14 @@ public class Gamers {
         }
     }
 
-    private void addGamers(List<String> playersNames) {
-        gamers.add(new Dealer(new DealerCards(new ArrayList<>())));
+    private void addPlayers(List<String> playersNames) {
         for (String playerName : playersNames) {
             PlayerCards emptyHand = new PlayerCards(new ArrayList<>());
-            gamers.add(new Player(playerName, emptyHand));
+            players.add(new Player(playerName, emptyHand));
         }
     }
 
-    public Dealer callDealer() {
-        return (Dealer) gamers.get(DEALER_INDEX);
-    }
-
-    public List<Player> callPlayers() {
-        return IntStream.range(PLAYER_FIRST_INDEX, gamers.size())
-                .mapToObj(index -> (Player) gamers.get(index))
-                .collect(Collectors.toList());
-    }
-
-    public List<Gamer> getGamers() {
-        return Collections.unmodifiableList(gamers);
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }
