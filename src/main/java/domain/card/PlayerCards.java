@@ -10,12 +10,6 @@ public class PlayerCards extends Cards implements Drawable {
     private final Name name;
     private final BetAmount betAmount;
 
-    public PlayerCards(Name name, List<Card> cards) {
-        super(cards);
-        this.name = name;
-        this.betAmount = new BetAmount(0);
-    }
-
     public PlayerCards(Name name, BetAmount betAmount, List<Card> cards) {
         super(cards);
         this.name = name;

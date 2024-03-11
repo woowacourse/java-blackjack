@@ -1,5 +1,6 @@
 package manager;
 
+import domain.BetAmount;
 import domain.Name;
 import domain.card.DealerCards;
 import domain.card.Deck;
@@ -10,7 +11,10 @@ import domain.score.ScoreBoard;
 import view.InputView;
 import view.OutputView;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Casino {
 
@@ -20,15 +24,40 @@ public class Casino {
 
     public void run() {
         List<Name> names = readNames();
+        Map<Name, BetAmount> betAmounts = readBetAmounts(names);
 
         DealerCards dealerCards = new DealerCards(deck.drawInitialHands());
-        List<PlayerCards> playerCardsBundle = makePlayerCards(names);
+        List<PlayerCards> playerCardsBundle = makePlayerCards(betAmounts);
         outputView.printInitialCards(dealerCards, playerCardsBundle);
 
         ScoreBoard scoreBoard = playGame(names, dealerCards, playerCardsBundle);
         outputView.printResults(dealerCards, playerCardsBundle);
 
         outputView.printScores(scoreBoard);
+    }
+
+    private List<Name> readNames() {
+        return inputView.readPlayerNames()
+                .stream()
+                .map(Name::new)
+                .toList();
+    }
+
+    private Map<Name, BetAmount> readBetAmounts(List<Name> names) {
+        return names.stream()
+                .collect(Collectors.toMap(
+                        name -> name,
+                        name -> new BetAmount(inputView.readBetAmount(name)),
+                        (x,y) -> y,
+                        LinkedHashMap::new
+                ));
+    }
+
+    private List<PlayerCards> makePlayerCards(Map<Name, BetAmount> betAmounts) {
+        return betAmounts.entrySet()
+                .stream()
+                .map(betAmount -> new PlayerCards(betAmount.getKey(), betAmount.getValue(), deck.drawInitialHands()))
+                .toList();
     }
 
     private ScoreBoard playGame(List<Name> names, DealerCards dealerCards, List<PlayerCards> playerCardsBundle) {
@@ -44,25 +73,6 @@ public class Casino {
         return scoreBoard;
     }
 
-    private List<PlayerCards> makePlayerCards(List<Name> names) {
-        return names.stream()
-                .map(name -> new PlayerCards(name, deck.drawInitialHands()))
-                .toList();
-    }
-
-    private List<Name> readNames() {
-        return inputView.readPlayerNames()
-                .stream()
-                .map(Name::new)
-                .toList();
-    }
-
-    private void drawDealerCards(DealerCards dealerCards) {
-        while (dealerCards.canDraw()) {
-            dealerCards.receive(deck.draw());
-            outputView.printDealerGivenCard();
-        }
-    }
 
     private void drawByOpinion(PlayerCards playerCards) {
         boolean opinion = inputView.readHitOpinion(playerCards.getPlayerName());
@@ -79,6 +89,13 @@ public class Casino {
     private void draw(PlayerCards playerCards) {
         if (playerCards.canDraw()) {
             playerCards.receive(deck.draw());
+        }
+    }
+
+    private void drawDealerCards(DealerCards dealerCards) {
+        while (dealerCards.canDraw()) {
+            dealerCards.receive(deck.draw());
+            outputView.printDealerGivenCard();
         }
     }
 }
