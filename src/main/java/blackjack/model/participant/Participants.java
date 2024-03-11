@@ -9,23 +9,23 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Players {
+public class Participants {
     private static final int MINIMUM_PLAYER_SIZE = 1;
     private static final int MAXIMUM_PLAYER_SIZE = 10;
 
     private final List<Player> players;
 
-    private Players(final List<Player> players) {
+    private Participants(final List<Player> players) {
         validatePlayerSize(players);
         this.players = players;
     }
 
-    public static Players of(final List<String> rawNames, final List<Hand> cards) {
+    public static Participants of(final List<String> rawNames, final List<Hand> cards) {
         validateNotDuplicateName(rawNames);
         validateNamesInitialCardsSize(rawNames, cards);
         return IntStream.range(0, rawNames.size())
                 .mapToObj(index -> new Player(new Name(rawNames.get(index)), cards.get(index)))
-                .collect(Collectors.collectingAndThen(Collectors.toList(), Players::new));
+                .collect(Collectors.collectingAndThen(Collectors.toList(), Participants::new));
     }
 
     private static void validateNamesInitialCardsSize(final List<String> rawNames, final List<Hand> cards) {

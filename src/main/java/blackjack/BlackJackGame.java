@@ -4,7 +4,7 @@ import blackjack.dto.NameCardsScore;
 import blackjack.model.participant.Dealer;
 import blackjack.model.deck.Deck;
 import blackjack.model.participant.Player;
-import blackjack.model.participant.Players;
+import blackjack.model.participant.Participants;
 import blackjack.model.result.Referee;
 import blackjack.model.result.ResultCommand;
 import blackjack.model.result.Rule;
@@ -19,23 +19,23 @@ public class BlackJackGame {
 
     public void run() {
         final Deck deck = Deck.createByRandomOrder();
-        final Players players = initPlayers(InputView.readPlayerNames(consoleReader), deck);
+        final Participants participants = initPlayers(InputView.readPlayerNames(consoleReader), deck);
         final Dealer dealer = new Dealer(deck.distributeInitialCard());
-        final Referee referee = new Referee(new Rule(dealer), players);
+        final Referee referee = new Referee(new Rule(dealer), participants);
 
-        announceInitialCards(dealer, players);
-        play(dealer, players.getPlayers(), deck);
-        announceResult(dealer, players, referee);
+        announceInitialCards(dealer, participants);
+        play(dealer, participants.getPlayers(), deck);
+        announceResult(dealer, participants, referee);
     }
 
-    private Players initPlayers(final List<String> names, final Deck deck) {
-        return Players.of(names, deck.distributeInitialCard(names.size()));
+    private Participants initPlayers(final List<String> names, final Deck deck) {
+        return Participants.of(names, deck.distributeInitialCard(names.size()));
     }
 
-    private void announceInitialCards(final Dealer dealer, final Players players) {
-        OutputView.printDistributionSubject(players.getNames());
+    private void announceInitialCards(final Dealer dealer, final Participants participants) {
+        OutputView.printDistributionSubject(participants.getNames());
         OutputView.printNameAndCards(dealer.getName(), dealer.openCard());
-        players.collectCardsOfEachPlayer()
+        participants.collectCardsOfEachPlayer()
                 .forEach(OutputView::printNameAndCards);
         OutputView.println();
     }
@@ -71,16 +71,16 @@ public class BlackJackGame {
         player.receiveCard(deck.distribute());
     }
 
-    private void announceResult(final Dealer dealer, final Players players, final Referee referee) {
-        printFinalCardsAndScores(dealer, players);
+    private void announceResult(final Dealer dealer, final Participants participants, final Referee referee) {
+        printFinalCardsAndScores(dealer, participants);
         printFinalResultCommand(referee);
     }
 
-    private void printFinalCardsAndScores(final Dealer dealer, final Players players) {
+    private void printFinalCardsAndScores(final Dealer dealer, final Participants participants) {
         OutputView.println();
         NameCardsScore dealerNameCardsScore = new NameCardsScore(dealer.getName(), dealer.openCards(),
                 dealer.getScore());
-        List<NameCardsScore> playerNameCardsScore = players.collectFinalResults();
+        List<NameCardsScore> playerNameCardsScore = participants.collectFinalResults();
         OutputView.printFinalCardsAndScore(dealerNameCardsScore);
         OutputView.printFinalCardsAndScore(playerNameCardsScore);
     }
