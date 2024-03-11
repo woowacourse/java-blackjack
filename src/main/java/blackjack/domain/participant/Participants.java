@@ -46,7 +46,7 @@ public class Participants {
         }
     }
 
-    public List<Participant> getValues() {
+    public List<Participant> getValue() {
         List<Participant> participants = new ArrayList<>();
 
         participants.add(dealer);
