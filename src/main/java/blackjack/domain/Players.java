@@ -23,6 +23,7 @@ public class Players {
         }
     }
 
+
     private void validatePlayersNumber(List<String> players) {
         if (players.size() < MIN_PLAYER_NUMBER || players.size() > MAX_PLAYER_NUMBER) {
             throw new IllegalArgumentException("게임 참여자는 최소 " + MIN_PLAYER_NUMBER

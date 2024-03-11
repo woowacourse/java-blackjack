@@ -1,4 +1,5 @@
 package blackjack.domain;
+
 // TODO 성격에 따라 패키지 나누어보기
 public class Card {
     private static final int MAX_CARD_VALUE = 13;
@@ -18,6 +19,7 @@ public class Card {
 
         return new Card(kind, value);
     }
+
     // TODO setter공개된 것과 달라보이지 않음
     public void downgradeAce() {
         value = Value.ACELOW;
