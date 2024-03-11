@@ -1,5 +1,9 @@
 package domain.blackjack;
 
+import static domain.blackjack.TestHoldingCards.DEAD_CARDS;
+import static domain.blackjack.TestHoldingCards.ONLY_SEVEN_HEART;
+import static domain.blackjack.TestHoldingCards.WIN_CARDS_WITHOUT_ACE;
+import static domain.blackjack.TestHoldingCards.WIN_CARDS_WITH_ACE;
 import static domain.card.Card.ACE_HEART;
 import static domain.card.Card.EIGHT_HEART;
 import static domain.card.Card.JACK_HEART;
@@ -7,10 +11,10 @@ import static domain.card.Card.JACK_SPADE;
 import static domain.card.Card.QUEEN_HEART;
 import static domain.card.Card.SEVEN_HEART;
 import static domain.card.Card.TWO_HEART;
+import static domain.card.FirstCardSelectStrategy.FIRST_CARD_SELECT_STRATEGY;
 
 import domain.card.Card;
 import domain.card.Deck;
-import domain.card.FirstCardSelectStrategy;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +37,14 @@ class GamerTest {
         );
     }
 
-    private static final FirstCardSelectStrategy FIRST_CARD_SELECT_STRATEGY = new FirstCardSelectStrategy();
+    public static Stream<Arguments> getSummationCardPointParameters() {
+        return Stream.of(
+                Arguments.of(new Gamer("게이머1", ONLY_SEVEN_HEART), new SummationCardPoint(7)),
+                Arguments.of(new Gamer("게이머1", WIN_CARDS_WITH_ACE), new SummationCardPoint(21)),
+                Arguments.of(new Gamer("게이머1", WIN_CARDS_WITHOUT_ACE), new SummationCardPoint(21)),
+                Arguments.of(new Gamer("게이머1", DEAD_CARDS), new SummationCardPoint(22))
+        );
+    }
 
     @Test
     @DisplayName("게임 참가자가 카드를 뽑았을 때 점수가 올바르게 계산되는지 검증")
@@ -87,6 +98,15 @@ class GamerTest {
         DrawResult drawResult = gamer.draw(Deck.of(cardInDeck), FIRST_CARD_SELECT_STRATEGY,
                 new PlayerCardDrawCondition(gamer));
         Assertions.assertThat(drawResult.hasNextChance())
+                .isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("getSummationCardPointParameters")
+    @DisplayName("게이머의 점수가 잘 계산되는지 검증")
+    void getSummationCardPoint(Gamer gamer, SummationCardPoint expected) {
+        SummationCardPoint summationCardPoint = gamer.getSummationCardPoint();
+        Assertions.assertThat(summationCardPoint)
                 .isEqualTo(expected);
     }
 }
