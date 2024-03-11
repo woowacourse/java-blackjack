@@ -2,10 +2,9 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.Cards.Card;
-import blackjack.domain.Cards.Deck;
-import blackjack.domain.Cards.Rank;
-import blackjack.domain.Cards.Shape;
+import blackjack.domain.cards.Card;
+import blackjack.domain.cards.Rank;
+import blackjack.domain.cards.Shape;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import org.assertj.core.api.Assertions;
@@ -13,24 +12,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
-
     @Test
     @DisplayName("플레이어가 잘 생성된다.")
     void playerConstructSuccessTest() {
         Assertions.assertThatNoException()
                 .isThrownBy(() -> new Player(new Name("이름")));
-    }
-
-    @Test
-    @DisplayName("플레이어가 덱을 받는다.")
-    void receiveDeckTest() {
-        Player player = new Player(new Name("이름"));
-        Deck deck = new Deck();
-        deck.addCard(new Card(Shape.HEART, Rank.ACE));
-        deck.addCard(new Card(Shape.HEART, Rank.TWO));
-        player.receiveDeck(deck);
-
-        assertThat(player.getHand().size()).isEqualTo(2);
     }
 
     @Test
@@ -45,11 +31,9 @@ public class PlayerTest {
     @DisplayName("플레이어 점수를 계산한다.")
     void calculateScoreTest() {
         Player player = new Player(new Name("이름"));
-        Deck deck = new Deck();
-        deck.addCard(new Card(Shape.HEART, Rank.TEN));
-        deck.addCard(new Card(Shape.HEART, Rank.TWO));
+        player.receiveCard(new Card(Shape.HEART, Rank.TEN));
+        player.receiveCard(new Card(Shape.HEART, Rank.TWO));
 
-        player.receiveDeck(deck);
         int result = player.calculateScore();
 
         assertThat(result).isEqualTo(12);

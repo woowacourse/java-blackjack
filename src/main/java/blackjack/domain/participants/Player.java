@@ -1,9 +1,8 @@
 package blackjack.domain.participants;
 
 
-import blackjack.domain.Cards.Card;
-import blackjack.domain.Cards.Deck;
-import blackjack.domain.Cards.Hand;
+import blackjack.domain.cards.Card;
+import blackjack.domain.cards.Hand;
 
 public class Player {
     private final Name name;
@@ -12,13 +11,6 @@ public class Player {
     public Player(Name name) {
         this.name = name;
         this.hand = new Hand();
-    }
-
-    public void receiveDeck(Deck tempDeck) {
-        int tempDeckSize = tempDeck.size();
-        for (int i = 0; i < tempDeckSize; i++) {
-            hand.addCard(tempDeck.pickRandomCard());
-        }
     }
 
     public void receiveCard(Card card) {
