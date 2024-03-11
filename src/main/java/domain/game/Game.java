@@ -2,8 +2,9 @@ package domain.game;
 
 import domain.Command;
 import domain.deck.TotalDeck;
+import domain.deck.UserDeck;
+import domain.user.Name;
 import domain.user.Player;
-import domain.user.User;
 import domain.user.Users;
 
 import java.util.LinkedHashMap;
@@ -24,22 +25,29 @@ public class Game {
         users.setStartCards(totalDeck);
     }
 
-    public boolean continueInput() {
-        return users.isCurrentUserPlayer();
+    public Index giveIndexOfGame() {
+        return users.makeIndex();
     }
 
-    public State hitOrStay(Command command) {
+    public Name getNameByIndex(Index index) {
+        return users.getNameByIndex(index);
+    }
+
+    public UserDeck getUserDeckByIndex(Index index) {
+        return users.geUserDeckByIndex(index);
+    }
+
+    public State determineState(Command command, Index index) {
         if (YES == command) {
-            users.addCardOfCurrentUser(totalDeck.getNewCard());
-            return hitOrBust();
+            users.addCardOfCurrentUser(totalDeck.getNewCard(), index);
+            return hitOrBust(index);
         }
-        users.nextUser();
         return STAY;
     }
 
-    private State hitOrBust() {
-        if (users.currentUserBusted()) {
-            users.nextUser();
+
+    private State hitOrBust(Index index) {
+        if (users.currentUserBusted(index)) {
             return BUST;
         }
         return HIT;
@@ -65,7 +73,4 @@ public class Game {
         return new PlayerResults(playerResults);
     }
 
-    public User getCurrentPlayer() {
-        return users.getCurrentUser();
-    }
 }

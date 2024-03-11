@@ -6,7 +6,7 @@ import domain.game.DealerResult;
 import domain.game.Game;
 import domain.game.PlayerResults;
 import domain.user.Dealer;
-import domain.user.User;
+import domain.user.Name;
 import domain.user.Users;
 
 import java.util.stream.Collectors;
@@ -32,17 +32,17 @@ public class ResultView {
         Card dealerVisibleCard = dealer.getVisibleCard();
         System.out.println(dealer.getName().value() + ": " + dealerVisibleCard.getName());
         users.getPlayers()
-                .forEach(player -> System.out.println(joinUserNameAndDeck(player)));
+                .forEach(player -> System.out.println(joinUserNameAndDeck(player.getName(), player.getUserDeck())));
     }
 
-    public static void printPlayerAndDeck(User user) {
-        System.out.println(joinUserNameAndDeck(user));
+    public static void printPlayerAndDeck(Name name, UserDeck userDeck) {
+        System.out.println(joinUserNameAndDeck(name, userDeck));
     }
 
-    private static String joinUserNameAndDeck(User user) {
-        return user.getName().value()
+    private static String joinUserNameAndDeck(Name name, UserDeck userDeck) {
+        return name.value()
                 + "카드: "
-                + joinDeck(user.getUserDeck());
+                + joinDeck(userDeck);
     }
 
     private static String joinDeck(UserDeck userDeck) {
@@ -60,7 +60,7 @@ public class ResultView {
         System.out.println();
         users.getUsers()
                 .forEach((user) ->
-                        System.out.println(joinUserNameAndDeck(user)
+                        System.out.println(joinUserNameAndDeck(user.getName(), user.getUserDeck())
                                 + " - 결과: " + user.sumUserDeck()));
     }
 
@@ -75,8 +75,8 @@ public class ResultView {
                         System.out.println(player.getName().value() + ": " + result.getResult())));
     }
 
-    public static void printBust(User user) {
-        printPlayerAndDeck(user);
+    public static void printBust(Name name, UserDeck userDeck) {
+        printPlayerAndDeck(name, userDeck);
         System.out.println("버스트!");
     }
 }

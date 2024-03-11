@@ -20,6 +20,6 @@ class CommandTest {
     @DisplayName("지정되지 않은 입력 시 예외를 던진다.")
     void invalidInputThrowsException() {
         assertThatThrownBy(() -> Command.get("aaa"))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(BlackjackException.class);
     }
 }

@@ -3,6 +3,7 @@ package domain.user;
 import domain.card.Card;
 import domain.deck.TotalDeck;
 import domain.deck.TotalDeckGenerator;
+import domain.game.Index;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,54 +17,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class UsersTest {
     @Test
-    @DisplayName("현재 플레이어를 반환한다.")
-    void getCurrentPlayerTest() {
-        Player player1 = new Player(new Name("a"));
-        Users users = new Users(List.of(player1));
-
-        assertThat(users.getCurrentUser()).isEqualTo(player1);
-    }
-
-    @Test
-    @DisplayName("현재 플레이 중인 유저에 카드를 추가한다.")
+    @DisplayName("주어진 인덱스에 맞는 유저에 카드를 추가한다.")
     void addCardOfCurrentUserTest() {
         Player player1 = new Player(new Name("a"));
         Users users = new Users(List.of(player1));
         Card card = new Card(CLOVER, FIVE);
-        users.addCardOfCurrentUser(card);
+        Index index = users.makeIndex();
+        users.addCardOfCurrentUser(card, index);
 
-        assertThat(users.getCurrentUser().userDeck.getCards().get(0)).isEqualTo(card);
-    }
-
-    @Test
-    @DisplayName("다음 플레이어로 순서를 넘겨준다.")
-    void nextUserTest() {
-        Player player1 = new Player(new Name("a"));
-        Player player2 = new Player(new Name("b"));
-        Users users = new Users(List.of(player1, player2));
-
-        users.nextUser();
-        assertThat(users.getCurrentUser()).isEqualTo(player2);
-    }
-
-    @Test
-    @DisplayName("현재 플레이 중인 유저가 플레이어인지 확인한다.")
-    void isCurrentUserPlayerTest() {
-        Player player1 = new Player(new Name("a"));
-        Player player2 = new Player(new Name("b"));
-        Users users = new Users(List.of(player1, player2));
-
-        assertThat(users.isCurrentUserPlayer()).isTrue();
-    }
-
-    @Test
-    @DisplayName("현재 플레이 중인 유저가 딜러이면 false를 반환한다.")
-    void isCurrentUserNotPlayerTest() {
-        Player player1 = new Player(new Name("a"));
-        Users users = new Users(List.of(player1));
-
-        users.nextUser();
-        assertThat(users.isCurrentUserPlayer()).isFalse();
+        assertThat(player1.userDeck.getCards().get(0)).isEqualTo(card);
     }
 
     @Test
@@ -121,6 +83,6 @@ class UsersTest {
         player1.addCard(new Card(CLOVER, TEN));
         player1.addCard(new Card(CLOVER, TEN));
 
-        assertThat(users.currentUserBusted()).isTrue();
+        assertThat(users.currentUserBusted(users.makeIndex())).isTrue();
     }
 }
