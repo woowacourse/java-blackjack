@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -40,6 +42,25 @@ public class Bettings {
 
             throw new IllegalArgumentException(message);
         }
+    }
+
+    public Map<Player, Integer> calculatePlayerProfits(Dealer dealer) {
+        Map<Player, Integer> playerProfits = new LinkedHashMap<>();
+
+        for (Player player : bettings.keySet()) {
+            PlayerGameResult result = dealer.judge(player);
+            int bettingMoney = getBettingMoney(player).getValue();
+            int profit = result.getProfit(bettingMoney);
+
+            playerProfits.put(player, profit);
+        }
+
+        return playerProfits;
+    }
+
+    public int calculateDealerProfit(Map<Player, Integer> playerProfits) {
+        return playerProfits.values().stream()
+                .reduce(0, Integer::sum) * -1;
     }
 
     public Money getBettingMoney(Player player) {

@@ -1,16 +1,14 @@
 package blackjack.controller;
 
 import blackjack.domain.Bettings;
-import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.card.Deck;
 import blackjack.domain.Money;
-import blackjack.domain.Participant;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
-import blackjack.domain.PlayerGameResult;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -91,31 +89,10 @@ public class BlackjackController {
     }
 
     private void printResult(Participants participants, Bettings bettings) {
-        Map<Player, Integer> playerProfit = createPlayerProfits(participants, bettings);
-
-        int dealerProfit = calculateDealerProfit(playerProfit);
+        Map<Player, Integer> playerProfit = bettings.calculatePlayerProfits(participants.getDealer());
+        int dealerProfit = bettings.calculateDealerProfit(playerProfit);
 
         outputView.printAllCardsWithScore(participants.getParticipants());
         outputView.printProfits(playerProfit, dealerProfit);
-    }
-
-    private static Map<Player, Integer> createPlayerProfits(Participants participants, Bettings bettings) {
-        Map<Player, Integer> playerProfit = new LinkedHashMap<>();
-        Dealer dealer = participants.getDealer();
-
-        participants.getPlayers().forEach(player -> {
-            PlayerGameResult playerGameResult = dealer.judge(player);
-            Money bettingMoney = bettings.getBettingMoney(player);
-            int profit = playerGameResult.getProfit(bettingMoney.getValue());
-
-            playerProfit.put(player, profit);
-        });
-
-        return playerProfit;
-    }
-
-    private static int calculateDealerProfit(Map<Player, Integer> playerProfit) {
-        return playerProfit.values().stream()
-                .reduce(0, Integer::sum) * -1;
     }
 }
