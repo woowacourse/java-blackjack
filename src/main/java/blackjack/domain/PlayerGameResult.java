@@ -16,4 +16,8 @@ public enum PlayerGameResult {
     public double getRatio() {
         return ratio;
     }
+
+    public int getProfit(int bettingMoney) {
+        return (int) (bettingMoney * ratio);
+    }
 }

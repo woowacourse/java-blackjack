@@ -12,12 +12,12 @@ public class Dealer extends Participant {
         super(DEALER_NAME);
     }
 
-    public GameResult judge(Player player) {
+    public PlayerGameResult judge(Player player) {
         int playerScore = player.calculateScore();
         int dealerScore = calculateScore();
 
         if (player.isBust()) {
-            return GameResult.LOSE;
+            return PlayerGameResult.LOSE;
         }
 
         if (player.isBlackJack()) {
@@ -27,24 +27,24 @@ public class Dealer extends Participant {
         return judgeWhenPlayerNormalScore(playerScore, dealerScore);
     }
 
-    private GameResult judgeWhenPlayerIsBlackjack() {
+    private PlayerGameResult judgeWhenPlayerIsBlackjack() {
         if (isBlackJack()) {
-            return GameResult.PUSH;
+            return PlayerGameResult.PUSH;
         }
 
-        return GameResult.WIN;
+        return PlayerGameResult.BLACKJACK_WIN;
     }
 
-    private GameResult judgeWhenPlayerNormalScore(int playerScore, int dealerScore) {
+    private PlayerGameResult judgeWhenPlayerNormalScore(int playerScore, int dealerScore) {
         if (isBust() || playerScore > dealerScore) {
-            return GameResult.WIN;
+            return PlayerGameResult.WIN;
         }
 
         if (isBlackJack() || playerScore < dealerScore) {
-            return GameResult.LOSE;
+            return PlayerGameResult.LOSE;
         }
 
-        return GameResult.PUSH;
+        return PlayerGameResult.PUSH;
     }
 
     public List<Card> getVisibleCards() {

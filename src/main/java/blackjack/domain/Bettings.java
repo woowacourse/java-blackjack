@@ -3,7 +3,7 @@ package blackjack.domain;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-class Bettings {
+public class Bettings {
 
     private static final int BETTING_MONEY_UNIT = 1000;
     private static final int MIN_BETTING_MONEY = 1000;
@@ -27,7 +27,7 @@ class Bettings {
     }
 
     private void validateBettingMoneyRange(int betting) {
-        if (betting < MIN_BETTING_MONEY || betting > MAX_BETTING_MONEY) {
+        if (MIN_BETTING_MONEY > betting || betting > MAX_BETTING_MONEY) {
             String message = String.format("베팅 금액은 %d원 이상 %d원 이하여야 합니다.", MIN_BETTING_MONEY, MAX_BETTING_MONEY);
 
             throw new IllegalArgumentException(message);

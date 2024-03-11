@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import java.util.Objects;
 
-class Money {
+public class Money {
 
     private static final int MIN_MONEY = 1;
 
@@ -24,6 +24,10 @@ class Money {
         return new Money((int) (money * multiplier));
     }
 
+    public int getValue() {
+        return money;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -39,9 +43,5 @@ class Money {
     @Override
     public int hashCode() {
         return Objects.hash(money);
-    }
-
-    public int getValue() {
-        return money;
     }
 }
