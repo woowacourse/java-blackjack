@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.stategy.TestShuffleStrategy;
+import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.dto.BlackjackResult;
 import blackjack.strategy.ShuffleStrategy;
 import java.util.List;
@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 @DisplayName("플레이어들")
 public class PlayersTest {
 
-    private final ShuffleStrategy shuffleStrategy = new TestShuffleStrategy();
+    private final ShuffleStrategy shuffleStrategy = new NoShuffleStrategy();
 
     private Deck deck;
     private Dealer dealer;

@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.Deck;
 import blackjack.domain.card.TrumpCard;
-import blackjack.domain.stategy.TestShuffleStrategy;
+import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.strategy.ShuffleStrategy;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 @DisplayName("플레이어")
 public class PlayerTest {
 
-    private final ShuffleStrategy shuffleStrategy = new TestShuffleStrategy();
+    private final ShuffleStrategy shuffleStrategy = new NoShuffleStrategy();
     private Deck deck;
     private Dealer dealer;
     private Player choco;
