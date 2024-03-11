@@ -20,8 +20,8 @@ public enum HitOption {
                 .orElseThrow(() -> new IllegalArgumentException("y나 n 둘 중 하나로 입력할 수 있습니다."));
     }
 
-    public static boolean isHitOption(String hitOption) {
+    public static boolean isStayOption(String hitOption) {
         HitOption findOption = from(hitOption);
-        return HIT == findOption;
+        return STAY == findOption;
     }
 }
