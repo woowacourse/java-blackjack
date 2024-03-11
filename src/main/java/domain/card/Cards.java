@@ -1,6 +1,8 @@
 package domain.card;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cards {
 
@@ -9,8 +11,8 @@ public class Cards {
 
     private final List<Card> cards;
 
-    public Cards(List<Card> cards) {
-        this.cards = cards;
+    public Cards() {
+        this.cards = new ArrayList<>();
     }
 
     public void addCard(Card card) {
@@ -18,7 +20,15 @@ public class Cards {
     }
 
     public int countMaxScore() {
-        return convertAceScore(countMatchScore());
+        int score = convertAceScore(countMatchScore());
+        if (isOver(score)) {
+            return 0;
+        }
+        return score;
+    }
+
+    public boolean isOver(int score) {
+        return score > 21;
     }
 
     private int convertAceScore(int maxResultScore) {
@@ -28,13 +38,21 @@ public class Cards {
         return maxResultScore;
     }
 
-    public int countMatchScore() {
+    private int countMatchScore() {
         return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
     }
 
-    public int countCard() {
-        return cards.size();
+    public int getMaxGameScore() {
+        return cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
+    }
+
+    public List<String> getCardsName() {
+        return cards.stream()
+                .map(Card::getCardName)
+                .collect(Collectors.toList());
     }
 }
