@@ -4,6 +4,7 @@ import view.OutputView;
 
 public class Main {
     public static void main(String[] args) {
-        new BlackJackController(new InputView(), new OutputView()).startGame();
+        BlackJackController blackJackController = new BlackJackController(new InputView(), new OutputView());
+        blackJackController.startGame();
     }
 }
