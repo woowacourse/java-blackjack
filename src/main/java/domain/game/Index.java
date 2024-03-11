@@ -10,9 +10,13 @@ public class Index {
         this.current = FIRST_PLAYER_INDEX;
     }
 
-    public Index(int size, int current) {
+    private Index(int size, int current) {
         this.size = size;
         this.current = current + 1;
+    }
+
+    public Index next() {
+        return new Index(size, current);
     }
 
     public boolean isEnd() {
@@ -21,10 +25,6 @@ public class Index {
 
     public int getCurrent() {
         return current;
-    }
-
-    public Index next() {
-        return new Index(size, current);
     }
 
 }
