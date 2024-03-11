@@ -12,8 +12,8 @@ public record OneOnOneResult(int win, int lose) {
         return ONE_LOSE;
     }
 
-    public OneOnOneResult updateStatus(final OneOnOneResult oneOnOneResult) {
-        if (oneOnOneResult.win > 0) {
+    public OneOnOneResult updateStatusByWinOrLose(final OneOnOneResult oneOnOneResult) {
+        if (oneOnOneResult.equals(ONE_WIN)) {
             return addWin();
         }
         return addLose();

@@ -6,23 +6,26 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    private final List<Card> cards = new ArrayList<>();
+    private static final List<Card> CASHED_CARDS;
 
-    public Deck() {
-        initialize();
+    private final List<Card> cards;
+
+    static {
+        CASHED_CARDS = new ArrayList<>();
+        for (final Denomination denomination : Denomination.values()) {
+            Arrays.stream(Symbol.values()).map(symbol -> new Card(denomination, symbol)).forEach(CASHED_CARDS::add);
+        }
     }
 
-    private void initialize() {
-        for (final Denomination denomination : Denomination.values()) {
-            Arrays.stream(Symbol.values()).map(symbol -> new Card(denomination, symbol)).forEach(cards::add);
-        }
+    public Deck() {
+        cards = new ArrayList<>(CASHED_CARDS);
+        Collections.shuffle(cards);
     }
 
     public Card draw() {
         if (cards.isEmpty()) {
-            throw new IllegalStateException("덱이 비어있습니다");
+            throw new IllegalStateException("덱이 비어 있을 때 카드를 뽑을 수 없습니다.");
         }
-        Collections.shuffle(cards);
         return pollLastCard();
     }
 
@@ -32,4 +35,3 @@ public class Deck {
         return card;
     }
 }
-
