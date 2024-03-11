@@ -33,7 +33,7 @@ class RefereeTest {
         List<Name> playerName = List.of(new Name("gamza"));
         Participants participants = new Participants(playerName, handGenerator);
         Referee referee = Referee.getInstance();
-        BlackjackResult blackjackResult = referee.generateResult(participants);
+        BlackjackResult blackjackResult = participants.generateResult(referee);
 
         assertThat(blackjackResult.getPlayersResult().values()).containsExactly(playerHandResult);
     }

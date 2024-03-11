@@ -36,7 +36,7 @@ public class BlackjackGame {
 
     private void printBlackjackResult(Participants participants) {
         Referee referee = Referee.getInstance();
-        BlackjackResult blackjackResult = referee.generateResult(participants);
+        BlackjackResult blackjackResult = participants.generateResult(referee);
         outputView.printBlackjackResult(blackjackResult);
     }
 

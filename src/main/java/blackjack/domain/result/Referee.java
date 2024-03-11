@@ -17,18 +17,7 @@ public class Referee {
         return INSTANCE;
     }
 
-    public BlackjackResult generateResult(Participants participants) {
-        Dealer dealer = participants.getDealer();
-        Players players = participants.getPlayers();
-        Map<Player, HandResult> playerResults = new LinkedHashMap<>();
-        for (Player player : players.getValues()) {
-            HandResult playerResult = getPlayerResult(player, dealer);
-            playerResults.put(player, playerResult);
-        }
-        return new BlackjackResult(playerResults);
-    }
-
-    private HandResult getPlayerResult(Player player, Dealer dealer) {
+    public HandResult getPlayerResult(Player player, Dealer dealer) {
         if (dealer.isBust()) {
             return HandResult.WIN;
         }
