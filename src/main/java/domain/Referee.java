@@ -5,16 +5,15 @@ import domain.participant.Participant;
 import domain.participant.Participants;
 
 public class Referee {
-    private static final int BLACKJACK_SCORE = 21;
     private final Participants participants;
 
     public Referee(final Participants participants) {
         this.participants = participants;
     }
 
-
     public JudgeResult judge() {
         if (participants.getDealer().isBusted()) {
+            // TODO: 여기 조건에 따르면 참가자는 Bust면 패, Bust가 아니면 승이다.
             return new JudgeResult(participants.getParticipantOutcomesIf(
                     participant -> participant.isNotBusted()
             ));

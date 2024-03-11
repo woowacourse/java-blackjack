@@ -10,7 +10,7 @@ import java.util.function.Function;
 public class Participants {
     private final List<Participant> participants;
 
-    private Participants(final List<Participant> participants) {
+    public Participants(final List<Participant> participants) {
         this.participants = participants;
     }
 
@@ -23,6 +23,7 @@ public class Participants {
         return new Participants(participants);
     }
 
+    // TODO: 조회 대상에 딜러도 포함되어있음. 제외해야 함.
     public List<ParticipantOutcome> getParticipantOutcomesIf(final Function<Participant, Boolean> function) {
         return participants.stream()
                 .map(participant -> new ParticipantOutcome(
