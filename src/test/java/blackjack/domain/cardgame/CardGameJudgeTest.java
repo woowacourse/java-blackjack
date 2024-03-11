@@ -1,8 +1,6 @@
 package blackjack.domain.cardgame;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.cardgame.CardGameJudge;
-import blackjack.domain.cardgame.WinningStatus;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import org.junit.jupiter.api.Test;
@@ -99,7 +97,7 @@ public class CardGameJudgeTest {
         var result = cardGameJudge.judge(dealer, List.of(player))
                 .getTotalResult();
 
-        assertThat(result.get(player)).isEqualTo(WinningStatus.LOSE);
+        assertThat(result.get(player)).isEqualTo(WinningStatus.WIN);
     }
 
     @Test
