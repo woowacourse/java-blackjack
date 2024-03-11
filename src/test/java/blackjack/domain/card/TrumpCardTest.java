@@ -13,7 +13,7 @@ public class TrumpCardTest {
     void createCard() {
         //given
         Rank rank = Rank.FOUR;
-        Suit suit = Suit.CLOVER;
+        Suit suit = Suit.CLUBS;
 
         //when
         TrumpCard trumpCard = new TrumpCard(rank, suit);

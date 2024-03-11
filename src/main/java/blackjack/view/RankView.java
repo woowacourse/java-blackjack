@@ -17,7 +17,8 @@ public enum RankView {
     TEN("10"),
     JACK("J"),
     QUEEN("Q"),
-    KING("K");
+    KING("K"),
+    ;
 
     private final String symbol;
 

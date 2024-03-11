@@ -17,7 +17,8 @@ public enum Rank {
     TEN(List.of(10)),
     JACK(List.of(10)),
     QUEEN(List.of(10)),
-    KING(List.of(10));
+    KING(List.of(10)),
+    ;
 
     private final List<Integer> score;
 
