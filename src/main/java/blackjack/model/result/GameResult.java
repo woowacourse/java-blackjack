@@ -8,6 +8,9 @@ public class GameResult {
     private final DealerResult dealerResult = new DealerResult();
     private final PlayersResult playersResult = new PlayersResult();
 
+    public GameResult() {
+    }
+
     public void addDealerWin() {
         dealerResult.addWin();
     }

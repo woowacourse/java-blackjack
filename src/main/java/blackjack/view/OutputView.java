@@ -15,6 +15,9 @@ public class OutputView {
     private static final String SEPARATOR = ", ";
     private static final String NONE = "";
 
+    private OutputView() {
+    }
+
     private static void printMessage(String message) {
         System.out.println(message);
     }

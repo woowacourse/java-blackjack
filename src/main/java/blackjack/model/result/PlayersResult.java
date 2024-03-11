@@ -8,6 +8,9 @@ public class PlayersResult {
 
     private final Map<Player, Result> playerResult = new LinkedHashMap<>();
 
+    public PlayersResult() {
+    }
+
     public void addWin(Player player) {
         playerResult.put(player, Result.WIN);
     }

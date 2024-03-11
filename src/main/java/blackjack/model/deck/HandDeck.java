@@ -8,6 +8,9 @@ public class HandDeck {
 
     private final List<Card> cards = new ArrayList<>();
 
+    public HandDeck() {
+    }
+
     public void addCard(Card card) {
         validateDuplicatedCard(card);
         cards.add(card);

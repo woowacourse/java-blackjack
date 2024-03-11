@@ -9,6 +9,9 @@ public abstract class Gamer {
 
     protected final HandDeck handDeck = new HandDeck();
 
+    public Gamer() {
+    }
+
     public void receiveCard(Card card) {
         handDeck.addCard(card);
         GameRule.adjustAceValue(handDeck);

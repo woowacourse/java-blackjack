@@ -7,6 +7,9 @@ public class DealerResult {
 
     private final List<Result> dealerResult = new ArrayList<>();
 
+    public DealerResult() {
+    }
+
     public void addWin() {
         dealerResult.add(Result.WIN);
     }

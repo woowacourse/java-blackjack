@@ -5,6 +5,9 @@ import blackjack.model.card.Card;
 
 public class Dealer extends Gamer {
 
+    public Dealer() {
+    }
+
     public Card getFirstCard() {
         return handDeck.getCards().get(0);
     }

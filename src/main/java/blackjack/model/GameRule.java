@@ -11,6 +11,9 @@ public class GameRule {
     private static final int PLAYER_HIT_MAX_SCORE = 21;
     private static final int DEALER_HIT_MAX_SCORE = 16;
 
+    public GameRule() {
+    }
+
     public static void adjustAceValue(HandDeck handDeck) {
         int aceCount = handDeck.countElevenAce();
 
