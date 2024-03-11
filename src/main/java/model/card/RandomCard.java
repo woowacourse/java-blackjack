@@ -2,59 +2,54 @@ package model.card;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.Arrays;
-import java.util.Map;
-import java.util.function.Function;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class RandomCard {
 
     private static final int END_OFFSET = 1;
-    private static RandomCard randomCardPicker = new RandomCard();
-
-    private final Map<Integer, CardNumber> cardNumbers;
-    private final Map<Integer, CardShape> cardShapes;
+    private static final List<CardNumber> cardNumbers = initCardNumbers();
+    private static final List<CardShape> cardShapes = initCardShapes();
 
     private RandomCard() {
-        cardNumbers = initCardNumbers();
-        cardShapes = initCardShapes();
     }
 
-    private Map<Integer, CardNumber> initCardNumbers() {
+    private static List<CardNumber> initCardNumbers() {
         return Arrays.stream(CardNumber.values())
-            .collect(toMap(Enum::ordinal, Function.identity()));
+            .toList();
     }
 
-    private Map<Integer, CardShape> initCardShapes() {
+    private static List<CardShape> initCardShapes() {
         return Arrays.stream(CardShape.values())
-            .collect(toMap(Enum::ordinal, Function.identity()));
+            .toList();
     }
 
-    public static RandomCard getRandomCard() {
-        if (randomCardPicker == null) {
-            randomCardPicker = new RandomCard();
-        }
-        return randomCardPicker;
-    }
-
-    public Cards pickCards(int count) {
-        return Stream.generate(this::pickCard)
+    public static Cards pickCards(int count) {
+        return Stream.generate(RandomCard::pickCard)
             .limit(count)
             .collect(collectingAndThen(toList(), Cards::new));
     }
 
-    public Card pickCard() {
-        int numberKey = pickRandomKey(cardNumbers.size());
-        int shapeKey = pickRandomKey(cardShapes.size());
-        CardNumber cardNumber = cardNumbers.get(numberKey);
-        CardShape cardShape = cardShapes.get(shapeKey);
+    public static Card pickCard() {
+        CardNumber cardNumber = pickCardNumber();
+        CardShape cardShape = pickCardShape();
         return new Card(cardNumber, cardShape);
     }
 
-    private int pickRandomKey(int endExclusive) {
+    private static CardNumber pickCardNumber() {
+        int index = pickRandomIndex(cardNumbers.size());
+        return cardNumbers.get(index);
+    }
+
+    private static CardShape pickCardShape() {
+        int index = pickRandomIndex(cardShapes.size());
+        return cardShapes.get(index);
+    }
+
+    private static int pickRandomIndex(int endExclusive) {
         return Randoms.pickNumberInRange(0, endExclusive - END_OFFSET);
     }
 }

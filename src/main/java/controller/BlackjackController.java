@@ -16,8 +16,6 @@ import view.OutputView;
 
 public class BlackjackController {
 
-    private final RandomCard randomCard = RandomCard.getRandomCard();
-
     public void run() {
         Players players = preparePlayers();
         Dealer dealer = new Dealer();
@@ -38,7 +36,7 @@ public class BlackjackController {
 
     private void initGame(BlackjackGame blackjackGame) {
         int cardCount = blackjackGame.determineInitCardCount();
-        Cards cards = randomCard.pickCards(cardCount);
+        Cards cards = RandomCard.pickCards(cardCount);
 
         blackjackGame.initCards(cards);
         OutputView.printInitCards(blackjackGame);
@@ -64,12 +62,12 @@ public class BlackjackController {
     }
 
     private Player hit(BlackjackGame blackjackGame, Player player) {
-        Card card = randomCard.pickCard();
+        Card card = RandomCard.pickCard();
         return blackjackGame.playerHit(player, card);
     }
 
     private void hitToDealer(BlackjackGame blackjackGame) {
-        Card card = randomCard.pickCard();
+        Card card = RandomCard.pickCard();
         if (blackjackGame.dealerHit(card)) {
             OutputView.printAfterDealerHit();
         }
