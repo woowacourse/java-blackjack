@@ -15,7 +15,7 @@ public class Dealer extends Gamer {
         this.deck = deck;
     }
 
-    public boolean extraCard() {
+    public boolean requestExtraCard() {
         if (canReceiveCard()) {
             draw(1);
             return true;

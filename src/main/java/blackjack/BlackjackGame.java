@@ -69,7 +69,7 @@ public class BlackjackGame {
     }
 
     private void printDealerExtraCard(final Dealer dealer) {
-        if (dealer.extraCard()) {
+        if (dealer.requestExtraCard()) {
             outputView.printAddDealerCard();
             return;
         }

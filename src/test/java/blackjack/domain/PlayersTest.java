@@ -67,7 +67,7 @@ public class PlayersTest {
 
         //when
         IntStream.range(0, 6)
-                .forEach(i -> bustedDealer.extraCard());
+                .forEach(i -> bustedDealer.requestExtraCard());
 
         //then
         BlackjackResult blackjackResult = players.createResult(bustedDealer);

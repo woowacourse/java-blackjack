@@ -281,7 +281,7 @@ class JudgeTest {
     }
 
     private void bustDealer() {
-        dealer.extraCard();
+        dealer.requestExtraCard();
     }
 
     private void deckDrawLoop(final int count) {
