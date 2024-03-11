@@ -25,7 +25,7 @@ public enum CardName {
         return cardNumber;
     }
 
-    public boolean isAce() {
-        return cardNumber == 1;
+    public boolean equals(int cardNumber) {
+        return this.cardNumber == cardNumber;
     }
 }
