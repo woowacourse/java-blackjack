@@ -2,14 +2,12 @@ package blackjack;
 
 import blackjack.domain.Deck;
 import blackjack.domain.Players;
-import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.strategy.RandomShuffleStrategy;
+import blackjack.view.CardView;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import blackjack.view.RankView;
-import blackjack.view.SuitView;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -52,10 +50,10 @@ public class BlackjackGame {
     }
 
     private void printHandCardsStatus(final Dealer dealer, final Players players) {
-        outputView.printHandCards(makeCardOutput(dealer.showFirstCard()));
+        outputView.printHandCards(CardView.makeCardOutput(dealer.showFirstCard()));
 
         for (Player player : players.getPlayers()) {
-            outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
+            outputView.printHandCards(player.getName(), CardView.makeCardOutput(player.getHandCards()));
         }
         outputView.printNewLine();
     }
@@ -77,12 +75,12 @@ public class BlackjackGame {
     }
 
     private void printResultCardsStatus(final Dealer dealer, final Players players) {
-        outputView.printCardResultStatus(makeCardOutput(dealer.getHandCards()), dealer.getScore());
+        outputView.printCardResultStatus(CardView.makeCardOutput(dealer.getHandCards()), dealer.getScore());
 
         for (Player player : players.getPlayers()) {
             outputView.printCardResultStatus(
                     player.getName(),
-                    makeCardOutput(player.getHandCards()),
+                    CardView.makeCardOutput(player.getHandCards()),
                     player.getScore()
             );
         }
@@ -92,23 +90,13 @@ public class BlackjackGame {
         String choice = inputView.readMoreCardChoice(player.getName());
 
         if (!outputView.isMoreChoice(choice)) {
-            outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
+            outputView.printHandCards(player.getName(), CardView.makeCardOutput(player.getHandCards()));
             return;
         }
 
         do {
             player.draw(dealer.draw());
-            outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
+            outputView.printHandCards(player.getName(), CardView.makeCardOutput(player.getHandCards()));
         } while ((player.canReceiveCard()) && outputView.isMoreChoice(inputView.readMoreCardChoice(player.getName())));
-    }
-
-    private List<String> makeCardOutput(final List<Card> cards) {
-        return cards.stream()
-                .map(this::makeCardOutput)
-                .toList();
-    }
-
-    private String makeCardOutput(final Card card) {
-        return RankView.toSymbol(card.getRank()) + SuitView.toSuitView(card.getSuit());
     }
 }
