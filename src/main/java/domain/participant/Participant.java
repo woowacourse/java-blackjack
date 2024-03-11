@@ -30,6 +30,10 @@ public class Participant {
         return hands.calculateScore() > BLACK_JACK_COUNT;
     }
 
+    public boolean isBlackJack() {
+        return this.getScore() == 21 && this.getCardCount() == 2;
+    }
+
     public int getCardCount() {
         return hands.getCardCount();
     }
