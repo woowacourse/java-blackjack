@@ -7,6 +7,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.HandGenerator;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
+import blackjack.testutil.CardDrawer;
 import blackjack.testutil.CustomDeck;
 import java.util.List;
 import java.util.stream.Stream;
@@ -45,6 +46,7 @@ class DealerTest {
         Deck deck = new CustomDeck(numbers);
         HandGenerator handGenerator = new HandGenerator(deck);
         Dealer dealer = new Dealer(handGenerator);
+        CardDrawer.addAllCards(deck, dealer);
 
         assertThat(dealer.canHit()).isEqualTo(canHit);
     }
@@ -53,7 +55,9 @@ class DealerTest {
         return Stream.of(
                 Arguments.of(List.of(Number.ACE, Number.JACK), false),
                 Arguments.of(List.of(Number.EIGHT, Number.NINE), false),
-                Arguments.of(List.of(Number.FOUR, Number.FIVE), true)
+                Arguments.of(List.of(Number.FOUR, Number.FIVE), true),
+                Arguments.of(List.of(Number.ACE, Number.ACE, Number.ACE, Number.ACE), true),
+                Arguments.of(List.of(Number.FIVE, Number.SIX, Number.KING), false)
         );
     }
 }

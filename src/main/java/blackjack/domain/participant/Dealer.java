@@ -21,6 +21,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canHit() {
-        return !isBlackjack() && !isTotalScoreGreaterThan(HIT_THRESHOLD);
+        return !isScoreBlackjack() && !isTotalScoreGreaterThan(HIT_THRESHOLD);
     }
 }
