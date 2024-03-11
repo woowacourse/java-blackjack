@@ -11,8 +11,11 @@ import blackjack.view.OutputView;
 import blackjack.view.RankView;
 import blackjack.view.SuitView;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class BlackjackGame {
+
+    private static final int BLACKJACK_INIT_CARD_AMOUNT = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -27,15 +30,24 @@ public class BlackjackGame {
 
         List<String> names = inputView.readPlayersName();
         Dealer dealer = new Dealer(deck);
-        Players players = Players.of(names, dealer);
+        Players players = Players.of(names);
 
-        printCardDistribute(names, players, dealer);
-        extraCardRequest(dealer, players);
+        initializeGame(dealer, players);
+        requestExtraCard(dealer, players);
         outputView.printFinalResult(names, players.createResult(dealer));
     }
 
-    private void printCardDistribute(final List<String> names, final Players players, final Dealer dealer) {
-        outputView.printCardDistribute(names);
+    private void initializeGame(final Dealer dealer, final Players players) {
+        dealer.draw(BLACKJACK_INIT_CARD_AMOUNT);
+
+        IntStream.range(0, BLACKJACK_INIT_CARD_AMOUNT)
+                .forEach(i -> players.getPlayers()
+                        .forEach(player -> player.draw(dealer.draw())));
+        printCardDistribute(dealer, players);
+    }
+
+    private void printCardDistribute(final Dealer dealer, final Players players) {
+        outputView.printCardDistribute(players.getNames());
         printHandCardsStatus(dealer, players);
     }
 
@@ -48,7 +60,7 @@ public class BlackjackGame {
         outputView.printNewLine();
     }
 
-    private void extraCardRequest(final Dealer dealer, final Players players) {
+    private void requestExtraCard(final Dealer dealer, final Players players) {
         players.getPlayers()
                 .forEach(player -> readMoreCardChoice(player, dealer));
 
@@ -85,7 +97,7 @@ public class BlackjackGame {
         }
 
         do {
-            player.draw(dealer);
+            player.draw(dealer.draw());
             outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
         } while ((player.canReceiveCard()) && outputView.isMoreChoice(inputView.readMoreCardChoice(player.getName())));
     }

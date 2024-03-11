@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
 import blackjack.util.Constants;
 import java.util.regex.Pattern;
 
@@ -10,14 +11,11 @@ public class Player extends Gamer {
 
     private final String name;
 
-    public Player(final String name, final Dealer dealer) {
+    public Player(final String name) {
         super();
 
         validate(name);
         this.name = name;
-
-        draw(dealer);
-        draw(dealer);
     }
 
     private void validate(final String name) {
@@ -26,8 +24,8 @@ public class Player extends Gamer {
         }
     }
 
-    public void draw(final Dealer dealer) {
-        hand.add(dealer.draw());
+    public void draw(final Card card) {
+        hand.add(card);
     }
 
     @Override

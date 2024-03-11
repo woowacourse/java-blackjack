@@ -37,6 +37,7 @@ class JudgeTest {
             resultStatus = ResultStatus.init();
             deckDrawLoop(6);
             dealer = new Dealer(deck);
+            dealer.draw(2);
             bustDealer();
         }
 
@@ -44,12 +45,14 @@ class JudgeTest {
         @Test
         void drawWhenBustTogether() {
             //given
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames);
             choco = players.getPlayers().get(0);
+            IntStream.range(0, 2)
+                    .forEach(i -> choco.draw(dealer.draw()));
             PlayerResult playerResult = new PlayerResult();
 
             //when
-            bustPlayerChoco(dealer);
+            bustPlayerChoco();
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
@@ -62,8 +65,10 @@ class JudgeTest {
         void loseWhenPlayerBlackjack() {
             //given
             deckDrawLoop(3);
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames);
             choco = players.getPlayers().get(0);
+            IntStream.range(0, 2)
+                    .forEach(i -> choco.draw(dealer.draw()));
             PlayerResult playerResult = new PlayerResult();
 
             //when
@@ -78,8 +83,10 @@ class JudgeTest {
         @Test
         void loseWhenPlayerNormal() {
             //given
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames);
             choco = players.getPlayers().get(0);
+            IntStream.range(0, 2)
+                    .forEach(i -> choco.draw(dealer.draw()));
             PlayerResult playerResult = new PlayerResult();
 
             //when
@@ -100,19 +107,21 @@ class JudgeTest {
             resultStatus = ResultStatus.init();
             deckDrawLoop(12);
             dealer = new Dealer(deck);
+            dealer.draw(2);
         }
 
         @DisplayName("플레이어가 버스트되면 딜러가 승리한다.")
         @Test
         void winWhenPlayerBust() {
             //given
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames);
             choco = players.getPlayers().get(0);
-
+            IntStream.range(0, 2)
+                    .forEach(i -> choco.draw(dealer.draw()));
             PlayerResult playerResult = new PlayerResult();
 
             //when
-            bustPlayerChoco(dealer);
+            bustPlayerChoco();
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
@@ -126,9 +135,10 @@ class JudgeTest {
             //given
             deckDrawLoop(11);
 
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames);
             choco = players.getPlayers().get(0);
-
+            IntStream.range(0, 2)
+                    .forEach(i -> choco.draw(dealer.draw()));
             PlayerResult playerResult = new PlayerResult();
 
             //when
@@ -143,9 +153,10 @@ class JudgeTest {
         @Test
         void winWhenPlayerNormal() {
             //given
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames);
             choco = players.getPlayers().get(0);
-
+            IntStream.range(0, 2)
+                    .forEach(i -> choco.draw(dealer.draw()));
             PlayerResult playerResult = new PlayerResult();
 
             //when
@@ -164,6 +175,7 @@ class JudgeTest {
         void setUp() {
             deck = new Deck(shuffleStrategy);
             dealer = new Dealer(deck);
+            dealer.draw(2);
             resultStatus = ResultStatus.init();
         }
 
@@ -171,13 +183,14 @@ class JudgeTest {
         @Test
         void winWhenPlayerBust() {
             //given
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames);
             choco = players.getPlayers().get(0);
-
+            IntStream.range(0, 2)
+                    .forEach(i -> choco.draw(dealer.draw()));
             PlayerResult playerResult = new PlayerResult();
 
             //when
-            bustPlayerChoco(dealer);
+            bustPlayerChoco();
             DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
 
             //then
@@ -191,9 +204,10 @@ class JudgeTest {
             //given
             deckDrawLoop(10);
 
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames);
             choco = players.getPlayers().get(0);
-
+            IntStream.range(0, 2)
+                    .forEach(i -> choco.draw(dealer.draw()));
             PlayerResult playerResult = new PlayerResult();
 
             //when
@@ -208,9 +222,10 @@ class JudgeTest {
         @Test
         void winWhenPlayerNormalWithSmallerScore() {
             //given
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames);
             choco = players.getPlayers().get(0);
-
+            IntStream.range(0, 2)
+                    .forEach(i -> choco.draw(dealer.draw()));
             PlayerResult playerResult = new PlayerResult();
 
             //when
@@ -226,9 +241,10 @@ class JudgeTest {
         void loseWhenPlayerNormalWithBiggerScore() {
             //given
             deckDrawLoop(5);
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames);
             choco = players.getPlayers().get(0);
-
+            IntStream.range(0, 2)
+                    .forEach(i -> choco.draw(dealer.draw()));
             PlayerResult playerResult = new PlayerResult();
 
             //when
@@ -244,9 +260,10 @@ class JudgeTest {
         void drawWhenPlayerNormalWithSameScore() {
             //given
             deckDrawLoop(3);
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames);
             choco = players.getPlayers().get(0);
-
+            IntStream.range(0, 2)
+                    .forEach(i -> choco.draw(dealer.draw()));
             PlayerResult playerResult = new PlayerResult();
 
             //when
@@ -258,9 +275,9 @@ class JudgeTest {
         }
     }
 
-    private void bustPlayerChoco(final Dealer dealer) {
+    private void bustPlayerChoco() {
         IntStream.range(0, bustDrawCount)
-                .forEach(i -> choco.draw(dealer));
+                .forEach(i -> choco.draw(dealer.draw()));
     }
 
     private void bustDealer() {

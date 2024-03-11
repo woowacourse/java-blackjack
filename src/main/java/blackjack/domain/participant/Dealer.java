@@ -13,12 +13,6 @@ public class Dealer extends Gamer {
         super();
 
         this.deck = deck;
-
-        draw(2);
-    }
-
-    public Card draw() {
-        return deck.draw();
     }
 
     public boolean extraCard() {
@@ -34,9 +28,13 @@ public class Dealer extends Gamer {
         return hand.calculateScore() <= Constants.DEALER_BOUND;
     }
 
-    private void draw(final int count) {
+    public void draw(final int count) {
         IntStream.range(0, count)
                 .forEach(i -> hand.add(deck.draw()));
+    }
+
+    public Card draw() {
+        return deck.draw();
     }
 
     public Card showFirstCard() {

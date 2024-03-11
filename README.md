@@ -100,7 +100,7 @@ example feat: 사용자 입력 후 도메인 사용
 - [x] 명시적으로 `NoShuffleStrategy` 같은 이름을 사용해주면 테스트의 가독성을 높인다.
 - [x] drawn에서 draw로 변경한다.
 - [x] selfDraw를 인자로 횟수를 전달한다.
-- [ ] Player가 Card를 넘겨받게 수정한다.
+- [x] Player가 Card를 넘겨받게 수정한다.
 - [ ] System.lineSeperator() 가 반복적으로 나오면서 가독성을 해친다. 이를
 - [ ] 트럼프카드의 심볼을 복수로 변경한다.
 - [ ] Enum 마지막에 ,를 넣어 세미콜론을 하나 아래로 내리면 나중에 값을 추가할 때 conflict을 방지한다.

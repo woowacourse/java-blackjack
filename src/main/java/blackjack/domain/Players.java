@@ -18,11 +18,11 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(final List<String> names, final Dealer dealer) {
+    public static Players of(final List<String> names) {
         validate(names);
 
         List<Player> players = names.stream()
-                .map(name -> new Player(name, dealer))
+                .map(Player::new)
                 .toList();
 
         return new Players(players);
@@ -48,6 +48,12 @@ public class Players {
         }
 
         return new BlackjackResult(DealerResult.of(resultStatus), playerResult);
+    }
+
+    public List<String> getNames() {
+        return players.stream()
+                .map(Player::getName)
+                .toList();
     }
 
     public List<Player> getPlayers() {

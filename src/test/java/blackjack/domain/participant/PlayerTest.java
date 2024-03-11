@@ -27,18 +27,19 @@ public class PlayerTest {
     void setUp() {
         deck = new Deck(shuffleStrategy);
         dealer = new Dealer(deck);
-        choco = playerChoco(dealer);
-        clover = playerClover(dealer);
+        choco = playerChoco();
+        clover = playerClover();
     }
 
     @DisplayName("플레이어에게 카드를 더 뽑을지 물어본다.")
     @Test
     void canReceiveCard() {
         //given & when
-        choco.draw(dealer);
+        IntStream.range(0, 3)
+                .forEach(i -> choco.draw(dealer.draw()));
 
         IntStream.range(0, 6)
-                .forEach(i -> clover.draw(dealer));
+                .forEach(i -> clover.draw(dealer.draw()));
 
         //then
         assertThat(choco.canReceiveCard()).isTrue();
@@ -52,8 +53,11 @@ public class PlayerTest {
         TrumpCard trumpCard = threeSpadeKingCard();
 
         //when
-        choco.draw(dealer);
+        IntStream.range(0, 3)
+                .forEach(i -> choco.draw(dealer.draw()));
 
+        System.out.println(choco.getHandCards().get(2).getRank());
+        System.out.println(choco.getHandCards().get(2).getSuit());
         //then
         assertThat(choco.getHandCards()).contains(trumpCard);
     }

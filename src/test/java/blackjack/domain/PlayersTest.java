@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
 import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.dto.BlackjackResult;
 import blackjack.strategy.ShuffleStrategy;
@@ -29,7 +28,11 @@ public class PlayersTest {
     void setUp() {
         deck = new Deck(shuffleStrategy);
         dealer = new Dealer(deck);
-        players = Players.of(List.of(nameA, nameB), dealer);
+        dealer.draw(2);
+        players = Players.of(List.of(nameA, nameB));
+        IntStream.range(0, 2)
+                .forEach(i -> players.getPlayers()
+                        .forEach(player -> player.draw(dealer.draw())));
     }
 
     @DisplayName("플레이어 이름이 중복되면 예외가 발생한다.")
@@ -39,7 +42,7 @@ public class PlayersTest {
         List<String> names = List.of("choco", "choco", "chip");
 
         //when & then
-        assertThatThrownBy(() -> Players.of(names, dealer))
+        assertThatThrownBy(() -> Players.of(names))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -54,28 +57,6 @@ public class PlayersTest {
         assertThat(blackjackResult.findPlayerResultByName(nameB)).isEqualTo(GameResult.LOSE);
         assertThat(blackjackResult.getDealerResult().getWins()).isEqualTo(2);
         assertThat(blackjackResult.getDealerResult().getLoses()).isEqualTo(0);
-    }
-
-    @DisplayName("버스트된 플레이어는 패배한다.")
-    @Test
-    void playerBustLose() {
-        //given
-        Dealer bustedDealer = new Dealer(deck);
-        Player player = players.getPlayers().get(0);
-
-        //when
-        IntStream.range(0, 12)
-                .forEach(i -> player.draw(dealer));
-
-        IntStream.range(0, 12)
-                .forEach(i -> bustedDealer.draw());
-
-        //then
-        BlackjackResult blackjackResult = players.createResult(dealer);
-        assertThat(blackjackResult.findPlayerResultByName(nameA)).isEqualTo(GameResult.LOSE);
-
-        BlackjackResult bustedDealerBlackjackResult = players.createResult(bustedDealer);
-        assertThat(bustedDealerBlackjackResult.findPlayerResultByName(nameA)).isEqualTo(GameResult.LOSE);
     }
 
     @DisplayName("딜러가 버스트 된 경우 버스트 안된 참가자는 승리한다.")
