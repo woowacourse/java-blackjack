@@ -7,6 +7,8 @@ import java.util.Scanner;
 public class InputView {
 
     private static final String PLAYER_NAME_DELIMITER = ",";
+    private static final String YES = "y";
+    private static final String NO = "n";
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -41,11 +43,11 @@ public class InputView {
         String message = String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name);
         String input = readLine(message);
 
-        if ("y".equals(input)) {
+        if (YES.equalsIgnoreCase(input)) {
             return true;
         }
 
-        if ("n".equals(input)) {
+        if (NO.equalsIgnoreCase(input)) {
             return false;
         }
 
