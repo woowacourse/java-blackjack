@@ -10,14 +10,22 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackjackController {
-    public static void main(String[] args) {
+    private final InputView inputView;
+    private final OutputView outputView;
+
+    BlackjackController(final InputView inputView, final OutputView outputView) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+    }
+
+    public void run() {
         final CardGame cardGame = new CardGame();
-        final List<String> names = InputView.askPlayerNames();
+        final List<String> names = inputView.askPlayerNames();
         final Dealer dealer = new Dealer();
         final List<Player> players = names.stream().map(Player::new).toList();
 
         cardGame.initializeHand(dealer, players);
-        OutputView.printInitialHandOfEachPlayer(dealer, players);
+        outputView.printInitialHandOfEachPlayer(dealer, players);
 
         for (final Player player : players) {
             givePlayerMoreCardsIfWanted(cardGame, player);
@@ -28,30 +36,30 @@ public class BlackjackController {
         printCardGameResult(dealer, players);
     }
 
-    private static void givePlayerMoreCardsIfWanted(final CardGame cardGame, final Player player) {
+    private void givePlayerMoreCardsIfWanted(final CardGame cardGame, final Player player) {
         final String playerName = player.getName();
-        while (player.isAlive() && InputView.askForMoreCard(playerName)) {
+        while (player.isAlive() && inputView.askForMoreCard(playerName)) {
             cardGame.giveCard(player);
-            OutputView.printPlayerCard(player);
+            outputView.printPlayerCard(player);
         }
     }
 
-    private static void giveDealerMoreCardsIfNeeded(final CardGame cardGame, final Dealer dealer) {
+    private void giveDealerMoreCardsIfNeeded(final CardGame cardGame, final Dealer dealer) {
         while (dealer.isMoreCardNeeded()) {
             cardGame.giveCard(dealer);
-            OutputView.printDealerHitMessage(dealer);
+            outputView.printDealerHitMessage(dealer);
         }
     }
 
-    private static void printHandStatusOfEachPlayer(final Dealer dealer, final List<Player> players) {
-        OutputView.printPlayerCardWithScore(dealer);
+    private void printHandStatusOfEachPlayer(final Dealer dealer, final List<Player> players) {
+        outputView.printPlayerCardWithScore(dealer);
         for (final Player player : players) {
-            OutputView.printPlayerCardWithScore(player);
+            outputView.printPlayerCardWithScore(player);
         }
     }
 
-    private static void printCardGameResult(final Dealer dealer, final List<Player> players) {
+    private void printCardGameResult(final Dealer dealer, final List<Player> players) {
         final CardGameResult cardGameResult = dealer.judgeWithPlayers(players);
-        OutputView.printResult(cardGameResult);
+        outputView.printResult(cardGameResult);
     }
 }
