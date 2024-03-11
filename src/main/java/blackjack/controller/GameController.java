@@ -34,7 +34,7 @@ public class GameController {
     }
 
     private static void confirmParticipantsHands(Players players, Deck deck, Dealer dealer) {
-        askDrawUntilConfirmHands(players, deck);
+        askDrawUntilConfirmPlayerHands(players, deck);
         confirmDealerHands(dealer, deck);
     }
 
@@ -49,7 +49,7 @@ public class GameController {
         }
     }
 
-    private static void askDrawUntilConfirmHands(Players players, Deck deck) {
+    private static void askDrawUntilConfirmPlayerHands(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
             askDrawToPlayer(player, deck);
         }
