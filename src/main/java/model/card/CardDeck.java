@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class Cards {
+public class CardDeck {
 
     private List<Card> cards;
 
-    public Cards() {
+    public CardDeck() {
         createCards();
     }
 

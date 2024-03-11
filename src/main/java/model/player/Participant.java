@@ -3,7 +3,6 @@ package model.player;
 import java.util.List;
 import model.Outcome;
 import model.card.Card;
-import model.card.Cards;
 
 public class Participant extends Player {
 

@@ -2,7 +2,6 @@ package model.player;
 
 import java.util.List;
 import model.card.Card;
-import model.card.Cards;
 
 public class Dealer extends Player {
 

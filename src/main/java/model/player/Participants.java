@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import model.card.CardSize;
-import model.card.Cards;
+import model.card.CardDeck;
 
 public class Participants {
 
@@ -30,18 +30,18 @@ public class Participants {
         }
     }
 
-    public void offerCardToPlayers(Cards cards, CardSize size) {
+    public void offerCardToPlayers(CardDeck cardDeck, CardSize size) {
         for (Player player : participants) {
-            player.addCards(cards.selectRandomCards(size));
+            player.addCards(cardDeck.selectRandomCards(size));
         }
     }
 
-    public void offerCardToParticipant(Cards cards, Player receiver, CardSize size) {
+    public void offerCardToParticipant(CardDeck cardDeck, Player receiver, CardSize size) {
         Player foundPlayer = participants.stream()
                 .filter(player -> player.equals(receiver))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("참가자가 존재하지 않습니다."));
-        foundPlayer.addCards(cards.selectRandomCards(size));
+        foundPlayer.addCards(cardDeck.selectRandomCards(size));
     }
 
     public List<Participant> getParticipants() {

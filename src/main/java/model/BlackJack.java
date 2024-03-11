@@ -8,24 +8,23 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import model.card.CardSize;
-import model.card.Cards;
+import model.card.CardDeck;
 import model.player.Dealer;
 import model.player.Participant;
 import model.player.Participants;
-import model.player.Player;
 
 public class BlackJack {
 
     private final Participants participants;
     private final Dealer dealer;
-    private final Cards cards;
+    private final CardDeck cardDeck;
 
-    public BlackJack(Participants participants, Dealer dealer, Cards cards) {
+    public BlackJack(Participants participants, Dealer dealer, CardDeck cardDeck) {
         validateParticipantIsNotNull(participants);
         validateDealerIsNotNull(dealer);
         this.participants = participants;
         this.dealer = dealer;
-        this.cards = cards;
+        this.cardDeck = cardDeck;
     }
 
     public void validateParticipantIsNotNull(Participants participants) {
@@ -41,16 +40,16 @@ public class BlackJack {
     }
 
     public void offerCardToPlayers(CardSize size) {
-        participants.offerCardToPlayers(cards, size);
+        participants.offerCardToPlayers(cardDeck, size);
         offerCardToDealer(size);
     }
 
     public void offerCardToParticipant(Participant participant, CardSize size) {
-        participants.offerCardToParticipant(cards, participant, size);
+        participants.offerCardToParticipant(cardDeck, participant, size);
     }
 
     public void offerCardToDealer(CardSize size) {
-        dealer.addCards(cards.selectRandomCards(size));
+        dealer.addCards(cardDeck.selectRandomCards(size));
     }
 
     public Map<Participant, Outcome> matchParticipantsOutcome() {

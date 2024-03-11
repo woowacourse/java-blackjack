@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.BlackJack;
 import model.card.CardSize;
-import model.card.Cards;
+import model.card.CardDeck;
 import model.player.Dealer;
 import model.player.Participant;
 import model.player.Participants;
@@ -34,15 +34,15 @@ public class BlackJackController {
     }
 
     private BlackJack createBlackJack(List<String> names) {
-        Cards cards = new Cards();
-        Participants participants = createParticipants(names, cards);
-        Dealer dealer = new Dealer(cards.selectRandomCards(CardSize.TWO));
-        return new BlackJack(participants, dealer, cards);
+        CardDeck cardDeck = new CardDeck();
+        Participants participants = createParticipants(names, cardDeck);
+        Dealer dealer = new Dealer(cardDeck.selectRandomCards(CardSize.TWO));
+        return new BlackJack(participants, dealer, cardDeck);
     }
 
-    private Participants createParticipants(List<String> names, Cards cards) {
+    private Participants createParticipants(List<String> names, CardDeck cardDeck) {
          return new Participants(new ArrayList<>(names.stream()
-                .map(name -> new Participant(name, cards.selectRandomCards(CardSize.TWO))).toList()));
+                .map(name -> new Participant(name, cardDeck.selectRandomCards(CardSize.TWO))).toList()));
     }
 
     private void offerMoreCards(BlackJack blackJack) {
