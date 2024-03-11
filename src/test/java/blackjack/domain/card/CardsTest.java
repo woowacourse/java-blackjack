@@ -32,16 +32,13 @@ public class CardsTest {
     @Test
     @DisplayName("뽑은 카드들의 합을 구한다.")
     void cardsSumTest() {
-        // given
-        int expectedScore = 9 + 5;
-
-        // when
+        // given & when
         Cards cards = new Cards();
         cards.addCard(new Card(CLUB, FIVE));
         cards.addCard(new Card(SPADE, NINE));
 
         // then
-        assertThat(cards.totalScore()).isEqualTo(expectedScore);
+        assertThat(cards.totalScore()).isEqualTo(14);
     }
 
     @Test

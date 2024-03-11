@@ -23,7 +23,7 @@ class DealerTest {
         // given
         Dealer dealer = new Dealer();
         List<Card> cards = List.of(new Card(SPADE, NINE), new Card(CLUB, QUEEN));
-        Card exptecedCard = new Card(SPADE, NINE);
+        List<Card> expectedCard = List.of(new Card(SPADE, NINE));
         Deck deck = new Deck() {
             @Override
             public List<Card> pick(int count) {
@@ -35,8 +35,8 @@ class DealerTest {
         dealer.deal(deck);
 
         // then
-        assertThat(dealer.getFirstCard())
-                .isEqualTo(exptecedCard);
+        assertThat(dealer.getCards())
+                .isEqualTo(expectedCard);
     }
 
     @Test
