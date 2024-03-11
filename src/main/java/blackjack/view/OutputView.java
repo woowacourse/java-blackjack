@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.model.blackjackgame.BlackJackGame;
 import blackjack.model.blackjackgame.PlayersGameResults;
 import blackjack.model.cards.Card;
 import blackjack.model.cards.Cards;
@@ -14,9 +13,7 @@ public class OutputView {
     private static final String DEALER_NAME = "딜러";
     private static final String MULTIPLE_OUTPUTS_DELIMITER = ", ";
 
-    public void printDistributedCardsInfo(BlackJackGame blackJackGame) {
-        List<Player> players = blackJackGame.getPlayers();
-        Dealer dealer = blackJackGame.getDealer();
+    public void printDistributedCardsInfo(List<Player> players, Dealer dealer) {
         System.out.println();
         System.out.printf(DEALER_NAME + "와 %s에게 2장을 나누었습니다.%n", getPlayersNames(players));
 
@@ -26,8 +23,8 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printPlayerCardsInfo(BlackJackGame blackJackGame, int index) {
-        Player player = blackJackGame.getPlayers().get(index);
+    public void printPlayerCardsInfo(List<Player> players, int index) {
+        Player player = players.get(index);
         System.out.print(getParticipantCardsFormat(player.getName(), player.getCards()));
     }
 
@@ -36,10 +33,8 @@ public class OutputView {
         System.out.println(DEALER_NAME + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printFinalScore(BlackJackGame blackJackGame) {
+    public void printFinalScore(List<Player> players, Dealer dealer) {
         System.out.println();
-        List<Player> players = blackJackGame.getPlayers();
-        Dealer dealer = blackJackGame.getDealer();
         System.out.print(getParticipantScoreFormat(DEALER_NAME, dealer.getCards(), dealer.getCards().getCardsScore()));
         players.forEach(player -> System.out.printf(
                 getParticipantScoreFormat(player.getName(), player.getCards(),
