@@ -1,25 +1,26 @@
 package model.dto;
 
 public enum MatchResult {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    WIN("승"), DRAW("무"), LOSE("패");
 
+    public static final int BUST_THRESHOLD = 22;
     private final String value;
 
     MatchResult(String value) {
         this.value = value;
     }
 
-    public static MatchResult of(int standard, int comparisonTarget) {
-        if (standard < comparisonTarget) {
+    public static MatchResult of(int dealerHand, int playerHand) {
+        if ((dealerHand >= BUST_THRESHOLD && playerHand < BUST_THRESHOLD)
+                || (playerHand < BUST_THRESHOLD && dealerHand < playerHand)) {
             return WIN;
         }
-        if (standard == comparisonTarget) {
+        if (dealerHand == playerHand) {
             return DRAW;
         }
         return LOSE;
     }
+
     public String getValue() {
         return value;
     }
