@@ -16,13 +16,13 @@ class RefereeTest {
     @Test
     void pushWhenBothBust() {
         final Cards playerCards = new Cards(List.of(
-                new Card(Number.EIGHT, Suit.CLOVER),
-                new Card(Number.TEN, Suit.CLOVER),
-                new Card(Number.TEN, Suit.DIAMOND)));
+                Card.of(Number.EIGHT, Suit.CLOVER),
+                Card.of(Number.TEN, Suit.CLOVER),
+                Card.of(Number.TEN, Suit.DIAMOND)));
         final Cards dealerCards = new Cards(List.of(
-                new Card(Number.SEVEN, Suit.CLOVER),
-                new Card(Number.TEN, Suit.HEART),
-                new Card(Number.TEN, Suit.SPADE)));
+                Card.of(Number.SEVEN, Suit.CLOVER),
+                Card.of(Number.TEN, Suit.HEART),
+                Card.of(Number.TEN, Suit.SPADE)));
 
         final Referee referee = new Referee(dealerCards);
         final Outcome outcome = referee.doesPlayerWin(playerCards);
@@ -34,12 +34,12 @@ class RefereeTest {
     @Test
     void playerLoseWhenOnlyBust() {
         final Cards playerCards = new Cards(List.of(
-                new Card(Number.EIGHT, Suit.CLOVER),
-                new Card(Number.TEN, Suit.CLOVER),
-                new Card(Number.TEN, Suit.DIAMOND)));
+                Card.of(Number.EIGHT, Suit.CLOVER),
+                Card.of(Number.TEN, Suit.CLOVER),
+                Card.of(Number.TEN, Suit.DIAMOND)));
         final Cards dealerCards = new Cards(List.of(
-                new Card(Number.SEVEN, Suit.CLOVER),
-                new Card(Number.TEN, Suit.HEART)));
+                Card.of(Number.SEVEN, Suit.CLOVER),
+                Card.of(Number.TEN, Suit.HEART)));
 
         final Referee referee = new Referee(dealerCards);
         final Outcome outcome = referee.doesPlayerWin(playerCards);
@@ -51,12 +51,12 @@ class RefereeTest {
     @Test
     void dealerLoseWhenOnlyBust() {
         final Cards playerCards = new Cards(List.of(
-                new Card(Number.SEVEN, Suit.CLOVER),
-                new Card(Number.TEN, Suit.HEART)));
+                Card.of(Number.SEVEN, Suit.CLOVER),
+                Card.of(Number.TEN, Suit.HEART)));
         final Cards dealerCards = new Cards(List.of(
-                new Card(Number.EIGHT, Suit.CLOVER),
-                new Card(Number.TEN, Suit.CLOVER),
-                new Card(Number.TEN, Suit.DIAMOND)));
+                Card.of(Number.EIGHT, Suit.CLOVER),
+                Card.of(Number.TEN, Suit.CLOVER),
+                Card.of(Number.TEN, Suit.DIAMOND)));
 
         final Referee referee = new Referee(dealerCards);
         final Outcome outcome = referee.doesPlayerWin(playerCards);
@@ -68,11 +68,11 @@ class RefereeTest {
     @Test
     void pushWhenBothBlackJack() {
         final Cards playerCards = new Cards(List.of(
-                new Card(Number.ACE, Suit.CLOVER),
-                new Card(Number.TEN, Suit.CLOVER)));
+                Card.of(Number.ACE, Suit.CLOVER),
+                Card.of(Number.TEN, Suit.CLOVER)));
         final Cards dealerCards = new Cards(List.of(
-                new Card(Number.ACE, Suit.DIAMOND),
-                new Card(Number.QUEEN, Suit.HEART)));
+                Card.of(Number.ACE, Suit.DIAMOND),
+                Card.of(Number.QUEEN, Suit.HEART)));
 
         final Referee referee = new Referee(dealerCards);
         final Outcome outcome = referee.doesPlayerWin(playerCards);
@@ -84,11 +84,11 @@ class RefereeTest {
     @Test
     void playerWinWhenOnlyBlackJack() {
         final Cards playerCards = new Cards(List.of(
-                new Card(Number.ACE, Suit.HEART),
-                new Card(Number.TEN, Suit.CLOVER)));
+                Card.of(Number.ACE, Suit.HEART),
+                Card.of(Number.TEN, Suit.CLOVER)));
         final Cards dealerCards = new Cards(List.of(
-                new Card(Number.TWO, Suit.CLOVER),
-                new Card(Number.TEN, Suit.HEART)));
+                Card.of(Number.TWO, Suit.CLOVER),
+                Card.of(Number.TEN, Suit.HEART)));
 
         final Referee referee = new Referee(dealerCards);
         final Outcome outcome = referee.doesPlayerWin(playerCards);
@@ -100,11 +100,11 @@ class RefereeTest {
     @Test
     void dealerWinWhenOnlyBlackJack() {
         final Cards playerCards = new Cards(List.of(
-                new Card(Number.TWO, Suit.CLOVER),
-                new Card(Number.TEN, Suit.HEART)));
+                Card.of(Number.TWO, Suit.CLOVER),
+                Card.of(Number.TEN, Suit.HEART)));
         final Cards dealerCards = new Cards(List.of(
-                new Card(Number.ACE, Suit.HEART),
-                new Card(Number.TEN, Suit.CLOVER)));
+                Card.of(Number.ACE, Suit.HEART),
+                Card.of(Number.TEN, Suit.CLOVER)));
 
         final Referee referee = new Referee(dealerCards);
         final Outcome outcome = referee.doesPlayerWin(playerCards);
@@ -116,11 +116,11 @@ class RefereeTest {
     @Test
     void playerWinWhenBiggerThanDealer() {
         final Cards playerCards = new Cards(List.of(
-                new Card(Number.EIGHT, Suit.CLOVER),
-                new Card(Number.TEN, Suit.CLOVER)));
+                Card.of(Number.EIGHT, Suit.CLOVER),
+                Card.of(Number.TEN, Suit.CLOVER)));
         final Cards dealerCards = new Cards(List.of(
-                new Card(Number.SEVEN, Suit.CLOVER),
-                new Card(Number.TEN, Suit.HEART)));
+                Card.of(Number.SEVEN, Suit.CLOVER),
+                Card.of(Number.TEN, Suit.HEART)));
 
         final Referee referee = new Referee(dealerCards);
         final Outcome outcome = referee.doesPlayerWin(playerCards);
@@ -132,11 +132,11 @@ class RefereeTest {
     @Test
     void playerLoseWhenLessThanDealer() {
         final Cards playerCards = new Cards(List.of(
-                new Card(Number.SEVEN, Suit.CLOVER),
-                new Card(Number.TEN, Suit.HEART)));
+                Card.of(Number.SEVEN, Suit.CLOVER),
+                Card.of(Number.TEN, Suit.HEART)));
         final Cards dealerCards = new Cards(List.of(
-                new Card(Number.EIGHT, Suit.CLOVER),
-                new Card(Number.TEN, Suit.CLOVER)));
+                Card.of(Number.EIGHT, Suit.CLOVER),
+                Card.of(Number.TEN, Suit.CLOVER)));
 
         final Referee referee = new Referee(dealerCards);
         final Outcome outcome = referee.doesPlayerWin(playerCards);
@@ -148,11 +148,11 @@ class RefereeTest {
     @Test
     void pushWhenSame() {
         final Cards playerCards = new Cards(List.of(
-                new Card(Number.SEVEN, Suit.CLOVER),
-                new Card(Number.TEN, Suit.HEART)));
+                Card.of(Number.SEVEN, Suit.CLOVER),
+                Card.of(Number.TEN, Suit.HEART)));
         final Cards dealerCards = new Cards(List.of(
-                new Card(Number.SEVEN, Suit.DIAMOND),
-                new Card(Number.TEN, Suit.CLOVER)));
+                Card.of(Number.SEVEN, Suit.DIAMOND),
+                Card.of(Number.TEN, Suit.CLOVER)));
 
         final Referee referee = new Referee(dealerCards);
         final Outcome outcome = referee.doesPlayerWin(playerCards);

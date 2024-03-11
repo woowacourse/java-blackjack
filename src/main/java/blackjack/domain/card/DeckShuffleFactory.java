@@ -20,7 +20,7 @@ public class DeckShuffleFactory implements DeckFactory {
     private List<Card> createSuits(final Number number) {
         final List<Card> suits = new ArrayList<>();
         for (final Suit suit : Suit.values()) {
-            suits.add(new Card(number, suit));
+            suits.add(Card.of(number, suit));
         }
         return suits;
     }

@@ -32,7 +32,7 @@ public class OutputView {
     private static String makeCardsState(List<Card> cards) {
         final StringJoiner cardJoiner = new StringJoiner(", ");
         for (Card card : cards) {
-            cardJoiner.add(card.number().getValue() + SuitTranslator.translate(card.suit()));
+            cardJoiner.add(card.getNumber().getValue() + SuitTranslator.translate(card.getSuit()));
         }
         return cardJoiner.toString();
     }

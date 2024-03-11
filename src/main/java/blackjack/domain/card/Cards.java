@@ -23,7 +23,7 @@ public class Cards {
 
     public int sum() {
         final List<Number> numbers = cards.stream()
-                .map(Card::number)
+                .map(Card::getNumber)
                 .toList();
 
         if (numbers.contains(Number.ACE)) {

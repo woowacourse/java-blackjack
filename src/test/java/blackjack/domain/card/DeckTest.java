@@ -15,6 +15,6 @@ class DeckTest {
 
         Card card = deck.pop();
 
-        assertThat(card).isEqualTo(new Card(Number.KING, Suit.DIAMOND));
+        assertThat(card).isEqualTo(Card.of(Number.KING, Suit.DIAMOND));
     }
 }

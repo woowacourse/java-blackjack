@@ -12,8 +12,8 @@ class CardsTest {
     @Test
     void calculateCardNumbersSum() {
         final Cards cards = new Cards(List.of(
-                new Card(Number.TEN, Suit.DIAMOND),
-                new Card(Number.EIGHT, Suit.CLOVER)
+                Card.of(Number.TEN, Suit.DIAMOND),
+                Card.of(Number.EIGHT, Suit.CLOVER)
         ));
 
         final int actual = cards.sum();
@@ -25,8 +25,8 @@ class CardsTest {
     @Test
     void calculateAceToEleven() {
         final Cards cards = new Cards(List.of(
-                new Card(Number.ACE, Suit.DIAMOND),
-                new Card(Number.EIGHT, Suit.CLOVER)
+                Card.of(Number.ACE, Suit.DIAMOND),
+                Card.of(Number.EIGHT, Suit.CLOVER)
         ));
 
         final int actual = cards.sum();
@@ -38,9 +38,9 @@ class CardsTest {
     @Test
     void calculateAceToOne() {
         final Cards cards = new Cards(List.of(
-                new Card(Number.ACE, Suit.DIAMOND),
-                new Card(Number.EIGHT, Suit.CLOVER),
-                new Card(Number.TEN, Suit.CLOVER)
+                Card.of(Number.ACE, Suit.DIAMOND),
+                Card.of(Number.EIGHT, Suit.CLOVER),
+                Card.of(Number.TEN, Suit.CLOVER)
         ));
 
         final int actual = cards.sum();
@@ -52,8 +52,8 @@ class CardsTest {
     @Test
     void calculateAceToSoftHand() {
         final Cards cards = new Cards(List.of(
-                new Card(Number.ACE, Suit.DIAMOND),
-                new Card(Number.EIGHT, Suit.CLOVER)
+                Card.of(Number.ACE, Suit.DIAMOND),
+                Card.of(Number.EIGHT, Suit.CLOVER)
         ));
 
         final int actual = cards.sum();
@@ -65,8 +65,8 @@ class CardsTest {
     @Test
     void calculateOnlyOneAceToSoftHand() {
         final Cards cards = new Cards(List.of(
-                new Card(Number.ACE, Suit.DIAMOND),
-                new Card(Number.ACE, Suit.CLOVER)
+                Card.of(Number.ACE, Suit.DIAMOND),
+                Card.of(Number.ACE, Suit.CLOVER)
         ));
 
         final int actual = cards.sum();
@@ -78,9 +78,9 @@ class CardsTest {
     @Test
     void calculateAllAceToOne() {
         final Cards cards = new Cards(List.of(
-                new Card(Number.ACE, Suit.DIAMOND),
-                new Card(Number.ACE, Suit.CLOVER),
-                new Card(Number.TEN, Suit.CLOVER)
+                Card.of(Number.ACE, Suit.DIAMOND),
+                Card.of(Number.ACE, Suit.CLOVER),
+                Card.of(Number.TEN, Suit.CLOVER)
         ));
 
         final int actual = cards.sum();
