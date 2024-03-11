@@ -18,6 +18,6 @@ public class Dealer extends User {
 
     @Override
     public String getNameValue() {
-        return "dealer name default value";
+        throw new IllegalStateException("딜러 이름을 불러오는 방식이 잘못되었습니다.");
     }
 }
