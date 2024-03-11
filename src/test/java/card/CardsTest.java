@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 
 class CardsTest {
 
-    private static final int ADDITIONAL_ACE_CARD_SCORE = CardNumber.calculatePlusAceCardScore();
-
     @DisplayName("해당 라운드에서 카드 점수의 최솟값이 21을 넘는지 확인한다.")
     @Test
     void countAceCard() {
@@ -46,9 +44,7 @@ class CardsTest {
         Cards cards = new Cards(List.of(new Card(CardNumber.ACE, CardPattern.CLOVER_PATTERN),
                 new Card(CardNumber.FOUR, CardPattern.DIA_PATTERN)));
 
-        int minimumScore = cards.countMinimumScore();
-
-        Assertions.assertThat(cards.countMaxScore()).isEqualTo(minimumScore + ADDITIONAL_ACE_CARD_SCORE);
+        Assertions.assertThat(cards.countMaxScore()).isEqualTo(15);
     }
 
     @DisplayName("가진 카드들의 모습을 List로 만들어 반환한다.")

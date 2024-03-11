@@ -33,7 +33,7 @@ public class Cards {
         return maxResultScore;
     }
 
-    public int countMinimumScore() {
+    private int countMinimumScore() {
         return cards.stream()
                 .mapToInt(Card::getDefaultCardScore)
                 .sum();
