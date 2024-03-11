@@ -4,7 +4,6 @@ import java.util.List;
 import model.dto.DealerScoreResult;
 import model.dto.FaceUpResult;
 import model.dto.PlayerScoreResult;
-import model.dto.Victory;
 
 public class OutputView {
     private static final int HOLE_CARD_INDEX = 0;

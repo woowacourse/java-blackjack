@@ -1,7 +1,6 @@
 package model.casino;
 
 import static java.util.Collections.*;
-import static model.dto.Victory.*;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -9,7 +8,7 @@ import model.Choice;
 import model.dto.DealerScoreResult;
 import model.dto.FaceUpResult;
 import model.dto.PlayerScoreResult;
-import model.dto.Victory;
+import view.Victory;
 import model.participant.Participants;
 
 public class Casino {
@@ -72,7 +71,7 @@ public class Casino {
                 .hand();
         return participants.getPlayerFaceUpResults()
                 .stream()
-                .map(result -> new PlayerScoreResult(result.name(), of(dealerHand, result.hand())))
+                .map(result -> new PlayerScoreResult(result.name(), Victory.of(dealerHand, result.hand())))
                 .toList();
     }
 
@@ -83,7 +82,7 @@ public class Casino {
                 .stream()
                 .map(player -> Victory.of(player.hand(), dealerHand))
                 .toList();
-        for (Victory victory : values()) {
+        for (Victory victory : Victory.values()) {
             dealerScoreBoard.put(victory, frequency(dealerScores, victory));
         }
         return new DealerScoreResult(dealerScoreBoard);

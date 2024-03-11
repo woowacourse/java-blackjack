@@ -1,4 +1,4 @@
-package model.dto;
+package view;
 
 public enum Victory {
     WIN("승"),
