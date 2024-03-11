@@ -7,6 +7,7 @@ import static java.util.stream.Collectors.toMap;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import model.card.CardSize;
 import model.card.Cards;
 import model.player.Dealer;
 import model.player.Participant;
@@ -37,17 +38,17 @@ public class BlackJack {
         }
     }
 
-    public void offerCardToPlayers(int cardCount) {
-        participants.offerCardToPlayers(cardCount);
-        offerCardToDealer(cardCount);
+    public void offerCardToPlayers(CardSize size) {
+        participants.offerCardToPlayers(size);
+        offerCardToDealer(size);
     }
 
-    public void offerCardToParticipant(Participant participant, int cardCount) {
-        participants.offerCardToParticipant(participant, cardCount);
+    public void offerCardToParticipant(Participant participant, CardSize size) {
+        participants.offerCardToParticipant(participant, size);
     }
 
-    public void offerCardToDealer(int cardCount) {
-        dealer.addCards(Cards.selectRandomCards(cardCount));
+    public void offerCardToDealer(CardSize size) {
+        dealer.addCards(Cards.selectRandomCards(size));
     }
 
     public Map<Participant, Outcome> matchParticipantsOutcome() {

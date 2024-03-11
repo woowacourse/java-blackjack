@@ -12,11 +12,11 @@ public class Cards {
     private Cards() {
     }
 
-    public static List<Card> selectRandomCards(int size) {
+    public static List<Card> selectRandomCards(CardSize size) {
         if (cards == null) {
             Cards.createCards();
         }
-        return Stream.generate(Cards::selectRandomCard).limit(size).toList();
+        return Stream.generate(Cards::selectRandomCard).limit(size.getSize()).toList();
     }
 
     private static void createCards() {

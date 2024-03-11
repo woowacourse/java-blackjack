@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 import model.card.Card;
 import model.card.CardNumber;
 import model.card.CardShape;
+import model.card.CardSize;
 import model.player.Dealer;
 import model.player.Participant;
 import model.player.Participants;
@@ -55,7 +56,7 @@ class BlackJackTest {
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE)))));
         BlackJack blackJack = new BlackJack(participants, dealer);
 
-        blackJack.offerCardToPlayers(1);
+        blackJack.offerCardToPlayers(CardSize.ONE);
 
         List<Participant> result = participants.getParticipants();
         assertThat(result.get(0).getCards()).hasSize(3);
@@ -70,7 +71,7 @@ class BlackJackTest {
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.TWO))));
 
         blackJack.offerCardToParticipant(new Participant("배키",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))), 1);
+                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))), CardSize.ONE);
 
         List<Participant> result = participants.getParticipants();
         assertThat(result.get(0).getCards()).hasSize(3);

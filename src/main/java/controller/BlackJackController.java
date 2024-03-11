@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 import model.BlackJack;
+import model.card.CardSize;
 import model.card.Cards;
 import model.player.Dealer;
 import model.player.Participant;
@@ -11,8 +12,6 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
-
-    private static final int INITIAL_CARD_COUNT = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -25,7 +24,7 @@ public class BlackJackController {
     public void startGame() {
         BlackJack blackJack = createBlackJack(inputView.askParticipantNames());
 
-        blackJack.offerCardToPlayers(INITIAL_CARD_COUNT);
+        blackJack.offerCardToPlayers(CardSize.TWO);
         outputView.printStartBlackJack(blackJack.getParticipants(), blackJack.getDealer());
 
         offerMoreCards(blackJack);
@@ -36,13 +35,13 @@ public class BlackJackController {
 
     private BlackJack createBlackJack(List<String> names) {
         Participants participants = createParticipants(names);
-        Dealer dealer = new Dealer(Cards.selectRandomCards(2));
+        Dealer dealer = new Dealer(Cards.selectRandomCards(CardSize.TWO));
         return new BlackJack(participants, dealer);
     }
 
     private Participants createParticipants(List<String> names) {
          return new Participants(new ArrayList<>(names.stream()
-                .map(name -> new Participant(name, Cards.selectRandomCards(2))).toList()));
+                .map(name -> new Participant(name, Cards.selectRandomCards(CardSize.TWO))).toList()));
     }
 
     private void offerMoreCards(BlackJack blackJack) {
@@ -58,7 +57,7 @@ public class BlackJackController {
 
     private void askAndOfferMoreCard(Participant participant, BlackJack blackJack) {
         while (!participant.isOverMaximumSum() && inputView.isOneMoreCard(participant.getName())) {
-            blackJack.offerCardToParticipant(participant, 1);
+            blackJack.offerCardToParticipant(participant, CardSize.ONE);
             outputView.printPlayerCardMessage(participant);
         }
     }
@@ -66,7 +65,7 @@ public class BlackJackController {
     private void checkDealerMoreCards(BlackJack blackJack) {
         while (blackJack.isDealerUnderThreshold()) {
             outputView.printDealerAddCard();
-            blackJack.offerCardToDealer(1);
+            blackJack.offerCardToDealer(CardSize.ONE);
         }
     }
 }
