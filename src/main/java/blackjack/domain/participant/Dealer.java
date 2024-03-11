@@ -18,7 +18,7 @@ public class Dealer extends Gamer {
     }
 
     public Card draw() {
-        return deck.drawn();
+        return deck.draw();
     }
 
     public boolean extraCard() {
@@ -35,7 +35,7 @@ public class Dealer extends Gamer {
     }
 
     private void selfDraw() {
-        Card card = deck.drawn();
+        Card card = deck.draw();
         hand.add(card);
     }
 

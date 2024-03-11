@@ -19,7 +19,7 @@ public class Deck {
         shuffleStrategy.shuffle(cards);
     }
 
-    public Card drawn() {
+    public Card draw() {
         if (cards.isEmpty()) {
             throw new IllegalStateException(NO_CARD_EXCEPTION);
         }
