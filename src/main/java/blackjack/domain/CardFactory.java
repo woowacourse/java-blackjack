@@ -12,5 +12,4 @@ public class CardFactory {
                         .map(number -> new Card(suit, number)))
                 .collect(Collectors.toList());
     }
-
 }

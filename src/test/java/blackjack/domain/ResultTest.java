@@ -25,5 +25,4 @@ public class ResultTest {
         Map<ResultStatus, Long> results = result.calculateDealerResult();
         results.forEach((key, value) -> System.out.println(key.getName() + " : " + value));
     }
-
 }

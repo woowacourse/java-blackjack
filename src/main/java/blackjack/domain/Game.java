@@ -13,7 +13,6 @@ public class Game {
     private final Dealer dealer;
     private final Players players;
 
-
     public Game(Dealer dealer, Players players) {
         this.dealer = dealer;
         this.players = players;
@@ -47,12 +46,32 @@ public class Game {
         }
     }
 
-    public Dealer getDealer() {
-        return dealer;
+    private void playerTurn(List<Player> players, Dealer dealer) {
+        for (Player player : players) {
+            hitOrStand(dealer, player);
+        }
     }
 
-    public List<Player> getPlayers() {
-        return players.getPlayers();
+    private void hitOrStand(Dealer dealer, Player player) {
+        while (player.canHit() && InputView.readHitOrStand(player)) {
+            player.putCard(dealer.draw());
+            OutputView.printTotalHand(player);
+            ifBust(player);
+        }
+    }
+
+    private void ifBust(Player player) {
+        if (!player.canHit()) {
+            OutputView.printBust();
+        }
+    }
+
+    private void dealerTurn(Dealer dealer) {
+        while (dealer.canHit()) {
+            dealer.putCard(dealer.draw());
+            OutputView.printDealerDraw(dealer);
+        }
+        OutputView.printDealerStand(dealer);
     }
 
     public Result calculateResult() {
@@ -68,22 +87,22 @@ public class Game {
     }
 
     private ResultStatus match(int dealerScore, int playerScore) {
-        boolean isDealerBurst = dealerScore > 21;
-        boolean isPlayerBurst = playerScore > 21;
-        if (isDealerBurst && isPlayerBurst) {
+        boolean isDealerBust = dealerScore > 21;
+        boolean isPlayerBust = playerScore > 21;
+        if (isDealerBust && isPlayerBust) {
             return ResultStatus.DRAW;
         }
-        if (isDealerBurst) {
+        if (isDealerBust) {
             return ResultStatus.WIN;
         }
-        if (isPlayerBurst) {
+        if (isPlayerBust) {
             return ResultStatus.LOSE;
         }
         final int gap = dealerScore - playerScore;
         return matchWhenDealerAlive(gap);
     }
 
-    private static ResultStatus matchWhenDealerAlive(int gap) {
+    private ResultStatus matchWhenDealerAlive(int gap) {
         if (gap > 0) {
             return ResultStatus.LOSE;
         }
@@ -93,31 +112,11 @@ public class Game {
         return ResultStatus.WIN;
     }
 
-    private void dealerTurn(Dealer dealer) {
-        while (dealer.canHit()) {
-            dealer.putCard(dealer.draw());
-            OutputView.printDealerDraw(dealer);
-        }
-        OutputView.printDealerStand(dealer);
+    public List<Player> getPlayers() {
+        return players.getPlayers();
     }
 
-    private void playerTurn(List<Player> players, Dealer dealer) {
-        for (Player player : players) {
-            hitOrStand(dealer, player);
-        }
-    }
-
-    private void hitOrStand(Dealer dealer, Player player) {
-        while (player.canHit() && InputView.readHitOrStand(player)) {
-            player.putCard(dealer.draw());
-            OutputView.printTotalHand(player);
-            ifBurst(player);
-        }
-    }
-
-    private void ifBurst(Player player) {
-        if (!player.canHit()) {
-            OutputView.printBurst();
-        }
+    public Dealer getDealer() {
+        return dealer;
     }
 }

@@ -14,6 +14,4 @@ public class PlayersTest {
         assertThatCode(() -> new Players(List.of(new Player("mark"), new Player("sang"))))
                 .doesNotThrowAnyException();
     }
-
-
 }

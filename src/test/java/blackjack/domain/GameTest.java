@@ -49,6 +49,5 @@ public class GameTest {
         Map<Player, ResultStatus> results = result.getResults();
 
         assertThat(results.size()).isEqualTo(game.getPlayers().size());
-
     }
 }

@@ -9,9 +9,9 @@ import java.util.List;
 
 public class InputView {
 
+    private static final String HIT = "y";
+    private static final String STAND = "n";
     private static final BufferedReader BUFFERED_READER = new BufferedReader(new InputStreamReader(System.in));
-    public static final String HIT = "y";
-    public static final String STAND = "n";
 
     public static List<String> readName() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");

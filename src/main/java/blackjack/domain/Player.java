@@ -2,8 +2,8 @@ package blackjack.domain;
 
 public class Player {
 
-    private final String name;
     protected final Hand hand;
+    private final String name;
 
     public Player(String name) {
         this.name = name;
@@ -18,15 +18,15 @@ public class Player {
         hand.put(card);
     }
 
+    public boolean canHit() {
+        return hand.calculate() <= 21;
+    }
+
     public Hand getHand() {
         return hand;
     }
 
     public String getName() {
         return name;
-    }
-
-    public boolean canHit() {
-        return hand.calculate() <= 21;
     }
 }

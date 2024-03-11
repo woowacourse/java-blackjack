@@ -7,6 +7,7 @@ import java.util.List;
 public class Hand {
 
     public static final int INITIAL_COUNTS = 2;
+
     private final List<Card> hand = new ArrayList<>();
 
     public int calculate() {

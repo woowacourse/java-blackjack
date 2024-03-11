@@ -11,6 +11,10 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
+    private static void print(String message) {
+        System.out.println(message);
+    }
+
     public static void printInitialHand(Dealer dealer, List<Player> players) {
         System.out.println();
         print(dealOut(dealer, players));
@@ -20,10 +24,6 @@ public class OutputView {
             printTotalHand(player);
         }
         System.out.println();
-    }
-
-    public static void printTotalHand(Player player) {
-        print(totalHand(player));
     }
 
     private static String dealOut(Dealer dealer, List<Player> players) {
@@ -39,6 +39,10 @@ public class OutputView {
         return String.format("%s: %s", dealer.getName(), extractCardName(cards.get(0)));
     }
 
+    public static void printTotalHand(Player player) {
+        print(totalHand(player));
+    }
+
     private static String totalHand(Player player) {
         List<Card> cards = player.getHand().getCards();
         String hand = cards.stream()
@@ -46,6 +50,10 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
 
         return String.format("%s: %s", player.getName(), hand);
+    }
+
+    private static String extractCardName(Card card) {
+        return card.getNumber().getName() + card.getSymbol().getName();
     }
 
     public static void printHandWithScore(Dealer dealer, List<Player> players) {
@@ -59,14 +67,6 @@ public class OutputView {
     private static String resultScore(Player player) {
         int score = player.calculate();
         return String.format(" - 결과: %d", score);
-    }
-
-    private static void print(String message) {
-        System.out.println(message);
-    }
-
-    private static String extractCardName(Card card) {
-        return card.getNumber().getName() + card.getSymbol().getName();
     }
 
     public static void printDealerDraw(Dealer dealer) {
@@ -105,7 +105,7 @@ public class OutputView {
         print(message);
     }
 
-    public static void printBurst() {
+    public static void printBust() {
         System.out.println("버스트 되었습니다.");
         System.out.println();
     }

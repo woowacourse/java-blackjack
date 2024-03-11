@@ -17,5 +17,4 @@ public class CardFactoryTest {
 
         assertThat(cards.size()).isEqualTo(52);
     }
-
 }

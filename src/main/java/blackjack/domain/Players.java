@@ -10,6 +10,7 @@ public class Players {
 
     private static final int MIN_PLAYER_SIZE = 1;
     private static final int MAX_PLAYER_SIZE = 4;
+    
     private final List<Player> players;
 
     public Players(List<Player> players) {
