@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Hand;
 import blackjack.domain.card.Card;
-import blackjack.util.Constants;
 import java.util.List;
 
 public abstract class Gamer {
@@ -16,7 +15,7 @@ public abstract class Gamer {
     abstract boolean canReceiveCard();
 
     public boolean isBust() {
-        return hand.calculateScore() > Constants.BLACKJACK_BOUND;
+        return hand.calculateScore() > Hand.BLACKJACK_BOUND;
     }
 
     public boolean isBlackjack() {

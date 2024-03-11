@@ -1,8 +1,8 @@
 package blackjack.view;
 
+import blackjack.domain.participant.Dealer;
 import blackjack.dto.BlackjackResult;
 import blackjack.dto.DealerResult;
-import blackjack.util.Constants;
 import java.util.List;
 
 public class OutputView {
@@ -43,7 +43,7 @@ public class OutputView {
     }
 
     public void printAddDealerCard() {
-        System.out.printf(DEALER_ADDED_CARD, Constants.DEALER_BOUND);
+        System.out.printf(DEALER_ADDED_CARD, Dealer.DEALER_BOUND);
     }
 
     public void printCardResultStatus(final List<String> card, final long score) {

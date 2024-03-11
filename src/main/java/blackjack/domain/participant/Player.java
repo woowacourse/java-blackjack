@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Hand;
 import blackjack.domain.card.Card;
-import blackjack.util.Constants;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -36,7 +36,7 @@ public class Player extends Gamer {
 
     @Override
     public boolean canReceiveCard() {
-        return hand.calculateScore() < Constants.BLACKJACK_BOUND;
+        return hand.calculateScore() < Hand.BLACKJACK_BOUND;
     }
 
     public String getName() {
