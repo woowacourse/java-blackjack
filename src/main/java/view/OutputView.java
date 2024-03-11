@@ -20,10 +20,9 @@ public class OutputView {
         System.out.println("딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.");
 
         String firstCard = dealerCards.getFirstCard();
-        System.out.print("딜러: " + firstCard);
+        System.out.println("딜러: " + firstCard);
 
         for (PlayerCards playerCard : playerCards) {
-            System.out.println();
             printPlayerCards(playerCard);
         }
         System.out.println();
@@ -32,7 +31,7 @@ public class OutputView {
     public void printPlayerCards(PlayerCards cards) {
         Name playerName = cards.getPlayerName();
         System.out.print(playerName + "카드: ");
-        System.out.print(formatCards(cards));
+        System.out.println(formatCards(cards));
     }
 
     private String formatCards(Cards playerCard) {
