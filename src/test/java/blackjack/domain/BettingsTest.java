@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class BettingsTest {
 
@@ -35,26 +37,14 @@ class BettingsTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("베팅 금액이 최소 범위를 벗어나면 예외를 발생한다.")
-    @Test
-    void validateBettingMoneyMinRange() {
+    @DisplayName("베팅 금액이 범위를 벗어나면 예외를 발생한다.")
+    @ParameterizedTest
+    @ValueSource(ints = {999, 10001})
+    void validateBettingMoneyRange(int money) {
         // given
         Bettings bettings = new Bettings();
         Player player = new Player("pobi");
-        Money bettingMoney = new Money(999);
-
-        // when & then
-        assertThatCode(() -> bettings.placeBet(player, bettingMoney))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @DisplayName("베팅 금액이 최대 범위를 벗어나면 예외를 발생한다.")
-    @Test
-    void validateBettingMoneyMaxRange() {
-        // given
-        Bettings bettings = new Bettings();
-        Player player = new Player("pobi");
-        Money bettingMoney = new Money(10001);
+        Money bettingMoney = new Money(money);
 
         // when & then
         assertThatCode(() -> bettings.placeBet(player, bettingMoney))
@@ -73,6 +63,4 @@ class BettingsTest {
         assertThatCode(() -> bettings.placeBet(player, bettingMoney))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
-
 }
