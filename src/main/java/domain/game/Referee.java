@@ -24,7 +24,7 @@ public class Referee {
 
     private boolean isWinner(final Player player) {
         if (player.isBusted()) {
-            return true;
+            return false;
         }
         if (player.isNotSameScoreAs(participants.getDealer())) {
             return player.hasMoreScoreThan(participants.getDealer());

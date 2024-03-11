@@ -9,7 +9,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean canPickCard(DecisionToContinue decision) {
+    public boolean canPickCard(final DecisionToContinue decision) {
         return isNotBusted() && CardCommand.HIT.equals(decision.get());
     }
 }

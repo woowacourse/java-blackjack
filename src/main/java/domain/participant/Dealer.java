@@ -11,7 +11,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean canPickCard(DecisionToContinue decision) {
+    public boolean canPickCard(final DecisionToContinue decision) {
         return calculateScore() <= CARD_PICK_THRESHOLD;
     }
 }

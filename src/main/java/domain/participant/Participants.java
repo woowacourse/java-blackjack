@@ -25,9 +25,9 @@ public class Participants {
 
     public List<PlayerOutcome> getPlayersOutcomeIf(final Function<Player, Boolean> function) {
         return getPlayers().stream()
-                .map(participant -> new PlayerOutcome(
-                        participant.getName(),
-                        Outcome.from(function.apply(participant))
+                .map(player -> new PlayerOutcome(
+                        player.getName(),
+                        Outcome.from(function.apply(player))
                 ))
                 .toList();
     }

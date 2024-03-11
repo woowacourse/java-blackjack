@@ -27,23 +27,30 @@ public class BlackJackGame {
     }
 
     public InitialCardStatus initialize() {
-        return new InitialCardStatus(INITIAL_CARD_SIZE, createHandStatuses());
-    }
-
-    public List<HandStatus> createHandStatuses() {
         List<HandStatus> status = new ArrayList<>();
         status.add(createHandStatusAfterPick(participants.getDealer()));
 
         for (Player player : participants.getPlayers()) {
             status.add(createHandStatusAfterPick(player));
         }
-        return status;
+        return new InitialCardStatus(INITIAL_CARD_SIZE, status);
     }
 
     private HandStatus createHandStatusAfterPick(final Participant participant) {
         participant.pickCard(deck, INITIAL_CARD_SIZE);
         return participant.createHandStatus();
     }
+
+    public List<HandStatus> createHandStatuses() {
+        List<HandStatus> status = new ArrayList<>();
+        status.add(participants.getDealer().createHandStatus());
+
+        for (Player player : participants.getPlayers()) {
+            status.add(player.createHandStatus());
+        }
+        return status;
+    }
+
 
     public void giveCard(
             final Participant participant,
