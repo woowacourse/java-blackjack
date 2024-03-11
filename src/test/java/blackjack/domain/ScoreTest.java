@@ -69,9 +69,9 @@ class ScoreTest {
     @ParameterizedTest
     @CsvSource({
             "18, 18",
-            "25, 22",
+            "20, 20",
     })
-    @DisplayName("둘 다 버스트이거나, 점수가 같다면 무승부이다.")
+    @DisplayName("둘 다 버스트가 아니고, 점수가 같다면 무승부이다.")
     void drawTest(int currentValue, int relativeValue) {
         Score currentScore = Score.of(currentValue);
         Score relativeScore = Score.of(relativeValue);
@@ -80,4 +80,27 @@ class ScoreTest {
         assertThat(actual).isEqualTo(GameResult.DRAW);
     }
 
+    @ParameterizedTest
+    @CsvSource({
+            "22, 23",
+            "30, 25",
+    })
+    @DisplayName("둘 다 버스트인 경우 BOTH_BUSTED 상태로 판단한다.")
+    void bothBustedTest(int currentValue, int relativeValue) {
+        Score currentScore = Score.of(currentValue);
+        Score relativeScore = Score.of(relativeValue);
+
+        GameResult actual = currentScore.compareWith(relativeScore);
+        assertThat(actual).isEqualTo(GameResult.BOTH_BUSTED);
+    }
+
+    @Test
+    @DisplayName("둘 다 블랙잭인 경우 DRAW 상태로 판단한다.")
+    void bothBlackJackTest() {
+        Score currentScore = Score.blackJackScore();
+        Score relativeScore = Score.blackJackScore();
+
+        GameResult actual = currentScore.compareWith(relativeScore);
+        assertThat(actual).isEqualTo(GameResult.DRAW);
+    }
 }
