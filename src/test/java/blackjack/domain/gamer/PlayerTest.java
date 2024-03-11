@@ -27,6 +27,7 @@ class PlayerTest {
         @DisplayName("카드의 총합이 21 이하이면 카드를 받을 수 있다.")
         void receiveCardTest() {
             player.addCard(new Card(CardShape.CLOVER, CardNumber.KING));
+            player.addCard(new Card(CardShape.HEART, CardNumber.SIX));
             player.addCard(new Card(CardShape.HEART, CardNumber.FIVE));
 
             assertThat(player.canReceiveCard()).isTrue();
@@ -61,7 +62,7 @@ class PlayerTest {
         @DisplayName("플레이어 점수가 21 이하이고, 딜러의 점수가 21을 초과하면 승리한다.")
         void bustTest1() {
             player.addCard(new Card(CardShape.CLOVER, CardNumber.KING));
-            player.addCard(new Card(CardShape.HEART, CardNumber.FIVE));
+            player.addCard(new Card(CardShape.HEART, CardNumber.ACE));
 
             assertThat(player.isWin(22)).isEqualTo(GameResult.WIN);
         }
