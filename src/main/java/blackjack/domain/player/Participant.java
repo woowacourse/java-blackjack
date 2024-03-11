@@ -13,20 +13,20 @@ public abstract class Participant {
         this.hand = hand;
     }
 
+    public abstract boolean canHit();
+
     public void hit(Card card) {
-        if (canHit(calculateHandTotalClosestToBlackjack())) {
+        if (canHit()) {
             hand.append(card);
         }
     }
 
-    protected abstract boolean canHit(int score);
-
-    public boolean isBust() {
-        return calculateHandTotalClosestToBlackjack() > BLACKJACK;
+    public int calculateHandTotal() {
+        return hand.calculateScoreTotalClosestToThreshold(BLACKJACK);
     }
 
-    public int calculateHandTotalClosestToBlackjack() {
-        return hand.calculateScoreTotalClosestToThreshold(BLACKJACK);
+    public boolean isNotBust() {
+        return calculateHandTotal() <= BLACKJACK;
     }
 
     public Hand getHand() {

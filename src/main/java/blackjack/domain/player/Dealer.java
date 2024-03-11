@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.Result;
 import blackjack.domain.card.Hand;
 
 public class Dealer extends Participant {
@@ -11,7 +12,13 @@ public class Dealer extends Participant {
     }
 
     @Override
-    protected boolean canHit(int score) {
-        return score < HIT_THRESHOLD;
+    public boolean canHit() {
+        return calculateHandTotal() < HIT_THRESHOLD;
+    }
+
+    public Result judge(Players players) {
+        Result result = new Result();
+        players.getPlayers().forEach(player -> result.updateOpponent(player.judge(this)));
+        return result;
     }
 }
