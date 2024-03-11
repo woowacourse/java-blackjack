@@ -1,15 +1,12 @@
 package domain.cards.gamercards;
 
 import domain.cards.Card;
-import domain.cards.cardinfo.CardNumber;
 import java.util.Collections;
 import java.util.List;
 
 public class PlayerCards {
 
     private static final int BUST_THRESHOLD = 21;
-    private static final int CONDITION_DECIDING_A_SCORE = 10;
-    private static final int A_SCORE_GAP = 10;
 
     protected final List<Card> cards;
 
@@ -37,7 +34,7 @@ public class PlayerCards {
     private int sumAceCards(int score) {
         int acesScore = 0;
         for (Card aceCard : filterAceCards()) {
-            int aceScore = decideAceScore(score);
+            int aceScore = aceCard.decideAceScore(score);
             score += aceScore;
             acesScore += aceScore;
         }
@@ -48,13 +45,6 @@ public class PlayerCards {
         return cards.stream()
                 .filter(Card::isAce)
                 .toList();
-    }
-
-    private int decideAceScore(int totalScore) {
-        if (totalScore <= CONDITION_DECIDING_A_SCORE) {
-            return CardNumber.A.getScore() + A_SCORE_GAP;
-        }
-        return CardNumber.A.getScore();
     }
 
     public boolean hasScoreUnderBustThreshold() {
