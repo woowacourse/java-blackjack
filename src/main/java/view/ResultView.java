@@ -72,7 +72,9 @@ public class ResultView {
 
     public void printDealerHitMessage(Dealer dealer, Card card) {
         String dealerName = dealer.getPlayerName();
-        System.out.printf(LINE_SEPARATOR + "%s는 16이하라 카드 %s를 더 받았습니다.", dealerName, resolveCardExpression(card));
+        System.out.print(LINE_SEPARATOR);
+        System.out.printf("%s는 16이하라 카드 %s를 더 받았습니다.", dealerName, resolveCardExpression(card));
+        System.out.print(LINE_SEPARATOR);
     }
 
     public void printGamersCardsScore(Gamers gamers) {
@@ -86,39 +88,31 @@ public class ResultView {
 
     public void printFinalResult(Dealer dealer, Judge judge) {
         System.out.println("## 최종 승패");
-        System.out.println(LINE_SEPARATOR);
-        System.out.println(resolveDealerFinalResult(dealer, judge) + resolvePlayersFinalResult(judge));
+        System.out.println(resolveDealerFinalResult(dealer, judge));
+        System.out.println(resolvePlayersFinalResult(judge));
     }
 
     private String resolveDealerFinalResult(Dealer dealer, Judge judge) {
-        return String.format("%s: %s", dealer.getPlayerName(), resolveDealerWinState(judge.getDealerResult()))
-                + LINE_SEPARATOR;
+        return String.format("%s: %s", dealer.getPlayerName(), resolveDealerWinState(judge.getDealerResult()));
     }
 
     private String resolveDealerWinState(Map<WinState, Integer> dealerResult) {
-        StringBuilder stringBuilder = new StringBuilder();
-        dealerResult.entrySet().stream()
+        List<String> results = dealerResult.entrySet().stream()
                 .filter(entry -> entry.getValue() > 0)
-                .forEach(entry -> {
-                    stringBuilder.append(entry.getValue());
-                    stringBuilder.append(WinStateMapper.toExpression(entry.getKey()));
-                    stringBuilder.append(" ");
-                });
-        return stringBuilder.toString();
+                .map(entry -> entry.getValue() + WinStateMapper.toExpression(entry.getKey()))
+                .toList();
+        return String.join(" ", results);
     }
 
     private String resolvePlayersFinalResult(Judge judge) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Map.Entry<Player, WinState> playerWinState : judge.getPlayerResult().entrySet()) {
-            Player player = playerWinState.getKey();
-            WinState winState = playerWinState.getValue();
-            stringBuilder.append(resolvePlayerFinalResult(player, winState));
-        }
-        return stringBuilder.toString();
+        Map<Player, WinState> playersResult = judge.getPlayersResult();
+        List<String> results = playersResult.entrySet().stream()
+                .map(playerWinState -> resolvePlayerFinalResult(playerWinState.getKey(), playerWinState.getValue()))
+                .toList();
+        return String.join(LINE_SEPARATOR, results);
     }
 
     private String resolvePlayerFinalResult(Player player, WinState playerWinState) {
-        return String.format("%s: %s", player.getPlayerName(), WinStateMapper.toExpression(playerWinState))
-                + LINE_SEPARATOR;
+        return String.format("%s: %s", player.getPlayerName(), WinStateMapper.toExpression(playerWinState));
     }
 }
