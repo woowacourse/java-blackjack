@@ -36,7 +36,7 @@ class JudgeTest {
 
         judge.decideResult(gamers);
 
-        assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.LOSE);
+        assertThat(judge.getPlayersResult().get(player)).isEqualTo(WinState.LOSE);
     }
 
     @DisplayName("딜러가 bust 일 경우 플레이어의 승리로 판단한다.")
@@ -51,7 +51,7 @@ class JudgeTest {
 
         judge.decideResult(gamers);
 
-        assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.WIN);
+        assertThat(judge.getPlayersResult().get(player)).isEqualTo(WinState.WIN);
     }
 
     @DisplayName("플레이어와 딜러 모두 bust 가 아닌 경우 플레이어가 높은 점수를 가지면 플레이어의 승리로 판단한다.")
@@ -63,7 +63,7 @@ class JudgeTest {
 
         judge.decideResult(gamers);
 
-        assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.WIN);
+        assertThat(judge.getPlayersResult().get(player)).isEqualTo(WinState.WIN);
     }
 
     @DisplayName("플레이어와 딜러 모두 bust 가 아닌 경우 점수가 같다면 무승부로 판단한다.")
@@ -75,7 +75,7 @@ class JudgeTest {
 
         judge.decideResult(gamers);
 
-        assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.DRAW);
+        assertThat(judge.getPlayersResult().get(player)).isEqualTo(WinState.DRAW);
     }
 
     @DisplayName("플레이어와 딜러 모두 bust 가 아닌 경우 딜러가 높은 점수를 가지면 플레이어의 패배로 판단한다.")
@@ -87,7 +87,7 @@ class JudgeTest {
 
         judge.decideResult(gamers);
 
-        assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.LOSE);
+        assertThat(judge.getPlayersResult().get(player)).isEqualTo(WinState.LOSE);
     }
 
     @DisplayName("N명의 플레이어가 패배한 경우 딜러는 N번의 승리를 얻는다.")

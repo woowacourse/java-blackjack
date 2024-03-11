@@ -3,19 +3,17 @@ package domain;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
-import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Judge {
 
-    private final Map<Player, WinState> playerResult;
-    private final Map<WinState, Integer> dealerResult;
+    private final PlayersResult playersResult;
+    private final DealerResult dealerResult;
 
     public Judge() {
-        this.playerResult = new LinkedHashMap<>();
-        this.dealerResult = new LinkedHashMap<>();
+        this.playersResult = new PlayersResult();
+        this.dealerResult = new DealerResult();
     }
 
     public void decideResult(Gamers gamers) {
@@ -31,15 +29,15 @@ public class Judge {
 
     private void decidePlayerResult(Player player, Dealer dealer) {
         if (player.isBust()) {
-            playerResult.put(player, WinState.LOSE);
+            playersResult.addResult(player, WinState.LOSE);
             return;
         }
         if (dealer.isBust()) {
-            playerResult.put(player, WinState.WIN);
+            playersResult.addResult(player, WinState.WIN);
             return;
         }
         WinState playerWinState = decidePlayerWinState(player, dealer);
-        playerResult.put(player, playerWinState);
+        playersResult.addResult(player, playerWinState);
     }
 
     private WinState decidePlayerWinState(Player player, Dealer dealer) {
@@ -55,22 +53,17 @@ public class Judge {
     }
 
     private void decideDealerResult() {
-        dealerResult.put(WinState.WIN, countWinStateOfPlayerResult(WinState.LOSE));
-        dealerResult.put(WinState.DRAW, countWinStateOfPlayerResult(WinState.DRAW));
-        dealerResult.put(WinState.LOSE, countWinStateOfPlayerResult(WinState.WIN));
+        dealerResult.addResult(WinState.WIN, playersResult.countWinState(WinState.LOSE));
+        dealerResult.addResult(WinState.DRAW, playersResult.countWinState(WinState.DRAW));
+        dealerResult.addResult(WinState.LOSE, playersResult.countWinState(WinState.WIN));
     }
 
-    private int countWinStateOfPlayerResult(WinState winState) {
-        return (int) playerResult.values().stream()
-                .filter(value -> value.equals(winState))
-                .count();
-    }
-
-    public Map<Player, WinState> getPlayerResult() {
-        return Collections.unmodifiableMap(playerResult);
+    // TODO: remove functions
+    public Map<Player, WinState> getPlayersResult() {
+        return playersResult.getResult();
     }
 
     public Map<WinState, Integer> getDealerResult() {
-        return Collections.unmodifiableMap(dealerResult);
+        return dealerResult.getResult();
     }
 }
