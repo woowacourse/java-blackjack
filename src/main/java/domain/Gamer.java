@@ -1,9 +1,8 @@
 package domain;
 
 import java.util.List;
-
 public class Gamer {
-    private static final int BUST_THRESHOLD = 21;
+
     private final Name name;
     private final Hand hand;
 
