@@ -34,10 +34,6 @@ public record ResultDto(Map<String, String> gameResults) {
     }
 
     public Map<String, String> getPlayerResult() {
-        Map<String, String> results = new LinkedHashMap<>();
-        for (Map.Entry<String, String> result : gameResults.entrySet()) {
-            results.put(result.getKey(), result.getValue());
-        }
-        return results;
+        return gameResults;
     }
 }
