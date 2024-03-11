@@ -46,8 +46,8 @@ class CardsTest {
         Cards cards = new Cards(List.of(new Card(CardNumber.ACE, CardPattern.CLOVER_PATTERN),
                 new Card(CardNumber.FOUR, CardPattern.DIA_PATTERN)));
 
-        int matchScore = cards.countMaxScore();
+        int minimumScore = cards.countMinimumScore();
 
-        Assertions.assertThat(cards.countMaxScore()).isEqualTo(matchScore + ADDITIONAL_ACE_CARD_SCORE);
+        Assertions.assertThat(cards.countMaxScore()).isEqualTo(minimumScore + ADDITIONAL_ACE_CARD_SCORE);
     }
 }
