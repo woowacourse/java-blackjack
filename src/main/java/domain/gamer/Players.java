@@ -1,8 +1,5 @@
 package domain.gamer;
 
-import domain.cards.gamercards.PlayerCards;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,16 +11,15 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> playersNames) {
-        validate(playersNames);
-        this.players = new ArrayList<>();
-        addPlayers(playersNames);
+    public Players(List<Player> players) {
+        validate(players);
+        this.players = players;
     }
 
-    private void validate(List<String> playersNames) {
-        validateSize(playersNames.size());
-        validateDuplicatedNames(playersNames);
-        validateNotDealerName(playersNames);
+    private void validate(List<Player> players) {
+        validateSize(players.size());
+        validateDuplicatedNames(players);
+        validateNotDealerName(players);
     }
 
     private void validateSize(int size) {
@@ -32,8 +28,9 @@ public class Players {
         }
     }
 
-    private void validateDuplicatedNames(List<String> players) {
+    private void validateDuplicatedNames(List<Player> players) {
         long nonDuplicatedCount = players.stream()
+                .map(Gamer::getPlayerName)
                 .distinct()
                 .count();
         if (nonDuplicatedCount != players.size()) {
@@ -41,16 +38,13 @@ public class Players {
         }
     }
 
-    private void validateNotDealerName(List<String> playersNames) {
-        if (playersNames.contains(DEALER_NAME)) {
-            throw new IllegalArgumentException("[ERROR] 플레이어의 이름은 \"" + DEALER_NAME + "\"가 될 수 없습니다.");
-        }
-    }
+    private void validateNotDealerName(List<Player> players) {
+        boolean isNoneMatchDealerName = players.stream()
+                .map(player -> player.getPlayerName())
+                .noneMatch(playerName -> playerName.equals(DEALER_NAME));
 
-    private void addPlayers(List<String> playersNames) {
-        for (String playerName : playersNames) {
-            PlayerCards emptyHand = new PlayerCards(new ArrayList<>());
-            players.add(new Player(playerName, emptyHand));
+        if (!isNoneMatchDealerName) {
+            throw new IllegalArgumentException("[ERROR] 플레이어의 이름은 \"" + DEALER_NAME + "\"가 될 수 없습니다.");
         }
     }
 

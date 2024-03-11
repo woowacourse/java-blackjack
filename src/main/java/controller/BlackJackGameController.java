@@ -6,6 +6,7 @@ import domain.cards.Card;
 import domain.cards.CardsGenerator;
 import domain.cards.Deck;
 import domain.cards.gamercards.DealerCards;
+import domain.cards.gamercards.PlayerCards;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.Players;
@@ -14,6 +15,7 @@ import view.InputView;
 import view.ResultView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BlackJackGameController {
 
@@ -26,7 +28,7 @@ public class BlackJackGameController {
     }
 
     public void gameStart() {
-        Players players = new Players(inputView.readPlayersNames());
+        Players players = new Players(generatePlayers(inputView.readPlayersNames()));
         Dealer dealer = new Dealer(new DealerCards(new ArrayList<>()));
         Deck deck = new Deck(CardsGenerator.generateRandomCards());
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
@@ -35,6 +37,15 @@ public class BlackJackGameController {
         progressGame(blackJackGame, players, dealer, deck);
 
         makeFinalResult(players, dealer);
+    }
+
+    private List<Player> generatePlayers(List<String> playersNames) {
+        List<Player> players = new ArrayList<>();
+        for (String playerName : playersNames) {
+            PlayerCards emptyHand = new PlayerCards(new ArrayList<>());
+            players.add(new Player(playerName, emptyHand));
+        }
+        return players;
     }
 
     private void configureSetup(BlackJackGame blackJackGame, Players players, Dealer dealer, Deck deck) {
