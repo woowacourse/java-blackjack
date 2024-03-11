@@ -3,6 +3,7 @@ package blackjack.view.object;
 import java.util.Arrays;
 
 public enum Command {
+
     HIT("y"),
     STAND("n");
 
