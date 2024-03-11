@@ -2,7 +2,6 @@ package view;
 
 import static view.viewer.UserViewer.DEALER_NAME_VALUE;
 
-import domain.game.Game;
 import domain.game.PlayerResults;
 import domain.game.Result;
 import domain.user.Player;
@@ -55,9 +54,8 @@ public class OutputView {
                                 + " - 결과: " + user.sumUserDeck()));
     }
 
-    public static void printFinalResult(Game game) {
+    public static void printFinalResult(PlayerResults playerResults) {
         System.out.println("\n## 최종 승패");
-        PlayerResults playerResults = game.generatePlayerResults();
         Map<Result, Integer> dealerResult = playerResults.generateDealerResult();
         System.out.println(DEALER_NAME_VALUE + ": " + ResultViewer.showDealerResult(dealerResult));
 

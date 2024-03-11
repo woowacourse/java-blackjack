@@ -1,8 +1,8 @@
-import controller.Controller;
+import controller.BlackjackRunner;
 
 public class Application {
     public static void main(String[] args) {
-        Controller controller = new Controller();
-        controller.play();
+        BlackjackRunner blackjackRunner = new BlackjackRunner();
+        blackjackRunner.play();
     }
 }
