@@ -1,4 +1,4 @@
-package domain.cards.gamercards;
+package domain.gamer;
 
 import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PlayerCards {
+public class Hand {
 
     private static final int BUST_THRESHOLD = 21;
     private static final int CONDITION_DECIDING_A_SCORE = 10;
@@ -15,7 +15,7 @@ public class PlayerCards {
 
     protected final List<Card> cards;
 
-    public PlayerCards() {
+    public Hand() {
         this.cards = new ArrayList<>();
     }
 

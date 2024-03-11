@@ -1,17 +1,18 @@
 package domain.gamer;
 
 import domain.cards.Card;
-import domain.cards.gamercards.PlayerCards;
 
 import java.util.Collections;
 import java.util.List;
 
 public class Player {
 
-    private final GamerName name;
-    protected final PlayerCards cards;
+    private static final int HIT_THRESHOLD = 21;
 
-    public Player(String name, PlayerCards cards) {
+    private final GamerName name;
+    protected final Hand cards;
+
+    public Player(String name, Hand cards) {
         this.name = new GamerName(name);
         this.cards = cards;
     }
@@ -21,11 +22,11 @@ public class Player {
     }
 
     public boolean isBust() {
-        return !cards.hasScoreUnderBustThreshold();
+        return cards.calculateScore() > HIT_THRESHOLD;
     }
 
-    public boolean isNotBust() {
-        return cards.hasScoreUnderBustThreshold();
+    public boolean canHit() {
+        return cards.calculateScore() < HIT_THRESHOLD;
     }
 
     public int finalizeCardsScore() {

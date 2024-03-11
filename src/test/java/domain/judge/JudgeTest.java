@@ -3,9 +3,8 @@ package domain;
 import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
 import domain.cards.cardinfo.CardShape;
-import domain.cards.gamercards.DealerCards;
-import domain.cards.gamercards.PlayerCards;
 import domain.gamer.Dealer;
+import domain.gamer.Hand;
 import domain.gamer.Player;
 import domain.gamer.Players;
 import domain.judge.Judge;
@@ -27,14 +26,14 @@ class JudgeTest {
     @BeforeEach
     void setUp() {
         judge = new Judge();
-        dealer = new Dealer(new DealerCards());
+        dealer = new Dealer(new Hand());
         dealer.hit(new Card(CardNumber.FIVE, CardShape.HEART));
     }
 
     @DisplayName("플레이어가 딜러를 상대로 승리를 판단한다.")
     @Test
     void decidePlayerWinByDealer() {
-        Player player = new Player("player", new PlayerCards());
+        Player player = new Player("player", new Hand());
         player.hit(new Card(CardNumber.KING, CardShape.HEART));
         Players players = new Players(List.of(player));
         judge.decideResult(players, dealer);
@@ -44,7 +43,7 @@ class JudgeTest {
     @DisplayName("플레이어가 딜러를 상대로 패배를 판단한다.")
     @Test
     void decidePlayerLoseByDealer() {
-        Player player = new Player("player", new PlayerCards());
+        Player player = new Player("player", new Hand());
         player.hit(new Card(CardNumber.TWO, CardShape.HEART));
         Players players = new Players(List.of(player));
         judge.decideResult(players, dealer);
@@ -54,7 +53,7 @@ class JudgeTest {
     @DisplayName("플레이어가 딜러를 상대로 무승부를 판단한다.")
     @Test
     void decidePlayerDrawByDealer() {
-        Player player = new Player("player", new PlayerCards());
+        Player player = new Player("player", new Hand());
         player.hit(new Card(CardNumber.FIVE, CardShape.HEART));
         Players players = new Players(List.of(player));
         judge.decideResult(players, dealer);
@@ -64,11 +63,11 @@ class JudgeTest {
     @DisplayName("딜러의 모든 승리 패배 무승부 상태를 반환한다.")
     @Test
     void decideDealerResult() {
-        Player player1 = new Player("player1", new PlayerCards());
+        Player player1 = new Player("player1", new Hand());
         player1.hit(new Card(CardNumber.KING, CardShape.HEART));
-        Player player2 = new Player("player2", new PlayerCards());
+        Player player2 = new Player("player2", new Hand());
         player2.hit(new Card(CardNumber.THREE, CardShape.CLOVER));
-        Player player3 = new Player("player3", new PlayerCards());
+        Player player3 = new Player("player3", new Hand());
         player3.hit(new Card(CardNumber.FIVE, CardShape.HEART));
         Players players = new Players(List.of(player1, player2, player3));
 

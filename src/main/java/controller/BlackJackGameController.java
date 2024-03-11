@@ -5,9 +5,8 @@ import domain.HitOption;
 import domain.cards.Card;
 import domain.cards.CardsGenerator;
 import domain.cards.Deck;
-import domain.cards.gamercards.DealerCards;
-import domain.cards.gamercards.PlayerCards;
 import domain.gamer.Dealer;
+import domain.gamer.Hand;
 import domain.gamer.Player;
 import domain.gamer.Players;
 import domain.judge.Judge;
@@ -29,7 +28,7 @@ public class BlackJackGameController {
 
     public void gameStart() {
         Players players = new Players(generatePlayers(inputView.readPlayersNames()));
-        Dealer dealer = new Dealer(new DealerCards());
+        Dealer dealer = new Dealer(new Hand());
         Deck deck = new Deck(CardsGenerator.generateRandomCards());
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
 
@@ -42,7 +41,7 @@ public class BlackJackGameController {
     private List<Player> generatePlayers(List<String> playersNames) {
         List<Player> players = new ArrayList<>();
         for (String playerName : playersNames) {
-            PlayerCards emptyHand = new PlayerCards();
+            Hand emptyHand = new Hand();
             players.add(new Player(playerName, emptyHand));
         }
         return players;

@@ -1,21 +1,16 @@
 package domain.gamer;
 
-import domain.cards.Card;
-import domain.cards.gamercards.DealerCards;
-
 public class Dealer extends Player {
 
     private static final String DEALER_NAME = "딜러";
+    private static final int HIT_THRESHOLD = 16;
 
-    public Dealer(DealerCards cards) {
+    public Dealer(Hand cards) {
         super(DEALER_NAME, cards);
     }
 
+    @Override
     public boolean canHit() {
-        return ((DealerCards) cards).hasScoreUnderHitThreshold();
-    }
-
-    public Card openOneCard() {
-        return ((DealerCards) cards).pickFirstCard();
+        return HIT_THRESHOLD > cards.calculateScore();
     }
 }

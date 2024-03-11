@@ -18,6 +18,7 @@ public class ResultView {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String DELIMITER = ", ";
+    public static final int DEALER_CARD_INDEX = 0;
 
     public void printInitialCards(Dealer dealer, List<Player> players) {
         printSharingCardsMessage(dealer, players);
@@ -34,7 +35,7 @@ public class ResultView {
     }
 
     private void printDealerCard(Dealer dealer) {
-        Card dealerCard = dealer.openOneCard();
+        Card dealerCard = dealer.getCards().get(DEALER_CARD_INDEX);
         System.out.println(dealer.getPlayerName() + ": " + resolveCardExpression(dealerCard));
     }
 
