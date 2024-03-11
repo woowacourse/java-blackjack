@@ -43,6 +43,18 @@ public class UserDeckTest {
     }
 
     @Test
+    @DisplayName("ACE 카드는 합이 11 초과일 때 숫자가 1로 사용된다.")
+    void sumCardContainingAceTest2() {
+        UserDeck userDeck = new UserDeck();
+
+        userDeck.addCard(new Card(Shape.CLOVER, Number.ACE));
+        userDeck.addCard(new Card(Shape.CLOVER, Number.TWO));
+        userDeck.addCard(new Card(Shape.CLOVER, Number.TEN));
+
+        assertThat(userDeck.sumCard()).isEqualTo(13);
+    }
+
+    @Test
     @DisplayName("카드의 합이 21 초과이면 busted이다.")
     void bustedTest() {
         UserDeck userDeck = new UserDeck();
@@ -52,5 +64,16 @@ public class UserDeckTest {
         userDeck.addCard(new Card(Shape.CLOVER, Number.KING));
 
         assertThat(userDeck.busted()).isTrue();
+    }
+
+    @Test
+    @DisplayName("카드의 합이 21 이하이면 busted이지 않다.")
+    void notBustedTest() {
+        UserDeck userDeck = new UserDeck();
+
+        userDeck.addCard(new Card(Shape.CLOVER, Number.JACK));
+        userDeck.addCard(new Card(Shape.CLOVER, Number.QUEEN));
+
+        assertThat(userDeck.busted()).isFalse();
     }
 }
