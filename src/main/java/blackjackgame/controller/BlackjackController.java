@@ -4,6 +4,7 @@ import blackjackgame.domain.blackjack.DealerRandomCardDrawStrategy;
 import blackjackgame.domain.blackjack.GameResult;
 import blackjackgame.domain.blackjack.GameResultCalculator;
 import blackjackgame.domain.blackjack.Gamer;
+import blackjackgame.domain.blackjack.Gamers;
 import blackjackgame.domain.blackjack.PlayerRandomCardDrawStrategy;
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.Deck;
@@ -24,9 +25,9 @@ public class BlackjackController {
     private static final int EXECUTION_COUNT = 2;
 
     private final Gamer dealer;
-    private final List<Gamer> players;
+    private final Gamers players;
 
-    public BlackjackController(Gamer dealer, List<Gamer> players) {
+    public BlackjackController(Gamer dealer, Gamers players) {
         this.dealer = dealer;
         this.players = players;
     }
@@ -43,38 +44,29 @@ public class BlackjackController {
     }
 
     private void initDealerAndPlayers(Deck deck) {
-        dealerDraw(deck, EXECUTION_COUNT);
-        players.forEach(player -> playerDraw(deck, player, EXECUTION_COUNT));
+        dealer.draw(deck, new DealerRandomCardDrawStrategy(dealer), EXECUTION_COUNT);
+        players.drawNTimes(deck, EXECUTION_COUNT);
 
-        List<String> playerNames = players.stream()
-                .map(Gamer::getRawName)
-                .toList();
-        OutputView.printCardSplitMessage(dealer.getRawName(), playerNames);
-    }
-
-    private void dealerDraw(Deck deck) {
-        dealer.draw(deck, new DealerRandomCardDrawStrategy(dealer));
-    }
-
-    private void dealerDraw(Deck deck, int execution_count) {
-        for (int count = 1; count <= execution_count; count++) {
-            dealer.draw(deck, new DealerRandomCardDrawStrategy(dealer));
-        }
-    }
-
-    private void playerDraw(Deck deck, Gamer player) {
-        player.draw(deck, new PlayerRandomCardDrawStrategy(player));
-    }
-
-    private void playerDraw(Deck deck, Gamer player, int execution_count) {
-        for (int count = 1; count <= execution_count; count++) {
-            player.draw(deck, new PlayerRandomCardDrawStrategy(player));
-        }
+        OutputView.printCardSplitMessage(dealer.getRawName(), players.getPlayersNames());
     }
 
     private void printDealerAndPlayers() {
         printDealer(dealer);
-        players.forEach(this::printPlayer);
+        printPlayers(players);
+    }
+
+    private void printDealer(Gamer dealer) {
+        GamerDTO dealerDTO = makeGamerDTO(dealer);
+        GamerOutputView.printOutputWithoutSummationCardPoint(dealerDTO);
+    }
+
+    private void printPlayers(Gamers players) {
+        players.getPlayers().forEach(this::printPlayer);
+    }
+
+    private void printPlayer(Gamer player) {
+        GamerDTO gamerDTO = makeGamerDTO(player);
+        GamerOutputView.printOutputWithoutSummationCardPoint(gamerDTO);
     }
 
     private GamerDTO makeGamerDTO(Gamer gamer) {
@@ -86,23 +78,13 @@ public class BlackjackController {
                 gamer.getRawSummationCardPoint());
     }
 
-    private void printDealer(Gamer dealer) {
-        GamerDTO dealerDTO = makeGamerDTO(dealer);
-        GamerOutputView.printOutputWithoutSummationCardPoint(dealerDTO);
-    }
-
-    private void printPlayer(Gamer player) {
-        GamerDTO playerDTO = makeGamerDTO(player);
-        GamerOutputView.printOutputWithoutSummationCardPoint(playerDTO);
-    }
-
     private void playersTryDraw(Deck deck) {
-        players.forEach(player -> playerTryDraw(deck, player));
+        players.getPlayers().forEach(player -> playerTryDraw(deck, player));
     }
 
-    private void playerTryDraw(Deck deck, Gamer player) {
+    public void playerTryDraw(Deck deck, Gamer player) {
         while(!player.isDead() && inputYesOrNo(player)) {
-            playerDraw(deck, player);
+            player.draw(deck, new PlayerRandomCardDrawStrategy(player));
             printPlayer(player);
         }
     }
@@ -114,7 +96,7 @@ public class BlackjackController {
 
     private void dealerTryDraw(Deck deck) {
         try {
-            dealerDraw(deck);
+            dealer.draw(deck, new DealerRandomCardDrawStrategy(dealer));
             OutputView.printDealerAdditionalCardMessage();
         } catch (IllegalStateException e) {
             OutputView.printDealerNoAdditionalCardMessage();
@@ -125,19 +107,19 @@ public class BlackjackController {
         GamerDTO dealerDTO = makeGamerDTO(dealer);
         GamerOutputView.generateOutputWithSummationCardPoint(dealerDTO);
 
-        for (Gamer player : players) {
+        for (Gamer player : players.getPlayers()) {
             GamerDTO playerDTO = makeGamerDTO(player);
             GamerOutputView.generateOutputWithSummationCardPoint(playerDTO);
         }
     }
 
     private void printDealerAndPlayersGameResult() {
-        Map<GameResult, Integer> dealerGameResultCounts = players.stream()
+        Map<GameResult, Integer> dealerGameResultCounts = players.getPlayers().stream()
                 .collect(Collectors.groupingBy(player -> GameResultCalculator.calculate(dealer, player),
                         Collectors.summingInt(value -> 1)));
         DealerGameResultDTO dealerGameResultDTO = new DealerGameResultDTO(dealerGameResultCounts);
 
-        List<PlayerGameResultDTO> playerGameResultDTOS = players.stream()
+        List<PlayerGameResultDTO> playerGameResultDTOS = players.getPlayers().stream()
                 .map(player -> new PlayerGameResultDTO(player.getRawName(),
                         GameResultCalculator.calculate(player, dealer)))
                 .toList();

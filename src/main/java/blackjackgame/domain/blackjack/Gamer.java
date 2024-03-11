@@ -21,6 +21,14 @@ public class Gamer {
         holdingCards.add(draw);
     }
 
+    public void draw(Deck deck, CardDrawStrategy cardDrawStrategy, int execution_count) {
+        for(int count = 1; count <= execution_count; count++) {
+            draw(deck, cardDrawStrategy);
+        }
+    }
+
+
+
     public SummationCardPoint getSummationCardPoint() {
         SummationCardPoint summationCardPoint = holdingCards.calculateTotalPoint();
         if (hasAceInHoldingCards()) {
