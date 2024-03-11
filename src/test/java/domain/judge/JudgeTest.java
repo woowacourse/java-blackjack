@@ -4,7 +4,6 @@ import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
 import domain.cards.cardinfo.CardShape;
 import domain.gamer.Dealer;
-import domain.gamer.Hand;
 import domain.gamer.Player;
 import domain.gamer.Players;
 import domain.judge.Judge;
@@ -26,7 +25,7 @@ class JudgeTest {
     @BeforeEach
     void setUp() {
         judge = new Judge();
-        dealer = new Dealer(new Hand());
+        dealer = new Dealer();
         dealer.hit(new Card(CardNumber.FIVE, CardShape.HEART));
     }
 
