@@ -32,16 +32,6 @@ public class UserDeckTest {
     }
 
     @Test
-    @DisplayName("ACE 카드 유무 판별")
-    void hasAceTest() {
-        UserDeck userDeck = new UserDeck();
-
-        userDeck.addCard(new Card(Shape.CLOVER, Number.ACE));
-
-        assertThat(userDeck.hasAce()).isTrue();
-    }
-
-    @Test
     @DisplayName("ACE 카드는 합이 11 이하일 때 숫자가 11로 사용된다.")
     void sumCardContainingAceTest() {
         UserDeck userDeck = new UserDeck();

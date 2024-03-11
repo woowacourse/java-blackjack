@@ -32,7 +32,7 @@ public class UserDeck {
         return sum;
     }
 
-    public boolean hasAce() {
+    private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
     }
