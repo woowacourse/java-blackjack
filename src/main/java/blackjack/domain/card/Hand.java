@@ -23,7 +23,7 @@ public class Hand {
     }
 
     public boolean isNaturalBlackjack() {
-        return isScoreBlackjack() && cards.size() == NATURAL_BLACKJACK_CARD_COUNT;
+        return cards.size() == NATURAL_BLACKJACK_CARD_COUNT && isScoreBlackjack();
     }
 
     public boolean isScoreBlackjack() {
