@@ -2,8 +2,7 @@ package domain;
 
 import domain.cards.Card;
 import domain.cards.CardPack;
-import domain.cards.gamercards.DealerCards;
-import domain.cards.gamercards.PlayerCards;
+import domain.cards.Hand;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
@@ -25,9 +24,9 @@ public class BlackJackGame {
 
     private Gamers makeGamers(List<String> rawPlayersNames) {
         List<Player> players = rawPlayersNames.stream()
-                .map(rawPlayersName -> new Player(rawPlayersName, new PlayerCards(new ArrayList<>())))
+                .map(rawPlayersName -> new Player(rawPlayersName, new Hand(new ArrayList<>())))
                 .toList();
-        Dealer dealer = new Dealer(new DealerCards(new ArrayList<>()));
+        Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
         return new Gamers(players, dealer);
     }
 

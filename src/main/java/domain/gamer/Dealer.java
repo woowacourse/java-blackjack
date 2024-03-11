@@ -1,22 +1,21 @@
 package domain.gamer;
 
 import domain.cards.Card;
-import domain.cards.gamercards.DealerCards;
+import domain.cards.Hand;
 
 public class Dealer extends Player {
 
     private static final String DEALER_NAME = "딜러";
 
-    public Dealer(DealerCards cards) {
-        super(DEALER_NAME, cards);
+    public Dealer(Hand hand) {
+        super(DEALER_NAME, hand);
     }
 
     public boolean canHit() {
-        DealerCards dealerCards = (DealerCards) cards;
-        return dealerCards.hasScoreUnderHitThreshold();
+        return hand.hasScoreUnderHitThreshold();
     }
 
     public Card openOneCard() {
-        return ((DealerCards) cards).pickFirstCard();
+        return hand.pickFirstCard();
     }
 }

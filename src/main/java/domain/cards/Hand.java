@@ -1,16 +1,17 @@
-package domain.cards.gamercards;
+package domain.cards;
 
-import domain.cards.Card;
 import java.util.Collections;
 import java.util.List;
 
-public class PlayerCards {
+public class Hand {
 
     private static final int BUST_THRESHOLD = 21;
+    private static final int DEALER_HIT_THRESHOLD = 16;
+    private static final int FIRST_CARD_INDEX = 0;
 
-    protected final List<Card> cards;
+    private final List<Card> cards;
 
-    public PlayerCards(List<Card> cards) {
+    public Hand(List<Card> cards) {
         this.cards = cards;
     }
 
@@ -49,6 +50,14 @@ public class PlayerCards {
 
     public boolean hasScoreUnderBustThreshold() {
         return calculateScore() <= BUST_THRESHOLD;
+    }
+
+    public boolean hasScoreUnderHitThreshold() {
+        return calculateScore() <= DEALER_HIT_THRESHOLD;
+    }
+
+    public Card pickFirstCard() {
+        return cards.get(FIRST_CARD_INDEX);
     }
 
     public List<Card> getCards() {

@@ -2,7 +2,7 @@ package domain.gamer;
 
 import domain.cards.Card;
 import domain.cards.CardPack;
-import domain.cards.gamercards.PlayerCards;
+import domain.cards.Hand;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -10,11 +10,11 @@ import java.util.Objects;
 public class Player {
 
     private final GamerName name;
-    protected final PlayerCards cards;
+    protected final Hand hand;
 
-    public Player(String name, PlayerCards cards) {
+    public Player(String name, Hand hand) {
         this.name = new GamerName(name);
-        this.cards = cards;
+        this.hand = hand;
     }
 
     public void receiveCards(CardPack cardPack, int count) {
@@ -24,27 +24,27 @@ public class Player {
     }
 
     public void hit(Card card) {
-        cards.addCard(card);
+        hand.addCard(card);
     }
 
     public boolean isBust() {
-        return !cards.hasScoreUnderBustThreshold();
+        return !hand.hasScoreUnderBustThreshold();
     }
 
     public boolean isNotBust() {
-        return cards.hasScoreUnderBustThreshold();
+        return hand.hasScoreUnderBustThreshold();
     }
 
     public int finalizeCardsScore() {
-        return cards.calculateScore();
+        return hand.calculateScore();
     }
 
     public String getPlayerName() {
         return name.getValue();
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards.getCards());
+    public List<Card> getHand() {
+        return Collections.unmodifiableList(hand.getCards());
     }
 
     @Override
@@ -56,11 +56,11 @@ public class Player {
             return false;
         }
         Player player = (Player) o;
-        return Objects.equals(name, player.name) && Objects.equals(cards, player.cards);
+        return Objects.equals(name, player.name) && Objects.equals(hand, player.hand);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, cards);
+        return Objects.hash(name, hand);
     }
 }
