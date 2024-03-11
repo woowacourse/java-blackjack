@@ -34,13 +34,13 @@ public class Player {
         return totalNumbers < HIT_CONDITION;
     }
 
-    public Player addCard(Card card) {
+    public Player hitCard(Card card) {
         Cards addedCards = cards.add(card);
         return new Player(name, addedCards);
     }
 
-    public Player addCards(List<Card> cardsElement) {
-        Cards addedCards = cards.addAll(cardsElement);
+    public Player hitCards(List<Card> cards) {
+        Cards addedCards = this.cards.addAll(cards);
         return new Player(name, addedCards);
     }
 

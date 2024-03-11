@@ -43,7 +43,7 @@ public class BlackjackController {
     }
 
     private void hitToPlayers(BlackjackGame blackjackGame) {
-        blackjackGame.getPlayersElements()
+        blackjackGame.getPlayersGroup()
             .forEach(player -> hitUntilStay(blackjackGame, player));
     }
 

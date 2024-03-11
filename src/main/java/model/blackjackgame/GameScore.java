@@ -36,7 +36,7 @@ public class GameScore {
     }
 
     private static int calculateTotalScore(Cards cards) {
-        List<Card> cardsElement = cards.getElements();
+        List<Card> cardsElement = cards.getCards();
         int totalScore = cards.calculateTotalNumbers();
         int countA = (int) cardsElement.stream()
             .filter(card -> card.getNumber().equals(CardNumber.ACE))

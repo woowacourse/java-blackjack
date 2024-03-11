@@ -48,7 +48,7 @@ class PlayerTest {
         Cards cards = new Cards(List.of(new Card(ACE, HEART), new Card(JACK, HEART)));
         Player player = new Player("lily", cards);
         Card card = new Card(TWO, DIAMOND);
-        Player updatedPlayer = player.addCard(card);
+        Player updatedPlayer = player.hitCard(card);
         assertThat(updatedPlayer.cardsSize()).isEqualTo(3);
     }
 }

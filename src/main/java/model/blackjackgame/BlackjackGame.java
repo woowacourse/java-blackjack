@@ -21,9 +21,9 @@ public class BlackjackGame {
     }
 
     public void initCards(Cards cards) {
-        List<Card> cardsElement = cards.getElements();
-        dealer = dealer.addCards(cardsElement.subList(0, INITIAL_CARD_COUNT));
-        players = players.addCards(cardsElement.subList(INITIAL_CARD_COUNT, cardsElement.size()));
+        List<Card> cardsElement = cards.getCards();
+        dealer = dealer.hitCards(cardsElement.subList(0, INITIAL_CARD_COUNT));
+        players = players.hitCards(cardsElement.subList(INITIAL_CARD_COUNT, cardsElement.size()));
     }
 
     public Player playerHit(Player player, Card card) {
@@ -32,8 +32,8 @@ public class BlackjackGame {
     }
 
     public boolean dealerHit(Card card) {
-        if (dealer.isPossibleAddCard()) {
-            dealer = dealer.addCard(card);
+        if (dealer.isPossibleHit()) {
+            dealer = dealer.hitCard(card);
             return true;
         }
         return false;
@@ -47,8 +47,8 @@ public class BlackjackGame {
         return dealer;
     }
 
-    public List<Player> getPlayersElements() {
-        return players.getElements();
+    public List<Player> getPlayersGroup() {
+        return players.getGroup();
     }
 
     public Players getPlayers() {

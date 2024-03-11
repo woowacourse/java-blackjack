@@ -51,12 +51,12 @@ public class OutputView {
     }
 
     private static void printDealerCard(Dealer dealer) {
-        List<Card> cards = dealer.getCards().getElements();
+        List<Card> cards = dealer.getCards().getCards();
         System.out.printf(DEALER_CARD_FORMAT, cards.get(0));
     }
 
     private static void printPlayersCards(Players players) {
-        players.getElements()
+        players.getGroup()
             .forEach(OutputView::printPlayerCard);
         System.out.println();
     }
@@ -72,16 +72,18 @@ public class OutputView {
 
     public static void printFinalScore(Dealer dealer, Players players, GameResult gameResult) {
         String dealerCards = createCardsMessage(dealer.getCards());
-        System.out.printf(FINAL_SCORE_FORMAT, DEALER_NAME, dealerCards, gameResult.findDealerScore());
-        for (Player player : players.getElements()) {
+        System.out.printf(FINAL_SCORE_FORMAT, DEALER_NAME, dealerCards,
+            gameResult.findDealerScore());
+        for (Player player : players.getGroup()) {
             String playerName = player.getName();
             String playerCards = createCardsMessage(player.getCards());
-            System.out.printf(FINAL_SCORE_FORMAT, playerName, playerCards, gameResult.findPlayerScore(playerName));
+            System.out.printf(FINAL_SCORE_FORMAT, playerName, playerCards,
+                gameResult.findPlayerScore(playerName));
         }
     }
 
     private static String createCardsMessage(Cards cards) {
-        return cards.getElements()
+        return cards.getCards()
             .stream()
             .map(Card::toString)
             .collect(collectingAndThen(toList(), result -> String.join(DELIMITER, result)));

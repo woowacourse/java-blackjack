@@ -23,9 +23,9 @@ class RandomCardTest {
     @ValueSource(ints = {0, 1, 5, 10, 29, 60})
     void testPickCards(int count) {
         Cards cards = RandomCard.pickCards(count);
-        assertThat(cards.getElements()).hasSize(count);
+        assertThat(cards.getCards()).hasSize(count);
 
-        cards.getElements().forEach(card -> {
+        cards.getCards().forEach(card -> {
             assertThat(card.getNumber()).isNotNull();
             assertThat(card.getShape()).isNotNull();
         });

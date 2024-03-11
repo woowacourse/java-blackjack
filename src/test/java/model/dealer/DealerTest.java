@@ -21,7 +21,7 @@ class DealerTest {
     void testCanAddCard() {
         Cards cards = new Cards(List.of(new Card(ACE, HEART), new Card(JACK, HEART)));
         Dealer dealer = new Dealer(cards);
-        assertThat(dealer.isPossibleAddCard()).isTrue();
+        assertThat(dealer.isPossibleHit()).isTrue();
     }
 
     @DisplayName("딜러의 카드 합계가 17점 이상이면 false를 반환한다")
@@ -29,7 +29,7 @@ class DealerTest {
     void testCanNotAddCard() {
         Cards cards = new Cards(List.of(new Card(SEVEN, HEART), new Card(JACK, HEART)));
         Dealer dealer = new Dealer(cards);
-        assertThat(dealer.isPossibleAddCard()).isFalse();
+        assertThat(dealer.isPossibleHit()).isFalse();
     }
 
     @DisplayName("카드 1장을 획득하면 카드가 1개 증가한 딜러 객체를 반환한다")
@@ -38,7 +38,7 @@ class DealerTest {
         Cards cards = new Cards(List.of(new Card(ACE, HEART), new Card(JACK, HEART)));
         Dealer dealer = new Dealer(cards);
         Card card = new Card(TWO, DIAMOND);
-        Dealer updatedDealer = dealer.addCard(card);
+        Dealer updatedDealer = dealer.hitCard(card);
 
         int expectedSize = cards.size() + 1;
         assertThat(updatedDealer.cardsSize()).isEqualTo(expectedSize);

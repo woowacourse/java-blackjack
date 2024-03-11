@@ -16,27 +16,27 @@ public class Players {
     private static final String NOT_EXIST_PLAYER = "존재하는 플레이어가 없습니다.";
     private static final int CARDS_PER_PLAYER = 2;
 
-    private final List<Player> elements;
+    private final List<Player> group;
 
-    private Players(List<Player> players) {
-        validate(players);
-        elements = players;
+    private Players(List<Player> group) {
+        validate(group);
+        this.group = group;
     }
 
-    private void validate(List<Player> players) {
-        validateEmptyPlayers(players);
-        validatePlayerNamesUnique(players);
+    private void validate(List<Player> group) {
+        validateEmptyGroup(group);
+        validatePlayerNamesUnique(group);
     }
 
-    private void validateEmptyPlayers(List<Player> players) {
-        if (players.isEmpty()) {
+    private void validateEmptyGroup(List<Player> group) {
+        if (group.isEmpty()) {
             throw new IllegalArgumentException(INVALID_PLAYERS_SIZE);
         }
     }
 
-    private void validatePlayerNamesUnique(List<Player> players) {
-        Set<Player> uniquePlayers = new HashSet<>(players);
-        if (uniquePlayers.size() < players.size()) {
+    private void validatePlayerNamesUnique(List<Player> group) {
+        Set<Player> uniquePlayerGroup = new HashSet<>(group);
+        if (uniquePlayerGroup.size() < group.size()) {
             throw new IllegalArgumentException(INVALID_PLAYER_NAMES_UNIQUE);
         }
     }
@@ -47,12 +47,12 @@ public class Players {
             .collect(collectingAndThen(toList(), Players::new));
     }
 
-    public Players addCards(List<Card> cardsElement) {
+    public Players hitCards(List<Card> cards) {
         int index = 0;
         List<Player> updatedPlayers = new ArrayList<>();
-        for (Player player : elements) {
-            List<Card> cards = cardsElement.subList(index, index + CARDS_PER_PLAYER);
-            Player updatedPlayer = player.addCards(cards);
+        for (Player player : group) {
+            List<Card> cardsToAssign = cards.subList(index, index + CARDS_PER_PLAYER);
+            Player updatedPlayer = player.hitCards(cardsToAssign);
             updatedPlayers.add(updatedPlayer);
             index += CARDS_PER_PLAYER;
         }
@@ -60,33 +60,33 @@ public class Players {
     }
 
     public Players hit(Player player, Card card) {
-        List<Player> updatedPlayers = new ArrayList<>(elements);
-        Player updatedPlayer = player.addCard(card);
+        List<Player> updatedGroup = new ArrayList<>(group);
+        Player updatedPlayer = player.hitCard(card);
 
-        int index = updatedPlayers.indexOf(player);
-        updatedPlayers.set(index, updatedPlayer);
+        int index = updatedGroup.indexOf(player);
+        updatedGroup.set(index, updatedPlayer);
 
-        return new Players(updatedPlayers);
+        return new Players(updatedGroup);
     }
 
     public Player findPlayer(Player player) {
-        return elements.stream()
-            .filter(player1 -> player1.equals(player))
+        return group.stream()
+            .filter(groupPlayer -> groupPlayer.equals(player))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_PLAYER));
     }
 
     public List<String> names() {
-        return elements.stream()
+        return group.stream()
             .map(Player::getName)
             .toList();
     }
 
     public int count() {
-        return elements.size();
+        return group.size();
     }
 
-    public List<Player> getElements() {
-        return elements;
+    public List<Player> getGroup() {
+        return group;
     }
 }

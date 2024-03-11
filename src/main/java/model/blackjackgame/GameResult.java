@@ -21,7 +21,7 @@ public class GameResult {
 
     public static GameResult of(Dealer dealer, Players players) {
         GameScore dealerScore = GameScore.from(dealer);
-        List<GameScore> playersScore = players.getElements()
+        List<GameScore> playersScore = players.getGroup()
             .stream()
             .map(GameScore::from)
             .toList();

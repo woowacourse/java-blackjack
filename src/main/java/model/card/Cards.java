@@ -5,35 +5,35 @@ import java.util.List;
 
 public class Cards {
 
-    private final List<Card> elements;
+    private final List<Card> cards;
 
     public Cards(List<Card> cards) {
-        elements = List.copyOf(cards);
+        this.cards = List.copyOf(cards);
     }
 
     public int calculateTotalNumbers() {
-        return elements.stream()
+        return cards.stream()
             .mapToInt(card -> card.getNumber().getScore())
             .sum();
     }
 
     public Cards add(Card card) {
-        List<Card> addedCards = new ArrayList<>(elements);
+        List<Card> addedCards = new ArrayList<>(cards);
         addedCards.add(card);
         return new Cards(addedCards);
     }
 
-    public Cards addAll(List<Card> cardsElement) {
-        List<Card> addedCards = new ArrayList<>(elements);
-        addedCards.addAll(cardsElement);
+    public Cards addAll(List<Card> cards) {
+        List<Card> addedCards = new ArrayList<>(this.cards);
+        addedCards.addAll(cards);
         return new Cards(addedCards);
     }
 
     public int size() {
-        return elements.size();
+        return cards.size();
     }
 
-    public List<Card> getElements() {
-        return elements;
+    public List<Card> getCards() {
+        return cards;
     }
 }
