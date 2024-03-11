@@ -16,6 +16,10 @@ public class Player extends Participant {
         return PlayerState.FINISHED;
     }
 
+    public boolean isFirstTurnBackJack() {
+        return isBlackJack() && hands.getHands().size() == 2;
+    }
+
     private PlayerState canNextDraw() {
         if (isBurst()) {
             return PlayerState.FINISHED;

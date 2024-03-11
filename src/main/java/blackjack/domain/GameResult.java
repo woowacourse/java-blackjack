@@ -24,15 +24,7 @@ public class GameResult {
     }
 
     private static Result judgeResult(Dealer dealer, Player player) {
-        if ((dealer.isBurst() && player.isBurst())
-                || dealer.getHandsScore() == player.getHandsScore()) {
-            return Result.DRAW;
-        }
-        if (dealer.isBurst()
-                || ((player.getHandsScore() > dealer.getHandsScore()) && !player.isBurst())) {
-            return Result.WIN;
-        }
-        return Result.LOSE;
+        return Result.findResult(player, dealer);
     }
 
     public long getTargetResultCount(Result targetResult) {

@@ -9,6 +9,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class GameResultTest {
 
+    @DisplayName("블랙잭 승 : 플레이어 첫턴 블랙잭 && dealer가 블랙잭이 아닐 때")
+    @Test
+    void should_returnBlackJackWin_When_PlayerBlackJack_And_DealerIsNotBlackJack() {
+        Players players = new Players(List.of("pobi"));
+        Dealer dealer = new Dealer();
+
+        Player testPlayer = players.getPlayers().get(0);
+        testPlayer.addCard(Card.create(0));
+        testPlayer.addCard(Card.create(9));
+
+        dealer.addCard(Card.create(0));
+        GameResult gameResult = GameResult.of(dealer, players);
+
+        assertThat(gameResult.getTargetResultCount(Result.BLACK_JACk_WIN)).isOne();
+    }
+
     @DisplayName("플레이어 승 : 플레이어 카드패 > 딜러 카드패")
     @Test
     void should_returnWin_When_PlayerHands_Higher_Than_DealerHands() {
@@ -17,7 +33,7 @@ class GameResultTest {
 
         Player testPlayer = players.getPlayers().get(0);
         testPlayer.addCard(Card.create(0));
-        testPlayer.addCard(Card.create(9));
+        testPlayer.addCard(Card.create(8));
 
         dealer.addCard(Card.create(0));
         GameResult gameResult = GameResult.of(dealer, players);
@@ -33,7 +49,7 @@ class GameResultTest {
 
         Player testPlayer = players.getPlayers().get(0);
         testPlayer.addCard(Card.create(0));
-        testPlayer.addCard(Card.create(9));
+        testPlayer.addCard(Card.create(8));
 
         dealer.addCard(Card.create(9));
         dealer.addCard(Card.create(9));
@@ -97,7 +113,7 @@ class GameResultTest {
         assertThat(gameResult.getTargetResultCount(Result.DRAW)).isOne();
     }
 
-    @DisplayName("무승부 : 플레이어- Burst, 딜러- Burst")
+    @DisplayName("패 : 플레이어- Burst, 딜러- Burst")
     @Test
     void should_returnDraw_When_Both_Burst() {
         Players players = new Players(List.of("pobi"));
@@ -114,6 +130,6 @@ class GameResultTest {
 
         GameResult gameResult = GameResult.of(dealer, players);
 
-        assertThat(gameResult.getTargetResultCount(Result.DRAW)).isOne();
+        assertThat(gameResult.getTargetResultCount(Result.LOSE)).isOne();
     }
 }

@@ -35,4 +35,16 @@ public abstract class Participant {
     public boolean isBurst() {
         return hands.isBurst();
     }
+
+    public boolean isNotBurst() {
+        return !isBurst();
+    }
+
+    public boolean isBlackJack() {
+        return hands.isBlackJack();
+    }
+
+    public boolean isNotBlackJack() {
+        return !isBlackJack();
+    }
 }

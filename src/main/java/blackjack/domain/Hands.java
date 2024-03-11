@@ -45,6 +45,10 @@ public class Hands {
         return handsScore.isBurst();
     }
 
+    public boolean isBlackJack() {
+        return handsScore.isBlackJack();
+    }
+
     public int getHandsScore() {
         return handsScore.getScore();
     }

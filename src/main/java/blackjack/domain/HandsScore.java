@@ -20,4 +20,8 @@ public class HandsScore {
     public boolean isBurst() {
         return handsScore > BLACK_JACK;
     }
+
+    public boolean isBlackJack() {
+        return handsScore == BLACK_JACK;
+    }
 }
