@@ -5,6 +5,7 @@ import static blackjack.domain.card.Shape.DIAMOND;
 import static blackjack.domain.card.Shape.HEART;
 import static blackjack.domain.card.Shape.SPADE;
 import static blackjack.domain.card.Value.ACE;
+import static blackjack.domain.card.Value.EIGHT;
 import static blackjack.domain.card.Value.KING;
 import static blackjack.domain.card.Value.NINE;
 import static blackjack.domain.card.Value.QUEEN;
@@ -16,6 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -171,43 +173,42 @@ class GameResultBoardTest {
         assertThat(gameResultBoard.getGameResult(player)).isEqualTo(expected);
     }
 
-//
-//    @Test
-//    @DisplayName("딜러의 전적을 반환할 수 있다.")
-//    void calculateDealerResultTest() {
-//        List<Card> cards = generateCards();
-//        Deck deck = new Deck(cards);
-//
-//        Dealer dealer = new Dealer();
-//        giveCardToPlayer(dealer.getPlayer(), deck, 2);
-//
-//        List<Player> players = generatePlayers();
-//        players.forEach(player -> giveCardToPlayer(player, deck, 2));
-//
-//        GameResultBoard gameResultBoard = new GameResultBoard(dealer, new Players(players));
-//        Map<GameResult, Integer> dealerResult = gameResultBoard.getDealerResult();
-//
-//        assertAll(
-//                () -> assertThat(dealerResult).containsEntry(GameResult.WIN, 1),
-//                () -> assertThat(dealerResult).containsEntry(GameResult.DRAW, 1),
-//                () -> assertThat(dealerResult).containsEntry(GameResult.LOSE, 2)
-//        );
-//    }
-//
-//    private List<Card> generateCards() {
-//        return List.of(
-//                new Card(DIAMOND, KING), new Card(DIAMOND, NINE), // Dealer
-//                new Card(DIAMOND, ACE), new Card(DIAMOND, QUEEN), // dealer lose
-//                new Card(SPADE, ACE), new Card(SPADE, QUEEN), // dealer lose
-//                new Card(SPADE, KING), new Card(SPADE, NINE), // draw
-//                new Card(SPADE, TEN), new Card(SPADE, EIGHT) // dealer win
-//        );
-//    }
-//
-//    private List<Player> generatePlayers() {
-//        List<String> playerNames = List.of("loki", "pedro", "poke", "alpaca");
-//        return playerNames.stream()
-//                .map(name -> Player.from(name, TEST_PLAYER_BET_AMOUNT))
-//                .toList();
-//    }
+    @Test
+    @DisplayName("딜러의 수익을 반환할 수 있다.")
+    void calculateDealerResultTest() {
+        List<Card> cards = generateCards();
+        Deck deck = new Deck(cards);
+
+        Dealer dealer = new Dealer();
+        giveCardToPlayer(dealer.getPlayer(), deck, 2);
+
+        List<Player> players = generatePlayers();
+        players.forEach(player -> giveCardToPlayer(player, deck, 2));
+
+        GameResultBoard gameResultBoard = new GameResultBoard(dealer, new Players(players));
+        int dealerProfit = gameResultBoard.getDealerProfit();
+
+        int expected = -1 * (calculateExpectedProfitOf(GameResult.BLACKJACK)
+                + calculateExpectedProfitOf(GameResult.WIN)
+                + calculateExpectedProfitOf(GameResult.DRAW)
+                + calculateExpectedProfitOf(GameResult.LOSE));
+        assertThat(dealerProfit).isEqualTo(expected);
+    }
+
+    private List<Card> generateCards() {
+        return List.of(
+                new Card(DIAMOND, KING), new Card(DIAMOND, NINE), // 19: Dealer
+                new Card(DIAMOND, ACE), new Card(DIAMOND, QUEEN), // 21: player win (Player BlackJack)
+                new Card(CLOVER, KING), new Card(SPADE, QUEEN), // 20: player win
+                new Card(SPADE, KING), new Card(SPADE, NINE), // 19: draw
+                new Card(SPADE, TEN), new Card(SPADE, EIGHT) // 18: player lose
+        );
+    }
+
+    private List<Player> generatePlayers() {
+        List<String> playerNames = List.of("loki", "pedro", "poke", "alpaca");
+        return playerNames.stream()
+                .map(name -> Player.from(name, TEST_PLAYER_BET_AMOUNT))
+                .toList();
+    }
 }
