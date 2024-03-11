@@ -72,11 +72,16 @@ public class Score {
     }
 
     public GameResult compareWith(Score other) {
-        // TODO: 메서드 행 줄이기
         if (isBlackJack && !other.isBlackJack) {
             return GameResult.BLACKJACK;
         }
+        if (this.isBusted() || other.isBusted()) {
+            return compareWhenSomeoneBusted(other);
+        }
+        return compareWhenNoOneBusted(other);
+    }
 
+    private GameResult compareWhenSomeoneBusted(Score other) {
         if (this.isBusted() && other.isBusted()) {
             return GameResult.BOTH_BUSTED;
         }
@@ -86,7 +91,10 @@ public class Score {
         if (other.isBusted()) {
             return GameResult.WIN;
         }
+        throw new IllegalStateException();
+    }
 
+    private GameResult compareWhenNoOneBusted(Score other) {
         if (this.isGreaterThan(other)) {
             return GameResult.WIN;
         }
