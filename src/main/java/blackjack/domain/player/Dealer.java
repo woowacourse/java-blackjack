@@ -9,15 +9,14 @@ import java.util.List;
 import java.util.Map;
 
 public class Dealer extends Player {
-    public static final int BUST_THRESHOLD = 21;
-    private static final int HIT_THRESHOLD = 16;
+    private static final int HIT_CONDITION = 16;
 
     public Dealer() {
         super("딜러");
     }
 
     public boolean isMoreCardNeeded() {
-        return this.hand.getScore() <= HIT_THRESHOLD;
+        return this.hand.getScore(BUST_CONDITION) <= HIT_CONDITION;
     }
 
     public Card getFirstCard() {
@@ -40,10 +39,10 @@ public class Dealer extends Player {
     }
 
     private WinningStatus doesPlayerWin(final int dealerScore, final int playerScore) {
-        if (playerScore > BUST_THRESHOLD) {
+        if (playerScore > BUST_CONDITION) {
             return WinningStatus.LOSE;
         }
-        if (dealerScore > BUST_THRESHOLD) {
+        if (dealerScore > BUST_CONDITION) {
             return WinningStatus.WIN;
         }
         if (dealerScore == playerScore) {

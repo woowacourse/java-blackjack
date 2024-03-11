@@ -7,20 +7,19 @@ import java.util.Collections;
 import java.util.List;
 
 public class Hand {
-    private static final int BUST_CONDITION = 21;
     private static final int BONUS_SCORE = 10;
     private static final int NON_SCORE = 0;
 
     private final List<Card> cards = new ArrayList<>();
 
-    int getScore() {
+    int getScore(final int bustCondition) {
         final int minimumScore = cards.stream()
                 .mapToInt(Card::getNumber)
                 .sum();
 
         final int bonusScore = this.getBonusScore();
 
-        if (minimumScore + bonusScore <= BUST_CONDITION) {
+        if (minimumScore + bonusScore <= bustCondition) {
             return minimumScore + bonusScore;
         }
         return minimumScore;
