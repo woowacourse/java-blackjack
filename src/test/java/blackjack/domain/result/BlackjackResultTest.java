@@ -17,12 +17,17 @@ class BlackjackResultTest {
     @DisplayName("딜러의 승패 결과는 플레이어의 승패 결과를 반대로 반환한다.")
     @Test
     void getDealerResults() {
+        //given
         Map<Player, HandResult> playerResults = Map.of(generatePlayer(), HandResult.WIN,
                 generatePlayer(), HandResult.WIN,
                 generatePlayer(), HandResult.DRAW,
                 generatePlayer(), HandResult.LOSE);
         BlackjackResult blackjackResult = new BlackjackResult(playerResults);
+
+        //when
         Map<HandResult, Integer> dealerResults = blackjackResult.getDealerResults();
+
+        //then
         assertThat(dealerResults).contains(Map.entry(HandResult.WIN, 1), Map.entry(HandResult.LOSE, 2),
                 Map.entry(HandResult.DRAW, 1));
     }

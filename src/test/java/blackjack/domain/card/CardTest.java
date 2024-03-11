@@ -14,7 +14,10 @@ class CardTest {
             "EIGHT, CLOVER, 8클로버",
     })
     void getSymbolAndShape(Number number, Shape shape, String expected) {
+        //given
         Card card = new Card(number, shape);
+
+        //when & then
         assertThat(card.getSymbol() + card.getShape()).isEqualTo(expected);
     }
 
@@ -24,7 +27,10 @@ class CardTest {
             "FIVE, HEART, 5",
     })
     void getScore(Number number, Shape shape, Integer expected) {
+        //given
         Card card = new Card(number, shape);
+
+        //when & then
         assertThat(card.getScore()).isEqualTo(expected);
     }
 
@@ -34,7 +40,10 @@ class CardTest {
             "ACE, DIAMOND"
     })
     void isAce(Number number, Shape shape) {
+        //given
         Card card = new Card(number, shape);
+
+        //when & then
         assertTrue(card.isAce());
     }
 }

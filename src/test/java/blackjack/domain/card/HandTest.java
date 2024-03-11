@@ -3,82 +3,88 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.api.Test;
 
 class HandTest {
-    private static Stream<Arguments> provideCardsWithBlackjack() {
-        return Stream.of(
-                Arguments.of(createCards(List.of(Number.ACE, Number.JACK)), true),
-                Arguments.of(createCards(List.of(Number.FIVE)), false),
-                Arguments.of(createCards(List.of(Number.FIVE, Number.SIX, Number.KING)), true),
-                Arguments.of(createCards(List.of(Number.ACE, Number.ACE, Number.ACE, Number.EIGHT)), true),
-                Arguments.of(createCards(List.of(Number.ACE, Number.FOUR, Number.EIGHT)), false)
-        );
-    }
-
-    private static Stream<Arguments> provideCardsWithOptimizedScore() {
-        return Stream.of(
-                Arguments.of(createCards(List.of(Number.ACE, Number.JACK)), 21),
-                Arguments.of(createCards(List.of(Number.FIVE)), 5),
-                Arguments.of(createCards(List.of(Number.FIVE, Number.SIX, Number.KING)), 21),
-                Arguments.of(createCards(List.of(Number.ACE, Number.ACE, Number.ACE, Number.EIGHT)), 21),
-                Arguments.of(createCards(List.of(Number.ACE, Number.FOUR, Number.EIGHT)), 13)
-        );
-    }
-
-    private static Stream<Arguments> provideCardsWithScoreGreaterThan() {
-        return Stream.of(
-                Arguments.of(createCards(List.of(Number.ACE, Number.JACK)), 17, true),
-                Arguments.of(createCards(List.of(Number.FIVE, Number.SIX, Number.ACE)), 4, true)
-        );
-    }
-
-    private static Stream<Arguments> provideCardsWithBust() {
-        return Stream.of(
-                Arguments.of(createCards(List.of(Number.ACE, Number.JACK)), false),
-                Arguments.of(createCards(List.of(Number.ACE, Number.FIVE, Number.NINE, Number.EIGHT)), true)
-        );
-    }
-
     private static List<Card> createCards(List<Number> numbers) {
         return numbers.stream()
                 .map(number -> new Card(number, Shape.CLOVER))
                 .toList();
     }
 
-    @DisplayName("블랙잭 여부를 판단한다.")
-    @ParameterizedTest
-    @MethodSource("provideCardsWithBlackjack")
-    void isBlackjack(List<Card> cards, boolean isBlackjack) {
+    @DisplayName("블랙잭이 성립하는 패의 블랙잭 여부를 판단한다.")
+    @Test
+    void isHandBlackjack() {
+        //given
+        List<Card> cards = createCards(List.of(Number.ACE, Number.JACK));
         Hand hand = new Hand(cards);
-        assertThat(hand.isBlackjack()).isEqualTo(isBlackjack);
+
+        //when & then
+        assertThat(hand.isBlackjack()).isEqualTo(true);
     }
 
-    @DisplayName("최적의 점수를 계산한다.")
-    @ParameterizedTest
-    @MethodSource("provideCardsWithOptimizedScore")
-    void getOptimizedScore(List<Card> cards, int score) {
+    @DisplayName("블랙잭이 성립하지 않는 패의 블랙잭 여부를 판단한다.")
+    @Test
+    void isNotHandBlackjack() {
+        //given
+        List<Card> cards = createCards(List.of(Number.NINE, Number.FIVE, Number.KING));
         Hand hand = new Hand(cards);
-        assertThat(hand.calculateOptimizedScore()).isEqualTo(score);
+
+        //when & then
+        assertThat(hand.isBlackjack()).isEqualTo(false);
     }
 
-    @DisplayName("카드의 합이 입력된 값을 넘는 지 판단한다.")
-    @ParameterizedTest
-    @MethodSource("provideCardsWithScoreGreaterThan")
-    void isTotalScoreGreaterThan(List<Card> cards, int score, boolean isGreaterThan) {
+    @DisplayName("ACE를 포함한 패의 최적의 점수를 계산한다.")
+    @Test
+    void getOptimizedScoreWithAce() {
+        //given
+        List<Card> cards = createCards(List.of(Number.ACE, Number.JACK, Number.FIVE));
         Hand hand = new Hand(cards);
-        assertThat(hand.isTotalScoreGreaterThan(score)).isEqualTo(isGreaterThan);
+        int expectedScore = 16;
+
+        //when
+        int actualScore = hand.calculateOptimizedScore();
+
+        //then
+        assertThat(actualScore).isEqualTo(expectedScore);
     }
 
-    @DisplayName("Bust 여부를 판단한다.")
-    @ParameterizedTest
-    @MethodSource("provideCardsWithBust")
-    void isBust(List<Card> cards, boolean isBust) {
+    @DisplayName("ACE를 포함하지 않은 패의 최적의 점수를 계산한다.")
+    @Test
+    void getOptimizedScoreWithoutAce() {
+        //given
+        List<Card> cards = createCards(List.of(Number.SEVEN, Number.JACK));
         Hand hand = new Hand(cards);
-        assertThat(hand.isBust()).isEqualTo(isBust);
+        int expectedScore = 17;
+
+        //when
+        int actualScore = hand.calculateOptimizedScore();
+
+        //then
+        assertThat(actualScore).isEqualTo(expectedScore);
+    }
+
+    @DisplayName("카드의 합이 주어진 값을 넘는다.")
+    @Test
+    void isTotalScoreGreaterThan() {
+        //given
+        List<Card> cards = createCards(List.of(Number.ACE, Number.JACK));
+        Hand hand = new Hand(cards);
+        int testScore = 20;
+
+        //when & then
+        assertThat(hand.isTotalScoreGreaterThan(testScore)).isEqualTo(true);
+    }
+
+    @DisplayName("카드의 합이 21이 넘는 경우 Bust인지 확인한다.")
+    @Test
+    void isBust() {
+        //given
+        List<Card> cards = createCards(List.of(Number.ACE, Number.FIVE, Number.NINE, Number.EIGHT));
+        Hand hand = new Hand(cards);
+
+        //when & then
+        assertThat(hand.isBust()).isEqualTo(true);
     }
 }

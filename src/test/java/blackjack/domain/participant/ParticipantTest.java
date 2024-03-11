@@ -13,27 +13,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ParticipantTest {
-    private static TestParticipant createParticipant(List<Number> numbers, List<Shape> shapes, String name) {
-        Deck deck = new CustomDeck(numbers, shapes);
-        HandGenerator handGenerator = new HandGenerator(deck);
-        return new TestParticipant(new Name(name), handGenerator);
-    }
-
-    @DisplayName("입력된 숫자만큼 카드를 반환한다.")
-    @Test
-    void getCardsByCount() {
-        List<Number> numbers = List.of(Number.ACE, Number.FOUR, Number.NINE);
-        List<Shape> shapes = List.of(Shape.SPADE, Shape.DIAMOND, Shape.CLOVER);
-        TestParticipant participant = createParticipant(numbers, shapes, "감자");
-
-        List<String> cardSignatures = participant.getCardsByCount(1)
-                .stream()
-                .map(card -> card.getSymbol() + card.getShape())
-                .toList();
-
-        assertThat(cardSignatures).containsExactly("A스페이드");
-    }
-
     private static class TestParticipant extends Participant {
         public TestParticipant(Name name, HandGenerator handGenerator) {
             super(name, handGenerator);
@@ -48,5 +27,29 @@ class ParticipantTest {
         public boolean canHit() {
             return false;
         }
+    }
+
+    private static TestParticipant createParticipant(List<Number> numbers, List<Shape> shapes, String name) {
+        Deck deck = new CustomDeck(numbers, shapes);
+        HandGenerator handGenerator = new HandGenerator(deck);
+        return new TestParticipant(new Name(name), handGenerator);
+    }
+
+    @DisplayName("입력된 숫자만큼 카드를 반환한다.")
+    @Test
+    void getCardsByCount() {
+        //given
+        List<Number> numbers = List.of(Number.ACE, Number.FOUR, Number.NINE);
+        List<Shape> shapes = List.of(Shape.SPADE, Shape.DIAMOND, Shape.CLOVER);
+        TestParticipant participant = createParticipant(numbers, shapes, "감자");
+
+        //when
+        List<String> cardSignatures = participant.getCardsByCount(1)
+                .stream()
+                .map(card -> card.getSymbol() + card.getShape())
+                .toList();
+
+        //then
+        assertThat(cardSignatures).containsExactly("A스페이드");
     }
 }

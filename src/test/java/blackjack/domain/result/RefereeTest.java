@@ -9,32 +9,61 @@ import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participants;
 import blackjack.testutil.CustomDeck;
 import java.util.List;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.api.Test;
 
 class RefereeTest {
-    private static Stream<Arguments> provideParticipantsWithHandResult() {
-        return Stream.of(
-                Arguments.of(List.of(Number.ACE, Number.SIX, Number.ACE, Number.EIGHT), HandResult.LOSE),
-                Arguments.of(List.of(Number.ACE, Number.EIGHT, Number.ACE, Number.SIX), HandResult.WIN),
-                Arguments.of(List.of(Number.SEVEN, Number.JACK, Number.QUEEN, Number.SEVEN), HandResult.DRAW)
-        );
-    }
-
-    @DisplayName("게임의 최종 결과를 생성한다.")
-    @ParameterizedTest
-    @MethodSource("provideParticipantsWithHandResult")
-    void generateResult(List<Number> numbers, HandResult playerHandResult) {
+    @DisplayName("딜러가 이기는 게임의 최종 결과를 생성한다.")
+    @Test
+    void generateResultThatDealerWin() {
+        //given
+        List<Number> numbers =  List.of(Number.ACE, Number.SIX, Number.ACE, Number.EIGHT);
         Deck deck = new CustomDeck(numbers);
         HandGenerator handGenerator = new HandGenerator(deck);
         List<Name> playerName = List.of(new Name("gamza"));
         Participants participants = new Participants(playerName, handGenerator);
         Referee referee = Referee.getInstance();
+
+        //when
         BlackjackResult blackjackResult = participants.generateResult(referee);
 
-        assertThat(blackjackResult.getPlayersResult().values()).containsExactly(playerHandResult);
+        //then
+        assertThat(blackjackResult.getPlayersResult().values()).containsExactly(HandResult.LOSE);
+    }
+
+    @DisplayName("플레이어가 이기는 게임의 최종 결과를 생성한다.")
+    @Test
+    void generateResultThatPlayerWin() {
+        //given
+        List<Number> numbers =  List.of(Number.ACE, Number.KING, Number.ACE, Number.EIGHT);
+        Deck deck = new CustomDeck(numbers);
+        HandGenerator handGenerator = new HandGenerator(deck);
+        List<Name> playerName = List.of(new Name("mason"));
+        Participants participants = new Participants(playerName, handGenerator);
+        Referee referee = Referee.getInstance();
+
+        //when
+        BlackjackResult blackjackResult = participants.generateResult(referee);
+
+        //then
+        assertThat(blackjackResult.getPlayersResult().values()).containsExactly(HandResult.WIN);
+    }
+
+    @DisplayName("비기는 게임의 최종 결과를 생성한다.")
+    @Test
+    void generateResultThatDraw() {
+        //given
+        List<Number> numbers =  List.of(Number.SEVEN, Number.JACK, Number.QUEEN, Number.SEVEN);
+        Deck deck = new CustomDeck(numbers);
+        HandGenerator handGenerator = new HandGenerator(deck);
+        List<Name> playerName = List.of(new Name("pobi"));
+        Participants participants = new Participants(playerName, handGenerator);
+        Referee referee = Referee.getInstance();
+
+        //when
+        BlackjackResult blackjackResult = participants.generateResult(referee);
+
+        //then
+        assertThat(blackjackResult.getPlayersResult().values()).containsExactly(HandResult.DRAW);
     }
 }

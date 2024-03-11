@@ -8,12 +8,8 @@ import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
 import blackjack.testutil.CustomDeck;
 import java.util.List;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 class DealerTest {
     private static Dealer createDealer(List<Number> numbers, List<Shape> shapes) {
@@ -22,37 +18,61 @@ class DealerTest {
         return new Dealer(handGenerator);
     }
 
-    private static Stream<Arguments> provideNumbersWithCanHit() {
-        return Stream.of(
-                Arguments.of(List.of(Number.ACE, Number.JACK), false),
-                Arguments.of(List.of(Number.EIGHT, Number.NINE), false),
-                Arguments.of(List.of(Number.FOUR, Number.FIVE), true)
-        );
-    }
-
     @DisplayName("딜러는 처음에 한 장의 카드를 오픈한다.")
     @Test
     void dealerInitialOpenedCards() {
+        //given
         List<Number> numbers = List.of(Number.ACE, Number.EIGHT);
         List<Shape> shapes = List.of(Shape.SPADE, Shape.CLOVER);
         Dealer dealer = createDealer(numbers, shapes);
 
+        //when
         List<String> cardSignatures = dealer.getInitialOpenedCards()
                 .stream()
                 .map(card -> card.getSymbol() + card.getShape())
                 .toList();
 
+        //then
         assertThat(cardSignatures).containsExactly("A스페이드");
     }
 
-    @DisplayName("딜러가 Hit을 할 수 있는지 판단한다.")
-    @ParameterizedTest
-    @MethodSource("provideNumbersWithCanHit")
-    void dealerCanHit(List<Number> numbers, boolean canHit) {
+    @DisplayName("패가 블랙잭인 딜러가 Hit을 할 수 있는지 확인한다.")
+    @Test
+    void isBlackjackDealerCanHit() {
+        //given
+        List<Number> numbers = List.of(Number.ACE, Number.JACK);
         Deck deck = new CustomDeck(numbers);
         HandGenerator handGenerator = new HandGenerator(deck);
         Dealer dealer = new Dealer(handGenerator);
 
-        assertThat(dealer.canHit()).isEqualTo(canHit);
+        //when & then
+        assertThat(dealer.canHit()).isEqualTo(false);
+    }
+
+    @DisplayName("패가 Bust인 딜러가 Hit을 할 수 있는지 확인한다.")
+    @Test
+    void isBustDealerCanHit() {
+        //given
+        List<Number> numbers = List.of(Number.FIVE, Number.NINE, Number.KING);
+        Deck deck = new CustomDeck(numbers);
+        HandGenerator handGenerator = new HandGenerator(deck);
+        Dealer dealer = new Dealer(handGenerator);
+        dealer.addCard(deck);
+
+        //when & then
+        assertThat(dealer.canHit()).isEqualTo(false);
+    }
+
+    @DisplayName("패가 16 이하인 딜러가 Hit을 할 수 있는지 확인한다.")
+    @Test
+    void isUnderDealerCanHit() {
+        //given
+        List<Number> numbers = List.of(Number.SEVEN, Number.NINE);
+        Deck deck = new CustomDeck(numbers);
+        HandGenerator handGenerator = new HandGenerator(deck);
+        Dealer dealer = new Dealer(handGenerator);
+
+        //when & then
+        assertThat(dealer.canHit()).isEqualTo(true);
     }
 }

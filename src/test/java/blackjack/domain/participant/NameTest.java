@@ -13,6 +13,7 @@ class NameTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "gambas"})
     void invalidNameLength(String name) {
+        //given & when & then
         assertThatThrownBy(() -> new Name(name))
                 .isInstanceOf(InvalidNameLengthException.class);
     }
@@ -21,6 +22,7 @@ class NameTest {
     @ParameterizedTest
     @ValueSource(strings = {"감자s~", "마so-", "pobi!", "po bi"})
     void nonAlphabeticName(String name) {
+        //given & when & then
         assertThatThrownBy(() -> new Name(name))
                 .isInstanceOf(NonAlphabeticNameException.class);
     }
