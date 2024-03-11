@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 import controller.dto.JudgeResult;
 import domain.participant.Participants;

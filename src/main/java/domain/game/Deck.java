@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 import domain.card.Card;
 import domain.card.Score;

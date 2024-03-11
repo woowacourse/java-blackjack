@@ -1,7 +1,7 @@
 package util;
 
-import domain.Deck;
 import domain.card.Card;
+import domain.game.Deck;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.List;

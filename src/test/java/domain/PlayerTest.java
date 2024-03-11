@@ -6,6 +6,7 @@ import domain.card.Card;
 import domain.card.Score;
 import domain.card.Shape;
 import domain.constants.CardCommand;
+import domain.game.Deck;
 import domain.participant.Player;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

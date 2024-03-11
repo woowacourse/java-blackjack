@@ -12,6 +12,8 @@ import domain.card.Card;
 import domain.card.Score;
 import domain.card.Shape;
 import domain.constants.CardCommand;
+import domain.game.BlackJackGame;
+import domain.game.Deck;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;

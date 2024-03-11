@@ -1,6 +1,6 @@
 package domain.participant;
 
-import static domain.BlackJackGame.BLACKJACK_SCORE;
+import static domain.game.BlackJackGame.BLACKJACK_SCORE;
 
 import domain.card.Card;
 import java.util.ArrayList;

@@ -2,13 +2,13 @@ package controller;
 
 import controller.dto.HandStatus;
 import controller.dto.JudgeResult;
-import domain.BlackJackGame;
 import domain.constants.CardCommand;
+import domain.game.ActionAfterPick;
+import domain.game.BlackJackGame;
+import domain.game.DecisionToContinue;
 import domain.participant.Participant;
 import domain.participant.Player;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 import view.InputView;
 import view.OutputView;
 
@@ -50,14 +50,14 @@ public class GameManager {
         }
     }
 
-    private Consumer<HandStatus> getAction(final Participant participant) {
+    private ActionAfterPick getAction(final Participant participant) {
         if (participant instanceof Player) {
             return handStatus -> outputView.printHandStatus(handStatus);
         }
         return handStatus -> outputView.printDealerCardSavedMessage();
     }
 
-    private Supplier<CardCommand> getSupplier(final Participant participant) {
+    private DecisionToContinue getSupplier(final Participant participant) {
         if (participant instanceof Player) {
             return () -> CardCommand.from(
                     inputView.requestCommandWhetherGetMoreCard(participant.getName())

@@ -13,6 +13,7 @@ import static util.ParticipantSupplier.createPlayer;
 import controller.dto.JudgeResult;
 import controller.dto.PlayerOutcome;
 import domain.constants.Outcome;
+import domain.game.Referee;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
