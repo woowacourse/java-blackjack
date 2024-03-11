@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Deck;
 import blackjack.domain.card.TrumpCard;
-import blackjack.domain.stategy.TestShuffleStrategy;
+import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.strategy.ShuffleStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("플레이어")
 public class PlayerTest {
 
-    private final ShuffleStrategy shuffleStrategy = new TestShuffleStrategy();
+    private final ShuffleStrategy shuffleStrategy = new NoShuffleStrategy();
     private Deck deck;
     private Dealer dealer;
     private Player choco;

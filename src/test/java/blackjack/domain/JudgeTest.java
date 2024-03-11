@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.stategy.TestShuffleStrategy;
+import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.dto.DealerResult;
 import blackjack.dto.PlayerResult;
 import blackjack.strategy.ShuffleStrategy;
@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("결과 판단")
 class JudgeTest {
 
-    private final ShuffleStrategy shuffleStrategy = new TestShuffleStrategy();
+    private final ShuffleStrategy shuffleStrategy = new NoShuffleStrategy();
 
     private Deck deck;
     private Dealer dealer;

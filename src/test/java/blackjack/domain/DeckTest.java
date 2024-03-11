@@ -1,7 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.TrumpCard;
-import blackjack.domain.stategy.TestShuffleStrategy;
+import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.strategy.ShuffleStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ public class DeckTest {
     @Test
     void shuffleCardInMyOrder() {
         // given
-        ShuffleStrategy shuffleStrategy = new TestShuffleStrategy();
+        ShuffleStrategy shuffleStrategy = new NoShuffleStrategy();
         Deck deck = new Deck(shuffleStrategy);
         TrumpCard trumpCardAceSpade = aceSpadeTrumpCard();
 
