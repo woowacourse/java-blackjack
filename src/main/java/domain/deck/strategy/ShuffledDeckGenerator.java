@@ -1,6 +1,6 @@
-package domain.strategy;
+package domain.deck.strategy;
 
-import domain.DeckGenerator;
+import domain.deck.DeckGenerator;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;

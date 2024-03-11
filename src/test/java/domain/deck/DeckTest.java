@@ -1,10 +1,10 @@
-package domain;
+package domain.deck;
 
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
-import domain.strategy.SettedDeckGenerator;
-import domain.strategy.ShuffledDeckGenerator;
+import domain.deck.strategy.SettedDeckGenerator;
+import domain.deck.strategy.ShuffledDeckGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

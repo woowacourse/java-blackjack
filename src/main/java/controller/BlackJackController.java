@@ -1,10 +1,11 @@
 package controller;
 
 import domain.*;
+import domain.deck.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Player;
-import domain.strategy.ShuffledDeckGenerator;
+import domain.deck.strategy.ShuffledDeckGenerator;
 import view.InputView;
 import view.OutputView;
 

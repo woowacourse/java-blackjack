@@ -1,6 +1,6 @@
-package domain.strategy;
+package domain.deck.strategy;
 
-import domain.DeckGenerator;
+import domain.deck.DeckGenerator;
 import domain.card.Card;
 
 import java.util.List;

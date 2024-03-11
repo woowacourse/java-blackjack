@@ -1,6 +1,7 @@
 package domain;
 
 import domain.card.Card;
+import domain.deck.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Player;
