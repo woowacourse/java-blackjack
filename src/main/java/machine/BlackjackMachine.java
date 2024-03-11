@@ -3,7 +3,6 @@ package machine;
 import domain.game.BlackjackGame;
 import domain.game.Result;
 import domain.participant.Dealer;
-import domain.participant.Name;
 import domain.participant.Participants;
 import domain.participant.Player;
 import java.util.List;
@@ -38,10 +37,7 @@ public class BlackjackMachine {
 
     private BlackjackGame initializeGame() {
         List<String> names = inputView.readNames();
-        List<Player> players = names.stream()
-            .map(name -> new Player(new Name(name)))
-            .toList();
-        return new BlackjackGame(Participants.of(players), new RandomCardGenerator());
+        return new BlackjackGame(Participants.from(names), new RandomCardGenerator());
     }
 
     private void playPlayerTurns(BlackjackGame game) {

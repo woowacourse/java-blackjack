@@ -1,42 +1,33 @@
 package domain.participant;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Participants {
 
-    private final List<Participant> participants;
+    private final Dealer dealer;
+    private final Players players;
 
-    public Participants(List<Participant> participants) {
-        this.participants = participants;
+    private Participants(Dealer dealer, Players participants) {
+        this.dealer = dealer;
+        this.players = participants;
     }
 
-    public static Participants of(List<Player> players) {
-        List<Participant> initialParticipants = new ArrayList<>(players);
-        initialParticipants.add(new Dealer());
-        return new Participants(initialParticipants);
+    public static Participants from(List<String> playerNames) {
+        return new Participants(new Dealer(), Players.from(playerNames));
     }
 
     public boolean doesNotContain(Participant participant) {
-        return !participants.contains(participant);
-    }
-
-    public List<Player> getPlayers() {
-        return participants.stream()
-            .filter(participant -> participant instanceof Player)
-            .map(participant -> (Player) participant)
-            .toList();
+        if (participant == dealer) {
+            return false;
+        }
+        return players.doesNotContain(participant);
     }
 
     public Dealer getDealer() {
-        return (Dealer) participants.stream()
-            .filter(participant -> participant instanceof Dealer)
-            .findFirst()
-            .orElseThrow(() -> new IllegalStateException("[ERROR] Dealer가 존재하지 않습니다."));
+        return dealer;
     }
 
-    public List<Participant> getParticipants() {
-        return Collections.unmodifiableList(participants);
+    public List<Player> getPlayers() {
+        return players.getPlayers();
     }
 }

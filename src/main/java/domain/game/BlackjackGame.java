@@ -22,10 +22,10 @@ public class BlackjackGame {
     }
 
     public void distributeStartingCards() {
-        for (Participant participant : participants.getParticipants()) {
-            List<Card> cards = deckCards.drawStartingCards(STARTING_CARDS_AMOUNT);
-            participant.receive(cards);
+        for (Participant participant : participants.getPlayers()) {
+            participant.receive(deckCards.drawStartingCards(STARTING_CARDS_AMOUNT));
         }
+        getDealer().receive(deckCards.drawStartingCards(STARTING_CARDS_AMOUNT));
     }
 
     public void giveOneCard(Participant participant) {
