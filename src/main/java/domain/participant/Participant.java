@@ -1,25 +1,25 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.game.BlackjackHand;
 import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
 
     private final Name name;
-    private final Cards cards;
+    private final BlackjackHand blackjackHand;
 
     public Participant(Name name) {
         this.name = name;
-        this.cards = new Cards();
+        this.blackjackHand = new BlackjackHand();
     }
 
     public abstract boolean isReceivable();
 
     public void receive(Card receivedCard) {
         if (isReceivable()) {
-            cards.receive(receivedCard);
+            blackjackHand.receive(receivedCard);
             return;
         }
         throw new IllegalStateException("[ERROR] 카드를 받을 수 없는 상태입니다.");
@@ -27,18 +27,18 @@ public abstract class Participant {
 
     public void receive(List<Card> receivedCards) {
         if (isReceivable()) {
-            cards.receive(receivedCards);
+            blackjackHand.receive(receivedCards);
             return;
         }
         throw new IllegalStateException("[ERROR] 카드를 받을 수 없는 상태입니다.");
     }
 
     public int calculateScore() {
-        return cards.calculateScore();
+        return blackjackHand.calculateScore();
     }
 
     public boolean isBusted() {
-        return cards.isOverBlackjackScore();
+        return blackjackHand.isOverBlackjackScore();
     }
 
     public String getName() {
@@ -46,6 +46,6 @@ public abstract class Participant {
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards.getCards());
+        return Collections.unmodifiableList(blackjackHand.getCards());
     }
 }

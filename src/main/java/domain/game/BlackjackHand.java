@@ -1,17 +1,20 @@
-package domain.card;
+package domain.game;
+
+import domain.card.Card;
+import domain.card.Rank;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class Cards {
+public class BlackjackHand {
 
     private static final int BLACKJACK_SCORE = 21;
     private static final int ACE_SPECIAL_SCORE = 10;
 
     private final List<Card> cards;
 
-    public Cards() {
+    public BlackjackHand() {
         this.cards = new ArrayList<>();
     }
 
