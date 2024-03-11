@@ -24,7 +24,4 @@ public abstract class Participant {
         return new FaceUpResult(name, cardDeck.getCards(), cardDeck.calculateHand());
     }
 
-    public Name getName(){
-        return name;
-    }
 }
