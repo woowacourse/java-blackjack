@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.card.Card;
 import blackjack.game.MatchResult;
-import blackjack.view.display.CardNumberDisplay;
+import blackjack.view.display.CardRankDisplay;
 import blackjack.view.display.CardShapeDisplay;
 import blackjack.view.display.PlayerResultDisplay;
 import java.util.List;
@@ -59,9 +59,9 @@ public class OutputView {
     }
 
     private String convertCard(Card card) {
-        String convertedNumber = CardNumberDisplay.getDisplayByNumber(card.getNumber());
+        String convertedRank = CardRankDisplay.getDisplayByRank(card.getRank());
         String convertedShape = CardShapeDisplay.getDisplayByShape(card.getShape());
-        return convertedNumber + convertedShape;
+        return convertedRank + convertedShape;
     }
 
     private String convertCards(List<Card> cards) {

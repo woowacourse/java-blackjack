@@ -1,6 +1,6 @@
 package blackjack.card;
 
-public enum Number {
+public enum Rank {
 
     ACE(1),
     TWO(2),
@@ -18,7 +18,7 @@ public enum Number {
 
     private final int score;
 
-    Number(int score) {
+    Rank(int score) {
         this.score = score;
     }
 

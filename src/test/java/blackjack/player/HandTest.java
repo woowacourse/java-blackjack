@@ -3,7 +3,7 @@ package blackjack.player;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.card.Card;
-import blackjack.card.Number;
+import blackjack.card.Rank;
 import blackjack.card.Shape;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -16,8 +16,8 @@ class HandTest {
     void calculateScoreTest() {
         // given
         List<Card> cards = List.of(
-                new Card(Shape.SPADE, Number.KING),
-                new Card(Shape.HEART, Number.EIGHT)
+                new Card(Shape.SPADE, Rank.KING),
+                new Card(Shape.HEART, Rank.EIGHT)
         );
         Hand hand = new Hand(cards);
         // when, then
@@ -29,8 +29,8 @@ class HandTest {
     void calculateAceAsElevenTest() {
         // given
         List<Card> cards = List.of(
-                new Card(Shape.HEART, Number.TEN),
-                new Card(Shape.CLOVER, Number.ACE)
+                new Card(Shape.HEART, Rank.TEN),
+                new Card(Shape.CLOVER, Rank.ACE)
         );
         Hand hand = new Hand(cards);
         // when, then
@@ -42,9 +42,9 @@ class HandTest {
     void calculateAceAsOneTest() {
         // given
         List<Card> cards = List.of(
-                new Card(Shape.HEART, Number.TEN),
-                new Card(Shape.CLOVER, Number.ACE),
-                new Card(Shape.DIAMOND, Number.TEN)
+                new Card(Shape.HEART, Rank.TEN),
+                new Card(Shape.CLOVER, Rank.ACE),
+                new Card(Shape.DIAMOND, Rank.TEN)
         );
         Hand hand = new Hand(cards);
         // when, then

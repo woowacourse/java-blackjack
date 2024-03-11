@@ -5,27 +5,27 @@ import java.util.Objects;
 public class Card {
 
     private final Shape shape;
-    private final Number number;
+    private final Rank rank;
 
-    public Card(Shape shape, Number number) {
+    public Card(Shape shape, Rank rank) {
         this.shape = shape;
-        this.number = number;
+        this.rank = rank;
     }
 
     public boolean isAce() {
-        return number == Number.ACE;
+        return rank == Rank.ACE;
     }
 
     public int getScore() {
-        return number.getScore();
+        return rank.getScore();
     }
 
     public Shape getShape() {
         return shape;
     }
 
-    public Number getNumber() {
-        return number;
+    public Rank getRank() {
+        return rank;
     }
 
     @Override
@@ -37,11 +37,11 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return shape == card.shape && number == card.number;
+        return shape == card.shape && rank == card.rank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(shape, number);
+        return Objects.hash(shape, rank);
     }
 }

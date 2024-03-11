@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.card.Card;
-import blackjack.card.Number;
+import blackjack.card.Rank;
 import blackjack.card.Shape;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -17,8 +17,8 @@ class DealerTest {
     void ableToDrawTest() {
         // given
         List<Card> cards = List.of(
-                new Card(Shape.HEART, Number.JACK),
-                new Card(Shape.DIAMOND, Number.SIX)
+                new Card(Shape.HEART, Rank.JACK),
+                new Card(Shape.DIAMOND, Rank.SIX)
         );
         Hand hand = new Hand(cards);
         Dealer dealer = new Dealer(hand);
@@ -33,8 +33,8 @@ class DealerTest {
     void unableToDrawTest() {
         // given
         List<Card> cards = List.of(
-                new Card(Shape.HEART, Number.JACK),
-                new Card(Shape.DIAMOND, Number.SEVEN)
+                new Card(Shape.HEART, Rank.JACK),
+                new Card(Shape.DIAMOND, Rank.SEVEN)
         );
         Hand hand = new Hand(cards);
         Dealer dealer = new Dealer(hand);
@@ -49,13 +49,13 @@ class DealerTest {
     void getFirstCardTest() {
         // given
         List<Card> cards = List.of(
-                new Card(Shape.HEART, Number.JACK),
-                new Card(Shape.DIAMOND, Number.SEVEN)
+                new Card(Shape.HEART, Rank.JACK),
+                new Card(Shape.DIAMOND, Rank.SEVEN)
         );
         Hand hand = new Hand(cards);
         Dealer dealer = new Dealer(hand);
         // when, then
-        assertThat(dealer.getFirstCard()).isEqualTo(new Card(Shape.HEART, Number.JACK));
+        assertThat(dealer.getFirstCard()).isEqualTo(new Card(Shape.HEART, Rank.JACK));
     }
 
     @Test

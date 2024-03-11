@@ -11,15 +11,15 @@ class CardTest {
     @Test
     @DisplayName("카드의 점수를 정확하게 계산한다.")
     void calculateCardTest() {
-        Card card = new Card(Shape.SPADE, Number.ACE);
+        Card card = new Card(Shape.SPADE, Rank.ACE);
         assertThat(card.getScore()).isEqualTo(1);
     }
 
     @Test
     @DisplayName("카드가 에이스인지 확인한다.")
     void isAceTest() {
-        Card aceCard = new Card(Shape.HEART, Number.ACE);
-        Card nonAceCard = new Card(Shape.CLOVER, Number.JACK);
+        Card aceCard = new Card(Shape.HEART, Rank.ACE);
+        Card nonAceCard = new Card(Shape.CLOVER, Rank.JACK);
 
         assertAll(
                 () -> assertThat(aceCard.isAce()).isTrue(),

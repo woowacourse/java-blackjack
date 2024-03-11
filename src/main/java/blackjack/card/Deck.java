@@ -25,8 +25,8 @@ public class Deck {
 
     private static List<Card> createNumberCardsOf(Shape shape) {
         List<Card> cards = new ArrayList<>();
-        for (Number number : Number.values()) {
-            cards.add(new Card(shape, number));
+        for (Rank rank : Rank.values()) {
+            cards.add(new Card(shape, rank));
         }
         return cards;
     }
