@@ -12,8 +12,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.player.Outcome;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.Score;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -57,10 +57,7 @@ class PlayerTest {
             player.draw(deck);
         }
 
-        Score score = player.getScore();
-
-        Score expected = new Score(9);
-        assertThat(score).isEqualTo(expected);
+        assertThat(player.getScore()).isEqualTo(9);
     }
 
     @ParameterizedTest
@@ -74,9 +71,9 @@ class PlayerTest {
             player.draw(deck);
         }
 
-        boolean isBusted = player.isBusted();
+        Outcome outcome = player.calculateOutcome();
 
-        assertThat(isBusted).isEqualTo(expected);
+        assertThat(outcome.isBusted()).isEqualTo(expected);
     }
 
     static Stream<Arguments> cardsAndBustStatus() {

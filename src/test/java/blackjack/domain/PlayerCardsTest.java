@@ -5,8 +5,8 @@ import static blackjack.domain.card.Shape.*;
 import static blackjack.domain.card.Value.*;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.player.Outcome;
 import blackjack.domain.player.PlayerCards;
-import blackjack.domain.player.Score;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -36,11 +36,8 @@ class PlayerCardsTest {
                 new Card(DIAMOND, FOUR)
         );
         PlayerCards playerCards = new PlayerCards(cards);
-
-        Score score = playerCards.calculateScore();
-        Score expected = new Score(9);
-
-        assertThat(score).isEqualTo(expected);
+        Outcome outcome = playerCards.calculateOutcome();
+        assertThat(outcome.getScore()).isEqualTo(9);
     }
 
     @Test
@@ -52,22 +49,17 @@ class PlayerCardsTest {
                 new Card(DIAMOND, KING)
         );
         PlayerCards playerCards = new PlayerCards(cards);
-
-        Score score = playerCards.calculateScore();
-        Score expected = new Score(30);
-
-        assertThat(score).isEqualTo(expected);
+        Outcome outcome = playerCards.calculateOutcome();
+        assertThat(outcome.getScore()).isEqualTo(30);
     }
 
     @ParameterizedTest
     @MethodSource("cardsAndScore")
     @DisplayName("ACE 는 1점 혹은 11점으로 계산된다.")
-    void calculateScoreWithAce(List<Card> cards, int expectedValue) {
+    void calculateScoreWithAce(List<Card> cards, int expected) {
         PlayerCards playerCards = new PlayerCards(cards);
-        Score score = playerCards.calculateScore();
-
-        Score expected = new Score(expectedValue);
-        assertThat(score).isEqualTo(expected);
+        Outcome outcome = playerCards.calculateOutcome();
+        assertThat(outcome.getScore()).isEqualTo(expected);
     }
 
     static Stream<Arguments> cardsAndScore() {
