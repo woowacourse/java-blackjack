@@ -15,15 +15,15 @@ public class Deck {
         this.cards = cards;
     }
 
-    public static Deck createSuffledDeck() {
+    public static Deck createShuffledDeck() {
         Deque<Card> cards = new ArrayDeque<>();
-        makeSuffledOrder().stream()
+        makeShuffledOrder().stream()
                 .map(Card::create)
                 .forEach(cards::add);
         return new Deck(cards);
     }
 
-    private static List<Integer> makeSuffledOrder() {
+    private static List<Integer> makeShuffledOrder() {
         List<Integer> cardOrder = IntStream.range(0, 52)
                 .boxed()
                 .collect(Collectors.toList());

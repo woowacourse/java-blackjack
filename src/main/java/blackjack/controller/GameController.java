@@ -14,7 +14,7 @@ public class GameController {
     }
 
     public static void run() {
-        Deck deck = Deck.createSuffledDeck();
+        Deck deck = Deck.createShuffledDeck();
         Game game = makeGame(deck);
         Dealer gameDealer = game.getDealer();
         Players gamePlayers = game.getPlayers();
