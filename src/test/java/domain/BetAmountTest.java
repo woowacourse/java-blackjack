@@ -12,7 +12,7 @@ class BetAmountTest {
     void determineProfit_Win() {
         BetAmount betAmount = new BetAmount(1000);
 
-        Assertions.assertThat(betAmount.determineProfit(Status.WIN)).isEqualTo(1000);
+        Assertions.assertThat(betAmount.determineIncome(Status.WIN)).isEqualTo(1000);
     }
 
     @Test
@@ -20,7 +20,7 @@ class BetAmountTest {
     void determineProfit_Tie() {
         BetAmount betAmount = new BetAmount(1000);
 
-        Assertions.assertThat(betAmount.determineProfit(Status.TIE)).isEqualTo(0);
+        Assertions.assertThat(betAmount.determineIncome(Status.TIE)).isEqualTo(0);
     }
 
     @Test
@@ -28,6 +28,6 @@ class BetAmountTest {
     void determineProfit_Lose() {
         BetAmount betAmount = new BetAmount(1000);
 
-        Assertions.assertThat(betAmount.determineProfit(Status.LOSE)).isEqualTo(-1000);
+        Assertions.assertThat(betAmount.determineIncome(Status.LOSE)).isEqualTo(-1000);
     }
 }

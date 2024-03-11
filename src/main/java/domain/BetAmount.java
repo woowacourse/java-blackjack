@@ -15,11 +15,11 @@ public class BetAmount {
     }
 
 
-    public int determineProfit(Status status) {
-        if(status == Status.WIN) {
+    public int determineIncome(Status status) {
+        if (status == Status.WIN) {
             return betAmount;
         }
-        if(status == Status.LOSE){
+        if (status == Status.LOSE) {
             return -betAmount;
         }
         return 0;

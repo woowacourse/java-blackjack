@@ -2,6 +2,7 @@ package domain.card;
 
 import domain.BetAmount;
 import domain.Name;
+import domain.score.Status;
 
 import java.util.List;
 
@@ -20,6 +21,10 @@ public class PlayerCards extends Cards implements Drawable {
         super(cards);
         this.name = name;
         this.betAmount = betAmount;
+    }
+
+    public int determineIncome(Status status) {
+        return betAmount.determineIncome(status);
     }
 
     @Override
