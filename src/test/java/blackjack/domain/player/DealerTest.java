@@ -62,7 +62,6 @@ class DealerTest {
                 new Card(KING, CLOVER),
                 new Card(KING, HEART),
                 new Card(KING, SPADE));
-
         Dealer dealer = dealer(
                 new Card(QUEEN, CLOVER),
                 new Card(QUEEN, HEART),

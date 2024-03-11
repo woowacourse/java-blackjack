@@ -7,7 +7,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class CardDeckTest {
-
     @Test
     void 덱에서_카드를_뽑을_수_있다() {
         CardDeck deck = CardDeck.create();

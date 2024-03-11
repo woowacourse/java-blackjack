@@ -8,7 +8,6 @@ import static blackjack.domain.card.CardShape.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardTest {
-
     @Test
     void 에이스_카드인지_확인한다() {
         Card aceCard = new Card(ACE, HEART);
@@ -22,5 +21,4 @@ public class CardTest {
 
         assertThat(notAceCard.isAceCard()).isFalse();
     }
-
 }
