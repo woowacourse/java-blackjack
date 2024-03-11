@@ -8,8 +8,7 @@ import java.util.List;
 import static java.util.Collections.unmodifiableList;
 
 public class Cards {
-    private static final int BLACK_JACK_CONDITION = 21;
-    private static final int BUST_CONDITION = 21;
+    private static final int MAX_CARDS_TOTAL = 21;
     private static final int ACE_ADJUSTMENT = 10;
 
     private final List<Card> cards;
@@ -48,7 +47,7 @@ public class Cards {
     }
 
     private boolean canBeAdjusted(int total) {
-        return total + ACE_ADJUSTMENT <= BLACK_JACK_CONDITION;
+        return total + ACE_ADJUSTMENT <= MAX_CARDS_TOTAL;
     }
 
     private int adjustTotalForAce(int total) {
@@ -56,11 +55,11 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return calculateCardsTotalScore() == BLACK_JACK_CONDITION;
+        return calculateCardsTotalScore() == MAX_CARDS_TOTAL;
     }
 
     public boolean isBust() {
-        return calculateCardsTotalScore() > BUST_CONDITION;
+        return calculateCardsTotalScore() > MAX_CARDS_TOTAL;
     }
 
     public int size() {
