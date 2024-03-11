@@ -1,7 +1,5 @@
 package view;
 
-import model.card.CardDeck;
-
 public enum Victory {
     WIN("승"),
     DRAW("무"),
