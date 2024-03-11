@@ -24,8 +24,7 @@ public class GamerCards {
 
     public int calculateScore() {
         int scoreExceptAce = sumExceptAceCards();
-        int scoreWithAce = sumAceCards(scoreExceptAce);
-        return scoreExceptAce + scoreWithAce;
+        return sumAceCards(scoreExceptAce);
     }
 
     private int sumExceptAceCards() {
@@ -36,14 +35,22 @@ public class GamerCards {
     }
 
     private int sumAceCards(int score) {
-        return cards.stream()
-                .filter(Card::isAce)
-                .mapToInt(card -> decideAceScore(score))
-                .sum();
+        int currentScore = score;
+        for (Card card : cards) {
+            currentScore = addAceScore(card, currentScore);
+        }
+        return currentScore;
     }
 
-    private int decideAceScore(int totalScore) {
-        if (totalScore <= CONDITION_DECIDING_A_SCORE) {
+    private int addAceScore(Card card, int currentScore) {
+        if (card.isAce()) {
+            return currentScore + decideAceScore(currentScore);
+        }
+        return currentScore;
+    }
+
+    private int decideAceScore(int currentScore) {
+        if (currentScore <= CONDITION_DECIDING_A_SCORE) {
             return CardNumber.A.getScore() + A_SCORE_GAP;
         }
         return CardNumber.A.getScore();
