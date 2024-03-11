@@ -35,10 +35,19 @@ public class PlayerCards {
     }
 
     private int sumAceCards(int score) {
+        int acesScore = 0;
+        for (Card aceCard : filterAceCards()) {
+            int aceScore = decideAceScore(score);
+            score += aceScore;
+            acesScore += aceScore;
+        }
+        return acesScore;
+    }
+
+    private List<Card> filterAceCards() {
         return cards.stream()
                 .filter(Card::isAce)
-                .mapToInt(card -> decideAceScore(score))
-                .sum();
+                .toList();
     }
 
     private int decideAceScore(int totalScore) {
