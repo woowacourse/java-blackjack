@@ -40,46 +40,44 @@ class ScoreTest {
 
     @ParameterizedTest
     @CsvSource({
-            "21, 20, true",
-            "20, 20, false",
-            "19, 20, false",
+            "1, 22",
+            "20, 19",
     })
-    @DisplayName("현재 점수가 다른 점수보다 더 높은지 확인할 수 있다.")
-    void isGreaterThenTest(int currentValue, int relativeValue, boolean expected) {
+    @DisplayName("상대가 버스트이거나, 현재 점수가 상대 점수보다 더 높다면 승리한다.")
+    void winTest(int currentValue, int relativeValue) {
         Score currentScore = Score.of(currentValue);
         Score relativeScore = Score.of(relativeValue);
 
-        boolean actual = currentScore.isGreaterThan(relativeScore);
-        assertThat(actual).isEqualTo(expected);
+        GameResult actual = currentScore.compareWith(relativeScore);
+        assertThat(actual).isEqualTo(GameResult.WIN);
     }
 
     @ParameterizedTest
     @CsvSource({
-            "21, 20, false",
-            "20, 20, true",
-            "19, 20, false",
+            "22, 1",
+            "19, 20",
     })
-    @DisplayName("현재 점수가 다른 점수보다 더 높은지 확인할 수 있다.")
-    void isSameTest(int currentValue, int relativeValue, boolean expected) {
+    @DisplayName("현재 점수가 버스트이거나 현재 점수가 상대 점수보다 낮다면 패배한다.")
+    void loseTest(int currentValue, int relativeValue) {
         Score currentScore = Score.of(currentValue);
         Score relativeScore = Score.of(relativeValue);
 
-        boolean actual = currentScore.isSame(relativeScore);
-        assertThat(actual).isEqualTo(expected);
+        GameResult actual = currentScore.compareWith(relativeScore);
+        assertThat(actual).isEqualTo(GameResult.LOSE);
     }
 
     @ParameterizedTest
     @CsvSource({
-            "21, 20, false",
-            "20, 20, false",
-            "19, 20, true",
+            "18, 18",
+            "25, 22",
     })
-    @DisplayName("현재 점수가 다른 점수보다 더 높은지 확인할 수 있다.")
-    void isLessThanTest(int currentValue, int relativeValue, boolean expected) {
+    @DisplayName("둘 다 버스트이거나, 점수가 같다면 무승부이다.")
+    void drawTest(int currentValue, int relativeValue) {
         Score currentScore = Score.of(currentValue);
         Score relativeScore = Score.of(relativeValue);
 
-        boolean actual = currentScore.isLessThan(relativeScore);
-        assertThat(actual).isEqualTo(expected);
+        GameResult actual = currentScore.compareWith(relativeScore);
+        assertThat(actual).isEqualTo(GameResult.DRAW);
     }
+
 }
