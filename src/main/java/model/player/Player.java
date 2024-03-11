@@ -6,18 +6,17 @@ import java.util.List;
 import java.util.Objects;
 import model.Outcome;
 import model.card.Card;
+import model.card.Cards;
 
 public abstract class Player implements NoticeStatus {
-    protected final static int MAXIMUM_SUM = 21;
 
     protected final String name;
-    protected List<Card> cards;
+    protected Cards cards;
 
     public Player(String name, List<Card> cards) {
         validateName(name);
-        validateCardSize(cards);
         this.name = name;
-        this.cards = new ArrayList<>(cards);
+        this.cards = new Cards(cards);
     }
 
     private void validateName(String name) {
@@ -26,48 +25,24 @@ public abstract class Player implements NoticeStatus {
         }
     }
 
-    private void validateCardSize(List<Card> cards) {
-        if (cards.size() != 2) {
-            throw new IllegalArgumentException("참가자의 초기 카드는 2장입니다.");
-        }
-    }
-
     public void addCards(List<Card> card) {
-        cards.addAll(card);
+        cards.addCards(card);
     }
 
     public void addCard(Card card) {
-        cards.add(card);
+        cards.addCard(card);
     }
 
     public int calculateScore() {
-        int sum = cards.stream().mapToInt(Card::minimumNumber).sum();
-
-        List<Integer> differenceNumbers = mapDifferenceNumber();
-        return differenceNumbers.stream()
-                .reduce(sum, this::changeToBestNumber);
-    }
-
-    private List<Integer> mapDifferenceNumber() {
-        return cards.stream()
-                .map(Card::subtractMaxMinNumber)
-                .filter(subtractNumber -> subtractNumber != 0)
-                .toList();
-    }
-
-    private int changeToBestNumber(Integer result, Integer number) {
-        if (result + number <= MAXIMUM_SUM) {
-            return result + number;
-        }
-        return result;
+        return cards.calculateScore();
     }
 
     public boolean isOverMaximumSum() {
-        return calculateScore() > MAXIMUM_SUM;
+        return cards.isOverMaximumSum();
     }
 
     public int findPlayerDifference() {
-        return Math.abs(MAXIMUM_SUM - calculateScore());
+        return cards.findPlayerDifference();
     }
 
     protected Outcome findPlayerOutcome(int otherDifference) {
@@ -86,7 +61,7 @@ public abstract class Player implements NoticeStatus {
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return cards.getCards();
     }
 
     @Override

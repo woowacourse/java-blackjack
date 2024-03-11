@@ -5,6 +5,7 @@ import model.Outcome;
 import model.card.Card;
 
 public class Participant extends Player {
+    private final static int NUMBER_THRESHOLD = 21;
 
     public Participant(String name, List<Card> cards) {
         super(name, cards);
@@ -22,6 +23,6 @@ public class Participant extends Player {
 
     @Override
     public boolean canReceiveCard() {
-        return calculateScore() <= MAXIMUM_SUM;
+        return calculateScore() <= NUMBER_THRESHOLD;
     }
 }
