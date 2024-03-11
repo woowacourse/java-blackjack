@@ -1,6 +1,9 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Players {
     public static final int INITIAL_CARDS_AMOUNT = 2;
@@ -43,6 +46,14 @@ public class Players {
 
     private void drawEach(Deck deck) {
         playerGroup.forEach(player -> player.draw(deck));
+    }
+
+    public Map<Player, GameResult> compareEach(Score dealerScore) {
+        return playerGroup.stream()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        player -> player.getScore().compareWith(dealerScore))
+                );
     }
 
     public List<Player> getPlayers() {

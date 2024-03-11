@@ -40,7 +40,9 @@ public class PlayerCards {
     }
 
     private boolean isBlackJackStatus(int score) {
-        return cards.size() == BLACKJACK_CARD_COUNT && score == BLACKJACK_MAX_SCORE;
+        boolean matchedCardSize = (cards.size() == BLACKJACK_CARD_COUNT);
+        boolean matchedScore = (score == BLACKJACK_MAX_SCORE);
+        return matchedCardSize && matchedScore;
     }
 
     private int getAceCount() {

@@ -46,6 +46,10 @@ public class Player {
         return playerMeta.name();
     }
 
+    public int getBetAmount() {
+        return playerMeta.betAmount();
+    }
+
     public int getTotalCardsCount() {
         return playerCards.size();
     }
