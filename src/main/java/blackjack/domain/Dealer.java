@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Dealer {
+    public static final int INITIAL_CARDS_AMOUNT = 2;
     private static final String DEALER_NAME = "딜러";
 
     private final Player player;
@@ -16,8 +17,8 @@ public class Dealer {
         player.draw(deck);
     }
 
-    public void draw(Deck deck, int amount) {
-        for (int i = 0; i < amount; i++) {
+    public void initialDraw(Deck deck) {
+        for (int i = 0; i < INITIAL_CARDS_AMOUNT; i++) {
             draw(deck);
         }
     }
@@ -40,7 +41,7 @@ public class Dealer {
         return player;
     }
 
-    public int getExtraCardsCount(int initialCardsCount) {
-        return player.getTotalCardsCount() - initialCardsCount;
+    public int getExtraCardsCount() {
+        return player.getTotalCardsCount() - INITIAL_CARDS_AMOUNT;
     }
 }

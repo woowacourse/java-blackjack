@@ -13,7 +13,6 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackJackController {
-    public static final int INITIAL_CARDS_COUNT = 2;
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -41,8 +40,8 @@ public class BlackJackController {
     }
 
     private void doInitialDraw(Dealer dealer, Players players, Deck deck) {
-        players.initialDraw(deck, INITIAL_CARDS_COUNT);
-        dealer.draw(deck, INITIAL_CARDS_COUNT);
+        players.initialDraw(deck);
+        dealer.initialDraw(deck);
 
         outputView.printInitialMessage(players.getPlayerNames());
         printInitialCards(dealer, players);
@@ -71,7 +70,7 @@ public class BlackJackController {
 
     private void doDealerRound(Dealer dealer, Deck deck) {
         dealer.drawUntilExceedMinimum(deck);
-        outputView.printExtraDealerDraw(dealer.getExtraCardsCount(INITIAL_CARDS_COUNT));
+        outputView.printExtraDealerDraw(dealer.getExtraCardsCount());
     }
 
     private void printGameResult(Dealer dealer, Players players) {

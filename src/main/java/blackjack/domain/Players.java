@@ -3,6 +3,8 @@ package blackjack.domain;
 import java.util.List;
 
 public class Players {
+    public static final int INITIAL_CARDS_AMOUNT = 2;
+
     private final List<Player> playerGroup;
 
     public Players(List<Player> playerGroup) {
@@ -33,8 +35,8 @@ public class Players {
         return new Players(players);
     }
 
-    public void initialDraw(Deck deck, int amount) {
-        for (int i = 0; i < amount; i++) {
+    public void initialDraw(Deck deck) {
+        for (int i = 0; i < INITIAL_CARDS_AMOUNT; i++) {
             drawEachPlayer(deck);
         }
     }
