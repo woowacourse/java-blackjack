@@ -12,8 +12,10 @@ import static domain.BlackjackGame.DEALER_HIT_THRESHOLD;
 import static domain.BlackjackGame.INITIAL_CARD_COUNT;
 
 public class ResultView {
-    public static final String DELIMITER = ", ";
-    public static final String EMPTY = "";
+    private static final String CONNECT = ": ";
+    public static final String SPACING = " ";
+    public static final String DELIMITER = ",";
+
 
     public void printInitialCards(final ParticipantDto dealer, final List<ParticipantDto> players) {
         printInitialDealMessage(dealer, players);
@@ -43,8 +45,7 @@ public class ResultView {
     private String parsePlayerNames(final List<ParticipantDto> players) {
         return players.stream()
                       .map(ParticipantDto::name)
-                      .reduce((player1, player2) -> player1 + DELIMITER + player2)
-                      .orElse(EMPTY);
+                      .collect(Collectors.joining(DELIMITER + SPACING));
     }
 
     public void printDealerCardMessage(final ParticipantDto dealer) {
@@ -65,7 +66,7 @@ public class ResultView {
 
     private void printCardAndSum(final ParticipantDto participantDto) {
         CardsDto cards = participantDto.cards();
-        System.out.printf("%s: %s - 결과: %d" + System.lineSeparator(),
+        System.out.printf("%s" + CONNECT + "%s - 결과" + CONNECT + "%d" + System.lineSeparator(),
                 participantDto.name(),
                 cards.parseCards(),
                 participantDto.score()
@@ -76,23 +77,22 @@ public class ResultView {
         Map<String, Integer> dealerResult = gameResultDto.dealerResult();
         Map<String, String> playerResults = gameResultDto.gameResult();
         System.out.println("## 최종 승패");
-        System.out.print(dealer.name() + ": " + parseDealerResult(dealerResult));
+        System.out.print(dealer.name() + CONNECT + parseDealerResult(dealerResult) + System.lineSeparator());
         System.out.println(parsePlayerResult(playerResults));
     }
 
-    public String parsePlayerResult(Map<String, String> playerResults) {
+    private String parsePlayerResult(final Map<String, String> playerResults) {
         return playerResults.keySet()
                             .stream()
-                            .map(player -> player + ": " + playerResults.get(player) + System.lineSeparator())
-                            .reduce((a, b) -> a + b)
-                            .orElse("");
+                            .map(player -> player + CONNECT + playerResults.get(player))
+                            .collect(Collectors.joining(System.lineSeparator()));
     }
 
-    public String parseDealerResult(Map<String, Integer> dealerResult) {
+    private String parseDealerResult(final Map<String, Integer> dealerResult) {
         return dealerResult.entrySet()
                            .stream()
                            .map(entry -> entry.getValue() + entry.getKey())
-                           .collect(Collectors.joining(" "));
+                           .collect(Collectors.joining(SPACING));
     }
 
 

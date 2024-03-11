@@ -1,10 +1,13 @@
 package view.dto.card;
 
-import java.util.List;
-
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.Cards;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static view.ResultView.SPACING;
 
 public class CardsDto {
 
@@ -22,9 +25,8 @@ public class CardsDto {
 
     public String parseCards() {
         return cards.stream()
-                .map(this::parseCard)
-                .reduce((card1, card2) -> card1 + ", " + card2)
-                .orElse("");
+                    .map(this::parseCard)
+                    .collect(Collectors.joining(SPACING));
     }
 
     private String parseCard(final Card card) {
