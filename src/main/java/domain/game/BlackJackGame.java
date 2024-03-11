@@ -27,12 +27,17 @@ public class BlackJackGame {
     }
 
     public InitialCardStatus initialize() {
+        return new InitialCardStatus(INITIAL_CARD_SIZE, createHandStatuses());
+    }
+
+    public List<HandStatus> createHandStatuses() {
         List<HandStatus> status = new ArrayList<>();
         status.add(createHandStatusAfterPick(participants.getDealer()));
+
         for (Player player : participants.getPlayers()) {
             status.add(createHandStatusAfterPick(player));
         }
-        return new InitialCardStatus(INITIAL_CARD_SIZE, status);
+        return status;
     }
 
     private HandStatus createHandStatusAfterPick(final Participant participant) {
@@ -50,13 +55,6 @@ public class BlackJackGame {
             HandStatus currentStatus = participant.createHandStatus();
             action.accept(currentStatus);
         }
-    }
-
-    public List<HandStatus> createHandStatuses() {
-        return participants.getParticipants()
-                .stream()
-                .map(participant -> participant.createHandStatus())
-                .toList();
     }
 
     public JudgeResult judge() {

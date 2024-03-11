@@ -16,7 +16,7 @@ public class OutputView {
     private static final String INITIAL_HAND_STATUS_FORMAT = "%n%s에게 %d장을 나누었습니다.%n";
     private static final String NAME_SEPARATOR = ", ";
     private static final String HAND_STATUS_FORMAT = "%s카드: %s%n";
-    private static final String DEALER_CARD_SAVED_MESSAGE = "%n딜러는 16이하라 한장의 카드를 더 받았습니다.%n";
+    private static final String DEALER_CARD_SAVED_MESSAGE = "%n딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String RESULT_HAND_STATUS_MESSAGE = "%s카드: %s - 결과 : %d";
     private static final String CARD_STATUS_MESSAGE = "%s%s";
     private static final String CARD_SEPARATOR = ", ";
@@ -60,6 +60,8 @@ public class OutputView {
     }
 
     public void printResultHandStatus(final List<HandStatus> handStatuses) {
+        System.out.println();
+        System.out.println();
         for (HandStatus handStatus : handStatuses) {
             System.out.println(String.format(
                     RESULT_HAND_STATUS_MESSAGE,
