@@ -62,11 +62,12 @@ public class Application {
     }
 
     private static void hit(GameBoard gameBoard) {
-        hitPlayers(gameBoard, gameBoard.getPlayers());
-        hitDealer(gameBoard, gameBoard.getDealer());
+        hitPlayers(gameBoard);
+        hitDealer(gameBoard);
     }
 
-    private static void hitPlayers(final GameBoard gameBoard, final Players players) {
+    private static void hitPlayers(final GameBoard gameBoard) {
+        final Players players = gameBoard.getPlayers();
         for (Player player : players.getPlayers()) {
             hitPlayer(gameBoard, player);
         }
@@ -79,8 +80,9 @@ public class Application {
         }
     }
 
-    private static void hitDealer(final GameBoard gameBoard, final Dealer dealer) {
+    private static void hitDealer(final GameBoard gameBoard) {
         System.out.println();
+        final Dealer dealer = gameBoard.getDealer();
         while (gameBoard.isHit(dealer)) {
             gameBoard.hit(dealer);
             OutputView.printDealerDrawMessage();
