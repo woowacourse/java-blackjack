@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import view.mapper.CardNumberMapper;
 import view.mapper.CardShapeMapper;
+import view.mapper.WinStateMapper;
 
 public class ResultView {
 
@@ -117,7 +118,7 @@ public class ResultView {
                 .filter(entry -> entry.getValue() > 0)
                 .forEach(entry -> {
                     stringBuilder.append(entry.getValue());
-                    stringBuilder.append(resolveWinState(entry.getKey()));
+                    stringBuilder.append(WinStateMapper.toExpression(entry.getKey()));
                     stringBuilder.append(" ");
                 });
         return stringBuilder.toString();
@@ -135,17 +136,7 @@ public class ResultView {
 
     private String resolvePlayerFinalResult(Player player, WinState playerWinState) {
         return String.format("%s: %s", player.getPlayerName(),
-                resolveWinState(playerWinState))
+                WinStateMapper.toExpression(playerWinState))
                 + LINE_SEPARATOR;
-    }
-
-    private String resolveWinState(WinState winState) {
-        if (winState == WinState.WIN) {
-            return "승";
-        }
-        if (winState == WinState.LOSE) {
-            return "패";
-        }
-        return "무";
     }
 }
