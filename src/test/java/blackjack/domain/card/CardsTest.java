@@ -4,11 +4,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import blackjack.fixture.CardFixture;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class CardsTest {
     @Test
@@ -20,26 +25,23 @@ public class CardsTest {
         assertThatCode(() -> new Cards(cards)).doesNotThrowAnyException();
     }
 
-    @Test
-    @DisplayName("카드 목록의 숫자 합을 계산 한다. (케이스 1)")
-    public void Cards_Sum_of_cards_case1() {
-        List<CardValue> cardValues = List.of(CardValue.EIGHT, CardValue.JACK);
+    @ParameterizedTest
+    @MethodSource("cardValuesProvider")
+    @DisplayName("카드 목록의 숫자 합을 계산 한다.")
+    public void Cards_Sum_of_cards_case1(CardValue cardValue1, CardValue cardValue2, int result) {
+        List<CardValue> cardValues = List.of(cardValue1, cardValue2);
         var sut = CardFixture.카드_목록_생성(cardValues);
 
         var sum = sut.sum();
 
-        assertThat(sum).isEqualTo(18);
+        assertThat(sum).isEqualTo(result);
     }
 
-    @Test
-    @DisplayName("카드 목록의 숫자 합을 계산 한다. (케이스 2)")
-    public void Cards_Sum_of_cards_case2() {
-        List<CardValue> cardValues = List.of(CardValue.FIVE, CardValue.EIGHT);
-        var sut2 = CardFixture.카드_목록_생성(cardValues);
-
-        var sum2 = sut2.sum();
-
-        assertThat(sum2).isEqualTo(13);
+    static Stream<Arguments> cardValuesProvider() {
+        return Stream.of(
+                arguments(CardValue.EIGHT, CardValue.JACK, 18),
+                arguments(CardValue.FIVE, CardValue.EIGHT, 13)
+        );
     }
 
     @Test
