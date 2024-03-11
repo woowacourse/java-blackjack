@@ -8,8 +8,8 @@ import java.util.List;
 import static java.util.Collections.unmodifiableList;
 
 public class Cards {
-    private static final int MAX_CARDS_TOTAL = 21;
-    private static final int ACE_ADJUSTMENT = 10;
+    private static final Score MAX_CARDS_TOTAL = Score.from(21);
+    private static final Score ACE_ADJUSTMENT = Score.from(10);
 
     private final List<Card> cards;
 

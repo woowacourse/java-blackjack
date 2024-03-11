@@ -34,7 +34,7 @@ public class CardsTest {
         Score actualTotal = cards.calculateCardsTotalScore();
 
         // then
-        int expectedTotal = 26;
+        Score expectedTotal = Score.from(26);
         assertThat(actualTotal.equalTo(expectedTotal)).isTrue();
     }
 
@@ -54,7 +54,8 @@ public class CardsTest {
         Score actualTotal = cards.calculateCardsTotalScore();
 
         // then
-        assertThat(actualTotal.equalTo(21)).isTrue();
+        Score expectedTotal = Score.from(21);
+        assertThat(actualTotal.equalTo(expectedTotal)).isTrue();
     }
 
     @Test

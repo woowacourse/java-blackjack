@@ -8,7 +8,7 @@ import blackjack.model.cardgenerator.CardGenerator;
 import java.util.List;
 
 public class Dealer {
-    private static final int ACTION_CONDITION = 17;
+    private static final Score ACTION_CONDITION = Score.from(17);
     private static final int NON_ACTION_COUNT = 2;
 
     private final Cards cards;
