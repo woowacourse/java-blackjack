@@ -31,8 +31,8 @@ public class Hands {
         return totalScore;
     }
 
-    public void receiveHands(Hands hands) {
-        cards.addAll(hands.getCards());
+    public void receiveHands(Hands newHands) {
+        cards.addAll(newHands.cards);
     }
 
     public List<Card> getCards() {

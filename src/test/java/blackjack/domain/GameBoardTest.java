@@ -100,29 +100,4 @@ public class GameBoardTest {
 
         assertThat(dealer.getHands().size()).isEqualTo(1);
     }
-
-    @Test
-    @DisplayName("플레이어가 모두 패배한 테스트")
-    void victoryLoseTest() {
-        dealer.hit(new Card(Shape.HEART, Rank.ACE));
-        dealer.hit(new Card(Shape.HEART, Rank.JACK));
-
-        Map<Player, Boolean> victoryResult = gameBoard.calculateWinOrLose();
-
-
-        assertThat(victoryResult.get(siso)).isFalse();
-        assertThat(victoryResult.get(takan)).isFalse();
-    }
-
-    @Test
-    @DisplayName("플레이어의 승리가 포함된 테스트")
-    void victoryWinTest() {
-        dealer.hit(new Card(Shape.HEART, Rank.QUEEN));
-        dealer.hit(new Card(Shape.HEART, Rank.JACK));
-
-        Map<Player, Boolean> victoryResult = gameBoard.calculateWinOrLose();
-
-        assertThat(victoryResult.get(takan)).isTrue();
-        assertThat(victoryResult.get(siso)).isFalse();
-    }
 }

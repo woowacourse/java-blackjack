@@ -5,9 +5,9 @@ import blackjack.domain.participants.Hands;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
+import blackjack.domain.participants.WinOrLose;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class GameBoard {
 
@@ -58,7 +58,7 @@ public class GameBoard {
         player.hit(deck.drawCard());
     }
 
-    public Map<Player, Boolean> calculateWinOrLose() {
+    public WinOrLose calculateWinOrLose() {
         return participants.calculateWinOrLose();
     }
 

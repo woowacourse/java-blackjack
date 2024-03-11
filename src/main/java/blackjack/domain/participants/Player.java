@@ -17,8 +17,8 @@ public class Player implements GameParticipant {
     }
 
     @Override
-    public void receiveHands(Hands hands) {
-        hands.receiveHands(hands);
+    public void receiveHands(Hands newHands) {
+        this.hands.receiveHands(newHands);
     }
 
     @Override

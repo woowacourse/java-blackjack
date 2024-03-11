@@ -1,9 +1,7 @@
 package blackjack.domain.participants;
 
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Players {
 
@@ -11,12 +9,6 @@ public class Players {
 
     public Players(List<Player> players) {
         this.players = players;
-    }
-
-    public Map<Player, Boolean> calculateWinOrLose(int dealerScore) {
-        Map<Player, Boolean> result = new LinkedHashMap<>();
-        players.forEach(player -> result.put(player, player.isWin(dealerScore)));
-        return result;
     }
 
     public void distributeHands(List<Hands> allHands) {

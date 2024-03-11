@@ -11,6 +11,7 @@ import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
+import blackjack.domain.participants.WinOrLose;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -95,8 +96,8 @@ class ParticipantsTest {
                 new ArrayList<>(List.of(hands1, hands2, hands3))
         );
 
-        Map<Player, Boolean> result = participants.calculateWinOrLose();
-        assertThat(result.get(siso)).isFalse();
+        WinOrLose winOrLose = participants.calculateWinOrLose();
+        assertThat(winOrLose.getResult(siso)).isFalse();
     }
 
 

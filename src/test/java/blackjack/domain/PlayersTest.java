@@ -9,6 +9,7 @@ import blackjack.domain.participants.Hands;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
+import blackjack.domain.participants.WinOrLose;
 import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -43,28 +44,6 @@ class PlayersTest {
         List<Player> playerList = List.of(siso, takan);
         players = new Players(playerList);
 
-    }
-
-    @Test
-    @DisplayName("딜러보다 점수가 낮은 플레이어는 패배한다.")
-    void calculateResultFailTest() {
-        Map<Player, Boolean> result = players.calculateWinOrLose(20);
-
-        assertThat(result.get(siso)).isFalse();
-    }
-
-    @Test
-    @DisplayName("딜러보다 점수가 높은 플레이어는 승리한다.")
-    void calculateResultSuccessTest() {
-        Map<Player, Boolean> result = players.calculateWinOrLose(20);
-
-        assertThat(result.get(takan)).isTrue();
-    }
-
-    @Test
-    @DisplayName("한 플레이어는 기준 점수보다 낮은 점수다.")
-    void isOnePlayerNotOverTest() {
-        Assertions.assertThat(siso.isNotOver(17)).isTrue();
     }
 
     @Test

@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import blackjack.domain.participants.Player;
+import blackjack.domain.participants.WinOrLose;
 import blackjack.dto.ParticipantDto;
 import java.util.List;
 import java.util.Map;
@@ -53,22 +55,20 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printResult(Map<String, Boolean> victoryResult) {
+    public void printWinOrLose(WinOrLose winOrLose) {
         System.out.println("## 최종 승패");
-        int dealerWinCount = (int) victoryResult.values().stream()
-                .filter(isWin -> !isWin)
-                .count();
-        int dealerLoseCount = victoryResult.size() - dealerWinCount;
+        int dealerWinCount = winOrLose.countDealerWin();
+        int dealerLoseCount = winOrLose.size() - dealerWinCount;
         System.out.printf("딜러: %d승 %d패\n", dealerWinCount, dealerLoseCount);
-        victoryResult.keySet().forEach(playerName -> printVictory(victoryResult, playerName));
+        winOrLose.getWinOrLose().keySet().forEach(player -> printVictory(winOrLose, player));
     }
 
-    private static void printVictory(Map<String, Boolean> victoryResult, String playerName) {
-        if (victoryResult.get(playerName)) {
-            System.out.println(playerName + ": 승");
+    private static void printVictory(WinOrLose winOrLose, Player player) {
+        if (winOrLose.getResult(player)) {
+            System.out.println(player.getName().getName() + ": 승");
             return;
         }
-        System.out.println(playerName + ": 패");
+        System.out.println(player.getName().getName() + ": 패");
     }
 
     public void printNewLine() {

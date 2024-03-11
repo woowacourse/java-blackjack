@@ -13,11 +13,12 @@ public class Dealer implements GameParticipant {
 
     public Dealer() {
         this.name = new Name(DEALER_NAME);
+        this.hands = new Hands(new ArrayList<>());
     }
 
     @Override
-    public void receiveHands(Hands hands) {
-        hands.receiveHands(hands);
+    public void receiveHands(Hands newHands) {
+        this.hands.receiveHands(newHands);
     }
 
     @Override

@@ -6,12 +6,11 @@ import blackjack.domain.participants.GameParticipant;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
+import blackjack.domain.participants.WinOrLose;
 import blackjack.dto.ParticipantDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackGame {
 
@@ -38,7 +37,7 @@ public class BlackjackGame {
         proceedPlayerTurn(gameBoard);
         proceedDealerTurn(gameBoard);
         handleResult(gameBoard);
-        handleVictory(gameBoard);
+        handleWinOrLose(gameBoard);
     }
 
     private void startSetting(GameBoard gameBoard) {
@@ -90,11 +89,8 @@ public class BlackjackGame {
         outputView.printScoreResult(dealerDto, playersDto);
     }
 
-    private void handleVictory(GameBoard gameBoard) {
-        Map<Player, Boolean> playerVictory = gameBoard.calculateWinOrLose();
-        Map<String, Boolean> playerNameVictory = new LinkedHashMap<>();
-        playerVictory.forEach(
-                (key, value) -> playerNameVictory.put(key.getName().getName(), playerVictory.get(key)));
-        outputView.printResult(playerNameVictory);
+    private void handleWinOrLose(GameBoard gameBoard) {
+        WinOrLose winOrLose = gameBoard.calculateWinOrLose();
+        outputView.printWinOrLose(winOrLose);
     }
 }
