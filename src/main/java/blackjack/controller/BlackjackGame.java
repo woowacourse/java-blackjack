@@ -5,12 +5,15 @@ import blackjack.domain.card.HandGenerator;
 import blackjack.domain.card.RandomDeck;
 import blackjack.domain.participant.*;
 import blackjack.domain.result.BlackjackResult;
+import blackjack.domain.result.PlayerBet;
+import blackjack.domain.result.PlayerBets;
 import blackjack.domain.result.Referee;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class BlackjackGame {
     private final InputView inputView = new InputView();
@@ -18,6 +21,7 @@ public class BlackjackGame {
 
     public void run() {
         Participants participants = createParticipants();
+        PlayerBets playerBets = createPlayerBets(participants.getPlayers());
         outputView.printInitialHand(participants);
         participantsHitCard(participants);
         outputView.printParticipantsHandWithScore(participants);
@@ -40,6 +44,19 @@ public class BlackjackGame {
         return playersName.stream()
                 .map(Name::new)
                 .toList();
+    }
+
+    private PlayerBets createPlayerBets(Players players) {
+        return players.getValues()
+                .stream()
+                .map(player -> retryOnException(() -> createPlayerBet(player)))
+                .collect(Collectors.collectingAndThen(Collectors.toList(), PlayerBets::new));
+    }
+
+    private PlayerBet createPlayerBet(Player player) {
+        String playerName = player.getName();
+        int bettingPrice = inputView.readPlayerBettingPrice(playerName);
+        return new PlayerBet(player, bettingPrice);
     }
 
     private void participantsHitCard(Participants participants) {
