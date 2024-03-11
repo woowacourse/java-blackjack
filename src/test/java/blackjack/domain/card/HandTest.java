@@ -40,4 +40,34 @@ public class HandTest {
         // then
         assertThat(hand.findMaximumScore()).isEqualTo(21);
     }
+
+    @Test
+    @DisplayName("에이스가 포함된 카드 점수의 합이 21을 넘을 경우 에이스를 1로 계산한 값을 반환한다.")
+    void ifExceedLimitScoreThenAceIsOneTest() {
+        // given
+        Hand hand = new Hand(List.of());
+
+        // when
+        hand.addCard(Card.SPADE_NINE);
+        hand.addCard(Card.CLUB_QUEEN);
+        hand.addCard(Card.CLUB_ACE);
+
+        // then
+        assertThat(hand.findMaximumScore()).isEqualTo(20);
+    }
+
+    @Test
+    @DisplayName("애이스가 포함된 카드 점수의 합이 21을 넘지 않을 경우 에이스를 11로 계산한 값을 반환한다.")
+    void ifUnderLimitScoreThenAceIsElevenTest() {
+        // given
+        Hand hand = new Hand(List.of());
+
+        // when
+        hand.addCard(Card.SPADE_TWO);
+        hand.addCard(Card.CLUB_EIGHT);
+        hand.addCard(Card.CLUB_ACE);
+
+        // then
+        assertThat(hand.findMaximumScore()).isEqualTo(21);
+    }
 }

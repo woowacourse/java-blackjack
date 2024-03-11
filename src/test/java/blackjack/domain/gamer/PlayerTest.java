@@ -47,4 +47,16 @@ public class PlayerTest {
         // then
         assertThat(player.getCards().size()).isEqualTo(1);
     }
+
+    @Test
+    @DisplayName("카드 점수의 합이 21이고 카드가 2장일 경우 블랙잭이다.")
+    void blackjackTest() {
+        // given
+        Player player = new Player("lemone", new Hand(List.of()));
+        // when
+        player.draw(List.of(Card.DIAMOND_TEN, Card.CLUB_ACE));
+
+        // then
+        assertThat(player.isBlackjack()).isEqualTo(true);
+    }
 }
