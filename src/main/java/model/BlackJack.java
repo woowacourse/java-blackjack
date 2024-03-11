@@ -19,8 +19,22 @@ public class BlackJack {
     private final Dealer dealer;
 
     public BlackJack(Participants participants, Dealer dealer) {
+        validateParticipantIsNotNull(participants);
+        validateDealerIsNotNull(dealer);
         this.participants = participants;
         this.dealer = dealer;
+    }
+
+    public void validateParticipantIsNotNull(Participants participants) {
+        if(participants == null) {
+            throw new IllegalArgumentException("참가자 없으면 게임이 진행되지 않습니다.");
+        }
+    }
+
+    public void validateDealerIsNotNull(Dealer dealer) {
+        if(dealer == null) {
+            throw new IllegalArgumentException("딜러가 없으면 게임이 진행되지 않습니다.");
+        }
     }
 
     public void offerCardToPlayers(int cardCount) {

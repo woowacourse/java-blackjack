@@ -12,6 +12,7 @@ import model.card.CardShape;
 import model.player.Dealer;
 import model.player.Participant;
 import model.player.Participants;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,22 @@ class BlackJackTest {
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.TWO)));
     }
 
+    @DisplayName("참가자가 null일 시 예외가 발생한다.")
+    @Test
+    void validateParticipantIsNotNull() {
+        Assertions.assertThatThrownBy(() -> new BlackJack(null, dealer))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("딜러가 null일 시 예외가 발생한다.")
+    @Test
+    void validateDealerIsNotNull() {
+        List<Card> cards = List.of(new Card(CardShape.SPACE, CardNumber.NINE),
+                new Card(CardShape.SPACE, CardNumber.FIVE));
+        Assertions.assertThatThrownBy(() -> new BlackJack(new Participants(List.of(new Participant("배키", cards))), null))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
     @DisplayName("참가자에게 카드를 준다.")
     @Test
     void offerCardToPlayers() {
@@ -37,9 +54,6 @@ class BlackJackTest {
 
         assertThat(result.get(0).getCards()).hasSize(3);
     }
-
-
-
 
     @DisplayName("이름이 일치하는 참가자에게만 카드를 줄 수 있다.")
     @Test
