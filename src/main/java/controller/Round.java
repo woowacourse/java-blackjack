@@ -18,8 +18,6 @@ import view.InputView;
 import view.OutputView;
 
 public class Round {
-    private static final int THRESHOLD = 16;
-
     private final Participant participant;
     private final Deck deck;
 
@@ -105,12 +103,10 @@ public class Round {
 
     public int giveCardsToDealer() {
         Dealer dealer = participant.dealer();
-        int currentScore = dealer.calculateResultScore();
 
         int count = 0;
-        while (currentScore <= THRESHOLD) {
+        while (!dealer.isUpToThreshold()) {
             dealer.pickOneCard(deck);
-            currentScore = dealer.calculateResultScore();
             count++;
         }
         return count;

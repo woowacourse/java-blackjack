@@ -14,14 +14,13 @@ class DealerTest {
     @Test
     void isUpToThreshold() {
         final Deck deck = createDeck();
-        int threshold = 16;
 
         Dealer dealer = new Dealer();
         for (int i = 0; i < deck.getTotalSize(); i++) {
             dealer.pickOneCard(deck);
         }
 
-        boolean isUp = dealer.isUpToThreshold(threshold);
+        boolean isUp = dealer.isUpToThreshold();
         assertTrue(isUp);
     }
 
