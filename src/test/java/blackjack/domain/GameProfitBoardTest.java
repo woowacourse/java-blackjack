@@ -24,7 +24,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class GameResultBoardTest {
+class GameProfitBoardTest {
     private static final int TEST_PLAYER_BET_AMOUNT = 10000;
     private static final List<Card> bustedCards = List.of(
             new Card(DIAMOND, THREE), new Card(DIAMOND, NINE), new Card(DIAMOND, KING)
@@ -69,9 +69,9 @@ class GameResultBoardTest {
         Player player = Player.from("testPlayer", TEST_PLAYER_BET_AMOUNT);
         giveCardToPlayer(player, deck, 2);
 
-        GameResultBoard gameResultBoard = new GameResultBoard(dealer, new Players(List.of(player)));
+        GameProfitBoard gameProfitBoard = new GameProfitBoard(dealer, new Players(List.of(player)));
 
-        assertThat(gameResultBoard.getProfitOf(player)).isEqualTo(expected);
+        assertThat(gameProfitBoard.getProfitOf(player)).isEqualTo(expected);
     }
 
     static Stream<Arguments> playerCardsAndExpectedProfitWhenNoOneBusted() {
@@ -104,9 +104,9 @@ class GameResultBoardTest {
         Player player = Player.from("testPlayer", TEST_PLAYER_BET_AMOUNT);
         giveCardToPlayer(player, deck, 2);
 
-        GameResultBoard gameResultBoard = new GameResultBoard(bustedDealer, new Players(List.of(player)));
+        GameProfitBoard gameProfitBoard = new GameProfitBoard(bustedDealer, new Players(List.of(player)));
 
-        assertThat(gameResultBoard.getProfitOf(player)).isEqualTo(expected);
+        assertThat(gameProfitBoard.getProfitOf(player)).isEqualTo(expected);
     }
 
     static Stream<Arguments> playerCardsAndExpectedProfitWhenDealerBusted() {
@@ -131,9 +131,9 @@ class GameResultBoardTest {
         giveCardToPlayer(dealer.getPlayer(), deck, dealerCards.size());
         Player player = generateBustedPlayer();
 
-        GameResultBoard gameResultBoard = new GameResultBoard(dealer, new Players(List.of(player)));
+        GameProfitBoard gameProfitBoard = new GameProfitBoard(dealer, new Players(List.of(player)));
 
-        assertThat(gameResultBoard.getProfitOf(player)).isEqualTo(expected);
+        assertThat(gameProfitBoard.getProfitOf(player)).isEqualTo(expected);
     }
 
     static Stream<Arguments> dealerCardsAndExpectedProfitWhenPlayerBusted() {
@@ -166,10 +166,10 @@ class GameResultBoardTest {
         giveCardToPlayer(player, deck, 2);
         giveCardToPlayer(dealer.getPlayer(), deck, 2);
 
-        GameResultBoard gameResultBoard = new GameResultBoard(dealer, new Players(List.of(player)));
+        GameProfitBoard gameProfitBoard = new GameProfitBoard(dealer, new Players(List.of(player)));
 
         int expected = calculateExpectedProfitOf(GameResult.DRAW);
-        assertThat(gameResultBoard.getProfitOf(player)).isEqualTo(expected);
+        assertThat(gameProfitBoard.getProfitOf(player)).isEqualTo(expected);
     }
 
     @Test
@@ -184,8 +184,8 @@ class GameResultBoardTest {
         List<Player> players = generatePlayers();
         players.forEach(player -> giveCardToPlayer(player, deck, 2));
 
-        GameResultBoard gameResultBoard = new GameResultBoard(dealer, new Players(players));
-        int dealerProfit = gameResultBoard.getDealerProfit();
+        GameProfitBoard gameProfitBoard = new GameProfitBoard(dealer, new Players(players));
+        int dealerProfit = gameProfitBoard.getDealerProfit();
 
         int expected = -1 * (calculateExpectedProfitOf(GameResult.BLACKJACK)
                 + calculateExpectedProfitOf(GameResult.WIN)

@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
-import blackjack.domain.GameResultBoard;
+import blackjack.domain.GameProfitBoard;
 import blackjack.domain.Player;
 import blackjack.domain.PlayerMeta;
 import blackjack.domain.Players;
@@ -87,11 +87,11 @@ public class BlackJackController {
 
     private void printGameResult(Dealer dealer, Players players) {
         printCardStatus(dealer, players);
-        GameResultBoard gameResultBoard = new GameResultBoard(dealer, players);
+        GameProfitBoard gameProfitBoard = new GameProfitBoard(dealer, players);
 
-        outputView.printDealerProfit(gameResultBoard.getDealerProfit());
+        outputView.printDealerProfit(gameProfitBoard.getDealerProfit());
         for (Player player : players.getPlayers()) {
-            outputView.printPlayerProfit(player.getName(), gameResultBoard.getProfitOf(player));
+            outputView.printPlayerProfit(player.getName(), gameProfitBoard.getProfitOf(player));
         }
     }
 

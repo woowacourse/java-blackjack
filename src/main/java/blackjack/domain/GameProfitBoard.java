@@ -4,15 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class GameResultBoard {
+public class GameProfitBoard {
     private final Map<String, Integer> resultBoard = new HashMap<>();
 
-    public GameResultBoard(Dealer dealer, Players players) {
+    public GameProfitBoard(Dealer dealer, Players players) {
         Map<Player, GameResult> compareResult = players.compareEach(dealer.getScore());
-        compareResult.entrySet().forEach(this::addResult);
+        compareResult.entrySet().forEach(this::addProfitResult);
     }
 
-    private void addResult(Entry<Player, GameResult> entry) {
+    private void addProfitResult(Entry<Player, GameResult> entry) {
         Player player = entry.getKey();
         GameResult gameResult = entry.getValue();
         int playerProfit = calcPlayerProfit(player, gameResult);
