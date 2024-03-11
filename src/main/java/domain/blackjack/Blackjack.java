@@ -4,7 +4,9 @@ import domain.card.Deck;
 import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Blackjack {
     private final Players players;
@@ -31,10 +33,28 @@ public class Blackjack {
         players.getAllPlayers().forEach(this::dealInitialCards);
     }
 
-    public BlackjackResult finishGame() {
-        final BlackjackRule blackjackResult = new BlackjackRule();
+    public GameResult finishGame() {
         final Player dealer = players.getDealer();
-        return blackjackResult.finishGame(getParticipants(), dealer);
+        final List<Player> participants = players.getParticipants();
+        final Map<Player, OneOnOneResult> result = new HashMap<>();
+
+        judgeGameResult(participants, result, dealer);
+
+        return new GameResult(result);
+    }
+
+    private void judgeGameResult(
+            final List<Player> participants,
+            final Map<Player, OneOnOneResult> result,
+            final Player dealer) {
+        OneOnOneResult dealerResult = OneOnOneResult.EMPTY;
+
+        for (final Player participant : participants) {
+            result.put(participant, participant.determineWinnerByComparing(dealer));
+            dealerResult = dealerResult.updateStatus(dealer.determineWinnerByComparing(participant));
+        }
+
+        result.put(dealer, dealerResult);
     }
 
     private void dealInitialCards(final Player player) {

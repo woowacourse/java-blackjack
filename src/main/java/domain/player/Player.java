@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.blackjack.OneOnOneResult;
 import domain.card.Card;
 import domain.card.Denomination;
 import java.util.ArrayList;
@@ -27,12 +28,12 @@ public abstract class Player {
 
     public abstract boolean canNotHit();
 
+    public abstract OneOnOneResult determineWinnerByComparing(final Player otherPlayer);
+
 
     public void hit(final Card card) {
         cards.add(card);
-
     }
-
 
     public int calculateScore() {
         int score = 0;
@@ -40,6 +41,14 @@ public abstract class Player {
             score += determineScore(card, score);
         }
         return score;
+    }
+
+    public boolean isDealer() {
+        return this.name.equals(new Name(DEALER_NAME));
+    }
+
+    public boolean isParticipant() {
+        return !this.isDealer();
     }
 
     private int determineScore(final Card card, final int score) {
@@ -54,14 +63,6 @@ public abstract class Player {
             return ACE_HIGH;
         }
         return ACE_LOW;
-    }
-
-    public boolean isDealer() {
-        return this.name.equals(new Name(DEALER_NAME));
-    }
-
-    public boolean isParticipant() {
-        return !this.isDealer();
     }
 
     public String getName() {

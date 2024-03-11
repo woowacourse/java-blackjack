@@ -3,6 +3,6 @@ package domain.card;
 public enum Symbol {
     HEART,
     SPADE,
-    CLOVER,
+    CLUBS,
     DIAMOND;
 }
