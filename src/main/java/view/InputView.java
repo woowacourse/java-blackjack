@@ -3,7 +3,7 @@ package view;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import model.dto.FaceUpResult;
+import model.dto.GameCompletionResult;
 
 public class InputView {
     private static final String INPUT_PARSE_DELIMITER = ",";
@@ -24,7 +24,7 @@ public class InputView {
                 .toList();
     }
 
-    public static String inputChoiceCommand(FaceUpResult faceUpResult) {
-        return input(faceUpResult.getPartipantNameAsString() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    public static String inputChoiceCommand(GameCompletionResult gameCompletionResult) {
+        return input(gameCompletionResult.getPartipantNameAsString() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 }

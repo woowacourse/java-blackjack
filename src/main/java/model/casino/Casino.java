@@ -6,7 +6,7 @@ import java.util.EnumMap;
 import java.util.List;
 import model.Choice;
 import model.dto.DealerScoreResult;
-import model.dto.FaceUpResult;
+import model.dto.GameCompletionResult;
 import model.dto.PlayerScoreResult;
 import view.Victory;
 import model.participant.Participants;
@@ -54,15 +54,15 @@ public class Casino {
         return participants.canHitDealer();
     }
 
-    public FaceUpResult getDealerFaceUpResult() {
+    public GameCompletionResult getDealerFaceUpResult() {
         return participants.getDealerFaceUpResult();
     }
 
-    public List<FaceUpResult> getPlayerFaceUpResult() {
+    public List<GameCompletionResult> getPlayerFaceUpResult() {
         return participants.getPlayerFaceUpResults();
     }
 
-    public FaceUpResult getNextPlayerFaceUpInfo() {
+    public GameCompletionResult getNextPlayerFaceUpInfo() {
         return participants.getNextAvailablePlayerName();
     }
 

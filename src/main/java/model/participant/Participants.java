@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Queue;
 import java.util.stream.Collectors;
 import model.card.Card;
-import model.dto.FaceUpResult;
+import model.dto.GameCompletionResult;
 
 public class Participants {
     private final Dealer dealer;
@@ -52,11 +52,11 @@ public class Participants {
         return players;
     }
 
-    public FaceUpResult getDealerFaceUpResult() {
+    public GameCompletionResult getDealerFaceUpResult() {
         return dealer.generateFaceUpResult();
     }
 
-    public List<FaceUpResult> getPlayerFaceUpResults() {
+    public List<GameCompletionResult> getPlayerFaceUpResults() {
         return players.stream()
                 .map(Player::generateFaceUpResult)
                 .toList();
@@ -66,7 +66,7 @@ public class Participants {
         return players.size();
     }
 
-    public FaceUpResult getNextAvailablePlayerName() {
+    public GameCompletionResult getNextAvailablePlayerName() {
         Player currentPlayer = players.peek();
         if (currentPlayer.canHit()) {
             return currentPlayer.generateFaceUpResult();

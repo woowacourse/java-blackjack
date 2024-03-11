@@ -9,7 +9,7 @@ import model.Choice;
 import model.casino.Casino;
 import model.casino.RandomCardShuffleMachine;
 import model.dto.DealerScoreResult;
-import model.dto.FaceUpResult;
+import model.dto.GameCompletionResult;
 import model.dto.PlayerScoreResult;
 import model.participant.Participants;
 import model.participant.Names;
@@ -36,22 +36,22 @@ public class BlackJackLauncher {
     }
 
     private void showInitialFaceUpResults(Casino casino) {
-        FaceUpResult dealerFaceUpResult = casino.getDealerFaceUpResult();
-        List<FaceUpResult> playerFaceUpResults = casino.getPlayerFaceUpResult();
-        OutputView.printInitialCardSetting(dealerFaceUpResult, playerFaceUpResults);
+        GameCompletionResult dealerGameCompletionResult = casino.getDealerFaceUpResult();
+        List<GameCompletionResult> playerGameCompletionResults = casino.getPlayerFaceUpResult();
+        OutputView.printInitialCardSetting(dealerGameCompletionResult, playerGameCompletionResults);
     }
 
     private void proceedPlayersTurn(Casino casino) {
         while (casino.hasAvailablePlayer()) {
-            FaceUpResult currentPlayerFaceUpInfo = casino.getNextPlayerFaceUpInfo();
+            GameCompletionResult currentPlayerCompletionResult = casino.getNextPlayerFaceUpInfo();
             Choice playerChoice = inputRetryHelper(() -> Choice.from(
-                    inputChoiceCommand(currentPlayerFaceUpInfo)));
+                    inputChoiceCommand(currentPlayerCompletionResult)));
             casino.distinctPlayerChoice(playerChoice);
-            showPlayerChoiceResult(playerChoice, currentPlayerFaceUpInfo);
+            showPlayerChoiceResult(playerChoice, currentPlayerCompletionResult);
         }
     }
 
-    private void showPlayerChoiceResult(Choice playerChoice, FaceUpResult currentPlayerFaceUpInfo) {
+    private void showPlayerChoiceResult(Choice playerChoice, GameCompletionResult currentPlayerFaceUpInfo) {
         if (playerChoice.isYes() || (!playerChoice.isYes() && currentPlayerFaceUpInfo.cards()
                 .size() == 2)) {
             OutputView.printSinglePlayerFaceUp(currentPlayerFaceUpInfo);
@@ -66,8 +66,8 @@ public class BlackJackLauncher {
     }
 
     private void showFinalFaceUpResults(Casino casino) {
-        List<FaceUpResult> playerFinalFaceUpResults = casino.getPlayerFaceUpResult();
-        FaceUpResult dealerFinalFaceUpResult = casino.getDealerFaceUpResult();
-        OutputView.printFinalFaceUpResult(dealerFinalFaceUpResult, playerFinalFaceUpResults);
+        List<GameCompletionResult> playerFinalGameCompletionResults = casino.getPlayerFaceUpResult();
+        GameCompletionResult dealerFinalGameCompletionResult = casino.getDealerFaceUpResult();
+        OutputView.printFinalFaceUpResult(dealerFinalGameCompletionResult, playerFinalGameCompletionResults);
     }
 }
