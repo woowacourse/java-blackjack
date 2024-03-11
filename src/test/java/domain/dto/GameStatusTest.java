@@ -1,6 +1,6 @@
 package domain.dto;
 
-import domain.Dealer;
+import domain.BlackJackGame;
 import domain.Name;
 import domain.Player;
 import java.util.List;
@@ -12,44 +12,40 @@ class GameStatusTest {
     @Test
     @DisplayName("List<GamerDto>로 생성한다.")
     void create() {
-        Assertions.assertThatCode(() -> GameStatus.of(
-                GamerDto.fromDealer(new Dealer()),
-                List.of(GamerDto.fromPlayer(new Player(new Name("test")))
-                ))).doesNotThrowAnyException();
+        Assertions.assertThatCode(() -> new GameStatus(
+                new BlackJackGame(List.of(new Player(new Name("test"))))
+        )).doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("List<GamerDto>를 반환한다.")
     void getGamerDtos() {
-        GamerDto gamerDto = GamerDto.fromPlayer(new Player(new Name("test")));
-        GameStatus gameStatus = GameStatus.of(
-                GamerDto.fromDealer(new Dealer()),
-                List.of(gamerDto));
-
-        Assertions.assertThat(gameStatus.getGamerDtos())
-                .isEqualTo(List.of(gamerDto));
+        Player player = new Player(new Name("test"));
+        GameStatus gameStatus = new GameStatus(
+                new BlackJackGame(List.of(player))
+        );
+        Assertions.assertThat(gameStatus.getGamerDtos().get(0).getName())
+                .isEqualTo("test");
     }
 
     @Test
     @DisplayName("이름이 들어오면 GamerDto를 반환한다.")
     void getGamerDtoFromName() {
-        GamerDto gamerDto = GamerDto.fromPlayer(new Player(new Name("test")));
-        GameStatus gameStatus = GameStatus.of(
-                GamerDto.fromDealer(new Dealer()),
-                List.of(gamerDto));
-
-        Assertions.assertThat(gameStatus.getGamerDtoFromName("test"))
-                .isEqualTo(gamerDto);
+        Player player = new Player(new Name("test"));
+        GameStatus gameStatus = new GameStatus(
+                new BlackJackGame(List.of(player))
+        );
+        Assertions.assertThat(gameStatus.getGamerDtoFromName("test").getName())
+                .isEqualTo("test");
     }
 
     @Test
     @DisplayName("없는 이름이 들어오면 예외를 발생한다.")
     void getGamerDtoFromNameException() {
-        GamerDto gamerDto = GamerDto.fromPlayer(new Player(new Name("test")));
-        GameStatus gameStatus = GameStatus.of(
-                GamerDto.fromDealer(new Dealer()),
-                List.of(gamerDto));
-
+        Player player = new Player(new Name("test"));
+        GameStatus gameStatus = new GameStatus(
+                new BlackJackGame(List.of(player))
+        );
         Assertions.assertThatThrownBy(() -> gameStatus.getGamerDtoFromName("wrongName"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("존재하지 않는 참여자 입니다.");

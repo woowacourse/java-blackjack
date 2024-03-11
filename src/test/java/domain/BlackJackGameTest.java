@@ -11,22 +11,13 @@ import org.junit.jupiter.api.Test;
 
 public class BlackJackGameTest {
     @Test
-    @DisplayName("GameStatusDto를 반환한다.")
-    void getGameStatusDto() {
-        BlackJackGame blackJackGame = new BlackJackGame(List.of(
-                new Player(new Name("test"))
-        ));
-        Assertions.assertThat(blackJackGame.getGameStatusDto()).isNotNull();
-    }
-
-    @Test
     @DisplayName("모든 Gamer들에게 카드를 2장씩 나눠준다")
     void initialDealing() {
         BlackJackGame blackJackGame = new BlackJackGame(List.of(
                 new Player(new Name("test"))
         ));
         blackJackGame.initialDealing();
-        Assertions.assertThat(blackJackGame.getGameStatusDto()
+        Assertions.assertThat(new GameStatus(blackJackGame)
                         .getGamerDtoFromName("test")
                         .getCards().size())
                 .isEqualTo(2);
@@ -40,7 +31,7 @@ public class BlackJackGameTest {
         ));
         blackJackGame.initialDealing();
         blackJackGame.drawCardFromName("test");
-        Assertions.assertThat(blackJackGame.getGameStatusDto()
+        Assertions.assertThat(new GameStatus(blackJackGame)
                         .getGamerDtoFromName("test")
                         .getCards().size())
                 .isEqualTo(3);
@@ -89,7 +80,7 @@ public class BlackJackGameTest {
         ));
         blackJackGame.initialDealing();
         blackJackGame.drawDealerCard();
-        GameStatus gameStatus = blackJackGame.getGameStatusDto();
+        GameStatus gameStatus = new GameStatus(blackJackGame);
         GamerDto gamerDto = gameStatus.getDealerDto();
         Assertions.assertThat(gamerDto.getTotalScore()).isGreaterThan(16);
     }

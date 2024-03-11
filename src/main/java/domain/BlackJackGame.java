@@ -1,8 +1,5 @@
 package domain;
 
-import domain.dto.GameStatus;
-import domain.dto.GamerDto;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,18 +34,6 @@ public class BlackJackGame {
         gamer.takeCard(deck.draw());
     }
 
-    public GameStatus getGameStatusDto() {
-        return GameStatus.of(GamerDto.fromDealer(dealer), toGamerDto());
-    }
-
-    public List<GamerDto> toGamerDto() {
-        List<GamerDto> gamerDtos = new ArrayList<>();
-        players.stream()
-                .map(GamerDto::fromPlayer)
-                .forEach(gamerDtos::add);
-        return Collections.unmodifiableList(gamerDtos);
-    }
-
     public void drawCardFromName(String name) {
         players.stream().filter(player -> player.isNameOf(name))
                 .findFirst()
@@ -72,5 +57,13 @@ public class BlackJackGame {
                 dealer.getTotalScore(),
                 players.stream()
                         .collect(Collectors.toMap(Player::getName, Gamer::getTotalScore)));
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 }
