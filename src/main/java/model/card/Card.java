@@ -23,6 +23,10 @@ public class Card {
         return number.getValue();
     }
 
+    public boolean isWildCard() {
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

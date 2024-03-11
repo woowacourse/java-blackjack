@@ -25,6 +25,10 @@ public class AceCard extends Card {
         return softAce;
     }
 
+    public boolean isWildCard() {
+        return true;
+    }
+
     @Override
     public int getCardActualValue() {
         if (softAce) {
