@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Bet {
 
     private static final int MIN_AMOUNT = 1;
-    private final int amount;
+    private int amount;
 
     public Bet(int amount) {
         validate(amount);
@@ -18,8 +18,23 @@ public class Bet {
         }
     }
 
-    public int getAmount() {
-        return amount;
+    public Bet lose() {
+        amount *= -1;
+        return this;
+    }
+
+    public Bet win() {
+        return this;
+    }
+
+    public Bet stay() {
+        amount = 0;
+        return this;
+    }
+
+    public Bet multiply() {
+        amount *= 1.5;
+        return this;
     }
 
     @Override

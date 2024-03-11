@@ -1,20 +1,21 @@
 package domain.score;
 
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import static domain.score.Status.*;
+import static domain.score.Status.values;
 
 public class Score {
 
     private final Map<Status, Integer> score;
 
     public Score() {
-        score = new HashMap<>(Map.of(
-                WIN, 0,
-                TIE, 0,
-                LOSE, 0
-        ));
+        score = Arrays.stream(values())
+                .collect(Collectors.toMap(
+                        status -> status,
+                        integer -> 0
+                ));
     }
 
     public void increaseScore(Status status) {
