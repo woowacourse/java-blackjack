@@ -1,6 +1,6 @@
 package blackjack.view.mapper;
 
-import blackjack.domain.Shape;
+import blackjack.domain.card.Shape;
 import java.util.Arrays;
 
 public enum ShapeMapper {

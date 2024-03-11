@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.domain.Hands;
+import blackjack.domain.participants.Hands;
 import blackjack.domain.participants.GameParticipant;
 import blackjack.domain.participants.Name;
 import blackjack.view.mapper.RankMapper;

@@ -1,7 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participants;
 
-import blackjack.domain.participants.GameParticipant;
-import blackjack.domain.participants.Name;
+import blackjack.domain.card.Card;
 import java.util.ArrayList;
 
 public class Dealer implements GameParticipant {

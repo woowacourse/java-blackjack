@@ -1,7 +1,6 @@
 package blackjack.domain.participants;
 
-import blackjack.domain.Card;
-import blackjack.domain.Hands;
+import blackjack.domain.card.Card;
 
 public interface GameParticipant {
     void receiveHands(Hands hands);
