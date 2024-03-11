@@ -21,7 +21,7 @@ public class PlayerTest {
         player = new Player(name);
     }
 
-    @DisplayName("Player가 들고 있는 카드가 최고점을 넘을경우 true를 return한다.")
+    @DisplayName("Player가 들고 있는 카드가 최고점을 넘을경우 0을 return한다.")
     @Test
     void isOverMaxGameScore() {
         Card kingCard = new Card(CardNumber.KING, CardPattern.CLOVER_PATTERN);
@@ -32,7 +32,7 @@ public class PlayerTest {
         player.receiveCard(queenCard);
         player.receiveCard(jackCard);
 
-        Assertions.assertThat(player.isDrawable()).isTrue();
+        Assertions.assertThat(player.isDrawable()).isFalse();
     }
 
     @DisplayName("Player가 들고 있는 카드가 최고점을 넘지 않을경우 false를 return한다.")
@@ -42,6 +42,6 @@ public class PlayerTest {
 
         player.receiveCard(kingCard);
 
-        Assertions.assertThat(player.isDrawable()).isFalse();
+        Assertions.assertThat(player.isDrawable()).isTrue();
     }
 }

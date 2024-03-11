@@ -1,7 +1,7 @@
 package domain.card;
 
 public class Card {
-    
+
     private final CardNumber cardNumber;
     private final CardPattern cardPattern;
 
@@ -14,8 +14,8 @@ public class Card {
         return cardNumber.getCardNumber();
     }
 
-    public boolean isAce(CardNumber checkNumber) {
-        return cardNumber == checkNumber;
+    public boolean isAce() {
+        return this.cardNumber == CardNumber.ACE;
     }
 
     public String getCardName() {

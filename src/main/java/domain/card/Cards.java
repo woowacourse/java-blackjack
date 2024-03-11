@@ -20,15 +20,18 @@ public class Cards {
     }
 
     public int countMaxScore() {
-        int score = convertAceScore(countMatchScore());
+        int score = countMatchScore();
+        if (this.hasAce()) {
+            score = convertAceScore(score);
+        }
         if (isOver(score)) {
             return 0;
         }
         return score;
     }
 
-    public boolean isOver(int score) {
-        return score > 21;
+    private boolean hasAce() {
+        return cards.stream().anyMatch(Card::isAce);
     }
 
     private int convertAceScore(int maxResultScore) {
@@ -42,6 +45,10 @@ public class Cards {
         return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
+    }
+
+    public boolean isOver(int score) {
+        return score > MAX_BLACK_JACK_SCORE;
     }
 
     public int getMaxGameScore() {

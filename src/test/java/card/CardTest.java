@@ -14,6 +14,6 @@ public class CardTest {
     void isSameCardNumberTest() {
         Card card = new Card(CardNumber.ACE, CardPattern.DIA_PATTERN);
 
-        Assertions.assertThat(card.isAce(CardNumber.ACE)).isTrue();
+        Assertions.assertThat(card.isAce()).isTrue();
     }
 }
