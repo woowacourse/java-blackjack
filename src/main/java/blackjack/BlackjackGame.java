@@ -1,19 +1,14 @@
 package blackjack;
 
-import blackjack.domain.Deck;
 import blackjack.domain.Players;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.strategy.RandomShuffleStrategy;
 import blackjack.view.CardView;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class BlackjackGame {
-
-    private static final int BLACKJACK_INIT_CARD_AMOUNT = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -24,24 +19,14 @@ public class BlackjackGame {
     }
 
     public void start() {
-        Deck deck = new Deck(new RandomShuffleStrategy());
-
         List<String> names = inputView.readPlayersName();
-        Dealer dealer = new Dealer(deck);
-        Players players = Players.of(names);
+        Dealer dealer = BlackjackInitializer.createDealer();
+        Players players = BlackjackInitializer.createPlayer(names);
 
-        initializeGame(dealer, players);
+        BlackjackInitializer.initializeGame(dealer, players);
+        printCardDistribute(dealer, players);
         requestExtraCard(dealer, players);
         outputView.printFinalResult(names, players.createResult(dealer));
-    }
-
-    private void initializeGame(final Dealer dealer, final Players players) {
-        dealer.draw(BLACKJACK_INIT_CARD_AMOUNT);
-
-        IntStream.range(0, BLACKJACK_INIT_CARD_AMOUNT)
-                .forEach(i -> players.getPlayers()
-                        .forEach(player -> player.draw(dealer.draw())));
-        printCardDistribute(dealer, players);
     }
 
     private void printCardDistribute(final Dealer dealer, final Players players) {
@@ -62,16 +47,14 @@ public class BlackjackGame {
         players.getPlayers()
                 .forEach(player -> readMoreCardChoice(player, dealer));
 
-        printDealerExtraCard(dealer);
+        addDealerExtraCard(dealer);
         printResultCardsStatus(dealer, players);
     }
 
-    private void printDealerExtraCard(final Dealer dealer) {
+    private void addDealerExtraCard(final Dealer dealer) {
         if (dealer.requestExtraCard()) {
             outputView.printAddDealerCard();
-            return;
         }
-        outputView.printNewLine();
     }
 
     private void printResultCardsStatus(final Dealer dealer, final Players players) {
@@ -79,9 +62,7 @@ public class BlackjackGame {
 
         for (Player player : players.getPlayers()) {
             outputView.printCardResultStatus(
-                    player.getName(),
-                    CardView.makeCardOutput(player.getHandCards()),
-                    player.getScore()
+                    player.getName(), CardView.makeCardOutput(player.getHandCards()), player.getScore()
             );
         }
     }

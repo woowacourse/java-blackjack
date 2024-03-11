@@ -11,9 +11,9 @@ public class OutputView {
     private static final String CARD_DISTRIBUTE = NEW_LINE + "딜러와 %s에게 2장을 나누었습니다." + NEW_LINE;
     private static final String DEALER_CARD_STATUS = "딜러: %s" + NEW_LINE;
     private static final String CARD_STATUS = "%s: %s" + NEW_LINE;
-    private static final String DEALER_ADDED_CARD = NEW_LINE + "딜러는 %d이하라 한장의 카드를 더 받았습니다." + NEW_LINE + NEW_LINE;
+    private static final String DEALER_ADDED_CARD = NEW_LINE + "딜러는 %d이하라 한장의 카드를 더 받았습니다." + NEW_LINE;
     private static final String RESULT_CARDS_STATUS = "%s카드: %s - 결과: %d" + NEW_LINE;
-    private static final String DEALER_RESULT_CARDS_STATUS = "딜러 카드: %s - 결과: %d" + NEW_LINE;
+    private static final String DEALER_RESULT_CARDS_STATUS = NEW_LINE + "딜러 카드: %s - 결과: %d" + NEW_LINE;
     private static final String FINAL_RESULT_TITLE = NEW_LINE + "## 최종 승패";
     private static final String DEALER_FINAL_RESULT = "딜러: %d승 %d패 %d무" + NEW_LINE;
     private static final String INVALID_CHOICE_EXCEPTION = "%s 또는 %s을 입력해주세요.";
