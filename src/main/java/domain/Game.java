@@ -28,11 +28,9 @@ public class Game {
 
     public Map<Result, Integer> getDealerResult() {
         Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
-
         for (Result value : getPlayersResult().values()) {
             Result reversed = value.reverse();
-            Integer orDefault = dealerResult.getOrDefault(reversed, 0);
-            dealerResult.put(reversed, orDefault + 1);
+            dealerResult.put(reversed, dealerResult.getOrDefault(reversed, 0) + 1);
         }
         return dealerResult;
     }

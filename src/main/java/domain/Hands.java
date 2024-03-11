@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Hands {
 
     private static final int BLACK_JACK = 21;
-    public static final int EXTRA_ACE_VALUE = 10;
+    private static final int EXTRA_ACE_VALUE = 10;
 
     private final List<Card> cards;
 
@@ -56,16 +56,7 @@ public class Hands {
     }
 
     public Result calculateResult(final Hands target) {
-        if (!this.isBust() && target.isBust()) {
-            return Result.WIN;
-        }
-        if (this.sum() == target.sum() && this.size() == target.size() && !this.isBust()) {
-            return Result.TIE;
-        }
-        if (this.sum() >= target.sum() && this.sum() <= BLACK_JACK) {
-            return Result.WIN;
-        }
-        return Result.LOSE;
+        return Result.calculateOf(this, target);
     }
 
     private int calculateTotalByAce(final int total) {
