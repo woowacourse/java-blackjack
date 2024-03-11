@@ -16,6 +16,7 @@ import blackjack.dto.PlayerDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
+import java.util.Map;
 
 public class Application {
 
@@ -91,10 +92,11 @@ public class Application {
     }
 
     private static OutcomesDto createOutcomesDto(final List<Outcome> outcomes) {
+        final Map<Outcome, Long> outcomeCounts = Outcome.countByKind(outcomes);
         return new OutcomesDto(
-                Outcome.calculateWinCount(outcomes),
-                Outcome.calculateLoseCount(outcomes),
-                Outcome.calculatePushCount(outcomes)
+                outcomeCounts.getOrDefault(Outcome.WIN, 0L).intValue(),
+                outcomeCounts.getOrDefault(Outcome.LOSE, 0L).intValue(),
+                outcomeCounts.getOrDefault(Outcome.PUSH, 0L).intValue()
         );
     }
 }

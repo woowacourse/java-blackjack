@@ -1,6 +1,10 @@
 package blackjack.domain;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public enum Outcome {
 
@@ -22,21 +26,8 @@ public enum Outcome {
         return Outcome.PUSH;
     }
 
-    public static int calculateWinCount(final List<Outcome> outcomes) {
-        return (int) outcomes.stream()
-                .filter(outcome -> outcome == Outcome.WIN)
-                .count();
-    }
-
-    public static int calculateLoseCount(final List<Outcome> outcomes) {
-        return (int) outcomes.stream()
-                .filter(outcome -> outcome == Outcome.LOSE)
-                .count();
-    }
-
-    public static int calculatePushCount(final List<Outcome> outcomes) {
-        return (int) outcomes.stream()
-                .filter(outcome -> outcome == Outcome.PUSH)
-                .count();
+    public static Map<Outcome, Long> countByKind(final List<Outcome> outcomes) {
+        return Collections.unmodifiableMap(outcomes.stream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())));
     }
 }
