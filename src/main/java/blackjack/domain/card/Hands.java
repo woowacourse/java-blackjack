@@ -3,8 +3,8 @@ package blackjack.domain.card;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.result.BlackjackStatus;
-import blackjack.domain.result.Score;
+import blackjack.domain.rule.BlackjackStatus;
+import blackjack.domain.rule.Score;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -54,12 +54,43 @@ public class Hands {
         return BlackjackStatus.from(new Score(sum)).isDead();
     }
 
+    public boolean isBlackjackAndSizeIs(final int size) {
+        return isBlackjack() && this.size() == size;
+    }
+
+    public boolean isBlackjackAndSizeIsNot(final int size) {
+        return isBlackjack() && this.size() != size;
+    }
+
+    public boolean isScoreBiggerThan(final Hands other) {
+        return this.calculateScore().isBiggerThan(other.calculateScore());
+    }
+
+    public boolean isScoreSame(final Hands other) {
+        return this.calculateScore().equals(other.calculateScore());
+    }
+
+    public boolean isNotSize(final int size) {
+        return this.size() != size;
+    }
+
+    public int size() {
+        return cards.size();
+    }
     public boolean isNotBlackjack() {
-        return !getStatus().isBlackjack();
+        return !isBlackjack();
+    }
+
+    public boolean isBlackjack() {
+        return getStatus().isBlackjack();
     }
 
     public boolean isNotDead() {
-        return !getStatus().isDead();
+        return !isDead();
+    }
+
+    public boolean isDead() {
+        return getStatus().isDead();
     }
 
     private BlackjackStatus getStatus() {
@@ -72,5 +103,10 @@ public class Hands {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    @Override
+    public String toString() {
+        return cards.toString();
     }
 }

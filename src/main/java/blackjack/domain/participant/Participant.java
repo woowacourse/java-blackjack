@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
-import blackjack.domain.result.Score;
+import blackjack.domain.rule.Score;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -39,7 +39,6 @@ public class Participant {
     public boolean isNotDead() {
         return hands.isNotDead();
     }
-
 
     public Hands getHands() {
         return new Hands(hands.getCards());

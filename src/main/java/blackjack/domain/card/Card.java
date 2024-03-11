@@ -50,4 +50,9 @@ public record Card(CardNumber number, CardShape shape) {
     public String getShapeName() {
         return shape.name();
     }
+
+    @Override
+    public String toString() {
+        return number.name() + "_" + shape.name();
+    }
 }

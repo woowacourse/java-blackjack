@@ -4,8 +4,7 @@ import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
-import blackjack.domain.result.Score;
-import blackjack.domain.result.WinStatus;
+import blackjack.domain.rule.BattingStatus;
 import blackjack.exception.NeedRetryException;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -56,11 +55,11 @@ public class Players {
         findedParticipant.addCard(card);
     }
 
-    public Map<ParticipantName, WinStatus> determineWinStatus(final Score dealerScore) {
-        final Map<ParticipantName, WinStatus> playersWinStatus = new LinkedHashMap<>();
+    public Map<ParticipantName, BattingStatus> determineWinStatus(final Hands dealerHands) {
+        final Map<ParticipantName, BattingStatus> playersWinStatus = new LinkedHashMap<>();
 
         for (Participant participant : players) {
-            playersWinStatus.put(participant.getName(), WinStatus.of(dealerScore, participant.calculateScore()));
+            playersWinStatus.put(participant.getName(), BattingStatus.of(dealerHands, participant.getHands()));
         }
 
         return playersWinStatus;
