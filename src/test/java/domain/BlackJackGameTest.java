@@ -22,9 +22,10 @@ public class BlackJackGameTest {
 
         game.setUpGame();
 
-        assertThat(game.getGamers().getDealer().getHand()).hasSize(2);
-        game.getGamers().getPlayers().forEach(player -> assertThat(player.getHand()).hasSize(2));
-        // TODO: refactoring
+        Dealer dealer = game.getGamers().getDealer();
+        List<Player> players = game.getGamers().getPlayers();
+        assertThat(dealer.getHand()).hasSize(2);
+        players.forEach(player -> assertThat(player.getHand()).hasSize(2));
     }
 
     @DisplayName("플레이어가 카드를 더 받을 경우 플레이어의 카드 수는 1 증가한다.")
