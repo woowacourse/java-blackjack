@@ -1,7 +1,9 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.HandGenerator;
-import blackjack.domain.result.*;
+import blackjack.domain.result.BlackjackResult;
+import blackjack.domain.result.HandResult;
+import blackjack.domain.result.Referee;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

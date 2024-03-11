@@ -13,22 +13,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ParticipantTest {
-    private static class TestParticipant extends Participant {
-        public TestParticipant(Name name, HandGenerator handGenerator) {
-            super(name, handGenerator);
-        }
-
-        @Override
-        public List<Card> getInitialOpenedCards() {
-            return getCards();
-        }
-
-        @Override
-        public boolean canHit() {
-            return false;
-        }
-    }
-
     private static TestParticipant createParticipant(List<Number> numbers, List<Shape> shapes, String name) {
         Deck deck = new CustomDeck(numbers, shapes);
         HandGenerator handGenerator = new HandGenerator(deck);
@@ -51,5 +35,21 @@ class ParticipantTest {
 
         //then
         assertThat(cardSignatures).containsExactly("A스페이드");
+    }
+
+    private static class TestParticipant extends Participant {
+        public TestParticipant(Name name, HandGenerator handGenerator) {
+            super(name, handGenerator);
+        }
+
+        @Override
+        public List<Card> getInitialOpenedCards() {
+            return getCards();
+        }
+
+        @Override
+        public boolean canHit() {
+            return false;
+        }
     }
 }

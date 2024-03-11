@@ -10,14 +10,14 @@ public abstract class Participant {
     private final Name name;
     private final Hand hand;
 
-    public abstract List<Card> getInitialOpenedCards();
-
-    public abstract boolean canHit();
-
     public Participant(Name name, HandGenerator handGenerator) {
         this.name = name;
         this.hand = handGenerator.generate();
     }
+
+    public abstract List<Card> getInitialOpenedCards();
+
+    public abstract boolean canHit();
 
     public String getName() {
         return name.getName();

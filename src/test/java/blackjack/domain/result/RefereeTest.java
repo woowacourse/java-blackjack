@@ -17,7 +17,7 @@ class RefereeTest {
     @Test
     void generateResultThatDealerWin() {
         //given
-        List<Number> numbers =  List.of(Number.ACE, Number.SIX, Number.ACE, Number.EIGHT);
+        List<Number> numbers = List.of(Number.ACE, Number.SIX, Number.ACE, Number.EIGHT);
         Deck deck = new CustomDeck(numbers);
         HandGenerator handGenerator = new HandGenerator(deck);
         List<Name> playerName = List.of(new Name("gamza"));
@@ -35,7 +35,7 @@ class RefereeTest {
     @Test
     void generateResultThatPlayerWin() {
         //given
-        List<Number> numbers =  List.of(Number.ACE, Number.KING, Number.ACE, Number.EIGHT);
+        List<Number> numbers = List.of(Number.ACE, Number.KING, Number.ACE, Number.EIGHT);
         Deck deck = new CustomDeck(numbers);
         HandGenerator handGenerator = new HandGenerator(deck);
         List<Name> playerName = List.of(new Name("mason"));
@@ -53,7 +53,7 @@ class RefereeTest {
     @Test
     void generateResultThatDraw() {
         //given
-        List<Number> numbers =  List.of(Number.SEVEN, Number.JACK, Number.QUEEN, Number.SEVEN);
+        List<Number> numbers = List.of(Number.SEVEN, Number.JACK, Number.QUEEN, Number.SEVEN);
         Deck deck = new CustomDeck(numbers);
         HandGenerator handGenerator = new HandGenerator(deck);
         List<Name> playerName = List.of(new Name("pobi"));
