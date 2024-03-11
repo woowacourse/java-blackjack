@@ -43,11 +43,11 @@ public class BlackjackGame {
     private void startSetting(GameBoard gameBoard) {
         gameBoard.distributeInitialHands();
         GameParticipant dealer = gameBoard.getDealer();
-        ParticipantDto dealerDto = ParticipantDto.from(dealer);
+        ParticipantDto dealerDto = new ParticipantDto(dealer);
         List<ParticipantDto> playersDto = gameBoard.getPlayers()
                 .getPlayers()
                 .stream()
-                .map(ParticipantDto::from)
+                .map(ParticipantDto::new)
                 .toList();
         outputView.printSetting(dealerDto, playersDto);
         outputView.printNewLine();
@@ -73,18 +73,18 @@ public class BlackjackGame {
         while (player.canHit() &&
                 inputView.readCommand(player.getName().getName())) {
             gameBoard.addCardToPlayer(player);
-            outputView.printCurrentCard(ParticipantDto.from(player));
+            outputView.printCurrentCard(new ParticipantDto(player));
             outputView.printNewLine();
         }
     }
 
     private void handleResult(GameBoard gameBoard) {
         GameParticipant dealer = gameBoard.getDealer();
-        ParticipantDto dealerDto = ParticipantDto.from(dealer);
+        ParticipantDto dealerDto = new ParticipantDto(dealer);
         List<ParticipantDto> playersDto = gameBoard.getPlayers()
                 .getPlayers()
                 .stream()
-                .map(ParticipantDto::from)
+                .map(ParticipantDto::new)
                 .toList();
         outputView.printScoreResult(dealerDto, playersDto);
     }

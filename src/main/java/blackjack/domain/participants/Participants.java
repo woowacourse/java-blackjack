@@ -2,7 +2,6 @@ package blackjack.domain.participants;
 
 import blackjack.domain.card.Card;
 import java.util.List;
-import java.util.Map;
 
 public class Participants {
 
@@ -34,7 +33,7 @@ public class Participants {
     }
 
     public WinOrLose calculateWinOrLose() {
-        return WinOrLose.calculateWinOrLose(players.getPlayers(), dealer.calculateScore());
+        return new WinOrLose(players.getPlayers(), dealer.calculateScore());
     }
 
     public boolean isDealerNotOver() {

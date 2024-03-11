@@ -8,14 +8,9 @@ import java.util.Map;
 public class WinOrLose {
     private final Map<Player, Boolean> winOrLose;
 
-    private WinOrLose(Map<Player, Boolean> winOrLose) {
-        this.winOrLose = winOrLose;
-    }
-
-    public static WinOrLose calculateWinOrLose(List<Player> players, int dealerScore) {
-        Map<Player, Boolean> winOrLose = new LinkedHashMap<>();
+    public WinOrLose(List<Player> players, int dealerScore) {
+        this.winOrLose = new LinkedHashMap<>();
         players.forEach(player -> winOrLose.put(player, player.isWin(dealerScore)));
-        return new WinOrLose(winOrLose);
     }
 
     public int countDealerWin() {

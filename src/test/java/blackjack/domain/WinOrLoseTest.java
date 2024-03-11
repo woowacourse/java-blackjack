@@ -43,7 +43,7 @@ public class WinOrLoseTest {
     @Test
     @DisplayName("플레이어가 모두 패배한 테스트")
     void victoryLoseTest() {
-        WinOrLose winOrLose = WinOrLose.calculateWinOrLose(players, 21);
+        WinOrLose winOrLose = new WinOrLose(players, 21);
 
         assertThat(winOrLose.countDealerWin()).isEqualTo(2);
     }
@@ -51,7 +51,7 @@ public class WinOrLoseTest {
     @Test
     @DisplayName("플레이어의 승리가 포함된 테스트")
     void victoryWinTest() {
-        WinOrLose winOrLose = WinOrLose.calculateWinOrLose(players, 17);
+        WinOrLose winOrLose = new WinOrLose(players, 17);
 
         assertThat(winOrLose.countDealerWin()).isEqualTo(0);
     }
@@ -59,7 +59,7 @@ public class WinOrLoseTest {
     @Test
     @DisplayName("한명의 플레이어만 승리한 테스트")
     void victorySingleWinTest() {
-        WinOrLose winOrLose = WinOrLose.calculateWinOrLose(players, 19);
+        WinOrLose winOrLose = new WinOrLose(players, 19);
 
         assertThat(winOrLose.countDealerWin()).isEqualTo(1);
     }

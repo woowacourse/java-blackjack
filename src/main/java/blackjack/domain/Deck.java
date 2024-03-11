@@ -30,7 +30,6 @@ public class Deck {
                 .forEach((shape) -> result.add(new Card(shape, rank)));
     }
 
-
     public Card drawCard() {
         validateDeck();
         int pickCardIndex = RANDOM.nextInt(deck.size());
