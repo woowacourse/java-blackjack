@@ -19,32 +19,6 @@ public class Dealer extends Player {
         return new Dealer(new Name(DEFAULT_DEALER_NAME), cards);
     }
 
-
-    public ResultStatus giveGamePlayerResult(GamePlayer gamePlayer) {
-        int playerScore = gamePlayer.calculateScore();
-        int dealerScore = calculateScore();
-
-        if (gamePlayer.isBust()) {
-            return ResultStatus.LOSE;
-        }
-        if (isBust()) {
-            return ResultStatus.WIN;
-        }
-        if (gamePlayer.isBlackjack() && !isBlackjack()) {
-            return ResultStatus.WIN;
-        }
-        if (!gamePlayer.isBlackjack() && isBlackjack()) {
-            return ResultStatus.LOSE;
-        }
-        if (playerScore > dealerScore) {
-            return ResultStatus.WIN;
-        }
-        if (playerScore == dealerScore) {
-            return ResultStatus.DRAW;
-        }
-        return ResultStatus.LOSE;
-    }
-
     @Override
     public List<Card> getOpenCards() {
         return cards.getFirstCard();
