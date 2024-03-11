@@ -1,7 +1,8 @@
 package domain.dto;
 
 import domain.Card;
-import domain.Gamer;
+import domain.Dealer;
+import domain.Player;
 import java.util.List;
 
 public class GamerDto {
@@ -15,11 +16,20 @@ public class GamerDto {
         this.totalScore = totalScore;
     }
 
-    public static GamerDto from(Gamer gamer) {
+    public static GamerDto fromPlayer(Player player) {
         return new GamerDto(
-                gamer.getName(),
-                gamer.getCards(),
-                gamer.getTotalScore()
+                player.getName(),
+                player.getCards(),
+                player.getTotalScore()
+        );
+    }
+
+
+    public static GamerDto fromDealer(Dealer dealer) {
+        return new GamerDto(
+                "dealer",
+                dealer.getCards(),
+                dealer.getTotalScore()
         );
     }
 

@@ -2,29 +2,19 @@ package domain;
 
 import java.util.List;
 
-public class Gamer {
-    private final Name name;
-    private final Hand hand;
+public abstract class Gamer {
+    protected final Hand hand;
 
-    public Gamer(Name name) {
-        this.name = name;
+    public Gamer() {
         this.hand = new Hand();
-    }
-
-    public List<Card> getCards() {
-        return hand.getCards();
     }
 
     public void takeCard(Card card) {
         hand.add(card);
     }
 
-    public boolean isName(String test) {
-        return name.name().equals(test);
-    }
-
-    public String getName() {
-        return name.name();
+    public List<Card> getCards() {
+        return hand.getCards();
     }
 
     public int getTotalScore() {
@@ -32,6 +22,6 @@ public class Gamer {
     }
 
     public boolean isBust() {
-        return (hand.isBust());
+        return hand.isBust();
     }
 }

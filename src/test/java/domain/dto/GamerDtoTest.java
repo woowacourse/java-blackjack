@@ -1,8 +1,8 @@
 package domain.dto;
 
 import domain.Card;
-import domain.Gamer;
 import domain.Name;
+import domain.Player;
 import domain.constant.CardNumber;
 import domain.constant.CardType;
 import java.util.List;
@@ -14,7 +14,7 @@ class GamerDtoTest {
     @Test
     @DisplayName("Gamer를 통해 생성할 수 있다.")
     void create() {
-        Assertions.assertThatCode(() -> GamerDto.from(new Gamer(new Name("test"))))
+        Assertions.assertThatCode(() -> GamerDto.fromPlayer(new Player(new Name("test"))))
                 .doesNotThrowAnyException();
 
     }
@@ -22,7 +22,7 @@ class GamerDtoTest {
     @Test
     @DisplayName("이름을 반환할 수 있다.")
     void getName() {
-        GamerDto gamerDto = GamerDto.from(new Gamer(new Name("test")));
+        GamerDto gamerDto = GamerDto.fromPlayer(new Player(new Name("test")));
         Assertions.assertThat(gamerDto.getName()).isEqualTo("test");
     }
 
@@ -30,10 +30,10 @@ class GamerDtoTest {
     @Test
     @DisplayName("카드들을 반환할 수 있다.")
     void getCards() {
-        Gamer gamer = new Gamer(new Name("test"));
+        Player player = new Player(new Name("test"));
         Card card = new Card(CardType.SPADE, CardNumber.ACE);
-        gamer.takeCard(card);
-        GamerDto gamerDto = GamerDto.from(gamer);
+        player.takeCard(card);
+        GamerDto gamerDto = GamerDto.fromPlayer(player);
         Assertions.assertThat(gamerDto.getCards())
                 .isEqualTo(List.of(card));
     }
@@ -41,10 +41,10 @@ class GamerDtoTest {
     @Test
     @DisplayName("카드 점수 합계를 반환한다.")
     void getTotalScore() {
-        Gamer gamer = new Gamer(new Name("test"));
-        gamer.takeCard(new Card(CardType.SPADE, CardNumber.ACE));
-        gamer.takeCard(new Card(CardType.SPADE, CardNumber.TEN));
-        GamerDto gamerDto = GamerDto.from(gamer);
+        Player player = new Player(new Name("test"));
+        player.takeCard(new Card(CardType.SPADE, CardNumber.ACE));
+        player.takeCard(new Card(CardType.SPADE, CardNumber.TEN));
+        GamerDto gamerDto = GamerDto.fromPlayer(player);
         Assertions.assertThat(gamerDto.getTotalScore())
                 .isEqualTo(21);
     }

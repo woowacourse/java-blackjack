@@ -1,6 +1,6 @@
 import domain.BlackJackGame;
-import domain.Gamer;
 import domain.Name;
+import domain.Player;
 import domain.dto.GameStatus;
 import domain.dto.GamerDto;
 import java.util.List;
@@ -20,11 +20,11 @@ public class Application {
 
     private static BlackJackGame setGame() {
         List<String> inputs = InputView.readNames(CONSOLE_READER);
-        List<Gamer> gamers = inputs.stream()
+        List<Player> players = inputs.stream()
                 .map(Name::new)
-                .map(Gamer::new)
+                .map(Player::new)
                 .toList();
-        return new BlackJackGame(gamers);
+        return new BlackJackGame(players);
     }
 
     private static List<GamerDto> showInitialStatus(BlackJackGame blackJackGame) {
