@@ -71,7 +71,7 @@ public class Casino {
                 .hand();
         return participants.getPlayerFaceUpResults()
                 .stream()
-                .map(result -> new PlayerScoreResult(result.name(), Victory.of(dealerHand, result.hand())))
+                .map(result -> new PlayerScoreResult(result.name(), Victory.of(result.hand(), dealerHand)))
                 .toList();
     }
 
@@ -80,7 +80,7 @@ public class Casino {
         EnumMap<Victory, Integer> dealerScoreBoard = new EnumMap<>(Victory.class);
         List<Victory> dealerScores = participants.getPlayerFaceUpResults()
                 .stream()
-                .map(player -> Victory.of(player.hand(), dealerHand))
+                .map(player -> Victory.of(dealerHand, player.hand()))
                 .toList();
         for (Victory victory : Victory.values()) {
             dealerScoreBoard.put(victory, frequency(dealerScores, victory));

@@ -12,7 +12,7 @@ public enum Victory {
     }
 
     public static Victory of(int standard, int comparisonTarget) {
-        if (standard < comparisonTarget) {
+        if (standard > comparisonTarget) {
             return WIN;
         }
         if (standard == comparisonTarget) {
