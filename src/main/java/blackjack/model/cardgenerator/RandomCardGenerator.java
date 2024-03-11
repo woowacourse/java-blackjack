@@ -10,13 +10,13 @@ public class RandomCardGenerator implements CardGenerator {
     private static final String NO_CARDS = "카드가 없습니다.";
     private static final int DECK_NUMBER = 4;
 
-    private final Iterator<Card> cards;
+    private final Queue<Card> cards;
 
     public RandomCardGenerator() {
-        this.cards = generateDecks().iterator();
+        this.cards = generateDecks();
     }
 
-    private List<Card> generateDecks() {
+    private Queue<Card> generateDecks() {
         List<Card> deck = generateDeck();
 
         List<Card> decks = new ArrayList<>();
@@ -40,15 +40,15 @@ public class RandomCardGenerator implements CardGenerator {
         }
     }
 
-    private List<Card> shuffle(final List<Card> decks) {
+    private Queue<Card> shuffle(final List<Card> decks) {
         Collections.shuffle(decks);
-        return decks;
+        return new LinkedList<>(decks);
     }
 
     @Override
     public Card pick() {
-        if (cards.hasNext()) {
-            return cards.next();
+        if (!cards.isEmpty()) {
+            return cards.poll();
         }
         throw new NoSuchElementException(NO_CARDS);
     }
