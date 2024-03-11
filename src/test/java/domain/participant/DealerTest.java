@@ -1,10 +1,8 @@
 package domain.participant;
 
 import domain.Deck;
-import domain.GameResults;
 import domain.PlayingCard;
 import domain.PlayingCardValue;
-import domain.constant.GameResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,8 +14,6 @@ import java.util.stream.Stream;
 
 import static domain.PlayingCardShape.DIAMOND;
 import static domain.PlayingCardValue.*;
-import static domain.constant.GameResult.LOSE;
-import static domain.constant.GameResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
@@ -67,7 +63,7 @@ public class DealerTest {
     @DisplayName("딜러와 플레이어의 게임 결과를 반환한다.")
     @ParameterizedTest
     @MethodSource("getGameResultsTestParameters")
-    void getGameResultsTest(PlayingCardValue playingCardValue, List<GameResult> dealerGameResult) {
+    void getGameResultsTest(PlayingCardValue playingCardValue, boolean dealerGameResult) {
         // Given
         Hand playerHand = Hand.init();
         List.of(new PlayingCard(DIAMOND, NINE)).forEach(playerHand::addCard);
@@ -77,16 +73,16 @@ public class DealerTest {
         Dealer dealer = new Dealer(dealerHand);
 
         // When
-        GameResults gameResults = dealer.getGameResults(players);
+        boolean isDealerWin = dealer.isDealerWin(players.get(0));
 
         // Then
-        assertThat(gameResults.dealerGameResult()).isEqualTo(dealerGameResult);
+        assertThat(isDealerWin).isEqualTo(dealerGameResult);
     }
 
     private static Stream<Arguments> getGameResultsTestParameters() {
         return Stream.of(
-                Arguments.of(EIGHT, List.of(LOSE)),
-                Arguments.of(TEN, List.of(WIN))
+                Arguments.of(EIGHT, false),
+                Arguments.of(TEN, true)
         );
     }
 }

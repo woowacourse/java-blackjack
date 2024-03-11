@@ -1,5 +1,6 @@
 package controller;
 
+import domain.BlackJackGame;
 import domain.Deck;
 import domain.GameResults;
 import domain.constant.GameResult;
@@ -17,15 +18,15 @@ import view.OutputView;
 import java.util.List;
 import java.util.Map;
 
-public class BlackJackGame {
+public class BlackJackController {
     public void run() {
         Dealer dealer = Dealer.init();
         List<Player> players = initPlayers();
-        Deck deck = Deck.init();
+        BlackJackGame blackJackGame = new BlackJackGame(Deck.init());
 
-        play(deck, dealer, players);
+        play(blackJackGame, dealer, players);
 
-        GameResults gameResults = dealer.getGameResults(players);
+        GameResults gameResults = blackJackGame.getGameResults(dealer, players);
         OutputView.printGameResult(gameResults.dealerGameResult(), getPlayerGameResultDto(gameResults.playerGameResults()));
     }
 
@@ -46,36 +47,42 @@ public class BlackJackGame {
         }
     }
 
-    private void play(final Deck deck, final Dealer dealer, final List<Player> players) {
-        firstDraw(deck, dealer, players);
-        players.forEach(player -> playForPlayer(deck, player));
-        playForDealer(deck, dealer);
+    private void play(final BlackJackGame blackJackGame, final Dealer dealer, final List<Player> players) {
+        firstDraw(blackJackGame, dealer, players);
+        players.forEach(player -> playForPlayer(blackJackGame, player));
+        playForDealer(blackJackGame, dealer);
 
         DealerHandStatusDto dealerHandStatusDto = DealerHandStatusDto.of(dealer);
         List<PlayerHandStatusDto> playerHandStatusDtos = players.stream().map(PlayerHandStatusDto::of).toList();
         OutputView.printFinalHandStatus(dealerHandStatusDto, playerHandStatusDtos);
     }
 
-    private void playForDealer(final Deck deck, final Dealer dealer) {
-        while (dealer.isDrawable()) {
-            try {
-                dealer.draw(deck);
-            } catch (IllegalStateException e) {
-                OutputView.printErrorMessage(e.getMessage());
-            }
-            OutputView.printDealerDrawMessage();
+    private void firstDraw(final BlackJackGame blackJackGame, final Dealer dealer, final List<Player> players) {
+        try {
+            blackJackGame.firstDraw(dealer, players);
+        } catch (IllegalStateException e) {
+            OutputView.printErrorMessage(e.getMessage());
+        }
+        PlayingCardDto dealerCardDto = PlayingCardDto.of(dealer.getHandCards().get(0));
+        List<PlayerHandStatusDto> playerHandStatusDtos = players.stream()
+                .map(PlayerHandStatusDto::of)
+                .toList();
+        OutputView.printFirstDrawStatus(dealerCardDto, playerHandStatusDtos);
+    }
+
+    private void playForPlayer(final BlackJackGame blackJackGame, final Player player) {
+        while (checkAcceptDraw(player)) {
+            playOneTurnForPlayer(blackJackGame, player);
         }
     }
 
-    private void playForPlayer(final Deck deck, final Player player) {
-        while (checkAcceptDraw(player)) {
-            try {
-                player.draw(deck);
-            } catch (IllegalStateException e) {
-                OutputView.printErrorMessage(e.getMessage());
-            }
-            OutputView.printPlayerDrawStatus(PlayerHandStatusDto.of(player));
+    private static void playOneTurnForPlayer(final BlackJackGame blackJackGame, final Player player) {
+        try {
+            blackJackGame.drawForParticipant(player);
+        } catch (IllegalStateException e) {
+            OutputView.printErrorMessage(e.getMessage());
         }
+        OutputView.printPlayerDrawStatus(PlayerHandStatusDto.of(player));
     }
 
     private boolean checkAcceptDraw(final Player player) {
@@ -94,27 +101,22 @@ public class BlackJackGame {
         }
     }
 
-    private void firstDraw(final Deck deck, final Dealer dealer, final List<Player> players) {
+    private void playForDealer(final BlackJackGame blackJackGame, final Dealer dealer) {
+        while (dealer.isDrawable()) {
+            playOneTurnForDealer(blackJackGame, dealer);
+        }
+    }
+
+    private static void playOneTurnForDealer(final BlackJackGame blackJackGame, final Dealer dealer) {
         try {
-            firstDrawInit(deck, dealer, players);
+            blackJackGame.drawForParticipant(dealer);
         } catch (IllegalStateException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
-        PlayingCardDto dealerCardDto = PlayingCardDto.of(dealer.getHandCards().get(0));
-        List<PlayerHandStatusDto> playerHandStatusDtos = players.stream()
-                .map(PlayerHandStatusDto::of)
-                .toList();
-        OutputView.printFirstDrawStatus(dealerCardDto, playerHandStatusDtos);
+        OutputView.printDealerDrawMessage();
     }
 
-    private void firstDrawInit(final Deck deck, final Dealer dealer, final List<Player> players) {
-        for (int gameCount = 0; gameCount < 2; gameCount++) {
-            players.forEach(player -> player.draw(deck));
-            dealer.draw(deck);
-        }
-    }
-
-    private List<PlayerGameResultDto> getPlayerGameResultDto(Map<Player, GameResult> playerGameResults) {
+    private List<PlayerGameResultDto> getPlayerGameResultDto(final Map<Player, GameResult> playerGameResults) {
         return playerGameResults.entrySet()
                 .stream()
                 .map(playerGameResult -> new PlayerGameResultDto(playerGameResult.getKey().getPlayerName(), playerGameResult.getValue()))
