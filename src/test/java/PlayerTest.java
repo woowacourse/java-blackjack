@@ -18,7 +18,7 @@ class PlayerTest {
     void saveCard() {
         Deck twoCards = createNormalWithTwoCards();
 
-        Player player = new Player("pobi");
+        Player player = new Player();
         for (int i = 0; i < 2; i++) {
             player.pickOneCard(twoCards);
         }
@@ -36,7 +36,7 @@ class PlayerTest {
         void calculateScoreWithNoAce() {
             Deck twoCards = createNormalWithTwoCards();
 
-            Player player = new Player("pobi");
+            Player player = new Player();
             for (int i = 0; i < 2; i++) {
                 player.pickOneCard(twoCards);
             }
@@ -49,7 +49,7 @@ class PlayerTest {
         void calculateScoreWithAceIfBusted() {
             Deck cardsWithAce = createCardsWithAce();
 
-            Player player = new Player("pobi");
+            Player player = new Player();
             for (int i = 0; i < 3; i++) {
                 player.pickOneCard(cardsWithAce);
             }
@@ -64,7 +64,7 @@ class PlayerTest {
     void drawAceCardAndCalculateScoreOne() {
         Deck cardsWithAce = createCardsWithAce();
 
-        Player player = new Player("pobi");
+        Player player = new Player();
         for (int i = 0; i < 3; i++) {
             player.pickOneCard(cardsWithAce);
         }
@@ -78,7 +78,7 @@ class PlayerTest {
     void isAbleToDrawCard() {
         Deck bustedCards = createBustedCards();
 
-        Player player = new Player("pobi");
+        Player player = new Player();
         for (int i = 0; i < 3; i++) {
             player.pickOneCard(bustedCards);
         }

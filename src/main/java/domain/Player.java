@@ -5,19 +5,10 @@ import java.util.List;
 public class Player {
     private static final int BLACKJACK_SCORE = 21;
 
-    private final String name;
     private final Hand hand;
 
-    public Player(final String name) {
-        validateName(name);
-        this.name = name;
+    public Player() {
         hand = new Hand();
-    }
-
-    private void validateName(final String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("이름으로 빈 문자열이 입력되었습니다.");
-        }
     }
 
     public void pickTwoCards(final Deck deck) {
@@ -58,10 +49,6 @@ public class Player {
 
     public int getHandSize() {
         return hand.size();
-    }
-
-    public String getName() {
-        return name;
     }
 
     public Hand getHand() {

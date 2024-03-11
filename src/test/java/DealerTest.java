@@ -16,7 +16,7 @@ class DealerTest {
         final Deck deck = createDeck();
         int threshold = 16;
 
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         for (int i = 0; i < deck.getTotalSize(); i++) {
             dealer.pickOneCard(deck);
         }

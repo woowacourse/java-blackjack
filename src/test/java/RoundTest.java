@@ -1,12 +1,11 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
 import controller.Round;
-import controller.dto.HandStatus;
 import domain.Card;
 import domain.Dealer;
 import domain.Deck;
+import domain.Gamer;
 import domain.Participant;
-import domain.Player;
 import domain.constants.Score;
 import domain.constants.Shape;
 import java.util.ArrayList;
@@ -20,15 +19,21 @@ class RoundTest {
     @DisplayName("참가자들에게 2장 씩 카드를 분배한다.")
     @Test
     void startBlackJack() {
-        List<String> playerNames = Arrays.asList("pobi", "jason");
-        Dealer dealer = new Dealer("딜러");
-        Round round = new Round(dealer, playerNames);
+        List<String> playerNames = List.of("pobi");
+        Dealer dealer = new Dealer();
 
-        List<HandStatus> statuses = round.initiateGameCondition();
+        List<Gamer> gamers = playerNames.stream()
+                .map(Gamer::new)
+                .toList();
+        Participant participant = new Participant(dealer, gamers);
 
-        for (HandStatus status : statuses) {
-            assertThat(status.hand().getCards()).hasSize(2);
-        }
+        Deck fourCards = createNormalWithFourCards();
+
+        Round round = new Round(participant, fourCards);
+        round.initiateGameCondition();
+
+        assertThat(dealer.getHandSize()).isEqualTo(2);
+        assertThat(gamers.get(0).getHandSize()).isEqualTo(2);
     }
 
     @DisplayName("딜러의 점수가 16 이하인동안 반복해서 카드를 받는다.")
@@ -37,13 +42,13 @@ class RoundTest {
         // given
         Deck twoCards = createNormalWithTwoCards();
 
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         for (int i = 0; i < 2; i++) {
             dealer.pickOneCard(twoCards);
         }
 
-        List<Player> players = List.of(new Player("pobi"));
-        Participant participant = new Participant(dealer, players);
+        List<Gamer> gamers = List.of(new Gamer("pobi"));
+        Participant participant = new Participant(dealer, gamers);
 
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Score.THREE, Shape.DIAMOND));
@@ -61,6 +66,15 @@ class RoundTest {
         return new Deck(new ArrayList<>(Arrays.asList(
                 new Card(Score.TEN, Shape.CLOVER),
                 new Card(Score.SIX, Shape.DIAMOND)
+        )));
+    }
+
+    private Deck createNormalWithFourCards() {
+        return new Deck(new ArrayList<>(Arrays.asList(
+                new Card(Score.TEN, Shape.CLOVER),
+                new Card(Score.SIX, Shape.DIAMOND),
+                new Card(Score.THREE, Shape.DIAMOND),
+                new Card(Score.FIVE, Shape.DIAMOND)
         )));
     }
 }

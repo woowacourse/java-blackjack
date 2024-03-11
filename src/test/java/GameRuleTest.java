@@ -4,8 +4,7 @@ import domain.Card;
 import domain.Dealer;
 import domain.Deck;
 import domain.GameRule;
-import domain.Participant;
-import domain.Player;
+import domain.Gamer;
 import domain.constants.Score;
 import domain.constants.Shape;
 import java.util.ArrayList;
@@ -23,17 +22,17 @@ class GameRuleTest {
         Deck twoCards = createNormalWithTwoCards();
         Deck threeCards = createNormalWithThreeCards();
 
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         for (int i = 0; i < 2; i++) {
             dealer.pickOneCard(twoCards);
         }
 
-        Player player = new Player("pobi");
+        Gamer gamer = new Gamer("pobi");
         for (int i = 0; i < 3; i++) {
-            dealer.pickOneCard(threeCards);
+            gamer.pickOneCard(threeCards);
         }
 
-        GameRule rule = createGameRule(player, dealer);
+        GameRule rule = createGameRule(gamer, dealer);
 
         // when
         List<Boolean> isWinner = rule.judge();
@@ -49,18 +48,18 @@ class GameRuleTest {
         @Test
         void playerBusted() {
             Deck bustedCardsForDealer = createBustedCards();
-            Dealer dealer = new Dealer("딜러");
+            Dealer dealer = new Dealer();
             for (int i = 0; i < 3; i++) {
                 dealer.pickOneCard(bustedCardsForDealer);
             }
 
             Deck bustedCardsForPlayer = createBustedCards();
-            Player player = new Player("pobi");
+            Gamer gamer = new Gamer("pobi");
             for (int i = 0; i < 3; i++) {
-                player.pickOneCard(bustedCardsForPlayer);
+                gamer.pickOneCard(bustedCardsForPlayer);
             }
 
-            GameRule rule = createGameRule(player, dealer);
+            GameRule rule = createGameRule(gamer, dealer);
 
             List<Boolean> gameResult = rule.judgePlayersIfDealerBusted();
 
@@ -75,17 +74,17 @@ class GameRuleTest {
             Deck bustedCards = createBustedCards();
             Deck twoCards = createNormalWithTwoCards();
 
-            Dealer dealer = new Dealer("딜러");
+            Dealer dealer = new Dealer();
             for (int i = 0; i < 3; i++) {
                 dealer.pickOneCard(bustedCards);
             }
 
-            Player player = new Player("pobi");
+            Gamer gamer = new Gamer("pobi");
             for (int i = 0; i < 2; i++) {
-                player.pickOneCard(twoCards);
+                gamer.pickOneCard(twoCards);
             }
 
-            GameRule rule = createGameRule(player, dealer);
+            GameRule rule = createGameRule(gamer, dealer);
 
             List<Boolean> gameResult = rule.judgePlayersIfDealerBusted();
 
@@ -104,17 +103,17 @@ class GameRuleTest {
             Deck blackJackTwoCards = createBlackJackWithTwoCards();
             Deck blackJackThreeCards = createBlackJackWithThreeCards();
 
-            Dealer dealer = new Dealer("딜러");
+            Dealer dealer = new Dealer();
             for (int i = 0; i < 2; i++) {
                 dealer.pickOneCard(blackJackTwoCards);
             }
 
-            Player player = new Player("pobi");
+            Gamer gamer = new Gamer("pobi");
             for (int i = 0; i < 3; i++) {
-                player.pickOneCard(blackJackThreeCards);
+                gamer.pickOneCard(blackJackThreeCards);
             }
 
-            GameRule rule = createGameRule(player, dealer);
+            GameRule rule = createGameRule(gamer, dealer);
 
             List<Boolean> gameResult = rule.judge();
 
@@ -129,17 +128,17 @@ class GameRuleTest {
             Deck blackJackTwoCards = createBlackJackWithTwoCards();
             Deck twoCards = createNormalWithTwoCards();
 
-            Dealer dealer = new Dealer("딜러");
+            Dealer dealer = new Dealer();
             for (int i = 0; i < 2; i++) {
                 dealer.pickOneCard(blackJackTwoCards);
             }
 
-            Player player = new Player("pobi");
+            Gamer gamer = new Gamer("pobi");
             for (int i = 0; i < 2; i++) {
-                player.pickOneCard(twoCards);
+                gamer.pickOneCard(twoCards);
             }
 
-            GameRule rule = createGameRule(player, dealer);
+            GameRule rule = createGameRule(gamer, dealer);
 
             List<Boolean> gameResult = rule.judge();
 
@@ -158,17 +157,17 @@ class GameRuleTest {
             Deck twoCards = createNormalWithTwoCards();
             Deck blackJackTwoCards = createBlackJackWithTwoCards();
 
-            Dealer dealer = new Dealer("딜러");
+            Dealer dealer = new Dealer();
             for (int i = 0; i < 2; i++) {
                 dealer.pickOneCard(twoCards);
             }
 
-            Player player = new Player("pobi");
+            Gamer gamer = new Gamer("pobi");
             for (int i = 0; i < 2; i++) {
-                player.pickOneCard(blackJackTwoCards);
+                gamer.pickOneCard(blackJackTwoCards);
             }
 
-            GameRule rule = createGameRule(player, dealer);
+            GameRule rule = createGameRule(gamer, dealer);
 
             List<Boolean> gameResult = rule.judge();
 
@@ -183,17 +182,17 @@ class GameRuleTest {
             Deck twoCards = createNormalWithTwoCards();
             Deck threeCards = createNormalWithThreeCards();
 
-            Dealer dealer = new Dealer("딜러");
+            Dealer dealer = new Dealer();
             for (int i = 0; i < 2; i++) {
                 dealer.pickOneCard(twoCards);
             }
 
-            Player player = new Player("pobi");
+            Gamer gamer = new Gamer("pobi");
             for (int i = 0; i < 3; i++) {
-                player.pickOneCard(threeCards);
+                gamer.pickOneCard(threeCards);
             }
 
-            GameRule rule = createGameRule(player, dealer);
+            GameRule rule = createGameRule(gamer, dealer);
 
             List<Boolean> gameResult = rule.judge();
 
@@ -208,17 +207,17 @@ class GameRuleTest {
             Deck threeCards = createNormalWithThreeCards();
             Deck twoCards = createSameScoreNormalWithTwoCards();
 
-            Dealer dealer = new Dealer("딜러");
+            Dealer dealer = new Dealer();
             for (int i = 0; i < 3; i++) {
                 dealer.pickOneCard(threeCards);
             }
 
-            Player player = new Player("pobi");
+            Gamer gamer = new Gamer("pobi");
             for (int i = 0; i < 2; i++) {
-                player.pickOneCard(twoCards);
+                gamer.pickOneCard(twoCards);
             }
 
-            GameRule rule = createGameRule(player, dealer);
+            GameRule rule = createGameRule(gamer, dealer);
 
             List<Boolean> gameResult = rule.judge();
 
@@ -228,11 +227,10 @@ class GameRuleTest {
         }
     }
 
-    private GameRule createGameRule(final Player player, final Dealer dealer) {
-        List<Player> players = List.of(player);
-        Participant participant = new Participant(dealer, players);
+    private GameRule createGameRule(final Gamer gamer, final Dealer dealer) {
+        List<Gamer> gamers = List.of(gamer);
 
-        return new GameRule(participant);
+        return new GameRule(dealer, gamers);
     }
 
     private Deck createBlackJackWithTwoCards() {
