@@ -24,24 +24,24 @@ public class OutputView {
         System.out.println("게임에 참여 할사람 이름을 입력하세요.(쉽표 기준으로 분리)");
     }
 
-    public static void printDrawInitialHandsMessage(Dealer dealer, Players players) {
+    public static void printDrawInitialHandsMessage(String dealerName, List<Player> players) {
         System.out.println(System.lineSeparator()
-                + dealer.getName()
+                + dealerName
                 + "와 "
                 + resolvePlayerNamesMessage(players)
                 + "에게 2장을 나누었습니다");
     }
 
-    public static void printParticipantsInitialHands(Dealer dealer, Players players) {
-        printDealerFirstCard(dealer);
-        for (Player player : players.getPlayers()) {
-            printParticipantHands(player);
+    public static void printParticipantsInitialHands(String dealerName, String dealerFirstCardName, List<Player> players) {
+        printDealerFirstCard(dealerName, dealerFirstCardName);
+        for (Player player : players) {
+            printParticipantHands(player.getName(), player.getHandsCards());
         }
         System.out.println();
     }
 
-    public static void printParticipantHands(Participant participant) {
-        System.out.println(resolveParticipantHandsMessage(participant));
+    public static void printParticipantHands(String participantName, List<Card> participantHands) {
+        System.out.println(resolveParticipantHandsMessage(participantName, participantHands));
     }
 
     public static void printAskDrawMessage(String playerName) {
@@ -49,48 +49,52 @@ public class OutputView {
     }
 
     public static void printDealerDrawMessage(Dealer dealer) {
+        System.out.println(); // TODO 뷰로직의 책임으로 옮기기
         System.out.println(dealer.getName() + "는 "
                 + DEALER_DRAW_THRESHOLD + "이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printFinalHandsAndScoreMessage(Dealer dealer, Players players) {
-        System.out.println(resolveFinalHandsAndScoreMessage(dealer));
+        System.out.println(resolveFinalHandsAndScoreMessage(dealer.getName(),
+                dealer.getHandsCards(), dealer.getHandsScore()));
+
         for (Player player : players.getPlayers()) {
-            System.out.println(resolveFinalHandsAndScoreMessage(player));
+            System.out.println(resolveFinalHandsAndScoreMessage(player.getName(),
+                    player.getHandsCards(), player.getHandsScore()));
         }
     }
 
-    public static void printGameResult(Dealer dealer, GameResult gameResult) {
+    public static void printGameResult(String dealerName, GameResult gameResult) {
         System.out.println(FINAL_RESULT_MESSAGE);
-        printDealerGameResult(dealer, gameResult);
+        printDealerGameResult(dealerName, gameResult);
         printPlayerGameResult(gameResult.getGameResult());
     }
 
-    private static String resolvePlayerNamesMessage(Players players) {
-        return players.getPlayers()
-                .stream()
+    private static String resolvePlayerNamesMessage(List<Player> players) {
+        return players.stream()
                 .map(Participant::getName)
                 .collect(Collectors.joining(","));
     }
 
-    private static void printDealerFirstCard(Dealer dealer) {
-        System.out.println(dealer.getName()
+    private static void printDealerFirstCard(String dealerName, String dealerFirstCardName) {
+        System.out.println(dealerName
                 + ": "
-                + dealer.getFirstCardName());
+                + dealerFirstCardName);
     }
 
-    private static String resolveFinalHandsAndScoreMessage(Participant participant) {
+    private static String resolveFinalHandsAndScoreMessage(String participantName
+            , List<Card> participantHands, int participantHandsScore) {
         return String.format(FINAL_HANDS_AND_SCORE_FORMAT
-                , resolveParticipantHandsMessage(participant)
-                , participant.getHandsScore());
+                , resolveParticipantHandsMessage(participantName, participantHands)
+                , participantHandsScore);
     }
 
-    private static void printDealerGameResult(Dealer dealer, GameResult gameResult) {
+    private static void printDealerGameResult(String dealerName, GameResult gameResult) {
         String dealerResultMessage = resolveDealerResultMessage(gameResult, Result.WIN)
                 + resolveDealerResultMessage(gameResult, Result.LOSE)
                 + resolveDealerResultMessage(gameResult, Result.DRAW);
 
-        System.out.printf(FINAL_RESULT_FORMAT, dealer.getName(), dealerResultMessage);
+        System.out.printf(FINAL_RESULT_FORMAT, dealerName, dealerResultMessage);
     }
 
     private static void printPlayerGameResult(Map<Player, Result> gameResult) {
@@ -108,10 +112,10 @@ public class OutputView {
         return cnt + result.getResult() + " ";
     }
 
-    private static String resolveParticipantHandsMessage(Participant participant) {
-        return participant.getName()
+    private static String resolveParticipantHandsMessage(String participantName, List<Card> participantHands) {
+        return participantName
                 + "카드: "
-                + resolveHandsMessage(participant.getHandsCards());
+                + resolveHandsMessage(participantHands);
     }
 
     private static String resolveHandsMessage(List<Card> hands) {

@@ -4,6 +4,8 @@ import blackjack.domain.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.List;
+
 public class GameController {
 
     private GameController() {
@@ -18,12 +20,12 @@ public class GameController {
         Dealer gameDealer = game.getDealer();
         Players gamePlayers = game.getPlayers();
 
-        printInitialHands(gameDealer, gamePlayers);
+        printInitialHands(gameDealer.getName(), gameDealer.getFirstCardName(), gamePlayers.getPlayers());
         // TODO game을 활용하는 코드로 리팩터해보기
         confirmParticipantsHands(gamePlayers, deck, gameDealer);
 
         OutputView.printFinalHandsAndScoreMessage(gameDealer, gamePlayers);
-        OutputView.printGameResult(gameDealer, game.makeGameResult());
+        OutputView.printGameResult(gameDealer.getName(), game.makeGameResult());
     }
 
     private static Game makeGame(Deck deck) {
@@ -38,17 +40,15 @@ public class GameController {
         confirmDealerHands(dealer, deck);
     }
 
-    private static void printInitialHands(Dealer dealer, Players players) {
-        OutputView.printDrawInitialHandsMessage(dealer, players);
-        OutputView.printParticipantsInitialHands(dealer, players);
+    private static void printInitialHands(String dealerName, String dealerFirstCardName, List<Player> players) {
+        OutputView.printDrawInitialHandsMessage(dealerName, players);
+        OutputView.printParticipantsInitialHands(dealerName, dealerFirstCardName, players);
     }
 
     private static void confirmDealerHands(Dealer dealer, Deck deck) {
-        System.out.println(); // TODO 뷰로직의 책임으로 옮기기
         while (dealer.draw(deck) == PlayerState.RUNNING) {
             OutputView.printDealerDrawMessage(dealer);
         }
-        System.out.println();
     }
 
     private static void askDrawUntilConfirmHands(Players players, Deck deck) {
@@ -62,7 +62,7 @@ public class GameController {
         while (playerState == PlayerState.RUNNING) {
             OutputView.printAskDrawMessage(player.getName());
             playerState = player.draw(InputView::askDraw, deck);
-            OutputView.printParticipantHands(player);
+            OutputView.printParticipantHands(player.getName(), player.getHandsCards());
         }
     }
 }
