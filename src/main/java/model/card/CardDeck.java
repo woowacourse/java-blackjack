@@ -3,16 +3,22 @@ package model.card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Stream;
 
 public class CardDeck {
 
-    private List<Card> cards;
+    private Set<Card> cards;
 
     public CardDeck(List<Card> cards) {
-        if (new HashSet<>(cards).size() != 48) {
+        this(new HashSet<>(cards));
+    }
+
+    public CardDeck(Set<Card> cards) {
+        if (cards.size() != 48) {
             throw new IllegalArgumentException("카드는 총 48개여야 합니다.");
         }
         this.cards = cards;
@@ -38,8 +44,10 @@ public class CardDeck {
 
     private Card selectRandomCard() {
         validateCardDeckNotEmpty();
-        Collections.shuffle(cards);
-        return cards.remove(0);
+        int removeIndex = new Random().nextInt(cards.size());
+        Card card = new ArrayList<>(cards).remove(removeIndex);
+        cards.remove(card);
+        return card;
     }
 
     void validateCardDeckNotEmpty() {
