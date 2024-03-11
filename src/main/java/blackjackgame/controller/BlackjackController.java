@@ -113,6 +113,14 @@ public class BlackjackController {
         }
     }
 
+    private void printDealerAndPlayersGameResult() {
+        OutputView.printGameResultMessage();
+        GameResultOutputView.print(makeDealerGameResultDTO());
+
+        List<PlayerGameResultDTO> playerGameResultDTOS = makePlayerGameResultDTO();
+        playerGameResultDTOS.forEach(GameResultOutputView::print);
+    }
+
     private DealerGameResultDTO makeDealerGameResultDTO() {
         Map<GameResult, Integer> dealerGameResultCounts = players.getPlayers().stream()
                 .collect(Collectors.groupingBy(player -> GameResultCalculator.calculate(dealer, player),
@@ -125,13 +133,5 @@ public class BlackjackController {
                 .map(player -> new PlayerGameResultDTO(player.getRawName(),
                         GameResultCalculator.calculate(player, dealer)))
                 .toList();
-    }
-
-    private void printDealerAndPlayersGameResult() {
-        OutputView.printGameResultMessage();
-        GameResultOutputView.print(makeDealerGameResultDTO());
-
-        List<PlayerGameResultDTO> playerGameResultDTOS = makePlayerGameResultDTO();
-        playerGameResultDTOS.forEach(GameResultOutputView::print);
     }
 }
