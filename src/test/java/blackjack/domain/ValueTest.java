@@ -25,6 +25,6 @@ class ValueTest {
     void should_ThrowIllegalStateException_When_NonExistCardNumber(int nonExistCardNumber) {
         assertThatThrownBy(() -> findValue(nonExistCardNumber))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("존재하지 않는 카드 번호입니다.");
+                .hasMessage(nonExistCardNumber + "는 존재하지 않는 카드 번호입니다.");
     }
 }

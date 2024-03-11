@@ -17,10 +17,9 @@ public enum Value {
         this.score = score;
     }
 
-    // TODO 어떤 값인지 알 수 있으면 디버그에 용이
     public static Value findValue(int cardNumber) {
         if (cardNumber < 1 || cardNumber >= values().length) {
-            throw new IllegalStateException("존재하지 않는 카드 번호입니다.");
+            throw new IllegalStateException(cardNumber + "는 존재하지 않는 카드 번호입니다.");
         }
         return values()[cardNumber];
     }
