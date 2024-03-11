@@ -3,6 +3,7 @@ package view;
 import static domain.game.Result.DRAW;
 import static domain.game.Result.LOSE;
 import static domain.game.Result.WIN;
+import static view.UserView.DEALER_NAME_VALUE;
 
 import domain.game.Game;
 import domain.game.PlayerResults;
@@ -26,11 +27,11 @@ public class ResultView {
         System.out.println("\n## 최종 승패");
         PlayerResults playerResults = game.generatePlayerResults();
         Map<Result, Integer> dealerResult = playerResults.generateDealerResult();
-        System.out.println("딜러: " + showDealerResult(dealerResult));
+        System.out.println(DEALER_NAME_VALUE + ": " + showDealerResult(dealerResult));
 
         playerResults.getPlayerResults()
                 .forEach(((player, result) ->
-                        System.out.println(player.getName().value() + ": " + show(result))));
+                        System.out.println(player.getNameValue() + ": " + show(result))));
     }
 
     private String showDealerResult(Map<Result, Integer> dealerResult) {

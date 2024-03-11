@@ -39,7 +39,7 @@ public class GameTest {
         Game game = new Game(totalDeck, users);
         game.hitOrStay(YES);
 
-        assertThat(player.getUserDeck().getCards()).hasSize(3);
+        assertThat(player.getAllCards()).hasSize(3);
     }
 
     @Test

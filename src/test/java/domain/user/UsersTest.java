@@ -86,7 +86,7 @@ class UsersTest {
         Card card = new Card(CLOVER, FIVE);
         users.addDealerCard(card);
 
-        assertThat(users.isDealerCardAddCondition()).isTrue();
+        assertThat(users.isDealerCardAddable()).isTrue();
     }
 
     @Test

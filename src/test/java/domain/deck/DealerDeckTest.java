@@ -19,7 +19,7 @@ public class DealerDeckTest {
         dealerDeck.addCard(card);
         dealerDeck.addCard(new Card(CLOVER, NINE));
 
-        assertThat(dealerDeck.getVisibleCard()).isEqualTo(card);
+        assertThat(dealerDeck.getVisibleCards()).containsExactly(card);
     }
 
     @Test
@@ -29,7 +29,7 @@ public class DealerDeckTest {
 
         dealerDeck.addCard(new Card(CLOVER, NINE));
 
-        assertThat(dealerDeck.isAddCondition()).isTrue();
+        assertThat(dealerDeck.isAddable()).isTrue();
     }
 
     @Test
@@ -40,6 +40,6 @@ public class DealerDeckTest {
         dealerDeck.addCard(new Card(CLOVER, NINE));
         dealerDeck.addCard(new Card(CLOVER, NINE));
 
-        assertThat(dealerDeck.isAddCondition()).isFalse();
+        assertThat(dealerDeck.isAddable()).isFalse();
     }
 }

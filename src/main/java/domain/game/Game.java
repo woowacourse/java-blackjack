@@ -47,7 +47,7 @@ public class Game {
     }
 
     public boolean isDealerCardAddCondition() {
-        return users.isDealerCardAddCondition();
+        return users.isDealerCardAddable();
     }
 
     public void addDealerCard() {

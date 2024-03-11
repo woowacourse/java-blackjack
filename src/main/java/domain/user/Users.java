@@ -7,7 +7,6 @@ import domain.TotalDeck;
 import domain.card.Card;
 import domain.game.Result;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,10 +18,9 @@ public class Users {
 
     public Users(List<Player> players) {
         validateDuplicatedName(players);
-        users = players.stream()
-                .map(player -> (User) player)
-                .collect(Collectors.toList());
+        users = new ArrayList<>();
         users.add(DEALER_INDEX, new Dealer());
+        users.addAll(players);
         currentUser = users.get(FIRST_PLAYER_INDEX);
     }
 
@@ -57,8 +55,8 @@ public class Users {
         return users.indexOf(currentUser) + 1;
     }
 
-    public boolean isDealerCardAddCondition() {
-        return getDealer().isAddCondition();
+    public boolean isDealerCardAddable() {
+        return getDealer().isAddable();
     }
 
     public void addDealerCard(Card card) {
@@ -77,10 +75,6 @@ public class Users {
 
     public boolean currentUserBusted() {
         return currentUser.busted();
-    }
-
-    public List<User> getUsers() {
-        return Collections.unmodifiableList(users);
     }
 
     public User getCurrentUser() {
@@ -107,10 +101,9 @@ public class Users {
     }
 
     private static void throwExceptionIfContains(List<Player> distinctPlayers, Player player) {
-        if (distinctPlayers.stream()
-                .anyMatch(distinctPlayer -> distinctPlayer.getName().equals(player.getName()))) {
+        if (distinctPlayers.contains(player)) {
             throw new IllegalArgumentException(
-                    "중복된 이름은 입력할 수 없습니다: %s".formatted(player.getName().value())
+                    "중복된 이름은 입력할 수 없습니다: %s".formatted(player.getNameValue())
             );
         }
     }

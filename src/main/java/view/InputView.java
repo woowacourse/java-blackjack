@@ -19,8 +19,8 @@ public class InputView {
         return new Users(players);
     }
 
-    public static Command inputAddCommand(Name name) {
-        System.out.println(name.value() + "은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    public static Command inputAddCommand(String name) {
+        System.out.println(name + "은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return Command.get(scanner.nextLine());
     }
 }

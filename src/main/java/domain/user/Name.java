@@ -20,7 +20,7 @@ public record Name(String value) {
 
     private void validateNameSize(String value) {
         if (value.length() > MAX_NAME_SIZE) {
-            throw new IllegalArgumentException("이름은 최대 5자입니다: %s".formatted(value));
+            throw new IllegalArgumentException("이름은 최대 %d자입니다: %s".formatted(MAX_NAME_SIZE, value));
         }
     }
 }

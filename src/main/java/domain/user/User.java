@@ -2,14 +2,13 @@ package domain.user;
 
 import domain.card.Card;
 import domain.deck.UserDeck;
+import java.util.List;
 
 public abstract class User {
     protected final UserDeck userDeck;
-    protected final Name name;
 
-    public User(UserDeck userDeck, Name name) {
+    public User(UserDeck userDeck) {
         this.userDeck = userDeck;
-        this.name = name;
     }
 
     public void addCard(Card card) {
@@ -24,13 +23,15 @@ public abstract class User {
         return userDeck.busted();
     }
 
-    abstract boolean isPlayer();
+    public abstract boolean isPlayer();
 
-    public Name getName() {
-        return name;
+    public List<Card> getVisibleCards() {
+        return userDeck.getVisibleCards();
     }
 
-    public UserDeck getUserDeck() {
-        return userDeck;
+    public List<Card> getAllCards() {
+        return userDeck.getCards();
     }
+
+    public abstract String getNameValue();
 }

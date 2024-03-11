@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class UserDeck {
+public abstract class UserDeck {
     private static final int BLACK_JACK_CONDITION = 21;
     private static final int ACE_CONVERT_VALUE = 10;
     protected final List<Card> cards;
@@ -40,6 +40,10 @@ public class UserDeck {
     public boolean busted() {
         return sumCard() > BLACK_JACK_CONDITION;
     }
+
+    public abstract boolean isAddable();
+
+    public abstract List<Card> getVisibleCards();
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);

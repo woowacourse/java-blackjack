@@ -1,10 +1,10 @@
 import controller.Controller;
 import view.ResultView;
-import view.card.CardView;
+import view.UserView;
 
 public class Application {
     public static void main(String[] args) {
-        Controller controller = new Controller(new CardView(), new ResultView());
+        Controller controller = new Controller(new UserView(), new ResultView());
         controller.play();
     }
 }

@@ -13,7 +13,7 @@ public class UserDeckTest {
     @DisplayName("유저 카드 덱에 카드를 추가할 수 있다.")
     void pushCardTest() {
         Card card = new Card(Shape.CLOVER, Number.ACE);
-        UserDeck userDeck = new UserDeck();
+        UserDeck userDeck = new PlayerDeck();
 
         userDeck.addCard(card);
 
@@ -22,8 +22,8 @@ public class UserDeckTest {
 
     @Test
     @DisplayName("덱 카드의 숫자의 합을 구할 수 있다.")
-    void sumCardTest() {
-        UserDeck userDeck = new UserDeck();
+    void sumCardPlayerDeck() {
+        UserDeck userDeck = new PlayerDeck();
 
         userDeck.addCard(new Card(Shape.CLOVER, Number.THREE));
         userDeck.addCard(new Card(Shape.CLOVER, Number.EIGHT));
@@ -34,7 +34,7 @@ public class UserDeckTest {
     @Test
     @DisplayName("ACE 카드는 합이 11 이하일 때 숫자가 11로 사용된다.")
     void sumCardContainingAceTest() {
-        UserDeck userDeck = new UserDeck();
+        UserDeck userDeck = new PlayerDeck();
 
         userDeck.addCard(new Card(Shape.CLOVER, Number.ACE));
         userDeck.addCard(new Card(Shape.CLOVER, Number.TWO));
@@ -45,7 +45,7 @@ public class UserDeckTest {
     @Test
     @DisplayName("ACE 카드는 합이 11 초과일 때 숫자가 1로 사용된다.")
     void sumCardContainingAceTest2() {
-        UserDeck userDeck = new UserDeck();
+        UserDeck userDeck = new PlayerDeck();
 
         userDeck.addCard(new Card(Shape.CLOVER, Number.ACE));
         userDeck.addCard(new Card(Shape.CLOVER, Number.TWO));
@@ -57,7 +57,7 @@ public class UserDeckTest {
     @Test
     @DisplayName("카드의 합이 21 초과이면 busted이다.")
     void bustedTest() {
-        UserDeck userDeck = new UserDeck();
+        UserDeck userDeck = new PlayerDeck();
 
         userDeck.addCard(new Card(Shape.CLOVER, Number.JACK));
         userDeck.addCard(new Card(Shape.CLOVER, Number.QUEEN));
@@ -69,7 +69,7 @@ public class UserDeckTest {
     @Test
     @DisplayName("카드의 합이 21 이하이면 busted이지 않다.")
     void notBustedTest() {
-        UserDeck userDeck = new UserDeck();
+        UserDeck userDeck = new PlayerDeck();
 
         userDeck.addCard(new Card(Shape.CLOVER, Number.JACK));
         userDeck.addCard(new Card(Shape.CLOVER, Number.QUEEN));

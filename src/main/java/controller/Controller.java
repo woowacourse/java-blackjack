@@ -9,21 +9,21 @@ import domain.user.User;
 import domain.user.Users;
 import view.InputView;
 import view.ResultView;
-import view.card.CardView;
+import view.UserView;
 
 public class Controller {
-    private final CardView cardView;
+    private final UserView userView;
     private final ResultView resultView;
 
-    public Controller(CardView cardView, ResultView resultView) {
-        this.cardView = cardView;
+    public Controller(UserView userView, ResultView resultView) {
+        this.userView = userView;
         this.resultView = resultView;
     }
 
     public void play() {
         Users users = ExceptionHandler.handle(InputView::inputNames);
         Game game = new Game(new TotalDeck(TotalDeckGenerator.generate()), users);
-        cardView.printStartStatus(users);
+        userView.printStartStatus(users);
         run(game);
         showGameResult(users, game);
     }
@@ -34,23 +34,23 @@ public class Controller {
         }
         while (game.isDealerCardAddCondition()) {
             game.addDealerCard();
-            cardView.printDealerHitMessage();
+            userView.printDealerHitMessage();
         }
     }
 
     private void hitOrStayOnce(Game game) {
         User currentPlayer = game.getCurrentPlayer();
         Command command = ExceptionHandler.handle(
-                () -> InputView.inputAddCommand(currentPlayer.getName())
+                () -> InputView.inputAddCommand(currentPlayer.getNameValue())
         );
         switch (game.hitOrStay(command)) {
-            case HIT -> cardView.printPlayerAndDeck(currentPlayer);
-            case BUST -> cardView.printBust(currentPlayer);
+            case HIT -> userView.printPlayerAndVisibleCards(currentPlayer);
+            case BUST -> userView.printBust(currentPlayer);
         }
     }
 
     private void showGameResult(Users users, Game game) {
-        cardView.printCardsAndSum(users);
+        userView.printAllUserCardsAndSum(users);
         resultView.printResult(game);
     }
 }
