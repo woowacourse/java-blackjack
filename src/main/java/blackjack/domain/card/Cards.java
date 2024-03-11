@@ -21,7 +21,7 @@ public class Cards {
                     .sum();
     }
 
-    public boolean containAce() {
+    private boolean containAce() {
         return cards.stream()
                     .anyMatch(Card::isAce);
     }

@@ -45,28 +45,6 @@ public class CardsTest {
     }
 
     @Test
-    @DisplayName("카드 목록에 에이스가 포함되어 있으면 참을 반환한다.")
-    public void Cards_True_if_contain_ACE_card() {
-        List<CardValue> cardValues = List.of(CardValue.ACE, CardValue.FIVE);
-        var sut = CardFixture.카드_목록_생성(cardValues);
-
-        var result = sut.containAce();
-
-        assertTrue(result);
-    }
-
-    @Test
-    @DisplayName("카드 목록에 에이스가 포함되어 없으면 거짓을 반환한다.")
-    public void Cards_False_if_not_contain_ACE_card() {
-        List<CardValue> cardValues = List.of(CardValue.TWO, CardValue.FIVE);
-        var sut = CardFixture.카드_목록_생성(cardValues);
-
-        var result = sut.containAce();
-
-        assertFalse(result);
-    }
-
-    @Test
     @DisplayName("카드 목록에 첫 번째 카드를 가져온다")
     public void Cards_Get_first_card() {
         List<Card> cards = List.of(new Card(CardValue.EIGHT, CardSymbol.DIAMOND),
