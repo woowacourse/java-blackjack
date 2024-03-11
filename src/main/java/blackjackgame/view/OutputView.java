@@ -31,4 +31,8 @@ public class OutputView {
     public static void printGameResultMessage() {
         System.out.println("\n## 최종 승패");
     }
+
+    public static void printPlayerSummationOverDeadPoint() {
+        System.out.println("\n플레이어 손패의 합이 21을 초과했습니다.");
+    }
 }

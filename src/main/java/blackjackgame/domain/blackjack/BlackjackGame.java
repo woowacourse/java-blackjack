@@ -1,0 +1,54 @@
+package blackjackgame.domain.blackjack;
+
+import blackjackgame.domain.card.Deck;
+import blackjackgame.view.OutputView;
+
+public class BlackjackGame {
+    private static final int EXECUTION_COUNT = 2;
+
+    private final Gamer dealer;
+    private final Gamers players;
+
+    public BlackjackGame(Gamer dealer, Gamers players) {
+        this.dealer = dealer;
+        this.players = players;
+    }
+
+    public void initDealerAndPlayers(Deck deck) {
+        dealerDraw(deck);
+        players.drawNTimes(deck, EXECUTION_COUNT);
+    }
+
+    private void dealerDraw(Deck deck) {
+        dealer.draw(deck, new DealerRandomCardDrawStrategy(dealer), EXECUTION_COUNT);
+    }
+
+    private void playerDraw(Deck deck, Gamer player) {
+        player.draw(deck, new PlayerRandomCardDrawStrategy(player), EXECUTION_COUNT);
+    }
+
+    public boolean isPlayerDead(Gamer player) {
+        return player.isDead();
+    }
+
+    public void dealerTryDraw(Deck deck) {
+        try {
+            dealerDraw(deck);
+            OutputView.printDealerAdditionalCardMessage();
+        } catch (IllegalStateException e) {
+            OutputView.printDealerNoAdditionalCardMessage();
+        }
+    }
+
+    public void playerTryDraw(Deck deck, Gamer player) {
+        try {
+            playerDraw(deck, player);
+        } catch (IllegalStateException e) {
+            OutputView.printPlayerSummationOverDeadPoint();
+        }
+    }
+
+    public Gamers getPlayers() {
+        return players;
+    }
+}

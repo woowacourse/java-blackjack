@@ -1,11 +1,10 @@
 package blackjackgame.controller;
 
-import blackjackgame.domain.blackjack.DealerRandomCardDrawStrategy;
+import blackjackgame.domain.blackjack.BlackjackGame;
 import blackjackgame.domain.blackjack.GameResult;
 import blackjackgame.domain.blackjack.GameResultCalculator;
 import blackjackgame.domain.blackjack.Gamer;
 import blackjackgame.domain.blackjack.Gamers;
-import blackjackgame.domain.blackjack.PlayerRandomCardDrawStrategy;
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.Deck;
 import blackjackgame.dto.CardDTO;
@@ -22,14 +21,17 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
-    private static final int EXECUTION_COUNT = 2;
 
     private final Gamer dealer;
     private final Gamers players;
 
+    private final BlackjackGame blackjackGame;
+
     public BlackjackController(Gamer dealer, Gamers players) {
         this.dealer = dealer;
         this.players = players;
+
+        blackjackGame = new BlackjackGame(dealer, players);
     }
 
     public void startBlackjackGame(Deck deck) {
@@ -44,9 +46,7 @@ public class BlackjackController {
     }
 
     private void initDealerAndPlayers(Deck deck) {
-        dealer.draw(deck, new DealerRandomCardDrawStrategy(dealer), EXECUTION_COUNT);
-        players.drawNTimes(deck, EXECUTION_COUNT);
-
+        blackjackGame.initDealerAndPlayers(deck);
         OutputView.printCardSplitMessage(dealer.getRawName(), players.getRawPlayersNames());
     }
 
@@ -79,28 +79,24 @@ public class BlackjackController {
     }
 
     private void playersTryDraw(Deck deck) {
+        Gamers players = blackjackGame.getPlayers();
         players.getPlayers().forEach(player -> playerTryDraw(deck, player));
     }
 
-    public void playerTryDraw(Deck deck, Gamer player) {
-        while(!player.isDead() && inputYesOrNo(player)) {
-            player.draw(deck, new PlayerRandomCardDrawStrategy(player));
+    private void playerTryDraw(Deck deck, Gamer player) {
+        while(!blackjackGame.isPlayerDead(player) && inputYesOrNo(player)) {
+            blackjackGame.playerTryDraw(deck, player);
             printPlayer(player);
         }
+    }
+
+    private void dealerTryDraw(Deck deck) {
+        blackjackGame.dealerTryDraw(deck);
     }
 
     private static boolean inputYesOrNo(Gamer player) {
         OutputView.printPlayerAdditionalCardMessage(player.getRawName());
         return YesOrNoInputView.getYNAsBoolean();
-    }
-
-    private void dealerTryDraw(Deck deck) {
-        try {
-            dealer.draw(deck, new DealerRandomCardDrawStrategy(dealer));
-            OutputView.printDealerAdditionalCardMessage();
-        } catch (IllegalStateException e) {
-            OutputView.printDealerNoAdditionalCardMessage();
-        }
     }
 
     private void printDealerAndPlayersWithPoint() {
