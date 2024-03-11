@@ -19,8 +19,8 @@ public class Gamer {
         hand.add(card);
     }
 
-    public boolean isName(String test) {
-        return name.name().equals(test);
+    public boolean isName(String comparedName) {
+        return name.name().equals(comparedName);
     }
 
     public String getName() {
