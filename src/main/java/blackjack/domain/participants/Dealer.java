@@ -9,7 +9,7 @@ public class Dealer implements GameParticipant {
     private static final String DEALER_NAME = "딜러";
 
     private final Name name;
-    private Hands hands;
+    private final Hands hands;
 
     public Dealer() {
         this.name = new Name(DEALER_NAME);
@@ -23,9 +23,6 @@ public class Dealer implements GameParticipant {
 
     @Override
     public void hit(Card card) {
-        if (hands == null) {
-            hands = new Hands(new ArrayList<>());
-        }
         hands.addCard(card);
     }
 
