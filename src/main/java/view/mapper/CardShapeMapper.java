@@ -20,7 +20,7 @@ public enum CardShapeMapper {
 
     public static String toExpression(CardShape cardShape) {
         return Arrays.stream(values())
-                .filter(cardShapeExpression -> cardShapeExpression.cardShape == cardShape)
+                .filter(cardShapeMapper -> cardShapeMapper.cardShape == cardShape)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 카드의 모양입니다."))
                 .expression;

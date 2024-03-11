@@ -39,7 +39,7 @@ public class PlayerCardsTest {
         PlayerCards playerCards = new PlayerCards(new ArrayList<>());
         playerCards.addCard(new Card(CardNumber.FIVE, CardShape.HEART));
         playerCards.addCard(new Card(CardNumber.FIVE, CardShape.SPADE));
-        playerCards.addCard(new Card(CardNumber.A, CardShape.SPADE));
+        playerCards.addCard(new Card(CardNumber.ACE, CardShape.SPADE));
 
         assertThat(playerCards.calculateScore()).isEqualTo(21);
     }
@@ -48,9 +48,9 @@ public class PlayerCardsTest {
     @Test
     void calculateScoreWhenOverThresholdTest() {
         PlayerCards playerCards = new PlayerCards(new ArrayList<>());
-        playerCards.addCard(new Card(CardNumber.K, CardShape.HEART));
-        playerCards.addCard(new Card(CardNumber.K, CardShape.SPADE));
-        playerCards.addCard(new Card(CardNumber.A, CardShape.SPADE));
+        playerCards.addCard(new Card(CardNumber.KING, CardShape.HEART));
+        playerCards.addCard(new Card(CardNumber.KING, CardShape.SPADE));
+        playerCards.addCard(new Card(CardNumber.ACE, CardShape.SPADE));
 
         assertThat(playerCards.calculateScore()).isEqualTo(21);
     }

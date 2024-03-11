@@ -1,15 +1,13 @@
 package domain.cards.gamercards;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
 import domain.cards.cardinfo.CardShape;
-import domain.cards.gamercards.DealerCards;
+import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerCardsTest {
 
@@ -17,7 +15,7 @@ public class DealerCardsTest {
     @Test
     void lowerThanCanHitThresholdTest() {
         DealerCards dealerCards = new DealerCards(new ArrayList<>());
-        dealerCards.addCard(new Card(CardNumber.K, CardShape.HEART));
+        dealerCards.addCard(new Card(CardNumber.KING, CardShape.HEART));
         dealerCards.addCard(new Card(CardNumber.SIX, CardShape.SPADE));
 
         assertThat(dealerCards.hasScoreUnderHitThreshold()).isTrue();
@@ -27,7 +25,7 @@ public class DealerCardsTest {
     @Test
     void lowerThanCannotHitThresholdTest() {
         DealerCards dealerCards = new DealerCards(new ArrayList<>());
-        dealerCards.addCard(new Card(CardNumber.K, CardShape.HEART));
+        dealerCards.addCard(new Card(CardNumber.KING, CardShape.HEART));
         dealerCards.addCard(new Card(CardNumber.SEVEN, CardShape.SPADE));
 
         assertThat(dealerCards.hasScoreUnderHitThreshold()).isFalse();

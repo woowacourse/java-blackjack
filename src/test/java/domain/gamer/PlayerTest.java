@@ -36,8 +36,8 @@ public class PlayerTest {
     void checkOverThreshold() {
         Player player = new Player("name", new PlayerCards(new ArrayList<>()));
         player.hit(new Card(CardNumber.TWO, CardShape.CLOVER));
-        player.hit(new Card(CardNumber.K, CardShape.CLOVER));
-        player.hit(new Card(CardNumber.K, CardShape.SPADE));
+        player.hit(new Card(CardNumber.KING, CardShape.CLOVER));
+        player.hit(new Card(CardNumber.KING, CardShape.SPADE));
 
         assertThat(player.isNotBust()).isFalse();
     }

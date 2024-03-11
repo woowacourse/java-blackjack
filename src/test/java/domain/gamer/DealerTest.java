@@ -35,8 +35,8 @@ public class DealerTest {
     void checkOverBustThreshold() {
         Dealer dealer = new Dealer(new DealerCards(new ArrayList<>()));
         dealer.hit(new Card(CardNumber.TWO, CardShape.CLOVER));
-        dealer.hit(new Card(CardNumber.K, CardShape.CLOVER));
-        dealer.hit(new Card(CardNumber.K, CardShape.SPADE));
+        dealer.hit(new Card(CardNumber.KING, CardShape.CLOVER));
+        dealer.hit(new Card(CardNumber.KING, CardShape.SPADE));
 
         assertThat(dealer.isNotBust()).isFalse();
     }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import view.mapper.CardNumberMapper;
 import view.mapper.CardShapeMapper;
 
 public class ResultView {
@@ -65,11 +66,12 @@ public class ResultView {
     }
 
     private String resolveCardNumber(CardNumber cardNumber) {
-        if (cardNumber.equals(CardNumber.A) || cardNumber.equals(CardNumber.J)
-                || cardNumber.equals(CardNumber.Q) || cardNumber.equals(CardNumber.K)) {
-            return cardNumber.name();
-        }
-        return String.valueOf(cardNumber.getScore());
+        return CardNumberMapper.toExpression(cardNumber);
+//        if (cardNumber.equals(CardNumber.A) || cardNumber.equals(CardNumber.J)
+//                || cardNumber.equals(CardNumber.Q) || cardNumber.equals(CardNumber.K)) {
+//            return cardNumber.name();
+//        }
+//        return String.valueOf(cardNumber.getScore());
     }
 
     private String resolveCardShape(CardShape cardShape) {
