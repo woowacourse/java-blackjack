@@ -6,6 +6,7 @@ import java.util.List;
 
 public class CardDeck {
 
+    public static final int HIT_THRESHOLD = 21;
     private final List<Card> cards;
 
     public CardDeck() {
@@ -26,7 +27,7 @@ public class CardDeck {
     }
 
     public boolean isBust() {
-        return calculateHand() > 21;
+        return calculateHand() > HIT_THRESHOLD;
     }
 
     public int calculateHand() {
