@@ -43,7 +43,7 @@ public abstract class Player {
     }
 
     public boolean isDealer() {
-        return this.name.equals(new Name("딜러"));
+        return this == Dealer.getInstance();
     }
 
     public boolean isParticipant() {

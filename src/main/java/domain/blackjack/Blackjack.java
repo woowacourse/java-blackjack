@@ -16,7 +16,7 @@ public class Blackjack {
     public Blackjack(final Players players) {
         this.players = players;
         this.deck = new Deck();
-        players.register(new Dealer());
+        players.register(Dealer.getInstance());
         dealCardsToPlayers();
     }
 

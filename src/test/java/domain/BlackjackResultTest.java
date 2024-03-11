@@ -22,7 +22,7 @@ class BlackjackResultTest {
     @Test
     @DisplayName("플레이어가 버스트 되면 딜러가 게임을 이긴다")
     void playerBust() {
-        final Player dealer = new Dealer();
+        final Player dealer = Dealer.getInstance();
         final Player teba = new Participant(new Name("테바"));
         teba.hit(new Card(Denomination.JACK, Symbol.CLUBS));
         teba.hit(new Card(Denomination.KING, Symbol.CLUBS));
@@ -40,7 +40,7 @@ class BlackjackResultTest {
     @Test
     @DisplayName("딜러가 버스트 되면 플레이어가 게임을 이긴다")
     void dealerBust() {
-        final Player dealer = new Dealer();
+        final Player dealer = Dealer.getInstance();
         final Player teba = new Participant(new Name("테바"));
         dealer.hit(new Card(Denomination.JACK, Symbol.CLUBS));
         dealer.hit(new Card(Denomination.KING, Symbol.CLUBS));
