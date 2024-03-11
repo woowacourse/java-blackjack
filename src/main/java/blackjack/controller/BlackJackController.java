@@ -4,6 +4,7 @@ import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.cardgenerator.RandomCardGenerator;
 import blackjack.model.dealer.Dealer;
 import blackjack.model.player.Player;
+import blackjack.model.player.PlayerAction;
 import blackjack.model.player.Players;
 import blackjack.model.referee.Referee;
 import blackjack.view.InputView;
@@ -59,12 +60,17 @@ public class BlackJackController {
     }
 
     private boolean doPlayerAction(final Player player, final CardGenerator cardGenerator) {
-        boolean command = retryOnException(() -> inputView.askHitOrStandCommand(player.getName()));
-        if (command) {
+        PlayerAction playerAction = retryOnException(() -> askPlayerActionTry(player.getName()));
+        if (playerAction.isAsked()) {
             player.hit(cardGenerator);
             outputView.printPlayerActionResult(player);
         }
-        return player.canHit() && command;
+        return playerAction.canContinue(player);
+    }
+
+    private PlayerAction askPlayerActionTry(final String playerName) {
+        boolean askContinuance = inputView.askHitOrStandCommand(playerName);
+        return PlayerAction.from(askContinuance);
     }
 
     private void end(final Players players, final Dealer dealer) {
