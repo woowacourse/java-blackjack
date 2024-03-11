@@ -60,7 +60,8 @@ public class Bettings {
 
     public int calculateDealerProfit(Map<Player, Integer> playerProfits) {
         return playerProfits.values().stream()
-                .reduce(0, Integer::sum) * -1;
+                .mapToInt(Integer::intValue)
+                .sum() * -1;
     }
 
     public Money getBettingMoney(Player player) {

@@ -36,8 +36,8 @@ public class Hand {
 
     private int calculateHardHandScore() {
         return cards.stream()
-                .map(Card::getScore)
-                .reduce(0, Integer::sum);
+                .mapToInt(Card::getScore)
+                .sum();
     }
 
     public boolean isBust() {
