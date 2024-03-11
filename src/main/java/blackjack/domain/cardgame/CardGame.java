@@ -9,7 +9,7 @@ public class CardGame {
     private final CardDeck cardDeck;
 
     public CardGame() {
-        this.cardDeck = new CardDeck();
+        this.cardDeck = CardDeck.create();
     }
 
     public void giveCard(final Player player) {

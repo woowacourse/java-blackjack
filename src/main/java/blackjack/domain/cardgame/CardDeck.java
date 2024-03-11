@@ -10,21 +10,26 @@ import java.util.Stack;
 public class CardDeck {
     private final Stack<Card> deck;
 
-    public CardDeck() {
-        final Stack<Card> deck = new Stack<>();
+    private CardDeck(Stack<Card> deck) {
+        this.deck = deck;
+    }
 
+    static CardDeck create() {
+        final Stack<Card> deck = new Stack<>();
         for (final CardNumber cardNumber : CardNumber.values()) {
             for (final CardShape cardShape : CardShape.values()) {
                 deck.push(new Card(cardNumber, cardShape));
             }
         }
-
         Collections.shuffle(deck);
-
-        this.deck = deck;
+        return new CardDeck(deck);
     }
 
-    public Card draw() {
+    Card draw() {
+        if (deck.empty()) {
+            throw new IllegalArgumentException("카드가 존재하지 않습니다.");
+        }
+
         return deck.pop();
     }
 }
