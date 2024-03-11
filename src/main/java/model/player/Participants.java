@@ -36,11 +36,11 @@ public class Participants {
         }
     }
 
-    public void offerCardToParticipant(CardDeck cardDeck, User receiver, CardSize size) {
+    public void offerCardToParticipant(CardDeck cardDeck, Participant receiver, CardSize size) {
         User foundUser = participants.stream()
                 .filter(player -> player.equals(receiver))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("참가자가 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("참가자(" + receiver.getName() + ")가 존재하지 않습니다."));
         foundUser.addCards(cardDeck.selectRandomCards(size));
     }
 
