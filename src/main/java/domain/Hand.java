@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static domain.constant.BlackJackGameConfig.BUST_THRESHOLD;
+
 public class Hand {
-    private static final int BUST_THRESHOLD = 21;
     private static final int ACE_VALUE_GAP = 10;
     private final List<Card> cards;
 

@@ -1,11 +1,11 @@
 package domain.constant;
 
+import static domain.constant.BlackJackGameConfig.BUST_THRESHOLD;
+
 public enum GamerResult {
     WIN("승"),
     DRAW("무"),
     LOSE("패");
-
-    private static final int BUST_THRESHOLD = 21;
     private final String result;
 
     GamerResult(String result) {
