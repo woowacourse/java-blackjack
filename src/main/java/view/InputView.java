@@ -28,6 +28,16 @@ public class InputView {
         }
     }
 
+    public int readBets(Name name) {
+        try {
+            System.out.println(name + "의 배팅 금액은?");
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("숫자를 입력해주세요.");
+            return readBets(name);
+        }
+    }
+
     private enum Opinion {
         POSITIVE("y", true),
         NEGATIVE("n", false);
