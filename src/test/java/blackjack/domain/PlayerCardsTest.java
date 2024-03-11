@@ -18,7 +18,7 @@ class PlayerCardsTest {
     @DisplayName("한 장의 카드를 추가할 수 있다.")
     void addCardTest() {
         Card card = new Card(DIAMOND, ACE);
-        PlayerCards playerCards = PlayerCards.createEmptyCards();
+        PlayerCards playerCards = PlayerCards.empty();
 
         playerCards.append(card);
         List<Card> cards = playerCards.getCards();

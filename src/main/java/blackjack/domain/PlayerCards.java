@@ -11,7 +11,7 @@ public class PlayerCards {
         this.cards = cards;
     }
 
-    public static PlayerCards createEmptyCards() {
+    public static PlayerCards empty() {
         return new PlayerCards(new ArrayList<>());
     }
 

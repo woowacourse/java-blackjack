@@ -9,7 +9,7 @@ public class Player {
 
     public Player(PlayerName playerName) {
         this.playerName = playerName;
-        this.playerCards = PlayerCards.createEmptyCards();
+        this.playerCards = PlayerCards.empty();
     }
 
     public static Player fromName(String name) {
