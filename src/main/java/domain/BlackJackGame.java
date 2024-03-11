@@ -1,13 +1,9 @@
 package domain;
-
-import domain.dto.GameStatusDto;
-import domain.dto.GamerDto;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
+    //TODO: Name으로 조회하기
     private static final int MAX_PLAYERS_COUNT = 8;
     private final List<Player> players;
     private final Dealer dealer;
@@ -33,16 +29,12 @@ public class BlackJackGame {
         gamer.pickTwoCards(deck);
     }
 
-    public GameStatusDto getGameStatusDto() {
-        return GameStatusDto.of(GamerDto.from(dealer), toGamerDto());
+    public List<Card> getDealerCards() {
+        return dealer.getCards();
     }
 
-    public List<GamerDto> toGamerDto() {
-        List<GamerDto> gamerDtos = new ArrayList<>();
-        players.stream()
-                .map(GamerDto::from)
-                .forEach(gamerDtos::add);
-        return Collections.unmodifiableList(gamerDtos);
+    public List<Card> getCardsFromName(String name) {
+        return searchFromName(name).getCards();
     }
 
     public void drawCardFromName(String name, Deck deck) {
@@ -67,5 +59,13 @@ public class BlackJackGame {
                 dealer.getTotalScore(),
                 players.stream()
                         .collect(Collectors.toMap(Gamer::getName, Gamer::getTotalScore)));
+    }
+
+    public int getDealerScore() {
+        return dealer.getTotalScore();
+    }
+
+    public int getScoreFromName(String name) {
+        return searchFromName(name).getTotalScore();
     }
 }

@@ -2,8 +2,6 @@ package domain;
 
 import domain.constant.CardNumber;
 import domain.constant.CardType;
-import domain.dto.GameStatusDto;
-import domain.dto.GamerDto;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -13,22 +11,12 @@ import org.junit.jupiter.api.Test;
 
 public class BlackJackGameTest {
     @Test
-    @DisplayName("GameStatusDto를 반환한다.")
-    void getGameStatusDto() {
-        BlackJackGame blackJackGame = new BlackJackGame(List.of(new Player(new Name("test"))));
-        Assertions.assertThat(blackJackGame.getGameStatusDto()).isNotNull();
-    }
-
-    @Test
     @DisplayName("모든 플레이어들에게 카드를 2장씩 나눠준다")
     void initialDealing() {
         BlackJackGame blackJackGame = new BlackJackGame(List.of(new Player(new Name("test"))));
         Deck deck = Deck.withFullCards();
         blackJackGame.initialDealing(deck);
-        Assertions.assertThat(blackJackGame.getGameStatusDto()
-                        .getGamerDtoFromName("test")
-                        .getCards().size())
-                .isEqualTo(2);
+        Assertions.assertThat(blackJackGame.getCardsFromName("test").size()).isEqualTo(2);
     }
 
     @Test
@@ -40,10 +28,7 @@ public class BlackJackGameTest {
         Deck deck = Deck.withFullCards();
         blackJackGame.initialDealing(deck);
         blackJackGame.drawCardFromName("test", deck);
-        Assertions.assertThat(blackJackGame.getGameStatusDto()
-                        .getGamerDtoFromName("test")
-                        .getCards().size())
-                .isEqualTo(3);
+        Assertions.assertThat(blackJackGame.getCardsFromName("test").size()).isEqualTo(3);
     }
 
     @Test
@@ -89,9 +74,7 @@ public class BlackJackGameTest {
                 new Card(CardType.CLOVER, CardNumber.TEN),
                 new Card(CardType.CLOVER, CardNumber.TEN));
         blackJackGame.drawDealerCard(deck);
-        GameStatusDto gameStatusDto = blackJackGame.getGameStatusDto();
-        GamerDto gamerDto = gameStatusDto.getDealerDto();
-        Assertions.assertThat(gamerDto.getTotalScore()).isGreaterThan(16);
+        Assertions.assertThat(blackJackGame.getDealerScore()).isGreaterThan(16);
     }
 
     @Test
