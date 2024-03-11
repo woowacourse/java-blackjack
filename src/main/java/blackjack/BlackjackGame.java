@@ -52,15 +52,20 @@ public class BlackjackGame {
         players.getPlayers()
                 .forEach(player -> readMoreCardChoice(player, dealer));
 
-        printDealerExtraCard(dealer);
+        printDealerExtraCard(drawDealerExtraCard(dealer));
         printResultCardsStatus(dealer, players);
     }
 
-    private void printDealerExtraCard(final Dealer dealer) {
-        if (dealer.drawExtraCard()) {
+    private boolean drawDealerExtraCard(final Dealer dealer) {
+        return dealer.drawExtraCard();
+    }
+
+    private void printDealerExtraCard(final boolean isDraw) {
+        if (isDraw) {
             outputView.printAddDealerCard();
             return;
         }
+
         outputView.printNewLine();
     }
 
