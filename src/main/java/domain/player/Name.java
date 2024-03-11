@@ -3,6 +3,7 @@ package domain.player;
 import java.util.Objects;
 
 public class Name {
+    private static final int MAX_LENGTH = 5;
     private final String value;
 
     public Name(final String name) {
@@ -12,6 +13,13 @@ public class Name {
 
     private void validate(final String name) {
         validateEmptiness(name);
+        validateLength(name);
+    }
+
+    private void validateLength(final String name) {
+        if (name.length() > MAX_LENGTH) {
+            throw new IllegalArgumentException(String.format("이름 길이는 %d자 이하로 입력해주세요", MAX_LENGTH));
+        }
     }
 
     private void validateEmptiness(final String name) {

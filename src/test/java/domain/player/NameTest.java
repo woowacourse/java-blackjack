@@ -13,8 +13,14 @@ class NameTest {
 
     @Test
     @DisplayName("이름이 비어 있으면 예외를 발생시킨다")
-    void nameTest() {
-        Assertions.assertThatCode(() -> new Name("")).isInstanceOf(IllegalArgumentException.class);
+    void blank() {
+        assertThatCode(() -> new Name("")).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("비어");
+    }
+
+    @Test
+    @DisplayName("이름이 5글자를 초과하면 예외가 발생한다")
+    void nameLength() {
+        assertThatCode(() -> new Name("123456")).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("이름 길이");
     }
 
 }
