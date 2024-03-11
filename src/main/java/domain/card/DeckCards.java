@@ -11,6 +11,7 @@ public class DeckCards {
     private final Queue<Card> cards;
 
     private DeckCards(Queue<Card> cards) {
+        validateNullOrEmpty(cards);
         this.cards = cards;
     }
 
@@ -33,5 +34,14 @@ public class DeckCards {
             throw new IllegalStateException("[ERROR] 카드를 모두 사용하였습니다.");
         }
         return cards.poll();
+    }
+
+    private void validateNullOrEmpty(Queue<Card> cards) {
+        if (cards == null) {
+            throw new IllegalArgumentException("[ERROR] 덱은 null일 수 없습니다.");
+        }
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 덱은 비어 있을 수 없습니다.");
+        }
     }
 }
