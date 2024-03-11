@@ -2,6 +2,7 @@ package blackjack.domain;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
@@ -39,5 +40,16 @@ class DeckTest {
         assertThatThrownBy(() -> new Deck(cards))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복되는 카드가 있습니다.");
+    }
+
+    @Test
+    @DisplayName("랜덤하게 섞인 댁을 만들 수 있다.")
+    void Test() {
+        assertThatCode(
+                () -> {
+                    Deck shuffledDeck = Deck.createShuffledDeck();
+                    shuffledDeck.draw();
+                }
+        ).doesNotThrowAnyException();
     }
 }

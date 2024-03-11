@@ -78,8 +78,37 @@ class PlayerTest {
 
     static Stream<Arguments> cardsAndBustStatus() {
         return Stream.of(
-                Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, ACE)), false),
-                Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, TWO)), true)
+                Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, ACE)),
+                        false),
+                Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, TWO)),
+                        true)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("cardsAndDrawAble")
+    @DisplayName("자신의 버스트 여부를 판단할 수 있다.")
+    void Test(List<Card> cards, boolean expected) {
+        Deck deck = new Deck(cards);
+
+        Player player = new Player("pedro");
+        for (int i = 0; i < cards.size(); i++) {
+            player.draw(deck);
+        }
+
+        assertThat(player.isDrawAble()).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> cardsAndDrawAble() {
+        return Stream.of(
+                Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, ACE)),
+                        false),
+                Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, ACE)),
+                        false),
+                Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, TWO)),
+                        false),
+                Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN)),
+                        true)
         );
     }
 }

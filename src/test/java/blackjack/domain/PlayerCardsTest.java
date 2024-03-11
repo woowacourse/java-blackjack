@@ -66,8 +66,16 @@ class PlayerCardsTest {
         return Stream.of(
                 Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, ACE)), 21),
                 Arguments.arguments(List.of(new Card(DIAMOND, NINE), new Card(DIAMOND, ACE), new Card(SPADE, ACE)), 21),
-                Arguments.arguments(List.of(new Card(DIAMOND, KING), new Card(DIAMOND, QUEEN), new Card(DIAMOND, ACE)), 21),
+                Arguments.arguments(List.of(new Card(DIAMOND, KING), new Card(DIAMOND, QUEEN), new Card(DIAMOND, ACE)),
+                        21),
                 Arguments.arguments(List.of(new Card(DIAMOND, ACE), new Card(CLOVER, ACE), new Card(SPADE, ACE)), 13)
         );
+    }
+
+    @Test
+    @DisplayName("시작 손패는 비어있다.")
+    void createEmptyCardsTest() {
+        PlayerCards emptyCards = PlayerCards.createEmptyCards();
+        assertThat(emptyCards.size()).isZero();
     }
 }
