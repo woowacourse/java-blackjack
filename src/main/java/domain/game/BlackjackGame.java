@@ -1,6 +1,5 @@
 package domain.game;
 
-import domain.card.Card;
 import domain.card.DeckCards;
 import domain.participant.Dealer;
 import domain.participant.Participant;
@@ -22,7 +21,7 @@ public class BlackjackGame {
     }
 
     public void distributeStartingCards() {
-        for (Participant participant : participants.getPlayers()) {
+        for (Participant participant : getPlayers()) {
             participant.receive(deckCards.drawStartingCards(STARTING_CARDS_AMOUNT));
         }
         getDealer().receive(deckCards.drawStartingCards(STARTING_CARDS_AMOUNT));
