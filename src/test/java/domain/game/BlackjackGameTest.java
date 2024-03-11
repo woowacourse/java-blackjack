@@ -17,7 +17,7 @@ class BlackjackGameTest {
     void distributeStartingCards() {
         Player player1 = new Player(new Name("name1"));
         Player player2 = new Player(new Name("name2"));
-        Participants participants = Participants.of(List.of(player1, player2));
+        Participants participants = Participants.createWithDealer(List.of(player1, player2));
         BlackjackGame game = new BlackjackGame(participants, new RandomCardGenerator());
 
         game.distributeStartingCards();
@@ -31,7 +31,7 @@ class BlackjackGameTest {
     @DisplayName("성공: 참가자에게 카드 한장 주기")
     void giveOneCard() {
         Player player = new Player(new Name("name"));
-        Participants participants = Participants.of(List.of(player));
+        Participants participants = Participants.createWithDealer(List.of(player));
         BlackjackGame game = new BlackjackGame(participants, new RandomCardGenerator());
 
         game.giveOneCard(player);

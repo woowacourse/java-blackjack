@@ -12,7 +12,7 @@ public class Participants {
         this.participants = participants;
     }
 
-    public static Participants of(List<Player> players) {
+    public static Participants createWithDealer(List<Player> players) {
         List<Participant> initialParticipants = new ArrayList<>(players);
         initialParticipants.add(new Dealer());
         return new Participants(initialParticipants);

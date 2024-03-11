@@ -42,7 +42,7 @@ public class BlackjackMachine {
         List<Player> players = names.stream()
                 .map(name -> new Player(new Name(name)))
                 .toList();
-        return new BlackjackGame(Participants.of(players), new RandomCardGenerator());
+        return new BlackjackGame(Participants.createWithDealer(players), new RandomCardGenerator());
     }
 
     private void playPlayersTurn(BlackjackGame game) {
