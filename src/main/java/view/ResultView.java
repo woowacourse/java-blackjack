@@ -8,7 +8,6 @@ import domain.cards.cardinfo.CardShape;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -24,7 +23,7 @@ public class ResultView {
     public void printInitialCards(Dealer dealer, List<Player> players) {
         System.out.print(LINE_SEPARATOR);
         System.out.println(resolveMessageSharingCards(dealer, players));
-        System.out.println(resolveDealerCard(dealer.getPlayerName(), dealer.openOneCard()));
+        System.out.println(resolveDealerCard(dealer));
         System.out.println(resolvePlayersCards(players));
     }
 
@@ -36,28 +35,29 @@ public class ResultView {
         return String.format("%s와 %s에게 2장을 나누었습니다.", dealerName, playersNames);
     }
 
-    private String resolveDealerCard(String dealerName, Card dealerCard) {
-        return String.format("%s카드: %s", dealerName, resolveCardExpression(dealerCard));
+    private String resolveDealerCard(Dealer dealer) {
+        String dealerName = dealer.getPlayerName();
+        Card dealerCard = dealer.openOneCard();
+        String dealerCardExpression = resolveCardExpression(dealerCard);
+        return String.format("%s카드: %s", dealerName, dealerCardExpression);
     }
 
     private String resolvePlayersCards(List<Player> players) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Player player : players) {
-            stringBuilder.append(resolvePlayerCards(player.getPlayerName(), player.getCards()));
+            stringBuilder.append(resolvePlayerCards(player));
             stringBuilder.append(LINE_SEPARATOR);
         }
         return stringBuilder.toString();
     }
 
-    private String resolvePlayerCards(String playerName, List<Card> playerCards) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(String.format("%s카드: ", playerName));
-        List<String> cards = new ArrayList<>();
-        for (Card card : playerCards) {
-            cards.add(resolveCardExpression(card));
-        }
-        stringBuilder.append(String.join(DELIMITER, cards));
-        return stringBuilder.toString();
+    private String resolvePlayerCards(Player player) {
+        String playerName = player.getPlayerName();
+        List<Card> playerCards = player.getCards();
+        List<String> playerCardsExpression = playerCards.stream()
+                .map(this::resolveCardExpression)
+                .toList();
+        return String.format("%s카드: %s", playerName, String.join(DELIMITER, playerCardsExpression));
     }
 
     private String resolveCardExpression(Card card) {
@@ -67,48 +67,31 @@ public class ResultView {
     }
 
     public void printPlayerCards(Player player) {
-        System.out.println(resolvePlayerCards(player.getPlayerName(), player.getCards()));
+        System.out.println(resolvePlayerCards(player));
     }
 
     public void printDealerHitMessage(Dealer dealer, Card card) {
-        System.out.println(resolveDealerHitMessage(dealer.getPlayerName(), card));
-    }
-
-    private String resolveDealerHitMessage(String dealerName, Card card) {
-        return String.format(LINE_SEPARATOR + "%s는 16이하라 카드 %s를 더 받았습니다.",
-                dealerName, resolveCardExpression(card));
+        String dealerName = dealer.getPlayerName();
+        System.out.printf(LINE_SEPARATOR + "%s는 16이하라 카드 %s를 더 받았습니다.", dealerName, resolveCardExpression(card));
     }
 
     public void printGamersCardsScore(Gamers gamers) {
-        System.out.println(resolveGamersCardsScore(gamers.getGamers()));
-    }
-
-    private String resolveGamersCardsScore(List<Player> gamers) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(LINE_SEPARATOR);
-        for (Player gamer : gamers) {
-            stringBuilder.append(String.format("%s - 결과: %d\n",
-                    resolvePlayerCards(gamer.getPlayerName(), gamer.getCards()), gamer.finalizeCardsScore()));
+        for (Player gamer : gamers.getGamers()) {
+            stringBuilder.append(String.format("%s - 결과: %d\n", resolvePlayerCards(gamer), gamer.finalizeCardsScore()));
         }
-        return stringBuilder.toString();
+        System.out.println(stringBuilder);
     }
 
     public void printFinalResult(Dealer dealer, Judge judge) {
-        System.out.println(resolveFinalResult(dealer, judge));
-    }
-
-    private String resolveFinalResult(Dealer dealer, Judge judge) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("## 최종 승패");
-        stringBuilder.append(LINE_SEPARATOR);
-        stringBuilder.append(resolveDealerFinalResult(dealer, judge));
-        stringBuilder.append(resolvePlayersFinalResult(judge));
-        return stringBuilder.toString();
+        System.out.println("## 최종 승패");
+        System.out.println(LINE_SEPARATOR);
+        System.out.println(resolveDealerFinalResult(dealer, judge) + resolvePlayersFinalResult(judge));
     }
 
     private String resolveDealerFinalResult(Dealer dealer, Judge judge) {
-        return String.format("%s: %s", dealer.getPlayerName(),
-                resolveDealerWinState(judge.getDealerResult()))
+        return String.format("%s: %s", dealer.getPlayerName(), resolveDealerWinState(judge.getDealerResult()))
                 + LINE_SEPARATOR;
     }
 
@@ -135,8 +118,7 @@ public class ResultView {
     }
 
     private String resolvePlayerFinalResult(Player player, WinState playerWinState) {
-        return String.format("%s: %s", player.getPlayerName(),
-                WinStateMapper.toExpression(playerWinState))
+        return String.format("%s: %s", player.getPlayerName(), WinStateMapper.toExpression(playerWinState))
                 + LINE_SEPARATOR;
     }
 }
