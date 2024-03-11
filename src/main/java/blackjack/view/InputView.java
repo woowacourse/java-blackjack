@@ -6,6 +6,10 @@ import java.util.Scanner;
 
 public class InputView {
 
+    private static final String WANT_HIT_COMMAND = "y";
+    private static final String NOT_WANT_HIT_COMMAND = "n";
+    private static final List<String> commands = List.of(WANT_HIT_COMMAND, NOT_WANT_HIT_COMMAND);
+    private static final String ERROR_INVALID_COMMAND = WANT_HIT_COMMAND + " 또는 " + NOT_WANT_HIT_COMMAND + "만 입력할 수 있습니다.";
     private static final Scanner scanner = new Scanner(System.in);
 
     public static List<String> readPlayerNames() {
@@ -14,8 +18,16 @@ public class InputView {
     }
 
     public static boolean readDoesWantHit(final Name name) {
-        System.out.println(name.value() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        System.out.println(name.value() + "는 한장의 카드를 더 받겠습니까?(예는 " + WANT_HIT_COMMAND
+                + ", 아니오는 " + NOT_WANT_HIT_COMMAND + ")");
         String input = scanner.nextLine();
-        return input.equals("y");
+        validateHitInput(input);
+        return input.equals(WANT_HIT_COMMAND);
+    }
+
+    private static void validateHitInput(final String input) {
+        if (!commands.contains(input)) {
+            throw new IllegalArgumentException(ERROR_INVALID_COMMAND);
+        }
     }
 }
