@@ -19,13 +19,13 @@ class DeckTest {
     @Test
     void should_ThrowIllegalArgumentException_When_NoMoreCard() {
         // TODO 테스트에서는 반복문 x
-        // TODO 타입만 검증하면 발생가능한 문제가 있을 수 있음
         Deck shuffledDeck = Deck.createShuffledDeck();
 
         for (int i = 0; i < 52; i++) {
             shuffledDeck.draw();
         }
         assertThatThrownBy(shuffledDeck::draw)
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("덱에 카드가 더 이상 없습니다");
     }
 }

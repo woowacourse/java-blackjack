@@ -33,7 +33,7 @@ public class Deck {
 
     public Card draw() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException("덱에 카드가 더이상 없습니다");
+            throw new IllegalArgumentException("덱에 카드가 더 이상 없습니다");
         }
         return cards.pop();
     }

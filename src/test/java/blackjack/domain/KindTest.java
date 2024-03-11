@@ -28,6 +28,7 @@ class KindTest {
     @ValueSource(ints = {-1, 4})
     void should_ThrowIllegalStateException_When_NonExistKindNumber(int nonExistKindNumber) {
         assertThatThrownBy(() -> findKind(nonExistKindNumber))
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("존재하지 않는 카드 종류를 조회하였습니다.");
     }
 }
