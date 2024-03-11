@@ -19,7 +19,7 @@ public enum Choice {
         if (commandText.matches(NO.originalText)){
             return NO;
         }
-        throw new IllegalArgumentException("[ERROR] y 혹은 n만 입력 가능합니다.");
+        throw new IllegalArgumentException("y 혹은 n만 입력 가능합니다.");
     }
 
     public boolean isYes() {
