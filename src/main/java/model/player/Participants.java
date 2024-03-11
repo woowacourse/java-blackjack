@@ -44,6 +44,11 @@ public class Participants {
         foundUser.addCards(cardDeck.selectRandomCards(size));
     }
 
+    public List<String> findParticipantsName() {
+        return participants.stream()
+                .map(participant -> participant.name).toList();
+    }
+
     public List<Participant> getParticipants() {
         return Collections.unmodifiableList(participants);
     }

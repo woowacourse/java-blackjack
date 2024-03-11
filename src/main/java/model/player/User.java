@@ -58,8 +58,8 @@ public abstract class User {
         return name;
     }
 
-    public List<Card> getCards() {
-        return cards.getCards();
+    public Cards getCards() {
+        return cards;
     }
 
     @Override

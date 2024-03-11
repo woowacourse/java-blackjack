@@ -2,9 +2,11 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import model.BlackJack;
 import model.card.CardSize;
 import model.card.CardDeck;
+import model.card.Cards;
 import model.player.Dealer;
 import model.player.Participant;
 import model.player.Participants;
@@ -24,11 +26,12 @@ public class BlackJackController {
     public void startGame() {
         BlackJack blackJack = createBlackJack(inputView.askParticipantNames());
 
-        outputView.printStartBlackJack(blackJack.getParticipants(), blackJack.getDealer());
+        outputView.printPlayerNames(blackJack.findParticipantsName());
+        outputView.printPlayerCards(blackJack.mapToUsersNameAndCards(), blackJack.mapToDealerNameAndCards());
 
         offerMoreCards(blackJack);
 
-        outputView.printBlackJackScore(blackJack.getParticipants(), blackJack.getDealer());
+        outputView.printBlackJackScore(blackJack.mapToUsersNameAndCards(), blackJack.mapToDealerNameAndCards());
         outputView.printPlayersOutcome(blackJack.getDealerOutCome(), blackJack.matchParticipantsOutcome());
     }
 
@@ -58,7 +61,7 @@ public class BlackJackController {
     private void decideParticipantPlay(Participant participant, BlackJack blackJack) {
         while (participant.isNotHit() == false && inputView.isOneMoreCard(participant.getName())) {
             blackJack.offerCardToParticipant(participant, CardSize.ONE);
-            outputView.printPlayerCardMessage(participant);
+            outputView.printPlayerCardMessage(participant.getName(), participant.getCards());
         }
     }
 

@@ -2,13 +2,13 @@ package view;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import model.Outcome;
 import model.card.Card;
 import model.card.CardNumber;
 import model.card.CardShape;
-import model.player.Dealer;
+import model.card.Cards;
 import model.player.Participant;
-import model.player.User;
 
 public class OutputView {
 
@@ -19,47 +19,50 @@ public class OutputView {
     private static final String DEALER_ADD_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String GAME_RESULT_PROMPT_MESSAGE = "## 최종 승패";
 
-    public void printStartBlackJack(List<Participant> players, Dealer dealer) {
-        printPlayerNames(players);
-        printPlayerCards(players, dealer);
+    public void printPlayerNames(List<String> names) {
+        System.out.println(System.lineSeparator() + DIVIDE_CARD_MESSAGE.formatted(String.join(", ", names)));
     }
 
-    private void printPlayerNames(List<Participant> players) {
-        String names = String.join(", ", players.stream().map(User::getName).toList());
-        System.out.println(System.lineSeparator() + DIVIDE_CARD_MESSAGE.formatted(names));
-    }
-
-    private void printPlayerCards(List<Participant> players, Dealer dealer) {
-        System.out.println(cardsToString(dealer, 1));
-        for (User user : players) {
-            System.out.println(cardsToString(user));
+    public void printPlayerCards(Map<String, Cards> usersNameAndCards, Map<String, Cards> dealerNameAndCards) {
+        Entry<String, Cards> dealer = mapToDealerEntry(dealerNameAndCards);
+        System.out.println(cardsToString(dealer.getKey(), dealer.getValue(), 1));
+        for (Entry<String, Cards> entry : usersNameAndCards.entrySet()) {
+            System.out.println(cardsToString(entry));
         }
     }
 
-    public void printPlayerCardMessage(User user) {
-        System.out.println(cardsToString(user));
+    private Entry<String, Cards> mapToDealerEntry(Map<String, Cards> dealerNameAndCards) {
+        return dealerNameAndCards.entrySet().stream()
+                .findFirst()
+                .orElseThrow();
     }
 
-    public void printBlackJackScore(List<Participant> players, Dealer dealer) {
+    public void printPlayerCardMessage(String name, Cards cards) {
+        System.out.println(cardsToString(name, cards, cards.getCards().size()));
+    }
+
+    public void printBlackJackScore(Map<String, Cards> usersNameAndCards, Map<String, Cards> dealerNameAndCards) {
+        Entry<String, Cards> dealer = mapToDealerEntry(dealerNameAndCards);
         System.out.println(System.lineSeparator() +
-                cardsToString(dealer) + PLAYER_CARD_SUM_MESSAGE.formatted(dealer.calculateScore()));
-        for (Participant player : players) {
-            System.out.println(cardsToString(player) + PLAYER_CARD_SUM_MESSAGE.formatted(player.calculateScore()));
+                cardsToString(dealer) + PLAYER_CARD_SUM_MESSAGE.formatted(dealer.getValue().calculateScore()));
+        for (Entry<String, Cards> participant : usersNameAndCards.entrySet()) {
+            System.out.println(cardsToString(participant) + PLAYER_CARD_SUM_MESSAGE.formatted(participant.getValue().calculateScore()));
         }
     }
 
-    private String cardsToString(User user) {
-        return cardsToString(user, user.getCards().size());
+    private String cardsToString(Entry<String, Cards> userNameAndCards) {
+        int size = userNameAndCards.getValue().getCards().size();
+        return cardsToString(userNameAndCards.getKey(), userNameAndCards.getValue(), size);
     }
 
-    private String cardsToString(User user, int cardCountToPrint) {
-        List<Card> cards = user.getCards();
+    private String cardsToString(String name, Cards userCards, int cardCountToPrint) {
+        List<Card> cards = userCards.getCards();
         int cardCountNotToPrint = cards.size() - cardCountToPrint;
         String cardNames = String.join(", ", cards.stream()
                 .skip(cardCountNotToPrint)
                 .map(this::cardToString)
                 .toList());
-        return RECEIVED_CARD_MESSAGE.formatted(user.getName(), cardNames);
+        return RECEIVED_CARD_MESSAGE.formatted(name, cardNames);
     }
 
     private String cardToString(Card card) {

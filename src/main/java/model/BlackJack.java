@@ -9,9 +9,11 @@ import java.util.List;
 import java.util.Map;
 import model.card.CardSize;
 import model.card.CardDeck;
+import model.card.Cards;
 import model.player.Dealer;
 import model.player.Participant;
 import model.player.Participants;
+import model.player.User;
 
 public class BlackJack {
 
@@ -66,6 +68,22 @@ public class BlackJack {
                 .collect(groupingBy(Outcome::reverse, counting()));
     }
 
+    public Map<String, Cards> mapToUsersNameAndCards() {
+        return participants.getParticipants().stream()
+                .collect(toMap(
+                        User::getName,
+                        User::getCards
+                ));
+    }
+
+    public List<String> findParticipantsName() {
+        return participants.findParticipantsName();
+    }
+
+    public Map<String, Cards> mapToDealerNameAndCards() {
+        return Map.of(dealer.getName(), dealer.getCards());
+    }
+
     public List<Participant> getParticipants() {
         return Collections.unmodifiableList(participants.getParticipants());
     }
@@ -73,5 +91,4 @@ public class BlackJack {
     public Dealer getDealer() {
         return dealer;
     }
-
 }

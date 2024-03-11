@@ -66,7 +66,7 @@ class BlackJackTest {
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))), CardSize.ONE);
 
         List<Participant> result = participants.getParticipants();
-        assertThat(result.get(0).getCards()).hasSize(3);
+        assertThat(result.get(0).getCards().getCards()).hasSize(3);
     }
 
     static Stream<Arguments> createDealer() {
