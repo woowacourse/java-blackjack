@@ -20,7 +20,7 @@ public class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("모든 Gamer들에게 카드를 2장씩 나눠준다")
+    @DisplayName("모든 플레이어들에게 카드를 2장씩 나눠준다")
     void initialDealing() {
         BlackJackGame blackJackGame = new BlackJackGame(List.of(new Player(new Name("test"))));
         Deck deck = new Deck();
@@ -32,7 +32,7 @@ public class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("이름이 들어오면 덱에서 해당 Gamer가 카드를 한 장 뽑는다.")
+    @DisplayName("이름이 들어오면 덱에서 해당 플레이어가 카드를 한 장 뽑는다.")
     void drawCardFromName() {
         BlackJackGame blackJackGame = new BlackJackGame(List.of(
                 new Player(new Name("test"))
@@ -47,7 +47,7 @@ public class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("Gamer 이름이 존재하지 않을 경우 예외가 발생한다.")
+    @DisplayName("플레이어 이름이 존재하지 않을 경우 예외가 발생한다.")
     void drawCardFromNameException() {
         BlackJackGame blackJackGame = new BlackJackGame(List.of(new Player(new Name("test"))));
         Deck deck = new Deck();
