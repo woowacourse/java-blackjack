@@ -64,13 +64,7 @@ public class BlackjackGame {
         if (dealerScore > BLACKJACK_SCORE) {
             return ResultStatus.WIN;
         }
-        if (playerScore > dealerScore) {
-            return ResultStatus.WIN;
-        }
-        if (playerScore == dealerScore) {
-            return ResultStatus.DRAW;
-        }
-        return ResultStatus.LOSE;
+        return ResultStatus.of(playerScore, dealerScore);
     }
 
     public boolean shouldDealerDrawCard() {
