@@ -1,7 +1,6 @@
 package domain.game;
 
 import domain.card.Card;
-import domain.card.Rank;
 
 import java.util.ArrayList;
 import java.util.List;
