@@ -2,9 +2,9 @@ package domain.game;
 
 import domain.participant.Dealer;
 import domain.participant.Player;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Result {
 
@@ -15,14 +15,12 @@ public class Result {
     }
 
     public static Result of(List<Player> players, Dealer dealer) {
-        Map<Player, WinLose> map = new LinkedHashMap<>();
-
-        for (Player player : players) {
-            WinLose winLose = decideWinLose(player, dealer);
-            map.put(player, winLose);
-        }
-
-        return new Result(map);
+        return new Result(
+            players.stream()
+                .collect(Collectors.toMap(
+                    player -> player,
+                    player -> decideWinLose(player, dealer)))
+        );
     }
 
     private static WinLose decideWinLose(Player player, Dealer dealer) {
