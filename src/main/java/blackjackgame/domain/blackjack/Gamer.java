@@ -27,8 +27,6 @@ public class Gamer {
         }
     }
 
-
-
     public SummationCardPoint getSummationCardPoint() {
         SummationCardPoint summationCardPoint = holdingCards.calculateTotalPoint();
         if (hasAceInHoldingCards()) {

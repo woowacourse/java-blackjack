@@ -47,7 +47,7 @@ public class BlackjackController {
         dealer.draw(deck, new DealerRandomCardDrawStrategy(dealer), EXECUTION_COUNT);
         players.drawNTimes(deck, EXECUTION_COUNT);
 
-        OutputView.printCardSplitMessage(dealer.getRawName(), players.getPlayersNames());
+        OutputView.printCardSplitMessage(dealer.getRawName(), players.getRawPlayersNames());
     }
 
     private void printDealerAndPlayers() {
@@ -113,19 +113,25 @@ public class BlackjackController {
         }
     }
 
-    private void printDealerAndPlayersGameResult() {
+    private DealerGameResultDTO makeDealerGameResultDTO() {
         Map<GameResult, Integer> dealerGameResultCounts = players.getPlayers().stream()
                 .collect(Collectors.groupingBy(player -> GameResultCalculator.calculate(dealer, player),
                         Collectors.summingInt(value -> 1)));
-        DealerGameResultDTO dealerGameResultDTO = new DealerGameResultDTO(dealerGameResultCounts);
+        return new DealerGameResultDTO(dealerGameResultCounts);
+    }
 
-        List<PlayerGameResultDTO> playerGameResultDTOS = players.getPlayers().stream()
+    private List<PlayerGameResultDTO> makePlayerGameResultDTO() {
+        return players.getPlayers().stream()
                 .map(player -> new PlayerGameResultDTO(player.getRawName(),
                         GameResultCalculator.calculate(player, dealer)))
                 .toList();
+    }
 
+    private void printDealerAndPlayersGameResult() {
         OutputView.printGameResultMessage();
-        GameResultOutputView.print(dealerGameResultDTO);
+        GameResultOutputView.print(makeDealerGameResultDTO());
+
+        List<PlayerGameResultDTO> playerGameResultDTOS = makePlayerGameResultDTO();
         playerGameResultDTOS.forEach(GameResultOutputView::print);
     }
 }

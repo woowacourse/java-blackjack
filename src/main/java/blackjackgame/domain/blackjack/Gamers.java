@@ -14,7 +14,7 @@ public class Gamers {
         players.forEach(player -> player.draw(deck, new PlayerRandomCardDrawStrategy(player), execution_count));
     }
 
-    public List<String> getPlayersNames() {
+    public List<String> getRawPlayersNames() {
         return players.stream()
                 .map(Gamer::getRawName)
                 .toList();
