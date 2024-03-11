@@ -26,7 +26,6 @@ class PlayerTest {
     @DisplayName("플레이어는 자신이 갖는 카드 합계를 계산할 수 있다")
     void sum() {
         final Player player = new Player(new Name("지쳐버린종이"));
-        ;
 
         player.dealCard(new Card(Denomination.FIVE, Symbol.CLUBS));
         player.dealCard(new Card(Denomination.FIVE, Symbol.CLUBS));
@@ -39,7 +38,6 @@ class PlayerTest {
     @DisplayName("플레이어는 자신이 갖는 카드 합계를 계산할 수 있다")
     void sum2() {
         final Player player = new Player(new Name("지쳐버린종이"));
-        ;
 
         player.dealCard(new Card(Denomination.KING, Symbol.CLUBS));
         player.dealCard(new Card(Denomination.KING, Symbol.CLUBS));

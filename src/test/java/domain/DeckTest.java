@@ -14,6 +14,7 @@ public class DeckTest {
     void draw() {
         final Deck deck = new Deck();
         final Set<Card> cards = new HashSet<>();
+
         for (int i = 0; i < 52; i++) {
             cards.add(deck.draw());
         }
@@ -24,6 +25,7 @@ public class DeckTest {
     @DisplayName("52장이 넘는 카드를 뽑을 경우 예외를 발생한다.")
     void deckSize() {
         final Deck deck = new Deck();
+
         for (int i = 0; i < 52; i++) {
             deck.draw();
         }
