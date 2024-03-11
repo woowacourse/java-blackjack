@@ -34,12 +34,11 @@ public class BlackJackGame {
         return dealer.getCards().getFirstCard();
     }
 
-    public List<CardsStatus> playGame(BiConsumer<SingleMatch, CardDeck> playSingleMatch, Players players) {
+    public List<CardsStatus> playGame(BiConsumer<Player, CardDeck> playSingleMatch, Players players) {
         List<CardsStatus> playerResult = new ArrayList<>();
 
         for (Player player : players.getPlayers()) {
-            SingleMatch singleMatch = new SingleMatch(player);
-            playerResult.add(singleMatch.play(playSingleMatch, cardDeck));
+            playerResult.add(player.play(playSingleMatch, cardDeck));
         }
 
         return playerResult;

@@ -2,9 +2,9 @@ package controller;
 
 import card.CardDeck;
 import cardGame.BlackJackGame;
-import cardGame.SingleMatch;
 import controller.dto.WinningResult;
 import java.util.List;
+import player.Player;
 import player.Players;
 import player.dto.CardsStatus;
 import view.InputView;
@@ -46,15 +46,15 @@ public class BlackJackController {
         outputView.printPlayersResult(result);
     }
 
-    private void playSingleMatch(SingleMatch singleMatch, CardDeck cardDeck) {
-        while (isCanPlayPlayer(singleMatch)) {
-            singleMatch.getMoreCard(cardDeck.pickCard());
-            outputView.printPlayerCardStatus(singleMatch.getPlayer());
+    private void playSingleMatch(Player player, CardDeck cardDeck) {
+        while (isCanPlayPlayer(player)) {
+            player.receiveCard(cardDeck.pickCard());
+            outputView.printPlayerCardStatus(player);
         }
     }
 
-    private boolean isCanPlayPlayer(SingleMatch singleMatch) {
-        return !singleMatch.isBustPlayer() && inputView.inputPlayerCommand(
-                singleMatch.getPlayer().getName());
+    private boolean isCanPlayPlayer(Player player) {
+        return !player.isBust() && inputView.inputPlayerCommand(
+                player.getName());
     }
 }
