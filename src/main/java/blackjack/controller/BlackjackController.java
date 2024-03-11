@@ -72,7 +72,7 @@ public class BlackjackController {
     private boolean hitAndPrint(Player player, Deck deck) {
         player.hit(deck);
         OutputView.printCards(player.getName(), player.getCards());
-        return !(player.isBurst() || player.isMaxScore());
+        return !(player.isBust() || player.isMaxScore());
     }
 
     private void printIfPlayerOnlyDeal(Player player) {
