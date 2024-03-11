@@ -23,7 +23,7 @@ public class Dealer {
     }
 
     public void drawUntilExceedMinimum(Deck deck) {
-        while (getScore().isLessThanDealerMinimumScore()) {
+        while (player.shouldDealerDrawMore()) {
             draw(deck);
         }
     }

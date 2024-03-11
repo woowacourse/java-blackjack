@@ -25,6 +25,11 @@ public class Player {
         return playerCards.isBusted();
     }
 
+    public boolean shouldDealerDrawMore() {
+        Score dealerScore = playerCards.calculateScore();
+        return dealerScore.isLessThanDealerMinimumScore();
+    }
+
     public List<Card> getCards() {
         return playerCards.getCards();
     }
