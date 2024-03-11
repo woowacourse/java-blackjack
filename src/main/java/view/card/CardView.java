@@ -7,6 +7,7 @@ import domain.deck.UserDeck;
 import domain.user.Dealer;
 import domain.user.User;
 import domain.user.Users;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -15,8 +16,8 @@ public class CardView {
     private final Map<Card, String> cardViewer;
 
     public CardView() {
-        this.cardViewer = Shape.giveShapes().stream()
-                .flatMap(shape -> Number.giveNumbers().stream()
+        this.cardViewer = Arrays.stream(Shape.values())
+                .flatMap(shape -> Arrays.stream(Number.values())
                         .map(number -> new Card(shape, number)))
                 .collect(Collectors.toMap(
                         Function.identity(),

@@ -1,10 +1,10 @@
 package domain.user;
 
-import domain.deck.PlayerDeck;
+import domain.deck.UserDeck;
 
 public class Player extends User {
     public Player(Name name) {
-        super(new PlayerDeck(), name);
+        super(new UserDeck(), name);
     }
 
     @Override
