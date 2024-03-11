@@ -24,7 +24,6 @@ public class BlackJackController {
     public void startGame() {
         BlackJack blackJack = createBlackJack(inputView.askParticipantNames());
 
-        blackJack.offerCardToPlayers(CardSize.TWO);
         outputView.printStartBlackJack(blackJack.getParticipants(), blackJack.getDealer());
 
         offerMoreCards(blackJack);

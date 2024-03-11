@@ -39,11 +39,6 @@ public class BlackJack {
         }
     }
 
-    public void offerCardToPlayers(CardSize size) {
-        participants.offerCardToPlayers(cardDeck, size);
-        offerCardToDealer(size);
-    }
-
     public void offerCardToParticipant(Participant participant, CardSize size) {
         participants.offerCardToParticipant(cardDeck, participant, size);
     }

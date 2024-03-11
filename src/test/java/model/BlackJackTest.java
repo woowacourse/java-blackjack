@@ -53,19 +53,6 @@ class BlackJackTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("참가자에게 카드를 준다.")
-    @Test
-    void offerCardToPlayers() {
-        Participants participants = new Participants(List.of(new Participant("배키",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE)))));
-        BlackJack blackJack = new BlackJack(participants, dealer, cardDeck);
-
-        blackJack.offerCardToPlayers(CardSize.ONE);
-
-        List<Participant> result = participants.getParticipants();
-        assertThat(result.get(0).getCards()).hasSize(3);
-    }
-
     @DisplayName("이름이 일치하는 참가자에게만 카드를 줄 수 있다.")
     @Test
     void offerCardToPlayer() {
