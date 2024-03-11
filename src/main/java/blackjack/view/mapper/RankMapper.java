@@ -5,29 +5,31 @@ import java.util.Arrays;
 
 public enum RankMapper {
 
-    ACE("A"),
-    TWO("2"),
-    THREE("3"),
-    FOUR("4"),
-    FIVE("5"),
-    SIX("6"),
-    SEVEN("7"),
-    EIGHT("8"),
-    NINE("9"),
-    TEN("10"),
-    JACK("J"),
-    KING("K"),
-    QUEEN("Q");
+    ACE(Rank.ACE, "A"),
+    TWO(Rank.TWO, "2"),
+    THREE(Rank.THREE, "3"),
+    FOUR(Rank.FOUR, "4"),
+    FIVE(Rank.FIVE, "5"),
+    SIX(Rank.SIX, "6"),
+    SEVEN(Rank.SEVEN, "7"),
+    EIGHT(Rank.EIGHT, "8"),
+    NINE(Rank.NINE, "9"),
+    TEN(Rank.TEN, "10"),
+    JACK(Rank.JACK, "J"),
+    KING(Rank.KING, "K"),
+    QUEEN(Rank.QUEEN, "Q");
 
+    private final Rank rank;
     private final String rankName;
 
-    RankMapper(String rankName) {
+    RankMapper(Rank rank, String rankName) {
+        this.rank = rank;
         this.rankName = rankName;
     }
 
     public static RankMapper findByRank(Rank rank) {
         return Arrays.stream(values())
-                .filter(rankMapper -> rank.isSameName(rankMapper.name()))
+                .filter(rankMapper -> rankMapper.rank == rank)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("일치하는 등급이 없습니다."));
     }
