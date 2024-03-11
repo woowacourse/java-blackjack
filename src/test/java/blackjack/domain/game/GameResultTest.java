@@ -15,6 +15,6 @@ public class GameResultTest {
         // given &  when & then
         assertThat(WIN.reverse()).isEqualTo(LOSE);
         assertThat(LOSE.reverse()).isEqualTo(WIN);
-        assertThat(DRAW.reverse()).isEqualTo(DRAW);
+        assertThat(PUSH.reverse()).isEqualTo(PUSH);
     }
 }

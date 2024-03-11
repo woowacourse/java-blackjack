@@ -33,12 +33,12 @@ public class GameResultsTest {
         Map<GameResult, Integer> expectedResult = new HashMap<>();
         expectedResult.put(GameResult.WIN, 1);
         expectedResult.put(GameResult.LOSE, 2);
-        expectedResult.put(GameResult.DRAW, 1);
+        expectedResult.put(GameResult.PUSH, 1);
 
         // when
         gameResults.put("lemone", GameResult.WIN);
         gameResults.put("seyang", GameResult.LOSE);
-        gameResults.put("pobi", GameResult.DRAW);
+        gameResults.put("pobi", GameResult.PUSH);
         gameResults.put("club", GameResult.WIN);
 
         // then

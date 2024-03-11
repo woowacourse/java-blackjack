@@ -21,10 +21,10 @@ public class PlayersTest {
         List<String> expectedNames = List.of("pobi", "lemone", "seyang");
 
         // when
-        Players players = Players.from(names);
+        Players blackJackGame = Players.from(names);
 
         // then
-        assertThat(players.getNames())
+        assertThat(blackJackGame.getNames())
                 .usingRecursiveComparison()
                 .isEqualTo(expectedNames);
     }
@@ -54,11 +54,11 @@ public class PlayersTest {
     @DisplayName("반복 테스트를 한다.")
     void playersForEachTest() {
         // given
-        Players players = Players.from(List.of("seyang", "lemone"));
+        Players blackJackGame = Players.from(List.of("seyang", "lemone"));
         AtomicInteger count = new AtomicInteger();
 
         // when
-        players.forEach(player -> count.getAndIncrement());
+        blackJackGame.forEach(player -> count.getAndIncrement());
 
         // then
         assertThat(count.get()).isEqualTo(2);
