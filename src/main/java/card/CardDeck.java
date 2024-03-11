@@ -1,5 +1,6 @@
 package card;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +13,7 @@ public class CardDeck {
 
     public CardDeck() {
         deck = readyCards();
+        shuffleCard();
     }
 
     private List<Card> readyCards() {
@@ -27,6 +29,15 @@ public class CardDeck {
 
     public void shuffleCard() {
         Collections.shuffle(deck);
+    }
+
+    public List<Card> firstCardSettings() {
+        List<Card> pickedCards = new ArrayList<>();
+
+        pickedCards.add(pickCard());
+        pickedCards.add(pickCard());
+
+        return pickedCards;
     }
 
     public Card pickCard() {
