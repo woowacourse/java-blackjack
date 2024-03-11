@@ -9,12 +9,19 @@ import domain.user.User;
 import domain.user.Users;
 import view.InputView;
 import view.ResultView;
+import view.card.CardView;
 
 public class Controller {
+    private final CardView cardView;
+
+    public Controller(CardView cardView) {
+        this.cardView = cardView;
+    }
+
     public void play() {
         Users users = ExceptionHandler.handle(InputView::inputNames);
         Game game = new Game(new TotalDeck(TotalDeckGenerator.generate()), users);
-        ResultView.showStartStatus(users);
+        cardView.showStartStatus(users);
         run(game);
         showGameResult(users, game);
     }
@@ -35,13 +42,13 @@ public class Controller {
                 () -> InputView.inputAddCommand(currentPlayer.getName())
         );
         switch (game.hitOrStay(command)) {
-            case HIT -> ResultView.printPlayerAndDeck(currentPlayer);
-            case BUST -> ResultView.printBust(currentPlayer);
+            case HIT -> cardView.printPlayerAndDeck(currentPlayer);
+            case BUST -> cardView.printBust(currentPlayer);
         }
     }
 
     private void showGameResult(Users users, Game game) {
-        ResultView.showCardsAndSum(users);
-        ResultView.showResult(game);
+        cardView.showCardsAndSum(users);
+        ResultView.printResult(game);
     }
 }

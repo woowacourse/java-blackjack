@@ -7,10 +7,6 @@ public record Card(Shape shape, Number number) {
         return number.getNumber();
     }
 
-    public String getName() {
-        return number.getName() + shape.getName();
-    }
-
     public boolean isAce() {
         return number == ACE;
     }
