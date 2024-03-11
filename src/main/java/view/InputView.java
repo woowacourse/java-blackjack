@@ -3,10 +3,7 @@ package view;
 import camp.nextstep.edu.missionutils.Console;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Supplier;
-import model.blackjackgame.HitAnswer;
 import model.player.Player;
-import model.player.Players;
 
 public class InputView {
 
@@ -23,13 +20,6 @@ public class InputView {
     private InputView() {
     }
 
-    public static Players preparePlayers() {
-        return retryOnException(() -> {
-            List<String> playerNames = askPlayerNames();
-            return Players.from(playerNames);
-        });
-    }
-
     public static List<String> askPlayerNames() {
         System.out.println(ASK_PLAYER_NAMES);
         String playerNames = Console.readLine();
@@ -40,13 +30,6 @@ public class InputView {
         return Arrays.stream(input.split(SPLIT_DELIMITER))
             .map(String::strip)
             .toList();
-    }
-
-    public static HitAnswer prepareHitAnswer(Player player) {
-        return retryOnException(() -> {
-            String hitAnswer = askHitAnswer(player);
-            return HitAnswer.of(hitAnswer);
-        });
     }
 
     public static String askHitAnswer(Player player) {
@@ -70,14 +53,5 @@ public class InputView {
     private static boolean isVowelKorean(char lastLetter) {
         int letterOffset = lastLetter - KOREAN_START_LETTER;
         return letterOffset % KOREAN_LETTER_COUNT == 0;
-    }
-
-    private static <T> T retryOnException(Supplier<T> retryOperation) {
-        try {
-            return retryOperation.get();
-        } catch (IllegalArgumentException e) {
-            OutputView.printExceptionMessage(e.getMessage());
-            return retryOnException(retryOperation);
-        }
     }
 }

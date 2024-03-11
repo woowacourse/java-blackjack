@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.List;
+import java.util.function.Supplier;
 import model.blackjackgame.BlackjackGame;
 import model.blackjackgame.GameResult;
 import model.blackjackgame.HitAnswer;
@@ -17,13 +19,20 @@ public class BlackjackController {
     private final RandomCard randomCardPicker = RandomCard.getRandomCard();
 
     public void run() {
-        Players players = InputView.preparePlayers();
+        Players players = preparePlayers();
         Dealer dealer = new Dealer();
         BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
 
         initGame(blackjackGame);
         executeGame(blackjackGame);
         finishGameWithResult(blackjackGame);
+    }
+
+    private Players preparePlayers() {
+        return retryOnException(() -> {
+            List<String> playerNames = InputView.askPlayerNames();
+            return Players.from(playerNames);
+        });
     }
 
     private void initGame(BlackjackGame blackjackGame) {
@@ -48,13 +57,20 @@ public class BlackjackController {
     private void continueHit(BlackjackGame blackjackGame, Player player) {
         HitAnswer hitAnswer = new HitAnswer(true);
         if (player.isPossibleAddCard()) {
-            hitAnswer = InputView.prepareHitAnswer(player);
+            hitAnswer = prepareHitAnswer(player);
         }
         while (player.isPossibleAddCard() && hitAnswer.isHit()) {
             player = hit(blackjackGame, player);
             OutputView.printPlayerCard(player);
-            hitAnswer = InputView.prepareHitAnswer(player);
+            hitAnswer = prepareHitAnswer(player);
         }
+    }
+
+    private HitAnswer prepareHitAnswer(Player player) {
+        return retryOnException(() -> {
+            String hitAnswer = InputView.askHitAnswer(player);
+            return HitAnswer.of(hitAnswer);
+        });
     }
 
     private Player hit(BlackjackGame blackjackGame, Player player) {
@@ -68,5 +84,14 @@ public class BlackjackController {
         GameResult gameResult = GameResult.of(dealer, players);
         OutputView.printFinalScore(dealer, players, gameResult);
         OutputView.printGameResult(gameResult);
+    }
+
+    private static <T> T retryOnException(Supplier<T> retryOperation) {
+        try {
+            return retryOperation.get();
+        } catch (IllegalArgumentException e) {
+            OutputView.printExceptionMessage(e.getMessage());
+            return retryOnException(retryOperation);
+        }
     }
 }
