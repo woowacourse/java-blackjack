@@ -6,7 +6,8 @@ import domain.participant.Participant;
 public enum WinStatus {
 
     WIN(1.0),
-    LOSE(-1);
+    LOSE(-1),
+    BLACKJACK(1.5);
 
     private final double betMultiplier;
 

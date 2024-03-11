@@ -12,7 +12,7 @@ public class BetAmount {
         this.bet = bet;
     }
 
-    public int getPayout(Participant participant, WinStatus winStatus) {
-        return (int) (bet.get(participant) * winStatus.getBetMultiplier());
+    public double getPayout(Participant participant, WinStatus winStatus) {
+        return bet.get(participant) * winStatus.getBetMultiplier();
     }
 }
