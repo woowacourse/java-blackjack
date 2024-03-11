@@ -9,15 +9,18 @@ public class GameResultBoard {
 
     public GameResultBoard(Dealer dealer, Players players) {
         Map<Player, GameResult> compareResult = players.compareEach(dealer.getScore());
+        compareResult.entrySet().forEach(this::addResult);
+    }
 
-        for (Entry<Player, GameResult> entry : compareResult.entrySet()) {
-            Player player = entry.getKey();
-            GameResult gameResult = entry.getValue();
+    private void addResult(Entry<Player, GameResult> entry) {
+        Player player = entry.getKey();
+        GameResult gameResult = entry.getValue();
+        int playerProfit = calcPlayerProfit(player, gameResult);
+        resultBoard.put(player.getName(), playerProfit);
+    }
 
-            int playerProfit = (int) (gameResult.getProfitRate() * player.getBetAmount());
-
-            resultBoard.put(player.getName(), playerProfit);
-        }
+    private int calcPlayerProfit(Player player, GameResult gameResult){
+        return (int) (player.getBetAmount() * gameResult.getProfitRate());
     }
 
     public int getProfitOf(Player player) {
