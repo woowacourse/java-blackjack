@@ -12,7 +12,7 @@ public enum GamerResult {
         this.result = result;
     }
 
-    public static GamerResult judge(int dealerScore, int playerScore) {
+    public static GamerResult judgeDealerResult(int dealerScore, int playerScore) {
         if (playerScore > BUST_THRESHOLD || (dealerScore <= BUST_THRESHOLD && dealerScore > playerScore)) {
             return GamerResult.WIN;
         }

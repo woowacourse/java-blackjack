@@ -23,7 +23,7 @@ public class BlackJackResult {
     }
 
     private GamerResult getJudgePlayerResult(int dealerScore, int playerScore) {
-        GamerResult dealerJudgeResult = GamerResult.judge(dealerScore, playerScore);
+        GamerResult dealerJudgeResult = GamerResult.judgeDealerResult(dealerScore, playerScore);
         addDealerResult(dealerJudgeResult);
         return dealerJudgeResult.getOpponentGameResult();
     }
