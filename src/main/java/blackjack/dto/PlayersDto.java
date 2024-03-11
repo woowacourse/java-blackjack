@@ -8,7 +8,7 @@ public class PlayersDto {
 
     private final List<PlayerDto> values;
 
-    public PlayersDto(final List<PlayerDto> values) {
+    private PlayersDto(final List<PlayerDto> values) {
         this.values = values;
     }
 

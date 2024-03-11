@@ -8,7 +8,7 @@ public class PlayerOutcomeDto {
     private final Name name;
     private final Outcome outcome;
 
-    public PlayerOutcomeDto(final Name name, final Outcome outcome) {
+    private PlayerOutcomeDto(final Name name, final Outcome outcome) {
         this.name = name;
         this.outcome = outcome;
     }

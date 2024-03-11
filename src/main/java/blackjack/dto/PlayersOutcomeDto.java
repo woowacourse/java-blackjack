@@ -10,7 +10,7 @@ public class PlayersOutcomeDto {
 
     private final List<PlayerOutcomeDto> values;
 
-    public PlayersOutcomeDto(List<PlayerOutcomeDto> values) {
+    private PlayersOutcomeDto(List<PlayerOutcomeDto> values) {
         this.values = values;
     }
 

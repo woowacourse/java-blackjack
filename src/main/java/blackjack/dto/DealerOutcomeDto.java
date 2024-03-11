@@ -9,7 +9,7 @@ public class DealerOutcomeDto {
     private final int loseCount;
     private final int pushCount;
 
-    public DealerOutcomeDto(final int winCount, final int loseCount, final int pushCount) {
+    private DealerOutcomeDto(final int winCount, final int loseCount, final int pushCount) {
         this.winCount = winCount;
         this.loseCount = loseCount;
         this.pushCount = pushCount;

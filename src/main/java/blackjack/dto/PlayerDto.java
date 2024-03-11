@@ -11,7 +11,7 @@ public class PlayerDto {
     private final List<Card> cards;
     private final int score;
 
-    public PlayerDto(final Name name, final List<Card> cards, final int score) {
+    private PlayerDto(final Name name, final List<Card> cards, final int score) {
         this.name = name;
         this.cards = cards;
         this.score = score;

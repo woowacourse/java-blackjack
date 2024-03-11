@@ -9,7 +9,7 @@ public class DealerDto {
     private final List<Card> cards;
     private final int score;
 
-    public DealerDto(final List<Card> cards, final int score) {
+    private DealerDto(final List<Card> cards, final int score) {
         this.cards = cards;
         this.score = score;
     }
