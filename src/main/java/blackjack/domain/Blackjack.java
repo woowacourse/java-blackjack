@@ -20,10 +20,6 @@ public class Blackjack {
         this.deck = deck;
     }
 
-    public Blackjack() {
-        deck = Deck.createPack();
-    }
-
     public Players acceptPlayers(Names names) {
         Dealer dealer = Dealer.createDefaultDealer(drawTwo());
         List<GamePlayer> gamePlayers = names.stream()

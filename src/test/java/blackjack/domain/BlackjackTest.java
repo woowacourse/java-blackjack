@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 import blackjack.domain.common.Name;
 import blackjack.domain.common.Names;
 import blackjack.domain.player.Dealer;
@@ -41,7 +42,7 @@ class BlackjackTest {
         Name name = new Name("딜러");
         Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
         Dealer dealer = new Dealer(name, cards);
-        var sut = new Blackjack();
+        var sut = new Blackjack(Deck.createPack());
 
         var result = sut.compareResults(dealer, List.of(gamePlayer));
 
