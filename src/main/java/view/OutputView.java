@@ -78,4 +78,8 @@ public class OutputView {
         return dealerScoresText;
     }
 
+    public static void printRetryMessage() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
 }

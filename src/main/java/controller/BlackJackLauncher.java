@@ -1,7 +1,7 @@
 package controller;
 
 import static util.InputRetryHelper.inputRetryHelper;
-import static view.InputView.input;
+import static view.InputView.inputChoiceCommand;
 import static view.InputView.inputNames;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class BlackJackLauncher {
     }
 
     private Casino initCasino() {
-        Names names = inputRetryHelper(() -> new Names(inputNames("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")));
+        Names names = inputRetryHelper(() -> new Names(inputNames()));
         Entrant entrant = new Entrant(names);
         return new Casino(entrant, new RandomCardShuffleMachine());
     }
@@ -45,7 +45,7 @@ public class BlackJackLauncher {
         while (casino.hasAvailablePlayer()) {
             FaceUpResult currentPlayerFaceUpInfo = casino.getNextPlayerFaceUpInfo();
             Choice playerChoice = inputRetryHelper(() -> Choice.from(
-                    input(currentPlayerFaceUpInfo.getPartipantNameAsString() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")));
+                    inputChoiceCommand(currentPlayerFaceUpInfo)));
             casino.distinctPlayerChoice(playerChoice);
             showPlayerChoiceResult(playerChoice, currentPlayerFaceUpInfo);
         }
@@ -61,7 +61,7 @@ public class BlackJackLauncher {
     private void proceedDealerTurn(Casino casino) {
         while (casino.isDealerHitAllowed()) {
             casino.hitCardToDealer();
-            OutputView.print("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+            OutputView.printRetryMessage();
         }
     }
 
