@@ -9,6 +9,8 @@ import blackjack.model.deck.PlayingDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedList;
+
 class PlayingDeckTest {
 
     @DisplayName("덱에서 카드를 한 장 뽑는다.")
@@ -26,12 +28,7 @@ class PlayingDeckTest {
     @Test
     void drawCardByEmptyDeck() {
         //given
-        PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck());
-
-        //when
-        for (int i = 0; i < 52; i++) {
-            playingDeck.drawCard();
-        }
+        PlayingDeck playingDeck = new PlayingDeck(new LinkedList<>());
 
         //when, then
         assertThatThrownBy(playingDeck::drawCard)
