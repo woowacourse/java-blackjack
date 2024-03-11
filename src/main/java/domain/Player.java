@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Player {
+public class Player {
     private static final int ACE_LOW = 1;
     private static final int ACE_HIGH = 11;
     private static final int BUST_CONDITION = 21;
-    protected static final String DEALER_NAME = "딜러";
 
     private final Name name;
     private final List<Card> cards = new ArrayList<>();
@@ -17,11 +16,13 @@ public abstract class Player {
         this.name = name;
     }
 
-    public void hit(final Card card) {
-        cards.add(card);
+    public void dealCards(final List<Card> initialCards) {
+        cards.addAll(initialCards);
     }
 
-    public abstract boolean isNotBust();
+    public void dealCard(final Card card) {
+        cards.add(card);
+    }
 
     public int calculateScore() {
         int score = 0;
@@ -45,8 +46,8 @@ public abstract class Player {
         return ACE_LOW;
     }
 
-    public boolean isDealer() {
-        return this.name.equals(new Name(DEALER_NAME));
+    public boolean isNotBust() {
+        return calculateScore() <= BUST_CONDITION;
     }
 
     public String getName() {

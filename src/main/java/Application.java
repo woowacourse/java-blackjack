@@ -1,7 +1,4 @@
-import domain.Blackjack;
-import domain.BlackjackResult;
-import domain.Player;
-import domain.Players;
+import domain.*;
 import view.InputView;
 import view.OutputView;
 
@@ -18,7 +15,7 @@ public class Application {
     }
 
     private static void playGame(final Blackjack blackjack) {
-        for (final var player : blackjack.getParticipants()) {
+        for (final var player : blackjack.getPlayers()) {
             drawCardDuringPlayerTurn(player, blackjack);
         }
 
@@ -31,7 +28,7 @@ public class Application {
     }
 
     private static Blackjack createBlackjack() {
-        return new Blackjack(createPlayers());
+        return new Blackjack(createPlayers(), new Dealer(new Deck()));
     }
 
     private static Players createPlayers() {

@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -14,9 +13,13 @@ public class Players {
     }
 
     public static Players from(final List<String> inputtedNames) {
-        return new Players(inputtedNames.stream()
-                .map(inputtedName -> new Participant(new Name(inputtedName)))
-                .collect(Collectors.toList()));
+        return new Players(createPlayers(inputtedNames));
+    }
+
+    private static List<Player> createPlayers(final List<String> inputtedNames) {
+        return inputtedNames.stream()
+                .map(inputtedName -> new Player(new Name(inputtedName)))
+                .collect(Collectors.toList());
     }
 
     private void validate(final List<Player> players) {
@@ -44,20 +47,18 @@ public class Players {
         return Set.copyOf(players).size() != players.size();
     }
 
-    public Player getDealer() {
-        return players.stream()
-                .filter(Player::isDealer)
-                .findAny()
-                .orElseThrow(() -> new NoSuchElementException("플레이어 목록에 딜러가 존재하지 않습니다."));
+    public void dealCards(final Dealer dealer) {
+        for (final Player player : players) {
+            final List<Card> cards = dealer.drawCards(2);
+            player.dealCards(cards);
+        }
     }
 
-    public List<Player> getParticipants() {
-        return players.stream()
-                .filter(player -> !player.isDealer())
-                .collect(Collectors.toList());
-    }
-
-    public List<Player> getAllPlayers() {
+    public List<Player> getPlayers() {
         return players;
+    }
+
+    public int size() {
+        return players.size();
     }
 }

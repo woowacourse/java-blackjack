@@ -12,11 +12,11 @@ class BlackjackResultTest {
     @Test
     @DisplayName("플레이어가 버스트 되면 딜러가 게임을 이긴다")
     void playerBust() {
-        final Player dealer = new Dealer();
-        final Player teba = new Participant(new Name("테바"));
-        teba.hit(new Card(Denomination.JACK, Symbol.CLUBS));
-        teba.hit(new Card(Denomination.KING, Symbol.CLUBS));
-        teba.hit(new Card(Denomination.SIX, Symbol.CLUBS));
+        final Dealer dealer = new Dealer(new Deck());
+        final Player teba = new Player(new Name("테바"));
+        teba.dealCard(new Card(Denomination.JACK, Symbol.CLUBS));
+        teba.dealCard(new Card(Denomination.KING, Symbol.CLUBS));
+        teba.dealCard(new Card(Denomination.SIX, Symbol.CLUBS));
         final Blackjack blackjack = new Blackjack(new Players(new ArrayList<>(List.of(teba))), dealer);
 
         final BlackjackResult blackjackResultDTO = blackjack.finishGame();
@@ -30,11 +30,11 @@ class BlackjackResultTest {
     @Test
     @DisplayName("딜러가 버스트 되면 플레이어가 게임을 이긴다")
     void dealerBust() {
-        final Player dealer = new Dealer();
-        final Player teba = new Participant(new Name("테바"));
-        dealer.hit(new Card(Denomination.JACK, Symbol.CLUBS));
-        dealer.hit(new Card(Denomination.KING, Symbol.CLUBS));
-        dealer.hit(new Card(Denomination.SIX, Symbol.CLUBS));
+        final Dealer dealer = new Dealer(new Deck());
+        final Player teba = new Player(new Name("테바"));
+        dealer.dealCard(new Card(Denomination.JACK, Symbol.CLUBS));
+        dealer.dealCard(new Card(Denomination.KING, Symbol.CLUBS));
+        dealer.dealCard(new Card(Denomination.SIX, Symbol.CLUBS));
         final Blackjack blackjack = new Blackjack(new Players(new ArrayList<>(List.of(teba))), dealer);
 
         final BlackjackResult blackjackResultDTO = blackjack.finishGame();

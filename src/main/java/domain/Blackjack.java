@@ -4,49 +4,44 @@ import java.util.List;
 
 public class Blackjack {
     private final Players players;
-    private final Deck deck;
+    private final Dealer dealer;
 
-    public Blackjack(final Players players) {
+    public Blackjack(final Players players, final Dealer dealer) {
         this.players = players;
-        this.deck = new Deck();
-        players.getAllPlayers().add(new Dealer());
-        dealCardsToPlayers();
+        this.dealer = dealer;
+        initGame();
     }
 
-    public Blackjack(final Players players, final Player dealer) {
-        this.players = players;
-        this.deck = new Deck();
-        players.getAllPlayers().add(dealer);
+    private void initGame() {
+        initPlayers();
+        initDealer();
+    }
+
+    private void initPlayers() {
+        for (final Player player : players.getPlayers()) {
+            player.dealCards(dealer.drawCards(2));
+        }
+    }
+
+    private void initDealer() {
+        dealer.dealCards(dealer.drawCards(2));
     }
 
     public void dealCard(final Player player) {
-        player.hit(deck.draw());
+        player.dealCard(dealer.drawCard());
     }
 
-    private void dealCardsToPlayers() {
-        players.getAllPlayers().forEach(this::dealInitialCards);
-    }
 
     public BlackjackResult finishGame() {
         final BlackjackRule blackjackResult = new BlackjackRule();
-        final Player dealer = players.getDealer();
-        return blackjackResult.finishGame(getParticipants(), dealer);
-    }
-
-    private void dealInitialCards(final Player player) {
-        player.hit(deck.draw());
-        player.hit(deck.draw());
+        return blackjackResult.finishGame(players.getPlayers(), dealer);
     }
 
     public List<Player> getPlayers() {
-        return players.getAllPlayers();
+        return players.getPlayers();
     }
 
     public Player getDealer() {
-        return players.getDealer();
-    }
-
-    public List<Player> getParticipants() {
-        return players.getParticipants();
+        return dealer;
     }
 }

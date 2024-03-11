@@ -13,7 +13,9 @@ class BlackjackTest {
     @Test
     @DisplayName("딜러에게 2장의 카드가 주어졌는지 확인한다")
     void initializeDealer() {
-        final Blackjack blackjack = new Blackjack(Players.from(List.of("pobi", "crong", "tebah")));
+        final Players players = Players.from(List.of("pobi", "crong", "tebah"));
+        final Dealer dealer = new Dealer(new Deck());
+        final Blackjack blackjack = new Blackjack(players, dealer);
 
         assertThat(blackjack.getDealer().getCards().size()).isEqualTo(2);
     }
@@ -21,7 +23,9 @@ class BlackjackTest {
     @Test
     @DisplayName("플레이어에게 2장의 카드가 주어졌는지 확인한다")
     void initializePlayers() {
-        final Blackjack blackjack = new Blackjack(Players.from(List.of("pobi", "crong", "tebah")));
+        final Players players = Players.from(List.of("pobi", "crong", "tebah"));
+        final Dealer dealer = new Dealer(new Deck());
+        final Blackjack blackjack = new Blackjack(players, dealer);
 
         assertThat(blackjack.getPlayers().get(0).getCards().size()).isEqualTo(2);
     }
@@ -29,7 +33,9 @@ class BlackjackTest {
     @Test
     @DisplayName("플레이어에게 1장의 카드를 추가로 지급한다")
     void dealCardsToPlayer() {
-        final Blackjack blackjack = new Blackjack(Players.from(List.of("pobi", "crong", "tebah")));
+        final Players players = Players.from(List.of("pobi", "crong", "tebah"));
+        final Dealer dealer = new Dealer(new Deck());
+        final Blackjack blackjack = new Blackjack(players, dealer);
         final Player player = blackjack.getPlayers().get(0);
         blackjack.dealCard(player);
 
@@ -39,11 +45,11 @@ class BlackjackTest {
     @Test
     @DisplayName("게임의 결과가 제대로 계산됐는지 확인한다")
     void gameResultTest() {
-        final Player dealer = new Dealer();
-        final Player teba = new Participant(new Name("테바"));
-        final Player jonge = new Participant(new Name("종이"));
-        teba.hit(new Card(Denomination.ACE, Symbol.CLUBS));
-        jonge.hit(new Card(Denomination.ACE, Symbol.HEART));
+        final Dealer dealer = new Dealer(new Deck());
+        final Player teba = new Player(new Name("테바"));
+        final Player jonge = new Player(new Name("종이"));
+        teba.dealCard(new Card(Denomination.ACE, Symbol.CLUBS));
+        jonge.dealCard(new Card(Denomination.ACE, Symbol.HEART));
         final Blackjack blackjack = new Blackjack(new Players(new ArrayList<>(List.of(teba, jonge))), dealer);
 
         final BlackjackResult blackjackResultDTO = blackjack.finishGame();
