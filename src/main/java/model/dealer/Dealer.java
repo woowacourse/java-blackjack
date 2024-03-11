@@ -7,7 +7,9 @@ import model.card.Cards;
 public class Dealer {
 
     private static final int ADD_CARD_CONDITION = 17;
+    private static final String TITLE_FOR_DEALER = "딜러";
 
+    private final String name;
     private final Cards cards;
 
     public Dealer() {
@@ -15,6 +17,7 @@ public class Dealer {
     }
 
     public Dealer(Cards cards) {
+        this.name = TITLE_FOR_DEALER;
         this.cards = cards;
     }
 
@@ -39,5 +42,13 @@ public class Dealer {
 
     public int totalNumber() {
         return cards.calculateTotalNumbers();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Cards getCards() {
+        return cards;
     }
 }

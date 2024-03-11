@@ -46,4 +46,8 @@ public class Player {
     public String getName() {
         return name;
     }
+
+    public Cards getCards() {
+        return cards;
+    }
 }
