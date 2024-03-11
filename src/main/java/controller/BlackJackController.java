@@ -57,7 +57,7 @@ public class BlackJackController {
     }
 
     private void decideParticipantPlay(Participant participant, BlackJack blackJack) {
-        while (!participant.isNotHit() && inputView.isOneMoreCard(participant.getName())) {
+        while (participant.isNotHit() == false && inputView.isOneMoreCard(participant.getName())) {
             blackJack.offerCardToParticipant(participant, CardSize.ONE);
             outputView.printPlayerCardMessage(participant);
         }
