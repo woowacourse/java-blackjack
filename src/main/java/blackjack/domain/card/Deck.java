@@ -1,45 +1,30 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
+// TODO: 카드피커 덱으로 이동
 public class Deck {
-    private static final int MAX_SCORE = 21;
+    private static final int PICK_CARD_INDEX = 0;
 
-    private final List<Card> values;
+    private List<Card> cards;
 
-    public Deck() {
-        this.values = new ArrayList<>();
+    public Deck(List<Card> cards) {
+        Collections.shuffle(cards);
+        this.cards = new ArrayList<>(List.copyOf(cards));
     }
 
-    public void addCard(Card card) {
-        values.add(card);
+    public Card pickCard() {
+        return cards.remove(PICK_CARD_INDEX);
     }
 
-    public List<Card> get() {
-        return List.copyOf(values);
-    }
+    public List<Card> pickCards(int count) {
+        List<Card> pickCards = new ArrayList<>();
 
-    public int totalScore() {
-        Set<Integer> scoreCases = new HashSet<>();
-        List<List<Integer>> cardsScores = values.stream().map(card -> card.getScore().get()).toList();
-        calculateScoreCases(scoreCases, cardsScores, 0, 0);
-
-        return scoreCases.stream()
-                .filter(score -> score <= MAX_SCORE)
-                .max(Integer::compare)
-                .orElse(scoreCases.stream().min(Integer::compare).get());
-    }
-
-    private void calculateScoreCases(Set<Integer> scoreCases, List<List<Integer>> cardsScores, int sum, int index) {
-        if (index == cardsScores.size()) {
-            scoreCases.add(sum);
-            return;
+        for (int i = 0; i < count; i++) {
+            pickCards.add(cards.remove(PICK_CARD_INDEX));
         }
-        for (int score : cardsScores.get(index)) {
-            calculateScoreCases(scoreCases, cardsScores, sum + score, index + 1);
-        }
+        return pickCards;
     }
 }
