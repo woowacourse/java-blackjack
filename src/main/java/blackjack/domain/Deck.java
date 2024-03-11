@@ -22,7 +22,7 @@ public class Deck {
                 .forEach(cards::add);
         return new Deck(cards);
     }
-
+    // TODO 매직넘버가 존재
     private static List<Integer> makeSuffledOrder() {
         List<Integer> cardOrder = IntStream.range(0, 52)
                 .boxed()

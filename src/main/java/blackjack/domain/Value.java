@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 public enum Value {
+    // TODO 뷰로직 걷어내기
 
     ACELOW("A", 1),
     ACEHIGH("A", 11), TWO("2", 2), THREE("3", 3),
@@ -16,6 +17,7 @@ public enum Value {
         this.score = score;
     }
 
+    // TODO 어떤 값인지 알 수 있으면 디버그에 용이
     public static Value findValue(int cardNumber) {
         if (cardNumber < 1 || cardNumber >= values().length) {
             throw new IllegalStateException("존재하지 않는 카드 번호입니다.");

@@ -9,14 +9,18 @@ public class GameController {
     private GameController() {
     }
 
+    // TODO 함수형 인터페이스를 적극적으로 사용해서 도메인으로 끌어내려보기
+    // TODO 필요한 정보만 추출하여 넘겨보기
+
     public static void run() {
+        // TODO suffle -> shuffle
         Deck deck = Deck.createSuffledDeck();
         Game game = makeGame(deck);
         Dealer gameDealer = game.getDealer();
         Players gamePlayers = game.getPlayers();
 
         printInitialHands(gameDealer, gamePlayers);
-
+        // TODO game을 활용하는 코드로 리팩터해보기
         confirmParticipantsHands(gamePlayers, deck, gameDealer);
 
         OutputView.printFinalHandsAndScoreMessage(gameDealer, gamePlayers);
@@ -41,7 +45,7 @@ public class GameController {
     }
 
     private static void confirmDealerHands(Dealer dealer, Deck deck) {
-        System.out.println();
+        System.out.println(); // TODO 뷰로직의 책임으로 옮기기
         while (dealer.draw(deck)) {
             OutputView.printDealerDrawMessage(dealer);
         }

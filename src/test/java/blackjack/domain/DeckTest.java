@@ -18,12 +18,13 @@ class DeckTest {
     @DisplayName("덱의 카드가 모두 반환되면, 더이상 반환을 요청할 수 없다")
     @Test
     void should_ThrowIllegalArgumentException_When_NoMoreCard() {
+        // TODO 테스트에서는 반복문 x
+        // TODO 타입만 검증하면 발생가능한 문제가 있을 수 있음
         Deck shuffledDeck = Deck.createSuffledDeck();
 
         for (int i = 0; i < 52; i++) {
             shuffledDeck.draw();
         }
-
         assertThatThrownBy(shuffledDeck::draw)
                 .isInstanceOf(IllegalArgumentException.class);
     }

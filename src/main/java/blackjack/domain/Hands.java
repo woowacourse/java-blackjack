@@ -18,7 +18,9 @@ public class Hands {
         handsScore.addScore(card.getScore());
         hands.add(card);
     }
-
+    // TODO boolean의 의미가 직관적이지 않음
+    // TODO 메서드명만보면 void 반환형 같아 보임
+    // TODO 특별한 메서드를 호출하는데 있어 제약사항이 없음
     public boolean downgradeAce() {
         List<Value> values = hands.stream()
                 .map(Card::getValue)
