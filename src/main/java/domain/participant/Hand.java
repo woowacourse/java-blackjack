@@ -42,4 +42,8 @@ public class Hand {
     public boolean isNotMaximum() {
         return getCardsNumberSum() != BLACKJACK_CONDITION;
     }
+
+    public boolean isBlackJack() {
+        return getCardsNumberSum() == BLACKJACK_CONDITION && playingCards.size() == 2;
+    }
 }

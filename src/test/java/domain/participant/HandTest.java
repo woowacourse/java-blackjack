@@ -68,16 +68,31 @@ public class HandTest {
         assertThat(initCardNumberSum).isNotEqualTo(hand.getCardsNumberSum());
     }
 
-    @DisplayName("손패가 블랙잭이면 true를 반환한다.")
+    @DisplayName("손패가 21이면 true를 반환한다.")
     @Test
-    void isBlackJackTest() {
+    void isMaximumTest() {
         // Given
         List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING), new PlayingCard(CLOVER, QUEEN), new PlayingCard(SPADE, ACE));
         Hand hand = Hand.init();
         playingCards.forEach(hand::addCard);
 
         // When
-        boolean isBlackJack = !hand.isNotMaximum();
+        boolean isMaximum = !hand.isNotMaximum();
+
+        // Then
+        Assertions.assertThat(isMaximum).isTrue();
+    }
+
+    @DisplayName("손패가 블랙잭이면 true를 반환한다.")
+    @Test
+    void isBlackJackTest() {
+        // Given
+        List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING), new PlayingCard(SPADE, ACE));
+        Hand hand = Hand.init();
+        playingCards.forEach(hand::addCard);
+
+        // When
+        boolean isBlackJack = hand.isBlackJack();
 
         // Then
         Assertions.assertThat(isBlackJack).isTrue();
