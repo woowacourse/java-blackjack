@@ -1,5 +1,6 @@
 package blackjack.model.referee;
 
+import blackjack.model.card.Score;
 import blackjack.model.dealer.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
@@ -27,13 +28,13 @@ public class Referee {
     }
 
     private MatchResult determineMatchResult(final Player player) {
-        int playerTotalScore = player.calculateCardsTotalScore();
-        int dealerTotalScore = dealer.calculateCardsTotalScore();
+        Score playerTotalScore = player.calculateCardsTotalScore();
+        Score dealerTotalScore = dealer.calculateCardsTotalScore();
 
         if (dealer.isBlackJack() && player.isBlackJack()) {
             return MatchResult.TIE;
         }
-        if (dealer.isBust() || playerTotalScore >= dealerTotalScore) {
+        if (dealer.isBust() || playerTotalScore.equalToOrGreaterThan(dealerTotalScore)) {
             return MatchResult.WIN;
         }
         return MatchResult.LOSE;

@@ -2,6 +2,7 @@ package blackjack.model.player;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
+import blackjack.model.card.Score;
 import blackjack.model.cardgenerator.CardGenerator;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class Player {
         }
     }
 
-    public int calculateCardsTotalScore() {
+    public Score calculateCardsTotalScore() {
         return cards.calculateCardsTotalScore();
     }
 

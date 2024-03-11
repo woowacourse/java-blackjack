@@ -29,16 +29,20 @@ public class Cards {
         cards.add(cardGenerator.pick());
     }
 
-    public int calculateCardsTotalScore() {
-        int total = cards.stream()
-                .map(Card::getDenomination)
-                .mapToInt(Denomination::getScore)
-                .sum();
-
-        if (hasAce() && canBeAdjusted(total)) {
-            return adjustTotalForAce(total);
+    public Score calculateCardsTotalScore() {
+        List<Score> scores = getScores();
+        Score totalScore = Score.from(scores);
+        if (hasAce() && canBeAdjusted(totalScore)) {
+            return adjustTotalForAce(totalScore);
         }
-        return total;
+        return totalScore;
+    }
+
+    private List<Score> getScores() {
+        return cards.stream()
+                .map(Card::getDenomination)
+                .map(Denomination::getScore)
+                .toList();
     }
 
     private boolean hasAce() {
@@ -46,20 +50,21 @@ public class Cards {
                 .anyMatch(card -> card.getDenomination().isAce());
     }
 
-    private boolean canBeAdjusted(int total) {
-        return total + ACE_ADJUSTMENT <= MAX_CARDS_TOTAL;
+    private boolean canBeAdjusted(final Score total) {
+        return total.plus(ACE_ADJUSTMENT)
+                .equalToOrLessThan(MAX_CARDS_TOTAL);
     }
 
-    private int adjustTotalForAce(int total) {
-        return total + ACE_ADJUSTMENT;
+    private Score adjustTotalForAce(final Score total) {
+        return total.plus(ACE_ADJUSTMENT);
     }
 
     public boolean isBlackJack() {
-        return calculateCardsTotalScore() == MAX_CARDS_TOTAL;
+        return calculateCardsTotalScore().equalTo(MAX_CARDS_TOTAL);
     }
 
     public boolean isBust() {
-        return calculateCardsTotalScore() > MAX_CARDS_TOTAL;
+        return calculateCardsTotalScore().greaterThan(MAX_CARDS_TOTAL);
     }
 
     public int getSize() {

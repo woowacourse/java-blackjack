@@ -31,14 +31,11 @@ public class CardsTest {
         Cards cards = new Cards(arbitraryCards);
 
         // when
-        int actualTotal = cards.calculateCardsTotalScore();
+        Score actualTotal = cards.calculateCardsTotalScore();
 
         // then
-        int expectedTotal = arbitraryCards.stream()
-                .map(Card::getDenomination)
-                .mapToInt(Denomination::getScore)
-                .sum();
-        assertThat(actualTotal).isEqualTo(expectedTotal);
+        int expectedTotal = 26;
+        assertThat(actualTotal.equalTo(expectedTotal)).isTrue();
     }
 
     @Test
@@ -54,10 +51,10 @@ public class CardsTest {
         Cards cards = new Cards(arbitraryCards);
 
         // when
-        int actualTotal = cards.calculateCardsTotalScore();
+        Score actualTotal = cards.calculateCardsTotalScore();
 
         // then
-        assertThat(actualTotal).isEqualTo(21);
+        assertThat(actualTotal.equalTo(21)).isTrue();
     }
 
     @Test

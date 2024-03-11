@@ -2,6 +2,7 @@ package blackjack.model.dealer;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
+import blackjack.model.card.Score;
 import blackjack.model.cardgenerator.CardGenerator;
 
 import java.util.List;
@@ -17,12 +18,12 @@ public class Dealer {
     }
 
     public void doAction(final CardGenerator cardGenerator) {
-        while (cards.calculateCardsTotalScore() < ACTION_CONDITION) {
+        while (cards.calculateCardsTotalScore().lessThan(ACTION_CONDITION)) {
             cards.addCard(cardGenerator);
         }
     }
 
-    public int calculateCardsTotalScore() {
+    public Score calculateCardsTotalScore() {
         return cards.calculateCardsTotalScore();
     }
 
