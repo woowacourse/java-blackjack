@@ -39,7 +39,7 @@ public class PlayerTest {
         player.hit(cards.removeLast());
 
         // then
-        assertThat(player.getHand()).hasSize(1);
+        assertThat(player.getCardsInHand()).hasSize(1);
     }
 
     @DisplayName("플레이어가 가진 카드의 점수를 알 수 있다.")

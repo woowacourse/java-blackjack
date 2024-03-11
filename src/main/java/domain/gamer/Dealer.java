@@ -11,12 +11,12 @@ public class Dealer extends Gamer {
     }
 
     public Card openFirstCard() {
-        return hand.getCards().get(0);
+        return getCardsInHand().get(0);
     }
 
     @Override
     public boolean isOverTurn() {
-        return hand.sum() >= STAY_CONDITION;
+        return getHand().sum() >= STAY_CONDITION;
     }
 
     @Override

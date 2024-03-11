@@ -34,7 +34,7 @@ public class DealerTest {
         dealer.hit(cards.removeLast());
 
         // then
-        assertThat(dealer.getHand()).hasSize(1);
+        assertThat(dealer.getCardsInHand()).hasSize(1);
     }
 
     @DisplayName("딜러가 가진 카드의 점수를 알 수 있다.")

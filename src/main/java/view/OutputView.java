@@ -54,7 +54,7 @@ public class OutputView {
     }
 
     public static void printAllCards(final Player player) {
-        String cardInfos = String.join(", ", printCardInfos(player.getHand()));
+        String cardInfos = String.join(", ", printCardInfos(player.getCardsInHand()));
         String message = String.format("%s카드: %s", player.getName(), cardInfos);
         System.out.println(message);
     }
@@ -71,7 +71,7 @@ public class OutputView {
         for (Gamer gamer : gamers.getGamers()) {
             String gamerName = gamer.getName();
             int totalScore = gamer.calculateTotalScore();
-            String cardInfos = String.join(", ", printCardInfos(gamer.getHand()));
+            String cardInfos = String.join(", ", printCardInfos(gamer.getCardsInHand()));
             builder.append(String.format("%s 카드: %s - 결과: %d", gamerName, cardInfos, totalScore))
                     .append(System.lineSeparator());
         }

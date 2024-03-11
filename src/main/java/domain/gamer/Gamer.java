@@ -5,8 +5,8 @@ import exception.CardReceiveException;
 import java.util.List;
 
 public abstract class Gamer {
-    protected Hand hand;
     private Name name;
+    private Hand hand;
 
     public Gamer(final Name name) {
         this.name = name;
@@ -42,11 +42,15 @@ public abstract class Gamer {
         return hand.sum();
     }
 
-    public List<Card> getHand() {
+    public List<Card> getCardsInHand() {
         return hand.getCards();
     }
 
     public String getName() {
         return name.getValue();
+    }
+
+    protected Hand getHand() {
+        return this.hand;
     }
 }

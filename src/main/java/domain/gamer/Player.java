@@ -18,7 +18,7 @@ public class Player extends Gamer {
 
     @Override
     public boolean isOverTurn() {
-        return hand.isBust();
+        return getHand().isBust();
     }
 
     @Override

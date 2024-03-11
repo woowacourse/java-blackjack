@@ -58,9 +58,9 @@ public class BlackJackGameTest {
 
         // then
         assertAll(
-                () -> assertThat(gamers.getGamers().get(0).getHand()).hasSize(2),
-                () -> assertThat(gamers.getGamers().get(1).getHand()).hasSize(2),
-                () -> assertThat(gamers.getGamers().get(2).getHand()).hasSize(2)
+                () -> assertThat(gamers.getGamers().get(0).getCardsInHand()).hasSize(2),
+                () -> assertThat(gamers.getGamers().get(1).getCardsInHand()).hasSize(2),
+                () -> assertThat(gamers.getGamers().get(2).getCardsInHand()).hasSize(2)
         );
     }
 
@@ -82,7 +82,7 @@ public class BlackJackGameTest {
 
         // then
         assertAll(
-                () -> assertThat(dealer.getHand()).hasSize(expectedDealerSize)
+                () -> assertThat(dealer.getCardsInHand()).hasSize(expectedDealerSize)
         );
     }
 
@@ -106,7 +106,7 @@ public class BlackJackGameTest {
 
         // then
         assertAll(
-                () -> assertThat(player.getHand()).hasSize(expectedPlayerSize)
+                () -> assertThat(player.getCardsInHand()).hasSize(expectedPlayerSize)
         );
     }
 
@@ -131,7 +131,7 @@ public class BlackJackGameTest {
                 () -> assertThatThrownBy(() -> blackJackGame.giveCard(dealer))
                         .isInstanceOf(CardReceiveException.class)
                         .hasMessage(CardReceiveException.CAN_NOT_RECEIVE_CARD),
-                () -> assertThat(dealer.getHand()).hasSize(expectedPlayerSize)
+                () -> assertThat(dealer.getCardsInHand()).hasSize(expectedPlayerSize)
         );
     }
 
@@ -158,7 +158,7 @@ public class BlackJackGameTest {
                 () -> assertThatThrownBy(() -> blackJackGame.giveCard(player))
                         .isInstanceOf(CardReceiveException.class)
                         .hasMessage(CardReceiveException.CAN_NOT_RECEIVE_CARD),
-                () -> assertThat(player.getHand()).hasSize(expectedPlayerSize)
+                () -> assertThat(player.getCardsInHand()).hasSize(expectedPlayerSize)
         );
     }
 
