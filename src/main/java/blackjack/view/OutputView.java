@@ -6,7 +6,6 @@ import blackjack.domain.card.Value;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.dto.MatchResultDto;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -109,9 +108,9 @@ public class OutputView {
         System.out.print("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printDealerMatchResult(MatchResultDto matchResult) {
+    public void printDealerMatchResult(int winCount, int loseCount) {
         System.out.println("## 최종 승패");
-        System.out.printf("딜러 : %d승 %d패%n", matchResult.winCount(), matchResult.loseCount());
+        System.out.printf("딜러 : %d승 %d패%n", winCount, loseCount);
     }
 
     public void printPlayerMatchResult(String name, boolean isWin) {

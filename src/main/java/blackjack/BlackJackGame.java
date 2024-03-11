@@ -50,7 +50,9 @@ public class BlackJackGame {
 
     private void printResult(Dealer dealer, Players players) {
         outputView.printEndingStatus(dealer, players);
-        outputView.printDealerMatchResult(dealer.match(players));
+        int winCount = dealer.calculateWinCount(players);
+        int loseCount = dealer.calculateLoseCount(players);
+        outputView.printDealerMatchResult(winCount, loseCount);
         for (Player player : players.getPlayers()) {
             outputView.printPlayerMatchResult(player.getName(), player.isWin(dealer));
         }
