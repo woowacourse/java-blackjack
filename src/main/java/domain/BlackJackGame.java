@@ -3,7 +3,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
-    //TODO: Name으로 조회하기
     private static final int MAX_PLAYERS_COUNT = 8;
     private final List<Player> players;
     private final Dealer dealer;
