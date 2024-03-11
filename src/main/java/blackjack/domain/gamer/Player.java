@@ -1,7 +1,55 @@
 package blackjack.domain.gamer;
 
-public class Player extends Gamer {
-    protected Player(String name) {
-        super(name);
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
+
+import java.util.List;
+
+public class Player {
+    private static final String NAME_EMPTY_ERROR = "공백이 아닌 플레이어를 입력해 주세요.";
+    private static final int BLACKJACK_CARDS_COUNT = 2;
+
+    protected final Hand hand;
+    private final String name;
+
+    public Player(String name, Hand hand) {
+        validateNameIsBlank(name);
+        this.name = name;
+        this.hand = hand;
+    }
+
+    public void draw(Card card) {
+        hand.addCard(card);
+    }
+
+    public void draw(List<Card> cards) {
+        hand.addCards(cards);
+    }
+
+    public boolean isBlackjack() {
+        return hand.getNumberOfCards() == BLACKJACK_CARDS_COUNT
+                && hand.isLimitScore();
+    }
+
+    public boolean isBust() {
+        return hand.isOverLimitScore();
+    }
+
+    public int getScore() {
+        return hand.findMaximumScore();
+    }
+
+    public List<Card> getCards() {
+        return hand.getMyCards();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    private void validateNameIsBlank(String name) {
+        if (name.isBlank()) {
+            throw new IllegalArgumentException(NAME_EMPTY_ERROR);
+        }
     }
 }

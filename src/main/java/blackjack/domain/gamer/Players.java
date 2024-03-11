@@ -1,5 +1,9 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.card.Hand;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.function.Consumer;
@@ -7,15 +11,15 @@ import java.util.function.Consumer;
 public class Players {
     private static final String NAMES_DUPLICATE_ERROR = "플레이어 이름은 중복될 수 없습니다.";
 
-    private final List<Player> values;
+    private final List<Player> players;
 
-    private Players(List<Player> values) {
-        this.values = values;
+    private Players(List<Player> players) {
+        this.players = players;
     }
 
     public static Players from(List<String> names) {
         validateDuplicate(names);
-        return new Players(names.stream().map(Player::new).toList());
+        return new Players(names.stream().map(name -> new Player(name, new Hand(new ArrayList<>()))).toList());
     }
 
     private static void validateDuplicate(List<String> names) {
@@ -25,11 +29,15 @@ public class Players {
         }
     }
 
-    public List<String> getNames() {
-        return values.stream().map(Player::getName).toList();
+    public void forEach(Consumer<? super Player> action) {
+        players.forEach(action);
     }
 
-    public void forEach(Consumer<? super Player> action) {
-        values.forEach(action);
+    public List<String> getNames() {
+        return players.stream().map(Player::getName).toList();
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }
