@@ -47,7 +47,7 @@ public class BlackJackGame {
     }
 
     public DealerResult calculateDealerResults(PlayerResult playerResult) {
-        return new DealerResult(playerResult);
+        return dealer.getResult(playerResult);
     }
 
     public Dealer getDealer() {
