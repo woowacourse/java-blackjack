@@ -35,7 +35,7 @@ public class Participant {
     }
 
     public boolean isName(final String name) {
-        return this.name.is(name);
+        return this.name.isSame(name);
     }
 
     public boolean isNotBlackjack() {
