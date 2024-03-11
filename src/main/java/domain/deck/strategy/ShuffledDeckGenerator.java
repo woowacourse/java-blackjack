@@ -1,9 +1,9 @@
 package domain.deck.strategy;
 
-import domain.deck.DeckGenerator;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
+import domain.deck.DeckGenerator;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -25,7 +25,7 @@ public class ShuffledDeckGenerator implements DeckGenerator {
         return decks;
     }
 
-    private List<Card> createCardPack(){
+    private List<Card> createCardPack() {
         return Stream.of(Symbol.values())
                 .flatMap(symbol -> Rank.getRanks().stream()
                         .map(rank -> new Card(symbol, rank)))

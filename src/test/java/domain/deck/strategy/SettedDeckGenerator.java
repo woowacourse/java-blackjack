@@ -1,7 +1,7 @@
 package domain.deck.strategy;
 
-import domain.deck.DeckGenerator;
 import domain.card.Card;
+import domain.deck.DeckGenerator;
 
 import java.util.List;
 import java.util.Stack;

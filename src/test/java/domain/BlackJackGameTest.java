@@ -4,10 +4,10 @@ import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
 import domain.deck.Deck;
+import domain.deck.strategy.SettedDeckGenerator;
 import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Player;
-import domain.deck.strategy.SettedDeckGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,7 +49,7 @@ public class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame(deck);
 
         // when
-        blackJackGame.prepareCards(dealer,players);
+        blackJackGame.prepareCards(dealer, players);
 
         // then
         assertAll(
