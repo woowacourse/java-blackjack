@@ -1,31 +1,32 @@
 package cardGame;
 
 import card.Card;
+import card.CardDeck;
 import card.CardNumber;
 import card.CardPattern;
-import dealer.Dealer;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import player.Name;
 import player.Player;
 
 class SingleMatchTest {
 
-    @DisplayName("Dealer의 승패 결과를 가져온다.")
+    @DisplayName("Player가 21을 넘는 카드를 가진다는 것을 확인한다.")
     @Test
-    void isDealerWins() {
-        Dealer dealer = new Dealer();
-        Player player = new Player(new Name("pola"));
+    void isCanPlayPlayer() {
+        Player player = Player.joinGame("pola", new CardDeck());
+        player.receiveCard(new Card(CardNumber.JACK, CardPattern.CLOVER_PATTERN));
+        player.receiveCard(new Card(CardNumber.KING, CardPattern.CLOVER_PATTERN));
 
-        player.receiveCard(new Card(CardNumber.ACE, CardPattern.SPADE_PATTERN));
-        player.receiveCard(new Card(CardNumber.ACE, CardPattern.DIA_PATTERN));
+        SingleMatch singleMatch = new SingleMatch(player);
+        Assertions.assertThat(singleMatch.isBustPlayer()).isTrue();
+    }
 
-        dealer.receiveCard(new Card(CardNumber.JACK, CardPattern.CLOVER_PATTERN));
-        dealer.receiveCard(new Card(CardNumber.QUEEN, CardPattern.CLOVER_PATTERN));
-
-        SingleMatch singleMatch = new SingleMatch(player, dealer);
-
-        Assertions.assertThat(singleMatch.isPlayerWins()).isTrue();
+    @DisplayName("Player가 21을 넘지 않는 카드를 가지지 않는 다는 것을 확인한다.")
+    @Test
+    void isCanNotPlayPlayer() {
+        Player player = Player.joinGame("pola", new CardDeck());
+        SingleMatch singleMatch = new SingleMatch(player);
+        Assertions.assertThat(singleMatch.isBustPlayer()).isFalse();
     }
 }

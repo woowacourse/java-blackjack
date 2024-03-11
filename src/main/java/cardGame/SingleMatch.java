@@ -1,40 +1,33 @@
 package cardGame;
 
 import card.Card;
-import dealer.Dealer;
+import card.CardDeck;
+import java.util.function.BiConsumer;
 import player.Player;
+import player.dto.SinglePlayerStatusDto;
 
 public class SingleMatch {
 
     private final Player player;
-    private final Dealer dealer;
 
-    public SingleMatch(Player player, Dealer dealer) {
+    public SingleMatch(Player player) {
         this.player = player;
-        this.dealer = dealer;
     }
 
-    public void getMoreCard() {
-        giveCard();
-    }
-
-    public boolean isCanPlayGamePlayer() {
-        return player.isOverMaxCardScore();
-    }
-
-    private void giveCard() {
-        Card pickedCard = dealer.giveCard();
-        player.receiveCard(pickedCard);
-    }
-
-    public boolean isPlayerWins() {
-        int dealerScore = dealer.getMaxGameScore();
-        int playerScore = player.getMaxGameScore();
-
-        return dealerScore < playerScore;
+    public boolean isBustPlayer() {
+        return player.isBust();
     }
 
     public Player getPlayer() {
         return player;
+    }
+
+    public void getMoreCard(Card card) {
+        player.receiveCard(card);
+    }
+
+    public SinglePlayerStatusDto play(BiConsumer<SingleMatch, CardDeck> playMatch, CardDeck cardDeck) {
+        playMatch.accept(this, cardDeck);
+        return new SinglePlayerStatusDto(player.getName(), player.getCards());
     }
 }
