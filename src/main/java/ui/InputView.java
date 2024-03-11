@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class InputView {
     private static final String DEFAULT_DELIMITER = ",";
     private static final String DEFAULT_DELIMITER_NAME = "쉼표";
-    private static final List<String> INVALID_PLAYER_NAMES = List.of("딜러", "dealer");
+    private static final List<String> INVALID_PLAYER_NAMES = List.of("딜러", "dealer", "y", "n");
 
     private final Scanner scanner;
 
@@ -32,7 +32,7 @@ public class InputView {
 
     private void validateInvalidPlayerName(List<String> playerNames) {
         if (hasInvalidPlayerName(playerNames)) {
-            throw new IllegalArgumentException("딜러와 연관된 이름이 포함되어 있습니다.");
+            throw new IllegalArgumentException("딜러와 연관된 이름 또는 게임 명령어와 연관된 이름이 포함되어 있습니다.");
         }
     }
 
