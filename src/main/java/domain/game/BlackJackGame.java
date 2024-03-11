@@ -45,7 +45,7 @@ public class BlackJackGame {
             final ActionAfterPick action,
             final DecisionToContinue decision
     ) {
-        while (participant.canPickCard(decision.get())) {
+        while (participant.canPickCard(decision)) {
             participant.pickCard(deck, CARD_PICK_SIZE);
             HandStatus currentStatus = participant.createHandStatus();
             action.accept(currentStatus);

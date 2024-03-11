@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.constants.CardCommand;
+import domain.game.DecisionToContinue;
 
 public class Player extends Participant {
     public Player(final String name) {
@@ -8,7 +9,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean canPickCard(CardCommand cardCommand) {
-        return CardCommand.HIT.equals(cardCommand) && isNotBusted();
+    public boolean canPickCard(DecisionToContinue decision) {
+        return isNotBusted() && CardCommand.HIT.equals(decision.get());
     }
 }

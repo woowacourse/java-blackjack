@@ -4,6 +4,7 @@ import controller.dto.HandStatus;
 import domain.card.Card;
 import domain.constants.CardCommand;
 import domain.game.BlackJackGame;
+import domain.game.DecisionToContinue;
 import domain.game.Deck;
 import java.util.List;
 
@@ -59,10 +60,9 @@ public abstract class Participant {
         return hand.size();
     }
 
-
     public String getName() {
         return this.name;
     }
 
-    abstract public boolean canPickCard(final CardCommand cardCommand);
+    abstract public boolean canPickCard(final DecisionToContinue decision);
 }

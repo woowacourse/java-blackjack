@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.constants.CardCommand;
+import domain.game.DecisionToContinue;
 
 public class Dealer extends Participant {
     public static final String DEALER_NAME = "딜러";
@@ -11,7 +11,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean canPickCard(CardCommand cardCommand) {
+    public boolean canPickCard(DecisionToContinue decision) {
         return calculateScore() <= CARD_PICK_THRESHOLD;
     }
 }

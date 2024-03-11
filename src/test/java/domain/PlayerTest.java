@@ -37,7 +37,7 @@ class PlayerTest {
             ));
             player.pickCard(deck, 3);
 
-            boolean ableToDrawCard = player.canPickCard(CardCommand.HIT);
+            boolean ableToDrawCard = player.canPickCard(() -> CardCommand.HIT);
             assertThat(ableToDrawCard).isFalse();
         }
 
@@ -52,7 +52,7 @@ class PlayerTest {
             ));
             player.pickCard(deck, 3);
 
-            boolean ableToDrawCard = player.canPickCard(CardCommand.STAND);
+            boolean ableToDrawCard = player.canPickCard(() -> CardCommand.STAND);
             assertThat(ableToDrawCard).isFalse();
         }
 
@@ -66,7 +66,7 @@ class PlayerTest {
             ));
             player.pickCard(deck, 2);
 
-            boolean ableToDrawCard = player.canPickCard(CardCommand.HIT);
+            boolean ableToDrawCard = player.canPickCard(() -> CardCommand.HIT);
             assertThat(ableToDrawCard).isTrue();
         }
 
@@ -80,7 +80,7 @@ class PlayerTest {
             ));
             player.pickCard(deck, 2);
 
-            boolean ableToDrawCard = player.canPickCard(CardCommand.STAND);
+            boolean ableToDrawCard = player.canPickCard(() -> CardCommand.STAND);
             assertThat(ableToDrawCard).isFalse();
         }
     }

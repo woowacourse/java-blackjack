@@ -19,7 +19,7 @@ public class Participants {
         for (String playerName : playerNames) {
             participants.add(new Player(playerName));
         }
-        participants.add(new Dealer()); // TODO: 순서에 영향을 받는 방식이다. 만약 딜러가 먼저 카드를 받고 플레이어가 받게 되면 이 순서를 변경한다. 이게 괜찮은가?
+        participants.add(new Dealer());
         return new Participants(participants);
     }
 
