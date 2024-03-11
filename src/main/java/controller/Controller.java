@@ -21,7 +21,7 @@ public class Controller {
     public void play() {
         Users users = ExceptionHandler.handle(InputView::inputNames);
         Game game = new Game(new TotalDeck(TotalDeckGenerator.generate()), users);
-        cardView.showStartStatus(users);
+        cardView.printStartStatus(users);
         run(game);
         showGameResult(users, game);
     }
@@ -32,7 +32,7 @@ public class Controller {
         }
         while (game.isDealerCardAddCondition()) {
             game.addDealerCard();
-            ResultView.dealerHit();
+            ResultView.printDealerHitMessage();
         }
     }
 
@@ -48,7 +48,7 @@ public class Controller {
     }
 
     private void showGameResult(Users users, Game game) {
-        cardView.showCardsAndSum(users);
+        cardView.printCardsAndSum(users);
         ResultView.printResult(game);
     }
 }

@@ -20,11 +20,11 @@ public class CardView {
                         .map(number -> new Card(shape, number)))
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        card -> ShapeViewer.show(card.shape()) + NumberViewer.show(card.number())
+                        card -> NumberViewer.show(card.number()) + ShapeViewer.show(card.shape())
                 ));
     }
 
-    public void showStartStatus(Users users) {
+    public void printStartStatus(Users users) {
         printUserNames(users);
         printUserCards(users);
         System.out.println();
@@ -55,18 +55,18 @@ public class CardView {
         System.out.println(joinUserNameAndDeck(user));
     }
 
-    private String joinUserNameAndDeck(User user) {
-        return user.getName().value()
-                + "카드: "
-                + joinDeck(user.getUserDeck());
-    }
-
-    public void showCardsAndSum(Users users) {
+    public void printCardsAndSum(Users users) {
         System.out.println();
         users.getUsers()
                 .forEach((user) ->
                         System.out.println(joinUserNameAndDeck(user)
                                 + " - 결과: " + user.sumUserDeck()));
+    }
+
+    private String joinUserNameAndDeck(User user) {
+        return user.getName().value()
+                + "카드: "
+                + joinDeck(user.getUserDeck());
     }
 
     private String joinDeck(UserDeck userDeck) {
