@@ -1,7 +1,6 @@
 package domain.player;
 
-import domain.player.Name;
-import domain.player.Player;
+import domain.blackjack.OneOnOneResult;
 
 public class Dealer extends Player {
 
@@ -29,5 +28,16 @@ public class Dealer extends Player {
     @Override
     public boolean canNotHit() {
         return false;
+    }
+
+    @Override
+    public OneOnOneResult determineWinnerByComparing(final Player participant) {
+        if (isBust()) {
+            return OneOnOneResult.ONE_LOSE;
+        }
+        if (participant.isBust()) {
+            return OneOnOneResult.ONE_WIN;
+        }
+        return OneOnOneResult.fromCondition(calculateScore() > participant.calculateScore());
     }
 }

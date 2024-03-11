@@ -1,5 +1,7 @@
 package domain.player;
 
+import domain.blackjack.OneOnOneResult;
+
 public class Participant extends Player {
     private static final int HIT_THRESHOLD = 21;
 
@@ -26,5 +28,16 @@ public class Participant extends Player {
     @Override
     public boolean canNotHit() {
         return !canHit();
+    }
+
+    @Override
+    public OneOnOneResult determineWinnerByComparing(final Player dealer) {
+        if(isBust()){
+            return OneOnOneResult.ONE_LOSE;
+        }
+        if (dealer.isBust()) {
+            return OneOnOneResult.ONE_WIN;
+        }
+        return OneOnOneResult.fromCondition(calculateScore() > dealer.calculateScore());
     }
 }

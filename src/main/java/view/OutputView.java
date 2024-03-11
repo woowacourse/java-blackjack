@@ -1,12 +1,15 @@
 package view;
 
-import domain.blackjack.BlackjackResult;
+import domain.blackjack.GameResult;
+import domain.blackjack.OneOnOneResult;
 import domain.card.Denomination;
 import domain.player.Player;
 import domain.card.Symbol;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class OutputView {
     public static void printPlayersStatus(final List<Player> players) {
@@ -48,13 +51,14 @@ public class OutputView {
         });
     }
 
-    public static void printBlackjackResults(final BlackjackResult blackjackResult) {
+    public static void printBlackjackResults(final GameResult blackjackResult) {
         System.out.println();
         System.out.println("## 최종 승패");
-        for (final var player : blackjackResult.results().keySet()) {
-            final Integer win = blackjackResult.getWin(player);
-            final Integer lose = blackjackResult.getLose(player);
-            printWinOrLose(player, win, lose);
+        final Set<Entry<Player, OneOnOneResult>> entries = blackjackResult.gameResult().entrySet();
+        for (final var entry : entries) {
+            final Player player = entry.getKey();
+            final OneOnOneResult oneOnOneResult = entry.getValue();
+            printWinOrLose(player, oneOnOneResult.win(), oneOnOneResult.lose());
         }
     }
 
@@ -100,7 +104,7 @@ public class OutputView {
         if (symbol == Symbol.HEART) {
             return "하트";
         }
-        if (symbol == Symbol.CLOVER) {
+        if (symbol == Symbol.CLUBS) {
             return "클로버";
         }
         if (symbol == Symbol.SPADE) {

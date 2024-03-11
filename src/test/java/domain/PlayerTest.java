@@ -22,9 +22,9 @@ class PlayerTest {
     void sum() {
         final Player player = new Participant(new Name("지쳐버린종이"));;
 
-        player.hit(new Card(Denomination.FIVE, Symbol.CLOVER));
-        player.hit(new Card(Denomination.FIVE, Symbol.CLOVER));
-        player.hit(new Card(Denomination.ACE, Symbol.CLOVER));
+        player.hit(new Card(Denomination.FIVE, Symbol.CLUBS));
+        player.hit(new Card(Denomination.FIVE, Symbol.CLUBS));
+        player.hit(new Card(Denomination.ACE, Symbol.CLUBS));
 
         Assertions.assertThat(player.calculateScore()).isEqualTo(21);
     }
@@ -34,9 +34,9 @@ class PlayerTest {
     void sum2() {
         final Player player = new Participant(new Name("지쳐버린종이"));;
 
-        player.hit(new Card(Denomination.KING, Symbol.CLOVER));
-        player.hit(new Card(Denomination.KING, Symbol.CLOVER));
-        player.hit(new Card(Denomination.ACE, Symbol.CLOVER));
+        player.hit(new Card(Denomination.KING, Symbol.CLUBS));
+        player.hit(new Card(Denomination.KING, Symbol.CLUBS));
+        player.hit(new Card(Denomination.ACE, Symbol.CLUBS));
 
         Assertions.assertThat(player.calculateScore()).isEqualTo(21);
     }
@@ -58,10 +58,10 @@ class PlayerTest {
     public static Stream<Arguments> argumentProvider() {
         return Stream.of(
                 Arguments.of(
-                        List.of(new Card(Denomination.KING, Symbol.CLOVER), new Card(Denomination.KING, Symbol.HEART),
+                        List.of(new Card(Denomination.KING, Symbol.CLUBS), new Card(Denomination.KING, Symbol.HEART),
                                 new Card(Denomination.KING, Symbol.SPADE)), false),
                 Arguments.of(
-                        List.of(new Card(Denomination.FIVE, Symbol.CLOVER), new Card(Denomination.FOUR, Symbol.HEART),
+                        List.of(new Card(Denomination.FIVE, Symbol.CLUBS), new Card(Denomination.FOUR, Symbol.HEART),
                                 new Card(Denomination.THREE, Symbol.SPADE)), true)
         );
     }

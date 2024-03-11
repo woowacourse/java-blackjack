@@ -1,5 +1,4 @@
 import domain.blackjack.Blackjack;
-import domain.blackjack.BlackjackResult;
 import domain.player.Player;
 import domain.player.Players;
 import view.InputView;
@@ -13,8 +12,7 @@ public class Application {
         playGame(blackjack);
         OutputView.printResults(blackjack.getPlayers());
 
-        final BlackjackResult blackjackResult = blackjack.finishGame();
-        OutputView.printBlackjackResults(blackjackResult);
+        OutputView.printBlackjackResults(blackjack.finishGame());
     }
 
     private static void playGame(final Blackjack blackjack) {

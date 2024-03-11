@@ -1,7 +1,7 @@
 package domain;
 
 import domain.blackjack.Blackjack;
-import domain.blackjack.BlackjackResult;
+import domain.blackjack.GameResult;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Symbol;
@@ -51,15 +51,15 @@ class BlackjackTest {
         final Player dealer = new Dealer();
         final Player teba = new Participant(new Name("테바"));
         final Player jonge = new Participant(new Name("종이"));
-        teba.hit(new Card(Denomination.ACE, Symbol.CLOVER));
-        jonge.hit(new Card(Denomination.ACE,Symbol.HEART));
+        teba.hit(new Card(Denomination.ACE, Symbol.CLUBS));
+        jonge.hit(new Card(Denomination.ACE, Symbol.HEART));
         final Blackjack blackjack = new Blackjack(new Players(new ArrayList<>(List.of(teba, jonge))), dealer);
 
-        final BlackjackResult blackjackResultDTO = blackjack.finishGame();
+        final GameResult blackjackResultDTO = blackjack.finishGame();
 
-        final Integer dealerLose = blackjackResultDTO.results().get(dealer).getValue();
-        final Integer tebaWin = blackjackResultDTO.results().get(teba).getKey();
-        final Integer jongeWin = blackjackResultDTO.results().get(jonge).getKey();
+        final Integer dealerLose = blackjackResultDTO.gameResult().get(dealer).lose();
+        final Integer tebaWin = blackjackResultDTO.gameResult().get(teba).win();
+        final Integer jongeWin = blackjackResultDTO.gameResult().get(jonge).win();
         assertThat(tebaWin + jongeWin).isEqualTo(dealerLose);
     }
 }
