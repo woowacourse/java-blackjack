@@ -44,7 +44,7 @@ public class ParticipantCards {
 
     private int aceCount() {
         return (int) cards.stream()
-            .filter(card -> card.getRank() == Rank.ACE)
+            .filter(card -> card.rank() == Rank.ACE)
             .count();
     }
 

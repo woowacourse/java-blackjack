@@ -69,7 +69,7 @@ public class OutputView {
     }
 
     private String cardText(Card card) {
-        return card.getRank().getDescription() + symbolText(card.getSymbol());
+        return card.rank().getDescription() + symbolText(card.symbol());
     }
 
     private String symbolText(Symbol symbol) {
