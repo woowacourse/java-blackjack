@@ -1,12 +1,17 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static util.CardsSupplier.createBlackJackWithThreeCards;
+import static util.CardsSupplier.createBlackJackWithTwoCards;
+import static util.CardsSupplier.createBustedCards;
+import static util.CardsSupplier.createNineteenScoreNormalWithTwoCards;
+import static util.CardsSupplier.createNineteenScoreWithThreeCards;
+import static util.CardsSupplier.createSixteenScoreWithTwoCards;
+import static util.ParticipantSupplier.createDealer;
+import static util.ParticipantSupplier.createPlayer;
 
 import controller.dto.JudgeResult;
 import controller.dto.ParticipantOutcome;
-import domain.card.Card;
-import domain.card.Score;
-import domain.card.Shape;
 import domain.constants.Outcome;
 import domain.participant.Dealer;
 import domain.participant.Participant;
@@ -41,7 +46,7 @@ class RefereeTest {
         @Test
         void playerDoesNotBusted() {
             Dealer dealer = createDealer(createBustedCards());
-            Player player = createPlayer("pobi", createNormalWithTwoCards());
+            Player player = createPlayer("pobi", createSixteenScoreWithTwoCards());
 
             Referee referee = createReferee(player, dealer);
 
@@ -60,7 +65,7 @@ class RefereeTest {
         @Test
         void playerBlackJackAndHaveMoreCard() {
             Dealer dealer = createDealer(createBlackJackWithTwoCards());
-            Player player = createPlayer("pobi", createNormalWithThreeCards());
+            Player player = createPlayer("pobi", createNineteenScoreWithThreeCards());
 
             Referee referee = createReferee(player, dealer);
 
@@ -90,7 +95,7 @@ class RefereeTest {
         @Test
         void playerIsNotBlackJack() {
             Dealer dealer = createDealer(createBlackJackWithTwoCards());
-            Player player = createPlayer("pobi", createNormalWithTwoCards());
+            Player player = createPlayer("pobi", createSixteenScoreWithTwoCards());
 
             Referee referee = createReferee(player, dealer);
 
@@ -108,7 +113,7 @@ class RefereeTest {
         @DisplayName("참가자의 점수가 21인 경우 참가자가 승리한다.")
         @Test
         void playerIsBlackJack() {
-            Dealer dealer = createDealer(createNormalWithTwoCards());
+            Dealer dealer = createDealer(createSixteenScoreWithTwoCards());
             Player player = createPlayer("pobi", createBlackJackWithTwoCards());
 
             Referee referee = createReferee(player, dealer);
@@ -123,8 +128,8 @@ class RefereeTest {
         @DisplayName("참가자의 점수가 21 미만인 경우 점수가 큰 사람이 승리한다.")
         @Test
         void playerIsNotBlackJack() {
-            Dealer dealer = createDealer(createNormalWithTwoCards());
-            Player player = createPlayer("pobi", createNormalWithThreeCards());
+            Dealer dealer = createDealer(createSixteenScoreWithTwoCards());
+            Player player = createPlayer("pobi", createNineteenScoreWithThreeCards());
 
             Referee referee = createReferee(player, dealer);
 
@@ -138,8 +143,8 @@ class RefereeTest {
         @DisplayName("참가자의 점수가 21 미만이고 딜러와 점수가 같은 경우 카드 개수가 적은 사람이 승리한다.")
         @Test
         void playerScoreEqualsToDealer() {
-            Dealer dealer = createDealer(createNormalWithThreeCards());
-            Player player = createPlayer("pobi", createSameScoreNormalWithTwoCards());
+            Dealer dealer = createDealer(createNineteenScoreWithThreeCards());
+            Player player = createPlayer("pobi", createNineteenScoreNormalWithTwoCards());
 
             Referee referee = createReferee(player, dealer);
 
@@ -151,61 +156,10 @@ class RefereeTest {
         }
     }
 
-    private Dealer createDealer(List<Card> cards) {
-        Dealer dealer = new Dealer();
-        dealer.pickCard(new Deck(cards), cards.size());
-        return dealer;
-    }
-
-    private Player createPlayer(String name, List<Card> cards) {
-        Player player = new Player(name);
-        player.pickCard(new Deck(cards), cards.size());
-        return player;
-    }
-
-    private Referee createReferee(final Player player, final Dealer dealer) {
+    public Referee createReferee(final Player player, final Dealer dealer) {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
         participants.add(player);
         return new Referee(new Participants(participants));
-    }
-
-    private List<Card> createBlackJackWithTwoCards() {
-        return List.of(
-                new Card(Score.TEN, Shape.CLOVER),
-                new Card(Score.ACE, Shape.DIAMOND));
-    }
-
-    private List<Card> createBlackJackWithThreeCards() {
-        return List.of(
-                new Card(Score.FIVE, Shape.CLOVER),
-                new Card(Score.FIVE, Shape.DIAMOND),
-                new Card(Score.ACE, Shape.DIAMOND));
-    }
-
-    private List<Card> createNormalWithTwoCards() {
-        return List.of(
-                new Card(Score.TEN, Shape.CLOVER),
-                new Card(Score.SIX, Shape.DIAMOND));
-    }
-
-    private List<Card> createNormalWithThreeCards() {
-        return List.of(
-                new Card(Score.TEN, Shape.CLOVER),
-                new Card(Score.THREE, Shape.DIAMOND),
-                new Card(Score.SIX, Shape.HEART));
-    }
-
-    private List<Card> createSameScoreNormalWithTwoCards() {
-        return List.of(
-                new Card(Score.TEN, Shape.CLOVER),
-                new Card(Score.NINE, Shape.DIAMOND));
-    }
-
-    private List<Card> createBustedCards() {
-        return List.of(
-                new Card(Score.TEN, Shape.CLOVER),
-                new Card(Score.FIVE, Shape.DIAMOND),
-                new Card(Score.EIGHT, Shape.HEART));
     }
 }
