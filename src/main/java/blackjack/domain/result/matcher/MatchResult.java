@@ -1,4 +1,4 @@
-package blackjack.domain.result.checker;
+package blackjack.domain.result.matcher;
 
 public enum MatchResult {
     MATCH,

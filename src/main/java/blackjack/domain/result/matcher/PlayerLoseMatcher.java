@@ -1,4 +1,4 @@
-package blackjack.domain.result.checker;
+package blackjack.domain.result.matcher;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;

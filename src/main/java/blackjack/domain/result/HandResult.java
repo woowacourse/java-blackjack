@@ -2,7 +2,7 @@ package blackjack.domain.result;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.checker.*;
+import blackjack.domain.result.matcher.*;
 
 public enum HandResult {
     BLACKJACK_WIN(1.5, new PlayerBlackjackWinMatcher()),
