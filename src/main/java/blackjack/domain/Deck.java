@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Deck {
-
+    private static final int DECK_CARD_NUMBER = 52;
     private final Deque<Card> cards;
 
     private Deck(Deque<Card> cards) {
@@ -23,9 +23,8 @@ public class Deck {
         return new Deck(cards);
     }
 
-    // TODO 매직넘버가 존재
     private static List<Integer> makeSuffledOrder() {
-        List<Integer> cardOrder = IntStream.range(0, 52)
+        List<Integer> cardOrder = IntStream.range(0, DECK_CARD_NUMBER)
                 .boxed()
                 .collect(Collectors.toList());
         Collections.shuffle(cardOrder);
