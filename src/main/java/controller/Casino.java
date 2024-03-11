@@ -9,7 +9,6 @@ import java.util.EnumMap;
 import java.util.List;
 import model.Choice;
 import model.casino.CardDispenser;
-import model.casino.CardShuffleMachine;
 import model.casino.RandomCardShuffleMachine;
 import model.dto.DealerScoreResult;
 import model.dto.GameCompletionResult;
@@ -57,8 +56,7 @@ public class Casino {
     }
 
     private void showPlayerChoiceResult(Choice playerChoice, GameCompletionResult currentPlayerFaceUpInfo) {
-        if (playerChoice.isYes() || (   !playerChoice.isYes() && currentPlayerFaceUpInfo.cards()
-                .size() == 2)) {
+        if (playerChoice.isYes() || currentPlayerFaceUpInfo.cards().size() == 2) {
             OutputView.printSinglePlayerFaceUp(currentPlayerFaceUpInfo);
         }
     }
