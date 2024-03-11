@@ -9,7 +9,7 @@ public class Deck {
     private final List<Card> cards;
 
     public Deck() {
-        this.cards = new ArrayList<>(Card.getAll());
+        cards = new ArrayList<>(Card.getAll());
         Collections.shuffle(cards);
     }
 

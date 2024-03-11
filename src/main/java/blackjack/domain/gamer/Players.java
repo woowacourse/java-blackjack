@@ -3,6 +3,7 @@ package blackjack.domain.gamer;
 import java.util.HashSet;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class Players {
     private static final String NAMES_DUPLICATE_ERROR = "플레이어 이름은 중복될 수 없습니다.";
@@ -31,5 +32,9 @@ public class Players {
 
     public void forEach(Consumer<? super Player> action) {
         values.forEach(action);
+    }
+
+    public Players filter(Predicate<? super Player> predicate) {
+        return new Players(values.stream().filter(predicate).toList());
     }
 }

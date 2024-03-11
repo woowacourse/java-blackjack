@@ -42,7 +42,11 @@ public class Player {
     }
 
     public boolean isBlackjack() {
-        return isMaxScore() && cards.get().size() == DEAL_CARD_COUNT;
+        return isMaxScore() && isOnlyDeal();
+    }
+
+    public boolean isOnlyDeal() {
+        return cards.get().size() == DEAL_CARD_COUNT;
     }
 
     public boolean isMaxScore() {
@@ -52,6 +56,7 @@ public class Player {
     public boolean canContinue() {
         return !(isBurst() || isMaxScore());
     }
+
 
     public String getName() {
         return name;

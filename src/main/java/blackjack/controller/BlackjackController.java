@@ -12,8 +12,6 @@ import blackjack.view.PlayerCommand;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import static blackjack.domain.gamer.Player.DEAL_CARD_COUNT;
-
 public class BlackjackController {
 
     public void run() {
@@ -44,7 +42,9 @@ public class BlackjackController {
     }
 
     private void processHitOrStand(Players players, Dealer dealer, Deck deck) {
-        players.forEach(player -> requestHitOrStand(player, deck));
+        players
+                .filter(Player::canContinue)
+                .forEach(player -> requestHitOrStand(player, deck));
         OutputView.printNewLine();
         dealerHitUntilBound(dealer, deck);
 
@@ -54,14 +54,19 @@ public class BlackjackController {
     }
 
     private void requestHitOrStand(Player player, Deck deck) {
-        if (player.canContinue()) {
-            return;
-        }
-        CommandController commandController = new CommandController();
-        commandController.put(PlayerCommand.HIT, () -> hitAndPrint(player, deck));
-        commandController.put(PlayerCommand.STAND, () -> checkPlayerStandAfterDeal(player));
+        PlayerCommand playerCommand;
+        do {
+            playerCommand = requestUntilValid(() ->
+                    PlayerCommand.from(InputView.readPlayerCommand(player.getName())));
 
-        while (commandController.runUntilCanHit(InputView.readPlayerCommand(player.getName()))) ;
+            if (playerCommand == PlayerCommand.STAND) {
+                printIfPlayerOnlyDeal(player);
+                break;
+            }
+            if (!hitAndPrint(player, deck)) {
+                break;
+            }
+        } while (playerCommand == PlayerCommand.HIT);
     }
 
     private boolean hitAndPrint(Player player, Deck deck) {
@@ -70,11 +75,10 @@ public class BlackjackController {
         return !(player.isBurst() || player.isMaxScore());
     }
 
-    private boolean checkPlayerStandAfterDeal(Player player) {
-        if (player.getCards().size() == DEAL_CARD_COUNT) {
+    private void printIfPlayerOnlyDeal(Player player) {
+        if (player.isOnlyDeal()) {
             OutputView.printCards(player.getName(), player.getCards());
         }
-        return false;
     }
 
     private void dealerHitUntilBound(Dealer dealer, Deck deck) {

@@ -227,16 +227,12 @@
         <th>Description</th>
     </tr>
     <tr>
-        <td rowspan="2">
+        <td>
             <img src="https://raw.githubusercontent.com/mallowigi/iconGenerator/master/assets/icons/folders/controllers.svg?sanitize=true"/>
             <b> controller</b>
         </td>
         <td><b>BlackjackController</b></td>
         <td>입력을 받아 계산하고 출력 해주는 전체 진행 담당 컨트롤러</td>
-    </tr>
-    <tr>
-        <td><b>CommandController</b></td>
-        <td>플레이어의 입력에 따라 반복을 담당하는 컨트롤러</td>
     </tr>
     <tr>
         <td rowspan="5">
