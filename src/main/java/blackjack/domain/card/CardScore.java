@@ -11,6 +11,7 @@ public enum CardScore {
     SEVEN(List.of(7)),
     EIGHT(List.of(8)),
     NINE(List.of(9)),
+    TEN(List.of(10)),
     JACK(List.of(10)),
     QUEEN(List.of(10)),
     KING(List.of(10)),

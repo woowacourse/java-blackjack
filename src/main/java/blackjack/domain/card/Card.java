@@ -1,7 +1,22 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.CardScore.*;
-import static blackjack.domain.card.CardSymbol.*;
+import static blackjack.domain.card.CardScore.ACE;
+import static blackjack.domain.card.CardScore.EIGHT;
+import static blackjack.domain.card.CardScore.FIVE;
+import static blackjack.domain.card.CardScore.FOUR;
+import static blackjack.domain.card.CardScore.JACK;
+import static blackjack.domain.card.CardScore.KING;
+import static blackjack.domain.card.CardScore.NINE;
+import static blackjack.domain.card.CardScore.QUEEN;
+import static blackjack.domain.card.CardScore.SEVEN;
+import static blackjack.domain.card.CardScore.SIX;
+import static blackjack.domain.card.CardScore.TEN;
+import static blackjack.domain.card.CardScore.THREE;
+import static blackjack.domain.card.CardScore.TWO;
+import static blackjack.domain.card.CardSymbol.CLUB;
+import static blackjack.domain.card.CardSymbol.DIAMOND;
+import static blackjack.domain.card.CardSymbol.HEART;
+import static blackjack.domain.card.CardSymbol.SPADE;
 
 public enum Card {
     SPADE_TWO(SPADE, TWO),
@@ -25,6 +40,7 @@ public enum Card {
     DIAMOND_SEVEN(DIAMOND, SEVEN),
     DIAMOND_EIGHT(DIAMOND, EIGHT),
     DIAMOND_NINE(DIAMOND, NINE),
+    DIAMOND_TEN(DIAMOND, TEN),
     DIAMOND_JACK(DIAMOND, JACK),
     DIAMOND_QUEEN(DIAMOND, QUEEN),
     DIAMOND_KING(DIAMOND, KING),
@@ -38,6 +54,7 @@ public enum Card {
     HEART_SEVEN(HEART, SEVEN),
     HEART_EIGHT(HEART, EIGHT),
     HEART_NINE(HEART, NINE),
+    HEART_TEN(HEART, TEN),
     HEART_JACK(HEART, JACK),
     HEART_QUEEN(HEART, QUEEN),
     HEART_KING(HEART, KING),
@@ -51,6 +68,7 @@ public enum Card {
     CLUB_SEVEN(CLUB, SEVEN),
     CLUB_EIGHT(CLUB, EIGHT),
     CLUB_NINE(CLUB, NINE),
+    CLUB_TEN(CLUB, TEN),
     CLUB_JACK(CLUB, JACK),
     CLUB_QUEEN(CLUB, QUEEN),
     CLUB_KING(CLUB, KING),
