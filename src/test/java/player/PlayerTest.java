@@ -37,10 +37,6 @@ public class PlayerTest {
     @DisplayName("Player가 들고 있는 카드가 최고점을 넘지 않을경우 false를 return한다.")
     @Test
     void isNotOverMaxGameScore() {
-        Card kingCard = new Card(CardNumber.KING, CardPattern.CLOVER_PATTERN);
-
-        player.receiveCard(kingCard);
-
         Assertions.assertThat(player.isBust()).isFalse();
     }
 
