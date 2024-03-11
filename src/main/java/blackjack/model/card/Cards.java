@@ -50,13 +50,13 @@ public class Cards {
                 .anyMatch(card -> card.getDenomination().isAce());
     }
 
-    private boolean canBeAdjusted(final Score total) {
-        return total.plus(ACE_ADJUSTMENT)
+    private boolean canBeAdjusted(final Score totalScore) {
+        return totalScore.plus(ACE_ADJUSTMENT)
                 .equalToOrLessThan(MAX_CARDS_TOTAL);
     }
 
-    private Score adjustTotalForAce(final Score total) {
-        return total.plus(ACE_ADJUSTMENT);
+    private Score adjustTotalForAce(final Score totalScore) {
+        return totalScore.plus(ACE_ADJUSTMENT);
     }
 
     public boolean isBlackJack() {
