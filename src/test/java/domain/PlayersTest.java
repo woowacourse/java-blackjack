@@ -1,21 +1,5 @@
 package domain;
 
-import domain.participant.Dealer;
-import domain.participant.Name;
-import domain.participant.Player;
-import domain.participant.Players;
-import domain.result.Result;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
-
 import static domain.HandsTestFixture.bustHands;
 import static domain.HandsTestFixture.noBustHands;
 import static domain.HandsTestFixture.sum18Size2;
@@ -25,6 +9,21 @@ import static domain.HandsTestFixture.sum21Size2;
 import static domain.result.Result.LOSE;
 import static domain.result.Result.TIE;
 import static domain.result.Result.WIN;
+
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Player;
+import domain.participant.Players;
+import domain.result.Result;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayersTest {
 

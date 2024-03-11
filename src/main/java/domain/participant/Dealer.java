@@ -4,7 +4,6 @@ import domain.Answer;
 import domain.CardDeck;
 import domain.Hands;
 import domain.result.Result;
-
 import java.util.EnumMap;
 import java.util.Map;
 

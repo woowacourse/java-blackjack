@@ -1,15 +1,5 @@
 package domain;
 
-import domain.card.Card;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.stream.Stream;
-
 import static domain.HandsTestFixture.sum19Size3Ace1;
 import static domain.HandsTestFixture.sum19Size4Ace11;
 import static domain.HandsTestFixture.sum20Size2;
@@ -17,6 +7,15 @@ import static domain.HandsTestFixture.sum20Size3Ace1;
 import static domain.HandsTestFixture.sum21Size3Ace11;
 import static domain.card.Rank.EIGHT;
 import static domain.card.Shape.CLOVER;
+
+import domain.card.Card;
+import java.util.stream.Stream;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class HandsTest {
 

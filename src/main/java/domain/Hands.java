@@ -2,7 +2,6 @@ package domain;
 
 import domain.card.Card;
 import domain.result.Result;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
