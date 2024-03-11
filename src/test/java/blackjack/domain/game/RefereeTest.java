@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Players;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,17 +43,6 @@ public class RefereeTest {
         expectedPlayersResult = new HashMap<>();
     }
 
-    @AfterEach
-    void assertResult() {
-        // when
-        players.forEach(player -> player.deal(playerDeck));
-        dealer.deal(dealerDeck);
-        referee.calculatePlayersResults(players, dealer);
-
-        // then
-        assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
-    }
-
 
     @Test
     @DisplayName("두 장의 카드 숫자를 합쳐 21을 초과하지 않으면서 21에 가깝게 만들면 이기는지 테스트한다.")
@@ -73,6 +61,14 @@ public class RefereeTest {
             }
         };
         expectedPlayersResult.put(name, GameResult.WIN);
+
+        // when
+        players.forEach(player -> player.deal(playerDeck));
+        dealer.deal(dealerDeck);
+        referee.calculatePlayersResults(players, dealer);
+
+        // then
+        assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
     }
 
     @Test
@@ -92,6 +88,14 @@ public class RefereeTest {
             }
         };
         expectedPlayersResult.put(name, GameResult.LOSE);
+
+        // when
+        players.forEach(player -> player.deal(playerDeck));
+        dealer.deal(dealerDeck);
+        referee.calculatePlayersResults(players, dealer);
+
+        // then
+        assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
     }
 
     @Test
@@ -111,6 +115,14 @@ public class RefereeTest {
             }
         };
         expectedPlayersResult.put(name, GameResult.DRAW);
+
+        // when
+        players.forEach(player -> player.deal(playerDeck));
+        dealer.deal(dealerDeck);
+        referee.calculatePlayersResults(players, dealer);
+
+        // then
+        assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
     }
 
     @Test
@@ -130,6 +142,14 @@ public class RefereeTest {
             }
         };
         expectedPlayersResult.put(name, GameResult.WIN);
+
+        // when
+        players.forEach(player -> player.deal(playerDeck));
+        dealer.deal(dealerDeck);
+        referee.calculatePlayersResults(players, dealer);
+
+        // then
+        assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
     }
 
     @Test
@@ -149,6 +169,14 @@ public class RefereeTest {
             }
         };
         expectedPlayersResult.put(name, GameResult.LOSE);
+
+        // when
+        players.forEach(player -> player.deal(playerDeck));
+        dealer.deal(dealerDeck);
+        referee.calculatePlayersResults(players, dealer);
+
+        // then
+        assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
     }
 
     @Test
@@ -168,6 +196,14 @@ public class RefereeTest {
             }
         };
         expectedPlayersResult.put(name, GameResult.LOSE);
+
+        // when
+        players.forEach(player -> player.deal(playerDeck));
+        dealer.deal(dealerDeck);
+        referee.calculatePlayersResults(players, dealer);
+
+        // then
+        assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
     }
 
     @Test
@@ -187,5 +223,13 @@ public class RefereeTest {
             }
         };
         expectedPlayersResult.put(name, GameResult.WIN);
+
+        // when
+        players.forEach(player -> player.deal(playerDeck));
+        dealer.deal(dealerDeck);
+        referee.calculatePlayersResults(players, dealer);
+
+        // then
+        assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
     }
 }
