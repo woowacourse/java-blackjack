@@ -1,7 +1,10 @@
 package domain.blackjack;
 
+import domain.card.Card;
 import domain.card.CardSelectStrategy;
 import domain.card.Deck;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Dealer extends Gamer {
 
@@ -21,5 +24,11 @@ public class Dealer extends Gamer {
     @Override
     public String getRawName() {
         return "딜러";
+    }
+
+    public List<Card> getRawHoldingCardsWithoutFirstCard() {
+        List<Card> rawHoldingCards = new ArrayList<>(blackJackGameMachine.getRawHoldingCards());
+        rawHoldingCards.remove(0);
+        return List.copyOf(rawHoldingCards);
     }
 }

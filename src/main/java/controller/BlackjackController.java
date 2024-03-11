@@ -13,7 +13,6 @@ import domain.card.RandomCardSelectStrategy;
 import dto.DealerGameResultDTO;
 import dto.GamerDTO;
 import dto.PlayerGameResultDTO;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -68,8 +67,7 @@ public class BlackjackController {
     }
 
     private static void printDealer(Dealer dealer) {
-        List<Card> rawHoldingCards = new ArrayList<>(dealer.getRawHoldingCards());
-        rawHoldingCards.remove(0);
+        List<Card> rawHoldingCards = dealer.getRawHoldingCardsWithoutFirstCard();
         GamerDTO gamerDTO = new GamerDTO(dealer.getRawName(), rawHoldingCards,
                 dealer.getRawSummationCardPoint());
         GamerOutputView.printWithoutSummationCardPoint(gamerDTO);

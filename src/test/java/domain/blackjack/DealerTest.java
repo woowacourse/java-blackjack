@@ -10,6 +10,7 @@ import static domain.card.FirstCardSelectStrategy.FIRST_CARD_SELECT_STRATEGY;
 
 import domain.card.Card;
 import domain.card.Deck;
+import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -50,5 +51,18 @@ class DealerTest {
         DrawResult drawResult = dealer.draw(deck, FIRST_CARD_SELECT_STRATEGY);
         Assertions.assertThat(drawResult.hasNextChance())
                 .isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("카드 하나가 숨겨진 상태로 조회되는지 검증")
+    void getRawHoldingCardsWithoutFirstCard() {
+        BlackJackGameMachine blackJackGameMachine = new BlackJackGameMachine(
+                HoldingCards.of(FIVE_HEART, QUEEN_HEART));
+        Dealer dealer = new Dealer(blackJackGameMachine);
+        List<Card> rawHoldingCardsWithoutFirstCard = dealer.getRawHoldingCardsWithoutFirstCard();
+        Assertions.assertThat(rawHoldingCardsWithoutFirstCard)
+                .containsExactly(QUEEN_HEART);
+        Assertions.assertThat(dealer.getRawHoldingCards())
+                .containsExactly(FIVE_HEART, QUEEN_HEART);
     }
 }
