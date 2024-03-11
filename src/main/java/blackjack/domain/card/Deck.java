@@ -9,24 +9,28 @@ import java.util.stream.Collectors;
 
 public class Deck {
 
-	private final LinkedList<Card> cards;
+    private final LinkedList<Card> cards;
 
-	public Deck() {
-		this.cards = Arrays.stream(CardShape.values())
-			.flatMap(cardShape -> Arrays.stream(CardNumber.values())
-				.map(number -> new Card(cardShape, number)))
-			.collect(Collectors.toCollection(LinkedList::new));
-	}
+    public Deck() {
+        this.cards = Arrays.stream(CardShape.values())
+                .flatMap(cardShape -> Arrays.stream(CardNumber.values())
+                        .map(number -> new Card(cardShape, number)))
+                .collect(Collectors.toCollection(LinkedList::new));
+    }
 
-	public void shuffle() {
-		Collections.shuffle(cards);
-	}
+    public Deck(LinkedList<Card> cards) {
+        this.cards = cards;
+    }
 
-	public Card draw() {
-		return cards.poll();
-	}
+    public void shuffle() {
+        Collections.shuffle(cards);
+    }
 
-	public List<Card> getCards() {
-		return new ArrayList<>(cards);
-	}
+    public Card draw() {
+        return cards.poll();
+    }
+
+    public List<Card> getCards() {
+        return new ArrayList<>(cards);
+    }
 }
