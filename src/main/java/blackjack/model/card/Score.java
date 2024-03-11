@@ -58,8 +58,8 @@ public class Score {
 
     private static class ScoreCache {
         static final int MIN_VALUE = 1;
-        static final int MAX_VALUE = 22;
-        static final Map<Integer, Score> cache = IntStream.range(MIN_VALUE, MAX_VALUE)
+        static final int MAX_VALUE = 21;
+        static final Map<Integer, Score> cache = IntStream.range(MIN_VALUE, MAX_VALUE + 1)
                 .boxed()
                 .collect(toMap(identity(), Score::new));
 
