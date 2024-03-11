@@ -30,7 +30,7 @@ public class BlackJackGame {
         return Players.from(names, cardDeck);
     }
 
-    public Card getInitDealerStatus() {
+    public Card getDealerFirstCard() {
         return dealer.getCards().getFirstCard();
     }
 

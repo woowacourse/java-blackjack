@@ -29,7 +29,7 @@ public class BlackJackController {
     }
 
     private void runBlackJackGame(BlackJackGame blackJackGame, Players players) {
-        outputView.printInitCardStatus(players, blackJackGame.getInitDealerStatus());
+        outputView.printInitCardStatus(players, blackJackGame.getDealerFirstCard());
 
         List<CardsStatus> playerResult = blackJackGame.playGame(this::playSingleMatch, players);
 
