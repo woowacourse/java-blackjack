@@ -8,6 +8,7 @@ import blackjack.model.referee.MatchResult;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
 import blackjack.view.dto.PlayerMatchResult;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -90,7 +91,7 @@ public class OutputView {
                 .collect(Collectors.groupingBy(PlayerMatchResult::matchResult, Collectors.counting()));
         long winCount = outcomeCounts.getOrDefault(MatchResult.LOSE, 0L);
         long loseCount = outcomeCounts.getOrDefault(MatchResult.WIN, 0L);
-        long tieCount = outcomeCounts.getOrDefault(MatchResult.TIE, 0L);
+        long tieCount = outcomeCounts.getOrDefault(MatchResult.PUSH, 0L);
         return DEALER_MATCH_RESULT_PREFIX + String.format(DEALER_MATCH_RESULT_FORM, winCount, loseCount, tieCount);
     }
 

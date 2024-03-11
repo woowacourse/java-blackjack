@@ -29,7 +29,7 @@ public class Referee {
 
     private MatchResult determineMatchResult(final Player player) {
         if (dealer.isBlackJack() && player.isBlackJack()) {
-            return MatchResult.TIE;
+            return MatchResult.PUSH;
         }
         if (checkPlayerWinning(player)) {
             return MatchResult.WIN;
