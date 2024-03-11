@@ -34,6 +34,10 @@ public class Player {
         return cards.isBlackJack();
     }
 
+    public boolean isBust() {
+        return cards.isBust();
+    }
+
     public boolean canHit() {
         return !cards.isBust();
     }
