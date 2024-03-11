@@ -77,7 +77,7 @@ public class HandTest {
         playingCards.forEach(hand::addCard);
 
         // When
-        boolean isBlackJack = !hand.isNotBlackJack();
+        boolean isBlackJack = !hand.isNotMaximum();
 
         // Then
         Assertions.assertThat(isBlackJack).isTrue();

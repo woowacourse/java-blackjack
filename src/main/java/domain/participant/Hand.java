@@ -39,7 +39,7 @@ public class Hand {
         return Collections.unmodifiableList(playingCards);
     }
 
-    public boolean isNotBlackJack() {
+    public boolean isNotMaximum() {
         return getCardsNumberSum() != BLACKJACK_CONDITION;
     }
 }
