@@ -4,14 +4,13 @@ import domain.Answer;
 import domain.CardDeck;
 import domain.Hands;
 import domain.result.Result;
-
 import java.util.EnumMap;
 import java.util.Map;
 
 public class Dealer extends Participant {
 
     public static final int INIT_HANDS_SIZE = 2;
-    public static final int MIN_HANDS_SUM = 16;
+    public static final int THRESHOLD = 16;
     public static final String NAME = "딜러";
 
     private final CardDeck cardDeck;
@@ -40,7 +39,7 @@ public class Dealer extends Participant {
     }
 
     public void deal() {
-        while (handsSum() <= MIN_HANDS_SUM) {
+        while (isUnderThreshold()) {
             super.add(cardDeck.pop());
         }
     }
@@ -57,5 +56,9 @@ public class Dealer extends Participant {
             dealerResult.put(reversed, dealerResult.getOrDefault(reversed, 0) + 1);
         }
         return dealerResult;
+    }
+
+    private boolean isUnderThreshold() {
+        return handsSum() <= THRESHOLD;
     }
 }

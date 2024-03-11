@@ -1,7 +1,7 @@
 package view;
 
 import static domain.participant.Dealer.INIT_HANDS_SIZE;
-import static domain.participant.Dealer.MIN_HANDS_SUM;
+import static domain.participant.Dealer.THRESHOLD;
 
 import domain.participant.Player;
 import domain.result.Result;
@@ -36,7 +36,7 @@ public class OutputView {
     }
 
     public void printDealerTurnMessage() {
-        System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.%n%n", MIN_HANDS_SUM);
+        System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.%n%n", THRESHOLD);
     }
 
     public void printHandsResult(final ParticipantsDto participantsDto) {
