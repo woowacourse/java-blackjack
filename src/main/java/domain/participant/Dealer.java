@@ -3,6 +3,10 @@ package domain.participant;
 import domain.Answer;
 import domain.CardDeck;
 import domain.Hands;
+import domain.result.Result;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 public class Dealer extends Participant {
 
@@ -43,5 +47,15 @@ public class Dealer extends Participant {
 
     public int countAddedHands() {
         return handsSize() - INIT_HANDS_SIZE;
+    }
+
+    public Map<Result, Integer> getDealerResult(final Players players) {
+        Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
+
+        for (Result value : players.getPlayersResult(this).values()) {
+            Result reversed = value.reverse();
+            dealerResult.put(reversed, dealerResult.getOrDefault(reversed, 0) + 1);
+        }
+        return dealerResult;
     }
 }

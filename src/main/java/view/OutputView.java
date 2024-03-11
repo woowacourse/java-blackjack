@@ -1,10 +1,11 @@
 package view;
 
-import domain.Result;
 import domain.participant.Player;
+import domain.result.Result;
 import dto.DealerHandsDto;
 import dto.ParticipantDto;
 import dto.ParticipantsDto;
+
 import java.util.List;
 import java.util.Map;
 

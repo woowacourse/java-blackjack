@@ -1,8 +1,8 @@
 package domain.participant;
 
 import domain.Hands;
-import domain.Result;
 import domain.card.Card;
+import domain.result.Result;
 
 import java.util.List;
 import java.util.Objects;

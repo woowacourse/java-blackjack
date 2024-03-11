@@ -2,7 +2,6 @@ package controller;
 
 import domain.Answer;
 import domain.CardDeck;
-import domain.Game;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -23,9 +22,7 @@ public class BlackJackController {
 
     public void run() {
         final Players players = Players.from(inputView.readNames());
-        final CardDeck cardDeck = CardDeck.generate();
-        final Dealer dealer = new Dealer(cardDeck);
-        final Game game = new Game(dealer, players);
+        final Dealer dealer = new Dealer(CardDeck.generate());
 
         initHands(players, dealer);
         dealWithPlayers(players, dealer);
@@ -34,7 +31,8 @@ public class BlackJackController {
             dealer.deal();
             printDealerTurnMessage(dealer.countAddedHands());
         }
-        printFinalResult(players, dealer, game);
+
+        printFinalResult(players, dealer);
     }
 
     private void printDealerTurnMessage(final int turn) {
@@ -54,9 +52,9 @@ public class BlackJackController {
         outputView.printStartDeal(DealerHandsDto.from(dealer), ParticipantsDto.of(players));
     }
 
-    private void printFinalResult(final Players players, final Dealer dealer, final Game game) {
+    private void printFinalResult(final Players players, final Dealer dealer) {
         outputView.printHandsResult(ParticipantsDto.of(dealer, players));
-        outputView.printGameResult(game.getDealerResult(), game.getPlayersResult());
+        outputView.printGameResult(dealer.getDealerResult(players), players.getPlayersResult(dealer));
     }
 
     private void deal(final Player player, final Dealer dealer) {
