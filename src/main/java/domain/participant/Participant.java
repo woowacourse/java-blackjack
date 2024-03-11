@@ -3,6 +3,8 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.Cards;
 
+import java.util.Objects;
+
 public class Participant {
 
     protected final Name name;
@@ -43,5 +45,18 @@ public class Participant {
 
     public Cards hand() {
         return hand;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Participant that = (Participant) o;
+        return Objects.equals(name, that.name) && Objects.equals(hand, that.hand);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, hand);
     }
 }
