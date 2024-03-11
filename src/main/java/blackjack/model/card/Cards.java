@@ -62,7 +62,7 @@ public class Cards {
         return calculateCardsTotalScore() > MAX_CARDS_TOTAL;
     }
 
-    public int size() {
+    public int getSize() {
         return cards.size();
     }
 

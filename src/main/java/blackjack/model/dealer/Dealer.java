@@ -35,7 +35,7 @@ public class Dealer {
     }
 
     public int getActionCount() {
-        return cards.size() - NON_ACTION_COUNT;
+        return cards.getSize() - NON_ACTION_COUNT;
     }
 
     public Card getFirstCard() {
