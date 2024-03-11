@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String DELEMITER = ", ";
-    public static void printInitialGame(List<Name> names) {
+    public static void printInitialStep(List<Name> names) {
         System.out.println("\n딜러와 %s에게 2장을 나누었습니다.".formatted(buildGamerNames(names)));
     }
     private static String buildGamerNames(List<Name> names) {
@@ -32,10 +32,6 @@ public class OutputView {
         return card.getCardNumber().getSymbol() + card.getCardType().getType();
     }
 
-    private static String buildCardsString(List<Card> cards) {
-        return cards.stream().map(OutputView::buildCardString).collect(Collectors.joining(DELEMITER));
-    }
-
     public static void printPlayerCards(Name name, List<Card> cards) {
         System.out.println(buildNameCards(name.name(),cards));
     }
@@ -50,7 +46,11 @@ public class OutputView {
         return "%s카드: %s".formatted(name, cardString);
     }
 
-    public static void printDealerTurn(int dealerDrawCount) {
+    private static String buildCardsString(List<Card> cards) {
+        return cards.stream().map(OutputView::buildCardString).collect(Collectors.joining(DELEMITER));
+    }
+
+    public static void printDealerHitCount(int dealerDrawCount) {
         System.out.println();
         System.out.print("딜러는 16이하라 한장의 카드를 더 받았습니다.\n".repeat(dealerDrawCount));
         System.out.println();
@@ -60,10 +60,10 @@ public class OutputView {
         System.out.println("딜러 카드: %s - %s".formatted(buildCardsString(dealerCards), buildTotalScore(dealerScore)));
     }
 
+
     public static void printPlayerStatus(Name playerName, List<Card> cards, int playerScore) {
         System.out.println("%s - %s".formatted(buildNameCards(playerName.name(),cards), buildTotalScore(playerScore)));
     }
-
 
     private static String buildTotalScore(int totalScore) {
         return "결과: %d".formatted(totalScore);
