@@ -12,7 +12,7 @@ public class Card {
         this.cardPattern = cardPattern;
     }
 
-    public int getFirstCardNumber() {
+    public int getDefaultCardNumber() {
         return cardNumber.getCardNumber(FIRST_POSITION_INDEX);
     }
 
@@ -20,7 +20,7 @@ public class Card {
         return cardNumber == checkNumber;
     }
 
-    public String getCard() {
+    public String getCardHand() {
         return cardNumber.number + cardPattern.name;
     }
 }
