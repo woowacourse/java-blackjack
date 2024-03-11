@@ -19,6 +19,7 @@ class PlayerTest {
         Player player = new Player("ted");
         CardProperties cardProperties = new CardProperties(CardPattern.CLOVER, CardNumber.FIVE);
         Card card = new Card(cardProperties);
+
         //when
         player.receiveCard(card);
         List<Card> playerDeck = player.getHandDeck();
@@ -53,9 +54,10 @@ class PlayerTest {
         Card card = new Card(cardProperties1);
         Card card2 = new Card(cardProperties2);
 
-        //when
         player.receiveCard(card);
         player.receiveCard(card2);
+
+        //when
         int totalScore = player.calculateTotalScore();
 
         //then

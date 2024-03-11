@@ -54,9 +54,10 @@ class DealerTest {
         Card card = new Card(cardProperties1);
         Card card2 = new Card(cardProperties2);
 
-        //when
         dealer.receiveCard(card);
         dealer.receiveCard(card2);
+
+        //when
         int totalScore = dealer.calculateTotalScore();
 
         //then
