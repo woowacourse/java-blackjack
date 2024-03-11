@@ -27,16 +27,16 @@ class InputViewTest {
         void emptyInputException(String input) {
             Assertions.assertThatThrownBy(() -> InputView.readNames(() -> input))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("이름에 공백이나 null을 넣을 수 없습니다.");
+                    .hasMessage("입력값에 공백이나 null을 넣을 수 없습니다.");
         }
 
-        @DisplayName("쉼표로 구분된 이름이 null 혹은 빈 문자열이면 예외를 발생한다.")
+        @DisplayName("입력값 끝에 쉼표가 있을 경우 예외를 발생한다.")
         @ParameterizedTest
         @ValueSource(strings = {"a,b,"})
         void emptyNameException(String input) {
             Assertions.assertThatThrownBy(() -> InputView.readNames(() -> input))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("이름에 공백이나 null을 넣을 수 없습니다.");
+                    .hasMessage("입력값 끝에 쉼표(,)를 넣을 수 없습니다.");
         }
 
         @Test
@@ -65,7 +65,7 @@ class InputViewTest {
         void emptyInputException(String input) {
             Assertions.assertThatThrownBy(() -> InputView.readAnswer(() -> input, "test"))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("이름에 공백이나 null을 넣을 수 없습니다.");
+                    .hasMessage("입력값에 공백이나 null을 넣을 수 없습니다.");
         }
 
         @Test

@@ -27,13 +27,13 @@ public class InputView {
 
     private static void validateEmpty(String input) {
         if (input == null || input.isBlank()) {
-            throw new IllegalArgumentException("이름에 공백이나 null을 넣을 수 없습니다.");
+            throw new IllegalArgumentException("입력값에 공백이나 null을 넣을 수 없습니다.");
         }
     }
 
     private static void validateDelimiter(String input) {
         if (input.endsWith(DELIMITER)) {
-            throw new IllegalArgumentException("이름에 공백이나 null을 넣을 수 없습니다.");
+            throw new IllegalArgumentException("입력값 끝에 쉼표(,)를 넣을 수 없습니다.");
         }
     }
 
