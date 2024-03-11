@@ -12,12 +12,12 @@ public class Card {
         this.cardPattern = cardPattern;
     }
 
-    public int getDefaultCardNumber() {
+    public int getDefaultCardScore() {
         return cardNumber.getCardNumber(FIRST_POSITION_INDEX);
     }
 
-    public boolean isSameCardNumber(CardNumber checkNumber) {
-        return cardNumber == checkNumber;
+    public boolean isAceCard() {
+        return cardNumber == CardNumber.ACE;
     }
 
     public String getCardHand() {

@@ -35,7 +35,7 @@ public class Cards {
 
     public int countMinimumScore() {
         return cards.stream()
-                .mapToInt(Card::getDefaultCardNumber)
+                .mapToInt(Card::getDefaultCardScore)
                 .sum();
     }
 
@@ -47,7 +47,7 @@ public class Cards {
 
     private boolean isAceCardExist() {
         return cards.stream()
-                .anyMatch(card -> card.isSameCardNumber(CardNumber.ACE));
+                .anyMatch(Card::isAceCard);
     }
 
     public int countCard() {
