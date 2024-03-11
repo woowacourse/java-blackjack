@@ -1,5 +1,6 @@
 package controller;
 
+import domain.blackjack.BetAmount;
 import domain.blackjack.BlackJack;
 import domain.blackjack.BlackJackResult;
 import domain.participant.Dealer;
@@ -8,6 +9,7 @@ import domain.participant.Participants;
 import view.InputView;
 import view.OutputView;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class BlackJackController {
@@ -17,6 +19,7 @@ public class BlackJackController {
     public void run() {
         List<String> names = InputView.inputParticipantName();
         Participants participants = new Participants(names);
+        LinkedHashMap<Participant, Integer> betAmount = createBetAmount(participants);
         Dealer dealer = new Dealer();
         BlackJack blackJack = new BlackJack(dealer, participants);
 
@@ -25,7 +28,15 @@ public class BlackJackController {
         dealerHit(blackJack);
 
         printScore(dealer, participants);
-        printResult(blackJack);
+        printResult(blackJack, betAmount);
+    }
+
+    private LinkedHashMap<Participant, Integer> createBetAmount(Participants participants) {
+        LinkedHashMap<Participant, Integer> betAmount = new LinkedHashMap<>();
+        for (Participant participant : participants.getValue()) {
+            betAmount.put(participant, InputView.inputBetAmount(participant.getName()));
+        }
+        return betAmount;
     }
 
     private void beginBlackJack(Participants participants, Dealer dealer) {
@@ -58,8 +69,9 @@ public class BlackJackController {
         }
     }
 
-    private void printResult(BlackJack blackJack) {
+    private void printResult(BlackJack blackJack, LinkedHashMap<Participant, Integer> bet) {
         BlackJackResult blackJackResult = blackJack.saveParticipantResult();
+        BetAmount betAmount = new BetAmount(bet, blackJackResult);
         OutputView.printBlackJackResult(blackJackResult);
     }
 }
