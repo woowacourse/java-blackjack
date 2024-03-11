@@ -53,7 +53,7 @@ class HandTest {
     @DisplayName("블랙잭 여부를 판단한다.")
     @ParameterizedTest
     @MethodSource("provideCardsWithBlackjack")
-    void isBlackjackTest(List<Card> cards, boolean isBlackjack) {
+    void isBlackjack(List<Card> cards, boolean isBlackjack) {
         Hand hand = new Hand(cards);
         assertThat(hand.isBlackjack()).isEqualTo(isBlackjack);
     }
@@ -61,7 +61,7 @@ class HandTest {
     @DisplayName("최적의 점수를 계산한다.")
     @ParameterizedTest
     @MethodSource("provideCardsWithOptimizedScore")
-    void getOptimizedScoreTest(List<Card> cards, int score) {
+    void getOptimizedScore(List<Card> cards, int score) {
         Hand hand = new Hand(cards);
         assertThat(hand.calculateOptimizedScore()).isEqualTo(score);
     }
@@ -69,7 +69,7 @@ class HandTest {
     @DisplayName("카드의 합이 입력된 값을 넘는 지 판단한다.")
     @ParameterizedTest
     @MethodSource("provideCardsWithScoreGreaterThan")
-    void isTotalScoreGreaterThanTest(List<Card> cards, int score, boolean isGreaterThan) {
+    void isTotalScoreGreaterThan(List<Card> cards, int score, boolean isGreaterThan) {
         Hand hand = new Hand(cards);
         assertThat(hand.isTotalScoreGreaterThan(score)).isEqualTo(isGreaterThan);
     }
@@ -77,7 +77,7 @@ class HandTest {
     @DisplayName("Bust 여부를 판단한다.")
     @ParameterizedTest
     @MethodSource("provideCardsWithBust")
-    void isBustTest(List<Card> cards, boolean isBust) {
+    void isBust(List<Card> cards, boolean isBust) {
         Hand hand = new Hand(cards);
         assertThat(hand.isBust()).isEqualTo(isBust);
     }

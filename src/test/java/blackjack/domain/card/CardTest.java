@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class CardTest {
     @DisplayName("올바르게 카드의 Number와 Shape를 반환한다.")
     @Test
-    void getSymbolAndShapeTest() {
+    void getSymbolAndShape() {
         Number number = Number.EIGHT;
         Shape shape = Shape.CLOVER;
         Card card = new Card(number, shape);
@@ -18,7 +18,7 @@ class CardTest {
 
     @DisplayName("올바르게 점수를 반환한다.")
     @Test
-    void getScoreTest() {
+    void getScore() {
         Number number = Number.FIVE;
         Shape shape = Shape.CLOVER;
         Card card = new Card(number, shape);
@@ -27,7 +27,7 @@ class CardTest {
 
     @DisplayName("에이스를 판별한다")
     @Test
-    void isAceTest() {
+    void isAce() {
         Number number = Number.ACE;
         Shape shape = Shape.HEART;
         Card card = new Card(number, shape);

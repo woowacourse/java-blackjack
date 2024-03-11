@@ -21,7 +21,7 @@ class ParticipantTest {
 
     @DisplayName("입력된 숫자만큼 카드를 반환한다.")
     @Test
-    void getCardsByCountTest() {
+    void getCardsByCount() {
         List<Number> numbers = List.of(Number.ACE, Number.FOUR, Number.NINE);
         List<Shape> shapes = List.of(Shape.SPADE, Shape.DIAMOND, Shape.CLOVER);
         TestParticipant participant = createParticipant(numbers, shapes, "감자");

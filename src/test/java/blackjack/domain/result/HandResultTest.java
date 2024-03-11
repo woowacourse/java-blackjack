@@ -20,7 +20,7 @@ public class HandResultTest {
     @DisplayName("입력된 결과와 반대되는 결과를 반환한다.")
     @ParameterizedTest
     @MethodSource("provideHandResultWithOppositeResult")
-    void getOppositeTest(HandResult handResult, HandResult oppositeResult) {
+    void resultGetOpposite(HandResult handResult, HandResult oppositeResult) {
         assertThat(handResult.getOpposite()).isEqualTo(oppositeResult);
     }
 }

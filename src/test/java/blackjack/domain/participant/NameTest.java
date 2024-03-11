@@ -12,7 +12,7 @@ class NameTest {
     @DisplayName("이름 길이가 1 이상 5 이하가 아니면 예외가 발생한다.")
     @ParameterizedTest
     @ValueSource(strings = {"", "gambas"})
-    void invalidNameLengthTest(String name) {
+    void invalidNameLength(String name) {
         assertThatThrownBy(() -> new Name(name))
                 .isInstanceOf(InvalidNameLengthException.class);
     }
@@ -20,7 +20,7 @@ class NameTest {
     @DisplayName("이름에 영문, 한글이 아닌 문자가 포함된 경우 예외가 발생한다.")
     @ParameterizedTest
     @ValueSource(strings = {"감자s~", "마so-", "pobi!", "po bi"})
-    void nonAlphabeticNameTest(String name) {
+    void nonAlphabeticName(String name) {
         assertThatThrownBy(() -> new Name(name))
                 .isInstanceOf(NonAlphabeticNameException.class);
     }

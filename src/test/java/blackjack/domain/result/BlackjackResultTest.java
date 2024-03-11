@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 class BlackjackResultTest {
     @DisplayName("딜러의 승패 결과는 플레이어의 승패 결과를 반대로 반환한다.")
     @Test
-    void getDealerResultsTest() {
+    void getDealerResults() {
         Map<Player, HandResult> playerResults = Map.of(generatePlayer(), HandResult.WIN,
                 generatePlayer(), HandResult.WIN,
                 generatePlayer(), HandResult.DRAW,

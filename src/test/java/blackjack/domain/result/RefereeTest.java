@@ -27,7 +27,7 @@ class RefereeTest {
     @DisplayName("게임의 최종 결과를 생성한다.")
     @ParameterizedTest
     @MethodSource("provideParticipantsWithHandResult")
-    void generateResultTest(List<Number> numbers, HandResult playerHandResult) {
+    void generateResult(List<Number> numbers, HandResult playerHandResult) {
         Deck deck = new CustomDeck(numbers);
         HandGenerator handGenerator = new HandGenerator(deck);
         List<Name> playerName = List.of(new Name("gamza"));

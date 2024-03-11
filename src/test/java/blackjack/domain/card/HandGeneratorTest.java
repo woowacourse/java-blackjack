@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class HandGeneratorTest {
     @DisplayName("카드를 2장 가진 Hand를 생성한다.")
     @Test
-    void generateHandTest() {
+    void generateHand() {
         List<Number> numbers = List.of(Number.ACE, Number.EIGHT);
         List<Shape> shapes = List.of(Shape.SPADE, Shape.CLOVER);
         Deck deck = new CustomDeck(numbers, shapes);

@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.HandGenerator;
 import blackjack.domain.card.Number;
@@ -33,7 +32,7 @@ class DealerTest {
 
     @DisplayName("딜러는 처음에 한 장의 카드를 오픈한다.")
     @Test
-    void initialOpenedCardsTest() {
+    void dealerInitialOpenedCards() {
         List<Number> numbers = List.of(Number.ACE, Number.EIGHT);
         List<Shape> shapes = List.of(Shape.SPADE, Shape.CLOVER);
         Dealer dealer = createDealer(numbers, shapes);
@@ -49,7 +48,7 @@ class DealerTest {
     @DisplayName("딜러가 Hit을 할 수 있는지 판단한다.")
     @ParameterizedTest
     @MethodSource("provideNumbersWithCanHit")
-    void canHitTest(List<Number> numbers, boolean canHit) {
+    void dealerCanHit(List<Number> numbers, boolean canHit) {
         Deck deck = new CustomDeck(numbers);
         HandGenerator handGenerator = new HandGenerator(deck);
         Dealer dealer = new Dealer(handGenerator);

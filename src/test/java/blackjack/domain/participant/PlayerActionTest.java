@@ -22,7 +22,7 @@ class PlayerActionTest {
     @DisplayName("유효하지 않은 명령어가 입력되면 예외가 발생한다.")
     @ParameterizedTest
     @ValueSource(strings = {"Y", "N", " ", "yn", "mason"})
-    void invalidHitCommandTest(String command) {
+    void invalidHitCommand(String command) {
         assertThatThrownBy(() -> PlayerAction.getAction(command))
                 .isInstanceOf(InvalidHitCommandException.class);
     }
@@ -30,7 +30,7 @@ class PlayerActionTest {
     @DisplayName("입력된 명령어에 해당하는 PlayerAction을 반환한다.")
     @ParameterizedTest
     @MethodSource("provideCommandWithAction")
-    void getActionTest(String command, PlayerAction playerAction) {
+    void getAction(String command, PlayerAction playerAction) {
         assertThat(PlayerAction.getAction(command))
                 .isEqualTo(playerAction);
     }

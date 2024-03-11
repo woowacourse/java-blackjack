@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 class PlayersTest {
     @DisplayName("플레이어가 한 명 미만이면 예외가 발생한다.")
     @Test
-    void invalidPlayerCountTest() {
+    void invalidPlayerCount() {
         Deck deck = RandomDeck.getInstance();
         HandGenerator handGenerator = new HandGenerator(deck);
 
