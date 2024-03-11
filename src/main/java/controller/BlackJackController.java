@@ -87,10 +87,10 @@ public class BlackJackController {
             outputView.printBlackJack();
             return true;
         }
-        return Answer.STAY.equals(answer);
+        return !answer.isHit();
     }
 
     private boolean shouldShowHands(final boolean handsChanged, final Answer answer) {
-        return (Answer.STAY.equals(answer) && !handsChanged) || Answer.HIT.equals(answer);
+        return answer.isHit() || !handsChanged;
     }
 }

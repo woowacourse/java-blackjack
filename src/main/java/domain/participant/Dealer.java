@@ -4,6 +4,7 @@ import domain.Answer;
 import domain.CardDeck;
 import domain.Hands;
 import domain.result.Result;
+
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -33,7 +34,7 @@ public class Dealer extends Participant {
     }
 
     public void deal(final Player player, final Answer answer) {
-        if (Answer.HIT.equals(answer)) {
+        if (answer.isHit()) {
             player.add(cardDeck.pop());
         }
     }

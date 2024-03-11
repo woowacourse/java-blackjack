@@ -18,4 +18,8 @@ public enum Answer {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 대답입니다."));
     }
+
+    public boolean isHit() {
+        return HIT.equals(this);
+    }
 }
