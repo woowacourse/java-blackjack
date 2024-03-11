@@ -1,7 +1,6 @@
 package blackjack.domain.card;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +23,7 @@ class CardTest {
 
         var result = sut.isAce();
 
-        org.junit.jupiter.api.Assertions.assertTrue(result);
+        assertThat(result).isTrue();
     }
 
     @Test
@@ -34,6 +33,6 @@ class CardTest {
 
         var result = sut.isAce();
 
-        org.junit.jupiter.api.Assertions.assertFalse(result);
+        assertThat(result).isFalse();
     }
 }

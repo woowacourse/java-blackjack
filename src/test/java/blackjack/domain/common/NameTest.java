@@ -1,6 +1,7 @@
 package blackjack.domain.common;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.common.Name;
 import org.junit.jupiter.api.Assertions;
@@ -21,6 +22,8 @@ public class NameTest {
     @Test
     @DisplayName("문자열에 공백이 포함되는 이름을 생성될 수 없다.")
     void Name_Instance_not_include_blank() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Name("초 롱"));
+        assertThatThrownBy(() -> new Name("초 롱"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("초 롱 는 공백을 포함 하고 있습니다");
     }
 }

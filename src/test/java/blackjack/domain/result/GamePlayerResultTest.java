@@ -3,8 +3,6 @@ package blackjack.domain.result;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.domain.common.Name;
-import blackjack.domain.result.GamePlayerResult;
-import blackjack.domain.result.ResultStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

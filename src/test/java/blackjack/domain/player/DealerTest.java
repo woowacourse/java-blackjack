@@ -2,8 +2,6 @@ package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardSymbol;
@@ -38,7 +36,7 @@ public class DealerTest {
         Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
         var sut = new Dealer(name, cards);
 
-        assertTrue(sut.isReceivable());
+        assertThat(sut.isReceivable()).isTrue();
     }
 
     @Test
@@ -48,7 +46,7 @@ public class DealerTest {
         Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.JACK, CardValue.KING));
         var sut = new Dealer(name, cards);
 
-        assertFalse(sut.isReceivable());
+        assertThat(sut.isReceivable()).isFalse();
     }
 
 

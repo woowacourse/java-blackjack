@@ -1,8 +1,7 @@
 package blackjack.domain.common;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.common.Names;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -24,9 +23,9 @@ public class NamesTest {
     public void Names_Instance_not_include_duplicated_name() {
         List<String> values = List.of("초롱", "조이썬", "초롱");
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            Names.from(values);
-        });
+        assertThatThrownBy(() -> Names.from(values))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("중복된 이름이 있습니다.");
     }
 
     @Test
@@ -34,8 +33,8 @@ public class NamesTest {
     public void Names_Instance_limit_size() {
         List<String> values = List.of("초롱","도비","조이썬","제우스","폰드","호티","배키","켬미");
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            Names.from(values);
-        });
+        assertThatThrownBy(() -> Names.from(values))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("7명 까지만 가능합니다.");
     }
 }

@@ -1,8 +1,8 @@
 package blackjack.domain.player;
 
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.CardValue;
 import blackjack.fixture.PlayerFixture;
@@ -18,7 +18,7 @@ public class GamePlayerTest {
 
         var result = sut.isReceivable();
 
-        assertTrue(result);
+        assertThat(result).isTrue();
     }
 
     @Test
@@ -28,6 +28,6 @@ public class GamePlayerTest {
 
         var result = sut.isReceivable();
 
-        assertFalse(result);
+        assertThat(result).isFalse();
     }
 }
