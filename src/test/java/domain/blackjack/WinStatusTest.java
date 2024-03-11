@@ -20,7 +20,7 @@ class WinStatusTest {
 
         Participant participant = new Participant(new Name("one"));
         participant.receiveCard(new Card(Shape.HEART, Rank.KING));
-        participant.receiveCard(new Card(Shape.HEART, Rank.ACE));
+        participant.receiveCard(new Card(Shape.HEART, Rank.TEN));
 
         dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
 

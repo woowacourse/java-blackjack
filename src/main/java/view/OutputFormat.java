@@ -1,6 +1,6 @@
 package view;
 
-import domain.blackjack.BetAmount;
+import domain.blackjack.BettingResult;
 import domain.card.Card;
 import domain.participant.Name;
 import domain.participant.Participant;
@@ -40,8 +40,8 @@ public class OutputFormat {
         return String.format("%s - 결과: %d", formatHands(participant), participant.getScore());
     }
 
-    public String formatDealerResult(BetAmount betAmount) {
-        return String.format("딜러: %d", (int) betAmount.getDealerPayout());
+    public String formatDealerResult(BettingResult bettingResult) {
+        return String.format("딜러: %d", (int) bettingResult.getDealerPayout());
     }
 
     public String formatBlackJackResult(Participant participant, double payout) {

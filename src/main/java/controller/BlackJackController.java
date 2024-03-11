@@ -1,6 +1,7 @@
 package controller;
 
 import domain.blackjack.BetAmount;
+import domain.blackjack.BettingResult;
 import domain.blackjack.BlackJack;
 import domain.blackjack.BlackJackResult;
 import domain.participant.Dealer;
@@ -19,7 +20,7 @@ public class BlackJackController {
     public void run() {
         List<String> names = InputView.inputParticipantName();
         Participants participants = new Participants(names);
-        LinkedHashMap<Participant, Integer> betAmount = createBetAmount(participants);
+        LinkedHashMap<Participant, BetAmount> betAmount = createBetAmount(participants);
         Dealer dealer = new Dealer();
         BlackJack blackJack = new BlackJack(dealer, participants);
 
@@ -31,10 +32,10 @@ public class BlackJackController {
         printResult(blackJack, betAmount);
     }
 
-    private LinkedHashMap<Participant, Integer> createBetAmount(Participants participants) {
-        LinkedHashMap<Participant, Integer> betAmount = new LinkedHashMap<>();
+    private LinkedHashMap<Participant, BetAmount> createBetAmount(Participants participants) {
+        LinkedHashMap<Participant, BetAmount> betAmount = new LinkedHashMap<>();
         for (Participant participant : participants.getValue()) {
-            betAmount.put(participant, InputView.inputBetAmount(participant.getName()));
+            betAmount.put(participant, new BetAmount(InputView.inputBetAmount(participant.getName())));
         }
         return betAmount;
     }
@@ -69,9 +70,9 @@ public class BlackJackController {
         }
     }
 
-    private void printResult(BlackJack blackJack, LinkedHashMap<Participant, Integer> bet) {
+    private void printResult(BlackJack blackJack, LinkedHashMap<Participant, BetAmount> bet) {
         BlackJackResult blackJackResult = blackJack.saveParticipantResult();
-        BetAmount betAmount = new BetAmount(bet, blackJackResult);
-        OutputView.printBlackJackResult(betAmount);
+        BettingResult bettingResult = new BettingResult(bet, blackJackResult);
+        OutputView.printBlackJackResult(bettingResult);
     }
 }

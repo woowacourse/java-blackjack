@@ -1,33 +1,20 @@
 package domain.blackjack;
 
-import domain.participant.Participant;
-
-import java.util.LinkedHashMap;
-import java.util.Set;
-
 public class BetAmount {
+    private final int betAmount;
 
-    private final LinkedHashMap<Participant, Integer> bet;
-    private final BlackJackResult blackJackResult;
-
-    public BetAmount(LinkedHashMap<Participant, Integer> bet, BlackJackResult blackJackResult) {
-        this.bet = bet;
-        this.blackJackResult = blackJackResult;
+    public BetAmount(int betAmount) {
+        validate(betAmount);
+        this.betAmount = betAmount;
     }
 
-    public double getPayout(Participant participant) {
-        return bet.get(participant) * blackJackResult.getWinStatus(participant).getBetMultiplier();
-    }
-
-    public double getDealerPayout() {
-        double total = 0;
-        for (Participant participant : bet.keySet()) {
-            total += getPayout(participant);
+    private void validate(int betAmount) {
+        if (betAmount < 1000) {
+            throw new IllegalArgumentException("배팅 금액은 1000원 이상부터 가능합니다.");
         }
-        return total * -1;
     }
 
-    public Set<Participant> getKey() {
-        return bet.keySet();
+    public int getBetAmount() {
+        return betAmount;
     }
 }

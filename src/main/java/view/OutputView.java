@@ -1,6 +1,6 @@
 package view;
 
-import domain.blackjack.BetAmount;
+import domain.blackjack.BettingResult;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Name;
@@ -49,14 +49,14 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printBlackJackResult(BetAmount betAmount) {
+    public static void printBlackJackResult(BettingResult bettingResult) {
         System.out.println();
         System.out.println("## 최종 수익");
-        System.out.printf(outputFormat.formatDealerResult(betAmount));
+        System.out.printf(outputFormat.formatDealerResult(bettingResult));
         System.out.println();
 
-        for (Participant participant : betAmount.getKey()) {
-            System.out.println(outputFormat.formatBlackJackResult(participant, betAmount.getPayout(participant)));
+        for (Participant participant : bettingResult.getKey()) {
+            System.out.println(outputFormat.formatBlackJackResult(participant, bettingResult.getPayout(participant)));
         }
     }
 }
