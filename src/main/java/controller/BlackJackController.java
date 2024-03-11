@@ -3,7 +3,7 @@ package controller;
 import card.CardDeck;
 import cardGame.BlackJackGame;
 import cardGame.SingleMatch;
-import controller.dto.SinglePlayerResultDto;
+import controller.dto.WinningResult;
 import java.util.List;
 import player.Players;
 import player.dto.SinglePlayerStatusDto;
@@ -41,7 +41,7 @@ public class BlackJackController {
     }
 
     private void showResult(BlackJackGame blackJackGame, Players players) {
-        List<SinglePlayerResultDto> result = blackJackGame.getPlayersResult(players);
+        List<WinningResult> result = blackJackGame.getPlayersResult(players);
         outputView.printDealerResult(blackJackGame.getDealerResult(players));
         outputView.printPlayersResult(result);
     }

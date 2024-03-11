@@ -2,7 +2,7 @@ package view;
 
 import card.Card;
 import card.Cards;
-import controller.dto.SinglePlayerResultDto;
+import controller.dto.WinningResult;
 import dealer.dto.DealerGameResult;
 import java.util.Collections;
 import java.util.List;
@@ -57,10 +57,10 @@ public class OutputView {
         }
     }
 
-    public void printPlayersResult(List<SinglePlayerResultDto> playerResult) {
+    public void printPlayersResult(List<WinningResult> playerResult) {
         Collections.reverse(playerResult);
 
-        for (SinglePlayerResultDto result : playerResult) {
+        for (WinningResult result : playerResult) {
             printSinglePlayerResult(result);
         }
     }
@@ -73,7 +73,7 @@ public class OutputView {
                         + GameResultSymbol.LOSE_SYMBOL.symbolName);
     }
 
-    private void printSinglePlayerResult(SinglePlayerResultDto playerResult) {
+    private void printSinglePlayerResult(WinningResult playerResult) {
         System.out.println(playerResult.name().getValue() + PARTICIPANT_RESULT_SYMBOL + GameResultSymbol.changeToSymbol(
                 playerResult.isWinner()).symbolName);
     }

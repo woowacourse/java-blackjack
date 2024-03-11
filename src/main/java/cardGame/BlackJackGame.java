@@ -2,7 +2,7 @@ package cardGame;
 
 import card.Card;
 import card.CardDeck;
-import controller.dto.SinglePlayerResultDto;
+import controller.dto.WinningResult;
 import dealer.Dealer;
 import dealer.dto.DealerGameResult;
 import java.util.ArrayList;
@@ -50,9 +50,9 @@ public class BlackJackGame {
         return new SinglePlayerStatusDto(new Name(DEALER_NAME), dealer.getCards());
     }
 
-    public List<SinglePlayerResultDto> getPlayersResult(Players players) {
+    public List<WinningResult> getPlayersResult(Players players) {
         return players.getPlayers().stream()
-                .map(player -> new SinglePlayerResultDto(player.getName(), player.isWinner(dealer.getCardScore())))
+                .map(player -> new WinningResult(player.getName(), player.isWinner(dealer.getCardScore())))
                 .collect(Collectors.toList());
     }
 
