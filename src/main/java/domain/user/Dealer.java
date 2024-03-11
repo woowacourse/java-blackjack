@@ -18,8 +18,4 @@ public class Dealer extends User {
         return deck.isAdd();
     }
 
-    @Override
-    public boolean isPlayer() {
-        return false;
-    }
 }

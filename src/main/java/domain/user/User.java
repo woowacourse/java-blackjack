@@ -24,8 +24,6 @@ public abstract class User {
         return userDeck.isBust();
     }
 
-    public abstract boolean isPlayer();
-
     public Name getName() {
         return name;
     }
