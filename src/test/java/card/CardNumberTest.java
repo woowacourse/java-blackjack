@@ -16,4 +16,10 @@ class CardNumberTest {
                 .hasMessage("가능한 범위의 점수 값이 아닙니다.");
     }
 
+    @ParameterizedTest
+    @ValueSource(ints = {1})
+    @DisplayName("받은 position에 맞는 Score을 돌려준다.")
+    void getCardNumberTest(int cardPosition) {
+        Assertions.assertThat(CardNumber.ACE.getCardNumber(cardPosition)).isEqualTo(11);
+    }
 }
