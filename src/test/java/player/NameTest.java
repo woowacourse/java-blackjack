@@ -26,4 +26,13 @@ class NameTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름은 빈값이 될 수 없습니다.");
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"pola", "jazz", "hogi"})
+    @DisplayName("이름에 담긴 값을 가져온다.")
+    void getNameValue(String inputName) {
+        Name name = new Name(inputName);
+
+        Assertions.assertThat(name.getValue()).isEqualTo(inputName);
+    }
 }
