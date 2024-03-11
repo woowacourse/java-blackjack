@@ -60,10 +60,10 @@ public class BlackjackRunner {
 
     private State hitOrBust(User user, TotalDeck totalDeck) {
         user.addCard(totalDeck.getNewCard());
-        return hitOrBust(user);
+        return hitResultState(user);
     }
 
-    private State hitOrBust(User user) {
+    private State hitResultState(User user) {
         if (user.busted()) {
             return BUST;
         }
