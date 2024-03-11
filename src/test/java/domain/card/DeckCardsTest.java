@@ -19,8 +19,8 @@ class DeckCardsTest {
     void draw_NoException() {
         DeckCards deckCards = DeckCards.from(new SequentialCardGenerator());
         Card drawnCard = deckCards.draw();
-        Assertions.assertThat(drawnCard.getRank()).isEqualTo(Rank.ACE);
-        Assertions.assertThat(drawnCard.getSymbol()).isEqualTo(Symbol.SPADE);
+        Assertions.assertThat(drawnCard.getRank()).isEqualTo(Rank.KING);
+        Assertions.assertThat(drawnCard.getSymbol()).isEqualTo(Symbol.CLUB);
     }
 
     @Test

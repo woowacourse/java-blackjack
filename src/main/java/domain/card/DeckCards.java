@@ -1,20 +1,21 @@
 package domain.card;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.stream.IntStream;
 import strategy.CardGenerator;
 
 public class DeckCards {
 
-    private final List<Card> cards;
+    private final Queue<Card> cards;
 
-    private DeckCards(List<Card> cards) {
+    private DeckCards(Queue<Card> cards) {
         this.cards = cards;
     }
 
     public static DeckCards from(CardGenerator cardGenerator) {
-        List<Card> generatedCards = new ArrayList<>(cardGenerator.generate());
+        Queue<Card> generatedCards = new LinkedList<>(cardGenerator.generate());
         return new DeckCards(generatedCards);
     }
 
@@ -31,6 +32,6 @@ public class DeckCards {
         if (cards.isEmpty()) {
             throw new IllegalStateException("[ERROR] 카드를 모두 사용하였습니다.");
         }
-        return cards.remove(cards.size() - 1);
+        return cards.poll();
     }
 }

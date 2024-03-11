@@ -1,16 +1,14 @@
 package domain.card;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import strategy.CardGenerator;
 
 public class OneCardGenerator implements CardGenerator {
 
     @Override
-    public List<Card> generate() {
-        List<Card> cards = new ArrayList<>();
-        cards.add(new Card(Rank.KING, Symbol.CLUB));
-
-        return List.copyOf(cards);
+    public Queue<Card> generate() {
+        return new LinkedList<>(List.of(new Card(Rank.KING, Symbol.CLUB)));
     }
 }
