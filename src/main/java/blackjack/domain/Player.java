@@ -8,10 +8,18 @@ public class Player extends Participant {
         super(name);
     }
 
-    public boolean draw(BooleanSupplier supplier, Deck deck) {
+    public PlayerState draw(BooleanSupplier supplier, Deck deck) {
         if (supplier.getAsBoolean()) {
-            return addCard(deck.draw());
+            addCard(deck.draw());
+            return canNextDraw();
         }
-        return false;
+        return PlayerState.FINISHED;
+    }
+
+    private PlayerState canNextDraw() {
+        if (isBurst()) {
+            return PlayerState.FINISHED;
+        }
+        return PlayerState.RUNNING;
     }
 }

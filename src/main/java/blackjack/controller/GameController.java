@@ -45,7 +45,7 @@ public class GameController {
 
     private static void confirmDealerHands(Dealer dealer, Deck deck) {
         System.out.println(); // TODO 뷰로직의 책임으로 옮기기
-        while (dealer.draw(deck)) {
+        while (dealer.draw(deck) == PlayerState.RUNNING) {
             OutputView.printDealerDrawMessage(dealer);
         }
         System.out.println();
@@ -58,10 +58,10 @@ public class GameController {
     }
 
     private static void askDrawToPlayer(Player player, Deck deck) {
-        boolean isDraw = true;
-        while (isDraw) {
+        PlayerState playerState = PlayerState.RUNNING;
+        while (playerState == PlayerState.RUNNING) {
             OutputView.printAskDrawMessage(player.getName());
-            isDraw = player.draw(InputView::askDraw, deck);
+            playerState = player.draw(InputView::askDraw, deck);
             OutputView.printParticipantHands(player);
         }
     }

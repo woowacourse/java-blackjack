@@ -12,12 +12,11 @@ public class Dealer extends Participant {
         super(DEALER_NAME);
     }
 
-    // TODO이 메서드만 보고 어떤 의미를 나타내는지 파악이 힘듦
-    public boolean draw(Deck deck) {
+    public PlayerState draw(Deck deck) {
         if (shouldDraw()) {
-            return addCard(deck.draw());
+            addCard(deck.draw());
         }
-        return false;
+        return canNextDraw();
     }
 
     public String getFirstCardName() {
@@ -29,6 +28,13 @@ public class Dealer extends Participant {
         return hands.getHands()
                 .get(0)
                 .getCardName();
+    }
+
+    private PlayerState canNextDraw() {
+        if (shouldDraw()) {
+            return PlayerState.RUNNING;
+        }
+        return PlayerState.FINISHED;
     }
 
     private boolean shouldDraw() {
