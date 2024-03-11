@@ -1,6 +1,5 @@
 package blackjack.model.card;
 
-import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
@@ -19,13 +18,6 @@ public class Score {
             return ScoreCache.cache.get(value);
         }
         return new Score(value);
-    }
-
-    public static Score from(final List<Score> scores) {
-        int sum = scores.stream()
-                .mapToInt(Score::getValue)
-                .sum();
-        return Score.from(sum);
     }
 
     public Score plus(final Score score) {

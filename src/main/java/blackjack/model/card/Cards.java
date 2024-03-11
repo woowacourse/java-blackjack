@@ -30,19 +30,18 @@ public class Cards {
     }
 
     public Score calculateCardsTotalScore() {
-        List<Score> scores = getScores();
-        Score totalScore = Score.from(scores);
+        Score totalScore = sumAllScores();
         if (hasAce() && canBeAdjusted(totalScore)) {
             return adjustTotalForAce(totalScore);
         }
         return totalScore;
     }
 
-    private List<Score> getScores() {
+    private Score sumAllScores() {
         return cards.stream()
                 .map(Card::getDenomination)
                 .map(Denomination::getScore)
-                .toList();
+                .reduce(Score.from(0), Score::plus);
     }
 
     private boolean hasAce() {
