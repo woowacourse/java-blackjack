@@ -7,6 +7,7 @@ import domain.game.WinLose;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,10 +17,10 @@ public class OutputView {
 
     public void printDistributionMessage(BlackjackGame game) {
         String playerNames = game.getPlayers().stream()
-            .map(Participant::getName)
-            .collect(Collectors.joining(DELIMITER));
+                .map(Participant::getName)
+                .collect(Collectors.joining(DELIMITER));
         System.out.printf(
-            "%n딜러와 %s에게 %d장을 나누었습니다.%n", playerNames, BlackjackGame.STARTING_CARDS_AMOUNT);
+                "%n딜러와 %s에게 %d장을 나누었습니다.%n", playerNames, BlackjackGame.STARTING_CARDS_AMOUNT);
     }
 
     public void printAllParticipantsCards(BlackjackGame game) {
@@ -33,7 +34,7 @@ public class OutputView {
     public void printAllParticipantsCardsWithScore(BlackjackGame game) {
         System.out.println();
         System.out.println(
-            participantNameAndCardsText(game.getDealer()) + scoreText(game.getDealer().calculateScore()));
+                participantNameAndCardsText(game.getDealer()) + scoreText(game.getDealer().calculateScore()));
         for (Player player : game.getPlayers()) {
             System.out.println(participantNameAndCardsText(player) + scoreText(player.calculateScore()));
         }
@@ -62,8 +63,8 @@ public class OutputView {
 
     private String cardsText(List<Card> cards) {
         return cards.stream()
-            .map(this::cardText)
-            .collect(Collectors.joining(DELIMITER));
+                .map(this::cardText)
+                .collect(Collectors.joining(DELIMITER));
     }
 
     private String cardText(Card card) {
@@ -77,9 +78,9 @@ public class OutputView {
     public void printResult(BlackjackGame game, Result result) {
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %s%s%s%n",
-            resultText(result.countDealerWins(), "승 "),
-            resultText(result.countDealerTies(), "무 "),
-            resultText(result.countDealerLoses(), "패")
+                resultText(result.countDealerWins(), "승 "),
+                resultText(result.countDealerTies(), "무 "),
+                resultText(result.countDealerLoses(), "패")
         );
         for (Player player : game.getPlayers()) {
             System.out.println(player.getName() + ": " + winLoseText(result.playerWinLose(player)));

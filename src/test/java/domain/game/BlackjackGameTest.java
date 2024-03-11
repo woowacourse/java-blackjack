@@ -3,11 +3,12 @@ package domain.game;
 import domain.participant.Name;
 import domain.participant.Participants;
 import domain.participant.Player;
-import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import strategy.RandomCardGenerator;
+
+import java.util.List;
 
 class BlackjackGameTest {
 

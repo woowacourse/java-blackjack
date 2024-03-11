@@ -1,19 +1,20 @@
 package domain.game;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ResultTest {
 

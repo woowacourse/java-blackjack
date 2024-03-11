@@ -1,13 +1,14 @@
 package domain.participant;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ParticipantTest {
 
@@ -24,8 +25,8 @@ class ParticipantTest {
     void receive_NoException_SeveralCards() {
         Participant participant = new Player(new Name("name"));
         participant.receive(List.of(
-            new Card(Rank.ACE, Symbol.CLUB),
-            new Card(Rank.ACE, Symbol.HEART)
+                new Card(Rank.ACE, Symbol.CLUB),
+                new Card(Rank.ACE, Symbol.HEART)
         ));
         assertThat(participant.getCards()).hasSize(2);
     }
@@ -35,9 +36,9 @@ class ParticipantTest {
     void isBusted_NoException_OverScore() {
         Participant participant = new Player(new Name("name"));
         participant.receive(List.of(
-            new Card(Rank.KING, Symbol.CLUB),
-            new Card(Rank.QUEEN, Symbol.HEART),
-            new Card(Rank.TWO, Symbol.DIAMOND)
+                new Card(Rank.KING, Symbol.CLUB),
+                new Card(Rank.QUEEN, Symbol.HEART),
+                new Card(Rank.TWO, Symbol.DIAMOND)
         ));
         assertThat(participant.isBusted()).isTrue();
     }

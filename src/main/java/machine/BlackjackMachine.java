@@ -6,10 +6,11 @@ import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Participants;
 import domain.participant.Player;
-import java.util.List;
 import strategy.RandomCardGenerator;
 import view.InputView;
 import view.OutputView;
+
+import java.util.List;
 
 public class BlackjackMachine {
 
@@ -39,8 +40,8 @@ public class BlackjackMachine {
     private BlackjackGame initializeGame() {
         List<String> names = inputView.readNames();
         List<Player> players = names.stream()
-            .map(name -> new Player(new Name(name)))
-            .toList();
+                .map(name -> new Player(new Name(name)))
+                .toList();
         return new BlackjackGame(Participants.of(players), new RandomCardGenerator());
     }
 

@@ -24,16 +24,16 @@ public class Participants {
 
     public List<Player> getPlayers() {
         return participants.stream()
-            .filter(participant -> participant instanceof Player)
-            .map(participant -> (Player) participant)
-            .toList();
+                .filter(participant -> participant instanceof Player)
+                .map(participant -> (Player) participant)
+                .toList();
     }
 
     public Dealer getDealer() {
         return (Dealer) participants.stream()
-            .filter(participant -> participant instanceof Dealer)
-            .findFirst()
-            .orElseThrow(() -> new IllegalStateException("[ERROR] Dealer가 존재하지 않습니다."));
+                .filter(participant -> participant instanceof Dealer)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("[ERROR] Dealer가 존재하지 않습니다."));
     }
 
     public List<Participant> getParticipants() {

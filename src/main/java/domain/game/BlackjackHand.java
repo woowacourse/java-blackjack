@@ -33,10 +33,10 @@ public class BlackjackHand {
         }
 
         return IntStream.rangeClosed(0, countAce())
-            .map(index -> (score + index * ACE_SPECIAL_SCORE))
-            .filter(number -> number <= BLACKJACK_SCORE)
-            .max()
-            .orElseThrow(() -> new IllegalStateException("[ERROR] 점수 계산에 실패했습니다."));
+                .map(index -> (score + index * ACE_SPECIAL_SCORE))
+                .filter(number -> number <= BLACKJACK_SCORE)
+                .max()
+                .orElseThrow(() -> new IllegalStateException("[ERROR] 점수 계산에 실패했습니다."));
     }
 
     public boolean isOverBlackjackScore() {
@@ -45,14 +45,14 @@ public class BlackjackHand {
 
     private int calculateInitialScore() {
         return cards.stream()
-            .mapToInt(Card::score)
-            .sum();
+                .mapToInt(Card::score)
+                .sum();
     }
 
     private int countAce() {
         return (int) cards.stream()
-            .filter(card -> card.getRank() == Rank.ACE)
-            .count();
+                .filter(card -> card.getRank() == Rank.ACE)
+                .count();
     }
 
     public List<Card> getCards() {

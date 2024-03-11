@@ -6,8 +6,9 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
-import java.util.List;
 import strategy.CardGenerator;
+
+import java.util.List;
 
 public class BlackjackGame {
 

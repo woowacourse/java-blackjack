@@ -2,6 +2,7 @@ package domain.game;
 
 import domain.participant.Dealer;
 import domain.participant.Player;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,20 +48,20 @@ public class Result {
 
     public long countDealerWins() {
         return resultMap.values().stream()
-            .filter(value -> value == WinLose.LOSE)
-            .count();
+                .filter(value -> value == WinLose.LOSE)
+                .count();
     }
 
     public long countDealerLoses() {
         return resultMap.values().stream()
-            .filter(value -> value == WinLose.WIN)
-            .count();
+                .filter(value -> value == WinLose.WIN)
+                .count();
     }
 
     public long countDealerTies() {
         return resultMap.values().stream()
-            .filter(value -> value == WinLose.TIE)
-            .count();
+                .filter(value -> value == WinLose.TIE)
+                .count();
     }
 
     public WinLose playerWinLose(Player player) {

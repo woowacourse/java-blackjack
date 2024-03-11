@@ -1,10 +1,11 @@
 package domain.card;
 
-import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import strategy.RandomCardGenerator;
+
+import java.util.List;
 
 class DeckCardsTest {
 
@@ -12,7 +13,7 @@ class DeckCardsTest {
     @DisplayName("성공: 객체 생성 시 52장의 카드를 가진다")
     void from_NoException() {
         Assertions.assertThatCode(() -> DeckCards.from(new RandomCardGenerator()))
-            .doesNotThrowAnyException();
+                .doesNotThrowAnyException();
     }
 
     @Test
@@ -44,8 +45,8 @@ class DeckCardsTest {
         DeckCards deckCards = DeckCards.from(new OneCardGenerator());
         deckCards.drawCard();
         Assertions.assertThatThrownBy(deckCards::drawCard)
-            .isInstanceOf(IllegalStateException.class)
-            .hasMessage("[ERROR] 카드를 모두 사용하였습니다.");
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 카드를 모두 사용하였습니다.");
     }
 
     @Test
