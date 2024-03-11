@@ -32,7 +32,7 @@ class BlackJackTest {
     void setUp() {
         dealer = new Dealer(
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.TWO)));
-        cardDeck = new CardDeck();
+        cardDeck = new CardDeck(CardDeck.createCards());
     }
 
     @DisplayName("참가자가 null일 시 예외가 발생한다.")

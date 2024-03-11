@@ -5,6 +5,7 @@ import java.util.List;
 import model.BlackJack;
 import model.card.CardSize;
 import model.card.CardDeck;
+import model.card.Cards;
 import model.player.Dealer;
 import model.player.Participant;
 import model.player.Participants;
@@ -34,7 +35,7 @@ public class BlackJackController {
     }
 
     private BlackJack createBlackJack(List<String> names) {
-        CardDeck cardDeck = new CardDeck();
+        CardDeck cardDeck = new CardDeck(CardDeck.createCards());
         Participants participants = createParticipants(names, cardDeck);
         Dealer dealer = new Dealer(cardDeck.selectRandomCards(CardSize.TWO));
         return new BlackJack(participants, dealer, cardDeck);
