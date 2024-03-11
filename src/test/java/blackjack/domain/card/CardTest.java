@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("카드")
-public class TrumpCardTest {
+public class CardTest {
 
     @DisplayName("숫자와 기호를 가진 카드 조회에 성공한다.")
     @Test
@@ -16,7 +16,7 @@ public class TrumpCardTest {
         Suit suit = Suit.CLUBS;
 
         //when
-        TrumpCard trumpCard = new TrumpCard(rank, suit);
+        Card trumpCard = new Card(rank, suit);
 
         //then
         assertThat(trumpCard.getRank())

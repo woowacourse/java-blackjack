@@ -6,7 +6,7 @@ import static blackjack.fixture.TrumpCardFixture.threeSpadeKingCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.Deck;
-import blackjack.domain.card.TrumpCard;
+import blackjack.domain.card.Card;
 import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.strategy.ShuffleStrategy;
 import java.util.stream.IntStream;
@@ -50,7 +50,7 @@ public class PlayerTest {
     @Test
     void draw() {
         //given
-        TrumpCard trumpCard = threeSpadeKingCard();
+        Card trumpCard = threeSpadeKingCard();
 
         //when
         IntStream.range(0, 3)

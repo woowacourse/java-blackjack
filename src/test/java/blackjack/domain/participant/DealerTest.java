@@ -4,7 +4,7 @@ import static blackjack.fixture.TrumpCardFixture.aceSpadeTrumpCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.Deck;
-import blackjack.domain.card.TrumpCard;
+import blackjack.domain.card.Card;
 import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.strategy.ShuffleStrategy;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +18,7 @@ public class DealerTest {
 
     private Deck deck;
     private Dealer dealer;
-    private final TrumpCard trumpCardAceSpade = aceSpadeTrumpCard();
+    private final Card trumpCardAceSpade = aceSpadeTrumpCard();
 
     @BeforeEach
     void setUp() {

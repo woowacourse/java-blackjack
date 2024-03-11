@@ -8,15 +8,15 @@ import static blackjack.fixture.TrumpCardFixture.fiveSpadeTrumpCard;
 import static blackjack.fixture.TrumpCardFixture.fourSpadeTrumpCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.TrumpCard;
+import blackjack.domain.card.Card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("카드 손패")
 public class HandTest {
 
-    private final TrumpCard trumpCardFourSpade = fourSpadeTrumpCard();
-    private final TrumpCard trumpCardFiveSpade = fiveSpadeTrumpCard();
+    private final Card trumpCardFourSpade = fourSpadeTrumpCard();
+    private final Card trumpCardFiveSpade = fiveSpadeTrumpCard();
 
     @DisplayName("패에 카드를 추가한다.")
     @Test
@@ -48,10 +48,10 @@ public class HandTest {
     @Test
     void calculateScoreWithAce() {
         //given
-        TrumpCard trumpCardAceClover = aceCloverTrumpCard();
-        TrumpCard trumpCardAceDiamond = aceDiamondTrumpCard();
-        TrumpCard trumpCardAceSpade = aceSpadeTrumpCard();
-        TrumpCard trumpCardKingSpade = fiveSpadeKingCard();
+        Card trumpCardAceClover = aceCloverTrumpCard();
+        Card trumpCardAceDiamond = aceDiamondTrumpCard();
+        Card trumpCardAceSpade = aceSpadeTrumpCard();
+        Card trumpCardKingSpade = fiveSpadeKingCard();
 
         //when
         Hand hand1 = new Hand();

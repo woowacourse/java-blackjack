@@ -3,7 +3,7 @@ package blackjack.domain;
 import static blackjack.fixture.TrumpCardFixture.aceSpadeTrumpCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.TrumpCard;
+import blackjack.domain.card.Card;
 import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.strategy.ShuffleStrategy;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +18,7 @@ public class DeckTest {
         //given
         ShuffleStrategy shuffleStrategy = new NoShuffleStrategy();
         Deck deck = new Deck(shuffleStrategy);
-        TrumpCard trumpCardAceSpade = aceSpadeTrumpCard();
+        Card trumpCardAceSpade = aceSpadeTrumpCard();
 
         //when & then
         assertThat(deck.getCards().get(0))
