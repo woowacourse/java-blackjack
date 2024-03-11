@@ -35,4 +35,15 @@ public class InputView {
 
         return CardRequestFormat.from(input);
     }
+
+    public int readBetAmount(final String name) {
+        System.out.printf("%n%s의 배팅 금액은?", name);
+        final String input = SCANNER.nextLine();
+
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new NeedRetryException("숫자만 입력할 수 있습니다.");
+        }
+    }
 }

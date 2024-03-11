@@ -23,6 +23,8 @@ public class BlackjackController {
     public void run() {
         final BlackjackGame blackjackGame = initGame();
 
+        saveAllPlayersBetAmount(blackjackGame);
+
         final StartCardsDto startCardsDTO = blackjackGame.start();
         outputView.printStartCards(startCardsDTO);
 
@@ -34,7 +36,21 @@ public class BlackjackController {
     }
 
     private BlackjackGame initGame() {
-        return ExceptionHandler.retry(() -> new BlackjackGame(inputView.readPlayerNames()), outputView::printError);
+        return ExceptionHandler.retryWithSupplier(() ->
+                        new BlackjackGame(inputView.readPlayerNames()), outputView::printError);
+    }
+
+    private void saveAllPlayersBetAmount(final BlackjackGame blackjackGame) {
+        final List<String> playersName = blackjackGame.getPlayersName();
+
+        for (String name : playersName) {
+            saveBetAmount(blackjackGame, name);
+        }
+    }
+
+    private void saveBetAmount(final BlackjackGame blackjackGame, final String name) {
+        ExceptionHandler.retryWithRunnable(() ->
+                        blackjackGame.saveBetAmountByName(inputView.readBetAmount(name), name), outputView::printError);
     }
 
     private void playGame(final BlackjackGame blackjackGame) {
@@ -67,7 +83,7 @@ public class BlackjackController {
     }
 
     private boolean needMoreCard(final String name) {
-        return ExceptionHandler.retry(() -> inputView.readNeedMoreCard(name), outputView::printError);
+        return ExceptionHandler.retryWithSupplier(() -> inputView.readNeedMoreCard(name), outputView::printError);
     }
 
     private void showPlayerCards(final BlackjackGame blackjackGame, final String name) {

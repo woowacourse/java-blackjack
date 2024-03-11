@@ -103,4 +103,8 @@ public class BlackjackGame {
     public String getDealerName() {
         return dealer.getName().getName();
     }
+
+    public void saveBetAmountByName(final int betAmount, final String name) {
+
+    }
 }

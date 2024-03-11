@@ -12,13 +12,23 @@ public class ExceptionHandler {
     private ExceptionHandler() {
     }
 
-    public static <T> T retry(final Supplier<T> supplier, final Consumer<String> errorConsumer) {
+    public static <T> T retryWithSupplier(final Supplier<T> supplier, final Consumer<String> errorConsumer) {
         try {
             return supplier.get();
         } catch (final NeedRetryException e) {
             errorConsumer.accept(e.getMessage());
             validateRetryCount();
-            return retry(supplier, errorConsumer);
+            return retryWithSupplier(supplier, errorConsumer);
+        }
+    }
+
+    public static void retryWithRunnable(final Runnable runnable, final Consumer<String> errorConsumer) {
+        try {
+            runnable.run();
+        } catch (final NeedRetryException e) {
+            errorConsumer.accept(e.getMessage());
+            validateRetryCount();
+            retryWithRunnable(runnable, errorConsumer);
         }
     }
 
