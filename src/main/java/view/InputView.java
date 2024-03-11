@@ -19,7 +19,7 @@ public class InputView {
         return List.of(input.split(",", -1));
     }
 
-    public boolean askOneMoreCard(String name) {
+    public boolean isOneMoreCard(String name) {
         System.out.println(ASK_ONE_MORE_CARD_MESSAGE.formatted(name));
 
         String input = in.nextLine();

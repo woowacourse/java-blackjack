@@ -57,7 +57,7 @@ public class BlackJackController {
     }
 
     private void askAndOfferMoreCard(Participant participant, BlackJack blackJack) {
-        while (!participant.isOverMaximumSum() && inputView.askOneMoreCard(participant.getName())) {
+        while (!participant.isOverMaximumSum() && inputView.isOneMoreCard(participant.getName())) {
             blackJack.offerCardToParticipant(participant, 1);
             outputView.printPlayerCardMessage(participant);
         }
