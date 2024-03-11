@@ -1,5 +1,9 @@
 package blackjack.domain;
 
+import blackjack.domain.deck.Deck;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Players;
+
 public class Game {
     private final Dealer dealer;
     private final Players players;

@@ -1,5 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.deck.Deck;
 import java.util.function.BooleanSupplier;
 
 public class Player extends Participant {

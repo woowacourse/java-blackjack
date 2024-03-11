@@ -1,11 +1,12 @@
 package blackjack.domain;
 
+import blackjack.domain.deck.Card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static blackjack.domain.Kind.DIAMOND;
-import static blackjack.domain.Kind.SPADE;
-import static blackjack.domain.Value.ACEHIGH;
+import static blackjack.domain.deck.Kind.DIAMOND;
+import static blackjack.domain.deck.Kind.SPADE;
+import static blackjack.domain.deck.Value.ACEHIGH;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 

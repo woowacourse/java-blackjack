@@ -1,5 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.deck.Card;
 import java.util.List;
 
 public abstract class Participant {
@@ -7,12 +8,12 @@ public abstract class Participant {
     protected final Name name;
     protected final Hands hands;
 
-    protected Participant(String name) {
+    public Participant(String name) {
         this.name = new Name(name);
         this.hands = new Hands();
     }
 
-    protected boolean addCard(Card card) {
+    public boolean addCard(Card card) {
         hands.addCard(card);
         if (hands.isBurst()) {
             return hands.downgradeAce();

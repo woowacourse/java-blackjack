@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 public class HandsScore {
     private static final int BLACK_JACK = 21;

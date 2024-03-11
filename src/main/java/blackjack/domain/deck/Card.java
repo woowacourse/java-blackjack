@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.deck;
 
 public class Card {
     private static final int MAX_CARD_VALUE = 13;

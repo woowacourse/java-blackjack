@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.deck;
 
 public enum Kind {
 
