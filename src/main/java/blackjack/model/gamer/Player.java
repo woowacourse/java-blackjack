@@ -10,13 +10,13 @@ public class Player extends Gamer {
         this.playerName = new Name(playerName);
     }
 
-    public String getPlayerName() {
+    public String name() {
         return playerName.getName();
     }
 
     @Override
     public boolean canHit() {
-        int cardScore = handDeck.calculateTotalScore();
-        return GameRule.playerHitRule(cardScore);
+        int totalScore = handDeck.score();
+        return GameRule.playerHitRule(totalScore);
     }
 }

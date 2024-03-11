@@ -1,6 +1,5 @@
 package blackjack.model.gamer;
 
-import blackjack.model.GameRule;
 import blackjack.model.card.Card;
 import blackjack.model.deck.HandDeck;
 import java.util.List;
@@ -11,16 +10,15 @@ public abstract class Gamer {
 
     public void receiveCard(Card card) {
         handDeck.addCard(card);
-        GameRule.adjustAceValue(handDeck);
+    }
+
+    public List<Card> allCards() {
+        return handDeck.cards();
+    }
+
+    public int totalScore() {
+        return handDeck.score();
     }
 
     public abstract boolean canHit();
-
-    public int calculateTotalScore() {
-        return handDeck.calculateTotalScore();
-    }
-
-    public List<Card> getHandDeck() {
-        return handDeck.getCards();
-    }
 }

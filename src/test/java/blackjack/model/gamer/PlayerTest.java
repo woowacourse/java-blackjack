@@ -21,7 +21,7 @@ class PlayerTest {
         Card card = new Card(cardProperties);
         //when
         player.receiveCard(card);
-        List<Card> playerDeck = player.getHandDeck();
+        List<Card> playerDeck = player.allCards();
 
         //then
         assertThat(playerDeck).containsExactly(card);
@@ -56,7 +56,7 @@ class PlayerTest {
         //when
         player.receiveCard(card);
         player.receiveCard(card2);
-        int totalScore = player.calculateTotalScore();
+        int totalScore = player.totalScore();
 
         //then
         assertThat(totalScore).isEqualTo(12);
