@@ -12,24 +12,23 @@ import java.util.stream.Stream;
 
 public class DeckGenerator {
 
-    private static final List<Card> deck;
-
-    static {
-        deck = createDeck();
-    }
+    private static final List<Card> deck = createDeck();
 
     public static List<Card> generateDeck() {
         return new ArrayList<>(deck);
     }
 
     private static List<Card> createDeck() {
+
         return Arrays.stream(CardPattern.values())
-                .flatMap(DeckGenerator::createCard)
+                .map(DeckGenerator::createCard)
+                .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
 
-    private static Stream<Card> createCard(CardPattern cardPattern) {
+    private static List<Card> createCard(CardPattern cardPattern) {
         return Arrays.stream(CardNumber.values())
-                .map(cardNumber -> new Card(new CardProperties(cardPattern, cardNumber)));
+                .map(cardNumber -> new Card(new CardProperties(cardPattern, cardNumber)))
+                .collect(Collectors.toList());
     }
 }
