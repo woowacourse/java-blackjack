@@ -1,5 +1,7 @@
 package domain;
 
+import domain.constant.CardNumber;
+import domain.constant.CardType;
 import domain.dto.GameStatusDto;
 import domain.dto.GamerDto;
 import java.util.List;
@@ -21,7 +23,8 @@ public class BlackJackGameTest {
     @DisplayName("모든 Gamer들에게 카드를 2장씩 나눠준다")
     void initialDealing() {
         BlackJackGame blackJackGame = new BlackJackGame(List.of(new Player(new Name("test"))));
-        blackJackGame.initialDealing();
+        Deck deck = new Deck();
+        blackJackGame.initialDealing(deck);
         Assertions.assertThat(blackJackGame.getGameStatusDto()
                         .getGamerDtoFromName("test")
                         .getCards().size())
@@ -34,8 +37,9 @@ public class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame(List.of(
                 new Player(new Name("test"))
         ));
-        blackJackGame.initialDealing();
-        blackJackGame.drawCardFromName("test");
+        Deck deck = new Deck();
+        blackJackGame.initialDealing(deck);
+        blackJackGame.drawCardFromName("test", deck);
         Assertions.assertThat(blackJackGame.getGameStatusDto()
                         .getGamerDtoFromName("test")
                         .getCards().size())
@@ -46,9 +50,10 @@ public class BlackJackGameTest {
     @DisplayName("Gamer 이름이 존재하지 않을 경우 예외가 발생한다.")
     void drawCardFromNameException() {
         BlackJackGame blackJackGame = new BlackJackGame(List.of(new Player(new Name("test"))));
-        blackJackGame.initialDealing();
-        blackJackGame.drawCardFromName("test");
-        Assertions.assertThatThrownBy(() -> blackJackGame.drawCardFromName("wrong"))
+        Deck deck = new Deck();
+        blackJackGame.initialDealing(deck);
+        blackJackGame.drawCardFromName("test", deck);
+        Assertions.assertThatThrownBy(() -> blackJackGame.drawCardFromName("wrong", deck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("존재하지 않는 참여자 입니다.");
     }
@@ -65,8 +70,12 @@ public class BlackJackGameTest {
     @DisplayName("입력으로 받은 이름이 bust이면 true를 반환한다.")
     void isBustFromNameTrue() {
         BlackJackGame blackJackGame = new BlackJackGame(List.of(new Player(new Name("test"))));
-        IntStream.range(0, 9)
-                .forEach(ignored -> blackJackGame.drawCardFromName("test"));
+        Deck deck = new Deck(
+                new Card(CardType.CLOVER, CardNumber.TEN),
+                new Card(CardType.HEART, CardNumber.TEN),
+                new Card(CardType.DIAMOND, CardNumber.TEN));
+        IntStream.range(0, 3)
+                .forEach(ignored -> blackJackGame.drawCardFromName("test", deck));
         Assertions.assertThat(blackJackGame.isBustFromName("test"))
                 .isTrue();
     }
@@ -75,8 +84,11 @@ public class BlackJackGameTest {
     @DisplayName("딜러가 17 이상이 될 때까지 카드를 뽑는다.")
     void drawDealerCard() {
         BlackJackGame blackJackGame = new BlackJackGame(List.of(new Player(new Name("test"))));
-        blackJackGame.initialDealing();
-        blackJackGame.drawDealerCard();
+        Deck deck = new Deck(
+                new Card(CardType.CLOVER, CardNumber.ACE),
+                new Card(CardType.CLOVER, CardNumber.TEN),
+                new Card(CardType.CLOVER, CardNumber.TEN));
+        blackJackGame.drawDealerCard(deck);
         GameStatusDto gameStatusDto = blackJackGame.getGameStatusDto();
         GamerDto gamerDto = gameStatusDto.getDealerDto();
         Assertions.assertThat(gamerDto.getTotalScore()).isGreaterThan(16);

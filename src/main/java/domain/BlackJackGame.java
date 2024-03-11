@@ -11,13 +11,11 @@ public class BlackJackGame {
     private static final int MAX_PLAYERS_COUNT = 8;
     private final List<Player> players;
     private final Dealer dealer;
-    private final Deck deck;
 
     public BlackJackGame(List<Player> players) {
         validatePlayerCount(players);
         this.players = players;
         this.dealer = new Dealer();
-        this.deck = new Deck();
     }
 
     private void validatePlayerCount(List<Player> players) {
@@ -26,13 +24,12 @@ public class BlackJackGame {
         }
     }
 
-    public void initialDealing() {
-        deck.shuffle();
-        takeTwoCards(dealer);
-        players.forEach(this::takeTwoCards);
+    public void initialDealing(Deck deck) {
+        takeTwoCards(dealer,deck);
+        players.forEach(player -> this.takeTwoCards(player, deck));
     }
 
-    private void takeTwoCards(Gamer gamer) {
+    private void takeTwoCards(Gamer gamer, Deck deck) {
         gamer.pickTwoCards(deck);
     }
 
@@ -48,7 +45,7 @@ public class BlackJackGame {
         return Collections.unmodifiableList(gamerDtos);
     }
 
-    public void drawCardFromName(String name) {
+    public void drawCardFromName(String name, Deck deck) {
         searchFromName(name).hit(deck);
     }
 
@@ -61,7 +58,7 @@ public class BlackJackGame {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 참여자 입니다."));
     }
-    public int drawDealerCard() {
+    public int drawDealerCard(Deck deck) {
         return dealer.hit(deck);
     }
 
