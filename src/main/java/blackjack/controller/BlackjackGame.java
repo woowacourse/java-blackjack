@@ -16,14 +16,14 @@ public class BlackjackGame {
     private final OutputView outputView = new OutputView();
 
     public void run() {
-        Participants participants = createParticipants();
+        Participants participants = createParticipantsWithDeck();
         outputView.printInitialHand(participants);
         participantsHitCard(participants);
         outputView.printParticipantsHandWithScore(participants);
         printBlackjackResult(participants);
     }
 
-    private Participants createParticipants() {
+    private Participants createParticipantsWithDeck() {
         Deck deck = RandomDeck.getInstance();
         HandGenerator handGenerator = new HandGenerator(deck);
         return retryOnException(() -> createParticipantsWithNames(handGenerator));
