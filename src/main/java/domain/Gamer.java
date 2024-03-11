@@ -1,10 +1,10 @@
 package domain;
 
 import java.util.List;
-public class Gamer {
+public abstract class Gamer {
 
     private final Name name;
-    private final Hand hand;
+    protected final Hand hand;
 
     public Gamer(Name name) {
         this.name = name;
@@ -15,9 +15,11 @@ public class Gamer {
         return hand.getCards();
     }
 
-    public void takeCard(Card card) {
-        hand.add(card);
+    public void pickTwoCards(Deck deck) {
+        hand.add(deck.draw());
+        hand.add(deck.draw());
     }
+    abstract public int hit(Deck deck);
 
     public boolean isName(String comparedName) {
         return name.name().equals(comparedName);

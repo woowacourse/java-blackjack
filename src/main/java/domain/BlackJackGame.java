@@ -9,18 +9,18 @@ import java.util.stream.Collectors;
 
 public class BlackJackGame {
     private static final int MAX_PLAYERS_COUNT = 8;
-    private final List<Gamer> players;
-    private final Gamer dealer;
+    private final List<Player> players;
+    private final Dealer dealer;
     private final Deck deck;
 
-    public BlackJackGame(List<Gamer> players) {
+    public BlackJackGame(List<Player> players) {
         validatePlayerCount(players);
         this.players = players;
-        this.dealer = new Gamer(new Name("딜러"));
+        this.dealer = new Dealer();
         this.deck = new Deck();
     }
 
-    private void validatePlayerCount(List<Gamer> players) {
+    private void validatePlayerCount(List<Player> players) {
         if (players.size() > MAX_PLAYERS_COUNT) {
             throw new IllegalArgumentException("플레이어의 수는 최대 8명 입니다.");
         }
@@ -33,8 +33,7 @@ public class BlackJackGame {
     }
 
     private void takeTwoCards(Gamer gamer) {
-        gamer.takeCard(deck.draw());
-        gamer.takeCard(deck.draw());
+        gamer.pickTwoCards(deck);
     }
 
     public GameStatusDto getGameStatusDto() {
@@ -50,7 +49,7 @@ public class BlackJackGame {
     }
 
     public void drawCardFromName(String name) {
-        searchFromName(name).takeCard(deck.draw());
+        searchFromName(name).hit(deck);
     }
 
     public boolean isBustFromName(String name) {
@@ -63,12 +62,7 @@ public class BlackJackGame {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 참여자 입니다."));
     }
     public int drawDealerCard() {
-        int dealerDrawCount = 0;
-        while (dealer.getTotalScore() <= 16) {
-            dealer.takeCard(deck.draw());
-            dealerDrawCount++;
-        }
-        return dealerDrawCount;
+        return dealer.hit(deck);
     }
 
     public BlackJackResult getGameResult() {
