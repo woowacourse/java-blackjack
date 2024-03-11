@@ -5,8 +5,8 @@ import java.util.Set;
 
 public class Participants {
 
-    public static final int MIN_PARTICIPANT_COUNT = 2;
-    public static final int MAX_PARTICIPANT_COUNT = 8;
+    private static final int MIN_PARTICIPANT_COUNT = 2;
+    private static final int MAX_PARTICIPANT_COUNT = 8;
 
     private final List<Participant> value;
 
