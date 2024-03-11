@@ -76,4 +76,8 @@ public class OutputView {
                     outcomeDto.getName().value() + ": " + OutcomeTranslator.translate(outcomeDto.getOutcome()));
         }
     }
+
+    public static void printLineSeparator(){
+        System.out.println();
+    }
 }

@@ -63,6 +63,7 @@ public class Application {
 
     private static void hit(GameBoard gameBoard) {
         hitPlayers(gameBoard);
+        OutputView.printLineSeparator();
         hitDealer(gameBoard);
     }
 
@@ -81,7 +82,6 @@ public class Application {
     }
 
     private static void hitDealer(final GameBoard gameBoard) {
-        System.out.println();
         final Dealer dealer = gameBoard.getDealer();
         while (gameBoard.isHit(dealer)) {
             gameBoard.hit(dealer);
