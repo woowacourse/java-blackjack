@@ -48,7 +48,7 @@ public class Bettings {
         Map<Player, Integer> playerProfits = new LinkedHashMap<>();
 
         for (Player player : playerMoneys.keySet()) {
-            PlayerGameResult result = dealer.judge(player);
+            PlayerGameResult result = Judge.compare(dealer, player);
             int bettingMoney = getBettingMoney(player).getValue();
             int profit = result.getProfit(bettingMoney);
 

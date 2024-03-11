@@ -11,15 +11,8 @@ public class Dealer extends Participant {
     private static final int STAND_BOUND = 17;
     private static final int FIRST_VISIBLE_CARD_INDEX = 1;
 
-    private final Judge judge;
-
     public Dealer() {
         super(DEALER_NAME);
-        this.judge = new Judge();
-    }
-
-    public PlayerGameResult judge(Player player) {
-        return judge.compare(this, player);
     }
 
     public List<Card> getVisibleCards() {

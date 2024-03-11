@@ -4,9 +4,13 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
 public class Judge {
-    public PlayerGameResult compare(Dealer dealer, Player player) {
+
+    private Judge() {
+    }
+
+    public static PlayerGameResult compare(Dealer dealer, Player player) {
         if (player.isBust()) {
-            return PlayerGameResult.LOSE;
+            return blackjack.domain.PlayerGameResult.LOSE;
         }
 
         if (player.isBlackJack()) {
@@ -16,7 +20,7 @@ public class Judge {
         return judgeWhenPlayerNormalScore(player, dealer);
     }
 
-    private PlayerGameResult judgeWhenPlayerIsBlackjack(Dealer dealer) {
+    private static PlayerGameResult judgeWhenPlayerIsBlackjack(Dealer dealer) {
         if (dealer.isBlackJack()) {
             return PlayerGameResult.PUSH;
         }
@@ -24,7 +28,7 @@ public class Judge {
         return PlayerGameResult.BLACKJACK_WIN;
     }
 
-    private PlayerGameResult judgeWhenPlayerNormalScore(Player player, Dealer dealer) {
+    private static PlayerGameResult judgeWhenPlayerNormalScore(Player player, Dealer dealer) {
         int playerScore = player.calculateScore();
         int dealerScore = dealer.calculateScore();
 
