@@ -49,7 +49,7 @@ public class OutputView {
     }
 
     public static void printDealerDrawMessage(Dealer dealer) {
-        System.out.println(); // TODO 뷰로직의 책임으로 옮기기
+        System.out.println();
         System.out.println(dealer.getName() + "는 "
                 + DEALER_DRAW_THRESHOLD + "이하라 한장의 카드를 더 받았습니다.");
     }

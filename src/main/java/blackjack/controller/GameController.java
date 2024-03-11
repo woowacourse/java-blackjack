@@ -15,7 +15,7 @@ public class GameController {
 
     public static void run() {
         Deck deck = Deck.createShuffledDeck();
-        Game game = makeGame(deck);
+        Game game = makeGame();
         Dealer gameDealer = game.getDealer();
         Players gamePlayers = game.getPlayers();
 
@@ -26,11 +26,9 @@ public class GameController {
         OutputView.printGameResult(gameDealer.getName(), game.makeGameResult());
     }
 
-    private static Game makeGame(Deck deck) {
+    private static Game makeGame() {
         OutputView.printAskNameMessage();
-        Players players = new Players(InputView.readNames());
-        Dealer dealer = new Dealer();
-        return Game.of(deck, dealer, players);
+        return Game.of(InputView.readNames());
     }
 
     private static void confirmParticipantsHands(Players players, Deck deck, Dealer dealer) {
