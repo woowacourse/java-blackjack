@@ -29,7 +29,7 @@ public class BlackJackGameTest {
         ));
         Deck deck = Deck.withFullCards();
         blackJackGame.initialDealing(deck);
-        blackJackGame.drawCardFromName(name, deck);
+        blackJackGame.hitFromName(name, deck);
         Assertions.assertThat(blackJackGame.getCardsFromName(name).size()).isEqualTo(3);
     }
 
@@ -40,8 +40,8 @@ public class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame(List.of(new Player(name)));
         Deck deck = Deck.withFullCards();
         blackJackGame.initialDealing(deck);
-        blackJackGame.drawCardFromName(name, deck);
-        Assertions.assertThatThrownBy(() -> blackJackGame.drawCardFromName(new Name("Wrong"), deck))
+        blackJackGame.hitFromName(name, deck);
+        Assertions.assertThatThrownBy(() -> blackJackGame.hitFromName(new Name("Wrong"), deck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("존재하지 않는 참여자 입니다.");
     }
@@ -65,7 +65,7 @@ public class BlackJackGameTest {
                 new Card(CardType.HEART, CardNumber.TEN),
                 new Card(CardType.DIAMOND, CardNumber.TEN));
         IntStream.range(0, 3)
-                .forEach(ignored -> blackJackGame.drawCardFromName(name, deck));
+                .forEach(ignored -> blackJackGame.hitFromName(name, deck));
         Assertions.assertThat(blackJackGame.isBustFromName(name))
                 .isTrue();
     }
@@ -79,7 +79,7 @@ public class BlackJackGameTest {
                 new Card(CardType.CLOVER, CardNumber.ACE),
                 new Card(CardType.CLOVER, CardNumber.TEN),
                 new Card(CardType.CLOVER, CardNumber.TEN));
-        blackJackGame.drawDealerCard(deck);
+        blackJackGame.hitDealer(deck);
         Assertions.assertThat(blackJackGame.getDealerScore()).isGreaterThan(16);
     }
 

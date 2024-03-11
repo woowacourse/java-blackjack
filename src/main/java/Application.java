@@ -77,7 +77,7 @@ public class Application {
 
     private static void hitByAnswer(String answer, Name playerName, BlackJackGame blackJackGame, Deck deck) {
         if (answer.equals("y")) {
-            blackJackGame.drawCardFromName(playerName, deck);
+            blackJackGame.hitFromName(playerName, deck);
         }
     }
 
@@ -89,7 +89,7 @@ public class Application {
     }
 
     private static void hitDealerStep(BlackJackGame blackJackGame, Deck deck) {
-        int dealerDrawCount = blackJackGame.drawDealerCard(deck);
+        int dealerDrawCount = blackJackGame.hitDealer(deck);
         OutputView.printDealerHitCount(dealerDrawCount);
     }
 

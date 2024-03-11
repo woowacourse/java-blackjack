@@ -37,7 +37,7 @@ public class BlackJackGame {
         return searchFromName(name).getCards();
     }
 
-    public void drawCardFromName(Name name, Deck deck) {
+    public void hitFromName(Name name, Deck deck) {
         searchFromName(name).hit(deck);
     }
 
@@ -50,7 +50,7 @@ public class BlackJackGame {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 참여자 입니다."));
     }
-    public int drawDealerCard(Deck deck) {
+    public int hitDealer(Deck deck) {
         return dealer.hit(deck);
     }
 
