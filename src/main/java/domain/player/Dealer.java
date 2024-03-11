@@ -7,7 +7,7 @@ public class Dealer extends Player {
     private static final int HIT_UPPER_BOUND = 17;
 
     public Dealer() {
-        super(Name.DEALER_NAME);
+        super(new Name("딜러"));
     }
 
     @Override

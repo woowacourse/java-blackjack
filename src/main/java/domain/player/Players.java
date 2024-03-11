@@ -23,13 +23,6 @@ public class Players {
     private void validate(final List<Player> players) {
         validatePlayerNumbers(players);
         validateDuplicate(players);
-        validateDealerName(players);
-    }
-
-    private void validateDealerName(final List<Player> players) {
-        if (players.stream().map(Player::getName).anyMatch(r -> r.equals(Name.DEALER_NAME.getName()))) {
-            throw new IllegalArgumentException("플레이어의 이름은 딜러가 될 수 없습니다.");
-        }
     }
 
     private void validatePlayerNumbers(final List<Player> players) {

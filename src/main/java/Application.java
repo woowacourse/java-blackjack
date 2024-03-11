@@ -37,7 +37,7 @@ public class Application {
     private static void drawCardDuringPlayerTurn(final Player player, final Blackjack blackjack) {
         while (player.isNotBust() && InputView.tryHit(player.getName())) {
             blackjack.dealCard(player);
+            OutputView.printPlayerStatus(player);
         }
-        OutputView.printPlayerStatus(player);
     }
 }
