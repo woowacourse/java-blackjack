@@ -55,7 +55,7 @@ public class OutputView {
         System.out.printf(outputFormat.formatDealerResult(bettingResult));
         System.out.println();
 
-        for (Participant participant : bettingResult.getKey()) {
+        for (Participant participant : bettingResult.getParticipants()) {
             System.out.println(outputFormat.formatBlackJackResult(participant, bettingResult.getPayout(participant)));
         }
     }

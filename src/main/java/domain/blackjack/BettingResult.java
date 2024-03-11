@@ -27,7 +27,7 @@ public class BettingResult {
         return total * -1;
     }
 
-    public Set<Participant> getKey() {
+    public Set<Participant> getParticipants() {
         return bet.keySet();
     }
 }
