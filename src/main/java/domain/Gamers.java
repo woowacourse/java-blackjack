@@ -1,6 +1,5 @@
 package domain;
 
-import controller.dto.gamer.GamerHandStatus;
 import java.util.List;
 
 public class Gamers {
@@ -8,12 +7,6 @@ public class Gamers {
 
     public Gamers(final List<Gamer> gamers) {
         this.gamers = gamers;
-    }
-
-    public List<GamerHandStatus> getGamerStatusAfterStartGame() {
-        return gamers.stream()
-                .map(gamer -> new GamerHandStatus(gamer.getName(), gamer.getHandStatusAsString()))
-                .toList();
     }
 
     public List<Gamer> listOf() {

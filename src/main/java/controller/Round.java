@@ -1,6 +1,7 @@
 package controller;
 
 import static controller.GameCommand.HIT;
+import static view.CardName.getHandStatusAsString;
 
 import controller.dto.gamer.GamerHandStatus;
 import domain.Dealer;
@@ -33,11 +34,12 @@ public class Round {
 
     public void giveCardToGamer(final String name, final OutputView outputView, final InputView inputView) {
         Gamer gamer = getGamer(name);
-        GamerHandStatus currentHand = new GamerHandStatus(name, gamer.getHandStatusAsString());
+        GamerHandStatus currentHand = new GamerHandStatus(name, getHandStatusAsString(gamer.getHand()));
         GameCommand command = inputCommand(name, inputView);
 
         while (HIT.equals(command)) {
-            currentHand = new GamerHandStatus(gamer.getName(), gamer.getHandStatusAsString());
+            gamer.pickOneCard();
+            currentHand = new GamerHandStatus(gamer.getName(), getHandStatusAsString(gamer.getHand()));
             if (!gamer.isAbleToDrawCard()) {
                 break;
             }

@@ -1,8 +1,6 @@
 package domain;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import view.CardName;
 
 public class Player {
     private static final int BLACKJACK_SCORE = 21;
@@ -31,14 +29,6 @@ public class Player {
 
     public int calculateResultScore() {
         return hand.calculateScoreAfterRound(BLACKJACK_SCORE);
-    }
-
-    public String getHandStatusAsString() {
-        List<Card> cardsInHand = hand.getCards();
-
-        return cardsInHand.stream()
-                .map(card -> CardName.valueOf(card.name()).getName() + card.getShape())
-                .collect(Collectors.joining(", "));
     }
 
     public boolean hasMoreScoreThan(final Dealer dealer) {

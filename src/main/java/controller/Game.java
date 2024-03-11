@@ -13,6 +13,7 @@ import domain.Gamers;
 import domain.Player;
 import java.util.ArrayList;
 import java.util.List;
+import view.CardName;
 import view.InputView;
 import view.OutputView;
 
@@ -47,8 +48,8 @@ public class Game {
         round.initiateGameCondition();
 
         outputView.printNoticeAfterStartGame(names);
-        outputView.printDealerStatusAfterStartGame(dealer.getDealerHandStatus());
-        outputView.printPlayerStatusAfterStartGame(names, gamers.getGamerStatusAfterStartGame());
+        outputView.printDealerStatusAfterStartGame(CardName.getDealerHandStatusWithHiddenCard(dealer.getHand()));
+        outputView.printPlayerStatusAfterStartGame(names, CardName.getGamerHandStatus(gamers));
 
         return round;
     }
@@ -73,7 +74,7 @@ public class Game {
     private DealerHandScore getCurrentDealerHandScore(final Round round) {
         Dealer dealer = round.getDealer();
 
-        DealerHandStatus dealerHand = dealer.getDealerHandStatus();
+        DealerHandStatus dealerHand = new DealerHandStatus(CardName.getHandStatusAsString(dealer.getHand()));
         return new DealerHandScore(dealerHand, getDealerResultScore(round));
     }
 
@@ -93,7 +94,9 @@ public class Game {
         List<GamerHandStatus> gamerHandStatuses = new ArrayList<>();
         Gamers gamers = round.getGamers();
         for (Gamer gamer : gamers.listOf()) {
-            gamerHandStatuses.add(new GamerHandStatus(gamer.getName(), gamer.getHandStatusAsString()));
+            gamerHandStatuses.add(
+                    new GamerHandStatus(gamer.getName(), CardName.getHandStatusAsString(gamer.getHand()))
+            );
         }
         return gamerHandStatuses;
     }

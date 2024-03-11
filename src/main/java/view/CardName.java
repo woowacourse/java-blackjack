@@ -1,5 +1,13 @@
 package view;
 
+import controller.dto.dealer.DealerHandStatus;
+import controller.dto.gamer.GamerHandStatus;
+import domain.Card;
+import domain.Gamers;
+import domain.Hand;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public enum CardName {
     ACE("A"),
     TWO("2"),
@@ -23,5 +31,29 @@ public enum CardName {
 
     public String getName() {
         return name;
+    }
+
+    public static String getHandStatusAsString(final Hand hand) {
+        List<Card> cardsInHand = hand.getCards();
+
+        return cardsInHand.stream()
+                .map(card -> CardName.valueOf(card.name()).getName() + card.getShape())
+                .collect(Collectors.joining(", "));
+    }
+
+    public static List<GamerHandStatus> getGamerHandStatus(final Gamers gamers) {
+        return gamers.listOf().stream()
+                .map(gamer -> new GamerHandStatus(gamer.getName(), getHandStatusAsString(gamer.getHand())))
+                .toList();
+    }
+
+    public static DealerHandStatus getDealerHandStatusWithHiddenCard(final Hand hand) {
+        return new DealerHandStatus(getDealerHandAfterStartGame(hand));
+    }
+
+    private static String getDealerHandAfterStartGame(final Hand hand) {
+        List<Card> cardsInHand = hand.getCards();
+        Card firstCard = cardsInHand.get(0);
+        return firstCard.getScore() + firstCard.getShape();
     }
 }
