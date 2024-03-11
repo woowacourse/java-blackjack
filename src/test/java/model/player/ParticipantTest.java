@@ -1,5 +1,6 @@
 package model.player;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -11,6 +12,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ParticipantTest {
+
+    @DisplayName("참가자의 수가 1명 미만이면 예외가 발생한다.")
+    @Test
+    void validateUnderOneParticipant() {
+        assertThatThrownBy(() -> new Participants(List.of()))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 
     @DisplayName("카드의 합이 21이하일 때는 참을 반환한다.")
     @Test

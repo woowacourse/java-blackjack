@@ -12,6 +12,7 @@ public class Participants {
 
     public Participants(List<Participant> participants) {
         validateNotDuplicatedPlayer(participants);
+        validateParticipantSize(participants);
         this.participants = participants;
     }
 
@@ -19,6 +20,12 @@ public class Participants {
         Set<Player> distinctPlayers = new HashSet<>(players);
         if (distinctPlayers.size() != players.size()) {
             throw new IllegalArgumentException("참가자들의 이름은 중복되면 안됩니다.");
+        }
+    }
+
+    private void validateParticipantSize(List<Participant> participants) {
+        if (participants.isEmpty()) {
+            throw new IllegalArgumentException("참가자의 수는 1명 이상이어야 합니다.");
         }
     }
 

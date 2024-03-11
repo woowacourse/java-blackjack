@@ -1,7 +1,6 @@
 package model;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -13,7 +12,6 @@ import model.card.CardShape;
 import model.player.Dealer;
 import model.player.Participant;
 import model.player.Participants;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,10 +35,10 @@ class BlackJackTest {
         blackJack.offerCardToPlayers(1);
         List<Participant> result = participants.getParticipants();
 
-        assertAll(
-                () -> assertThat(result.get(0).getCards()).hasSize(3)
-        );
+        assertThat(result.get(0).getCards()).hasSize(3);
     }
+
+
 
 
     @DisplayName("이름이 일치하는 참가자에게만 카드를 줄 수 있다.")
@@ -54,9 +52,8 @@ class BlackJackTest {
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))), 1);
         List<Participant> result = participants.getParticipants();
 
-        assertAll(
-                () -> assertThat(result.get(0).getCards()).hasSize(3)
-        );
+
+        assertThat(result.get(0).getCards()).hasSize(3);
     }
 
     @DisplayName("카드의 합이 21을 초과하면 패한다.")
@@ -72,7 +69,7 @@ class BlackJackTest {
         BlackJack blackJack = new BlackJack(participants, dealer);
 
         Map<Participant, Outcome> result = blackJack.matchParticipantsOutcome();
-        Assertions.assertThat(result).isEqualTo(Map.of(participant, Outcome.WIN));
+        assertThat(result).isEqualTo(Map.of(participant, Outcome.WIN));
     }
 
     @DisplayName("참가자 카드의 합이 딜러와 동일하면 무승부다.")
@@ -87,7 +84,7 @@ class BlackJackTest {
         BlackJack blackJack = new BlackJack(participants, dealer);
 
         Map<Participant, Outcome> result = blackJack.matchParticipantsOutcome();
-        Assertions.assertThat(result).isEqualTo(Map.of(participant, Outcome.DRAW));
+        assertThat(result).isEqualTo(Map.of(participant, Outcome.DRAW));
     }
 
     @DisplayName("딜러의 합이 16을 넘으면 거짓을 반환한다.")
