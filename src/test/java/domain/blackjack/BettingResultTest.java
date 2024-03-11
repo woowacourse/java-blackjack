@@ -20,6 +20,7 @@ class BettingResultTest {
         BlackJackResult blackJackResult = new BlackJackResult(result);
         bet.put(participant, new BetAmount(10_000));
         BettingResult bettingResult = new BettingResult(bet, blackJackResult);
+
         double payout = bettingResult.getPayout(participant);
 
         Assertions.assertThat(payout).isEqualTo(10_000);
@@ -35,6 +36,7 @@ class BettingResultTest {
         BlackJackResult blackJackResult = new BlackJackResult(result);
         bet.put(participant, new BetAmount(10_000));
         BettingResult bettingResult = new BettingResult(bet, blackJackResult);
+
         double payout = bettingResult.getPayout(participant);
 
         Assertions.assertThat(payout).isEqualTo(-10_000);
@@ -50,6 +52,7 @@ class BettingResultTest {
         BlackJackResult blackJackResult = new BlackJackResult(result);
         bet.put(participant, new BetAmount(10_000));
         BettingResult bettingResult = new BettingResult(bet, blackJackResult);
+
         double payout = bettingResult.getPayout(participant);
 
         Assertions.assertThat(payout).isEqualTo(15_000);
@@ -65,11 +68,13 @@ class BettingResultTest {
         BlackJackResult blackJackResult = new BlackJackResult(result);
         bet.put(participant, new BetAmount(10_000));
         BettingResult bettingResult = new BettingResult(bet, blackJackResult);
+
         double payout = bettingResult.getPayout(participant);
 
         Assertions.assertThat(payout).isZero();
     }
 
+    @DisplayName("딜러의 수익을 계산한다.")
     @Test
     void getDealerPayout() {
         LinkedHashMap<Participant, BetAmount> bet = new LinkedHashMap<>();
@@ -77,14 +82,15 @@ class BettingResultTest {
         Participant one = new Participant(new Name("one"));
         Participant two = new Participant(new Name("one"));
         Participant three = new Participant(new Name("one"));
-        result.put(one, WinStatus.WIN);
         bet.put(one, new BetAmount(10_000));
-        result.put(two, WinStatus.LOSE);
+        result.put(one, WinStatus.WIN);
         bet.put(two, new BetAmount(15_000));
-        result.put(three, WinStatus.BLACKJACK);
+        result.put(two, WinStatus.LOSE);
         bet.put(three, new BetAmount(10_000));
+        result.put(three, WinStatus.BLACKJACK);
         BlackJackResult blackJackResult = new BlackJackResult(result);
         BettingResult bettingResult = new BettingResult(bet, blackJackResult);
+
         double payout = bettingResult.getDealerPayout();
 
         Assertions.assertThat(payout).isEqualTo(-10_000);
