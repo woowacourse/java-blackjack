@@ -31,7 +31,7 @@ class DealerTest {
         assertThat(dealer.getCards().getCards()).hasSize(3);
     }
 
-    @DisplayName("딜러 카드가 기준 점수보다 크면 진다.")
+    @DisplayName("딜러 카드가 기준 점수보다 크면 플레이어는 이긴다.")
     @Test
     void compareScore() {
         List<Card> given = List.of(
@@ -50,10 +50,10 @@ class DealerTest {
         Dealer dealer = new Dealer();
         dealer.addCards(given);
         PlayerResultStatus playerResultStatus = dealer.getResultStatus(comparisonCards);
-        assertThat(playerResultStatus).isEqualTo(PlayerResultStatus.LOSE);
+        assertThat(playerResultStatus).isEqualTo(PlayerResultStatus.WIN);
     }
 
-    @DisplayName("딜러 카드가 기준 점수보다 낮고 비교 카드 점수가 기준 점수보다 크면 플레이어는 이긴다.")
+    @DisplayName("딜러 카드가 기준 점수보다 낮고 비교 카드 점수가 기준 점수보다 크면 플레이어는 진다.")
     @Test
     void compareScore2() {
         List<Card> given = List.of(
@@ -72,7 +72,7 @@ class DealerTest {
         Dealer dealer = new Dealer();
         dealer.addCards(given);
         PlayerResultStatus playerResultStatus = dealer.getResultStatus(comparisonCards);
-        assertThat(playerResultStatus).isEqualTo(PlayerResultStatus.WIN);
+        assertThat(playerResultStatus).isEqualTo(PlayerResultStatus.LOSE);
     }
 
     @DisplayName("딜러 카드와 비교 카드 점수가 기준 점수보다 낮으면 두 점수의 대소관계로 결과를 낸다.")

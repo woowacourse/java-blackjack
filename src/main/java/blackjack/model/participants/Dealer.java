@@ -13,10 +13,10 @@ public class Dealer extends Participant {
 
     public PlayerResultStatus getResultStatus(Cards otherCards) {
         if (otherCards.isGreaterThanWinningScore()) {
-            return PlayerResultStatus.WIN;
+            return PlayerResultStatus.LOSE;
         }
         if (cards.isGreaterThanWinningScore()) {
-            return PlayerResultStatus.LOSE;
+            return PlayerResultStatus.WIN;
         }
         return compareScore(otherCards);
     }
