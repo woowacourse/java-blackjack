@@ -10,7 +10,7 @@ public class Card {
         this.symbol = symbol;
     }
 
-    public int score() {
+    public int getScore() {
         return rank.getScore();
     }
 

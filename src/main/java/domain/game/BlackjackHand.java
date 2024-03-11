@@ -45,7 +45,7 @@ public class BlackjackHand {
 
     private int calculateInitialScore() {
         return cards.stream()
-                .mapToInt(Card::score)
+                .mapToInt(Card::getScore)
                 .sum();
     }
 

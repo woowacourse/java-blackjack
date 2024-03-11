@@ -17,7 +17,7 @@ class CardTest {
     @MethodSource("rankScoreStream")
     void score_NoException_WithMethodSource(Rank rank, int score) {
         Card card = new Card(rank, DIAMOND);
-        assertThat(card.score()).isEqualTo(score);
+        assertThat(card.getScore()).isEqualTo(score);
     }
 
     static Stream<Arguments> rankScoreStream() {
