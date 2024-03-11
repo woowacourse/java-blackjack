@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 class PlayerBetWalletTest {
 
-    @DisplayName("배팅 금액이 100원 미만일 경우 예외가 발생한다.")
+    @DisplayName("배팅 금액이 100원 미만일 경우 예외를 발생시킨다.")
     @Test
     void createBetWalletByLowAmount() {
         //given
@@ -20,7 +20,7 @@ class PlayerBetWalletTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("배팅 금액이 10원 단위가 아닐 경우 예외가 발생한다.")
+    @DisplayName("배팅 금액이 10원 단위가 아닐 경우 예외를 발생시킨다.")
     @Test
     void createBetWalletByOutOfUnit() {
         //given
