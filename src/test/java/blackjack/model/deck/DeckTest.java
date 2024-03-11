@@ -1,6 +1,7 @@
 package blackjack.model.deck;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.NoSuchElementException;
 import org.assertj.core.api.Assertions;
@@ -37,10 +38,15 @@ class DeckTest {
     }
 
     @Test
-    @DisplayName("Deck에서 가장 앞에 있는 카드를 반환한다.")
+    @DisplayName("Deck에서 카드를 배분한다.")
     void distribute() {
-        Card expected = deck.getDeck().getFirst();
-        assertThat(deck.distribute()).isEqualTo(expected);
-    }
+        int deckSizeBeforeDistribute = deck.getDeck().size();
 
+        Card distributeCard = deck.distribute();
+
+        int deckSizeAfterDistribute = deck.getDeck().size();
+        assertAll(
+                () -> assertThat(deckSizeAfterDistribute).isEqualTo(deckSizeBeforeDistribute - 1),
+                () -> assertThat(deck.getDeck()).doesNotContain(distributeCard));
+    }
 }
