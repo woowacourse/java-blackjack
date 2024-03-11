@@ -17,6 +17,9 @@ public class Hands {
         }
     }
 
+    public Hands() {
+        this.value = new ArrayList<>();
+    }
     public Hands(final List<Card> value) {
         this.value = value;
     }
