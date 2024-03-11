@@ -1,8 +1,8 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.dto.PlayerDto;
-import blackjack.domain.dto.PlayerResultDto;
+import blackjack.domain.participant.dto.PlayerDto;
+import blackjack.domain.participant.dto.PlayerResultDto;
 import blackjack.view.description.ShapeDescription;
 import blackjack.view.description.ValueDescription;
 import java.util.List;

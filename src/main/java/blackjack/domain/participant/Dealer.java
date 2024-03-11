@@ -1,5 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.card.Deck;
+import blackjack.domain.game.Score;
 import blackjack.domain.card.Card;
 import java.util.List;
 

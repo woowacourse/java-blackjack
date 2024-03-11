@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 public record PlayerMeta(String name, int betAmount) {
     private static final int MINIMUM_BET_AMOUNT = 0;

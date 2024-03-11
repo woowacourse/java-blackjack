@@ -1,6 +1,6 @@
 package blackjack.view.description;
 
-import blackjack.domain.GameResult;
+import blackjack.domain.game.GameResult;
 import java.util.Arrays;
 
 public enum GameResultDescription {
