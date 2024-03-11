@@ -4,7 +4,9 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class CardFactory {
 
@@ -18,8 +20,8 @@ public class CardFactory {
         return trumpCards;
     }
 
-    private List<Card> createCards(Suit suit) {
-        List<Card> trumpCards = new ArrayList<>();
+    private Queue<Card> createCards(Suit suit) {
+        Queue<Card> trumpCards = new LinkedList<>();
 
         for (Rank rank : Rank.values()) {
             trumpCards.add(new Card(rank, suit));

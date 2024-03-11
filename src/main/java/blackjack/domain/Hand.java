@@ -2,9 +2,9 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Hand {
 
@@ -12,10 +12,10 @@ public class Hand {
     public static final int BLACKJACK_CARD_SIZE = 2;
     private static final int MAX_ACE_SCORE = 11;
 
-    private final List<Card> cards;
+    private final Queue<Card> cards;
 
     public Hand() {
-        this.cards = new ArrayList<>();
+        this.cards = new LinkedList<>();
     }
 
     public void add(final Card... cards) {
@@ -59,15 +59,12 @@ public class Hand {
         return calculateScore() == BLACKJACK_BOUND && cards.size() == BLACKJACK_CARD_SIZE;
     }
 
-    public boolean isBust() {
-        return calculateScore() > Hand.BLACKJACK_BOUND;
-    }
-
     public Card getFirstCard() {
-        return cards.get(0);
+        return cards.peek();
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return cards.stream()
+                .toList();
     }
 }

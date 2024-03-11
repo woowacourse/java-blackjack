@@ -21,7 +21,7 @@ public class DeckTest {
         Card trumpCardAceSpade = aceSpadeTrumpCard();
 
         //when & then
-        assertThat(deck.getCards().get(0))
+        assertThat(deck.getCards().peek())
                 .isEqualTo(trumpCardAceSpade);
     }
 }
