@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
-import blackjack.domain.GameResult;
 import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import java.util.List;
@@ -42,6 +41,7 @@ public class OutputView {
     }
 
     public void printAllCardsWithScore(List<Participant> participants) {
+        System.out.println();
         for (Participant participant : participants) {
             System.out.println(buildCardsWithScoreMessage(participant));
         }
@@ -54,25 +54,18 @@ public class OutputView {
                 participant.calculateScore());
     }
 
-    public void printGameResult(Map<Player, GameResult> playerGameResults, Map<GameResult, Integer> dealerGameResult) {
-        System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.printf("딜러: %s%n", buildDealerResult(dealerGameResult));
-        playerGameResults.forEach((player, gameResult) ->
-                System.out.printf("%s: %s%n", player.getName(), gameResult.getValue()));
-
-    }
-
-    private String buildDealerResult(Map<GameResult, Integer> dealerGameResult) {
-        return dealerGameResult.entrySet().stream()
-                .filter(entry -> entry.getValue() > 0)
-                .map(entry -> String.format("%d%s", entry.getValue(), entry.getKey().getValue()))
-                .collect(Collectors.joining(" "));
-    }
-
     private String buildCardsMessage(List<Card> cards) {
         return cards.stream()
                 .map(Card::getName)
                 .collect(Collectors.joining(", "));
+    }
+
+    public void printProfits(Map<Player, Integer> playerProfits, int dealerProfit) {
+        System.out.println();
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %d%n", dealerProfit);
+        for (Map.Entry<Player, Integer> entry : playerProfits.entrySet()) {
+            System.out.printf("%s: %d%n", entry.getKey().getName(), entry.getValue());
+        }
     }
 }

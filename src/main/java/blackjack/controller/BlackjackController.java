@@ -1,18 +1,18 @@
 package blackjack.controller;
 
+import blackjack.domain.Bettings;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
-import blackjack.domain.GameResult;
+import blackjack.domain.Money;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
+import blackjack.domain.PlayerGameResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class BlackjackController {
 
@@ -28,11 +28,13 @@ public class BlackjackController {
         try {
             Participants participants = createParticipants();
             Deck deck = Deck.createShuffledDeck();
+            Bettings bettings = new Bettings();
 
             initialDeal(participants, deck);
+            placeBetsByPlayers(participants, bettings);
             playersTurn(participants.getPlayers(), deck);
             dealerTurn(participants.getDealer(), deck);
-            printResult(participants);
+            printResult(participants, bettings);
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
         }
@@ -51,6 +53,13 @@ public class BlackjackController {
         }
 
         outputView.printInitialDeal(participants.getDealer(), participants.getPlayers());
+    }
+
+    private void placeBetsByPlayers(Participants participants, Bettings bettings) {
+        participants.getPlayers().forEach(player -> {
+            int bettingMoney = inputView.readBettingMoney(player.getName());
+            bettings.placeBet(player, new Money(bettingMoney));
+        });
     }
 
     private void playersTurn(List<Player> players, Deck deck) {
@@ -76,43 +85,37 @@ public class BlackjackController {
     private void dealerTurn(Dealer dealer, Deck deck) {
         while (dealer.isPlayable()) {
             dealer.hit(deck.draw());
+
             outputView.printDealerHitMessage();
         }
     }
 
-    private void printResult(Participants participants) {
-        Map<Player, GameResult> playerGameResults = createPlayerGameResults(participants);
-        Map<GameResult, Integer> dealerGameResult = createDealerGameResult(playerGameResults);
+    private void printResult(Participants participants, Bettings bettings) {
+        Map<Player, Integer> playerProfit = createPlayerProfits(participants, bettings);
+
+        int dealerProfit = calculateDealerProfit(playerProfit);
 
         outputView.printAllCardsWithScore(participants.getParticipants());
-        outputView.printGameResult(playerGameResults, dealerGameResult);
+        outputView.printProfits(playerProfit, dealerProfit);
     }
 
-    private Map<GameResult, Integer> createDealerGameResult(Map<Player, GameResult> playerGameResults) {
-        Map<GameResult, Integer> dealerGameResults = new EnumMap<>(GameResult.class);
-
-        for (GameResult gameResult : GameResult.values()) {
-            dealerGameResults.put(gameResult, 0);
-        }
-
-        for (Entry<Player, GameResult> entry : playerGameResults.entrySet()) {
-            GameResult gameResult = entry.getValue().getOpposite();
-            int current = dealerGameResults.get(gameResult);
-            dealerGameResults.put(gameResult, current + 1);
-        }
-
-        return dealerGameResults;
-    }
-
-    private Map<Player, GameResult> createPlayerGameResults(Participants participants) {
-        Map<Player, GameResult> playerGameResults = new LinkedHashMap<>();
+    private static Map<Player, Integer> createPlayerProfits(Participants participants, Bettings bettings) {
+        Map<Player, Integer> playerProfit = new LinkedHashMap<>();
         Dealer dealer = participants.getDealer();
 
-        for (Player player : participants.getPlayers()) {
-            GameResult gameResult = dealer.judge(player);
-            playerGameResults.put(player, gameResult);
-        }
+        participants.getPlayers().forEach(player -> {
+            PlayerGameResult playerGameResult = dealer.judge(player);
+            Money bettingMoney = bettings.getBettingMoney(player);
+            int profit = playerGameResult.getProfit(bettingMoney.getValue());
 
-        return playerGameResults;
+            playerProfit.put(player, profit);
+        });
+
+        return playerProfit;
+    }
+
+    private static int calculateDealerProfit(Map<Player, Integer> playerProfit) {
+        return playerProfit.values().stream()
+                .reduce(0, Integer::sum) * -1;
     }
 }
