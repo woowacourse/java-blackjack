@@ -1,6 +1,9 @@
 package blackjack.domain;
 
+import java.util.Objects;
+
 public class Score {
+    // TODO: Score 객체 캐싱
     private static final int MINIMUM_VALUE = 0;
     private static final int BLACKJACK_MAX_SCORE = 21;
     private static final int DEALER_MINIMUM_SCORE = 17;
@@ -95,5 +98,22 @@ public class Score {
 
     public int getValue() {
         return value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Score score = (Score) o;
+        return value == score.value && isBlackJack == score.isBlackJack;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, isBlackJack);
     }
 }

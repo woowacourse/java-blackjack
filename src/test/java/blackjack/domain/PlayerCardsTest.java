@@ -64,8 +64,7 @@ class PlayerCardsTest {
         PlayerCards playerCards = new PlayerCards(cards);
         Score score = playerCards.calculateScore();
 
-        Score expected = Score.of(expectedValue);
-        assertThat(score).isEqualTo(expected);
+        assertThat(score.getValue()).isEqualTo(expectedValue);
     }
 
     static Stream<Arguments> cardsAndScore() {

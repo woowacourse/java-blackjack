@@ -43,9 +43,8 @@ class DealerTest {
 
         dealer.drawUntilExceedMinimum(deck);
         Score score = dealer.getScore();
-        Score expected = Score.of(expectedValue);
 
-        assertThat(score).isEqualTo(expected);
+        assertThat(score.getValue()).isEqualTo(expectedValue);
     }
 
     static Stream<Arguments> cardsAndScore() {
