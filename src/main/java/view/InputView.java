@@ -1,25 +1,23 @@
 package view;
 
+import view.dto.participant.ParticipantDto;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
-import view.dto.participant.PlayerDto;
-import view.dto.participant.PlayersDto;
-
 public class InputView implements AutoCloseable {
 
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
 
-    public PlayersDto askPlayerNames() {
+    public List<ParticipantDto> askPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = requireNotBlank(readLine());
-        List<PlayerDto> players = Arrays.stream(input.split(","))
-                .map(name -> new PlayerDto(name.trim()))
-                .toList();
-        return new PlayersDto(players);
+        return Arrays.stream(input.split(","))
+                                             .map(name -> new ParticipantDto(name.trim()))
+                                             .toList();
     }
 
     private String requireNotBlank(final String input) {
@@ -29,8 +27,8 @@ public class InputView implements AutoCloseable {
         return input;
     }
 
-    public BlackJackGameCommand askMoreCard(final PlayerDto playerDto) {
-        System.out.printf("%n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerDto.name());
+    public BlackJackGameCommand askMoreCard(final ParticipantDto player) {
+        System.out.printf("%n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", player.name());
         return requireYesOrNo(readLine());
     }
 

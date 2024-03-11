@@ -1,16 +1,9 @@
 package domain;
 
-import java.util.EnumMap;
-import java.util.stream.IntStream;
+import domain.participant.*;
+import view.dto.result.GameResultDto;
 
-import domain.participant.Dealer;
-import domain.participant.DealerResult;
-import domain.participant.Participant;
-import domain.participant.Players;
-import domain.participant.PlayerResults;
-import view.dto.GameResultDto;
-import view.dto.participant.DealerResultDto;
-import view.dto.participant.PlayerResultsDto;
+import java.util.stream.IntStream;
 
 public class BlackjackGame {
 
@@ -24,19 +17,15 @@ public class BlackjackGame {
 
     private void giveCards(final Dealer dealer, final Participant participant) {
         IntStream.range(0, INITIAL_CARD_COUNT)
-                .forEach(__ -> dealer.deal(participant));
+                 .forEach(__ -> dealer.deal(participant));
     }
 
     public GameResultDto resultsOf(final Dealer dealer, final Players players) {
-        DealerResult dealerResults = new DealerResult(new EnumMap<>(GameResultStatus.class));
-        PlayerResults playerResults = new PlayerResults();
+        GameResult gameResult = new GameResult();
         players.forEach(player -> {
-            GameResultStatus playerResultStatus = dealer.resultStatusOf(player);
-            GameResultStatus dealerResultStatus = playerResultStatus.opposite();
-            playerResults.put(player, playerResultStatus);
-            dealerResults.put(dealerResultStatus);
+            GameResultStatus result = dealer.resultStatusOf(player);
+            gameResult.put(player, result);
         });
-        return new GameResultDto(new DealerResultDto(dealer, dealerResults), new PlayerResultsDto(playerResults));
+        return GameResultDto.from(gameResult, gameResult.ofDealer());
     }
-
 }
