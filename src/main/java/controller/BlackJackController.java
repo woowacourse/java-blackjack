@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 import model.BlackJack;
+import model.card.Cards;
 import model.player.Dealer;
 import model.player.Participant;
 import model.player.Participants;
@@ -35,8 +36,8 @@ public class BlackJackController {
     private BlackJack createBlackJack() {
         List<String> names = inputView.askParticipantNames();
         List<Participant> players = new ArrayList<>(names.stream()
-                .map(Participant::new).toList());
-        return new BlackJack(new Participants(players), new Dealer());
+                .map(name -> new Participant(name, Cards.selectRandomCards(2))).toList());
+        return new BlackJack(new Participants(players), new Dealer(Cards.selectRandomCards(2)));
     }
 
     private void offerMoreCards(BlackJack blackJack) {

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import model.card.Card;
+import model.card.Cards;
 
 public abstract class Player implements NoticeStatus {
     protected final static int MAXIMUM_SUM = 21;
@@ -12,15 +13,22 @@ public abstract class Player implements NoticeStatus {
     protected final String name;
     protected List<Card> cards;
 
-    public Player(String name) {
+    public Player(String name, List<Card> cards) {
         validateName(name);
+        validateCardSize(cards);
         this.name = name;
-        this.cards = new ArrayList<>();
+        this.cards = new ArrayList<>(cards);
     }
 
     private void validateName(String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("참가자의 이름은 공백이거나 null일 수 없습니다.");
+        }
+    }
+
+    private void validateCardSize(List<Card> cards) {
+        if (cards.size() != 2) {
+            throw new IllegalArgumentException("참가자의 초기 카드는 2장입니다.");
         }
     }
 
