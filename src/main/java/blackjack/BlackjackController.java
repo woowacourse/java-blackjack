@@ -1,7 +1,6 @@
 package blackjack;
 
 import blackjack.domain.cardgame.CardGame;
-import blackjack.domain.cardgame.CardGameJudge;
 import blackjack.domain.cardgame.CardGameResult;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
@@ -15,9 +14,7 @@ public class BlackjackController {
         final CardGame cardGame = new CardGame();
         final List<String> names = InputView.askPlayerNames();
         final Dealer dealer = new Dealer();
-        final List<Player> players = names.stream()
-                .map(Player::new)
-                .toList();
+        final List<Player> players = names.stream().map(Player::new).toList();
 
         cardGame.initializeHand(dealer, players);
         OutputView.printInitialHandOfEachPlayer(dealer, players);
@@ -54,8 +51,7 @@ public class BlackjackController {
     }
 
     private static void printCardGameResult(final Dealer dealer, final List<Player> players) {
-        final CardGameJudge cardGameJudge = new CardGameJudge();
-        final CardGameResult cardGameResult = cardGameJudge.judge(dealer, players);
+        final CardGameResult cardGameResult = dealer.judgeWithPlayers(players);
         OutputView.printResult(cardGameResult);
     }
 }
