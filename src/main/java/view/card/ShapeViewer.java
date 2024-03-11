@@ -3,7 +3,7 @@ package view.card;
 import domain.card.Shape;
 
 public class ShapeViewer {
-    protected static String show(Shape shape) {
+    static String show(Shape shape) {
         return switch (shape) {
             case SPADE -> "스페이드";
             case DIAMOND -> "다이아몬드";

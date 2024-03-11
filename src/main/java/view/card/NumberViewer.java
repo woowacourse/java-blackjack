@@ -3,7 +3,7 @@ package view.card;
 import domain.card.Number;
 
 public class NumberViewer {
-    protected static String show(Number number) {
+    static String show(Number number) {
         return switch (number) {
             case ACE -> "A";
             case TWO -> "2";

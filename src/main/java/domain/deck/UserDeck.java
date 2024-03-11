@@ -8,7 +8,7 @@ import java.util.List;
 public class UserDeck {
     private static final int BLACK_JACK_CONDITION = 21;
     private static final int ACE_CONVERT_VALUE = 10;
-    final List<Card> cards;
+    protected final List<Card> cards;
 
     public UserDeck() {
         this.cards = new ArrayList<>();
