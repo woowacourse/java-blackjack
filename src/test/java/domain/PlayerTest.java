@@ -12,7 +12,7 @@ class PlayerTest {
     @DisplayName("이름으로 참여자를 생성한다.")
     @Test
     void createPlayerWithName() {
-        Assertions.assertThatCode(() -> new Player("pobi", Hands.createEmptyPacket()))
+        Assertions.assertThatCode(() -> new Player("pobi", Hands.createEmptyHands()))
                 .doesNotThrowAnyException();
     }
 
@@ -20,7 +20,7 @@ class PlayerTest {
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "  "})
     void BlankInputThrowException(String name) {
-        Assertions.assertThatThrownBy(() -> new Player(name, Hands.createEmptyPacket()))
+        Assertions.assertThatThrownBy(() -> new Player(name, Hands.createEmptyHands()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 참여자 이름에 공백을 입력할 수 없습니다.");
     }
@@ -29,7 +29,7 @@ class PlayerTest {
     @ParameterizedTest
     @NullSource
     void nullInputThrowException(String name) {
-        Assertions.assertThatThrownBy(() -> new Player(name, Hands.createEmptyPacket()))
+        Assertions.assertThatThrownBy(() -> new Player(name, Hands.createEmptyHands()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 유효하지 않은 참여자 이름입니다.");
     }

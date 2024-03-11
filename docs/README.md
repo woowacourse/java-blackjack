@@ -68,7 +68,7 @@
 
 * [ ] 추상 클래스 활용
 * [ ] 카드가 비어진 경우 예외 발생
-* [ ] createEmptyPacket 메서드명 수정
+* [x] createEmptyPacket 메서드명 수정
 * [ ] 블랙잭인경우 바로 게임 종료
 * [ ] model 안에 있는 view를 어떻게 해야할까
   * Rank, Shape

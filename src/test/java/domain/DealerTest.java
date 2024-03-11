@@ -36,8 +36,8 @@ class DealerTest {
     @DisplayName("참여자의 답변이 y라면 카드를 한장 추가한다.")
     void addOneCard() {
         //given
-        final Player redddy = new Player("레디", Hands.createEmptyPacket());
-        final Player zeze = new Player("제제", Hands.createEmptyPacket());
+        final Player redddy = new Player("레디", Hands.createEmptyHands());
+        final Player zeze = new Player("제제", Hands.createEmptyHands());
 
         final Players players = new Players(List.of(redddy, zeze));
 

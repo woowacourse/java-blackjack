@@ -34,7 +34,7 @@ public class Players {
     private static List<Player> mapToPlayers(final List<String> names) {
         return names.stream()
                 .map(String::trim)
-                .map(name -> new Player(name, Hands.createEmptyPacket()))
+                .map(name -> new Player(name, Hands.createEmptyHands()))
                 .toList();
     }
 

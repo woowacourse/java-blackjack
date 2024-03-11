@@ -16,7 +16,7 @@ public class Hands {
         this.cards = new ArrayList<>(cards);
     }
 
-    public static Hands createEmptyPacket() {
+    public static Hands createEmptyHands() {
         return new Hands(new ArrayList<>());
     }
 

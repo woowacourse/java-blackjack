@@ -44,7 +44,7 @@ class HandsTest {
     @Test
     @DisplayName("카드를 가지고 있는 객체를 생성한다.")
     void createPacket() {
-        Assertions.assertThatCode(Hands::createEmptyPacket)
+        Assertions.assertThatCode(Hands::createEmptyHands)
                 .doesNotThrowAnyException();
     }
 
@@ -52,7 +52,7 @@ class HandsTest {
     @DisplayName("카드를 추가한다.")
     void addCard() {
         //given
-        final Hands hands = Hands.createEmptyPacket();
+        final Hands hands = Hands.createEmptyHands();
 
         //when
         hands.add(new Card(EIGHT, CLOVER));
