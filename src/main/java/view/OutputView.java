@@ -1,81 +1,94 @@
 package view;
 
-import cardGame.dto.BlackJackGameStatusDto;
-import cardGame.dto.ParticipantsTotalGameResultDto;
+import card.Card;
+import card.Cards;
 import controller.dto.SinglePlayerResultDto;
+import dealer.dto.DealerGameResult;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import player.Name;
-import player.dto.AllPlayerStatusDto;
+import player.Player;
+import player.Players;
 import player.dto.SinglePlayerStatusDto;
 
 public class OutputView {
 
+    private static final String DEALER = "딜러";
+    private static final String DEALER_NAME_SYMBOL = DEALER + ": ";
+    private static final String CARD_SYMBOL = "카드: ";
     private static final int INIT_CARD_COUNT = 2;
     private static final int MIN_DEALER_SCORE = 16;
     private static final String PARTICIPANT_RESULT_SYMBOL = " : ";
     private static final String NAME_FORMAT_SYMBOL = ", ";
 
-    public void printInitCardStatus(BlackJackGameStatusDto blackJackGameStatusDto) {
-        AllPlayerStatusDto playersCardStatus = blackJackGameStatusDto.playerCardStatus();
+    public void printInitCardStatus(Players players, Card card) {
 
-        String playersNames = changeNameFormat(playersCardStatus.getNames());
-        System.out.println("\n딜러와 " + playersNames + "에게 " + INIT_CARD_COUNT + "장을 나누었습니다.");
+        String playersNames = changeNameFormat(players.getPlayerNames());
 
-        System.out.println("딜러: " + blackJackGameStatusDto.dealerCards().getCardsStatus());
+        System.out.println("\n" + DEALER + "와 " + playersNames + "에게 " + INIT_CARD_COUNT + "장을 나누었습니다.");
+        System.out.println(DEALER_NAME_SYMBOL + card.getCardHand());
 
-        for (int i = 0; i < playersCardStatus.size(); i++) {
-            SinglePlayerStatusDto singlePlayerStatus = playersCardStatus.multiPlayersStatus().get(i);
+        for (Player player : players.getPlayers()) {
             System.out.println(
-                    singlePlayerStatus.name().getValue() + "카드: " + singlePlayerStatus.cards().getCardsStatus());
+                    player.getName().getValue() + CARD_SYMBOL + formatCardsStatus(player.getCards()));
         }
 
         System.out.println();
     }
 
-    public void printExtraCardInfo(int dealerExtraCardCount) {
+    public void printPlayerCardStatus(Player player) {
+        System.out.println(makeCardsStatus(player.getName(), player.getCards()));
+    }
+
+    public void printExtraCardInfo(SinglePlayerStatusDto result) {
         System.out.println();
-        for (int i = 0; i < dealerExtraCardCount; i++) {
-            System.out.println("딜러가 " + MIN_DEALER_SCORE + "이하라 한장의 카드를 더 받았습니다.\n");
+        for (int i = 2; i <= result.cards().countCard(); i++) {
+            System.out.println(result.name().getValue() + "가 " + MIN_DEALER_SCORE + "이하라 한장의 카드를 더 받았습니다.\n");
         }
     }
 
-    public void printPariticipantsScore(ParticipantsTotalGameResultDto participantsTotalGameResultDto) {
-        Map<SinglePlayerStatusDto, Integer> participantsResult = participantsTotalGameResultDto.totalGameResult();
+    public void printPlayStatus(List<SinglePlayerStatusDto> playResult) {
+        Collections.reverse(playResult);
 
-        for (SinglePlayerStatusDto singlePlayerStatusDto : participantsResult.keySet()) {
-            System.out.println(
-                    makeCardsStatus(singlePlayerStatusDto) + " - 결과: " + participantsResult.get(singlePlayerStatusDto));
+        for (SinglePlayerStatusDto singlePlayerResult : playResult) {
+            System.out.println(makeCardsStatus(singlePlayerResult.name(), singlePlayerResult.cards()) + " - 결과: "
+                    + singlePlayerResult.getCardsScore());
         }
     }
 
-    public void printCardsStatus(SinglePlayerStatusDto singlePlayerStatus) {
-        System.out.println(makeCardsStatus(singlePlayerStatus));
+    public void printPlayersResult(List<SinglePlayerResultDto> playerResult) {
+        Collections.reverse(playerResult);
+
+        for (SinglePlayerResultDto result : playerResult) {
+            printSinglePlayerResult(result);
+        }
     }
 
-    private String makeCardsStatus(SinglePlayerStatusDto singlePlayerStatus) {
-        return singlePlayerStatus.name().getValue() + "카드: " + singlePlayerStatus.cards().getCardsStatus();
+    public void printDealerResult(DealerGameResult dealerGameResult) {
+        System.out.println("\n## 최종 승패");
+        System.out.println(
+                DEALER_NAME_SYMBOL + dealerGameResult.winningCount() + GameResultSymbol.WINNING_SYMBOL.symbolName + " "
+                        + dealerGameResult.failCount()
+                        + GameResultSymbol.LOSE_SYMBOL.symbolName);
+    }
+
+    private void printSinglePlayerResult(SinglePlayerResultDto playerResult) {
+        System.out.println(playerResult.name().getValue() + PARTICIPANT_RESULT_SYMBOL + GameResultSymbol.changeToSymbol(
+                playerResult.isWinner()).symbolName);
+    }
+
+    public String formatCardsStatus(Cards cards) {
+        return String.join(",", cards.getCardsStatus());
+    }
+
+    private String makeCardsStatus(Name name, Cards cards) {
+        return name.getValue() + CARD_SYMBOL + cards.getCardsStatus();
     }
 
     private String changeNameFormat(List<Name> names) {
         return names.stream()
                 .map(Name::getValue)
                 .collect(Collectors.joining(NAME_FORMAT_SYMBOL));
-    }
-
-    public void printDealerResult(int dealerWinningCount, int dealerFailCount) {
-        System.out.println("\n## 최종 승패");
-        System.out.println(
-                "딜러: " + dealerWinningCount + GameResultSymbol.WINNING_SYMBOL.symbolName + " " + dealerFailCount
-                        + GameResultSymbol.LOSE_SYMBOL.symbolName);
-    }
-
-    public void printPlayerResult(List<SinglePlayerResultDto> winOrNotResults) {
-        for (SinglePlayerResultDto singlePlayerResultDto : winOrNotResults) {
-            System.out.println(singlePlayerResultDto.name().getValue() + PARTICIPANT_RESULT_SYMBOL
-                    + GameResultSymbol.changeToSymbol(
-                    singlePlayerResultDto.isWinner()).symbolName);
-        }
     }
 }

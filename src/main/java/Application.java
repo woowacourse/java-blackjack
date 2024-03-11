@@ -10,6 +10,6 @@ public class Application {
         OutputView outputView = new OutputView();
 
         BlackJackController blackJackController = new BlackJackController(inputView, outputView);
-        blackJackController.playGame();
+        blackJackController.run();
     }
 }
