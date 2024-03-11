@@ -71,7 +71,7 @@ class GameResultBoardTest {
 
         GameResultBoard gameResultBoard = new GameResultBoard(dealer, new Players(List.of(player)));
 
-        assertThat(gameResultBoard.getGameResult(player)).isEqualTo(expected);
+        assertThat(gameResultBoard.getProfitOf(player)).isEqualTo(expected);
     }
 
     static Stream<Arguments> playerCardsAndExpectedProfitWhenNoOneBusted() {
@@ -106,7 +106,7 @@ class GameResultBoardTest {
 
         GameResultBoard gameResultBoard = new GameResultBoard(bustedDealer, new Players(List.of(player)));
 
-        assertThat(gameResultBoard.getGameResult(player)).isEqualTo(expected);
+        assertThat(gameResultBoard.getProfitOf(player)).isEqualTo(expected);
     }
 
     static Stream<Arguments> playerCardsAndExpectedProfitWhenDealerBusted() {
@@ -133,7 +133,7 @@ class GameResultBoardTest {
 
         GameResultBoard gameResultBoard = new GameResultBoard(dealer, new Players(List.of(player)));
 
-        assertThat(gameResultBoard.getGameResult(player)).isEqualTo(expected);
+        assertThat(gameResultBoard.getProfitOf(player)).isEqualTo(expected);
     }
 
     static Stream<Arguments> dealerCardsAndExpectedProfitWhenPlayerBusted() {
@@ -169,7 +169,7 @@ class GameResultBoardTest {
         GameResultBoard gameResultBoard = new GameResultBoard(dealer, new Players(List.of(player)));
 
         int expected = calculateExpectedProfitOf(GameResult.DRAW);
-        assertThat(gameResultBoard.getGameResult(player)).isEqualTo(expected);
+        assertThat(gameResultBoard.getProfitOf(player)).isEqualTo(expected);
     }
 
     @Test

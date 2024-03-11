@@ -20,7 +20,7 @@ public class GameResultBoard {
         }
     }
 
-    public int getGameResult(Player player) {
+    public int getProfitOf(Player player) {
         return resultBoard.get(player.getName());
     }
 
