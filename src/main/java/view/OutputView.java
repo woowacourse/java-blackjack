@@ -61,7 +61,6 @@ public class OutputView {
 
     public void printResultHandStatus(final List<HandStatus> handStatuses) {
         System.out.println();
-        System.out.println();
         for (HandStatus handStatus : handStatuses) {
             System.out.println(String.format(
                     RESULT_HAND_STATUS_MESSAGE,
@@ -92,7 +91,7 @@ public class OutputView {
 
         int winnersCount = judgeResult.countWinner();
         int losersCount = judgeResult.results().size() - winnersCount;
-        System.out.printf(JUDGE_DEALER_RESULT_FORMAT, Dealer.DEALER_NAME, winnersCount, losersCount);
+        System.out.printf(JUDGE_DEALER_RESULT_FORMAT, Dealer.DEALER_NAME, losersCount, winnersCount);
 
         for (PlayerOutcome result : judgeResult.results()) {
             System.out.printf(
@@ -101,6 +100,7 @@ public class OutputView {
                     findJudgeResultMessage(result.outcome())
             );
         }
+        System.out.println();
     }
 
     private String findJudgeResultMessage(final Outcome outcome) {
