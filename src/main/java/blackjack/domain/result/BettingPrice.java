@@ -18,4 +18,8 @@ public class BettingPrice {
             throw new BettingPriceOutOfBoundException(bettingPrice);
         }
     }
+
+    public double calculateProfit(HandResult playerResult) {
+        return playerResult.getProfitRate() * bettingPrice;
+    }
 }
