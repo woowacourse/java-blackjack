@@ -31,7 +31,15 @@ public class CardDeck {
     }
 
     private Card selectRandomCard() {
+        validateCardDeckNotEmpty();
         Collections.shuffle(cards);
         return cards.remove(0);
     }
+
+    void validateCardDeckNotEmpty() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("더 뽑을 카드가 없습니다.");
+        }
+    }
+
 }
