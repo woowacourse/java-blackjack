@@ -3,15 +3,16 @@ package domain.participant;
 import domain.Hands;
 import domain.Result;
 import domain.card.Card;
+
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
 
-    private final String name;
+    private final Name name;
     private final Hands hands;
 
-    protected Participant(final String name, final Hands hands) {
+    protected Participant(final Name name, final Hands hands) {
         this.name = name;
         this.hands = hands;
     }
@@ -45,7 +46,7 @@ public abstract class Participant {
     }
 
     public String getName() {
-        return name;
+        return name.getValue();
     }
 
     public Hands getHands() {

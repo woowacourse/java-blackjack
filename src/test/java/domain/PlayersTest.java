@@ -1,6 +1,7 @@
 package domain;
 
 import domain.card.Card;
+import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
 import org.assertj.core.api.Assertions;
@@ -61,8 +62,8 @@ class PlayersTest {
     @DisplayName("참가자 중 버스트 되지 않은 참가자가 있다면 False를 반환한다.")
     void isAllBustFalse() {
         //given
-        final Player player1 = new Player("레디", bustHands);
-        final Player player2 = new Player("제제", noBustHands);
+        final Player player1 = new Player(new Name("레디"), bustHands);
+        final Player player2 = new Player(new Name("제제"), noBustHands);
         final Players players = new Players(List.of(player1, player2));
 
         //when && then
@@ -73,10 +74,10 @@ class PlayersTest {
     @DisplayName("모든 참가자가 버스트되면 True를 반환한다.")
     void isAllBustTrue() {
         //given
-        Player player1 = new Player("레디", bustHands);
-        Player player2 = new Player("제제", bustHands);
-        Player player3 = new Player("수달", bustHands);
-        Player player4 = new Player("피케이", bustHands);
+        Player player1 = new Player(new Name("레디"), bustHands);
+        Player player2 = new Player(new Name("제제"), bustHands);
+        Player player3 = new Player(new Name("수달"), bustHands);
+        Player player4 = new Player(new Name("피케이"), bustHands);
 
         Players players = new Players(List.of(player1, player2, player3, player4));
 

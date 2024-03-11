@@ -71,9 +71,9 @@
 * [x] createEmptyPacket 메서드명 수정
 * [ ] 블랙잭인경우 바로 게임 종료
 * [ ] model 안에 있는 view를 어떻게 해야할까
-  * Rank, Shape
+    * Rank, Shape
 * [ ] 플레이어의 이름 딜러 불가
-* [ ] Name 객체 포장하기
+* [x] Name 객체 포장하기
 * [ ] CardDeck 스토리지 유닛으로 변경
 * [ ] Result 함수형 프로그래밍 사용
 * [ ] TestFixture 사용

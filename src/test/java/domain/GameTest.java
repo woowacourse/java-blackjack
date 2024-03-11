@@ -2,6 +2,7 @@ package domain;
 
 import domain.card.Card;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
 import org.assertj.core.api.Assertions;
@@ -38,9 +39,9 @@ class GameTest {
     @DisplayName("참여자의 승패무를 판단한다.")
     void playerResult() {
         //given
-        Player loser = new Player("레디", sum18);
-        Player winner = new Player("제제", sum21);
-        Player tier = new Player("수달", sum20);
+        Player loser = new Player(new Name("레디"), sum18);
+        Player winner = new Player(new Name("제제"), sum21);
+        Player tier = new Player(new Name("수달"), sum20);
 
         Players players = new Players(List.of(loser, winner, tier));
         Dealer dealer = new Dealer(CardDeck.generate(), sum20);
@@ -56,10 +57,10 @@ class GameTest {
     @Test
     void dealerResult() {
         // given
-        Player loser1 = new Player("레디", sum18);
-        Player loser2 = new Player("피케이", sum18);
-        Player winner = new Player("제제", sum21);
-        Player tier = new Player("브라운", sum20);
+        Player loser1 = new Player(new Name("레디"), sum18);
+        Player loser2 = new Player(new Name("피케이"), sum18);
+        Player winner = new Player(new Name("제제"), sum21);
+        Player tier = new Player(new Name("브라운"), sum20);
 
         Players players = new Players(List.of(loser1, loser2, winner, tier));
         Dealer dealer = new Dealer(CardDeck.generate(), sum20);
@@ -78,9 +79,9 @@ class GameTest {
     void all() {
         //given
         Dealer bustDealer = new Dealer(CardDeck.generate(), bustHands);
-        Player winner1 = new Player("레디", sum18);
-        Player winner2 = new Player("브라운", sum20);
-        Player loser = new Player("제제", bustHands);
+        Player winner1 = new Player(new Name("레디"), sum18);
+        Player winner2 = new Player(new Name("브라운"), sum20);
+        Player loser = new Player(new Name("제제"), bustHands);
 
         Players players = new Players(List.of(winner1, winner2, loser));
 

@@ -2,6 +2,7 @@ package domain;
 
 import domain.card.Card;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
 import org.assertj.core.api.Assertions;
@@ -36,8 +37,8 @@ class DealerTest {
     @DisplayName("참여자의 답변이 y라면 카드를 한장 추가한다.")
     void addOneCard() {
         //given
-        final Player redddy = new Player("레디", Hands.createEmptyHands());
-        final Player zeze = new Player("제제", Hands.createEmptyHands());
+        final Player redddy = new Player(new Name("레디"), Hands.createEmptyHands());
+        final Player zeze = new Player(new Name("제제"), Hands.createEmptyHands());
 
         final Players players = new Players(List.of(redddy, zeze));
 

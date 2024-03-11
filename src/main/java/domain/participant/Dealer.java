@@ -13,12 +13,12 @@ public class Dealer extends Participant {
     private final CardDeck cardDeck;
 
     public Dealer(final CardDeck cardDeck) {
-        super(NAME, Hands.createEmptyHands());
+        super(new Name(NAME), Hands.createEmptyHands());
         this.cardDeck = cardDeck;
     }
 
     public Dealer(final CardDeck cardDeck, final Hands hands) {
-        super(NAME, hands);
+        super(new Name(NAME), hands);
         this.cardDeck = cardDeck;
     }
 

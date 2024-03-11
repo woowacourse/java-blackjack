@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.Hands;
+
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -17,9 +18,8 @@ public class Players {
     }
 
     public static Players from(final List<String> names) {
-        List<Player> playerNames = mapToPlayers(names);
-        validate(playerNames);
-        return new Players(playerNames);
+        validate(names);
+        return new Players(mapToPlayers(names));
     }
 
     public void forEach(Consumer<? super Player> action) {
@@ -34,23 +34,23 @@ public class Players {
     private static List<Player> mapToPlayers(final List<String> names) {
         return names.stream()
                 .map(String::trim)
-                .map(name -> new Player(name, Hands.createEmptyHands()))
+                .map(name -> new Player(new Name(name), Hands.createEmptyHands()))
                 .toList();
     }
 
-    private static void validate(final List<Player> players) {
-        validateSize(players);
-        validateDuplicate(players);
+    private static void validate(final List<String> names) {
+        validateSize(names);
+        validateDuplicate(names);
     }
 
-    private static void validateSize(final List<Player> players) {
-        if (players.size() < MIN_SIZE || MAX_SIZE < players.size()) {
+    private static void validateSize(final List<String> names) {
+        if (names.size() < MIN_SIZE || MAX_SIZE < names.size()) {
             throw new IllegalArgumentException("[ERROR] 유효하지 않은 참여자 수입니다.");
         }
     }
 
-    private static void validateDuplicate(final List<Player> players) {
-        if (players.size() != Set.copyOf(players).size()) {
+    private static void validateDuplicate(final List<String> names) {
+        if (names.size() != Set.copyOf(names).size()) {
             throw new IllegalArgumentException("[ERROR] 참여자 이름은 중복될 수 없습니다.");
         }
     }
