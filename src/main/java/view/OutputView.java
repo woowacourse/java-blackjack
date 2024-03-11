@@ -13,18 +13,18 @@ import domain.participant.Hand;
 import java.util.List;
 
 public class OutputView {
-    private static final String INITIAL_HAND_STATUS_FORMAT = "%s에게 %d장을 나누었습니다.";
-    private static final String NAME_SEPARATOR = ",";
-    private static final String HAND_STATUS_FORMAT = "%s카드: %s";
-    private static final String DEALER_CARD_SAVED_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String RESULT_HAND_STATUS_MESSAGE = HAND_STATUS_FORMAT + " - 결과 : %d";
-    private static final String CARD_STATUS_MESSAGE = "%d%s";
-    private static final String CARD_SEPARATOR = ",";
-    private static final String JUDGE_RESULT_MESSAGE = "## 최종 승패";
+    private static final String INITIAL_HAND_STATUS_FORMAT = "%n%s에게 %d장을 나누었습니다.%n";
+    private static final String NAME_SEPARATOR = ", ";
+    private static final String HAND_STATUS_FORMAT = "%s카드: %s%n";
+    private static final String DEALER_CARD_SAVED_MESSAGE = "%n딜러는 16이하라 한장의 카드를 더 받았습니다.%n";
+    private static final String RESULT_HAND_STATUS_MESSAGE = "%s카드: %s - 결과 : %d";
+    private static final String CARD_STATUS_MESSAGE = "%s%s";
+    private static final String CARD_SEPARATOR = ", ";
+    private static final String JUDGE_RESULT_MESSAGE = "%n## 최종 승패";
     private static final String WIN_MESSAGE = "승";
     private static final String LOSE_MESSAGE = "패";
-    private static final String JUDGE_DEALER_RESULT_FORMAT = "%s: %d" + WIN_MESSAGE + "%d" + LOSE_MESSAGE;
-    private static final String JUDGE_PLAYER_RESULT_FORMAT = "%s: %s";
+    private static final String JUDGE_DEALER_RESULT_FORMAT = "%n%s: %d" + WIN_MESSAGE + " %d" + LOSE_MESSAGE;
+    private static final String JUDGE_PLAYER_RESULT_FORMAT = "%n%s: %s";
 
 
     public void printInitialHandStatus(final InitialCardStatus initialCardStatus) {
@@ -38,6 +38,7 @@ public class OutputView {
         for (HandStatus handStatus : initialCardStatus.statuses()) {
             printHandStatus(handStatus);
         }
+        System.out.println();
     }
 
     private List<String> generateParticipantNames(final InitialCardStatus initialCardStatus) {
@@ -55,7 +56,7 @@ public class OutputView {
     }
 
     public void printDealerCardSavedMessage() {
-        System.out.println(DEALER_CARD_SAVED_MESSAGE);
+        System.out.printf(DEALER_CARD_SAVED_MESSAGE);
     }
 
     public void printResultHandStatus(final List<HandStatus> handStatuses) {
@@ -78,14 +79,14 @@ public class OutputView {
         return cards.stream()
                 .map(card -> String.format(
                         CARD_STATUS_MESSAGE,
-                        card.getScore(),
+                        card.getName(),
                         card.getShape())
                 )
                 .toList();
     }
 
     public void printJudgeResult(final JudgeResult judgeResult) {
-        System.out.println(JUDGE_RESULT_MESSAGE);
+        System.out.printf(JUDGE_RESULT_MESSAGE);
 
         int winnersCount = judgeResult.countWinner();
         int losersCount = judgeResult.results().size() - winnersCount;
