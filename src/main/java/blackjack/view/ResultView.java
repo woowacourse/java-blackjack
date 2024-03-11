@@ -7,7 +7,8 @@ public enum ResultView {
 
     WIN("승"),
     DRAW("무"),
-    LOSE("패");
+    LOSE("패"),
+    ;
 
     private final String resultView;
 

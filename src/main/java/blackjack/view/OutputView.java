@@ -7,6 +7,7 @@ import blackjack.dto.DealerResult;
 import java.util.List;
 
 public class OutputView {
+
     private static final String CARD_DISTRIBUTE = "딜러와 %s에게 2장을 나누었습니다.";
     private static final String DEALER_CARD_STATUS = "딜러: %s";
     private static final String CARD_STATUS = "%s: %s";
