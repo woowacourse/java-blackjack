@@ -49,7 +49,7 @@ public class BlackjackController {
     }
 
     private void initialDeal(Participants participants, Deck deck) {
-        for (Participant participant : participants.getParticipants()) {
+        for (Participant participant : participants.getValues()) {
             participant.hit(deck.draw());
             participant.hit(deck.draw());
         }
@@ -96,7 +96,7 @@ public class BlackjackController {
         Map<Player, Integer> playerProfit = bettings.calculatePlayerProfits(participants.getDealer());
         int dealerProfit = bettings.calculateDealerProfit(playerProfit);
 
-        outputView.printAllCardsWithScore(participants.getParticipants());
+        outputView.printAllCardsWithScore(participants.getValues());
         outputView.printProfits(playerProfit, dealerProfit);
     }
 }

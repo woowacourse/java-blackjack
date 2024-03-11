@@ -4,12 +4,12 @@ import java.util.Objects;
 
 public class Name {
 
-    private final String name;
+    private final String value;
 
-    public Name(String name) {
-        validateNameSize(name);
+    public Name(String value) {
+        validateNameSize(value);
 
-        this.name = name;
+        this.value = value;
     }
 
     private void validateNameSize(String name) {
@@ -19,7 +19,7 @@ public class Name {
     }
 
     public String getValue() {
-        return name;
+        return value;
     }
 
     @Override
@@ -30,12 +30,12 @@ public class Name {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Name other = (Name) o;
-        return Objects.equals(name, other.name);
+        Name name = (Name) o;
+        return Objects.equals(value, name.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(value);
     }
 }

@@ -6,12 +6,12 @@ public class Money {
 
     private static final int MIN_MONEY = 1;
 
-    private final int money;
+    private final int value;
 
-    public Money(int money) {
-        validateMoneyRange(money);
+    public Money(int value) {
+        validateMoneyRange(value);
 
-        this.money = money;
+        this.value = value;
     }
 
     private void validateMoneyRange(int money) {
@@ -21,11 +21,11 @@ public class Money {
     }
 
     public Money multiply(double multiplier) {
-        return new Money((int) (money * multiplier));
+        return new Money((int) (value * multiplier));
     }
 
     public int getValue() {
-        return money;
+        return value;
     }
 
     @Override
@@ -36,12 +36,12 @@ public class Money {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Money other = (Money) o;
-        return money == other.money;
+        Money money = (Money) o;
+        return value == money.value;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(money);
+        return Objects.hash(value);
     }
 }

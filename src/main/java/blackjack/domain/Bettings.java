@@ -11,16 +11,16 @@ public class Bettings {
     private static final int MIN_BETTING_MONEY = 1000;
     private static final int MAX_BETTING_MONEY = 10000;
 
-    private final Map<Player, Money> bettings;
+    private final Map<Player, Money> playerMoneys;
 
     public Bettings() {
-        this.bettings = new LinkedHashMap<>();
+        this.playerMoneys = new LinkedHashMap<>();
     }
 
     public void placeBet(Player player, Money bettingMoney) {
         validateBettingMoney(bettingMoney);
 
-        bettings.put(player, bettingMoney);
+        playerMoneys.put(player, bettingMoney);
     }
 
     private void validateBettingMoney(Money bettingMoney) {
@@ -47,7 +47,7 @@ public class Bettings {
     public Map<Player, Integer> calculatePlayerProfits(Dealer dealer) {
         Map<Player, Integer> playerProfits = new LinkedHashMap<>();
 
-        for (Player player : bettings.keySet()) {
+        for (Player player : playerMoneys.keySet()) {
             PlayerGameResult result = dealer.judge(player);
             int bettingMoney = getBettingMoney(player).getValue();
             int profit = result.getProfit(bettingMoney);
@@ -65,7 +65,7 @@ public class Bettings {
     }
 
     public Money getBettingMoney(Player player) {
-        return bettings.computeIfAbsent(player, k -> {
+        return playerMoneys.computeIfAbsent(player, k -> {
             throw new IllegalArgumentException("베팅 정보가 없습니다.");
         });
     }
