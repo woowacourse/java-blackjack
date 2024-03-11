@@ -45,24 +45,24 @@ public class BlackJackController {
     }
 
     private void offerMoreCards(BlackJack blackJack) {
-        askAndOfferMoreCards(blackJack);
-        checkDealerMoreCards(blackJack);
+        decideParticipantsPlay(blackJack);
+        decideDealerPlay(blackJack);
     }
 
-    private void askAndOfferMoreCards(BlackJack blackJack) {
+    private void decideParticipantsPlay(BlackJack blackJack) {
         for (Participant participant : blackJack.getParticipants()) {
-            askAndOfferMoreCard(participant, blackJack);
+            decideParticipantPlay(participant, blackJack);
         }
     }
 
-    private void askAndOfferMoreCard(Participant participant, BlackJack blackJack) {
+    private void decideParticipantPlay(Participant participant, BlackJack blackJack) {
         while (!participant.isOverMaximumSum() && inputView.isOneMoreCard(participant.getName())) {
             blackJack.offerCardToParticipant(participant, CardSize.ONE);
             outputView.printPlayerCardMessage(participant);
         }
     }
 
-    private void checkDealerMoreCards(BlackJack blackJack) {
+    private void decideDealerPlay(BlackJack blackJack) {
         while (blackJack.isDealerUnderThreshold()) {
             outputView.printDealerAddCard();
             blackJack.offerCardToDealer(CardSize.ONE);
