@@ -33,8 +33,8 @@ public class Blackjack {
 
 
     public BlackjackResult finishGame() {
-        final BlackjackRule blackjackResult = new BlackjackRule();
-        return blackjackResult.finishGame(players.getPlayers(), dealer);
+        final BlackjackRule blackjackRule = new BlackjackRule();
+        return blackjackRule.finishGame(players.getPlayers(), dealer);
     }
 
     public List<Player> getPlayers() {
