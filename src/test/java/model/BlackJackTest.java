@@ -105,23 +105,33 @@ class BlackJackTest {
         assertThat(result).isEqualTo(Map.of(participant, Outcome.LOSE));
     }
 
-    @DisplayName("딜러 카드의 합이 21을 넘고 참가자 카드의 합이 21을 넘지 않았을 때는 참가자가 승리한다.")
-    @Test
-    void findWinOutcomeDealerOverThreshold() {
-        Participant participant = new Participant("배키",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.DIAMOND, CardNumber.NINE)));
-        Dealer dealer = new Dealer(
+    static Stream<Arguments> createParticipant() {
+        Participant underThresholdParticipant = new Participant("켬미",
                 List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
-        dealer.addCard(new Card(CardShape.HEART, CardNumber.NINE));
+        Participant overThresholdParticipant = new Participant("켬미",
+                List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
+        underThresholdParticipant.addCard(new Card(CardShape.HEART, CardNumber.NINE));
+        return Stream.of(Arguments.of(
+                underThresholdParticipant,
+                overThresholdParticipant
+        ));
+    }
+
+    @DisplayName("참가자 카드이 합이 21을 넘거나, 둘 다 21을 넘지 않았을 때 21과의 차이가 먼 참가자가 패한다.")
+    @ParameterizedTest
+    @MethodSource("createParticipant")
+    void findWinOutcomeDealerOverThreshold(Participant participant) {
+       Dealer dealer = new Dealer(
+                List.of(new Card(CardShape.SPACE, CardNumber.KING), new Card(CardShape.CLOVER, CardNumber.KING)));
 
         Participants participants = new Participants(List.of(participant));
         BlackJack blackJack = new BlackJack(participants, dealer);
 
         Map<Participant, Outcome> result = blackJack.matchParticipantsOutcome();
-        assertThat(result).isEqualTo(Map.of(participant, Outcome.WIN));
+        assertThat(result).isEqualTo(Map.of(participant, Outcome.LOSE));
     }
 
-    @DisplayName("둘 다 21을 넘지 않았을 때, 21과의 차이가 가까운 참가자가 승리한다.")
+    @DisplayName("딜러만 21을 넘거나, 둘 다 21을 넘지 않았을 때 21과의 차이가 가까운 참가자가 승리한다.")
     @Test
     void findWinOutComeCloseToThreshold() {
         Participant participant = new Participant("배키",
@@ -134,21 +144,6 @@ class BlackJackTest {
 
         Map<Participant, Outcome> result = blackJack.matchParticipantsOutcome();
         assertThat(result).isEqualTo(Map.of(participant, Outcome.WIN));
-    }
-
-    @DisplayName("둘 다 21을 넘지 않았을 때, 21과의 차이가 먼 참가자가 패한다.")
-    @Test
-    void findLoseOutComeCloseToThreshold() {
-        Participant participant = new Participant("배키",
-                List.of(new Card(CardShape.SPACE, CardNumber.FIVE), new Card(CardShape.DIAMOND, CardNumber.NINE)));
-        Dealer dealer = new Dealer(
-                List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
-
-        Participants participants = new Participants(List.of(participant));
-        BlackJack blackJack = new BlackJack(participants, dealer);
-
-        Map<Participant, Outcome> result = blackJack.matchParticipantsOutcome();
-        assertThat(result).isEqualTo(Map.of(participant, Outcome.LOSE));
     }
 
     @DisplayName("참가자 카드의 합이 딜러 카드의 합이 동일하면 무승부다.")

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import model.Outcome;
 import model.card.Card;
-import model.card.Cards;
 
 public abstract class Player implements NoticeStatus {
     protected final static int MAXIMUM_SUM = 21;
@@ -68,6 +68,17 @@ public abstract class Player implements NoticeStatus {
 
     public int findPlayerDifference() {
         return Math.abs(MAXIMUM_SUM - calculateScore());
+    }
+
+    protected Outcome findPlayerOutcome(int otherDifference) {
+        int difference = findPlayerDifference();
+        if (otherDifference > difference) {
+            return Outcome.WIN;
+        }
+        if (otherDifference < difference) {
+            return Outcome.LOSE;
+        }
+        return Outcome.DRAW;
     }
 
     public String getName() {

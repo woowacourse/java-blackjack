@@ -56,28 +56,8 @@ public class BlackJack {
         return sumPlayers.stream()
                 .collect(toMap(
                         participant -> participant,
-                        participant -> findOutcome(participant, dealer)
+                        participant -> participant.findOutcome(dealer)
                 ));
-    }
-
-    private Outcome findOutcome(Player participant, Player dealer) {
-        if (participant.isOverMaximumSum()) {
-            return Outcome.LOSE;
-        }
-        if (dealer.isOverMaximumSum()) {
-            return Outcome.WIN;
-        }
-        return findCloseToThreshold(participant.findPlayerDifference(), dealer.findPlayerDifference());
-    }
-
-    private Outcome findCloseToThreshold(int participantDifference, int dealerDifference) {//closestToThreshold
-        if (participantDifference > dealerDifference) {
-            return Outcome.LOSE;
-        }
-        if (participantDifference < dealerDifference) {
-            return Outcome.WIN;
-        }
-        return Outcome.DRAW;
     }
 
     public boolean isDealerUnderThreshold() {
