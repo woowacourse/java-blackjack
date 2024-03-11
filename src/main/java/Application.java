@@ -7,7 +7,7 @@ import view.OutputView;
 public class Application {
     public static void main(final String[] args) {
         final Blackjack blackjack = createBlackjack();
-        OutputView.printPlayersStatus(blackjack.getPlayers());
+        OutputView.printPlayersStatus(blackjack.getParticipants());
 
         playGame(blackjack);
         OutputView.printResults(blackjack.getPlayers());

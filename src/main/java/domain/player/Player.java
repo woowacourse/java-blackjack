@@ -11,7 +11,6 @@ public abstract class Player {
     private static final int ACE_LOW = 1;
     private static final int ACE_HIGH = 11;
     static final int PERFECT_SCORE = 21;
-    static final String DEALER_NAME = "딜러";
 
     private final Name name;
     private final List<Card> cards = new ArrayList<>();
@@ -44,7 +43,7 @@ public abstract class Player {
     }
 
     public boolean isDealer() {
-        return this.name.equals(new Name(DEALER_NAME));
+        return this.name.equals(Name.DEALER_NAME);
     }
 
     public boolean isParticipant() {
