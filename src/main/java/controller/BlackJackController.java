@@ -23,7 +23,8 @@ public class BlackJackController {
     }
 
     public void startGame() {
-        BlackJack blackJack = createBlackJack();
+        BlackJack blackJack = createBlackJack(inputView.askParticipantNames());
+
         blackJack.offerCardToPlayers(INITIAL_CARD_COUNT);
         outputView.printStartBlackJack(blackJack.getParticipants(), blackJack.getDealer());
 
@@ -33,11 +34,15 @@ public class BlackJackController {
         outputView.printPlayersOutcome(blackJack.getDealerOutCome(), blackJack.matchParticipantsOutcome());
     }
 
-    private BlackJack createBlackJack() {
-        List<String> names = inputView.askParticipantNames();
-        List<Participant> players = new ArrayList<>(names.stream()
-                .map(name -> new Participant(name, Cards.selectRandomCards(2))).toList());
-        return new BlackJack(new Participants(players), new Dealer(Cards.selectRandomCards(2)));
+    private BlackJack createBlackJack(List<String> names) {
+        Participants participants = createParticipants(names);
+        Dealer dealer = new Dealer(Cards.selectRandomCards(2));
+        return new BlackJack(participants, dealer);
+    }
+
+    private Participants createParticipants(List<String> names) {
+         return new Participants(new ArrayList<>(names.stream()
+                .map(name -> new Participant(name, Cards.selectRandomCards(2))).toList()));
     }
 
     private void offerMoreCards(BlackJack blackJack) {
