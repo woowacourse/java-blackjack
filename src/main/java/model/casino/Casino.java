@@ -1,7 +1,7 @@
 package model.casino;
 
 import static java.util.Collections.*;
-import static model.dto.Victory.*;
+import static model.dto.MatchResult.*;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -9,7 +9,7 @@ import model.Choice;
 import model.dto.DealerScoreResult;
 import model.dto.FaceUpResult;
 import model.dto.PlayerScoreResult;
-import model.dto.Victory;
+import model.dto.MatchResult;
 import model.participant.Entrant;
 
 public class Casino {
@@ -72,19 +72,19 @@ public class Casino {
                 .hand();
         return entrant.getPlayerFaceUpResults()
                 .stream()
-                .map(result -> new PlayerScoreResult(result.name(), Victory.of(dealerHand, result.hand())))
+                .map(result -> new PlayerScoreResult(result.name(), MatchResult.of(dealerHand, result.hand())))
                 .toList();
     }
 
     public DealerScoreResult calculateDealerResult() {
         int dealerHand = entrant.getDealerFaceUpResult().hand();
-        EnumMap<Victory, Integer> dealerScoreBoard = new EnumMap<>(Victory.class);
-        List<Victory> dealerScores = entrant.getPlayerFaceUpResults()
+        EnumMap<MatchResult, Integer> dealerScoreBoard = new EnumMap<>(MatchResult.class);
+        List<MatchResult> dealerScores = entrant.getPlayerFaceUpResults()
                 .stream()
-                .map(player -> Victory.of(player.hand(), dealerHand))
+                .map(player -> MatchResult.of(player.hand(), dealerHand))
                 .toList();
-        for (Victory victory : values()) {
-            dealerScoreBoard.put(victory, frequency(dealerScores, victory));
+        for (MatchResult matchResult : values()) {
+            dealerScoreBoard.put(matchResult, frequency(dealerScores, matchResult));
         }
         return new DealerScoreResult(dealerScoreBoard);
     }

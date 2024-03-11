@@ -4,7 +4,7 @@ import java.util.List;
 import model.dto.DealerScoreResult;
 import model.dto.FaceUpResult;
 import model.dto.PlayerScoreResult;
-import model.dto.Victory;
+import model.dto.MatchResult;
 
 public class OutputView {
     private static final int HOLE_CARD_INDEX = 0;
@@ -72,8 +72,8 @@ public class OutputView {
 
     private static StringBuilder genernateDealerScoreTexts(DealerScoreResult dealerScoreResult) {
         StringBuilder dealerScoresText = new StringBuilder("딜러: ");
-        for (Victory victory : Victory.values()) {
-            dealerScoresText.append(dealerScoreResult.getVictoryScoreAsString(victory) + " ");
+        for (MatchResult matchResult : MatchResult.values()) {
+            dealerScoresText.append(dealerScoreResult.getVictoryScoreAsString(matchResult) + " ");
         }
         return dealerScoresText;
     }

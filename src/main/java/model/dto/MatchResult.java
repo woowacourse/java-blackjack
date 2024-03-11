@@ -1,17 +1,17 @@
 package model.dto;
 
-public enum Victory {
+public enum MatchResult {
     WIN("승"),
     DRAW("무"),
     LOSE("패");
 
     private final String value;
 
-    Victory(String value) {
+    MatchResult(String value) {
         this.value = value;
     }
 
-    public static Victory of(int standard, int comparisonTarget) {
+    public static MatchResult of(int standard, int comparisonTarget) {
         if (standard < comparisonTarget) {
             return WIN;
         }
