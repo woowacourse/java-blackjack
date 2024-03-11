@@ -33,13 +33,11 @@ public class Player extends Gamer {
                 .forEach(i -> draw(dealer));
     }
 
-    public boolean draw(final Dealer dealer) {
+    public void draw(final Dealer dealer) {
         if (canReceiveCard()) {
             TrumpCard trumpCard = dealer.draw();
             hand.add(trumpCard);
         }
-
-        return !isBust();
     }
 
     @Override

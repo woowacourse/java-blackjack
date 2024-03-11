@@ -84,11 +84,10 @@ public class BlackjackGame {
             return;
         }
 
-        boolean isNotBust = true;
         do {
-            isNotBust = player.draw(dealer);
+            player.draw(dealer);
             printHandCards(player);
-        } while ((isNotBust) && outputView.isMoreChoice(inputView.readMoreCardChoice(player.getName())));
+        } while ((player.canReceiveCard()) && outputView.isMoreChoice(inputView.readMoreCardChoice(player.getName())));
     }
 
     private void printHandCards(Player player) {
