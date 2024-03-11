@@ -66,19 +66,15 @@
 
 ## 리팩터링 목록
 
-* [ ] 추상 클래스 활용
+~~추상 클래스 활용~~
+
 * [x] 카드덱이 비었을때 꺼낸 경우 예외 발생
 * [x] createEmptyPacket 메서드명 수정
-* [ ] 블랙잭인경우 바로 게임 종료
-* [ ] model 안에 있는 view를 어떻게 해야할까
-    * Rank, Shape
 * [x] 참가자의 이름 딜러 불가
 * [x] Name 객체 포장하기
-* [ ] CardDeck 스토리지 유닛으로 변경
 * [x] Result 함수형 프로그래밍 사용
 * [x] TestFixture 사용
 * [ ] 패키지 정리
 * [ ] 메서드 컨벤션 작성 및 확인
 * [ ] final 컨벤션 통일
 * [x] CardDeck 생성자 닫기
-* [ ] CardDeck 구조 변경
