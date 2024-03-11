@@ -1,5 +1,6 @@
 package model.blackjackgame;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import model.dealer.Dealer;
@@ -12,11 +13,13 @@ public class Result {
     private static final String FAIL_WORD = "패";
     private static final String DRAW_WORD = "무";
 
+    private final String dealerResult;
     private final Map<String, String> playerResult;
 
     public Result(Dealer dealer, Players players) {
         this.playerResult = new HashMap<>();
         createPlayersResult(dealer, players);
+        this.dealerResult = createDealerResult();
     }
 
     private void createPlayersResult(Dealer dealer, Players players) {
@@ -35,8 +38,30 @@ public class Result {
         return DRAW_WORD;
     }
 
+    private String createDealerResult() {
+        StringBuilder result = new StringBuilder();
+        appendResult(result, countOccurrences(FAIL_WORD), WIN_WORD);
+        appendResult(result, countOccurrences(WIN_WORD), FAIL_WORD);
+        appendResult(result, countOccurrences(DRAW_WORD), DRAW_WORD);
+
+        return result.toString().trim();
+    }
+
+    private int countOccurrences(String resultType) {
+        return Collections.frequency(playerResult.values(), resultType);
+    }
+
+    private void appendResult(StringBuilder result, int count, String resultType) {
+        if (count > 0) {
+            result.append(count).append(resultType).append(" ");
+        }
+    }
+
     public Map<String, String> getPlayerResult() {
         return playerResult;
     }
 
+    public String getDealerResult() {
+        return dealerResult;
+    }
 }

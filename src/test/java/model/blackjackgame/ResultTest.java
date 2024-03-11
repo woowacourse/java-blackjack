@@ -8,6 +8,7 @@ import static model.card.CardShape.CLOVER;
 import static model.card.CardShape.DIAMOND;
 import static model.card.CardShape.HEART;
 import static model.card.CardShape.SPADE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -32,6 +33,19 @@ class ResultTest {
         Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers());
         assertTrue(result.getPlayerResult().containsKey(blackjackGame.getPlayers().getPlayers().get(0).getName()));
         assertTrue(result.getPlayerResult().containsValue("승"));
+    }
+
+    @DisplayName("딜러의 결과는 플레이어의 수만큼 존재")
+    @Test
+    void testDealerResult() {
+        BlackjackGame blackjackGame = prepareBlackjackGame();
+        Cards cards = new Cards(
+                List.of(new Card(JACK, DIAMOND), new Card(FIVE, CLOVER), new Card(JACK, HEART),
+                        new Card(JACK, CLOVER), new Card(SIX, DIAMOND), new Card(ONE, SPADE))
+        );
+        blackjackGame.distributeCardsForSetting(cards);
+        Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers());
+        assertEquals("1승 1패", result.getDealerResult());
     }
 
     private BlackjackGame prepareBlackjackGame() {
