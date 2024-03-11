@@ -60,9 +60,6 @@ public class BlackJack {
     }
 
     private Outcome findOutcome(Player participant, Player dealer) {
-        if (participant.isOverMaximumSum() && dealer.isOverMaximumSum()) {
-            return Outcome.DRAW;
-        }
         if (participant.isOverMaximumSum()) {
             return Outcome.LOSE;
         }

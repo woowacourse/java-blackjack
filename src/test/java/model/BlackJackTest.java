@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 import model.card.Card;
 import model.card.CardNumber;
 import model.card.CardShape;
@@ -16,6 +17,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class BlackJackTest {
 
@@ -39,7 +43,8 @@ class BlackJackTest {
     void validateDealerIsNotNull() {
         List<Card> cards = List.of(new Card(CardShape.SPACE, CardNumber.NINE),
                 new Card(CardShape.SPACE, CardNumber.FIVE));
-        Assertions.assertThatThrownBy(() -> new BlackJack(new Participants(List.of(new Participant("배키", cards))), null))
+        Assertions.assertThatThrownBy(
+                        () -> new BlackJack(new Participants(List.of(new Participant("배키", cards))), null))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -49,9 +54,10 @@ class BlackJackTest {
         Participants participants = new Participants(List.of(new Participant("배키",
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE)))));
         BlackJack blackJack = new BlackJack(participants, dealer);
-        blackJack.offerCardToPlayers(1);
-        List<Participant> result = participants.getParticipants();
 
+        blackJack.offerCardToPlayers(1);
+
+        List<Participant> result = participants.getParticipants();
         assertThat(result.get(0).getCards()).hasSize(3);
     }
 
@@ -62,20 +68,63 @@ class BlackJackTest {
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE)))));
         BlackJack blackJack = new BlackJack(participants, new Dealer(
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.TWO))));
+
         blackJack.offerCardToParticipant(new Participant("배키",
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))), 1);
+
         List<Participant> result = participants.getParticipants();
-
-
         assertThat(result.get(0).getCards()).hasSize(3);
     }
 
-    @DisplayName("카드의 합이 21을 초과하면 패한다.")
-    @Test
-    void findLoseOutcome() {
+    static Stream<Arguments> createDealer() {
+        Dealer underThresholdDealer = new Dealer(
+                List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
+        Dealer overThresholdDealer = new Dealer(
+                List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
+        overThresholdDealer.addCard(new Card(CardShape.HEART, CardNumber.NINE));
+        return Stream.of(Arguments.of(
+                underThresholdDealer,
+                overThresholdDealer
+        ));
+    }
+
+    @DisplayName("딜러의 카드의 합과 무관하게 참가자 카드의 합이 21을 초과하면 참가자가 패한다.")
+    @ParameterizedTest
+    @MethodSource("createDealer")
+    void findLoseOutcomeParticipantOverThreshold(Dealer dealer) {
         Participant participant = new Participant("배키",
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.DIAMOND, CardNumber.NINE)));
+        participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
 
+
+        Participants participants = new Participants(List.of(participant));
+        BlackJack blackJack = new BlackJack(participants, dealer);
+
+        Map<Participant, Outcome> result = blackJack.matchParticipantsOutcome();
+        assertThat(result).isEqualTo(Map.of(participant, Outcome.LOSE));
+    }
+
+    @DisplayName("딜러 카드의 합이 21을 넘고 참가자 카드의 합이 21을 넘지 않았을 때는 참가자가 승리한다.")
+    @Test
+    void findWinOutcomeDealerOverThreshold() {
+        Participant participant = new Participant("배키",
+                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.DIAMOND, CardNumber.NINE)));
+        Dealer dealer = new Dealer(
+                List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
+        dealer.addCard(new Card(CardShape.HEART, CardNumber.NINE));
+
+        Participants participants = new Participants(List.of(participant));
+        BlackJack blackJack = new BlackJack(participants, dealer);
+
+        Map<Participant, Outcome> result = blackJack.matchParticipantsOutcome();
+        assertThat(result).isEqualTo(Map.of(participant, Outcome.WIN));
+    }
+
+    @DisplayName("둘 다 21을 넘지 않았을 때, 21과의 차이가 가까운 참가자가 승리한다.")
+    @Test
+    void findWinOutComeCloseToThreshold() {
+        Participant participant = new Participant("배키",
+                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.DIAMOND, CardNumber.NINE)));
         Dealer dealer = new Dealer(
                 List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
 
@@ -86,7 +135,22 @@ class BlackJackTest {
         assertThat(result).isEqualTo(Map.of(participant, Outcome.WIN));
     }
 
-    @DisplayName("참가자 카드의 합이 딜러와 동일하면 무승부다.")
+    @DisplayName("둘 다 21을 넘지 않았을 때, 21과의 차이가 먼 참가자가 패한다.")
+    @Test
+    void findLoseOutComeCloseToThreshold() {
+        Participant participant = new Participant("배키",
+                List.of(new Card(CardShape.SPACE, CardNumber.FIVE), new Card(CardShape.DIAMOND, CardNumber.NINE)));
+        Dealer dealer = new Dealer(
+                List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
+
+        Participants participants = new Participants(List.of(participant));
+        BlackJack blackJack = new BlackJack(participants, dealer);
+
+        Map<Participant, Outcome> result = blackJack.matchParticipantsOutcome();
+        assertThat(result).isEqualTo(Map.of(participant, Outcome.LOSE));
+    }
+
+    @DisplayName("참가자 카드의 합이 딜러 카드의 합이 동일하면 무승부다.")
     @Test
     void findDrawOutcome() {
         Participant participant = new Participant("배키",
