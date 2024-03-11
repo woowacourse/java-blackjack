@@ -21,6 +21,19 @@ public class Names {
 
     private void validate(List<String> names) {
         validateDuplicated(names);
+        validateAllowedName(names);
+    }
+
+    private void validateAllowedName(List<String> inputNames){
+        for (String inputName : inputNames) {
+            isContainsDealerName(inputName);
+        }
+    }
+
+    private void isContainsDealerName(String inputName) {
+        if (inputName.contains("딜러")){
+            throw new IllegalArgumentException("'딜러'가 포함된 사용자명은 사용할 수 없습니다.");
+        }
     }
 
     private void validateDuplicated(List<String> names) {
