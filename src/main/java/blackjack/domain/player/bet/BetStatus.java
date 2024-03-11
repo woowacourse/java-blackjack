@@ -1,7 +1,7 @@
-package blackjack.domain.bet;
+package blackjack.domain.player.bet;
 
-import blackjack.domain.card.BlackjackStatus;
 import blackjack.domain.card.Hands;
+import blackjack.domain.rule.BlackjackStatus;
 import blackjack.domain.rule.GameRule;
 import java.util.Arrays;
 import java.util.function.BiPredicate;

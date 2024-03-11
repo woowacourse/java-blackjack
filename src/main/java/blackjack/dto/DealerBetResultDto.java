@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.domain.bet.BetRevenue;
+import blackjack.domain.player.bet.BetRevenue;
 
 public record DealerBetResultDto(String name, double revenue) {
 

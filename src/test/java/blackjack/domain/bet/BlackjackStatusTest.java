@@ -2,8 +2,8 @@ package blackjack.domain.bet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.BlackjackStatus;
-import blackjack.domain.card.Score;
+import blackjack.domain.rule.BlackjackStatus;
+import blackjack.domain.rule.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

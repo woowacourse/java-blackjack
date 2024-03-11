@@ -1,7 +1,7 @@
 package blackjack.dto;
 
-import blackjack.domain.bet.BetRevenue;
-import blackjack.domain.participant.ParticipantName;
+import blackjack.domain.player.bet.BetRevenue;
+import blackjack.domain.player.PlayerName;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +11,7 @@ public record BetRevenueResultDto(
 ) {
 
     public static BetRevenueResultDto of(
-            final Map<ParticipantName, BetRevenue> playersBetResult,
+            final Map<PlayerName, BetRevenue> playersBetResult,
             final BetRevenue dealerBetRevenue,
             final String dealerName
     ) {
@@ -19,7 +19,7 @@ public record BetRevenueResultDto(
     }
 
     private static List<PlayerBetResultDto> convertToPlayersDto(
-            final Map<ParticipantName, BetRevenue> playersBetResult) {
+            final Map<PlayerName, BetRevenue> playersBetResult) {
         return playersBetResult.entrySet().stream()
                 .map(entry -> PlayerBetResultDto.of(entry.getKey(), entry.getValue()))
                 .toList();

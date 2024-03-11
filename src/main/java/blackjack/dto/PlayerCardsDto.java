@@ -1,7 +1,7 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Hands;
-import blackjack.domain.participant.ParticipantName;
+import blackjack.domain.player.PlayerName;
 import java.util.List;
 
 public record PlayerCardsDto(String name, List<CardDto> cards) {
@@ -10,7 +10,7 @@ public record PlayerCardsDto(String name, List<CardDto> cards) {
         return new PlayerCardsDto(name, convertToCardDto(hands));
     }
 
-    public static PlayerCardsDto of(final ParticipantName name, final Hands hands) {
+    public static PlayerCardsDto of(final PlayerName name, final Hands hands) {
         return new PlayerCardsDto(name.getName(), convertToCardDto(hands));
     }
 

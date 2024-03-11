@@ -1,9 +1,9 @@
 package blackjack.domain.dealer;
 
-import blackjack.domain.card.BlackjackStatus;
+import blackjack.domain.rule.BlackjackStatus;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
-import blackjack.domain.card.Score;
+import blackjack.domain.rule.Score;
 import java.util.List;
 import java.util.stream.Stream;
 

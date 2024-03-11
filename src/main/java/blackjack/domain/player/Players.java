@@ -1,13 +1,13 @@
-package blackjack.domain.participant;
+package blackjack.domain.player;
 
 import static java.util.stream.Collectors.toMap;
 
-import blackjack.domain.bet.BetAmount;
-import blackjack.domain.bet.BetRevenue;
-import blackjack.domain.card.BlackjackStatus;
+import blackjack.domain.player.bet.BetAmount;
+import blackjack.domain.player.bet.BetRevenue;
+import blackjack.domain.rule.BlackjackStatus;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
-import blackjack.domain.bet.BetStatus;
+import blackjack.domain.player.bet.BetStatus;
 import blackjack.exception.NeedRetryException;
 import java.util.Collections;
 import java.util.Iterator;
@@ -20,29 +20,29 @@ import java.util.function.Function;
 
 public class Players {
 
-    private final Map<ParticipantName, Hands> handsRepository;
-    private final Map<ParticipantName, BetAmount> betAmountRepository;
+    private final Map<PlayerName, Hands> handsRepository;
+    private final Map<PlayerName, BetAmount> betAmountRepository;
 
-    private Players(final Map<ParticipantName, Hands> handsRepository,
-            final Map<ParticipantName, BetAmount> betAmountRepository) {
+    private Players(final Map<PlayerName, Hands> handsRepository,
+            final Map<PlayerName, BetAmount> betAmountRepository) {
         this.handsRepository = handsRepository;
         this.betAmountRepository = betAmountRepository;
     }
 
     public static Players from(final List<String> inputPlayerNames) {
-        final List<ParticipantName> playerNames = inputPlayerNames.stream()
-                .map(ParticipantName::new)
+        final List<PlayerName> playerNames = inputPlayerNames.stream()
+                .map(PlayerName::new)
                 .toList();
 
         validateDuplicate(playerNames);
 
-        final Map<ParticipantName, Hands> playersHands = createEmptyRepository(playerNames, name -> new Hands());
-        final Map<ParticipantName, BetAmount> playersBetAmount = createEmptyRepository(playerNames, name -> new BetAmount(0));
+        final Map<PlayerName, Hands> playersHands = createEmptyRepository(playerNames, name -> new Hands());
+        final Map<PlayerName, BetAmount> playersBetAmount = createEmptyRepository(playerNames, name -> new BetAmount(0));
 
         return new Players(playersHands, playersBetAmount);
     }
 
-    private static void validateDuplicate(final List<ParticipantName> playerNames) {
+    private static void validateDuplicate(final List<PlayerName> playerNames) {
         if (Set.copyOf(playerNames).size() != playerNames.size()) {
             throw new NeedRetryException("중복된 이름의 참여자는 참여할 수 없습니다.");
         }
@@ -57,13 +57,13 @@ public class Players {
     }
 
     public void saveBetAmountByName(final int betAmount, final String name) {
-        final ParticipantName playerName = new ParticipantName(name);
+        final PlayerName playerName = new PlayerName(name);
         validatePlayerName(playerName);
 
         betAmountRepository.put(playerName, new BetAmount(betAmount));
     }
 
-    private void validatePlayerName(final ParticipantName name) {
+    private void validatePlayerName(final PlayerName name) {
         if (!handsRepository.containsKey(name) || !betAmountRepository.containsKey(name)) {
             throw new IllegalArgumentException("없는 참가자 입니다.");
         }
@@ -90,17 +90,17 @@ public class Players {
     }
 
     private Hands findHands(final String name) {
-        final ParticipantName playerName = new ParticipantName(name);
+        final PlayerName playerName = new PlayerName(name);
         validatePlayerName(playerName);
 
         return handsRepository.get(playerName);
     }
 
-    public Map<ParticipantName, BetRevenue> determineBetRevenue(final Hands dealerHands) {
-        final Map<ParticipantName, BetRevenue> playersWinStatus = new LinkedHashMap<>();
+    public Map<PlayerName, BetRevenue> determineBetRevenue(final Hands dealerHands) {
+        final Map<PlayerName, BetRevenue> playersWinStatus = new LinkedHashMap<>();
 
-        for (Entry<ParticipantName, Hands> entry : handsRepository.entrySet()) {
-            final ParticipantName name = entry.getKey();
+        for (Entry<PlayerName, Hands> entry : handsRepository.entrySet()) {
+            final PlayerName name = entry.getKey();
             final BetStatus betStatus = BetStatus.of(dealerHands, entry.getValue());
             final BetAmount betAmount = betAmountRepository.get(name);
 
@@ -112,7 +112,7 @@ public class Players {
 
     public boolean hasName(final String other) {
         return handsRepository.keySet().stream()
-                .anyMatch(name -> name.equals(new ParticipantName(other)));
+                .anyMatch(name -> name.equals(new PlayerName(other)));
     }
 
     public boolean isNotDead(final String name) {
@@ -133,11 +133,11 @@ public class Players {
         return new Hands(findHands(name).getCards());
     }
 
-    public List<ParticipantName> getNames() {
+    public List<PlayerName> getNames() {
         return handsRepository.keySet().stream().toList();
     }
 
-    public Map<ParticipantName, Hands> getPlayersHands() {
+    public Map<PlayerName, Hands> getPlayersHands() {
         return Collections.unmodifiableMap(handsRepository);
     }
 }

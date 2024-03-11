@@ -2,7 +2,9 @@ package blackjack.domain.bet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.participant.ParticipantName;
+import blackjack.domain.player.BetResult;
+import blackjack.domain.player.PlayerName;
+import blackjack.domain.player.bet.BetRevenue;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,9 +15,9 @@ class BetResultTest {
     @Test
     void calculateDealerRevenue() {
         // given
-        Map<ParticipantName, BetRevenue> playersBetRevenu = Map.of(new ParticipantName("pobi"), new BetRevenue(1000),
-                new ParticipantName("kirby"), new BetRevenue(2000),
-                new ParticipantName("json"), new BetRevenue(-1000));
+        Map<PlayerName, BetRevenue> playersBetRevenu = Map.of(new PlayerName("pobi"), new BetRevenue(1000),
+                new PlayerName("kirby"), new BetRevenue(2000),
+                new PlayerName("json"), new BetRevenue(-1000));
 
         BetResult betResult = new BetResult(playersBetRevenu);
 

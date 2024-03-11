@@ -1,13 +1,13 @@
 package blackjack.service;
 
-import blackjack.domain.bet.BetResult;
-import blackjack.domain.bet.BetRevenue;
+import blackjack.domain.player.BetResult;
+import blackjack.domain.player.bet.BetRevenue;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
 import blackjack.domain.dealer.Deck;
-import blackjack.domain.participant.ParticipantName;
-import blackjack.domain.participant.Players;
+import blackjack.domain.player.PlayerName;
+import blackjack.domain.player.Players;
 import blackjack.domain.rule.GameRule;
 import blackjack.dto.DealerMoreCardDto;
 import blackjack.dto.FinalHandsScoreDto;
@@ -47,7 +47,7 @@ public class BlackjackGame {
 
     private StartCardsDto getStartCards() {
         final Hands dealerOpenedHands = dealer.getOpenedHands();
-        return StartCardsDto.of(players.getPlayersHands(), dealerOpenedHands, new ParticipantName(Dealer.DEALER_NAME));
+        return StartCardsDto.of(players.getPlayersHands(), dealerOpenedHands, new PlayerName(Dealer.DEALER_NAME));
     }
 
     public void saveBetAmountByName(final int betAmount, final String name) {
@@ -85,7 +85,7 @@ public class BlackjackGame {
     }
 
     public BetRevenueResultDto getBetRevenueResults() {
-        final Map<ParticipantName, BetRevenue> playersBetResult = players.determineBetRevenue(dealer.getHands());
+        final Map<PlayerName, BetRevenue> playersBetResult = players.determineBetRevenue(dealer.getHands());
         final BetResult betResult = new BetResult(playersBetResult);
         final BetRevenue dealerRevenue = betResult.calculateDealerRevenue();
 
@@ -99,7 +99,7 @@ public class BlackjackGame {
 
     public List<String> getPlayersName() {
         return players.getNames().stream()
-                .map(ParticipantName::getName)
+                .map(PlayerName::getName)
                 .toList();
     }
 }

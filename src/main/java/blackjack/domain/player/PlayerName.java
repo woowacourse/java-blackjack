@@ -1,13 +1,13 @@
-package blackjack.domain.participant;
+package blackjack.domain.player;
 
 import blackjack.exception.NeedRetryException;
 import java.util.Objects;
 
-public class ParticipantName {
+public class PlayerName {
 
     private final String name;
 
-    public ParticipantName(final String input) {
+    public PlayerName(final String input) {
         validateBlank(input);
         this.name = input.trim();
     }
@@ -30,7 +30,7 @@ public class ParticipantName {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        final ParticipantName that = (ParticipantName) o;
+        final PlayerName that = (PlayerName) o;
         return Objects.equals(name, that.name);
     }
 
