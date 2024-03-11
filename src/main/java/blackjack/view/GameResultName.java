@@ -5,7 +5,7 @@ import blackjack.domain.game.GameResult;
 public enum GameResultName {
     WIN("승"),
     LOSE("패"),
-    DRAW("무");
+    PUSH("무");
 
     private final String name;
 

@@ -2,7 +2,8 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.game.GameResult;
+
+import java.util.List;
 
 public class Dealer extends Player {
     public static final int HIT_UPPER_BOUND = 16;
@@ -17,26 +18,11 @@ public class Dealer extends Player {
         return hand.findMaximumScore() <= HIT_UPPER_BOUND;
     }
 
-    public GameResult judgeGameResult(Player player) {
-        if (player.isBust()) {
-            return GameResult.LOSE;
+    @Override
+    public List<Card> getCards() {
+        if (hand.getMyCards().size() == 2) {
+            return List.of(hand.getMyCardAt(FIRST_DEAL_CARD_INDEX));
         }
-        if (isPlayerWin(player)) {
-            return GameResult.WIN;
-        }
-        if (hand.compareScoreTo(player.hand) == 0) {
-            return GameResult.PUSH;
-        }
-        return GameResult.LOSE;
-    }
-
-    private boolean isPlayerWin(Player player) {
-        return hand.compareScoreTo(player.hand) == 1 ||
-                player.isBlackjack() ||
-                isBust();
-    }
-
-    public Card getOneDealCard() {
-        return hand.getMyCardAt(FIRST_DEAL_CARD_INDEX);
+        return hand.getMyCards();
     }
 }

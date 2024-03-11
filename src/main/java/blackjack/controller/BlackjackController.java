@@ -29,7 +29,7 @@ public class BlackjackController {
         // 딜 후 딜러, 플레이어 카드 출력
         blackjackGame.deal(dealer, players);
         OutputView.printDealAnnounce(dealer.getName(), players.getNames());
-        OutputView.printDealCard(dealer.getName(), dealer.getOneDealCard());
+        OutputView.printDealCards(dealer.getName(), dealer.getCards());
         players.forEach(player ->
                 OutputView.printDealCards(player.getName(), player.getCards()));
         OutputView.printNewLine();

@@ -20,18 +20,18 @@ class DealerTest {
         // given
         Dealer dealer = new Dealer(new Hand(List.of()));
         List<Card> cards = List.of(Card.SPADE_NINE, Card.CLUB_QUEEN);
-        Card exptecedCard = Card.SPADE_NINE;
+        List<Card> exptecedCard = List.of(Card.SPADE_NINE);
 
         // when
         dealer.draw(cards);
 
         // then
-        assertThat(dealer.getOneDealCard())
+        assertThat(dealer.getCards())
                 .isEqualTo(exptecedCard);
     }
 
     @Test
-    @DisplayName("딜러의 카드의 합이 16 이하이면 true를 반환하는 메소드를 테스트한다.")
+    @DisplayName("딜러의 카드의 합이 16 이하이면 true를 반환한다.")
     void dealerHitUpperBoundTest() {
         // given
         Dealer dealer = new Dealer(new Hand(List.of()));
@@ -45,29 +45,5 @@ class DealerTest {
 
         // when & then
         assertThat(dealer.isScoreUnderBound()).isEqualTo(true);
-    }
-
-    @Test
-    @DisplayName("딜러의 카드의 합이 16 이하이면 카드를 한장 더 뽑늗다.")
-    void dealerHitTest() {
-        // given
-        Dealer dealer = new Dealer(new Hand(List.of()));
-        List<Card> cards = List.of(Card.SPADE_NINE, Card.CLUB_SEVEN);
-        CardPicker cardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
-            @Override
-            public List<Card> pickCards(int count) {
-                return cards;
-            }
-        };
-
-        // when
-        dealer.draw(cardPicker.pickCard());
-        if (dealer.isScoreUnderBound()) {
-            dealer.draw(cardPicker.pickCard());
-        }
-
-        // then
-        assertThat(dealer.getCards().size())
-                .isBetween(2, 3);
     }
 }
