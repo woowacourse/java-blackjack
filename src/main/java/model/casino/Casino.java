@@ -20,7 +20,7 @@ public class Casino {
         this.cardDispenser = new CardDispenser(cardShuffleMachine);
     }
 
-    public void initializeGame() {
+    public void hitCardTwice() {
         int playerSize = participants.getPlayerSize();
         for (int i = 0; i < playerSize; i++) {
             participants.hitAndMoveToNextPlayer(cardDispenser.dispenseCard());

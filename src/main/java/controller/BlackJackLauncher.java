@@ -19,7 +19,7 @@ public class BlackJackLauncher {
 
     public void execute() {
         Casino casino = initCasino();
-        casino.initializeGame();
+        casino.hitCardTwice();
         showInitialFaceUpResults(casino);
         proceedPlayersTurn(casino);
         proceedDealerTurn(casino);
