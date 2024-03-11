@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 public record Name(String name) {
     private static final Pattern pattern = Pattern.compile("^[^가-힣a-zA-Z-_0-9].*$");
+    private static final int MAX_NAME_LENGTH = 5;
 
     public Name {
         validateName(name);
@@ -23,7 +24,7 @@ public record Name(String name) {
     }
 
     private void validateLength(String name) {
-        if (name.length() > 5) {
+        if (name.length() > MAX_NAME_LENGTH) {
             throw new IllegalArgumentException("이름의 길이는 5글자 이하여야 합니다.");
         }
     }
