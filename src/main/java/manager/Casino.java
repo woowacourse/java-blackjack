@@ -16,10 +16,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static view.InputView.*;
+import static view.OutputView.*;
+
 public class Casino {
 
-    private final OutputView outputView = new OutputView();
-    private final InputView inputView = new InputView();
     private final Deck deck = new Deck(new RandomDrawStrategy());
 
     public void run() {
@@ -28,26 +29,26 @@ public class Casino {
 
         DealerCards dealerCards = new DealerCards(deck.drawInitialHands());
         List<PlayerCards> playerCardsBundle = makePlayerCards(betAmounts);
-        outputView.printInitialCards(dealerCards, playerCardsBundle);
+        printInitialCards(dealerCards, playerCardsBundle);
 
         for (PlayerCards playerCards : playerCardsBundle) {
-            while (playerCards.canDraw() && inputView.readHitOpinion(playerCards.getPlayerName())) {
+            while (playerCards.canDraw() && readHitOpinion(playerCards.getPlayerName())) {
                 playerCards.receive(deck.draw());
-                outputView.printPlayerCards(playerCards);
+                printPlayerCards(playerCards);
             }
         }
 
         drawDealerCards(dealerCards);
 
-        outputView.printResults(dealerCards, playerCardsBundle);
+        printResults(dealerCards, playerCardsBundle);
 
         Rule rule = Rule.of(dealerCards, playerCardsBundle);
         Map<Name, Income> incomes = rule.getIncomes();
-        outputView.printIncomes(rule.getDealerIncome(), incomes);
+        printIncomes(rule.getDealerIncome(), incomes);
     }
 
     private List<Name> readNames() {
-        return inputView.readPlayerNames()
+        return readPlayerNames()
                 .stream()
                 .map(Name::new)
                 .toList();
@@ -57,7 +58,7 @@ public class Casino {
         return names.stream()
                 .collect(Collectors.toMap(
                         name -> name,
-                        name -> new BetAmount(inputView.readBetAmount(name)),
+                        name -> new BetAmount(readBetAmount(name)),
                         (x, y) -> y,
                         LinkedHashMap::new
                 ));
@@ -73,7 +74,7 @@ public class Casino {
     private void drawDealerCards(DealerCards dealerCards) {
         while (dealerCards.canDraw()) {
             dealerCards.receive(deck.draw());
-            outputView.printDealerGivenCard();
+            printDealerGivenCard();
         }
     }
 }

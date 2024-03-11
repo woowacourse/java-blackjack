@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class OutputView {
 
-    public void printInitialCards(DealerCards dealerCards, List<PlayerCards> playerCards) {
+    public static void printInitialCards(DealerCards dealerCards, List<PlayerCards> playerCards) {
         List<String> names = playerCards.stream()
                 .map(playerCard -> playerCard.getPlayerName().toString())
                 .toList();
@@ -28,18 +28,18 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printPlayerCards(PlayerCards cards) {
+    public static void printPlayerCards(PlayerCards cards) {
         Name playerName = cards.getPlayerName();
         System.out.print(playerName + "카드: ");
         System.out.println(formatCards(cards));
     }
 
-    private String formatCards(Cards playerCard) {
+    private static String formatCards(Cards playerCard) {
         List<String> cards = playerCard.getCards();
         return String.join(", ", cards);
     }
 
-    public void printResults(DealerCards dealerCards, List<PlayerCards> playerCards) {
+    public static void printResults(DealerCards dealerCards, List<PlayerCards> playerCards) {
         System.out.println();
         printDealerCards(dealerCards);
         printSumOfCards(dealerCards);
@@ -49,21 +49,21 @@ public class OutputView {
         }
     }
 
-    private void printDealerCards(DealerCards cards) {
+    private static void printDealerCards(DealerCards cards) {
         System.out.print("딜러 카드: ");
         System.out.print(formatCards(cards));
     }
 
-    private void printSumOfCards(Cards cards) {
+    private static void printSumOfCards(Cards cards) {
         System.out.println(" - 결과: " + cards.bestSum());
     }
 
-    public void printDealerGivenCard() {
+    public static void printDealerGivenCard() {
         System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printIncomes(int dealerIncome, Map<Name, Income> playerIncomes) {
+    public static void printIncomes(int dealerIncome, Map<Name, Income> playerIncomes) {
         System.out.println();
         System.out.println("최종 수익");
         System.out.println("딜러: " + dealerIncome);
