@@ -1,4 +1,4 @@
-package player;
+package domain.gamer;
 
 public class Name {
 

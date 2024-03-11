@@ -1,8 +1,8 @@
 package view;
 
+import domain.gamer.Name;
 import java.util.List;
 import java.util.Scanner;
-import player.Name;
 
 public class InputView {
 
