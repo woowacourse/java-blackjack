@@ -38,4 +38,12 @@ public class Player {
     public int cardsSize() {
         return cards.size();
     }
+
+    public int totalNumber() {
+        return cards.calculateTotalNumbers();
+    }
+
+    public String getName() {
+        return name;
+    }
 }
