@@ -1,9 +1,9 @@
-package blackjack.domain.result;
+package blackjack.domain.betting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
-import blackjack.domain.rule.Score;
+import blackjack.domain.card.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

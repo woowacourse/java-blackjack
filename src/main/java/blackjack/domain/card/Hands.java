@@ -3,8 +3,6 @@ package blackjack.domain.card;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.rule.BlackjackStatus;
-import blackjack.domain.rule.Score;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

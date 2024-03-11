@@ -1,10 +1,11 @@
-package blackjack.domain.rule;
+package blackjack.domain.betting;
 
 import blackjack.domain.card.Hands;
+import blackjack.domain.rule.GameRule;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
-public enum BattingStatus {
+public enum BettingStatus {
     LUCKY(1.5,
             (dealerHands, playerHands) -> playerHands.isBlackjackAndSizeIs(GameRule.START_CARD_COUNT)
             && (dealerHands.isNotBlackjack() || (dealerHands.isBlackjackAndSizeIsNot(GameRule.START_CARD_COUNT)))),
@@ -22,25 +23,19 @@ public enum BattingStatus {
     private final double leverage;
     private final BiPredicate<Hands, Hands> condition;
 
-    BattingStatus(final double leverage, final BiPredicate<Hands, Hands> condition) {
+    BettingStatus(final double leverage, final BiPredicate<Hands, Hands> condition) {
         this.leverage = leverage;
         this.condition = condition;
     }
 
-    public static BattingStatus of(final Hands dealerHands, final Hands playerHands) {
+    public static BettingStatus of(final Hands dealerHands, final Hands playerHands) {
         return Arrays.stream(values())
                 .filter(winStatus -> winStatus.condition.test(dealerHands, playerHands))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("잘못된 점수입니다."));
     }
 
-    public BattingStatus opposite() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return DRAW;
+    public BetRevenue applyLeverage(final BetAmount batAmount) {
+        return new BetRevenue(batAmount.multiply(leverage));
     }
 }
