@@ -9,56 +9,23 @@ import java.util.List;
 
 public class TrumpCardFactory implements CardFactory {
 
-    public TrumpCardFactory() {
-    }
-
     @Override
     public List<Card> createCards() {
         List<Card> trumpCards = new ArrayList<>();
 
-        trumpCards.addAll(createSpadeCards());
-        trumpCards.addAll(createDiamondCards());
-        trumpCards.addAll(createHeartCards());
-        trumpCards.addAll(createCloverCards());
+        trumpCards.addAll(createCards(Suit.SPADE));
+        trumpCards.addAll(createCards(Suit.DIAMOND));
+        trumpCards.addAll(createCards(Suit.HEART));
+        trumpCards.addAll(createCards(Suit.CLOVER));
 
         return trumpCards;
     }
 
-    private static List<TrumpCard> createHeartCards() {
+    private List<TrumpCard> createCards(Suit suit) {
         List<TrumpCard> trumpCards = new ArrayList<>();
 
         for (Rank rank : Rank.values()) {
-            trumpCards.add(new TrumpCard(rank, Suit.HEART));
-        }
-
-        return trumpCards;
-    }
-
-    private static List<TrumpCard> createSpadeCards() {
-        List<TrumpCard> trumpCards = new ArrayList<>();
-
-        for (Rank rank : Rank.values()) {
-            trumpCards.add(new TrumpCard(rank, Suit.SPADE));
-        }
-
-        return trumpCards;
-    }
-
-    private static List<TrumpCard> createCloverCards() {
-        List<TrumpCard> trumpCards = new ArrayList<>();
-
-        for (Rank rank : Rank.values()) {
-            trumpCards.add(new TrumpCard(rank, Suit.CLOVER));
-        }
-
-        return trumpCards;
-    }
-
-    private static List<TrumpCard> createDiamondCards() {
-        List<TrumpCard> trumpCards = new ArrayList<>();
-
-        for (Rank rank : Rank.values()) {
-            trumpCards.add(new TrumpCard(rank, Suit.DIAMOND));
+            trumpCards.add(new TrumpCard(rank, suit));
         }
 
         return trumpCards;
