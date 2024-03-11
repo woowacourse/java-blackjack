@@ -28,7 +28,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플렝이어는 21점 이상이면 추가 드로우가 불가능하다.")
+    @DisplayName("플레이어는 21점 이상이면 추가 드로우가 불가능하다.")
     void unableToDrawTest() {
         // given
         List<Card> cards = List.of(
