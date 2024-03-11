@@ -12,14 +12,14 @@ public class Participants {
     private final List<Participant> participants;
 
     public Participants(List<Participant> participants) {
-        validateNotDuplicatedPlayer(participants);
+        validateNotDuplicatedParticipant(participants);
         validateParticipantSize(participants);
         this.participants = participants;
     }
 
-    private void validateNotDuplicatedPlayer(List<Participant> players) {
-        Set<User> distinctUsers = new HashSet<>(players);
-        if (distinctUsers.size() != players.size()) {
+    private void validateNotDuplicatedParticipant(List<Participant> participants) {
+        Set<User> distinctUsers = new HashSet<>(participants);
+        if (distinctUsers.size() != participants.size()) {
             throw new IllegalArgumentException("참가자들의 이름은 중복되면 안됩니다.");
         }
     }
