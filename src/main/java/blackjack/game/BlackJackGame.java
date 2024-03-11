@@ -66,7 +66,7 @@ public class BlackJackGame {
 
     private void proceedPlayerTurn(Deck deck, Player player) {
         Command command = askPlayerToDrawMore(player);
-        if (command == Command.NO) {
+        if (command.isNo()) {
             return;
         }
         player.drawCard(deck);
