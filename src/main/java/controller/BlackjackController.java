@@ -13,10 +13,10 @@ import domain.card.Emblem;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
+
+import java.util.*;
+import java.util.function.Supplier;
+
 import ui.InputView;
 import ui.OutputView;
 
@@ -31,7 +31,7 @@ public class BlackjackController {
 
     public void start() {
         Dealer dealer = generateDealer();
-        Players players = new Players(inputView.readPlayerNames());
+        Players players = replyOnException(this::generatePlayers);
         BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
 
         GameResult gameResult = playBlackjackGame(dealer, players, blackjackGame);
@@ -48,6 +48,11 @@ public class BlackjackController {
                 .map(CardFactory::create)
                 .flatMap(Collection::stream)
                 .collect(collectingAndThen(toList(), CardDeck::new));
+    }
+
+    private Players generatePlayers() {
+        List<String> playerNames = inputView.readPlayerNames();
+        return new Players(playerNames);
     }
 
     private GameResult playBlackjackGame(Dealer dealer, Players players, BlackjackGame blackjackGame) {
@@ -72,11 +77,12 @@ public class BlackjackController {
     }
 
     private void hitUntilStay(BlackjackGame blackjackGame, Player player, int playerIndex) {
-        BlackjackAction action = selectBlackjackAction(player.getName());
+        BlackjackAction action = replyOnException(() -> selectBlackjackAction(player.getName()));
+
         while (action.isHit()) {
             blackjackGame.dealToPlayer(playerIndex);
             outputView.printCardHandAfterHit(player);
-            action = selectBlackjackAction(player.getName());
+            action = replyOnException(() -> selectBlackjackAction(player.getName()));
         }
     }
 
@@ -97,5 +103,14 @@ public class BlackjackController {
         Map<Player, ResultStatus> playerResult = gameResult.getPlayerResult();
 
         outputView.printParticipantResult(dealerResult, playerResult);
+    }
+
+    private <T> T replyOnException(Supplier<T> inputReader) {
+        try {
+            return inputReader.get();
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            return replyOnException(inputReader);
+        }
     }
 }

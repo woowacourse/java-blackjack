@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    private static final String ERROR_SUFFIX = "[ERROR]";
 
     public void printCardHand(Dealer dealer, Players players) {
         String result = String.join(", ", players.getPlayerNames());
@@ -83,5 +84,9 @@ public class OutputView {
                 .stream()
                 .map(entry -> String.format("%d%s", entry.getValue(), entry.getKey().getName()))
                 .collect(Collectors.joining(" "));
+    }
+
+    public void printErrorMessage(final String errorMessage) {
+        System.out.printf("%s %s%n", ERROR_SUFFIX, errorMessage);
     }
 }
