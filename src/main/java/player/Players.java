@@ -1,8 +1,9 @@
 package player;
 
+import card.CardDeck;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 public class Players {
 
@@ -15,11 +16,11 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(List<Name> playerNames) {
+    public static Players from(List<String> playerNames, CardDeck cardDeck) {
         validate(playerNames);
 
         List<Player> players = playerNames.stream()
-                .map(Player::new)
+                .map(name -> Player.joinGame(name, cardDeck))
                 .toList();
 
         return new Players(players);
@@ -29,12 +30,22 @@ public class Players {
         return Collections.unmodifiableList(players);
     }
 
-    private static void validate(List<Name> players) {
+    public List<Name> getPlayerNames() {
+        return players.stream()
+                .map(Player::getName)
+                .toList();
+    }
+
+    public int getSize() {
+        return players.size();
+    }
+
+    private static void validate(List<String> players) {
         validatePlayerCountRange(players);
         validateHasDuplicateName(players);
     }
 
-    private static void validateHasDuplicateName(List<Name> players) {
+    private static void validateHasDuplicateName(List<String> players) {
         int uniqueNameCount = countPlayerUniqueName(players);
 
         if (players.size() != uniqueNameCount) {
@@ -42,14 +53,11 @@ public class Players {
         }
     }
 
-    private static int countPlayerUniqueName(List<Name> players) {
-        return players.stream()
-                .map(Name::getValue)
-                .collect(Collectors.toSet())
-                .size();
+    private static int countPlayerUniqueName(List<String> players) {
+        return Set.copyOf(players).size();
     }
 
-    private static void validatePlayerCountRange(List<Name> players) {
+    private static void validatePlayerCountRange(List<String> players) {
         if (players.size() < MINIMUM_PLAYER_RANGE || MAXIMUM_PLAYER_RANGE < players.size()) {
             throw new IllegalArgumentException(
                     "참가자의 인원은 최소 " + MINIMUM_PLAYER_RANGE + "에서 최대 " + MAXIMUM_PLAYER_RANGE + "명 까지 가능합니다.");
