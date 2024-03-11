@@ -20,8 +20,9 @@ public class OutputView {
         final List<PlayerCardsDto> playersCards = startCards.playersCards();
         final PlayerCardsDto dealerCards = startCards.dealerCards();
 
-        System.out.printf("%n%s와 %s에게 2장을 나누었습니다.%n", dealerCards.name(),
-                String.join(DELIMITER, playersCards.stream().map(PlayerCardsDto::name).toList()));
+        System.out.printf("%n%s와 %s에게 %d장을 나누었습니다.%n", dealerCards.name(),
+                String.join(DELIMITER, playersCards.stream().map(PlayerCardsDto::name).toList()),
+                startCards.eachCardCount());
 
         System.out.printf("%s: %s%n", dealerCards.name(),
                 convertToCardsFormat(dealerCards.cards()));
@@ -71,7 +72,7 @@ public class OutputView {
     }
 
     private void printBetResult(final BetRevenueResultDto betResult) {
-        System.out.printf("%n## 최종 승패%n");
+        System.out.printf("%n## 최종 수익%n");
         printDealerBetResult(betResult.dealerBetResults());
         printPlayersBetResult(betResult.playersBetResult());
     }

@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import static java.util.stream.Collectors.toMap;
 
+import blackjack.domain.betting.BetAmount;
 import blackjack.domain.betting.BetRevenue;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
@@ -16,6 +17,7 @@ import java.util.Set;
 public class Players {
 
     private final List<Participant> players;
+    private final Map<ParticipantName, BetAmount> betAmountRepository = new LinkedHashMap<>();
 
     private Players(final List<Participant> players) {
         validateDuplicate(players);
@@ -37,7 +39,8 @@ public class Players {
     }
 
     public void saveBetAmountByName(final int betAmount, final String name) {
-
+        final Participant player = findParticipant(name);
+        betAmountRepository.put(player.getName(), new BetAmount(betAmount));
     }
 
     public void divideCard(final List<List<Card>> cards) {
@@ -65,7 +68,8 @@ public class Players {
 
         for (Participant player : players) {
             final BetStatus betStatus = BetStatus.of(dealerHands, player.getHands());
-            playersWinStatus.put(player.getName(), betStatus.applyLeverage(player.getBetAmount()));
+            final BetAmount betAmount = betAmountRepository.get(player.getName());
+            playersWinStatus.put(player.getName(), betStatus.applyLeverage(betAmount));
         }
 
         return playersWinStatus;

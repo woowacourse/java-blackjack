@@ -5,12 +5,12 @@ import blackjack.domain.participant.ParticipantName;
 import java.util.List;
 import java.util.Map;
 
-public record StartCardsDto(List<PlayerCardsDto> playersCards, PlayerCardsDto dealerCards) {
+public record StartCardsDto(List<PlayerCardsDto> playersCards, PlayerCardsDto dealerCards, int eachCardCount) {
 
     public static StartCardsDto of(final Map<ParticipantName, Hands> playersCards, final Hands dealerHands,
             final ParticipantName dealerName) {
         return new StartCardsDto(convertToPlayersCardDto(playersCards),
-                convertToPlayerCardDto(dealerHands, dealerName));
+                convertToPlayerCardDto(dealerHands, dealerName), dealerHands.size());
     }
 
     private static List<PlayerCardsDto> convertToPlayersCardDto(final Map<ParticipantName, Hands> playersCards) {

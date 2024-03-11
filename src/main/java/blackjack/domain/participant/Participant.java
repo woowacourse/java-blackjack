@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.betting.BetAmount;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import blackjack.domain.card.Score;
@@ -9,10 +8,8 @@ import java.util.Objects;
 
 public class Participant {
 
-    // TODO : 인스턴스 필드 2개로 줄이기
     private final Hands hands;
     private final ParticipantName name;
-    private BetAmount betAmount;
 
     private Participant(final String name) {
         this.name = new ParticipantName(name);
@@ -53,10 +50,6 @@ public class Participant {
 
     public ParticipantName getName() {
         return name;
-    }
-
-    public BetAmount getBetAmount() {
-        return betAmount;
     }
 
     @Override
