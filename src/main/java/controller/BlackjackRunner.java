@@ -26,6 +26,7 @@ public class BlackjackRunner {
     public void play() {
         TotalDeck totalDeck = new TotalDeck(TotalDeckGenerator.generate());
         Users users = ExceptionHandler.handle(InputView::inputNames);
+        users.setStartCards(totalDeck);
         OutputView.printStartStatus(users);
         run(users, totalDeck);
         showGameResult(users);
