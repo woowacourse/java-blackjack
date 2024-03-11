@@ -25,7 +25,7 @@ public class Dealer extends Participant {
         return calculateScore() < DEALER_MIN_SCORE_POLICY;
     }
 
-    public void shuffle() {
+    public void shuffleCards() {
         cardDeck.shuffle(cardShuffleStrategy);
     }
 
