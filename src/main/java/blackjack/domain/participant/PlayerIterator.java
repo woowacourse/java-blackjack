@@ -1,26 +1,26 @@
 package blackjack.domain.participant;
 
-import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class PlayerIterator {
-    private final List<Player> players;
-    private int order = 0;
+    private final Queue<Player> players;
 
     public PlayerIterator(Players players) {
-        this.players = players.getValues();
+        this.players = new LinkedList<>(players.getValues());
     }
 
     public boolean hasNext() {
-        return order < players.size();
+        return !players.isEmpty();
     }
 
     public void increaseOrderByActionAndHand(PlayerAction playerAction) {
         if (playerAction.equals(PlayerAction.STAND) || !getPlayer().canHit()) {
-            order++;
+            players.poll();
         }
     }
 
     public Player getPlayer() {
-        return players.get(order);
+        return players.peek();
     }
 }
