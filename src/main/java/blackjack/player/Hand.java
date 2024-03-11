@@ -32,8 +32,8 @@ public class Hand {
 
     private int calculateMinimumScore() {
         return cards.stream()
-                .map(Card::getScore)
-                .reduce(0, Integer::sum);
+                .mapToInt(Card::getScore)
+                .sum();
     }
 
     private int calculateMaximumScore() {
