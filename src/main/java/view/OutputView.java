@@ -16,7 +16,7 @@ public class OutputView {
     public static void printInitialStatus(GameStatus gameStatus) {
         GamerDto dealerDto = gameStatus.getDealerDto();
         List<GamerDto> gamerDtos = gameStatus.getGamerDtos();
-        System.out.println("%n딜러와 %s에게 2장을 나누었습니다.".formatted(buildGamerNames(gamerDtos)));
+        System.out.printf("%n%s와 %s에게 2장을 나누었습니다.%n", DEALER_NAME, buildGamerNames(gamerDtos));
         System.out.println(buildDealerInitialStatus(dealerDto));
         System.out.println(buildPlayersInitialStatus(gamerDtos) + "\n");
     }
@@ -50,7 +50,7 @@ public class OutputView {
 
     public static void printDealerTurn(int dealerDrawCount) {
         System.out.println();
-        System.out.print("딜러는 16이하라 한장의 카드를 더 받았습니다.\n".repeat(dealerDrawCount));
+        System.out.printf("%s는 16이하라 한장의 카드를 더 받았습니다.%n".formatted(DEALER_NAME).repeat(dealerDrawCount));
     }
 
     public static void printTotalStatus(GameStatus gameStatus) {
@@ -85,7 +85,7 @@ public class OutputView {
 
         System.out.println(String.join(": ", DEALER_NAME, buildDealerResult(dealerGameResult)));
         playersGameResult.forEach(
-                (name, result) -> System.out.println("%s: %s".formatted(name, result.getResult())));
+                (name, result) -> System.out.printf("%s: %s%n", name, result.getResult()));
 
     }
 
