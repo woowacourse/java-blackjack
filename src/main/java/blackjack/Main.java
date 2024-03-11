@@ -15,7 +15,7 @@ public class Main {
         CardFactory cardFactory = new CardFactory();
         Deck deck = new Deck(cardFactory.createBlackJackCard());
         Dealer dealer = new Dealer(deck);
-        Game game = new Game(dealer, Players.convertTo(playerNames));
+        Game game = new Game(dealer, Players.from(playerNames));
 
         game.play();
     }
