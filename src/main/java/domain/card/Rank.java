@@ -33,10 +33,14 @@ public enum Rank {
     }
 
     public static int selectAceScore(int score) {
-        if (score + BIG_ACE.score > BLACK_JACK) {
+        if (isHardHand(score)) {
             return SMALL_ACE.score;
         }
         return BIG_ACE.score;
+    }
+
+    private static boolean isHardHand(final int score) {
+        return score + BIG_ACE.score > BLACK_JACK;
     }
 
     public boolean isAce() {
