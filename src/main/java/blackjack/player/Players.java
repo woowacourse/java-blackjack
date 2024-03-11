@@ -2,6 +2,7 @@ package blackjack.player;
 
 import blackjack.card.Deck;
 import java.util.List;
+import java.util.Set;
 
 public class Players {
 
@@ -36,10 +37,7 @@ public class Players {
     }
 
     private void validateUniqueNames(List<String> playerNames) {
-        int distinctNameCount = (int) playerNames.stream()
-                .distinct()
-                .count();
-        if (distinctNameCount != playerNames.size()) {
+        if (Set.copyOf(playerNames).size() != playerNames.size()) {
             throw new IllegalArgumentException("[ERROR] 이름은 중복될 수 없습니다.");
         }
     }
