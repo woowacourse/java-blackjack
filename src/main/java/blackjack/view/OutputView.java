@@ -32,8 +32,8 @@ public class OutputView {
                 + "에게 2장을 나누었습니다");
     }
 
-    public static void printParticipantsInitialHands(String dealerName, String dealerFirstCardName, List<Player> players) {
-        printDealerFirstCard(dealerName, dealerFirstCardName);
+    public static void printParticipantsInitialHands(String dealerName, Card dealerFirstCard, List<Player> players) {
+        printDealerFirstCard(dealerName, resolveCardMessage(dealerFirstCard));
         for (Player player : players) {
             printParticipantHands(player.getName(), player.getHandsCards());
         }
@@ -112,7 +112,12 @@ public class OutputView {
 
     private static String resolveHandsMessage(List<Card> hands) {
         return hands.stream()
-                .map(Card::getCardName)
+                .map(OutputView::resolveCardMessage)
                 .collect(Collectors.joining(", "));
+    }
+
+    private static String resolveCardMessage(Card card) {
+        return ValueView.findValueName(card.getValue())
+                + KindView.findKindName(card.getKind());
     }
 }

@@ -12,7 +12,7 @@ class DealerTest {
     @Test
     void should_ThrowIllegalStateException_When_RequestShowCards_But_DealerHasNoCards() {
         Dealer dealer = new Dealer();
-        assertThatThrownBy(dealer::getFirstCardName)
+        assertThatThrownBy(dealer::getFirstCard)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("아직 지니고 있는 카드가 없습니다");
     }
@@ -50,9 +50,8 @@ class DealerTest {
         dealer.addCard(Card.create(6));
         dealer.addCard(Card.create(45));
 
-        assertThat(dealer.getFirstCardName())
-                .isEqualTo(Card.create(6)
-                        .getCardName());
+        assertThat(dealer.getFirstCard())
+                .isEqualTo(Card.create(6));
     }
 
 }

@@ -17,15 +17,14 @@ public class Dealer extends Participant {
         return canNextDraw();
     }
 
-    public String getFirstCardName() {
+    public Card getFirstCard() {
         List<Card> cards = hands.getHands();
         if (cards.isEmpty()) {
             throw new IllegalStateException("아직 지니고 있는 카드가 없습니다");
         }
 
         return hands.getHands()
-                .get(0)
-                .getCardName();
+                .get(0);
     }
 
     private PlayerState canNextDraw() {

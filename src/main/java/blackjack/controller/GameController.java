@@ -19,7 +19,7 @@ public class GameController {
         Dealer gameDealer = game.getDealer();
         Players gamePlayers = game.getPlayers();
 
-        printInitialHands(gameDealer.getName(), gameDealer.getFirstCardName(), gamePlayers.getPlayers());
+        printInitialHands(gameDealer.getName(), gameDealer.getFirstCard(), gamePlayers.getPlayers());
         confirmParticipantsHands(gamePlayers, deck, gameDealer);
 
         OutputView.printFinalHandsAndScoreMessage(gameDealer, gamePlayers);
@@ -36,9 +36,9 @@ public class GameController {
         confirmDealerHands(dealer, deck);
     }
 
-    private static void printInitialHands(String dealerName, String dealerFirstCardName, List<Player> players) {
+    private static void printInitialHands(String dealerName, Card dealerFirstCard, List<Player> players) {
         OutputView.printDrawInitialHandsMessage(dealerName, players);
-        OutputView.printParticipantsInitialHands(dealerName, dealerFirstCardName, players);
+        OutputView.printParticipantsInitialHands(dealerName, dealerFirstCard, players);
     }
 
     private static void confirmDealerHands(Dealer dealer, Deck deck) {
