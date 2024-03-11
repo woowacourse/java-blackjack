@@ -9,13 +9,16 @@ import model.card.Cards;
 import model.dealer.Dealer;
 import model.player.Players;
 import model.view.InputView;
+import model.view.OutputView;
 
 public class BlackjackGameController {
 
     private final InputView inputView;
+    private final OutputView outputView;
 
-    public BlackjackGameController(InputView inputView) {
+    public BlackjackGameController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
+        this.outputView = outputView;
     }
 
     public void run() {
@@ -27,5 +30,6 @@ public class BlackjackGameController {
         }
         Cards cards = new Cards(generatedCards);
         blackjackGame.distributeCardsForSetting(cards);
+        outputView.printDistributeCards(players);
     }
 }
