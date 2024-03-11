@@ -30,7 +30,9 @@ public class Cards {
     }
 
     public int calculateScore() {
-        int sum = cards.stream().mapToInt(Card::minimumNumber).sum();
+        int sum = cards.stream()
+                .mapToInt(Card::minimumNumber)
+                .sum();
 
         List<Integer> differenceNumbers = mapDifferenceNumber();
         return differenceNumbers.stream()
