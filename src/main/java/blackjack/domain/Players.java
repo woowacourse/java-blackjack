@@ -37,11 +37,11 @@ public class Players {
 
     public void initialDraw(Deck deck) {
         for (int i = 0; i < INITIAL_CARDS_AMOUNT; i++) {
-            drawEachPlayer(deck);
+            drawEach(deck);
         }
     }
 
-    private void drawEachPlayer(Deck deck) {
+    private void drawEach(Deck deck) {
         playerGroup.forEach(player -> player.draw(deck));
     }
 
