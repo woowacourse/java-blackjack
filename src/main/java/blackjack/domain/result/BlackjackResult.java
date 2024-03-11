@@ -1,32 +1,16 @@
 package blackjack.domain.result;
 
-import blackjack.domain.participant.Player;
-
-import java.util.*;
-import java.util.function.Function;
-
-import static java.util.stream.Collectors.*;
+import java.util.List;
+import java.util.Collections;
 
 public class BlackjackResult {
-    private final Map<Player, HandResult> playersResult;
+    private final List<ParticipantProfit> participantProfits;
 
-    public BlackjackResult(Map<Player, HandResult> playersResult) {
-        this.playersResult = Collections.unmodifiableMap(playersResult);
+    public BlackjackResult(List<ParticipantProfit> participantProfits) {
+        this.participantProfits = Collections.unmodifiableList(participantProfits);
     }
 
-    public Map<HandResult, Integer> getDealerResults() {
-        return playersResult.values()
-                .stream()
-                .map(HandResult::getOpposite)
-                .sorted(Comparator.comparingInt(HandResult::ordinal))
-                .collect(groupingBy(
-                        Function.identity(),
-                        LinkedHashMap::new,
-                        collectingAndThen(counting(), Long::intValue)
-                ));
-    }
-
-    public Map<Player, HandResult> getPlayersResult() {
-        return playersResult;
+    public List<ParticipantProfit> getParticipantProfits() {
+        return participantProfits;
     }
 }

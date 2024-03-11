@@ -10,4 +10,13 @@ public class PlayerBet {
         this.player = player;
         this.bettingPrice = new BettingPrice(bettingPrice);
     }
+
+    public ParticipantProfit calculateProfit(HandResult handResult) {
+        double profit = bettingPrice.calculateProfit(handResult);
+        return new ParticipantProfit(player.getName(), profit);
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
 }
