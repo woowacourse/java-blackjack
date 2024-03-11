@@ -2,6 +2,7 @@ package card;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -21,5 +22,11 @@ class CardNumberTest {
     @DisplayName("받은 position에 맞는 Score을 돌려준다.")
     void getCardNumberTest(int cardPosition) {
         Assertions.assertThat(CardNumber.ACE.getCardNumber(cardPosition)).isEqualTo(11);
+    }
+
+    @DisplayName("에이스 카드의 추가 점수를 계산한다.")
+    @Test
+    void calculateAdditionalAceCardScore() {
+        Assertions.assertThat(CardNumber.calculatePlusAceCardScore()).isEqualTo(10);
     }
 }

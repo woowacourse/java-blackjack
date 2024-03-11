@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class CardsTest {
 
-    private static final int ADDITIONAL_ACE_CARD_SCORE = CardNumber.ACE.getAdditionalScore();
+    private static final int ADDITIONAL_ACE_CARD_SCORE = CardNumber.calculatePlusAceCardScore();
 
     @DisplayName("해당 라운드에서 카드 점수의 최솟값이 21을 넘는지 확인한다.")
     @Test

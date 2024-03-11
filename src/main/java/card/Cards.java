@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Cards {
 
-    private static final int ADDITIONAL_ACE_CARD_SCORE = CardNumber.ACE.getAdditionalScore();
+    private static final int ADDITIONAL_ACE_CARD_SCORE = CardNumber.calculatePlusAceCardScore();
     private static final int MAX_BLACK_JACK_SCORE = 21;
 
     private final List<Card> cards;

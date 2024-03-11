@@ -39,7 +39,7 @@ public enum CardNumber {
         }
     }
 
-    public int getAdditionalScore() {
-        return getCardNumber(1) - getCardNumber(0);
+    public static int calculatePlusAceCardScore() {
+        return ACE.getCardNumber(1) - ACE.getCardNumber(0);
     }
 }
