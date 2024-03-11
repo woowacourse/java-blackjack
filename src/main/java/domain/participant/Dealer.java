@@ -16,6 +16,6 @@ public class Dealer extends Participant {
     // TODO: 사실 상 이 친구는 매개변수를 사용하지 않는다. 그러나 추상 클래스의 다형성을 위해 사용하였따. 다른 방법이 있는가?
     @Override
     public boolean canPickCard(CardCommand cardCommand) {
-        return calculateScore() > CARD_PICK_THRESHOLD;
+        return calculateScore() <= CARD_PICK_THRESHOLD;
     }
 }
