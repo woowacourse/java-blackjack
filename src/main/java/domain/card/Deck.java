@@ -26,12 +26,6 @@ public class Deck {
         if (cards.isEmpty()) {
             throw new IllegalStateException("덱이 비어 있을 때 카드를 뽑을 수 없습니다.");
         }
-        return pollLastCard();
-    }
-
-    private Card pollLastCard() {
-        final Card card = cards.get(cards.size() - 1);
-        cards.remove(cards.size() - 1);
-        return card;
+        return cards.remove(cards.size() - 1);
     }
 }

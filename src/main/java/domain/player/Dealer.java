@@ -4,7 +4,7 @@ import domain.blackjack.OneOnOneResult;
 
 public class Dealer extends Player {
 
-    private static final int HIT_THRESHOLD = 17;
+    private static final int HIT_UPPER_BOUND = 17;
 
     public Dealer() {
         super(Name.DEALER_NAME);
@@ -22,7 +22,7 @@ public class Dealer extends Player {
 
     @Override
     public boolean canHit() {
-        return calculateScore() < HIT_THRESHOLD;
+        return calculateScore() < HIT_UPPER_BOUND;
     }
 
     @Override

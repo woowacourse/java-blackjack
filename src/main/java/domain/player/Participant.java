@@ -3,7 +3,7 @@ package domain.player;
 import domain.blackjack.OneOnOneResult;
 
 public class Participant extends Player {
-    private static final int HIT_THRESHOLD = 21;
+    private static final int HIT_UPPER_BOUND = 21;
 
     public Participant(final Name name) {
         super(name);
@@ -22,7 +22,7 @@ public class Participant extends Player {
 
     @Override
     public boolean canHit() {
-        return calculateScore() < HIT_THRESHOLD;
+        return calculateScore() < HIT_UPPER_BOUND;
     }
 
     @Override

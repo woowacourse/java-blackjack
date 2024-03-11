@@ -14,9 +14,22 @@ public class Players {
         this.players = players;
     }
 
+    public static Players from(final String[] names) {
+        return new Players(Arrays.stream(names)
+                .map(name -> new Participant(new Name(name)))
+                .collect(Collectors.toList()));
+    }
+
     private void validate(final List<Player> players) {
         validatePlayerNumbers(players);
         validateDuplicate(players);
+        validateDealerName(players);
+    }
+
+    private void validateDealerName(final List<Player> players) {
+        if (players.stream().map(Player::getName).anyMatch(r -> r.equals(Name.DEALER_NAME.getName()))) {
+            throw new IllegalArgumentException("플레이어의 이름은 딜러가 될 수 없습니다.");
+        }
     }
 
     private void validatePlayerNumbers(final List<Player> players) {
@@ -35,15 +48,14 @@ public class Players {
         }
     }
 
+    public void register(final Player player) {
+        getAllPlayers().add(player);
+    }
+
     private boolean hasDuplicatePlayers(final List<Player> players) {
         return Set.copyOf(players).size() != players.size();
     }
 
-    public static Players from(final String[] names) {
-        return new Players(Arrays.stream(names)
-                .map(name -> new Participant(new Name(name)))
-                .collect(Collectors.toList()));
-    }
 
     public Player getDealer() {
         return players.stream()
