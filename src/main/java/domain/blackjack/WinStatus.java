@@ -1,8 +1,5 @@
 package domain.blackjack;
 
-import domain.participant.Dealer;
-import domain.participant.Participant;
-
 public enum WinStatus {
 
     WIN(1.0),
