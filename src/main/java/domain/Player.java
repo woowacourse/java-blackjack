@@ -46,6 +46,10 @@ public class Player {
         return ACE_LOW;
     }
 
+    public boolean isBust() {
+        return calculateScore() > BUST_CONDITION;
+    }
+
     public boolean isNotBust() {
         return calculateScore() <= BUST_CONDITION;
     }
