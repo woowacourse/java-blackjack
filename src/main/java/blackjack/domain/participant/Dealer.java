@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.Deck;
 import blackjack.domain.card.Card;
 import blackjack.util.Constants;
+import java.util.stream.IntStream;
 
 public class Dealer extends Gamer {
 
@@ -13,8 +14,7 @@ public class Dealer extends Gamer {
 
         this.deck = deck;
 
-        selfDraw();
-        selfDraw();
+        draw(2);
     }
 
     public Card draw() {
@@ -23,7 +23,7 @@ public class Dealer extends Gamer {
 
     public boolean extraCard() {
         if (canReceiveCard()) {
-            selfDraw();
+            draw(1);
             return true;
         }
         return false;
@@ -34,9 +34,9 @@ public class Dealer extends Gamer {
         return hand.calculateScore() <= Constants.DEALER_BOUND;
     }
 
-    private void selfDraw() {
-        Card card = deck.draw();
-        hand.add(card);
+    private void draw(final int count) {
+        IntStream.range(0, count)
+                .forEach(i -> hand.add(deck.draw()));
     }
 
     public Card showFirstCard() {
