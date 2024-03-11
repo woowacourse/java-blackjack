@@ -29,7 +29,7 @@ public class BlackJackGameController {
 
     public void gameStart() {
         Players players = new Players(generatePlayers(inputView.readPlayersNames()));
-        Dealer dealer = new Dealer(new DealerCards(new ArrayList<>()));
+        Dealer dealer = new Dealer(new DealerCards());
         Deck deck = new Deck(CardsGenerator.generateRandomCards());
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
 
@@ -42,7 +42,7 @@ public class BlackJackGameController {
     private List<Player> generatePlayers(List<String> playersNames) {
         List<Player> players = new ArrayList<>();
         for (String playerName : playersNames) {
-            PlayerCards emptyHand = new PlayerCards(new ArrayList<>());
+            PlayerCards emptyHand = new PlayerCards();
             players.add(new Player(playerName, emptyHand));
         }
         return players;

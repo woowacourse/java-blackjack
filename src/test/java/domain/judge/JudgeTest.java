@@ -27,13 +27,15 @@ class JudgeTest {
     @BeforeEach
     void setUp() {
         judge = new Judge();
-        dealer = new Dealer(new DealerCards(List.of(new Card(CardNumber.FIVE, CardShape.HEART))));
+        dealer = new Dealer(new DealerCards());
+        dealer.hit(new Card(CardNumber.FIVE, CardShape.HEART));
     }
 
     @DisplayName("플레이어가 딜러를 상대로 승리를 판단한다.")
     @Test
     void decidePlayerWinByDealer() {
-        Player player = new Player("player", new PlayerCards(List.of(new Card(CardNumber.KING, CardShape.HEART))));
+        Player player = new Player("player", new PlayerCards());
+        player.hit(new Card(CardNumber.KING, CardShape.HEART));
         Players players = new Players(List.of(player));
         judge.decideResult(players, dealer);
         assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.WIN);
@@ -42,7 +44,8 @@ class JudgeTest {
     @DisplayName("플레이어가 딜러를 상대로 패배를 판단한다.")
     @Test
     void decidePlayerLoseByDealer() {
-        Player player = new Player("player", new PlayerCards(List.of(new Card(CardNumber.TWO, CardShape.HEART))));
+        Player player = new Player("player", new PlayerCards());
+        player.hit(new Card(CardNumber.TWO, CardShape.HEART));
         Players players = new Players(List.of(player));
         judge.decideResult(players, dealer);
         assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.LOSE);
@@ -51,7 +54,8 @@ class JudgeTest {
     @DisplayName("플레이어가 딜러를 상대로 무승부를 판단한다.")
     @Test
     void decidePlayerDrawByDealer() {
-        Player player = new Player("player", new PlayerCards(List.of(new Card(CardNumber.FIVE, CardShape.HEART))));
+        Player player = new Player("player", new PlayerCards());
+        player.hit(new Card(CardNumber.FIVE, CardShape.HEART));
         Players players = new Players(List.of(player));
         judge.decideResult(players, dealer);
         assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.DRAW);
@@ -60,9 +64,12 @@ class JudgeTest {
     @DisplayName("딜러의 모든 승리 패배 무승부 상태를 반환한다.")
     @Test
     void decideDealerResult() {
-        Player player1 = new Player("player1", new PlayerCards(List.of(new Card(CardNumber.KING, CardShape.HEART))));
-        Player player2 = new Player("player2", new PlayerCards(List.of(new Card(CardNumber.THREE, CardShape.CLOVER))));
-        Player player3 = new Player("player3", new PlayerCards(List.of(new Card(CardNumber.FIVE, CardShape.HEART))));
+        Player player1 = new Player("player1", new PlayerCards());
+        player1.hit(new Card(CardNumber.KING, CardShape.HEART));
+        Player player2 = new Player("player2", new PlayerCards());
+        player2.hit(new Card(CardNumber.THREE, CardShape.CLOVER));
+        Player player3 = new Player("player3", new PlayerCards());
+        player3.hit(new Card(CardNumber.FIVE, CardShape.HEART));
         Players players = new Players(List.of(player1, player2, player3));
 
         judge.decideResult(players, dealer);

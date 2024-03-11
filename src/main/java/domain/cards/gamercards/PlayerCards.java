@@ -3,6 +3,7 @@ package domain.cards.gamercards;
 import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,8 +15,8 @@ public class PlayerCards {
 
     protected final List<Card> cards;
 
-    public PlayerCards(List<Card> cards) {
-        this.cards = cards;
+    public PlayerCards() {
+        this.cards = new ArrayList<>();
     }
 
     public void addCard(Card card) {

@@ -16,11 +16,12 @@ public class PlayersTest {
     @Test
     void createDomainByDuplicatedNames() {
         assertThatThrownBy(() -> new Players(List.of(
-                new Player("player1", new PlayerCards(new ArrayList<>())),
-                new Player("player1", new PlayerCards(new ArrayList<>())),
-                new Player("player2", new PlayerCards(new ArrayList<>())))))
+                new Player("player1", new PlayerCards()),
+                new Player("player1", new PlayerCards()),
+                new Player("player2", new PlayerCards()))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 플레이어 간 중복된 이름을 가질 수 없습니다.");
+
     }
 
     @DisplayName("플레이어가 1명보다 적을 경우 예외를 발생시킨다.")
@@ -35,15 +36,15 @@ public class PlayersTest {
     @Test
     void createDomainByInvalidMaxSize() {
         assertThatThrownBy(() -> new Players(List.of(
-                new Player("player1", new PlayerCards(new ArrayList<>())),
-                new Player("player2", new PlayerCards(new ArrayList<>())),
-                new Player("player3", new PlayerCards(new ArrayList<>())),
-                new Player("player4", new PlayerCards(new ArrayList<>())),
-                new Player("player5", new PlayerCards(new ArrayList<>())),
-                new Player("player6", new PlayerCards(new ArrayList<>())),
-                new Player("player7", new PlayerCards(new ArrayList<>())),
-                new Player("player8", new PlayerCards(new ArrayList<>())),
-                new Player("player9", new PlayerCards(new ArrayList<>())))))
+                new Player("player1", new PlayerCards()),
+                new Player("player2", new PlayerCards()),
+                new Player("player3", new PlayerCards()),
+                new Player("player4", new PlayerCards()),
+                new Player("player5", new PlayerCards()),
+                new Player("player6", new PlayerCards()),
+                new Player("player7", new PlayerCards()),
+                new Player("player8", new PlayerCards()),
+                new Player("player9", new PlayerCards()))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 플레이어는 최소 1명에서 최대 8명까지 참여할 수 있습니다.");
     }
@@ -52,16 +53,16 @@ public class PlayersTest {
     @Test
     void createDomainSuccessfully() {
         assertThatCode(() -> new Players(List.of(
-                new Player("player1", new PlayerCards(new ArrayList<>())),
-                new Player("player2", new PlayerCards(new ArrayList<>())),
-                new Player("player3", new PlayerCards(new ArrayList<>())))))
+                new Player("player1", new PlayerCards()),
+                new Player("player2", new PlayerCards()),
+                new Player("player3", new PlayerCards()))))
                 .doesNotThrowAnyException();
     }
 
     @DisplayName("플레이어의 이름이 \"딜러\"면 예외를 발생시킨다.")
     @Test
     void createDomainByInvalidName() {
-        assertThatThrownBy(() -> new Players(List.of(new Player("딜러", new PlayerCards(new ArrayList<>())))))
+        assertThatThrownBy(() -> new Players(List.of(new Player("딜러", new PlayerCards()))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 플레이어의 이름은 \"딜러\"가 될 수 없습니다.");
     }
