@@ -1,9 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardRank;
 import java.util.ArrayList;
 import java.util.List;
 
-class Hand {
+public class Hand {
 
     private static final int BONUS_SCORE = 10;
     private static final int BLACKJACK_SCORE = 21;

@@ -1,6 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
-class Name {
+public class Name {
 
     private final String name;
 
