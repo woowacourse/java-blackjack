@@ -11,7 +11,7 @@ public class Deck {
 
     private final Queue<Card> cards = new ArrayDeque<>();
 
-    Deck(List<Card> cards) {
+    public Deck(List<Card> cards) {
         validateDuplicated(cards);
 
         this.cards.addAll(cards);
