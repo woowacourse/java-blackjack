@@ -23,12 +23,4 @@ public enum BlackjackStatus {
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("잘못된 점수입니다."));
     }
-
-    public boolean isBlackjack() {
-        return this == BLACKJACK;
-    }
-
-    public boolean isDead() {
-        return this == DEAD;
-    }
 }

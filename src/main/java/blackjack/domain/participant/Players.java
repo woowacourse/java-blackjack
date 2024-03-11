@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.bet.BetAmount;
 import blackjack.domain.bet.BetRevenue;
+import blackjack.domain.card.BlackjackStatus;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import blackjack.domain.bet.BetStatus;
@@ -116,12 +117,12 @@ public class Players {
 
     public boolean isNotDead(final String name) {
         final Hands hands = findHands(name);
-        return hands.isNotDead();
+        return BlackjackStatus.from(hands.calculateScore()) != BlackjackStatus.DEAD;
     }
 
     public boolean isAllDead() {
         return handsRepository.values().stream()
-                .noneMatch(Hands::isNotDead);
+                .noneMatch(hands -> BlackjackStatus.from(hands.calculateScore()) != BlackjackStatus.DEAD);
     }
 
     public int count() {

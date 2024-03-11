@@ -1,5 +1,6 @@
 package blackjack.domain.dealer;
 
+import blackjack.domain.card.BlackjackStatus;
 import blackjack.domain.card.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
@@ -46,7 +47,7 @@ public class Dealer {
     }
 
     public boolean isNotBlackjack() {
-        return hands.isNotBlackjack();
+        return BlackjackStatus.from(hands.calculateScore()) != BlackjackStatus.BLACKJACK;
     }
 
     public Hands getOpenedHands() {

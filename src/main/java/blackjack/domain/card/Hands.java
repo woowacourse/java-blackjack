@@ -45,15 +45,7 @@ public class Hands {
     }
 
     private boolean isDeadScore(final int sum) {
-        return BlackjackStatus.from(new Score(sum)).isDead();
-    }
-
-    public boolean isBlackjackAndSizeIs(final int size) {
-        return isBlackjack() && this.size() == size;
-    }
-
-    public boolean isBlackjackAndSizeIsNot(final int size) {
-        return isBlackjack() && this.size() != size;
+        return BlackjackStatus.from(new Score(sum)) == BlackjackStatus.DEAD;
     }
 
     public boolean isScoreBiggerThan(final Hands other) {
@@ -64,31 +56,12 @@ public class Hands {
         return this.calculateScore().equals(other.calculateScore());
     }
 
-    public boolean isNotSize(final int size) {
-        return this.size() != size;
+    public boolean isSizeOf(final int size) {
+        return this.size() == size;
     }
 
     public int size() {
         return cards.size();
-    }
-    public boolean isNotBlackjack() {
-        return !isBlackjack();
-    }
-
-    public boolean isBlackjack() {
-        return getStatus().isBlackjack();
-    }
-
-    public boolean isNotDead() {
-        return !isDead();
-    }
-
-    public boolean isDead() {
-        return getStatus().isDead();
-    }
-
-    private BlackjackStatus getStatus() {
-        return BlackjackStatus.from(calculateScore());
     }
 
     public Hands getFirstCard() {

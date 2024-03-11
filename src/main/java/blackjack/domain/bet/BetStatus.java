@@ -1,5 +1,6 @@
 package blackjack.domain.bet;
 
+import blackjack.domain.card.BlackjackStatus;
 import blackjack.domain.card.Hands;
 import blackjack.domain.rule.GameRule;
 import java.util.Arrays;
@@ -7,17 +8,16 @@ import java.util.function.BiPredicate;
 
 public enum BetStatus {
     LUCKY(1.5,
-            (dealerHands, playerHands) -> playerHands.isBlackjackAndSizeIs(GameRule.START_CARD_COUNT)
-            && (dealerHands.isNotBlackjack() || (dealerHands.isBlackjackAndSizeIsNot(GameRule.START_CARD_COUNT)))),
+            (dealerHands, playerHands) -> isStartBlackjack(playerHands) && isNotStartBlackjack(dealerHands)),
     WIN(1,
-            (dealerHands, playerHands) -> playerHands.isNotDead()
-            && (dealerHands.isDead() || playerHands.isScoreBiggerThan(dealerHands))),
+            (dealerHands, playerHands) -> isNotDead(playerHands)
+            && (isDead(dealerHands) || playerHands.isScoreBiggerThan(dealerHands))),
     LOSE(-1,
-            (dealerHands, playerHands) -> playerHands.isDead()
-            || (dealerHands.isBlackjackAndSizeIs(GameRule.START_CARD_COUNT) && playerHands.isNotSize(GameRule.START_CARD_COUNT))
-            || (dealerHands.isNotDead() && dealerHands.isScoreBiggerThan(playerHands))),
+            (dealerHands, playerHands) -> isDead(playerHands)
+            || (isStartBlackjack(dealerHands) && isNotStartBlackjack(playerHands))
+            || (isNotDead(dealerHands) && dealerHands.isScoreBiggerThan(playerHands))),
     DRAW(0,
-            (dealerHands, playerHands) -> dealerHands.isNotDead() && playerHands.isNotDead()
+            (dealerHands, playerHands) -> isNotDead(dealerHands) && isNotDead(playerHands)
             && playerHands.isScoreSame(dealerHands));
 
     private final double leverage;
@@ -35,7 +35,27 @@ public enum BetStatus {
                 .orElseThrow(() -> new IllegalStateException("잘못된 점수입니다."));
     }
 
+    private static boolean isStartBlackjack(final Hands hands) {
+        return isBlackjack(hands) && hands.isSizeOf(GameRule.START_CARD_COUNT);
+    }
+
+    private static boolean isNotStartBlackjack(final Hands hands) {
+        return !isStartBlackjack(hands);
+    }
+    private static boolean isDead(final Hands hands) {
+        return BlackjackStatus.from(hands.calculateScore()) == BlackjackStatus.DEAD;
+    }
+
+    private static boolean isNotDead(final Hands hands) {
+        return !isDead(hands);
+    }
+
+    private static boolean isBlackjack(final Hands hands) {
+        return BlackjackStatus.from(hands.calculateScore()) == BlackjackStatus.BLACKJACK;
+    }
+
     public BetRevenue applyLeverage(final BetAmount batAmount) {
         return new BetRevenue(batAmount.multiply(leverage));
     }
+
 }

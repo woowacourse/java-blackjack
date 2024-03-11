@@ -36,7 +36,7 @@ public record Card(CardNumber number, CardShape shape) {
     }
 
     public boolean isAce() {
-        return number.isAce();
+        return number == CardNumber.ACE;
     }
 
     public int getNumber() {
