@@ -8,7 +8,7 @@ import model.card.CardNumber;
 import model.card.CardShape;
 import model.player.Dealer;
 import model.player.Participant;
-import model.player.Player;
+import model.player.User;
 
 public class OutputView {
 
@@ -25,19 +25,19 @@ public class OutputView {
     }
 
     private void printPlayerNames(List<Participant> players) {
-        String names = String.join(", ", players.stream().map(Player::getName).toList());
+        String names = String.join(", ", players.stream().map(User::getName).toList());
         System.out.println(System.lineSeparator() + DIVIDE_CARD_MESSAGE.formatted(names));
     }
 
     private void printPlayerCards(List<Participant> players, Dealer dealer) {
         System.out.println(cardsToString(dealer, 1));
-        for (Player player : players) {
-            System.out.println(cardsToString(player));
+        for (User user : players) {
+            System.out.println(cardsToString(user));
         }
     }
 
-    public void printPlayerCardMessage(Player player) {
-        System.out.println(cardsToString(player));
+    public void printPlayerCardMessage(User user) {
+        System.out.println(cardsToString(user));
     }
 
     public void printBlackJackScore(List<Participant> players, Dealer dealer) {
@@ -48,18 +48,18 @@ public class OutputView {
         }
     }
 
-    private String cardsToString(Player player) {
-        return cardsToString(player, player.getCards().size());
+    private String cardsToString(User user) {
+        return cardsToString(user, user.getCards().size());
     }
 
-    private String cardsToString(Player player, int cardCountToPrint) {
-        List<Card> cards = player.getCards();
+    private String cardsToString(User user, int cardCountToPrint) {
+        List<Card> cards = user.getCards();
         int cardCountNotToPrint = cards.size() - cardCountToPrint;
         String cardNames = String.join(", ", cards.stream()
                 .skip(cardCountNotToPrint)
                 .map(this::cardToString)
                 .toList());
-        return RECEIVED_CARD_MESSAGE.formatted(player.getName(), cardNames);
+        return RECEIVED_CARD_MESSAGE.formatted(user.getName(), cardNames);
     }
 
     private String cardToString(Card card) {

@@ -18,8 +18,8 @@ public class Participants {
     }
 
     private void validateNotDuplicatedPlayer(List<Participant> players) {
-        Set<Player> distinctPlayers = new HashSet<>(players);
-        if (distinctPlayers.size() != players.size()) {
+        Set<User> distinctUsers = new HashSet<>(players);
+        if (distinctUsers.size() != players.size()) {
             throw new IllegalArgumentException("참가자들의 이름은 중복되면 안됩니다.");
         }
     }
@@ -31,17 +31,17 @@ public class Participants {
     }
 
     public void offerCardToPlayers(CardDeck cardDeck, CardSize size) {
-        for (Player player : participants) {
-            player.addCards(cardDeck.selectRandomCards(size));
+        for (User user : participants) {
+            user.addCards(cardDeck.selectRandomCards(size));
         }
     }
 
-    public void offerCardToParticipant(CardDeck cardDeck, Player receiver, CardSize size) {
-        Player foundPlayer = participants.stream()
+    public void offerCardToParticipant(CardDeck cardDeck, User receiver, CardSize size) {
+        User foundUser = participants.stream()
                 .filter(player -> player.equals(receiver))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("참가자가 존재하지 않습니다."));
-        foundPlayer.addCards(cardDeck.selectRandomCards(size));
+        foundUser.addCards(cardDeck.selectRandomCards(size));
     }
 
     public List<Participant> getParticipants() {

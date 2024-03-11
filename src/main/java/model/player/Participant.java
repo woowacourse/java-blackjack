@@ -4,7 +4,7 @@ import java.util.List;
 import model.Outcome;
 import model.card.Card;
 
-public class Participant extends Player {
+public class Participant extends User {
     private final static int NUMBER_THRESHOLD = 21;
 
     public Participant(String name, List<Card> cards) {

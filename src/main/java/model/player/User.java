@@ -1,19 +1,17 @@
 package model.player;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import model.Outcome;
 import model.card.Card;
 import model.card.Cards;
 
-public abstract class Player implements NoticeStatus {
+public abstract class User implements NoticeStatus {
 
     protected final String name;
     protected Cards cards;
 
-    public Player(String name, List<Card> cards) {
+    public User(String name, List<Card> cards) {
         validateName(name);
         this.name = name;
         this.cards = new Cards(cards);
@@ -72,8 +70,8 @@ public abstract class Player implements NoticeStatus {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Player player = (Player) o;
-        return Objects.equals(name, player.name);
+        User user = (User) o;
+        return Objects.equals(name, user.name);
     }
 
     @Override
