@@ -21,7 +21,7 @@ public class Cards {
         int aceCardCount = countAceCard();
         int maxResultScore = countMatchScore();
 
-        if (aceCardCount > 1) {
+        if (aceCardCount > 0) {
             return convertAceScore(maxResultScore);
         }
         return maxResultScore;
@@ -36,13 +36,13 @@ public class Cards {
 
     public int countMatchScore() {
         return cards.stream()
-                .mapToInt(Card::getFirstCardNumber)
+                .mapToInt(Card::getDefaultCardNumber)
                 .sum();
     }
 
     public List<String> getCardsStatus() {
         return cards.stream()
-                .map(Card::getCard)
+                .map(Card::getCardHand)
                 .toList();
     }
 
