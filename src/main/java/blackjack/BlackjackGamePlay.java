@@ -1,4 +1,4 @@
-package blackjack.controller;
+package blackjack;
 
 import blackjack.model.GameRule;
 import blackjack.model.card.Card;
@@ -11,7 +11,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 
-public class BlackjackController {
+public class BlackjackGamePlay {
 
     private final PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck());
 
