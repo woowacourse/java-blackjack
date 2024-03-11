@@ -18,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.util.stream.Stream;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -26,6 +27,7 @@ class CardTest {
 
     @ParameterizedTest
     @MethodSource("rankScoreStream")
+    @DisplayName("성공: Card 객체는 올바른 점수를 가지고 있다")
     void score_NoException_WithMethodSource(Rank rank, int score) {
         Card card = new Card(rank, DIAMOND);
         assertThat(card.score()).isEqualTo(score);
