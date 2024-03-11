@@ -5,8 +5,14 @@ import domain.participant.Participant;
 
 public enum WinStatus {
 
-    WIN,
-    LOSE;
+    WIN(1.0),
+    LOSE(-1);
+
+    private final double betMultiplier;
+
+    WinStatus(double betMultiplier) {
+        this.betMultiplier = betMultiplier;
+    }
 
     public static WinStatus of(Participant participant, Dealer dealer) {
         if (participant.isBust()) {
@@ -35,5 +41,9 @@ public enum WinStatus {
             return WIN;
         }
         return LOSE;
+    }
+
+    public Double getBetMultiplier() {
+        return betMultiplier;
     }
 }
