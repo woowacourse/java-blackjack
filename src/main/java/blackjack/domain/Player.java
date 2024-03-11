@@ -4,16 +4,16 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Player {
-    private final PlayerName playerName;
+    private final PlayerMeta playerMeta;
     private final PlayerCards playerCards;
 
-    public Player(PlayerName playerName) {
-        this.playerName = playerName;
+    public Player(PlayerMeta playerMeta) {
+        this.playerMeta = playerMeta;
         this.playerCards = PlayerCards.empty();
     }
 
-    public static Player fromName(String name) {
-        return new Player(new PlayerName(name));
+    public static Player from(String name, int betAmount) {
+        return new Player(new PlayerMeta(name, betAmount));
     }
 
     public void draw(Deck deck) {
@@ -43,7 +43,7 @@ public class Player {
     }
 
     public String getName() {
-        return playerName.name();
+        return playerMeta.name();
     }
 
     public int getTotalCardsCount() {

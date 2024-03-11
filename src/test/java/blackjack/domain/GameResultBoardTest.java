@@ -23,6 +23,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class GameResultBoardTest {
+    private static final int TEST_PLAYER_BET_AMOUNT = 10000;
+
     @ParameterizedTest
     @MethodSource("playerAndGameResult")
     @DisplayName("딜러와 플레이어들을 전달받아 승리/패배/무승부 여부를 계산한다.")
@@ -33,7 +35,7 @@ class GameResultBoardTest {
 
         Dealer dealer = new Dealer();
         giveCardToPlayer(dealer.getPlayer(), deck, 2);
-        Player player = Player.fromName("testPlayer");
+        Player player = Player.from("testPlayer", TEST_PLAYER_BET_AMOUNT);
         giveCardToPlayer(player, deck, 2);
 
         GameResultBoard gameResultBoard = new GameResultBoard(dealer, new Players(List.of(player)));
@@ -93,7 +95,7 @@ class GameResultBoardTest {
     private List<Player> generatePlayers() {
         List<String> playerNames = List.of("loki", "pedro", "poke", "alpaca");
         return playerNames.stream()
-                .map(Player::fromName)
+                .map(name -> Player.from(name, TEST_PLAYER_BET_AMOUNT))
                 .toList();
     }
 

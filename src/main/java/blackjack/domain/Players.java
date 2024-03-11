@@ -27,9 +27,9 @@ public class Players {
         return distinctCount != players.size();
     }
 
-    public static Players from(List<String> names) {
-        List<Player> players = names.stream()
-                .map(Player::fromName)
+    public static Players from(List<PlayerMeta> playerMetas) {
+        List<Player> players = playerMetas.stream()
+                .map(Player::new)
                 .toList();
 
         return new Players(players);
