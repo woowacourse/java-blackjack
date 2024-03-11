@@ -41,10 +41,7 @@ public abstract class BlackjackGamer {
 		return name;
 	}
 
-	public GamerHandDto convertGamerToDto() {
-		String playerName = name.value();
-		List<CardDto> gamerHand = hand.convertHandToDto();
-
-		return new GamerHandDto(playerName, gamerHand);
+	public Hand getHand() {
+		return hand;
 	}
 }
