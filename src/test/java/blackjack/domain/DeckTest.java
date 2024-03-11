@@ -8,26 +8,13 @@ import org.junit.jupiter.api.Test;
 public class DeckTest {
 
     @Test
-    @DisplayName("덱에 카드가 잘 추가된다.")
-    void addCardTest() {
+    @DisplayName("덱에 카드 하나를 뽑는다.")
+    void drawTest() {
         Deck deck = new Deck();
-        Card card = new Card(Shape.CLOVER, Rank.EIGHT);
+        int firstSize = deck.size();
 
-        deck.addCard(card);
-        Card result = deck.pickRandomCard();
+        deck.drawCard();
 
-        assertThat(result).isEqualTo(card);
-    }
-
-    @Test
-    @DisplayName("댁에서 카드를 선택한다.")
-    void pickCardTest() {
-        Deck deck = new Deck();
-        Card card = new Card(Shape.HEART, Rank.EIGHT);
-
-        deck.addCard(card);
-        Card result = deck.pickRandomCard();
-
-        assertThat(result).isEqualTo(card);
+        assertThat(deck.size()).isEqualTo(firstSize - 1);
     }
 }

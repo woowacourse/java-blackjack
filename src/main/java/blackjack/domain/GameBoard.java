@@ -4,7 +4,6 @@ import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -18,17 +17,6 @@ public class GameBoard {
     public GameBoard(Dealer dealer, Players players) {
         this.participants = new Participants(dealer, players);
         this.deck = new Deck();
-        addAllCard();
-    }
-
-    private void addAllCard() {
-        Arrays.stream(Rank.values())
-                .forEach(this::addAllShape);
-    }
-
-    private void addAllShape(Rank rank) {
-        Arrays.stream(Shape.values())
-                .forEach((shape) -> deck.addCard(new Card(shape, rank)));
     }
 
     public int countPlayers() {
@@ -55,17 +43,17 @@ public class GameBoard {
     private Hands makeHands() {
         Hands hands = new Hands(new ArrayList<>());
         for (int cardCount = 0; cardCount < INITIAL_CARD_COUNT; cardCount++) {
-            hands.addCard(deck.pickRandomCard());
+            hands.addCard(deck.drawCard());
         }
         return hands;
     }
 
     public void addCardToDealer() {
-        participants.receiveDealerCard(deck.pickRandomCard());
+        participants.receiveDealerCard(deck.drawCard());
     }
 
     public void addCardToPlayer(Player player) {
-        player.hit(deck.pickRandomCard());
+        player.hit(deck.drawCard());
     }
 
     public Map<Player, Boolean> calculateWinOrLose() {

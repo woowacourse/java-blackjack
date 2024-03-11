@@ -10,22 +10,20 @@ public class Player implements GameParticipant{
     private static final int MAX_SCORE = 21;
 
     private final Name name;
-    private Hands hands;
+    private final Hands hands;
 
     public Player(Name name) {
         this.name = name;
+        this.hands = new Hands(new ArrayList<>());
     }
 
     @Override
     public void receiveHands(Hands hands) {
-        this.hands = hands;
+        hands.receiveHands(hands);
     }
 
     @Override
     public void hit(Card card) {
-        if (hands == null) {
-            hands = new Hands(new ArrayList<>());
-        }
         hands.addCard(card);
     }
 

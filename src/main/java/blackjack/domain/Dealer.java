@@ -18,7 +18,7 @@ public class Dealer implements GameParticipant {
 
     @Override
     public void receiveHands(Hands hands) {
-        this.hands = hands;
+        hands.receiveHands(hands);
     }
 
     @Override

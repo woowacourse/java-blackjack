@@ -29,6 +29,10 @@ public class Hands {
         return totalScore;
     }
 
+    public void receiveHands(Hands hands) {
+        cards.addAll(hands.getCards());
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
