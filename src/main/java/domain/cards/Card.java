@@ -26,7 +26,6 @@ public class Card {
         return cardNumber.getScore();
     }
 
-    //  TODO: ace 점수 결정은 누구 책임? PlayerCards or Card(Number)
     public int decideAceScore(int totalScore) {
         return cardNumber.decideAceScore(totalScore);
     }

@@ -40,5 +40,5 @@ public enum CardNumber {
             return ACE.score + A_SCORE_GAP;
         }
         return ACE.score;
-    } // TODO: getScore 와 합치기?
+    }
 }
