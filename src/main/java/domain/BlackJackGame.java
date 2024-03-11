@@ -50,19 +50,18 @@ public class BlackJackGame {
     }
 
     public void drawCardFromName(String name) {
-        players.stream().filter(player -> player.isName(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 참여자 입니다."))
-                .takeCard(deck.draw());
+        searchFromName(name).takeCard(deck.draw());
     }
 
     public boolean isBustFromName(String name) {
-        return players.stream().filter(player -> player.isName(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 참여자 입니다."))
-                .isBust();
+        return searchFromName(name).isBust();
     }
 
+    private Gamer searchFromName(String name) {
+        return players.stream().filter(player -> player.isName(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 참여자 입니다."));
+    }
     public int drawDealerCard() {
         int dealerDrawCount = 0;
         while (dealer.getTotalScore() <= 16) {
