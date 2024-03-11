@@ -11,7 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class JudgeTest {
+class PlayerGameResultTest {
     @Nested
     @DisplayName("딜러의 점수가 21점 이하이고, ")
     class DealerScoreLessThanOrEqual21 {
@@ -33,7 +33,7 @@ class JudgeTest {
                 player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
                 player.hit(new Card(CardRank.EIGHT, CardShape.DIAMOND));
 
-                PlayerGameResult playerGameResult = Judge.compare(dealer, player);
+                PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
                 assertThat(playerGameResult).isEqualTo(PlayerGameResult.WIN);
             }
@@ -45,7 +45,7 @@ class JudgeTest {
                 player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
                 player.hit(new Card(CardRank.SIX, CardShape.DIAMOND));
 
-                PlayerGameResult playerGameResult = Judge.compare(dealer, player);
+                PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
                 assertThat(playerGameResult).isEqualTo(PlayerGameResult.LOSE);
             }
@@ -57,7 +57,7 @@ class JudgeTest {
                 player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
                 player.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
 
-                PlayerGameResult playerGameResult = Judge.compare(dealer, player);
+                PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
                 assertThat(playerGameResult).isEqualTo(PlayerGameResult.PUSH);
             }
@@ -70,7 +70,7 @@ class JudgeTest {
             player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
             player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
 
-            PlayerGameResult playerGameResult = Judge.compare(dealer, player);
+            PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
             assertThat(playerGameResult).isEqualTo(PlayerGameResult.BLACKJACK_WIN);
         }
@@ -83,7 +83,7 @@ class JudgeTest {
             player.hit(new Card(CardRank.SIX, CardShape.DIAMOND));
             player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
 
-            PlayerGameResult playerGameResult = Judge.compare(dealer, player);
+            PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
             assertThat(playerGameResult).isEqualTo(PlayerGameResult.LOSE);
         }
@@ -107,7 +107,7 @@ class JudgeTest {
             player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
             player.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
 
-            PlayerGameResult playerGameResult = Judge.compare(dealer, player);
+            PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
             assertThat(playerGameResult).isEqualTo(PlayerGameResult.LOSE);
         }
@@ -119,7 +119,7 @@ class JudgeTest {
             player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
             player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
 
-            PlayerGameResult playerGameResult = Judge.compare(dealer, player);
+            PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
             assertThat(playerGameResult).isEqualTo(PlayerGameResult.PUSH);
         }
@@ -132,7 +132,7 @@ class JudgeTest {
             player.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
             player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
 
-            PlayerGameResult playerGameResult = Judge.compare(dealer, player);
+            PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
             assertThat(playerGameResult).isEqualTo(PlayerGameResult.LOSE);
         }
@@ -156,7 +156,7 @@ class JudgeTest {
             player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
             player.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
 
-            PlayerGameResult playerGameResult = Judge.compare(dealer, player);
+            PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
             assertThat(playerGameResult).isEqualTo(PlayerGameResult.WIN);
         }
@@ -168,7 +168,7 @@ class JudgeTest {
             player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
             player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
 
-            PlayerGameResult playerGameResult = Judge.compare(dealer, player);
+            PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
             assertThat(playerGameResult).isEqualTo(PlayerGameResult.BLACKJACK_WIN);
         }
@@ -181,7 +181,7 @@ class JudgeTest {
             player.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
             player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
 
-            PlayerGameResult playerGameResult = Judge.compare(dealer, player);
+            PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
             assertThat(playerGameResult).isEqualTo(PlayerGameResult.LOSE);
         }
@@ -199,7 +199,7 @@ class JudgeTest {
         player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
         player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
 
-        PlayerGameResult playerGameResult = Judge.compare(dealer, player);
+        PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
         assertThat(playerGameResult).isEqualTo(PlayerGameResult.BLACKJACK_WIN);
     }
@@ -216,8 +216,9 @@ class JudgeTest {
         player.hit(new Card(CardRank.TWO, CardShape.DIAMOND));
         player.hit(new Card(CardRank.NINE, CardShape.DIAMOND));
 
-        PlayerGameResult playerGameResult = Judge.compare(dealer, player);
+        PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
         assertThat(playerGameResult).isEqualTo(PlayerGameResult.LOSE);
     }
+
 }
