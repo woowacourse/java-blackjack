@@ -1,6 +1,7 @@
 package blackjack.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.CardNumber;
@@ -35,9 +36,11 @@ class GameRuleTest {
         int scoreOne = aceCard.getScore();
 
         //then
-        assertThat(scoreEleven).isEqualTo(11);
-        assertThat(scoreOne).isEqualTo(1);
-        assertThat(player.calculateTotalScore()).isEqualTo(13);
+        assertAll(
+                () -> assertThat(scoreEleven).isEqualTo(11),
+                () -> assertThat(scoreOne).isEqualTo(1),
+                () -> assertThat(player.calculateTotalScore()).isEqualTo(13)
+        );
     }
 
     @DisplayName("플레이어의 점수가 21이하면 히트할 수 있다.")
@@ -83,8 +86,10 @@ class GameRuleTest {
         Result playerResult = playersResult.get(player);
 
         //then
-        assertThat(gameResult.countDealerWins()).isEqualTo(1);
-        assertThat(playerResult).isEqualTo(Result.LOSE);
+        assertAll(
+                () -> assertThat(gameResult.countDealerWins()).isEqualTo(1),
+                () -> assertThat(playerResult).isEqualTo(Result.LOSE)
+        );
     }
 
     @DisplayName("딜러와 플레이어가 둘 다 블랙잭이면 플레이어가 승리한다.")
@@ -110,8 +115,10 @@ class GameRuleTest {
         Result playerResult = playersResult.get(player);
 
         //then
-        assertThat(gameResult.countDealerLoses()).isEqualTo(1);
-        assertThat(playerResult).isEqualTo(Result.WIN);
+        assertAll(
+                () -> assertThat(gameResult.countDealerLoses()).isEqualTo(1),
+                () -> assertThat(playerResult).isEqualTo(Result.WIN)
+        );
     }
 
     @DisplayName("딜러와 플레이어가 둘 다 버스트와 블랙잭이 아닐 경우 더 큰 점수가 승리한다.")
@@ -135,8 +142,10 @@ class GameRuleTest {
         Result playerResult = playersResult.get(player);
 
         //then
-        assertThat(gameResult.countDealerWins()).isEqualTo(1);
-        assertThat(playerResult).isEqualTo(Result.LOSE);
+        assertAll(
+                () -> assertThat(gameResult.countDealerWins()).isEqualTo(1),
+                () -> assertThat(playerResult).isEqualTo(Result.LOSE)
+        );
     }
 
     @DisplayName("딜러와 플레이어가 둘 다 버스트와 블랙잭이 아닐 때 점수가 같으면 무승부다.")
@@ -160,8 +169,10 @@ class GameRuleTest {
         Result playerResult = playersResult.get(player);
 
         //then
-        assertThat(gameResult.countDealerTies()).isEqualTo(1);
-        assertThat(playerResult).isEqualTo(Result.TIE);
+        assertAll(
+                () -> assertThat(gameResult.countDealerTies()).isEqualTo(1),
+                () -> assertThat(playerResult).isEqualTo(Result.TIE)
+        );
     }
 
 }
