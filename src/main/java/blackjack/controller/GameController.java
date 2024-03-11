@@ -13,8 +13,7 @@ public class GameController {
     // TODO 필요한 정보만 추출하여 넘겨보기
 
     public static void run() {
-        // TODO suffle -> shuffle
-        Deck deck = Deck.createSuffledDeck();
+        Deck deck = Deck.createShuffledDeck();
         Game game = makeGame(deck);
         Dealer gameDealer = game.getDealer();
         Players gamePlayers = game.getPlayers();

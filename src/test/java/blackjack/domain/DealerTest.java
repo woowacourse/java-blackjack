@@ -11,7 +11,7 @@ class DealerTest {
     @Test
     void should_AddCard_When_HandsScoreBelowThreshold() {
         Dealer dealer = new Dealer();
-        Deck deck = Deck.createSuffledDeck();
+        Deck deck = Deck.createShuffledDeck();
         dealer.addCard(Card.create(9));
         dealer.addCard(Card.create(5));
 
@@ -24,7 +24,7 @@ class DealerTest {
     @Test
     void should_NotAddCard_When_HandsScoreOverThreshold() {
         Dealer dealer = new Dealer();
-        Deck deck = Deck.createSuffledDeck();
+        Deck deck = Deck.createShuffledDeck();
         dealer.addCard(Card.create(9));
         dealer.addCard(Card.create(6));
 

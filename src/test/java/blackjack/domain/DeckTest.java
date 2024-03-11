@@ -11,7 +11,7 @@ class DeckTest {
     @DisplayName("카드 덱은 카드를 한장씩 반환한다")
     @Test
     void should_giveOneCard() {
-        Deck shuffledDeck = Deck.createSuffledDeck();
+        Deck shuffledDeck = Deck.createShuffledDeck();
         assertThat(shuffledDeck.draw()).isInstanceOf(Card.class);
     }
 
@@ -20,7 +20,7 @@ class DeckTest {
     void should_ThrowIllegalArgumentException_When_NoMoreCard() {
         // TODO 테스트에서는 반복문 x
         // TODO 타입만 검증하면 발생가능한 문제가 있을 수 있음
-        Deck shuffledDeck = Deck.createSuffledDeck();
+        Deck shuffledDeck = Deck.createShuffledDeck();
 
         for (int i = 0; i < 52; i++) {
             shuffledDeck.draw();
