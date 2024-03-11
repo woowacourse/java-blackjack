@@ -16,7 +16,7 @@ public class Deck {
         Collections.shuffle(cards);
     }
 
-    public Deck(List<Card> cards) {
+    public Deck(final List<Card> cards) {
         this.cards = new ArrayList<>();
         for (Card card : cards) {
             this.cards.add(card);

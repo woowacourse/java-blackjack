@@ -5,7 +5,7 @@ import domain.constants.Outcome;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class Participants {
     private final List<Participant> participants;
@@ -23,11 +23,11 @@ public class Participants {
         return new Participants(participants);
     }
 
-    public List<PlayerOutcome> getPlayersOutcomeIf(final Function<Player, Boolean> function) {
+    public List<PlayerOutcome> getPlayersOutcomeIf(final Predicate<Player> function) {
         return getPlayers().stream()
                 .map(player -> new PlayerOutcome(
                         player.getName(),
-                        Outcome.from(function.apply(player))
+                        Outcome.from(function.test(player))
                 ))
                 .toList();
     }
@@ -38,15 +38,15 @@ public class Participants {
 
     public Dealer getDealer() {
         return (Dealer) participants.stream()
-                .filter(player -> player instanceof Dealer)
+                .filter(Dealer.class::isInstance)
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }
 
     public List<Player> getPlayers() {
         return participants.stream()
-                .filter(player -> player instanceof Player)
-                .map(participant -> (Player) participant)
+                .filter(Player.class::isInstance)
+                .map(Player.class::cast)
                 .toList();
     }
 }

@@ -52,7 +52,7 @@ public class GameManager {
 
     private ActionAfterPick getAction(final Participant participant) {
         if (participant instanceof Player) {
-            return handStatus -> outputView.printHandStatus(handStatus);
+            return outputView::printHandStatus;
         }
         return handStatus -> outputView.printDealerCardSavedMessage();
     }

@@ -1,6 +1,7 @@
 package domain.game;
 
 import controller.dto.JudgeResult;
+import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
 
@@ -14,11 +15,11 @@ public class Referee {
     public JudgeResult judge() {
         if (participants.getDealer().isBusted()) {
             return new JudgeResult(participants.getPlayersOutcomeIf(
-                    player -> player.isNotBusted()
+                    Participant::isNotBusted
             ));
         }
         return new JudgeResult(participants.getPlayersOutcomeIf(
-                player -> isWinner(player)
+                this::isWinner
         ));
     }
 
