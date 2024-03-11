@@ -35,8 +35,7 @@ public class BlackJackGame {
         gamers.shareInitCards(cardPack, INIT_CARDS_AMOUNT);
     }
 
-    public boolean hitByPlayer(String rawHitOption, Player player) {
-        HitOption hitOption = new HitOption(rawHitOption);
+    public boolean hitByPlayer(HitOption hitOption, Player player) {
         if (hitOption.isHit()) {
             player.hit(cardPack.pickOneCard());
             return true;
