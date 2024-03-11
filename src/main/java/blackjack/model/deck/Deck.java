@@ -13,13 +13,13 @@ import java.util.stream.Stream;
 
 public class Deck {
     private static final int BLACKJACK_CARD_COUNT = 52;
-    
+
     private final Deque<Card> deck;
 
     public Deck() {
         final Deque<Card> newDeck = makeDeck();
         validateSize(newDeck);
-        this.deck = makeDeck();
+        this.deck = newDeck;
     }
 
     private void validateSize(final Deque<Card> deck) {
