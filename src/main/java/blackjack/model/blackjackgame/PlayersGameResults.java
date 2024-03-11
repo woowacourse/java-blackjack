@@ -1,6 +1,7 @@
 package blackjack.model.blackjackgame;
 
 import blackjack.model.participants.Player;
+import blackjack.view.DealerResultStatus;
 import blackjack.view.PlayerResultStatus;
 import java.util.EnumMap;
 import java.util.Map;
@@ -14,11 +15,11 @@ public class PlayersGameResults {
         this.result = result;
     }
 
-    public Map<PlayerResultStatus, Long> getDealerResult() {
+    public Map<DealerResultStatus, Long> getDealerResult() {
         return result.values()
                 .stream()
-                .collect(Collectors.groupingBy(resultState -> resultState,
-                        () -> new EnumMap<>(PlayerResultStatus.class),
+                .collect(Collectors.groupingBy(DealerResultStatus::from,
+                        () -> new EnumMap<>(DealerResultStatus.class),
                         Collectors.counting()));
     }
 

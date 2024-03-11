@@ -1,8 +1,7 @@
 package blackjack.view;
 
 import blackjack.model.blackjackgame.BlackJackGame;
-import blackjack.model.blackjackgame.GameResults;
-import blackjack.model.blackjackgame.ResultStatus;
+import blackjack.model.blackjackgame.PlayersGameResults;
 import blackjack.model.cards.Card;
 import blackjack.model.cards.Cards;
 import blackjack.model.participants.Dealer;
@@ -21,7 +20,7 @@ public class OutputView {
         System.out.println();
         System.out.printf(DEALER_NAME + "와 %s에게 2장을 나누었습니다.%n", getPlayersNames(players));
 
-        System.out.print(getDealerCardFormat(DEALER_NAME, getDealerCard(dealer)));
+        System.out.print(getDealerCardFormat(getDealerCard(dealer)));
         players.forEach(player ->
                 System.out.print(getParticipantCardsFormat(player.getName(), player.getCards())));
         System.out.println();
@@ -47,12 +46,13 @@ public class OutputView {
                         player.getCards().getCardsScore())));
     }
 
-    public void printGameResults(GameResults gameResults) {
+    public void printGameResults(PlayersGameResults playersGameResults) {
         System.out.println();
         System.out.println("### 최종 승패");
-        Map<ResultStatus, Long> dealerResult = gameResults.getDealerResult();
+        Map<DealerResultStatus, Long> dealerResult = playersGameResults.getDealerResult();
+
         System.out.printf("%s: %s%n", DEALER_NAME, getDealerResultFormat(dealerResult));
-        Map<Player, ResultStatus> gameResult = gameResults.getResult();
+        Map<Player, PlayerResultStatus> gameResult = playersGameResults.getResult();
         printPlayerResultsFormat(gameResult);
     }
 
@@ -60,8 +60,8 @@ public class OutputView {
         System.out.println("카드 합계가 21을 초과하였습니다. 턴을 종료합니다.");
     }
 
-    private String getDealerCardFormat(String name, Card card) {
-        return String.format("%s: %s%n", name, convertCardText(card));
+    private String getDealerCardFormat(Card card) {
+        return String.format("%s: %s%n", DEALER_NAME, convertCardText(card));
     }
 
     private String getParticipantCardsFormat(String name, Cards cards) {
@@ -72,10 +72,10 @@ public class OutputView {
         return String.format("%s: %s - 결과: %d%n", name, getCardsText(cards), score);
     }
 
-    private void printPlayerResultsFormat(Map<Player, ResultStatus> gameResult) {
+    private void printPlayerResultsFormat(Map<Player, PlayerResultStatus> gameResult) {
         gameResult.entrySet()
                 .stream()
-                .map(entry -> getPlayerResultFormat(entry.getKey().getName(), entry.getValue().getPlayerResult()))
+                .map(entry -> getPlayerResultFormat(entry.getKey().getName(), entry.getValue().getResult()))
                 .forEach(System.out::print);
     }
 
@@ -83,10 +83,10 @@ public class OutputView {
         return String.format("%s: %s%n", name, result);
     }
 
-    private String getDealerResultFormat(Map<ResultStatus, Long> dealerResult) {
+    private String getDealerResultFormat(Map<DealerResultStatus, Long> dealerResult) {
         return dealerResult.entrySet()
                 .stream()
-                .map(entry -> String.format("%d%s", entry.getValue(), entry.getKey().getDealerResult()))
+                .map(entry -> String.format("%d%s", entry.getValue(), entry.getKey().getResult()))
                 .collect(Collectors.joining(" "));
     }
 
