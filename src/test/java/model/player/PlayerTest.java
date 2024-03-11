@@ -29,7 +29,7 @@ class PlayerTest {
     void testCanAddCard() {
         Cards cards = new Cards(List.of(new Card(ACE, HEART), new Card(JACK, HEART)));
         Player player = new Player("lily", cards);
-        assertThat(player.isPossibleAddCard()).isTrue();
+        assertThat(player.isPossibleHit()).isTrue();
     }
 
     @DisplayName("플레이어의 카드 합계가 22점 이상이면 false를 반환한다")
@@ -39,7 +39,7 @@ class PlayerTest {
             List.of(new Card(TEN, HEART), new Card(JACK, HEART), new Card(TWO, HEART))
         );
         Player player = new Player("lily", cards);
-        assertThat(player.isPossibleAddCard()).isFalse();
+        assertThat(player.isPossibleHit()).isFalse();
     }
 
     @DisplayName("카드 1장을 획득하면 카드가 1개 증가한 플레이어 객체를 반환한다")

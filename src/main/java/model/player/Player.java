@@ -8,7 +8,7 @@ import model.card.Cards;
 public class Player {
 
     private static final String INVALID_NAME_LENGTH = "플레이어 이름은 빈 값일 수 없습니다.";
-    private static final int ADD_CARD_CONDITION = 22;
+    private static final int HIT_CONDITION = 22;
 
     private final String name;
     private final Cards cards;
@@ -29,9 +29,9 @@ public class Player {
         }
     }
 
-    public boolean isPossibleAddCard() {
+    public boolean isPossibleHit() {
         int totalNumbers = cards.calculateTotalNumbers();
-        return totalNumbers < ADD_CARD_CONDITION;
+        return totalNumbers < HIT_CONDITION;
     }
 
     public Player addCard(Card card) {

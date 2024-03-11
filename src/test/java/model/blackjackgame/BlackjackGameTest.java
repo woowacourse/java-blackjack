@@ -61,7 +61,7 @@ class BlackjackGameTest {
         List<Card> cards = List.of(new Card(JACK, DIAMOND), new Card(FIVE, CLOVER));
 
         for (int i = 0; i < playersElement.size(); i++) {
-            blackjackGame.hitForPlayer(playersElement.get(i), cards.get(i));
+            blackjackGame.playerHit(playersElement.get(i), cards.get(i));
         }
 
         Players updatedPlayers = blackjackGame.getPlayers();
@@ -77,7 +77,7 @@ class BlackjackGameTest {
         Players players = Players.from(List.of("lily", "jojo"));
         BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
 
-        blackjackGame.hitForDealer(new Card(THREE, SPADE));
+        blackjackGame.dealerHit(new Card(THREE, SPADE));
 
         Dealer updatedDealer = blackjackGame.getDealer();
         assertThat(updatedDealer.cardsSize()).isEqualTo(expectedCardSize);

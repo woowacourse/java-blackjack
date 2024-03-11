@@ -26,12 +26,12 @@ public class BlackjackGame {
         players = players.addCards(cardsElement.subList(INITIAL_CARD_COUNT, cardsElement.size()));
     }
 
-    public Player hitForPlayer(Player player, Card card) {
+    public Player playerHit(Player player, Card card) {
         players = players.hit(player, card);
         return players.findPlayer(player);
     }
 
-    public boolean hitForDealer(Card card) {
+    public boolean dealerHit(Card card) {
         if (dealer.isPossibleAddCard()) {
             dealer = dealer.addCard(card);
             return true;
@@ -45,6 +45,10 @@ public class BlackjackGame {
 
     public Dealer getDealer() {
         return dealer;
+    }
+
+    public List<Player> getPlayersElements() {
+        return players.getElements();
     }
 
     public Players getPlayers() {
