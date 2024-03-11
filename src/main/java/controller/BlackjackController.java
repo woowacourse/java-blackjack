@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import view.GameResultOutputView;
-import view.GamerOutputView;
 import view.OutputView;
 import view.YesOrNoInputView;
+import view.gamer.GamerOutputView;
+import view.gameresult.GameResultOutputView;
 
 public class BlackjackController {
     private final Gamer dealer;
