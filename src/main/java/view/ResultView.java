@@ -62,20 +62,7 @@ public class ResultView {
     private String resolveCardExpression(Card card) {
         CardNumber cardNumber = card.getCardNumber();
         CardShape cardShape = card.getCardShape();
-        return resolveCardNumber(cardNumber) + resolveCardShape(cardShape);
-    }
-
-    private String resolveCardNumber(CardNumber cardNumber) {
-        return CardNumberMapper.toExpression(cardNumber);
-//        if (cardNumber.equals(CardNumber.A) || cardNumber.equals(CardNumber.J)
-//                || cardNumber.equals(CardNumber.Q) || cardNumber.equals(CardNumber.K)) {
-//            return cardNumber.name();
-//        }
-//        return String.valueOf(cardNumber.getScore());
-    }
-
-    private String resolveCardShape(CardShape cardShape) {
-        return CardShapeMapper.toExpression(cardShape);
+        return CardNumberMapper.toExpression(cardNumber) + CardShapeMapper.toExpression(cardShape);
     }
 
     public void printPlayerCards(Player player) {
