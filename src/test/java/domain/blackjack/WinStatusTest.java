@@ -24,7 +24,7 @@ class WinStatusTest {
 
         dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
 
-        WinStatus winStatus = WinStatus.of(participant, dealer);
+        WinStatus winStatus = dealer.isWinner(participant);
         assertThat(winStatus).isEqualTo(WinStatus.WIN);
     }
 
@@ -41,7 +41,7 @@ class WinStatusTest {
         dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
         dealer.receiveCard(new Card(Shape.HEART, Rank.ACE));
 
-        WinStatus winStatus = WinStatus.of(participant, dealer);
+        WinStatus winStatus = dealer.isWinner(participant);
         assertThat(winStatus).isEqualTo(WinStatus.LOSE);
     }
 }

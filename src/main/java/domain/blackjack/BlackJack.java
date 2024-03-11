@@ -41,7 +41,7 @@ public class BlackJack {
     public BlackJackResult saveParticipantResult() {
         LinkedHashMap<Participant, WinStatus> result = new LinkedHashMap<>();
         for (Participant participant : participants.getValue()) {
-            result.put(participant, WinStatus.of(participant, dealer));
+            result.put(participant, dealer.isWinner(participant));
         }
         return new BlackJackResult(result);
     }
