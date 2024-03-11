@@ -18,6 +18,10 @@ public class Deck {
         cards = new ArrayList<>(CARDS_CACHE);
     }
 
+    Deck(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
+    }
+
     public Card draw() {
         if (cards.isEmpty()) {
             throw new RuntimeException("카드가 더이상 존재하지 않습니다.");

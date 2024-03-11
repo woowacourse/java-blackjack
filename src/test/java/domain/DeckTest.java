@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.constant.CardNumber;
 import domain.constant.CardType;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,10 +15,11 @@ class DeckTest {
     @Test
     @DisplayName("가장 마지막에 있는 카드를 반환한다.")
     void draw() {
-        Card card = new Deck().draw();
+        Card card = new Deck(List.of(new Card(CardType.SPADE, CardNumber.ACE)))
+                .draw();
         Assertions.assertAll(
-                () -> assertThat(card.getCardType()).isEqualTo(CardType.CLOVER),
-                () -> assertThat(card.getCardNumber()).isEqualTo(CardNumber.KING)
+                () -> assertThat(card.getCardType()).isEqualTo(CardType.SPADE),
+                () -> assertThat(card.getCardNumber()).isEqualTo(CardNumber.ACE)
         );
     }
 
