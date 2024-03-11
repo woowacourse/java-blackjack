@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerCards {
+    private static final int BLACKJACK_CARD_COUNT = 2;
+    private static final int BLACKJACK_MAX_SCORE = 21;
+
     private final List<Card> cards;
 
     public PlayerCards(List<Card> cards) {
@@ -24,24 +27,31 @@ public class PlayerCards {
                 .mapToInt(Card::getScore)
                 .sum();
 
-        Score score = new Score(scoreValue);
+        if (isBlackJackStatus(scoreValue)) {
+            return Score.blackJackScore();
+        }
+        Score score = Score.of(scoreValue);
         int currentAceAmount = getAceCount();
-
         if (currentAceAmount > 0 && score.isBusted()) {
             return score.convertToSmallAce(currentAceAmount);
         }
+
         return score;
     }
 
-    public boolean isBusted() {
-        Score score = calculateScore();
-        return score.isBusted();
+    private boolean isBlackJackStatus(int score) {
+        return cards.size() == BLACKJACK_CARD_COUNT && score == BLACKJACK_MAX_SCORE;
     }
 
     private int getAceCount() {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
+    }
+
+    public boolean isBusted() {
+        Score score = calculateScore();
+        return score.isBusted();
     }
 
     public List<Card> getCards() {

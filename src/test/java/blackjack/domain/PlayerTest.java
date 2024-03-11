@@ -68,7 +68,7 @@ class PlayerTest {
 
         Score score = player.getScore();
 
-        Score expected = new Score(9);
+        Score expected = Score.of(9);
         assertThat(score).isEqualTo(expected);
     }
 

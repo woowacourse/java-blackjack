@@ -15,8 +15,8 @@ class GameResultTest {
             "15, 22"
     })
     void playerWinTest(int playerScoreValue, int dealerScoreValue) {
-        Score playerScore = new Score(playerScoreValue);
-        Score dealerScore = new Score(dealerScoreValue);
+        Score playerScore = Score.of(playerScoreValue);
+        Score dealerScore = Score.of(dealerScoreValue);
 
         GameResult winResult = GameResult.calculatePlayerResult(playerScore, dealerScore);
         GameResult expected = GameResult.WIN;
@@ -31,8 +31,8 @@ class GameResultTest {
             "22, 22"
     })
     void playerLoseTest(int playerScoreValue, int dealerScoreValue) {
-        Score playerScore = new Score(playerScoreValue);
-        Score dealerScore = new Score(dealerScoreValue);
+        Score playerScore = Score.of(playerScoreValue);
+        Score dealerScore = Score.of(dealerScoreValue);
 
         GameResult loseResult = GameResult.calculatePlayerResult(playerScore, dealerScore);
         GameResult expected = GameResult.LOSE;
@@ -43,8 +43,8 @@ class GameResultTest {
     @DisplayName("플레이어와 딜러의 점수가 같은 경우 무승부로 판단한다.")
     void drawTest() {
         int sameScore = 21;
-        Score playerScore = new Score(sameScore);
-        Score dealerScore = new Score(sameScore);
+        Score playerScore = Score.of(sameScore);
+        Score dealerScore = Score.of(sameScore);
 
         GameResult drawResult = GameResult.calculatePlayerResult(playerScore, dealerScore);
         GameResult expected = GameResult.DRAW;

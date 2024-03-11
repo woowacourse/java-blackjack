@@ -36,7 +36,7 @@ class PlayerCardsTest {
         PlayerCards playerCards = new PlayerCards(cards);
 
         Score score = playerCards.calculateScore();
-        Score expected = new Score(9);
+        Score expected = Score.of(9);
 
         assertThat(score).isEqualTo(expected);
     }
@@ -52,7 +52,7 @@ class PlayerCardsTest {
         PlayerCards playerCards = new PlayerCards(cards);
 
         Score score = playerCards.calculateScore();
-        Score expected = new Score(30);
+        Score expected = Score.of(30);
 
         assertThat(score).isEqualTo(expected);
     }
@@ -64,7 +64,7 @@ class PlayerCardsTest {
         PlayerCards playerCards = new PlayerCards(cards);
         Score score = playerCards.calculateScore();
 
-        Score expected = new Score(expectedValue);
+        Score expected = Score.of(expectedValue);
         assertThat(score).isEqualTo(expected);
     }
 

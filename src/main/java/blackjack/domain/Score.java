@@ -1,13 +1,20 @@
 package blackjack.domain;
 
-public record Score(int value) {
+public class Score {
     private static final int MINIMUM_VALUE = 0;
-    private static final int BUST_THRESHOLD = 21;
+    private static final int BLACKJACK_MAX_SCORE = 21;
     private static final int DEALER_MINIMUM_SCORE = 17;
     public static final int CONVERTED_ACE_DIFFERENCE = 10;
 
-    public Score {
+    private final int value;
+    private final boolean isBlackJack;
+
+    public Score(int value, boolean isBlackJack) {
         validateRange(value);
+        validateBlackJack(value, isBlackJack);
+
+        this.value = value;
+        this.isBlackJack = isBlackJack;
     }
 
     private void validateRange(int value) {
@@ -16,12 +23,26 @@ public record Score(int value) {
         }
     }
 
+    private void validateBlackJack(int value, boolean isBlackJack) {
+        if (isBlackJack && value != BLACKJACK_MAX_SCORE) {
+            throw new IllegalArgumentException(BLACKJACK_MAX_SCORE + "점이 아닐 경우 블랙잭일 수 없습니다.");
+        }
+    }
+
+    public static Score of(int value) {
+        return new Score(value, false);
+    }
+
+    public static Score blackJackScore() {
+        return new Score(BLACKJACK_MAX_SCORE, false);
+    }
+
     public boolean isBusted() {
-        return value > BUST_THRESHOLD;
+        return value > BLACKJACK_MAX_SCORE;
     }
 
     private boolean isBusted(int scoreValue) {
-        return scoreValue > BUST_THRESHOLD;
+        return scoreValue > BLACKJACK_MAX_SCORE;
     }
 
     public boolean isGreaterThan(Score relativeScore) {
@@ -48,6 +69,10 @@ public record Score(int value) {
             convertedAceAmount++;
         }
 
-        return new Score(currentValue);
+        return Score.of(currentValue);
+    }
+
+    public int getValue() {
+        return value;
     }
 }

@@ -39,7 +39,7 @@ public class Player {
     }
 
     public int getScoreValue() {
-        return getScore().value();
+        return getScore().getValue();
     }
 
     public String getName() {

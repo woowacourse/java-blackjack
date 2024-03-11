@@ -29,7 +29,7 @@ class DealerTest {
 
         dealer.draw(deck);
         Score score = dealer.getScore();
-        Score expected = new Score(10);
+        Score expected = Score.of(10);
 
         assertThat(score).isEqualTo(expected);
     }
@@ -43,7 +43,7 @@ class DealerTest {
 
         dealer.drawUntilExceedMinimum(deck);
         Score score = dealer.getScore();
-        Score expected = new Score(expectedValue);
+        Score expected = Score.of(expectedValue);
 
         assertThat(score).isEqualTo(expected);
     }
