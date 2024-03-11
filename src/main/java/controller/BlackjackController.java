@@ -7,6 +7,7 @@ import domain.blackjack.DealerCardDrawCondition;
 import domain.blackjack.DrawResult;
 import domain.blackjack.GameResult;
 import domain.blackjack.Gamer;
+import domain.blackjack.PlayerCardDrawCondition;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.RandomCardSelectStrategy;
@@ -59,7 +60,7 @@ public class BlackjackController {
     }
 
     private DrawResult playerDraw(Deck deck, Gamer player) {
-        return player.draw(deck, new RandomCardSelectStrategy(), new DealerCardDrawCondition(player));
+        return player.draw(deck, new RandomCardSelectStrategy(), new PlayerCardDrawCondition(player));
     }
 
     private void printDealerAndPlayers() {
