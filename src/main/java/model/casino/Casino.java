@@ -3,7 +3,6 @@ package model.casino;
 import static java.util.Collections.*;
 import static model.dto.Victory.*;
 
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import model.Choice;
@@ -73,7 +72,7 @@ public class Casino {
                 .hand();
         return entrant.getPlayerFaceUpResults()
                 .stream()
-                .map(result -> new PlayerScoreResult(result.name(), of(dealerHand, result.hand())))
+                .map(result -> new PlayerScoreResult(result.name(), Victory.of(dealerHand, result.hand())))
                 .toList();
     }
 
