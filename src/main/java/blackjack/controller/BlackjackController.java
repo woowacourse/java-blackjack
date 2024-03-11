@@ -32,10 +32,10 @@ public class BlackjackController {
 
     private void processDeal(Players players, Dealer dealer, Deck deck) {
         OutputView.printDealAnnounce(players.getNames());
-        players.forEach(player -> player.deal(deck));
         dealer.deal(deck);
+        players.forEach(player -> player.deal(deck));
 
-        OutputView.printCard(dealer.getName(), dealer.getFirstCard());
+        OutputView.printCards(dealer.getName(), dealer.getCards());
         players.forEach(player ->
                 OutputView.printCards(player.getName(), player.getCards()));
         OutputView.printNewLine();

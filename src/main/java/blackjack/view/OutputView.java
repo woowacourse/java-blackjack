@@ -30,10 +30,6 @@ public class OutputView {
         System.out.printf(CARD_FORMAT + LINE_SEPARATOR, name, formatCards(cards));
     }
 
-    public static void printCard(String name, Card card) {
-        System.out.printf(CARD_FORMAT + LINE_SEPARATOR, name, formatCard(card));
-    }
-
     private static String formatCards(List<Card> cards) {
         return cards.stream()
                 .map(OutputView::formatCard)
