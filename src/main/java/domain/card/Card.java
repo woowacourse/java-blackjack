@@ -3,24 +3,24 @@ package domain.card;
 import java.util.Objects;
 
 public class Card {
-    private final Denomination denomination;
-    private final Symbol symbol;
+    private final Rank rank;
+    private final Suit suit;
 
-    public Card(final Denomination denomination, final Symbol symbol) {
-        this.denomination = denomination;
-        this.symbol = symbol;
+    public Card(final Rank rank, final Suit suit) {
+        this.rank = rank;
+        this.suit = suit;
     }
 
-    public int getValue() {
-        return denomination.getValue();
+    public int getRankValue() {
+        return rank.getValue();
     }
 
-    public Denomination getDenomination() {
-        return denomination;
+    public Rank getRank() {
+        return rank;
     }
 
-    public Symbol getSymbol() {
-        return symbol;
+    public Suit getSymbol() {
+        return suit;
     }
 
     @Override
@@ -32,11 +32,11 @@ public class Card {
             return false;
         }
         final Card card = (Card) o;
-        return denomination == card.denomination && Objects.equals(symbol, card.symbol);
+        return rank == card.rank && Objects.equals(suit, card.suit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(denomination, symbol);
+        return Objects.hash(rank, suit);
     }
 }

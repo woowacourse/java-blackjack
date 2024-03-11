@@ -1,29 +1,19 @@
 package domain.blackjack;
 
-import domain.card.Deck;
 import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Blackjack {
     private final Players players;
-    private final Deck deck;
+    private final Dealer dealer;
 
-    public Blackjack(final Players players) {
+    public Blackjack(final Players players, final Dealer dealer) {
         this.players = players;
-        this.deck = new Deck();
-        players.register(Dealer.getInstance());
-        dealCardsToPlayers();
-    }
-
-    public Blackjack(final Players players, final Player dealer) {
-        this.players = players;
-        this.deck = new Deck();
-        players.register(dealer);
+        this.dealer = dealer;
     }
 
     public void dealCard(final Player player) {

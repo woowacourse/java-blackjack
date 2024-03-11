@@ -3,26 +3,15 @@ package domain.player;
 import domain.blackjack.OneOnOneResult;
 
 public class Dealer extends Player {
-    private static final String DEALER_NAME = "딜러";
     private static final int HIT_UPPER_BOUND = 17;
     private static final Dealer dealer = new Dealer();
 
     private Dealer() {
-        super(new Name(DEALER_NAME));
+        super(new Name(""));
     }
 
     public static Dealer getInstance() {
         return dealer;
-    }
-
-    @Override
-    public boolean isBust() {
-        return calculateScore() > PERFECT_SCORE;
-    }
-
-    @Override
-    public boolean isNotBust() {
-        return !isBust();
     }
 
     @Override

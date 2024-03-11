@@ -1,11 +1,8 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.card.Denomination;
-import domain.card.Symbol;
-import domain.player.Name;
-import domain.player.Participant;
-import domain.player.Player;
+import domain.card.Rank;
+import domain.card.Suit;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,9 +19,9 @@ class PlayerTest {
     void sum() {
         final Player player = new Participant(new Name("지쳐버린종이"));;
 
-        player.hit(new Card(Denomination.FIVE, Symbol.CLUBS));
-        player.hit(new Card(Denomination.FIVE, Symbol.CLUBS));
-        player.hit(new Card(Denomination.ACE, Symbol.CLUBS));
+        player.hit(new Card(Rank.FIVE, Suit.CLUBS));
+        player.hit(new Card(Rank.FIVE, Suit.CLUBS));
+        player.hit(new Card(Rank.ACE, Suit.CLUBS));
 
         Assertions.assertThat(player.calculateScore()).isEqualTo(21);
     }
@@ -34,9 +31,9 @@ class PlayerTest {
     void sum2() {
         final Player player = new Participant(new Name("지쳐버린종이"));;
 
-        player.hit(new Card(Denomination.KING, Symbol.CLUBS));
-        player.hit(new Card(Denomination.KING, Symbol.CLUBS));
-        player.hit(new Card(Denomination.ACE, Symbol.CLUBS));
+        player.hit(new Card(Rank.KING, Suit.CLUBS));
+        player.hit(new Card(Rank.KING, Suit.CLUBS));
+        player.hit(new Card(Rank.ACE, Suit.CLUBS));
 
         Assertions.assertThat(player.calculateScore()).isEqualTo(21);
     }
@@ -58,11 +55,11 @@ class PlayerTest {
     public static Stream<Arguments> argumentProvider() {
         return Stream.of(
                 Arguments.of(
-                        List.of(new Card(Denomination.KING, Symbol.CLUBS), new Card(Denomination.KING, Symbol.HEART),
-                                new Card(Denomination.KING, Symbol.SPADE)), false),
+                        List.of(new Card(Rank.KING, Suit.CLUBS), new Card(Rank.KING, Suit.HEARTS),
+                                new Card(Rank.KING, Suit.SPADES)), false),
                 Arguments.of(
-                        List.of(new Card(Denomination.FIVE, Symbol.CLUBS), new Card(Denomination.FOUR, Symbol.HEART),
-                                new Card(Denomination.THREE, Symbol.SPADE)), true)
+                        List.of(new Card(Rank.FIVE, Suit.CLUBS), new Card(Rank.FOUR, Suit.HEARTS),
+                                new Card(Rank.THREE, Suit.SPADES)), true)
         );
     }
 }

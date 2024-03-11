@@ -1,8 +1,8 @@
 package domain.blackjack;
 
 import domain.card.Card;
-import domain.card.Denomination;
-import domain.card.Symbol;
+import domain.card.Rank;
+import domain.card.Suit;
 import domain.player.Dealer;
 import domain.player.Name;
 import domain.player.Participant;
@@ -28,9 +28,9 @@ class GameResultTest {
     void playerBust() {
         final Player dealer = Dealer.getInstance();
         final Player teba = new Participant(new Name("테바"));
-        teba.hit(new Card(Denomination.JACK, Symbol.CLUBS));
-        teba.hit(new Card(Denomination.KING, Symbol.CLUBS));
-        teba.hit(new Card(Denomination.SIX, Symbol.CLUBS));
+        teba.hit(new Card(Rank.JACK, Suit.CLUBS));
+        teba.hit(new Card(Rank.KING, Suit.CLUBS));
+        teba.hit(new Card(Rank.SIX, Suit.CLUBS));
         final Blackjack blackjack = new Blackjack(new Players(new ArrayList<>(List.of(teba))), dealer);
 
         final GameResult blackjackResultDTO = blackjack.finishGame();
@@ -46,9 +46,9 @@ class GameResultTest {
     void dealerBust() {
         final Player dealer = Dealer.getInstance();
         final Player teba = new Participant(new Name("테바"));
-        dealer.hit(new Card(Denomination.JACK, Symbol.CLUBS));
-        dealer.hit(new Card(Denomination.KING, Symbol.CLUBS));
-        dealer.hit(new Card(Denomination.SIX, Symbol.CLUBS));
+        dealer.hit(new Card(Rank.JACK, Suit.CLUBS));
+        dealer.hit(new Card(Rank.KING, Suit.CLUBS));
+        dealer.hit(new Card(Rank.SIX, Suit.CLUBS));
         final Blackjack blackjack = new Blackjack(new Players(new ArrayList<>(List.of(teba))), dealer);
 
         final GameResult blackjackResultDTO = blackjack.finishGame();
