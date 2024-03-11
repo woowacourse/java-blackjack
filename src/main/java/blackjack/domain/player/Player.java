@@ -9,6 +9,10 @@ public abstract class Player {
     protected final Name name;
     protected final Cards cards;
 
+    public abstract List<Card> getOpenCards();
+
+    public abstract boolean isReceivable();
+
     public Player(Name name, Cards cards) {
         this.name = name;
         this.cards = cards;
@@ -25,10 +29,6 @@ public abstract class Player {
     public void drawCard(Card card) {
         cards.add(card);
     }
-
-    public abstract List<Card> getOpenCards();
-
-    public abstract boolean isReceivable();
 
     public boolean isBlackjack() {
         return cards.isBlackjack();
