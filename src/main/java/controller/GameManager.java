@@ -60,7 +60,7 @@ public class GameManager {
     private Supplier<CardCommand> getSupplier(final Participant participant) {
         if (participant instanceof Player) {
             return () -> CardCommand.from(
-                    inputView.decideToGetMoreCard(participant.getName())
+                    inputView.requestCommandWhetherGetMoreCard(participant.getName())
             );
         }
         return () -> CardCommand.HIT;

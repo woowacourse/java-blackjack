@@ -8,6 +8,7 @@ import java.util.Set;
 
 public class InputView {
     private static final String INVALID_DELIMITER_MESSAGE = "잘못된 구분자 입력입니다.";
+    private static final String REQUEST_WHETHER_GET_MORE_CARD = "%n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n";
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -55,8 +56,8 @@ public class InputView {
         }
     }
 
-    public String decideToGetMoreCard(final String name) {
-        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    public String requestCommandWhetherGetMoreCard(final String name) {
+        System.out.printf(REQUEST_WHETHER_GET_MORE_CARD, name);
         return scanner.nextLine();
     }
 }
