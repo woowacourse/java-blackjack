@@ -30,4 +30,8 @@ public enum Value {
     public int getMaxScore() {
         return maxScore;
     }
+
+    public boolean isAce() {
+        return this == ACE;
+    }
 }

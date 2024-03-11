@@ -44,4 +44,8 @@ public class Card {
     public Shape getShape() {
         return shape;
     }
+
+    public boolean isAce() {
+        return value.isAce();
+    }
 }

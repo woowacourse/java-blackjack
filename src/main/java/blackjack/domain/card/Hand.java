@@ -8,6 +8,7 @@ public class Hand {
 
     private static final int BLACKJACK_SCORE = 21;
     private static final int BLACKJACK_SIZE = 2;
+
     private final List<Card> cards;
 
     public Hand(List<Card> cards) {
@@ -19,20 +20,33 @@ public class Hand {
     }
 
     public int calculateScore() {
-        int score = getMaxScore();
-        int cardIndex = 0;
-        while (score > BLACKJACK_SCORE && cardIndex < cards.size()) {
-            Card card = cards.get(cardIndex);
-            score = score + card.getMinScore() - card.getMaxScore();
-            cardIndex++;
+        int totalMinScore = getMinScore();
+        int biggerScore = getBiggerScore();
+
+        if (biggerScore > BLACKJACK_SCORE) {
+            return totalMinScore;
         }
-        return score;
+        return biggerScore;
     }
 
-    private int getMaxScore() {
+    private int getMinScore() {
         return cards.stream()
-                .mapToInt(Card::getMaxScore)
+                .mapToInt(Card::getMinScore)
                 .sum();
+    }
+
+    private int getBiggerScore() {
+        int score = getMinScore();
+        int differenceScore = cards.stream()
+                .filter(Card::isAce)
+                .mapToInt(this::calculateDifferenceScore)
+                .findAny()
+                .orElse(0);
+        return score + differenceScore;
+    }
+
+    private int calculateDifferenceScore(Card card) {
+        return card.getMaxScore() - card.getMinScore();
     }
 
     public boolean isBusted() {
