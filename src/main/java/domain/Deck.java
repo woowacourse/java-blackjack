@@ -17,7 +17,10 @@ public class Deck {
     }
 
     public Deck(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>();
+        for (Card card : cards) {
+            this.cards.add(card);
+        }
     }
 
     private void create() {
