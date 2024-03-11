@@ -36,8 +36,8 @@ public class Money {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Money money1 = (Money) o;
-        return money == money1.money;
+        Money other = (Money) o;
+        return money == other.money;
     }
 
     @Override
