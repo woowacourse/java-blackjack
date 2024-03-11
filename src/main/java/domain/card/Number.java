@@ -1,7 +1,5 @@
 package domain.card;
 
-import java.util.List;
-
 public enum Number {
     ACE(1),
     TWO(2),
@@ -25,9 +23,5 @@ public enum Number {
 
     public int getNumber() {
         return number;
-    }
-
-    public static List<Number> giveNumbers() {
-        return List.of(values());
     }
 }
