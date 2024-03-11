@@ -51,7 +51,7 @@ public class OutputView {
 
     public static void printAllCards(final Player player) {
         String cardInfos = String.join(", ", printCardInfos(player.getHand()));
-        String message = String.format("%s카드: %s", player.getName().getValue(), cardInfos);
+        String message = String.format("%s 카드: %s", player.getName().getValue(), cardInfos);
         System.out.println(message);
     }
 
@@ -63,7 +63,7 @@ public class OutputView {
     }
 
     public static void printCardsAndResult(final Dealer dealer, final Players players) {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(System.lineSeparator());
         for (Gamer gamer : getGamers(dealer, players)) {
             String gamerName = gamer.getName().getValue();
             int totalScore = gamer.calculateTotalScore();
@@ -76,8 +76,8 @@ public class OutputView {
 
     private static List<Gamer> getGamers(final Dealer dealer, final Players players) {
         List<Gamer> gamers = new ArrayList<>();
-        gamers.addAll(players.getPlayers());
         gamers.add(dealer);
+        gamers.addAll(players.getPlayers());
         return gamers;
     }
 
