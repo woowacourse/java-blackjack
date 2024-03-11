@@ -7,35 +7,39 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    private final List<Card> cards;
+    private static final List<Card> cards = new ArrayList<>();
 
-    public Deck() {
-        cards = new ArrayList<>();
-        create();
-        Collections.shuffle(cards);
-    }
-
-    public Deck(final List<Card> cards) {
-        this.cards = cards;
-    }
-
-    private void create() {
+    static {
         for (Shape shape : Shape.values()) {
-            addCardsOfShape(shape);
+            createCardOf(shape);
         }
     }
 
-    private void addCardsOfShape(final Shape shape) {
+    private static void createCardOf(final Shape shape) {
         for (Score score : Score.values()) {
             cards.add(new Card(score, shape));
         }
     }
 
-    public Card pick() {
+    private Deck() {
+    }
+
+    public static void shuffle() {
+        Collections.shuffle(cards);
+    }
+
+    public static Card pick() {
+        validateCardQuantity();
         return cards.remove(0);
     }
 
-    public int getTotalSize() {
+    private static void validateCardQuantity() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("카드가 모두 소진되었습니다.");
+        }
+    }
+
+    public static int getTotalSize() {
         return cards.size();
     }
 }

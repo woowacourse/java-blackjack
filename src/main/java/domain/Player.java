@@ -11,12 +11,16 @@ public class Player {
         hand = new Hand();
     }
 
-    public void pickTwoCards(final Deck deck) {
-        hand.saveCards(List.of(deck.pick(), deck.pick()));
+    public Player(final Hand hand) {
+        this.hand = hand;
     }
 
-    public void pickOneCard(final Deck deck) {
-        hand.saveCard(deck.pick());
+    public void pickTwoCards() {
+        hand.saveCards(List.of(Deck.pick(), Deck.pick()));
+    }
+
+    public void pickOneCard() {
+        hand.saveCard(Deck.pick());
     }
 
     public int calculateRoundScore() {

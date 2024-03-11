@@ -9,6 +9,12 @@ public class Gamer extends Player {
         this.name = name;
     }
 
+    public Gamer(final String name, final Hand hand) {
+        super(hand);
+        validateName(name);
+        this.name = name;
+    }
+
     private void validateName(final String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("이름으로 빈 문자열이 입력되었습니다.");

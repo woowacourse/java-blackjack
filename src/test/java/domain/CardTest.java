@@ -1,6 +1,7 @@
+package domain;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Card;
 import domain.constants.Score;
 import domain.constants.Shape;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +26,7 @@ class CardTest {
     @Test
     void getCardName() {
         Card card = new Card(Score.TWO, Shape.CLOVER);
-        assertThat(card.getName()).isEqualTo("2");
+        assertThat(card.name()).isEqualTo("TWO");
     }
 
     @DisplayName("카드의 모양 정보를 제공한다.")

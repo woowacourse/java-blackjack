@@ -8,25 +8,25 @@ public class Card {
     private final Score score;
     private final Shape shape;
 
-    public Card(Score score, Shape shape) {
+    public Card(final Score score, final Shape shape) {
         this.score = score;
         this.shape = shape;
     }
 
     public boolean isAceCard() {
-        return this.score.equals(Score.ACE);
+        return score.equals(Score.ACE);
     }
 
     public int getScore() {
         return score.getValue();
     }
 
-    public String getName() {
-        return score.getName();
-    }
-
     public String getShape() {
         return shape.getName();
+    }
+
+    public String name() {
+        return score.name();
     }
 
     @Override

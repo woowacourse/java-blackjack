@@ -7,6 +7,10 @@ public class Dealer extends Player {
         super();
     }
 
+    public Dealer(final Hand hand) {
+        super(hand);
+    }
+
     public boolean isUpToThreshold() {
         return this.calculateResultScore() > THRESHOLD;
     }

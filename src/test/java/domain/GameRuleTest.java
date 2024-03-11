@@ -1,10 +1,7 @@
+package domain;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Card;
-import domain.Dealer;
-import domain.Deck;
-import domain.GameRule;
-import domain.Gamer;
 import domain.constants.Score;
 import domain.constants.Shape;
 import java.util.ArrayList;
@@ -19,19 +16,11 @@ class GameRuleTest {
     @Test
     void judgeWinners() {
         // given
-        Deck twoCards = createNormalWithTwoCards();
-        Deck threeCards = createNormalWithThreeCards();
+        Hand twoCards = createNormalWithTwoCards();
+        Hand threeCards = createNormalWithThreeCards();
 
-        Dealer dealer = new Dealer();
-        for (int i = 0; i < 2; i++) {
-            dealer.pickOneCard(twoCards);
-        }
-
-        Gamer gamer = new Gamer("pobi");
-        for (int i = 0; i < 3; i++) {
-            gamer.pickOneCard(threeCards);
-        }
-
+        Dealer dealer = new Dealer(twoCards);
+        Gamer gamer = new Gamer("pobi", threeCards);
         GameRule rule = createGameRule(gamer, dealer);
 
         // when
@@ -43,22 +32,15 @@ class GameRuleTest {
 
     @DisplayName("딜러의 점수가 21을 초과한 경우")
     @Nested
-    class dealerBusted {
-        @DisplayName("모든 참가자는 21을 초과해도 승리한다.")
+    class DealerBusted {
+        @DisplayName("모든 참가자는 21을 초과하면 무조건 패배한다.")
         @Test
         void playerBusted() {
-            Deck bustedCardsForDealer = createBustedCards();
-            Dealer dealer = new Dealer();
-            for (int i = 0; i < 3; i++) {
-                dealer.pickOneCard(bustedCardsForDealer);
-            }
+            Hand bustedCardsForDealer = createBustedCards();
+            Dealer dealer = new Dealer(bustedCardsForDealer);
 
-            Deck bustedCardsForPlayer = createBustedCards();
-            Gamer gamer = new Gamer("pobi");
-            for (int i = 0; i < 3; i++) {
-                gamer.pickOneCard(bustedCardsForPlayer);
-            }
-
+            Hand bustedCardsForPlayer = createBustedCards();
+            Gamer gamer = new Gamer("pobi", bustedCardsForPlayer);
             GameRule rule = createGameRule(gamer, dealer);
 
             List<Boolean> gameResult = rule.judgePlayersIfDealerBusted();
@@ -71,19 +53,11 @@ class GameRuleTest {
         @DisplayName("참가자의 점수가 21 미만인 경우 승리한다.")
         @Test
         void playerDoesNotBusted() {
-            Deck bustedCards = createBustedCards();
-            Deck twoCards = createNormalWithTwoCards();
+            Hand bustedCards = createBustedCards();
+            Hand twoCards = createNormalWithTwoCards();
 
-            Dealer dealer = new Dealer();
-            for (int i = 0; i < 3; i++) {
-                dealer.pickOneCard(bustedCards);
-            }
-
-            Gamer gamer = new Gamer("pobi");
-            for (int i = 0; i < 2; i++) {
-                gamer.pickOneCard(twoCards);
-            }
-
+            Dealer dealer = new Dealer(bustedCards);
+            Gamer gamer = new Gamer("pobi", twoCards);
             GameRule rule = createGameRule(gamer, dealer);
 
             List<Boolean> gameResult = rule.judgePlayersIfDealerBusted();
@@ -96,23 +70,15 @@ class GameRuleTest {
 
     @DisplayName("딜러가 블랙잭인 경우")
     @Nested
-    class dealerBlackJack {
+    class DealerBlackJack {
         @DisplayName("참가자가 블랙잭인 경우 카드 개수가 적은 사람이 승리한다.")
         @Test
         void playerBlackJack() {
-            Deck blackJackTwoCards = createBlackJackWithTwoCards();
-            Deck blackJackThreeCards = createBlackJackWithThreeCards();
+            Hand blackJackTwoCards = createBlackJackWithTwoCards();
+            Hand blackJackThreeCards = createBlackJackWithThreeCards();
 
-            Dealer dealer = new Dealer();
-            for (int i = 0; i < 2; i++) {
-                dealer.pickOneCard(blackJackTwoCards);
-            }
-
-            Gamer gamer = new Gamer("pobi");
-            for (int i = 0; i < 3; i++) {
-                gamer.pickOneCard(blackJackThreeCards);
-            }
-
+            Dealer dealer = new Dealer(blackJackTwoCards);
+            Gamer gamer = new Gamer("pobi", blackJackThreeCards);
             GameRule rule = createGameRule(gamer, dealer);
 
             List<Boolean> gameResult = rule.judge();
@@ -125,19 +91,11 @@ class GameRuleTest {
         @DisplayName("참가자가 블랙잭이 아닌 경우 딜러가 승리한다.")
         @Test
         void playerIsNotBlackJack() {
-            Deck blackJackTwoCards = createBlackJackWithTwoCards();
-            Deck twoCards = createNormalWithTwoCards();
+            Hand blackJackTwoCards = createBlackJackWithTwoCards();
+            Hand twoCards = createNormalWithTwoCards();
 
-            Dealer dealer = new Dealer();
-            for (int i = 0; i < 2; i++) {
-                dealer.pickOneCard(blackJackTwoCards);
-            }
-
-            Gamer gamer = new Gamer("pobi");
-            for (int i = 0; i < 2; i++) {
-                gamer.pickOneCard(twoCards);
-            }
-
+            Dealer dealer = new Dealer(blackJackTwoCards);
+            Gamer gamer = new Gamer("pobi", twoCards);
             GameRule rule = createGameRule(gamer, dealer);
 
             List<Boolean> gameResult = rule.judge();
@@ -154,19 +112,11 @@ class GameRuleTest {
         @DisplayName("참가자의 점수가 21인 경우 참가자가 승리한다.")
         @Test
         void playerIsBlackJack() {
-            Deck twoCards = createNormalWithTwoCards();
-            Deck blackJackTwoCards = createBlackJackWithTwoCards();
+            Hand twoCards = createNormalWithTwoCards();
+            Hand blackJackTwoCards = createBlackJackWithTwoCards();
 
-            Dealer dealer = new Dealer();
-            for (int i = 0; i < 2; i++) {
-                dealer.pickOneCard(twoCards);
-            }
-
-            Gamer gamer = new Gamer("pobi");
-            for (int i = 0; i < 2; i++) {
-                gamer.pickOneCard(blackJackTwoCards);
-            }
-
+            Dealer dealer = new Dealer(twoCards);
+            Gamer gamer = new Gamer("pobi", blackJackTwoCards);
             GameRule rule = createGameRule(gamer, dealer);
 
             List<Boolean> gameResult = rule.judge();
@@ -179,19 +129,11 @@ class GameRuleTest {
         @DisplayName("참가자의 점수가 21 미만인 경우 점수가 큰 사람이 승리한다.")
         @Test
         void playerIsNotBlackJack() {
-            Deck twoCards = createNormalWithTwoCards();
-            Deck threeCards = createNormalWithThreeCards();
+            Hand twoCards = createNormalWithTwoCards();
+            Hand threeCards = createNormalWithThreeCards();
 
-            Dealer dealer = new Dealer();
-            for (int i = 0; i < 2; i++) {
-                dealer.pickOneCard(twoCards);
-            }
-
-            Gamer gamer = new Gamer("pobi");
-            for (int i = 0; i < 3; i++) {
-                gamer.pickOneCard(threeCards);
-            }
-
+            Dealer dealer = new Dealer(twoCards);
+            Gamer gamer = new Gamer("pobi", threeCards);
             GameRule rule = createGameRule(gamer, dealer);
 
             List<Boolean> gameResult = rule.judge();
@@ -204,19 +146,11 @@ class GameRuleTest {
         @DisplayName("참가자의 점수가 21 미만이고 딜러와 점수가 같은 경우 카드 개수가 적은 사람이 승리한다.")
         @Test
         void playerScoreEqualsToDealer() {
-            Deck threeCards = createNormalWithThreeCards();
-            Deck twoCards = createSameScoreNormalWithTwoCards();
+            Hand threeCards = createNormalWithThreeCards();
+            Hand twoCards = createSameScoreNormalWithTwoCards();
 
-            Dealer dealer = new Dealer();
-            for (int i = 0; i < 3; i++) {
-                dealer.pickOneCard(threeCards);
-            }
-
-            Gamer gamer = new Gamer("pobi");
-            for (int i = 0; i < 2; i++) {
-                gamer.pickOneCard(twoCards);
-            }
-
+            Dealer dealer = new Dealer(threeCards);
+            Gamer gamer = new Gamer("pobi", twoCards);
             GameRule rule = createGameRule(gamer, dealer);
 
             List<Boolean> gameResult = rule.judge();
@@ -233,48 +167,60 @@ class GameRuleTest {
         return new GameRule(dealer, gamers);
     }
 
-    private Deck createBlackJackWithTwoCards() {
-        return new Deck(new ArrayList<>(Arrays.asList(
+    private Hand createBlackJackWithTwoCards() {
+        Hand hand = new Hand();
+        hand.saveCards(List.of(
                 new Card(Score.TEN, Shape.CLOVER),
                 new Card(Score.ACE, Shape.DIAMOND)
-        )));
+        ));
+        return hand;
     }
 
-    private Deck createBlackJackWithThreeCards() {
-        return new Deck(new ArrayList<>(Arrays.asList(
+    private Hand createBlackJackWithThreeCards() {
+        Hand hand = new Hand();
+        hand.saveCards(new ArrayList<>(Arrays.asList(
                 new Card(Score.FIVE, Shape.CLOVER),
                 new Card(Score.FIVE, Shape.DIAMOND),
                 new Card(Score.ACE, Shape.DIAMOND)
         )));
+        return hand;
     }
 
-    private Deck createNormalWithTwoCards() {
-        return new Deck(new ArrayList<>(Arrays.asList(
+    private Hand createNormalWithTwoCards() {
+        Hand hand = new Hand();
+        hand.saveCards(new ArrayList<>(Arrays.asList(
                 new Card(Score.TEN, Shape.CLOVER),
                 new Card(Score.SIX, Shape.DIAMOND)
         )));
+        return hand;
     }
 
-    private Deck createNormalWithThreeCards() {
-        return new Deck(new ArrayList<>(Arrays.asList(
+    private Hand createNormalWithThreeCards() {
+        Hand hand = new Hand();
+        hand.saveCards(new ArrayList<>(Arrays.asList(
                 new Card(Score.TEN, Shape.CLOVER),
                 new Card(Score.THREE, Shape.DIAMOND),
                 new Card(Score.SIX, Shape.HEART)
         )));
+        return hand;
     }
 
-    private Deck createSameScoreNormalWithTwoCards() {
-        return new Deck(new ArrayList<>(Arrays.asList(
+    private Hand createSameScoreNormalWithTwoCards() {
+        Hand hand = new Hand();
+        hand.saveCards(new ArrayList<>(Arrays.asList(
                 new Card(Score.TEN, Shape.CLOVER),
                 new Card(Score.NINE, Shape.DIAMOND)
         )));
+        return hand;
     }
 
-    private Deck createBustedCards() {
-        return new Deck(new ArrayList<>(Arrays.asList(
+    private Hand createBustedCards() {
+        Hand hand = new Hand();
+        hand.saveCards(new ArrayList<>(Arrays.asList(
                 new Card(Score.TEN, Shape.CLOVER),
                 new Card(Score.FIVE, Shape.DIAMOND),
                 new Card(Score.EIGHT, Shape.HEART)
         )));
+        return hand;
     }
 }

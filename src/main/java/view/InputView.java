@@ -7,6 +7,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class InputView {
+    public static final String INVALID_COMMAND_MESSAGE = "잘못된 명령어 입력입니다.";
     private static final String INVALID_DELIMITER_MESSAGE = "잘못된 구분자 입력입니다.";
 
     private final Scanner scanner = new Scanner(System.in);
@@ -57,6 +58,47 @@ public class InputView {
 
     public String decideToGetMoreCard(final String name) {
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        String commandValue = scanner.nextLine();
+        validateCommandValue(commandValue);
+
+        if (commandValue.equals("y")) {
+            return "HIT";
+        }
+        if (commandValue.equals("n")) {
+            return "STAND";
+        }
+
         return scanner.nextLine();
+    }
+
+    private void validateCommandValue(final String commandValue) {
+        isCommandValueNotNull(commandValue);
+        isCommandValueNotEmpty(commandValue);
+        isCommandValueNotBlank(commandValue);
+        isCommandValueValidInput(commandValue);
+    }
+
+    private static void isCommandValueNotNull(final String commandValue) {
+        if (commandValue == null) {
+            throw new IllegalArgumentException(INVALID_COMMAND_MESSAGE);
+        }
+    }
+
+    private static void isCommandValueNotEmpty(final String commandValue) {
+        if (commandValue.isEmpty()) {
+            throw new IllegalArgumentException(INVALID_COMMAND_MESSAGE);
+        }
+    }
+
+    private static void isCommandValueNotBlank(final String commandValue) {
+        if (commandValue.isBlank()) {
+            throw new IllegalArgumentException(INVALID_COMMAND_MESSAGE);
+        }
+    }
+
+    private static void isCommandValueValidInput(final String commandValue) {
+        if (!commandValue.equals("y") && !commandValue.equals("n")) {
+            throw new IllegalArgumentException(INVALID_COMMAND_MESSAGE);
+        }
     }
 }
