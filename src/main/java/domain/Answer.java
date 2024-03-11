@@ -3,6 +3,7 @@ package domain;
 import java.util.Arrays;
 
 public enum Answer {
+
     HIT("y"),
     STAY("n");
 

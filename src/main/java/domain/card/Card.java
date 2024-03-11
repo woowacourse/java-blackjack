@@ -3,6 +3,7 @@ package domain.card;
 import java.util.Objects;
 
 public class Card {
+
     private final Rank rank;
     private final Shape shape;
 
@@ -11,12 +12,12 @@ public class Card {
         this.shape = shape;
     }
 
-    public int getCardNumber() {
-        return rank.getValue();
-    }
-
     public boolean isAce() {
         return rank.isAce();
+    }
+
+    public int getCardNumber() {
+        return rank.getValue();
     }
 
     @Override

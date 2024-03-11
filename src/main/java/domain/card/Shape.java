@@ -1,6 +1,7 @@
 package domain.card;
 
 public enum Shape {
+
     SPADE("스페이드"),
     HEART("하트"),
     CLOVER("클로버"),

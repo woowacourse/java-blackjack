@@ -11,6 +11,7 @@ import java.util.Deque;
 import java.util.List;
 
 public class CardDeck {
+
     private static final int DECK_SIZE = 6;
 
     private final Deque<Card> cards;

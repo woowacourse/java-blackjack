@@ -18,20 +18,6 @@ public enum Result {
         this.condition = condition;
     }
 
-    private static boolean winningCondition(final Hands hands, final Hands target) {
-        return (!hands.isBust() && target.isBust())
-                || (hands.sum() > target.sum() && !hands.isBust())
-                || (hands.sum() == target.sum() && hands.size() < target.size() && !hands.isBust());
-    }
-
-    private static boolean tieCondition(final Hands hands, final Hands target) {
-        return hands.sum() == target.sum() && hands.size() == target.size() && !hands.isBust();
-    }
-
-    private static boolean loseCondition(final Hands hands, final Hands target) {
-        return hands.isBust() || hands.sum() < target.sum() || !target.isBust();
-    }
-
     public Result reverse() {
         if (Result.WIN.equals(this)) {
             return LOSE;
@@ -47,6 +33,20 @@ public enum Result {
                 .filter(result -> result.condition.test(hands, target))
                 .findFirst()
                 .orElseThrow();
+    }
+
+    private static boolean winningCondition(final Hands hands, final Hands target) {
+        return (!hands.isBust() && target.isBust())
+                || (hands.sum() > target.sum() && !hands.isBust())
+                || (hands.sum() == target.sum() && hands.size() < target.size() && !hands.isBust());
+    }
+
+    private static boolean tieCondition(final Hands hands, final Hands target) {
+        return hands.sum() == target.sum() && hands.size() == target.size() && !hands.isBust();
+    }
+
+    private static boolean loseCondition(final Hands hands, final Hands target) {
+        return hands.isBust() || hands.sum() < target.sum() || !target.isBust();
     }
 
     public String getValue() {
