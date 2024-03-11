@@ -11,7 +11,7 @@ public class Dealer extends Player {
     }
 
     public boolean isMoreCardNeeded() {
-        return this.hand.getSum() <= HIT_THRESHOLD;
+        return this.hand.getScore() <= HIT_THRESHOLD;
     }
 
     public Card getFirstCard() {

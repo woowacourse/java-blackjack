@@ -7,35 +7,37 @@ import java.util.Collections;
 import java.util.List;
 
 public class Hand {
+    private static final int BUST_CONDITION = 21;
+    private static final int BONUS_SCORE = 10;
+    private static final int NON_SCORE = 0;
+
     private final List<Card> cards = new ArrayList<>();
 
-    // TODO: 메서드 분리, 상수 분리 필요
-    public int getSum() {
-        int minimumSum = cards.stream()
+    int getScore() {
+        final int minimumScore = cards.stream()
                 .mapToInt(Card::getNumber)
                 .sum();
 
-        final int aceCount = getAceCount();
-        for (int i = 0; i < aceCount; i++) {
-            if (minimumSum + 10 <= 21) {
-                minimumSum += 10;
-            }
+        final int bonusScore = this.getBonusScore();
+
+        if (minimumScore + bonusScore <= BUST_CONDITION) {
+            return minimumScore + bonusScore;
         }
-
-        return minimumSum;
+        return minimumScore;
     }
 
-    private int getAceCount() {
-        return (int) cards.stream()
-                .filter(Card::isAceCard)
-                .count();
+    private int getBonusScore() {
+        if (this.cards.stream().anyMatch(Card::isAceCard)) {
+            return BONUS_SCORE;
+        }
+        return NON_SCORE;
     }
 
-    public void add(final Card card) {
+    void add(final Card card) {
         cards.add(card);
     }
 
-    public List<Card> getAllCards() {
+    List<Card> getAllCards() {
         return Collections.unmodifiableList(cards);
     }
 }
