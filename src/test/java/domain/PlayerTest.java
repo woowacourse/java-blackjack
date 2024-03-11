@@ -19,9 +19,8 @@ public class PlayerTest {
     @Test
     @DisplayName("게이머는 카드를 한 장 가져갈 수 있다.")
     void takeCard() {
-        Player player = new Player(new Name("test"));
         Card card = new Card(CardType.SPADE, CardNumber.ACE);
-        player.takeCard(card);
+        Player player = new Player(new Name("test"), List.of(card));
         Assertions.assertThat(player.getCards()).isEqualTo(List.of(card));
     }
 
@@ -35,9 +34,11 @@ public class PlayerTest {
     @Test
     @DisplayName("게이머의 점수 합계를 반환한다.")
     void getTotalScore() {
-        Player player = new Player(new Name("test"));
-        player.takeCard(new Card(CardType.SPADE, CardNumber.ACE));
-        player.takeCard(new Card(CardType.SPADE, CardNumber.TEN));
+        Player player = new Player(new Name("test"),
+                List.of(
+                        new Card(CardType.SPADE, CardNumber.ACE),
+                        new Card(CardType.SPADE, CardNumber.TEN)
+                ));
         Assertions.assertThat(player.getTotalScore())
                 .isEqualTo(21);
     }
@@ -45,10 +46,12 @@ public class PlayerTest {
     @Test
     @DisplayName("Bust이면 true를 반환한다.")
     void isBustTrue() {
-        Player player = new Player(new Name("test"));
-        player.takeCard(new Card(CardType.SPADE, CardNumber.TEN));
-        player.takeCard(new Card(CardType.SPADE, CardNumber.TEN));
-        player.takeCard(new Card(CardType.SPADE, CardNumber.TEN));
+        Player player = new Player(new Name("test"),
+                List.of(
+                        new Card(CardType.SPADE, CardNumber.TEN),
+                        new Card(CardType.SPADE, CardNumber.TEN),
+                        new Card(CardType.SPADE, CardNumber.TEN)
+                ));
         Assertions.assertThat(player.isBust())
                 .isTrue();
     }
@@ -56,9 +59,10 @@ public class PlayerTest {
     @Test
     @DisplayName("Bust가 아니면 false를 반환한다.")
     void isBustFalse() {
-        Player player = new Player(new Name("test"));
-        player.takeCard(new Card(CardType.SPADE, CardNumber.TEN));
-        player.takeCard(new Card(CardType.SPADE, CardNumber.TEN));
+        Player player = new Player(new Name("test"), List.of(
+                new Card(CardType.SPADE, CardNumber.TEN),
+                new Card(CardType.SPADE, CardNumber.TEN)
+        ));
         Assertions.assertThat(player.isBust())
                 .isFalse();
     }

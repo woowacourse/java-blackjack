@@ -14,6 +14,10 @@ public class Hand {
         cards = new ArrayList<>();
     }
 
+    Hand(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
+    }
+
     public void add(Card card) {
         cards.add(card);
     }
