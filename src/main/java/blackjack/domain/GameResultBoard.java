@@ -30,19 +30,19 @@ public class GameResultBoard {
 
     private int getDealerWinCount() {
         return (int) resultBoard.values().stream()
-                .filter(playerResult -> playerResult.equals(GameResult.LOSE))
+                .filter(GameResult::isLose)
                 .count();
     }
 
     private int getDealerLoseCount() {
         return (int) resultBoard.values().stream()
-                .filter(playerResult -> playerResult.equals(GameResult.WIN))
+                .filter(GameResult::isWin)
                 .count();
     }
 
     private int getDealerDrawCount() {
         return (int) resultBoard.values().stream()
-                .filter(playerResult -> playerResult.equals(GameResult.DRAW))
+                .filter(GameResult::isDraw)
                 .count();
     }
 }
