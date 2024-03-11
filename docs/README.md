@@ -75,12 +75,11 @@
 * [ ] 플레이어의 이름 딜러 불가
 * [x] Name 객체 포장하기
 * [ ] CardDeck 스토리지 유닛으로 변경
-* [ ] Result 함수형 프로그래밍 사용
-* [ ] TestFixture 사용
+* [x] Result 함수형 프로그래밍 사용
+* [x] TestFixture 사용
 * [ ] Answer 필드값 및 stream 제거
 * [ ] 패키지 정리
 * [ ] 메서드 컨벤션 작성 및 확인
 * [ ] final 컨벤션 통일
 * [x] CardDeck 생성자 닫기
 * [ ] CardDeck 구조 변경
-* [ ] Game 메서드 변경 Dto 변경
