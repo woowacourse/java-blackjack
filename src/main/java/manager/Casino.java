@@ -10,7 +10,10 @@ import domain.score.ScoreBoard;
 import view.InputView;
 import view.OutputView;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Casino {
 
@@ -19,6 +22,7 @@ public class Casino {
 
     public void run() {
         Names names = readNames();
+        Map<Name, Bet> bets = readBets(names);
 
         Deck deck = new Deck();
         DealerCards dealerCards = new DealerCards(deck.drawInitialHands());
@@ -28,6 +32,25 @@ public class Casino {
         playGame(deck, dealerCards, playerCardsBundle);
         ScoreBoard scoreBoard = ScoreBoard.from(names);
         determineOutcome(dealerCards, playerCardsBundle, scoreBoard);
+    }
+
+    private Map<Name, Bet> readBets(Names names) {
+        Map<Name, Bet> bets = new HashMap<>();
+        for (Name name : names.getNames()) {
+            Bet bet = readBet(name);
+            bets.put(name, bet);
+        }
+        return Collections.unmodifiableMap(bets);
+    }
+
+    private Bet readBet(Name name) {
+        try {
+            int bet = inputView.readBet(name);
+            return new Bet(bet);
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return readBet(name);
+        }
     }
 
     private void determineOutcome(DealerCards dealerCards, List<PlayerCards> playerCardsBundle, ScoreBoard scoreBoard) {
