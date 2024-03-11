@@ -3,7 +3,7 @@ package blackjack.domain.game;
 public enum GameResult {
     WIN,
     LOSE,
-    DRAW;
+    PUSH;
 
     public GameResult reverse() {
         if (this == WIN) {
