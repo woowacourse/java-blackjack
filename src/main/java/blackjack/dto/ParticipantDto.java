@@ -12,7 +12,7 @@ public record ParticipantDto(String playerName, List<String> allHands, int score
         Name name = participant.getName();
         Hands hands = participant.getHands();
         List<String> allHands = hands.getCards().stream()
-                .map(tempHands -> RankMapper.findByRank(tempHands.getRank()).getRankName() + ShapeMapper.findByShape(tempHands.getShape()).getShapeName())
+                .map(tempHands -> RankMapper.findByRank(tempHands.getRank()) + ShapeMapper.findByShape(tempHands.getShape()))
                 .toList();
         return new ParticipantDto(name.getName(), allHands, participant.calculateScore());
     }

@@ -5,22 +5,24 @@ import java.util.Arrays;
 
 public enum ShapeMapper {
 
-    HEART("하트"), DIAMOND("다이아몬드"), CLOVER("클로버"), SPADE("스페이드");
+    HEART(Shape.HEART, "하트"),
+    DIAMOND(Shape.DIAMOND, "다이아몬드"),
+    CLOVER(Shape.CLOVER, "클로버"),
+    SPADE(Shape.SPADE, "스페이드");
 
+    private final Shape shape;
     private final String shapeName;
 
-    ShapeMapper(String shapeName) {
+    ShapeMapper(Shape shape, String shapeName) {
+        this.shape = shape;
         this.shapeName = shapeName;
     }
 
-    public static ShapeMapper findByShape(Shape shape) {
+    public static String findByShape(Shape shape) {
         return Arrays.stream(values())
-                .filter(shapeMapper -> shape.isSameName(shapeMapper.name()))
+                .filter(shapeMapper -> shapeMapper.shape == shape)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("일치하는 모양이 없습니다."));
-    }
-
-    public String getShapeName() {
-        return shapeName;
+                .orElseThrow(() -> new IllegalArgumentException("일치하는 모양이 없습니다."))
+                .shapeName;
     }
 }

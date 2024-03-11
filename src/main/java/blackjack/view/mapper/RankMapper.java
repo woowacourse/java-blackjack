@@ -27,14 +27,11 @@ public enum RankMapper {
         this.rankName = rankName;
     }
 
-    public static RankMapper findByRank(Rank rank) {
+    public static String findByRank(Rank rank) {
         return Arrays.stream(values())
                 .filter(rankMapper -> rankMapper.rank == rank)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("일치하는 등급이 없습니다."));
-    }
-
-    public String getRankName() {
-        return rankName;
+                .orElseThrow(() -> new IllegalArgumentException("일치하는 등급이 없습니다."))
+                .rankName;
     }
 }
