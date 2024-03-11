@@ -9,23 +9,23 @@ import domain.card.Card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class DealerDeckTest {
+public class PlayerDeckTest {
     @Test
-    @DisplayName("보여지는 카드를 반환할 때 덱의 첫 카드만 반환한다.")
+    @DisplayName("보여지는 카드를 반환할 때 덱의 모든 카드를 반환한다.")
     void getVisibleCardTest() {
-        DealerDeck dealerDeck = new DealerDeck();
+        PlayerDeck dealerDeck = new PlayerDeck();
         Card card = new Card(CLOVER, TEN);
 
         dealerDeck.addCard(card);
-        dealerDeck.addCard(new Card(CLOVER, NINE));
+        dealerDeck.addCard(card);
 
-        assertThat(dealerDeck.getVisibleCards()).containsExactly(card);
+        assertThat(dealerDeck.getVisibleCards()).containsExactly(card, card);
     }
 
     @Test
-    @DisplayName("카드의 합이 16 이하이면 true를 반환한다.")
+    @DisplayName("busted가 false이면 true를 반환한다.")
     void isAddableTest() {
-        DealerDeck dealerDeck = new DealerDeck();
+        PlayerDeck dealerDeck = new PlayerDeck();
 
         dealerDeck.addCard(new Card(CLOVER, NINE));
 
@@ -33,10 +33,11 @@ public class DealerDeckTest {
     }
 
     @Test
-    @DisplayName("카드의 합이 17 이상이면 false를 반환한다.")
+    @DisplayName("busted가 true이면 false를 반환한다.")
     void isNotAddableTest() {
-        DealerDeck dealerDeck = new DealerDeck();
+        PlayerDeck dealerDeck = new PlayerDeck();
 
+        dealerDeck.addCard(new Card(CLOVER, NINE));
         dealerDeck.addCard(new Card(CLOVER, NINE));
         dealerDeck.addCard(new Card(CLOVER, NINE));
 

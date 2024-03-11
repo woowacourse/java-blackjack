@@ -14,20 +14,4 @@ public class UserTest {
 
         assertThat(player.getNameValue()).isEqualTo(name.value());
     }
-
-    @Test
-    @DisplayName("플레이어면 true를 반환한다.")
-    void isPlayer() {
-        User player = new Player(new Name("poby"));
-
-        assertThat(player.isPlayer()).isTrue();
-    }
-
-    @Test
-    @DisplayName("플레이어가 아니면 false를 반환한다.")
-    void isNotPlayer() {
-        User dealer = new Dealer();
-
-        assertThat(dealer.isPlayer()).isFalse();
-    }
 }
