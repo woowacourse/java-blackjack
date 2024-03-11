@@ -41,7 +41,7 @@ public class BlackJackController {
     }
 
     private void play(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
-        if (dealer.isBlackJack()) {
+        if (dealer.isBust()) {
             return;
         }
         for (Player player : players.getPlayers()) {
