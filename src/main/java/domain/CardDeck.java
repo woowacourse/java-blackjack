@@ -15,7 +15,7 @@ public class CardDeck {
 
     private final Deque<Card> cards;
 
-    public CardDeck(final Deque<Card> cards) {
+    private CardDeck(final Deque<Card> cards) {
         this.cards = cards;
     }
 
@@ -31,6 +31,9 @@ public class CardDeck {
     }
 
     public Card pop() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("[ERROR] 카드덱이 비어있습니다.");
+        }
         return cards.pop();
     }
 
@@ -49,5 +52,4 @@ public class CardDeck {
                 .map(rank -> new Card(rank, shape))
                 .toList();
     }
-
 }
