@@ -19,6 +19,7 @@ public class Deck {
             Arrays.stream(CardNumber.values())
                     .forEach(number -> cards.add(new Card(type, number)));
         }
+        Collections.shuffle(cards);
         return new Deck(cards);
     }
 
@@ -32,9 +33,5 @@ public class Deck {
             throw new RuntimeException("카드가 더이상 존재하지 않습니다.");
         }
         return cards.remove(cards.size() - 1);
-    }
-
-    public void shuffle() {
-        Collections.shuffle(cards);
     }
 }
