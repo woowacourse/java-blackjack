@@ -27,7 +27,7 @@ public class CardDeck {
                 .map(number -> new Card(number, pattern));
     }
 
-    public void shuffleCard() {
+    private void shuffleCard() {
         Collections.shuffle(deck);
     }
 
@@ -42,5 +42,9 @@ public class CardDeck {
 
     public Card pickCard() {
         return deck.remove(DECK_TOP_POSITION);
+    }
+
+    public int getDeckSize() {
+        return deck.size();
     }
 }
