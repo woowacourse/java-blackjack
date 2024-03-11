@@ -9,7 +9,7 @@ public class Dealer extends Player {
         this.deck = deck;
     }
 
-    public void shuffle() {
+    public void shuffleDeck() {
         deck.shuffle();
     }
 

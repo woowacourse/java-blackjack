@@ -33,7 +33,7 @@ public class Game {
     }
 
     private void initializeHands() {
-        dealer.shuffle();
+        dealer.shuffleDeck();
         initializeHand(dealer);
         for (Player player : players.getPlayers()) {
             initializeHand(player);
