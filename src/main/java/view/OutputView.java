@@ -2,9 +2,9 @@ package view;
 
 import domain.blackjack.GameResult;
 import domain.blackjack.OneOnOneResult;
-import domain.card.Denomination;
+import domain.card.Rank;
 import domain.player.Player;
-import domain.card.Symbol;
+import domain.card.Suit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class OutputView {
         final StringBuilder stringBuilder = new StringBuilder(player.getName() + ": ");
         final List<String> cardInfos = new ArrayList<>();
         for (final var card : player.getCards()) {
-            final String denomination = denominationToMessage(card.getDenomination());
+            final String denomination = denominationToMessage(card.getRank());
             final String symbol = symbolToMessage(card.getSymbol());
             cardInfos.add(denomination + symbol);
         }
@@ -43,7 +43,7 @@ public class OutputView {
             final StringBuilder stringBuilder = new StringBuilder(player.getName() + "카드: ");
             final List<String> cardInfos = player.getCards()
                     .stream()
-                    .map(card -> denominationToMessage(card.getDenomination()) + symbolToMessage(card.getSymbol()))
+                    .map(card -> denominationToMessage(card.getRank()) + symbolToMessage(card.getSymbol()))
                     .toList();
             stringBuilder.append(String.join(", ", cardInfos));
             System.out.print(stringBuilder);
@@ -84,30 +84,30 @@ public class OutputView {
         return "패";
     }
 
-    private static String denominationToMessage(final Denomination denomination) {
-        if (denomination == Denomination.ACE) {
+    private static String denominationToMessage(final Rank rank) {
+        if (rank == Rank.ACE) {
             return "A";
         }
-        if (denomination == Denomination.JACK) {
+        if (rank == Rank.JACK) {
             return "J";
         }
-        if (denomination == Denomination.QUEEN) {
+        if (rank == Rank.QUEEN) {
             return "Q";
         }
-        if (denomination == Denomination.KING) {
+        if (rank == Rank.KING) {
             return "K";
         }
-        return "" + denomination.getValue();
+        return "" + rank.getValue();
     }
 
-    private static String symbolToMessage(final Symbol symbol) {
-        if (symbol == Symbol.HEART) {
+    private static String symbolToMessage(final Suit suit) {
+        if (suit == Suit.HEARTS) {
             return "하트";
         }
-        if (symbol == Symbol.CLUBS) {
+        if (suit == Suit.CLUBS) {
             return "클로버";
         }
-        if (symbol == Symbol.SPADE) {
+        if (suit == Suit.SPADES) {
             return "스페이드";
         }
         return "다이아몬드";

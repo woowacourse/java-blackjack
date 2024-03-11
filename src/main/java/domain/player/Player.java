@@ -2,7 +2,7 @@ package domain.player;
 
 import domain.blackjack.OneOnOneResult;
 import domain.card.Card;
-import domain.card.Denomination;
+import domain.card.Rank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -19,13 +19,18 @@ public abstract class Player {
         this.name = name;
     }
 
-    public abstract boolean isNotBust();
+    public boolean isBust() {
+        return calculateScore() > PERFECT_SCORE;
+    }
 
-    public abstract boolean isBust();
+    public boolean isNotBust() {
+        return !isBust();
+    }
 
     public abstract boolean canHit();
 
     public abstract boolean canNotHit();
+
     public void hit(final Card card) {
         cards.add(card);
     }
@@ -54,10 +59,10 @@ public abstract class Player {
     }
 
     private int determineScore(final Card card, final int score) {
-        if (card.getDenomination() == Denomination.ACE) {
+        if (card.getRank() == Rank.ACE) {
             return determineAceScore(score);
         }
-        return card.getValue();
+        return card.getRankValue();
     }
 
     private int determineAceScore(final int score) {
@@ -68,7 +73,7 @@ public abstract class Player {
     }
 
     public String getName() {
-        return name.getName();
+        return name.getValue();
     }
 
     public List<Card> getCards() {

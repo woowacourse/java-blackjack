@@ -3,12 +3,11 @@ package domain.player;
 import java.util.Objects;
 
 public class Name {
-    private final String name;
+    private final String value;
 
     public Name(final String name) {
-        final String trimmed = name.trim();
-        validate(trimmed);
-        this.name = trimmed;
+        validate(name);
+        this.value = name;
     }
 
     private void validate(final String name) {
@@ -21,8 +20,8 @@ public class Name {
         }
     }
 
-    public String getName() {
-        return name;
+    public String getValue() {
+        return value;
     }
 
     @Override
@@ -34,11 +33,11 @@ public class Name {
             return false;
         }
         final Name name1 = (Name) o;
-        return Objects.equals(name, name1.name);
+        return Objects.equals(value, name1.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(value);
     }
 }

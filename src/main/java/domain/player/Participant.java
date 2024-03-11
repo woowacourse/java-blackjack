@@ -10,17 +10,6 @@ public class Participant extends Player {
     }
 
     @Override
-    public boolean isBust() {
-        return calculateScore() > PERFECT_SCORE;
-    }
-
-
-    @Override
-    public boolean isNotBust() {
-        return !isBust();
-    }
-
-    @Override
     public boolean canHit() {
         return calculateScore() < HIT_UPPER_BOUND;
     }
@@ -32,7 +21,7 @@ public class Participant extends Player {
 
     @Override
     public OneOnOneResult determineWinnerByComparing(final Player dealer) {
-        if(isBust()){
+        if (isBust()) {
             return OneOnOneResult.ONE_LOSE;
         }
         if (dealer.isBust()) {

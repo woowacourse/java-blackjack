@@ -1,8 +1,8 @@
 package domain.blackjack;
 
 import domain.card.Card;
-import domain.card.Denomination;
-import domain.card.Symbol;
+import domain.card.Rank;
+import domain.card.Suit;
 import domain.player.Dealer;
 import domain.player.Name;
 import domain.player.Participant;
@@ -55,8 +55,8 @@ class BlackjackTest {
         final Player dealer = Dealer.getInstance();
         final Player teba = new Participant(new Name("테바"));
         final Player jonge = new Participant(new Name("종이"));
-        teba.hit(new Card(Denomination.ACE, Symbol.CLUBS));
-        jonge.hit(new Card(Denomination.ACE, Symbol.HEART));
+        teba.hit(new Card(Rank.ACE, Suit.CLUBS));
+        jonge.hit(new Card(Rank.ACE, Suit.HEARTS));
         final Blackjack blackjack = new Blackjack(new Players(new ArrayList<>(List.of(teba, jonge))), dealer);
 
         final GameResult blackjackResultDTO = blackjack.finishGame();
