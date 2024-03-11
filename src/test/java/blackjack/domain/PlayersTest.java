@@ -11,7 +11,7 @@ public class PlayersTest {
     @DisplayName("Players를 생성한다")
     @Test
     public void create() {
-        assertThatCode(() -> new Players(List.of(new Player("mark"), new Player("sang"))))
+        assertThatCode(() -> new Players(List.of("마크", "이상")))
                 .doesNotThrowAnyException();
     }
 }
