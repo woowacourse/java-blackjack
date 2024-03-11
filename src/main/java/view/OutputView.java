@@ -37,23 +37,21 @@ public class OutputView {
     }
 
     public void printDealerHitMessage() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
     public void printFinalHandAndScore(List<PlayerDto> playerDtos, ScoreDto scoreDto) {
-        System.out.println();
         for (PlayerDto playerDto : playerDtos) {
             System.out.println(buildPlayerCardsWithResult(playerDto, scoreDto.getByPlayerName(playerDto.name())));
         }
     }
 
     private String buildPlayerCardsWithResult(PlayerDto playerDto, int score) {
-        return String.format("%s - 결과: %d", buildPlayerCards(playerDto), score);
+        return String.format("%s %s - 결과: %d", playerDto.name(), buildPlayerCards(playerDto), score);
     }
 
     private String buildPlayerCards(PlayerDto playerDto) {
-        String hands = String.join(", ", playerDto.hands());
-        return playerDto.name() + ": " + hands;
+        return String.join(", ", playerDto.hands());
     }
 
     public void printWinLoss(ResultDto resultDto) {
