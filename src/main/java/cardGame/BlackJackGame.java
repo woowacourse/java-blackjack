@@ -23,7 +23,7 @@ public class BlackJackGame {
 
     public BlackJackGame() {
         this.cardDeck = new CardDeck();
-        this.dealer = new Dealer(cardDeck);
+        this.dealer = new Dealer(cardDeck.firstCardSettings());
     }
 
     public Players initGamePlayer(List<String> names) {

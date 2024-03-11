@@ -1,16 +1,18 @@
 package dealer;
 
+import card.Card;
 import card.CardDeck;
 import cardGame.GameParticipantCards;
 import dealer.dto.DealerWinningResult;
+import java.util.List;
 import player.Players;
 
 public class Dealer extends GameParticipantCards {
 
     private static final int MIN_DEALER_SCORE = 16;
 
-    public Dealer(CardDeck cardDeck) {
-        super(cardDeck.firstCardSettings());
+    public Dealer(List<Card> initCards) {
+        super(initCards);
     }
 
     public void getExtraCard(CardDeck cardDeck) {

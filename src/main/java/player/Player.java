@@ -16,8 +16,8 @@ public class Player extends GameParticipantCards {
         this.name = name;
     }
 
-    public static Player joinGame(String name, CardDeck cardDeck) {
-        return new Player(cardDeck.firstCardSettings(), new Name(name));
+    public static Player joinGame(String name, List<Card> cards) {
+        return new Player(cards, new Name(name));
     }
 
     public CardsStatus play(BiConsumer<Player, CardDeck> playMatch, CardDeck cardDeck) {

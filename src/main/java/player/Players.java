@@ -20,7 +20,7 @@ public class Players {
         validate(playerNames);
 
         List<Player> players = playerNames.stream()
-                .map(name -> Player.joinGame(name, cardDeck))
+                .map(name -> Player.joinGame(name, cardDeck.firstCardSettings()))
                 .toList();
 
         return new Players(players);

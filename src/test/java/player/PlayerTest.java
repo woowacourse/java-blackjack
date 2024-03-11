@@ -17,7 +17,7 @@ public class PlayerTest {
     void setUp() {
         String name = "pola";
 
-        player = Player.joinGame(name, new CardDeck());
+        player = Player.joinGame(name, new CardDeck().firstCardSettings());
     }
 
     @DisplayName("Player가 들고 있는 카드가 최고점을 넘을경우 true를 return한다.")
