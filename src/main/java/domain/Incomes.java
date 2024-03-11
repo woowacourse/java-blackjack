@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Incomes {
@@ -10,15 +11,15 @@ public class Incomes {
         this.incomes = incomes;
     }
 
-    public Income getIncomeByName(Name name) {
-        return incomes.get(name);
-    }
-
     public int getDealerIncome() {
         int sumOfPlayerIncome = incomes.entrySet()
                 .stream()
                 .mapToInt(income -> income.getValue().getIncome())
                 .sum();
         return -sumOfPlayerIncome;
+    }
+
+    public Map<Name, Income> getIncomes() {
+        return incomes;
     }
 }

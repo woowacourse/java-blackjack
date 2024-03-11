@@ -1,6 +1,7 @@
 package manager;
 
 import domain.BetAmount;
+import domain.Income;
 import domain.Name;
 import domain.card.DealerCards;
 import domain.card.Deck;
@@ -38,10 +39,11 @@ public class Casino {
 
         drawDealerCards(dealerCards);
 
-
         outputView.printResults(dealerCards, playerCardsBundle);
 
         Rule rule = Rule.of(dealerCards, playerCardsBundle);
+        Map<Name, Income> incomes = rule.getIncomes();
+        outputView.printIncomes(rule.getDealerIncome(), incomes);
     }
 
     private List<Name> readNames() {
