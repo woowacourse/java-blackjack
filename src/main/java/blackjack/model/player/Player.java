@@ -9,7 +9,6 @@ import java.util.List;
 
 public class Player {
     private static final String INVALID_NAME_LENGTH = "참여자 이름은 한 글자 이상이다";
-    private static final String INVALID_PLAYER_NAME = "딜러";
 
     private final String name;
     private final Cards cards;
@@ -21,7 +20,7 @@ public class Player {
     }
 
     private void validateName(final String name) {
-        if (name.isEmpty() || name.equals(INVALID_PLAYER_NAME)) {
+        if (name.isEmpty()) {
             throw new IllegalArgumentException(INVALID_NAME_LENGTH);
         }
     }
