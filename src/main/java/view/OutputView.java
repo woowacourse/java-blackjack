@@ -80,11 +80,11 @@ public class OutputView {
     }
 
     public String formatCardsStatus(Cards cards) {
-        return String.join(",", cards.getCardsStatus());
+        return String.join(",", cards.getCardsFeatures());
     }
 
     private String makeCardsStatus(Name name, Cards cards) {
-        return name.getValue() + CARD_SYMBOL + cards.getCardsStatus();
+        return name.getValue() + CARD_SYMBOL + cards.getCardsFeatures();
     }
 
     private String changeNameFormat(List<Name> names) {

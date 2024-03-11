@@ -50,4 +50,27 @@ class CardsTest {
 
         Assertions.assertThat(cards.countMaxScore()).isEqualTo(minimumScore + ADDITIONAL_ACE_CARD_SCORE);
     }
+
+    @DisplayName("가진 카드들의 모습을 List로 만들어 반환한다.")
+    @Test
+    void getCardsFeature() {
+        Cards cards = new Cards(List.of(new Card(CardNumber.ACE, CardPattern.CLOVER_PATTERN),
+                new Card(CardNumber.KING, CardPattern.DIA_PATTERN),
+                new Card(CardNumber.QUEEN, CardPattern.DIA_PATTERN)));
+
+        List<String> expectedResult = List.of("A클로버", "K다이아몬드", "Q다이아몬드");
+
+        Assertions.assertThat(cards.getCardsFeatures()).isEqualTo(expectedResult);
+    }
+
+    @DisplayName("첫번째 카드를 반환한다.")
+    @Test
+    void getFirstCard() {
+        Card expectedCard = new Card(CardNumber.ACE, CardPattern.CLOVER_PATTERN);
+
+        Cards cards = new Cards(List.of(expectedCard,
+                new Card(CardNumber.FOUR, CardPattern.DIA_PATTERN)));
+
+        Assertions.assertThat(cards.getFirstCard()).isEqualTo(expectedCard);
+    }
 }

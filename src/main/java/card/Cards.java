@@ -39,7 +39,7 @@ public class Cards {
                 .sum();
     }
 
-    public List<String> getCardsStatus() {
+    public List<String> getCardsFeatures() {
         return cards.stream()
                 .map(Card::getCardFeature)
                 .toList();
