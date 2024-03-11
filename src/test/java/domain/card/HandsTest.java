@@ -31,7 +31,7 @@ class HandsTest {
         Assertions.assertThat(totalScore).isEqualTo(21);
     }
 
-    @DisplayName("ace를 11로 계산했을 때 21을 초과할 경우 ace를 11로 결정한다.")
+    @DisplayName("ace를 11로 계산했을 때 21을 초과할 경우 ace를 1로 결정한다.")
     @Test
     void calculateAceIsOne() {
         Hands hands = new Hands();

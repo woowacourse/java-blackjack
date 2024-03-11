@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.*;
 
 class ParticipantTest {
 
-    @DisplayName("사용자의 점수가 21이하면 카드를 받을 수 없다.")
+    @DisplayName("사용자의 점수가 21이하면 카드를 받을 수 있다.")
     @Test
     void canHit() {
         Participant participant = new Participant(new Name("user"));
