@@ -13,6 +13,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static blackjack.domain.card.CardScore.ACE;
+import static blackjack.domain.card.CardScore.EIGHT;
+import static blackjack.domain.card.CardScore.FIVE;
+import static blackjack.domain.card.CardScore.JACK;
+import static blackjack.domain.card.CardScore.KING;
+import static blackjack.domain.card.CardScore.NINE;
+import static blackjack.domain.card.CardScore.QUEEN;
+import static blackjack.domain.card.CardScore.SEVEN;
+import static blackjack.domain.card.CardScore.THREE;
+import static blackjack.domain.card.CardScore.TWO;
+import static blackjack.domain.card.CardSymbol.CLUB;
+import static blackjack.domain.card.CardSymbol.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("심판")
@@ -51,13 +63,13 @@ public class RefereeTest {
         playerDeck = new Deck() {
             @Override
             public List<Card> pick(int count) {
-                return List.of(Card.SPADE_NINE, Card.CLUB_QUEEN);
+                return List.of(new Card(SPADE, NINE), new Card(CLUB, QUEEN));
             }
         };
         dealerDeck = new Deck() {
             @Override
             public List<Card> pick(int count) {
-                return List.of(Card.SPADE_EIGHT, Card.CLUB_QUEEN);
+                return List.of(new Card(SPADE, EIGHT), new Card(CLUB, QUEEN));
             }
         };
         expectedPlayersResult.put(name, GameResult.WIN);
@@ -70,13 +82,13 @@ public class RefereeTest {
         playerDeck = new Deck() {
             @Override
             public List<Card> pick(int count) {
-                return List.of(Card.SPADE_NINE, Card.CLUB_QUEEN, Card.CLUB_THREE);
+                return List.of(new Card(SPADE, NINE), new Card(CLUB, QUEEN), new Card(CLUB, THREE));
             }
         };
         dealerDeck = new Deck() {
             @Override
             public List<Card> pick(int count) {
-                return List.of(Card.SPADE_EIGHT, Card.SPADE_TWO, Card.CLUB_QUEEN);
+                return List.of(new Card(SPADE, EIGHT), new Card(SPADE, TWO), new Card(CLUB, QUEEN));
             }
         };
         expectedPlayersResult.put(name, GameResult.LOSE);
@@ -89,13 +101,13 @@ public class RefereeTest {
         playerDeck = new Deck() {
             @Override
             public List<Card> pick(int count) {
-                return List.of(Card.SPADE_NINE, Card.CLUB_SEVEN, Card.CLUB_THREE);
+                return List.of(new Card(SPADE, NINE), new Card(CLUB, SEVEN), new Card(CLUB, THREE));
             }
         };
         dealerDeck = new Deck() {
             @Override
             public List<Card> pick(int count) {
-                return List.of(Card.SPADE_NINE, Card.CLUB_SEVEN, Card.CLUB_THREE);
+                return List.of(new Card(SPADE, NINE), new Card(CLUB, SEVEN), new Card(CLUB, THREE));
             }
         };
         expectedPlayersResult.put(name, GameResult.DRAW);
@@ -108,13 +120,13 @@ public class RefereeTest {
         playerDeck = new Deck() {
             @Override
             public List<Card> pick(int count) {
-                return List.of(Card.CLUB_ACE, Card.CLUB_JACK);
+                return List.of(new Card(CLUB, ACE), new Card(CLUB, JACK));
             }
         };
         dealerDeck = new Deck() {
             @Override
             public List<Card> pick(int count) {
-                return List.of(Card.SPADE_NINE, Card.CLUB_SEVEN, Card.CLUB_FIVE);
+                return List.of(new Card(SPADE, NINE), new Card(CLUB, SEVEN), new Card(CLUB, FIVE));
             }
         };
         expectedPlayersResult.put(name, GameResult.WIN);
@@ -127,13 +139,13 @@ public class RefereeTest {
         playerDeck = new Deck() {
             @Override
             public List<Card> pick(int count) {
-                return List.of(Card.CLUB_TWO, Card.CLUB_JACK);
+                return List.of(new Card(CLUB, TWO), new Card(CLUB, JACK));
             }
         };
         dealerDeck = new Deck() {
             @Override
             public List<Card> pick(int count) {
-                return List.of(Card.SPADE_NINE, Card.CLUB_SEVEN, Card.CLUB_FIVE);
+                return List.of(new Card(SPADE, NINE), new Card(CLUB, SEVEN), new Card(CLUB, FIVE));
             }
         };
         expectedPlayersResult.put(name, GameResult.LOSE);
@@ -146,13 +158,13 @@ public class RefereeTest {
         playerDeck = new Deck() {
             @Override
             public List<Card> pick(int count) {
-                return List.of(Card.CLUB_KING, Card.CLUB_JACK, Card.CLUB_THREE);
+                return List.of(new Card(CLUB, KING), new Card(CLUB, JACK), new Card(CLUB, THREE));
             }
         };
         dealerDeck = new Deck() {
             @Override
             public List<Card> pick(int count) {
-                return List.of(Card.CLUB_KING, Card.CLUB_JACK, Card.CLUB_THREE);
+                return List.of(new Card(CLUB, KING), new Card(CLUB, JACK), new Card(CLUB, THREE));
             }
         };
         expectedPlayersResult.put(name, GameResult.LOSE);
@@ -165,13 +177,13 @@ public class RefereeTest {
         playerDeck = new Deck() {
             @Override
             public List<Card> pick(int count) {
-                return List.of(Card.CLUB_KING, Card.CLUB_JACK);
+                return List.of(new Card(CLUB, KING), new Card(CLUB, JACK));
             }
         };
         dealerDeck = new Deck() {
             @Override
             public List<Card> pick(int count) {
-                return List.of(Card.CLUB_KING, Card.CLUB_JACK, Card.CLUB_THREE);
+                return List.of(new Card(CLUB, KING), new Card(CLUB, JACK), new Card(CLUB, THREE));
             }
         };
         expectedPlayersResult.put(name, GameResult.WIN);

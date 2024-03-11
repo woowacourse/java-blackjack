@@ -7,6 +7,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static blackjack.domain.card.CardScore.NINE;
+import static blackjack.domain.card.CardScore.QUEEN;
+import static blackjack.domain.card.CardScore.SEVEN;
+import static blackjack.domain.card.CardScore.TWO;
+import static blackjack.domain.card.CardSymbol.CLUB;
+import static blackjack.domain.card.CardSymbol.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("딜러")
@@ -16,8 +22,8 @@ class DealerTest {
     void getFirstCardTest() {
         // given
         Dealer dealer = new Dealer();
-        List<Card> cards = List.of(Card.SPADE_NINE, Card.CLUB_QUEEN);
-        Card exptecedCard = Card.SPADE_NINE;
+        List<Card> cards = List.of(new Card(SPADE, NINE), new Card(CLUB, QUEEN));
+        Card exptecedCard = new Card(SPADE, NINE);
         Deck deck = new Deck() {
             @Override
             public List<Card> pick(int count) {
@@ -38,7 +44,7 @@ class DealerTest {
     void dealerHitUpperBoundTest() {
         // given
         Dealer dealer = new Dealer();
-        List<Card> cards = List.of(Card.SPADE_NINE, Card.CLUB_SEVEN);
+        List<Card> cards = List.of(new Card(SPADE, NINE), new Card(CLUB, SEVEN));
         Deck deck = new Deck() {
             @Override
             public List<Card> pick(int count) {
@@ -58,7 +64,7 @@ class DealerTest {
     void dealerHitTest() {
         // given
         Dealer dealer = new Dealer();
-        List<Card> cards = List.of(Card.SPADE_NINE, Card.CLUB_SEVEN);
+        List<Card> cards = List.of(new Card(SPADE, NINE), new Card(CLUB, SEVEN), new Card(CLUB, TWO));
         Deck deck = new Deck() {
             @Override
             public List<Card> pick(int count) {

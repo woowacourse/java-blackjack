@@ -41,7 +41,7 @@ public class OutputView {
     }
 
     private static String formatCard(Card card) {
-        return CardScoreName.convert(card.getScore()) + CardSymbolName.convert(card.getSymbol());
+        return CardScoreName.convert(card.score()) + CardSymbolName.convert(card.symbol());
     }
 
     public static void printNewLine() {

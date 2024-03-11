@@ -39,7 +39,7 @@ public class Cards {
     private List<List<Integer>> getCardsScores() {
         return values.stream()
                 .map(card -> card
-                        .getScore()
+                        .score()
                         .get())
                 .toList();
     }
