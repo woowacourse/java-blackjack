@@ -11,8 +11,7 @@ public class CardsGeneratorTest {
     @DisplayName("서로 다른 52장의 카드팩을 생성한다.")
     @Test
     void generateCardsTest() {
-        CardsGenerator cardsGenerator = new CardsGenerator();
-        List<Card> cards = cardsGenerator.generateRandomCards();
+        List<Card> cards = CardsGenerator.generateRandomCards();
         Assertions.assertThat(cards).hasSize(52);
     }
 }

@@ -3,7 +3,6 @@ package domain;
 import domain.cards.Card;
 import domain.cards.Deck;
 import domain.gamer.Dealer;
-import domain.gamer.Gamer;
 import domain.gamer.Player;
 import domain.gamer.Players;
 
@@ -23,16 +22,16 @@ public class BlackJackGame {
     }
 
     public void shareInitCards(Deck deck) {
-        List<Gamer> gamers = new ArrayList<>(players.getPlayers());
-        gamers.add(dealer);
-        for (Gamer gamer : gamers) {
-            hitInitCards(gamer, deck);
+        List<Player> players = new ArrayList<>(this.players.getPlayers());
+        players.add(dealer);
+        for (Player player : players) {
+            hitInitCards(player, deck);
         }
     }
 
-    private void hitInitCards(Gamer gamer, Deck deck) {
+    private void hitInitCards(Player player, Deck deck) {
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
-            gamer.hit(deck.pickOneCard());
+            player.hit(deck.pickOneCard());
         }
     }
 
@@ -40,9 +39,9 @@ public class BlackJackGame {
         return player.isNotBust() && hitOption.doHit();
     }
 
-    public Card allowHit(Gamer gamer, Deck deck) {
+    public Card allowHit(Player player, Deck deck) {
         Card pickedCard = deck.pickOneCard();
-        gamer.hit(pickedCard);
+        player.hit(pickedCard);
         return pickedCard;
     }
 

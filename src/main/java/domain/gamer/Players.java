@@ -30,7 +30,7 @@ public class Players {
 
     private void validateDuplicatedNames(List<Player> players) {
         long nonDuplicatedCount = players.stream()
-                .map(Gamer::getPlayerName)
+                .map(Player::getPlayerName)
                 .distinct()
                 .count();
         if (nonDuplicatedCount != players.size()) {

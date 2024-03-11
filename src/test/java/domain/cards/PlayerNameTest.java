@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class GamerNameTest {
+public class PlayerNameTest {
 
     @DisplayName("이름의 길이가 1글자 미만이거나 20글자를 초과하면 생성에 실패한다.")
     @ParameterizedTest

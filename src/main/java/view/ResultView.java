@@ -4,7 +4,6 @@ import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
 import domain.cards.cardinfo.CardShape;
 import domain.gamer.Dealer;
-import domain.gamer.Gamer;
 import domain.gamer.Player;
 import domain.gamer.Players;
 import domain.judge.Judge;
@@ -29,7 +28,7 @@ public class ResultView {
     private void printSharingCardsMessage(Dealer dealer, List<Player> players) {
         String dealerName = dealer.getPlayerName();
         String playersNames = players.stream()
-                .map(Gamer::getPlayerName)
+                .map(Player::getPlayerName)
                 .collect(Collectors.joining(DELIMITER));
         System.out.println(LINE_SEPARATOR + String.format("%s와 %s에게 2장을 나누었습니다.", dealerName, playersNames));
     }
@@ -46,14 +45,14 @@ public class ResultView {
         System.out.print(LINE_SEPARATOR);
     }
 
-    public void printPlayerCards(Gamer gamer) {
-        System.out.printf("%s카드: ", gamer.getPlayerName());
-        System.out.println(resolvePlayerCards(gamer));
+    public void printPlayerCards(Player player) {
+        System.out.printf("%s카드: ", player.getPlayerName());
+        System.out.println(resolvePlayerCards(player));
     }
 
-    private String resolvePlayerCards(Gamer gamer) {
+    private String resolvePlayerCards(Player player) {
         List<String> cards = new ArrayList<>();
-        for (Card card : gamer.getCards()) {
+        for (Card card : player.getCards()) {
             cards.add(resolveCardExpression(card));
         }
         return String.join(DELIMITER, cards);
@@ -104,16 +103,16 @@ public class ResultView {
     }
 
     public void printAllGamersCardsResult(Dealer dealer, Players players) {
-        List<Gamer> gamers = new ArrayList<>(players.getPlayers());
+        List<Player> gamers = new ArrayList<>(players.getPlayers());
         gamers.add(0, dealer);
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(LINE_SEPARATOR);
-        for (Gamer gamer : gamers) {
-            stringBuilder.append(String.format("%s카드: ", gamer.getPlayerName()));
-            stringBuilder.append(resolvePlayerCards(gamer));
+        for (Player player : gamers) {
+            stringBuilder.append(String.format("%s카드: ", player.getPlayerName()));
+            stringBuilder.append(resolvePlayerCards(player));
             stringBuilder.append(" - 결과: ");
-            stringBuilder.append(gamer.finalizeCardsScore());
+            stringBuilder.append(player.finalizeCardsScore());
             stringBuilder.append(LINE_SEPARATOR);
         }
         System.out.println(stringBuilder);
