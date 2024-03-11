@@ -1,9 +1,9 @@
 package blackjack.controller;
 
-import blackjack.dto.CardDTO;
-import blackjack.dto.FinalResultDTO;
-import blackjack.dto.StartCardsDTO;
-import blackjack.dto.WinningResultDTO;
+import blackjack.dto.CardDto;
+import blackjack.dto.ParticipantCardsScoreDto;
+import blackjack.dto.ParticipantCardsDto;
+import blackjack.dto.WinningResultDto;
 import blackjack.service.BlackjackGame;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -31,9 +31,9 @@ public class BlackjackController {
     private BlackjackGame initGame() {
         try {
             final BlackjackGame blackjackGame = new BlackjackGame(inputView.readPlayerNames());
-            final StartCardsDTO startCardsDTO = blackjackGame.start();
+            final List<ParticipantCardsDto> participantCardsDtos = blackjackGame.init();
 
-            outputView.printStartCards(startCardsDTO);
+            outputView.printStartCards(participantCardsDtos);
             return blackjackGame;
         } catch (final IllegalArgumentException e) {
             outputView.printError(e.getMessage());
@@ -55,8 +55,7 @@ public class BlackjackController {
     private void runPlayerTurn(final BlackjackGame blackjackGame, final String name) {
         boolean isFirst = true;
 
-        while (isContinue(blackjackGame, name)) {
-            blackjackGame.addCardToPlayers(name);
+        while (blackjackGame.addCardToPlayers(name) && needMoreCard(name)) {
             showPlayerCards(blackjackGame, name);
             isFirst = false;
         }
@@ -67,12 +66,8 @@ public class BlackjackController {
     }
 
     private void showPlayerCards(final BlackjackGame blackjackGame, final String name) {
-        final List<CardDTO> cards = blackjackGame.getCardsOf(name);
-        outputView.printPlayerCard(name, cards);
-    }
-
-    private boolean isContinue(final BlackjackGame blackjackGame, final String name) {
-        return blackjackGame.isPlayerAliveByName(name) && needMoreCard(name);
+        final List<CardDto> cards = blackjackGame.getCardsOf(name);
+        outputView.printPlayerCard(new ParticipantCardsDto(name, cards));
     }
 
     private boolean needMoreCard(final String name) {
@@ -85,8 +80,8 @@ public class BlackjackController {
     }
 
     private void finishGame(final BlackjackGame blackjackGame) {
-        final FinalResultDTO finalResultDTO = blackjackGame.getFinalResults();
-        final WinningResultDTO winningResults = blackjackGame.getWinningResults();
-        outputView.printFinalResult(finalResultDTO, winningResults);
+        final List<ParticipantCardsScoreDto> participantCardsScoreDto = blackjackGame.getFinalResults();
+        final WinningResultDto winningResults = blackjackGame.getWinningResults();
+        outputView.printFinalResult(participantCardsScoreDto, winningResults);
     }
 }

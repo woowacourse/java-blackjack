@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
     @Test
-    @DisplayName("딜러는 카드의 합이 17 미만인 경우 카드가 더 필요하다.")
+    @DisplayName("는 카드의 합이 17 미만인 경우 카드가 더 필요하다.")
     void needMoreCard() {
         Card card1 = new Card(CardNumber.SEVEN, CardShape.HEART);
         Card card2 = new Card(CardNumber.NINE, CardShape.HEART);

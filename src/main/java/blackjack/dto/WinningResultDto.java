@@ -2,25 +2,22 @@ package blackjack.dto;
 
 import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.result.WinStatus;
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 
-public record WinningResultDTO(Map<String, String> playerWinningResult, Map<String, Long> dealerWinningResult) {
-    public static WinningResultDTO of(final Map<ParticipantName, WinStatus> playerWinningResult,
+public record WinningResultDto(List<PlayerWinningResultDto> playersWinningResult,
+                               List<WinningResultCountDto> dealerWinningResult) {
+    public static WinningResultDto of(final Map<ParticipantName, WinStatus> playerWinningResults,
                                       final Map<WinStatus, Long> dealerWinningResult) {
-        return new WinningResultDTO(convertToPlayersDTO(playerWinningResult), convertToDealerDTO(dealerWinningResult));
+        return new WinningResultDto(
+                convertToDto(playerWinningResults, PlayerWinningResultDto::of),
+                convertToDto(dealerWinningResult, WinningResultCountDto::of));
     }
 
-    private static Map<String, String> convertToPlayersDTO(
-            final Map<ParticipantName, WinStatus> rawPlayerWinningResult) {
-        final Map<String, String> playerWinningResults = new LinkedHashMap<>();
-        rawPlayerWinningResult.forEach((key, value) -> playerWinningResults.put(key.getName(), value.name()));
-        return playerWinningResults;
-    }
-
-    private static Map<String, Long> convertToDealerDTO(final Map<WinStatus, Long> rawDealerWinningResult) {
-        final Map<String, Long> dealerWinningResults = new LinkedHashMap<>();
-        rawDealerWinningResult.forEach((key, value) -> dealerWinningResults.put(key.name(), value));
-        return dealerWinningResults;
+    private static <K, V, D> List<D> convertToDto(final Map<K, V> target, BiFunction<K, V, D> function) {
+        return target.entrySet().stream()
+                .map(entry -> function.apply(entry.getKey(), entry.getValue()))
+                .toList();
     }
 }

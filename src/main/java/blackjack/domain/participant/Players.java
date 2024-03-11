@@ -12,44 +12,44 @@ import java.util.Map;
 import java.util.Set;
 
 public class Players {
-    private final List<Participant> players;
+    private final List<Player> players;
 
-    public Players(final List<Participant> players) {
+    public Players(final List<Player> players) {
         validateDuplicate(players);
         this.players = players;
     }
 
     public static Players from(final List<String> playerNames) {
-        final List<Participant> participants = playerNames.stream()
-                .map(Participant::from)
+        final List<Player> players = playerNames.stream()
+                .map(Player::new)
                 .toList();
 
-        return new Players(participants);
+        return new Players(players);
     }
 
-    private void validateDuplicate(final List<Participant> participants) {
-        if (Set.copyOf(participants).size() != participants.size()) {
+    private void validateDuplicate(final List<Player> players) {
+        if (Set.copyOf(players).size() != players.size()) {
             throw new IllegalArgumentException("중복된 이름의 참여자는 참여할 수 없습니다.");
         }
     }
 
     public void divideCard(final List<Card> cards) {
         for (int i = 0; i < cards.size(); i++) {
-            Participant participant = players.get(i / 2);
-            participant.addCard(cards.get(i));
+            Player player = players.get(i / 2);
+            player.addCard(cards.get(i));
         }
     }
 
     public void addCardTo(final String name, final Card card) {
-        final Participant findedParticipant = findParticipant(name);
-        findedParticipant.addCard(card);
+        final Player findedPlayer = findParticipant(name);
+        findedPlayer.addCard(card);
     }
 
     public Map<ParticipantName, WinStatus> determineWinStatus(final Score dealerScore) {
         final Map<ParticipantName, WinStatus> playersWinStatus = new LinkedHashMap<>();
 
-        for (Participant participant : players) {
-            playersWinStatus.put(participant.getName(), WinStatus.of(dealerScore, participant.calculate()));
+        for (Player player : players) {
+            playersWinStatus.put(player.getName(), WinStatus.of(dealerScore, player.calculate()));
         }
 
         return playersWinStatus;
@@ -60,11 +60,11 @@ public class Players {
     }
 
     public boolean isNotDead(final String name) {
-        final Participant participant = findParticipant(name);
-        return participant.isNotDead();
+        final Player player = findParticipant(name);
+        return player.isNotDead();
     }
 
-    private Participant findParticipant(final String name) {
+    private Player findParticipant(final String name) {
         return players.stream()
                 .filter(participant -> participant.isName(name))
                 .findAny()
@@ -72,29 +72,29 @@ public class Players {
     }
 
     public Hands getCardsOf(final String name) {
-        final Participant findedParticipant = findParticipant(name);
-        return findedParticipant.getHands();
+        final Player findedPlayer = findParticipant(name);
+        return findedPlayer.getHands();
     }
 
     public Map<ParticipantName, Hands> getPlayerHands() {
         return players.stream()
-                .collect(toMap(Participant::getName,
-                        Participant::getHands,
+                .collect(toMap(Player::getName,
+                        Player::getHands,
                         (v1, v2) -> v1,
                         LinkedHashMap::new));
     }
 
     public Map<ParticipantName, Score> getPlayerScores() {
         return players.stream()
-                .collect(toMap(Participant::getName,
-                        Participant::calculate,
+                .collect(toMap(Player::getName,
+                        Player::calculate,
                         (v1, v2) -> v1,
                         LinkedHashMap::new));
     }
 
     public List<ParticipantName> getNames() {
         return players.stream()
-                .map(Participant::getName)
+                .map(Player::getName)
                 .toList();
     }
 }

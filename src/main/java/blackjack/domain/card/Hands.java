@@ -18,7 +18,7 @@ public class Hands {
 
     private void validateDuplicate(final List<Card> cards) {
         if (Set.copyOf(cards).size() != cards.size()) {
-            throw new IllegalStateException("중복된 카드는 존재할 수 없습니다.");
+            throw new IllegalArgumentException("중복된 카드는 존재할 수 없습니다.");
         }
     }
 
@@ -28,7 +28,7 @@ public class Hands {
 
     public int sum() {
         return cards.stream()
-                .mapToInt(Card::getRealNumber)
+                .mapToInt(card -> card.getNumberName().getNumber())
                 .sum();
     }
 

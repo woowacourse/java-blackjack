@@ -2,8 +2,8 @@ package blackjack.dto;
 
 import blackjack.domain.card.Card;
 
-public record CardDTO(String number, String shape) {
-    public static CardDTO from(final Card dealerCard) {
-        return new CardDTO(dealerCard.getNumberName(), dealerCard.getShapeName());
+public record CardDto(String number, String shape) {
+    public static CardDto from(final Card dealerCard) {
+        return new CardDto(dealerCard.getNumberName().name(), dealerCard.getShapeName());
     }
 }

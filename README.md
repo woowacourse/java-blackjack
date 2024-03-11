@@ -26,7 +26,9 @@
 
 # 리팩토링 목록
 - [x] 딜러, 참여자 중복 로직 제거
-- [ ] 클래스 - 메서드 사이 공백 고민, 통일
-
-# 고민점
-- [ ] 이름이 '딜러'가 아닌지 검증
+- [x] 클래스 - 메서드 사이 공백 고민, 통일
+- [x] 딜러, 참여자, 플레이어, 게임, dto 컨벤션 체크
+- [x] 테스트 코드 컨벤션 체크
+- [x] entry -> 로 한 거 그냥 key, value로 바로 부르게 스트림 부분들 수정
+- [x] 여기도 map말고 key, value 가시적으로:WinningResultDto(Map<String, String> playerWinningResult, Map<String, Long> dealerWinningResult) {
+- [x] 카드 formatter도 도메인에 의존하게 변경

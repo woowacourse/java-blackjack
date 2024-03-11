@@ -16,11 +16,11 @@ class PlayersTest {
     @Test
     void validateDuplicate() {
         // given
-        Participant participant = Participant.from("kirby");
-        List<Participant> participants = List.of(participant, participant);
+        Player player = new Player("kirby");
+        List<Player> players = List.of(player, player);
 
         // when & then
-        assertThatThrownBy(() -> new Players(participants))
+        assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복된 이름의 참여자는 참여할 수 없습니다.");
     }
@@ -31,7 +31,7 @@ class PlayersTest {
         // given
         String kirby = "kirby";
         String pobi = "pobi";
-        Players players = new Players(List.of(new Participant(kirby), new Participant(pobi)));
+        Players players = new Players(List.of(new Player(kirby), new Player(pobi)));
         Card card1 = new Card(CardNumber.ACE, CardShape.SPADE);
         Card card2 = new Card(CardNumber.TWO, CardShape.SPADE);
         Card card3 = new Card(CardNumber.THREE, CardShape.SPADE);

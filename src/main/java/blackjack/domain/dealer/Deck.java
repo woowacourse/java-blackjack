@@ -21,15 +21,13 @@ public class Deck {
     }
 
     public static Deck create() {
-        return new Deck(createCards());
-    }
-
-    private static Set<Card> createCards() {
         final List<CardNumber> numbers = Arrays.asList(CardNumber.values());
 
-        return Arrays.stream(CardShape.values())
+        Set<Card> cards = Arrays.stream(CardShape.values())
                 .flatMap(shape -> numbers.stream().map(number -> new Card(number, shape)))
                 .collect(toCollection(LinkedHashSet::new));
+
+        return new Deck(cards);
     }
 
     public void shuffle() {

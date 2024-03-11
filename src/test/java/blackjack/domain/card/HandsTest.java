@@ -15,7 +15,7 @@ class HandsTest {
         List<Card> cards = List.of(card, card);
 
         assertThatThrownBy(() -> new Hands(cards))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복된 카드는 존재할 수 없습니다.");
     }
 
@@ -65,5 +65,20 @@ class HandsTest {
 
         // then
         assertThat(hands.getCards()).containsExactly(card1, card2, card3);
+    }
+
+    @DisplayName("첫번째 카드를 가져온다")
+    @Test
+    void getFirstCard() {
+        // given
+        Card card1 = new Card(CardNumber.ACE, CardShape.HEART);
+        Card card2 = new Card(CardNumber.ACE, CardShape.SPADE);
+        Hands hands = new Hands(List.of(card1, card2));
+
+        // when
+        Hands firstCard = hands.getFirstCard();
+
+        // then
+        assertThat(firstCard.getCards()).containsExactly(card1);
     }
 }

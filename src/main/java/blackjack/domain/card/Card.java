@@ -14,13 +14,8 @@ public class Card {
     public boolean isAce() {
         return number == CardNumber.ACE;
     }
-
-    public int getRealNumber() {
-        return number.getNumber();
-    }
-
-    public String getNumberName() {
-        return number.name();
+    public CardNumber getNumberName() {
+        return number;
     }
 
     public String getShapeName() {

@@ -1,19 +1,20 @@
 package blackjack.service;
 
+import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
 import blackjack.domain.dealer.Deck;
-import blackjack.domain.card.Hands;
 import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.Score;
 import blackjack.domain.result.WinStatus;
 import blackjack.domain.result.WinningResult;
-import blackjack.dto.CardDTO;
-import blackjack.dto.FinalResultDTO;
-import blackjack.dto.StartCardsDTO;
-import blackjack.dto.WinningResultDTO;
+import blackjack.dto.CardDto;
+import blackjack.dto.ParticipantCardsDto;
+import blackjack.dto.ParticipantCardsScoreDto;
+import blackjack.dto.WinningResultDto;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackjackGame {
     private final Players players;
@@ -24,7 +25,7 @@ public class BlackjackGame {
         this.dealer = new Dealer(Deck.create());
     }
 
-    public StartCardsDTO start() {
+    public List<ParticipantCardsDto> init() {
         dealer.shuffleDeck();
         dealer.addStartCard();
 
@@ -34,17 +35,25 @@ public class BlackjackGame {
         return getStartCards();
     }
 
-    private StartCardsDTO getStartCards() {
+    private List<ParticipantCardsDto> getStartCards() {
         final Map<ParticipantName, Hands> playersCard = players.getPlayerHands();
 
-        final Hands dealerHands = dealer.getOpenedHands();
-        playersCard.put(dealer.getName(), dealerHands);
+        List<ParticipantCardsDto> participantCardsDtos = playersCard.entrySet().stream()
+                .map(entry -> ParticipantCardsDto.of(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
 
-        return StartCardsDTO.of(playersCard);
+        participantCardsDtos.add(ParticipantCardsDto.of(dealer.getName(), dealer.getFirstCard()));
+        return participantCardsDtos;
     }
 
-    public void addCardToPlayers(final String name) {
+    public boolean addCardToPlayers(final String name) {
+        if (!isPlayerAliveByName(name)) {
+            return false;
+        }
+
         players.addCardTo(name, dealer.drawCard());
+
+        return true;
     }
 
     public int giveDealerMoreCard() {
@@ -58,7 +67,7 @@ public class BlackjackGame {
         return count;
     }
 
-    public FinalResultDTO getFinalResults() {
+    public List<ParticipantCardsScoreDto> getFinalResults() {
         final Map<ParticipantName, Hands> participantsHands = players.getPlayerHands();
         final Map<ParticipantName, Score> participantsScores = players.getPlayerScores();
 
@@ -68,15 +77,18 @@ public class BlackjackGame {
         participantsHands.put(dealer.getName(), dealerHands);
         participantsScores.put(dealer.getName(), dealerScore);
 
-        return FinalResultDTO.of(participantsHands, participantsScores);
+        return participantsHands.entrySet().stream()
+                .map(entry -> ParticipantCardsScoreDto.of(entry.getKey(), entry.getValue(), participantsScores.get(entry.getKey())))
+                .toList();
     }
 
-    public WinningResultDTO getWinningResults() {
+    public WinningResultDto getWinningResults() {
         final WinningResult winningResult = WinningResult.of(players, dealer.calculate());
+
         final Map<ParticipantName, WinStatus> playerWinningResults = winningResult.getParticipantsWinStatus();
         final Map<WinStatus, Long> dealerWinningResult = winningResult.summarizeDealerWinningResult();
 
-        return WinningResultDTO.of(playerWinningResults, dealerWinningResult);
+        return WinningResultDto.of(playerWinningResults, dealerWinningResult);
     }
 
     public boolean isPlayerAliveByName(final String name) {
@@ -87,9 +99,9 @@ public class BlackjackGame {
         return dealer.isNotBlackjack();
     }
 
-    public List<CardDTO> getCardsOf(final String name) {
+    public List<CardDto> getCardsOf(final String name) {
         return players.getCardsOf(name).getCards().stream()
-                .map(CardDTO::from)
+                .map(CardDto::from)
                 .toList();
     }
 

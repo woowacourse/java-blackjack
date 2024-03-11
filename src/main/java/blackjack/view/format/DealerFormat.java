@@ -1,11 +1,15 @@
 package blackjack.view.format;
 
-public enum DealerFormat {
-    DEALER("딜러");
+import blackjack.domain.dealer.Dealer;
 
+public enum DealerFormat {
+    DEALER(Dealer.DEALER_SIGNAL, "딜러");
+
+    private final String signal;
     private final String format;
 
-    DealerFormat(final String format) {
+    DealerFormat(final String signal, final String format) {
+        this.signal = signal;
         this.format = format;
     }
 
@@ -13,8 +17,8 @@ public enum DealerFormat {
         return format;
     }
 
-    public boolean isNot(final String input) {
-        return !this.name().equals(input);
+    public String getSignal() {
+        return signal;
     }
 
     public boolean isSignal(final String name) {
