@@ -9,8 +9,6 @@ import java.util.Scanner;
 public class InputView {
 
     private static final String DELIMITER = ",";
-    private static final String YES = "y";
-    private static final String NO = "n";
 
     private final Scanner scanner;
 
@@ -23,8 +21,11 @@ public class InputView {
         return Arrays.asList(scanner.nextLine().split(DELIMITER));
     }
 
-    public String readHitOrStay(Player player) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", player.getName(), YES, NO);
-        return scanner.nextLine();
+    public HitStay readHitStay(Player player) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n",
+                player.getName(),
+                HitStay.HIT.getInput(),
+                HitStay.STAY.getInput());
+        return HitStay.from(scanner.nextLine());
     }
 }

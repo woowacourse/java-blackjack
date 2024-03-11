@@ -7,6 +7,7 @@ import domain.participant.Name;
 import domain.participant.Participants;
 import domain.participant.Player;
 import strategy.RandomCardGenerator;
+import view.HitStay;
 import view.InputView;
 import view.OutputView;
 
@@ -64,7 +65,7 @@ public class BlackjackMachine {
     }
 
     private boolean isHitRequested(Player player) {
-        return HitStay.from(inputView.readHitOrStay(player)) == HitStay.HIT;
+        return inputView.readHitStay(player) == HitStay.HIT;
     }
 
     private void playDealerTurn(BlackjackGame game) {

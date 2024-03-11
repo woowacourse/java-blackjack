@@ -1,4 +1,4 @@
-package machine;
+package view;
 
 import java.util.Arrays;
 
@@ -18,5 +18,9 @@ public enum HitStay {
                 .filter(value -> value.input.equals(input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 적절하지 않은 입력입니다."));
+    }
+
+    public String getInput() {
+        return this.input;
     }
 }
