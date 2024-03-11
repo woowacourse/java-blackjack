@@ -1,7 +1,7 @@
 package blackjack.service;
 
-import blackjack.domain.betting.BetResult;
-import blackjack.domain.betting.BetRevenue;
+import blackjack.domain.bet.BetResult;
+import blackjack.domain.bet.BetRevenue;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
@@ -103,9 +103,5 @@ public class BlackjackGame {
         return players.getNames().stream()
                 .map(ParticipantName::getName)
                 .toList();
-    }
-
-    public String getDealerName() {
-        return dealer.getName().getName();
     }
 }

@@ -1,4 +1,4 @@
-package blackjack.domain.betting;
+package blackjack.domain.bet;
 
 import blackjack.exception.NeedRetryException;
 import java.util.Objects;

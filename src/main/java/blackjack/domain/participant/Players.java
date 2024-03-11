@@ -2,11 +2,11 @@ package blackjack.domain.participant;
 
 import static java.util.stream.Collectors.toMap;
 
-import blackjack.domain.betting.BetAmount;
-import blackjack.domain.betting.BetRevenue;
+import blackjack.domain.bet.BetAmount;
+import blackjack.domain.bet.BetRevenue;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
-import blackjack.domain.betting.BetStatus;
+import blackjack.domain.bet.BetStatus;
 import blackjack.exception.NeedRetryException;
 import java.util.Collections;
 import java.util.Iterator;
@@ -106,7 +106,7 @@ public class Players {
             playersWinStatus.put(name, betStatus.applyLeverage(betAmount));
 
         }
-        return playersWinStatus;
+        return Collections.unmodifiableMap(playersWinStatus);
     }
 
     public boolean hasName(final ParticipantName other) {

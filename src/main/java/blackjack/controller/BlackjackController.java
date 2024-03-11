@@ -35,7 +35,7 @@ public class BlackjackController {
 
     private BlackjackGame initGame() {
         return ExceptionHandler.retryWithSupplier(() ->
-                        new BlackjackGame(inputView.readPlayerNames()), outputView::printError);
+                new BlackjackGame(inputView.readPlayerNames()), outputView::printError);
     }
 
     private void saveAllPlayersBetAmount(final BlackjackGame blackjackGame) {
@@ -48,7 +48,7 @@ public class BlackjackController {
 
     private void saveBetAmount(final BlackjackGame blackjackGame, final String name) {
         ExceptionHandler.retryWithRunnable(() ->
-                        blackjackGame.saveBetAmountByName(inputView.readBetAmount(name), name), outputView::printError);
+                blackjackGame.saveBetAmountByName(inputView.readBetAmount(name), name), outputView::printError);
     }
 
     private void playGame(final BlackjackGame blackjackGame) {

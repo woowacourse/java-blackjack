@@ -1,4 +1,4 @@
-package blackjack.domain.betting;
+package blackjack.domain.bet;
 
 import blackjack.domain.participant.ParticipantName;
 import java.util.Map;
@@ -13,7 +13,7 @@ public class BetResult {
 
     public BetRevenue calculateDealerRevenue() {
         final double sum = playersBetRevenue.values().stream()
-                .mapToDouble(BetRevenue::getValue)
+                .mapToDouble(BetRevenue::value)
                 .sum();
 
         return new BetRevenue(-sum);

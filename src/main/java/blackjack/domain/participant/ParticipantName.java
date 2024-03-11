@@ -18,10 +18,6 @@ public class ParticipantName {
         }
     }
 
-    public boolean isSameName(final String otherName) {
-        return name.equals(otherName);
-    }
-
     public String getName() {
         return name;
     }

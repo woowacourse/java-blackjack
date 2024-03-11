@@ -1,4 +1,4 @@
-package blackjack.domain.betting;
+package blackjack.domain.bet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
