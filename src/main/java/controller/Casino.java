@@ -108,9 +108,9 @@ public class Casino {
                 .stream()
                 .map(player -> Victory.of(dealerHand, player.hand()))
                 .toList();
-        for (Victory victory : Victory.values()) {
-            dealerScoreBoard.put(victory, frequency(dealerScores, victory));
-        }
+        dealerScoreBoard.put(Victory.WIN, frequency(dealerScores, Victory.WIN));
+        dealerScoreBoard.put(Victory.DRAW, frequency(dealerScores, Victory.DRAW));
+        dealerScoreBoard.put(Victory.LOSE, frequency(dealerScores, Victory.LOSE));
         return new DealerScoreResult(dealerScoreBoard);
     }
 

@@ -1,5 +1,7 @@
 package view;
 
+import model.card.CardDeck;
+
 public enum Victory {
     WIN("승"),
     DRAW("무"),
@@ -12,11 +14,11 @@ public enum Victory {
     }
 
     public static Victory of(int standard, int comparisonTarget) {
-        if (standard > comparisonTarget) {
-            return WIN;
-        }
-        if (standard == comparisonTarget) {
+        if (standard == comparisonTarget || (standard > 21 && comparisonTarget > 21)) {
             return DRAW;
+        }
+        if (standard <= 21 && (standard > comparisonTarget || comparisonTarget > 21)) {
+            return WIN;
         }
         return LOSE;
     }
