@@ -23,18 +23,14 @@ class ParticipantsTest {
 
     private Player siso;
     private Player tacan;
-    private Dealer dealer;
-    private Players players;
     private Participants participants;
 
     @BeforeEach
     void beforeEach() {
         siso = new Player(new Name("시소"));
         tacan = new Player(new Name("타칸"));
-        dealer = new Dealer();
         List<Player> playerList = List.of(siso, tacan);
-        players = new Players(playerList);
-        participants = new Participants(dealer, players);
+        participants = new Participants(new Dealer(),  new Players(playerList));
     }
 
     @Test
@@ -65,7 +61,6 @@ class ParticipantsTest {
                 new Card(Shape.DIAMOND, Rank.TWO))
         );
 
-
         participants.receiveInitialHands(
                 new ArrayList<>(List.of(hands1, hands2, hands3))
         );
@@ -91,7 +86,6 @@ class ParticipantsTest {
                 new Card(Shape.DIAMOND, Rank.TWO))
         );
 
-
         participants.receiveInitialHands(
                 new ArrayList<>(List.of(hands1, hands2, hands3))
         );
@@ -99,8 +93,6 @@ class ParticipantsTest {
         WinOrLose winOrLose = participants.calculateWinOrLose();
         assertThat(winOrLose.getResult(siso)).isFalse();
     }
-
-
 
     @Test
     @DisplayName("딜러가 카드를 더 받을 수 있다.")
@@ -119,7 +111,6 @@ class ParticipantsTest {
                 new Card(Shape.DIAMOND, Rank.ACE),
                 new Card(Shape.DIAMOND, Rank.TWO))
         );
-
 
         participants.receiveInitialHands(
                 new ArrayList<>(List.of(hands1, hands2, hands3))
