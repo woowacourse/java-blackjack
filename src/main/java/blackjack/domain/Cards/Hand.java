@@ -1,4 +1,4 @@
-package blackjack.domain.Cards;
+package blackjack.domain.cards;
 
 import blackjack.domain.participants.Players;
 import java.util.Collections;
@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Hand {
-
     private static final int ACE_BONUS_SCORE = 10;
     private static final int NO_BONUS_SCORE = 0;
 
@@ -59,7 +58,7 @@ public class Hand {
         return cards.size();
     }
 
-    public List<Card> getCards() {
+    public List<Card> getCardsValue() {
         return Collections.unmodifiableList(cards);
     }
 }
