@@ -57,7 +57,7 @@ public class Users {
     }
 
     public boolean isDealerCardAddCondition() {
-        return getDealer().isDealerCardAddCondition();
+        return getDealer().isDealerCardAddable();
     }
 
     public void addDealerCard(Card card) {

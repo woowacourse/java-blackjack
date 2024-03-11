@@ -13,9 +13,9 @@ public class Dealer extends User {
         return deck.getFirstCard();
     }
 
-    public boolean isDealerCardAddCondition() {
+    public boolean isDealerCardAddable() {
         DealerDeck deck = (DealerDeck) userDeck;
-        return deck.isAdd();
+        return deck.isAddable();
     }
 
 }

@@ -11,7 +11,7 @@ public class DealerDeck extends UserDeck {
         return cards.get(FIRST_INDEX);
     }
 
-    public boolean isAdd() {
+    public boolean isAddable() {
         return sumCard() <= DEALER_CARD_CONDITION;
     }
 }
