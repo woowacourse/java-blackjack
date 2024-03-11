@@ -7,7 +7,7 @@ import view.OutputView;
 public class Application {
     public static void main(final String[] args) {
         final Blackjack blackjack = createBlackjack();
-        OutputView.printPlayersStatus(blackjack.getParticipants());
+        OutputView.printPlayersStatus(blackjack.getPlayers());
 
         playGame(blackjack);
         OutputView.printResults(blackjack.getPlayers());
@@ -16,7 +16,7 @@ public class Application {
     }
 
     private static void playGame(final Blackjack blackjack) {
-        for (final var player : blackjack.getParticipants()) {
+        for (final Player player : blackjack.getParticipants()) {
             drawCardDuringPlayerTurn(player, blackjack);
         }
 
@@ -35,7 +35,7 @@ public class Application {
     }
 
     private static void drawCardDuringPlayerTurn(final Player player, final Blackjack blackjack) {
-        while (player.isNotBust() && InputView.tryHit(player.getName())) {
+        while (player.canHit() && InputView.tryHit(player.getName())) {
             blackjack.dealCard(player);
             OutputView.printPlayerStatus(player);
         }

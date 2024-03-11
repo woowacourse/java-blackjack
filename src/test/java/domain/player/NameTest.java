@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,7 @@ class NameTest {
     @Test
     @DisplayName("이름이 비어 있으면 예외를 발생시킨다")
     void nameTest() {
-
+        Assertions.assertThatCode(() -> new Name("")).isInstanceOf(IllegalArgumentException.class);
     }
 
 }

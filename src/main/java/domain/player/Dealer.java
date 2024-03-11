@@ -4,6 +4,7 @@ import domain.blackjack.OneOnOneResult;
 
 public class Dealer extends Player {
     private static final String DEALER_NAME = "딜러";
+    private static final int HIT_UPPER_BOUND = 17;
     private static final Dealer dealer = new Dealer();
 
     private Dealer() {
@@ -13,9 +14,6 @@ public class Dealer extends Player {
     public static Dealer getInstance() {
         return dealer;
     }
-
-    private static final int HIT_UPPER_BOUND = 17;
-
 
     @Override
     public boolean isBust() {

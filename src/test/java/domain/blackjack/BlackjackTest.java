@@ -1,7 +1,5 @@
-package domain;
+package domain.blackjack;
 
-import domain.blackjack.Blackjack;
-import domain.blackjack.GameResult;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Symbol;
@@ -10,6 +8,7 @@ import domain.player.Name;
 import domain.player.Participant;
 import domain.player.Player;
 import domain.player.Players;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +18,11 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class BlackjackTest {
+
+    @BeforeEach
+    void init(){
+        Dealer.getInstance().clear();
+    }
 
     @Test
     @DisplayName("딜러에게 2장의 카드가 주어졌는지 확인한다")
