@@ -6,6 +6,8 @@ import static blackjack.model.deck.Score.THREE;
 import static blackjack.model.deck.Score.TWO;
 import static blackjack.model.deck.Shape.CLOVER;
 import static blackjack.model.deck.Shape.DIA;
+import static blackjack.model.deck.Shape.HEART;
+import static blackjack.model.deck.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -51,6 +53,14 @@ class PlayerTest {
         Player player = Player.of("몰리", hand);
 
         assertThat(player.canHit()).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어가 가진 카드의 합이 임계 값을 넘으면 bust이다.")
+    void isBust() {
+        Hand hand = new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, TEN), new Card(HEART, TEN)));
+        Player player = Player.of("몰리", hand);
+        assertThat(player.isBust()).isTrue();
     }
 
     @Test

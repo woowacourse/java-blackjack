@@ -31,7 +31,7 @@ public class Player {
     }
 
     public boolean isBust() {
-        return hand.isBust();
+        return hand.calculateScore() > HITTABLE_THRESHOLD;
     }
 
     public int getScore() {

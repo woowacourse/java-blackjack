@@ -63,13 +63,6 @@ class HandTest {
     }
 
     @Test
-    @DisplayName("카드들의 합이 임계 값을 넘으면 bust이다.")
-    void isBust() {
-        Hand hand = new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, TEN), new Card(HEART, TEN)));
-        assertThat(hand.isBust()).isTrue();
-    }
-
-    @Test
     @DisplayName("카드의 개수를 반환한다.")
     void countCardsSize() {
         Hand hand = new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, TEN), new Card(HEART, TEN)));

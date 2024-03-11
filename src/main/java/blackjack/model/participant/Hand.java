@@ -60,10 +60,6 @@ public class Hand {
         return aceCount == SOFT_ACE_COUNT && baseScore <= SOFT_MAX_SCORE_WITHOUT_ACE;
     }
 
-    public boolean isBust() {
-        return calculateScore() > BLACKJACK_SCORE;
-    }
-
     public int countSize() {
         return cards.size();
     }
