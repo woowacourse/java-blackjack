@@ -18,10 +18,10 @@ public class HitAnswer {
     }
 
     private static boolean convertYesOrNoToBoolean(String answer) {
-        if (answer.equals(YES)) {
+        if (YES.equals(answer)) {
             return true;
         }
-        if (answer.equals(NO)) {
+        if (NO.equals(answer)) {
             return false;
         }
         throw new IllegalArgumentException(INVALID_ANSWER);
