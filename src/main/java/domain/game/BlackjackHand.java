@@ -51,7 +51,7 @@ public class BlackjackHand {
 
     private int countAce() {
         return (int) cards.stream()
-                .filter(card -> card.getRank() == Rank.ACE)
+                .filter(Card::isAce)
                 .count();
     }
 
