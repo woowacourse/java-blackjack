@@ -31,10 +31,8 @@ public class BlackjackGame {
     }
 
     private void validateDateDealerName() {
-        final ParticipantName dealerName = dealer.getName();
-
-        if (players.hasName(dealerName)) {
-            throw new NeedRetryException(dealerName.getName() + "를 이름으로 사용할 수 없습니다.");
+        if (players.hasName(Dealer.DEALER_NAME)) {
+            throw new NeedRetryException(Dealer.DEALER_NAME + "를 이름으로 사용할 수 없습니다.");
         }
     }
 
@@ -49,7 +47,7 @@ public class BlackjackGame {
 
     private StartCardsDto getStartCards() {
         final Hands dealerOpenedHands = dealer.getOpenedHands();
-        return StartCardsDto.of(players.getPlayersHands(), dealerOpenedHands, dealer.getName());
+        return StartCardsDto.of(players.getPlayersHands(), dealerOpenedHands, new ParticipantName(Dealer.DEALER_NAME));
     }
 
     public void saveBetAmountByName(final int betAmount, final String name) {
@@ -62,7 +60,7 @@ public class BlackjackGame {
 
     public DealerMoreCardDto giveDealerMoreCard() {
         if (players.isAllDead()) {
-            return DealerMoreCardDto.of(dealer.getName(), 0, Dealer.NEED_CARD_NUMBER_MAX);
+            return DealerMoreCardDto.of(Dealer.DEALER_NAME, 0, Dealer.NEED_CARD_NUMBER_MAX);
         }
         int count = 0;
 
@@ -71,7 +69,7 @@ public class BlackjackGame {
             count++;
         }
 
-        return DealerMoreCardDto.of(dealer.getName(), count, Dealer.NEED_CARD_NUMBER_MAX);
+        return DealerMoreCardDto.of(Dealer.DEALER_NAME, count, Dealer.NEED_CARD_NUMBER_MAX);
     }
 
     public boolean isNotDealerBlackjack() {
@@ -91,7 +89,7 @@ public class BlackjackGame {
         final BetResult betResult = new BetResult(playersBetResult);
         final BetRevenue dealerRevenue = betResult.calculateDealerRevenue();
 
-        return BetRevenueResultDto.of(playersBetResult, dealerRevenue, dealer.getName());
+        return BetRevenueResultDto.of(playersBetResult, dealerRevenue, Dealer.DEALER_NAME);
     }
 
     public PlayerCardsDto getCardsOf(final String name) {

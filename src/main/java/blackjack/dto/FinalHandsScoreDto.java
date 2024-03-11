@@ -13,6 +13,6 @@ public record FinalHandsScoreDto(List<PlayerHandsScoreDto> playersHandsScore, Pl
                 .map(entry -> PlayerHandsScoreDto.of(entry.getKey(), entry.getValue()))
                 .toList();
 
-        return new FinalHandsScoreDto(handsScores, PlayerHandsScoreDto.of(dealer.getName(), dealer.getHands()));
+        return new FinalHandsScoreDto(handsScores, PlayerHandsScoreDto.of(new ParticipantName(Dealer.DEALER_NAME), dealer.getHands()));
     }
 }

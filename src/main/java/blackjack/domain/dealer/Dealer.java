@@ -1,17 +1,16 @@
 package blackjack.domain.dealer;
 
 import blackjack.domain.card.BlackjackStatus;
-import blackjack.domain.card.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
-import blackjack.domain.participant.ParticipantName;
+import blackjack.domain.card.Score;
 import java.util.List;
 import java.util.stream.Stream;
 
 public class Dealer {
 
     public static final int NEED_CARD_NUMBER_MAX = 16;
-    private static final ParticipantName DEALER_NAME = new ParticipantName("딜러");
+    public static final String DEALER_NAME = "딜러";
 
     private final Deck deck;
     private final Hands hands;
@@ -56,9 +55,5 @@ public class Dealer {
 
     public Hands getHands() {
         return new Hands(hands.getCards());
-    }
-
-    public ParticipantName getName() {
-        return DEALER_NAME;
     }
 }

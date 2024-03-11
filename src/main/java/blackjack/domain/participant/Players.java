@@ -110,9 +110,9 @@ public class Players {
         return Collections.unmodifiableMap(playersWinStatus);
     }
 
-    public boolean hasName(final ParticipantName other) {
+    public boolean hasName(final String other) {
         return handsRepository.keySet().stream()
-                .anyMatch(name -> name.equals(other));
+                .anyMatch(name -> name.equals(new ParticipantName(other)));
     }
 
     public boolean isNotDead(final String name) {

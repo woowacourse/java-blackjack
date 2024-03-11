@@ -13,7 +13,7 @@ public record BetRevenueResultDto(
     public static BetRevenueResultDto of(
             final Map<ParticipantName, BetRevenue> playersBetResult,
             final BetRevenue dealerBetRevenue,
-            final ParticipantName dealerName
+            final String dealerName
     ) {
         return new BetRevenueResultDto(convertToPlayersDto(playersBetResult), DealerBetResultDto.of(dealerName, dealerBetRevenue));
     }
