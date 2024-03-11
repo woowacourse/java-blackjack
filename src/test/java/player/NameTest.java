@@ -35,4 +35,12 @@ class NameTest {
 
         Assertions.assertThat(name.getValue()).isEqualTo(inputName);
     }
+
+    @DisplayName("이름의 앞 뒤 공백을 제거한 후 저장한다.")
+    @Test
+    void getTrimedName() {
+        Name name = new Name("pola ");
+
+        Assertions.assertThat(name.getValue()).isEqualTo("pola");
+    }
 }
