@@ -1,8 +1,10 @@
 package player;
 
-import card.Card;
-import card.CardNumber;
-import card.CardPattern;
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardPattern;
+import domain.gamer.Name;
+import domain.gamer.Player;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +32,7 @@ public class PlayerTest {
         player.receiveCard(queenCard);
         player.receiveCard(jackCard);
 
-        Assertions.assertThat(player.isOverMaxCardScore()).isTrue();
+        Assertions.assertThat(player.isDrawable()).isTrue();
     }
 
     @DisplayName("Player가 들고 있는 카드가 최고점을 넘지 않을경우 false를 return한다.")
@@ -40,6 +42,6 @@ public class PlayerTest {
 
         player.receiveCard(kingCard);
 
-        Assertions.assertThat(player.isOverMaxCardScore()).isFalse();
+        Assertions.assertThat(player.isDrawable()).isFalse();
     }
 }
