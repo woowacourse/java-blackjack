@@ -18,11 +18,7 @@ public class Deck {
     }
 
     private List<Card> init() {
-        List<Card> initialCards = new ArrayList<>();
-        for (Shape shape : Shape.values()) {
-            Arrays.stream(Rank.values())
-                    .forEach(rank -> initialCards.add(new Card(shape, rank)));
-        }
+        List<Card> initialCards = Card.getCache();
         Collections.shuffle(initialCards);
         return initialCards;
     }
