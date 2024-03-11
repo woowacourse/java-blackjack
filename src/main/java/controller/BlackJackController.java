@@ -3,7 +3,6 @@ package controller;
 import domain.blackjack.BetAmount;
 import domain.blackjack.BettingResult;
 import domain.blackjack.BlackJack;
-import domain.blackjack.BlackJackResult;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
@@ -29,7 +28,7 @@ public class BlackJackController {
         dealerHit(blackJack);
 
         printScore(dealer, participants);
-        printResult(blackJack, betAmount);
+        printResult(dealer, betAmount);
     }
 
     private LinkedHashMap<Participant, BetAmount> createBetAmount(Participants participants) {
@@ -70,9 +69,8 @@ public class BlackJackController {
         }
     }
 
-    private void printResult(BlackJack blackJack, LinkedHashMap<Participant, BetAmount> bet) {
-        BlackJackResult blackJackResult = blackJack.saveParticipantResult();
-        BettingResult bettingResult = new BettingResult(bet, blackJackResult);
+    private void printResult(Dealer dealer, LinkedHashMap<Participant, BetAmount> bet) {
+        BettingResult bettingResult = new BettingResult(bet, dealer);
         OutputView.printBlackJackResult(bettingResult);
     }
 }

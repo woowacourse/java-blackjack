@@ -4,7 +4,6 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
 
-import java.util.LinkedHashMap;
 import java.util.function.BiConsumer;
 
 public class BlackJack {
@@ -36,13 +35,5 @@ public class BlackJack {
             count++;
         }
         return count;
-    }
-
-    public BlackJackResult saveParticipantResult() {
-        LinkedHashMap<Participant, WinStatus> result = new LinkedHashMap<>();
-        for (Participant participant : participants.getValue()) {
-            result.put(participant, dealer.isWinner(participant));
-        }
-        return new BlackJackResult(result);
     }
 }

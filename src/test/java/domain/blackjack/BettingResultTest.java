@@ -1,5 +1,9 @@
 package domain.blackjack;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Shape;
+import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Participant;
 import org.assertj.core.api.Assertions;
@@ -15,11 +19,13 @@ class BettingResultTest {
     void getPayoutWhenWin() {
         LinkedHashMap<Participant, BetAmount> bet = new LinkedHashMap<>();
         Participant participant = new Participant(new Name("one"));
-        LinkedHashMap<Participant, WinStatus> result = new LinkedHashMap<>();
-        result.put(participant, WinStatus.WIN);
-        BlackJackResult blackJackResult = new BlackJackResult(result);
+        participant.receiveCard(new Card(Shape.DIA, Rank.JACK));
+
         bet.put(participant, new BetAmount(10_000));
-        BettingResult bettingResult = new BettingResult(bet, blackJackResult);
+
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Shape.DIA, Rank.SIX));
+        BettingResult bettingResult = new BettingResult(bet, dealer);
 
         double payout = bettingResult.getPayout(participant);
 
@@ -31,11 +37,13 @@ class BettingResultTest {
     void getPayoutWhenLose() {
         LinkedHashMap<Participant, BetAmount> bet = new LinkedHashMap<>();
         Participant participant = new Participant(new Name("one"));
-        LinkedHashMap<Participant, WinStatus> result = new LinkedHashMap<>();
-        result.put(participant, WinStatus.LOSE);
-        BlackJackResult blackJackResult = new BlackJackResult(result);
+        participant.receiveCard(new Card(Shape.DIA, Rank.SIX));
+
         bet.put(participant, new BetAmount(10_000));
-        BettingResult bettingResult = new BettingResult(bet, blackJackResult);
+
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Shape.DIA, Rank.JACK));
+        BettingResult bettingResult = new BettingResult(bet, dealer);
 
         double payout = bettingResult.getPayout(participant);
 
@@ -47,11 +55,14 @@ class BettingResultTest {
     void getPayoutWhenBlackJack() {
         LinkedHashMap<Participant, BetAmount> bet = new LinkedHashMap<>();
         Participant participant = new Participant(new Name("one"));
-        LinkedHashMap<Participant, WinStatus> result = new LinkedHashMap<>();
-        result.put(participant, WinStatus.BLACKJACK);
-        BlackJackResult blackJackResult = new BlackJackResult(result);
+        participant.receiveCard(new Card(Shape.DIA, Rank.JACK));
+        participant.receiveCard(new Card(Shape.DIA, Rank.ACE));
+
         bet.put(participant, new BetAmount(10_000));
-        BettingResult bettingResult = new BettingResult(bet, blackJackResult);
+
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Shape.DIA, Rank.SIX));
+        BettingResult bettingResult = new BettingResult(bet, dealer);
 
         double payout = bettingResult.getPayout(participant);
 
@@ -63,11 +74,15 @@ class BettingResultTest {
     void getPayoutWhenDraw() {
         LinkedHashMap<Participant, BetAmount> bet = new LinkedHashMap<>();
         Participant participant = new Participant(new Name("one"));
-        LinkedHashMap<Participant, WinStatus> result = new LinkedHashMap<>();
-        result.put(participant, WinStatus.DRAW);
-        BlackJackResult blackJackResult = new BlackJackResult(result);
+        participant.receiveCard(new Card(Shape.DIA, Rank.JACK));
+        participant.receiveCard(new Card(Shape.DIA, Rank.ACE));
+
         bet.put(participant, new BetAmount(10_000));
-        BettingResult bettingResult = new BettingResult(bet, blackJackResult);
+
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Shape.CLOVER, Rank.ACE));
+        dealer.receiveCard(new Card(Shape.CLOVER, Rank.QUEEN));
+        BettingResult bettingResult = new BettingResult(bet, dealer);
 
         double payout = bettingResult.getPayout(participant);
 
@@ -78,18 +93,25 @@ class BettingResultTest {
     @Test
     void getDealerPayout() {
         LinkedHashMap<Participant, BetAmount> bet = new LinkedHashMap<>();
-        LinkedHashMap<Participant, WinStatus> result = new LinkedHashMap<>();
         Participant one = new Participant(new Name("one"));
-        Participant two = new Participant(new Name("one"));
-        Participant three = new Participant(new Name("one"));
+        one.receiveCard(new Card(Shape.CLOVER, Rank.TEN));
+        one.receiveCard(new Card(Shape.DIA, Rank.JACK));
+
+        Participant two = new Participant(new Name("two"));
+        two.receiveCard(new Card(Shape.DIA, Rank.KING));
+
+        Participant three = new Participant(new Name("three"));
+        three.receiveCard(new Card(Shape.SPADE, Rank.KING));
+        three.receiveCard(new Card(Shape.SPADE, Rank.ACE));
+
         bet.put(one, new BetAmount(10_000));
-        result.put(one, WinStatus.WIN);
         bet.put(two, new BetAmount(15_000));
-        result.put(two, WinStatus.LOSE);
         bet.put(three, new BetAmount(10_000));
-        result.put(three, WinStatus.BLACKJACK);
-        BlackJackResult blackJackResult = new BlackJackResult(result);
-        BettingResult bettingResult = new BettingResult(bet, blackJackResult);
+
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Shape.CLOVER, Rank.JACK));
+        dealer.receiveCard(new Card(Shape.CLOVER, Rank.NINE));
+        BettingResult bettingResult = new BettingResult(bet, dealer);
 
         double payout = bettingResult.getDealerPayout();
 
