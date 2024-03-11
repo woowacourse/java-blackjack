@@ -38,10 +38,10 @@ public class Hand {
 
     private int calculateMaximumScore() {
         int score = calculateMinimumScore();
-        boolean isAce = cards.stream()
+        boolean hasAceInCards = cards.stream()
                 .anyMatch(Card::isAce);
 
-        if (isAce) {
+        if (hasAceInCards) {
             return score + ADDITIONAL_ACE_SCORE;
         }
         return score;
