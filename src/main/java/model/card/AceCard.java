@@ -13,16 +13,17 @@ public class AceCard extends Card {
         softAce = true;
     }
 
-    public void changeToHardAce() {
-        if (softAce) {
-            softAce = false;
-            return;
-        }
-        throw new IllegalStateException("Cannot Change Again");
+    @Override
+    public boolean isSoftAce() {
+        return thenChangeToHardAceAndReturnTrue();
     }
 
-    public boolean isSoftAce() {
-        return softAce;
+    private boolean thenChangeToHardAceAndReturnTrue() {
+        if (softAce) {
+            softAce = false;
+            return true;
+        }
+        return false;
     }
 
     @Override

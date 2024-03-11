@@ -19,6 +19,10 @@ public class Card {
         return new Card(number, emblem);
     }
 
+    public boolean isSoftAce() {
+        return false;
+    }
+
     public int getCardActualValue() {
         return number.getValue();
     }

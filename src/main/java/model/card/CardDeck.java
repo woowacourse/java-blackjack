@@ -20,11 +20,8 @@ public class CardDeck {
     private void changeSoftAceToHardWhenBust() {
         if (isBust()) {
             cards.stream()
-                    .filter(AceCard.class::isInstance)
-                    .map(AceCard.class::cast)
-                    .filter(AceCard::isSoftAce)
-                    .findFirst()
-                    .ifPresent(AceCard::changeToHardAce);
+                    .filter(Card::isSoftAce)
+                    .findFirst();
         }
     }
 
