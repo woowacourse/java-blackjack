@@ -41,4 +41,12 @@ public class CardTest {
 
         Assertions.assertThat(card.isAceCard()).isFalse();
     }
+
+    @DisplayName("카드의 모습을 가져오는지 Test")
+    @Test
+    void getCardFeature() {
+        Card card = new Card(CardNumber.JACK, CardPattern.CLOVER_PATTERN);
+
+        Assertions.assertThat(card.getCardFeature()).isEqualTo("J클로버");
+    }
 }

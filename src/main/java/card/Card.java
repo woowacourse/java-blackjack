@@ -20,7 +20,7 @@ public class Card {
         return cardNumber == CardNumber.ACE;
     }
 
-    public String getCardHand() {
+    public String getCardFeature() {
         return cardNumber.number + cardPattern.name;
     }
 }

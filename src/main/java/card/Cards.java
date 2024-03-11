@@ -41,7 +41,7 @@ public class Cards {
 
     public List<String> getCardsStatus() {
         return cards.stream()
-                .map(Card::getCardHand)
+                .map(Card::getCardFeature)
                 .toList();
     }
 

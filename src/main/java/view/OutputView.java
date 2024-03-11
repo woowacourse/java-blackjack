@@ -27,7 +27,7 @@ public class OutputView {
         String playersNames = changeNameFormat(players.getPlayerNames());
 
         System.out.println("\n" + DEALER + "와 " + playersNames + "에게 " + INIT_CARD_COUNT + "장을 나누었습니다.");
-        System.out.println(DEALER_NAME_SYMBOL + card.getCardHand());
+        System.out.println(DEALER_NAME_SYMBOL + card.getCardFeature());
 
         for (Player player : players.getPlayers()) {
             System.out.println(
