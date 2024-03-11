@@ -15,14 +15,12 @@ public class Users {
     private static final int DEALER_INDEX = 0;
     private static final int FIRST_PLAYER_INDEX = 1;
     private final List<User> users;
-    private User currentUser;
 
     public Users(List<Player> players) {
         validateDuplicatedName(players);
         users = new ArrayList<>();
         users.add(DEALER_INDEX, new Dealer());
         users.addAll(players);
-        currentUser = users.get(FIRST_PLAYER_INDEX);
     }
 
     public void setStartCards(TotalDeck totalDeck) {
@@ -30,30 +28,6 @@ public class Users {
             user.addCard(totalDeck.getNewCard());
             user.addCard(totalDeck.getNewCard());
         }
-    }
-
-    public boolean isCurrentUserPlayer() {
-        return currentUser.isPlayer();
-    }
-
-    public void addCardOfCurrentUser(Card card) {
-        currentUser.addCard(card);
-    }
-
-    public void nextUser() {
-        if (lastPlayer()) {
-            currentUser = getDealer();
-            return;
-        }
-        currentUser = users.get(nextUserIndex());
-    }
-
-    private boolean lastPlayer() {
-        return users.get(users.size() - 1).equals(currentUser);
-    }
-
-    private int nextUserIndex() {
-        return users.indexOf(currentUser) + 1;
     }
 
     public boolean isDealerCardAddable() {
@@ -74,16 +48,8 @@ public class Users {
         return Result.compare(player.sumUserDeck(), getDealer().sumUserDeck());
     }
 
-    public boolean currentUserBusted() {
-        return currentUser.busted();
-    }
-
     public List<User> getUsers() {
         return Collections.unmodifiableList(users);
-    }
-
-    public User getCurrentUser() {
-        return currentUser;
     }
 
     public List<Player> getPlayers() {
@@ -93,7 +59,7 @@ public class Users {
                 .collect(Collectors.toList());
     }
 
-    public Dealer getDealer() {
+    private Dealer getDealer() {
         return (Dealer) users.get(DEALER_INDEX);
     }
 

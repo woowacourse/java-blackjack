@@ -25,29 +25,19 @@ public class Game {
         users.setStartCards(totalDeck);
     }
 
-    public boolean continueInput() {
-        return users.isCurrentUserPlayer();
-    }
-
-    public State hitOrStay(Command command) {
+    public State hitOrStay(Command command, User user) {
         if (YES == command) {
-            users.addCardOfCurrentUser(totalDeck.getNewCard());
-            return hitOrBust();
+            user.addCard(totalDeck.getNewCard());
+            return hitOrBust(user);
         }
-        users.nextUser();
         return STAY;
     }
 
-    private State hitOrBust() {
-        if (users.currentUserBusted()) {
-            users.nextUser();
+    private State hitOrBust(User user) {
+        if (user.busted()) {
             return BUST;
         }
         return HIT;
-    }
-
-    public boolean isDealerCardAddCondition() {
-        return users.isDealerCardAddable();
     }
 
     public void addDealerCard() {
@@ -64,9 +54,5 @@ public class Game {
                         LinkedHashMap::new
                 ));
         return new PlayerResults(playerResults);
-    }
-
-    public User getCurrentPlayer() {
-        return users.getCurrentUser();
     }
 }

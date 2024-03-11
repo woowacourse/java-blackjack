@@ -1,6 +1,5 @@
 package domain.game;
 
-import static domain.Command.NO;
 import static domain.Command.YES;
 import static domain.game.Result.LOSE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,22 +36,9 @@ public class GameTest {
         Users users = new Users(List.of(player));
 
         Game game = new Game(totalDeck, users);
-        game.hitOrStay(YES);
+        game.hitOrStay(YES, player);
 
         assertThat(player.getAllCards()).hasSize(3);
-    }
-
-    @Test
-    @DisplayName("입력이 n이면 다음 유저로 넘어간다.")
-    void stayTest() {
-        TotalDeck totalDeck = new TotalDeck(TotalDeckGenerator.generate());
-        Player player = new Player(new Name("a"));
-        Users users = new Users(List.of(player));
-
-        Game game = new Game(totalDeck, users);
-        game.hitOrStay(NO);
-
-        assertThat(game.getCurrentPlayer()).isNotEqualTo(player);
     }
 
     @Test
