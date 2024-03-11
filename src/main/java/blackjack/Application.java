@@ -65,6 +65,7 @@ public class Application {
         hitPlayers(gameBoard);
         OutputView.printLineSeparator();
         hitDealer(gameBoard);
+        OutputView.printLineSeparator();
     }
 
     private static void hitPlayers(final GameBoard gameBoard) {
