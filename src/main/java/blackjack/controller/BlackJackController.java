@@ -4,12 +4,14 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.GameResultBoard;
 import blackjack.domain.Player;
+import blackjack.domain.PlayerMeta;
 import blackjack.domain.Players;
 import blackjack.domain.card.Card;
 import blackjack.domain.dto.PlayerDto;
 import blackjack.domain.dto.PlayerResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackController {
@@ -23,11 +25,21 @@ public class BlackJackController {
 
     public void start() {
         Dealer dealer = new Dealer();
-        Players players = Players.from(inputView.inputPlayerNames());
+        Players players = initPlayers();
         Deck deck = Deck.createShuffledDeck();
 
         playGame(dealer, players, deck);
         printGameResult(dealer, players);
+    }
+
+    private Players initPlayers() {
+        List<String> playerNames = inputView.inputPlayerNames();
+        List<PlayerMeta> playerMetas = new ArrayList<>();
+        for (String name : playerNames) {
+            int betAmount = inputView.inputBetAmount(name);
+            playerMetas.add(new PlayerMeta(name, betAmount));
+        }
+        return Players.from(playerMetas);
     }
 
     private void playGame(Dealer dealer, Players players, Deck deck) {
