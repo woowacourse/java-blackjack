@@ -4,6 +4,7 @@ import domain.participant.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import machine.HitStay;
 
 public class InputView {
 
@@ -22,8 +23,15 @@ public class InputView {
         return Arrays.asList(scanner.nextLine().split(DELIMITER));
     }
 
-    public String readHitOrStay(Player player) {
+    public HitStay readHitOrStay(Player player) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", player.getName(), YES, NO);
-        return scanner.nextLine();
+        String rawHitStay = scanner.nextLine();
+        if (rawHitStay.equals(YES)) {
+            return HitStay.HIT;
+        }
+        if (rawHitStay.equals(NO)) {
+            return HitStay.STAY;
+        }
+        throw new IllegalArgumentException(String.format("[ERROR] %s 혹은 %s만 입력해 주세요.", YES, NO));
     }
 }

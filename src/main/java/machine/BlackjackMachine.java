@@ -63,7 +63,7 @@ public class BlackjackMachine {
     }
 
     private boolean isHitRequested(Player player) {
-        return HitStay.from(inputView.readHitOrStay(player)) == HitStay.HIT;
+        return inputView.readHitOrStay(player) == HitStay.HIT;
     }
 
     private void playDealerTurn(BlackjackGame game) {
