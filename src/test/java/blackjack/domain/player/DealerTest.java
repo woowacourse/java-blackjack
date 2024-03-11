@@ -69,7 +69,7 @@ class DealerTest {
                 new Card(QUEEN, SPADE));
 
         var totalResult = dealer.judgeWithPlayers(List.of(player))
-                .getTotalResult();
+                .totalResult();
 
         assertThat(totalResult.get(player)).isEqualTo(WinningStatus.LOSE);
     }
@@ -80,7 +80,7 @@ class DealerTest {
         Dealer dealer = dealer(new Card(TWO, SPADE));
 
         var result = dealer.judgeWithPlayers(List.of(player))
-                .getTotalResult();
+                .totalResult();
 
         assertThat(result.get(player)).isEqualTo(WinningStatus.WIN);
     }
@@ -94,7 +94,7 @@ class DealerTest {
         Dealer dealer = dealer(new Card(TWO, HEART));
 
         var result = dealer.judgeWithPlayers(List.of(player))
-                .getTotalResult();
+                .totalResult();
 
         assertThat(result.get(player)).isEqualTo(WinningStatus.LOSE);
     }
@@ -108,7 +108,7 @@ class DealerTest {
                 new Card(KING, SPADE));
 
         var result = dealer.judgeWithPlayers(List.of(player))
-                .getTotalResult();
+                .totalResult();
 
         assertThat(result.get(player)).isEqualTo(WinningStatus.WIN);
     }
@@ -119,7 +119,7 @@ class DealerTest {
         Dealer dealer = dealer(new Card(KING, SPADE));
 
         var result = dealer.judgeWithPlayers(List.of(player))
-                .getTotalResult();
+                .totalResult();
 
         assertThat(result.get(player)).isEqualTo(WinningStatus.WIN);
     }
@@ -130,7 +130,7 @@ class DealerTest {
         Dealer dealer = dealer(new Card(ACE, HEART));
 
         var result = dealer.judgeWithPlayers(List.of(player))
-                .getTotalResult();
+                .totalResult();
 
         assertThat(result.get(player)).isEqualTo(WinningStatus.PUSH);
     }

@@ -88,7 +88,7 @@ public class OutputView {
     }
 
     private static void printResultOfEachPlayer(final CardGameResult cardGameResult) {
-        cardGameResult.getTotalResult()
+        cardGameResult.totalResult()
                 .entrySet()
                 .stream()
                 .map(result -> result.getKey().getName() + ": " + result.getValue().getValue())

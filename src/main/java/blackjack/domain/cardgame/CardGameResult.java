@@ -8,14 +8,9 @@ import java.util.Map;
 import static blackjack.domain.cardgame.WinningStatus.LOSE;
 import static blackjack.domain.cardgame.WinningStatus.WIN;
 
-public class CardGameResult {
-    private final Map<Player, WinningStatus> totalResult;
-
-    public CardGameResult(Map<Player, WinningStatus> totalResult) {
-        this.totalResult = totalResult;
-    }
-
-    public Map<Player, WinningStatus> getTotalResult() {
+public record CardGameResult(Map<Player, WinningStatus> totalResult) {
+    @Override
+    public Map<Player, WinningStatus> totalResult() {
         return Collections.unmodifiableMap(totalResult);
     }
 
