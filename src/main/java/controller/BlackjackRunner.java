@@ -22,7 +22,6 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackjackRunner {
-
     public void play() {
         TotalDeck totalDeck = new TotalDeck(TotalDeckGenerator.generate());
         Users users = ExceptionHandler.handle(InputView::inputNames);
