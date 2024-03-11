@@ -16,11 +16,10 @@ public class OutputFormat {
     private static final String DELIMITER = ", ";
 
     public String formatParticipantNames(Participants participants) {
-        List<Name> names = participants.getNames();
-        List<String> participantNames = new ArrayList<>();
-        for (Name name : names) {
-            participantNames.add(name.getValue());
-        }
+        List<String> participantNames = participants.getNames()
+                .stream()
+                .map(Name::getValue)
+                .toList();
         return String.format("딜러와 %s에게 2장을 나누었습니다.", String.join(DELIMITER, participantNames));
     }
 
