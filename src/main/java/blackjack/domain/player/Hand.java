@@ -14,7 +14,7 @@ public class Hand {
 
     int getScore(final int bustCondition) {
         final int minimumScore = cards.stream()
-                .mapToInt(Card::getNumber)
+                .mapToInt(Card::getScore)
                 .sum();
 
         final int bonusScore = this.getBonusScore();

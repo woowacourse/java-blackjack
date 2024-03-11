@@ -13,11 +13,15 @@ public class Card {
         return cardNumber == CardNumber.ACE;
     }
 
-    public int getNumber() {
+    public int getScore() {
         return cardNumber.getValue();
     }
 
-    public String getShape() {
-        return cardShape.getName();
+    public CardNumber getNumber() {
+        return cardNumber;
+    }
+
+    public CardShape getShape() {
+        return cardShape;
     }
 }
