@@ -45,15 +45,15 @@ public class Score {
         return scoreValue > BLACKJACK_MAX_SCORE;
     }
 
-    public boolean isGreaterThan(Score relativeScore) {
+    private boolean isGreaterThan(Score relativeScore) {
         return value > relativeScore.value;
     }
 
-    public boolean isSame(Score relativeScore) {
+    private boolean isSame(Score relativeScore) {
         return value == relativeScore.value;
     }
 
-    public boolean isLessThan(Score relativeScore) {
+    private boolean isLessThan(Score relativeScore) {
         return value < relativeScore.value;
     }
 
@@ -70,6 +70,27 @@ public class Score {
         }
 
         return Score.of(currentValue);
+    }
+
+    public GameResult compareWith(Score other) {
+        // TODO: 메서드 행 줄이기ㅣ
+        if (this.isBusted() && other.isBusted()) {
+            return GameResult.DRAW; // both busted
+        }
+        if (this.isBusted()) {
+            return GameResult.LOSE;
+        }
+        if (other.isBusted()) {
+            return GameResult.WIN;
+        }
+
+        if (this.isGreaterThan(other)) {
+            return GameResult.WIN;
+        }
+        if (this.isLessThan(other)) {
+            return GameResult.LOSE;
+        }
+        return GameResult.DRAW;
     }
 
     public int getValue() {
