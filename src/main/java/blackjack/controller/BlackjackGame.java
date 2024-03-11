@@ -25,7 +25,7 @@ public class BlackjackGame {
         outputView.printInitialHand(participants);
         participantsHitCard(participants);
         outputView.printParticipantsHandWithScore(participants);
-        printBlackjackResult(participants);
+        printBlackjackResult(participants, playerBets);
     }
 
     private Participants createParticipants() {
@@ -97,9 +97,9 @@ public class BlackjackGame {
         outputView.printDealerHitCount(hitCount);
     }
 
-    private void printBlackjackResult(Participants participants) {
+    private void printBlackjackResult(Participants participants, PlayerBets playerBets) {
         Referee referee = Referee.getInstance();
-        BlackjackResult blackjackResult = participants.generateResult(referee);
+        BlackjackResult blackjackResult = participants.generateResult(referee, playerBets);
         outputView.printBlackjackResult(blackjackResult);
     }
 
