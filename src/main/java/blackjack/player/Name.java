@@ -19,7 +19,9 @@ public class Name {
 
     private void validateNameLength(String name) {
         if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException("[ERROR] 이름은 2글자 이상 5글자 이하여야 합니다.");
+            throw new IllegalArgumentException(
+                    "[ERROR] 이름은 " + MIN_NAME_LENGTH + "글자 이상 " + MAX_NAME_LENGTH + "글자 이하여야 합니다."
+            );
         }
     }
 

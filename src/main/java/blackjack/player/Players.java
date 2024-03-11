@@ -32,7 +32,9 @@ public class Players {
 
     private void validateSize(List<String> playerNames) {
         if (playerNames.size() < MIN_PLAYER_COUNT || playerNames.size() > MAX_PLAYER_COUNT) {
-            throw new IllegalArgumentException("[ERROR] 플레이어의 수는 1명 이상 10명 이하여야 합니다.");
+            throw new IllegalArgumentException(
+                    "[ERROR] 플레이어의 수는 " + MIN_PLAYER_COUNT + "명 이상 " + MAX_PLAYER_COUNT + "명 이하여야 합니다."
+            );
         }
     }
 
