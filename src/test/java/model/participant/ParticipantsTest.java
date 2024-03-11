@@ -12,27 +12,27 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class EntrantTest {
-    Entrant entrant;
+class ParticipantsTest {
+    Participants participants;
 
     @BeforeEach
     void setUp() {
         // Given
         Names names = new Names(List.of("프람"));
-        entrant = new Entrant(names);
+        participants = new Participants(names);
 
         // When
-        entrant.hitDealer(Card.from(Number.ACE, Emblem.SPADE));
-        entrant.hitDealer(Card.from(Number.TWO, Emblem.SPADE));
-        entrant.hitDealer(Card.from(Number.THREE, Emblem.SPADE));
+        participants.hitDealer(Card.from(Number.ACE, Emblem.SPADE));
+        participants.hitDealer(Card.from(Number.TWO, Emblem.SPADE));
+        participants.hitDealer(Card.from(Number.THREE, Emblem.SPADE));
 
-        entrant.getPlayers()
+        participants.getPlayers()
                 .peek()
                 .hitCard(Card.from(Number.ACE, Emblem.HEART));
-        entrant.getPlayers()
+        participants.getPlayers()
                 .peek()
                 .hitCard(Card.from(Number.TWO, Emblem.HEART));
-        entrant.getPlayers()
+        participants.getPlayers()
                 .peek()
                 .hitCard(Card.from(Number.THREE, Emblem.HEART));
 
@@ -43,7 +43,7 @@ class EntrantTest {
     void getDealerFaceUpResult_ShouldReturnDealerCardInfo_WhenCalled() {
 
         // Then
-        FaceUpResult result = entrant.getDealerFaceUpResult();
+        FaceUpResult result = participants.getDealerFaceUpResult();
         assertAll(() -> {
             assertEquals("딜러", result.getPartipantNameAsString());
             assertEquals(List.of("A스페이드", "2스페이드", "3스페이드"), result.getCardsAsStrings());
@@ -56,7 +56,7 @@ class EntrantTest {
     void getPlayerFaceUpResult_ShouldReturnPlayerCardInfo_WhenCalled() {
 
         // Then
-        List<FaceUpResult> result = entrant.getPlayerFaceUpResults();
+        List<FaceUpResult> result = participants.getPlayerFaceUpResults();
         assertAll(() -> {
             assertEquals("프람", result.get(0)
                     .getPartipantNameAsString());

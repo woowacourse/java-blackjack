@@ -8,11 +8,11 @@ import java.util.stream.Collectors;
 import model.card.Card;
 import model.dto.FaceUpResult;
 
-public class Entrant {
+public class Participants {
     private final Dealer dealer;
     private final Queue<Player> players;
 
-    public Entrant(Names names) {
+    public Participants(Names names) {
         this.dealer = new Dealer();
         this.players = generatePlayers(names);
     }

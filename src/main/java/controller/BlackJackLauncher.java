@@ -11,7 +11,7 @@ import model.casino.RandomCardShuffleMachine;
 import model.dto.DealerScoreResult;
 import model.dto.FaceUpResult;
 import model.dto.PlayerScoreResult;
-import model.participant.Entrant;
+import model.participant.Participants;
 import model.participant.Names;
 import view.OutputView;
 
@@ -31,8 +31,8 @@ public class BlackJackLauncher {
 
     private Casino initCasino() {
         Names names = inputRetryHelper(() -> new Names(inputNames()));
-        Entrant entrant = new Entrant(names);
-        return new Casino(entrant, new RandomCardShuffleMachine());
+        Participants participants = new Participants(names);
+        return new Casino(participants, new RandomCardShuffleMachine());
     }
 
     private void showInitialFaceUpResults(Casino casino) {

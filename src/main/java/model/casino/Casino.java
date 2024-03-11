@@ -3,7 +3,6 @@ package model.casino;
 import static java.util.Collections.*;
 import static model.dto.Victory.*;
 
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import model.Choice;
@@ -11,22 +10,22 @@ import model.dto.DealerScoreResult;
 import model.dto.FaceUpResult;
 import model.dto.PlayerScoreResult;
 import model.dto.Victory;
-import model.participant.Entrant;
+import model.participant.Participants;
 
 public class Casino {
-    private final Entrant entrant;
+    private final Participants participants;
     private final CardDispenser cardDispenser;
 
-    public Casino(Entrant entrant, CardShuffleMachine cardShuffleMachine) {
-        this.entrant = entrant;
+    public Casino(Participants participants, CardShuffleMachine cardShuffleMachine) {
+        this.participants = participants;
         this.cardDispenser = new CardDispenser(cardShuffleMachine);
     }
 
     public void initializeGame() {
-        int playerSize = entrant.getPlayerSize();
+        int playerSize = participants.getPlayerSize();
         for (int i = 0; i < playerSize; i++) {
-            entrant.hitAndMoveToNextPlayer(cardDispenser.dispenseCard());
-            entrant.hitAndMoveToNextPlayer(cardDispenser.dispenseCard());
+            participants.hitAndMoveToNextPlayer(cardDispenser.dispenseCard());
+            participants.hitAndMoveToNextPlayer(cardDispenser.dispenseCard());
         }
         hitCardToDealer();
         hitCardToDealer();
@@ -37,50 +36,50 @@ public class Casino {
             hitCardToPlayer();
             return;
         }
-        entrant.turnOverPlayer();
+        participants.turnOverPlayer();
     }
 
     private void hitCardToPlayer() {
-        entrant.hitPlayer(cardDispenser.dispenseCard());
+        participants.hitPlayer(cardDispenser.dispenseCard());
     }
 
     public void hitCardToDealer() {
-        entrant.hitDealer(cardDispenser.dispenseCard());
+        participants.hitDealer(cardDispenser.dispenseCard());
     }
 
     public boolean hasAvailablePlayer() {
-        return entrant.hasAvailablePlayer();
+        return participants.hasAvailablePlayer();
     }
 
     public boolean isDealerHitAllowed() {
-        return entrant.canHitDealer();
+        return participants.canHitDealer();
     }
 
     public FaceUpResult getDealerFaceUpResult() {
-        return entrant.getDealerFaceUpResult();
+        return participants.getDealerFaceUpResult();
     }
 
     public List<FaceUpResult> getPlayerFaceUpResult() {
-        return entrant.getPlayerFaceUpResults();
+        return participants.getPlayerFaceUpResults();
     }
 
     public FaceUpResult getNextPlayerFaceUpInfo() {
-        return entrant.getNextAvailablePlayerName();
+        return participants.getNextAvailablePlayerName();
     }
 
     public List<PlayerScoreResult> calculatePlayerResults() {
-        int dealerHand = entrant.getDealerFaceUpResult()
+        int dealerHand = participants.getDealerFaceUpResult()
                 .hand();
-        return entrant.getPlayerFaceUpResults()
+        return participants.getPlayerFaceUpResults()
                 .stream()
                 .map(result -> new PlayerScoreResult(result.name(), of(dealerHand, result.hand())))
                 .toList();
     }
 
     public DealerScoreResult calculateDealerResult() {
-        int dealerHand = entrant.getDealerFaceUpResult().hand();
+        int dealerHand = participants.getDealerFaceUpResult().hand();
         EnumMap<Victory, Integer> dealerScoreBoard = new EnumMap<>(Victory.class);
-        List<Victory> dealerScores = entrant.getPlayerFaceUpResults()
+        List<Victory> dealerScores = participants.getPlayerFaceUpResults()
                 .stream()
                 .map(player -> Victory.of(player.hand(), dealerHand))
                 .toList();
