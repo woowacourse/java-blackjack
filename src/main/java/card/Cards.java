@@ -18,13 +18,12 @@ public class Cards {
     }
 
     public int countMaxScore() {
-        int aceCardCount = countAceCard();
-        int maxResultScore = countMatchScore();
+        int minimumScore = countMinimumScore();
 
-        if (aceCardCount > 0) {
-            return convertAceScore(maxResultScore);
+        if (isAceCardExist()) {
+            return convertAceScore(minimumScore);
         }
-        return maxResultScore;
+        return minimumScore;
     }
 
     private int convertAceScore(int maxResultScore) {
@@ -34,7 +33,7 @@ public class Cards {
         return maxResultScore;
     }
 
-    public int countMatchScore() {
+    public int countMinimumScore() {
         return cards.stream()
                 .mapToInt(Card::getDefaultCardNumber)
                 .sum();
@@ -46,10 +45,9 @@ public class Cards {
                 .toList();
     }
 
-    public int countAceCard() {
-        return (int) cards.stream()
-                .filter(card -> card.isSameCardNumber(CardNumber.ACE))
-                .count();
+    private boolean isAceCardExist() {
+        return cards.stream()
+                .anyMatch(card -> card.isSameCardNumber(CardNumber.ACE));
     }
 
     public int countCard() {
