@@ -18,12 +18,14 @@ public class BlackJack {
 
     private final Participants participants;
     private final Dealer dealer;
+    private final Cards cards;
 
-    public BlackJack(Participants participants, Dealer dealer) {
+    public BlackJack(Participants participants, Dealer dealer, Cards cards) {
         validateParticipantIsNotNull(participants);
         validateDealerIsNotNull(dealer);
         this.participants = participants;
         this.dealer = dealer;
+        this.cards = cards;
     }
 
     public void validateParticipantIsNotNull(Participants participants) {
@@ -39,16 +41,16 @@ public class BlackJack {
     }
 
     public void offerCardToPlayers(CardSize size) {
-        participants.offerCardToPlayers(size);
+        participants.offerCardToPlayers(cards, size);
         offerCardToDealer(size);
     }
 
     public void offerCardToParticipant(Participant participant, CardSize size) {
-        participants.offerCardToParticipant(participant, size);
+        participants.offerCardToParticipant(cards, participant, size);
     }
 
     public void offerCardToDealer(CardSize size) {
-        dealer.addCards(Cards.selectRandomCards(size));
+        dealer.addCards(cards.selectRandomCards(size));
     }
 
     public Map<Participant, Outcome> matchParticipantsOutcome() {

@@ -34,14 +34,15 @@ public class BlackJackController {
     }
 
     private BlackJack createBlackJack(List<String> names) {
-        Participants participants = createParticipants(names);
-        Dealer dealer = new Dealer(Cards.selectRandomCards(CardSize.TWO));
-        return new BlackJack(participants, dealer);
+        Cards cards = new Cards();
+        Participants participants = createParticipants(names, cards);
+        Dealer dealer = new Dealer(cards.selectRandomCards(CardSize.TWO));
+        return new BlackJack(participants, dealer, cards);
     }
 
-    private Participants createParticipants(List<String> names) {
+    private Participants createParticipants(List<String> names, Cards cards) {
          return new Participants(new ArrayList<>(names.stream()
-                .map(name -> new Participant(name, Cards.selectRandomCards(CardSize.TWO))).toList()));
+                .map(name -> new Participant(name, cards.selectRandomCards(CardSize.TWO))).toList()));
     }
 
     private void offerMoreCards(BlackJack blackJack) {

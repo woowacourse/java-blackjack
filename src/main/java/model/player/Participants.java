@@ -30,18 +30,18 @@ public class Participants {
         }
     }
 
-    public void offerCardToPlayers(CardSize size) {
+    public void offerCardToPlayers(Cards cards, CardSize size) {
         for (Player player : participants) {
-            player.addCards(Cards.selectRandomCards(size));
+            player.addCards(cards.selectRandomCards(size));
         }
     }
 
-    public void offerCardToParticipant(Player receiver, CardSize size) {
+    public void offerCardToParticipant(Cards cards, Player receiver, CardSize size) {
         Player foundPlayer = participants.stream()
                 .filter(player -> player.equals(receiver))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("참가자가 존재하지 않습니다."));
-        foundPlayer.addCards(Cards.selectRandomCards(size));
+        foundPlayer.addCards(cards.selectRandomCards(size));
     }
 
     public List<Participant> getParticipants() {

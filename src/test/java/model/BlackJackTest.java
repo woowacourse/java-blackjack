@@ -11,6 +11,7 @@ import model.card.Card;
 import model.card.CardNumber;
 import model.card.CardShape;
 import model.card.CardSize;
+import model.card.Cards;
 import model.player.Dealer;
 import model.player.Participant;
 import model.player.Participants;
@@ -25,27 +26,29 @@ import org.junit.jupiter.params.provider.MethodSource;
 class BlackJackTest {
 
     private Dealer dealer;
+    private Cards cards;
 
     @BeforeEach
     void setUp() {
         dealer = new Dealer(
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.TWO)));
+        cards = new Cards();
     }
 
     @DisplayName("참가자가 null일 시 예외가 발생한다.")
     @Test
     void validateParticipantIsNotNull() {
-        Assertions.assertThatThrownBy(() -> new BlackJack(null, dealer))
+        Assertions.assertThatThrownBy(() -> new BlackJack(null, dealer, cards))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("딜러가 null일 시 예외가 발생한다.")
     @Test
     void validateDealerIsNotNull() {
-        List<Card> cards = List.of(new Card(CardShape.SPACE, CardNumber.NINE),
+        List<Card> participantCards = List.of(new Card(CardShape.SPACE, CardNumber.NINE),
                 new Card(CardShape.SPACE, CardNumber.FIVE));
         Assertions.assertThatThrownBy(
-                        () -> new BlackJack(new Participants(List.of(new Participant("배키", cards))), null))
+                        () -> new BlackJack(new Participants(List.of(new Participant("배키", participantCards))), null, cards))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -54,7 +57,7 @@ class BlackJackTest {
     void offerCardToPlayers() {
         Participants participants = new Participants(List.of(new Participant("배키",
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE)))));
-        BlackJack blackJack = new BlackJack(participants, dealer);
+        BlackJack blackJack = new BlackJack(participants, dealer, cards);
 
         blackJack.offerCardToPlayers(CardSize.ONE);
 
@@ -68,7 +71,7 @@ class BlackJackTest {
         Participants participants = new Participants(List.of(new Participant("배키",
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE)))));
         BlackJack blackJack = new BlackJack(participants, new Dealer(
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.TWO))));
+                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.TWO))), cards);
 
         blackJack.offerCardToParticipant(new Participant("배키",
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))), CardSize.ONE);
@@ -99,7 +102,7 @@ class BlackJackTest {
 
 
         Participants participants = new Participants(List.of(participant));
-        BlackJack blackJack = new BlackJack(participants, dealer);
+        BlackJack blackJack = new BlackJack(participants, dealer, cards);
 
         Map<Participant, Outcome> result = blackJack.matchParticipantsOutcome();
         assertThat(result).isEqualTo(Map.of(participant, Outcome.LOSE));
@@ -125,7 +128,7 @@ class BlackJackTest {
                 List.of(new Card(CardShape.SPACE, CardNumber.KING), new Card(CardShape.CLOVER, CardNumber.KING)));
 
         Participants participants = new Participants(List.of(participant));
-        BlackJack blackJack = new BlackJack(participants, dealer);
+        BlackJack blackJack = new BlackJack(participants, dealer, cards);
 
         Map<Participant, Outcome> result = blackJack.matchParticipantsOutcome();
         assertThat(result).isEqualTo(Map.of(participant, Outcome.LOSE));
@@ -140,7 +143,7 @@ class BlackJackTest {
                 List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
 
         Participants participants = new Participants(List.of(participant));
-        BlackJack blackJack = new BlackJack(participants, dealer);
+        BlackJack blackJack = new BlackJack(participants, dealer, cards);
 
         Map<Participant, Outcome> result = blackJack.matchParticipantsOutcome();
         assertThat(result).isEqualTo(Map.of(participant, Outcome.WIN));
@@ -155,7 +158,7 @@ class BlackJackTest {
                 List.of(new Card(CardShape.HEART, CardNumber.NINE), new Card(CardShape.CLOVER, CardNumber.NINE)));
 
         Participants participants = new Participants(List.of(participant));
-        BlackJack blackJack = new BlackJack(participants, dealer);
+        BlackJack blackJack = new BlackJack(participants, dealer, cards);
 
         Map<Participant, Outcome> result = blackJack.matchParticipantsOutcome();
         assertThat(result).isEqualTo(Map.of(participant, Outcome.DRAW));
@@ -170,7 +173,7 @@ class BlackJackTest {
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.CLOVER, CardNumber.NINE)));
 
         Participants participants = new Participants(List.of(participant));
-        BlackJack blackJack = new BlackJack(participants, dealer);
+        BlackJack blackJack = new BlackJack(participants, dealer, cards);
 
         assertFalse(blackJack.isDealerUnderThreshold());
     }
@@ -184,7 +187,7 @@ class BlackJackTest {
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.CLOVER, CardNumber.SIX)));
 
         Participants participants = new Participants(List.of(participant));
-        BlackJack blackJack = new BlackJack(participants, dealer);
+        BlackJack blackJack = new BlackJack(participants, dealer, cards);
 
         assertTrue(blackJack.isDealerUnderThreshold());
     }
