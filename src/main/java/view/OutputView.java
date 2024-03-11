@@ -4,7 +4,7 @@ import static domain.participant.Dealer.INIT_HANDS_SIZE;
 import static domain.participant.Dealer.THRESHOLD;
 
 import domain.participant.Player;
-import domain.result.Result;
+import domain.Result;
 import dto.DealerHandsDto;
 import dto.ParticipantDto;
 import dto.ParticipantsDto;

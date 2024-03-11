@@ -1,5 +1,6 @@
 package domain;
 
+import domain.participant.Hands;
 import domain.participant.Name;
 import domain.participant.Player;
 import org.assertj.core.api.Assertions;

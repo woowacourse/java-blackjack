@@ -1,6 +1,6 @@
-package domain.result;
+package domain;
 
-import domain.Hands;
+import domain.participant.Hands;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 

@@ -8,7 +8,6 @@ import static domain.HandsTestFixture.sum20Size2;
 import static domain.HandsTestFixture.sum20Size3;
 import static domain.HandsTestFixture.sum21Size2;
 
-import domain.result.Result;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

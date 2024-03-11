@@ -1,9 +1,8 @@
 package domain.participant;
 
 import domain.Answer;
-import domain.CardDeck;
-import domain.Hands;
-import domain.result.Result;
+import domain.card.CardDeck;
+import domain.Result;
 import java.util.EnumMap;
 import java.util.Map;
 

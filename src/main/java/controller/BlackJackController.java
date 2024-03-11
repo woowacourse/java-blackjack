@@ -1,7 +1,7 @@
 package controller;
 
 import domain.Answer;
-import domain.CardDeck;
+import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;

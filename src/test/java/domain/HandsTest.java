@@ -9,6 +9,7 @@ import static domain.card.Rank.EIGHT;
 import static domain.card.Shape.CLOVER;
 
 import domain.card.Card;
+import domain.participant.Hands;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
