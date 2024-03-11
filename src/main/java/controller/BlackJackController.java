@@ -5,14 +5,13 @@ import domain.blackjack.BlackJackResult;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
+import view.HitOption;
 import view.InputView;
 import view.OutputView;
 
 import java.util.List;
 
 public class BlackJackController {
-
-    public static final String HIT_OPTION = "y";
 
     public void run() {
         List<String> names = InputView.inputParticipantName();
@@ -40,15 +39,11 @@ public class BlackJackController {
     }
 
     private void participantHit(Participant participant, Dealer dealer) {
-        while (participant.canHit() && isHitOption(participant)) {
+        String option = InputView.inputHitOption(participant.getName());
+        while (participant.canHit() && HitOption.isHitOption(option)) {
             participant.receiveCard(dealer.draw());
             OutputView.printParticipantHands(participant);
         }
-    }
-
-    private boolean isHitOption(Participant participant) {
-        String option = InputView.inputHitOption(participant.getName());
-        return HIT_OPTION.equals(option);
     }
 
     private void dealerHit(BlackJack blackJack) {
