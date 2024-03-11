@@ -1,19 +1,14 @@
 package domain.game;
 
-import java.util.Arrays;
-import java.util.function.BiPredicate;
-
 public enum Result {
-    WIN("승", (current, opponent) -> current > opponent),
-    LOSE("패", (current, opponent) -> current < opponent),
-    DRAW("무", Integer::equals);
+    WIN("승"),
+    LOSE("패"),
+    DRAW("무");
 
     private final String result;
-    private final BiPredicate<Integer, Integer> condition;
 
-    Result(String result, BiPredicate<Integer, Integer> condition) {
+    Result(String result) {
         this.result = result;
-        this.condition = condition;
     }
 
     public Result reverse() {
@@ -29,9 +24,12 @@ public enum Result {
     }
 
     public static Result compare(int current, int opponent) {
-        return Arrays.stream(values())
-                .filter(result -> result.condition.test(current, opponent))
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("Result의 BiPredicate가 모든 경우의 수를 포함하지 않습니다."));
+        if (current > opponent) {
+            return WIN;
+        }
+        if (current < opponent) {
+            return LOSE;
+        }
+        return DRAW;
     }
 }
