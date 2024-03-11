@@ -1,6 +1,5 @@
 package blackjack.model.participant;
 
-import blackjack.dto.NameCardsScore;
 import blackjack.model.deck.Card;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -55,12 +54,6 @@ public class Participants {
             result.put(player.getName(), player.openCards());
         }
         return result;
-    }
-
-    public List<NameCardsScore> collectFinalResults() {
-        return players.stream()
-                .map(player -> new NameCardsScore(player.getName(), player.openCards(), player.getScore()))
-                .toList();
     }
 
     public List<Player> getPlayers() {

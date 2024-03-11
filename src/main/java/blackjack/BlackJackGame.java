@@ -80,9 +80,14 @@ public class BlackJackGame {
         OutputView.println();
         NameCardsScore dealerNameCardsScore = new NameCardsScore(dealer.getName(), dealer.openCards(),
                 dealer.getScore());
-        List<NameCardsScore> playerNameCardsScore = participants.collectFinalResults();
         OutputView.printFinalCardsAndScore(dealerNameCardsScore);
-        OutputView.printFinalCardsAndScore(playerNameCardsScore);
+        OutputView.printFinalCardsAndScore(collectFinalResults(participants));
+    }
+
+    private List<NameCardsScore> collectFinalResults(final Participants participants) {
+        return participants.getPlayers().stream()
+                .map(player -> new NameCardsScore(player.getName(), player.openCards(), player.getScore()))
+                .toList();
     }
 
     private void printFinalResultCommand(final Referee referee) {
