@@ -49,6 +49,10 @@ public class Player {
         return cards.totalScore() == MAX_SCORE;
     }
 
+    public boolean canContinue() {
+        return !(isBurst() || isMaxScore());
+    }
+
     public String getName() {
         return name;
     }

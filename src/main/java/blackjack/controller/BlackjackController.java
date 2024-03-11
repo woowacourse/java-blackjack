@@ -54,7 +54,7 @@ public class BlackjackController {
     }
 
     private void requestHitOrStand(Player player, Deck deck) {
-        if (player.isBlackjack()) {
+        if (player.canContinue()) {
             return;
         }
         CommandController commandController = new CommandController();
