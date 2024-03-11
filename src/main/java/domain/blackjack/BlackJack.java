@@ -51,7 +51,7 @@ public class BlackJack {
         return new BlackJackResult(result);
     }
 
-    WinStatus isWinner(Participant participant) {
+    private WinStatus isWinner(Participant participant) {
         if (!participant.canHit()) {
             return WinStatus.LOSE;
         }

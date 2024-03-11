@@ -38,14 +38,22 @@ class BlackJackTest {
         Participants participants = new Participants(List.of("one", "two"));
         BlackJack blackJack = new BlackJack(dealer, participants);
 
-        Participant participant = participants.getValue().get(0);
-        participant.receiveCard(new Card(Shape.HEART, Rank.KING));
-        participant.receiveCard(new Card(Shape.HEART, Rank.ACE));
+        Participant one = participants.getValue().get(0);
+        one.receiveCard(new Card(Shape.HEART, Rank.KING));
 
-        dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
+        Participant two = participants.getValue().get(1);
+        two.receiveCard(new Card(Shape.DIA, Rank.KING));
+        two.receiveCard(new Card(Shape.DIA, Rank.FOUR));
 
-        WinStatus winStatus = blackJack.isWinner(participant);
-        assertThat(winStatus).isEqualTo(WinStatus.WIN);
+        dealer.receiveCard(new Card(Shape.DIA, Rank.QUEEN));
+        dealer.receiveCard(new Card(Shape.DIA, Rank.ACE));
+        /*
+         * one 참가자의 점수: 10점
+         * two 참가자의 점수: 14점
+         * 딜러의 점수: 21점인 상황
+         */
+        BlackJackResult blackJackResult = blackJack.saveParticipantResult();
+        assertThat(blackJackResult.getDealerWinCount()).isEqualTo(2);
     }
 
     @DisplayName("참가자와 딜러의 점수가 같은경우 ")
@@ -55,15 +63,28 @@ class BlackJackTest {
         Participants participants = new Participants(List.of("one", "two"));
         BlackJack blackJack = new BlackJack(dealer, participants);
 
-        Participant participant = participants.getValue().get(0);
-        participant.receiveCard(new Card(Shape.HEART, Rank.KING));
-        participant.receiveCard(new Card(Shape.HEART, Rank.THREE));
-        participant.receiveCard(new Card(Shape.HEART, Rank.EIGHT));
+        Participant one = participants.getValue().get(0);
+        one.receiveCard(new Card(Shape.HEART, Rank.KING));
+        one.receiveCard(new Card(Shape.HEART, Rank.TWO));
+        one.receiveCard(new Card(Shape.HEART, Rank.EIGHT));
+        one.receiveCard(new Card(Shape.HEART, Rank.ACE));
 
-        dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
-        dealer.receiveCard(new Card(Shape.HEART, Rank.ACE));
+        Participant two = participants.getValue().get(1);
+        two.receiveCard(new Card(Shape.CLOVER, Rank.KING));
+        two.receiveCard(new Card(Shape.CLOVER, Rank.ACE));
 
-        WinStatus winStatus = blackJack.isWinner(participant);
-        assertThat(winStatus).isEqualTo(WinStatus.LOSE);
+        dealer.receiveCard(new Card(Shape.DIA, Rank.QUEEN));
+        dealer.receiveCard(new Card(Shape.DIA, Rank.KING));
+        dealer.receiveCard(new Card(Shape.DIA, Rank.ACE));
+        /*
+         * one 참가자의 점수: 21점, 카드 4장
+         * two 참가자의 점수: 21점, 카드 2장
+         * 딜러의 점수: 21점인, 카드 3장인 상황
+         */
+        BlackJackResult blackJackResult = blackJack.saveParticipantResult();
+        Assertions.assertAll(
+                () -> assertThat(blackJackResult.getTotalCount()).isEqualTo(2),
+                () -> assertThat(blackJackResult.getDealerWinCount()).isEqualTo(1)
+        );
     }
 }
