@@ -18,13 +18,9 @@ public class GameResult {
     private static Map<Player, Result> makeGameResult(Dealer dealer, Players players) {
         Map<Player, Result> gameResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            gameResult.put(player, judgeResult(dealer, player));
+            gameResult.put(player, Result.findResult(player, dealer));
         }
         return gameResult;
-    }
-
-    private static Result judgeResult(Dealer dealer, Player player) {
-        return Result.findResult(player, dealer);
     }
 
     public long getTargetResultCount(Result targetResult) {
