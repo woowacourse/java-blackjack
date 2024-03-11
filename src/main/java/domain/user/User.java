@@ -4,8 +4,8 @@ import domain.card.Card;
 import domain.deck.UserDeck;
 
 public abstract class User {
-    final UserDeck userDeck;
-    final Name name;
+    protected final UserDeck userDeck;
+    protected final Name name;
 
     public User(UserDeck userDeck, Name name) {
         this.userDeck = userDeck;
