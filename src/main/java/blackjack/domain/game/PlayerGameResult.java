@@ -1,11 +1,11 @@
 package blackjack.domain.game;
 
-public enum GameResult {
+public enum PlayerGameResult {
     WIN,
     LOSE,
     PUSH;
 
-    public GameResult reverse() {
+    public PlayerGameResult reverse() {
         if (this == WIN) {
             return LOSE;
         }

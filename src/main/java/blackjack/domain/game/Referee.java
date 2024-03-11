@@ -7,10 +7,10 @@ import blackjack.domain.gamer.Players;
 import java.util.Map;
 
 public class Referee {
-    private final GameResults values;
+    private final PlayersGameResult values;
 
     public Referee() {
-        this.values = new GameResults();
+        this.values = new PlayersGameResult();
     }
 
     public void calculatePlayersResults(Players players, Dealer dealer) {
@@ -19,17 +19,17 @@ public class Referee {
         );
     }
 
-    private GameResult judgeGameResult(Dealer dealer, Player player) {
+    private PlayerGameResult judgeGameResult(Dealer dealer, Player player) {
         if (player.isBust()) {
-            return GameResult.LOSE;
+            return PlayerGameResult.LOSE;
         }
         if (isPlayerWin(dealer, player)) {
-            return GameResult.WIN;
+            return PlayerGameResult.WIN;
         }
         if (dealer.getScore() == player.getScore()) {
-            return GameResult.PUSH;
+            return PlayerGameResult.PUSH;
         }
-        return GameResult.LOSE;
+        return PlayerGameResult.LOSE;
     }
 
     private boolean isPlayerWin(Dealer dealer, Player player) {
@@ -38,11 +38,11 @@ public class Referee {
                 dealer.isBust();
     }
 
-    public Map<String, GameResult> getPlayersResults() {
+    public Map<String, PlayerGameResult> getPlayersResults() {
         return values.getPlayersResults();
     }
 
-    public Map<GameResult, Integer> getDealerResult() {
+    public Map<PlayerGameResult, Integer> getDealerResult() {
         return values.getDealerResult();
     }
 }

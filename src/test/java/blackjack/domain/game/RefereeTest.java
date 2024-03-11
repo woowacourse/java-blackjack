@@ -25,7 +25,7 @@ public class RefereeTest {
         Players players = Players.from(name);
         Dealer dealer = new Dealer(new Hand(List.of()));
         Referee referee = new Referee();
-        Map<String, GameResult> expectedPlayersResult = new HashMap<>();
+        Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
 
         CardPicker playerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
             @Override
@@ -43,7 +43,7 @@ public class RefereeTest {
         players.forEach(player -> player.draw(playerCardPicker.pickCards(2)));
         dealer.draw(dealerCardPicker.pickCards(2));
         referee.calculatePlayersResults(players, dealer);
-        expectedPlayersResult.put("lemone", GameResult.WIN);
+        expectedPlayersResult.put("lemone", PlayerGameResult.WIN);
 
         assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
     }
@@ -55,7 +55,7 @@ public class RefereeTest {
         Players players = Players.from(name);
         Dealer dealer = new Dealer(new Hand(List.of()));
         Referee referee = new Referee();
-        Map<String, GameResult> expectedPlayersResult = new HashMap<>();
+        Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
 
         CardPicker playerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
             @Override
@@ -73,7 +73,7 @@ public class RefereeTest {
         players.forEach(player -> player.draw(playerCardPicker.pickCards(2)));
         dealer.draw(dealerCardPicker.pickCards(2));
         referee.calculatePlayersResults(players, dealer);
-        expectedPlayersResult.put("lemone", GameResult.LOSE);
+        expectedPlayersResult.put("lemone", PlayerGameResult.LOSE);
 
         assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
     }
@@ -85,7 +85,7 @@ public class RefereeTest {
         Players players = Players.from(name);
         Dealer dealer = new Dealer(new Hand(List.of()));
         Referee referee = new Referee();
-        Map<String, GameResult> expectedPlayersResult = new HashMap<>();
+        Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
 
         CardPicker playerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
             @Override
@@ -103,7 +103,7 @@ public class RefereeTest {
         players.forEach(player -> player.draw(playerCardPicker.pickCards(2)));
         dealer.draw(dealerCardPicker.pickCards(2));
         referee.calculatePlayersResults(players, dealer);
-        expectedPlayersResult.put("lemone", GameResult.PUSH);
+        expectedPlayersResult.put("lemone", PlayerGameResult.PUSH);
 
         assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
     }
@@ -115,7 +115,7 @@ public class RefereeTest {
         Players players = Players.from(name);
         Dealer dealer = new Dealer(new Hand(List.of()));
         Referee referee = new Referee();
-        Map<String, GameResult> expectedPlayersResult = new HashMap<>();
+        Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
 
         CardPicker playerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
             @Override
@@ -133,7 +133,7 @@ public class RefereeTest {
         players.forEach(player -> player.draw(playerCardPicker.pickCards(2)));
         dealer.draw(dealerCardPicker.pickCards(2));
         referee.calculatePlayersResults(players, dealer);
-        expectedPlayersResult.put("lemone", GameResult.WIN);
+        expectedPlayersResult.put("lemone", PlayerGameResult.WIN);
 
         assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
     }
@@ -145,7 +145,7 @@ public class RefereeTest {
         Players players = Players.from(name);
         Dealer dealer = new Dealer(new Hand(List.of()));
         Referee referee = new Referee();
-        Map<String, GameResult> expectedPlayersResult = new HashMap<>();
+        Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
 
         CardPicker playerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
             @Override
@@ -162,7 +162,7 @@ public class RefereeTest {
         players.forEach(player -> player.draw(playerCardPicker.pickCards(2)));
         dealer.draw(dealerCardPicker.pickCards(2));
         referee.calculatePlayersResults(players, dealer);
-        expectedPlayersResult.put("lemone", GameResult.LOSE);
+        expectedPlayersResult.put("lemone", PlayerGameResult.LOSE);
 
         assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
     }
@@ -174,7 +174,7 @@ public class RefereeTest {
         Players players = Players.from(name);
         Dealer dealer = new Dealer(new Hand(List.of()));
         Referee referee = new Referee();
-        Map<String, GameResult> expectedPlayersResult = new HashMap<>();
+        Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
 
         CardPicker playerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
             @Override
@@ -191,7 +191,7 @@ public class RefereeTest {
         players.forEach(player -> player.draw(playerCardPicker.pickCards(2)));
         dealer.draw(dealerCardPicker.pickCards(2));
         referee.calculatePlayersResults(players, dealer);
-        expectedPlayersResult.put("lemone", GameResult.LOSE);
+        expectedPlayersResult.put("lemone", PlayerGameResult.LOSE);
 
         assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
     }
@@ -203,7 +203,7 @@ public class RefereeTest {
         Players players = Players.from(name);
         Dealer dealer = new Dealer(new Hand(List.of()));
         Referee referee = new Referee();
-        Map<String, GameResult> expectedPlayersResult = new HashMap<>();
+        Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
 
         CardPicker playerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
             @Override
@@ -220,7 +220,7 @@ public class RefereeTest {
         players.forEach(player -> player.draw(playerCardPicker.pickCards(2)));
         dealer.draw(dealerCardPicker.pickCards(2));
         referee.calculatePlayersResults(players, dealer);
-        expectedPlayersResult.put("lemone", GameResult.WIN);
+        expectedPlayersResult.put("lemone", PlayerGameResult.WIN);
 
         assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
     }

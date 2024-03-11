@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 public class Hand {
-    //    public static final int HIT_UPPER_BOUND = 16;
     private static final int MAX_LIMIT_SCORE = 21;
 
     private final List<Card> myCards;
