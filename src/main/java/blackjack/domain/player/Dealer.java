@@ -20,7 +20,7 @@ public class Dealer extends Player {
     }
 
 
-    public ResultStatus compareResult(GamePlayer gamePlayer) {
+    public ResultStatus giveGamePlayerResult(GamePlayer gamePlayer) {
         int playerScore = gamePlayer.calculateScore();
         int dealerScore = calculateScore();
 
@@ -32,6 +32,9 @@ public class Dealer extends Player {
         }
         if (gamePlayer.isBlackjack() && !isBlackjack()) {
             return ResultStatus.WIN;
+        }
+        if (!gamePlayer.isBlackjack() && isBlackjack()) {
+            return ResultStatus.LOSE;
         }
         if (playerScore > dealerScore) {
             return ResultStatus.WIN;

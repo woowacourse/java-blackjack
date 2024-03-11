@@ -59,7 +59,7 @@ public class DealerTest {
         var sut = new Dealer(name, cards);
         sut.drawCard(new Card(CardValue.JACK, CardSymbol.HEART));
 
-        var result = sut.compareResult(gamePlayer);
+        var result = sut.giveGamePlayerResult(gamePlayer);
 
         assertThat(result).isEqualTo(ResultStatus.WIN);
     }
@@ -73,7 +73,7 @@ public class DealerTest {
         var sut = new Dealer(name, cards);
         gamePlayer.drawCard(new Card(CardValue.JACK, CardSymbol.CLOVER));
 
-        var result = sut.compareResult(gamePlayer);
+        var result = sut.giveGamePlayerResult(gamePlayer);
 
         assertThat(result).isEqualTo(ResultStatus.LOSE);
     }
