@@ -1,9 +1,9 @@
 package blackjack.controller;
 
+import blackjack.dto.BetRevenueResultDto;
+import blackjack.dto.DealerMoreCardDto;
 import blackjack.dto.FinalHandsScoreDto;
 import blackjack.dto.PlayerCardsDto;
-import blackjack.dto.StartCardsDto;
-import blackjack.dto.BetRevenueResultDto;
 import blackjack.exception.ExceptionHandler;
 import blackjack.service.BlackjackGame;
 import blackjack.view.InputView;
@@ -22,11 +22,9 @@ public class BlackjackController {
 
     public void run() {
         final BlackjackGame blackjackGame = initGame();
-
         saveAllPlayersBetAmount(blackjackGame);
 
-        final StartCardsDto startCardsDTO = blackjackGame.start();
-        outputView.printStartCards(startCardsDTO);
+        outputView.printStartCards(blackjackGame.start());
 
         if (blackjackGame.isNotDealerBlackjack()) {
             playGame(blackjackGame);
@@ -43,7 +41,7 @@ public class BlackjackController {
     private void saveAllPlayersBetAmount(final BlackjackGame blackjackGame) {
         final List<String> playersName = blackjackGame.getPlayersName();
 
-        for (String name : playersName) {
+        for (final String name : playersName) {
             saveBetAmount(blackjackGame, name);
         }
     }
@@ -60,8 +58,8 @@ public class BlackjackController {
             runPlayerTurn(blackjackGame, name);
         }
 
-        final int count = blackjackGame.giveDealerMoreCard();
-        outputView.printDealerMoreCard(count, blackjackGame.getDealerName());
+        final DealerMoreCardDto dealerMoreCard = blackjackGame.giveDealerMoreCard();
+        outputView.printDealerMoreCard(dealerMoreCard);
     }
 
     private void runPlayerTurn(final BlackjackGame blackjackGame, final String name) {

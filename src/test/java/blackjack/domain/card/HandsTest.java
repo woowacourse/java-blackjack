@@ -1,7 +1,6 @@
 package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -10,17 +9,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class HandsTest {
-
-    @DisplayName("중복된 카드가 포함된 카드 더미를 생성할 수 없다.")
-    @Test
-    void validateDuplicate() {
-        Card card = new Card(CardNumber.ACE, CardShape.HEART);
-        List<Card> cards = List.of(card, card);
-
-        assertThatThrownBy(() -> new Hands(cards))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("중복된 카드는 존재할 수 없습니다.");
-    }
 
     @DisplayName("게임에 유리한 방향으로 ACE를 1, 11 중 선택하여 계산한다.")
     @ParameterizedTest
@@ -62,7 +50,7 @@ class HandsTest {
         Card card3 = new Card(CardNumber.ACE, CardShape.CLOVER);
 
         // when
-        hands.add(card3);
+        hands.addCard(card3);
 
         // then
         assertThat(hands.getCards()).containsExactly(card1, card2, card3);

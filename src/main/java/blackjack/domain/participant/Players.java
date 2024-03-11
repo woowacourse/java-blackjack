@@ -8,118 +8,135 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import blackjack.domain.betting.BetStatus;
 import blackjack.exception.NeedRetryException;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.Function;
 
 public class Players {
 
-    private final List<Participant> players;
-    private final Map<ParticipantName, BetAmount> betAmountRepository = new LinkedHashMap<>();
+    private final Map<ParticipantName, Hands> handsRepository;
+    private final Map<ParticipantName, BetAmount> betAmountRepository;
 
-    private Players(final List<Participant> players) {
-        validateDuplicate(players);
-        this.players = players;
+    private Players(final Map<ParticipantName, Hands> handsRepository,
+            final Map<ParticipantName, BetAmount> betAmountRepository) {
+        this.handsRepository = handsRepository;
+        this.betAmountRepository = betAmountRepository;
     }
 
-    public static Players from(final List<String> playerNames) {
-        final List<Participant> participants = playerNames.stream()
-                .map(Participant::from)
+    public static Players from(final List<String> inputPlayerNames) {
+        final List<ParticipantName> playerNames = inputPlayerNames.stream()
+                .map(ParticipantName::new)
                 .toList();
 
-        return new Players(participants);
+        validateDuplicate(playerNames);
+
+        final Map<ParticipantName, Hands> playersHands = createEmptyRepository(playerNames, name -> new Hands());
+        final Map<ParticipantName, BetAmount> playersBetAmount = createEmptyRepository(playerNames, name -> new BetAmount(0));
+
+        return new Players(playersHands, playersBetAmount);
     }
 
-    private void validateDuplicate(final List<Participant> participants) {
-        if (Set.copyOf(participants).size() != participants.size()) {
+    private static void validateDuplicate(final List<ParticipantName> playerNames) {
+        if (Set.copyOf(playerNames).size() != playerNames.size()) {
             throw new NeedRetryException("중복된 이름의 참여자는 참여할 수 없습니다.");
         }
     }
 
+    private static <T, U> Map<T, U> createEmptyRepository(final List<T> names, final Function<T, U> supplier) {
+        return names.stream()
+                .collect(toMap(Function.identity(),
+                        supplier,
+                        (v1, v2) -> v1,
+                        LinkedHashMap::new));
+    }
+
     public void saveBetAmountByName(final int betAmount, final String name) {
-        final Participant player = findParticipant(name);
-        betAmountRepository.put(player.getName(), new BetAmount(betAmount));
+        final ParticipantName playerName = new ParticipantName(name);
+        validatePlayerName(playerName);
+
+        betAmountRepository.put(playerName, new BetAmount(betAmount));
+    }
+
+    private void validatePlayerName(final ParticipantName name) {
+        if (!handsRepository.containsKey(name) || !betAmountRepository.containsKey(name)) {
+            throw new IllegalArgumentException("없는 참가자 입니다.");
+        }
     }
 
     public void divideCard(final List<List<Card>> cards) {
         validateCardSize(cards);
         final Iterator<List<Card>> cardIterator = cards.iterator();
 
-        for (final Participant player : players) {
-            cardIterator.next().forEach(player::addCard);
+        for (final Hands hands : handsRepository.values()) {
+            cardIterator.next().forEach(hands::addCard);
         }
     }
 
     private void validateCardSize(final List<List<Card>> cards) {
-        if (cards.size() != players.size()) {
+        if (cards.size() != handsRepository.values().size()) {
             throw new IllegalArgumentException("카드 묶음 수량이 플레이어 수량과 맞지 않습니다.");
         }
     }
 
     public void addCardTo(final String name, final Card card) {
-        final Participant findedParticipant = findParticipant(name);
-        findedParticipant.addCard(card);
+        final Hands hands = findHands(name);
+        hands.addCard(card);
+    }
+
+    private Hands findHands(final String name) {
+        final ParticipantName playerName = new ParticipantName(name);
+        validatePlayerName(playerName);
+
+        return handsRepository.get(playerName);
     }
 
     public Map<ParticipantName, BetRevenue> determineBetRevenue(final Hands dealerHands) {
         final Map<ParticipantName, BetRevenue> playersWinStatus = new LinkedHashMap<>();
 
-        for (Participant player : players) {
-            final BetStatus betStatus = BetStatus.of(dealerHands, player.getHands());
-            final BetAmount betAmount = betAmountRepository.get(player.getName());
-            playersWinStatus.put(player.getName(), betStatus.applyLeverage(betAmount));
-        }
+        for (Entry<ParticipantName, Hands> entry : handsRepository.entrySet()) {
+            final ParticipantName name = entry.getKey();
+            final BetStatus betStatus = BetStatus.of(dealerHands, entry.getValue());
+            final BetAmount betAmount = betAmountRepository.get(name);
 
+            playersWinStatus.put(name, betStatus.applyLeverage(betAmount));
+
+        }
         return playersWinStatus;
     }
 
+    public boolean hasName(final ParticipantName other) {
+        return handsRepository.keySet().stream()
+                .anyMatch(name -> name.equals(other));
+    }
+
     public boolean isNotDead(final String name) {
-        final Participant participant = findParticipant(name);
-        return participant.isNotDead();
-    }
-
-    private Participant findParticipant(final String name) {
-        return players.stream()
-                .filter(participant -> participant.isName(name))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("없는 참가자 입니다."));
-    }
-
-    public boolean hasName(final ParticipantName name) {
-        return players.stream()
-                .anyMatch(player -> player.isName(name.getName()));
-    }
-
-    public Hands getHandsOf(final String name) {
-        final Participant findedParticipant = findParticipant(name);
-        return findedParticipant.getHands();
-    }
-
-    public Map<ParticipantName, Hands> getPlayersHands() {
-        return players.stream()
-                .collect(toMap(Participant::getName,
-                        Participant::getHands,
-                        (v1, v2) -> v1,
-                        LinkedHashMap::new));
-    }
-
-    public List<ParticipantName> getNames() {
-        return players.stream()
-                .map(Participant::getName)
-                .toList();
+        final Hands hands = findHands(name);
+        return hands.isNotDead();
     }
 
     public boolean isAllDead() {
-        if (players.stream().anyMatch(Participant::isNotDead)) {
-            return false;
-        }
-
-        return true;
+        return handsRepository.values().stream()
+                .noneMatch(Hands::isNotDead);
     }
 
     public int count() {
-        return players.size();
+        return handsRepository.size();
+    }
+
+    public Hands getHandsOf(final String name) {
+        return new Hands(findHands(name).getCards());
+    }
+
+    public List<ParticipantName> getNames() {
+        return handsRepository.keySet().stream().toList();
+    }
+
+    public Map<ParticipantName, Hands> getPlayersHands() {
+        return Collections.unmodifiableMap(handsRepository);
     }
 }

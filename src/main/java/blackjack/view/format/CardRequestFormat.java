@@ -1,5 +1,7 @@
 package blackjack.view.format;
 
+import blackjack.exception.NeedRetryException;
+
 public enum CardRequestFormat {
     YES("y"),
     NO("n");
@@ -17,7 +19,7 @@ public enum CardRequestFormat {
         if (NO.getFormat().equals(input)) {
             return false;
         }
-        throw new IllegalArgumentException("입력은 y또는 n으로 해주세요.");
+        throw new NeedRetryException("입력은 y또는 n으로 해주세요.");
     }
 
     public String getFormat() {

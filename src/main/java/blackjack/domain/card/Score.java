@@ -23,6 +23,10 @@ public class Score {
         return this.value > other.value;
     }
 
+    public boolean isSmallerOrEqual(final Score score) {
+        return this.value <= score.value;
+    }
+
     public int getValue() {
         return value;
     }

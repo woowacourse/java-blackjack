@@ -9,6 +9,7 @@ import blackjack.domain.dealer.Deck;
 import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.participant.Players;
 import blackjack.domain.rule.GameRule;
+import blackjack.dto.DealerMoreCardDto;
 import blackjack.dto.FinalHandsScoreDto;
 import blackjack.dto.PlayerCardsDto;
 import blackjack.dto.StartCardsDto;
@@ -46,30 +47,22 @@ public class BlackjackGame {
         return getStartCards();
     }
 
-    public void saveBetAmountByName(final int betAmount, final String name) {
-        players.saveBetAmountByName(betAmount, name);
-    }
-
     private StartCardsDto getStartCards() {
         final Hands dealerOpenedHands = dealer.getOpenedHands();
         return StartCardsDto.of(players.getPlayersHands(), dealerOpenedHands, dealer.getName());
     }
 
-    public boolean isNotDealerBlackjack() {
-        return dealer.isNotBlackjack();
-    }
-
-    public boolean isPlayerAliveByName(final String name) {
-        return players.isNotDead(name);
+    public void saveBetAmountByName(final int betAmount, final String name) {
+        players.saveBetAmountByName(betAmount, name);
     }
 
     public void addCardToPlayers(final String name) {
         players.addCardTo(name, dealer.drawCard());
     }
 
-    public int giveDealerMoreCard() {
+    public DealerMoreCardDto giveDealerMoreCard() {
         if (players.isAllDead()) {
-            return 0;
+            return DealerMoreCardDto.of(dealer.getName(), 0, Dealer.NEED_CARD_NUMBER_MAX);
         }
         int count = 0;
 
@@ -78,12 +71,15 @@ public class BlackjackGame {
             count++;
         }
 
-        return count;
+        return DealerMoreCardDto.of(dealer.getName(), count, Dealer.NEED_CARD_NUMBER_MAX);
     }
 
-    public PlayerCardsDto getCardsOf(final String name) {
-        final Hands hands = players.getHandsOf(name);
-        return PlayerCardsDto.of(name, hands);
+    public boolean isNotDealerBlackjack() {
+        return dealer.isNotBlackjack();
+    }
+
+    public boolean isPlayerAliveByName(final String name) {
+        return players.isNotDead(name);
     }
 
     public FinalHandsScoreDto getFinalHandsScore() {
@@ -96,6 +92,11 @@ public class BlackjackGame {
         final BetRevenue dealerRevenue = betResult.calculateDealerRevenue();
 
         return BetRevenueResultDto.of(playersBetResult, dealerRevenue, dealer.getName());
+    }
+
+    public PlayerCardsDto getCardsOf(final String name) {
+        final Hands hands = players.getHandsOf(name);
+        return PlayerCardsDto.of(name, hands);
     }
 
     public List<String> getPlayersName() {

@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.dto.BetRevenueResultDto;
 import blackjack.dto.CardDto;
 import blackjack.dto.DealerBetResultDto;
+import blackjack.dto.DealerMoreCardDto;
 import blackjack.dto.FinalHandsScoreDto;
 import blackjack.dto.PlayerBetResultDto;
 import blackjack.dto.PlayerCardsDto;
@@ -87,9 +88,11 @@ public class OutputView {
                 System.out.printf("%s: %f%n", playerWinningResult.name(), playerWinningResult.revenue()));
     }
 
-    public void printDealerMoreCard(int count, final String dealerName) {
+    public void printDealerMoreCard(final DealerMoreCardDto dealerMoreCard) {
+        int count = dealerMoreCard.count();
+
         while (count-- > 0) {
-            System.out.printf("%s는 16이하라 한장의 카드를 더 받았습니다.%n", dealerName);
+            System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.%n", dealerMoreCard.name(), dealerMoreCard.limitScore());
         }
     }
 

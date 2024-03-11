@@ -3,26 +3,25 @@ package blackjack.domain.dealer;
 import blackjack.domain.card.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.ParticipantName;
 import java.util.List;
 import java.util.stream.Stream;
 
 public class Dealer {
 
-    private static final Score NEED_CARD_CRITERION = new Score(17);
-    private static final String DEALER_NAME = "딜러";
+    public static final int NEED_CARD_NUMBER_MAX = 16;
+    private static final ParticipantName DEALER_NAME = new ParticipantName("딜러");
 
     private final Deck deck;
-    private final Participant participant;
+    private final Hands hands;
 
     public Dealer(final Deck deck) {
         this.deck = deck;
-        this.participant = Participant.from(DEALER_NAME);
+        this.hands = new Hands();
     }
 
     public boolean needMoreCard() {
-        return NEED_CARD_CRITERION.isBiggerThan(participant.calculateScore());
+        return hands.calculateScore().isSmallerOrEqual(new Score(NEED_CARD_NUMBER_MAX));
     }
 
 
@@ -37,32 +36,28 @@ public class Dealer {
     }
 
     public void addCard() {
-        participant.addCard(drawCard());
+        hands.addCard(drawCard());
     }
 
     public void addCard(int count) {
         while (count-- > 0) {
-            participant.addCard(drawCard());
+            hands.addCard(drawCard());
         }
     }
 
-    public Score calculateScore() {
-        return participant.calculateScore();
-    }
-
     public boolean isNotBlackjack() {
-        return participant.isNotBlackjack();
+        return hands.isNotBlackjack();
     }
 
     public Hands getOpenedHands() {
-        return participant.getFirstCard();
+        return hands.getFirstCard();
     }
 
     public Hands getHands() {
-        return participant.getHands();
+        return new Hands(hands.getCards());
     }
 
     public ParticipantName getName() {
-        return participant.getName();
+        return DEALER_NAME;
     }
 }
