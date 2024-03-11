@@ -1,20 +1,24 @@
 package domain;
 
-import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.result.Result;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
-import static domain.card.Rank.FIVE;
-import static domain.card.Rank.NINE;
-import static domain.card.Shape.HEART;
-import static domain.card.Shape.SPADE;
+import static domain.HandsTestFixture.sum10Size2;
+import static domain.HandsTestFixture.sum18Size2;
+import static domain.HandsTestFixture.sum20Size3;
+import static domain.HandsTestFixture.sum21Size2;
+import static domain.result.Result.LOSE;
+import static domain.result.Result.TIE;
+import static domain.result.Result.WIN;
 
 class DealerTest {
 
@@ -59,8 +63,7 @@ class DealerTest {
     @DisplayName("딜러의 카드의 합이 17이상이 될때까지 카드를 추가한다.")
     void dealerDeal() {
         //given
-        final Hands sum10 = new Hands(List.of(new Card(FIVE, SPADE), new Card(FIVE, HEART)));
-        final Dealer dealer = new Dealer(CardDeck.generate(), sum10);
+        final Dealer dealer = new Dealer(CardDeck.generate(), sum10Size2);
 
         //when
         dealer.deal();
@@ -73,13 +76,31 @@ class DealerTest {
     @Test
     void dealerNoDeal() {
         //given
-        final Hands sum18 = new Hands(List.of(new Card(NINE, SPADE), new Card(NINE, HEART)));
-        final Dealer dealer = new Dealer(CardDeck.generate(), sum18);
+        final Dealer dealer = new Dealer(CardDeck.generate(), sum18Size2);
 
         //when
         dealer.deal();
 
         //then
         Assertions.assertThat(dealer.countAddedHands()).isZero();
+    }
+
+    @DisplayName("딜러의 승패무를 판단한다.")
+    @Test
+    void dealerResult() {
+        // given
+        Player loser1 = new Player(new Name("레디"), sum18Size2);
+        Player loser2 = new Player(new Name("피케이"), sum18Size2);
+        Player winner = new Player(new Name("제제"), sum21Size2);
+        Player tier = new Player(new Name("브라운"), sum20Size3);
+
+        Players players = new Players(List.of(loser1, loser2, winner, tier));
+        Dealer dealer = new Dealer(CardDeck.generate(), sum20Size3);
+
+        // when
+        Map<Result, Integer> expected = Map.of(WIN, 2, LOSE, 1, TIE, 1);
+
+        // then
+        Assertions.assertThat(dealer.getDealerResult(players)).isEqualTo(expected);
     }
 }

@@ -15,5 +15,4 @@ class AnswerTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 유효하지 않은 대답입니다.");
     }
-
 }

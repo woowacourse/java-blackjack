@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class CardDeckTest {
+
     @DisplayName("카드를 52 * 6 만큼 생성한다.")
     @Test
     void generate() {
@@ -14,7 +15,6 @@ class CardDeckTest {
         // when && then
         Assertions.assertThat(cardDeck.size()).isEqualTo(52 * 6);
     }
-
 
     @Test
     @DisplayName("카드가 없는데 카드를 뽑을 경우 예외가 발생한다.")

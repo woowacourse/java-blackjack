@@ -1,51 +1,24 @@
 package domain;
 
-import static domain.card.Rank.ACE;
-import static domain.card.Rank.EIGHT;
-import static domain.card.Rank.FIVE;
-import static domain.card.Rank.FOUR;
-import static domain.card.Rank.JACK;
-import static domain.card.Rank.NINE;
-import static domain.card.Rank.SEVEN;
-import static domain.card.Rank.TWO;
-import static domain.card.Shape.HEART;
-import static domain.card.Shape.SPADE;
-
-import domain.card.Card;
-import java.util.List;
+import domain.result.Result;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ResultTest {
+import static domain.HandsTestFixture.blackJack;
+import static domain.HandsTestFixture.bustHands;
+import static domain.HandsTestFixture.sum17Size3One;
+import static domain.HandsTestFixture.sum17Size3Two;
+import static domain.HandsTestFixture.sum20Size2;
+import static domain.HandsTestFixture.sum20Size3;
+import static domain.HandsTestFixture.sum21Size2;
 
-    final Hands sum20Size2 = new Hands(
-            List.of(new Card(NINE, SPADE), new Card(ACE, SPADE)));
-    final Hands sum20Size3 = new Hands(
-            List.of(new Card(FOUR, SPADE), new Card(FIVE, SPADE),
-                    new Card(ACE, SPADE)));
-    final Hands sum21Size2 = new Hands(
-            List.of(new Card(JACK, HEART),
-                    new Card(ACE, SPADE)));
-    final Hands sum22Size3 = new Hands(
-            List.of(new Card(NINE, HEART), new Card(EIGHT, SPADE),
-                    new Card(FIVE, HEART)));
-    final Hands blackJack = new Hands(
-            List.of(new Card(JACK, HEART), new Card(ACE, SPADE)));
+class ResultTest {
 
     @DisplayName("카드 합이 같고 카드 갯수가 같으면 무승부이다.")
     @Test
     void isTie() {
-        // given
-        final Hands dealerSum10Size3 = new Hands(
-                List.of(new Card(SEVEN, SPADE), new Card(TWO, SPADE),
-                        new Card(ACE, SPADE)));
-        final Hands playerSum10Size3 = new Hands(
-                List.of(new Card(FOUR, SPADE), new Card(FIVE, SPADE),
-                        new Card(ACE, SPADE)));
-
-        // when && then
-        Assertions.assertThat(dealerSum10Size3.calculateResult(playerSum10Size3)).isEqualTo(Result.TIE);
+        Assertions.assertThat(sum17Size3One.calculateResult(sum17Size3Two)).isEqualTo(Result.TIE);
     }
 
     @DisplayName("카드 합이 같은데 카드 갯수가 더 적으면 승리이다.")
@@ -64,7 +37,7 @@ class ResultTest {
     @Test
     @DisplayName("카드 합이 21초과이면 패배한다.")
     void isLoseWhenCardSumGreater21() {
-        Assertions.assertThat(sum22Size3.calculateResult(sum20Size2)).isEqualTo(Result.LOSE);
+        Assertions.assertThat(bustHands.calculateResult(sum20Size2)).isEqualTo(Result.LOSE);
     }
 
     @Test

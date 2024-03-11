@@ -1,9 +1,10 @@
 package domain;
 
-import domain.card.Card;
+import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.result.Result;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,22 +13,20 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
-import static domain.card.Rank.JACK;
-import static domain.card.Rank.TEN;
-import static domain.card.Shape.HEART;
-import static domain.card.Shape.SPADE;
+import static domain.HandsTestFixture.bustHands;
+import static domain.HandsTestFixture.noBustHands;
+import static domain.HandsTestFixture.sum18Size2;
+import static domain.HandsTestFixture.sum20Size2;
+import static domain.HandsTestFixture.sum20Size3;
+import static domain.HandsTestFixture.sum21Size2;
+import static domain.result.Result.LOSE;
+import static domain.result.Result.TIE;
+import static domain.result.Result.WIN;
 
 class PlayersTest {
-
-    final Hands bustHands = new Hands(
-            List.of(new Card(JACK, HEART), new Card(TEN, SPADE),
-                    new Card(TEN, HEART)));
-
-    final Hands noBustHands = new Hands(
-            List.of(new Card(JACK, HEART), new Card(TEN, SPADE)));
-
 
     @Test
     @DisplayName("참여자 이름 중복시 예외가 발생한다.")
@@ -85,6 +84,41 @@ class PlayersTest {
         Assertions.assertThat(players.isAllBust()).isTrue();
     }
 
+    @Test
+    @DisplayName("참여자의 승패무를 판단한다.")
+    void playerResult() {
+        //given
+        Player loser = new Player(new Name("레디"), sum18Size2);
+        Player winner = new Player(new Name("제제"), sum21Size2);
+        Player tier = new Player(new Name("수달"), sum20Size3);
+
+        Players players = new Players(List.of(loser, winner, tier));
+        Dealer dealer = new Dealer(CardDeck.generate(), sum20Size3);
+
+        //when & then
+        Map<Player, Result> expected = Map.of(loser, LOSE, winner, WIN, tier, TIE);
+        Assertions.assertThat(players.getPlayersResult(dealer)).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("딜러가 버스트일때 참여자가 버스트가 아니면 WIN")
+    void all() {
+        //given
+        Dealer bustDealer = new Dealer(CardDeck.generate(), bustHands);
+        Player winner1 = new Player(new Name("레디"), sum18Size2);
+        Player winner2 = new Player(new Name("브라운"), sum20Size2);
+        Player loser = new Player(new Name("제제"), bustHands);
+
+        Players players = new Players(List.of(winner1, winner2, loser));
+
+        //when
+        Map<Player, Result> expectedPlayerResult = Map.of(winner1, WIN, winner2, WIN, loser, LOSE);
+        Map<Result, Integer> expectedDealerResult = Map.of(WIN, 1, LOSE, 2);
+
+        //then
+        Assertions.assertThat(players.getPlayersResult(bustDealer)).isEqualTo(expectedPlayerResult);
+        Assertions.assertThat(bustDealer.getDealerResult(players)).isEqualTo(expectedDealerResult);
+    }
 
     static Stream<Arguments> validPlayersSizeParameterProvider() {
         return Stream.of(

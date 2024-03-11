@@ -1,20 +1,6 @@
 package domain;
 
-import static domain.card.Rank.ACE;
-import static domain.card.Rank.EIGHT;
-import static domain.card.Rank.FIVE;
-import static domain.card.Rank.FOUR;
-import static domain.card.Rank.NINE;
-import static domain.card.Rank.SIX;
-import static domain.card.Rank.TWO;
-import static domain.card.Shape.CLOVER;
-import static domain.card.Shape.DIAMOND;
-import static domain.card.Shape.HEART;
-import static domain.card.Shape.SPADE;
-
 import domain.card.Card;
-import java.util.List;
-import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,10 +8,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class HandsTest {
+import java.util.stream.Stream;
 
-    final Hands sum20Size2 = new Hands(
-            List.of(new Card(NINE, SPADE), new Card(ACE, SPADE)));
+import static domain.HandsTestFixture.sum19Size3Ace1;
+import static domain.HandsTestFixture.sum19Size4Ace11;
+import static domain.HandsTestFixture.sum20Size2;
+import static domain.HandsTestFixture.sum20Size3Ace1;
+import static domain.HandsTestFixture.sum21Size3Ace11;
+import static domain.card.Rank.EIGHT;
+import static domain.card.Shape.CLOVER;
+
+class HandsTest {
 
     @Test
     @DisplayName("카드를 가지고 있는 객체를 생성한다.")
@@ -77,29 +70,15 @@ class HandsTest {
 
     static Stream<Arguments> sumAce11ParameterProvider() {
         return Stream.of(
-                Arguments.of(new Hands(List.of(new Card(ACE, HEART),
-                                new Card(EIGHT, SPADE),
-                                new Card(TWO, CLOVER))),
-                        21),
-                Arguments.of(new Hands(List.of(new Card(ACE, DIAMOND),
-                                new Card(TWO, CLOVER),
-                                new Card(FOUR, CLOVER),
-                                new Card(TWO, CLOVER))),
-                        19)
+                Arguments.of(sum21Size3Ace11, 21),
+                Arguments.of(sum19Size4Ace11, 19)
         );
     }
 
     static Stream<Arguments> sumAce1ParameterProvider() {
         return Stream.of(
-                Arguments.of(new Hands(List.of(new Card(ACE, HEART),
-                                new Card(NINE, SPADE),
-                                new Card(NINE, CLOVER))),
-                        19),
-                Arguments.of(new Hands(List.of(new Card(ACE, DIAMOND),
-                                new Card(EIGHT, CLOVER),
-                                new Card(FIVE, CLOVER),
-                                new Card(SIX, CLOVER))),
-                        20)
+                Arguments.of(sum19Size3Ace1, 19),
+                Arguments.of(sum20Size3Ace1, 20)
         );
     }
 }
