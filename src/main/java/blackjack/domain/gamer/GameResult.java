@@ -2,20 +2,10 @@ package blackjack.domain.gamer;
 
 public enum GameResult {
 
-	WIN("승"),
-	LOSE("패");
+    WIN,
+    LOSE;
 
-	private final String name;
-
-	GameResult(String name) {
-		this.name = name;
-	}
-
-	public boolean isLose() {
-		return this == LOSE;
-	}
-
-	public String getName() {
-		return name;
-	}
+    public static boolean isLose(GameResult gameResult) {
+        return LOSE == gameResult;
+    }
 }
