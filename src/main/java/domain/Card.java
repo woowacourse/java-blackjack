@@ -2,6 +2,8 @@ package domain;
 
 import domain.constant.CardNumber;
 import domain.constant.CardType;
+import view.CardNumberView;
+import view.CardTypeView;
 
 public class Card {
     private final CardType cardType;
@@ -33,6 +35,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return cardNumber.getSymbol() + cardType.getType();
+        return CardNumberView.getViewByNumber(cardNumber).getSymbol()
+                + CardTypeView.getViewByType(cardType).getSymbol();
     }
 }

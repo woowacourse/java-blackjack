@@ -1,16 +1,11 @@
 package domain.constant;
 
 public enum GamerResult {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    WIN,
+    DRAW,
+    LOSE;
 
     private static final int BUST_THRESHOLD = 21;
-    private final String result;
-
-    GamerResult(String result) {
-        this.result = result;
-    }
 
     public static GamerResult judgeDealerResult(int dealerScore, int playerScore) {
         if (playerScore > BUST_THRESHOLD || (dealerScore <= BUST_THRESHOLD && dealerScore > playerScore)) {
@@ -30,9 +25,5 @@ public enum GamerResult {
             return GamerResult.WIN;
         }
         return GamerResult.DRAW;
-    }
-
-    public String getResult() {
-        return result;
     }
 }

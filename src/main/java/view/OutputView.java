@@ -85,14 +85,16 @@ public class OutputView {
 
         System.out.println(String.join(": ", DEALER_NAME, buildDealerResult(dealerGameResult)));
         playersGameResult.forEach(
-                (name, result) -> System.out.printf("%s: %s%n", name, result.getResult()));
+                (name, result) -> System.out.printf("%s: %s%n", name,
+                        GamerResultView.getViewByType(result).getSymbol()));
 
     }
 
     private static String buildDealerResult(Map<GamerResult, Integer> dealerGameResult) {
         return Arrays.stream(GamerResult.values())
                 .filter(dealerGameResult::containsKey)
-                .map(result -> "%d%s".formatted(dealerGameResult.get(result), result.getResult()))
+                .map(result -> "%d%s".formatted(dealerGameResult.get(result),
+                        GamerResultView.getViewByType(result).getSymbol()))
                 .collect(Collectors.joining(" "));
     }
 }
