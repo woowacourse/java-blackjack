@@ -34,7 +34,7 @@ public class Score {
     }
 
     public static Score blackJackScore() {
-        return new Score(BLACKJACK_MAX_SCORE, false);
+        return new Score(BLACKJACK_MAX_SCORE, true);
     }
 
     public boolean isBusted() {
@@ -43,6 +43,10 @@ public class Score {
 
     private boolean isBusted(int scoreValue) {
         return scoreValue > BLACKJACK_MAX_SCORE;
+    }
+
+    public boolean isBlackJack() {
+        return isBlackJack;
     }
 
     private boolean isGreaterThan(Score relativeScore) {
@@ -73,9 +77,13 @@ public class Score {
     }
 
     public GameResult compareWith(Score other) {
-        // TODO: 메서드 행 줄이기ㅣ
+        // TODO: 메서드 행 줄이기
+        if (isBlackJack && !other.isBlackJack) {
+            return GameResult.BLACKJACK;
+        }
+
         if (this.isBusted() && other.isBusted()) {
-            return GameResult.DRAW; // both busted
+            return GameResult.BOTH_BUSTED;
         }
         if (this.isBusted()) {
             return GameResult.LOSE;
