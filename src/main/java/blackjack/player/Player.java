@@ -2,10 +2,11 @@ package blackjack.player;
 
 import blackjack.card.Card;
 import blackjack.card.Deck;
-import blackjack.game.BlackJackGame;
 import java.util.List;
 
 public class Player {
+
+    private static final int BLACKJACK_MAX_SCORE = 21;
 
     private final Name name;
     protected final Hand hand;
@@ -29,7 +30,7 @@ public class Player {
     }
 
     public boolean hasDrawableScore() {
-        return hand.calculateScore() < BlackJackGame.BLACKJACK_MAX_SCORE;
+        return hand.calculateScore() < BLACKJACK_MAX_SCORE;
     }
 
     public String getName() {

@@ -1,13 +1,13 @@
 package blackjack.player;
 
 import blackjack.card.Card;
-import blackjack.game.BlackJackGame;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Hand {
 
+    private static final int BLACKJACK_MAX_SCORE = 21;
     private static final int ADDITIONAL_ACE_SCORE = 10;
 
     private final List<Card> cards;
@@ -41,7 +41,7 @@ public class Hand {
 
     private int changeToMaximumScore(int minimumScore) {
         int maximumScore = minimumScore + ADDITIONAL_ACE_SCORE;
-        if (maximumScore <= BlackJackGame.BLACKJACK_MAX_SCORE) {
+        if (maximumScore <= BLACKJACK_MAX_SCORE) {
             return maximumScore;
         }
         return minimumScore;

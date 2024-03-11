@@ -6,6 +6,8 @@ public enum MatchResult {
     PLAYER_WIN,
     TIE;
 
+    private static final int BLACKJACK_MAX_SCORE = 21;
+
     public static MatchResult chooseWinner(int playerScore, int dealerScore) {
         if (isPlayerWinningCondition(playerScore, dealerScore)) {
             return PLAYER_WIN;
@@ -30,8 +32,7 @@ public enum MatchResult {
         return !isBust(dealerScore) && dealerScore > playerScore;
     }
 
-    private static boolean isBurst(int score) {
     private static boolean isBust(int score) {
-        return score > BlackJackGame.BLACKJACK_MAX_SCORE;
+        return score > BLACKJACK_MAX_SCORE;
     }
 }

@@ -10,8 +10,6 @@ import java.util.List;
 
 public class BlackJackGame {
 
-    public static final int BLACKJACK_MAX_SCORE = 21;
-
     private final InputView inputView;
     private final OutputView outputView;
 
