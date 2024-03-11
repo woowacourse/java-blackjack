@@ -13,8 +13,8 @@ public class Referee {
     }
 
     public Outcome doesPlayerWin(final Cards playerCards) {
-        if (isBust(playerCards.sum()) || isBust(dealerCards.sum())) {
-            return calculateBustCase(playerCards.sum());
+        if (isBust(playerCards.calculateOptimalSum()) || isBust(dealerCards.calculateOptimalSum())) {
+            return calculateBustCase(playerCards.calculateOptimalSum());
         }
         if (isBlackJack(dealerCards) || isBlackJack(playerCards)) {
             return calculateBlackJackCase(playerCards);
@@ -27,17 +27,17 @@ public class Referee {
     }
 
     private Outcome calculateBustCase(final int playerScore) {
-        if (isBust(dealerCards.sum()) && isBust(playerScore)) {
+        if (isBust(dealerCards.calculateOptimalSum()) && isBust(playerScore)) {
             return Outcome.PUSH;
         }
-        if (isBust(dealerCards.sum())) {
+        if (isBust(dealerCards.calculateOptimalSum())) {
             return Outcome.WIN;
         }
         return Outcome.LOSE;
     }
 
     private boolean isBlackJack(Cards cards) {
-        return cards.sum() == BLACKJACK_CANDIDATE && cards.hasOnlyInitialCard();
+        return cards.calculateOptimalSum() == BLACKJACK_CANDIDATE && cards.hasOnlyInitialCard();
     }
 
     private Outcome calculateBlackJackCase(final Cards playerCards) {
@@ -51,10 +51,10 @@ public class Referee {
     }
 
     private Outcome calculateNormalCase(final Cards playerCards) {
-        if (dealerCards.sum() < playerCards.sum()) {
+        if (dealerCards.calculateOptimalSum() < playerCards.calculateOptimalSum()) {
             return Outcome.WIN;
         }
-        if (dealerCards.sum() > playerCards.sum()) {
+        if (dealerCards.calculateOptimalSum() > playerCards.calculateOptimalSum()) {
             return Outcome.LOSE;
         }
         return Outcome.PUSH;

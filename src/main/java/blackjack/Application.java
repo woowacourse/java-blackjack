@@ -48,7 +48,7 @@ public class Application {
     }
 
     private static DealerDto createDealerDto(final Cards cards) {
-        return new DealerDto(cards.toList(), cards.sum());
+        return new DealerDto(cards.toList(), cards.calculateOptimalSum());
     }
 
     private static List<PlayerDto> toDtos(final Players players) {
@@ -58,7 +58,7 @@ public class Application {
     }
 
     private static PlayerDto toDto(final Player player) {
-        return new PlayerDto(player.getName(), player.getCards().toList(), player.getCards().sum());
+        return new PlayerDto(player.getName(), player.getCards().toList(), player.getCards().calculateOptimalSum());
     }
 
     private static void hit(GameBoard gameBoard) {

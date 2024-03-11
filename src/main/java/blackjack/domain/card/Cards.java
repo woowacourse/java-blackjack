@@ -5,6 +5,7 @@ import java.util.List;
 public class Cards {
 
     private static final int BLACKJACK_CANDIDATE = 21;
+    private static final int VALUE_FOR_SOFT_HAND = 10;
     private static final int INITIAL_CARD_SIZE = 2;
 
     private final List<Card> cards;
@@ -21,24 +22,30 @@ public class Cards {
         return cards.get(0);
     }
 
-    public int sum() {
+    public int calculateOptimalSum() {
         final List<Number> numbers = cards.stream()
                 .map(Card::getNumber)
                 .toList();
 
         if (numbers.contains(Number.ACE)) {
-            return calculateOptimalSum(numbers);
+            return calculateAceToOptimal(numbers);
         }
-        return Number.sum(numbers);
+        return sumHardHand(numbers);
     }
 
-    private int calculateOptimalSum(List<Number> numbers) {
-        int softHandSum = Number.sumOneAceToSoftHand(numbers);
-
-        if (softHandSum <= BLACKJACK_CANDIDATE) {
-            return softHandSum;
+    private int calculateAceToOptimal(final List<Number> numbers) {
+        final int hardHandScore = sumHardHand(numbers);
+        final int softHandScore = hardHandScore + VALUE_FOR_SOFT_HAND;
+        if (softHandScore <= BLACKJACK_CANDIDATE) {
+            return softHandScore;
         }
-        return Number.sum(numbers);
+        return hardHandScore;
+    }
+
+    private int sumHardHand(final List<Number> numbers) {
+        return numbers.stream()
+                .mapToInt(Number::getValue)
+                .sum();
     }
 
     public boolean hasOnlyInitialCard() {

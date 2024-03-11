@@ -16,7 +16,7 @@ class CardsTest {
                 Card.of(Number.EIGHT, Suit.CLOVER)
         ));
 
-        final int actual = cards.sum();
+        final int actual = cards.calculateOptimalSum();
 
         assertThat(actual).isEqualTo(18);
     }
@@ -29,7 +29,7 @@ class CardsTest {
                 Card.of(Number.EIGHT, Suit.CLOVER)
         ));
 
-        final int actual = cards.sum();
+        final int actual = cards.calculateOptimalSum();
 
         assertThat(actual).isEqualTo(19);
     }
@@ -43,7 +43,7 @@ class CardsTest {
                 Card.of(Number.TEN, Suit.CLOVER)
         ));
 
-        final int actual = cards.sum();
+        final int actual = cards.calculateOptimalSum();
 
         assertThat(actual).isEqualTo(19);
     }
@@ -56,7 +56,7 @@ class CardsTest {
                 Card.of(Number.EIGHT, Suit.CLOVER)
         ));
 
-        final int actual = cards.sum();
+        final int actual = cards.calculateOptimalSum();
 
         assertThat(actual).isEqualTo(19);
     }
@@ -69,7 +69,7 @@ class CardsTest {
                 Card.of(Number.ACE, Suit.CLOVER)
         ));
 
-        final int actual = cards.sum();
+        final int actual = cards.calculateOptimalSum();
 
         assertThat(actual).isEqualTo(12);
     }
@@ -83,7 +83,7 @@ class CardsTest {
                 Card.of(Number.TEN, Suit.CLOVER)
         ));
 
-        final int actual = cards.sum();
+        final int actual = cards.calculateOptimalSum();
 
         assertThat(actual).isEqualTo(12);
     }

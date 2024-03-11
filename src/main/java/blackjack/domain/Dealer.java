@@ -25,12 +25,12 @@ public class Dealer implements Gamer {
 
     @Override
     public boolean canDraw() {
-        return cards.sum() <= THRESHOLD;
+        return cards.calculateOptimalSum() <= THRESHOLD;
     }
 
     @Override
     public int calculateScore() {
-        return cards.sum();
+        return cards.calculateOptimalSum();
     }
 
     public Card findFaceUpCard() {
