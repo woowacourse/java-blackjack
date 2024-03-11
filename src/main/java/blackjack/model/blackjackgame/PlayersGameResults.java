@@ -1,27 +1,28 @@
 package blackjack.model.blackjackgame;
 
 import blackjack.model.participants.Player;
+import blackjack.view.PlayerResultStatus;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class GameResults {
+public class PlayersGameResults {
 
-    private final Map<Player, ResultStatus> result;
+    private final Map<Player, PlayerResultStatus> result;
 
-    public GameResults(Map<Player, ResultStatus> result) {
+    public PlayersGameResults(Map<Player, PlayerResultStatus> result) {
         this.result = result;
     }
 
-    public Map<ResultStatus, Long> getDealerResult() {
+    public Map<PlayerResultStatus, Long> getDealerResult() {
         return result.values()
                 .stream()
                 .collect(Collectors.groupingBy(resultState -> resultState,
-                        () -> new EnumMap<>(ResultStatus.class),
+                        () -> new EnumMap<>(PlayerResultStatus.class),
                         Collectors.counting()));
     }
 
-    public Map<Player, ResultStatus> getResult() {
+    public Map<Player, PlayerResultStatus> getResult() {
         return result;
     }
 }

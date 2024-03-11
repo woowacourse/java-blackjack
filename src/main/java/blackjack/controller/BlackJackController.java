@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.model.blackjackgame.BlackJackGame;
-import blackjack.model.blackjackgame.GameResults;
+import blackjack.model.blackjackgame.PlayersGameResults;
 import blackjack.model.generator.CardGenerator;
 import blackjack.model.generator.RandomIndexGenerator;
 import blackjack.model.participants.Dealer;
@@ -30,8 +30,8 @@ public class BlackJackController {
 
         executeMultipleTurns(players, blackJackGame);
         outputView.printFinalScore(blackJackGame);
-        GameResults gameResults = blackJackGame.calculateFinalResults();
-        outputView.printGameResults(gameResults);
+        PlayersGameResults playersGameResults = blackJackGame.calculatePlayersResults();
+        outputView.printGameResults(playersGameResults);
     }
 
     private void executeMultipleTurns(List<Player> players, BlackJackGame blackJackGame) {
