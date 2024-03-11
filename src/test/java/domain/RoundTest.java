@@ -18,19 +18,14 @@ class RoundTest {
     @Order(2)
     @Test
     void startBlackJack() {
-        List<String> playerNames = List.of("pobi");
+        List<String> gamerNames = List.of("pobi");
         Dealer dealer = new Dealer();
 
-        List<Gamer> gamers = playerNames.stream()
-                .map(Gamer::new)
-                .toList();
-        Participant participant = new Participant(dealer, gamers);
-
-        Round round = new Round(participant);
+        Round round = new Round(dealer, gamerNames);
         round.initiateGameCondition();
 
         assertThat(dealer.getHandSize()).isEqualTo(2);
-        assertThat(gamers.get(0).getHandSize()).isEqualTo(2);
+        assertThat(round.getGamer("pobi").getHandSize()).isEqualTo(2);
     }
 
     @DisplayName("딜러의 점수가 16 이하인동안 반복해서 카드를 받는다.")
@@ -39,11 +34,8 @@ class RoundTest {
     void giveCardsUntilDealerScoreOverThreshold() {
         // given
         Dealer dealer = new Dealer();
-
-        List<Gamer> gamers = List.of(new Gamer("pobi"));
-        Participant participant = new Participant(dealer, gamers);
-
-        Round round = new Round(participant);
+        List<String> gamers = List.of("pobi");
+        Round round = new Round(dealer, gamers);
 
         // when
         int count = round.giveCardsToDealer();

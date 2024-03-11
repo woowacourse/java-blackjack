@@ -5,20 +5,20 @@ import java.util.List;
 
 public class GameRule {
     private final Dealer dealer;
-    private final List<Gamer> gamers;
+    private final Gamers gamers;
 
-    public GameRule(final Dealer dealer, final List<Gamer> gamers) {
+    public GameRule(final Dealer dealer, final Gamers gamers) {
         this.dealer = dealer;
         this.gamers = gamers;
     }
 
     public List<Boolean> judge() {
         if (dealer.isBusted()) {
-            return judgePlayersIfDealerBusted();
+            return judgeGamersIfDealerBusted();
         }
 
         List<Boolean> gameResult = new ArrayList<>();
-        for (Player player : gamers) {
+        for (Player player : gamers.listOf()) {
             checkWinner(player, gameResult);
         }
         return gameResult;
@@ -36,10 +36,10 @@ public class GameRule {
         gameResult.add(player.hasMoreScoreThan(dealer));
     }
 
-    public List<Boolean> judgePlayersIfDealerBusted() {
+    public List<Boolean> judgeGamersIfDealerBusted() {
         List<Boolean> gameResult = new ArrayList<>();
-        for (Player player : gamers) {
-            gameResult.add(!player.isBusted());
+        for (Gamer gamer : gamers.listOf()) {
+            gameResult.add(!gamer.isBusted());
         }
         return gameResult;
     }

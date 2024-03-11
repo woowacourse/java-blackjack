@@ -9,6 +9,7 @@ import controller.dto.gamer.GamerHandStatus;
 import domain.Dealer;
 import domain.GameRule;
 import domain.Gamer;
+import domain.Gamers;
 import domain.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,25 +43,23 @@ public class Game {
         Dealer dealer = new Dealer();
 
         Round round = new Round(dealer, names);
+        Gamers gamers = round.getGamers();
         round.initiateGameCondition();
 
         outputView.printNoticeAfterStartGame(names);
-        outputView.printDealerStatusAfterStartGame(round.getDealerStatusAfterStartGame());
-        outputView.printPlayerStatusAfterStartGame(names, round.getGamerStatusAfterStartGame());
+        outputView.printDealerStatusAfterStartGame(dealer.getDealerHandStatus());
+        outputView.printPlayerStatusAfterStartGame(names, gamers.getGamerStatusAfterStartGame());
 
         return round;
     }
 
     private List<Integer> getGamerResultScore(final Round round) {
         List<Integer> scores = new ArrayList<>();
-        for (Player player : getGamers(round)) {
+        Gamers gamers = round.getGamers();
+        for (Player player : gamers.listOf()) {
             scores.add(player.calculateResultScore());
         }
         return scores;
-    }
-
-    private List<Gamer> getGamers(final Round round) {
-        return round.getGamers();
     }
 
     private int getDealerResultScore(final Round round) {
@@ -74,7 +73,7 @@ public class Game {
     private DealerHandScore getCurrentDealerHandScore(final Round round) {
         Dealer dealer = round.getDealer();
 
-        DealerHandStatus dealerHand = new DealerHandStatus(round.getHandToString(dealer));
+        DealerHandStatus dealerHand = dealer.getDealerHandStatus();
         return new DealerHandScore(dealerHand, getDealerResultScore(round));
     }
 
@@ -92,8 +91,9 @@ public class Game {
 
     private List<GamerHandStatus> getPlayerHandStatuses(final Round round) {
         List<GamerHandStatus> gamerHandStatuses = new ArrayList<>();
-        for (Gamer gamer : round.getGamers()) {
-            gamerHandStatuses.add(new GamerHandStatus(gamer.getName(), round.getHandToString(gamer)));
+        Gamers gamers = round.getGamers();
+        for (Gamer gamer : gamers.listOf()) {
+            gamerHandStatuses.add(new GamerHandStatus(gamer.getName(), gamer.getHandStatusAsString()));
         }
         return gamerHandStatuses;
     }

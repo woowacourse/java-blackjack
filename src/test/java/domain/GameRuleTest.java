@@ -43,7 +43,7 @@ class GameRuleTest {
             Gamer gamer = new Gamer("pobi", bustedCardsForPlayer);
             GameRule rule = createGameRule(gamer, dealer);
 
-            List<Boolean> gameResult = rule.judgePlayersIfDealerBusted();
+            List<Boolean> gameResult = rule.judgeGamersIfDealerBusted();
 
             assertThat(gameResult)
                     .hasSize(1)
@@ -60,7 +60,7 @@ class GameRuleTest {
             Gamer gamer = new Gamer("pobi", twoCards);
             GameRule rule = createGameRule(gamer, dealer);
 
-            List<Boolean> gameResult = rule.judgePlayersIfDealerBusted();
+            List<Boolean> gameResult = rule.judgeGamersIfDealerBusted();
 
             assertThat(gameResult)
                     .hasSize(1)
@@ -162,7 +162,7 @@ class GameRuleTest {
     }
 
     private GameRule createGameRule(final Gamer gamer, final Dealer dealer) {
-        List<Gamer> gamers = List.of(gamer);
+        Gamers gamers = new Gamers(List.of(gamer));
 
         return new GameRule(dealer, gamers);
     }
