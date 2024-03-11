@@ -32,40 +32,8 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printAllParticipantsCardsWithScore(BlackjackGame game) {
-        System.out.println();
-        System.out.println(
-            participantNameAndCardsText(game.getDealer()) + scoreText(game.getDealer().score()));
-        for (Player player : game.getPlayers()) {
-            System.out.println(participantNameAndCardsText(player) + scoreText(player.score()));
-        }
-        System.out.println();
-    }
-
-    public void printParticipantCards(Participant participant) {
-        System.out.println(participantNameAndCardsText(participant));
-    }
-
-    public void printBustMessage(Participant participant) {
-        System.out.println(participant.getName() + "님은 버스트되었습니다.");
-    }
-
-    private String scoreText(int score) {
-        return " - 결과: " + score;
-    }
-
     private String dealerNameAndCardsText(Dealer dealer) {
         return dealer.getName() + " 카드: " + cardText(dealer.findShowingCard());
-    }
-
-    private String participantNameAndCardsText(Participant participant) {
-        return participant.getName() + " 카드: " + cardsText(participant.getCards());
-    }
-
-    private String cardsText(List<Card> cards) {
-        return cards.stream()
-            .map(this::cardText)
-            .collect(Collectors.joining(DELIMITER));
     }
 
     private String cardText(Card card) {
@@ -85,8 +53,40 @@ public class OutputView {
         }
     }
 
+    public void printParticipantCards(Participant participant) {
+        System.out.println(participantNameAndCardsText(participant));
+    }
+
+    private String participantNameAndCardsText(Participant participant) {
+        return participant.getName() + " 카드: " + cardsText(participant.getCards());
+    }
+
+    private String cardsText(List<Card> cards) {
+        return cards.stream()
+            .map(this::cardText)
+            .collect(Collectors.joining(DELIMITER));
+    }
+
+    public void printBustMessage(Participant participant) {
+        System.out.println(participant.getName() + "님은 버스트되었습니다.");
+    }
+
     public void printDealerDrawMessage() {
         System.out.printf("%n딜러는 %d이하라 한장의 카드를 더 받았습니다.%n", Dealer.THRESHOLD_SCORE);
+    }
+
+    public void printAllParticipantsCardsWithScore(BlackjackGame game) {
+        System.out.println();
+        System.out.println(
+            participantNameAndCardsText(game.getDealer()) + scoreText(game.getDealer().score()));
+        for (Player player : game.getPlayers()) {
+            System.out.println(participantNameAndCardsText(player) + scoreText(player.score()));
+        }
+        System.out.println();
+    }
+
+    private String scoreText(int score) {
+        return " - 결과: " + score;
     }
 
     public void printResult(BlackjackGame game, Result result) {
