@@ -28,14 +28,18 @@ public class BlackjackController {
             Deck deck = Deck.createShuffledDeck();
             Bettings bettings = new Bettings();
 
-            initialDeal(participants, deck);
-            placeBetsByPlayers(participants, bettings);
-            playersTurn(participants.getPlayers(), deck);
-            dealerTurn(participants.getDealer(), deck);
+            startGame(participants, deck, bettings);
             printResult(participants, bettings);
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
         }
+    }
+
+    private void startGame(Participants participants, Deck deck, Bettings bettings) {
+        initialDeal(participants, deck);
+        placeBetsByPlayers(participants, bettings);
+        playersTurn(participants.getPlayers(), deck);
+        dealerTurn(participants.getDealer(), deck);
     }
 
     private Participants createParticipants() {
