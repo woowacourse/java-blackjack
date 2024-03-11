@@ -58,7 +58,7 @@ public class OutputView {
 
     public static void printScoreResults(DealerScoreResult dealerScoreResult,
                                          List<PlayerScoreResult> playerScoreResults) {
-        StringBuilder dealerScoresText = genernateDealerScoreTexts(dealerScoreResult);
+        StringBuilder dealerScoresText = generateDealerScoreTexts(dealerScoreResult);
 
         System.out.print(System.lineSeparator());
         print("## 최종 승패");
@@ -70,7 +70,7 @@ public class OutputView {
         return result.getNameAsString() + ": " + result.getVictoryAsString();
     }
 
-    private static StringBuilder genernateDealerScoreTexts(DealerScoreResult dealerScoreResult) {
+    private static StringBuilder generateDealerScoreTexts(DealerScoreResult dealerScoreResult) {
         StringBuilder dealerScoresText = new StringBuilder("딜러: ");
         for (Victory victory : Victory.values()) {
             dealerScoresText.append(dealerScoreResult.getVictoryScoreAsString(victory) + " ");
