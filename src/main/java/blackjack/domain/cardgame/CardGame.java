@@ -11,7 +11,7 @@ public class CardGame {
     private final CardDeck cardDeck;
 
     public CardGame() {
-        this.cardDeck = CardDeck.create();
+        this.cardDeck = CardDeck.createShuffledDeck();
     }
 
     public void initializeHand(final Dealer dealer, final List<Player> players) {

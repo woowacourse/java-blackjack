@@ -4,8 +4,11 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
+import java.util.stream.Stream;
 
 public class CardDeck {
     private final Stack<Card> deck;
@@ -14,15 +17,23 @@ public class CardDeck {
         this.deck = deck;
     }
 
-    static CardDeck create() {
+    static CardDeck createShuffledDeck() {
+        final List<Card> allKindOfCards = Arrays.stream(CardShape.values())
+                .flatMap(CardDeck::createEachNumber)
+                .toList();
+
         final Stack<Card> deck = new Stack<>();
-        for (final CardNumber cardNumber : CardNumber.values()) {
-            for (final CardShape cardShape : CardShape.values()) {
-                deck.push(new Card(cardNumber, cardShape));
-            }
+        for (final Card card : allKindOfCards) {
+            deck.push(card);
         }
+
         Collections.shuffle(deck);
         return new CardDeck(deck);
+    }
+
+    private static Stream<Card> createEachNumber(final CardShape cardShape) {
+        return Arrays.stream(CardNumber.values())
+                .map(cardNumber -> new Card(cardNumber, cardShape));
     }
 
     Card draw() {
