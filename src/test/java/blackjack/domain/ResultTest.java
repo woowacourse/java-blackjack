@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.util.Map;
@@ -19,10 +20,14 @@ public class ResultTest {
     @Test
     public void dealerResult() {
         Result result = new Result(
-                Map.of(new Player("mark"), ResultStatus.DRAW, new Player("isang"), ResultStatus.WIN,
+                Map.of(new Player("mark"), ResultStatus.DRAW,
+                        new Player("isang"), ResultStatus.WIN,
                         new Player("isang"), ResultStatus.WIN));
 
         Map<ResultStatus, Long> results = result.calculateDealerResult();
-        results.forEach((key, value) -> System.out.println(key.getName() + " : " + value));
+
+        assertThat(results.get(ResultStatus.WIN)).isEqualTo(null);
+        assertThat(results.get(ResultStatus.DRAW)).isEqualTo(1);
+        assertThat(results.get(ResultStatus.LOSE)).isEqualTo(2);
     }
 }
