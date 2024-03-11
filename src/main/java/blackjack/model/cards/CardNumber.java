@@ -17,19 +17,19 @@ public enum CardNumber {
     QUEEN(12, 10, "Q"),
     KING(13, 10, "K");
 
-    private final int order;
+    private final int numberOfCard;
     private final int score;
     private final String text;
 
-    CardNumber(int order, int score, String text) {
-        this.order = order;
+    CardNumber(int numberOfCard, int score, String text) {
+        this.numberOfCard = numberOfCard;
         this.score = score;
         this.text = text;
     }
 
     public static CardNumber generate(int number) {
         return Arrays.stream(values())
-                .filter(cardNumber -> cardNumber.order == number)
+                .filter(cardNumber -> cardNumber.numberOfCard == number)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("카드숫자를 고르는 숫자가 올바르지 않습니다."));
     }

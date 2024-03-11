@@ -41,7 +41,7 @@ class PlayerTest {
         Player player = new Player("daon");
         player.addCards(given);
 
-        assertThat(player.checkDrawCardState()).isTrue();
+        assertThat(player.checkCanGetMoreCard()).isTrue();
     }
 
     @DisplayName("카드를 추가로 받을 수 있는지 확인한다")
@@ -55,7 +55,7 @@ class PlayerTest {
         Player player = new Player("daon");
         player.addCards(given);
 
-        assertThat(player.checkDrawCardState()).isFalse();
+        assertThat(player.checkCanGetMoreCard()).isFalse();
     }
 
     @DisplayName("플레이어 카드가 기준 점수보다 크면 진다.")

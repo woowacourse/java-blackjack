@@ -11,7 +11,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean checkDrawCardState() {
+    public boolean checkCanGetMoreCard() {
         return !cards.isGreaterThanWinningScore();
     }
 

@@ -27,7 +27,7 @@ class CardGeneratorTest {
         IndexGenerator indexGenerator = maxRange -> 1;
         CardGenerator cardGenerator = new CardGenerator(indexGenerator);
 
-        List<Card> cards = cardGenerator.drawCards();
+        List<Card> cards = cardGenerator.drawFirstCardsDealt();
 
         assertThat(cards).hasSize(2);
     }

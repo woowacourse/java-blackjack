@@ -53,9 +53,9 @@ public class BlackJackController {
     }
 
     private boolean checkDrawCardState(Player player) {
-        if (!player.checkDrawCardState()) {
+        if (!player.checkCanGetMoreCard()) {
             outputView.printInvalidDrawCardState();
         }
-        return player.checkDrawCardState();
+        return player.checkCanGetMoreCard();
     }
 }

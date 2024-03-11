@@ -23,7 +23,7 @@ public class CardGenerator {
         return new Card(cardNumber, cardShape);
     }
 
-    public List<Card> drawCards() {
+    public List<Card> drawFirstCardsDealt() {
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < INITIAL_CARD_SIZE; i++) {
             cards.add(drawCard());

@@ -20,8 +20,8 @@ public class BlackJackGame {
     }
 
     public void distributeCards() {
-        dealer.addCards(cardGenerator.drawCards());
-        players.forEach(player -> player.addCards(cardGenerator.drawCards()));
+        dealer.addCards(cardGenerator.drawFirstCardsDealt());
+        players.forEach(player -> player.addCards(cardGenerator.drawFirstCardsDealt()));
     }
 
     public void update(int index) {
@@ -30,7 +30,7 @@ public class BlackJackGame {
     }
 
     public boolean checkDealerState() {
-        return dealer.checkDrawCardState();
+        return dealer.checkCanGetMoreCard();
     }
 
     public void updateDealer() {
