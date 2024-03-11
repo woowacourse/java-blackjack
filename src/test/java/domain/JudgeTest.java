@@ -10,6 +10,7 @@ import domain.cards.gamercards.PlayerCards;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
+import domain.result.Judge;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

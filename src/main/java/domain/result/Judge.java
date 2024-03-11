@@ -1,5 +1,6 @@
-package domain;
+package domain.result;
 
+import domain.WinState;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
@@ -58,7 +59,6 @@ public class Judge {
         dealerResult.addResult(WinState.LOSE, playersResult.countWinState(WinState.WIN));
     }
 
-    // TODO: remove functions
     public Map<Player, WinState> getPlayersResult() {
         return playersResult.getResult();
     }

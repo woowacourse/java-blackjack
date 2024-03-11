@@ -1,6 +1,5 @@
 package view;
 
-import domain.Judge;
 import domain.WinState;
 import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
@@ -8,6 +7,7 @@ import domain.cards.cardinfo.CardShape;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
+import domain.result.Judge;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

@@ -1,9 +1,9 @@
 import domain.BlackJackGame;
-import domain.Judge;
 import domain.cards.Card;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
+import domain.result.Judge;
 import java.util.List;
 import view.InputView;
 import view.ResultView;

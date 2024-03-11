@@ -1,5 +1,6 @@
-package domain;
+package domain.result;
 
+import domain.WinState;
 import domain.gamer.Player;
 import java.util.Collections;
 import java.util.LinkedHashMap;

@@ -1,5 +1,6 @@
-package domain;
+package domain.result;
 
+import domain.WinState;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
