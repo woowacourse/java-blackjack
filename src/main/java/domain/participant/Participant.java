@@ -12,7 +12,6 @@ public abstract class Participant {
     private final Hand hand;
 
     protected Participant(final String name) {
-        Validator.validateName(name);
         this.name = name;
         this.hand = new Hand();
     }
@@ -66,14 +65,4 @@ public abstract class Participant {
     }
 
     abstract public boolean canPickCard(final CardCommand cardCommand);
-
-
-    // TODO: 검증 로직을 뷰 단으로 옮기기
-    private static class Validator {
-        private static void validateName(final String name) {
-            if (name == null || name.isBlank()) {
-                throw new IllegalArgumentException("이름으로 빈 문자열이 입력되었습니다.");
-            }
-        }
-    }
 }

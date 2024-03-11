@@ -15,8 +15,15 @@ public class InputView {
     public List<String> enterPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = scanner.nextLine();
+        validateBlankInput(input);
         validatePlayerNames(input);
         return Arrays.asList(input.split(","));
+    }
+
+    private static void validateBlankInput(final String input) {
+        if (input == null || input.isBlank()) {
+            throw new IllegalArgumentException("빈 문자열이 입력되었습니다.");
+        }
     }
 
     private void validatePlayerNames(final String input) {

@@ -13,7 +13,6 @@ public class Referee {
 
     public JudgeResult judge() {
         if (participants.getDealer().isBusted()) {
-            // TODO: 여기 조건에 따르면 참가자는 Bust면 패, Bust가 아니면 승이다.
             return new JudgeResult(participants.getPlayersOutcomeIf(
                     player -> player.isNotBusted()
             ));
