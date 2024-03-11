@@ -29,7 +29,7 @@ public class PlayerTest {
     @Test
     public void putCard() {
         Player player = new Player("마크");
-        Card card = CardFixture.heartJack();
+        Card card = new Card(CardSuit.HEART, CardNumber.TEN);
 
         player.putCard(card);
         int score = player.calculate();
