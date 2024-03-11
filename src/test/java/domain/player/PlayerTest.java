@@ -1,30 +1,68 @@
 package domain.player;
 
-import static org.assertj.core.api.FactoryBasedNavigableListAssert.assertThat;
-
 import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Suit;
+import domain.card.Denomination;
+import domain.card.Symbol;
+import domain.player.Name;
+import domain.player.Participant;
+import domain.player.Player;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-public class PlayerTest {
+import java.util.List;
+import java.util.stream.Stream;
 
-    @DisplayName("플레이어는 카드의 합이 21미만일 때만 히트할 수 있다")
+class PlayerTest {
     @Test
-    void canHit() {
-        final Player player = new Player(new Name("종이"));
-        player.hit(new Card(Rank.TEN, Suit.CLUBS));
-        player.hit(new Card(Rank.TEN, Suit.CLUBS));
-        Assertions.assertThat(player.canHit()).isTrue();
+    @DisplayName("플레이어는 자신이 갖는 카드 합계를 계산할 수 있다")
+    void sum() {
+        final Player player = new Participant(new Name("지쳐버린종이"));;
+
+        player.hit(new Card(Denomination.FIVE, Symbol.CLUBS));
+        player.hit(new Card(Denomination.FIVE, Symbol.CLUBS));
+        player.hit(new Card(Denomination.ACE, Symbol.CLUBS));
+
+        Assertions.assertThat(player.calculateScore()).isEqualTo(21);
     }
-    @DisplayName("플레이어는 카드의 합이 21이상이면 히트할 수 없다")
+
     @Test
-    void canNotHit() {
-        final Player player = new Player(new Name("종이"));
-        player.hit(new Card(Rank.TEN, Suit.CLUBS));
-        player.hit(new Card(Rank.ACE, Suit.CLUBS));
-        Assertions.assertThat(player.canHit()).isFalse();
+    @DisplayName("플레이어는 자신이 갖는 카드 합계를 계산할 수 있다")
+    void sum2() {
+        final Player player = new Participant(new Name("지쳐버린종이"));;
+
+        player.hit(new Card(Denomination.KING, Symbol.CLUBS));
+        player.hit(new Card(Denomination.KING, Symbol.CLUBS));
+        player.hit(new Card(Denomination.ACE, Symbol.CLUBS));
+
+        Assertions.assertThat(player.calculateScore()).isEqualTo(21);
+    }
+
+    @ParameterizedTest
+    @MethodSource("argumentProvider")
+    @DisplayName("플레이어의 버스트 여부를 반환한다.")
+    void alive(final List<Card> cards, final boolean expected) {
+        final Player player = new Participant(new Name("지쳐버린종이"));
+
+        player.hit(cards.get(0));
+        player.hit(cards.get(1));
+        player.hit(cards.get(2));
+
+        Assertions.assertThat(player.isNotBust()).isEqualTo(expected);
+    }
+
+
+    public static Stream<Arguments> argumentProvider() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(new Card(Denomination.KING, Symbol.CLUBS), new Card(Denomination.KING, Symbol.HEART),
+                                new Card(Denomination.KING, Symbol.SPADE)), false),
+                Arguments.of(
+                        List.of(new Card(Denomination.FIVE, Symbol.CLUBS), new Card(Denomination.FOUR, Symbol.HEART),
+                                new Card(Denomination.THREE, Symbol.SPADE)), true)
+        );
     }
 }

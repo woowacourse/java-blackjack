@@ -26,13 +26,16 @@ public abstract class Player {
     public abstract boolean canHit();
 
     public abstract boolean canNotHit();
-
-    public abstract OneOnOneResult determineWinnerByComparing(final Player otherPlayer);
-
-
     public void hit(final Card card) {
         cards.add(card);
     }
+
+    public abstract OneOnOneResult determineWinnerByComparing(final Player otherPlayer);
+
+    public void clear() {
+        this.cards.clear();
+    }
+
 
     public int calculateScore() {
         int score = 0;
@@ -88,9 +91,5 @@ public abstract class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    public boolean isGreaterOrEqualThan(final Player player) {
-        return this.calculateScore() >= player.calculateScore();
     }
 }

@@ -1,7 +1,5 @@
-package domain;
+package domain.blackjack;
 
-import domain.blackjack.Blackjack;
-import domain.blackjack.GameResult;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Symbol;
@@ -11,13 +9,19 @@ import domain.player.Participant;
 import domain.player.Player;
 import domain.player.Players;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class BlackjackResultTest {
+class GameResultTest {
+
+    @BeforeEach
+    void init() {
+        Dealer.getInstance().clear();
+    }
 
     @Test
     @DisplayName("플레이어가 버스트 되면 딜러가 게임을 이긴다")
