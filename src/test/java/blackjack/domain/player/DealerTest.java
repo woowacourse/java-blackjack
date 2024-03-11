@@ -3,14 +3,9 @@ package blackjack.domain.player;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Cards;
-import blackjack.domain.common.Name;
-import blackjack.domain.result.ResultStatus;
 import blackjack.fixture.CardFixture;
-import blackjack.fixture.PlayerFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

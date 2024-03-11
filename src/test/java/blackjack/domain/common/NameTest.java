@@ -3,7 +3,7 @@ package blackjack.domain.common;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.common.Name;
+import blackjack.domain.player.Name;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

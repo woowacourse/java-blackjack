@@ -3,7 +3,7 @@ package blackjack.fixture;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.GamePlayer;
-import blackjack.domain.common.Name;
+import blackjack.domain.player.Name;
 import java.util.List;
 
 public class PlayerFixture {

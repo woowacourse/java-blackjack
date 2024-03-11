@@ -6,7 +6,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Cards;
-import blackjack.domain.common.Name;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
