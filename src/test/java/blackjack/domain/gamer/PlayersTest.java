@@ -17,6 +17,14 @@ class PlayersTest {
                 .hasMessage(Players.ERROR_DUPLICATED_NAME);
     }
 
+    @DisplayName("플레이어 수가 최소 인원 미만이면 예외가 발생한다.")
+    @Test
+    void occurExceptionIfPlayerCountIsLessThanMinCount() {
+        assertThatThrownBy(() -> Players.from(List.of()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(Players.ERROR_MIN_PLAYER_COUNT);
+    }
+
     @DisplayName("이름을 보고 플레이어를 찾는다.")
     @Test
     void findPlayerByName() {
