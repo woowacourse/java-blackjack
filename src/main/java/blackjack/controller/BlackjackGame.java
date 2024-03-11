@@ -1,7 +1,5 @@
 package blackjack.controller;
 
-import static blackjack.view.InputView.DEALER_NAME;
-
 import blackjack.domain.GameBoard;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
@@ -19,8 +17,7 @@ public class BlackjackGame {
 
     public void run() {
         Players players = createPlayers();
-        Player dealer = new Player(new Name(DEALER_NAME));
-        GameBoard gameBoard = new GameBoard(dealer, players);
+        GameBoard gameBoard = new GameBoard(players);
         play(gameBoard);
     }
 
@@ -41,11 +38,11 @@ public class BlackjackGame {
     }
 
     private void startSetting(GameBoard gameBoard) {
-        gameBoard.distributeInitialDecks();
+        gameBoard.distributeInitialHand();
         Player dealer = gameBoard.getDealer();
         PlayerDto dealerDto = PlayerDto.from(dealer);
         List<PlayerDto> playersDto = gameBoard.getPlayers()
-                .getPlayers()
+                .getPlayersValue()
                 .stream()
                 .map(PlayerDto::from)
                 .toList();
@@ -70,7 +67,7 @@ public class BlackjackGame {
 
     private void proceedOnePlayerTurn(GameBoard gameBoard, int playerIndex) {
         while (gameBoard.isPlayerNotOver(playerIndex) &&
-                inputView.readCommand(gameBoard.getPlayerName(playerIndex).getName())) {
+                inputView.readCommand(gameBoard.getPlayerName(playerIndex).getValue())) {
             gameBoard.addCardToPlayer(playerIndex);
             Player player = gameBoard.getPlayer(playerIndex);
             outputView.printCurrentCard(PlayerDto.from(player));
@@ -82,7 +79,7 @@ public class BlackjackGame {
         Player dealer = gameBoard.getDealer();
         PlayerDto dealerDto = PlayerDto.from(dealer);
         List<PlayerDto> playersDto = gameBoard.getPlayers()
-                .getPlayers()
+                .getPlayersValue()
                 .stream()
                 .map(PlayerDto::from)
                 .toList();
@@ -93,7 +90,7 @@ public class BlackjackGame {
         Map<Player, Boolean> playerVictory = gameBoard.calculateVictory();
         Map<String, Boolean> playerNameVictory = new LinkedHashMap<>();
         playerVictory.forEach(
-                (key, value) -> playerNameVictory.put(key.getName().getName(), playerVictory.get(key)));
+                (key, value) -> playerNameVictory.put(key.getName().getValue(), playerVictory.get(key)));
         outputView.printResult(playerNameVictory);
     }
 }
