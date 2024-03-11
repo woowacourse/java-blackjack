@@ -40,22 +40,22 @@ class DealerTest {
     @DisplayName("참여자의 답변이 y라면 카드를 한장 추가한다.")
     void addOneCard() {
         //given
-        final Player redddy = new Player(new Name("레디"), Hands.createEmptyHands());
-        final Player zeze = new Player(new Name("제제"), Hands.createEmptyHands());
+        final Player hitPlayer = new Player(new Name("레디"), Hands.createEmptyHands());
+        final Player stayPlayer = new Player(new Name("제제"), Hands.createEmptyHands());
 
-        final Players players = new Players(List.of(redddy, zeze));
+        final Players players = new Players(List.of(hitPlayer, stayPlayer));
 
         final CardDeck cardDeck = CardDeck.generate();
         final Dealer dealer = new Dealer(cardDeck);
         dealer.initHands(players);
 
         //when
-        dealer.deal(redddy, Answer.HIT);
-        dealer.deal(zeze, Answer.STAY);
+        dealer.deal(hitPlayer, Answer.HIT);
+        dealer.deal(stayPlayer, Answer.STAY);
 
         //then
-        Assertions.assertThat(redddy.handsSize()).isEqualTo(3);
-        Assertions.assertThat(zeze.handsSize()).isEqualTo(2);
+        Assertions.assertThat(hitPlayer.handsSize()).isEqualTo(3);
+        Assertions.assertThat(stayPlayer.handsSize()).isEqualTo(2);
     }
 
     @Test
@@ -69,6 +69,7 @@ class DealerTest {
 
         //then
         Assertions.assertThat(dealer.countAddedHands()).isPositive();
+        Assertions.assertThat(dealer.handsSum()).isGreaterThanOrEqualTo(17);
     }
 
     @DisplayName("딜러의 카드의 합이 17이상이라면 카드를 추가하지 않는다")
@@ -82,6 +83,7 @@ class DealerTest {
 
         //then
         Assertions.assertThat(dealer.countAddedHands()).isZero();
+        Assertions.assertThat(dealer.handsSum()).isGreaterThanOrEqualTo(17);
     }
 
     @DisplayName("딜러의 승패무를 판단한다.")

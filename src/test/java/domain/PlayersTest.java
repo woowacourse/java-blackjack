@@ -57,19 +57,19 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("참가자 중 버스트 되지 않은 참가자가 있다면 False를 반환한다.")
+    @DisplayName("참가자 중 버스트 되지 않은 참가자가 있다면 isAllBust가 False를 반환한다.")
     void isAllBustFalse() {
         //given
-        final Player player1 = new Player(new Name("레디"), bustHands);
-        final Player player2 = new Player(new Name("제제"), noBustHands);
-        final Players players = new Players(List.of(player1, player2));
+        final Player bustPlayer = new Player(new Name("레디"), bustHands);
+        final Player noBustPlayer = new Player(new Name("제제"), noBustHands);
+        final Players players = new Players(List.of(bustPlayer, noBustPlayer));
 
         //when && then
         Assertions.assertThat(players.isAllBust()).isFalse();
     }
 
     @Test
-    @DisplayName("모든 참가자가 버스트되면 True를 반환한다.")
+    @DisplayName("모든 참가자가 버스트되면 isAllBust가 True를 반환한다.")
     void isAllBustTrue() {
         //given
         Player player1 = new Player(new Name("레디"), bustHands);
