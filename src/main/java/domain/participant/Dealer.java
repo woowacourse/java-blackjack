@@ -11,7 +11,7 @@ public class Dealer extends Participant {
 
     public static final int INIT_HANDS_SIZE = 2;
     public static final int MIN_HANDS_SUM = 16;
-    private static final String NAME = "딜러";
+    public static final String NAME = "딜러";
 
     private final CardDeck cardDeck;
 
