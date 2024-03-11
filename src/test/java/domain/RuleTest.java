@@ -23,7 +23,7 @@ class RuleTest {
         DealerCards dealerCards = new DealerCards(List.of(new Card(10, Shape.CLUB), new Card(6, Shape.CLUB)));
 
         Name capy = new Name("capy");
-        PlayerCards playerCards = new PlayerCards(capy, List.of(new Card(10, Shape.CLUB), new Card(11, Shape.CLUB)));
+        PlayerCards playerCards = new PlayerCards(capy, new BetAmount(1000), List.of(new Card(10, Shape.CLUB), new Card(11, Shape.CLUB)));
 
         Rule rule = new Rule(ScoreBoard.from(List.of(capy)));
         Status dealerStatus = rule.decideStatus(dealerCards, playerCards);
@@ -41,7 +41,7 @@ class RuleTest {
         DealerCards dealerCards = new DealerCards(List.of(new Card(10, Shape.CLUB), new Card(6, Shape.CLUB)));
 
         Name capy = new Name("capy");
-        PlayerCards playerCards = new PlayerCards(capy, List.of(new Card(10, Shape.CLUB), new Card(11, Shape.CLUB)));
+        PlayerCards playerCards = new PlayerCards(capy, new BetAmount(1000), List.of(new Card(10, Shape.CLUB), new Card(11, Shape.CLUB)));
 
         ScoreBoard scoreBoard = ScoreBoard.from(List.of(capy));
         new Rule(scoreBoard).decideResult(dealerCards, List.of(playerCards));
