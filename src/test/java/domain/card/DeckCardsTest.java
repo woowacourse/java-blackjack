@@ -12,8 +12,13 @@ class DeckCardsTest {
     @Test
     @DisplayName("성공: 객체 생성 시 52장의 카드를 가진다")
     void from_NoException() {
-        Assertions.assertThatCode(() -> DeckCards.from(new RandomCardGenerator()))
+        DeckCards deckCards = DeckCards.from(new RandomCardGenerator());
+
+        Assertions.assertThatCode(() -> deckCards.drawCards(52))
                 .doesNotThrowAnyException();
+
+        Assertions.assertThatCode(deckCards::drawCard)
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @Test
