@@ -7,7 +7,6 @@ import domain.card.Deck;
 import domain.card.PlayerCards;
 import domain.card.RandomDrawStrategy;
 import domain.game.Rule;
-import domain.score.ScoreBoard;
 import view.InputView;
 import view.OutputView;
 
@@ -30,10 +29,19 @@ public class Casino {
         List<PlayerCards> playerCardsBundle = makePlayerCards(betAmounts);
         outputView.printInitialCards(dealerCards, playerCardsBundle);
 
-        ScoreBoard scoreBoard = playGame(names, dealerCards, playerCardsBundle);
+        for (PlayerCards playerCards : playerCardsBundle) {
+            while (playerCards.canDraw() && inputView.readHitOpinion(playerCards.getPlayerName())) {
+                playerCards.receive(deck.draw());
+                outputView.printPlayerCards(playerCards);
+            }
+        }
+
+        drawDealerCards(dealerCards);
+
+
         outputView.printResults(dealerCards, playerCardsBundle);
 
-        outputView.printScores(scoreBoard);
+        Rule rule = Rule.of(dealerCards, playerCardsBundle);
     }
 
     private List<Name> readNames() {
@@ -48,7 +56,7 @@ public class Casino {
                 .collect(Collectors.toMap(
                         name -> name,
                         name -> new BetAmount(inputView.readBetAmount(name)),
-                        (x,y) -> y,
+                        (x, y) -> y,
                         LinkedHashMap::new
                 ));
     }
@@ -59,39 +67,7 @@ public class Casino {
                 .map(betAmount -> new PlayerCards(betAmount.getKey(), betAmount.getValue(), deck.drawInitialHands()))
                 .toList();
     }
-
-    private ScoreBoard playGame(List<Name> names, DealerCards dealerCards, List<PlayerCards> playerCardsBundle) {
-        ScoreBoard scoreBoard = ScoreBoard.from(names);
-        Rule rule = new Rule(scoreBoard);
-
-        for (PlayerCards playerCards : playerCardsBundle) {
-            drawByOpinion(playerCards);
-        }
-        drawDealerCards(dealerCards);
-
-        rule.decideResult(dealerCards, playerCardsBundle);
-        return scoreBoard;
-    }
-
-
-    private void drawByOpinion(PlayerCards playerCards) {
-        boolean opinion = inputView.readHitOpinion(playerCards.getPlayerName());
-        if (!opinion) {
-            return;
-        }
-        draw(playerCards);
-        outputView.printPlayerCards(playerCards);
-        if (playerCards.canDraw()) {
-            drawByOpinion(playerCards);
-        }
-    }
-
-    private void draw(PlayerCards playerCards) {
-        if (playerCards.canDraw()) {
-            playerCards.receive(deck.draw());
-        }
-    }
-
+    
     private void drawDealerCards(DealerCards dealerCards) {
         while (dealerCards.canDraw()) {
             dealerCards.receive(deck.draw());

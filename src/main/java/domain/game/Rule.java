@@ -1,24 +1,37 @@
 package domain.game;
 
+import domain.Income;
+import domain.Incomes;
+import domain.Name;
 import domain.card.Cards;
 import domain.card.DealerCards;
 import domain.card.PlayerCards;
-import domain.score.ScoreBoard;
 import domain.score.Status;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Rule {
 
     private static final int STANDARD = 21;
 
-    private final ScoreBoard scoreBoard;
+    private final Incomes incomes;
 
-    public Rule(ScoreBoard scoreBoard) {
-        this.scoreBoard = scoreBoard;
+    private Rule(Incomes incomes) {
+        this.incomes = incomes;
     }
 
-    public Status decideStatus(Cards targetCards, Cards otherCards) {
+    public static Rule of(DealerCards dealerCards, List<PlayerCards> playerCardsBundle) {
+        Map<Name, Income> incomes = playerCardsBundle.stream()
+                .collect(Collectors.toMap(
+                        playerCards -> playerCards.getPlayerName(),
+                        playerCards -> new Income(playerCards.determineIncome(decideStatus(playerCards, dealerCards)))
+                ));
+        return new Rule(new Incomes(incomes));
+    }
+
+    public static Status decideStatus(Cards targetCards, Cards otherCards) {
         if (targetCards.bestSum() > STANDARD) {
             return Status.LOSE;
         }
@@ -35,16 +48,5 @@ public class Rule {
             return Status.LOSE;
         }
         return Status.TIE;
-    }
-
-    public void decideResult(DealerCards dealer, List<PlayerCards> players) {
-        players.forEach(player -> decideResult(dealer, player));
-    }
-
-    private void decideResult(DealerCards dealer, PlayerCards player) {
-        Status dealerStatus = decideStatus(dealer, player);
-        Status playerStatus = decideStatus(player, dealer);
-        scoreBoard.updateDealerScore(dealerStatus);
-        scoreBoard.updatePlayerScore(player.getPlayerName(), playerStatus);
     }
 }
