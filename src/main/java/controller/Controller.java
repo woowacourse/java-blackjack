@@ -13,9 +13,11 @@ import view.card.CardView;
 
 public class Controller {
     private final CardView cardView;
+    private final ResultView resultView;
 
-    public Controller(CardView cardView) {
+    public Controller(CardView cardView, ResultView resultView) {
         this.cardView = cardView;
+        this.resultView = resultView;
     }
 
     public void play() {
@@ -32,7 +34,7 @@ public class Controller {
         }
         while (game.isDealerCardAddCondition()) {
             game.addDealerCard();
-            ResultView.printDealerHitMessage();
+            cardView.printDealerHitMessage();
         }
     }
 
@@ -49,6 +51,6 @@ public class Controller {
 
     private void showGameResult(Users users, Game game) {
         cardView.printCardsAndSum(users);
-        ResultView.printResult(game);
+        resultView.printResult(game);
     }
 }

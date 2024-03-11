@@ -1,5 +1,7 @@
 package domain.game;
 
+import static domain.game.Result.DRAW;
+import static domain.game.Result.LOSE;
 import static domain.game.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,7 +18,10 @@ class PlayerResultsTest {
         PlayerResults playerResults = new PlayerResults(
                 Map.of(new Player(new Name("a")), WIN));
 
-        DealerResult dealerResult = playerResults.generateDealerResult();
-        assertThat(dealerResult.getResultsDetail()).isEqualTo("1패");
+        assertThat(playerResults.generateDealerResult()).contains(
+                Map.entry(WIN, 0),
+                Map.entry(LOSE, 1),
+                Map.entry(DRAW, 0)
+        );
     }
 }

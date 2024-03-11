@@ -4,15 +4,13 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum Result {
-    WIN("승", (current, opponent) -> current > opponent),
-    LOSE("패", (current, opponent) -> current < opponent),
-    DRAW("무", Integer::equals);
+    WIN((current, opponent) -> current > opponent),
+    LOSE((current, opponent) -> current < opponent),
+    DRAW(Integer::equals);
 
-    private final String result;
     private final BiPredicate<Integer, Integer> condition;
 
-    Result(String result, BiPredicate<Integer, Integer> condition) {
-        this.result = result;
+    Result(BiPredicate<Integer, Integer> condition) {
         this.condition = condition;
     }
 
@@ -22,10 +20,6 @@ public enum Result {
             case LOSE -> WIN;
             case DRAW -> DRAW;
         };
-    }
-
-    public String getResult() {
-        return result;
     }
 
     public static Result compare(int current, int opponent) {

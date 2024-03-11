@@ -24,7 +24,7 @@ public enum Number {
     }
 
     public int getNumber() {
-        return this.number;
+        return number;
     }
 
     public static List<Number> giveNumbers() {

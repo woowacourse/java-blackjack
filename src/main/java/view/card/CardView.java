@@ -51,6 +51,10 @@ public class CardView {
         System.out.println("버스트!");
     }
 
+    public void printDealerHitMessage() {
+        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
     public void printPlayerAndDeck(User user) {
         System.out.println(joinUserNameAndDeck(user));
     }

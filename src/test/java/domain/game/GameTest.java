@@ -4,7 +4,6 @@ import static domain.Command.NO;
 import static domain.Command.YES;
 import static domain.game.Result.LOSE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.TotalDeck;
 import domain.TotalDeckGenerator;
@@ -70,11 +69,7 @@ public class GameTest {
 
         Game game = new Game(totalDeck, users);
         PlayerResults playerResults = game.generatePlayerResults();
-        DealerResult dealerResult = playerResults.generateDealerResult();
 
-        assertAll(
-                () -> assertThat(playerResults.getPlayerResults().get(player)).isEqualTo(LOSE),
-                () -> assertThat(dealerResult.getResultsDetail()).isEqualTo("1승")
-        );
+        assertThat(playerResults.getPlayerResults().get(player)).isEqualTo(LOSE);
     }
 }
