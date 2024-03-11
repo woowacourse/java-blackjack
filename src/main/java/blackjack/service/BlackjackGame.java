@@ -1,5 +1,7 @@
 package blackjack.service;
 
+import blackjack.domain.betting.BetResult;
+import blackjack.domain.betting.BetRevenue;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
@@ -10,9 +12,10 @@ import blackjack.domain.rule.GameRule;
 import blackjack.dto.FinalHandsScoreDto;
 import blackjack.dto.PlayerCardsDto;
 import blackjack.dto.StartCardsDto;
-import blackjack.dto.WinningResultDto;
+import blackjack.dto.BetRevenueResultDto;
 import blackjack.exception.NeedRetryException;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackGame {
 
@@ -83,13 +86,12 @@ public class BlackjackGame {
         return FinalHandsScoreDto.of(players.getPlayersHands(), dealer);
     }
 
-    public WinningResultDto getWinningResults() {
-//        final BattingResult battingResult = BattingResult.of(players, dealer.getHands());
-//        final Map<ParticipantName, BattingStatus> playerWinningResults = battingResult.getParticipantsWinStatus();
-//        final Map<BattingStatus, Long> dealerWinningResult = battingResult.summarizeDealerWinningResult();
+    public BetRevenueResultDto getBetRevenueResults() {
+        final Map<ParticipantName, BetRevenue> playersBetResult = players.determineBetRevenue(dealer.getHands());
+        final BetResult betResult = new BetResult(playersBetResult);
+        final BetRevenue dealerRevenue = betResult.calculateDealerRevenue();
 
-//        return WinningResultDto.of(playerWinningResults, dealerWinningResult, dealer.getName());
-        return null;
+        return BetRevenueResultDto.of(playersBetResult, dealerRevenue, dealer.getName());
     }
 
     public List<String> getPlayersName() {

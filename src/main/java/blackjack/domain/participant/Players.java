@@ -2,9 +2,10 @@ package blackjack.domain.participant;
 
 import static java.util.stream.Collectors.toMap;
 
+import blackjack.domain.betting.BetRevenue;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
-import blackjack.domain.betting.BettingStatus;
+import blackjack.domain.betting.BetStatus;
 import blackjack.exception.NeedRetryException;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -55,11 +56,12 @@ public class Players {
         findedParticipant.addCard(card);
     }
 
-    public Map<ParticipantName, BettingStatus> determineWinStatus(final Hands dealerHands) {
-        final Map<ParticipantName, BettingStatus> playersWinStatus = new LinkedHashMap<>();
+    public Map<ParticipantName, BetRevenue> determineBetRevenue(final Hands dealerHands) {
+        final Map<ParticipantName, BetRevenue> playersWinStatus = new LinkedHashMap<>();
 
-        for (Participant participant : players) {
-            playersWinStatus.put(participant.getName(), BettingStatus.of(dealerHands, participant.getHands()));
+        for (Participant player : players) {
+            final BetStatus betStatus = BetStatus.of(dealerHands, player.getHands());
+            playersWinStatus.put(player.getName(), betStatus.applyLeverage(player.getBetAmount()));
         }
 
         return playersWinStatus;

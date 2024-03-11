@@ -5,7 +5,7 @@ import blackjack.domain.rule.GameRule;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
-public enum BettingStatus {
+public enum BetStatus {
     LUCKY(1.5,
             (dealerHands, playerHands) -> playerHands.isBlackjackAndSizeIs(GameRule.START_CARD_COUNT)
             && (dealerHands.isNotBlackjack() || (dealerHands.isBlackjackAndSizeIsNot(GameRule.START_CARD_COUNT)))),
@@ -23,12 +23,12 @@ public enum BettingStatus {
     private final double leverage;
     private final BiPredicate<Hands, Hands> condition;
 
-    BettingStatus(final double leverage, final BiPredicate<Hands, Hands> condition) {
+    BetStatus(final double leverage, final BiPredicate<Hands, Hands> condition) {
         this.leverage = leverage;
         this.condition = condition;
     }
 
-    public static BettingStatus of(final Hands dealerHands, final Hands playerHands) {
+    public static BetStatus of(final Hands dealerHands, final Hands playerHands) {
         return Arrays.stream(values())
                 .filter(winStatus -> winStatus.condition.test(dealerHands, playerHands))
                 .findFirst()

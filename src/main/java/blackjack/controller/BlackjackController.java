@@ -3,7 +3,7 @@ package blackjack.controller;
 import blackjack.dto.FinalHandsScoreDto;
 import blackjack.dto.PlayerCardsDto;
 import blackjack.dto.StartCardsDto;
-import blackjack.dto.WinningResultDto;
+import blackjack.dto.BetRevenueResultDto;
 import blackjack.exception.ExceptionHandler;
 import blackjack.service.BlackjackGame;
 import blackjack.view.InputView;
@@ -76,8 +76,8 @@ public class BlackjackController {
     }
 
     private void finishGame(final BlackjackGame blackjackGame) {
-        final FinalHandsScoreDto finalHandsScoreDTO = blackjackGame.getFinalHandsScore();
-        final WinningResultDto winningResults = blackjackGame.getWinningResults();
-        outputView.printFinalResult(finalHandsScoreDTO, winningResults);
+        final FinalHandsScoreDto finalHandsScore = blackjackGame.getFinalHandsScore();
+        final BetRevenueResultDto betRevenueResult = blackjackGame.getBetRevenueResults();
+        outputView.printFinalResult(finalHandsScore, betRevenueResult);
     }
 }

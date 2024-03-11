@@ -1,18 +1,16 @@
 package blackjack.view;
 
+import blackjack.dto.BetRevenueResultDto;
 import blackjack.dto.CardDto;
-import blackjack.dto.DealerWinningResultDto;
+import blackjack.dto.DealerBetResultDto;
 import blackjack.dto.FinalHandsScoreDto;
+import blackjack.dto.PlayerBetResultDto;
 import blackjack.dto.PlayerCardsDto;
 import blackjack.dto.PlayerHandsScoreDto;
-import blackjack.dto.PlayerWinningResultDto;
 import blackjack.dto.StartCardsDto;
-import blackjack.dto.WinningResultDto;
 import blackjack.view.format.CardNumberFormat;
 import blackjack.view.format.CardShapeFormat;
-import blackjack.view.format.WinningStatusFormat;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -44,9 +42,9 @@ public class OutputView {
         System.out.printf("%s카드: %s%n", playerCards.name(), convertToCardsFormat(playerCards.cards()));
     }
 
-    public void printFinalResult(final FinalHandsScoreDto finalHandsScore, final WinningResultDto winningResult) {
+    public void printFinalResult(final FinalHandsScoreDto finalHandsScore, final BetRevenueResultDto betRevenueResult) {
         printCardScore(finalHandsScore);
-        printWinningResult(winningResult);
+        printBetResult(betRevenueResult);
     }
 
     private void printCardScore(final FinalHandsScoreDto finalHandsScore) {
@@ -72,30 +70,20 @@ public class OutputView {
                 playerHandsScore.handsScore().score());
     }
 
-    private void printWinningResult(final WinningResultDto winningResult) {
+    private void printBetResult(final BetRevenueResultDto betResult) {
         System.out.printf("%n## 최종 승패%n");
-        printDealerWinningResult(winningResult.dealerWinningResults(), winningResult.dealerName());
-        printPlayersWinningResult(winningResult.playersWinningResult());
+        printDealerBetResult(betResult.dealerBetResults());
+        printPlayersBetResult(betResult.playersBetResult());
     }
 
-    private void printDealerWinningResult(final List<DealerWinningResultDto> dealerWinningResult, final String dealerName) {
-        System.out.printf("%s: %s%n", dealerName, convertToWinningResult(dealerWinningResult));
+    private void printDealerBetResult(final DealerBetResultDto dealerBetResult) {
+        System.out.printf("%s: %f%n", dealerBetResult.name(), dealerBetResult.revenue());
 
     }
 
-    private String convertToWinningResult(final List<DealerWinningResultDto> dealerWinningResults) {
-        return dealerWinningResults.stream()
-                .map(winningResult ->
-                        winningResult.count() + WinningStatusFormat.valueOf(winningResult.winStatus()).getFormat())
-                .collect(Collectors.joining(" "));
-    }
-
-    private void printPlayersWinningResult(final List<PlayerWinningResultDto> playersWinningResult) {
+    private void printPlayersBetResult(final List<PlayerBetResultDto> playersWinningResult) {
         playersWinningResult.forEach(playerWinningResult ->
-                System.out.printf("%s: %s%n",
-                        playerWinningResult.name(),
-                        WinningStatusFormat.valueOf(playerWinningResult.winnStatus()).getFormat()));
-
+                System.out.printf("%s: %f%n", playerWinningResult.name(), playerWinningResult.revenue()));
     }
 
     public void printDealerMoreCard(int count, final String dealerName) {
