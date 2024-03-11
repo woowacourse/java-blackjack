@@ -10,21 +10,39 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class HandTest {
-    @DisplayName("블랙잭 여부를 판단한다.")
+    @DisplayName("NaturalBlackjack 여부를 판단한다.")
     @ParameterizedTest
-    @MethodSource("provideCardsWithBlackjack")
-    void isBlackjackTest(List<Card> cards, boolean isBlackjack) {
+    @MethodSource("provideCardsWithNaturalBlackjack")
+    void isNaturalBlackjackTest(List<Card> cards, boolean isNaturalBlackjack) {
         Hand hand = new Hand(cards);
-        assertThat(hand.isBlackjack()).isEqualTo(isBlackjack);
+        assertThat(hand.isNaturalBlackjack()).isEqualTo(isNaturalBlackjack);
     }
 
-    private static Stream<Arguments> provideCardsWithBlackjack() {
+    private static Stream<Arguments> provideCardsWithNaturalBlackjack() {
+        return Stream.of(
+                Arguments.of(createCards(List.of(Number.ACE, Number.JACK)), true),
+                Arguments.of(createCards(List.of(Number.FIVE)), false),
+                Arguments.of(createCards(List.of(Number.FIVE, Number.SIX, Number.KING)), false),
+                Arguments.of(createCards(List.of(Number.ACE, Number.ACE, Number.ACE, Number.EIGHT)), false),
+                Arguments.of(createCards(List.of(Number.ACE, Number.QUEEN)), true)
+        );
+    }
+
+    @DisplayName("scoreBlackjack 여부를 판단한다.")
+    @ParameterizedTest
+    @MethodSource("provideCardsWithScoreBlackjack")
+    void isScoreBlackjackTest(List<Card> cards, boolean isScoreBlackjack) {
+        Hand hand = new Hand(cards);
+        assertThat(hand.isScoreBlackjack()).isEqualTo(isScoreBlackjack);
+    }
+
+    private static Stream<Arguments> provideCardsWithScoreBlackjack() {
         return Stream.of(
                 Arguments.of(createCards(List.of(Number.ACE, Number.JACK)), true),
                 Arguments.of(createCards(List.of(Number.FIVE)), false),
                 Arguments.of(createCards(List.of(Number.FIVE, Number.SIX, Number.KING)), true),
                 Arguments.of(createCards(List.of(Number.ACE, Number.ACE, Number.ACE, Number.EIGHT)), true),
-                Arguments.of(createCards(List.of(Number.ACE, Number.FOUR, Number.EIGHT)), false)
+                Arguments.of(createCards(List.of(Number.ACE, Number.QUEEN)), true)
         );
     }
 

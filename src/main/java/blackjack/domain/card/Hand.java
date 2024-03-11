@@ -6,6 +6,7 @@ import java.util.List;
 public class Hand {
     private static final int BLACKJACK = 21;
     private static final int ACE_ALTERNATIVE_SCORE = 10;
+    private static final int NATURAL_BLACKJACK_CARD_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -21,7 +22,11 @@ public class Hand {
         return getCardTotalScore() > score;
     }
 
-    public boolean isBlackjack() {
+    public boolean isNaturalBlackjack() {
+        return isScoreBlackjack() && cards.size() == NATURAL_BLACKJACK_CARD_COUNT;
+    }
+
+    public boolean isScoreBlackjack() {
         return getOptimizedScore() == BLACKJACK;
     }
 
