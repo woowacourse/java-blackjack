@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 @DisplayName("플레이어 명령어")
 class PlayerCommandTest {
     @Test
-    @DisplayName("존재하지 않는 명령어가 입력 될 경우 예외가 발생한다.")
+    @DisplayName("플레이어 명령어가 존재하지 않을 경우 예외가 발생한다.")
     void validateExist() {
         // given
         String command = "fr";

@@ -45,7 +45,7 @@ public class RefereeTest {
 
 
     @Test
-    @DisplayName("두 장의 카드 숫자를 합쳐 21을 초과하지 않으면서 21에 가깝게 만들면 이기는지 테스트한다.")
+    @DisplayName("심판은 두 장의 카드 숫자를 합쳐 21을 초과하지 않으면서 21에 가깝게 플레이어를 승자로 여긴다.")
     void playerWinTest() {
         // given
         playerDeck = new Deck() {
@@ -72,7 +72,7 @@ public class RefereeTest {
     }
 
     @Test
-    @DisplayName("플레이어는 자신의 숫자 합이 21을 초과할 경우 패배한다.")
+    @DisplayName("심판은 숫자 합이 21을 초과한 플레이어를 패배자로 여긴다.")
     void playerLoseWhenBustTest() {
         // given
         playerDeck = new Deck() {
@@ -99,7 +99,7 @@ public class RefereeTest {
     }
 
     @Test
-    @DisplayName("딜러의 합과 플레이어의 합이 같으면 무승부이다.")
+    @DisplayName("심판은 딜러의 합과 플레이어의 합이 같으면 무승부로 본다.")
     void playerDrawWhenSameBlackjackTest() {
         // given
         playerDeck = new Deck() {
@@ -126,7 +126,7 @@ public class RefereeTest {
     }
 
     @Test
-    @DisplayName("플레이어의 첫 두개의 카드의 합이 21이면 승리한다.")
+    @DisplayName("심판은 플레이어의 첫 두개의 카드의 합이 21이면 플레이어를 승자로 여긴다.")
     void playerDealCardsBlackjackTest() {
         // given
         playerDeck = new Deck() {
@@ -153,7 +153,7 @@ public class RefereeTest {
     }
 
     @Test
-    @DisplayName("플레이어의 점수가 딜러보다 낮을 경우 패배한다.")
+    @DisplayName("심판은 플레이어의 점수가 딜러보다 낮을 경우 플레이어를 패배자로 여긴다.")
     void playerLoseTest() {
         // given
         playerDeck = new Deck() {
@@ -180,7 +180,7 @@ public class RefereeTest {
     }
 
     @Test
-    @DisplayName("플레이어와 딜러가 모두 bust 이면, 플레이어가 패배한다.")
+    @DisplayName("심판은 플레이어와 딜러가 모두 버스트이면, 플레이어를 패배자로 여긴다.")
     void playerDealerAllBustPlayerLoseTest() {
         // given
         playerDeck = new Deck() {
@@ -207,7 +207,7 @@ public class RefereeTest {
     }
 
     @Test
-    @DisplayName("딜러가 bust 이고 플레이가 bust 가 아닐 경우, 플레이어가 승리한다.")
+    @DisplayName("심판은 딜러가 버스트이고 플레이가 아닐 경우, 플레이어를 승리자로 여긴다.")
     void dealerBustPlayerNonBustWinTest() {
         // given
         playerDeck = new Deck() {

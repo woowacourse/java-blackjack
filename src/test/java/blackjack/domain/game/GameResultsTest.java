@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("게임 결과들")
 public class GameResultsTest {
     @Test
-    @DisplayName("플레이어의 승패 결과를 Map으로 반환한다.")
+    @DisplayName("게임 결과들에서 플레이어의 승패 결과를 Map으로 반환한다.")
     void createPlayersGameResultsTest() {
         // given
         GameResults gameResults = new GameResults();
@@ -26,7 +26,7 @@ public class GameResultsTest {
     }
 
     @Test
-    @DisplayName("딜러 승패 결과를 Map으로 반환한다.")
+    @DisplayName("게임 결과들에서 딜러 승패 결과를 Map으로 반환한다.")
     void createDealerResulTest() {
         // given
         GameResults gameResults = new GameResults();
