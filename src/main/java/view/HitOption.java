@@ -24,5 +24,4 @@ public enum HitOption {
         HitOption findOption = from(hitOption);
         return HIT == findOption;
     }
-
 }
