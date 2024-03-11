@@ -13,12 +13,13 @@ public class BettingTest {
         // Given
         Betting betting = Betting.getInstance();
         PlayerName test = new PlayerName("test");
-        betting.setBetting(test, 15000);
+        betting.setBetting(test, new Amount("15000"));
 
         // When
-        int bettingAmount = betting.getBetting(test);
+        Amount bettingAmount = betting.getBetting(test);
+        int amount = bettingAmount.getAmount();
 
         // Then
-        assertThat(bettingAmount).isEqualTo(15000);
+        assertThat(amount).isEqualTo(15000);
     }
 }
