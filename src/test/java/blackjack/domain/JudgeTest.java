@@ -25,6 +25,7 @@ class JudgeTest {
         @Nested
         @DisplayName("플레이어의 점수가 21점 이하이고, ")
         class PlayerScoreLessThanOrEqual21 {
+
             @DisplayName("플레이어의 점수가 딜러의 점수보다 높으면 플레이어가 이긴다.")
             @Test
             void playerWin() {
