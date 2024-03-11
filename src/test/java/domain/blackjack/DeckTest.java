@@ -4,13 +4,15 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.*;
+
 class DeckTest {
 
     @DisplayName("카드 덱 초기화")
     @Test
     void initDeck() {
         Deck deck = new Deck();
-        Assertions.assertThat(deck.getCardCount())
+        assertThat(deck.getCardCount())
                 .isEqualTo(52);
     }
 
@@ -20,7 +22,18 @@ class DeckTest {
         Deck deck = new Deck();
         deck.draw();
 
-        Assertions.assertThat(deck.getCardCount())
+        assertThat(deck.getCardCount())
                 .isEqualTo(51);
+    }
+
+    @DisplayName("카드를 52장 초과로 뽑으면 에러가 발생한다.")
+    @Test
+    void cardRemoveWhenEmpty() {
+        Deck deck = new Deck();
+
+        for (int i = 0; i < 52; i++) {
+            deck.draw();
+        }
+        assertThatThrownBy(deck::draw).isInstanceOf(IllegalStateException.class);
     }
 }

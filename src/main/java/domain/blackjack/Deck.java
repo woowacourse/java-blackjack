@@ -28,7 +28,10 @@ public class Deck {
     }
 
     public Card draw() {
-         return cards.remove(0);
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("드로우할 카드가 남아있지 않습니다.");
+        }
+        return cards.remove(0);
     }
 
     public int getCardCount() {
