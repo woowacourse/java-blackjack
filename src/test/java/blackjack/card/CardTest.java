@@ -1,6 +1,7 @@
 package blackjack.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,5 +13,17 @@ class CardTest {
     void calculateCardTest() {
         Card card = new Card(Shape.SPADE, Number.ACE);
         assertThat(card.getScore()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("카드가 에이스인지 확인한다.")
+    void isAceTest() {
+        Card aceCard = new Card(Shape.HEART, Number.ACE);
+        Card nonAceCard = new Card(Shape.CLOVER, Number.JACK);
+
+        assertAll(
+                () -> assertThat(aceCard.isAce()).isTrue(),
+                () -> assertThat(nonAceCard.isAce()).isFalse()
+        );
     }
 }
