@@ -13,10 +13,9 @@ public class TrumpCardFactory implements CardFactory {
     public List<Card> createCards() {
         List<Card> trumpCards = new ArrayList<>();
 
-        trumpCards.addAll(createCards(Suit.SPADE));
-        trumpCards.addAll(createCards(Suit.DIAMOND));
-        trumpCards.addAll(createCards(Suit.HEART));
-        trumpCards.addAll(createCards(Suit.CLOVER));
+        for (Suit suit : Suit.values()) {
+            trumpCards.addAll(createCards(suit));
+        }
 
         return trumpCards;
     }
