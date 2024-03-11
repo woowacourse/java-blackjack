@@ -46,7 +46,7 @@ public class BlackJackGame {
     }
 
     private void playPlayerTurn(final Player player, final Deck deck) {
-        if (!player.isBust() && player.canHit()) {
+        if (player.canHit()) {
             final boolean isHit = InputView.readHitOrNot(player.getName(), consoleReader);
             distributeIfPlayerWant(isHit, player, deck);
         }
