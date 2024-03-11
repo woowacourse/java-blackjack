@@ -68,7 +68,21 @@ public class PlayerTest {
         assertThat(result).isEqualTo(expectedScore);
     }
 
-    @DisplayName("플레이어가 버스트인지 확인한다.")
+    @DisplayName("블랙잭도 아니고, 버스트도 아닌 경우 일반 점수 합으로 취급한다.")
+    @Test
+    void isNormalScore(){
+        //given
+        player.hit(cards.pop());
+        player.hit(cards.pop());
+
+        //when
+        boolean result = player.isNormalScore();
+
+        //then
+        assertThat(result).isTrue();
+    }
+
+    @DisplayName("플레이어가 버스트이다.")
     @Test
     void isBust() {
         // given

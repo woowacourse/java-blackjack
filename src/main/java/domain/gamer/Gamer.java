@@ -29,6 +29,10 @@ public abstract class Gamer {
         return hand.sum();
     }
 
+    public boolean isNormalScore() {
+        return !hand.isBlackJack() && !hand.isBust();
+    }
+
     public boolean isBust() {
         return hand.isBust();
     }

@@ -63,7 +63,21 @@ public class DealerTest {
         assertThat(result).isEqualTo(expectedScore);
     }
 
-    @DisplayName("딜러가 버스트인지 확인한다.")
+    @DisplayName("블랙잭도 아니고, 버스트도 아닌 경우 일반 점수 합으로 취급한다.")
+    @Test
+    void isNormalScore(){
+        //given
+        dealer.hit(cards.pop());
+        dealer.hit(cards.pop());
+
+        //when
+        boolean result = dealer.isNormalScore();
+
+        //then
+        assertThat(result).isTrue();
+    }
+
+    @DisplayName("딜러가 버스트이다.")
     @Test
     void isBust() {
         // given
