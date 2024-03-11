@@ -15,6 +15,14 @@ public class Dealer extends Participant {
         deck = new Deck();
     }
 
+    public boolean shouldHit() {
+        return hands.calculateScore() <= DEALER_HIT_COUNT;
+    }
+
+    public Card draw() {
+        return deck.draw();
+    }
+
     public WinStatus isWinner(Participant participant) {
         if (participant.isBust()) {
             return WinStatus.LOSE;
@@ -52,13 +60,5 @@ public class Dealer extends Participant {
             return WinStatus.WIN;
         }
         return WinStatus.LOSE;
-    }
-
-    public boolean shouldHit() {
-        return hands.calculateScore() <= DEALER_HIT_COUNT;
-    }
-
-    public Card draw() {
-        return deck.draw();
     }
 }
