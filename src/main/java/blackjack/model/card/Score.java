@@ -29,7 +29,7 @@ public class Score {
     }
 
     public Score plus(final Score score) {
-        return new Score(value + score.value);
+        return Score.from(value + score.value);
     }
 
     public boolean equalTo(final Score criterion) {
