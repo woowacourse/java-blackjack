@@ -3,7 +3,6 @@ package domain.cards.gamercards;
 import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
 import domain.cards.cardinfo.CardShape;
-import domain.cards.gamercards.GamerCards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -41,7 +40,7 @@ public class GamerCardsTest {
         GamerCards gamerCards = new GamerCards(new ArrayList<>());
         gamerCards.addCard(new Card(CardNumber.FIVE, CardShape.HEART));
         gamerCards.addCard(new Card(CardNumber.FIVE, CardShape.SPADE));
-        gamerCards.addCard(new Card(CardNumber.A, CardShape.SPADE));
+        gamerCards.addCard(new Card(CardNumber.ACE, CardShape.SPADE));
 
         assertThat(gamerCards.calculateScore()).isEqualTo(21);
     }
@@ -50,9 +49,9 @@ public class GamerCardsTest {
     @Test
     void calculateScoreWhenOverThresholdTest() {
         GamerCards gamerCards = new GamerCards(new ArrayList<>());
-        gamerCards.addCard(new Card(CardNumber.K, CardShape.HEART));
-        gamerCards.addCard(new Card(CardNumber.K, CardShape.SPADE));
-        gamerCards.addCard(new Card(CardNumber.A, CardShape.SPADE));
+        gamerCards.addCard(new Card(CardNumber.KING, CardShape.HEART));
+        gamerCards.addCard(new Card(CardNumber.KING, CardShape.SPADE));
+        gamerCards.addCard(new Card(CardNumber.ACE, CardShape.SPADE));
 
         assertThat(gamerCards.calculateScore()).isEqualTo(21);
     }

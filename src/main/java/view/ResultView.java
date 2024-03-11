@@ -68,8 +68,8 @@ public class ResultView {
     }
 
     private String resolveCardNumber(CardNumber cardNumber) {
-        if (cardNumber.equals(CardNumber.A) || cardNumber.equals(CardNumber.J)
-                || cardNumber.equals(CardNumber.Q) || cardNumber.equals(CardNumber.K)) {
+        if (cardNumber.equals(CardNumber.ACE) || cardNumber.equals(CardNumber.JACK)
+                || cardNumber.equals(CardNumber.QUEEN) || cardNumber.equals(CardNumber.KING)) {
             return cardNumber.name();
         }
         return String.valueOf(cardNumber.getScore());

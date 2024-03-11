@@ -14,11 +14,11 @@ public class Card {
     }
 
     public boolean isAce() {
-        return cardNumber.equals(CardNumber.A);
+        return cardNumber.equals(CardNumber.ACE);
     }
 
     public boolean isNotAce() {
-        return !cardNumber.equals(CardNumber.A);
+        return !cardNumber.equals(CardNumber.ACE);
     }
 
     public int score() {

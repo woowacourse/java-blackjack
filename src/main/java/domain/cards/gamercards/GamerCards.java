@@ -51,9 +51,9 @@ public class GamerCards {
 
     private int decideAceScore(int currentScore) {
         if (currentScore <= CONDITION_DECIDING_A_SCORE) {
-            return CardNumber.A.getScore() + A_SCORE_GAP;
+            return CardNumber.ACE.getScore() + A_SCORE_GAP;
         }
-        return CardNumber.A.getScore();
+        return CardNumber.ACE.getScore();
     }
 
     public boolean hasScoreUnderBustThreshold() {

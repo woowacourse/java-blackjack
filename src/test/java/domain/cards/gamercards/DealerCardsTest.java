@@ -3,7 +3,6 @@ package domain.cards.gamercards;
 import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
 import domain.cards.cardinfo.CardShape;
-import domain.cards.gamercards.DealerCards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +16,7 @@ public class DealerCardsTest {
     @Test
     void lowerThanCanHitThresholdTest() {
         DealerCards dealerCards = new DealerCards(new ArrayList<>());
-        dealerCards.addCard(new Card(CardNumber.K, CardShape.HEART));
+        dealerCards.addCard(new Card(CardNumber.KING, CardShape.HEART));
         dealerCards.addCard(new Card(CardNumber.SIX, CardShape.SPADE));
 
         assertThat(dealerCards.hasScoreUnderHitThreshold()).isTrue();
@@ -27,7 +26,7 @@ public class DealerCardsTest {
     @Test
     void lowerThanCannotHitThresholdTest() {
         DealerCards dealerCards = new DealerCards(new ArrayList<>());
-        dealerCards.addCard(new Card(CardNumber.K, CardShape.HEART));
+        dealerCards.addCard(new Card(CardNumber.KING, CardShape.HEART));
         dealerCards.addCard(new Card(CardNumber.SEVEN, CardShape.SPADE));
 
         assertThat(dealerCards.hasScoreUnderHitThreshold()).isFalse();

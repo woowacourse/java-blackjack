@@ -2,7 +2,7 @@ package domain.cards.cardinfo;
 
 public enum CardNumber {
 
-    A(1),
+    ACE(1),
     TWO(2),
     THREE(3),
     FOUR(4),
@@ -12,9 +12,9 @@ public enum CardNumber {
     EIGHT(8),
     NINE(9),
     TEN(10),
-    J(10),
-    Q(10),
-    K(10);
+    JACK(10),
+    QUEEN(10),
+    KING(10);
 
     private final int score;
 

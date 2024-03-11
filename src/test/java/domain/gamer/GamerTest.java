@@ -4,7 +4,6 @@ import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
 import domain.cards.cardinfo.CardShape;
 import domain.cards.gamercards.GamerCards;
-import domain.gamer.Gamer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -38,8 +37,8 @@ public class GamerTest {
     void checkOverThreshold() {
         Gamer gamer = new Gamer("name", new GamerCards(new ArrayList<>()));
         gamer.hit(new Card(CardNumber.TWO, CardShape.CLOVER));
-        gamer.hit(new Card(CardNumber.K, CardShape.CLOVER));
-        gamer.hit(new Card(CardNumber.K, CardShape.SPADE));
+        gamer.hit(new Card(CardNumber.KING, CardShape.CLOVER));
+        gamer.hit(new Card(CardNumber.KING, CardShape.SPADE));
 
         assertThat(gamer.isNotBust()).isFalse();
     }
