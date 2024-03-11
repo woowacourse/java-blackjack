@@ -9,7 +9,6 @@ import java.util.List;
 
 public class Hand {
 
-    private static final int BUST_THRESHOLD = 21;
     private static final int CONDITION_DECIDING_A_SCORE = 10;
     private static final int A_SCORE_GAP = 10;
 
@@ -55,10 +54,6 @@ public class Hand {
             return CardNumber.ACE.getScore() + A_SCORE_GAP;
         }
         return CardNumber.ACE.getScore();
-    }
-
-    public boolean hasScoreUnderBustThreshold() {
-        return calculateScore() <= BUST_THRESHOLD;
     }
 
     public List<Card> getCards() {

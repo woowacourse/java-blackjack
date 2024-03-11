@@ -35,7 +35,7 @@ public class ResultView {
     }
 
     private void printDealerCard(Dealer dealer) {
-        Card dealerCard = dealer.getCards().get(DEALER_CARD_INDEX);
+        Card dealerCard = dealer.getHand().get(DEALER_CARD_INDEX);
         System.out.println(dealer.getPlayerName() + ": " + resolveCardExpression(dealerCard));
     }
 
@@ -53,7 +53,7 @@ public class ResultView {
 
     private String resolvePlayerCards(Player player) {
         List<String> cards = new ArrayList<>();
-        for (Card card : player.getCards()) {
+        for (Card card : player.getHand()) {
             cards.add(resolveCardExpression(card));
         }
         return String.join(DELIMITER, cards);

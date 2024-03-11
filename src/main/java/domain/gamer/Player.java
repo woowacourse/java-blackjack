@@ -10,34 +10,34 @@ public class Player {
     private static final int HIT_THRESHOLD = 21;
 
     private final GamerName name;
-    protected final Hand cards;
+    protected final Hand hand;
 
-    public Player(String name, Hand cards) {
+    public Player(String name) {
         this.name = new GamerName(name);
-        this.cards = cards;
+        this.hand = new Hand();
     }
 
     public void hit(Card card) {
-        cards.addCard(card);
+        hand.addCard(card);
     }
 
     public boolean isBust() {
-        return cards.calculateScore() > HIT_THRESHOLD;
+        return hand.calculateScore() > HIT_THRESHOLD;
     }
 
     public boolean canHit() {
-        return cards.calculateScore() < HIT_THRESHOLD;
+        return hand.calculateScore() < HIT_THRESHOLD;
     }
 
     public int finalizeCardsScore() {
-        return cards.calculateScore();
+        return hand.calculateScore();
     }
 
     public String getPlayerName() {
         return name.getValue();
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards.getCards());
+    public List<Card> getHand() {
+        return Collections.unmodifiableList(hand.getCards());
     }
 }

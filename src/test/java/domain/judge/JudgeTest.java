@@ -33,7 +33,7 @@ class JudgeTest {
     @DisplayName("플레이어가 딜러를 상대로 승리를 판단한다.")
     @Test
     void decidePlayerWinByDealer() {
-        Player player = new Player("player", new Hand());
+        Player player = new Player("player");
         player.hit(new Card(CardNumber.KING, CardShape.HEART));
         Players players = new Players(List.of(player));
         judge.decideResult(players, dealer);
@@ -43,7 +43,7 @@ class JudgeTest {
     @DisplayName("플레이어가 딜러를 상대로 패배를 판단한다.")
     @Test
     void decidePlayerLoseByDealer() {
-        Player player = new Player("player", new Hand());
+        Player player = new Player("player");
         player.hit(new Card(CardNumber.TWO, CardShape.HEART));
         Players players = new Players(List.of(player));
         judge.decideResult(players, dealer);
@@ -53,7 +53,7 @@ class JudgeTest {
     @DisplayName("플레이어가 딜러를 상대로 무승부를 판단한다.")
     @Test
     void decidePlayerDrawByDealer() {
-        Player player = new Player("player", new Hand());
+        Player player = new Player("player");
         player.hit(new Card(CardNumber.FIVE, CardShape.HEART));
         Players players = new Players(List.of(player));
         judge.decideResult(players, dealer);
@@ -63,11 +63,11 @@ class JudgeTest {
     @DisplayName("딜러의 모든 승리 패배 무승부 상태를 반환한다.")
     @Test
     void decideDealerResult() {
-        Player player1 = new Player("player1", new Hand());
+        Player player1 = new Player("player1");
         player1.hit(new Card(CardNumber.KING, CardShape.HEART));
-        Player player2 = new Player("player2", new Hand());
+        Player player2 = new Player("player2");
         player2.hit(new Card(CardNumber.THREE, CardShape.CLOVER));
-        Player player3 = new Player("player3", new Hand());
+        Player player3 = new Player("player3");
         player3.hit(new Card(CardNumber.FIVE, CardShape.HEART));
         Players players = new Players(List.of(player1, player2, player3));
 
