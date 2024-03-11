@@ -30,6 +30,10 @@ public class Player {
         return dealerScore.isLessThanDealerMinimumScore();
     }
 
+    public GameResult compareScoreWith(Score otherScore) {
+        return getScore().compareWith(otherScore);
+    }
+
     public List<Card> getCards() {
         return playerCards.getCards();
     }

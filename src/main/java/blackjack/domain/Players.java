@@ -52,7 +52,7 @@ public class Players {
         return playerGroup.stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        player -> player.getScore().compareWith(dealerScore))
+                        player -> player.compareScoreWith(dealerScore))
                 );
     }
 
