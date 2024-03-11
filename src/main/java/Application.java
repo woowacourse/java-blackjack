@@ -1,6 +1,6 @@
-import controller.BlackjackController;
-import ui.InputView;
-import ui.OutputView;
+import blackjack.controller.BlackjackController;
+import blackjack.ui.InputView;
+import blackjack.ui.OutputView;
 
 public class Application {
     public static void main(String[] args) {
