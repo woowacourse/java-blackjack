@@ -9,7 +9,6 @@ import java.util.List;
 public class Player {
     private static final String INVALID_NAME_LENGTH = "참여자 이름은 한 글자 이상이다";
     private static final String INVALID_PLAYER_NAME = "딜러";
-    private static final int HIT_CONDITION = 21;
 
     private final String name;
     private final Cards cards;
@@ -35,8 +34,7 @@ public class Player {
     }
 
     public boolean canHit() {
-        int cardsTotal = cards.calculateCardsTotalScore();
-        return cardsTotal <= HIT_CONDITION;
+        return !cards.isBust();
     }
 
     public void hit(final CardGenerator cardGenerator) {
