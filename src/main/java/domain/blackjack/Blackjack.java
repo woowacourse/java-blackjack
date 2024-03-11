@@ -51,7 +51,7 @@ public class Blackjack {
 
         for (final Player participant : participants) {
             result.put(participant, participant.determineWinnerByComparing(dealer));
-            dealerResult = dealerResult.updateStatus(dealer.determineWinnerByComparing(participant));
+            dealerResult = dealerResult.updateStatusByWinOrLose(dealer.determineWinnerByComparing(participant));
         }
 
         result.put(dealer, dealerResult);
