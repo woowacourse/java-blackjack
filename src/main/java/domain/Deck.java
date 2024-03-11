@@ -13,6 +13,7 @@ public class Deck {
     private Deck(List<Card> cards) {
         this.cards = cards;
     }
+
     public static Deck withFullCards() {
         List<Card> cards = new ArrayList<>();
         for (CardType type : CardType.values()) {
@@ -23,8 +24,7 @@ public class Deck {
         return new Deck(cards);
     }
 
-    // TODO: default 로 변경해야 함
-    public static Deck withCustomCards(Card ... cards) {
+    static Deck withCustomCards(Card ... cards) {
         return new Deck(new ArrayList<>(Arrays.stream(cards).toList()));
     }
 
