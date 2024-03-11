@@ -4,27 +4,52 @@ import blackjack.model.card.Card;
 import blackjack.model.card.Denomination;
 import blackjack.model.card.Suit;
 
-import java.util.Random;
+import java.util.*;
 
 public class RandomCardGenerator implements CardGenerator {
-    private final Random random = new Random();
+    private static final String NO_CARDS = "카드가 없습니다.";
+    private static final int DECK_NUMBER = 4;
+
+    private final Iterator<Card> cards;
+
+    public RandomCardGenerator() {
+        this.cards = generateDecks().iterator();
+    }
+
+    private List<Card> generateDecks() {
+        List<Card> deck = generateDeck();
+
+        List<Card> decks = new ArrayList<>();
+        while (decks.size() < deck.size() * DECK_NUMBER) {
+            decks.addAll(deck);
+        }
+        return shuffle(decks);
+    }
+
+    private List<Card> generateDeck() {
+        List<Card> deck = new ArrayList<>();
+        for (Suit suit : Suit.values()) {
+            generateCardsWithSuit(deck, suit);
+        }
+        return deck;
+    }
+
+    private void generateCardsWithSuit(final List<Card> deck, final Suit suit) {
+        for (Denomination denomination : Denomination.values()) {
+            deck.add(new Card(suit, denomination));
+        }
+    }
+
+    private List<Card> shuffle(final List<Card> decks) {
+        Collections.shuffle(decks);
+        return decks;
+    }
 
     @Override
     public Card pick() {
-        Suit suit = generateSuit();
-        Denomination denomination = generateDenomination();
-        return new Card(suit, denomination);
-    }
-
-    private Suit generateSuit() {
-        int bound = Suit.getSize();
-        int randomIndex = random.nextInt(bound);
-        return Suit.findByIndex(randomIndex);
-    }
-
-    private Denomination generateDenomination() {
-        int bound = Denomination.getSize();
-        int randomIndex = random.nextInt(bound);
-        return Denomination.findByIndex(randomIndex);
+        if (cards.hasNext()) {
+            return cards.next();
+        }
+        throw new NoSuchElementException(NO_CARDS);
     }
 }
