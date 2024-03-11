@@ -47,14 +47,14 @@ public class Players {
         players.forEach(player -> player.initCard(deck));
     }
 
-    public List<Player> getPlayers() {
-        return List.copyOf(players);
-    }
-
     public Map<Name, GameResult> collectPlayerGameResults(int dealerScore) {
         Map<Name, GameResult> playerGameResults = new LinkedHashMap<>();
         players.forEach(player -> playerGameResults.put(player.getName(), player.isWin(dealerScore)));
 
         return playerGameResults;
+    }
+
+    public List<Player> getPlayers() {
+        return List.copyOf(players);
     }
 }
