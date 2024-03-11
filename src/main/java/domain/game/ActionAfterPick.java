@@ -1,7 +1,7 @@
 package domain.game;
 
-import controller.dto.HandStatus;
+import controller.dto.ParticipantHandStatus;
 import java.util.function.Consumer;
 
-public interface ActionAfterPick extends Consumer<HandStatus> {
+public interface ActionAfterPick extends Consumer<ParticipantHandStatus> {
 }

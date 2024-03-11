@@ -1,7 +1,7 @@
 package controller;
 
-import controller.dto.HandStatus;
 import controller.dto.JudgeResult;
+import controller.dto.ParticipantHandStatus;
 import domain.constants.CardCommand;
 import domain.game.ActionAfterPick;
 import domain.game.BlackJackGame;
@@ -70,8 +70,8 @@ public class GameManager {
      * 게임의 결과를 출력하고 최종 승패를 출력하는 메서드
      */
     private void finish(final BlackJackGame blackJackGame) {
-        List<HandStatus> handStatuses = blackJackGame.createHandStatuses();
-        outputView.printResultHandStatus(handStatuses);
+        List<ParticipantHandStatus> participantHandStatuses = blackJackGame.createHandStatuses();
+        outputView.printResultHandStatus(participantHandStatuses);
 
         JudgeResult judgeResult = blackJackGame.judge();
         outputView.printJudgeResult(judgeResult);

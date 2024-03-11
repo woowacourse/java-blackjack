@@ -1,6 +1,6 @@
 package domain.participant;
 
-import controller.dto.HandStatus;
+import controller.dto.ParticipantHandStatus;
 import domain.card.Card;
 import domain.game.BlackJackGame;
 import domain.game.DecisionToContinue;
@@ -39,8 +39,8 @@ public abstract class Participant {
         return hand.calculateResultScore();
     }
 
-    public HandStatus createHandStatus() {
-        return new HandStatus(name, hand);
+    public ParticipantHandStatus createHandStatus() {
+        return new ParticipantHandStatus(name, hand);
     }
 
     public boolean isNotSameScoreAs(final Participant other) {

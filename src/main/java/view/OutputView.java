@@ -2,9 +2,9 @@ package view;
 
 import static domain.constants.Outcome.WIN;
 
-import controller.dto.HandStatus;
 import controller.dto.InitialCardStatus;
 import controller.dto.JudgeResult;
+import controller.dto.ParticipantHandStatus;
 import controller.dto.PlayerOutcome;
 import domain.card.Card;
 import domain.constants.Outcome;
@@ -35,23 +35,23 @@ public class OutputView {
                 initialCardStatus.initialCardSize()
         );
 
-        for (HandStatus handStatus : initialCardStatus.statuses()) {
-            printHandStatus(handStatus);
+        for (ParticipantHandStatus participantHandStatus : initialCardStatus.statuses()) {
+            printHandStatus(participantHandStatus);
         }
         System.out.println();
     }
 
     private List<String> generateParticipantNames(final InitialCardStatus initialCardStatus) {
         return initialCardStatus.statuses().stream()
-                .map(HandStatus::name)
+                .map(ParticipantHandStatus::name)
                 .toList();
     }
 
-    public void printHandStatus(final HandStatus handStatus) {
+    public void printHandStatus(final ParticipantHandStatus participantHandStatus) {
         System.out.printf(
                 HAND_STATUS_FORMAT,
-                handStatus.name(),
-                generateCardsStatusMessage(handStatus.hand())
+                participantHandStatus.name(),
+                generateCardsStatusMessage(participantHandStatus.hand())
         );
     }
 
@@ -59,14 +59,14 @@ public class OutputView {
         System.out.printf(DEALER_CARD_SAVED_MESSAGE);
     }
 
-    public void printResultHandStatus(final List<HandStatus> handStatuses) {
+    public void printResultHandStatus(final List<ParticipantHandStatus> participantHandStatuses) {
         System.out.println();
-        for (HandStatus handStatus : handStatuses) {
+        for (ParticipantHandStatus participantHandStatus : participantHandStatuses) {
             System.out.println(String.format(
                     RESULT_HAND_STATUS_MESSAGE,
-                    handStatus.name(),
-                    generateCardsStatusMessage(handStatus.hand()),
-                    handStatus.hand().calculateResultScore()
+                    participantHandStatus.name(),
+                    generateCardsStatusMessage(participantHandStatus.hand()),
+                    participantHandStatus.hand().calculateResultScore()
             ));
         }
     }

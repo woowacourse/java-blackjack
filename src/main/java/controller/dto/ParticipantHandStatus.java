@@ -2,7 +2,7 @@ package controller.dto;
 
 import domain.participant.Hand;
 
-public record HandStatus(
+public record ParticipantHandStatus(
         String name,
         Hand hand
 ) {

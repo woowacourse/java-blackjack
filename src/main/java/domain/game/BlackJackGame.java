@@ -1,8 +1,8 @@
 package domain.game;
 
-import controller.dto.HandStatus;
 import controller.dto.InitialCardStatus;
 import controller.dto.JudgeResult;
+import controller.dto.ParticipantHandStatus;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
@@ -27,7 +27,7 @@ public class BlackJackGame {
     }
 
     public InitialCardStatus initialize() {
-        List<HandStatus> status = new ArrayList<>();
+        List<ParticipantHandStatus> status = new ArrayList<>();
         status.add(createHandStatusAfterPick(participants.getDealer()));
 
         for (Player player : participants.getPlayers()) {
@@ -36,13 +36,13 @@ public class BlackJackGame {
         return new InitialCardStatus(INITIAL_CARD_SIZE, status);
     }
 
-    private HandStatus createHandStatusAfterPick(final Participant participant) {
+    private ParticipantHandStatus createHandStatusAfterPick(final Participant participant) {
         participant.pickCard(deck, INITIAL_CARD_SIZE);
         return participant.createHandStatus();
     }
 
-    public List<HandStatus> createHandStatuses() {
-        List<HandStatus> status = new ArrayList<>();
+    public List<ParticipantHandStatus> createHandStatuses() {
+        List<ParticipantHandStatus> status = new ArrayList<>();
         status.add(participants.getDealer().createHandStatus());
 
         for (Player player : participants.getPlayers()) {
@@ -59,7 +59,7 @@ public class BlackJackGame {
     ) {
         while (participant.canPickCard(decision)) {
             participant.pickCard(deck, CARD_PICK_SIZE);
-            HandStatus currentStatus = participant.createHandStatus();
+            ParticipantHandStatus currentStatus = participant.createHandStatus();
             action.accept(currentStatus);
         }
     }

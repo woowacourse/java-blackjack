@@ -6,8 +6,8 @@ import static util.CardsSupplier.createSixteenScoreWithTwoCards;
 import static util.ParticipantSupplier.createDealer;
 import static util.ParticipantSupplier.createPlayer;
 
-import controller.dto.HandStatus;
 import controller.dto.InitialCardStatus;
+import controller.dto.ParticipantHandStatus;
 import domain.card.Card;
 import domain.card.Score;
 import domain.card.Shape;
@@ -35,7 +35,7 @@ class RoundTest {
         InitialCardStatus result = blackJackGame.initialize();
 
         Assertions.assertThat(result.initialCardSize()).isEqualTo(2);
-        for (HandStatus status : result.statuses()) {
+        for (ParticipantHandStatus status : result.statuses()) {
             assertThat(status.hand().getCards()).hasSize(2);
         }
     }
