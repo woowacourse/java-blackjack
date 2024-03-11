@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    private static final String DEALER_NAME = "딜러";
+
     public static void printInitialStatus(GameStatus gameStatus) {
         GamerDto dealerDto = gameStatus.getDealerDto();
         List<GamerDto> gamerDtos = gameStatus.getGamerDtos();
@@ -27,7 +29,7 @@ public class OutputView {
 
     private static String buildDealerInitialStatus(GamerDto dealerDto) {
         return String.join(": ",
-                dealerDto.getName(),
+                DEALER_NAME,
                 dealerDto.getCards().get(0).toString());
     }
 
@@ -55,12 +57,18 @@ public class OutputView {
         GamerDto dealerDto = gameStatus.getDealerDto();
         List<GamerDto> playersDto = gameStatus.getGamerDtos();
         System.out.println();
-        System.out.println(buildTotalStatus(dealerDto));
-        playersDto.stream().map(OutputView::buildTotalStatus)
+        System.out.println(buildDealerTotalStatus(dealerDto));
+        playersDto.stream().map(OutputView::buildPlayerTotalStatus)
                 .forEach(System.out::println);
     }
 
-    private static String buildTotalStatus(GamerDto gamer) {
+    private static String buildDealerTotalStatus(GamerDto gamer) {
+        String nameCards = buildNameCards(DEALER_NAME, gamer.getCards());
+        String totalScores = buildTotalScore(gamer);
+        return "%s - %s".formatted(nameCards, totalScores);
+    }
+
+    private static String buildPlayerTotalStatus(GamerDto gamer) {
         String nameCards = buildNameCards(gamer.getName(), gamer.getCards());
         String totalScores = buildTotalScore(gamer);
         return "%s - %s".formatted(nameCards, totalScores);
@@ -75,7 +83,7 @@ public class OutputView {
         Map<GamerResult, Integer> dealerGameResult = gameResult.getDealerResult();
         Map<String, GamerResult> playersGameResult = gameResult.getPlayersResult();
 
-        System.out.println("딜러:" + buildDealerResult(dealerGameResult));
+        System.out.println(String.join(": ", DEALER_NAME, buildDealerResult(dealerGameResult)));
         playersGameResult.forEach(
                 (name, result) -> System.out.println("%s: %s".formatted(name, result.getResult())));
 
