@@ -16,11 +16,4 @@ class NameTest {
 
     }
 
-    @Test
-    @DisplayName("이름이 딜러라면 예외가 발생한다")
-    void dealerName() {
-        assertThatCode(() -> new Name("딜러")).isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("딜러");
-    }
-
 }

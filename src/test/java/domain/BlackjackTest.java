@@ -48,7 +48,7 @@ class BlackjackTest {
     @Test
     @DisplayName("게임의 결과가 제대로 계산됐는지 확인한다")
     void gameResultTest() {
-        final Player dealer = new Dealer();
+        final Player dealer = Dealer.getInstance();
         final Player teba = new Participant(new Name("테바"));
         final Player jonge = new Participant(new Name("종이"));
         teba.hit(new Card(Denomination.ACE, Symbol.CLUBS));

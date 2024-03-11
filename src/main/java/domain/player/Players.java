@@ -23,6 +23,13 @@ public class Players {
     private void validate(final List<Player> players) {
         validatePlayerNumbers(players);
         validateDuplicate(players);
+        validateDealerName(players);
+    }
+
+    private void validateDealerName(final List<Player> players) {
+        if (players.stream().anyMatch(r -> r.getName().equals(Dealer.getInstance().getName()))) {
+            throw new IllegalArgumentException("딜러와 중복되는 이름을 가질 수 없습니다");
+        }
     }
 
     private void validatePlayerNumbers(final List<Player> players) {

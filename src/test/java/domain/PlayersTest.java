@@ -35,4 +35,13 @@ class PlayersTest {
 
         assertThatCode(() -> new Players(players)).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("플레이어의 이름 딜러라면 예외가 발생한다")
+    void dealerName() {
+        final List<Player> players = new ArrayList<>();
+        players.add(new Participant(new Name("딜러")));
+
+        assertThatCode(() -> new Players(players)).isInstanceOf(IllegalArgumentException.class);
+    }
 }
