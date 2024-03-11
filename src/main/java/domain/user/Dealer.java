@@ -18,6 +18,6 @@ public class Dealer extends User {
 
     @Override
     public String getNameValue() {
-        return "";
+        return "dealer name default value";
     }
 }

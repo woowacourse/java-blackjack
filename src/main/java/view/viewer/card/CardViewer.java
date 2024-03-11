@@ -1,4 +1,4 @@
-package view.card;
+package view.viewer.card;
 
 import domain.card.Card;
 import domain.card.Number;

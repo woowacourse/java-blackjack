@@ -7,6 +7,7 @@ import domain.TotalDeck;
 import domain.card.Card;
 import domain.game.Result;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,6 +76,10 @@ public class Users {
 
     public boolean currentUserBusted() {
         return currentUser.busted();
+    }
+
+    public List<User> getUsers() {
+        return Collections.unmodifiableList(users);
     }
 
     public User getCurrentUser() {
