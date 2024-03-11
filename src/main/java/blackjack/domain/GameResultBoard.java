@@ -24,29 +24,17 @@ public class GameResultBoard {
         return resultBoard.get(player.getName());
     }
 
-//    public Map<GameResult, Integer> getDealerResult() {
-//        return Map.of(
-//                GameResult.WIN, getDealerWinCount(),
-//                GameResult.DRAW, getDealerDrawCount(),
-//                GameResult.LOSE, getDealerLoseCount()
-//        );
-//    }
-//
-//    private int getDealerWinCount() {
-//        return (int) resultBoard.values().stream()
-//                .filter(GameResult::isLose)
-//                .count();
-//    }
-//
-//    private int getDealerLoseCount() {
-//        return (int) resultBoard.values().stream()
-//                .filter(GameResult::isWin)
-//                .count();
-//    }
-//
-//    private int getDealerDrawCount() {
-//        return (int) resultBoard.values().stream()
-//                .filter(GameResult::isDraw)
-//                .count();
-//    }
+    public int getDealerProfit() {
+        return makeNegative(playersTotalProfit());
+    }
+
+    private int playersTotalProfit() {
+        return resultBoard.values().stream()
+                .mapToInt(i -> i)
+                .sum();
+    }
+
+    private int makeNegative(int value) {
+        return -1 * value;
+    }
 }
