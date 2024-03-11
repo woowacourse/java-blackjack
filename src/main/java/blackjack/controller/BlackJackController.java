@@ -89,9 +89,9 @@ public class BlackJackController {
         printCardStatus(dealer, players);
         GameResultBoard gameResultBoard = new GameResultBoard(dealer, players);
 
-        outputView.printDealerResult(gameResultBoard.getDealerResult());
+        outputView.printDealerProfit(gameResultBoard.getDealerProfit());
         for (Player player : players.getPlayers()) {
-            outputView.printPlayerResult(player.getName(), gameResultBoard.getGameResult(player));
+            outputView.printPlayerProfit(player.getName(), gameResultBoard.getProfitOf(player));
         }
     }
 
