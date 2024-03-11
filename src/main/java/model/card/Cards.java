@@ -51,7 +51,7 @@ public class Cards {
         return result;
     }
 
-    public boolean isOverMaximumSum() {
+    public boolean isNotHit() {
         return calculateScore() > MAXIMUM_SUM;
     }
 

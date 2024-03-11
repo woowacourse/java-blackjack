@@ -5,24 +5,18 @@ import model.Outcome;
 import model.card.Card;
 
 public class Participant extends User {
-    private final static int NUMBER_THRESHOLD = 21;
 
     public Participant(String name, List<Card> cards) {
         super(name, cards);
     }
 
     public Outcome findOutcome(Dealer dealer) {
-        if (isOverMaximumSum()) {
+        if (isNotHit()) {
             return Outcome.LOSE;
         }
-        if (dealer.isOverMaximumSum()) {
+        if (dealer.isNotHit()) {
             return Outcome.WIN;
         }
         return findPlayerOutcome(dealer.findPlayerDifference());
-    }
-
-    @Override
-    public boolean canReceiveCard() {
-        return calculateScore() <= NUMBER_THRESHOLD;
     }
 }

@@ -6,7 +6,7 @@ import model.Outcome;
 import model.card.Card;
 import model.card.Cards;
 
-public abstract class User implements NoticeStatus {
+public abstract class User {
 
     protected final String name;
     protected Cards cards;
@@ -35,8 +35,8 @@ public abstract class User implements NoticeStatus {
         return cards.calculateScore();
     }
 
-    public boolean isOverMaximumSum() {
-        return cards.isOverMaximumSum();
+    public boolean isNotHit() {
+        return cards.isNotHit();
     }
 
     public int findPlayerDifference() {

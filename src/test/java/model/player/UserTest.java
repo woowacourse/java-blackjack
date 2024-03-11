@@ -16,26 +16,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class UserTest {
 
-//    @BeforeEach
-//    void makePlayer() {
-//        this.player = new Player("켬미",
-//                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
-//            @Override
-//            public boolean canReceiveCard() {
-//                return false;
-//            }
-//        };
-//    }
-
     @DisplayName("이름이 공백이면 예외가 발생한다.")
     @Test
     void validateBlankName() {
         Assertions.assertThatThrownBy(() -> new User("",
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
-            @Override
-            public boolean canReceiveCard() {
-                return false;
-            }
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -44,10 +29,6 @@ class UserTest {
     void validateNullName() {
         Assertions.assertThatThrownBy(() -> new User(null,
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
-            @Override
-            public boolean canReceiveCard() {
-                return false;
-            }
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -63,10 +44,6 @@ class UserTest {
     @MethodSource("createCard")
     void validateCardSize(List<Card> cards) {
         Assertions.assertThatThrownBy(() -> new User("켬미", cards) {
-            @Override
-            public boolean canReceiveCard() {
-                return false;
-            }
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -75,10 +52,6 @@ class UserTest {
     void addCard() {
         User user = new User("켬미",
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
-            @Override
-            public boolean canReceiveCard() {
-                return false;
-            }
         };
         Card card = new Card(CardShape.CLOVER, CardNumber.EIGHT);
         user.addCard(card);
@@ -89,12 +62,7 @@ class UserTest {
     @Test
     void addCards() {
         User user = new User("켬미",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
-            @Override
-            public boolean canReceiveCard() {
-                return false;
-            }
-        };
+                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {};
         List<Card> cards = List.of(new Card(CardShape.CLOVER, CardNumber.EIGHT),
                 new Card(CardShape.CLOVER, CardNumber.FIVE));
         user.addCards(cards);
@@ -105,12 +73,7 @@ class UserTest {
     @Test
     void calculateScore() {
         User user = new User("켬미",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
-            @Override
-            public boolean canReceiveCard() {
-                return false;
-            }
-        };
+                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {};
 
         assertThat(user.calculateScore()).isEqualTo(14);
     }
@@ -119,12 +82,7 @@ class UserTest {
     @Test
     void calculateScoreWithAce() {
         User user = new User("켬미",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
-            @Override
-            public boolean canReceiveCard() {
-                return false;
-            }
-        };
+                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {};
         user.addCard(new Card(CardShape.SPACE, CardNumber.ACE));
 
         assertThat(user.calculateScore()).isEqualTo(15);

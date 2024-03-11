@@ -5,7 +5,6 @@ import java.util.List;
 import model.BlackJack;
 import model.card.CardSize;
 import model.card.CardDeck;
-import model.card.Cards;
 import model.player.Dealer;
 import model.player.Participant;
 import model.player.Participants;
@@ -58,7 +57,7 @@ public class BlackJackController {
     }
 
     private void decideParticipantPlay(Participant participant, BlackJack blackJack) {
-        while (!participant.isOverMaximumSum() && inputView.isOneMoreCard(participant.getName())) {
+        while (!participant.isNotHit() && inputView.isOneMoreCard(participant.getName())) {
             blackJack.offerCardToParticipant(participant, CardSize.ONE);
             outputView.printPlayerCardMessage(participant);
         }

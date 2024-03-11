@@ -1,7 +1,6 @@
 package model.player;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.InstanceOfAssertFactories.predicate;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -32,7 +31,7 @@ class ParticipantTest {
     void noticeTrue() {
         Participant participant = new Participant("배키",
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE)));
-        assertTrue(participant.canReceiveCard());
+        assertFalse(participant.isNotHit());
     }
 
     @DisplayName("카드의 합이 21초과일 때는 거짓을 반환한다.")
@@ -43,7 +42,7 @@ class ParticipantTest {
         participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
         participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
         participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
-        assertFalse(participant.canReceiveCard());
+        assertTrue(participant.isNotHit());
     }
 
     @DisplayName("참가자와 딜러 카드의 합이 같을 때 무승부이다.")

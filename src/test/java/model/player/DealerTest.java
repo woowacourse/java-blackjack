@@ -24,13 +24,13 @@ class DealerTest {
     @DisplayName("카드의 합이 16이하일 때는 참을 반환한다.")
     @Test
     void noticeTrue() {
-        assertTrue(dealer.canReceiveCard());
+        assertTrue(dealer.isHit());
     }
 
     @DisplayName("카드의 합이 16초과일 때는 거짓을 반환한다.")
     @Test
     void noticeFalse() {
         dealer.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
-        assertFalse(dealer.canReceiveCard());
+        assertFalse(dealer.isHit());
     }
 }

@@ -62,7 +62,7 @@ public class BlackJack {
     }
 
     public boolean isDealerUnderThreshold() {
-        return dealer.canReceiveCard();
+        return dealer.isHit();
     }
 
     public Map<Outcome, Long> getDealerOutCome() {
