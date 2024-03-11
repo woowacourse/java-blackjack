@@ -10,17 +10,21 @@ import java.util.List;
 public class Deck {
     private final List<Card> cards;
 
-    public Deck() {
-        cards = new ArrayList<>();
+    private Deck(List<Card> cards) {
+        this.cards = cards;
+    }
+    public static Deck withFullCards() {
+        List<Card> cards = new ArrayList<>();
         for (CardType type : CardType.values()) {
             Arrays.stream(CardNumber.values())
                     .forEach(number -> cards.add(new Card(type, number)));
         }
+        return new Deck(cards);
     }
 
     // TODO: default 로 변경해야 함
-    public Deck(Card ... cards) {
-        this.cards = new ArrayList<>(Arrays.stream(cards).toList());
+    public static Deck withCustomCards(Card ... cards) {
+        return new Deck(new ArrayList<>(Arrays.stream(cards).toList()));
     }
 
     public Card draw() {

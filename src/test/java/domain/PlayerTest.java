@@ -22,7 +22,7 @@ class PlayerTest {
         Player player = new Player(new Name("test"));
         Card one = new Card(CardType.CLOVER,CardNumber.ACE);
         Card two = new Card(CardType.CLOVER,CardNumber.TWO);
-        Deck deck = new Deck(one,two);
+        Deck deck = Deck.withCustomCards(one,two);
         player.pickTwoCards(deck);
         List<Card> cards = player.getCards();
         Assertions.assertThat(cards)
@@ -35,7 +35,7 @@ class PlayerTest {
     void takeCard() {
         Player player = new Player(new Name("test"));
         Card card = new Card(CardType.SPADE, CardNumber.TEN);
-        Deck deck = new Deck(card);
+        Deck deck = Deck.withCustomCards(card);
         player.hit(deck);
         List<Card> cards = player.getCards();
         Assertions.assertThat(cards).isEqualTo(List.of(card));
@@ -52,7 +52,7 @@ class PlayerTest {
     @DisplayName("게이머의 점수 합계를 반환한다.")
     void getTotalScore() {
         Player player = new Player(new Name("test"));
-        Deck deck = new Deck(
+        Deck deck = Deck.withCustomCards(
                 new Card(CardType.SPADE, CardNumber.TEN));
         player.hit(deck);
         Assertions.assertThat(player.getTotalScore()).isEqualTo(10);
@@ -62,7 +62,7 @@ class PlayerTest {
     @DisplayName("Bust이면 true를 반환한다.")
     void isBustTrue() {
         Player player = new Player(new Name("test"));
-        Deck deck = new Deck(
+        Deck deck = Deck.withCustomCards(
                 new Card(CardType.SPADE, CardNumber.TEN),
                 new Card(CardType.SPADE, CardNumber.TEN),
                 new Card(CardType.SPADE, CardNumber.TEN));
@@ -78,7 +78,7 @@ class PlayerTest {
     @DisplayName("Bust가 아니면 false를 반환한다.")
     void isBustFalse() {
         Player player = new Player(new Name("test"));
-        Deck deck = new Deck(
+        Deck deck = Deck.withCustomCards(
                 new Card(CardType.SPADE, CardNumber.TEN),
                 new Card(CardType.SPADE, CardNumber.TEN));
         player.pickTwoCards(deck);

@@ -32,7 +32,7 @@ class GamerDtoTest {
     void getCards() {
         Player player = new Player(new Name("test"));
         Card card = new Card(CardType.SPADE, CardNumber.ACE);
-        Deck deck = new Deck(card);
+        Deck deck = Deck.withCustomCards(card);
         player.hit(deck);
         GamerDto gamerDto = GamerDto.from(player);
         Assertions.assertThat(gamerDto.getCards())
@@ -43,7 +43,7 @@ class GamerDtoTest {
     @DisplayName("카드 점수 합계를 반환한다.")
     void getTotalScore() {
         Player player = new Player(new Name("test"));
-        Deck deck = new Deck(
+        Deck deck = Deck.withCustomCards(
                 new Card(CardType.SPADE, CardNumber.ACE),
                 new Card(CardType.DIAMOND, CardNumber.TEN));
         player.hit(deck);

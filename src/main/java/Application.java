@@ -13,7 +13,7 @@ public class Application {
     private static final ConsoleReader CONSOLE_READER = new ConsoleReader();
 
     public static void main(String[] args) {
-        Deck deck = new Deck();
+        Deck deck = Deck.withFullCards();
         BlackJackGame blackJackGame = setGame();
         List<GamerDto> gamerDtos = showInitialStatus(blackJackGame, deck);
         playMainGame(gamerDtos, blackJackGame,deck);

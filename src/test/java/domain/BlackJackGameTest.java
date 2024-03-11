@@ -23,7 +23,7 @@ public class BlackJackGameTest {
     @DisplayName("모든 플레이어들에게 카드를 2장씩 나눠준다")
     void initialDealing() {
         BlackJackGame blackJackGame = new BlackJackGame(List.of(new Player(new Name("test"))));
-        Deck deck = new Deck();
+        Deck deck = Deck.withFullCards();
         blackJackGame.initialDealing(deck);
         Assertions.assertThat(blackJackGame.getGameStatusDto()
                         .getGamerDtoFromName("test")
@@ -37,7 +37,7 @@ public class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame(List.of(
                 new Player(new Name("test"))
         ));
-        Deck deck = new Deck();
+        Deck deck = Deck.withFullCards();
         blackJackGame.initialDealing(deck);
         blackJackGame.drawCardFromName("test", deck);
         Assertions.assertThat(blackJackGame.getGameStatusDto()
@@ -50,7 +50,7 @@ public class BlackJackGameTest {
     @DisplayName("플레이어 이름이 존재하지 않을 경우 예외가 발생한다.")
     void drawCardFromNameException() {
         BlackJackGame blackJackGame = new BlackJackGame(List.of(new Player(new Name("test"))));
-        Deck deck = new Deck();
+        Deck deck = Deck.withFullCards();
         blackJackGame.initialDealing(deck);
         blackJackGame.drawCardFromName("test", deck);
         Assertions.assertThatThrownBy(() -> blackJackGame.drawCardFromName("wrong", deck))
@@ -70,7 +70,7 @@ public class BlackJackGameTest {
     @DisplayName("입력으로 받은 이름이 bust이면 true를 반환한다.")
     void isBustFromNameTrue() {
         BlackJackGame blackJackGame = new BlackJackGame(List.of(new Player(new Name("test"))));
-        Deck deck = new Deck(
+        Deck deck = Deck.withCustomCards(
                 new Card(CardType.CLOVER, CardNumber.TEN),
                 new Card(CardType.HEART, CardNumber.TEN),
                 new Card(CardType.DIAMOND, CardNumber.TEN));
@@ -84,7 +84,7 @@ public class BlackJackGameTest {
     @DisplayName("딜러가 17 이상이 될 때까지 카드를 뽑는다.")
     void drawDealerCard() {
         BlackJackGame blackJackGame = new BlackJackGame(List.of(new Player(new Name("test"))));
-        Deck deck = new Deck(
+        Deck deck = Deck.withCustomCards(
                 new Card(CardType.CLOVER, CardNumber.ACE),
                 new Card(CardType.CLOVER, CardNumber.TEN),
                 new Card(CardType.CLOVER, CardNumber.TEN));

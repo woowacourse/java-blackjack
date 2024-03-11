@@ -22,7 +22,7 @@ class DealerTest {
         Dealer dealer = new Dealer();
         Card one = new Card(CardType.CLOVER,CardNumber.ACE);
         Card two = new Card(CardType.CLOVER,CardNumber.TWO);
-        Deck deck = new Deck(one,two);
+        Deck deck = Deck.withCustomCards(one,two);
         dealer.pickTwoCards(deck);
         List<Card> cards = dealer.getCards();
         Assertions.assertThat(cards)
@@ -33,7 +33,7 @@ class DealerTest {
     @DisplayName("딜러가 카드를 뽑을 경우, 점수가 16점 이하일 경우 카드를 계속 뽑고, 뽑은 횟수를 반환한다.")
     void takeCard() {
         Dealer dealer = new Dealer();
-        Deck deck = new Deck(
+        Deck deck = Deck.withCustomCards(
                 new Card(CardType.SPADE, CardNumber.TEN),
                 new Card(CardType.SPADE, CardNumber.FIVE),
                 new Card(CardType.SPADE, CardNumber.ACE),
@@ -53,7 +53,7 @@ class DealerTest {
     @DisplayName("딜러의 점수 합계를 반환한다.")
     void getTotalScore() {
         Dealer dealer = new Dealer();
-        Deck deck = new Deck(
+        Deck deck = Deck.withCustomCards(
                 new Card(CardType.SPADE, CardNumber.TEN),
                 new Card(CardType.SPADE, CardNumber.ACE));
         int drawCount = dealer.hit(deck);
@@ -66,7 +66,7 @@ class DealerTest {
     @DisplayName("Bust이면 true를 반환한다.")
     void isBustTrue() {
         Dealer dealer = new Dealer();
-        Deck deck = new Deck(
+        Deck deck = Deck.withCustomCards(
                 new Card(CardType.SPADE, CardNumber.TEN),
                 new Card(CardType.SPADE, CardNumber.SIX),
                 new Card(CardType.SPADE, CardNumber.TEN));
@@ -79,7 +79,7 @@ class DealerTest {
     @DisplayName("Bust가 아니면 false를 반환한다.")
     void isBustFalse() {
         Dealer dealer = new Dealer();
-        Deck deck = new Deck(
+        Deck deck = Deck.withCustomCards(
                 new Card(CardType.SPADE, CardNumber.TEN),
                 new Card(CardType.SPADE, CardNumber.TEN));
         dealer.hit(deck);
