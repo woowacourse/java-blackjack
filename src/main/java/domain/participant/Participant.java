@@ -5,6 +5,7 @@ import domain.card.Card;
 import domain.game.BlackJackGame;
 import domain.game.DecisionToContinue;
 import domain.game.Deck;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Participant {
@@ -41,6 +42,12 @@ public abstract class Participant {
 
     public ParticipantHandStatus createHandStatus() {
         return new ParticipantHandStatus(name, hand);
+    }
+
+    public ParticipantHandStatus createHandStatusExceptLastOne() {
+        List<Card> cardsExceptLastOne = new ArrayList<>(hand.getCards());
+        cardsExceptLastOne.remove(cardsExceptLastOne.size() - 1);
+        return new ParticipantHandStatus(name, new Hand(cardsExceptLastOne));
     }
 
     public boolean isNotSameScoreAs(final Participant other) {

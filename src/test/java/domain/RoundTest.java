@@ -1,6 +1,5 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static util.CardsSupplier.createSevenScoreWithTwoCards;
 import static util.CardsSupplier.createSixteenScoreWithTwoCards;
 import static util.ParticipantSupplier.createDealer;
@@ -36,8 +35,15 @@ class RoundTest {
 
         Assertions.assertThat(result.initialCardSize()).isEqualTo(2);
         for (ParticipantHandStatus status : result.statuses()) {
-            assertThat(status.hand().getCards()).hasSize(2);
+            Assertions.assertThat(status.hand().size()).isEqualTo(getExpectedSize(status));
         }
+    }
+
+    private int getExpectedSize(final ParticipantHandStatus status) {
+        if (status.name().equals(Dealer.DEALER_NAME)) {
+            return 1;
+        }
+        return 2;
     }
 
     @DisplayName("딜러와 플레이어가 돌아가면서 카드를 받는 테스트")
