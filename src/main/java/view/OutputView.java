@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import player.Name;
 import player.Player;
 import player.Players;
-import player.dto.SinglePlayerStatusDto;
+import player.dto.CardsStatus;
 
 public class OutputView {
 
@@ -41,17 +41,17 @@ public class OutputView {
         System.out.println(makeCardsStatus(player.getName(), player.getCards()));
     }
 
-    public void printExtraCardInfo(SinglePlayerStatusDto result) {
+    public void printExtraCardInfo(CardsStatus result) {
         System.out.println();
         for (int i = 2; i <= result.cards().countCard(); i++) {
             System.out.println(result.name().getValue() + "가 " + MIN_DEALER_SCORE + "이하라 한장의 카드를 더 받았습니다.\n");
         }
     }
 
-    public void printPlayStatus(List<SinglePlayerStatusDto> playResult) {
+    public void printPlayStatus(List<CardsStatus> playResult) {
         Collections.reverse(playResult);
 
-        for (SinglePlayerStatusDto singlePlayerResult : playResult) {
+        for (CardsStatus singlePlayerResult : playResult) {
             System.out.println(makeCardsStatus(singlePlayerResult.name(), singlePlayerResult.cards()) + " - 결과: "
                     + singlePlayerResult.getCardsScore());
         }

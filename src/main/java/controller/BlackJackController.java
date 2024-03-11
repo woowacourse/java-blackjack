@@ -6,7 +6,7 @@ import cardGame.SingleMatch;
 import controller.dto.WinningResult;
 import java.util.List;
 import player.Players;
-import player.dto.SinglePlayerStatusDto;
+import player.dto.CardsStatus;
 import view.InputView;
 import view.OutputView;
 
@@ -31,9 +31,9 @@ public class BlackJackController {
     private void runBlackJackGame(BlackJackGame blackJackGame, Players players) {
         outputView.printInitCardStatus(players, blackJackGame.getInitDealerStatus());
 
-        List<SinglePlayerStatusDto> playerResult = blackJackGame.playGame(this::playSingleMatch, players);
+        List<CardsStatus> playerResult = blackJackGame.playGame(this::playSingleMatch, players);
 
-        SinglePlayerStatusDto result = blackJackGame.playDealerTurn();
+        CardsStatus result = blackJackGame.playDealerTurn();
         playerResult.add(result);
 
         outputView.printExtraCardInfo(result);

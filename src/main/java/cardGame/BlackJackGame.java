@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import player.Name;
 import player.Player;
 import player.Players;
-import player.dto.SinglePlayerStatusDto;
+import player.dto.CardsStatus;
 
 public class BlackJackGame {
 
@@ -34,8 +34,8 @@ public class BlackJackGame {
         return dealer.getCards().getFirstCard();
     }
 
-    public List<SinglePlayerStatusDto> playGame(BiConsumer<SingleMatch, CardDeck> playSingleMatch, Players players) {
-        List<SinglePlayerStatusDto> playerResult = new ArrayList<>();
+    public List<CardsStatus> playGame(BiConsumer<SingleMatch, CardDeck> playSingleMatch, Players players) {
+        List<CardsStatus> playerResult = new ArrayList<>();
 
         for (Player player : players.getPlayers()) {
             SingleMatch singleMatch = new SingleMatch(player);
@@ -45,9 +45,9 @@ public class BlackJackGame {
         return playerResult;
     }
 
-    public SinglePlayerStatusDto playDealerTurn() {
+    public CardsStatus playDealerTurn() {
         dealer.getExtraCard(cardDeck);
-        return new SinglePlayerStatusDto(new Name(DEALER_NAME), dealer.getCards());
+        return new CardsStatus(new Name(DEALER_NAME), dealer.getCards());
     }
 
     public List<WinningResult> getPlayersResult(Players players) {

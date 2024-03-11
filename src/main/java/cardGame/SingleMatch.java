@@ -4,7 +4,7 @@ import card.Card;
 import card.CardDeck;
 import java.util.function.BiConsumer;
 import player.Player;
-import player.dto.SinglePlayerStatusDto;
+import player.dto.CardsStatus;
 
 public class SingleMatch {
 
@@ -26,8 +26,8 @@ public class SingleMatch {
         player.receiveCard(card);
     }
 
-    public SinglePlayerStatusDto play(BiConsumer<SingleMatch, CardDeck> playMatch, CardDeck cardDeck) {
+    public CardsStatus play(BiConsumer<SingleMatch, CardDeck> playMatch, CardDeck cardDeck) {
         playMatch.accept(this, cardDeck);
-        return new SinglePlayerStatusDto(player.getName(), player.getCards());
+        return new CardsStatus(player.getName(), player.getCards());
     }
 }
