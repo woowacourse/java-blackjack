@@ -42,10 +42,10 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("문자열로 플레이어의 이름을 검증할 수 있다.")
+    @DisplayName("이름 객체로 플레이어의 이름을 검증할 수 있다.")
     void createName() {
         Player player = new Player(new Name("test"));
-        Assertions.assertThat(player.isName("test")).isTrue();
+        Assertions.assertThat(player.isName(new Name("test"))).isTrue();
     }
 
     @Test

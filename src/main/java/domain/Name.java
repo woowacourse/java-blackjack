@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,5 +35,22 @@ public record Name(String name) {
         if (matcher.matches()) {
             throw new IllegalArgumentException("이름은 알파벳, 한글, 숫자, '_', '-'로만 이루어져야 합니다.");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Name that = (Name) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

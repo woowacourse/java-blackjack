@@ -46,7 +46,7 @@ class DealerTest {
     @DisplayName("딜러의 이름은 \"딜러\"로 초기화 된다.")
     void isName() {
         Dealer gamer = new Dealer();
-        Assertions.assertThat(gamer.isName("딜러")).isTrue();
+        Assertions.assertThat(gamer.isName(new Name("딜러"))).isTrue();
     }
 
     @Test

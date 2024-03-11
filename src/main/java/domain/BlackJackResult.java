@@ -7,16 +7,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BlackJackResult {
-    private final Map<String, GamerResult> playersResult;
+    private final Map<Name, GamerResult> playersResult;
     private final Map<GamerResult, Integer> dealerResult;
 
-    public BlackJackResult(int dealerScore, Map<String, Integer> playersScore) {
+    public BlackJackResult(int dealerScore, Map<Name, Integer> playersScore) {
         dealerResult = new EnumMap<>(GamerResult.class);
         this.playersResult = calculatePlayersResult(dealerScore, playersScore);
     }
 
-    private Map<String, GamerResult> calculatePlayersResult(int dealerScore, Map<String, Integer> playersScore) {
-        Map<String, GamerResult> playersResult = new HashMap<>();
+    private Map<Name, GamerResult> calculatePlayersResult(int dealerScore, Map<Name, Integer> playersScore) {
+        Map<Name, GamerResult> playersResult = new HashMap<>();
         playersScore.forEach((name, playerScore) -> playersResult.put(name,
                 getJudgePlayerResult(dealerScore, playerScore)));
         return playersResult;
@@ -32,7 +32,7 @@ public class BlackJackResult {
         dealerResult.put(gamerResult, dealerResult.computeIfAbsent(gamerResult, score -> 0) + 1);
     }
 
-    public Map<String, GamerResult> getPlayersResult() {
+    public Map<Name, GamerResult> getPlayersResult() {
         return Collections.unmodifiableMap(playersResult);
     }
 

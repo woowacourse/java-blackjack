@@ -1,4 +1,6 @@
+
 import domain.BlackJackGame;
+import domain.Card;
 import domain.Deck;
 import domain.Player;
 import domain.Name;
@@ -41,8 +43,13 @@ public class Application {
     }
 
     private static void printPlayersCards(BlackJackGame blackJackGame, List<Name> names) {
-        names.forEach(name -> OutputView.printPlayerCards(name, blackJackGame.getCardsFromName(name.name())));
+        names.forEach(name -> printPlayerCards(name, blackJackGame));
         OutputView.printNewLine();
+    }
+
+    private static void printPlayerCards(Name name, BlackJackGame blackJackGame) {
+        List<Card> cards = blackJackGame.getCardsFromName(name);
+        OutputView.printPlayerCards(name, cards);
     }
 
     private static void playMainGame(List<Name> playerNames, BlackJackGame blackJackGame, Deck deck) {
@@ -54,7 +61,7 @@ public class Application {
     private static void askForGamer(Name playerName, BlackJackGame blackJackGame, Deck deck) {
         boolean isFirstTurn = true;
         String answer = "y";
-        while (!blackJackGame.isBustFromName(playerName.name()) && answer.equals("y")) {
+        while (!blackJackGame.isBustFromName(playerName) && answer.equals("y")) {
             answer = InputView.readAnswer(CONSOLE_READER, playerName.name());
             drawIfAnswerIsYes(answer, playerName, blackJackGame, deck);
             printPlayerStatus(answer, playerName, blackJackGame, isFirstTurn);
@@ -64,21 +71,20 @@ public class Application {
 
     private static void drawIfAnswerIsYes(String answer, Name playerName, BlackJackGame blackJackGame, Deck deck) {
         if (answer.equals("y")) {
-            blackJackGame.drawCardFromName(playerName.name(), deck);
+            blackJackGame.drawCardFromName(playerName, deck);
         }
     }
 
     private static void printPlayerStatus(String answer, Name playerName, BlackJackGame blackJackGame, boolean isFirstTurn) {
         if (isFirstTurn || answer.equals("y")) {
-            OutputView.printPlayerCards(playerName,blackJackGame.getCardsFromName(playerName.name()));
+            List<Card> cards = blackJackGame.getCardsFromName(playerName);
+            OutputView.printPlayerCards(playerName, cards);
         }
     }
 
     private static void showFinalStatus(List<Name> names, BlackJackGame blackJackGame) {
         OutputView.printDealerStatus(blackJackGame.getDealerCards(),blackJackGame.getDealerScore());
-        names.forEach(name -> OutputView.printPlayerStatus(name
-                ,blackJackGame.getCardsFromName(name.name()),
-                blackJackGame.getScoreFromName(name.name())));
+        names.forEach(name -> OutputView.printPlayerStatus(name,blackJackGame.getCardsFromName(name), blackJackGame.getScoreFromName(name)));
         OutputView.printGameResult(blackJackGame.getGameResult());
     }
 }

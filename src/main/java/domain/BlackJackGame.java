@@ -33,19 +33,19 @@ public class BlackJackGame {
         return dealer.getCards();
     }
 
-    public List<Card> getCardsFromName(String name) {
+    public List<Card> getCardsFromName(Name name) {
         return searchFromName(name).getCards();
     }
 
-    public void drawCardFromName(String name, Deck deck) {
+    public void drawCardFromName(Name name, Deck deck) {
         searchFromName(name).hit(deck);
     }
 
-    public boolean isBustFromName(String name) {
+    public boolean isBustFromName(Name name) {
         return searchFromName(name).isBust();
     }
 
-    private Gamer searchFromName(String name) {
+    private Gamer searchFromName(Name name) {
         return players.stream().filter(player -> player.isName(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 참여자 입니다."));
@@ -65,7 +65,7 @@ public class BlackJackGame {
         return dealer.getTotalScore();
     }
 
-    public int getScoreFromName(String name) {
+    public int getScoreFromName(Name name) {
         return searchFromName(name).getTotalScore();
     }
 }

@@ -72,11 +72,11 @@ public class OutputView {
     public static void printGameResult(BlackJackResult gameResult) {
         System.out.println("\n## 최종 승패");
         Map<GamerResult, Integer> dealerGameResult = gameResult.getDealerResult();
-        Map<String, GamerResult> playersGameResult = gameResult.getPlayersResult();
+        Map<Name, GamerResult> playersGameResult = gameResult.getPlayersResult();
 
         System.out.println("딜러: " + buildDealerResult(dealerGameResult));
         playersGameResult.forEach(
-                (name, result) -> System.out.println("%s: %s".formatted(name, result.getResult())));
+                (name, result) -> System.out.println("%s: %s".formatted(name.name(), result.getResult())));
     }
 
     private static String buildDealerResult(Map<GamerResult, Integer> dealerGameResult) {

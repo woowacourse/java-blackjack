@@ -21,12 +21,12 @@ public abstract class Gamer {
     }
     abstract public int hit(Deck deck);
 
-    public boolean isName(String comparedName) {
-        return name.name().equals(comparedName);
+    public boolean isName(Name comparedName) {
+        return name.equals(comparedName);
     }
 
-    public String getName() {
-        return name.name();
+    public Name getName() {
+        return name;
     }
 
     public int getTotalScore() {

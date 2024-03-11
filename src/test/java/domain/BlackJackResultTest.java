@@ -10,22 +10,24 @@ class BlackJackResultTest {
     @Test
     @DisplayName("Player들의 승리 결과를 반환한다.")
     void getPlayersResult() {
+        Name win = new Name("win");
+        Name lose = new Name("lose");
         BlackJackResult blackJackResult = new BlackJackResult(20, Map.of(
-                "test", 10,
-                "test2", 21));
-        Map<String, GamerResult> playersResult = blackJackResult.getPlayersResult();
+                lose, 10,
+                win, 21));
+        Map<Name, GamerResult> playersResult = blackJackResult.getPlayersResult();
         Assertions.assertThat(playersResult)
                 .isEqualTo(Map.of(
-                        "test", GamerResult.LOSE,
-                        "test2", GamerResult.WIN));
+                        win, GamerResult.WIN,
+                        lose, GamerResult.LOSE));
     }
 
     @Test
     @DisplayName("Dealer의 승리 결과를 반환한다.")
     void getDealerResult() {
         BlackJackResult blackJackResult = new BlackJackResult(20, Map.of(
-                "test", 10,
-                "test2", 21));
+                new Name("test"), 10,
+                new Name("test2"), 21));
         Map<GamerResult, Integer> dealerResult = blackJackResult.getDealerResult();
         Assertions.assertThat(dealerResult)
                 .isEqualTo(Map.of(
