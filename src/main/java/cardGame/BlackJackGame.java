@@ -4,7 +4,7 @@ import card.Card;
 import card.CardDeck;
 import controller.dto.WinningResult;
 import dealer.Dealer;
-import dealer.dto.DealerGameResult;
+import dealer.dto.DealerWinningResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -56,7 +56,7 @@ public class BlackJackGame {
                 .collect(Collectors.toList());
     }
 
-    public DealerGameResult getDealerResult(Players players) {
+    public DealerWinningResult getDealerResult(Players players) {
         return dealer.getWinningResult(players);
     }
 }

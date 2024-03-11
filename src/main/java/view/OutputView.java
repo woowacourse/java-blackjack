@@ -3,7 +3,7 @@ package view;
 import card.Card;
 import card.Cards;
 import controller.dto.WinningResult;
-import dealer.dto.DealerGameResult;
+import dealer.dto.DealerWinningResult;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,19 +41,19 @@ public class OutputView {
         System.out.println(makeCardsStatus(player.getName(), player.getCards()));
     }
 
-    public void printExtraCardInfo(CardsStatus result) {
+    public void printExtraCardInfo(CardsStatus cardsStatus) {
         System.out.println();
-        for (int i = 2; i <= result.cards().countCard(); i++) {
-            System.out.println(result.name().getValue() + "가 " + MIN_DEALER_SCORE + "이하라 한장의 카드를 더 받았습니다.\n");
+        for (int i = 2; i <= cardsStatus.cards().countCard(); i++) {
+            System.out.println(cardsStatus.name().getValue() + "가 " + MIN_DEALER_SCORE + "이하라 한장의 카드를 더 받았습니다.\n");
         }
     }
 
-    public void printPlayStatus(List<CardsStatus> playResult) {
-        Collections.reverse(playResult);
+    public void printPlayStatus(List<CardsStatus> cardsStatuses) {
+        Collections.reverse(cardsStatuses);
 
-        for (CardsStatus singlePlayerResult : playResult) {
-            System.out.println(makeCardsStatus(singlePlayerResult.name(), singlePlayerResult.cards()) + " - 결과: "
-                    + singlePlayerResult.getCardsScore());
+        for (CardsStatus cardsStatus : cardsStatuses) {
+            System.out.println(makeCardsStatus(cardsStatus.name(), cardsStatus.cards()) + " - 결과: "
+                    + cardsStatus.getCardsScore());
         }
     }
 
@@ -65,11 +65,12 @@ public class OutputView {
         }
     }
 
-    public void printDealerResult(DealerGameResult dealerGameResult) {
+    public void printDealerResult(DealerWinningResult dealerWinningResult) {
         System.out.println("\n## 최종 승패");
         System.out.println(
-                DEALER_NAME_SYMBOL + dealerGameResult.winningCount() + GameResultSymbol.WINNING_SYMBOL.symbolName + " "
-                        + dealerGameResult.failCount()
+                DEALER_NAME_SYMBOL + dealerWinningResult.winningCount() + GameResultSymbol.WINNING_SYMBOL.symbolName
+                        + " "
+                        + dealerWinningResult.failCount()
                         + GameResultSymbol.LOSE_SYMBOL.symbolName);
     }
 

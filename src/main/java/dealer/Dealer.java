@@ -2,7 +2,7 @@ package dealer;
 
 import card.CardDeck;
 import cardGame.GameParticipantCards;
-import dealer.dto.DealerGameResult;
+import dealer.dto.DealerWinningResult;
 import player.Players;
 
 public class Dealer extends GameParticipantCards {
@@ -23,11 +23,11 @@ public class Dealer extends GameParticipantCards {
         return getCardScore() <= MIN_DEALER_SCORE;
     }
 
-    public DealerGameResult getWinningResult(Players players) {
+    public DealerWinningResult getWinningResult(Players players) {
         int winningCount = (int) players.getPlayers().stream()
                 .filter(player -> !player.isWinner(getCardScore()))
                 .count();
 
-        return new DealerGameResult(winningCount, players.getSize() - winningCount);
+        return new DealerWinningResult(winningCount, players.getSize() - winningCount);
     }
 }
