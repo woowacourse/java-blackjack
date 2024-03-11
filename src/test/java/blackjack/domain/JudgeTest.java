@@ -23,11 +23,10 @@ class JudgeTest {
 
     private Deck deck;
     private Dealer dealer;
-    private List<String> playerNames = List.of("choco");
+    private final List<String> playerNames = List.of("choco");
     private Players players;
     private Player choco;
     ResultStatus resultStatus;
-    private int bustDrawCount = 10;
 
     @DisplayName("딜러가 버스트된 경우")
     @Nested
@@ -36,7 +35,9 @@ class JudgeTest {
         void setUp() {
             deck = new Deck(shuffleStrategy);
             resultStatus = ResultStatus.init();
+
             deckDrawLoop(6);
+
             dealer = new Dealer(deck);
             bustDealer();
         }
@@ -63,6 +64,7 @@ class JudgeTest {
         void loseWhenPlayerBlackjack() {
             //given
             deckDrawLoop(3);
+
             players = Players.of(playerNames, dealer);
             choco = players.getPlayers().get(0);
             PlayerResult playerResult = new PlayerResult();
@@ -99,7 +101,9 @@ class JudgeTest {
         void setUp() {
             deck = new Deck(shuffleStrategy);
             resultStatus = ResultStatus.init();
+
             deckDrawLoop(12);
+
             dealer = new Dealer(deck);
         }
 
@@ -260,7 +264,7 @@ class JudgeTest {
     }
 
     private void bustPlayerChoco(final Dealer dealer) {
-        IntStream.range(0, bustDrawCount)
+        IntStream.range(0, 10)
                 .forEach(i -> choco.draw(dealer));
     }
 
