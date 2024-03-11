@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static domain.constant.GameOption.BLACKJACK_CONDITION;
+import static domain.BlackJackGame.BLACKJACK_CONDITION;
 
 public class Hand {
     private final List<PlayingCard> playingCards;

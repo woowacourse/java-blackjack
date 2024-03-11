@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackJackGame {
+    public static final int BLACKJACK_CONDITION = 21;
+
     private final Deck deck;
 
     public BlackJackGame(final Deck deck) {
