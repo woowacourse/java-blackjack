@@ -12,17 +12,6 @@ public class BlackJackResult {
         this.resultByParticipant = resultByParticipant;
     }
 
-    public int getDealerWinCount() {
-        long dealerWinCount = resultByParticipant.values().stream()
-                .filter(isWin -> WinStatus.LOSE == isWin)
-                .count();
-        return (int) dealerWinCount;
-    }
-
-    public int getTotalCount() {
-        return resultByParticipant.size();
-    }
-
     public WinStatus getWinStatus(Participant participant) {
         return resultByParticipant.get(participant);
     }
