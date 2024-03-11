@@ -2,11 +2,11 @@ package domain.participant;
 
 import domain.Hands;
 import domain.result.Result;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 public class Players {
 
@@ -34,11 +34,11 @@ public class Players {
     }
 
     public Map<Player, Result> getPlayersResult(final Dealer dealer) {
-        return names.stream()
-                .collect(Collectors.toMap(
-                        player -> player,
-                        player -> player.calculateResult(dealer)
-                ));
+        final Map<Player, Result> result = new LinkedHashMap<>();
+        for (Player name : names) {
+            result.put(name, name.calculateResult(dealer));
+        }
+        return result;
     }
 
     private static List<Player> mapToPlayers(final List<String> names) {
