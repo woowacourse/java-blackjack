@@ -24,9 +24,7 @@ public class BlackJackLauncher {
         proceedPlayersTurn(casino);
         proceedDealerTurn(casino);
         showFinalFaceUpResults(casino);
-        DealerScoreResult dealerScoreResult = casino.calculateDealerResult();
-        List<PlayerScoreResult> playerScoreResults = casino.calculatePlayerResults();
-        OutputView.printScoreResults(dealerScoreResult, playerScoreResults);
+        showFinalMatchResults(casino);
     }
 
     private Casino initCasino() {
@@ -69,5 +67,11 @@ public class BlackJackLauncher {
         List<FaceUpResult> playerFinalFaceUpResults = casino.getPlayerFaceUpResult();
         FaceUpResult dealerFinalFaceUpResult = casino.getDealerFaceUpResult();
         OutputView.printFinalFaceUpResult(dealerFinalFaceUpResult, playerFinalFaceUpResults);
+    }
+
+    private void showFinalMatchResults(Casino casino) {
+        DealerScoreResult dealerScoreResult = casino.calculateDealerResult();
+        List<PlayerScoreResult> playerScoreResults = casino.calculatePlayerResults();
+        OutputView.printScoreResults(dealerScoreResult, playerScoreResults);
     }
 }
