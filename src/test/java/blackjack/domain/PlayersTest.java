@@ -2,16 +2,14 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.Cards.Card;
-import blackjack.domain.Cards.Deck;
-import blackjack.domain.Cards.Rank;
-import blackjack.domain.Cards.Shape;
+import blackjack.domain.cards.Card;
+import blackjack.domain.cards.Rank;
+import blackjack.domain.cards.Shape;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
 import java.util.List;
 import java.util.Map;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,16 +25,12 @@ class PlayersTest {
         siso = new Player(new Name("시소"));
         takan = new Player(new Name("타칸"));
 
-        Deck sisoDeck = new Deck();
-        sisoDeck.addCard(new Card(Shape.HEART, Rank.JACK));
-        sisoDeck.addCard(new Card(Shape.HEART, Rank.SIX)); // 16
+        siso.receiveCard(new Card(Shape.HEART, Rank.JACK));
+        siso.receiveCard(new Card(Shape.HEART, Rank.SIX)); // 16
 
-        Deck takanDeck = new Deck();
-        takanDeck.addCard(new Card(Shape.SPADE, Rank.ACE));
-        takanDeck.addCard(new Card(Shape.SPADE, Rank.JACK)); // 13
+        takan.receiveCard(new Card(Shape.SPADE, Rank.ACE));
+        takan.receiveCard(new Card(Shape.SPADE, Rank.JACK)); // 13
 
-        siso.receiveDeck(sisoDeck);
-        takan.receiveDeck(takanDeck);
 
         List<Player> playerList = List.of(siso, takan);
         players = new Players(playerList);
@@ -64,31 +58,18 @@ class PlayersTest {
     void receiveOnePlayerCardTest() {
         players.receiveOnePlayerCard(new Card(Shape.DIAMOND, Rank.TWO), 0);
 
-        Assertions.assertThat(siso.getHand().size()).isEqualTo(3);
-    }
-
-    @Test
-    @DisplayName("한 플레이어는 하나의 덱를 받는다.")
-    void receiveOnePlayerDeckTest() {
-        Deck deck = new Deck();
-
-        deck.addCard(new Card(Shape.CLOVER, Rank.TWO));
-        deck.addCard(new Card(Shape.CLOVER, Rank.FIVE));
-
-        players.receiveOnePlayerDeck(deck, 0);
-
-        Assertions.assertThat(siso.getHand().size()).isEqualTo(4);
+        assertThat(siso.getHand().size()).isEqualTo(3);
     }
 
     @Test
     @DisplayName("한 플레이어는 기준 점수보다 낮은 점수다.")
-    void isOnePlayerNotOverTest() {
-        Assertions.assertThat(siso.isNotOver(17)).isTrue();
+    void isOnePlayerNotO0verTest() {
+        assertThat(players.isOnePlayerNotOver(0)).isTrue();
     }
 
     @Test
     @DisplayName("플레이어들의 사이즈를 잘 센다.")
     void sizeTest() {
-        Assertions.assertThat(players.size()).isEqualTo(2);
+        assertThat(players.size()).isEqualTo(2);
     }
 }

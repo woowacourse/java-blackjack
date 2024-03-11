@@ -1,8 +1,7 @@
 package blackjack.domain.participants;
 
 
-import blackjack.domain.Cards.Card;
-import blackjack.domain.Cards.Deck;
+import blackjack.domain.cards.Card;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,10 +35,6 @@ public class Players {
         players.get(playerIndex).receiveCard(card);
     }
 
-    public void receiveOnePlayerDeck(Deck deck, int playerIndex) {
-        players.get(playerIndex).receiveDeck(deck);
-    }
-
     public boolean isOnePlayerNotOver(int playerIndex) {
         return players.get(playerIndex).isNotOver(MAX_SCORE);
     }
@@ -56,7 +51,7 @@ public class Players {
         return players.get(playerIndex);
     }
 
-    public List<Player> getPlayers() {
+    public List<Player> getPlayersValue() {
         return players;
     }
 }
