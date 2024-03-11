@@ -28,4 +28,8 @@ public class Player extends Participant {
         }
         return PlayerState.RUNNING;
     }
+
+    public Double getBat() {
+        return batting.getBat();
+    }
 }

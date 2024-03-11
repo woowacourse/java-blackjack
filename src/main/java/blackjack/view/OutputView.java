@@ -13,8 +13,8 @@ public class OutputView {
             + ACCEPT_DRAW_MESSAGE + ", 아니오는 " + REJECT_DRAW_MESSAGE + ")";
 
     private static final String FINAL_HANDS_AND_SCORE_FORMAT = "%s - 결과: %d";
-    private static final String FINAL_RESULT_FORMAT = "%s: %s" + System.lineSeparator();
-    private static final String FINAL_RESULT_MESSAGE = System.lineSeparator() + "## 최종 승패";
+    private static final String FINAL_RESULT_FORMAT = "%s: %.0f" + System.lineSeparator();
+    private static final String FINAL_RESULT_MESSAGE = System.lineSeparator() + "## 최종 수익";
     private static final int DEALER_DRAW_THRESHOLD = 16;
 
     private OutputView() {
@@ -66,8 +66,8 @@ public class OutputView {
 
     public static void printGameResult(String dealerName, GameResult gameResult) {
         System.out.println(FINAL_RESULT_MESSAGE);
-        printDealerGameResult(dealerName, gameResult);
-        printPlayerGameResult(gameResult.getGameResult());
+        printDealerProfitResult(dealerName, gameResult);
+        printPlayerProfitResult(gameResult.getGameResult());
     }
 
     private static String resolvePlayerNamesMessage(List<Player> players) {
@@ -89,27 +89,19 @@ public class OutputView {
                 , participantHandsScore);
     }
 
-    private static void printDealerGameResult(String dealerName, GameResult gameResult) {
-        String dealerResultMessage = resolveDealerResultMessage(gameResult, Result.WIN)
-                + resolveDealerResultMessage(gameResult, Result.LOSE)
-                + resolveDealerResultMessage(gameResult, Result.DRAW);
+    private static void printDealerProfitResult(String dealerName, GameResult gameResult) {
+        Double dealerProfit = -1 * gameResult.getSumOfProfit();
 
-        System.out.printf(FINAL_RESULT_FORMAT, dealerName, dealerResultMessage);
+        System.out.printf(FINAL_RESULT_FORMAT, dealerName, dealerProfit);
     }
 
-    private static void printPlayerGameResult(Map<Player, Result> gameResult) {
-        for (Player player : gameResult.keySet()) {
+    private static void printPlayerProfitResult(Map<Player, Profit> gameResult) {
+        for (Map.Entry<Player, Profit> playerAndBatting : gameResult.entrySet()) {
+            Player player = playerAndBatting.getKey();
+            Profit profit = playerAndBatting.getValue();
             System.out.printf(FINAL_RESULT_FORMAT, player.getName()
-                    , gameResult.get(player).getResult());
+                    , profit.getProfit());
         }
-    }
-
-    private static String resolveDealerResultMessage(GameResult gameResult, Result result) {
-        long cnt = gameResult.getTargetResultCount(Result.reverseResult(result));
-        if (cnt == 0) {
-            return "";
-        }
-        return cnt + result.getResult() + " ";
     }
 
     private static String resolveParticipantHandsMessage(String participantName, List<Card> participantHands) {
