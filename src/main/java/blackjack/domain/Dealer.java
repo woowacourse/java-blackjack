@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.List;
+
 // TODO 기능을 위한 has a 관계로 바라보기
 public class Dealer extends Participant {
 
@@ -18,8 +20,12 @@ public class Dealer extends Participant {
         return false;
     }
 
-    // TODO 예기치 못한 상황(카드가 없는 상황)에 대한 방어가 필요
     public String getFirstCardName() {
+        List<Card> cards = hands.getHands();
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("아직 지니고 있는 카드가 없습니다");
+        }
+
         return hands.getHands()
                 .get(0)
                 .getCardName();

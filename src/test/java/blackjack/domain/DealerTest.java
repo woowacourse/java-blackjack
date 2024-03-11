@@ -4,8 +4,18 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DealerTest {
+
+    @DisplayName("딜러가 아직 가진 패가 없다면 첫장 공개를 요청할 수 없다")
+    @Test
+    void should_ThrowIllegalStateException_When_RequestShowCards_But_DealerHasNoCards() {
+        Dealer dealer = new Dealer();
+        assertThatThrownBy(dealer::getFirstCardName)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("아직 지니고 있는 카드가 없습니다");
+    }
 
     @DisplayName("딜러는 자신의 패가 16이하이면 한장을 더 받는다")
     @Test
