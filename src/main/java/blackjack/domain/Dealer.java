@@ -7,12 +7,13 @@ import java.util.ArrayList;
 public class Dealer implements GameParticipant {
 
     private static final int MAX_RECEIVE_SCORE = 17;
+    private static final String DEALER_NAME = "딜러";
 
     private final Name name;
     private Hands hands;
 
-    public Dealer(Name name) {
-        this.name = name;
+    public Dealer() {
+        this.name = new Name(DEALER_NAME);
     }
 
     @Override

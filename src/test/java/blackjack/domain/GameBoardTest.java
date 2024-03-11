@@ -40,7 +40,7 @@ public class GameBoardTest {
         List<Player> playerList = List.of(siso, takan);
         players = new Players(playerList);
 
-        dealer = new Dealer(new Name("딜러"));
+        dealer = new Dealer();
         gameBoard = new GameBoard(dealer, players);
 
     }

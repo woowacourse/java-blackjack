@@ -25,7 +25,7 @@ class ParticipantsTest {
     void beforeEach() {
         siso = new Player(new Name("시소"));
         tacan = new Player(new Name("타칸"));
-        dealer = new Dealer(new Name("딜러"));
+        dealer = new Dealer();
         List<Player> playerList = List.of(siso, tacan);
         players = new Players(playerList);
         participants = new Participants(dealer, players);

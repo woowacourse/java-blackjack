@@ -1,7 +1,5 @@
 package blackjack.controller;
 
-import static blackjack.view.InputView.DEALER_NAME;
-
 import blackjack.domain.GameBoard;
 import blackjack.domain.Dealer;
 import blackjack.domain.participants.GameParticipant;
@@ -22,7 +20,7 @@ public class BlackjackGame {
 
     public void run() {
         Players players = createPlayers();
-        Dealer dealer = new Dealer(new Name(DEALER_NAME));
+        Dealer dealer = new Dealer();
         GameBoard gameBoard = new GameBoard(dealer, players);
         play(gameBoard);
     }
