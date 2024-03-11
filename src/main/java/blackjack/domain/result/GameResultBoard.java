@@ -1,7 +1,7 @@
 package blackjack.domain.result;
 
-import blackjack.domain.player.Score;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Outcome;
 import blackjack.domain.player.Player;
 import java.util.HashMap;
 import java.util.List;
@@ -11,11 +11,14 @@ public class GameResultBoard {
     private final Map<String, GameResult> resultBoard = new HashMap<>();
 
     public GameResultBoard(Dealer dealer, List<Player> players) {
-        Score dealerScore = dealer.getScore();
+        Outcome dealerOutcome = dealer.calculateOutcome();
         for (Player player : players) {
             String playerName = player.getName();
-            Score playerScore = player.getScore();
-            GameResult gameResult = GameResult.calculatePlayerResult(playerScore, dealerScore);
+            Outcome playerOutcome = player.calculateOutcome();
+            GameResult gameResult = playerOutcome.compete(dealerOutcome);
+            if (gameResult == GameResult.DRAW && playerOutcome.isBusted()) {
+                gameResult = GameResult.LOSE;
+            }
             resultBoard.put(playerName, gameResult);
         }
     }

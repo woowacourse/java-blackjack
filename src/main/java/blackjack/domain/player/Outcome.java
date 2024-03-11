@@ -106,4 +106,12 @@ public class Outcome {
         }
         return GameResult.DRAW;
     }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getCardsSize() {
+        return cardsSize;
+    }
 }

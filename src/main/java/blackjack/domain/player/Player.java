@@ -18,27 +18,28 @@ public class Player {
         playerCards.append(card);
     }
 
-    public boolean isBusted() {
-        return playerCards.isBusted();
+    public Outcome calculateOutcome() {
+        return playerCards.calculateOutcome();
     }
 
     public List<Card> getCards() {
         return playerCards.getCards();
     }
 
-    public Score getScore() {
-        return playerCards.calculateScore();
+    public boolean isDrawAble() {
+        Outcome outcome = calculateOutcome();
+        if (outcome.isBusted() || outcome.isMaxScore()) {
+            return false;
+        }
+        return true;
     }
 
-    public int getScoreValue() {
-        return getScore().value();
+    public int getScore() {
+        Outcome outcome = calculateOutcome();
+        return outcome.getScore();
     }
 
     public String getName() {
         return playerName.name();
-    }
-
-    public int getTotalCardsCount() {
-        return playerCards.size();
     }
 }

@@ -19,27 +19,8 @@ public class PlayerCards {
         cards.add(card);
     }
 
-    public Score calculateScore() {
-        int scoreValue = cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
-
-        Score score = new Score(scoreValue);
-        int currentAceAmount = getAceCount();
-
-        if (currentAceAmount > 0 && score.isBusted()) {
-            return score.convertToSmallAce(currentAceAmount);
-        }
-        return score;
-    }
-
-    public boolean isBusted() {
-        Score score = calculateScore();
-        return score.isBusted();
-    }
-
-    private int getAceCount() {
-        return (int) cards.stream().filter(Card::isAce).count();
+    public Outcome calculateOutcome() {
+        return new Outcome(cards);
     }
 
     public List<Card> getCards() {
