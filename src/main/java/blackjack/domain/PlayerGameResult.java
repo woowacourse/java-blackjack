@@ -13,10 +13,6 @@ public enum PlayerGameResult {
         this.ratio = ratio;
     }
 
-    public double getRatio() {
-        return ratio;
-    }
-
     public int getProfit(int bettingMoney) {
         return (int) (bettingMoney * ratio);
     }
