@@ -25,9 +25,9 @@ public class BlackJackGame {
         Dealer dealer = new Dealer();
 
         Players players = createPlayers();
-        initGame(deck, dealer, players);
-        playersDrawMore(deck, players);
-        dealerDrawMore(deck, dealer);
+        initializeGame(deck, dealer, players);
+        proceedPlayersTurn(deck, players);
+        proceedDealerTurn(deck, dealer);
 
         showCardsWithScore(dealer, players);
         showMatchResult(dealer, players);
@@ -41,14 +41,14 @@ public class BlackJackGame {
         return players;
     }
 
-    private void initGame(Deck deck, Dealer dealer, Players players) {
-        players.initDrawCards(deck);
-        dealer.initDrawCards(deck);
+    private void initializeGame(Deck deck, Dealer dealer, Players players) {
+        players.doInitialDraw(deck);
+        dealer.doInitialDraw(deck);
         outputView.printInitializeBlackJack(players.getNames());
-        showInitCard(dealer, players);
+        showInitialCard(dealer, players);
     }
 
-    private void showInitCard(Dealer dealer, Players players) {
+    private void showInitialCard(Dealer dealer, Players players) {
         outputView.printDealerFirstCard(dealer.getFirstCard());
 
         for (Player player : players.getPlayers()) {
@@ -57,14 +57,14 @@ public class BlackJackGame {
         outputView.printNewLine();
     }
 
-    private void playersDrawMore(Deck deck, Players players) {
+    private void proceedPlayersTurn(Deck deck, Players players) {
         for (Player player : players.getPlayers()) {
-            playerDrawMore(deck, player);
+            proceedPlayerTurn(deck, player);
         }
         outputView.printNewLine();
     }
 
-    private void playerDrawMore(Deck deck, Player player) {
+    private void proceedPlayerTurn(Deck deck, Player player) {
         Command command = askPlayerToDrawMore(player);
         if (command == Command.NO) {
             return;
@@ -73,7 +73,7 @@ public class BlackJackGame {
         outputView.printPlayerCards(player.getName(), player.getCards());
 
         if (player.hasDrawableScore()) {
-            playerDrawMore(deck, player);
+            proceedPlayerTurn(deck, player);
         }
     }
 
@@ -83,7 +83,7 @@ public class BlackJackGame {
         return Command.from(input);
     }
 
-    private void dealerDrawMore(Deck deck, Dealer dealer) {
+    private void proceedDealerTurn(Deck deck, Dealer dealer) {
         while (dealer.hasDrawableScore()) {
             dealer.drawCard(deck);
             outputView.printDealerDrawCard();

@@ -44,8 +44,8 @@ public class Players {
         }
     }
 
-    public void initDrawCards(Deck deck) {
-        players.forEach(player -> player.initDrawCards(deck));
+    public void doInitialDraw(Deck deck) {
+        players.forEach(player -> player.doInitialDraw(deck));
     }
 
     public List<String> getNames() {

@@ -23,7 +23,7 @@ public class Player {
         hand.addCard(deck.draw());
     }
 
-    public void initDrawCards(Deck deck) {
+    public void doInitialDraw(Deck deck) {
         drawCard(deck);
         drawCard(deck);
     }
