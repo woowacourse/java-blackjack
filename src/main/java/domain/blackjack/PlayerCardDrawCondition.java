@@ -3,14 +3,14 @@ package domain.blackjack;
 import domain.card.CardDrawCondition;
 
 public final class PlayerCardDrawCondition implements CardDrawCondition {
-    private final Gamer player;
+    private final BlackJackGameMachine player;
 
-    public PlayerCardDrawCondition(Gamer player) {
+    public PlayerCardDrawCondition(BlackJackGameMachine player) {
         this.player = player;
     }
 
     @Override
     public boolean canDraw() {
-        return !player.isDead();
+        return !player.isBust();
     }
 }

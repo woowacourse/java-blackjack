@@ -26,7 +26,7 @@ class PlayerCardDrawConditionTest {
     @MethodSource("canDrawParameters")
     @DisplayName("플레이어의 드로우 여부가 제대로 판단되는지 검증")
     void canDraw(HoldingCards holdingCards, boolean expected) {
-        Gamer player = new Gamer("플레이어", holdingCards);
+        BlackJackGameMachine player = new BlackJackGameMachine(holdingCards);
         Assertions.assertThat(new PlayerCardDrawCondition(player).canDraw())
                 .isEqualTo(expected);
     }

@@ -13,6 +13,7 @@ import static domain.card.FirstCardSelectStrategy.FIRST_CARD_SELECT_STRATEGY;
 
 import domain.card.Card;
 import domain.card.Deck;
+import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +22,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class GamerTest {
+class BlackJackGameMachineTest {
     public static Stream<Arguments> isDeadParameters() {
         return Stream.of(
                 Arguments.of(TWO_HEART, true), Arguments.of(ACE_HEART, false)
@@ -38,22 +39,30 @@ class GamerTest {
     }
 
     @Test
-    @DisplayName("게임 참가자가 카드를 뽑았을 때 점수가 올바르게 계산되는지 검증")
+    @DisplayName("카드를 뽑았을 때 소유중인 카드에 제대로 반영되는지 검증")
     void draw() {
         BlackJackGameMachine blackJackGameMachine = new BlackJackGameMachine(HoldingCards.of());
         Deck deck = Deck.of(JACK_HEART, EIGHT_HEART);
         blackJackGameMachine.draw(deck, FIRST_CARD_SELECT_STRATEGY, new PlayerCardDrawCondition(blackJackGameMachine));
 
-        SummationCardPoint actual = blackJackGameMachine.getSummationCardPoint();
-        SummationCardPoint expected = new SummationCardPoint(10);
+        List<Card> actual = blackJackGameMachine.getRawHoldingCards();
 
         Assertions.assertThat(actual)
-                .isEqualTo(expected);
+                .containsExactly(JACK_HEART);
+    }
+
+    @Test
+    @DisplayName("드로우 조건에 따라 드로우 가능 여부가 결정되는지 검증")
+    void validateDrawLimit() {
+        BlackJackGameMachine blackJackGameMachine = new BlackJackGameMachine(HoldingCards.of());
+        Deck deck = Deck.of(TWO_HEART);
+        DrawResult drawResult = blackJackGameMachine.draw(deck, FIRST_CARD_SELECT_STRATEGY, () -> true);
+        Assertions.assertThat(drawResult.isSuccess()).isTrue();
     }
 
     @ParameterizedTest
     @MethodSource("isDeadParameters")
-    @DisplayName("게임 참가자의 점수가 21이 넘으면 죽었다고 판단하는지 검증")
+    @DisplayName("점수가 21이 넘으면 죽었다고 판단하는지 검증")
     void isBust(Card additionalCard, boolean expected) {
         BlackJackGameMachine blackJackGameMachine = new BlackJackGameMachine(
                 HoldingCards.of(JACK_HEART, QUEEN_HEART, additionalCard));
@@ -63,7 +72,7 @@ class GamerTest {
 
     @ParameterizedTest
     @MethodSource("getSummationCardPointParameters")
-    @DisplayName("게임 참가자의 점수가 잘 계산되는지 검증")
+    @DisplayName("점수가 잘 계산되는지 검증")
     void getSummationCardPoint(BlackJackGameMachine blackJackGameMachine, SummationCardPoint expected) {
         SummationCardPoint summationCardPoint = blackJackGameMachine.getSummationCardPoint();
         Assertions.assertThat(summationCardPoint)

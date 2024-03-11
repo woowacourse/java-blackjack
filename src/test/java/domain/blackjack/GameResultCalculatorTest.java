@@ -21,22 +21,31 @@ class GameResultCalculatorTest {
 
     public static Stream<Arguments> getGameResultParameters() {
         return Stream.of(
-                Arguments.of(new Gamer("게이머1", ONLY_SEVEN_HEART), new Gamer("게이머2", ONLY_SIX_HEART), WIN),
-                Arguments.of(new Gamer("게이머1", ONLY_SIX_HEART), new Gamer("게이머2", ONLY_SEVEN_HEART), LOSE),
-                Arguments.of(new Gamer("게이머1", ONLY_SEVEN_HEART), new Gamer("게이머2", ONLY_SEVEN_HEART), TIE),
-                Arguments.of(new Gamer("게이머1", DEAD_CARDS), new Gamer("게이머2", ONLY_SEVEN_HEART), LOSE),
-                Arguments.of(new Gamer("게이머1", ONLY_SEVEN_HEART), new Gamer("게이머2", DEAD_CARDS), WIN),
-                Arguments.of(new Gamer("게이머1", DEAD_CARDS), new Gamer("게이머2", DEAD_CARDS), TIE),
-                Arguments.of(new Gamer("게이머1", WIN_CARDS_WITH_ACE), new Gamer("게이머2", TWO_SIX_CARDS), WIN),
-                Arguments.of(new Gamer("게이머1", WIN_CARDS_WITH_ACE), new Gamer("게이머2", WIN_CARDS_WITHOUT_ACE), TIE)
+                Arguments.of(new BlackJackGameMachine(ONLY_SEVEN_HEART),
+                        new BlackJackGameMachine(ONLY_SIX_HEART), WIN),
+                Arguments.of(new BlackJackGameMachine(ONLY_SIX_HEART),
+                        new BlackJackGameMachine(ONLY_SEVEN_HEART), LOSE),
+                Arguments.of(new BlackJackGameMachine(ONLY_SEVEN_HEART),
+                        new BlackJackGameMachine(ONLY_SEVEN_HEART), TIE),
+                Arguments.of(new BlackJackGameMachine(DEAD_CARDS),
+                        new BlackJackGameMachine(ONLY_SEVEN_HEART), LOSE),
+                Arguments.of(new BlackJackGameMachine(ONLY_SEVEN_HEART),
+                        new BlackJackGameMachine(DEAD_CARDS), WIN),
+                Arguments.of(new BlackJackGameMachine(DEAD_CARDS), new BlackJackGameMachine(DEAD_CARDS),
+                        TIE),
+                Arguments.of(new BlackJackGameMachine(WIN_CARDS_WITH_ACE),
+                        new BlackJackGameMachine(TWO_SIX_CARDS), WIN),
+                Arguments.of(new BlackJackGameMachine(WIN_CARDS_WITH_ACE),
+                        new BlackJackGameMachine(WIN_CARDS_WITHOUT_ACE), TIE)
         );
     }
 
     @ParameterizedTest
     @MethodSource("getGameResultParameters")
     @DisplayName("승부가 잘 결정되는지 검증")
-    void calculate(Gamer gamer1, Gamer gamer2, GameResult expected) {
-        Assertions.assertThat(GameResultCalculator.calculate(gamer1, gamer2))
+    void calculate(BlackJackGameMachine blackJackGameMachine1, BlackJackGameMachine blackJackGameMachine2,
+                   GameResult expected) {
+        Assertions.assertThat(GameResultCalculator.calculate(blackJackGameMachine1, blackJackGameMachine2))
                 .isEqualTo(expected);
     }
 }

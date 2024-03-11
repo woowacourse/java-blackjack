@@ -28,8 +28,8 @@ class DealerCardDrawConditionTest {
     @MethodSource("canDrawParameters")
     @DisplayName("딜러의 드로우 여부가 제대로 판단되는지 검증")
     void canDraw(HoldingCards holdingCards, boolean expected) {
-        Gamer dealer = new Gamer("딜러", holdingCards);
-        Assertions.assertThat(new DealerCardDrawCondition(dealer).canDraw())
+        BlackJackGameMachine dealerMachine = new BlackJackGameMachine(holdingCards);
+        Assertions.assertThat(new DealerCardDrawCondition(dealerMachine).canDraw())
                 .isEqualTo(expected);
     }
 }

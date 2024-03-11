@@ -3,10 +3,10 @@ package domain.blackjack;
 import domain.card.CardDrawCondition;
 
 public final class DealerCardDrawCondition implements CardDrawCondition {
-    private final Gamer dealer;
+    private final BlackJackGameMachine blackJackGameMachine;
 
-    public DealerCardDrawCondition(Gamer dealer) {
-        this.dealer = dealer;
+    public DealerCardDrawCondition(BlackJackGameMachine blackJackGameMachine) {
+        this.blackJackGameMachine = blackJackGameMachine;
     }
 
     @Override
@@ -14,7 +14,7 @@ public final class DealerCardDrawCondition implements CardDrawCondition {
         final int rawDealerDrawThresholdPoint = 16;
         SummationCardPoint dealerDrawThresholdPoint = new SummationCardPoint(rawDealerDrawThresholdPoint);
 
-        SummationCardPoint summationCardPoint = dealer.getSummationCardPoint();
+        SummationCardPoint summationCardPoint = blackJackGameMachine.getSummationCardPoint();
         return !summationCardPoint.isBiggerThan(dealerDrawThresholdPoint);
     }
 }

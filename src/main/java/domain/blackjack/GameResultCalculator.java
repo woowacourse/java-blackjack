@@ -4,26 +4,28 @@ public class GameResultCalculator {
     /**
      * baseGamer의 otherGamer 에 대한 승부 결과 반환
      *
-     * @param baseGamer  기준 게이머
-     * @param otherGamer 상대 게이머
+     * @param baseBlackJackGameMachine  기준 게이머
+     * @param otherBlackJackGameMachine 상대 게이머
      * @return baseGamer의 otherGamer 에 대한 승부 결과
      */
-    public static GameResult calculate(Gamer baseGamer, Gamer otherGamer) {
-        if (baseGamer.isDead() && otherGamer.isDead()) {
+    public static GameResult calculate(BlackJackGameMachine baseBlackJackGameMachine,
+                                       BlackJackGameMachine otherBlackJackGameMachine) {
+        if (baseBlackJackGameMachine.isBust() && otherBlackJackGameMachine.isBust()) {
             return GameResult.TIE;
         }
-        if (baseGamer.isDead()) {
+        if (baseBlackJackGameMachine.isBust()) {
             return GameResult.LOSE;
         }
-        if (otherGamer.isDead()) {
+        if (otherBlackJackGameMachine.isBust()) {
             return GameResult.WIN;
         }
-        return getGameResultWhenNobodyDead(baseGamer, otherGamer);
+        return getGameResultWhenNobodyDead(baseBlackJackGameMachine, otherBlackJackGameMachine);
     }
 
-    private static GameResult getGameResultWhenNobodyDead(Gamer baseGamer, Gamer otherGamer) {
-        SummationCardPoint baseGamerSummationCardPoint = baseGamer.getSummationCardPoint();
-        SummationCardPoint otherGamerSummationCardPoint = otherGamer.getSummationCardPoint();
+    private static GameResult getGameResultWhenNobodyDead(BlackJackGameMachine baseBlackJackGameMachine,
+                                                          BlackJackGameMachine otherBlackJackGameMachine) {
+        SummationCardPoint baseGamerSummationCardPoint = baseBlackJackGameMachine.getSummationCardPoint();
+        SummationCardPoint otherGamerSummationCardPoint = otherBlackJackGameMachine.getSummationCardPoint();
 
         if (baseGamerSummationCardPoint.isBiggerThan(otherGamerSummationCardPoint)) {
             return GameResult.WIN;

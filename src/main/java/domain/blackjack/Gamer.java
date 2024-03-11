@@ -1,69 +1,30 @@
 package domain.blackjack;
 
-import static domain.card.CardName.TEN;
-
 import domain.card.Card;
-import domain.card.CardDrawCondition;
 import domain.card.CardSelectStrategy;
 import domain.card.Deck;
 import java.util.List;
 
-public class Gamer {
-    private final String name;
-    private final HoldingCards holdingCards;
+abstract class Gamer {
+    protected final BlackJackGameMachine blackJackGameMachine;
 
-    public Gamer(String name, HoldingCards holdingCards) {
-        this.name = name;
-        this.holdingCards = holdingCards;
+    public Gamer(BlackJackGameMachine blackJackGameMachine) {
+        this.blackJackGameMachine = blackJackGameMachine;
     }
 
-    public DrawResult draw(Deck deck, CardSelectStrategy cardSelectStrategy, CardDrawCondition cardDrawCondition) {
-        if (isDead() || !cardDrawCondition.canDraw()) {
-            return DrawResult.fail("카드를 더이상 뽑을 수 없습니다.", false);
-        }
-        try {
-            Card draw = deck.draw(cardSelectStrategy);
-            holdingCards.add(draw);
-            return DrawResult.success(!isDead());
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            return DrawResult.fail(e, !isDead());
-        }
+    public abstract DrawResult draw(Deck deck, CardSelectStrategy cardSelectStrategy);
+
+    public final List<Card> getRawHoldingCards() {
+        return blackJackGameMachine.getRawHoldingCards();
     }
 
-    public SummationCardPoint getSummationCardPoint() {
-        SummationCardPoint summationCardPoint = holdingCards.calculateTotalPoint();
-        if (hasAceInHoldingCards()) {
-            int rawPoint = fixPoint(summationCardPoint.summationCardPoint());
-            return new SummationCardPoint(rawPoint);
-        }
-        return summationCardPoint;
+    public final int getRawSummationCardPoint() {
+        return blackJackGameMachine.getRawSummationCardPoint();
     }
 
-    private int fixPoint(int rawPoint) {
-        SummationCardPoint fixPoint = new SummationCardPoint(rawPoint + TEN.getCardNumber());
-        if (!fixPoint.isDeadPoint()) {
-            return fixPoint.summationCardPoint();
-        }
-        return rawPoint;
+    public final BlackJackGameMachine getGamer() {
+        return blackJackGameMachine;
     }
 
-    public String getRawName() {
-        return name;
-    }
-
-    public List<Card> getRawHoldingCards() {
-        return List.copyOf(holdingCards.getHoldingCards());
-    }
-
-    public int getRawSummationCardPoint() {
-        return getSummationCardPoint().summationCardPoint();
-    }
-
-    public boolean isDead() {
-        return getSummationCardPoint().isDeadPoint();
-    }
-
-    boolean hasAceInHoldingCards() {
-        return holdingCards.hasAce();
-    }
+    public abstract String getRawName();
 }
