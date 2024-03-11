@@ -4,7 +4,7 @@ import domain.*;
 import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Player;
-import domain.strategy.ShuffledDecksGenerator;
+import domain.strategy.ShuffledDeckGenerator;
 import view.InputView;
 import view.OutputView;
 
@@ -15,7 +15,7 @@ public class BlackJackController {
     public void play() {
         Players players = readPlayers();
         Dealer dealer = new Dealer();
-        BlackJackGame blackJackGame = new BlackJackGame(Decks.createByStrategy(new ShuffledDecksGenerator()));
+        BlackJackGame blackJackGame = new BlackJackGame(Deck.createByStrategy(new ShuffledDeckGenerator()));
         blackJackGame.prepareCards(dealer,players);
         OutputView.printInitialCardsMessage(dealer, players);
         handOutCard(blackJackGame, dealer, players);

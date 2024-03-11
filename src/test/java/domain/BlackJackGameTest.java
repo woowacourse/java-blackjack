@@ -6,7 +6,7 @@ import domain.card.Symbol;
 import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Player;
-import domain.strategy.SettedDecksGenerator;
+import domain.strategy.SettedDeckGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class BlackJackGameTest {
-    Decks decks;
+    Deck deck;
 
     @BeforeEach
     void init() {
@@ -31,8 +31,8 @@ public class BlackJackGameTest {
         Card card8 = new Card(Symbol.DIAMOND, Rank.THREE);
 
         List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8);
-        SettedDecksGenerator settedDecksGenerator = new SettedDecksGenerator(cards);
-        decks = Decks.createByStrategy(settedDecksGenerator);
+        SettedDeckGenerator settedDecksGenerator = new SettedDeckGenerator(cards);
+        deck = Deck.createByStrategy(settedDecksGenerator);
     }
 
     @DisplayName("딜러와 플레이어에게 카드를 2장씩 준다.")
@@ -45,7 +45,7 @@ public class BlackJackGameTest {
         Player player2 = new Player(name2);
         Dealer dealer = new Dealer();
         Players players = new Players(List.of(player1, player2));
-        BlackJackGame blackJackGame = new BlackJackGame(decks);
+        BlackJackGame blackJackGame = new BlackJackGame(deck);
 
         // when
         blackJackGame.prepareCards(dealer,players);
@@ -64,7 +64,7 @@ public class BlackJackGameTest {
         // given
         Dealer dealer = new Dealer();
 
-        BlackJackGame blackJackGame = new BlackJackGame(decks);
+        BlackJackGame blackJackGame = new BlackJackGame(deck);
 
         blackJackGame.takeTurn(dealer); // 3 다이아몬드
         blackJackGame.takeTurn(dealer); // 9 클로버
@@ -89,7 +89,7 @@ public class BlackJackGameTest {
         Name name = new Name("lini");
         Player player = new Player(name);
 
-        BlackJackGame blackJackGame = new BlackJackGame(decks);
+        BlackJackGame blackJackGame = new BlackJackGame(deck);
 
         blackJackGame.takeTurn(player); // 3 다이아몬드
         blackJackGame.takeTurn(player); // 9 클로버
@@ -114,7 +114,7 @@ public class BlackJackGameTest {
         // given
         Dealer dealer = new Dealer();
 
-        BlackJackGame blackJackGame = new BlackJackGame(decks);
+        BlackJackGame blackJackGame = new BlackJackGame(deck);
 
         blackJackGame.takeTurn(dealer); // 3 다이아몬드
         blackJackGame.takeTurn(dealer); // 9 클로버
@@ -140,7 +140,7 @@ public class BlackJackGameTest {
         Name name = new Name("lini");
         Player player = new Player(name);
 
-        BlackJackGame blackJackGame = new BlackJackGame(decks);
+        BlackJackGame blackJackGame = new BlackJackGame(deck);
 
         blackJackGame.takeTurn(player); // 3 다이아몬드
         blackJackGame.takeTurn(player); // 9 클로버
@@ -172,7 +172,7 @@ public class BlackJackGameTest {
 
         Players players = new Players(List.of(pobi, jason));
 
-        BlackJackGame blackJackGame = new BlackJackGame(decks);
+        BlackJackGame blackJackGame = new BlackJackGame(deck);
         blackJackGame.prepareCards(dealer, players);
 
         blackJackGame.takeTurn(pobi);

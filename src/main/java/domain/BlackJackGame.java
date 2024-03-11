@@ -12,10 +12,10 @@ import java.util.stream.Stream;
 
 public class BlackJackGame {
     private static final int INITIAL_CARD_COUNT = 2;
-    private final Decks decks;
+    private final Deck deck;
 
-    public BlackJackGame(final Decks decks) {
-        this.decks = decks;
+    public BlackJackGame(final Deck deck) {
+        this.deck = deck;
     }
 
     public void prepareCards(final Dealer dealer, final Players players) {
@@ -26,14 +26,14 @@ public class BlackJackGame {
     }
 
     private List<Card> drawTwoCards() {
-        return Stream.generate(decks::draw)
+        return Stream.generate(deck::draw)
                 .limit(INITIAL_CARD_COUNT)
                 .toList();
     }
 
     public boolean takeTurn(final Gamer gamer) {
         if (!gamer.shouldStay()) {
-            gamer.hit(decks.draw());
+            gamer.hit(deck.draw());
             return true;
         }
         return false;
