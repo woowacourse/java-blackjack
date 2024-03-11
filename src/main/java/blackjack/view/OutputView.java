@@ -41,7 +41,7 @@ public class OutputView {
         printPlayerResult(results);
     }
 
-    public static void printBurst() {
+    public static void printBust() {
         System.out.println("버스트 되었습니다.");
     }
 

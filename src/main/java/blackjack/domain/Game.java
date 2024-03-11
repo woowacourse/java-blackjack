@@ -57,15 +57,15 @@ public class Game {
     }
 
     private ResultStatus match(int dealerScore, int playerScore) {
-        boolean isDealerBurst = dealerScore > 21;
-        boolean isPlayerBurst = playerScore > 21;
-        if (isDealerBurst && isPlayerBurst) {
+        boolean isDealerBust = dealerScore > 21;
+        boolean isPlayerBust = playerScore > 21;
+        if (isDealerBust && isPlayerBust) {
             return ResultStatus.DRAW;
         }
-        if (isDealerBurst) {
+        if (isDealerBust) {
             return ResultStatus.WIN;
         }
-        if (isPlayerBurst) {
+        if (isPlayerBust) {
             return ResultStatus.LOSE;
         }
         final int gap = dealerScore - playerScore;
@@ -87,7 +87,6 @@ public class Game {
             dealer.putCard(dealer.draw());
             OutputView.printDealerDraw(dealer);
         }
-//        OutputView.printDealerStand(dealer);
     }
 
     private void playerTurn(List<Player> players, Dealer dealer) {
@@ -100,13 +99,13 @@ public class Game {
         while (player.canHit() && InputView.readHitOrStand(player)) {
             player.putCard(dealer.draw());
             OutputView.printTotalHand(player);
-            ifBurst(player);
+            ifBust(player);
         }
     }
 
-    private void ifBurst(Player player) {
+    private void ifBust(Player player) {
         if (!player.canHit()) {
-            OutputView.printBurst();
+            OutputView.printBust();
         }
     }
 }
