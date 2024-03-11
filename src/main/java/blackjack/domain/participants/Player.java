@@ -37,10 +37,6 @@ public class Player implements GameParticipant{
         return calculateScore() < MAX_SCORE;
     }
 
-    public boolean isNotOver(int boundaryScore) { // TODO delete
-        return hands.calculateScore() < boundaryScore;
-    }
-
     public boolean isWin(int dealerScore) {
         int score = hands.calculateScore();
         if (score > MAX_SCORE) {
