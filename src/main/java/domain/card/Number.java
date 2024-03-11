@@ -15,13 +15,22 @@ public enum Number {
     QUEEN(10),
     KING(10);
 
+    private static final int MAX_SOFT_ACE_CONVERTABLE_SUM = 11;
+    private static final int SOFT_ACE_CONVERT_VALUE = 10;
     private final int number;
 
     Number(int number) {
         this.number = number;
     }
 
-    public int getNumber() {
+    public int getValue() {
         return number;
+    }
+
+    public static int sumContainingSoftAce(int sum) {
+        if (sum <= MAX_SOFT_ACE_CONVERTABLE_SUM) {
+            return sum + SOFT_ACE_CONVERT_VALUE;
+        }
+        return sum;
     }
 }

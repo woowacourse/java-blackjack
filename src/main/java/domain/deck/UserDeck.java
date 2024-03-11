@@ -1,13 +1,13 @@
 package domain.deck;
 
 import domain.card.Card;
+import domain.card.Number;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public abstract class UserDeck {
     private static final int BLACK_JACK_CONDITION = 21;
-    private static final int ACE_CONVERT_VALUE = 10;
     protected final List<Card> cards;
 
     public UserDeck() {
@@ -26,8 +26,8 @@ public abstract class UserDeck {
     }
 
     private int addSumByAce(int sum) {
-        if (sum + ACE_CONVERT_VALUE <= BLACK_JACK_CONDITION && hasAce()) {
-            sum += ACE_CONVERT_VALUE;
+        if (hasAce()) {
+            return Number.sumContainingSoftAce(sum);
         }
         return sum;
     }
