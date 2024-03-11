@@ -21,13 +21,25 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class PlayerTest {
+    private static final String TEST_PLAYER_NAME = "testPlayer";
+    private static final int TEST_PLAYER_BET_AMOUNT = 10000;
+
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "      ", "\n"})
     @DisplayName("공백 이름으로는 플레이어를 생성하면 예외가 발생한다.")
     void throwsExceptionWhenNameIsBlankTest(String blankName) {
-        assertThatThrownBy(() -> Player.fromName(blankName))
+        assertThatThrownBy(() -> Player.from(blankName, TEST_PLAYER_BET_AMOUNT))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름이 비어있습니다.");
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {-1, -100})
+    @DisplayName("배팅 금액이 음수면 예외가 발생한다.")
+    void throwsExceptionWhenNameIsBlankTest(int negativeBetAmount) {
+        assertThatThrownBy(() -> Player.from(TEST_PLAYER_NAME, negativeBetAmount))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("원 미만일 수 없습니다.");
     }
 
     @Test
@@ -36,7 +48,7 @@ class PlayerTest {
         List<Card> cards = List.of(new Card(DIAMOND, TWO), new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR));
         Deck deck = new Deck(cards);
 
-        Player player = Player.fromName("pedro");
+        Player player = Player.from("pedro", TEST_PLAYER_BET_AMOUNT);
         player.draw(deck);
 
         List<Card> playerCards = player.getCards();
@@ -49,7 +61,7 @@ class PlayerTest {
         List<Card> cards = List.of(new Card(DIAMOND, TWO), new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR));
         Deck deck = new Deck(cards);
 
-        Player player = Player.fromName("pedro");
+        Player player = Player.from("pedro", TEST_PLAYER_BET_AMOUNT);
         for (int i = 0; i < cards.size(); i++) {
             player.draw(deck);
         }
@@ -66,7 +78,7 @@ class PlayerTest {
     void checkBustTest(List<Card> cards, boolean expected) {
         Deck deck = new Deck(cards);
 
-        Player player = Player.fromName("pedro");
+        Player player = Player.from("pedro", TEST_PLAYER_BET_AMOUNT);
         for (int i = 0; i < cards.size(); i++) {
             player.draw(deck);
         }
