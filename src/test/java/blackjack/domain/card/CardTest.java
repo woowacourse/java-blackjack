@@ -19,9 +19,7 @@ public class CardTest {
         Card trumpCard = new Card(rank, suit);
 
         //then
-        assertThat(trumpCard.getRank())
-                .isEqualTo(rank);
-        assertThat(trumpCard.getSuit())
-                .isEqualTo(suit);
+        assertThat(trumpCard.getRank()).isEqualTo(rank);
+        assertThat(trumpCard.getSuit()).isEqualTo(suit);
     }
 }
