@@ -1,4 +1,4 @@
-package blackjack.game;
+package blackjack.view;
 
 import java.util.Arrays;
 
