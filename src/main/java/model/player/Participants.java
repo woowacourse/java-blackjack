@@ -1,9 +1,9 @@
 package model.player;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import model.card.CardSize;
 import model.card.CardDeck;
 
@@ -18,21 +18,21 @@ public class Participants {
     }
 
     private void validateNotDuplicatedParticipant(List<Participant> participants) {
-        Set<User> distinctUsers = new HashSet<>(participants);
-        if (distinctUsers.size() != participants.size()) {
-            throw new IllegalArgumentException("참가자들의 이름은 중복되면 안됩니다.");
+        Set<User> duplicates = participants.stream()
+                .filter(n -> Collections.frequency(participants, n) > 1)
+                .collect(Collectors.toSet());
+
+        if (!duplicates.isEmpty()) {
+            String duplicatedNames = duplicates.stream()
+                    .map(User::getName)
+                    .collect(Collectors.joining(","));
+            throw new IllegalArgumentException("중복된 이름("+ duplicatedNames +")가 있습니다, 참가자들의 이름은 중복되면 안됩니다.");
         }
     }
 
     private void validateParticipantSize(List<Participant> participants) {
         if (participants.isEmpty()) {
             throw new IllegalArgumentException("참가자의 수는 1명 이상이어야 합니다.");
-        }
-    }
-
-    public void offerCardToPlayers(CardDeck cardDeck, CardSize size) {
-        for (User user : participants) {
-            user.addCards(cardDeck.selectRandomCards(size));
         }
     }
 
