@@ -33,7 +33,7 @@ public class Referee {
         if (dealer.isBlackJack() && player.isBlackJack()) {
             return MatchResult.TIE;
         }
-        if (dealer.isBurst() || playerTotalScore >= dealerTotalScore) {
+        if (dealer.isBust() || playerTotalScore >= dealerTotalScore) {
             return MatchResult.WIN;
         }
         return MatchResult.LOSE;

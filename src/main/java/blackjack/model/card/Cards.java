@@ -9,7 +9,7 @@ import static java.util.Collections.unmodifiableList;
 
 public class Cards {
     private static final int BLACK_JACK_CONDITION = 21;
-    private static final int BURST_CONDITION = 21;
+    private static final int BUST_CONDITION = 21;
     private static final int ACE_ADJUSTMENT = 10;
 
     private final List<Card> cards;
@@ -59,8 +59,8 @@ public class Cards {
         return calculateCardsTotalScore() == BLACK_JACK_CONDITION;
     }
 
-    public boolean isBurst() {
-        return calculateCardsTotalScore() > BURST_CONDITION;
+    public boolean isBust() {
+        return calculateCardsTotalScore() > BUST_CONDITION;
     }
 
     public int size() {

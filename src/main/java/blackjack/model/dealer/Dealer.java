@@ -26,8 +26,8 @@ public class Dealer {
         return cards.calculateCardsTotalScore();
     }
 
-    public boolean isBurst() {
-        return cards.isBurst();
+    public boolean isBust() {
+        return cards.isBust();
     }
 
     public boolean isBlackJack() {
