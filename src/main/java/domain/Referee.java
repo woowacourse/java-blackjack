@@ -1,8 +1,8 @@
 package domain;
 
 import controller.dto.JudgeResult;
-import domain.participant.Participant;
 import domain.participant.Participants;
+import domain.participant.Player;
 
 public class Referee {
     private final Participants participants;
@@ -14,22 +14,22 @@ public class Referee {
     public JudgeResult judge() {
         if (participants.getDealer().isBusted()) {
             // TODO: 여기 조건에 따르면 참가자는 Bust면 패, Bust가 아니면 승이다.
-            return new JudgeResult(participants.getParticipantOutcomesIf(
-                    participant -> participant.isNotBusted()
+            return new JudgeResult(participants.getPlayersOutcomeIf(
+                    player -> player.isNotBusted()
             ));
         }
-        return new JudgeResult(participants.getParticipantOutcomesIf(
-                participant -> isWinner(participant)
+        return new JudgeResult(participants.getPlayersOutcomeIf(
+                player -> isWinner(player)
         ));
     }
 
-    private boolean isWinner(final Participant participant) {
-        if (participant.isBusted()) {
+    private boolean isWinner(final Player player) {
+        if (player.isBusted()) {
             return true;
         }
-        if (participant.isNotSameScoreAs(participants.getDealer())) {
-            return participant.hasMoreScoreThan(participants.getDealer());
+        if (player.isNotSameScoreAs(participants.getDealer())) {
+            return player.hasMoreScoreThan(participants.getDealer());
         }
-        return participant.hasLessOrSameCardThan(participants.getDealer());
+        return player.hasLessOrSameCardThan(participants.getDealer());
     }
 }

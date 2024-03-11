@@ -5,7 +5,7 @@ import static domain.constants.Outcome.WIN;
 import controller.dto.HandStatus;
 import controller.dto.InitialCardStatus;
 import controller.dto.JudgeResult;
-import controller.dto.ParticipantOutcome;
+import controller.dto.PlayerOutcome;
 import domain.card.Card;
 import domain.constants.Outcome;
 import domain.participant.Dealer;
@@ -91,7 +91,7 @@ public class OutputView {
         int losersCount = judgeResult.results().size() - winnersCount;
         System.out.printf(JUDGE_DEALER_RESULT_FORMAT, Dealer.DEALER_NAME, winnersCount, losersCount);
 
-        for (ParticipantOutcome result : judgeResult.results()) {
+        for (PlayerOutcome result : judgeResult.results()) {
             System.out.printf(
                     JUDGE_PLAYER_RESULT_FORMAT,
                     result.name(),

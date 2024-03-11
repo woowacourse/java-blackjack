@@ -1,6 +1,6 @@
 package domain.participant;
 
-import controller.dto.ParticipantOutcome;
+import controller.dto.PlayerOutcome;
 import domain.constants.Outcome;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,10 +23,9 @@ public class Participants {
         return new Participants(participants);
     }
 
-    // TODO: 조회 대상에 딜러도 포함되어있음. 제외해야 함.
-    public List<ParticipantOutcome> getParticipantOutcomesIf(final Function<Participant, Boolean> function) {
-        return participants.stream()
-                .map(participant -> new ParticipantOutcome(
+    public List<PlayerOutcome> getPlayersOutcomeIf(final Function<Player, Boolean> function) {
+        return getPlayers().stream()
+                .map(participant -> new PlayerOutcome(
                         participant.getName(),
                         Outcome.from(function.apply(participant))
                 ))
@@ -42,5 +41,12 @@ public class Participants {
                 .filter(player -> player instanceof Dealer)
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
+    }
+
+    public List<Player> getPlayers() {
+        return participants.stream()
+                .filter(player -> player instanceof Player)
+                .map(participant -> (Player) participant)
+                .toList();
     }
 }
