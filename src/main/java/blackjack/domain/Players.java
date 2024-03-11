@@ -1,6 +1,8 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Players {
 
@@ -9,10 +11,11 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> players) {
-        validatePlayersNumber(players);
-        this.players = players.stream()
-                .map(Player::new)
+    public Players(Map<Name, Batting> playerNameAndBattings) {
+        validatePlayersNumber(playerNameAndBattings.keySet());
+        this.players = playerNameAndBattings.entrySet()
+                .stream()
+                .map(player -> new Player(player.getKey(), player.getValue()))
                 .toList();
     }
 
@@ -24,7 +27,7 @@ public class Players {
     }
 
 
-    private void validatePlayersNumber(List<String> players) {
+    private void validatePlayersNumber(Set<Name> players) {
         if (players.size() < MIN_PLAYER_NUMBER || players.size() > MAX_PLAYER_NUMBER) {
             throw new IllegalArgumentException("게임 참여자는 최소 " + MIN_PLAYER_NUMBER
                     + "명에서 최대 " + MAX_PLAYER_NUMBER + "명까지 가능합니다");

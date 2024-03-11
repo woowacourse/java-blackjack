@@ -1,21 +1,20 @@
 package blackjack.domain;
 
-import java.util.List;
+import java.util.Map;
 
 public class Game {
 
     private final GameParticipants gameParticipants;
     private final Deck deck;
 
-    private Game(List<String> playerNames, Deck deck) {
-        this.gameParticipants = GameParticipants.of(playerNames);
+    private Game(Map<Name, Batting> playerNameAndBattings, Deck deck) {
+        this.gameParticipants = GameParticipants.of(playerNameAndBattings);
+        this.gameParticipants.handOutInitialCards(deck);
         this.deck = deck;
     }
 
-    public static Game of(List<String> playerNames) {
-        Deck deck = Deck.createShuffledDeck();
-        Game game = new Game(playerNames, deck);
-        return game;
+    public static Game of(Map<Name, Batting> playerNameAndBattings) {
+        return new Game(playerNameAndBattings, Deck.createShuffledDeck());
     }
 
     public GameResult makeGameResult() {

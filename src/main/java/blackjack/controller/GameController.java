@@ -28,7 +28,7 @@ public class GameController {
 
     private static Game makeGame() {
         OutputView.printAskNameMessage();
-        return Game.of(InputView.readNames());
+        return Game.of(InputView.readPlayerNamesAndBattings());
     }
 
     private static void confirmParticipantsHands(Players players, Deck deck, Dealer dealer) {

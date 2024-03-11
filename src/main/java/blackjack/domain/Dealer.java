@@ -4,12 +4,10 @@ import java.util.List;
 
 // TODO 기능을 위한 has a 관계로 바라보기
 public class Dealer extends Participant {
-
-    private static final String DEALER_NAME = "딜러";
     private static final int DEALER_DRAW_THRESHOLD = 16;
 
     public Dealer() {
-        super(DEALER_NAME);
+        super(Name.dealerName());
     }
 
     public PlayerState draw(Deck deck) {

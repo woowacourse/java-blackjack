@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import java.util.List;
+import java.util.Map;
 
 public class GameParticipants {
     private final Players players;
@@ -11,8 +11,8 @@ public class GameParticipants {
         this.dealer = dealer;
     }
 
-    public static GameParticipants of(List<String> playerNames) {
-        return new GameParticipants(new Players(playerNames), new Dealer());
+    public static GameParticipants of(Map<Name, Batting> playerNameAndBattings) {
+        return new GameParticipants(new Players(playerNameAndBattings), new Dealer());
     }
 
     public void handOutInitialCards(Deck deck) {

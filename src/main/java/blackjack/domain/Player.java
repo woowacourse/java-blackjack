@@ -3,9 +3,11 @@ package blackjack.domain;
 import java.util.function.BooleanSupplier;
 
 public class Player extends Participant {
+    private final Batting batting;
 
-    public Player(String name) {
+    public Player(Name name, Batting batting) {
         super(name);
+        this.batting = batting;
     }
 
     public PlayerState draw(BooleanSupplier supplier, Deck deck) {

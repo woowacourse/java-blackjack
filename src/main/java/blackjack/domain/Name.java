@@ -4,6 +4,7 @@ public class Name {
     private static final int MIN_NAME_LENGTH = 1;
     private static final int MAX_NAME_LENGTH = 15;
     private static final String ELEMENT_NAME_RULE = "^[ㄱ-ㅎ가-힣a-zA-Z0-9]+$";
+    private static final String DEALER_NAME = "딜러";
 
     private final String name;
 
@@ -11,6 +12,10 @@ public class Name {
         validateNameLength(name);
         validateNameRule(name);
         this.name = name;
+    }
+
+    public static Name dealerName() {
+        return new Name(DEALER_NAME);
     }
 
     private void validateNameLength(String name) {

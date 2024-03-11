@@ -21,7 +21,7 @@ public class OutputView {
     }
 
     public static void printAskNameMessage() {
-        System.out.println("게임에 참여 할사람 이름을 입력하세요.(쉽표 기준으로 분리)");
+        System.out.println("게임에 참여할 사람 이름을 입력하세요.(쉽표 기준으로 분리)");
     }
 
     public static void printDrawInitialHandsMessage(String dealerName, List<Player> players) {
