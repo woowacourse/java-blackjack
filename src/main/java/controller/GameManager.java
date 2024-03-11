@@ -74,6 +74,6 @@ public class GameManager {
         outputView.printResultHandStatus(handStatuses);
 
         JudgeResult judgeResult = blackJackGame.judge();
-        outputView.printGameResult(judgeResult);
+        outputView.printJudgeResult(judgeResult);
     }
 }
