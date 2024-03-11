@@ -4,7 +4,6 @@ import blackjack.domain.participants.Player;
 import blackjack.domain.participants.WinOrLose;
 import blackjack.dto.ParticipantDto;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
