@@ -23,7 +23,7 @@ public class DealerDeckTest {
     }
 
     @Test
-    @DisplayName("카드의 합이 16 이하이면 true를 반환한다.")
+    @DisplayName("카드의 합이 16 이하면 true를 반환한다.")
     void isAddableTest() {
         DealerDeck dealerDeck = new DealerDeck();
 
@@ -33,7 +33,7 @@ public class DealerDeckTest {
     }
 
     @Test
-    @DisplayName("카드의 합이 17 이상이면 false를 반환한다.")
+    @DisplayName("카드의 합이 16 초과면 false를 반환한다.")
     void isNotAddableTest() {
         DealerDeck dealerDeck = new DealerDeck();
 

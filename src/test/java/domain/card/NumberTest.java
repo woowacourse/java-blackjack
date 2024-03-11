@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 public class NumberTest {
     @Test
-    @DisplayName("합이 11 이하이면 합에 10을 더해준다.")
+    @DisplayName("합이 11 이하면 합에 10을 더해준다.")
     void sumContainingSoftAceTest() {
         int sum = 3;
 
@@ -15,7 +15,7 @@ public class NumberTest {
     }
 
     @Test
-    @DisplayName("합이 11 초과이면 그대로 반환한다.")
+    @DisplayName("합이 11 초과면 그대로 반환한다.")
     void sumCardNotContainingSoftAceTest() {
         int sum = 13;
 

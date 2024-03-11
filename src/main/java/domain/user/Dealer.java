@@ -7,13 +7,14 @@ public class Dealer extends User {
         super(new DealerDeck());
     }
 
-    public boolean isAddable() {
-        return userDeck.isAddable();
-    }
-
     @Override
     public boolean isPlayer() {
         return false;
+    }
+
+    @Override
+    public boolean isAddable() {
+        return userDeck.isAddable();
     }
 
     @Override

@@ -59,8 +59,8 @@ public class Users {
                 .collect(Collectors.toList());
     }
 
-    private Dealer getDealer() {
-        return (Dealer) users.get(DEALER_INDEX);
+    private User getDealer() {
+        return users.get(DEALER_INDEX);
     }
 
     private void validateDuplicatedName(List<Player> players) {

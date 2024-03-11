@@ -13,34 +13,34 @@ public class PlayerDeckTest {
     @Test
     @DisplayName("보여지는 카드를 반환할 때 덱의 모든 카드를 반환한다.")
     void getVisibleCardTest() {
-        PlayerDeck dealerDeck = new PlayerDeck();
+        PlayerDeck playerDeck = new PlayerDeck();
         Card card = new Card(CLOVER, TEN);
 
-        dealerDeck.addCard(card);
-        dealerDeck.addCard(card);
+        playerDeck.addCard(card);
+        playerDeck.addCard(card);
 
-        assertThat(dealerDeck.getVisibleCards()).containsExactly(card, card);
+        assertThat(playerDeck.getVisibleCards()).containsExactly(card, card);
     }
 
     @Test
-    @DisplayName("busted가 false이면 true를 반환한다.")
+    @DisplayName("busted가 false면 true를 반환한다.")
     void isAddableTest() {
-        PlayerDeck dealerDeck = new PlayerDeck();
+        PlayerDeck playerDeck = new PlayerDeck();
 
-        dealerDeck.addCard(new Card(CLOVER, NINE));
+        playerDeck.addCard(new Card(CLOVER, NINE));
 
-        assertThat(dealerDeck.isAddable()).isTrue();
+        assertThat(playerDeck.isAddable()).isTrue();
     }
 
     @Test
-    @DisplayName("busted가 true이면 false를 반환한다.")
+    @DisplayName("busted가 true면 false를 반환한다.")
     void isNotAddableTest() {
-        PlayerDeck dealerDeck = new PlayerDeck();
+        PlayerDeck playerDeck = new PlayerDeck();
 
-        dealerDeck.addCard(new Card(CLOVER, NINE));
-        dealerDeck.addCard(new Card(CLOVER, NINE));
-        dealerDeck.addCard(new Card(CLOVER, NINE));
+        playerDeck.addCard(new Card(CLOVER, NINE));
+        playerDeck.addCard(new Card(CLOVER, NINE));
+        playerDeck.addCard(new Card(CLOVER, NINE));
 
-        assertThat(dealerDeck.isAddable()).isFalse();
+        assertThat(playerDeck.isAddable()).isFalse();
     }
 }

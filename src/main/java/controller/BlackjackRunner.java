@@ -1,8 +1,8 @@
 package controller;
 
 import static domain.Command.YES;
-import static domain.game.State.BUST;
-import static domain.game.State.HIT;
+import static domain.game.State.BUSTED;
+import static domain.game.State.HITTABLE;
 
 import domain.Command;
 import domain.ExceptionHandler;
@@ -43,36 +43,40 @@ public class BlackjackRunner {
     }
 
     private void hitOrStay(User user, TotalDeck totalDeck) {
+        boolean addable = true;
+        while (addable) {
+            addable = isAddable(user, totalDeck);
+        }
+    }
+
+    private boolean isAddable(User user, TotalDeck totalDeck) {
         Command command = ExceptionHandler.handle(
                 () -> InputView.inputAddCommand(user.getNameValue())
         );
         if (YES == command) {
             hit(user, totalDeck);
+            printByState(user);
+            return user.isAddable();
         }
+        return false;
     }
 
     private void hit(User user, TotalDeck totalDeck) {
-        switch (hitOrBust(user, totalDeck)) {
-            case HIT -> hitOrStayAgain(user, totalDeck);
-            case BUST -> OutputView.printBust(user);
-        }
+        user.addCard(totalDeck.getNewCard());
     }
 
-    private State hitOrBust(User user, TotalDeck totalDeck) {
-        user.addCard(totalDeck.getNewCard());
-        return hitResultState(user);
+    private void printByState(User user) {
+        switch (hitResultState(user)) {
+            case HITTABLE -> OutputView.printPlayerAndVisibleCards(user);
+            case BUSTED -> OutputView.printBust(user);
+        }
     }
 
     private State hitResultState(User user) {
         if (user.busted()) {
-            return BUST;
+            return BUSTED;
         }
-        return HIT;
-    }
-
-    private void hitOrStayAgain(User user, TotalDeck totalDeck) {
-        OutputView.printPlayerAndVisibleCards(user);
-        hitOrStay(user, totalDeck);
+        return HITTABLE;
     }
 
     private void showGameResult(Users users) {
