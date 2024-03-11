@@ -1,40 +1,33 @@
 package domain.score;
 
+import domain.player.Bet;
 import domain.player.Name;
-import domain.player.Names;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ScoreBoard {
 
     private final Score dealerScore = new Score();
-    private final Map<Name, Status> playerStatus;
+    private final Map<Name, Bet> playerScore;
 
-    private ScoreBoard(Map<Name, Status> playerStatus) {
-        this.playerStatus = playerStatus;
-    }
-
-    public static ScoreBoard from(Names names) {
-        Map<Name, Status> scoreBoard = names.getNames().stream()
-                .collect(Collectors.toMap(
-                        name -> name,
-                        name -> Status.TIE
-                ));
-        return new ScoreBoard(scoreBoard);
+    public ScoreBoard(Map<Name, Bet> playerScore) {
+        this.playerScore = new HashMap<>(playerScore);
     }
 
     public void updatePlayerScore(Name name, Status status) {
-        playerStatus.put(name, status);
+        Bet bet = playerScore.get(name);
+        Bet revenue = status.calculateRevenue(bet);
+        playerScore.put(name, revenue);
     }
 
     public void updateDealerScore(Status status) {
         dealerScore.increaseScore(status);
     }
 
-    public Map<Name, Status> getPlayerScore() {
-        return Collections.unmodifiableMap(playerStatus);
+    public Map<Name, Bet> getPlayerScore() {
+        return Collections.unmodifiableMap(playerScore);
     }
 
     public Score getDealerScore() {

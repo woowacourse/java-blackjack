@@ -3,11 +3,13 @@ package view;
 import domain.card.Cards;
 import domain.card.DealerCards;
 import domain.card.PlayerCards;
+import domain.player.Bet;
 import domain.player.Name;
 import domain.score.Score;
 import domain.score.ScoreBoard;
 import domain.score.Status;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -70,17 +72,16 @@ public class OutputView {
         System.out.println();
         System.out.println("## 최종 승패");
         System.out.print("딜러: ");
-        Score dealerScore = scoreBoard.getDealerScore();
 
+        Score dealerScore = scoreBoard.getDealerScore();
         StringJoiner stringJoiner = new StringJoiner(" ");
-        for (Status status : Status.values()) {
-            String score = dealerScore.getScore(status) + outcome.get(status);
-            stringJoiner.add(score);
-        }
+        Arrays.stream(Status.values())
+                .filter(status -> status != Status.BLACKJACK)
+                .forEach(status -> stringJoiner.add(dealerScore.getScore(status) + outcome.get(status)));
         System.out.println(stringJoiner);
 
-        Map<Name, Status> playerStatus = scoreBoard.getPlayerScore();
-        playerStatus.forEach((name, status) -> System.out.println(name + ": " + outcome.get(status)));
+        Map<Name, Bet> playerScore = scoreBoard.getPlayerScore();
+        playerScore.forEach((name, bet) -> System.out.println(name + ": " + bet.getAmount()));
     }
 
     public void printDealerGivenCard() {

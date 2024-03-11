@@ -4,6 +4,7 @@ import domain.card.DealerCards;
 import domain.card.Deck;
 import domain.card.PlayerCards;
 import domain.game.Referee;
+import domain.player.Bet;
 import domain.player.Name;
 import domain.player.Names;
 import domain.score.ScoreBoard;
@@ -25,12 +26,12 @@ public class Casino {
         Map<Name, Bet> bets = readBets(names);
 
         Deck deck = new Deck();
+        ScoreBoard scoreBoard = new ScoreBoard(bets);
         DealerCards dealerCards = new DealerCards(deck.drawInitialHands());
         List<PlayerCards> playerCardsBundle = makePlayerCards(names, deck);
         outputView.printInitialCards(dealerCards, playerCardsBundle);
 
         playGame(deck, dealerCards, playerCardsBundle);
-        ScoreBoard scoreBoard = ScoreBoard.from(names);
         determineOutcome(dealerCards, playerCardsBundle, scoreBoard);
     }
 

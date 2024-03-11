@@ -4,8 +4,8 @@ import domain.card.Card;
 import domain.card.DealerCards;
 import domain.card.PlayerCards;
 import domain.card.Shape;
+import domain.player.Bet;
 import domain.player.Name;
-import domain.player.Names;
 import domain.score.ScoreBoard;
 import domain.score.Status;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -37,8 +38,7 @@ class RefereeTest {
                 new Card(11, Shape.CLUB)
         ));
 
-        Names names = new Names(List.of(capy));
-        scoreBoard = ScoreBoard.from(names);
+        scoreBoard = new ScoreBoard(Map.of(capy, new Bet(20000)));
         referee = new Referee(scoreBoard);
     }
 
@@ -51,7 +51,7 @@ class RefereeTest {
                 () -> assertThat(scoreBoard.getDealerScore().getScore(Status.WIN)).isEqualTo(0),
                 () -> assertThat(scoreBoard.getDealerScore().getScore(Status.TIE)).isEqualTo(0),
                 () -> assertThat(scoreBoard.getDealerScore().getScore(Status.LOSE)).isEqualTo(1),
-                () -> assertThat(scoreBoard.getPlayerScore().get(capy)).isEqualTo(Status.WIN)
+                () -> assertThat(scoreBoard.getPlayerScore().get(capy)).isEqualTo(new Bet(20000))
         );
     }
 }
