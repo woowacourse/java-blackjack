@@ -1,16 +1,13 @@
 package domain;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Deck {
-    private final List<Card> cards;
+    private final Deque<Card> deck;
 
     public Deck() {
-        cards = createCards();
-        Collections.shuffle(cards);
+        deck = createShuffledDeck();
     }
 
     private List<Card> createCards() {
@@ -21,17 +18,17 @@ public class Deck {
                 .collect(Collectors.toList());
     }
 
-    public Card draw() {
-        if (cards.isEmpty()) {
-            throw new IllegalStateException("덱이 비어있습니다");
-        }
-        return pollLastCard();
+    private Deque<Card> createShuffledDeck() {
+        final List<Card> cards = createCards();
+        Collections.shuffle(cards);
+        return new ArrayDeque<>(cards);
     }
 
-    private Card pollLastCard() {
-        final Card card = cards.get(cards.size() - 1);
-        cards.remove(cards.size() - 1);
-        return card;
+    public Card draw() {
+        if (deck.isEmpty()) {
+            throw new IllegalStateException("덱이 비어있습니다");
+        }
+        return deck.removeLast();
     }
 }
 
