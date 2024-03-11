@@ -1,17 +1,19 @@
 package blackjack.model.result;
 
 public enum Result {
-    WIN("승"),
-    LOSE("패"),
-    TIE("무");
+    WIN(2.0),
+    BLACKJACK(1.5),
+    PUSH(1.0),
+    LOSE(0.0),
+    NONE(0.0);
 
-    private final String name;
+    private final Double payoutRate;
 
-    Result(String name) {
-        this.name = name;
+    Result(Double payoutRate) {
+        this.payoutRate = payoutRate;
     }
 
-    public String getName() {
-        return name;
+    public Double getPayoutRate() {
+        return payoutRate;
     }
 }
