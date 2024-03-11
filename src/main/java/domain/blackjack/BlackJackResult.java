@@ -28,4 +28,8 @@ public class BlackJackResult {
     public int getTotalCount() {
         return resultByParticipant.size();
     }
+
+    public WinStatus getWinStatus(Participant participant) {
+        return resultByParticipant.get(participant);
+    }
 }
