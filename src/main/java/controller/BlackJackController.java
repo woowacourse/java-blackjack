@@ -72,6 +72,6 @@ public class BlackJackController {
     private void printResult(BlackJack blackJack, LinkedHashMap<Participant, Integer> bet) {
         BlackJackResult blackJackResult = blackJack.saveParticipantResult();
         BetAmount betAmount = new BetAmount(bet, blackJackResult);
-        OutputView.printBlackJackResult(blackJackResult);
+        OutputView.printBlackJackResult(betAmount);
     }
 }

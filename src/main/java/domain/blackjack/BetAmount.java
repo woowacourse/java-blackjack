@@ -3,6 +3,7 @@ package domain.blackjack;
 import domain.participant.Participant;
 
 import java.util.LinkedHashMap;
+import java.util.Set;
 
 public class BetAmount {
 
@@ -24,5 +25,9 @@ public class BetAmount {
             total += getPayout(participant);
         }
         return total * -1;
+    }
+
+    public Set<Participant> getKey() {
+        return bet.keySet();
     }
 }

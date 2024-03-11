@@ -7,7 +7,8 @@ public enum WinStatus {
 
     WIN(1.0),
     LOSE(-1),
-    BLACKJACK(1.5);
+    BLACKJACK(1.5),
+    DRAW(0);
 
     private final double betMultiplier;
 
@@ -28,6 +29,12 @@ public enum WinStatus {
     private static WinStatus isWinnerWhenNotBust(Participant participant, Dealer dealer) {
         int participantScore = participant.getScore();
         int dealerScore = dealer.getScore();
+        if (dealerScore == 21 && dealer.getCardCount() == 2 && participantScore == 21 && participant.getCardCount() == 2) {
+            return DRAW;
+        }
+        if (participantScore == 21 && participant.getCardCount() == 2) {
+            return BLACKJACK;
+        }
         if (participantScore == dealerScore) {
             return isWinnerByCardCount(participant, dealer);
         }
