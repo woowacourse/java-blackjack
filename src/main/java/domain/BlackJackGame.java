@@ -6,6 +6,7 @@ import controller.dto.JudgeResult;
 import domain.constants.CardCommand;
 import domain.participant.Participant;
 import domain.participant.Participants;
+import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -31,11 +32,16 @@ public class BlackJackGame {
 
     public InitialCardStatus initialize() {
         List<HandStatus> status = new ArrayList<>();
-        for (Participant participant : participants.getParticipants()) {
-            participant.pickCard(deck, INITIAL_CARD_SIZE);
-            status.add(participant.createHandStatus());
-        }
+        status.add(createHandStatusAfterPick(participants.getDealer()));
+        for (Player player : participants.getPlayers()) {
+            status.add(createHandStatusAfterPick(player));
+        } // TODO: 다형성을 사용하려면 항상 호출하는 순서도 일관되어야 하네 ..
         return new InitialCardStatus(INITIAL_CARD_SIZE, status);
+    }
+
+    private HandStatus createHandStatusAfterPick(final Participant participant) {
+        participant.pickCard(deck, INITIAL_CARD_SIZE);
+        return participant.createHandStatus();
     }
 
     // TODO: 함수형 인터페이스를 Wrapping하기
