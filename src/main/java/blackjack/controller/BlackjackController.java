@@ -11,23 +11,31 @@ import java.util.List;
 
 public class BlackjackController {
     public void run() {
-        final CardGame cardGame = new CardGame();
         final List<String> names = InputView.askPlayerNames();
+        final List<Player> players = createPlayersByNames(names);
         final Dealer dealer = new Dealer();
-        final List<Player> players = names.stream()
-                .map(Player::new)
-                .toList();
+        final CardGame cardGame = new CardGame();
 
         cardGame.initializeHand(dealer, players);
         OutputView.printInitialHandOfEachPlayer(dealer, players);
 
-        for (final Player player : players) {
-            givePlayerMoreCardsIfWanted(cardGame, player);
-        }
+        givePlayersMoreCardsIfWanted(cardGame, players);
         giveDealerMoreCardsIfNeeded(cardGame, dealer);
 
         printHandStatusOfEachPlayer(dealer, players);
         printCardGameResult(dealer, players);
+    }
+
+    private static List<Player> createPlayersByNames(List<String> names) {
+        return names.stream()
+                .map(Player::new)
+                .toList();
+    }
+
+    private void givePlayersMoreCardsIfWanted(final CardGame cardGame, final List<Player> players) {
+        for (final Player player : players) {
+            givePlayerMoreCardsIfWanted(cardGame, player);
+        }
     }
 
     private void givePlayerMoreCardsIfWanted(final CardGame cardGame, final Player player) {
