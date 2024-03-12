@@ -2,10 +2,9 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
+import blackjack.domain.rule.Score;
 
 public abstract class Participant {
-
-    private static final int BLACKJACK = 21;
 
     private final Hand hand;
 
@@ -21,12 +20,8 @@ public abstract class Participant {
         }
     }
 
-    public int getHandScore() {
-        return hand.calculateScoreTotalClosestToThreshold(BLACKJACK);
-    }
-
-    public boolean isNotBust() {
-        return getHandScore() <= BLACKJACK;
+    public Score getHandScore() {
+        return hand.calculateScore();
     }
 
     public Hand getHand() {
