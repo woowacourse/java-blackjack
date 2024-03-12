@@ -2,10 +2,10 @@ package domain.participant;
 
 import controller.dto.PlayerOutcome;
 import domain.constants.Outcome;
+import domain.game.deck.PlayerWinningCondition;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class Participants {
     private final List<Participant> participants;
@@ -23,11 +23,11 @@ public class Participants {
         return new Participants(participants);
     }
 
-    public List<PlayerOutcome> getPlayersOutcomeIf(final Predicate<Player> function) {
+    public List<PlayerOutcome> getPlayersOutcomeIf(final PlayerWinningCondition condition) {
         return getPlayers().stream()
                 .map(player -> new PlayerOutcome(
                         player.getName(),
-                        Outcome.from(function.test(player))
+                        Outcome.from(condition.test(player))
                 ))
                 .toList();
     }
