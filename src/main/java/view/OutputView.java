@@ -54,7 +54,7 @@ public class OutputView {
     }
 
     private String dealerNameAndCardsText(Dealer dealer) {
-        return dealer.getName() + " 카드: " + cardText(dealer.findShowingCard());
+        return dealer.getName() + " 카드: " + cardsText(dealer.findShowingCards());
     }
 
     private String participantNameAndCardsText(Participant participant) {

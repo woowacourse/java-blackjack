@@ -2,6 +2,8 @@ package domain.participant;
 
 import domain.card.Card;
 
+import java.util.List;
+
 public class Dealer extends Participant {
 
     public static final int THRESHOLD_SCORE = 16;
@@ -16,10 +18,14 @@ public class Dealer extends Participant {
         return calculateScore() <= THRESHOLD_SCORE;
     }
 
-    public Card findShowingCard() {
+    @Override
+    public List<Card> findShowingCards() {
         if (getCards().isEmpty()) {
             throw new IllegalStateException("[ERROR] 딜러 카드가 비어 있습니다.");
         }
-        return getCards().get(0);
+        if (getCards().size() == 2) {
+            return List.of(getCards().get(0));
+        }
+        return getCards();
     }
 }

@@ -18,6 +18,8 @@ public abstract class Participant {
 
     public abstract boolean isReceivable();
 
+    public abstract List<Card> findShowingCards();
+
     public void receive(Card receivedCard) {
         if (isReceivable()) {
             blackjackHand.receive(receivedCard);

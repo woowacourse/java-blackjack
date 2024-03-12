@@ -1,5 +1,9 @@
 package domain.participant;
 
+import domain.card.Card;
+
+import java.util.List;
+
 public class Player extends Participant {
 
     public Player(Name name) {
@@ -9,5 +13,10 @@ public class Player extends Participant {
     @Override
     public boolean isReceivable() {
         return !isBusted();
+    }
+
+    @Override
+    public List<Card> findShowingCards() {
+        return getCards();
     }
 }
