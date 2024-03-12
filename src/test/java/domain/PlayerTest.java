@@ -3,25 +3,8 @@ package domain;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.List;
-import java.util.stream.Stream;
 
 class PlayerTest {
-    public static Stream<Arguments> argumentProvider() {
-        return Stream.of(
-                Arguments.of(
-                        List.of(new Card(Denomination.KING, Suit.CLUBS), new Card(Denomination.KING, Suit.HEART),
-                                new Card(Denomination.KING, Suit.SPADE)), true),
-                Arguments.of(
-                        List.of(new Card(Denomination.FIVE, Suit.CLUBS), new Card(Denomination.FOUR, Suit.HEART),
-                                new Card(Denomination.THREE, Suit.SPADE)), false)
-        );
-    }
-
     @Test
     @DisplayName("플레이어는 자신이 갖는 카드 합계를 계산할 수 있다")
     void sum() {
@@ -46,16 +29,27 @@ class PlayerTest {
         Assertions.assertThat(player.score()).isEqualTo(21);
     }
 
-    @ParameterizedTest
-    @MethodSource("argumentProvider")
-    @DisplayName("플레이어의 버스트 여부를 반환한다.")
-    void alive(final List<Card> cards, final boolean expected) {
+    @Test
+    @DisplayName("합계 점수가 21을 초과하면 버스트")
+    void bust() {
         final Player player = new Player(new Name("지쳐버린종이"));
 
-        player.dealCard(cards.get(0));
-        player.dealCard(cards.get(1));
-        player.dealCard(cards.get(2));
+        player.dealCard(new Card(Denomination.KING, Suit.CLUBS));
+        player.dealCard(new Card(Denomination.JACK, Suit.CLUBS));
+        player.dealCard(new Card(Denomination.QUEEN, Suit.CLUBS));
 
-        Assertions.assertThat(player.isBust()).isEqualTo(expected);
+        Assertions.assertThat(player.isBust()).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("합계 점수가 21을 초과하면 버스트")
+    void notBust() {
+        final Player player = new Player(new Name("지쳐버린종이"));
+
+        player.dealCard(new Card(Denomination.KING, Suit.CLUBS));
+        player.dealCard(new Card(Denomination.JACK, Suit.CLUBS));
+        player.dealCard(new Card(Denomination.ACE, Suit.CLUBS));
+
+        Assertions.assertThat(player.isNotBust()).isEqualTo(true);
     }
 }
