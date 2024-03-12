@@ -44,7 +44,7 @@ public class DealerTest {
         // Given
         Deck deck = Deck.init();
         Hand initHand = Hand.init();
-        int totalScore = initHand.getTotalScore().value();
+        int totalScore = initHand.getTotalScore().getTotalScore();
         Dealer dealer = new Dealer(initHand);
 
         // When

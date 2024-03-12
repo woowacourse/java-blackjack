@@ -47,7 +47,7 @@ public class PlayerTest {
         // Given
         Deck deck = Deck.init();
         Hand initHand = Hand.init();
-        int totalScore = initHand.getTotalScore().value();
+        int totalScore = initHand.getTotalScore().getTotalScore();
         Player player = new Player(new PlayerName("kelly"), initHand);
 
         // When

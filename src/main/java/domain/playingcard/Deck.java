@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static domain.playingcard.PlayingCardValue.SMALL_ACE;
 import static domain.playingcard.PlayingCardValue.values;
 
 public class Deck {
@@ -26,7 +25,6 @@ public class Deck {
 
     private static List<PlayingCard> generateCardByShape(final PlayingCardShape playingCardShape) {
         return Arrays.stream(values())
-                .filter(playingCardValue -> playingCardValue != SMALL_ACE)
                 .map(playingCardValue -> new PlayingCard(playingCardShape, playingCardValue))
                 .toList();
     }

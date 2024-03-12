@@ -2,14 +2,12 @@ package domain.playingcard;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
 import static domain.playingcard.PlayingCardShape.HEART;
-import static domain.playingcard.PlayingCardValue.DEFAULT_ACE;
+import static domain.playingcard.PlayingCardValue.ACE;
 import static domain.playingcard.PlayingCardValue.FIVE;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,21 +27,10 @@ public class PlayingCardTest {
         assertThat(playingCard).isNotNull();
     }
 
-    @DisplayName("카드의 숫자만큼 더해서 반환한다.")
-    @MethodSource("addValueParameters")
-    @ParameterizedTest(name = "[{index}] \"{0}\" => {1}")
-    void addValueTest(PlayingCard playingCard, int inputNumber, int expect) {
-        // When
-        int result = playingCard.addValue(inputNumber);
-
-        // Then
-        assertThat(result).isEqualTo(expect);
-    }
-
     private static Stream<Arguments> addValueParameters() {
         return Stream.of(
-                Arguments.of(new PlayingCard(HEART, DEFAULT_ACE), 4, 15),
-                Arguments.of(new PlayingCard(HEART, DEFAULT_ACE), 18, 19),
+                Arguments.of(new PlayingCard(HEART, ACE), 4, 15),
+                Arguments.of(new PlayingCard(HEART, ACE), 18, 19),
                 Arguments.of(new PlayingCard(HEART, FIVE), 15, 20)
         );
     }

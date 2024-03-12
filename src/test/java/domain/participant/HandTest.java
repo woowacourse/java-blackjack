@@ -31,7 +31,7 @@ public class HandTest {
         Hand hand = new Hand(playingCards);
 
         // When
-        int result = hand.getTotalScore().value();
+        int result = hand.getTotalScore().getTotalScore();
 
         // Then
         assertThat(result).isEqualTo(11);
@@ -56,7 +56,7 @@ public class HandTest {
     void addCardTest() {
         // Given
         Hand hand = Hand.init();
-        int totalScore = hand.getTotalScore().value();
+        int totalScore = hand.getTotalScore().getTotalScore();
         PlayingCard card = new PlayingCard(DIAMOND, NINE);
 
         // When
@@ -70,8 +70,7 @@ public class HandTest {
     @Test
     void isBlackJackTest() {
         // Given
-//        List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING), new PlayingCard(CLOVER, NINE), new PlayingCard(SPADE, TWO));
-        List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING), new PlayingCard(CLOVER, QUEEN), new PlayingCard(SPADE, DEFAULT_ACE));
+        List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING), new PlayingCard(CLOVER, QUEEN), new PlayingCard(SPADE, ACE));
         Hand hand = new Hand(playingCards);
 
         // When

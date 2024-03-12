@@ -160,7 +160,7 @@ class GameResultsTest {
 
     private static Hand initBlackJackHand() {
         return new Hand(List.of(
-                new PlayingCard(DIAMOND, DEFAULT_ACE),
+                new PlayingCard(DIAMOND, ACE),
                 new PlayingCard(CLOVER, QUEEN)
         ));
     }

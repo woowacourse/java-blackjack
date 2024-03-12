@@ -21,12 +21,7 @@ public class Hand {
     }
 
     public Score getTotalScore() {
-        int result = 0;
-        for (PlayingCard playingCard : playingCards) {
-            result = playingCard.addValue(result);
-        }
-
-        return new Score(result);
+        return Score.of(playingCards);
     }
 
     public boolean isBust() {
