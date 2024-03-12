@@ -4,10 +4,8 @@ import blackjack.dto.DealerResultCount;
 import blackjack.dto.NameCards;
 import blackjack.dto.NameCardsScore;
 import blackjack.dto.PlayerNameFinalResult;
-import blackjack.model.deck.Card;
 import blackjack.model.deck.Deck;
 import blackjack.model.participant.Dealer;
-import blackjack.model.participant.Participant;
 import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
 import blackjack.model.result.Referee;
@@ -95,7 +93,7 @@ public class BlackJackGame {
 
     private void distributeIfPlayerWant(final boolean isHit, final Player player, final Dealer dealer) {
         if (isHit) {
-            distributeNewCard(player, dealer.distributeCard());
+            player.draw(dealer.distributeCard());
             outputView.printNameAndCards(NameCards.from(player));
             playPlayerTurn(player, dealer);
         }
@@ -104,12 +102,8 @@ public class BlackJackGame {
     private void playDealerTurn(final Dealer dealer) {
         while (dealer.canHit()) {
             outputView.printDealerHit();
-            distributeNewCard(dealer, dealer.distributeCard());
+            dealer.draw(dealer.distributeCard());
         }
-    }
-
-    private void distributeNewCard(final Participant player, final Card card) {
-        player.draw(card);
     }
 
     private void printFinalResult(final Dealer dealer, final Players players, final Referee referee) {
