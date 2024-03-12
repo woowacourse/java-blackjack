@@ -19,10 +19,6 @@ public class Players {
         return new Players(players);
     }
 
-    public int countPlayer() {
-        return players.size();
-    }
-
     private void validate(List<Player> players) {
         validateEntryNotEmpty(players);
         validateEachPlayerNameUnique(players);
