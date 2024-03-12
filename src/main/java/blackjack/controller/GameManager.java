@@ -10,15 +10,15 @@ import blackjack.view.InputView;
 import blackjack.view.MessageResolver;
 import blackjack.view.OutputView;
 
-public class BlackjackGame {
+public class GameManager {
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView(new MessageResolver());
 
-    public BlackjackGame() {
+    public GameManager() {
     }
 
-    public void play() {
+    public void start() {
         Participants participants = Participants.create(inputView.readNames());
         CardDeck cardDeck = CardDeck.createShuffledFullCardDeck();
 
