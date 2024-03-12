@@ -1,47 +1,37 @@
 package blackjack.domain.gamer;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.dto.CardDto;
-import blackjack.dto.GamerHandDto;
+import java.util.ArrayList;
 
 public abstract class BlackjackGamer {
 
-	private final Name name;
-	private final Hand hand;
+    private final Hand hand;
 
-	public BlackjackGamer(Name name) {
-		this.name = name;
-		this.hand = new Hand(new ArrayList<>());
-	}
+    public BlackjackGamer() {
+        this.hand = new Hand(new ArrayList<>());
+    }
 
-	public abstract boolean canReceiveCard();
+    public abstract boolean canReceiveCard();
 
-	public void initCard(Deck deck) {
-		addCard(deck.draw());
-		addCard(deck.draw());
-	}
+    public void initCard(Deck deck) {
+        addCard(deck.draw());
+        addCard(deck.draw());
+    }
 
-	public void addCard(Card card) {
-		hand.add(card);
-	}
+    public void addCard(Card card) {
+        hand.add(card);
+    }
 
-	public Card getFirstCard() {
-		return hand.getFirstCard();
-	}
+    public Card getFirstCard() {
+        return hand.getFirstCard();
+    }
 
-	public int getScore() {
-		return hand.calculateScore();
-	}
+    public int getScore() {
+        return hand.calculateScore();
+    }
 
-	public Name getName() {
-		return name;
-	}
-
-	public Hand getHand() {
-		return hand;
-	}
+    public Hand getHand() {
+        return hand;
+    }
 }

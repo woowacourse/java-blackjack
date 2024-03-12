@@ -8,9 +8,10 @@ import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.dto.DealerInitialHandDto;
 import blackjack.dto.DealerResultDto;
-import blackjack.dto.GamerHandDto;
-import blackjack.dto.GamersHandDto;
+import blackjack.dto.HandDto;
 import blackjack.dto.PlayerGameResultsDto;
+import blackjack.dto.PlayerHandDto;
+import blackjack.dto.PlayersHandDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.object.Command;
@@ -55,7 +56,7 @@ public class BlackjackController {
 
     private void printInitialHands(Players players, Dealer dealer) {
         DealerInitialHandDto dealerInitialHandDto = DealerInitialHandDto.fromDealer(dealer);
-        GamersHandDto playersInitialHandDto = GamersHandDto.fromPlayers(players);
+        PlayersHandDto playersInitialHandDto = PlayersHandDto.fromPlayers(players);
 
         outputView.printInitialHands(dealerInitialHandDto, playersInitialHandDto);
     }
@@ -69,7 +70,7 @@ public class BlackjackController {
     private void distributeCardToPlayer(Deck deck, Player player) {
         while (canDistribute(player)) {
             player.addCard(deck.draw());
-            outputView.printPlayerHand(GamerHandDto.fromBlackjackGamer(player));
+            outputView.printPlayerHand(PlayerHandDto.fromPlayer(player));
         }
     }
 
@@ -84,20 +85,22 @@ public class BlackjackController {
     private void distributeCardToDealer(Dealer dealer, Deck deck) {
         while (dealer.canReceiveCard()) {
             dealer.addCard(deck.draw());
-            outputView.printDealerMessage(dealer.getName().value());
+            outputView.printDealerMessage();
         }
     }
 
     private void printAllGamerScores(Dealer dealer, Players players) {
-        outputView.printEmptyLine();
-        outputView.printScore(GamerHandDto.fromBlackjackGamer(dealer), dealer.getScore());
+        printDealerScore(dealer);
         printPlayersScores(players);
     }
 
+    private void printDealerScore(Dealer dealer) {
+        outputView.printEmptyLine();
+        outputView.printDealerHandScore(HandDto.fromHand(dealer.getHand()));
+    }
+
     private void printPlayersScores(Players players) {
-        for (Player player : players.getPlayers()) {
-            outputView.printScore(GamerHandDto.fromBlackjackGamer(player), player.getScore());
-        }
+        outputView.printPlayersHandScore(PlayersHandDto.fromPlayers(players));
     }
 
     private void printResult(Dealer dealer, Players players) {
