@@ -11,14 +11,14 @@ public class CardGameJudge {
         final Map<Player, WinningStatus> result = new LinkedHashMap<>();
 
         for (final Player player : players) {
-            WinningStatus winningStatus = doesPlayerWin(dealer, player);
+            WinningStatus winningStatus = findPlayerWinningStatus(dealer, player);
             result.put(player, winningStatus);
         }
 
         return new CardGameResult(result);
     }
 
-    private WinningStatus doesPlayerWin(final Dealer dealer, final Player player) {
+    private WinningStatus findPlayerWinningStatus(final Dealer dealer, final Player player) {
         if (player.isBust()) {
             return WinningStatus.LOSE;
         }
