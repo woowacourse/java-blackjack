@@ -5,6 +5,8 @@ import domain.card.CardSelectStrategy;
 import domain.card.Deck;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Dealer extends Gamer {
 
@@ -25,5 +27,13 @@ public class Dealer extends Gamer {
         List<Card> rawHoldingCards = new ArrayList<>(blackJackGameMachine.getRawHoldingCards());
         rawHoldingCards.remove(0);
         return List.copyOf(rawHoldingCards);
+    }
+
+    public Map<GameResult, Integer> calculateGameResultWithPlayers(Players players) {
+        List<GameResult> gameResults = players.calculateGameResultsWith(this).stream()
+                .map(GameResult::changeBase)
+                .toList();
+        return gameResults.stream()
+                .collect(Collectors.groupingBy(gameResult -> gameResult, Collectors.summingInt(value -> 1)));
     }
 }

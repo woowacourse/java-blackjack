@@ -1,13 +1,11 @@
 package controller;
 
-import static domain.blackjack.GameResultCalculator.calculate;
-import static java.util.stream.Collectors.summingInt;
-
 import domain.blackjack.Dealer;
 import domain.blackjack.DrawResult;
 import domain.blackjack.GameResult;
 import domain.blackjack.HoldingCards;
 import domain.blackjack.Player;
+import domain.blackjack.Players;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.RandomCardSelectStrategy;
@@ -17,7 +15,6 @@ import dto.PlayerDTO;
 import dto.PlayerGameResultDTO;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import view.NameInputView;
 import view.OutputView;
@@ -31,7 +28,7 @@ public class BlackjackController {
     public void startBlackjackGame(Deck deck) {
         OutputView.printStartGame();
         final Dealer dealer = generateDealer();
-        final List<Player> players = generatePlayers();
+        final Players players = generatePlayers();
 
         initialDraw(deck, dealer, players);
         printDealerAndPlayers(dealer, players);
@@ -51,13 +48,14 @@ public class BlackjackController {
         return Dealer.of(HoldingCards.of());
     }
 
-    private List<Player> generatePlayers() {
-        return NameInputView.getNames().stream()
+    private Players generatePlayers() {
+        List<Player> players = NameInputView.getNames().stream()
                 .map(name -> Player.from(name, HoldingCards.of()))
                 .toList();
+        return new Players(players);
     }
 
-    private void initialDraw(Deck deck, Dealer dealer, List<Player> players) {
+    private void initialDraw(Deck deck, Dealer dealer, Players players) {
         final int initialDrawCount = 2;
         IntStream.range(0, initialDrawCount).forEach(index -> {
             players.forEach(player -> playerDraw(deck, player));
@@ -73,7 +71,7 @@ public class BlackjackController {
         return player.draw(deck, new RandomCardSelectStrategy());
     }
 
-    private void printDealerAndPlayers(Dealer dealer, List<Player> players) {
+    private void printDealerAndPlayers(Dealer dealer, Players players) {
         printDealer(dealer);
         players.forEach(BlackjackController::printPlayer);
     }
@@ -90,7 +88,7 @@ public class BlackjackController {
         PlayerOutputView.printWithoutSummationCardPoint(playerDTO);
     }
 
-    private void playersTryDraw(Deck deck, List<Player> players) {
+    private void playersTryDraw(Deck deck, Players players) {
         players.forEach(player -> playerTryDraw(deck, player));
     }
 
@@ -127,29 +125,25 @@ public class BlackjackController {
         DealerOutputView.print(dealerDTO);
     }
 
-    private void printPlayersWithPoint(List<Player> players) {
-        for (Player player : players) {
+    private void printPlayersWithPoint(Players players) {
+        players.forEach(player -> {
             PlayerDTO playerDTO = new PlayerDTO(player.getRawName(), player.getRawHoldingCards(),
                     player.getRawSummationCardPoint());
             PlayerOutputView.print(playerDTO);
-        }
+        });
     }
 
-    private void printDealerGameResult(Dealer dealer, List<Player> players) {
-        Map<GameResult, Integer> dealerGameResultCounts = players.stream()
-                .collect(Collectors.groupingBy(player -> calculate(dealer.getGamer(), player.getGamer()),
-                        summingInt(value -> 1)));
+    private void printDealerGameResult(Dealer dealer, Players players) {
+        Map<GameResult, Integer> dealerGameResultCounts = dealer.calculateGameResultWithPlayers(players);
         DealerGameResultDTO dealerGameResultDTO = new DealerGameResultDTO(dealerGameResultCounts);
         GameResultOutputView.print(dealerGameResultDTO);
     }
 
-    private void printPlayersGameResult(Dealer dealer, List<Player> players) {
-        List<PlayerGameResultDTO> playerGameResultDTOS = players.stream()
-                .map(player -> new PlayerGameResultDTO(player.getRawName(),
-                        calculate(player.getGamer(), dealer.getGamer())))
+    private void printPlayersGameResult(Dealer dealer, Players players) {
+        List<PlayerGameResultDTO> playerGameResultDTOs = players.calculateGameResultsWithAsMap(dealer)
+                .entrySet().stream()
+                .map(entry -> new PlayerGameResultDTO(entry.getKey(), entry.getValue()))
                 .toList();
-        for (PlayerGameResultDTO playerGameResultDTO : playerGameResultDTOS) {
-            GameResultOutputView.print(playerGameResultDTO);
-        }
+        GameResultOutputView.print(playerGameResultDTOs);
     }
 }
