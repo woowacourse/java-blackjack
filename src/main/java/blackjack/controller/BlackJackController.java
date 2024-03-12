@@ -25,6 +25,7 @@ public class BlackJackController {
     public void run() {
         Dealer dealer = new Dealer();
         List<Player> players = inputView.readPlayers();
+        betMoney(players);
         CardDeck cardDeck = new CardDeck(new RandomIndexGenerator());
         BlackJackGame blackJackGame = new BlackJackGame(dealer, players, cardDeck);
         blackJackGame.distributeCards();
@@ -33,6 +34,13 @@ public class BlackJackController {
         executeMultipleTurns(players, blackJackGame);
         outputView.printFinalScore(blackJackGame);
         printGameResults(blackJackGame);
+    }
+
+    private void betMoney(List<Player> players) {
+        for (Player player : players) {
+            int money = inputView.readBetAmount(player);
+            player.betMoney(money);
+        }
     }
 
     private void executeMultipleTurns(List<Player> players, BlackJackGame blackJackGame) {

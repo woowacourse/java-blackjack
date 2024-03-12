@@ -5,6 +5,7 @@ import blackjack.model.results.Result;
 
 public class Player extends Participant {
     private final String name;
+    private int betAmount = 0;
 
     public Player(String name) {
         validateName(name);
@@ -47,5 +48,9 @@ public class Player extends Participant {
 
     public String getName() {
         return name;
+    }
+
+    public void betMoney(int betMoney) {
+        betAmount += betMoney;
     }
 }

@@ -36,6 +36,25 @@ public class InputView {
         return Command.generate(input);
     }
 
+    public int readBetAmount(Player player) {
+        return repeatUntilSuccess(() -> getBetAmount(player));
+    }
+
+    private int getBetAmount(Player player) {
+        String message = String.format("%s의 배팅 금액은?", player.getName());
+        System.out.println(message);
+        String input = scanner.nextLine();
+        return convertToMoneyAmount(input);
+    }
+
+    private int convertToMoneyAmount(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("베팅 금액은 숫자이어야한다");
+        }
+    }
+
     private void validateMultipleInputs(String input) {
         if (input == null || input.isBlank() || input.endsWith(INPUT_DELIMITER)) {
             throw new IllegalArgumentException("입력값은 공백이거나 구분자로 끝날 수 없다.");

@@ -132,4 +132,13 @@ class PlayerTest {
         Result playerResultStatus = player.getResult(comparisonCards);
         assertThat(playerResultStatus).isEqualTo(expected);
     }
+
+    @DisplayName("플레이어는 베팅을 할 수 있다")
+    @Test
+    void betMoney() {
+        Player player = new Player("ella");
+        player.betMoney(3000);
+
+        assertThat(player).extracting("betAmount").isEqualTo(3000);
+    }
 }
