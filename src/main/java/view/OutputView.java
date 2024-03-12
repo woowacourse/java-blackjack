@@ -1,9 +1,11 @@
 package view;
 
-import domain.BlackjackResult;
 import domain.Denomination;
 import domain.Player;
 import domain.Suit;
+import dto.GameResult;
+import dto.PlayerResult;
+import dto.WinLose;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,13 +50,12 @@ public class OutputView {
         });
     }
 
-    public static void printBlackjackResults(final BlackjackResult blackjackResult) {
+    public static void printBlackjackResults(final GameResult gameResult) {
         System.out.println();
         System.out.println("## 최종 승패");
-        for (final var player : blackjackResult.results().keySet()) {
-            final Integer win = blackjackResult.getWin(player);
-            final Integer lose = blackjackResult.getLose(player);
-            printWinOrLose(player, win, lose);
+        System.out.println(gameResult.dealerResult().name() + " : " + gameResult.dealerResult().winCount() + "승" + gameResult.dealerResult().loseCount() + "패");
+        for (final PlayerResult playerResult : gameResult.playerResults()) {
+            System.out.println(playerResult.name() + " : " + (playerResult.winLose() == WinLose.WIN ? "승" : "패"));
         }
     }
 

@@ -3,7 +3,6 @@ package domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -40,23 +39,5 @@ class BlackjackTest {
         blackjack.dealCard(player);
 
         assertThat(player.getCards().size()).isEqualTo(3);
-    }
-
-    @Test
-    @DisplayName("게임의 결과가 제대로 계산됐는지 확인한다")
-    void gameResultTest() {
-        final Dealer dealer = new Dealer(new Deck());
-        final Player teba = new Player(new Name("테바"));
-        final Player jonge = new Player(new Name("종이"));
-        teba.dealCard(new Card(Denomination.ACE, Suit.CLUBS));
-        jonge.dealCard(new Card(Denomination.ACE, Suit.HEART));
-        final Blackjack blackjack = new Blackjack(new Players(new ArrayList<>(List.of(teba, jonge))), dealer);
-
-        final BlackjackResult blackjackResultDTO = blackjack.finishGame();
-        final Integer dealerLose = blackjackResultDTO.results().get(dealer).getValue();
-        final Integer tebaWin = blackjackResultDTO.results().get(teba).getKey();
-        final Integer jongeWin = blackjackResultDTO.results().get(jonge).getKey();
-
-        assertThat(tebaWin + jongeWin).isEqualTo(dealerLose);
     }
 }

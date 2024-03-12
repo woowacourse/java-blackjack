@@ -1,4 +1,5 @@
 import domain.*;
+import dto.GameResult;
 import view.InputView;
 import view.OutputView;
 
@@ -10,8 +11,8 @@ public class Application {
         playGame(blackjack);
         OutputView.printResults(blackjack.getPlayers());
 
-        final BlackjackResult blackjackResult = blackjack.finishGame();
-        OutputView.printBlackjackResults(blackjackResult);
+        final GameResult gameResult = blackjack.finishGame();
+        OutputView.printBlackjackResults(gameResult);
     }
 
     private static void playGame(final Blackjack blackjack) {

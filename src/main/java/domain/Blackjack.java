@@ -1,5 +1,7 @@
 package domain;
 
+import dto.GameResult;
+
 import java.util.List;
 
 public class Blackjack {
@@ -31,10 +33,9 @@ public class Blackjack {
         player.dealCard(dealer.drawSingleCard());
     }
 
-
-    public BlackjackResult finishGame() {
+    public GameResult finishGame() {
         final BlackjackRule blackjackRule = new BlackjackRule();
-        return blackjackRule.calculateResult(players.getPlayers(), dealer);
+        return blackjackRule.calculate(players, dealer);
     }
 
     public List<Player> getPlayers() {

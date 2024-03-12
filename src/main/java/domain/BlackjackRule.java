@@ -1,41 +1,40 @@
 package domain;
 
-import java.util.LinkedHashMap;
+import dto.DealerResult;
+import dto.GameResult;
+import dto.PlayerResult;
+import dto.WinLose;
+
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class BlackjackRule {
-    private final Map<Player, Entry<Integer, Integer>> results = new LinkedHashMap<>();
+    public GameResult calculate(final Players players, final Dealer dealer) {
+        final List<PlayerResult> playerResults = players.getPlayers().stream()
+                .map(player -> match(player, dealer))
+                .toList();
 
-    public BlackjackResult calculateResult(final List<Player> players, final Player dealer) {
-        results.put(dealer, Map.entry(0, 0));
-        players.forEach(player -> {
-            results.put(player, Map.entry(0, 0));
-            judgeWinningHand(dealer, player);
-        });
-        return new BlackjackResult(results);
+        final long playerWins = countPlayerWins(playerResults);
+
+        final DealerResult dealerResult = new DealerResult(dealer.getName(), (int) (players.size() - playerWins), (int) playerWins);
+        return new GameResult(playerResults, dealerResult);
     }
 
-    private void judgeWinningHand(final Player dealer, final Player player) {
+    private long countPlayerWins(final List<PlayerResult> playerResults) {
+        return playerResults.stream()
+                .filter(playerResult -> playerResult.winLose() == WinLose.WIN)
+                .count();
+    }
+
+    private PlayerResult match(final Player player, final Dealer dealer) {
         if (player.isBust()) {
-            calculate(dealer, player, 0, 1);
-            return;
+            return new PlayerResult(player.getName(), WinLose.LOSE);
         }
         if (dealer.isBust()) {
-            calculate(dealer, player, 1, 0);
-            return;
+            return new PlayerResult(player.getName(), WinLose.WIN);
         }
         if (dealer.score() >= player.score()) {
-            calculate(dealer, player, 0, 1);
+            return new PlayerResult(player.getName(), WinLose.LOSE);
         }
-    }
-
-    private void calculate(final Player dealer, final Player player, final int win, final int lose) {
-        final Entry<Integer, Integer> playerEntry = results.get(player);
-        final Entry<Integer, Integer> dealerEntry = results.get(dealer);
-
-        results.put(player, Map.entry(playerEntry.getKey() + win, playerEntry.getValue() + lose));
-        results.put(dealer, Map.entry(dealerEntry.getKey() + lose, dealerEntry.getValue() + win));
+        return new PlayerResult(player.getName(), WinLose.WIN);
     }
 }
