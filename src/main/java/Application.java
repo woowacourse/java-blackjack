@@ -1,9 +1,9 @@
-
 import domain.BlackJackGame;
 import domain.Card;
 import domain.Deck;
-import domain.Player;
 import domain.Name;
+import domain.Player;
+import domain.Players;
 import java.util.List;
 import util.ConsoleReader;
 import view.InputView;
@@ -24,15 +24,15 @@ public class Application {
     private static List<Name> setPlayerNames() {
         List<String> inputs = InputView.readNames(CONSOLE_READER);
         return inputs.stream()
-                    .map(Name::new)
-                    .toList();
+                .map(Name::new)
+                .toList();
     }
 
     private static BlackJackGame setGame(List<Name> names) {
         List<Player> players = names.stream()
                 .map(Player::new)
                 .toList();
-        return new BlackJackGame(players);
+        return new BlackJackGame(new Players(players));
     }
 
     private static void playInitialStep(List<Name> names, BlackJackGame blackJackGame, Deck deck) {
@@ -40,10 +40,10 @@ public class Application {
         blackJackGame.initialDealing(deck);
 
         OutputView.printDealerInitialCards(blackJackGame.getDealerCards());
-        printPlayersInitialCards(blackJackGame,names);
+        printInitialPlayersCards(blackJackGame, names);
     }
 
-    private static void printPlayersInitialCards(BlackJackGame blackJackGame, List<Name> names) {
+    private static void printInitialPlayersCards(BlackJackGame blackJackGame, List<Name> names) {
         names.forEach(name -> printInitialPlayerCards(name, blackJackGame));
         OutputView.printNewLine();
     }
@@ -54,7 +54,7 @@ public class Application {
     }
 
     private static void playHitStep(List<Name> playerNames, BlackJackGame blackJackGame, Deck deck) {
-        for(Name playerName : playerNames) {
+        for (Name playerName : playerNames) {
             hitPlayerStep(playerName, blackJackGame, deck);
         }
         hitDealerStep(blackJackGame, deck);
@@ -81,7 +81,8 @@ public class Application {
         }
     }
 
-    private static void printPlayerHitResult(String answer, Name name, BlackJackGame blackJackGame, boolean isFirstTurn) {
+    private static void printPlayerHitResult(String answer, Name name, BlackJackGame blackJackGame,
+                                             boolean isFirstTurn) {
         if (isFirstTurn || answer.equals("y")) {
             List<Card> cards = blackJackGame.getCardsFromName(name);
             OutputView.printPlayerCards(name, cards);

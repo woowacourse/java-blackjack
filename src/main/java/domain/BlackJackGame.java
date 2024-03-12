@@ -1,31 +1,19 @@
 package domain;
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BlackJackGame {
-    private static final int MAX_PLAYERS_COUNT = 8;
-    private final List<Player> players;
+    private final Players players;
     private final Dealer dealer;
 
-    public BlackJackGame(List<Player> players) {
-        validatePlayerCount(players);
+    public BlackJackGame(Players players) {
         this.players = players;
         this.dealer = new Dealer();
     }
 
-    private void validatePlayerCount(List<Player> players) {
-        if (players.size() > MAX_PLAYERS_COUNT) {
-            throw new IllegalArgumentException("플레이어의 수는 최대 8명 입니다.");
-        }
-    }
-
     public void initialDealing(Deck deck) {
-        takeTwoCards(dealer,deck);
-        players.forEach(player -> this.takeTwoCards(player, deck));
-    }
-
-    private void takeTwoCards(Gamer gamer, Deck deck) {
-        gamer.pickTwoCards(deck);
+        dealer.pickTwoCards(deck);
+        players.pickTwoCards(deck);
     }
 
     public List<Card> getDealerCards() {
@@ -33,22 +21,17 @@ public class BlackJackGame {
     }
 
     public List<Card> getCardsFromName(Name name) {
-        return searchFromName(name).getCards();
+        return players.getCardsFromName(name);
     }
 
     public void hitFromName(Name name, Deck deck) {
-        searchFromName(name).hit(deck);
+        players.hitFromName(name, deck);
     }
 
     public boolean isBustFromName(Name name) {
-        return searchFromName(name).isBust();
+        return players.isBustFromName(name);
     }
 
-    private Gamer searchFromName(Name name) {
-        return players.stream().filter(player -> player.isName(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 참여자 입니다."));
-    }
     public int hitDealer(Deck deck) {
         return dealer.hit(deck);
     }
@@ -56,8 +39,7 @@ public class BlackJackGame {
     public BlackJackResult getGameResult() {
         return new BlackJackResult(
                 dealer.getTotalScore(),
-                players.stream()
-                        .collect(Collectors.toMap(Gamer::getName, Gamer::getTotalScore)));
+                players.getPlayersTotalScores());
     }
 
     public int getDealerScore() {
@@ -65,6 +47,6 @@ public class BlackJackGame {
     }
 
     public int getScoreFromName(Name name) {
-        return searchFromName(name).getTotalScore();
+        return players.getTotalScore(name);
     }
 }
