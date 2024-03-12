@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class OutputView {
     public static void printInitInfosOfPlayersAndDealer(final PlayerInfos initPlayerInfos, final DealerInfo initDealerInfo) {
         System.out.println();
-        System.out.println("딜러와 pobi, jason에게 2장을 나누었습니다.");
+        System.out.println("딜러와 " + playerNamesToMessage(initPlayerInfos) + "에게 2장을 나누었습니다.");
         printInitDealerInfo(initDealerInfo);
 
         for (final PlayerInfo playerInfo : initPlayerInfos.playerInfos()) {
@@ -17,13 +17,17 @@ public class OutputView {
         System.out.println();
     }
 
+    private static String playerNamesToMessage(final PlayerInfos initPlayerInfos) {
+        return String.join(", ", initPlayerInfos.playerInfos().stream().map(PlayerInfo::name).toList());
+    }
+
     private static void printInitDealerInfo(final DealerInfo initDealerInfo) {
-        System.out.println(initDealerInfo.name() + "카드:" + cardInfosToMessage(initDealerInfo.cardInfos().subList(0, 1)));
+        System.out.println(initDealerInfo.name() + "카드: " + cardInfosToMessage(initDealerInfo.cardInfos().subList(0, 1)));
     }
 
     public static void printInfosOfPlayersAndDealer(final PlayerInfos playerInfos, final DealerInfo dealerInfo) {
         System.out.println();
-        System.out.println(dealerInfo.name() + "카드:" + cardInfosToMessage(dealerInfo.cardInfos()));
+        System.out.println(dealerInfo.name() + "카드: " + cardInfosToMessage(dealerInfo.cardInfos()));
 
         for (final PlayerInfo playerInfo : playerInfos.playerInfos()) {
             printPlayerInfo(playerInfo);
@@ -31,7 +35,7 @@ public class OutputView {
     }
 
     public static void printPlayerInfo(final PlayerInfo playerInfo) {
-        System.out.println(playerInfo.name() + "카드:" + cardInfosToMessage(playerInfo.cardInfos()));
+        System.out.println(playerInfo.name() + "카드: " + cardInfosToMessage(playerInfo.cardInfos()));
     }
 
     private static String cardInfosToMessage(final List<CardInfo> cardInfos) {
