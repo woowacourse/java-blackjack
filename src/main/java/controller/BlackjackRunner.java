@@ -5,14 +5,10 @@ import static view.Command.YES;
 import domain.Deck;
 import domain.DeckGenerator;
 import domain.ExceptionHandler;
-import domain.game.GameResult;
-import domain.game.PlayerResults;
+import domain.user.Dealer;
+import domain.user.GameUsers;
 import domain.user.Player;
-import domain.user.Users;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import domain.user.Players;
 import view.Command;
 import view.InputView;
 import view.OutputView;
@@ -20,25 +16,29 @@ import view.OutputView;
 public class BlackjackRunner {
     public void play() {
         Deck deck = new Deck(new DeckGenerator().generate());
-        Users users = ExceptionHandler.handle(InputView::inputNames);
-        users.putStartCards(deck);
-        OutputView.printStartStatus(users);
-        run(users, deck);
-        showGameResult(users);
+        Players players = ExceptionHandler.handle(InputView::inputPlayers);
+        GameUsers gameUsers = new GameUsers(players, deck);
+        OutputView.printStartStatus(gameUsers);
+        doPlayersTurn(players, deck);
+        doDealersTurn(gameUsers.getDealer(), deck);
+        printGameResult(gameUsers);
     }
 
-    private void run(Users users, Deck deck) {
-        for (Player player : users.getPlayers()) {
+    private void doPlayersTurn(Players players, Deck deck) {
+        for (Player player : players.getPlayers()) {
             hitOrStay(player, deck);
         }
-        while (users.isDealerCardAddable()) {
-            users.addDealerCard(deck.getNewCard());
+    }
+
+    private void doDealersTurn(Dealer dealer, Deck deck) {
+        while (dealer.isAddable()) {
+            dealer.addCard(deck.getNewCard());
             OutputView.printDealerHitMessage();
         }
     }
 
     private void hitOrStay(Player player, Deck deck) {
-        while (YES == inputValidatedCommand(player.getNameValue()) && !player.busted()) {
+        while (!player.busted() && YES == inputValidatedCommand(player.getNameValue())) {
             player.addCard(deck.getNewCard());
             printByState(player);
         }
@@ -55,20 +55,8 @@ public class BlackjackRunner {
         }
     }
 
-    private void showGameResult(Users users) {
-        OutputView.printAllUserCardsAndSum(users);
-        OutputView.printFinalResult(generatePlayerResults(users));
-    }
-
-    private PlayerResults generatePlayerResults(Users users) {
-        Map<Player, GameResult> playerResults = users.getPlayers()
-                .stream()
-                .collect(Collectors.toMap(
-                        Function.identity(),
-                        users::generatePlayerResult,
-                        (oldValue, newValue) -> newValue,
-                        LinkedHashMap::new
-                ));
-        return new PlayerResults(playerResults);
+    private void printGameResult(GameUsers gameUsers) {
+        OutputView.printAllUserCardsAndSum(gameUsers);
+        OutputView.printFinalResult(gameUsers.generatePlayerResults());
     }
 }

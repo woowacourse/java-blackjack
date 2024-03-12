@@ -13,7 +13,7 @@ public class Players {
         this.players = players;
     }
 
-    public void putStartCards(Deck deck) {
+    void putStartCards(Deck deck) {
         for (Player player : players) {
             player.addCard(deck.getNewCard());
             player.addCard(deck.getNewCard());

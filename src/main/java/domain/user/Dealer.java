@@ -12,7 +12,7 @@ public class Dealer {
         this.hand = new Hand();
     }
 
-    public void putStartCards(Deck deck) {
+    void putStartCards(Deck deck) {
         hand.addCard(deck.getNewCard());
         hand.addCard(deck.getNewCard());
     }
