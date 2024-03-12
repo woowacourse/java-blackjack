@@ -66,12 +66,12 @@ public class BlackjackGame {
     }
 
     private boolean drawPlayerCard(final Player player, final CardGenerator cardGenerator) {
-        boolean command = retryOnException(() -> inputView.askHitOrStandCommand(player.getName()));
-        if (command) {
+        Command command = retryOnException(() -> inputView.askPlayerDrawOrStandCommand(player.getName()));
+        if (command.isDraw()) {
             player.draw(cardGenerator);
             outputView.printPlayerDrawingCards(player);
         }
-        return player.canDraw() && command;
+        return player.canDraw() && command.isDraw();
     }
 
     private void drawDealerCards(final Dealer dealer, final CardGenerator cardGenerator) {
