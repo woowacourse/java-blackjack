@@ -32,7 +32,7 @@ public class Participants {
         return hands.remove(hands.size() - 1);
     }
 
-    public BlackJackGameResult calculateWinOrLose() {
+    public BlackJackGameResult calculateGameResult() {
         return new BlackJackGameResult(players.getPlayers(), dealer.calculateScore());
     }
 

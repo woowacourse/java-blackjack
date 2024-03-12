@@ -36,8 +36,8 @@ public class BlackjackGame {
         startSetting(gameBoard);
         proceedPlayerTurn(gameBoard);
         proceedDealerTurn(gameBoard);
-        handleResult(gameBoard);
-        handleWinOrLose(gameBoard);
+        handleScoreResult(gameBoard);
+        handleGameResult(gameBoard);
     }
 
     private void startSetting(GameBoard gameBoard) {
@@ -78,7 +78,7 @@ public class BlackjackGame {
         }
     }
 
-    private void handleResult(GameBoard gameBoard) {
+    private void handleScoreResult(GameBoard gameBoard) {
         GameParticipant dealer = gameBoard.getDealer();
         ParticipantDto dealerDto = new ParticipantDto(dealer);
         List<ParticipantDto> playersDto = gameBoard.getPlayers()
@@ -89,8 +89,8 @@ public class BlackjackGame {
         outputView.printScoreResult(dealerDto, playersDto);
     }
 
-    private void handleWinOrLose(GameBoard gameBoard) {
-        BlackJackGameResult blackJackGameResult = gameBoard.calculateWinOrLose();
+    private void handleGameResult(GameBoard gameBoard) {
+        BlackJackGameResult blackJackGameResult = gameBoard.calculateGameResult();
         outputView.printWinOrLose(blackJackGameResult);
     }
 }

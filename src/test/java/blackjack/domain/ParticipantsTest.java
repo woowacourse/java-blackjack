@@ -89,7 +89,7 @@ class ParticipantsTest {
                 new ArrayList<>(List.of(hands1, hands2, hands3))
         );
 
-        BlackJackGameResult blackJackGameResult = participants.calculateWinOrLose();
+        BlackJackGameResult blackJackGameResult = participants.calculateGameResult();
         assertThat(blackJackGameResult.getResult(siso)).isFalse();
     }
 
