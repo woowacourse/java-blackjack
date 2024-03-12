@@ -49,7 +49,6 @@ public class Score implements Comparable<Score> {
         if (value < MINIMUM_SCORE || MAXIMUM_SCORE < value) {
             throw new IllegalArgumentException(INVALID_SCORE_MESSAGE);
         }
-        ;
     }
 
     private static boolean isBustWithAce(final int sum, final int aceCount) {
