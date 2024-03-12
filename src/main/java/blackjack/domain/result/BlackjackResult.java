@@ -1,7 +1,7 @@
 package blackjack.domain.result;
 
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
 
 public class BlackjackResult {
     private final List<ParticipantProfit> participantProfits;

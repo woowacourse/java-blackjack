@@ -1,21 +1,19 @@
 package blackjack.domain.participant;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.HandGenerator;
 import blackjack.domain.card.Number;
-import blackjack.domain.card.Shape;
+import blackjack.domain.card.*;
 import blackjack.testutil.CardDrawer;
 import blackjack.testutil.CustomDeck;
-import java.util.List;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerTest {
     @DisplayName("플레이어는 처음에 두 장의 카드를 오픈한다.")

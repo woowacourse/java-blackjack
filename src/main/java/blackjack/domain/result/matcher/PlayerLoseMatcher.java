@@ -8,7 +8,7 @@ public class PlayerLoseMatcher implements PlayerResultMatcher {
     public MatchResult match(Player player, Dealer dealer) {
         boolean isDealerBust = dealer.isBust();
         if (player.isBust() && !isDealerBust) {
-                return MatchResult.MATCH;
+            return MatchResult.MATCH;
         }
         if ((!isDealerBust && player.getScore() < dealer.getScore()) || (dealer.isNaturalBlackjack() && !player.isNaturalBlackjack())) {
             return MatchResult.MATCH;

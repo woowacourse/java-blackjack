@@ -24,7 +24,7 @@ public class Participants {
             participantProfits.add(playerBet.calculateProfit(playerResult));
         }
         ParticipantProfit dealerProfit = calculateDealerProfit(participantProfits);
-        participantProfits.add(DEALER_PROFIT_INDEX ,dealerProfit);
+        participantProfits.add(DEALER_PROFIT_INDEX, dealerProfit);
         return new BlackjackResult(participantProfits);
     }
 

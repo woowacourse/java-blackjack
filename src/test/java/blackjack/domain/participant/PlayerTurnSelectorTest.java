@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class PlayerTurnSelectorTest {
     private static final String VALID_NAME = "감자";
+
     @DisplayName("현재 플레이어를 올바르게 반환한다.")
     @Test
     void getPlayerTest() {
