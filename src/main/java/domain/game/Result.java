@@ -34,10 +34,10 @@ public class Result {
     }
 
     private static WinLose decideWinLoseByScore(Player player, Dealer dealer) {
-        if (dealer.score() < player.score()) {
+        if (dealer.score().isLessThan(player.score())) {
             return WinLose.WIN;
         }
-        if (dealer.score() > player.score()) {
+        if (dealer.score().isGreaterThan(player.score())) {
             return WinLose.LOSE;
         }
         return WinLose.TIE;

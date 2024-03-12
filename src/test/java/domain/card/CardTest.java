@@ -28,17 +28,26 @@ class CardTest {
     @ParameterizedTest
     @MethodSource("rankScoreStream")
     @DisplayName("성공: Card 객체는 올바른 점수를 가지고 있다")
-    void score_NoException_WithMethodSource(Rank rank, int score) {
+    void score_NoException_WithMethodSource(Rank rank, Score score) {
         Card card = new Card(rank, DIAMOND);
         assertThat(card.score()).isEqualTo(score);
     }
 
     static Stream<Arguments> rankScoreStream() {
         return Stream.of(
-            arguments(KING, 10), arguments(QUEEN, 10), arguments(JACK, 10), arguments(TEN, 10),
-            arguments(NINE, 9), arguments(EIGHT, 8), arguments(SEVEN, 7),
-            arguments(SIX, 6), arguments(FIVE, 5), arguments(FOUR, 4),
-            arguments(THREE, 3), arguments(TWO, 2), arguments(ACE, 1)
+            arguments(KING, new Score(10)),
+            arguments(QUEEN, new Score(10)),
+            arguments(JACK, new Score(10)),
+            arguments(TEN, new Score(10)),
+            arguments(NINE, new Score(9)),
+            arguments(EIGHT, new Score(8)),
+            arguments(SEVEN, new Score(7)),
+            arguments(SIX, new Score(6)),
+            arguments(FIVE, new Score(5)),
+            arguments(FOUR, new Score(4)),
+            arguments(THREE, new Score(3)),
+            arguments(TWO, new Score(2)),
+            arguments(ACE, new Score(1))
         );
     }
 }

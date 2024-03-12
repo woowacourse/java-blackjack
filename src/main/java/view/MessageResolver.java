@@ -1,6 +1,7 @@
 package view;
 
 import domain.card.Card;
+import domain.card.Score;
 import domain.card.Symbol;
 import domain.game.Result;
 import domain.game.WinLose;
@@ -61,8 +62,8 @@ public class MessageResolver {
         return String.format("%s 카드: %s", participant.getName(), cardsText(participant.getCards()));
     }
 
-    public String scoreText(int score) {
-        return String.valueOf(score);
+    public String scoreText(Score score) {
+        return String.valueOf(score.toInt());
     }
 
     public String dealerResultText(Dealer dealer, Result result) {

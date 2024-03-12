@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.Rank;
+import domain.card.Score;
 import domain.card.Symbol;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -47,6 +48,6 @@ class ParticipantTest {
     void score_NoException() {
         Participant participant = new Player(new Name("name"));
         participant.receive(new Card(Rank.NINE, Symbol.CLUB));
-        assertThat(participant.score()).isEqualTo(9);
+        assertThat(participant.score()).isEqualTo(new Score(9));
     }
 }

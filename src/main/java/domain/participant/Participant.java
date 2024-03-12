@@ -2,12 +2,11 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.ParticipantCards;
+import domain.card.Score;
 import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
-
-    private static final int BLACKJACK_SCORE = 21;
 
     private final Name name;
     private final ParticipantCards cards;
@@ -35,12 +34,12 @@ public abstract class Participant {
         throw new IllegalStateException("[ERROR] 카드를 받을 수 없는 상태입니다.");
     }
 
-    public int score() {
-        return cards.calculateScore();
+    public Score score() {
+        return cards.totalScore();
     }
 
     public boolean isBusted() {
-        return cards.calculateScore() > BLACKJACK_SCORE;
+        return cards.totalScore().isBust();
     }
 
     public String getName() {

@@ -2,12 +2,8 @@ package domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class ParticipantCards {
-
-    private static final int BLACKJACK_SCORE = 21;
-    private static final int ACE_SPECIAL_SCORE = 10;
 
     private final List<Card> cards;
 
@@ -23,29 +19,13 @@ public class ParticipantCards {
         cards.addAll(receivedCards);
     }
 
-    public int calculateScore() {
-        final int score = initialScore();
-        if (score > BLACKJACK_SCORE) {
-            return score;
-        }
-
-        return IntStream.rangeClosed(0, aceCount())
-            .map(index -> (score + index * ACE_SPECIAL_SCORE))
-            .filter(number -> number <= BLACKJACK_SCORE)
-            .max()
-            .orElseThrow(() -> new IllegalStateException("[ERROR] 점수 계산에 실패했습니다."));
+    public Score totalScore() {
+        return Score.totalScoreOf(this);
     }
 
-    private int initialScore() {
+    public boolean hasAce() {
         return cards.stream()
-            .mapToInt(Card::score)
-            .sum();
-    }
-
-    private int aceCount() {
-        return (int) cards.stream()
-            .filter(card -> card.rank() == Rank.ACE)
-            .count();
+            .anyMatch(card -> card.rank() == Rank.ACE);
     }
 
     public List<Card> getCards() {
