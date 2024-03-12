@@ -3,6 +3,7 @@ package domain;
 import domain.participant.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -29,7 +30,8 @@ public class NameTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"", "123456"})
+    @EmptySource
+    @ValueSource(strings = {"123456"})
     @DisplayName("실패: 글자수 위반 - 경계값(0, 6)")
     void construct_Exception_IllegalNameLength(String rawName) {
         assertThatThrownBy(() -> new Name(rawName))
