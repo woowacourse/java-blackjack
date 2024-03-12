@@ -18,10 +18,6 @@ public class HandsScore {
         return new HandsScore(totalScore);
     }
 
-    public HandsScore add(int score) {
-        return new HandsScore(handsScore + score);
-    }
-
     public boolean isHigherThan(HandsScore score) {
         return handsScore > score.handsScore;
     }
