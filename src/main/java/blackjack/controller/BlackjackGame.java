@@ -5,6 +5,7 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participants;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
+import blackjack.domain.rule.Judge;
 import blackjack.view.InputView;
 import blackjack.view.MessageResolver;
 import blackjack.view.OutputView;
@@ -27,7 +28,7 @@ public class BlackjackGame {
         drawToPlayers(participants.getPlayers(), cardDeck);
         drawToDealer(participants.getDealer(), cardDeck);
         outputView.printParticipantsHandScore(participants);
-        outputView.printParticipantsResult(participants.getDealer(), participants.getPlayers());
+        outputView.printParticipantsResult(new Judge(participants));
     }
 
     private void drawToPlayers(Players players, CardDeck cardDeck) {

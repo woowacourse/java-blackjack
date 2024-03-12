@@ -1,9 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participants;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
+import blackjack.domain.rule.Judge;
 
 public class OutputView {
 
@@ -34,9 +33,9 @@ public class OutputView {
         System.out.println(messageResolver.resolveParticipantsHandScoreMessage(participants));
     }
 
-    public void printParticipantsResult(Dealer dealer, Players players) {
+    public void printParticipantsResult(Judge judge) {
         System.out.println(messageResolver.resolveResultDescriptionMessage());
-        System.out.println(messageResolver.resolveDealerResult(dealer.judge(players)));
-        System.out.println(messageResolver.resolvePlayersResult(players, dealer));
+        System.out.println(messageResolver.resolveDealerResultMessage(judge));
+        System.out.println(messageResolver.resolvePlayersResultMessage(judge));
     }
 }

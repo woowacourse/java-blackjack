@@ -10,8 +10,10 @@ import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
 
+import blackjack.domain.rule.Judge;
 import blackjack.view.mapper.CardRankMapper;
 import blackjack.view.mapper.CardSuitMapper;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class MessageResolver {
@@ -99,18 +101,24 @@ public class MessageResolver {
         return String.join("", LINE_SEPARATOR, "## 최종 승패");
     }
 
-    public String resolveDealerResult(Result result) {
-        return String.format("%s: %d승 %d패", DEALER_NAME, result.getWinCount(), result.getLoseCount());
+    public String resolveDealerResultMessage(Judge judge) {
+        return judge.getResults().entrySet().stream()
+                .filter(entry -> entry.getKey() instanceof Dealer)
+                .findFirst()
+                .map(Entry::getValue)
+                .map(dealer -> String.format("%s: %d승 %d패", DEALER_NAME, dealer.getWinCount(), dealer.getLoseCount()))
+                .orElseThrow(IllegalArgumentException::new);
     }
 
-    public String resolvePlayersResult(Players players, Dealer dealer) {
-        return players.getPlayers().stream()
-                .map(player -> resolvePlayerResult(player, dealer))
+    public String resolvePlayersResultMessage(Judge judge) {
+        return judge.getResults().entrySet().stream()
+                .filter(entry -> entry.getKey() instanceof Player)
+                .map(entry -> resolvePlayerResult((Player) entry.getKey(), entry.getValue()))
                 .collect(Collectors.joining(LINE_SEPARATOR));
     }
 
-    private String resolvePlayerResult(Player player, Dealer dealer) {
-        if (player.judge(dealer).getWinCount() == 1) {
+    private String resolvePlayerResult(Player player, Result result) {
+        if (result.getWinCount() == 1) {
             return String.format("%s: 승", player.getPlayerName().getValue());
         }
         return String.format("%s: 패", player.getPlayerName().getValue());
