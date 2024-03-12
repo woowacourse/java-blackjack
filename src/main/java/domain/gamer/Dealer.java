@@ -18,14 +18,4 @@ public class Dealer extends Gamer {
     public boolean isOverTurn() {
         return getHand().sum() >= STAY_CONDITION;
     }
-
-    @Override
-    public boolean isDealer() {
-        return true;
-    }
-
-    @Override
-    public boolean isPlayer() {
-        return false;
-    }
 }

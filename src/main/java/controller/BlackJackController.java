@@ -5,7 +5,6 @@ import domain.card.Deck;
 import domain.card.ShuffledCardsGenerator;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
-import domain.gamer.Gamers;
 import domain.gamer.Name;
 import domain.gamer.Player;
 import domain.gamer.Players;
@@ -17,22 +16,24 @@ import view.OutputView;
 public class BlackJackController {
 
     public void start() {
-        Gamers gamers = readGamers();
+        Dealer dealer = new Dealer();
+        Players players = createPlayers();
         Deck deck = createDeck();
         BlackJackGame blackJackGame = new BlackJackGame(deck);
-        blackJackGame.prepareCards(gamers);
-        OutputView.printInitialCardsMessage(gamers);
-        handOutCard(blackJackGame, gamers);
-        OutputView.printCardsAndResult(gamers);
-        PlayerResults playerResults = blackJackGame.findPlayerResult(gamers);
+        blackJackGame.prepareCards(dealer, players);
+        OutputView.printInitialCardsMessage(dealer, players);
+        handOutCard(blackJackGame, dealer, players);
+        OutputView.printCardsAndResult(dealer, players);
+        PlayerResults playerResults = blackJackGame.findPlayerResult(dealer, players);
         OutputView.printFinalGameResult(playerResults);
     }
 
-    private Gamers readGamers() {
+    private Players createPlayers() {
         List<String> names = InputView.readPlayerNames();
-        Players players = createPlayers(names);
-        Dealer dealer = new Dealer();
-        return Gamers.of(players, dealer);
+        List<Player> players = names.stream()
+                .map(name -> new Player(new Name(name)))
+                .toList();
+        return new Players(players);
     }
 
     private Deck createDeck() {
@@ -40,23 +41,13 @@ public class BlackJackController {
         return Deck.from(shuffledCardsGenerator.generate());
     }
 
-    private Players createPlayers(final List<String> names) {
-        List<Player> players = names.stream()
-                .map(name -> new Player(new Name(name)))
-                .toList();
-        return new Players(players);
-    }
-
-    private void handOutCard(final BlackJackGame blackJackGame, final Gamers gamers) {
-        List<Player> players = gamers.findPlayers();
+    private void handOutCard(final BlackJackGame blackJackGame, final Dealer dealer, final Players players) {
         askPlayersHit(blackJackGame, players);
-
-        Dealer dealer = gamers.findDealer();
         askDealerHit(blackJackGame, dealer);
     }
 
-    private void askPlayersHit(final BlackJackGame blackJackGame, final List<Player> players) {
-        for (Player player : players) {
+    private void askPlayersHit(final BlackJackGame blackJackGame, final Players players) {
+        for (Player player : players.getPlayers()) {
             askSelection(blackJackGame, player);
         }
     }
@@ -75,9 +66,11 @@ public class BlackJackController {
     }
 
     private void askDealerHit(final BlackJackGame blackJackGame, final Dealer dealer) {
+        OutputView.printNewLine();
         while (tryGiveCard(blackJackGame, dealer)) {
             OutputView.printDealerHit(dealer);
         }
+        OutputView.printNewLine();
     }
 
     private boolean tryGiveCard(final BlackJackGame blackJackGame, final Gamer gamer) {

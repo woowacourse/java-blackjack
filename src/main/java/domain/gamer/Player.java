@@ -20,14 +20,4 @@ public class Player extends Gamer {
     public boolean isOverTurn() {
         return getHand().isBust();
     }
-
-    @Override
-    public boolean isDealer() {
-        return false;
-    }
-
-    @Override
-    public boolean isPlayer() {
-        return true;
-    }
 }

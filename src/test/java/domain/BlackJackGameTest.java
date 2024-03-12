@@ -9,7 +9,6 @@ import domain.card.Deck;
 import domain.card.Rank;
 import domain.card.Symbol;
 import domain.gamer.Dealer;
-import domain.gamer.Gamers;
 import domain.gamer.Name;
 import domain.gamer.Player;
 import domain.gamer.Players;
@@ -22,7 +21,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BlackJackGameTest {
-    Deck deck;
+    BlackJackGame blackJackGame;
+    Dealer dealer;
 
     @BeforeEach
     void init() {
@@ -36,7 +36,9 @@ public class BlackJackGameTest {
         Card card8 = new Card(Symbol.DIAMOND, Rank.THREE);
 
         List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8);
-        deck = Deck.from(cards);
+        Deck deck = Deck.from(cards);
+        blackJackGame = new BlackJackGame(deck);
+        dealer = new Dealer();
     }
 
     @DisplayName("딜러와 플레이어에게 카드를 2장씩 준다.")
@@ -47,20 +49,16 @@ public class BlackJackGameTest {
         Name name2 = new Name("kaki");
         Player player1 = new Player(name1);
         Player player2 = new Player(name2);
-        Dealer dealer = new Dealer();
         Players players = new Players(List.of(player1, player2));
 
-        Gamers gamers = Gamers.of(players, dealer);
-        BlackJackGame blackJackGame = new BlackJackGame(deck);
-
         // when
-        blackJackGame.prepareCards(gamers);
+        blackJackGame.prepareCards(dealer, players);
 
         // then
         assertAll(
-                () -> assertThat(gamers.getGamers().get(0).getCardsInHand()).hasSize(2),
-                () -> assertThat(gamers.getGamers().get(1).getCardsInHand()).hasSize(2),
-                () -> assertThat(gamers.getGamers().get(2).getCardsInHand()).hasSize(2)
+                () -> assertThat(dealer.getCardsInHand()).hasSize(2),
+                () -> assertThat(players.getPlayers().get(0).getCardsInHand()).hasSize(2),
+                () -> assertThat(players.getPlayers().get(1).getCardsInHand()).hasSize(2)
         );
     }
 
@@ -68,10 +66,6 @@ public class BlackJackGameTest {
     @Test
     void giveDealerCardSuccessTest() {
         // given
-        Dealer dealer = new Dealer();
-
-        BlackJackGame blackJackGame = new BlackJackGame(deck);
-
         blackJackGame.giveCard(dealer); // 3 다이아몬드
         blackJackGame.giveCard(dealer); // 9 클로버
 
@@ -93,8 +87,6 @@ public class BlackJackGameTest {
         Name name = new Name("lini");
         Player player = new Player(name);
 
-        BlackJackGame blackJackGame = new BlackJackGame(deck);
-
         blackJackGame.giveCard(player); // 3 다이아몬드
         blackJackGame.giveCard(player); // 9 클로버
         blackJackGame.giveCard(player); // 5 하트
@@ -115,10 +107,6 @@ public class BlackJackGameTest {
     @Test
     void giveDealerCardFailureTest() {
         // given
-        Dealer dealer = new Dealer();
-
-        BlackJackGame blackJackGame = new BlackJackGame(deck);
-
         blackJackGame.giveCard(dealer); // 3 다이아몬드
         blackJackGame.giveCard(dealer); // 9 클로버
         blackJackGame.giveCard(dealer); // 5 하트
@@ -141,8 +129,6 @@ public class BlackJackGameTest {
         // given
         Name name = new Name("lini");
         Player player = new Player(name);
-
-        BlackJackGame blackJackGame = new BlackJackGame(deck);
 
         blackJackGame.giveCard(player); // 3 다이아몬드
         blackJackGame.giveCard(player); // 9 클로버
@@ -172,12 +158,9 @@ public class BlackJackGameTest {
         Name name2 = new Name("jason");
         Player pobi = new Player(name1);
         Player jason = new Player(name2);
-
         Players players = new Players(List.of(pobi, jason));
-        Gamers gamers = Gamers.of(players, dealer);
 
-        BlackJackGame blackJackGame = new BlackJackGame(deck);
-        blackJackGame.prepareCards(gamers);
+        blackJackGame.prepareCards(dealer, players);
 
         blackJackGame.giveCard(pobi);
         blackJackGame.giveCard(dealer);
@@ -186,7 +169,7 @@ public class BlackJackGameTest {
         // 제이슨 : 7 클로버, K 스페이드 (합계 : 17)
 
         // when
-        PlayerResults playerResults = blackJackGame.findPlayerResult(gamers);
+        PlayerResults playerResults = blackJackGame.findPlayerResult(dealer, players);
 
         // then
         assertAll(

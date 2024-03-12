@@ -15,10 +15,6 @@ public abstract class Gamer {
 
     public abstract boolean isOverTurn();
 
-    public abstract boolean isDealer();
-
-    public abstract boolean isPlayer();
-
     public void receiveInitialCard(final Card card) {
         hand.add(card);
     }

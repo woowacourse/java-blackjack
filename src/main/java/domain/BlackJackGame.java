@@ -3,8 +3,8 @@ package domain;
 import domain.card.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
-import domain.gamer.Gamers;
 import domain.gamer.Player;
+import domain.gamer.Players;
 import domain.result.PlayerResults;
 import domain.result.Result;
 import java.util.LinkedHashMap;
@@ -18,9 +18,11 @@ public class BlackJackGame {
         this.deck = deck;
     }
 
-    public void prepareCards(final Gamers gamers) {
-        for (Gamer gamer : gamers.getGamers()) {
-            giveInitialCards(gamer);
+    public void prepareCards(final Dealer dealer, final Players players) {
+        giveInitialCards(dealer);
+
+        for (Player player : players.getPlayers()) {
+            giveInitialCards(player);
         }
     }
 
@@ -34,10 +36,9 @@ public class BlackJackGame {
         gamer.hit(deck.draw());
     }
 
-    public PlayerResults findPlayerResult(final Gamers gamers) {
-        Dealer dealer = gamers.findDealer();
+    public PlayerResults findPlayerResult(final Dealer dealer, final Players players) {
         Map<Player, Result> playerResults = new LinkedHashMap<>();
-        for (Player player : gamers.findPlayers()) {
+        for (Player player : players.getPlayers()) {
             Result playerResult = Result.getPlayerResultWith(player, dealer);
             playerResults.put(player, playerResult);
         }
