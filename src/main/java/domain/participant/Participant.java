@@ -9,7 +9,7 @@ import java.util.List;
 public class Participant {
 
     private static final int BLACK_JACK_COUNT = 21;
-    public static final int MIN_CARD_COUNT = 2;
+    private static final int MIN_CARD_COUNT = 2;
 
     protected Hands hands;
     private final Name name;

@@ -14,11 +14,7 @@ public class BetAmount {
         }
     }
 
-    public double mul(WinStatus winStatus) {
+    public double calculateProfit(WinStatus winStatus) {
         return betAmount * winStatus.getBetMultiplier();
-    }
-
-    public int getBetAmount() {
-        return betAmount;
     }
 }

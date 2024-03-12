@@ -9,6 +9,8 @@ import java.util.Set;
 
 public class BettingResult {
 
+    private static final double BLACKJACK_PROFIT_RATE = 1.5;
+
     private final Map<Participant, BetAmount> bet;
     private final Dealer dealer;
 
@@ -18,9 +20,9 @@ public class BettingResult {
     }
 
     public double getPayout(Participant participant) {
-        double payout = bet.get(participant).mul(dealer.calculateParticipantWinStatus(participant));
+        double payout = bet.get(participant).calculateProfit(dealer.calculateParticipantWinStatus(participant));
         if (participant.isBlackJack() && dealer.isNotBlackJack()) {
-            return payout * 1.5;
+            return payout * BLACKJACK_PROFIT_RATE;
         }
         return payout;
     }
