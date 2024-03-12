@@ -30,11 +30,20 @@ public class BlackjackGame {
     }
 
     private void play(GameBoard gameBoard) {
+        startBetting(gameBoard);
         startSetting(gameBoard);
         proceedPlayerTurn(gameBoard);
         proceedDealerTurn(gameBoard);
         handleResult(gameBoard);
         handleVictory(gameBoard);
+    }
+
+    private void startBetting(GameBoard gameBoard) {
+        Players players = gameBoard.getPlayers();
+        for(int i = 0; i < players.size(); i++) {
+            int money = inputView.readMoney(players.getOnePlayerName(i).getValue());
+            players.betOnePlayerMoney(money, i);
+        }
     }
 
     private void startSetting(GameBoard gameBoard) {

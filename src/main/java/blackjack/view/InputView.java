@@ -18,6 +18,13 @@ public class InputView {
                 .toList();
     }
 
+    public int readMoney(String name) {
+        System.out.printf("\n%s의 배팅 금액은?\n", name);
+        String money = SCANNER.nextLine();
+        validateMoney(money);
+        return Integer.parseInt(money);
+    }
+
     public boolean readCommand(String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 " + YES + ", 아니오는 " + NO + ")\n", name);
         String command = SCANNER.nextLine();
@@ -28,6 +35,14 @@ public class InputView {
     private void validateCommand(String command) {
         if (!YES.equals(command) && !NO.equals(command)) {
             throw new IllegalArgumentException(YES + " 또는 " + NO + "만 입력 가능합니다.");
+        }
+    }
+
+    private void validateMoney(String money) {
+        try {
+            Integer.parseInt(money);
+        } catch (NumberFormatException e) {
+            System.out.println("배팅 금액이 정수가 아닙니다.");
         }
     }
 }
