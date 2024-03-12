@@ -2,7 +2,10 @@ package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.TestCardDeckCreator;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -23,5 +26,14 @@ class DealerTest {
     void testCanHit(int card1, int card2) {
         Dealer dealer = new Dealer(TestHandCreator.of(card1, card2));
         assertThat(dealer.canHit()).isFalse();
+    }
+
+    @DisplayName("히트 규칙을 기반으로 덱을 완성할 수 있다")
+    @Test
+    void testCompleteDealerHand() {
+        Dealer dealer = new Dealer(TestHandCreator.of(4, 3));
+        CardDeck deck = TestCardDeckCreator.createFrom(9, 10, 5, 4, 3);
+        dealer.completeHand(deck);
+        assertThat(dealer.calculateHandScore().getValue()).isEqualTo(19);
     }
 }
