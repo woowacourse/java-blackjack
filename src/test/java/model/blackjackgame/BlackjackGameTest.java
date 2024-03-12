@@ -40,7 +40,7 @@ class BlackjackGameTest {
         Dealer updatedDealer = blackjackGame.getDealer();
         Players updatedPlayers = blackjackGame.getPlayers();
 
-        assertThat(updatedDealer.cardsSize()).isEqualTo(2);
+        assertThat(updatedDealer.handSize()).isEqualTo(2);
         updatedPlayers.getGroup()
             .forEach(player -> assertThat(player.handSize()).isEqualTo(2));
     }

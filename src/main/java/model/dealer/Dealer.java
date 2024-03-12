@@ -33,7 +33,11 @@ public class Dealer {
         return new Dealer(addedCards);
     }
 
-    public int cardsSize() {
+    public Card getFirstCard() {
+        return hand.getCards().get(0);
+    }
+
+    public int handSize() {
         return hand.size();
     }
 

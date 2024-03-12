@@ -1,6 +1,5 @@
 package model.blackjackgame;
 
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -28,14 +27,14 @@ public class GameResult {
         return new GameResult(dealerScore, playersScore);
     }
 
-    public Map<ResultStatus, Integer> findDealerGameResult() {
+    public DealerResult findDealerGameResult() {
         Map<ResultStatus, Integer> gameResult = new EnumMap<>(ResultStatus.class);
         for (GameScore playerScore : playersScore) {
             ResultStatus resultStatus = findGameResult(dealerScore, playerScore);
             int previousCount = gameResult.getOrDefault(resultStatus, 0);
             gameResult.put(resultStatus, ++previousCount);
         }
-        return Collections.unmodifiableMap(gameResult);
+        return new DealerResult(gameResult);
     }
 
     public ResultStatus findGameResult(GameScore self, GameScore opponent) {

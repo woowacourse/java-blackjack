@@ -41,6 +41,6 @@ class DealerTest {
         Dealer updatedDealer = dealer.hitCard(card);
 
         int expectedSize = cards.size() + 1;
-        assertThat(updatedDealer.cardsSize()).isEqualTo(expectedSize);
+        assertThat(updatedDealer.handSize()).isEqualTo(expectedSize);
     }
 }

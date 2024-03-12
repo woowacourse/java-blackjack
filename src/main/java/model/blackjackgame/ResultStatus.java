@@ -2,8 +2,8 @@ package model.blackjackgame;
 
 public enum ResultStatus {
     WIN("승"),
-    LOOSE("패"),
-    PUSH("무");
+    PUSH("무"),
+    LOOSE("패");
 
     private final String displayName;
 
