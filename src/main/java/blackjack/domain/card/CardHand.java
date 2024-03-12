@@ -22,7 +22,7 @@ public class CardHand {
         int sum = calculateSum();
 
         if (hasAce()) {
-            return sumAllWithBonusScore(sum);
+            return addBonusScoreIfNotBust(sum);
         }
         return sum;
     }
@@ -38,7 +38,7 @@ public class CardHand {
                 .anyMatch(Card::isAce);
     }
 
-    private int sumAllWithBonusScore(int sum) {
+    private int addBonusScoreIfNotBust(int sum) {
         int sumWithBonusScore = sum + ACE_BONUS_SCORE;
 
         if (sumWithBonusScore <= BLACKJACK_SCORE) {
