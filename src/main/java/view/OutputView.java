@@ -15,10 +15,14 @@ public class OutputView {
         System.out.println(message);
     }
 
+    public void printInitialHand(PlayerDto playerDto) {
+        System.out.println(buildInitialHand(playerDto));
+    }
+
     public void printInitialHand(List<PlayerDto> playerDtos) {
         StringBuilder stringBuilder = new StringBuilder();
         for (PlayerDto playerDto : playerDtos) {
-            stringBuilder.append(buildInitialHand(playerDto));
+            stringBuilder.append(buildInitialHand(playerDto)).append("\n");
         }
 
         System.out.println(stringBuilder);
@@ -26,10 +30,10 @@ public class OutputView {
 
     private String buildInitialHand(PlayerDto playerDto) {
         if (playerDto.name().equals("딜러")) {
-            return playerDto.name() + ": " + playerDto.hands().get(0) + "\n";
+            return playerDto.name() + "카드: " + playerDto.hands().get(0);
         }
 
-        return buildPlayerCards(playerDto) + "\n";
+        return buildPlayerCards(playerDto);
     }
 
     public void printHandAfterHit(PlayerDto playerDto) {
@@ -41,17 +45,18 @@ public class OutputView {
     }
 
     public void printFinalHandAndScore(List<PlayerDto> playerDtos, ScoreDto scoreDto) {
+        System.out.println();
         for (PlayerDto playerDto : playerDtos) {
             System.out.println(buildPlayerCardsWithResult(playerDto, scoreDto.getByPlayerName(playerDto.name())));
         }
     }
 
     private String buildPlayerCardsWithResult(PlayerDto playerDto, int score) {
-        return String.format("%s %s - 결과: %d", playerDto.name(), buildPlayerCards(playerDto), score);
+        return String.format("%s - 결과: %d", buildPlayerCards(playerDto), score);
     }
 
     private String buildPlayerCards(PlayerDto playerDto) {
-        return String.join(", ", playerDto.hands());
+        return playerDto.name() + "카드: " + String.join(", ", playerDto.hands());
     }
 
     public void printWinLoss(ResultDto resultDto) {
