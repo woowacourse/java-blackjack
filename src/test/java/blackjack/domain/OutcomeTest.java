@@ -10,6 +10,7 @@ import static blackjack.domain.card.Value.KING;
 import static blackjack.domain.card.Value.QUEEN;
 import static blackjack.domain.card.Value.SEVEN;
 import static blackjack.domain.card.Value.SIX;
+import static blackjack.domain.card.Value.TEN;
 import static blackjack.domain.card.Value.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,7 +39,9 @@ class OutcomeTest {
                 Arguments.arguments(
                         List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, ACE)), false),
                 Arguments.arguments(
-                        List.of(new Card(DIAMOND, JACK), new Card(CLOVER, QUEEN), new Card(SPADE, TWO)), true)
+                        List.of(new Card(DIAMOND, JACK), new Card(CLOVER, QUEEN), new Card(SPADE, TWO)), true),
+                Arguments.arguments(
+                        List.of(new Card(DIAMOND, QUEEN), new Card(CLOVER, SEVEN), new Card(SPADE, ACE), new Card(SPADE, ACE), new Card(SPADE, TEN)), true)
         );
     }
 
@@ -153,4 +156,3 @@ class OutcomeTest {
         );
     }
 }
-

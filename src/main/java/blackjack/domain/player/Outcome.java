@@ -63,7 +63,7 @@ public class Outcome {
 
     private int calculateScoreAceExists(List<Card> cards, int score) {
         int convertedAceAmount = 0;
-        int currentBigAceAmount = (int) cards.stream().map(Card::isAce).count();
+        int currentBigAceAmount = (int) cards.stream().filter(Card::isAce).count();
         while (isBusted(score) && convertedAceAmount < currentBigAceAmount) {
             score -= CONVERTED_ACE_DIFFERENCE;
             convertedAceAmount++;
