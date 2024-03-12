@@ -44,16 +44,15 @@ public class Application {
     }
 
     private static void drawCardDuringPlayerTurn(final Player player, final Blackjack blackjack) {
-        if (player.isBust()) {
-            return;
-        }
-        while (wantToHit(player)) {
+        while (player.isNotBust() && wantToHit(player)) {
             blackjack.dealCard(player);
         }
         OutputView.printPlayerInfo(PlayerInfo.from(player));
     }
 
     private static boolean wantToHit(final Player player) {
-        return InputView.inputHitCommand(player.name()).equals("y");
+        final String input = InputView.inputHitCommand(player.name());
+        final UserCommand userCommand = UserCommand.fromInput(input);
+        return userCommand.isYes();
     }
 }
