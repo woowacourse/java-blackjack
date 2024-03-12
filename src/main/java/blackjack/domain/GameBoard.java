@@ -29,16 +29,20 @@ public class GameBoard {
         return dealer.openFirstCard();
     }
 
-    public void hit(final Dealer dealer) {
+    public void hitPlayer() {
         dealer.draw();
     }
 
-    public void hit(final Player player) {
+    public void hitPlayer(final Player player) {
         player.draw(dealer.drawPlayerCard());
     }
 
-    public boolean canHit(final Gamer gamer) {
-        return gamer.canDraw();
+    public boolean canDealerHit() {
+        return dealer.canDraw();
+    }
+
+    public boolean canPlayerHit(final Player player) {
+        return player.canDraw();
     }
 
     public List<Outcome> getDealerOutcome() {

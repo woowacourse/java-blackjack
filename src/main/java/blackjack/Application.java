@@ -77,16 +77,15 @@ public class Application {
     }
 
     private static void hitPlayer(final GameBoard gameBoard, final Player player) {
-        while (gameBoard.canHit(player) && InputView.readDoesWantHit(player.getName())) {
-            gameBoard.hit(player);
+        while (gameBoard.canPlayerHit(player) && InputView.readDoesWantHit(player.getName())) {
+            gameBoard.hitPlayer(player);
             OutputView.printCurrentState(createPlayerDto(player));
         }
     }
 
     private static void hitDealer(final GameBoard gameBoard) {
-        final Dealer dealer = gameBoard.getDealer();
-        while (gameBoard.canHit(dealer)) {
-            gameBoard.hit(dealer);
+        while (gameBoard.canDealerHit()) {
+            gameBoard.hitPlayer();
             OutputView.printDealerDrawMessage();
         }
     }
