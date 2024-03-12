@@ -6,10 +6,14 @@ public class Player extends Participant {
 
     private final String name;
 
+    public Player(final String name) {
+        this(name, new Hand());
+    }
+
     public Player(final String name, final Hand hand) {
+        super(hand);
         validateNullAndEmptyName(name);
         this.name = name.trim();
-        this.hand = hand;
     }
 
     private void validateNullAndEmptyName(final String name) {

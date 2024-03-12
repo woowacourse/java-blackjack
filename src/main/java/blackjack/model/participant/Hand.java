@@ -6,24 +6,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-    private static final int MIN_INITIAL_CARD_SIZE = 2;
     private static final int BLACKJACK_SCORE = 21;
     private static final int BLACKJACK_CARD_SIZE = 2;
 
-    private final List<Card> cards;
+    private final List<Card> cards = new ArrayList<>();
 
-    public Hand(final List<Card> cards) {
-        validateSize(cards);
-        this.cards = new ArrayList<>(cards);
+    public Hand() {
     }
 
-    private void validateSize(final List<Card> cards) {
-        if (cards.size() < MIN_INITIAL_CARD_SIZE) {
-            throw new IllegalArgumentException("카드는 두 장 이상이어야 합니다.");
-        }
+    // TODO: 없애기
+    public Hand(List<Card> cards) {
+        this.cards.addAll(cards);
     }
 
-    public void addCard(final Card card) {
+    public void add(final List<Card> cards) {
+        this.cards.addAll(cards);
+    }
+
+    public void add(final Card card) {
         cards.add(card);
     }
 

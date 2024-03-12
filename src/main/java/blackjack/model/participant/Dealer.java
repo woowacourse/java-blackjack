@@ -3,6 +3,7 @@ package blackjack.model.participant;
 import blackjack.model.deck.Card;
 import blackjack.model.deck.Deck;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class Dealer extends Participant {
     private static final int HITTABLE_THRESHOLD = 16;
@@ -10,12 +11,12 @@ public class Dealer extends Participant {
     private Deck deck;
 
     public Dealer(final Hand hand) {
-        this.hand = hand;
+        this(new Hand(), new Deck());
     }
 
     // TODO: HAND 없애기
     public Dealer(final Hand hand, final Deck deck) {
-        this.hand = hand;
+        super(hand);
         this.deck = deck;
     }
 

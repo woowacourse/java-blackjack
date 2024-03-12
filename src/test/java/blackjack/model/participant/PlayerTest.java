@@ -57,6 +57,16 @@ class PlayerTest {
     }
 
     @Test
+    @DisplayName("플레이어는 초기 카드 2장을 받는다.")
+    void receiveInitialCards() {
+        Player player = new Player("몰리");
+        List<Card> cards = List.of(new Card(CLOVER, ACE), new Card(CLOVER, THREE));
+        player.receiveInitialCards(cards);
+
+        assertThat(player.openCards()).containsExactly(new Card(CLOVER, ACE), new Card(CLOVER, THREE));
+    }
+
+    @Test
     @DisplayName("자신이 카드를 추가로 더 받을 수 있는지 확인한다.")
     void checkNotBust() {
         Hand hand = new Hand(List.of(new Card(DIA, TEN), new Card(CLOVER, TEN)));

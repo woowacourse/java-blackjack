@@ -10,7 +10,6 @@ import static blackjack.model.deck.Shape.DIA;
 import static blackjack.model.deck.Shape.HEART;
 import static blackjack.model.deck.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import blackjack.model.deck.Card;
 import java.util.List;
@@ -18,19 +17,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class HandTest {
-    @Test
-    @DisplayName("전달된 카드 리스트에 카드가 2개 미만인 경우 예외를 던진다.")
-    void createCardsLowerSize() {
-        assertThatIllegalArgumentException()
-                .isThrownBy(() -> new Hand(List.of(new Card(CLOVER, ACE))))
-                .withMessage("카드는 두 장 이상이어야 합니다.");
-    }
 
     @Test
     @DisplayName("카드를 추가할 수 있다.")
     void addCard() {
         Hand hand = new Hand(List.of(new Card(CLOVER, FIVE), new Card(CLOVER, FOUR)));
-        hand.addCard(new Card(CLOVER, ACE));
+        hand.add(new Card(CLOVER, ACE));
         assertThat(hand.getCards()).isEqualTo(
                 List.of(new Card(CLOVER, FIVE), new Card(CLOVER, FOUR), new Card(CLOVER, ACE)));
     }

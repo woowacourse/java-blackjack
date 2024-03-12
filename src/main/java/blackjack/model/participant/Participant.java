@@ -6,7 +6,11 @@ import java.util.List;
 public class Participant {
     private static final int HITTABLE_THRESHOLD = 21;
 
-    protected Hand hand;
+    protected final Hand hand;
+
+    public Participant(Hand hand) {
+        this.hand = hand;
+    }
 
     public void receiveInitialCards(final List<Card> cards) {
         hand.add(cards);

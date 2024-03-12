@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public class Players {
@@ -55,6 +56,12 @@ public class Players {
         return players.stream()
                 .map(player -> new NameCardsScore(player.getName(), player.openCards(), player.notifyScore()))
                 .toList();
+    }
+
+    public void receiveInitialCards(Supplier<List<Card>> initialCards) {
+        for (Player player: players) {
+            player.receiveInitialCards(initialCards.get());
+        }
     }
 
     public Stream<Player> stream() {
