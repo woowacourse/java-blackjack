@@ -6,10 +6,7 @@ import java.util.List;
 
 public class TrumpCardFactory {
 
-    private TrumpCardFactory() {
-    }
-
-    public static List<TrumpCard> createCards() {
+    public List<TrumpCard> createCards() {
         List<TrumpCard> trumpCards = new ArrayList<>();
 
         Arrays.stream(Suit.values())
@@ -18,7 +15,7 @@ public class TrumpCardFactory {
         return trumpCards;
     }
 
-    private static List<TrumpCard> createCardsBySuit(Suit suit) {
+    private List<TrumpCard> createCardsBySuit(Suit suit) {
         return Arrays.stream(Rank.values())
                 .map(rank -> new TrumpCard(rank, suit))
                 .toList();

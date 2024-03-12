@@ -15,7 +15,7 @@ public class Deck {
     private final Queue<TrumpCard> trumpCards;
 
     public Deck(final ShuffleStrategy shuffleStrategy) {
-        List<TrumpCard> trumpCards = TrumpCardFactory.createCards();
+        List<TrumpCard> trumpCards = new TrumpCardFactory().createCards();
         shuffleStrategy.shuffle(trumpCards);
 
         this.trumpCards = new LinkedList<>(trumpCards);
