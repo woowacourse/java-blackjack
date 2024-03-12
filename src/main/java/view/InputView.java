@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class InputView {
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    private final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
     public List<String> readPlayerNames() throws IOException {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
@@ -35,8 +35,7 @@ public class InputView {
     }
 
     private String removeBlank(String input) {
-        input = input.replace(" ", "");
-        return input;
+        return input.replace(" ", "");
     }
 
     private void validateCommand(String input) {
