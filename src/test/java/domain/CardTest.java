@@ -37,7 +37,7 @@ class CardTest {
     @ParameterizedTest
     @MethodSource("createCard")
     void getValue(Map.Entry<Card, Integer> input) {
-        int actual = input.getKey().getLetterValue();
+        int actual = input.getKey().getRankValue();
         int expected = input.getValue();
 
         assertThat(actual).isEqualTo(expected);
