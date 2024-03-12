@@ -4,8 +4,7 @@ public enum WinStatus {
 
     WIN(1.0),
     LOSE(-1),
-    BLACKJACK(1.5),
-    DRAW(0);
+    PUSH(0);
 
     private final double betMultiplier;
 

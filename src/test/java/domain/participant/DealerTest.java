@@ -46,23 +46,7 @@ class DealerTest {
         assertThat(winStatus).isEqualTo(WinStatus.WIN);
     }
 
-    @DisplayName("참가자와 딜러의 점수가 같은 경우 카드의 장수가 더 적은 사람이 승리한다.")
-    @Test
-    void isWinnerWhenSameScore() {
-        Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
-        dealer.receiveCard(new Card(Shape.HEART, Rank.ACE));
-
-        Participant participant = new Participant(new Name("one"));
-        participant.receiveCard(new Card(Shape.HEART, Rank.KING));
-        participant.receiveCard(new Card(Shape.HEART, Rank.THREE));
-        participant.receiveCard(new Card(Shape.HEART, Rank.EIGHT));
-
-        WinStatus winStatus = dealer.calculateParticipantWinStatus(participant);
-        assertThat(winStatus).isEqualTo(WinStatus.LOSE);
-    }
-
-    @DisplayName("참가자와 딜러 모두 블랙잭인 경우 무승부(DRAW)로 처리한다.")
+    @DisplayName("참가자와 딜러의 점수가 같은 경우 무승부(DRAW)로 처리한다.")
     @Test
     void isWinnerWhenAllBlackJack() {
         Dealer dealer = new Dealer();
@@ -74,21 +58,6 @@ class DealerTest {
         participant.receiveCard(new Card(Shape.DIA, Rank.ACE));
 
         WinStatus winStatus = dealer.calculateParticipantWinStatus(participant);
-        assertThat(winStatus).isEqualTo(WinStatus.DRAW);
-    }
-
-    @DisplayName("참가자만 블랙잭인 경우 BlackJack으로 처리한다.")
-    @Test
-    void isWinnerWhenParticipantBlackJack() {
-        Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
-        dealer.receiveCard(new Card(Shape.HEART, Rank.TWO));
-
-        Participant participant = new Participant(new Name("one"));
-        participant.receiveCard(new Card(Shape.HEART, Rank.KING));
-        participant.receiveCard(new Card(Shape.DIA, Rank.ACE));
-
-        WinStatus winStatus = dealer.calculateParticipantWinStatus(participant);
-        assertThat(winStatus).isEqualTo(WinStatus.BLACKJACK);
+        assertThat(winStatus).isEqualTo(WinStatus.PUSH);
     }
 }
