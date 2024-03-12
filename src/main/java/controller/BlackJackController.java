@@ -25,26 +25,19 @@ public class BlackJackController {
         Players players = Players.settingPlayers(inputView.inputPlayerNames());
         Dealer dealer = new Dealer();
 
-        settingGame(players, dealer);
+        players.initCard(dealer);
+        showInitialCard(players, dealer);
         playGame(players, dealer);
         showResult(players, dealer);
     }
 
-    private void settingGame(Players players, Dealer dealer) {
-        initCard(players, dealer);
+    private void showInitialCard(Players players, Dealer dealer) {
         outputView.printInitCard(InitCardDto.makeInitCard(players, dealer));
-    }
-
-    private static void initCard(Players players, Dealer dealer) {
-        for (Player player : players.getPlayers()) {
-            player.receiveCard(dealer.dealCard());
-            player.receiveCard(dealer.dealCard());
-        }
     }
 
     private void playGame(Players players, Dealer dealer) {
         players.play(this::playTurn, dealer);
-        while (dealer.isDrawable()) {
+        while (dealer.shouldDraw()) {
             dealer.receiveCard();
             outputView.printDealerAddCard();
         }

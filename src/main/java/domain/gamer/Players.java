@@ -60,6 +60,13 @@ public class Players {
         }
     }
 
+    public void initCard(Dealer dealer) {
+        for (Player player : players) {
+            player.receiveCard(dealer.dealCard());
+            player.receiveCard(dealer.dealCard());
+        }
+    }
+
     public void play(PlayerTurn playerTurn, Dealer dealer) {
         for (Player player : players) {
             playerTurn.playTurn(player, dealer);
