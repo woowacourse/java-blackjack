@@ -8,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
-
     @Test
     @DisplayName("딜러가 카드를 잘 뽑는다.")
     void drawCardTest() {
@@ -22,5 +21,13 @@ public class DealerTest {
         Dealer dealer = new Dealer();
         dealer.setInitialHand();
         assertThat(dealer.getHand().size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("딜러가 돈을 벌었다.")
+    void gainMoneyTest() {
+        Dealer dealer = new Dealer();
+        dealer.gainMoney(3000);
+        assertThat(dealer.getMoney()).isEqualTo(3000);
     }
 }

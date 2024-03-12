@@ -25,4 +25,10 @@ public class Dealer extends Player {
             receiveCard(drawCard());
         }
     }
+
+    public void gainMoney(int money) {
+        betMoney(money);
+    }
+
+
 }
