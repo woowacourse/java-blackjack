@@ -21,22 +21,34 @@ public class Hand {
     }
 
     public int calculateScore() {
-        boolean hasAce = false;
-        int sum = 0;
+        int sumExceptAce = getSumExceptAce();
+        int countAce = getAceCount();
 
-        for (Card card : myCards) {
-            if (card.rank() == Rank.ACE && !hasAce) {
-                hasAce = true;
-                sum += card.rank().get(1);
-                continue;
-            }
-            sum += card.rank().get(0);
+        if (countAce > 0) {
+            return sumExceptAce + getAceSum(sumExceptAce, countAce);
         }
+        return sumExceptAce;
+    }
 
-        if (sum > MAX_LIMIT_SCORE && hasAce) {
-            sum = sum - Rank.ACE.get(1) + Rank.ACE.get(0);
+    private int getSumExceptAce() {
+        return myCards.stream()
+                .filter(card -> card.rank() != Rank.ACE)
+                .mapToInt(card -> card.rank().get(0))
+                .sum();
+    }
+
+    private int getAceCount() {
+        return (int) myCards.stream()
+                .filter(card -> card.rank() == Rank.ACE)
+                .count();
+    }
+
+    private int getAceSum(int sumExceptAce, int countAce) {
+        int sumAce = Rank.ACE.get(1) + (countAce - 1) * Rank.ACE.get(0);
+        if (sumExceptAce + sumAce <= MAX_LIMIT_SCORE) {
+            return sumAce;
         }
-        return sum;
+        return sumAce - Rank.ACE.get(1) + Rank.ACE.get(0);
     }
 
     public boolean isOverLimitScore() {
