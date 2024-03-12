@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Value;
+import blackjack.domain.card.Value;
 
 import java.util.Optional;
 import java.util.stream.Stream;

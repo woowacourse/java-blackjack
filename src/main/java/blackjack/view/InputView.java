@@ -1,7 +1,7 @@
 package blackjack.view;
 
-import blackjack.domain.Batting;
-import blackjack.domain.Name;
+import blackjack.domain.gameresult.Batting;
+import blackjack.domain.participant.Name;
 
 import java.util.LinkedHashMap;
 import java.util.List;
