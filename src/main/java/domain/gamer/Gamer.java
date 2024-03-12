@@ -16,7 +16,7 @@ public abstract class Gamer {
     abstract int getStayCondition();
 
     public boolean canHit() {
-        return calculateTotalScore() >= getStayCondition();
+        return calculateTotalScore() < getStayCondition();
     }
 
     public void receiveInitialCard(final Card card) {
@@ -24,7 +24,7 @@ public abstract class Gamer {
     }
 
     public void hit(final Card card) {
-        if (canHit()) {
+        if (!canHit()) {
             throw new CardReceiveException(CardReceiveException.CAN_NOT_RECEIVE_CARD);
         }
         hand.add(card);
