@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Result;
+import blackjack.domain.game.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import blackjack.domain.participant.Dealer;
@@ -10,7 +10,7 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.PlayerName;
 import blackjack.domain.participant.Players;
 
-import blackjack.domain.rule.Judge;
+import blackjack.domain.game.Judge;
 import blackjack.view.mapper.CardRankMapper;
 import blackjack.view.mapper.CardSuitMapper;
 import java.util.Map.Entry;

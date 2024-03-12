@@ -1,4 +1,4 @@
-package blackjack.domain.rule;
+package blackjack.domain.game;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

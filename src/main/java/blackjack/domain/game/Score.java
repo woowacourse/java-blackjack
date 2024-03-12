@@ -1,4 +1,4 @@
-package blackjack.domain.rule;
+package blackjack.domain.game;
 
 import blackjack.domain.card.CardRank;
 

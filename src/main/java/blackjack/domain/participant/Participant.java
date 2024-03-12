@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.rule.Score;
+import blackjack.domain.game.Score;
 
 public abstract class Participant {
 
