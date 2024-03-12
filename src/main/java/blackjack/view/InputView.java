@@ -37,13 +37,13 @@ public class InputView {
 		}
 	}
 
-	public String readHitOrStand(Player player) {
+	public boolean readHitOrStand(Player player) {
 		System.out.println(
 			String.format("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)", player.getName(), COMMAND_YES, COMMAND_NO));
 		String command = scanner.nextLine();
 		validateCommand(command);
 
-		return command;
+		return command.equals(COMMAND_YES);
 	}
 
 	private void validateCommand(String command) {

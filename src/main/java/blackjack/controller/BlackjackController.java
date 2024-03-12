@@ -63,7 +63,7 @@ public class BlackjackController {
 	}
 
 	private boolean isPlayerInputHit(Player player) {
-		return inputView.readHitOrStand(player).equals("y");
+		return inputView.readHitOrStand(player);
 	}
 
 	private void receiveDealerAdditionalCard(Dealer dealer) {
