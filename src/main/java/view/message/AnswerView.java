@@ -1,10 +1,10 @@
-package view;
+package view.message;
 
 import domain.Answer;
 import java.util.Arrays;
 
 public enum AnswerView {
-    
+
     HIT(Answer.HIT, "y"),
     STAY(Answer.STAY, "n");
 

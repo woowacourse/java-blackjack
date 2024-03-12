@@ -2,8 +2,8 @@ package dto;
 
 import domain.participant.Participant;
 import java.util.List;
-import view.RankView;
-import view.ShapeView;
+import view.message.RankView;
+import view.message.ShapeView;
 
 public record ParticipantDto(String name, List<String> cards, int totalSum) {
 

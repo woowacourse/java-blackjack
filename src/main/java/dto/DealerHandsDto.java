@@ -2,8 +2,8 @@ package dto;
 
 import domain.participant.Dealer;
 import java.util.List;
-import view.RankView;
-import view.ShapeView;
+import view.message.RankView;
+import view.message.ShapeView;
 
 public record DealerHandsDto(String name, String card) {
 

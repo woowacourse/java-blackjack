@@ -1,4 +1,4 @@
-package view;
+package view.message;
 
 import domain.card.Rank;
 import java.util.Arrays;
