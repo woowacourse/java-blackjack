@@ -25,7 +25,7 @@ public class Player {
     }
 
     public int score() {
-        return hand.score();
+        return hand.score().toInt();
     }
 
     public boolean isBust() {

@@ -14,7 +14,7 @@ public class HandTest {
                 new Card(Denomination.ACE, Suit.CLUBS)
         );
 
-        final int score = hand.score();
+        final int score = hand.score().toInt();
 
         Assertions.assertEquals(13, score);
     }
@@ -28,7 +28,7 @@ public class HandTest {
                 new Card(Denomination.KING, Suit.CLUBS)
         );
 
-        final int score = hand.score();
+        final int score = hand.score().toInt();
 
         Assertions.assertEquals(22, score);
     }
@@ -42,7 +42,7 @@ public class HandTest {
                 new Card(Denomination.ACE, Suit.CLUBS)
         );
 
-        final int score = hand.score();
+        final int score = hand.score().toInt();
 
         Assertions.assertEquals(21, score);
     }
