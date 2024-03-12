@@ -4,6 +4,7 @@ import domain.participant.Player;
 import domain.participant.PlayerName;
 import domain.participant.PlayerNames;
 import domain.playingcard.Deck;
+import domain.playingcard.PlayingCards;
 import dto.DealerHandStatusDto;
 import dto.PlayerHandStatusDto;
 import view.InputView;
@@ -14,7 +15,8 @@ import java.util.List;
 public class BlackJackGame {
 
     public void run() {
-        Deck deck = Deck.init();
+        PlayingCards playingCards = PlayingCards.init();
+        Deck deck = Deck.init(playingCards.value());
         Dealer dealer = Dealer.init(deck);
         List<Player> players = initPlayers(deck);
 

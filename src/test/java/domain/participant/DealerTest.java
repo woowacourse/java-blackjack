@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.playingcard.Deck;
 import domain.playingcard.PlayingCard;
+import domain.playingcard.PlayingCards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ public class DealerTest {
     @Test
     void createDealerTest() {
         // When
-        Dealer dealer = Dealer.init(Deck.init());
+        Dealer dealer = Dealer.init(Deck.init(PlayingCards.init().value()));
 
         // Then
         assertThat(dealer).isNotNull();
@@ -42,7 +43,7 @@ public class DealerTest {
     @Test
     void drawTest() {
         // Given
-        Deck deck = Deck.init();
+        Deck deck = Deck.init(PlayingCards.init().value());
         Hand initHand = Hand.init();
         int totalScore = initHand.getTotalScore().value();
         Dealer dealer = new Dealer(initHand);

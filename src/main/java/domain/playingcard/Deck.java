@@ -1,8 +1,9 @@
 package domain.playingcard;
 
-import java.util.*;
-
-import static domain.playingcard.PlayingCardValue.values;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 public class Deck {
     private final Queue<PlayingCard> playingCards;
@@ -11,21 +12,13 @@ public class Deck {
         this.playingCards = playingCards;
     }
 
-    public static Deck init() {
-        Queue<PlayingCard> playingCards = new LinkedList<>();
-        Arrays.stream(PlayingCardShape.values())
-                .flatMap(playingCardShape -> generateCardByShape(playingCardShape).stream())
-                .forEach(playingCards::offer);
+    public static Deck init(final List<PlayingCard> playingCards) {
+        Queue<PlayingCard> queue = new LinkedList<>();
+        playingCards.forEach(queue::offer);
 
-        Collections.shuffle((List<?>) playingCards);
+        Collections.shuffle((List<?>) queue);
 
-        return new Deck(playingCards);
-    }
-
-    private static List<PlayingCard> generateCardByShape(final PlayingCardShape playingCardShape) {
-        return Arrays.stream(values())
-                .map(playingCardValue -> new PlayingCard(playingCardShape, playingCardValue))
-                .toList();
+        return new Deck(queue);
     }
 
     public PlayingCard drawn() {

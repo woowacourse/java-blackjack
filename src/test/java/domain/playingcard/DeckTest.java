@@ -11,7 +11,7 @@ public class DeckTest {
     @Test
     void initDeckTest() {
         // When
-        Deck deck = Deck.init();
+        Deck deck = Deck.init(PlayingCards.init().value());
 
         // Then
         assertThat(deck).isNotNull();
@@ -21,7 +21,7 @@ public class DeckTest {
     @Test
     void drawnTest() {
         // Given
-        Deck deck = Deck.init();
+        Deck deck = Deck.init(PlayingCards.init().value());
 
         // When
         PlayingCard card = deck.drawn();
