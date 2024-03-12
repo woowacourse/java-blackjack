@@ -5,10 +5,10 @@ import java.util.Map;
 
 public class GameResult {
 
-    private final Map<Player, Profit> gameResult;
+    private final Map<Player, Profit> profitResult;
 
-    private GameResult(Map<Player, Profit> gameResult) {
-        this.gameResult = gameResult;
+    public GameResult(Map<Player, Profit> profitResult) {
+        this.profitResult = profitResult;
     }
 
     public static GameResult of(Dealer dealer, Players players) {
@@ -18,20 +18,25 @@ public class GameResult {
     private static Map<Player, Profit> makeGameResult(Dealer dealer, Players players) {
         Map<Player, Profit> gameResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            double profit = Result.calculateProfit(player, dealer);
-            gameResult.put(player, Profit.from(profit));
+            gameResult.put(player, calculateProfit(dealer, player));
         }
         return gameResult;
     }
 
+    private static Profit calculateProfit(Dealer dealer, Player player) {
+        Result result = ResultJudge.makeResult(player, dealer);
+        double profit = Result.calculateProfit(result, player.getBat());
+        return Profit.from(profit);
+    }
+
     public Double getSumOfProfit() {
-        return gameResult.values()
+        return profitResult.values()
                 .stream()
                 .mapToDouble(Profit::getProfit)
                 .sum();
     }
 
-    public Map<Player, Profit> getGameResult() {
-        return gameResult;
+    public Map<Player, Profit> getProfitResult() {
+        return profitResult;
     }
 }

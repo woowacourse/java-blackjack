@@ -67,7 +67,7 @@ public class OutputView {
     public static void printGameResult(String dealerName, GameResult gameResult) {
         System.out.println(FINAL_RESULT_MESSAGE);
         printDealerProfitResult(dealerName, gameResult);
-        printPlayerProfitResult(gameResult.getGameResult());
+        printPlayerProfitResult(gameResult.getProfitResult());
     }
 
     private static String resolvePlayerNamesMessage(List<Player> players) {
