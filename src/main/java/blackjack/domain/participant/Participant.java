@@ -16,6 +16,10 @@ public abstract class Participant {
         this.hand = new Hand(cards);
     }
 
+    protected abstract int getMaxDrawableScore();
+
+    protected abstract int getStartCardSize();
+
     public final int calculateScore() {
         return hand.calculateScore();
     }
@@ -55,8 +59,4 @@ public abstract class Participant {
     public final List<Card> getCards() {
         return hand.getCards();
     }
-
-    protected abstract int getMaxDrawableScore();
-
-    protected abstract int getStartCardSize();
 }
