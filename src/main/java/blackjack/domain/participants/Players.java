@@ -51,6 +51,10 @@ public class Players {
         return players.get(playerIndex).getName();
     }
 
+    public int getOnePlayerMoney(int playerIndex) {
+        return players.get(playerIndex).getMoney();
+    }
+
     public Player getOnePlayer(int playerIndex) {
         return players.get(playerIndex);
     }

@@ -51,7 +51,25 @@ public class GameBoard {
     }
 
     public Map<Player, Boolean> calculateVictory() {
-        return players.calculateVictory(dealer.calculateScore());
+        Map<Player, Boolean> victory = players.calculateVictory(dealer.calculateScore());
+        calculateBettingMoney(victory);
+        return victory;
+    }
+
+    private void calculateBettingMoney(Map<Player, Boolean> victory) {
+        for(Player onePlayer: victory.keySet()) {
+            calculateOnePlayerBettingMoney(victory.get(onePlayer), onePlayer);
+        }
+    }
+
+    private void calculateOnePlayerBettingMoney(Boolean victory, Player onePlayer) {
+        if (victory) {
+            dealer.loseMoney(onePlayer.getMoney());
+            onePlayer.earnBetSuccessMoney();
+            return;
+        }
+        dealer.gainMoney(onePlayer.getMoney());
+        onePlayer.payBetFailMoney();
     }
 
     public Name getPlayerName(int playerIndex) {
