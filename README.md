@@ -20,7 +20,7 @@
 
 # 블랙잭 규칙(BlackjackRule)
 - [x] 딜러, 참가자의 카드를 바탕으로 게임 결과를 생성한다.
-- [x] 블랙잭(21)인 플레이어는 승리한다. 단, 딜러와 참가자 모두 블랙잭이면 딜러가 승리한다.
+- [x] 블랙잭(21)인 플레이어는 승리한다. 단, 딜러와 참가자 모두 블랙잭이면 비긴다.
 - [x] 21이 넘은 플레이어는 패배한다. 단, 딜러와 참가자 모두 버스트가 되면 딜러가 승리한다. 
 - [x] 둘 모두 블랙잭,버스트가 아닐 경우 지닌 카드의 숫자를 계산하여 승패를 결정한다.
 
@@ -63,22 +63,3 @@
 - [x] 나눈 카드를 출력한다.
 - [x] 나누어진 카드와 게임 결과를 출력한다.
 - [x] 게임의 승패를 출력한다.
-
-
-
-TODO:
-
-카드 캐싱 적용하기
-게임 계산 결과 로직 개선
-덱 중복 로직 개선
-
-사용자 이름은 5글자 이하여야한다
-
-
-
-The Pack
-The standard 52-card pack is used, but in most casinos several decks of cards are shuffled together. 
-The six-cards game (312 cards) is the most popular. 
-In addition, the dealer uses a blank plastic card, which is never dealt, 
-but is placed toward the bottom of the pack to indicate when it will be time for the cards to be reshuffled. When four or more decks are used, they are dealt from a shoe (a box that allows the dealer to remove cards one at a time, face down, without actually holding one or more packs).
-
