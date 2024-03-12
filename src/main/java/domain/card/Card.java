@@ -1,12 +1,24 @@
 package domain.card;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Card {
 
-    private static final Map<String, Card> CARD_CACHE = new HashMap<>();
+    private static final Map<String, Card> CARD_POOL;
+
+    static {
+        CARD_POOL = Suit.getValues().stream()
+                .flatMap(suit -> Rank.getValues().stream()
+                        .map(rank -> new Card(rank, suit))
+                )
+                .collect(Collectors.toMap(
+                        card -> toKey(card.getRank(), card.getSuit()),
+                        Function.identity()
+                ));
+    }
 
     private final Rank rank;
     private final Suit suit;
@@ -17,8 +29,11 @@ public class Card {
     }
 
     public static Card of(Rank rank, Suit suit) {
-        String cardKey = rank.name() + "-" + suit.name();
-        return CARD_CACHE.computeIfAbsent(cardKey, key -> new Card(rank, suit));
+        return CARD_POOL.get(toKey(rank, suit));
+    }
+
+    private static String toKey(Rank rank, Suit suit) {
+        return rank.name() + "-" + suit.name();
     }
 
     public boolean isAceCard() {
