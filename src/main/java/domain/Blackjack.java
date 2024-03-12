@@ -28,13 +28,13 @@ public class Blackjack {
     }
 
     public void dealCard(final Player player) {
-        player.dealCard(dealer.drawCard());
+        player.dealCard(dealer.drawSingleCard());
     }
 
 
     public BlackjackResult finishGame() {
         final BlackjackRule blackjackRule = new BlackjackRule();
-        return blackjackRule.finishGame(players.getPlayers(), dealer);
+        return blackjackRule.calculateResult(players.getPlayers(), dealer);
     }
 
     public List<Player> getPlayers() {

@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 public class BlackjackRule {
     private final Map<Player, Entry<Integer, Integer>> results = new LinkedHashMap<>();
 
-    public BlackjackResult finishGame(final List<Player> players, final Player dealer) {
+    public BlackjackResult calculateResult(final List<Player> players, final Player dealer) {
         results.put(dealer, Map.entry(0, 0));
         players.forEach(player -> {
             results.put(player, Map.entry(0, 0));

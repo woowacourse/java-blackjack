@@ -18,7 +18,7 @@ public class Dealer extends Player {
         return calculateScore() < 17;
     }
 
-    public Card drawCard() {
+    public Card drawSingleCard() {
         return deck.draw();
     }
 
