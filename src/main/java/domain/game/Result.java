@@ -25,15 +25,15 @@ public enum Result {
 
     private static boolean isDealerWin(final Dealer dealer, final Player player) {
         return player.isBust()
-                || !dealer.isBust() && dealer.getTotalScore().compareTo(player.getTotalScore()) > 0;
+                || !dealer.isBust() && dealer.getScore().compareTo(player.getScore()) > 0;
     }
 
     private static boolean isPlayerWin(final Dealer dealer, final Player player) {
         return dealer.isBust()
-                || !player.isBust() && dealer.getTotalScore().compareTo(player.getTotalScore()) < 0;
+                || !player.isBust() && dealer.getScore().compareTo(player.getScore()) < 0;
     }
 
     private static boolean isPush(final Dealer dealer, final Player player) {
-        return dealer.getTotalScore().compareTo(player.getTotalScore()) == 0;
+        return dealer.getScore().compareTo(player.getScore()) == 0;
     }
 }

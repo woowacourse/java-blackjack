@@ -52,7 +52,7 @@ public class BlackJackGame {
     public Map<Player, Score> getScores() {
         Map<Player, Score> scores = new LinkedHashMap<>();
         for (Player player : getEveryParticipants()) {
-            scores.put(player, player.getTotalScore());
+            scores.put(player, player.getScore());
         }
         return scores;
     }

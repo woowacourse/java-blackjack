@@ -27,14 +27,14 @@ public class Player {
     }
 
     public boolean isBust() {
-        return getTotalScore().isBust();
+        return getScore().isBust();
     }
 
     public boolean isHittable() {
-        return getTotalScore().compareTo(BLACK_JACK) < 0;
+        return getScore().compareTo(BLACK_JACK) < 0;
     }
 
-    public Score getTotalScore() {
+    public Score getScore() {
         return hand.calculateScore();
     }
 
