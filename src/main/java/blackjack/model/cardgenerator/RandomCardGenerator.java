@@ -10,10 +10,10 @@ public class RandomCardGenerator implements CardGenerator {
     private static final String NO_CARDS = "카드가 없습니다.";
     private static final int DECK_NUMBER = 4;
 
-    private final Queue<Card> cards;
+    private final Queue<Card> decks;
 
     public RandomCardGenerator() {
-        this.cards = generateDecks();
+        this.decks = generateDecks();
     }
 
     private Queue<Card> generateDecks() {
@@ -47,8 +47,8 @@ public class RandomCardGenerator implements CardGenerator {
 
     @Override
     public Card pick() {
-        if (!cards.isEmpty()) {
-            return cards.poll();
+        if (!decks.isEmpty()) {
+            return decks.poll();
         }
         throw new NoSuchElementException(NO_CARDS);
     }
