@@ -7,6 +7,6 @@ public class RandomIndexGenerator implements IndexGenerator {
 
     @Override
     public int generate(int maxRange) {
-        return random.nextInt(maxRange) + 1;
+        return random.nextInt(maxRange);
     }
 }
