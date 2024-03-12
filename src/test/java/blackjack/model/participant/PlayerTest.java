@@ -21,10 +21,10 @@ class PlayerTest {
     @Test
     @DisplayName("참여할 사람은 이름을 가진다.")
     void createPlayer() {
-        String name = "리브";
+        String rawName = "리브";
         Hand hand = new Hand(List.of(new Card(CLOVER, ACE), new Card(CLOVER, THREE)));
-        Player player = Player.of(name, hand);
-        assertThat(player.getName()).isEqualTo(name);
+        Player player = Player.of(rawName, hand);
+        assertThat(player.getName()).isEqualTo(new Name(rawName));
     }
 
     @Test

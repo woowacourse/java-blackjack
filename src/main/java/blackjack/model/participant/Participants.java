@@ -48,8 +48,8 @@ public class Participants {
         }
     }
 
-    public Map<String, List<Card>> collectCardsOfEachPlayer() {
-        Map<String, List<Card>> result = new LinkedHashMap<>();
+    public Map<Name, List<Card>> collectCardsOfEachPlayer() {
+        Map<Name, List<Card>> result = new LinkedHashMap<>();
         for (Player player : players) {
             result.put(player.getName(), player.openCards());
         }
@@ -60,7 +60,7 @@ public class Participants {
         return Collections.unmodifiableList(players);
     }
 
-    public List<String> getNames() {
+    public List<Name> getNames() {
         return players.stream()
                 .map(Player::getName)
                 .toList();

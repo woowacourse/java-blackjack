@@ -3,6 +3,7 @@ package blackjack;
 import blackjack.dto.NameCardsScore;
 import blackjack.model.participant.Dealer;
 import blackjack.model.deck.Deck;
+import blackjack.model.participant.Name;
 import blackjack.model.participant.Player;
 import blackjack.model.participant.Participants;
 import blackjack.model.result.Referee;
@@ -93,7 +94,7 @@ public class BlackJackGame {
     private void printFinalResultCommand(final Referee referee) {
         Map<ResultCommand, Integer> dealerResults = referee.judgeDealerResult();
         OutputView.printDealerFinalResult(dealerResults);
-        Map<String, ResultCommand> playerResults = referee.judgePlayerResult();
+        Map<Name, ResultCommand> playerResults = referee.judgePlayerResult();
         OutputView.printFinalResult(playerResults);
     }
 }

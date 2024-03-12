@@ -42,7 +42,7 @@ public class Player {
         return hand.countSize();
     }
 
-    public String getName() {
-        return name.getValue();
+    public Name getName() {
+        return name;
     }
 }

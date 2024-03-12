@@ -1,5 +1,6 @@
 package blackjack.model.result;
 
+import blackjack.model.participant.Name;
 import blackjack.model.participant.Player;
 import blackjack.model.participant.Participants;
 import java.util.EnumMap;
@@ -15,8 +16,8 @@ public class Referee {
         this.participants = participants;
     }
 
-    public Map<String, ResultCommand> judgePlayerResult() {
-        Map<String, ResultCommand> result = new LinkedHashMap<>();
+    public Map<Name, ResultCommand> judgePlayerResult() {
+        Map<Name, ResultCommand> result = new LinkedHashMap<>();
         for (Player player : participants.getPlayers()) {
             result.put(player.getName(), rule.calculateResult(player));
         }

@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.model.participant.Name;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
@@ -24,8 +25,8 @@ public class InputView {
                 .toList();
     }
 
-    public static boolean readHitOrNot(final String playerName, Supplier<String> reader) {
-        System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    public static boolean readHitOrNot(final Name playerName, Supplier<String> reader) {
+        System.out.println(playerName.getRawName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = reader.get();
         validateHitOrNotCommand(input);
         return YES.equals(input);

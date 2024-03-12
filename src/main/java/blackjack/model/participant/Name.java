@@ -3,11 +3,11 @@ package blackjack.model.participant;
 import java.util.Objects;
 
 public class Name {
-    private final String value;
+    private final String rawName;
 
     public Name(final String name) {
         validateNullAndEmptyName(name);
-        this.value = name;
+        this.rawName = name;
     }
 
     private void validateNullAndEmptyName(final String name) {
@@ -16,8 +16,8 @@ public class Name {
         }
     }
 
-    public String getValue() {
-        return value;
+    public String getRawName() {
+        return rawName;
     }
 
     @Override
@@ -29,11 +29,11 @@ public class Name {
             return false;
         }
         Name name = (Name) o;
-        return Objects.equals(value, name.value);
+        return Objects.equals(rawName, name.rawName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value);
+        return Objects.hash(rawName);
     }
 }

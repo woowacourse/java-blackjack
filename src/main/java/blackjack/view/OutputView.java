@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.dto.NameCardsScore;
 import blackjack.model.deck.Card;
+import blackjack.model.participant.Name;
 import blackjack.model.result.ResultCommand;
 import blackjack.view.display.result.ResultCommandDisplay;
 import blackjack.view.display.deck.ScoreDisplay;
@@ -20,13 +21,15 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printDistributionSubject(final List<String> names) {
-        String formattedName = String.join(", ", names);
+    public static void printDistributionSubject(final List<Name> names) {
+        String formattedName = names.stream()
+                .map(Name::getRawName)
+                .collect(Collectors.joining(", "));
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", formattedName);
     }
 
-    public static void printNameAndCards(final String name, final List<Card> cards) {
-        System.out.println(name + ": " + convert(cards));
+    public static void printNameAndCards(final Name name, final List<Card> cards) {
+        System.out.println(name.getRawName() + ": " + convert(cards));
     }
 
     private static String convert(final List<Card> cards) {
@@ -61,8 +64,8 @@ public class OutputView {
                 .collect(Collectors.joining(" "));
     }
 
-    public static void printFinalResult(final Map<String, ResultCommand> playerResults) {
-        playerResults.forEach((name, result) -> System.out.println(formatFinalResult(name, result)));
+    public static void printFinalResult(final Map<Name, ResultCommand> playerResults) {
+        playerResults.forEach((name, result) -> System.out.println(formatFinalResult(name.getRawName(), result)));
     }
 
     private static String formatFinalResult(final String name, final ResultCommand result) {

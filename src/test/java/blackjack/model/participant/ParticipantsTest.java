@@ -92,7 +92,7 @@ class ParticipantsTest {
                 new Hand(List.of(new Card(CLOVER, ACE), new Card(CLOVER, FIVE))),
                 new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
         );
-        assertThat(Participants.of(names, cards).getNames()).isEqualTo(names);
+        assertThat(Participants.of(names, cards).getNames()).containsExactly(new Name("리브"), new Name("몰리"));
     }
 
     @Test
@@ -104,9 +104,9 @@ class ParticipantsTest {
                 new Hand(List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT)))
         );
 
-        Map<String, List<Card>> expected = new LinkedHashMap<>();
-        expected.put("리브", List.of(new Card(CLOVER, ACE), new Card(CLOVER, FIVE)));
-        expected.put("몰리", (List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))));
+        Map<Name, List<Card>> expected = new LinkedHashMap<>();
+        expected.put(new Name("리브"), List.of(new Card(CLOVER, ACE), new Card(CLOVER, FIVE)));
+        expected.put(new Name("몰리"), (List.of(new Card(CLOVER, FOUR), new Card(CLOVER, EIGHT))));
         assertThat(Participants.of(names, cards).collectCardsOfEachPlayer())
                 .containsExactlyEntriesOf(expected);
     }

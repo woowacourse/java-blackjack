@@ -10,6 +10,7 @@ import blackjack.model.deck.Score;
 import blackjack.model.deck.Shape;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Hand;
+import blackjack.model.participant.Name;
 import blackjack.model.participant.Participants;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -33,7 +34,7 @@ class RefereeTest {
                     new Hand(List.of(new Card(Shape.SPADE, Score.SEVEN), new Card(Shape.DIA, Score.TEN))));
 
             Referee referee = new Referee(new Rule(dealer), participants);
-            assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of("몰리", WIN));
+            assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of(new Name("몰리"), WIN));
         }
 
         @Test
@@ -47,7 +48,7 @@ class RefereeTest {
                             new Card(Shape.DIA, Score.THREE))));
 
             Referee referee = new Referee(new Rule(dealer), participants);
-            assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of("몰리", WIN));
+            assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of(new Name("몰리"), WIN));
         }
     }
 
@@ -66,7 +67,7 @@ class RefereeTest {
                             new Card(Shape.DIA, Score.FOUR))));
 
             Referee referee = new Referee(new Rule(dealer), participants);
-            assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of("몰리", WIN));
+            assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of(new Name("몰리"), WIN));
         }
 
         @Test
@@ -81,7 +82,7 @@ class RefereeTest {
                             new Card(Shape.CLOVER, Score.FIVE), new Card(Shape.DIA, Score.FOUR))));
 
             Referee referee = new Referee(new Rule(dealer), participants);
-            assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of("몰리", WIN));
+            assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of(new Name("몰리"), WIN));
         }
     }
 
@@ -101,7 +102,7 @@ class RefereeTest {
                             new Card(Shape.DIA, Score.TEN))));
 
             Referee referee = new Referee(new Rule(dealer), participants);
-            assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of("몰리", WIN));
+            assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of(new Name("몰리"), WIN));
         }
     }
 
@@ -119,7 +120,7 @@ class RefereeTest {
                     new Hand(List.of(new Card(Shape.HEART, Score.ACE), new Card(Shape.DIA, Score.TEN))));
 
             Referee referee = new Referee(new Rule(dealer), participants);
-            assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of("몰리", DRAW));
+            assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of(new Name("몰리"), DRAW));
         }
 
         @Test
@@ -132,7 +133,7 @@ class RefereeTest {
                     new Hand(List.of(new Card(Shape.HEART, Score.FIVE), new Card(Shape.DIA, Score.FIVE))));
 
             Referee referee = new Referee(new Rule(dealer), participants);
-            assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of("몰리", DRAW));
+            assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of(new Name("몰리"), DRAW));
         }
 
         @Test
@@ -147,7 +148,7 @@ class RefereeTest {
                             new Card(Shape.DIA, Score.NINE))));
 
             Referee referee = new Referee(new Rule(dealer), participants);
-            assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of("몰리", DRAW));
+            assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of(new Name("몰리"), DRAW));
         }
     }
 
@@ -166,10 +167,10 @@ class RefereeTest {
                 new Hand(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN))));
 
         Referee referee = new Referee(new Rule(dealer), participants);
-        Map<String, ResultCommand> expected = new LinkedHashMap<>();
-        expected.put("몰리", LOSE);
-        expected.put("리브", WIN);
-        expected.put("포비", DRAW);
+        Map<Name, ResultCommand> expected = new LinkedHashMap<>();
+        expected.put(new Name("몰리"), LOSE);
+        expected.put(new Name("리브"), WIN);
+        expected.put(new Name("포비"), DRAW);
         assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(expected);
     }
 
