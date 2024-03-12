@@ -1,5 +1,7 @@
 package domain.player;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
+
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
@@ -36,6 +38,13 @@ class ParticipantTest {
         participant.hit(new Card(Rank.ACE, Suit.CLUBS));
 
         Assertions.assertThat(participant.calculateScore()).isEqualTo(21);
+    }
+    
+    @Test
+    @DisplayName("정해진 이름이 없다면 예외가 발생한다")
+    void nameNotDetermined() {
+        final Participant dealer = new Dealer();
+        assertThatCode(dealer::getName).isInstanceOf(IllegalCallerException.class);
     }
 
     @ParameterizedTest
