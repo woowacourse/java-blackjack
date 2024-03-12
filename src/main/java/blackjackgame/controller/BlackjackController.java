@@ -1,18 +1,22 @@
 package blackjackgame.controller;
 
+import blackjackgame.domain.blackjack.BetMakerGamer;
+import blackjackgame.domain.blackjack.BetMoney;
 import blackjackgame.domain.blackjack.BlackjackGame;
 import blackjackgame.domain.blackjack.GameResult;
 import blackjackgame.domain.blackjack.GameResultCalculator;
 import blackjackgame.domain.blackjack.CardHolderGamer;
-import blackjackgame.domain.blackjack.Gamers;
+import blackjackgame.domain.blackjack.HoldingCards;
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.Deck;
 import blackjackgame.dto.CardDTO;
 import blackjackgame.dto.DealerGameResultDTO;
 import blackjackgame.dto.GamerDTO;
 import blackjackgame.dto.PlayerGameResultDTO;
+import blackjackgame.view.BetMoneyInputView;
 import blackjackgame.view.GameResultOutputView;
 import blackjackgame.view.GamerOutputView;
+import blackjackgame.view.NameInputView;
 import blackjackgame.view.OutputView;
 import blackjackgame.view.YesOrNoInputView;
 import java.util.ArrayList;
@@ -21,47 +25,77 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
-
-    private final CardHolderGamer dealer;
-    private final Gamers players;
-
-    private final BlackjackGame blackjackGame;
-
-    public BlackjackController(CardHolderGamer dealer, Gamers players) {
-        this.dealer = dealer;
-        this.players = players;
-
-        blackjackGame = new BlackjackGame(dealer, players);
-    }
+    private static final String DEALER_NAME = "딜러";
 
     public void startBlackjackGame(Deck deck) {
-        initDealerAndPlayers(deck);
-        printDealerAndPlayers();
-
-        playersTryDraw(deck);
-        dealerTryDraw(deck);
-
-        printDealerAndPlayersWithPoint();
-        printDealerAndPlayersGameResult();
+        BlackjackGame blackjackGame = initBlackJackGame();
+        playBlackJackGame(blackjackGame, deck);
     }
 
-    private void initDealerAndPlayers(Deck deck) {
+    private static BlackjackGame initBlackJackGame() {
+        CardHolderGamer cardHolderDealer = makeCardHolderDealer();
+        BetMakerGamer betMakerGamer = makeBetMakerDealer();
+
+        List<String> playerNames = NameInputView.getNames();
+        List<CardHolderGamer> cardHolderGamers = makeCardHolderPlayers(playerNames);
+        List<BetMakerGamer> betMakerGamers = makeBetMakerPlayers(playerNames);
+
+        return new BlackjackGame(cardHolderDealer, betMakerGamer, cardHolderGamers, betMakerGamers);
+    }
+
+    private void playBlackJackGame(BlackjackGame blackjackGame, Deck deck) {
+        initDealerAndPlayers(blackjackGame, deck);
+        printDealerAndPlayers(blackjackGame);
+
+        playersTryDraw(blackjackGame, deck);
+        dealerTryDraw(blackjackGame, deck);
+
+        printDealerAndPlayersWithPoint(blackjackGame);
+        printDealerAndPlayersGameResult(blackjackGame);
+    }
+
+    private static CardHolderGamer makeCardHolderDealer() {
+        return new CardHolderGamer(DEALER_NAME, HoldingCards.of());
+    }
+
+    private static BetMakerGamer makeBetMakerDealer() {
+        return new BetMakerGamer(DEALER_NAME, new BetMoney(0));
+    }
+
+    private static List<CardHolderGamer> makeCardHolderPlayers(List<String> playerNames) {
+        return playerNames.stream()
+                .map(playerName -> new CardHolderGamer(playerName, HoldingCards.of()))
+                .toList();
+    }
+
+    private static List<BetMakerGamer> makeBetMakerPlayers(List<String> playerNames) {
+        List<BetMakerGamer> betMakerGamers = new ArrayList<>();
+
+        List<Integer> playerBetMoneys = BetMoneyInputView.getPlayerBetMoneys(playerNames);
+        for (int i = 0; i < playerNames.size(); i++) {
+            BetMakerGamer betMakerGamer = new BetMakerGamer(playerNames.get(i), new BetMoney(playerBetMoneys.get(i)));
+            betMakerGamers.add(betMakerGamer);
+        }
+        return betMakerGamers;
+    }
+
+    private void initDealerAndPlayers(BlackjackGame blackjackGame, Deck deck) {
         blackjackGame.initDealerAndPlayers(deck);
-        OutputView.printCardSplitMessage(dealer.getRawName(), players.getRawPlayersNames());
+        OutputView.printCardSplitMessage(blackjackGame.getRawDealerName(), blackjackGame.getRawPlayerNames());
     }
 
-    private void printDealerAndPlayers() {
-        printDealer(dealer);
-        printPlayers(players);
+    private void printDealerAndPlayers(BlackjackGame blackjackGame) {
+        printDealer(blackjackGame);
+        printPlayers(blackjackGame);
     }
 
-    private void printDealer(CardHolderGamer dealer) {
-        GamerDTO dealerDTO = makeGamerDTO(dealer);
+    private void printDealer(BlackjackGame blackjackGame) {
+        GamerDTO dealerDTO = makeGamerDTO(blackjackGame.getDealer());
         GamerOutputView.printOutputWithoutSummationCardPoint(dealerDTO);
     }
 
-    private void printPlayers(Gamers players) {
-        players.getPlayers().forEach(this::printPlayer);
+    private void printPlayers(BlackjackGame blackjackGame) {
+        blackjackGame.getRawPlayers().forEach(this::printPlayer);
     }
 
     private void printPlayer(CardHolderGamer player) {
@@ -78,19 +112,19 @@ public class BlackjackController {
                 cardHolderGamer.getRawSummationCardPoint());
     }
 
-    private void playersTryDraw(Deck deck) {
-        Gamers players = blackjackGame.getPlayers();
-        players.getPlayers().forEach(player -> playerTryDraw(deck, player));
+    private void playersTryDraw(BlackjackGame blackjackGame, Deck deck) {
+        List<CardHolderGamer> players = blackjackGame.getRawPlayers();
+        players.forEach(player -> playerTryDraw(blackjackGame, deck, player));
     }
 
-    private void playerTryDraw(Deck deck, CardHolderGamer player) {
+    private void playerTryDraw(BlackjackGame blackjackGame, Deck deck, CardHolderGamer player) {
         while(!blackjackGame.isPlayerDead(player) && inputYesOrNo(player)) {
             blackjackGame.playerTryDraw(deck, player);
             printPlayer(player);
         }
     }
 
-    private void dealerTryDraw(Deck deck) {
+    private void dealerTryDraw(BlackjackGame blackjackGame, Deck deck) {
         blackjackGame.dealerTryDraw(deck);
     }
 
@@ -99,35 +133,35 @@ public class BlackjackController {
         return YesOrNoInputView.getYNAsBoolean();
     }
 
-    private void printDealerAndPlayersWithPoint() {
-        GamerDTO dealerDTO = makeGamerDTO(dealer);
+    private void printDealerAndPlayersWithPoint(BlackjackGame blackjackGame) {
+        GamerDTO dealerDTO = makeGamerDTO(blackjackGame.getDealer());
         GamerOutputView.generateOutputWithSummationCardPoint(dealerDTO);
 
-        for (CardHolderGamer player : players.getPlayers()) {
+        for (CardHolderGamer player : blackjackGame.getRawPlayers()) {
             GamerDTO playerDTO = makeGamerDTO(player);
             GamerOutputView.generateOutputWithSummationCardPoint(playerDTO);
         }
     }
 
-    private void printDealerAndPlayersGameResult() {
+    private void printDealerAndPlayersGameResult(BlackjackGame blackjackGame) {
         OutputView.printGameResultMessage();
-        GameResultOutputView.print(makeDealerGameResultDTO());
+        GameResultOutputView.print(makeDealerGameResultDTO(blackjackGame));
 
-        List<PlayerGameResultDTO> playerGameResultDTOS = makePlayerGameResultDTO();
+        List<PlayerGameResultDTO> playerGameResultDTOS = makePlayerGameResultDTO(blackjackGame);
         playerGameResultDTOS.forEach(GameResultOutputView::print);
     }
 
-    private DealerGameResultDTO makeDealerGameResultDTO() {
-        Map<GameResult, Integer> dealerGameResultCounts = players.getPlayers().stream()
-                .collect(Collectors.groupingBy(player -> GameResultCalculator.calculate(dealer, player),
+    private DealerGameResultDTO makeDealerGameResultDTO(BlackjackGame blackjackGame) {
+        Map<GameResult, Integer> dealerGameResultCounts = blackjackGame.getRawPlayers().stream()
+                .collect(Collectors.groupingBy(player -> GameResultCalculator.calculate(blackjackGame.getDealer(), player),
                         Collectors.summingInt(value -> 1)));
         return new DealerGameResultDTO(dealerGameResultCounts);
     }
 
-    private List<PlayerGameResultDTO> makePlayerGameResultDTO() {
-        return players.getPlayers().stream()
+    private List<PlayerGameResultDTO> makePlayerGameResultDTO(BlackjackGame blackjackGame) {
+        return blackjackGame.getRawPlayers().stream()
                 .map(player -> new PlayerGameResultDTO(player.getRawName(),
-                        GameResultCalculator.calculate(player, dealer)))
+                        GameResultCalculator.calculate(player, blackjackGame.getDealer())))
                 .toList();
     }
 }

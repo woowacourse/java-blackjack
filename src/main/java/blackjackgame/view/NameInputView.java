@@ -9,6 +9,7 @@ public class NameInputView {
     }
 
     public static List<String> getNames() {
+        OutputView.printInputNamesMessage();
         String input = Console.getInputFromConsole();
         validateSeparator(input);
         List<String> splitInput = List.of(input.split(SEPARATOR));

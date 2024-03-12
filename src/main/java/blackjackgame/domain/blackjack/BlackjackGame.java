@@ -2,16 +2,24 @@ package blackjackgame.domain.blackjack;
 
 import blackjackgame.domain.card.Deck;
 import blackjackgame.view.OutputView;
+import java.util.List;
 
 public class BlackjackGame {
     private static final int EXECUTION_COUNT = 2;
 
+//    private final CardHolderGamer cardHolderDealer;
     private final CardHolderGamer dealer;
+    private final BetMakerGamer betMakerDealer;
+//    private final List<CardHolderGamer> cardHolderPlayers;
     private final Gamers players;
+    private final List<BetMakerGamer> betMakerPlayers;
 
-    public BlackjackGame(CardHolderGamer dealer, Gamers players) {
-        this.dealer = dealer;
-        this.players = players;
+    public BlackjackGame(CardHolderGamer cardHolderDealer, BetMakerGamer betMakerDealer,
+                         List<CardHolderGamer> cardHolderPlayers, List<BetMakerGamer> betMakerPlayers) {
+        this.dealer = cardHolderDealer;
+        this.betMakerDealer = betMakerDealer;
+        this.players = new Gamers(cardHolderPlayers);
+        this.betMakerPlayers = betMakerPlayers;
     }
 
     public void initDealerAndPlayers(Deck deck) {
@@ -48,7 +56,19 @@ public class BlackjackGame {
         }
     }
 
-    public Gamers getPlayers() {
-        return players;
+    public CardHolderGamer getDealer() {
+        return dealer;
+    }
+
+    public List<CardHolderGamer> getRawPlayers() {
+        return players.getPlayers();
+    }
+
+    public String getRawDealerName() {
+        return dealer.getRawName();
+    }
+
+    public List<String> getRawPlayerNames() {
+        return players.getRawPlayerNames();
     }
 }

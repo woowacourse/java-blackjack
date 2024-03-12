@@ -35,4 +35,8 @@ public class OutputView {
     public static void printPlayerSummationOverDeadPoint() {
         System.out.println("\n플레이어 손패의 합이 21을 초과했습니다.");
     }
+
+    public static void printInputBetMoneyMessage(String playerName) {
+        System.out.println("\n" + playerName + "의 배팅 금액은?");
+    }
 }
