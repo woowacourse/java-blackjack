@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Deck {
 	static final int INIT_SIZE = 52;
+	private static final String SIZE_ERROR_MESSAGE = String.format("덱의 사이즈가 %d장이 아닙니다.", INIT_SIZE);
+	private static final String DUPLICATION_ERROR_MESSAGE = "카드는 중복될 수 없습니다.";
 
 	private final List<Card> cards;
 
@@ -48,13 +50,13 @@ public class Deck {
 			.count();
 
 		if (cards.size() != distinctCount) {
-			throw new IllegalArgumentException("카드는 중복될 수 없습니다.");
+			throw new IllegalArgumentException(DUPLICATION_ERROR_MESSAGE);
 		}
 	}
 
 	private void validateSize(List<Card> deck) {
 		if (deck.size() != INIT_SIZE) {
-			throw new IllegalArgumentException(String.format("덱의 사이즈가 %d장이 아닙니다.", INIT_SIZE));
+			throw new IllegalArgumentException(SIZE_ERROR_MESSAGE);
 		}
 	}
 

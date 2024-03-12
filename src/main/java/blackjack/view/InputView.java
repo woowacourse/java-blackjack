@@ -7,10 +7,12 @@ import blackjack.domain.gamer.Player;
 
 public class InputView {
 	private static final InputView INSTANCE = new InputView(new Scanner(System.in));
-
 	private static final String PLAYER_NAME_DELIMITER = ",";
 	private static final String COMMAND_YES = "y";
 	private static final String COMMAND_NO = "n";
+	private static final String COMMAND_ERROR_MESSAGE = String.format("%s 또는 %s만 입력할 수 있습니다.", COMMAND_YES, COMMAND_NO);
+	private static final String DELIMITER_ERROR_MESSAGE = "플레이어의 이름은 쉼표로 시작하거나 끝날 수 없습니다.";
+
 	private final Scanner scanner;
 
 	private InputView(Scanner scanner) {
@@ -31,7 +33,7 @@ public class InputView {
 
 	private static void validatePlayerNamesFormat(String names) {
 		if (names.startsWith(PLAYER_NAME_DELIMITER) || names.endsWith(PLAYER_NAME_DELIMITER)) {
-			throw new IllegalArgumentException("플레이어의 이름은 쉼표로 시작하거나 끝날 수 없습니다.");
+			throw new IllegalArgumentException(DELIMITER_ERROR_MESSAGE);
 		}
 	}
 
@@ -46,7 +48,7 @@ public class InputView {
 
 	private void validateCommand(String command) {
 		if (!List.of(COMMAND_YES, COMMAND_NO).contains(command)) {
-			throw new IllegalArgumentException(String.format("%s 또는 %s만 입력할 수 있습니다.", COMMAND_YES, COMMAND_NO));
+			throw new IllegalArgumentException(COMMAND_ERROR_MESSAGE);
 		}
 	}
 }
