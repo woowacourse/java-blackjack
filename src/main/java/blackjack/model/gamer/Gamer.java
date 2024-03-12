@@ -12,18 +12,17 @@ public abstract class Gamer {
     public Gamer() {
     }
 
-    public void receiveCard(Card card) {
+    public final void receiveCard(Card card) {
         handDeck.addCard(card);
-        GameRule.adjustAceValue(handDeck);
     }
 
     public abstract boolean canHit();
 
-    public int calculateTotalScore() {
+    public final int calculateTotalScore() {
         return handDeck.calculateTotalScore();
     }
 
-    public List<Card> getHandDeck() {
+    public final List<Card> getHandDeck() {
         return handDeck.getCards();
     }
 }
