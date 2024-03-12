@@ -34,7 +34,7 @@ public class Deck {
                 .collect(Collectors.toList());
         validateSize(originDeck);
         return new Deck(shuffleDeck(originDeck));
-    };
+    }
 
     private Stream<Card> matchScore(Shape shape) {
         return Arrays.stream(Score.values())
