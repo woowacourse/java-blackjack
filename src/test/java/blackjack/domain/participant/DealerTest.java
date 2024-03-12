@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+
 import static blackjack.fixture.TrumpCardFixture.aceSpadeTrumpCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,12 +30,23 @@ public class DealerTest {
 
     @DisplayName("딜러는 한 장을 뽑아서 손패에 넣는다.")
     @Test
-    void draw() {
+    void drawExtraCard() {
         //when
         dealer.drawExtraCard();
 
         //then
         assertThat(dealer.getHandCards()).contains(trumpCardAceSpade);
+    }
+
+    @DisplayName("딜러는 16점 이상이면 더 이상 카드를 받지 않는다.")
+    @Test
+    void cantDrawExtraCard() {
+        //when
+        IntStream.range(0, 6)
+                .forEach(i -> dealer.drawExtraCard());
+
+        //then
+        assertThat(dealer.drawExtraCard()).isEqualTo(false);
     }
 
     @DisplayName("딜러의 첫번째 카드를 공개한다.")

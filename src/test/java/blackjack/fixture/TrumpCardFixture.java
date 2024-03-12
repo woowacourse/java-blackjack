@@ -26,11 +26,11 @@ public class TrumpCardFixture {
         return new TrumpCard(Rank.FIVE, Suit.SPADE);
     }
 
-    public static TrumpCard fiveSpadeKingCard() {
+    public static TrumpCard kingSpadeTrumpCard() {
         return new TrumpCard(Rank.KING, Suit.SPADE);
     }
 
-    public static TrumpCard threeSpadeKingCard() {
+    public static TrumpCard threeSpadeTrumpCard() {
         return new TrumpCard(Rank.THREE, Suit.SPADE);
     }
 }

@@ -12,8 +12,9 @@ import java.util.stream.IntStream;
 
 import static blackjack.fixture.PlayerFixture.playerChoco;
 import static blackjack.fixture.PlayerFixture.playerClover;
-import static blackjack.fixture.TrumpCardFixture.threeSpadeKingCard;
+import static blackjack.fixture.TrumpCardFixture.threeSpadeTrumpCard;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("플레이어")
 public class PlayerTest {
@@ -30,6 +31,15 @@ public class PlayerTest {
         dealer = new Dealer(deck);
         choco = playerChoco(dealer);
         clover = playerClover(dealer);
+    }
+
+    @DisplayName("사용자의 이름은 숫자와 영어만 가능하다")
+    @Test
+    void validateName() {
+        String name = "noValidName123";
+
+        assertThatThrownBy(() -> new Player(name, dealer))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("버스트 되지 않은 플레이어는 카드를 한장 더 뽑을 수 있다.")
@@ -57,7 +67,7 @@ public class PlayerTest {
     @Test
     void draw() {
         //given
-        TrumpCard trumpCard = threeSpadeKingCard();
+        TrumpCard trumpCard = threeSpadeTrumpCard();
 
         //when
         choco.draw(dealer);
