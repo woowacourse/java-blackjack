@@ -15,15 +15,18 @@ public class HandsScore {
     }
 
     public static HandsScore of(List<Card> cards) {
-        int score = 0;
+        int totalScore = 0;
         for (Card card : cards) {
-            if (card.getValue() == Value.ACE && score + ACE_HIGH_SCORE <= BLACK_JACK) {
-                score += ACE_HIGH_SCORE;
-            } else {
-                score += card.getScore();
-            }
+            totalScore += findAddScore(totalScore, card);
         }
-        return new HandsScore(score);
+        return new HandsScore(totalScore);
+    }
+
+    private static int findAddScore(int presentScore, Card card) {
+        if (card.getValue() == Value.ACE && presentScore + ACE_HIGH_SCORE <= BLACK_JACK) {
+            return ACE_HIGH_SCORE;
+        }
+        return card.getScore();
     }
 
     public int getScore() {
