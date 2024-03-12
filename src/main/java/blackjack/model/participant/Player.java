@@ -7,7 +7,6 @@ public class Player extends Participant {
     private final String name;
 
     public Player(final String name) {
-        super(new Hand());
         validateNullAndEmptyName(name);
         this.name = name.trim();
     }

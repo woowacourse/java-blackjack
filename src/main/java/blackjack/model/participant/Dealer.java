@@ -7,16 +7,10 @@ import java.util.List;
 public class Dealer extends Participant {
     private static final int HITTABLE_THRESHOLD = 16;
 
-    private Deck deck;
+    private final Deck deck;
 
     public Dealer(final Deck deck) {
-        super(new Hand());
         this.deck = deck;
-    }
-
-    // TODO: 없애기
-    public Dealer(Hand hand) {
-        super(hand);
     }
 
     @Override

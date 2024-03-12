@@ -6,6 +6,7 @@ import static blackjack.model.deck.Shape.CLOVER;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.deck.Card;
+import blackjack.model.deck.Deck;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,7 +17,8 @@ class DealerTest {
 
     @BeforeEach
     void init() {
-        dealer = new Dealer(new Hand(List.of(new Card(CLOVER, FIVE), new Card(CLOVER, FOUR))));
+        dealer = new Dealer(new Deck());
+        dealer.receiveInitialCards(List.of(new Card(CLOVER, FIVE), new Card(CLOVER, FOUR)));
     }
 
     @Test

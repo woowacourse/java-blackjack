@@ -12,11 +12,6 @@ public class Participant {
         this.hand = new Hand();
     }
 
-    // TODO: 없애기
-    public Participant(Hand hand) {
-        this.hand = hand;
-    }
-
     public void receiveInitialCards(final List<Card> cards) {
         hand.add(cards);
     }
