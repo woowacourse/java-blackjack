@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.cards.Card;
 import blackjack.domain.cards.Rank;
 import blackjack.domain.cards.Shape;
+import blackjack.domain.participants.Money;
 import blackjack.domain.participants.PlayerStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,29 +34,29 @@ public class PlayerStatusTest {
     @DisplayName("돈을 추가한다")
     void addMoneyTest() {
         PlayerStatus playerStatus = new PlayerStatus();
-        playerStatus.addMoney(3000);
+        playerStatus.addMoney(new Money(3000));
 
-        assertThat(playerStatus.getMoney()).isEqualTo(3000);
+        assertThat(playerStatus.getMoney()).isEqualTo(new Money(3000));
     }
 
     @Test
     @DisplayName("이긴 후 금액을 계산한다")
     void calculateWinMoneyTest() {
         PlayerStatus playerStatus = new PlayerStatus();
-        playerStatus.addMoney(3000);
+        playerStatus.addMoney(new Money(3000));
         playerStatus.calculateWinMoney();
 
-        assertThat(playerStatus.getMoney()).isEqualTo(6000);
+        assertThat(playerStatus.getMoney()).isEqualTo(new Money(3000));
     }
 
     @Test
     @DisplayName("진 후 금액을 계산한다")
     void calculateLoseMoneyTest() {
         PlayerStatus playerStatus = new PlayerStatus();
-        playerStatus.addMoney(3000);
+        playerStatus.addMoney(new Money(3000));
         playerStatus.calculateLoseMoney();
 
-        assertThat(playerStatus.getMoney()).isEqualTo(-3000);
+        assertThat(playerStatus.getMoney()).isEqualTo(new Money(-3000));
     }
 
 

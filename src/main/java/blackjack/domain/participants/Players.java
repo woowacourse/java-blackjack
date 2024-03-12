@@ -31,7 +31,7 @@ public class Players {
         return dealerScore < player.calculateScore();
     }
 
-    public void betOnePlayerMoney(int money, int playerIndex) {
+    public void betOnePlayerMoney(Money money, int playerIndex) {
         players.get(playerIndex).betMoney(money);
     }
 
@@ -51,7 +51,7 @@ public class Players {
         return players.get(playerIndex).getName();
     }
 
-    public int getOnePlayerMoney(int playerIndex) {
+    public Money getOnePlayerMoney(int playerIndex) {
         return players.get(playerIndex).getMoney();
     }
 

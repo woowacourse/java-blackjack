@@ -25,11 +25,11 @@ public class Player {
         return playerStatus.calculateScore() < boundaryScore;
     }
 
-    public void betMoney(int money) {
+    public void betMoney(Money money) {
         playerStatus.addMoney(money);
     }
 
-    public void loseMoney(int money) {
+    public void loseMoney(Money money) {
         playerStatus.subtractMoney(money);
     }
 
@@ -49,7 +49,7 @@ public class Player {
         return playerStatus.getHand();
     }
 
-    public int getMoney() {
+    public Money getMoney() {
         return playerStatus.getMoney();
     }
 }

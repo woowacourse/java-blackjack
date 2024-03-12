@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.cards.Card;
 import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +28,7 @@ public class DealerTest {
     @DisplayName("딜러가 돈을 벌었다.")
     void gainMoneyTest() {
         Dealer dealer = new Dealer();
-        dealer.gainMoney(3000);
-        assertThat(dealer.getMoney()).isEqualTo(3000);
+        dealer.gainMoney(new Money(3000));
+        assertThat(dealer.getMoney()).isEqualTo(new Money(3000));
     }
 }

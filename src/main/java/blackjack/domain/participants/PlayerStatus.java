@@ -7,12 +7,13 @@ public class PlayerStatus {
     private static final int GAIN_BETTING = 1;
     private static final int LOSE_BETTING = -1;
 
+
     private final Hand hand;
-    private int money;
+    private Money money;
 
     public PlayerStatus() {
         hand = new Hand();
-        this.money = 0;
+        this.money = new Money();
     }
 
     public void addCard(Card card) {
@@ -23,23 +24,23 @@ public class PlayerStatus {
         return hand.calculateTotalScore();
     }
 
-    public void addMoney(int money) {
-        this.money += money;
+    public void addMoney(Money money) {
+        this.money = this.money.add(money);
     }
 
-    public void subtractMoney(int money) {
-        this.money -= money;
+    public void subtractMoney(Money money) {
+        this.money = this.money.subtract(money);
     }
 
     public void calculateWinMoney() {
-        money *= GAIN_BETTING;
+        this.money = this.money.multiply(GAIN_BETTING);
     }
 
     public void calculateLoseMoney() {
-        money *= LOSE_BETTING;
+        this.money = this.money.multiply(LOSE_BETTING);
     }
 
-    public int getMoney() {
+    public Money getMoney() {
         return money;
     }
 

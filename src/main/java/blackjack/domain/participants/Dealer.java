@@ -26,7 +26,7 @@ public class Dealer extends Player {
         }
     }
 
-    public void gainMoney(int money) {
+    public void gainMoney(Money money) {
         betMoney(money);
     }
 
