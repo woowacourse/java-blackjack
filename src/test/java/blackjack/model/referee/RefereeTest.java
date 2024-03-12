@@ -124,7 +124,7 @@ public class RefereeTest {
     private Dealer createDealer(final List<Card> dealerCards) {
         CardGenerator cardGenerator = new SequentialCardGenerator(dealerCards);
         Dealer dealer = new Dealer(cardGenerator);
-        dealer.doAction(cardGenerator);
+        dealer.hitUntilEnd(cardGenerator);
         return dealer;
     }
 }

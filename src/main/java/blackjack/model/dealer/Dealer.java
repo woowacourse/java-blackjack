@@ -8,7 +8,7 @@ import blackjack.model.cardgenerator.CardGenerator;
 import java.util.List;
 
 public class Dealer {
-    private static final Score ACTION_CONDITION = Score.from(17);
+    private static final Score END_CONDITION = Score.from(17);
     private static final int NON_ACTION_COUNT = 2;
 
     private final Cards cards;
@@ -17,8 +17,8 @@ public class Dealer {
         this.cards = new Cards(cardGenerator);
     }
 
-    public void doAction(final CardGenerator cardGenerator) {
-        while (cards.calculateCardsTotalScore().lessThan(ACTION_CONDITION)) {
+    public void hitUntilEnd(final CardGenerator cardGenerator) {
+        while (cards.calculateCardsTotalScore().lessThan(END_CONDITION)) {
             cards.addCard(cardGenerator);
         }
     }

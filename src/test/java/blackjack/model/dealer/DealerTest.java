@@ -22,7 +22,7 @@ public class DealerTest {
         // when
         Card firstCardCreatedByAction = new Card(Suit.HEART, Denomination.TEN);
         Card secondCardCreatedByAction = new Card(Suit.HEART, Denomination.FOUR);
-        dealer.doAction(new SequentialCardGenerator(List.of(firstCardCreatedByAction, secondCardCreatedByAction)));
+        dealer.hitUntilEnd(new SequentialCardGenerator(List.of(firstCardCreatedByAction, secondCardCreatedByAction)));
 
         // then
         int cardsTotal = dealer.calculateCardsTotalScore().getValue();

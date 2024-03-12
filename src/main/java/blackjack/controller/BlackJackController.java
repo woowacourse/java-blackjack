@@ -43,13 +43,13 @@ public class BlackJackController {
 
     private void play(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
         for (Player player : players.getPlayers()) {
-            doPlayerActionUtilEnd(player, cardGenerator);
+            doPlayerActionUntilEnd(player, cardGenerator);
         }
-        dealer.doAction(cardGenerator);
+        dealer.hitUntilEnd(cardGenerator);
         outputView.printDealerActionResult(dealer);
     }
 
-    private void doPlayerActionUtilEnd(final Player player, final CardGenerator cardGenerator) {
+    private void doPlayerActionUntilEnd(final Player player, final CardGenerator cardGenerator) {
         boolean isContinue = player.canHit();
         while (isContinue) {
             isContinue = doPlayerAction(player, cardGenerator);
