@@ -1,4 +1,4 @@
-package domain;
+package domain.blackjack;
 
 import domain.card.Card;
 import domain.player.Dealer;
@@ -6,6 +6,7 @@ import domain.player.Participant;
 import domain.player.Player;
 import domain.player.PlayerResult;
 import domain.player.Players;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -63,7 +64,8 @@ public class Blackjack {
     public GameResult finishGame() {
         final Map<Player, PlayerResult> playerResult = players.getValue()
                 .stream()
-                .collect(Collectors.toMap(player -> player, player -> player.obtainResultBy(dealer)));
+                .collect(Collectors.toMap(player -> player, player -> player.obtainResultBy(dealer), (a, b) -> a,
+                        LinkedHashMap::new));
         final Map<PlayerResult, Integer> dealerResult = dealer.wrapUp(players);
         return new GameResult(dealerResult, playerResult);
     }

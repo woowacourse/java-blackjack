@@ -19,7 +19,8 @@ class ParticipantTest {
     @Test
     @DisplayName("참가자는 자신이 갖는 카드 합계를 계산할 수 있다")
     void sum() {
-        final Participant participant = new Player(new Name("지쳐버린종"));;
+        final Participant participant = new Player(new Name("지쳐버린종"));
+        ;
 
         participant.hit(new Card(Rank.FIVE, Suit.CLUBS));
         participant.hit(new Card(Rank.FIVE, Suit.CLUBS));
@@ -31,7 +32,8 @@ class ParticipantTest {
     @Test
     @DisplayName("참가자는 자신이 갖는 카드 합계를 계산할 수 있다")
     void sum2() {
-        final Participant participant = new Player(new Name("지쳐버린종"));;
+        final Participant participant = new Player(new Name("지쳐버린종"));
+        ;
 
         participant.hit(new Card(Rank.KING, Suit.CLUBS));
         participant.hit(new Card(Rank.KING, Suit.CLUBS));
@@ -39,11 +41,12 @@ class ParticipantTest {
 
         Assertions.assertThat(participant.calculateScore()).isEqualTo(21);
     }
-    
+
     @Test
     @DisplayName("정해진 이름이 없다면 예외가 발생한다")
     void nameNotDetermined() {
         final Participant dealer = new Dealer();
+
         assertThatCode(dealer::getName).isInstanceOf(IllegalCallerException.class);
     }
 

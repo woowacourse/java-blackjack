@@ -1,4 +1,4 @@
-package domain;
+package domain.blackjack;
 
 import domain.player.Player;
 import domain.player.PlayerResult;

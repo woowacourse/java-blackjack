@@ -1,6 +1,7 @@
 package view;
 
-import domain.GameResult;
+import domain.blackjack.GameResult;
+import domain.card.Card;
 import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.PlayerResult;
@@ -28,9 +29,14 @@ public class OutputView {
     }
 
     public static void printStatus(final Participant participant) {
-        final StringBuilder stringBuilder = new StringBuilder(participant.getName() + "카드: ");
+        final String name = determineName(participant);
+        final StringBuilder stringBuilder = new StringBuilder(name + "카드: ");
         final List<String> cardInfos = new ArrayList<>();
-        for (final var card : participant.getHands()) {
+        List<Card> hands = participant.getHands();
+        if (!participant.isPlayer()) {
+            hands = List.of(hands.get(0));
+        }
+        for (final var card : hands) {
             final String denomination = denominationToMessage(card.getRank());
             final String symbol = symbolToMessage(card.getSymbol());
             cardInfos.add(denomination + symbol);
@@ -47,15 +53,23 @@ public class OutputView {
         players.getValue().forEach(OutputView::printStatusWithResult);
     }
 
-    private static void printStatusWithResult(final Participant player) {
-        final StringBuilder stringBuilder = new StringBuilder(player.getName() + "카드: ");
-        final List<String> cardInfos = player.getHands()
+    private static void printStatusWithResult(final Participant participant) {
+        final String name = determineName(participant);
+        final StringBuilder stringBuilder = new StringBuilder(name + "카드: ");
+        final List<String> cardInfos = participant.getHands()
                 .stream()
                 .map(card -> denominationToMessage(card.getRank()) + symbolToMessage(card.getSymbol()))
                 .toList();
         stringBuilder.append(String.join(", ", cardInfos));
         System.out.print(stringBuilder);
-        System.out.println(" - 결과 : " + player.calculateScore());
+        System.out.println(" - 결과 : " + participant.calculateScore());
+    }
+
+    private static String determineName(final Participant participant) {
+        if (participant.isPlayer()) {
+            return participant.getName();
+        }
+        return "딜러";
     }
 
     public static void printWinOrLose(final GameResult blackjackResult) {
