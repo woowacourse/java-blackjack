@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 
 class ParticipantTest {
     @Test
-    @DisplayName("플레이어는 자신이 갖는 카드 합계를 계산할 수 있다")
+    @DisplayName("참가자는 자신이 갖는 카드 합계를 계산할 수 있다")
     void sum() {
         final Participant participant = new Player(new Name("지쳐버린종"));;
 
@@ -27,7 +27,7 @@ class ParticipantTest {
     }
 
     @Test
-    @DisplayName("플레이어는 자신이 갖는 카드 합계를 계산할 수 있다")
+    @DisplayName("참가자는 자신이 갖는 카드 합계를 계산할 수 있다")
     void sum2() {
         final Participant participant = new Player(new Name("지쳐버린종"));;
 
@@ -40,7 +40,7 @@ class ParticipantTest {
 
     @ParameterizedTest
     @MethodSource("argumentProvider")
-    @DisplayName("플레이어의 버스트 여부를 반환한다.")
+    @DisplayName("참가자의 버스트 여부를 반환한다.")
     void alive(final List<Card> cards, final boolean expected) {
         final Participant participant = new Player(new Name("지쳐버린종"));
 

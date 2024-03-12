@@ -52,14 +52,6 @@ public class Blackjack {
         player.hit(dealer.draw());
     }
 
-    public Players getPlayers() {
-        return players;
-    }
-
-    public Player getPlayer(final String name) {
-        return players.findPlayerByName(name);
-    }
-
 
     public boolean canDealerHit() {
         return dealer.canHit();
@@ -76,6 +68,14 @@ public class Blackjack {
                 .collect(Collectors.toMap(player -> player, player -> player.obtainResultBy(dealer)));
         final Map<PlayerResult, Integer> dealerResult = dealer.wrapUp(players);
         return new GameResult(dealerResult, playerResult);
+    }
+
+    public Players getPlayers() {
+        return players;
+    }
+
+    public Player getPlayer(final String name) {
+        return players.findPlayerByName(name);
     }
 
     public Dealer getDealer() {
