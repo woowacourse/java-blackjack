@@ -12,7 +12,11 @@ public class Gamer {
         this.betMaker = betMaker;
     }
 
-    public void cardHolderDrawNTimes(Deck deck, int execution_count) {
+    public void cardHolderDraw(Deck deck) {
+        cardHolder.draw(deck, new DealerRandomCardDrawStrategy(cardHolder));
+    }
+
+    public void cardHolderDraw(Deck deck, int execution_count) {
         cardHolder.draw(deck, new DealerRandomCardDrawStrategy(cardHolder), execution_count);
     }
 

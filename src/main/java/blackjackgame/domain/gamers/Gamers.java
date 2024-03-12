@@ -12,8 +12,12 @@ public class Gamers {
         this.betMakers = betMakers;
     }
 
-    public void cardHoldersDrawNTimes(Deck deck, int execution_count) {
-        cardHolders.drawNTimes(deck, execution_count);
+    public void cardHoldersDraw(Deck deck) {
+        cardHolders.draw(deck);
+    }
+
+    public void cardHoldersDraw(Deck deck, int execution_count) {
+        cardHolders.draw(deck, execution_count);
     }
 
     public List<String> getRawGamerNames() {

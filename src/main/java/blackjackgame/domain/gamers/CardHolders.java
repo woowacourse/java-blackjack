@@ -11,7 +11,12 @@ public class CardHolders {
         this.cardHolders = players;
     }
 
-    public void drawNTimes(Deck deck, int execution_count) {
+    public void draw(Deck deck) {
+        cardHolders.forEach(cardHolder ->
+                cardHolder.draw(deck, new PlayerRandomCardDrawStrategy(cardHolder)));
+    }
+
+    public void draw(Deck deck, int execution_count) {
         cardHolders.forEach(cardHolder ->
                 cardHolder.draw(deck, new PlayerRandomCardDrawStrategy(cardHolder), execution_count));
     }
