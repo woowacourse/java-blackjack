@@ -15,6 +15,8 @@ public abstract class Participant {
         this.hands = hands;
     }
 
+    public abstract boolean canDeal();
+
     public void add(final Card card) {
         hands.add(card);
     }

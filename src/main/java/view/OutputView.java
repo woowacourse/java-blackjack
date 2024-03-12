@@ -62,6 +62,15 @@ public class OutputView {
         System.out.printf("BLACK JACK!!!%n");
     }
 
+    public void printDealerEndMessage(boolean isBust) {
+        if (isBust) {
+            printBust();
+            return;
+        }
+
+        printBlackJack();
+    }
+
     private String format(final Map<Result, Integer> dealerResult) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry<Result, Integer> entry : dealerResult.entrySet()) {

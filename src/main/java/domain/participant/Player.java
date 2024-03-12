@@ -1,10 +1,17 @@
 package domain.participant;
 
+import static domain.participant.Hands.BLACK_JACK;
+
 public class Player extends Participant {
 
     public Player(final Name name, final Hands hands) {
         super(name, hands);
         validate(name);
+    }
+
+    @Override
+    public boolean canDeal() {
+        return handsSum() <= BLACK_JACK;
     }
 
     private void validate(final Name name) {

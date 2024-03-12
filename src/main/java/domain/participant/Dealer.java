@@ -37,7 +37,7 @@ public class Dealer extends Participant {
     }
 
     public void deal() {
-        while (isUnderThreshold()) {
+        while (canDeal()) {
             super.add(cardDeck.pop());
         }
     }
@@ -57,7 +57,8 @@ public class Dealer extends Participant {
         return result;
     }
 
-    private boolean isUnderThreshold() {
+    @Override
+    public boolean canDeal() {
         return handsSum() <= THRESHOLD;
     }
 }
