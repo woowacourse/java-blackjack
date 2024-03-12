@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Hand {
 
-    public static final int BLACKJACK_BOUND = 21;
+    private static final int BLACKJACK_BOUND = 21;
     private static final int BLACKJACK_CARD_SIZE = 2;
     private static final int MAX_ACE_SCORE = 11;
 

@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Hand;
 import blackjack.domain.card.TrumpCard;
 
 import java.util.regex.Pattern;
@@ -42,7 +41,7 @@ public class Player extends Gamer {
 
     @Override
     public boolean canReceiveCard() {
-        return hand.calculateScore() < Hand.BLACKJACK_BOUND;
+        return !hand.isBust() && !hand.isBlackjack();
     }
 
     public String getName() {
