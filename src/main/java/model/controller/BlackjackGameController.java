@@ -21,6 +21,7 @@ import model.view.OutputView;
 public class BlackjackGameController {
 
     private static final int CARD_COUNT_FOR_SETTING = 2;
+    private static final String NO_HIT_WORD = "n";
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -37,11 +38,10 @@ public class BlackjackGameController {
 
         cardSettingBeforeGameStart(players, blackjackGame);
         printCardSetting(blackjackGame.getDealer(), blackjackGame.getPlayers());
-        turnHitPlayers(blackjackGame.getPlayers(), blackjackGame);
 
-        boolean dealerHit = blackjackGame.dealerHitsUnderSixteen(
-                new Card(CardDispenser.generateCardNumber(), CardDispenser.generateCardShape()));
-        outputView.printDealerHitStatus(dealerHit);
+        turnHitPlayers(blackjackGame.getPlayers(), blackjackGame);
+        turnHitDealer(blackjackGame);
+
         printFinalResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
     }
 
@@ -63,9 +63,7 @@ public class BlackjackGameController {
     }
 
     private void turnHitPlayers(Players players, BlackjackGame blackjackGame) {
-        for (Player player : players.getPlayers()) {
-            hitOrStay(player, blackjackGame);
-        }
+        players.getPlayers().forEach(player -> hitOrStay(player, blackjackGame));
     }
 
     private void hitOrStay(Player player, BlackjackGame blackjackGame) {
@@ -84,7 +82,13 @@ public class BlackjackGameController {
             return repeatUntilSuccess(inputView::requestHitAnswer, player);
         }
         outputView.printBustInfo(player);
-        return new Answer("n");
+        return new Answer(NO_HIT_WORD);
+    }
+
+    private void turnHitDealer(BlackjackGame blackjackGame) {
+        boolean dealerHit = blackjackGame.dealerHitsUnderSixteen(
+                new Card(CardDispenser.generateCardNumber(), CardDispenser.generateCardShape()));
+        outputView.printDealerHitStatus(dealerHit);
     }
 
     private void printFinalResult(Dealer dealer, Players players) {
