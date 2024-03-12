@@ -26,7 +26,7 @@ class JudgeTest {
     private final List<String> playerNames = List.of("choco");
     private Players players;
     private Player choco;
-    ResultStatus resultStatus;
+    private DealerResult initDealerResult;
 
     @DisplayName("딜러가 버스트된 경우")
     @Nested
@@ -34,7 +34,7 @@ class JudgeTest {
         @BeforeEach
         void setUp() {
             deck = new Deck(shuffleStrategy);
-            resultStatus = ResultStatus.init();
+            initDealerResult = DealerResult.of(0, 0, 0);
 
             deckDrawLoop(6);
 
@@ -52,7 +52,7 @@ class JudgeTest {
 
             //when
             bustPlayerChoco(dealer);
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(initDealerResult, choco, dealer, playerResult);
 
             //then
             assertThat(isDealerResultDraw(dealerResult))
@@ -70,7 +70,7 @@ class JudgeTest {
             PlayerResult playerResult = new PlayerResult();
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(initDealerResult, choco, dealer, playerResult);
 
             //then
             assertThat(isDealerResultLose(dealerResult))
@@ -86,7 +86,7 @@ class JudgeTest {
             PlayerResult playerResult = new PlayerResult();
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(initDealerResult, choco, dealer, playerResult);
 
             //then
             assertThat(isDealerResultLose(dealerResult))
@@ -100,7 +100,7 @@ class JudgeTest {
         @BeforeEach
         void setUp() {
             deck = new Deck(shuffleStrategy);
-            resultStatus = ResultStatus.init();
+            initDealerResult = DealerResult.of(0, 0, 0);
 
             deckDrawLoop(12);
 
@@ -118,7 +118,7 @@ class JudgeTest {
 
             //when
             bustPlayerChoco(dealer);
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(initDealerResult, choco, dealer, playerResult);
 
             //then
             assertThat(isDealerResultWin(dealerResult))
@@ -137,7 +137,7 @@ class JudgeTest {
             PlayerResult playerResult = new PlayerResult();
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(initDealerResult, choco, dealer, playerResult);
 
             //then
             assertThat(isDealerResultDraw(dealerResult))
@@ -154,7 +154,7 @@ class JudgeTest {
             PlayerResult playerResult = new PlayerResult();
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(initDealerResult, choco, dealer, playerResult);
 
             //then
             assertThat(isDealerResultWin(dealerResult))
@@ -169,7 +169,7 @@ class JudgeTest {
         void setUp() {
             deck = new Deck(shuffleStrategy);
             dealer = new Dealer(deck);
-            resultStatus = ResultStatus.init();
+            initDealerResult = DealerResult.of(0, 0, 0);
         }
 
         @DisplayName("플레이어가 버스트되면 딜러가 승리한다.")
@@ -183,7 +183,7 @@ class JudgeTest {
 
             //when
             bustPlayerChoco(dealer);
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(initDealerResult, choco, dealer, playerResult);
 
             //then
             assertThat(isDealerResultWin(dealerResult))
@@ -202,7 +202,7 @@ class JudgeTest {
             PlayerResult playerResult = new PlayerResult();
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(initDealerResult, choco, dealer, playerResult);
 
             //then
             assertThat(isDealerResultLose(dealerResult))
@@ -219,7 +219,7 @@ class JudgeTest {
             PlayerResult playerResult = new PlayerResult();
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(initDealerResult, choco, dealer, playerResult);
 
             //then
             assertThat(isDealerResultWin(dealerResult))
@@ -237,7 +237,7 @@ class JudgeTest {
             PlayerResult playerResult = new PlayerResult();
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(initDealerResult, choco, dealer, playerResult);
 
             //then
             assertThat(isDealerResultLose(dealerResult))
@@ -255,7 +255,7 @@ class JudgeTest {
             PlayerResult playerResult = new PlayerResult();
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            DealerResult dealerResult = Judge.judge(initDealerResult, choco, dealer, playerResult);
 
             //then
             assertThat(isDealerResultDraw(dealerResult))
@@ -278,14 +278,20 @@ class JudgeTest {
     }
 
     private boolean isDealerResultWin(final DealerResult dealerResult) {
-        return dealerResult.getWins() == 1 && dealerResult.getLoses() == 0 && dealerResult.getDraws() == 0;
+        return dealerResult.findResultByGameResult(GameResult.WIN) == 1
+                && dealerResult.findResultByGameResult(GameResult.LOSE) == 0
+                && dealerResult.findResultByGameResult(GameResult.DRAW) == 0;
     }
 
     private boolean isDealerResultLose(final DealerResult dealerResult) {
-        return dealerResult.getWins() == 0 && dealerResult.getLoses() == 1 && dealerResult.getDraws() == 0;
+        return dealerResult.findResultByGameResult(GameResult.WIN) == 0
+                && dealerResult.findResultByGameResult(GameResult.LOSE) == 1
+                && dealerResult.findResultByGameResult(GameResult.DRAW) == 0;
     }
 
     private boolean isDealerResultDraw(final DealerResult dealerResult) {
-        return dealerResult.getWins() == 0 && dealerResult.getLoses() == 0 && dealerResult.getDraws() == 1;
+        return dealerResult.findResultByGameResult(GameResult.WIN) == 0
+                && dealerResult.findResultByGameResult(GameResult.LOSE) == 0
+                && dealerResult.findResultByGameResult(GameResult.DRAW) == 1;
     }
 }

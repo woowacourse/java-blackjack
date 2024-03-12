@@ -10,11 +10,11 @@ public class PlayerResult {
     private final Map<String, GameResult> result;
 
     public PlayerResult() {
-        result = new HashMap<>();
+        this.result = new HashMap<>();
     }
 
-    public void addResult(final Player player, final GameResult result) {
-        this.result.put(player.getName(), result);
+    public void addResult(final Player player, final GameResult gameResult) {
+        result.put(player.getName(), gameResult);
     }
 
     public GameResult findByName(final String name) {

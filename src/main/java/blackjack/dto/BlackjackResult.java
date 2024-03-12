@@ -16,7 +16,7 @@ public class BlackjackResult {
         return playerResult.findByName(name);
     }
 
-    public DealerResult getDealerResult() {
-        return dealerResult;
+    public int findDealerResultByGameResult(final GameResult gameResult) {
+        return dealerResult.findResultByGameResult(gameResult);
     }
 }

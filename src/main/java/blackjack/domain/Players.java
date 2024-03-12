@@ -39,15 +39,15 @@ public class Players {
     }
 
     public BlackjackResult createResult(final Dealer dealer) {
-        ResultStatus resultStatus = ResultStatus.init();
+        DealerResult dealerResult = DealerResult.of(0, 0, 0);
         PlayerResult playerResult = new PlayerResult();
 
         for (Player player : players) {
-            DealerResult result = Judge.judge(resultStatus, player, dealer, playerResult);
-            resultStatus.updateResultStatus(result);
+            DealerResult resultWithPlayer = Judge.judge(dealerResult, player, dealer, playerResult);
+            dealerResult.updateByDealerResult(resultWithPlayer);
         }
 
-        return new BlackjackResult(DealerResult.of(resultStatus), playerResult);
+        return new BlackjackResult(dealerResult, playerResult);
     }
 
     public List<Player> getPlayers() {

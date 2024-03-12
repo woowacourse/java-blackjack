@@ -52,8 +52,8 @@ public class PlayersTest {
         assertAll(
                 () -> assertThat(blackjackResult.findPlayerResultByName(nameA)).isEqualTo(GameResult.LOSE),
                 () -> assertThat(blackjackResult.findPlayerResultByName(nameB)).isEqualTo(GameResult.LOSE),
-                () -> assertThat(blackjackResult.getDealerResult().getWins()).isEqualTo(2),
-                () -> assertThat(blackjackResult.getDealerResult().getLoses()).isEqualTo(0)
+                () -> assertThat(blackjackResult.findDealerResultByGameResult(GameResult.WIN)).isEqualTo(2),
+                () -> assertThat(blackjackResult.findDealerResultByGameResult(GameResult.LOSE)).isEqualTo(0)
         );
     }
 }
