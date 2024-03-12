@@ -1,6 +1,7 @@
 package blackjack.domain.gamer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
@@ -10,9 +11,13 @@ public abstract class BlackjackGamer {
 	private final Name name;
 	private final Hand hand;
 
-	public BlackjackGamer(Name name) {
+	public BlackjackGamer(Name name, List<Card> cards) {
 		this.name = name;
-		this.hand = new Hand(new ArrayList<>());
+		this.hand = new Hand(cards);
+	}
+
+	public BlackjackGamer(Name name) {
+		this(name, new ArrayList<>());
 	}
 
 	public abstract boolean canReceiveCard();
@@ -27,11 +32,11 @@ public abstract class BlackjackGamer {
 		hand.add(card);
 	}
 
-	public boolean isBust() {
+	public boolean isBusted() {
 		return hand.checkIfBust();
 	}
 
-	public boolean isBlackJack() {
+	public boolean isBlackjack() {
 		return hand.checkIfBlackjack();
 	}
 
