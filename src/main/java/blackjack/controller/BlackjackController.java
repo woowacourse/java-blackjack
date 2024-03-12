@@ -12,7 +12,7 @@ import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
 import blackjack.view.dto.PlayerMatchResult;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class BlackjackController {
@@ -81,7 +81,7 @@ public class BlackjackController {
         dealer.hitUntilEnd(cardGenerator);
         outputView.printDealerActionResult(dealer);
     }
-    
+
     private void end(final Game game) {
         Players players = game.players();
         Dealer dealer = game.dealer();
@@ -103,21 +103,19 @@ public class BlackjackController {
     }
 
     public <T> T retryOnException(final Supplier<T> retryOperation) {
-        boolean retry = true;
-        T result = null;
-        while (retry) {
+        Optional<T> result = Optional.empty();
+        while (result.isEmpty()) {
             result = tryOperation(retryOperation);
-            retry = Objects.isNull(result);
         }
-        return result;
+        return result.get();
     }
 
-    private <T> T tryOperation(final Supplier<T> operation) {
+    private <T> Optional<T> tryOperation(final Supplier<T> operation) {
         try {
-            return operation.get();
+            return Optional.of(operation.get());
         } catch (IllegalArgumentException e) {
             outputView.printException(e.getMessage());
-            return null;
+            return Optional.empty();
         }
     }
 }
