@@ -3,6 +3,7 @@ package blackjack.game;
 import blackjack.card.Card;
 import blackjack.card.Deck;
 import blackjack.money.BetMoney;
+import blackjack.money.PlayerBet;
 import blackjack.money.PlayerBets;
 import blackjack.player.Player;
 import blackjack.player.Players;
@@ -153,10 +154,11 @@ public class BlackJackGame {
 
     private void showPlayersResult(PlayerBets playerBets, MatchResults matchResults) {
         playerBets.stream()
-                .forEach(bet -> {
-                            int profit = matchResults.calculateProfitByBet(bet);
-                            outputView.printPlayerResult(bet.name(), profit);
-                        }
-                );
+                .forEach(bet -> showSingleResult(matchResults, bet));
+    }
+
+    private void showSingleResult(MatchResults matchResults, PlayerBet playerBet) {
+        int profit = matchResults.calculateProfitByBet(playerBet);
+        outputView.printPlayerResult(playerBet.name(), profit);
     }
 }
