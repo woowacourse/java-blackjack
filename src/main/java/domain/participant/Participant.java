@@ -5,10 +5,10 @@ import domain.card.Cards;
 
 import java.util.Objects;
 
-public class Participant {
+public abstract class Participant {
 
-    protected final Name name;
-    protected final Cards hand;
+    private final Name name;
+    private final Cards hand;
 
     public Participant(final Name name) {
         this.name = name;
