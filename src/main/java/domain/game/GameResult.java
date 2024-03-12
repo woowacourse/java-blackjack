@@ -27,6 +27,6 @@ public enum GameResult {
                 .filter(result -> result.condition.test(current, opponent))
                 .findFirst()
                 .orElseThrow(() ->
-                        new IllegalStateException("Result의 BiPredicate가 모든 경우의 수를 포함하지 않습니다."));
+                        new IllegalStateException("입력에 따른 결과가 존재하지 않습니다."));
     }
 }
