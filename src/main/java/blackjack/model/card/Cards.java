@@ -46,7 +46,7 @@ public class Cards {
 
     private boolean hasAce() {
         return cards.stream()
-                .anyMatch(card -> card.getDenomination().isAce());
+                .anyMatch(Card::isAce);
     }
 
     private boolean canBeAdjusted(final Score totalScore) {
