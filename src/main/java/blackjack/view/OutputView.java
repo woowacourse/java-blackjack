@@ -48,7 +48,7 @@ public class OutputView {
 
     public static void printFinalCardsAndScore(final NameCardsScore nameCardsScore) {
         System.out.println(
-                nameCardsScore.name() + ": " + convert(nameCardsScore.cards()) + " - 결과: " + nameCardsScore.score());
+                nameCardsScore.name().getRawName() + ": " + convert(nameCardsScore.cards()) + " - 결과: " + nameCardsScore.score());
     }
 
     public static void printDealerFinalResult(final Map<ResultCommand, Integer> dealerResults) {
