@@ -1,14 +1,14 @@
 package blackjack.controller;
 
-import blackjack.model.blackjackgame.PlayersGameResults;
+import blackjack.model.blackjackgame.PlayersResults;
 import blackjack.model.generator.CardGenerator;
 import blackjack.model.generator.RandomIndexGenerator;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
+import blackjack.model.blackjackgame.Profit;
 import blackjack.view.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import blackjack.view.PlayerResultStatus;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,14 +56,14 @@ public class BlackJackController {
 
     private void executeAdditionalDealerTurn(Dealer dealer, CardGenerator cardGenerator) {
         if (dealer.checkCanGetMoreCard()) {
-            updateDealer(dealer, cardGenerator);
+            dealer.addCard(cardGenerator.drawCard());
             outputView.printDealerChange();
         }
     }
 
     private void printWinningResults(List<Player> players, Dealer dealer) {
-        PlayersGameResults playersGameResults = calculatePlayersResults(players, dealer);
-        outputView.printGameResults(playersGameResults);
+        PlayersResults playersResults = calculatePlayersResults(players, dealer);
+        outputView.printGameResults(playersResults);
     }
 
     private void drawCardWithCommand(List<Player> players, int index, CardGenerator cardGenerator) {
@@ -82,13 +82,9 @@ public class BlackJackController {
         return player.checkCanGetMoreCard();
     }
 
-    private void updateDealer(Dealer dealer, CardGenerator cardGenerator) {
-        dealer.addCard(cardGenerator.drawCard());
-    }
-
-    private PlayersGameResults calculatePlayersResults(List<Player> players, Dealer dealer) {
-        Map<Player, PlayerResultStatus> result = new LinkedHashMap<>();
-        players.forEach(player -> result.put(player, player.determineWinner(dealer)));
-        return new PlayersGameResults(result);
+    private PlayersResults calculatePlayersResults(List<Player> players, Dealer dealer) {
+        Map<Player, Profit> result = new LinkedHashMap<>();
+        players.forEach(player -> result.put(player, player.getProfit(dealer)));
+        return new PlayersResults(result);
     }
 }

@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.model.participants.Betting;
 import blackjack.model.participants.Player;
 import java.util.Arrays;
 import java.util.List;
@@ -21,8 +22,18 @@ public class InputView {
         String input = scanner.nextLine();
         validateMultipleInputs(input);
         return Arrays.stream(input.split(INPUT_DELIMITER))
-                .map(Player::new)
+                .map(name -> new Player(name, readMoney(name)))
                 .toList();
+    }
+
+    private Betting readMoney(String name) {
+        return repeatUntilSuccess(() -> getMoney(name));
+    }
+
+    public Betting getMoney(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+        String input = scanner.nextLine();
+        return new Betting(parseInt(input));
     }
 
     public Command readCommand(Player player) {
@@ -39,6 +50,14 @@ public class InputView {
     private void validateMultipleInputs(String input) {
         if (input == null || input.isBlank() || input.endsWith(INPUT_DELIMITER)) {
             throw new IllegalArgumentException("입력값은 공백이거나 구분자로 끝날 수 없다.");
+        }
+    }
+
+    private int parseInt(String value) {
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("입력값은 숫자 형식이어야 한다.");
         }
     }
 

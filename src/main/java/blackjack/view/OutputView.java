@@ -1,16 +1,19 @@
 package blackjack.view;
 
-import blackjack.model.blackjackgame.PlayersGameResults;
+import blackjack.model.blackjackgame.PlayersResults;
 import blackjack.model.cards.Card;
 import blackjack.model.cards.Cards;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Participant;
 import blackjack.model.participants.Player;
+import blackjack.model.blackjackgame.Profit;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    private static final DecimalFormat DOUBLE_FORMAT = new DecimalFormat("#,###.#");
     private static final String DEALER_NAME = "딜러";
     private static final String MULTIPLE_OUTPUTS_DELIMITER = ", ";
 
@@ -46,14 +49,12 @@ public class OutputView {
         return participant.getCards().getCardsScore().getValue();
     }
 
-    public void printGameResults(PlayersGameResults playersGameResults) {
+    public void printGameResults(PlayersResults playersResults) {
         System.out.println();
-        System.out.println("### 최종 승패");
-        Map<DealerResultStatus, Long> dealerResult = playersGameResults.getDealerResult();
+        System.out.println("### 최종 수익");
 
-        System.out.printf("%s: %s%n", DEALER_NAME, getDealerResultFormat(dealerResult));
-        Map<Player, PlayerResultStatus> gameResult = playersGameResults.getResult();
-        printPlayerResultsFormat(gameResult);
+        System.out.printf("%s: %s%n", DEALER_NAME, convertFormat(playersResults.getDealerProfit()));
+        printPlayerResultsFormat(playersResults.getResults());
     }
 
     public void printInvalidDrawCardState() {
@@ -72,22 +73,19 @@ public class OutputView {
         return String.format("%s: %s - 결과: %d%n", name, getCardsText(cards), score);
     }
 
-    private void printPlayerResultsFormat(Map<Player, PlayerResultStatus> gameResult) {
+    private void printPlayerResultsFormat(Map<Player, Profit> gameResult) {
         gameResult.entrySet()
                 .stream()
-                .map(entry -> getPlayerResultFormat(entry.getKey().getName(), entry.getValue().getResult()))
+                .map(entry -> getPlayerResultFormat(entry.getKey().getName(), convertFormat(entry.getValue())))
                 .forEach(System.out::print);
     }
 
-    private String getPlayerResultFormat(String name, String result) {
-        return String.format("%s: %s%n", name, result);
+    private String convertFormat(Profit profit) {
+        return DOUBLE_FORMAT.format(profit.getValue());
     }
 
-    private String getDealerResultFormat(Map<DealerResultStatus, Long> dealerResult) {
-        return dealerResult.entrySet()
-                .stream()
-                .map(entry -> String.format("%d%s", entry.getValue(), entry.getKey().getResult()))
-                .collect(Collectors.joining(" "));
+    private String getPlayerResultFormat(String name, String profit) {
+        return String.format("%s: %s%n", name, profit);
     }
 
     private String getPlayersNames(List<Player> players) {
