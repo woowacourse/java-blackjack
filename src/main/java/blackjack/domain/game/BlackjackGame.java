@@ -22,6 +22,10 @@ public class BlackjackGame {
         players.forEach(player -> player.draw(deck.pickCards(DEAL_CARDS_COUNT)));
     }
 
+    public boolean isPlayerCanHit(Player player, PlayerCommand playerCommand) {
+        return playerCommand != PlayerCommand.STAND && !player.isBust();
+    }
+
     public void hitOrStand(Player player, PlayerCommand playerCommand) {
         if (playerCommand == HIT) {
             player.draw(deck.pickCard());
