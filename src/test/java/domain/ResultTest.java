@@ -17,7 +17,7 @@ class ResultTest {
         List<Card> maxScoreCards = List.of(ACE_HEART, TEN_HEART);
         List<Card> minScoreCards = List.of(TWO_HEART);
 
-        CardDeck cardDeck = new CardDeck();
+        CardDeck cardDeck = CardDeck.createShuffledDeck();
         Dealer dealerWithBust = new Dealer(cardDeck);
         dealerWithBust.initHand(bustCards);
         Dealer dealerWithMaxScore = new Dealer(cardDeck);
