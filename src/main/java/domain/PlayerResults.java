@@ -14,7 +14,7 @@ public class PlayerResults {
     }
 
     public void addResult(final Player player, final Result result) {
-        results.put(player,result);
+        results.put(player, result);
     }
 
     public Map<Player, Result> getResults() {

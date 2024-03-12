@@ -70,7 +70,7 @@ public class PlayerTest {
 
     @DisplayName("블랙잭도 아니고, 버스트도 아닌 경우 일반 점수 합으로 취급한다.")
     @Test
-    void isNormalScore(){
+    void isNormalScore() {
         //given
         player.hit(cards.pop());
         player.hit(cards.pop());

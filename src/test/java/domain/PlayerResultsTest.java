@@ -22,7 +22,7 @@ class PlayerResultsTest {
         int expectedSize = 1;
 
         // when
-        playerResults.addResult(player,result);
+        playerResults.addResult(player, result);
 
         // then
         assertAll(
