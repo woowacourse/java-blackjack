@@ -1,6 +1,7 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 
 import java.util.List;
 
@@ -8,8 +9,8 @@ public class Dealer extends Gamer {
     public static final int HIT_UPPER_BOUND = 16;
     private static final String name = "딜러";
 
-    public Dealer() {
-        super();
+    public Dealer(Deck deck) {
+        super(deck);
     }
 
     @Override

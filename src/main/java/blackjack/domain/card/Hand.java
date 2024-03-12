@@ -8,18 +8,20 @@ import java.util.Set;
 public class Hand {
     private static final int MAX_SCORE = 21;
 
+    private final Deck deck;
     private final List<Card> cards;
 
-    public Hand() {
+    public Hand(Deck deck) {
+        this.deck = deck;
         this.cards = new ArrayList<>();
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
+    public void draw() {
+        draw(1);
     }
 
-    public void addCards(List<Card> cards) {
-        this.cards.addAll(cards);
+    public void draw(int count) {
+        cards.addAll(deck.draw(count));
     }
 
     public Card getCard(int index) {
@@ -30,7 +32,7 @@ public class Hand {
         return List.copyOf(cards);
     }
 
-    public int getSize() {
+    public int size() {
         return cards.size();
     }
 

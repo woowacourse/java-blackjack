@@ -37,7 +37,7 @@ public class RefereeTest {
 
     @BeforeEach
     void setupGamer() {
-        players = Players.from(List.of(name));
+        players = Players.of(List.of(name));
         dealer = new Dealer();
         referee = new Referee();
         expectedPlayersResult = new HashMap<>();

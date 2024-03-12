@@ -13,8 +13,8 @@ public class Referee {
         this.values = new GameResults();
     }
 
-    public void calculatePlayersResults(Players players, Dealer dealer) {
-        players.forEach(player ->
+    public void calculatePlayersResults(Dealer dealer, Players players) {
+        players.get().forEach(player ->
                 values.put(player.getName(), judgeGameResult(player, dealer))
         );
     }

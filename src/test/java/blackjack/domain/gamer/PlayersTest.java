@@ -21,7 +21,7 @@ public class PlayersTest {
         List<String> expectedNames = List.of("pobi", "lemone", "seyang");
 
         // when
-        Players players = Players.from(names);
+        Players players = Players.of(names);
 
         // then
         assertThat(players.getNames())
@@ -34,7 +34,7 @@ public class PlayersTest {
     @DisplayName("플레이어들이 없을 경우 예외가 발생한다.")
     void validateNoPlayer(String names) {
         // given & when & then
-        assertThatCode(() -> Players.from(List.of(names)))
+        assertThatCode(() -> Players.of(List.of(names)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("공백이 아닌 플레이어를 입력해 주세요.");
     }
@@ -45,7 +45,7 @@ public class PlayersTest {
         // given
         List<String> names = List.of("pobi", "pobi");
         // when & then
-        assertThatCode(() -> Players.from(names))
+        assertThatCode(() -> Players.of(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("플레이어 이름은 중복될 수 없습니다.");
     }
@@ -54,7 +54,7 @@ public class PlayersTest {
     @DisplayName("플레이어들을 반복하여 무언가를 수행한다.")
     void playersForEachTest() {
         // given
-        Players players = Players.from(List.of("seyang", "lemone"));
+        Players players = Players.of(List.of("seyang", "lemone"));
         AtomicInteger count = new AtomicInteger();
 
         // when

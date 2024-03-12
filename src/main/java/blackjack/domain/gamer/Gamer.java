@@ -8,28 +8,27 @@ import java.util.List;
 
 public abstract class Gamer {
     public static final int DEAL_CARD_COUNT = 2;
-    private static final int HIT_CARD_COUNT = 1;
 
     protected final Hand hand;
 
-    protected Gamer() {
-        this.hand = new Hand();
+    protected Gamer(Deck deck) {
+        this.hand = new Hand(deck);
     }
 
     abstract boolean canContinue();
 
     abstract String getName();
 
-    public void deal(Deck deck) {
-        hand.addCards(deck.draw(DEAL_CARD_COUNT));
+    public void deal() {
+        hand.draw(DEAL_CARD_COUNT);
     }
 
-    public void hit(Deck deck) {
-        hand.addCards(deck.draw(HIT_CARD_COUNT));
+    public void hit() {
+        hand.draw();
     }
 
     public boolean isOnlyDeal() {
-        return hand.getSize() == DEAL_CARD_COUNT;
+        return hand.size() == DEAL_CARD_COUNT;
     }
 
     public boolean isBust() {
@@ -42,6 +41,10 @@ public abstract class Gamer {
 
     public boolean isMaxScore() {
         return hand.isBlackjackScore();
+    }
+
+    public boolean isUnderBound() {
+        return hand.isUnderBoundScore();
     }
 
     public List<Card> getCards() {
