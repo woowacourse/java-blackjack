@@ -3,10 +3,16 @@ package domain;
 import java.util.Objects;
 
 public class Name {
+    private static final String DEALER_NAME = "딜러";
+    
     private final String name;
 
     public Name(final String name) {
         this.name = name;
+    }
+
+    public boolean isDealerName() {
+        return name.equals(DEALER_NAME);
     }
 
     public String getName() {

@@ -11,8 +11,8 @@ public class Player extends Participant {
     }
 
     private void validateName(final Name name) {
-        if (name.getName().equals("딜러")) {
-            throw new IllegalArgumentException();
+        if (name.isDealerName()) {
+            throw new IllegalArgumentException("플레이어는 [딜러] 이름을 사용할 수 없습니다.");
         }
     }
 
