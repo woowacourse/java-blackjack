@@ -21,7 +21,7 @@ public class CardHolders {
                 .toList();
     }
 
-    public List<CardHolder> getPlayers() {
+    public List<CardHolder> getCardHolders() {
         return players;
     }
 }

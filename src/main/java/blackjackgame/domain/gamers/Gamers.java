@@ -1,7 +1,7 @@
 package blackjackgame.domain.gamers;
 
-import blackjackgame.domain.gamers.BetMakers;
-import blackjackgame.domain.gamers.CardHolders;
+import blackjackgame.domain.card.Deck;
+import java.util.List;
 
 public class Gamers {
     private final CardHolders cardHolders;
@@ -10,5 +10,21 @@ public class Gamers {
     public Gamers(CardHolders cardHolders, BetMakers betMakers) {
         this.cardHolders = cardHolders;
         this.betMakers = betMakers;
+    }
+
+    public void cardHoldersDrawNTimes(Deck deck, int execution_count) {
+        cardHolders.drawNTimes(deck, execution_count);
+    }
+
+    public List<String> getRawGamerNames() {
+        return cardHolders.getRawPlayerNames();
+    }
+
+    public List<CardHolder> getCardHolders() {
+        return cardHolders.getCardHolders();
+    }
+
+    public List<BetMaker> getBetMakers() {
+        return betMakers.getBetMakerGamers();
     }
 }

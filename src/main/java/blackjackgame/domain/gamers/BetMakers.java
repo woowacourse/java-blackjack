@@ -8,4 +8,8 @@ public class BetMakers {
     public BetMakers(List<BetMaker> betMakerGamers) {
         this.betMakerGamers = betMakerGamers;
     }
+
+    public List<BetMaker> getBetMakerGamers() {
+        return betMakerGamers;
+    }
 }

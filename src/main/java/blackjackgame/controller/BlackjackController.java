@@ -1,16 +1,18 @@
 package blackjackgame.controller;
 
-import blackjackgame.domain.gamers.BetMaker;
-import blackjackgame.domain.gamers.BetMakers;
-import blackjackgame.domain.blackjack.BetMoney;
 import blackjackgame.domain.BlackjackGame;
-import blackjackgame.domain.gamers.CardHolder;
+import blackjackgame.domain.blackjack.BetMoney;
 import blackjackgame.domain.blackjack.GameResult;
 import blackjackgame.domain.blackjack.GameResultCalculator;
-import blackjackgame.domain.gamers.CardHolders;
 import blackjackgame.domain.blackjack.HoldingCards;
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.Deck;
+import blackjackgame.domain.gamers.BetMaker;
+import blackjackgame.domain.gamers.BetMakers;
+import blackjackgame.domain.gamers.CardHolder;
+import blackjackgame.domain.gamers.CardHolders;
+import blackjackgame.domain.gamers.Gamer;
+import blackjackgame.domain.gamers.Gamers;
 import blackjackgame.dto.CardDTO;
 import blackjackgame.dto.DealerGameResultDTO;
 import blackjackgame.dto.GamerDTO;
@@ -37,13 +39,15 @@ public class BlackjackController {
 
     private static BlackjackGame initBlackJackGame() {
         CardHolder cardHolderDealer = makeCardHolderDealer();
-        BetMaker betMakerGamer = makeBetMakerDealer();
-
+        BetMaker betMakerDealer = makeBetMakerDealer();
         List<String> playerNames = NameInputView.getNames();
-        CardHolders cardHolderGamers = new CardHolders(makeCardHolderPlayers(playerNames));
-        BetMakers betMakerGamers = new BetMakers(makeBetMakerPlayers(playerNames));
+        CardHolders cardHolderPlayers = new CardHolders(makeCardHolderPlayers(playerNames));
+        BetMakers betMakerPlayers = new BetMakers(makeBetMakerPlayers(playerNames));
 
-        return new BlackjackGame(cardHolderDealer, betMakerGamer, cardHolderGamers, betMakerGamers);
+        Gamer dealer = new Gamer(cardHolderDealer, betMakerDealer);
+        Gamers players = new Gamers(cardHolderPlayers, betMakerPlayers);
+
+        return new BlackjackGame(dealer, players);
     }
 
     private void playBlackJackGame(BlackjackGame blackjackGame, Deck deck) {

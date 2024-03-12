@@ -1,7 +1,7 @@
 package blackjackgame.domain.gamers;
 
-import blackjackgame.domain.gamers.BetMaker;
-import blackjackgame.domain.gamers.CardHolder;
+import blackjackgame.domain.blackjack.DealerRandomCardDrawStrategy;
+import blackjackgame.domain.card.Deck;
 
 public class Gamer {
     private final CardHolder cardHolder;
@@ -10,5 +10,21 @@ public class Gamer {
     public Gamer(CardHolder cardHolder, BetMaker betMaker) {
         this.cardHolder = cardHolder;
         this.betMaker = betMaker;
+    }
+
+    public void cardHolderDraw(Deck deck, int execution_count) {
+        cardHolder.draw(deck, new DealerRandomCardDrawStrategy(cardHolder), execution_count);
+    }
+
+    public String getRawGamerName() {
+        return cardHolder.getRawName();
+    }
+
+    public CardHolder getCardHolder() {
+        return cardHolder;
+    }
+
+    public BetMaker getBetMaker() {
+        return betMaker;
     }
 }
