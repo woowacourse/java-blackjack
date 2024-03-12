@@ -45,4 +45,8 @@ public class BlackjackGame {
     public Dealer getDealer() {
         return participants.getDealer();
     }
+
+    public List<Participant> getParticipants() {
+        return participants.getParticipants();
+    }
 }

@@ -24,19 +24,16 @@ public class OutputView {
     }
 
     public void printAllParticipantsCards(BlackjackGame game) {
-        System.out.println(dealerNameAndCardsText(game.getDealer()));
-        for (Player player : game.getPlayers()) {
-            System.out.println(participantNameAndCardsText(player));
+        for (Participant participant : game.getParticipants()) {
+            System.out.println(participantNameAndCardsText(participant));
         }
         System.out.println();
     }
 
     public void printAllParticipantsCardsWithScore(BlackjackGame game) {
         System.out.println();
-        System.out.println(
-                participantNameAndCardsText(game.getDealer()) + scoreText(game.getDealer().calculateScore()));
-        for (Player player : game.getPlayers()) {
-            System.out.println(participantNameAndCardsText(player) + scoreText(player.calculateScore()));
+        for (Participant participant : game.getParticipants()) {
+            System.out.println(participantNameAndCardsText(participant) + scoreText(participant.calculateScore()));
         }
         System.out.println();
     }
@@ -53,12 +50,8 @@ public class OutputView {
         return " - 결과: " + score;
     }
 
-    private String dealerNameAndCardsText(Dealer dealer) {
-        return dealer.getName() + " 카드: " + cardsText(dealer.findShowingCards());
-    }
-
     private String participantNameAndCardsText(Participant participant) {
-        return participant.getName() + " 카드: " + cardsText(participant.getCards());
+        return participant.getName() + " 카드: " + cardsText(participant.findShowingCards());
     }
 
     private String cardsText(List<Card> cards) {

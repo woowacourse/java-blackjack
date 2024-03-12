@@ -19,7 +19,7 @@ public class Participants {
     }
 
     public boolean doesNotContain(Participant participant) {
-        return !players.contains((Player) participant);
+        return !getParticipants().contains(participant);
     }
 
     public List<Player> getPlayers() {
@@ -32,7 +32,7 @@ public class Participants {
 
     public List<Participant> getParticipants() {
         List<Participant> participants = new ArrayList<>(players);
-        participants.add(dealer);
+        participants.add(0, dealer);
 
         return Collections.unmodifiableList(participants);
     }
