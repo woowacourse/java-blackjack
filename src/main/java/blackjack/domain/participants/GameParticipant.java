@@ -7,6 +7,8 @@ public interface GameParticipant {
     void hit(Card card);
     int calculateScore();
     boolean canHit();
+    boolean isBurst();
     Name getName();
     Hands getHands();
+    int getHandsSize();
 }

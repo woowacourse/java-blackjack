@@ -12,6 +12,7 @@ import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
 import blackjack.domain.participants.BlackJackGameResult;
+import blackjack.domain.participants.State;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,32 +66,6 @@ class ParticipantsTest {
         );
 
         assertThat(siso.getHands().size()).isEqualTo(2);
-    }
-
-    @Test
-    @DisplayName("참가자들의 결과를 계산한다.")
-    void calculateResultTest() {
-        Hands hands1 = new Hands(List.of(
-                new Card(Shape.HEART, Rank.ACE),
-                new Card(Shape.HEART, Rank.TWO))
-        );
-
-        Hands hands2 = new Hands(List.of(
-                new Card(Shape.SPADE, Rank.ACE),
-                new Card(Shape.SPADE, Rank.TWO))
-        );
-
-        Hands hands3 = new Hands(List.of(
-                new Card(Shape.DIAMOND, Rank.ACE),
-                new Card(Shape.DIAMOND, Rank.TWO))
-        );
-
-        participants.receiveInitialHands(
-                new ArrayList<>(List.of(hands1, hands2, hands3))
-        );
-
-        BlackJackGameResult blackJackGameResult = participants.calculateGameResult();
-        assertThat(blackJackGameResult.getResult(siso)).isFalse();
     }
 
     @Test

@@ -91,6 +91,6 @@ public class BlackjackGame {
 
     private void handleGameResult(GameBoard gameBoard) {
         BlackJackGameResult blackJackGameResult = gameBoard.calculateGameResult();
-        outputView.printWinOrLose(blackJackGameResult);
+        outputView.printGameResult(blackJackGameResult);
     }
 }

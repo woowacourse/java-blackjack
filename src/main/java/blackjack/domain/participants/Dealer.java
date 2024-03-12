@@ -34,6 +34,16 @@ public class Dealer implements GameParticipant {
         return calculateScore() < MAX_RECEIVE_SCORE;
     }
 
+    @Override
+    public boolean isBurst() {
+        return calculateScore() > Player.MAX_SCORE;
+    }
+
+    @Override
+    public int getHandsSize() {
+        return hands.size();
+    }
+
     public Name getName() {
         return name;
     }
@@ -41,4 +51,5 @@ public class Dealer implements GameParticipant {
     public Hands getHands() {
         return hands;
     }
+
 }

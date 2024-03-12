@@ -6,28 +6,57 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackJackGameResult {
-    private final Map<Player, Boolean> winOrLose;
+    private final Map<Player, State> gameResult;
 
-    public BlackJackGameResult(List<Player> players, int dealerScore) {
-        this.winOrLose = new LinkedHashMap<>();
-        players.forEach(player -> winOrLose.put(player, player.isWin(dealerScore)));
+    public BlackJackGameResult(List<Player> players, Dealer dealer) {
+        this.gameResult = new LinkedHashMap<>();
+        players.forEach(player -> gameResult.put(player, calculateState(player, dealer)));
     }
 
-    public int countDealerWin() {
-        return (int) winOrLose.values().stream()
-                .filter(isWin -> !isWin)
+    private State calculateState(Player player, Dealer dealer) {
+        if (isWin(player, dealer)) {
+            return State.WIN;
+        }
+        if (isTie(player, dealer)) {
+            return State.TIE;
+        }
+        return State.LOSE;
+    }
+
+    private boolean isWin(Player player, Dealer dealer) {
+         if (player.isBurst()) {
+             return false;
+         }
+         if (dealer.isBurst()) {
+             return true;
+         }
+        return player.calculateScore() > dealer.calculateScore();
+    }
+
+    private boolean isTie(Player player, Dealer dealer) {
+        if (player.isBurst() || dealer.isBurst()) {
+            return false;
+        }
+        return player.calculateScore() == dealer.calculateScore() &&
+                player.getHandsSize() == dealer.getHandsSize() &&
+                player.calculateScore() == Player.MAX_SCORE;
+    }
+
+    public int countDealerWin() { // TODO 이제 필요 없지 않나?
+        return (int) gameResult.values().stream()
+                .filter(state -> state == State.WIN)
                 .count();
     }
 
     public int size() {
-        return winOrLose.size();
+        return gameResult.size();
     }
 
-    public Map<Player, Boolean> getWinOrLose() {
-        return new HashMap<>(winOrLose);
+    public Map<Player, State> getGameResult() {
+        return new HashMap<>(gameResult);
     }
 
-    public Boolean getResult(Player player) {
-        return winOrLose.get(player);
+    public State getResult(Player player) {
+        return gameResult.get(player);
     }
 }

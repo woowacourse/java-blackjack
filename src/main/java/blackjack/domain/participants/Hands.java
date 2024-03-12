@@ -32,6 +32,7 @@ public class Hands {
     }
 
     public void receiveHands(Hands newHands) {
+        cards.clear();
         cards.addAll(newHands.cards);
     }
 

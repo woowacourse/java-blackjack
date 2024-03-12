@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Player implements GameParticipant {
 
-    private static final int MAX_SCORE = 21;
+    public static final int MAX_SCORE = 21;
 
     private final Name name;
     private final Hands hands;
@@ -36,15 +36,14 @@ public class Player implements GameParticipant {
         return calculateScore() < MAX_SCORE;
     }
 
-    public boolean isWin(int dealerScore) {
-        int score = hands.calculateScore();
-        if (score > MAX_SCORE) {
-            return false;
-        }
-        if (dealerScore > MAX_SCORE) {
-            return true;
-        }
-        return dealerScore < score;
+    @Override
+    public boolean isBurst() {
+        return calculateScore() > 21;
+    }
+
+    @Override
+    public int getHandsSize() {
+        return hands.size();
     }
 
     public Name getName() {
@@ -54,4 +53,5 @@ public class Player implements GameParticipant {
     public Hands getHands() {
         return hands;
     }
+
 }

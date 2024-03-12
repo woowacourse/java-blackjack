@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.BlackJackGameResult;
+import blackjack.domain.participants.State;
 import blackjack.dto.ParticipantDto;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,21 +55,26 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printWinOrLose(BlackJackGameResult blackJackGameResult) {
+    public void printGameResult(BlackJackGameResult blackJackGameResult) { // TODO 리팩터링
         System.out.println("## 최종 승패");
-        int dealerWinCount = blackJackGameResult.countDealerWin();
-        int dealerLoseCount = blackJackGameResult.size() - dealerWinCount;
-        System.out.printf("딜러: %d승 %d패\n", dealerWinCount, dealerLoseCount);
-        blackJackGameResult.getWinOrLose().keySet().forEach(player -> printVictory(blackJackGameResult, player));
+//        int dealerWinCount = blackJackGameResult.countDealerWin();
+//        int dealerLoseCount = blackJackGameResult.size() - dealerWinCount;
+//        System.out.printf("딜러: %d승 %무 %d패\n", dealerWinCount, dealerLoseCount);
+//        blackJackGameResult.getGameResult().keySet().forEach(player -> printVictory(blackJackGameResult, player));
     }
 
-    private static void printVictory(BlackJackGameResult blackJackGameResult, Player player) {
-        if (blackJackGameResult.getResult(player)) {
-            System.out.println(player.getName().getName() + ": 승");
-            return;
-        }
-        System.out.println(player.getName().getName() + ": 패");
-    }
+//    private static void printVictory(BlackJackGameResult blackJackGameResult, Player player) {
+//        State state = blackJackGameResult.getResult(player);
+//        if (state == State.WIN) {
+//            System.out.println(player.getName().getName() + ": 승");
+//            return;
+//        }
+//        if (state == State.TIE) {
+//            System.out.println(player.getName().getName() + ": 무");
+//            return;
+//        }
+//        System.out.println(player.getName().getName() + ": 패");
+//    }
 
     public void printNewLine() {
         System.out.println();

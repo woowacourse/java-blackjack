@@ -33,7 +33,7 @@ public class Participants {
     }
 
     public BlackJackGameResult calculateGameResult() {
-        return new BlackJackGameResult(players.getPlayers(), dealer.calculateScore());
+        return new BlackJackGameResult(players.getPlayers(), dealer);
     }
 
     public boolean isDealerNotOver() {
