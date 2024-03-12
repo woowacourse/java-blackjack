@@ -18,13 +18,13 @@ public class WinningResult {
         return new WinningResult(players.determineWinStatus(dealerScore));
     }
 
-    public Map<WinStatus, Long> summarizeDealerWinningResult() {
+    public Map<WinStatus, Long> summarizeDealerResult() {
         return participantsWinStatus.values().stream()
                 .map(WinStatus::opposite)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
     }
 
-    public Map<ParticipantName, WinStatus> getParticipantsWinStatus() {
+    public Map<ParticipantName, WinStatus> getParticipantsResult() {
         return Collections.unmodifiableMap(participantsWinStatus);
     }
 }

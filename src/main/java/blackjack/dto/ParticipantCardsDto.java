@@ -5,7 +5,7 @@ import blackjack.domain.card.Hands;
 import blackjack.domain.participant.ParticipantName;
 import java.util.List;
 
-public record ParticipantCardsDto(String participantName, List<CardDto> cardDtos) {
+public record ParticipantCardsDto(String name, List<CardDto> cardDtos) {
     public static ParticipantCardsDto of(final ParticipantName name, final Hands cards) {
         return new ParticipantCardsDto(name.getName(), convertToCardDto(cards.getCards()));
     }

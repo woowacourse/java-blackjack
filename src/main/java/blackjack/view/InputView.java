@@ -1,7 +1,7 @@
 package blackjack.view;
 
+import blackjack.domain.dealer.Dealer;
 import blackjack.view.format.CardRequestFormat;
-import blackjack.view.format.DealerFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;

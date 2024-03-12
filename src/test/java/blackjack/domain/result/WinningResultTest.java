@@ -14,7 +14,7 @@ class WinningResultTest {
         WinningResult winningResult = new WinningResult(Map.of(
                 new ParticipantName("kirby"), WinStatus.LOSE,
                 new ParticipantName("baekho"), WinStatus.WIN));
-        Map<WinStatus, Long> dealerResult = winningResult.summarizeDealerWinningResult();
+        Map<WinStatus, Long> dealerResult = winningResult.summarizeDealerResult();
 
         assertThat(dealerResult).containsExactlyInAnyOrderEntriesOf(Map.of(
                 WinStatus.WIN, 1L,

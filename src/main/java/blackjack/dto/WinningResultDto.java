@@ -7,12 +7,12 @@ import java.util.Map;
 import java.util.function.BiFunction;
 
 public record WinningResultDto(List<PlayerWinningResultDto> playersWinningResult,
-                               List<WinningResultCountDto> dealerWinningResult) {
+                               List<WinningCountDto> dealerWinningResult) {
     public static WinningResultDto of(final Map<ParticipantName, WinStatus> playerWinningResults,
                                       final Map<WinStatus, Long> dealerWinningResult) {
         return new WinningResultDto(
                 convertToDto(playerWinningResults, PlayerWinningResultDto::of),
-                convertToDto(dealerWinningResult, WinningResultCountDto::of));
+                convertToDto(dealerWinningResult, WinningCountDto::of));
     }
 
     private static <K, V, D> List<D> convertToDto(final Map<K, V> target, BiFunction<K, V, D> function) {

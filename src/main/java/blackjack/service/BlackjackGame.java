@@ -6,12 +6,10 @@ import blackjack.domain.dealer.Deck;
 import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.Score;
-import blackjack.domain.result.WinStatus;
 import blackjack.domain.result.WinningResult;
 import blackjack.dto.CardDto;
 import blackjack.dto.ParticipantCardsDto;
-import blackjack.dto.ParticipantCardsScoreDto;
-import blackjack.dto.WinningResultDto;
+import blackjack.dto.ParticipantScoreDto;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -56,7 +54,7 @@ public class BlackjackGame {
         return true;
     }
 
-    public int giveDealerMoreCard() {
+    public int giveDealerMoreCards() {
         int count = 0;
 
         while (dealer.needMoreCard()) {
