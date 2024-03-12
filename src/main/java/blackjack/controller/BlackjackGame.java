@@ -22,7 +22,7 @@ public class BlackjackGame {
     public void run() {
         Participants participants = createParticipants();
         PlayerBets playerBets = createPlayerBets(participants.getPlayers());
-        outputView.printInitialHand(participants);
+        printInitialHandsOf(participants);
         participantsHitCard(participants);
         outputView.printParticipantsHandWithScore(participants);
         printBlackjackResult(participants, playerBets);
@@ -54,21 +54,24 @@ public class BlackjackGame {
     }
 
     private PlayerBet createPlayerBet(Player player) {
-        String playerName = player.getName();
-        int bettingPrice = inputView.readPlayerBettingPrice(playerName);
+        Name playerName = player.getName();
+        int bettingPrice = inputView.readPlayerBettingPrice(playerName.getValue());
         return new PlayerBet(player, bettingPrice);
     }
 
-    private void participantsHitCard(Participants participants) {
-        playersHitCard(participants.getPlayers());
-        dealerHitCard(participants.getDealer());
+    private void printInitialHandsOf(Participants participants) {
+        List<InitialHand> participantsInitialHand = participants.getParticipantsInitialHand();
+        outputView.printInitialHands(participantsInitialHand);
     }
 
-    private void playersHitCard(Players players) {
-        PlayerTurnSelector playerTurnSelector = new PlayerTurnSelector(players);
+    private void participantsHitCard(Participants participants) {
+        PlayerTurnSelector playerTurnSelector = participants.createPlayerTurnSelector();
         while (playerTurnSelector.hasNext()) {
             hitIfCurrentPlayerWants(playerTurnSelector);
         }
+
+        int dealerHitCount = participants.executeAndCountDealerHit(RandomDeck.getInstance());
+        outputView.printDealerHitCount(dealerHitCount);
     }
 
     private void hitIfCurrentPlayerWants(PlayerTurnSelector playerTurnSelector) {
@@ -82,24 +85,14 @@ public class BlackjackGame {
     }
 
     private PlayerAction getPlayerAction(Player player) {
-        String playerName = player.getName();
-        boolean dosePlayerWantHit = inputView.dosePlayerWantHit(playerName);
+        Name playerName = player.getName();
+        boolean dosePlayerWantHit = inputView.dosePlayerWantHit(playerName.getValue());
         return PlayerAction.getAction(dosePlayerWantHit);
     }
 
-    private void dealerHitCard(Dealer dealer) {
-        Deck deck = RandomDeck.getInstance();
-        int hitCount = 0;
-        while (dealer.canHit()) {
-            dealer.addCard(deck);
-            hitCount++;
-        }
-        outputView.printDealerHitCount(hitCount);
-    }
-
     private void printBlackjackResult(Participants participants, PlayerBets playerBets) {
-        Referee referee = Referee.getInstance();
-        BlackjackResult blackjackResult = participants.generateResult(referee, playerBets);
+        Referee referee = participants.createRefereeByDealer();
+        BlackjackResult blackjackResult = referee.generateBlackjackResult(playerBets);
         outputView.printBlackjackResult(blackjackResult);
     }
 

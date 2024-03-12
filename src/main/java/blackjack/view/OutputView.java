@@ -18,39 +18,28 @@ public class OutputView {
     private static final String GAME_RESULT_PREFIX = "## 최종 수익";
     private static final String PROFIT_FORMAT = "%s: %.0f";
 
-    public void printInitialHand(Participants participants) {
-        Dealer dealer = participants.getDealer();
-        Players players = participants.getPlayers();
-        printHandOutMessage(dealer, players);
-        printParticipantsHand(dealer, players);
+    public void printInitialHands(List<InitialHand> initialHands) {
+        List<String> names = initialHands.stream()
+                .map(InitialHand::getName)
+                .toList();
+        printHandOutMessage(names);
+        initialHands.stream()
+                .map(this::getFormattedParticipantHand)
+                .forEach(System.out::println);
     }
 
-    private void printHandOutMessage(Dealer dealer, Players players) {
-        String playersName = formatPlayersName(players);
-        String handOutMessage = String.format(HAND_OUT_MESSAGE, dealer.getName(), playersName);
+    private void printHandOutMessage(List<String> names) {
+        String firstName = names.get(0);
+        String othersName = String.join(DELIMITER, names.subList(1, names.size()));
+        String handOutMessage = String.format(HAND_OUT_MESSAGE, firstName, othersName);
         printNewLine();
         System.out.println(handOutMessage);
     }
 
-    private String formatPlayersName(Players players) {
-        return players.getValues()
-                .stream()
-                .map(Participant::getName)
-                .collect(Collectors.joining(DELIMITER));
-    }
-
-    private void printParticipantsHand(Dealer dealer, Players players) {
-        printParticipantsInitialHand(dealer);
-        players.getValues()
-                .forEach(this::printParticipantsInitialHand);
-    }
-
-    private void printParticipantsInitialHand(Participant participant) {
-        List<Card> cards = participant.getInitialOpenedCards();
-        String cardSignatures = getCardSignatures(cards);
-        String participantName = participant.getName();
-        String cardsWithName = String.format(PARTICIPANT_HAND, participantName, cardSignatures);
-        System.out.println(cardsWithName);
+    private String getFormattedParticipantHand(InitialHand initialHand) {
+        String participantName = initialHand.getName();
+        String cardSignatures = getCardSignatures(initialHand.getCards());
+        return String.format(PARTICIPANT_HAND, participantName, cardSignatures);
     }
 
     private String getCardSignatures(List<Card> cards) {
@@ -65,7 +54,7 @@ public class OutputView {
     }
 
     private String getParticipantHand(Participant participant) {
-        String participantName = participant.getName();
+        String participantName = participant.getName().getValue();
         List<Card> cards = participant.getCards();
         String cardSignatures = getCardSignatures(cards);
         return String.format(PARTICIPANT_HAND, participantName, cardSignatures);
