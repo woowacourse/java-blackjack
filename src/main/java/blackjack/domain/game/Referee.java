@@ -7,15 +7,15 @@ import blackjack.domain.gamer.Players;
 import java.util.Map;
 
 public class Referee {
-    private final PlayersGameResult values;
+    private final PlayersGameResult result;
 
     public Referee() {
-        this.values = new PlayersGameResult();
+        this.result = new PlayersGameResult();
     }
 
     public void calculatePlayersResults(Players players, Dealer dealer) {
         players.forEach(player ->
-                values.put(player.getName(), judgeGameResult(dealer, player))
+                result.put(player.getName(), judgeGameResult(dealer, player))
         );
     }
 
@@ -39,10 +39,10 @@ public class Referee {
     }
 
     public Map<String, PlayerGameResult> getPlayersResults() {
-        return values.getPlayersResults();
+        return result.getPlayersResults();
     }
 
     public Map<PlayerGameResult, Integer> getDealerResult() {
-        return values.getDealerResult();
+        return result.getDealerResult();
     }
 }
