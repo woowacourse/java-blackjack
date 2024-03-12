@@ -22,14 +22,14 @@ public class CardGameResult {
     public int getDealerWinCount() {
         return (int) totalResult.values()
                 .stream()
-                .filter(playerWinningstatus -> playerWinningstatus.equals(LOSE))
+                .filter(playerWinningstatus -> LOSE.equals(playerWinningstatus))
                 .count();
     }
 
     public int getDealerLoseCount() {
         return (int) totalResult.values()
                 .stream()
-                .filter(status -> status.equals(WIN))
+                .filter(status -> WIN.equals(status))
                 .count();
     }
 }
