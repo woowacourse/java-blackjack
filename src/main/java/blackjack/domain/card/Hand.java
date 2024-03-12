@@ -44,16 +44,6 @@ public class Hand {
                 .count();
     }
 
-    public int sum() {
-        return cards.stream()
-                .mapToInt(Card::getCardNumber)
-                .sum();
-    }
-
-    public int countCard() {
-        return cards.size();
-    }
-
     public List<Card> getCards() {
         return List.copyOf(cards);
     }

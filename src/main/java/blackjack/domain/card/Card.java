@@ -4,16 +4,8 @@ import java.util.Objects;
 
 public class Card {
 
-    // TODO: final 추가 및 cardShape, cardNumber 제거
-    private CardShape cardShape;
-    private CardNumber cardNumber;
-    private CardRank cardRank;
-    private CardSuit cardSuit;
-
-    public Card(CardShape cardShape, CardNumber cardNumber) {
-        this.cardShape = cardShape;
-        this.cardNumber = cardNumber;
-    }
+    private final CardRank cardRank;
+    private final CardSuit cardSuit;
 
     public Card(CardRank cardRank, CardSuit cardSuit) {
         this.cardRank = cardRank;
@@ -39,18 +31,6 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(cardSuit, cardRank);
-    }
-
-    public int getCardNumber() {
-        return cardNumber.getValue();
-    }
-
-    public String getCardNumberName() {
-        return cardNumber.getName();
-    }
-
-    public String getCardShape() {
-        return cardShape.getName();
     }
 
     public CardRank getCardRank() {

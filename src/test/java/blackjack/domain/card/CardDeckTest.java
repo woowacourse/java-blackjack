@@ -38,9 +38,9 @@ class CardDeckTest {
     void testPopCardsFromDeck() {
         // given
         List<Card> cards = new ArrayList<>();
-        cards.add(new Card(CardShape.HEART, CardNumber.TWO));
-        cards.add(new Card(CardShape.CLUB, CardNumber.THREE));
-        cards.add(new Card(CardShape.DIAMOND, CardNumber.FOUR));
+        cards.add(new Card(CardRank.TWO, CardSuit.HEART));
+        cards.add(new Card(CardRank.THREE, CardSuit.CLUB));
+        cards.add(new Card(CardRank.FOUR, CardSuit.DIAMOND));
 
         CardDeck cardDeck = new CardDeck(cards);
 

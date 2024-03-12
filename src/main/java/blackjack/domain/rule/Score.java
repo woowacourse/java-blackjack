@@ -8,10 +8,6 @@ public class Score {
         this.value = value;
     }
 
-    public boolean hitAllowed(HitStrategy hitStrategy) {
-        return hitStrategy.canHit(this);
-    }
-
     public boolean isAbove(int bustCondition) {
         return bustCondition < value;
     }
