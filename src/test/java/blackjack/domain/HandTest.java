@@ -38,4 +38,12 @@ class HandTest {
         assertThat(addedCard.getSuit()).isEqualTo(Suit.CLOVER);
         assertThat(addedCard.getDenomination()).isEqualTo(Denomination.ACE);
     }
+
+    @DisplayName("초기화된 2장의 카드가 들어있는 핸드의 합이 21이면 블랙잭이다")
+    @Test
+    public void blackJack() {
+        Hand initialHand = Hand.of(new Card(Suit.DIAMOND, Denomination.TEN), new Card(Suit.SPADE, Denomination.ACE));
+
+        assertThat(initialHand.isBlackJack()).isTrue();
+    }
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Hand {
     private static final Score ACE_ADDITIONAL_SCORE = Score.from(10);
+    private static final int INITIAL_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -40,6 +41,15 @@ public class Hand {
 
     private boolean hasAce() {
         return cards.stream().anyMatch(Card::isAce);
+    }
+
+    public boolean isBlackJack() {
+        Score handScore = calculate();
+        return isInitialHand() && handScore.isBlackJackScore();
+    }
+
+    private boolean isInitialHand() {
+        return cards.size() == INITIAL_COUNT;
     }
 
     public List<Card> getCards() {
