@@ -1,14 +1,9 @@
 package game;
 
-import java.util.EnumMap;
-
 import domain.BlackjackResult;
-import domain.BlackjackResultStatus;
 import domain.card.CardMachine;
 import domain.participant.dealer.Dealer;
-import domain.participant.dealer.DealerResult;
 import domain.participant.player.Player;
-import domain.participant.player.PlayerResults;
 import domain.participant.player.Players;
 import view.GameCommand;
 import view.InputView;
@@ -66,16 +61,6 @@ public class BlackjackGame {
 
     private void printTotalAndResultOf(final Dealer dealer, final Players players) {
         resultView.printCardsAndTotalOf(dealer, players);
-        resultView.printResult(resultOf(dealer, players));
-    }
-
-    private BlackjackResult resultOf(final Dealer dealer, final Players players) {
-        DealerResult dealerResult = new DealerResult(dealer, new EnumMap<>(BlackjackResultStatus.class));
-        PlayerResults playerResults = new PlayerResults();
-        players.forEach(player -> {
-            dealerResult.put(dealer.resultStatusAgainst(player));
-            playerResults.put(player, player.resultStatusAgainst(dealer));
-        });
-        return new BlackjackResult(dealerResult, playerResults);
+        resultView.printResult(BlackjackResult.of(dealer, players));
     }
 }

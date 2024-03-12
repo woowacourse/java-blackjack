@@ -81,8 +81,8 @@ public class ResultView implements BlackjackViewParser {
 
     public void printResult(final BlackjackResult result) {
         System.out.println("\n## 최종 승패");
-        printDealerResult(result.dealerResult());
-        printPlayerResults(result.playerResults());
+        printDealerResult(result.getDealerResult());
+        printPlayerResults(result.getPlayerResults());
     }
 
     public void printDealerResult(final DealerResult result) {
