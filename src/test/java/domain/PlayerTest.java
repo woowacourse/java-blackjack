@@ -3,7 +3,6 @@ package domain;
 import domain.participant.Hands;
 import domain.participant.Name;
 import domain.participant.Player;
-import exception.InvalidPlayerName;
 import exception.ReservedPlayerNameException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

@@ -1,7 +1,7 @@
 package domain.participant;
 
 import constants.ErrorCode;
-import exception.InvalidPlayerName;
+import exception.InvalidPlayerNameException;
 
 public class Name {
 
@@ -19,13 +19,13 @@ public class Name {
 
     private void validateNull(final String name) {
         if (name == null) {
-            throw new InvalidPlayerName(ErrorCode.BLANK_VALUE);
+            throw new InvalidPlayerNameException(ErrorCode.BLANK_VALUE);
         }
     }
 
     private void validateBlank(final String name) {
         if (name.isBlank()) {
-            throw new InvalidPlayerName(ErrorCode.BLANK_VALUE);
+            throw new InvalidPlayerNameException(ErrorCode.BLANK_VALUE);
         }
     }
 

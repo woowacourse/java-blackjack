@@ -1,7 +1,7 @@
 package domain;
 
 import domain.participant.Name;
-import exception.InvalidPlayerName;
+import exception.InvalidPlayerNameException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,7 +15,7 @@ class NameTest {
     @ValueSource(strings = {"", " ", "  "})
     void BlankInputThrowException(String value) {
         Assertions.assertThatThrownBy(() -> new Name(value))
-                .isInstanceOf(InvalidPlayerName.class);
+                .isInstanceOf(InvalidPlayerNameException.class);
     }
 
     @DisplayName("null을 입력하면 예외를 발생시킨다.")
@@ -23,6 +23,6 @@ class NameTest {
     @NullSource
     void nullInputThrowException(String value) {
         Assertions.assertThatThrownBy(() -> new Name(value))
-                .isInstanceOf(InvalidPlayerName.class);
+                .isInstanceOf(InvalidPlayerNameException.class);
     }
 }
