@@ -31,19 +31,6 @@ public class BlackjackController {
         calculateGameResultAndPrint(dealer, players);
     }
 
-    private void printAllPlayersHandResult(Dealer dealer, Players players) {
-        OutputView.printGamerCards(dealer.getName(), dealer.getCards(), dealer.getScore());
-        players.forEach(player ->
-                OutputView.printGamerCards(player.getName(), player.getCards(), player.getScore()));
-    }
-
-    private void drawToDealer(Dealer dealer, BlackjackGame blackjackGame) {
-        while (dealer.isScoreUnderBound()) {
-            blackjackGame.drawIfScoreUnderBound(dealer);
-            OutputView.printDealerHitAnnounce();
-        }
-    }
-
     private void dealAndPrintResult(BlackjackGame blackjackGame, Dealer dealer, Players players) {
         blackjackGame.deal(dealer, players);
 
@@ -74,13 +61,24 @@ public class BlackjackController {
     }
 
     private void printDealCards(Player player, PlayerCommand command) {
-        if (command == PlayerCommand.STAND) {
-            if (player.getCards().size() == 2) {
-                OutputView.printDealCards(player.getName(), player.getCards());
-            }
+        if (command == PlayerCommand.STAND && player.getCards().size() == 2) {
+            OutputView.printDealCards(player.getName(), player.getCards());
             return;
         }
         OutputView.printDealCards(player.getName(), player.getCards());
+    }
+
+    private void drawToDealer(Dealer dealer, BlackjackGame blackjackGame) {
+        while (dealer.isScoreUnderBound()) {
+            blackjackGame.drawIfScoreUnderBound(dealer);
+            OutputView.printDealerHitAnnounce();
+        }
+    }
+
+    private void printAllPlayersHandResult(Dealer dealer, Players players) {
+        OutputView.printGamerCards(dealer.getName(), dealer.getCards(), dealer.getScore());
+        players.forEach(player ->
+                OutputView.printGamerCards(player.getName(), player.getCards(), player.getScore()));
     }
 
     private void calculateGameResultAndPrint(Dealer dealer, Players players) {
