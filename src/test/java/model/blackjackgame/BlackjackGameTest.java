@@ -1,11 +1,10 @@
 package model.blackjackgame;
 
+import static model.card.CardNumber.ACE;
 import static model.card.CardNumber.FIVE;
 import static model.card.CardNumber.JACK;
-import static model.card.CardNumber.ACE;
 import static model.card.CardNumber.SEVEN;
 import static model.card.CardNumber.SIX;
-import static model.card.CardNumber.THREE;
 import static model.card.CardShape.CLOVER;
 import static model.card.CardShape.DIAMOND;
 import static model.card.CardShape.HEART;
@@ -69,24 +68,21 @@ class BlackjackGameTest {
         assertThat(updatedPlayers.getGroup().get(1).cardsSize()).isEqualTo(1);
     }
 
-    @DisplayName("최초 딜러의 카드 합이 16점 이하이면 카드를 1장을 지급한다")
+    @DisplayName("최초 딜러의 카드 합이 16점 이하인지 유무를 반환한다")
     @ParameterizedTest
     @MethodSource("provideCardsAndExpectedCardSize")
-    void testHitIfDealerPossible(Cards cards, int expectedCardSize) {
+    void testIsDealerPossibleHit(Cards cards, boolean isPossibleHit) {
         Dealer dealer = new Dealer(cards);
         Players players = Players.from(List.of("lily", "jojo"));
         BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
 
-        blackjackGame.dealerHit(new Card(THREE, SPADE));
-
-        Dealer updatedDealer = blackjackGame.getDealer();
-        assertThat(updatedDealer.cardsSize()).isEqualTo(expectedCardSize);
+        assertThat(blackjackGame.isDealerPossibleHit()).isEqualTo(isPossibleHit);
     }
 
     private static Stream<Arguments> provideCardsAndExpectedCardSize() {
         return Stream.of(
-            Arguments.of(new Cards(List.of(new Card(JACK, DIAMOND), new Card(SEVEN, CLOVER))), 2),
-            Arguments.of(new Cards(List.of(new Card(JACK, DIAMOND), new Card(SIX, CLOVER))), 3)
+            Arguments.of(new Cards(List.of(new Card(JACK, DIAMOND), new Card(SEVEN, CLOVER))), false),
+            Arguments.of(new Cards(List.of(new Card(JACK, DIAMOND), new Card(SIX, CLOVER))), true)
         );
     }
 }

@@ -67,8 +67,9 @@ public class BlackjackController {
     }
 
     private void hitToDealer(BlackjackGame blackjackGame) {
-        Card card = RandomCard.pickCard();
-        if (blackjackGame.dealerHit(card)) {
+        if (blackjackGame.isDealerPossibleHit()) {
+            Card card = RandomCard.pickCard();
+            blackjackGame.dealerHit(card);
             OutputView.printAfterDealerHit();
         }
     }
@@ -77,6 +78,7 @@ public class BlackjackController {
         Dealer dealer = blackjackGame.getDealer();
         Players players = blackjackGame.getPlayers();
         GameResult gameResult = GameResult.of(dealer, players);
+
         OutputView.printFinalScore(dealer, players, gameResult);
         OutputView.printGameResult(gameResult);
     }

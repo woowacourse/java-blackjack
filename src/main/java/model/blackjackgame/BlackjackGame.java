@@ -31,12 +31,12 @@ public class BlackjackGame {
         return players.findPlayer(player);
     }
 
-    public boolean dealerHit(Card card) {
-        if (dealer.isPossibleHit()) {
-            dealer = dealer.hitCard(card);
-            return true;
-        }
-        return false;
+    public boolean isDealerPossibleHit() {
+        return dealer.isPossibleHit();
+    }
+
+    public void dealerHit(Card card) {
+        dealer = dealer.hitCard(card);
     }
 
     public int determineInitCardCount() {
