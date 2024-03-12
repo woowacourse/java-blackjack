@@ -11,6 +11,6 @@ class BetAmountTest {
     void validateMinSize() {
         Assertions.assertThatThrownBy(() -> new BetAmount(999))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("배팅 금액은 1000원 이상부터 가능합니다.");
+                .hasMessage("배팅 금액으로 1000 미만의 값은 입력할 수 없습니다.");
     }
 }

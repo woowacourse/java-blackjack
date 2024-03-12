@@ -18,7 +18,8 @@ public class BettingResult {
     }
 
     public double getPayout(Participant participant) {
-        return bet.get(participant).getBetAmount() * dealer.isWinner(participant).getBetMultiplier();
+        //return bet.get(participant).getBetAmount() * dealer.isWinner(participant).getBetMultiplier();
+        return bet.get(participant).mul(dealer.isWinner(participant));
     }
 
     public double getDealerPayout() {

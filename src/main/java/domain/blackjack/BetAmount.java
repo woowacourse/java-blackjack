@@ -10,8 +10,12 @@ public class BetAmount {
 
     private void validate(int betAmount) {
         if (betAmount < 1000) {
-            throw new IllegalArgumentException("배팅 금액은 1000원 이상부터 가능합니다.");
+            throw new IllegalArgumentException("배팅 금액으로 1000 미만의 값은 입력할 수 없습니다.");
         }
+    }
+
+    public double mul(WinStatus winStatus) {
+        return betAmount * winStatus.getBetMultiplier();
     }
 
     public int getBetAmount() {
