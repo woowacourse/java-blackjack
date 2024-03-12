@@ -5,13 +5,22 @@ import domain.constant.CardType;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BlackJackGameTest {
-    private static final Name TEST_NAME = new Name("test");
-    private static final Player TEST_PLAYER = new Player(TEST_NAME);
-    private static final Players TEST_PLAYERS = new Players(List.of(TEST_PLAYER));
+    private Name TEST_NAME;
+    private Player TEST_PLAYER;
+    private Players TEST_PLAYERS;
+
+    @BeforeEach
+    void setUp() {
+        TEST_NAME = new Name("test");
+        TEST_PLAYER = new Player(TEST_NAME);
+        TEST_PLAYERS = new Players(List.of(TEST_PLAYER));
+
+    }
 
     @Test
     @DisplayName("모든 플레이어들에게 카드를 2장씩 나눠준다")
