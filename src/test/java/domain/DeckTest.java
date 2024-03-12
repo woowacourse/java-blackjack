@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
-import domain.game.Deck;
+import domain.game.deck.Deck;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +15,7 @@ class DeckTest {
     @DisplayName("블랙잭에 필요한 카드들을 생성해둔다.")
     @Test
     void createCards() {
-        Deck deck = new Deck();
+        Deck deck = new Deck(deckGenerator);
 
         assertThat(deck.getTotalSize()).isEqualTo(52);
     }

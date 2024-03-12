@@ -6,6 +6,8 @@ import controller.dto.InitialCardStatus;
 import controller.dto.JudgeResult;
 import controller.dto.ParticipantHandStatus;
 import controller.dto.PlayerOutcome;
+import domain.game.deck.Deck;
+import domain.game.deck.DeckGenerator;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
@@ -26,8 +28,8 @@ public class BlackJackGame {
         this.deck = deck;
     }
 
-    public static BlackJackGame from(final List<String> playerNames) {
-        return new BlackJackGame(Participants.from(playerNames), new Deck());
+    public static BlackJackGame from(final List<String> playerNames, final DeckGenerator deckGenerator) {
+        return new BlackJackGame(Participants.from(playerNames), deckGenerator.generate());
     }
 
     public InitialCardStatus initialize() {

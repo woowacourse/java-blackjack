@@ -6,6 +6,7 @@ import domain.constants.CardCommand;
 import domain.game.ActionAfterPick;
 import domain.game.BlackJackGame;
 import domain.game.DecisionToContinue;
+import domain.game.deck.RandomDeckGenerator;
 import domain.participant.Participant;
 import domain.participant.Player;
 import java.util.List;
@@ -28,7 +29,10 @@ public class GameManager {
     }
 
     private BlackJackGame start() {
-        BlackJackGame blackJackGame = BlackJackGame.from(inputView.enterPlayerNames());
+        BlackJackGame blackJackGame = BlackJackGame.from(
+                inputView.enterPlayerNames(),
+                new RandomDeckGenerator()
+        );
         outputView.printInitialHandStatus(blackJackGame.initialize());
         return blackJackGame;
     }

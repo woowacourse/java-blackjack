@@ -4,7 +4,7 @@ import controller.dto.ParticipantHandStatus;
 import domain.card.Card;
 import domain.game.BlackJackGame;
 import domain.game.DecisionToContinue;
-import domain.game.Deck;
+import domain.game.deck.Deck;
 import java.util.ArrayList;
 import java.util.List;
 

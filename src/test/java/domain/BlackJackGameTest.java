@@ -12,7 +12,7 @@ import domain.card.Denomination;
 import domain.card.Suit;
 import domain.constants.CardCommand;
 import domain.game.BlackJackGame;
-import domain.game.Deck;
+import domain.game.deck.Deck;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
