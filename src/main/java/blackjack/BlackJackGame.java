@@ -1,6 +1,5 @@
 package blackjack;
 
-import blackjack.domain.DrawDecision;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.player.Dealer;
@@ -41,9 +40,7 @@ public class BlackJackGame {
     }
 
     private Players initPlayers(CardDeck cardDeck) {
-        InputMapper inputMapper = new InputMapper();
-        List<PlayerName> playerNames = inputMapper.mapToPlayers(inputView.readNames());
-
+        List<PlayerName> playerNames = inputView.readNames();
         return new Players(playerNames.stream()
                 .map(playerName -> new Player(playerName, Hand.createHandFrom(cardDeck)))
                 .toList());
@@ -60,15 +57,10 @@ public class BlackJackGame {
     }
 
     private void completePlayerHand(Player participant, CardDeck cardDeck) {
-        while (participant.canHit() && readHitDecision(participant).isYes()) {
+        while (participant.canHit() && inputView.readDrawDecision(participant.getName()).isYes()) {
             participant.appendCard(cardDeck.popCard());
             outputView.printPlayerHand(participant);
         }
-    }
-
-    private DrawDecision readHitDecision(Player participant) {
-        InputMapper inputMapper = new InputMapper();
-        return inputMapper.mapToDrawDecision(inputView.readDrawPlan(participant.getName()));
     }
 
     private void completeDealerHand(Dealer dealer, CardDeck cardDeck) {
