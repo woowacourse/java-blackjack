@@ -17,7 +17,7 @@ class DeckTest {
 
     @DisplayName("덱에 카드를 추가한다.")
     @Test
-    void addCard() {
+    void add() {
         //given
         Card card = Card.of(CardPattern.CLOVER, CardNumber.EIGHT);
 
@@ -31,7 +31,7 @@ class DeckTest {
 
     @DisplayName("덱에 카드를 추가할 때 동일한 카드가 있는 경우 예외를 발생시킨다.")
     @Test
-    void addCard_duplicateCard() {
+    void add_duplicateCard() {
         //given
         Card card1 = Card.of(CardPattern.CLOVER, CardNumber.ACE);
         Card card2 = Card.of(CardPattern.CLOVER, CardNumber.ACE);
