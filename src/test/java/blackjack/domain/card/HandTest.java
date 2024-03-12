@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.rule.Score;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -24,20 +25,54 @@ class HandTest {
         assertThat(hand.getCards()).containsExactly(card);
     }
 
-    @DisplayName("임계값에 가장 가까운 핸드의 합을 계산한다.")
+    @DisplayName("핸드에 Ace가 있을 때 합이 21을 초과하지 않으면 Ace는 11로 계산한다.")
     @Test
-    void testCalculateScoreSumClosestToThreshold() {
+    void testCalculateScoreAcePresentAndNotBust() {
         // given
-        Card card1 = new Card(CardRank.TWO, CardSuit.HEART);
-        Card card2 = new Card(CardRank.EIGHT, CardSuit.SPADE);
-        Card card3 = new Card(CardRank.ACE, CardSuit.CLUB);
-
-        Hand hand = new Hand(List.of(card1, card2, card3));
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(CardRank.ACE, CardSuit.HEART));
+        cards.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
+        cards.add(new Card(CardRank.NINE, CardSuit.HEART));
+        Hand hand = new Hand(cards);
 
         // when
-        int actual = hand.calculateScoreTotalClosestToThreshold(21);
+        Score score = hand.calculateScore();
 
         // then
-        assertThat(actual).isEqualTo(21);
+        assertThat(score).extracting("value").isEqualTo(21);
     }
+
+    @DisplayName("핸드에 Ace가 있을 때 합이 21을 초과하면 Ace는 11로 계산하지 않는다.")
+    @Test
+    void testCalculateScoreAcePresentAndBust() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(CardRank.ACE, CardSuit.HEART));
+        cards.add(new Card(CardRank.TWO, CardSuit.HEART));
+        cards.add(new Card(CardRank.NINE, CardSuit.HEART));
+        Hand hand = new Hand(cards);
+
+        // when
+        Score score = hand.calculateScore();
+
+        // then
+        assertThat(score).extracting("value").isEqualTo(12);
+    }
+
+    @DisplayName("핸드에 Ace가 없으면 합을 변경하지 않는다.")
+    @Test
+    void testCalculateScoreAceAbsent() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(CardRank.TWO, CardSuit.HEART));
+        cards.add(new Card(CardRank.NINE, CardSuit.HEART));
+        Hand hand = new Hand(cards);
+
+        // when
+        Score score = hand.calculateScore();
+
+        // then
+        assertThat(score).extracting("value").isEqualTo(11);
+    }
+
 }

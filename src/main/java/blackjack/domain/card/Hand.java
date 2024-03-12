@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import blackjack.domain.rule.Score;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,29 +20,22 @@ public class Hand {
         cards.add(card);
     }
 
-    public int calculateScoreTotalClosestToThreshold(int threshold) {
-        int scoreTotal = calculateScoreTotal();
-        int aceCount = countAce();
-        int aceScoreDifference = CardRank.ACE.getSpecialScore() - CardRank.ACE.getScore();
-
-        while (aceCount > 0 && scoreTotal + aceScoreDifference <= threshold) {
-            scoreTotal += aceScoreDifference;
-            aceCount--;
+    public Score calculateScore() {
+        Score score = sumScore();
+        if (hasAce()) {
+            return score.adjustAceScore();
         }
-        return scoreTotal;
+        return score;
     }
 
-    private int calculateScoreTotal() {
+    private Score sumScore() {
         return cards.stream()
-                .map(Card::getCardRank)
-                .mapToInt(CardRank::getScore)
-                .sum();
+                .map(card -> new Score(card.getCardRank().getScore()))
+                .reduce(new Score(0), Score::add);
     }
 
-    private int countAce() {
-        return (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
+    private boolean hasAce() {
+        return cards.stream().anyMatch(Card::isAce);
     }
 
     public List<Card> getCards() {
