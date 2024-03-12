@@ -21,7 +21,8 @@ public class BlackJackController {
     }
 
     public void run() {
-        BlackJackGame blackJackGame = new BlackJackGame();
+        CardDeck cardDeck = new CardDeck();
+        BlackJackGame blackJackGame = new BlackJackGame(cardDeck, cardDeck.firstCardSettings());
         Players players = blackJackGame.initGamePlayer(inputView.inputPlayerNames());
 
         runBlackJackGame(blackJackGame, players);
