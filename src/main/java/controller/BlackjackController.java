@@ -61,11 +61,11 @@ public class BlackjackController {
     }
 
     private DrawResult dealerDraw(Deck deck, Dealer dealer) {
-        return dealer.draw(deck, new RandomCardSelectStrategy());
+        return dealer.draw(deck, RandomCardSelectStrategy.INSTANCE);
     }
 
     private DrawResult playerDraw(Deck deck, Player player) {
-        return player.draw(deck, new RandomCardSelectStrategy());
+        return player.draw(deck, RandomCardSelectStrategy.INSTANCE);
     }
 
     private void printDealerAndPlayers(Dealer dealer, Players players) {
