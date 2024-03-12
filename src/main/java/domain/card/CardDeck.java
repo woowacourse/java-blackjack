@@ -9,13 +9,17 @@ public class CardDeck {
     private final Stack<Card> deck;
 
     public CardDeck() {
-        List<Card> cards = Suit.getValues().stream()
-                .flatMap(suit -> Rank.getValues().stream()
-                        .map(rank -> Card.of(rank, suit)))
-                .toList();
+        List<Card> cards = generateAllCards();
         deck = new Stack<>();
         deck.addAll(cards);
         shuffle();
+    }
+
+    private List<Card> generateAllCards() {
+        return Suit.getValues().stream()
+                .flatMap(suit -> Rank.getValues().stream()
+                        .map(rank -> Card.of(rank, suit)))
+                .toList();
     }
 
     private void shuffle() {
