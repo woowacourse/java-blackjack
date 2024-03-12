@@ -42,14 +42,6 @@ public class Players {
         }
     }
 
-    public Map<String, List<Card>> collectCardsOfEachPlayer() {
-        Map<String, List<Card>> result = new LinkedHashMap<>();
-        for (Player player : players) {
-            result.put(player.getName(), player.openCards());
-        }
-        return result;
-    }
-
     public List<NameCardsScore> collectFinalResults() {
         return players.stream()
                 .map(player -> new NameCardsScore(player.getName(), player.openCards(), player.notifyScore()))
