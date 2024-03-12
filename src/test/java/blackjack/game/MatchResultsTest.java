@@ -38,7 +38,7 @@ class MatchResultsTest {
         matchResults.addResult("atto", 10, 10);
         matchResults.addResult("jazz", 20, 10);
         // when
-        int playerWinCount = matchResults.getResultCount(MatchResult.PLAYER_WIN);
+        int playerWinCount = matchResults.getResultCount(MatchResult.PLAYER_NORMAL_WIN);
         int tieCount = matchResults.getResultCount(MatchResult.TIE);
         int dealerWinCount = matchResults.getResultCount(MatchResult.DEALER_WIN);
         // then

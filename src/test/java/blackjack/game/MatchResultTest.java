@@ -15,7 +15,7 @@ class MatchResultTest {
         // when
         MatchResult result = MatchResult.chooseWinner(playerScore, dealerScore);
         // then
-        assertThat(result).isEqualTo(MatchResult.PLAYER_WIN);
+        assertThat(result).isEqualTo(MatchResult.PLAYER_NORMAL_WIN);
     }
 
     @ParameterizedTest

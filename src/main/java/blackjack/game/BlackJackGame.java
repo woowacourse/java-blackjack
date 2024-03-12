@@ -123,7 +123,7 @@ public class BlackJackGame {
         outputView.printDealerResult(
                 matchResults.getResultCount(MatchResult.DEALER_WIN),
                 matchResults.getResultCount(MatchResult.TIE),
-                matchResults.getResultCount(MatchResult.PLAYER_WIN)
+                matchResults.getResultCount(MatchResult.PLAYER_NORMAL_WIN)
         );
     }
 

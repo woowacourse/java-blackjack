@@ -14,7 +14,7 @@ public class StandState extends TerminatedState {
     @Override
     public MatchResult createMatchResult(GameState dealerState) {
         if (dealerState.isBusted()) {
-            return MatchResult.PLAYER_WIN;
+            return MatchResult.PLAYER_NORMAL_WIN;
         }
         return createMatchResultByScore(dealerState);
     }
@@ -23,7 +23,7 @@ public class StandState extends TerminatedState {
         Score playerScore = getScore();
         Score dealerScore = dealerState.getScore();
         if (playerScore.isGreaterThan(dealerScore)) {
-            return MatchResult.PLAYER_WIN;
+            return MatchResult.PLAYER_NORMAL_WIN;
         }
         if (dealerScore.isGreaterThan(playerScore)) {
             return MatchResult.DEALER_WIN;
