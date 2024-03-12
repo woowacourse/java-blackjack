@@ -1,18 +1,21 @@
 package blackjack.domain;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Deck {
 
+    private final ShuffleStrategy shuffleStrategy;
+
     private final List<Card> cards;
 
-    public Deck(List<Card> cards) {
-        this.cards = cards;
+    public Deck(List<Card> cards, ShuffleStrategy shuffleStrategy) {
+        this.cards = new ArrayList<>(cards);
+        this.shuffleStrategy = shuffleStrategy;
     }
 
     public void shuffle() {
-        Collections.shuffle(cards);
+        shuffleStrategy.shuffle(cards);
     }
 
     public Card draw() {
