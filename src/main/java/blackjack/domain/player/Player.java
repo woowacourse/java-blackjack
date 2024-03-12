@@ -1,13 +1,13 @@
 package blackjack.domain.player;
 
-import blackjack.domain.Result;
 import blackjack.domain.card.Hand;
 
+import blackjack.domain.rule.Score;
 import java.util.Objects;
 
 public class Player extends Participant {
 
-    private static final int HIT_THRESHOLD = 21;
+    private static final Score HIT_THRESHOLD = new Score(21);
 
     private final PlayerName playerName;
 
@@ -22,27 +22,7 @@ public class Player extends Participant {
 
     @Override
     public boolean canHit() {
-        return getHandScore() <= HIT_THRESHOLD;
-    }
-
-    public Result judge(Dealer dealer) {
-        int playerHandTotal = this.getHandScore();
-        int dealerHandTotal = dealer.getHandScore();
-
-        if (playerHandTotal > 21) {
-            return Result.createLossResult();
-        }
-        if (dealerHandTotal > 21) {
-            return Result.createWinResult();
-        }
-        return compare(playerHandTotal, dealerHandTotal);
-    }
-
-    private Result compare(int playerHandTotal, int dealerHandTotal) {
-        if (playerHandTotal > dealerHandTotal) {
-            return Result.createWinResult();
-        }
-        return Result.createLossResult();
+        return getHandScore().canHit(HIT_THRESHOLD);
     }
 
     @Override
