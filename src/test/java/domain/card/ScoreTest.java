@@ -47,7 +47,7 @@ class ScoreTest {
         Score first = Score.get(10);
         Score second = Score.get(11);
 
-        Score result = first.sum(second);
+        Score result = first.plus(second);
 
         assertThat(result).isEqualTo(Score.get(21));
     }
@@ -56,7 +56,7 @@ class ScoreTest {
     void 보너스_점수를_더했을_때_Bust가_아니면_보너스_점수를_더한다() {
         Score score = Score.get(1);
 
-        Score result = score.sumBonusScore();
+        Score result = score.plusBonusScore();
 
         assertThat(result).isEqualTo(Score.get(11));
     }
@@ -65,7 +65,7 @@ class ScoreTest {
     void 보너스_점수를_더했을_때_Bust이면_보너스_점수를_더하지_않는다() {
         Score first = Score.get(20);
 
-        Score result = first.sumBonusScore();
+        Score result = first.plusBonusScore();
 
         assertThat(result).isEqualTo(Score.get(20));
     }

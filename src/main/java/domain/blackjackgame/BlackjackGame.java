@@ -1,6 +1,7 @@
 package domain.blackjackgame;
 
 import domain.card.Card;
+import domain.card.Score;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -44,30 +45,30 @@ public class BlackjackGame {
     }
 
     public GameResult createGameResult() {
-        int dealerScore = dealer.calculateScore();
+        Score dealerScore = dealer.calculateScore();
 
         GameResult gameResult = new GameResult();
         for (int i = 0; i < players.count(); i++) {
             Player player = players.findPlayerByIndex(i);
-            int playerScore = player.calculateScore();
-            ResultStatus status = getResultStatus(dealerScore, playerScore);
+            Score playerScore = player.calculateScore();
+            ResultStatus status = getResultStatus(playerScore, dealerScore);
             gameResult.record(player, status);
         }
 
         return gameResult;
     }
 
-    private ResultStatus getResultStatus(int dealerScore, int playerScore) {
-        if (playerScore > BLACKJACK_SCORE) {
+    private ResultStatus getResultStatus(Score dealerScore, Score playerScore) {
+        if (playerScore.isBust()) {
             return ResultStatus.LOSE;
         }
-        if (dealerScore > BLACKJACK_SCORE) {
+        if (dealerScore.isBust()) {
             return ResultStatus.WIN;
         }
-        if (playerScore > dealerScore) {
+        if (playerScore.isGreaterThan(dealerScore)) {
             return ResultStatus.WIN;
         }
-        if (playerScore == dealerScore) {
+        if (playerScore.equals(dealerScore)) {
             return ResultStatus.DRAW;
         }
         return ResultStatus.LOSE;

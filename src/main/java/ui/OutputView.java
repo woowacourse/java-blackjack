@@ -57,12 +57,12 @@ public class OutputView {
 
     public void printCardHandWithScore(Dealer dealer, Players players) {
         String dealerCardHandMessage = generateAllCardHandMessage(dealer);
-        System.out.println(formatScoreMessage(dealerCardHandMessage, dealer.calculateScore()));
+        System.out.println(formatScoreMessage(dealerCardHandMessage, dealer.calculateScore().getValue()));
 
         for (int i = 0; i < players.count(); i++) {
             Player player = players.findPlayerByIndex(i);
             String playerCardHandMessage = generateAllCardHandMessage(player);
-            System.out.println(formatScoreMessage(playerCardHandMessage, player.calculateScore()));
+            System.out.println(formatScoreMessage(playerCardHandMessage, player.calculateScore().getValue()));
         }
         System.out.println();
     }

@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Cards;
+import domain.card.Score;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,8 +19,8 @@ public class Participant {
         cards.addCard(card);
     }
 
-    public int calculateScore() {
-        return cards.sumAll();
+    public Score calculateScore() {
+        return cards.sumAllScore();
     }
 
     public String getName() {

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Score {
+    public static final Score ZERO = new Score(0);
+
     private static final Map<Integer, Score> CACHE = new HashMap<>();
     private static final Score BLACKJACK_SCORE;
     private static final Score BONUS_SCORE;
@@ -38,16 +40,16 @@ public class Score {
         }
     }
 
-    public Score sum(Score other) {
-        return get(this.value + other.value);
+    public Score plus(Score other) {
+        return Score.get(this.value + other.value);
     }
 
-    public Score sumBonusScore() {
-        Score bonusAddedScore = sum(BONUS_SCORE);
-        if (bonusAddedScore.isBust()) {
+    public Score plusBonusScore() {
+        Score plussedBonusScore = plus(BONUS_SCORE);
+        if (plussedBonusScore.isBust()) {
             return this;
         }
-        return bonusAddedScore;
+        return plussedBonusScore;
     }
 
     public boolean isBust() {
@@ -64,5 +66,9 @@ public class Score {
 
     public boolean isLessThan(Score other) {
         return this.value < other.value;
+    }
+
+    public int getValue() {
+        return this.value;
     }
 }

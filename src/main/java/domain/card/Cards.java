@@ -5,9 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Cards {
-    private static final int ACE_BONUS_SCORE = 10;
-    private static final int BLACKJACK_SCORE = 21;
-
     private final List<Card> cards;
 
     public Cards() {
@@ -15,36 +12,29 @@ public class Cards {
     }
 
     public void addCard(Card card) {
+        if (sumAllScore().isBust()) {
+            throw new IllegalStateException("버스트 상태에서는 카드를 추가할 수 없습니다.");
+        }
         cards.add(card);
     }
 
-    public int sumAll() {
-        int sum = calculateSum();
-
+    public Score sumAllScore() {
+        Score score = sum();
         if (hasAce()) {
-            return sumAllWithBonusScore(sum);
+            return score.plusBonusScore();
         }
-        return sum;
+        return score;
     }
 
-    private int calculateSum() {
+    private Score sum() {
         return cards.stream()
-                .mapToInt(Card::getDenominationScore)
-                .sum();
+                .map(Card::getScore)
+                .reduce(Score.ZERO, Score::plus);
     }
 
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
-    }
-
-    private int sumAllWithBonusScore(int sum) {
-        int sumWithBonusScore = sum + ACE_BONUS_SCORE;
-
-        if (sumWithBonusScore <= BLACKJACK_SCORE) {
-            return sumWithBonusScore;
-        }
-        return sum;
     }
 
     public List<Card> getCards() {

@@ -2,6 +2,7 @@ package domain.card;
 
 import static fixture.CardFixture.카드;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
 
@@ -15,14 +16,25 @@ class CardsTest {
     }
 
     @Test
+    void Bust에_카드를_받으면_예외가_발생한다() {
+        Cards cards = new Cards();
+        cards.addCard(카드(Denomination.TEN));
+        cards.addCard(카드(Denomination.JACK));
+        cards.addCard(카드(Denomination.QUEEN));
+
+        assertThatThrownBy(() -> cards.addCard(카드(Denomination.KING)))
+                .isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
     void 카드의_합을_계산한다() {
         Cards cards = new Cards();
         cards.addCard(카드(Denomination.TEN));
         cards.addCard(카드(Denomination.SIX));
 
-        int result = cards.sumAll();
+        Score score = cards.sumAllScore();
 
-        assertThat(result).isEqualTo(16);
+        assertThat(score).isEqualTo(Score.get(16));
     }
 
     @Test
@@ -31,9 +43,9 @@ class CardsTest {
         cards.addCard(카드(Denomination.ACE));
         cards.addCard(카드(Denomination.SIX));
 
-        int result = cards.sumAll();
+        Score result = cards.sumAllScore();
 
-        assertThat(result).isEqualTo(17);
+        assertThat(result).isEqualTo(Score.get(17));
     }
 
     @Test
@@ -42,9 +54,9 @@ class CardsTest {
         cards.addCard(카드(Denomination.ACE));
         cards.addCard(카드(Denomination.ACE));
 
-        int result = cards.sumAll();
+        Score result = cards.sumAllScore();
 
-        assertThat(result).isEqualTo(12);
+        assertThat(result).isEqualTo(Score.get(12));
     }
 
     @Test
@@ -54,8 +66,8 @@ class CardsTest {
         cards.addCard(카드(Denomination.KING));
         cards.addCard(카드(Denomination.JACK));
 
-        int result = cards.sumAll();
+        Score result = cards.sumAllScore();
 
-        assertThat(result).isEqualTo(21);
+        assertThat(result).isEqualTo(Score.get(21));
     }
 }

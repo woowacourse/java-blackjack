@@ -16,11 +16,11 @@ public enum Denomination {
     KING("K", 10);
 
     private final String expression;
-    private final int score;
+    private final Score score;
 
     Denomination(String expression, int score) {
         this.expression = expression;
-        this.score = score;
+        this.score = Score.get(score);
     }
 
     public boolean isAce() {
@@ -31,7 +31,7 @@ public enum Denomination {
         return this.expression;
     }
 
-    public int getScore() {
+    public Score getScore() {
         return this.score;
     }
 }
