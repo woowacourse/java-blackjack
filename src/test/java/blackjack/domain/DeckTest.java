@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,5 +33,20 @@ public class DeckTest {
         assertThatCode(deck::draw)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("덱에 모든 카드가 소진되었습니다.");
+    }
+
+    @DisplayName("덱에서 2장을 뽑아 핸드로 반환한다")
+    @Test
+    public void initializeHand() {
+        Deck deck = Deck.of(new CardFactory(), cards -> cards);
+
+        Hand hand = deck.initializeHand();
+        List<Card> cards = hand.getCards();
+
+        assertThat(cards.size()).isEqualTo(2);
+        assertThat(cards.get(0).getSuit()).isEqualTo(Suit.SPADE);
+        assertThat(cards.get(0).getDenomination()).isEqualTo(Denomination.KING);
+        assertThat(cards.get(1).getSuit()).isEqualTo(Suit.SPADE);
+        assertThat(cards.get(1).getDenomination()).isEqualTo(Denomination.QUEEN);
     }
 }
