@@ -26,11 +26,11 @@ public class Dealer extends Participant {
         return calculateScore().isLessThan(Score.get(DEALER_MIN_SCORE_POLICY));
     }
 
-    public void shuffle() {
+    public void shuffleCardDeck() {
         cardDeck.shuffle(cardShuffleStrategy);
     }
 
-    public Card getFirstCardHand() {
-        return super.getCardHand().get(0);
+    public Card getFirstCard() {
+        return super.getCards().get(0);
     }
 }

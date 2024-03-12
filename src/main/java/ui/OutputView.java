@@ -12,41 +12,41 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public void printCardHand(Dealer dealer, Players players) {
+    public void printCards(Dealer dealer, Players players) {
         String result = String.join(", ", players.getPlayerNames());
         System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), result);
 
-        System.out.println(generateOneCardHandMessage(dealer));
+        System.out.println(generateOneCardMessage(dealer));
         for (int i = 0; i < players.count(); i++) {
             Player player = players.findPlayerByIndex(i);
-            System.out.println(generateAllCardHandMessage(player));
+            System.out.println(generateCardsMessage(player));
         }
         System.out.println();
     }
 
-    private String generateOneCardHandMessage(Dealer dealer) {
-        Card card = dealer.getFirstCardHand();
+    private String generateOneCardMessage(Dealer dealer) {
+        Card card = dealer.getFirstCard();
         String cardDisplay = CardDisplay.generateCardMessage(card);
-        return formatCardHandMessage(dealer, cardDisplay);
+        return formatCardsMessage(dealer, cardDisplay);
     }
 
-    private String generateAllCardHandMessage(Participant participant) {
-        String message = joinAllCardHand(participant.getCardHand());
-        return formatCardHandMessage(participant, message);
+    private String generateCardsMessage(Participant participant) {
+        String message = joinCards(participant.getCards());
+        return formatCardsMessage(participant, message);
     }
 
-    private String joinAllCardHand(List<Card> cardHand) {
-        return cardHand.stream()
+    private String joinCards(List<Card> cards) {
+        return cards.stream()
                 .map(CardDisplay::generateCardMessage)
                 .collect(Collectors.joining(", "));
     }
 
-    private String formatCardHandMessage(Participant participant, String message) {
+    private String formatCardsMessage(Participant participant, String message) {
         return String.format("%s카드: %s", participant.getName(), message);
     }
 
-    public void printCardHandAfterHit(Player player) {
-        System.out.println(generateAllCardHandMessage(player));
+    public void printCardsAfterHit(Player player) {
+        System.out.println(generateCardsMessage(player));
     }
 
     public void printDealerReceiveCardMessage() {
@@ -55,20 +55,20 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printCardHandWithScore(Dealer dealer, Players players) {
-        String dealerCardHandMessage = generateAllCardHandMessage(dealer);
-        System.out.println(formatScoreMessage(dealerCardHandMessage, dealer.calculateScore().getValue()));
+    public void printCardsWithScore(Dealer dealer, Players players) {
+        String dealerCardsMessage = generateCardsMessage(dealer);
+        System.out.println(formatScoreMessage(dealerCardsMessage, dealer.calculateScore().getValue()));
 
         for (int i = 0; i < players.count(); i++) {
             Player player = players.findPlayerByIndex(i);
-            String playerCardHandMessage = generateAllCardHandMessage(player);
-            System.out.println(formatScoreMessage(playerCardHandMessage, player.calculateScore().getValue()));
+            String playerCardsMessage = generateCardsMessage(player);
+            System.out.println(formatScoreMessage(playerCardsMessage, player.calculateScore().getValue()));
         }
         System.out.println();
     }
 
-    private String formatScoreMessage(String cardHandMessage, int score) {
-        return String.format("%s - 결과: %d", cardHandMessage, score);
+    private String formatScoreMessage(String cardsMessage, int score) {
+        return String.format("%s - 결과: %d", cardsMessage, score);
     }
 
     public void printParticipantResult(Map<ResultStatus, Integer> dealerResult,

@@ -38,7 +38,7 @@ public class BlackjackController {
 
     private GameResult playBlackjackGame(Dealer dealer, Players players, BlackjackGame blackjackGame) {
         blackjackGame.startGame();
-        outputView.printCardHand(dealer, players);
+        outputView.printCards(dealer, players);
 
         dealToParticipants(dealer, players, blackjackGame);
         return blackjackGame.createGameResult();
@@ -47,7 +47,7 @@ public class BlackjackController {
     private void dealToParticipants(Dealer dealer, Players players, BlackjackGame blackjackGame) {
         dealToPlayers(players, blackjackGame);
         dealToDealer(blackjackGame);
-        outputView.printCardHandWithScore(dealer, players);
+        outputView.printCardsWithScore(dealer, players);
     }
 
     private void dealToPlayers(Players players, BlackjackGame blackjackGame) {
@@ -61,7 +61,7 @@ public class BlackjackController {
         boolean isHit = inputView.askForMoreCard(player.getName());
         while (isHit) {
             blackjackGame.dealToPlayer(playerIndex);
-            outputView.printCardHandAfterHit(player);
+            outputView.printCardsAfterHit(player);
             isHit = inputView.askForMoreCard(player.getName());
         }
     }

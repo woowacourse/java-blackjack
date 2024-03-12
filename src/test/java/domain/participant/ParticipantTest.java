@@ -14,7 +14,7 @@ class ParticipantTest {
 
         participant.add(카드());
 
-        assertThat(participant.getCardHand()).hasSize(1);
+        assertThat(participant.getCards()).hasSize(1);
     }
 
     @Test

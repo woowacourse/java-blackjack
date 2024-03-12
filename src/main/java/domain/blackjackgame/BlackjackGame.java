@@ -19,7 +19,7 @@ public class BlackjackGame {
     }
 
     public void startGame() {
-        dealer.shuffle();
+        dealer.shuffleCardDeck();
 
         for (int count = 0; count < INITIAL_CARD_COUNT; count++) {
             dealAllParticipants();
