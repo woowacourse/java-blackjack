@@ -4,11 +4,11 @@ import java.util.Objects;
 
 public class Card {
     private final Denomination denomination;
-    private final Suit symbol;
+    private final Suit suit;
 
     public Card(final Denomination number, final Suit symbol) {
         this.denomination = number;
-        this.symbol = symbol;
+        this.suit = symbol;
     }
 
     public int score() {
@@ -19,12 +19,12 @@ public class Card {
         return denomination == Denomination.ACE;
     }
 
-    public Denomination getDenomination() {
+    public Denomination denomination() {
         return denomination;
     }
 
-    public Suit getSymbol() {
-        return symbol;
+    public Suit suit() {
+        return suit;
     }
 
     @Override
@@ -36,11 +36,11 @@ public class Card {
             return false;
         }
         final Card card = (Card) o;
-        return denomination == card.denomination && Objects.equals(symbol, card.symbol);
+        return denomination == card.denomination && Objects.equals(suit, card.suit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(denomination, symbol);
+        return Objects.hash(denomination, suit);
     }
 }

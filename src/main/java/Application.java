@@ -1,18 +1,25 @@
 import domain.*;
+import dto.DealerInfo;
 import dto.GameResult;
+import dto.PlayerInfo;
+import dto.PlayerInfos;
 import view.InputView;
 import view.OutputView;
 
 public class Application {
     public static void main(final String[] args) {
         final Blackjack blackjack = createBlackjack();
-        OutputView.printPlayersStatus(blackjack.getPlayers());
+        final PlayerInfos initPlayerInfos = PlayerInfos.from(blackjack.getPlayers());
+        final DealerInfo initDealerInfo = DealerInfo.from(blackjack.getDealer());
+        OutputView.printInitInfosOfPlayersAndDealer(initPlayerInfos, initDealerInfo);
 
         playGame(blackjack);
-        OutputView.printResults(blackjack.getPlayers());
+        final PlayerInfos playerInfos = PlayerInfos.from(blackjack.getPlayers());
+        final DealerInfo dealerInfo = DealerInfo.from(blackjack.getDealer());
+        OutputView.printInfosOfPlayersAndDealer(playerInfos, dealerInfo);
 
         final GameResult gameResult = blackjack.finishGame();
-        OutputView.printBlackjackResults(gameResult);
+        OutputView.printBlackjackGameResults(gameResult);
     }
 
     private static void playGame(final Blackjack blackjack) {
@@ -37,10 +44,13 @@ public class Application {
     }
 
     private static void drawCardDuringPlayerTurn(final Player player, final Blackjack blackjack) {
-        while (player.isNotBust() && wantToHit(player)) {
+        if (player.isBust()) {
+            return;
+        }
+        while (wantToHit(player)) {
             blackjack.dealCard(player);
         }
-        OutputView.printPlayerStatus(player);
+        OutputView.printPlayerInfo(PlayerInfo.from(player));
     }
 
     private static boolean wantToHit(final Player player) {

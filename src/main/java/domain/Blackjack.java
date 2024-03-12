@@ -43,7 +43,7 @@ public class Blackjack {
         return players.getPlayers();
     }
 
-    public Player getDealer() {
+    public Dealer getDealer() {
         return dealer;
     }
 }
