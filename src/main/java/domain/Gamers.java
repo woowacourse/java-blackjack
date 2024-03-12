@@ -17,16 +17,8 @@ public class Gamers {
         return gamers;
     }
 
-    private List<Integer> getGamerResultScore() {
-        List<Integer> scores = new ArrayList<>();
-        for (Gamer gamer : gamers) {
-            scores.add(gamer.calculateResultScore());
-        }
-        return scores;
-    }
-
     public List<GamerHandScore> getCurrentGamerHandScore() {
-        List<GamerHandStatus> gamerHandStatuses = getPlayerHandStatuses();
+        List<GamerHandStatus> gamerHandStatuses = getGamerHandStatuses();
         List<Integer> scores = getGamerResultScore();
 
         List<GamerHandScore> gamerHandScores = new ArrayList<>();
@@ -37,7 +29,15 @@ public class Gamers {
         return gamerHandScores;
     }
 
-    public List<GamerHandStatus> getPlayerHandStatuses() {
+    private List<Integer> getGamerResultScore() {
+        List<Integer> scores = new ArrayList<>();
+        for (Gamer gamer : gamers) {
+            scores.add(gamer.calculateResultScore());
+        }
+        return scores;
+    }
+
+    public List<GamerHandStatus> getGamerHandStatuses() {
         List<GamerHandStatus> gamerHandStatuses = new ArrayList<>();
 
         for (Gamer gamer : gamers) {

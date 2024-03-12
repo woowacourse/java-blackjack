@@ -15,12 +15,12 @@ public class Player {
         this.hand = hand;
     }
 
-    public void pickTwoCards() {
-        hand.saveCards(List.of(Deck.pick(), Deck.pick()));
+    public void drawTwoCard(final int first, final int second) {
+        hand.saveCards(List.of(Deck.pick(first), Deck.pick(second)));
     }
 
-    public void pickOneCard() {
-        hand.saveCard(Deck.pick());
+    public void drawOneCard(final int cardAt) {
+        hand.saveCard(Deck.pick(cardAt));
     }
 
     public int calculateRoundScore() {

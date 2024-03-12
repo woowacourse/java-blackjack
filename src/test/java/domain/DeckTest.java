@@ -2,6 +2,8 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.constants.Score;
+import domain.constants.Shape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -14,17 +16,15 @@ class DeckTest {
     @Order(1)
     @Test
     void createCards() {
-        assertThat(Deck.getTotalSize()).isEqualTo(52);
+        assertThat(Deck.getSize()).isEqualTo(52);
     }
 
     @DisplayName("하나의 카드를 뽑는다.")
     @Order(2)
     @Test
     void pickCard() {
-        int beforeSize = Deck.getTotalSize();
-        Deck.pick();
-        int afterSize = Deck.getTotalSize();
+        Card card = Deck.pick(0);
 
-        assertThat(beforeSize - afterSize).isEqualTo(1);
+        assertThat(card).isEqualTo(new Card(Score.ACE, Shape.SPADE));
     }
 }

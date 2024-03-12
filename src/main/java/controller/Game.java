@@ -3,20 +3,21 @@ package controller;
 import static view.CardName.getHandStatusAsString;
 
 import controller.dto.GameResult;
-import controller.dto.PlayerResult;
 import controller.dto.gamer.GamerHandStatus;
 import domain.Dealer;
 import domain.Deck;
 import domain.GameRule;
 import domain.Gamer;
 import domain.Gamers;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import view.CardName;
 import view.InputView;
 import view.OutputView;
 
 public class Game {
+    private static final int DECK_SIZE = Deck.getSize();
+
     private final Dealer dealer = new Dealer();
     private final Gamers gamers;
 
@@ -32,12 +33,15 @@ public class Game {
     }
 
     private void initiateGameCondition(final Dealer dealer, final Gamers gamers) {
-        Deck.shuffle();
-
-        dealer.pickTwoCards();
+        dealer.drawTwoCard(getRandomCardIndex(), getRandomCardIndex());
         for (Gamer gamer : gamers.listOf()) {
-            gamer.pickTwoCards();
+            gamer.drawTwoCard(getRandomCardIndex(), getRandomCardIndex());
         }
+    }
+
+    private int getRandomCardIndex() {
+        Random random = new Random();
+        return random.nextInt(DECK_SIZE);
     }
 
     private void printInitiateGameResult(final OutputView outputView) {
@@ -57,15 +61,24 @@ public class Game {
         GameCommand command = inputCommand(gamer.getName(), inputView);
 
         while (command.isHit()) {
-            gamer.pickOneCard();
-            currentHand = new GamerHandStatus(gamer.getName(), getHandStatusAsString(gamer.getHand()));
-            if (gamer.isNotAbleToDrawCard()) {
-                break;
-            }
-            outputView.printCardStatus(gamer.getName(), currentHand);
-            command = inputCommand(gamer.getName(), inputView);
+            currentHand = getStatusAfterDraw(gamer);
+            command = getCommandAfterDraw(gamer, inputView, outputView);
         }
         outputView.printCardStatus(gamer.getName(), currentHand);
+    }
+
+    private GamerHandStatus getStatusAfterDraw(final Gamer gamer) {
+        gamer.drawOneCard(getRandomCardIndex());
+        return new GamerHandStatus(gamer.getName(), getHandStatusAsString(gamer.getHand()));
+    }
+
+    private GameCommand getCommandAfterDraw(final Gamer gamer, final InputView inputView, final OutputView outputView) {
+        if (gamer.isNotAbleToDrawCard()) {
+            return GameCommand.STAND;
+        }
+        outputView.printCardStatus(gamer.getName(),
+                new GamerHandStatus(gamer.getName(), getHandStatusAsString(gamer.getHand())));
+        return inputCommand(gamer.getName(), inputView);
     }
 
     private GameCommand inputCommand(final String name, final InputView inputView) {
@@ -73,8 +86,17 @@ public class Game {
     }
 
     public void printDealerDrawMessage(final OutputView outputView) {
-        int count = dealer.cardDrawCount();
+        int count = cardDrawCount(dealer);
         outputView.printDealerPickMessage(count);
+    }
+
+    private int cardDrawCount(final Dealer dealer) {
+        int count = 0;
+        while (dealer.isNotUpToThreshold()) {
+            dealer.drawOneCard(getRandomCardIndex());
+            count++;
+        }
+        return count;
     }
 
     public void printResult(final OutputView outputView) {
@@ -92,13 +114,6 @@ public class Game {
 
     private GameResult getResults() {
         GameRule rule = new GameRule(dealer, gamers);
-        List<Boolean> results = rule.judge();
-        List<String> names = gamers.getNames();
-
-        List<PlayerResult> playerResults = new ArrayList<>();
-        for (int i = 0; i < names.size(); i++) {
-            playerResults.add(new PlayerResult(names.get(i), results.get(i)));
-        }
-        return new GameResult(playerResults);
+        return rule.getResultsOfGame();
     }
 }

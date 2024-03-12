@@ -5,6 +5,7 @@ import domain.constants.Shape;
 import java.util.Objects;
 
 public class Card {
+
     private final Score score;
     private final Shape shape;
 

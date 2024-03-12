@@ -1,5 +1,7 @@
 package domain;
 
+import controller.dto.GameResult;
+import controller.dto.PlayerResult;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,5 +44,16 @@ public class GameRule {
             gameResult.add(!gamer.isBusted());
         }
         return gameResult;
+    }
+
+    public GameResult getResultsOfGame() {
+        List<Boolean> results = judge();
+        List<String> names = gamers.getNames();
+
+        List<PlayerResult> playerResults = new ArrayList<>();
+        for (int i = 0; i < names.size(); i++) {
+            playerResults.add(new PlayerResult(names.get(i), results.get(i)));
+        }
+        return new GameResult(playerResults);
     }
 }

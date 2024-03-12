@@ -1,7 +1,10 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 
+import controller.dto.GameResult;
+import controller.dto.PlayerResult;
 import domain.constants.Score;
 import domain.constants.Shape;
 import java.util.ArrayList;
@@ -159,6 +162,23 @@ class GameRuleTest {
                     .hasSize(1)
                     .containsExactly(true);
         }
+    }
+
+    @DisplayName("게임 결과에 대한 정보를 반환한다.")
+    @Test
+    void getGameResult() {
+        Hand twoCards = createNormalWithTwoCards();
+        Hand threeCards = createNormalWithThreeCards();
+
+        Dealer dealer = new Dealer(twoCards);
+        Gamer gamer = new Gamer("pobi", threeCards);
+        GameRule rule = createGameRule(gamer, dealer);
+
+        GameResult gameResult = rule.getResultsOfGame();
+
+        assertThat(gameResult.results())
+                .extracting(PlayerResult::name, PlayerResult::isWin)
+                .containsExactly(tuple("pobi", true));
     }
 
     private GameRule createGameRule(final Gamer gamer, final Dealer dealer) {

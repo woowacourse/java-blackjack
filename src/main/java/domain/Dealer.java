@@ -19,18 +19,8 @@ public class Dealer extends Player {
         return this.calculateResultScore() <= THRESHOLD;
     }
 
-    public int cardDrawCount() {
-        int count = 0;
-        while (isNotUpToThreshold()) {
-            pickOneCard();
-            count++;
-        }
-        return count;
-    }
-
     public DealerHandScore getCurrentDealerHandScore() {
         DealerHandStatus dealerHand = new DealerHandStatus(CardName.getHandStatusAsString(getHand()));
         return new DealerHandScore(dealerHand, calculateResultScore());
     }
-
 }
