@@ -41,7 +41,8 @@ public class InputView implements AutoCloseable {
         try {
             return READER.readLine();
         } catch (final IOException exception) {
-            throw new RuntimeException(exception);
+            System.out.println(exception.getMessage());
+            return readLine();
         }
     }
 
