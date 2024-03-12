@@ -1,6 +1,6 @@
 package domain.game;
 
-import static domain.game.Result.values;
+import static domain.game.GameResult.values;
 
 import domain.user.Player;
 import java.util.Arrays;
@@ -9,28 +9,28 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PlayerResults {
-    private final Map<Player, Result> playerResults;
+    private final Map<Player, GameResult> playerResults;
 
-    public PlayerResults(Map<Player, Result> playerResults) {
+    public PlayerResults(Map<Player, GameResult> playerResults) {
         this.playerResults = playerResults;
     }
 
-    public Map<Result, Integer> generateDealerResult() {
+    public Map<GameResult, Integer> generateDealerResult() {
         return Arrays.stream(values())
                 .collect(Collectors.toMap(
-                        Result::reverse,
+                        GameResult::reverse,
                         this::countResults
                 ));
     }
 
-    private int countResults(Result result) {
+    private int countResults(GameResult gameResult) {
         return (int) playerResults.values()
                 .stream()
-                .filter(playerResult -> playerResult == result)
+                .filter(playerResult -> playerResult == gameResult)
                 .count();
     }
 
-    public Map<Player, Result> getPlayerResults() {
+    public Map<Player, GameResult> getPlayerResults() {
         return Collections.unmodifiableMap(playerResults);
     }
 }

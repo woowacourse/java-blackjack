@@ -1,8 +1,8 @@
 package domain.game;
 
-import static domain.game.Result.DRAW;
-import static domain.game.Result.LOSE;
-import static domain.game.Result.WIN;
+import static domain.game.GameResult.DRAW;
+import static domain.game.GameResult.LOSE;
+import static domain.game.GameResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.user.Name;

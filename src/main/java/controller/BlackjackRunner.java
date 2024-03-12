@@ -1,15 +1,14 @@
 package controller;
 
-import static domain.Command.YES;
 import static domain.game.State.BUSTED;
 import static domain.game.State.HITTABLE;
+import static view.Command.YES;
 
-import domain.Command;
 import domain.ExceptionHandler;
 import domain.TotalDeck;
 import domain.TotalDeckGenerator;
+import domain.game.GameResult;
 import domain.game.PlayerResults;
-import domain.game.Result;
 import domain.game.State;
 import domain.user.Player;
 import domain.user.User;
@@ -18,6 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import view.Command;
 import view.InputView;
 import view.OutputView;
 
@@ -84,7 +84,7 @@ public class BlackjackRunner {
     }
 
     private PlayerResults generatePlayerResults(Users users) {
-        Map<Player, Result> playerResults = users.getPlayers()
+        Map<Player, GameResult> playerResults = users.getPlayers()
                 .stream()
                 .collect(Collectors.toMap(
                         Function.identity(),

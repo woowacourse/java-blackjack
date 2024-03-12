@@ -4,7 +4,7 @@ import domain.card.Card;
 import java.util.List;
 
 public class DealerDeck extends UserDeck {
-    private final static int ADD_CONDITION = 16;
+    private static final int ADD_CONDITION = 16;
     private static final int FIRST_INDEX = 0;
 
     @Override

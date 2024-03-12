@@ -3,18 +3,18 @@ package domain.game;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
-public enum Result {
+public enum GameResult {
     WIN((current, opponent) -> current > opponent),
     LOSE((current, opponent) -> current < opponent),
     DRAW(Integer::equals);
 
     private final BiPredicate<Integer, Integer> condition;
 
-    Result(BiPredicate<Integer, Integer> condition) {
+    GameResult(BiPredicate<Integer, Integer> condition) {
         this.condition = condition;
     }
 
-    public Result reverse() {
+    public GameResult reverse() {
         return switch (this) {
             case WIN -> LOSE;
             case LOSE -> WIN;
@@ -22,7 +22,7 @@ public enum Result {
         };
     }
 
-    public static Result compare(int current, int opponent) {
+    public static GameResult compare(int current, int opponent) {
         return Arrays.stream(values())
                 .filter(result -> result.condition.test(current, opponent))
                 .findFirst()

@@ -1,6 +1,5 @@
 package view;
 
-import domain.Command;
 import domain.user.Name;
 import domain.user.Player;
 import domain.user.Users;

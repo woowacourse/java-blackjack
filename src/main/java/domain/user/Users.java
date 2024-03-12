@@ -1,11 +1,11 @@
 package domain.user;
 
-import static domain.game.Result.LOSE;
-import static domain.game.Result.WIN;
+import static domain.game.GameResult.LOSE;
+import static domain.game.GameResult.WIN;
 
 import domain.TotalDeck;
 import domain.card.Card;
-import domain.game.Result;
+import domain.game.GameResult;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -38,14 +38,14 @@ public class Users {
         getDealer().addCard(card);
     }
 
-    public Result generatePlayerResult(Player player) {
+    public GameResult generatePlayerResult(Player player) {
         if (player.busted()) {
             return LOSE;
         }
         if (getDealer().busted()) {
             return WIN;
         }
-        return Result.compare(player.sumUserDeck(), getDealer().sumUserDeck());
+        return GameResult.compare(player.sumUserDeck(), getDealer().sumUserDeck());
     }
 
     public List<User> getUsers() {
@@ -65,17 +65,16 @@ public class Users {
 
     private void validateDuplicatedName(List<Player> players) {
         List<Player> distinctPlayers = new ArrayList<>();
-        players.forEach(player -> {
+        for (Player player : players) {
             throwExceptionIfContains(distinctPlayers, player);
             distinctPlayers.add(player);
-        });
+        }
     }
 
     private static void throwExceptionIfContains(List<Player> distinctPlayers, Player player) {
         if (distinctPlayers.contains(player)) {
             throw new IllegalArgumentException(
-                    "중복된 이름은 입력할 수 없습니다: %s".formatted(player.getNameValue())
-            );
+                    "중복된 이름은 입력할 수 없습니다: %s".formatted(player.getNameValue()));
         }
     }
 }

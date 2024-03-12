@@ -2,7 +2,7 @@ package domain.user;
 
 import static domain.card.Number.FIVE;
 import static domain.card.Shape.CLOVER;
-import static domain.game.Result.WIN;
+import static domain.game.GameResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

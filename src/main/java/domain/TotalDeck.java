@@ -9,15 +9,10 @@ public class TotalDeck {
     private final Deque<Card> totalDeck;
 
     public TotalDeck(List<Card> cards) {
-        totalDeck = new ArrayDeque<>();
-        totalDeck.addAll(cards);
+        totalDeck = new ArrayDeque<>(cards);
     }
 
     public Card getNewCard() {
         return totalDeck.removeLast();
-    }
-
-    public int size() {
-        return totalDeck.size();
     }
 }
