@@ -6,25 +6,30 @@ import java.util.List;
 
 public class Hand {
     private static final Score ACE_ADDITIONAL_SCORE = Score.from(10);
-    private static final Score NO_ADDITIONAL_SCORE = Score.from(0);
 
     private final List<Card> cards;
 
-    public Hand(Card... cards) {
-        this.cards = new ArrayList<>(Arrays.asList(cards));
+    private Hand(List<Card> cards) {
+        this.cards = cards;
+    }
+
+    public static Hand from(Card... cards) {
+        return new Hand(new ArrayList<>(Arrays.asList(cards)));
     }
 
     public Score calculate() {
-        if (hasAce()) {
-            return calculateScore(ACE_ADDITIONAL_SCORE);
+        Score defaultScore = calculateDefaultScore();
+        Score addedAceScore = defaultScore.add(ACE_ADDITIONAL_SCORE);
+        if (hasAce() && addedAceScore.isNotBurst()) {
+            return addedAceScore;
         }
-        return calculateScore(NO_ADDITIONAL_SCORE);
+        return defaultScore;
     }
 
-    private Score calculateScore(Score additionalScore) {
+    private Score calculateDefaultScore() {
         return cards.stream()
                 .map(Card::getScore)
-                .reduce(additionalScore, Score::add);
+                .reduce(Score.from(0), Score::add);
     }
 
     private boolean hasAce() {

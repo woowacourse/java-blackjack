@@ -18,4 +18,13 @@ public class ScoreTest {
         assertThat(newScore).isEqualTo(Score.from(2));
     }
 
+    @DisplayName("점수가 버스트되지 않는지 반환한다")
+    @Test
+    public void isNotBurst() {
+        Score notBurstScore = Score.from(21);
+        Score burstScore = Score.from(22);
+
+        assertThat(notBurstScore.isNotBurst()).isTrue();
+        assertThat(burstScore.isNotBurst()).isFalse();
+    }
 }

@@ -9,6 +9,7 @@ import java.util.stream.IntStream;
 public class Score {
     private static final int MIN_CACHE_SCORE = 0;
     private static final int MAX_CACHE_SCORE = 30;
+    private static final int BLACKJACK_SCORE = 21;
     private static final Map<Integer, Score> POOL;
 
     static {
@@ -31,7 +32,15 @@ public class Score {
     }
 
     public Score add(Score other) {
-        return new Score(this.value + other.value);
+        int findValue = this.value + other.value;
+        if (POOL.containsKey(findValue)) {
+            return POOL.get(findValue);
+        }
+        return new Score(findValue);
+    }
+
+    public boolean isNotBurst() {
+        return value <= BLACKJACK_SCORE;
     }
 
     @Override
