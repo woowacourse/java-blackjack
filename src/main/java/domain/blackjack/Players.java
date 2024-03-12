@@ -28,4 +28,8 @@ public class Players {
     public void forEach(Consumer<Player> consumer) {
         players.forEach(consumer);
     }
+
+    public List<String> getPlayerNames() {
+        return players.stream().map(Player::getRawName).toList();
+    }
 }

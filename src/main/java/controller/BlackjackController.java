@@ -69,6 +69,7 @@ public class BlackjackController {
     }
 
     private void printDealerAndPlayers(Dealer dealer, Players players) {
+        OutputView.printInitGameDoneMessage(players.getPlayerNames());
         printDealer(dealer);
         players.forEach(BlackjackController::printPlayer);
     }
