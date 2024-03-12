@@ -8,6 +8,8 @@ import blackjackgame.view.OutputView;
 import java.util.List;
 
 public class BlackjackGame {
+    private final static int EXECUTION_COUNT = 2;
+
     private final Gamer dealer;
     private final Gamers players;
 
@@ -17,13 +19,13 @@ public class BlackjackGame {
     }
 
     public void initDealerAndPlayers(Deck deck) {
-        dealer.cardHolderDrawNTimes(deck, 2);
-        players.cardHoldersDrawNTimes(deck, 2);
+        dealer.cardHolderDraw(deck, EXECUTION_COUNT);
+        players.cardHoldersDraw(deck, EXECUTION_COUNT);
     }
 
     public void dealerTryDraw(Deck deck) {
         try {
-            dealer.cardHolderDrawNTimes(deck, 1);
+            dealer.cardHolderDraw(deck);
             OutputView.printDealerAdditionalCardMessage();
         } catch (IllegalStateException e) {
             OutputView.printDealerNoAdditionalCardMessage();
