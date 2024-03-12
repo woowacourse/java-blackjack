@@ -1,6 +1,5 @@
 package controller;
 
-import domain.blackjackgame.BlackjackAction;
 import domain.blackjackgame.BlackjackGame;
 import domain.blackjackgame.GameResult;
 import domain.blackjackgame.ResultStatus;
@@ -59,17 +58,12 @@ public class BlackjackController {
     }
 
     private void hitUntilStay(BlackjackGame blackjackGame, Player player, int playerIndex) {
-        BlackjackAction action = selectBlackjackAction(player.getName());
-        while (action.isHit()) {
+        boolean isHit = inputView.askForMoreCard(player.getName());
+        while (isHit) {
             blackjackGame.dealToPlayer(playerIndex);
             outputView.printCardHandAfterHit(player);
-            action = selectBlackjackAction(player.getName());
+            isHit = inputView.askForMoreCard(player.getName());
         }
-    }
-
-    private BlackjackAction selectBlackjackAction(String playerName) {
-        String action = inputView.readBlackjackAction(playerName);
-        return BlackjackAction.from(action);
     }
 
     private void dealToDealer(BlackjackGame blackjackGame) {

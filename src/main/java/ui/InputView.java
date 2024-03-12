@@ -9,6 +9,8 @@ public class InputView {
     private static final String DEFAULT_DELIMITER = ",";
     private static final String DEFAULT_DELIMITER_NAME = "쉼표";
     private static final Set<String> INVALID_PLAYER_NAMES = Set.of("딜러", "dealer");
+    private static final String YES = "y";
+    private static final String NO = "n";
 
     private final Scanner scanner;
 
@@ -41,11 +43,17 @@ public class InputView {
                 .anyMatch(INVALID_PLAYER_NAMES::contains);
     }
 
-    public String readBlackjackAction(String name) {
-        System.out.printf("%s는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
-        String action = scanner.nextLine();
-        validateInput(action);
-        return action.trim();
+    public boolean askForMoreCard(String name) {
+        System.out.printf("%s는 한 장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", name, YES, NO);
+        String yesOrNo = scanner.nextLine();
+        validateInput(yesOrNo);
+        if (YES.equals(yesOrNo)) {
+            return true;
+        }
+        if (NO.equals(yesOrNo)) {
+            return false;
+        }
+        throw new IllegalArgumentException(String.format("%s | %s 중 하나의 값을 입력해주세요.", YES, NO));
     }
 
     private void validateInput(String input) {
