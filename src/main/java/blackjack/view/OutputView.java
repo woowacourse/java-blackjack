@@ -22,7 +22,7 @@ public class OutputView {
     public static final String DEALER_MATCH_RESULT_PREFIX = "딜러: ";
     public static final String WIN_MESSAGE = "승";
     public static final String LOSE_MESSAGE = "패";
-    public static final String TIE_MESSAGE = "무";
+    public static final String PUSH_MESSAGE = "무";
     public static final String DEALER_MATCH_RESULT_FORM = "%s승 %s패 %s무";
     public static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
 
@@ -91,8 +91,9 @@ public class OutputView {
                 .collect(Collectors.groupingBy(PlayerMatchResult::matchResult, Collectors.counting()));
         long winCount = outcomeCounts.getOrDefault(MatchResult.LOSE, 0L);
         long loseCount = outcomeCounts.getOrDefault(MatchResult.WIN, 0L);
-        long tieCount = outcomeCounts.getOrDefault(MatchResult.TIE, 0L);
-        return DEALER_MATCH_RESULT_PREFIX + String.format(DEALER_MATCH_RESULT_FORM, winCount, loseCount, tieCount);
+        loseCount += outcomeCounts.getOrDefault(MatchResult.BLACKJACK_WIN, 0L);
+        long pushCount = outcomeCounts.getOrDefault(MatchResult.PUSH, 0L);
+        return DEALER_MATCH_RESULT_PREFIX + String.format(DEALER_MATCH_RESULT_FORM, winCount, loseCount, pushCount);
     }
 
     private String formatPlayerMatchResult(final PlayerMatchResult playerMatchResult) {
@@ -100,13 +101,13 @@ public class OutputView {
     }
 
     private String formatMatchResult(final MatchResult matchResult) {
-        if (matchResult == MatchResult.WIN) {
+        if (matchResult == MatchResult.WIN || matchResult == MatchResult.BLACKJACK_WIN) {
             return WIN_MESSAGE;
         }
         if (matchResult == MatchResult.LOSE) {
             return LOSE_MESSAGE;
         }
-        return TIE_MESSAGE;
+        return PUSH_MESSAGE;
     }
 
     public void printException(final String errorMessage) {
