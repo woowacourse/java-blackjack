@@ -17,18 +17,25 @@ public class Dealer implements Gamer {
         this.hand = hand;
     }
 
-    public static Dealer of(final Deck deck) {
+    public static Dealer from(final Deck deck) {
         return new Dealer(deck, new Hand(new ArrayList<>()));
     }
 
-    public Card draw() {
-        final Card card = deck.pop();
-        hand.add(card);
-        return card;
+    public void drawInitialHand() {
+        draw();
+        draw();
+    }
+
+    public void draw() {
+        hand.add(deck.pop());
     }
 
     public Card drawPlayerCard() {
         return deck.pop();
+    }
+
+    public Card openFirstCard() {
+        return hand.findFirst();
     }
 
     @Override

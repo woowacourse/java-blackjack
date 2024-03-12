@@ -48,7 +48,11 @@ public class Hand {
         return cards.size() == INITIAL_CARD_SIZE;
     }
 
-    public List<Card> toList() {
+    public Card findFirst() {
+        return cards.get(0);
+    }
+
+    public List<Card> getCards() {
         return cards;
     }
 }

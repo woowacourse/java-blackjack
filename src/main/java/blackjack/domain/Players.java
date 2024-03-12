@@ -3,7 +3,6 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class Players {
 
@@ -21,22 +20,14 @@ public class Players {
         return new Players(players);
     }
 
+    public void drawInitialHand(final Dealer dealer) {
+        for (final Player player : players) {
+            player.draw(dealer.drawPlayerCard());
+            player.draw(dealer.drawPlayerCard());
+        }
+    }
+
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
-    }
-
-    public List<Name> getNames() {
-        final List<Name> names = new ArrayList<>();
-        for (final Player player : players) {
-            names.add(player.getName());
-        }
-        return names;
-    }
-
-    public Player findByName(final Name name) {
-        return players.stream()
-                .filter(player -> Objects.equals(player.getName(), name))
-                .findAny()
-                .orElseThrow(() -> new IllegalStateException("해당 이름을 가진 플레이어가 존재하지 않습니다."));
     }
 }

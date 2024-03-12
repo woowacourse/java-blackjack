@@ -17,18 +17,16 @@ public class GameBoard {
         this.players = players;
     }
 
-    public Card drawInitialDealerHand() {
-        final Card firstCard = dealer.draw();
-        dealer.draw();
-        return firstCard;
+    public void drawInitialDealerHand() {
+        dealer.drawInitialHand();
     }
 
-    public Players drawInitialPlayersHand() {
-        for (final Player player : players.getPlayers()) {
-            player.draw(dealer.drawPlayerCard());
-            player.draw(dealer.drawPlayerCard());
-        }
-        return players;
+    public void drawInitialPlayersHand() {
+        players.drawInitialHand(dealer);
+    }
+
+    public Card getDealerFirstCard() {
+        return dealer.openFirstCard();
     }
 
     public void hit(final Dealer dealer) {
@@ -39,7 +37,7 @@ public class GameBoard {
         player.draw(dealer.drawPlayerCard());
     }
 
-    public boolean isHit(Gamer gamer) {
+    public boolean canHit(final Gamer gamer) {
         return gamer.canDraw();
     }
 

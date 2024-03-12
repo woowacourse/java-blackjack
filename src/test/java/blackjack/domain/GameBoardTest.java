@@ -28,7 +28,7 @@ class GameBoardTest {
         final TestDeckFactory testDeckFactory = new TestDeckFactory();
         final Deck deck = testDeckFactory.create();
         final Players players = Players.from(List.of("pobi"));
-        final Dealer dealer = Dealer.of(deck);
+        final Dealer dealer = Dealer.from(deck);
         final GameBoard gameBoard = new GameBoard(dealer, players);
         gameBoard.drawInitialPlayersHand();
         gameBoard.drawInitialDealerHand();
@@ -44,7 +44,7 @@ class GameBoardTest {
         final TestDeckFactory testDeckFactory = new TestDeckFactory();
         final Deck deck = testDeckFactory.create();
         final Players players = Players.from(List.of("pobi", "jason"));
-        final Dealer dealer = Dealer.of(deck);
+        final Dealer dealer = Dealer.from(deck);
         final GameBoard gameBoard = new GameBoard(dealer, players);
         gameBoard.drawInitialDealerHand();
         gameBoard.drawInitialPlayersHand();

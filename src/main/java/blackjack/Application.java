@@ -19,7 +19,7 @@ public class Application {
 
     public static void main(String[] args) {
         final GameBoard gameBoard = createGameBoard();
-        drawInitialCards(gameBoard);
+        drawInitialHands(gameBoard);
 
         hit(gameBoard);
 
@@ -30,14 +30,16 @@ public class Application {
 
     private static GameBoard createGameBoard() {
         Deck deck = new ShuffledDeckFactory().create();
-        Dealer dealer = Dealer.of(deck);
+        Dealer dealer = Dealer.from(deck);
         Players players = Players.from(InputView.readPlayerNames());
         return new GameBoard(dealer, players);
     }
 
-    private static void drawInitialCards(GameBoard gameBoard) {
-        final DealerDto dealerDto = createDealerDto(gameBoard.drawInitialDealerHand());
-        final List<PlayerDto> playerDtos = createPlayerDtos(gameBoard.drawInitialPlayersHand());
+    private static void drawInitialHands(GameBoard gameBoard) {
+        gameBoard.drawInitialPlayersHand();
+        gameBoard.drawInitialDealerHand();
+        final DealerDto dealerDto = createDealerDto(gameBoard.getDealerFirstCard());
+        final List<PlayerDto> playerDtos = createPlayerDtos(gameBoard.getPlayers());
 
         OutputView.printInitialState(dealerDto, playerDtos);
     }
@@ -47,7 +49,7 @@ public class Application {
     }
 
     private static DealerDto createDealerDto(final Hand hand) {
-        return new DealerDto(hand.toList(), hand.calculateOptimalSum());
+        return new DealerDto(hand.getCards(), hand.calculateOptimalSum());
     }
 
     private static List<PlayerDto> createPlayerDtos(final Players players) {
@@ -57,7 +59,7 @@ public class Application {
     }
 
     private static PlayerDto createPlayerDto(final Player player) {
-        return new PlayerDto(player.getName(), player.getHand().toList(), player.getHand().calculateOptimalSum());
+        return new PlayerDto(player.getName(), player.getHand().getCards(), player.getHand().calculateOptimalSum());
     }
 
     private static void hit(GameBoard gameBoard) {
@@ -75,7 +77,7 @@ public class Application {
     }
 
     private static void hitPlayer(final GameBoard gameBoard, final Player player) {
-        while (gameBoard.isHit(player) && InputView.readDoesWantHit(player.getName())) {
+        while (gameBoard.canHit(player) && InputView.readDoesWantHit(player.getName())) {
             gameBoard.hit(player);
             OutputView.printCurrentState(createPlayerDto(player));
         }
@@ -83,7 +85,7 @@ public class Application {
 
     private static void hitDealer(final GameBoard gameBoard) {
         final Dealer dealer = gameBoard.getDealer();
-        while (gameBoard.isHit(dealer)) {
+        while (gameBoard.canHit(dealer)) {
             gameBoard.hit(dealer);
             OutputView.printDealerDrawMessage();
         }
