@@ -33,10 +33,10 @@ public class Player {
     }
 
     private int determineScore(final Card card, final int score) {
-        if (card.getDenomination() == Denomination.ACE) {
+        if (card.isAce()) {
             return determineAceScore(score);
         }
-        return card.getValue();
+        return card.score();
     }
 
     private int determineAceScore(final int score) {

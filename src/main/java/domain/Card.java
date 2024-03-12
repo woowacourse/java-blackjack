@@ -11,8 +11,12 @@ public class Card {
         this.symbol = symbol;
     }
 
-    public int getValue() {
+    public int score() {
         return denomination.getValue();
+    }
+
+    public boolean isAce() {
+        return denomination == Denomination.ACE;
     }
 
     public Denomination getDenomination() {
