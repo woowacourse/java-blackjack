@@ -6,6 +6,9 @@ import java.util.Arrays;
 
 public class TestCardCreator {
 
+    private TestCardCreator() {
+    }
+
     public static Card from(int number) {
         CardNumber cardNumber = Arrays.stream(CardNumber.values())
                 .filter(cn -> cn.getValue() == number)
