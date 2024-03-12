@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.CardPattern;
-import blackjack.model.card.CardProperties;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,9 +15,9 @@ class PlayerTest {
     @Test
     void receiveCard() {
         //given
-        Player player = new Player("ted");
-        CardProperties cardProperties = new CardProperties(CardPattern.CLOVER, CardNumber.FIVE);
-        Card card = new Card(cardProperties);
+        Player player = Player.from("ted");
+        Card card = Card.of(CardPattern.CLOVER, CardNumber.FIVE);
+
         //when
         player.receiveCard(card);
         List<Card> playerDeck = player.allCards();
@@ -31,9 +30,8 @@ class PlayerTest {
     @Test
     void canHit() {
         //given
-        Player player = new Player("ted");
-        CardProperties cardProperties = new CardProperties(CardPattern.CLOVER, CardNumber.FIVE);
-        Card card = new Card(cardProperties);
+        Player player = Player.from("ted");
+        Card card = Card.of(CardPattern.CLOVER, CardNumber.FIVE);
 
         //when
         player.receiveCard(card);
@@ -46,15 +44,12 @@ class PlayerTest {
     @Test
     void calculateTotalScore() {
         //given
-        Player player = new Player("ted");
-        CardProperties cardProperties1 = new CardProperties(CardPattern.CLOVER, CardNumber.FIVE);
-        CardProperties cardProperties2 = new CardProperties(CardPattern.CLOVER, CardNumber.SEVEN);
-
-        Card card = new Card(cardProperties1);
-        Card card2 = new Card(cardProperties2);
+        Player player = Player.from("ted");
+        Card card1 = Card.of(CardPattern.CLOVER, CardNumber.FIVE);
+        Card card2 = Card.of(CardPattern.CLOVER, CardNumber.SEVEN);
 
         //when
-        player.receiveCard(card);
+        player.receiveCard(card1);
         player.receiveCard(card2);
         int totalScore = player.totalScore();
 
