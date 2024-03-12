@@ -2,18 +2,21 @@ package blackjack.controller;
 
 import blackjack.domain.player.Dealer;
 import blackjack.domain.card.Deck;
+import blackjack.domain.result.BettingBoard;
 import blackjack.domain.result.GameResultBoard;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.card.Card;
 import blackjack.domain.dto.PlayerDto;
 import blackjack.domain.dto.PlayerResultDto;
+import blackjack.domain.result.Money;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackJackController {
     public static final int INITIAL_CARDS_COUNT = 2;
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -25,10 +28,18 @@ public class BlackJackController {
     public void start() {
         Dealer dealer = new Dealer();
         Players players = new Players(inputView.inputPlayerNames());
+        BettingBoard bettingBoard = new BettingBoard();
         Deck deck = Deck.createShuffledDeck();
 
+        betMoney(bettingBoard, players);
         playGame(dealer, players, deck);
-        printGameResult(dealer, players);
+        printGameResult(dealer, players, bettingBoard);
+    }
+
+    private void betMoney(BettingBoard bettingBoard, Players players) {
+        for (Player player : players.getPlayers()) {
+            bettingBoard.bet(player.getPlayerName(), new Money(inputView.inputMoney(player.getName())));
+        }
     }
 
     private void playGame(Dealer dealer, Players players, Deck deck) {
@@ -91,13 +102,16 @@ public class BlackJackController {
         }
     }
 
-    private void printGameResult(Dealer dealer, Players players) {
+    private void printGameResult(Dealer dealer, Players players, BettingBoard bettingBoard) {
         printCardStatus(dealer, players);
         GameResultBoard gameResultBoard = new GameResultBoard(dealer, players.getPlayers());
+        bettingBoard.calculateMoney(gameResultBoard.getResultBoard());
 
-        outputView.printDealerResult(gameResultBoard.getDealerResult());
+        Money dealerMoney = bettingBoard.calculateDealerMoney();
+        outputView.printDealerMoney(dealerMoney.money());
         for (Player player : players.getPlayers()) {
-            outputView.printPlayerResult(player.getName(), gameResultBoard.getGameResult(player));
+            Money playerMoney = bettingBoard.findByPlayerName(player.getPlayerName());
+            outputView.printPlayerMoney(player.getName(), playerMoney.money());
         }
     }
 
