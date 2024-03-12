@@ -20,9 +20,9 @@ public class PlayerBetWallet {
     public static PlayerBetWallet from(int betAmount) {
         return new PlayerBetWallet(betAmount);
     }
-
-    //TODO : 검증
+    
     public void registerProfitAmount(Result result) {
+        validateAlreadySet();
         profitAmount = (int) (betAmount * result.getPayoutRate());
     }
 
@@ -39,6 +39,12 @@ public class PlayerBetWallet {
     private void validateBetAmountUnit(int betAmount) {
         if (betAmount % BET_AMOUNT_UNIT != 0) {
             throw new IllegalArgumentException("[ERROR] 배팅은 10원 단위로만 가능합니다.");
+        }
+    }
+
+    private void validateAlreadySet() {
+        if (profitAmount != 0) {
+            throw new IllegalArgumentException("[ERROR] 이미 수익금이 등록되어 있습니다.");
         }
     }
 

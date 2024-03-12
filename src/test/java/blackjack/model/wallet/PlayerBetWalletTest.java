@@ -120,6 +120,18 @@ class PlayerBetWalletTest {
         assertThat(profitAmount).isEqualTo(0);
     }
 
+    @DisplayName("수익금을 두 번 이상등록하는 경우 예외를 발생시킨다.")
+    @Test
+    void calculatePayAmountByAlreadySet() {
+        //given
+        PlayerBetWallet playerBetWallet = PlayerBetWallet.from(100);
+        playerBetWallet.registerProfitAmount(Result.WIN);
+
+        //when, then
+        assertThatThrownBy(() -> playerBetWallet.registerProfitAmount(Result.LOSE))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
     @DisplayName("배팅 금액 대비 게임 수익을 계산한다.")
     @Test
     void calculateNetProfit() {
