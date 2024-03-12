@@ -43,6 +43,10 @@ public class Hands {
         value.add(card);
     }
 
+    public void receive(List<Card> cards) {
+        value.addAll(cards);
+    }
+
     public int getCardCount() {
         return value.size();
     }

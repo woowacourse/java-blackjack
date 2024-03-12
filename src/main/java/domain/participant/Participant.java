@@ -22,6 +22,10 @@ public class Participant {
         hands.receive(card);
     }
 
+    public void receiveCard(List<Card> cards) {
+        hands.receive(cards);
+    }
+
     public boolean canHit() {
         return hands.calculateScore() <= BLACK_JACK_COUNT;
     }
