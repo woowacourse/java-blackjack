@@ -8,7 +8,6 @@ import controller.dto.ParticipantHandStatus;
 import controller.dto.PlayerOutcome;
 import domain.game.deck.Deck;
 import domain.game.deck.DeckGenerator;
-import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
@@ -44,10 +43,7 @@ public class BlackJackGame {
 
     private ParticipantHandStatus createInitialHandStatusAfterPick(final Participant participant) {
         participant.pickCard(deck, INITIAL_CARD_SIZE);
-        if (participant instanceof Dealer) {
-            return participant.createHandStatusExceptLastOne();
-        }
-        return participant.createHandStatus();
+        return participant.createInitialHandStatus();
     }
 
     public List<ParticipantHandStatus> createHandStatuses() {
