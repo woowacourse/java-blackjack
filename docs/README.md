@@ -79,6 +79,10 @@
 - [x] 이름에 앞 뒤 공백 제거
 - [x] 재입력 받기
 - [x] 카드 점수 비교 Player에게 메시지 던지기
+- [ ] DTO 만들기
+- [ ] 테스트 반복되는 생성로직을 Test Fixture 로 추출
+- [ ] Cards 일급 컬렉션
+- [ ] OutputView, InputView 정적 클래스 ❌
 
 ### ACE 점수 계산
 
