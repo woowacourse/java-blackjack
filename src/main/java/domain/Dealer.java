@@ -3,19 +3,19 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dealer extends Player {
+public class Dealer extends Participant {
     public static final int DEALER_HIT_THRESHOLD = 17;
     private static final String DEALER_NAME = "딜러";
 
     private final Deck deck;
 
     public Dealer(final Deck deck) {
-        super(new Name(DEALER_NAME));
+        super(new Name(DEALER_NAME), new Hand());
         this.deck = deck;
     }
 
     @Override
-    public boolean isNotBust() {
+    public boolean canHit() {
         return score() < DEALER_HIT_THRESHOLD;
     }
 

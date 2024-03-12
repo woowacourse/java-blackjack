@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-class Hand {
+public class Hand {
     private static final int BLACKJACK_CONDITION = 21;
 
     private final List<Card> cards;

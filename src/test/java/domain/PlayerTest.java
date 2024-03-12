@@ -50,6 +50,6 @@ class PlayerTest {
         player.dealCard(new Card(Denomination.JACK, Suit.CLUBS));
         player.dealCard(new Card(Denomination.ACE, Suit.CLUBS));
 
-        Assertions.assertThat(player.isNotBust()).isEqualTo(true);
+        Assertions.assertThat(player.canHit()).isEqualTo(true);
     }
 }

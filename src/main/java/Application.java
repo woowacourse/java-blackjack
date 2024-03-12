@@ -22,19 +22,6 @@ public class Application {
         OutputView.printBlackjackGameResults(gameResult);
     }
 
-    private static void playGame(final Blackjack blackjack) {
-        for (final var player : blackjack.getPlayers()) {
-            drawCardDuringPlayerTurn(player, blackjack);
-        }
-
-        final Player dealer = blackjack.getDealer();
-
-        if (dealer.isNotBust()) {
-            blackjack.dealCard(dealer);
-            OutputView.printDealerHitMessage();
-        }
-    }
-
     private static Blackjack createBlackjack() {
         return new Blackjack(createPlayers(), new Dealer(new Deck()));
     }
@@ -43,8 +30,21 @@ public class Application {
         return Players.from(InputView.inputNames());
     }
 
+    private static void playGame(final Blackjack blackjack) {
+        for (final var player : blackjack.getPlayers()) {
+            drawCardDuringPlayerTurn(player, blackjack);
+        }
+
+        final Dealer dealer = blackjack.getDealer();
+
+        if (dealer.canHit()) {
+            blackjack.dealCard(dealer);
+            OutputView.printDealerHitMessage();
+        }
+    }
+
     private static void drawCardDuringPlayerTurn(final Player player, final Blackjack blackjack) {
-        while (player.isNotBust() && wantToHit(player)) {
+        while (player.canHit() && wantToHit(player)) {
             blackjack.dealCard(player);
         }
         OutputView.printPlayerInfo(PlayerInfo.from(player));

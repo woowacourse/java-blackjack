@@ -30,8 +30,8 @@ public class Blackjack {
         dealer.dealCards(dealer.drawCards(INITIAL_HAND_SIZE));
     }
 
-    public void dealCard(final Player player) {
-        player.dealCard(dealer.drawSingleCard());
+    public void dealCard(final Participant participant) {
+        participant.dealCard(dealer.drawSingleCard());
     }
 
     public GameResult finishGame() {
