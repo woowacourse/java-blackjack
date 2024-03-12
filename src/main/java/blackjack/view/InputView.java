@@ -44,14 +44,22 @@ public class InputView {
         String message = String.format("%s의 배팅 금액은?", player.getName());
         System.out.println(message);
         String input = scanner.nextLine();
-        return convertToMoneyAmount(input);
+        return convertToInteger(input);
     }
 
-    private int convertToMoneyAmount(String input) {
+    private int convertToInteger(String input) {
         try {
-            return Integer.parseInt(input);
+            int value = Integer.parseInt(input);
+            validateBetMoney(value);
+            return value;
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("베팅 금액은 숫자이어야한다");
+        }
+    }
+
+    private void validateBetMoney(int value) {
+        if (value % 1000 != 0) {
+            throw new IllegalArgumentException("베팅 금액은 1000단위의 숫자이어야한다.");
         }
     }
 
