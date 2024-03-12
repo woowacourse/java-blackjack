@@ -1,27 +1,11 @@
 package blackjack.domain;
 
-import static blackjack.domain.card.Shape.CLOVER;
-import static blackjack.domain.card.Shape.DIAMOND;
-import static blackjack.domain.card.Shape.SPADE;
-import static blackjack.domain.card.Value.ACE;
-import static blackjack.domain.card.Value.EIGHT;
-import static blackjack.domain.card.Value.KING;
-import static blackjack.domain.card.Value.NINE;
-import static blackjack.domain.card.Value.QUEEN;
-import static blackjack.domain.card.Value.TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.result.BettingBoard;
 import blackjack.domain.result.GameResult;
-import blackjack.domain.result.GameResultBoard;
 import blackjack.domain.result.Money;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -55,7 +39,7 @@ class BettingBoardTest {
         assertThat(money).isEqualTo(expected);
     }
 
-    static Stream<Arguments> resultAndMoney() {
+    private static Stream<Arguments> resultAndMoney() {
         return Stream.of(
                 Arguments.arguments(
                         GameResult.WIN_BY_BLACK_JACK, new Money(1500)

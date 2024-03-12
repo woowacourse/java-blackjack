@@ -76,7 +76,7 @@ class PlayerTest {
         assertThat(outcome.isBusted()).isEqualTo(expected);
     }
 
-    static Stream<Arguments> cardsAndBustStatus() {
+    private static Stream<Arguments> cardsAndBustStatus() {
         return Stream.of(
                 Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, QUEEN), new Card(DIAMOND, ACE)),
                         false),
@@ -99,7 +99,7 @@ class PlayerTest {
         assertThat(player.isDrawAble()).isEqualTo(expected);
     }
 
-    static Stream<Arguments> cardsAndDrawAble() {
+    private static Stream<Arguments> cardsAndDrawAble() {
         return Stream.of(
                 Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, ACE)),
                         false),

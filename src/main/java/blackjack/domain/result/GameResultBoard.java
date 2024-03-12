@@ -29,7 +29,7 @@ public class GameResultBoard {
         return resultBoard;
     }
 
-    private static GameResult calculateGameResult(Outcome playerOutcome, Outcome dealerOutcome) {
+    private GameResult calculateGameResult(Outcome playerOutcome, Outcome dealerOutcome) {
         GameResult gameResult = playerOutcome.compete(dealerOutcome);
         if (playerOutcome.isBusted()) {
             gameResult = GameResult.LOSE;

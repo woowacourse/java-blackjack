@@ -46,7 +46,7 @@ class DealerTest {
         assertThat(outcome.isLessThanDealerMinimumScore()).isFalse();
     }
 
-    static Stream<Arguments> cardsAndScore() {
+    private static Stream<Arguments> cardsAndScore() {
         return Stream.of(
                 Arguments.arguments(List.of(
                         new Card(DIAMOND, KING), new Card(DIAMOND, TWO), new Card(DIAMOND, FOUR),

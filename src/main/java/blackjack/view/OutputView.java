@@ -25,19 +25,6 @@ public class OutputView {
         System.out.println("딜러: " + generateCardDescription(dealerCard));
     }
 
-    private String generateCardsDescription(List<Card> cards) {
-        List<String> list = cards.stream()
-                .map(this::generateCardDescription)
-                .toList();
-        return String.join(", ", list);
-    }
-
-    private String generateCardDescription(Card card) {
-        String shapeDescription = ShapeDescription.getDescription(card.shape());
-        String valueDescription = ValueDescription.getDescription(card.value());
-        return shapeDescription + valueDescription;
-    }
-
     public void printInitialMessage(List<String> playerNames) {
         System.out.println("딜러와 " + String.join(", ", playerNames) + " 에게 2장을 나누었습니다.");
     }
@@ -81,5 +68,18 @@ public class OutputView {
 
     public void printPlayerMoney(String name, int playerName) {
         System.out.println(name + ": " + playerName);
+    }
+
+    private String generateCardsDescription(List<Card> cards) {
+        List<String> list = cards.stream()
+                .map(this::generateCardDescription)
+                .toList();
+        return String.join(", ", list);
+    }
+
+    private String generateCardDescription(Card card) {
+        String shapeDescription = ShapeDescription.getDescription(card.shape());
+        String valueDescription = ValueDescription.getDescription(card.value());
+        return shapeDescription + valueDescription;
     }
 }

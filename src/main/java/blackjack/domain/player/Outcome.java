@@ -47,6 +47,14 @@ public class Outcome {
         return competeScore(other);
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public int getCardsSize() {
+        return cardsSize;
+    }
+
     private int calculateScore(List<Card> cards) {
         int score = cards.stream()
                 .mapToInt(Card::getScore)
@@ -105,13 +113,5 @@ public class Outcome {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public int getCardsSize() {
-        return cardsSize;
     }
 }
