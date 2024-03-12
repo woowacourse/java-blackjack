@@ -2,7 +2,6 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Hand;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -19,7 +18,9 @@ public class Players {
 
     public static Players from(List<String> names) {
         validateDuplicate(names);
-        return new Players(names.stream().map(name -> new Player(name, new Hand(new ArrayList<>()))).toList());
+        return new Players(names.stream()
+                .map(name -> new Player(name, new Hand(List.of())))
+                .toList());
     }
 
     private static void validateDuplicate(List<String> names) {

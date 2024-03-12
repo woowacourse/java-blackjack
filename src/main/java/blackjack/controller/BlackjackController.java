@@ -11,14 +11,14 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayerCommand;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
 public class BlackjackController {
 
     public void run() {
-        Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
+        Dealer dealer = new Dealer(new Hand(List.of()));
         Players players = requestUntilValid(() -> Players.from(InputView.readPlayersName()));
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
 
