@@ -40,8 +40,4 @@ public class Betting {
         }
         return getBetting(playerName).getAmount() * -1;
     }
-
-    public int getDealerBettingResult() {
-        return -1 * betting.values().stream().map(Amount::getAmount).reduce(0, Integer::sum);
-    }
 }

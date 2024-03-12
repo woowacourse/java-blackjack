@@ -1,6 +1,7 @@
 package controller;
 
 import domain.*;
+import domain.dto.BettingResultDto;
 import domain.dto.DealerHandStatusDto;
 import domain.dto.PlayerHandStatusDto;
 import domain.dto.PlayingCardDto;
@@ -12,7 +13,6 @@ import view.InputView;
 import view.OutputView;
 
 import java.util.List;
-import java.util.Map;
 
 public class BlackJackController {
     public void run() {
@@ -135,8 +135,8 @@ public class BlackJackController {
 
     private void finish(final BlackJackGame blackJackGame, final Betting betting, final Dealer dealer, final List<Player> players) {
         GameResults gameResults = blackJackGame.getGameResults(dealer, players);
-        Map<PlayerName, Integer> bettingResult = betting.calculateBettingOnPlayers(gameResults);
-        OutputView.printDealerBettingResult(betting.getDealerBettingResult());
+        BettingResultDto bettingResult = new BettingResultDto(betting.calculateBettingOnPlayers(gameResults));
+        OutputView.printDealerBettingResult(bettingResult.getDealerBettingResult());
         OutputView.printPlayerBettingResult(bettingResult);
     }
 }

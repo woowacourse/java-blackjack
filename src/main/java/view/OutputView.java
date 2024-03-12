@@ -1,12 +1,12 @@
 package view;
 
+import domain.dto.BettingResultDto;
 import domain.dto.DealerHandStatusDto;
 import domain.dto.PlayerHandStatusDto;
 import domain.dto.PlayingCardDto;
 import domain.participant.PlayerName;
 
 import java.util.List;
-import java.util.Map;
 
 import static view.FormatConverter.*;
 
@@ -73,7 +73,7 @@ public class OutputView {
         System.out.println("딜러: " + dealerSum);
     }
 
-    public static void printPlayerBettingResult(Map<PlayerName, Integer> bettingResult) {
-        bettingResult.forEach((key, value) -> System.out.println(key.value() + ": " + value));
+    public static void printPlayerBettingResult(final BettingResultDto bettingResult) {
+        bettingResult.result().forEach((key, value) -> System.out.println(key.value() + ": " + value));
     }
 }
