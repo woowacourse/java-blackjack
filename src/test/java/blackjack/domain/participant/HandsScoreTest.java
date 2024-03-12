@@ -15,12 +15,12 @@ class HandsScoreTest {
     @DisplayName("카드패의 점수가 21을 초과했는지 판단한다")
     @Test
     void should_judgeBurst() {
-        List<Card> notOverCards = List.of(Card.create(0),Card.create(9));
+        List<Card> notOverCards = List.of(Card.create(0), Card.create(9));
         HandsScore handsScore = HandsScore.of(notOverCards);
 
         assertFalse(handsScore.isBurst());
 
-        List<Card> overCards = List.of(Card.create(0),Card.create(13),Card.create(9));
+        List<Card> overCards = List.of(Card.create(0), Card.create(13), Card.create(9));
         handsScore = HandsScore.of(overCards);
         assertTrue(handsScore.isBurst());
     }

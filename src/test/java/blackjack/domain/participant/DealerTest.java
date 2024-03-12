@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import blackjack.domain.deck.Card;
@@ -44,6 +45,15 @@ class DealerTest {
         assertThat(dealer.getFirstCardName())
                 .isEqualTo(Card.create(6)
                         .getCardName());
+    }
+
+    @DisplayName("딜러는 초기카드 분배 후에 패를 보여줄 수 있다.")
+    @Test
+    void should_Unsupported_NotHasInitialCards() {
+        Dealer dealer = new Dealer();
+        assertThatThrownBy(dealer::getFirstCardName)
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("초기 카드 분배 후에 사용할 수 있습니다.");
     }
 
 }

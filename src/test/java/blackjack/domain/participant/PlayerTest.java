@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Deck;
@@ -19,7 +18,7 @@ class PlayerTest {
         testPlayer.addCard(Card.create(0));
         testPlayer.addCard(Card.create(1));
 
-        testPlayer.draw(()->Boolean.TRUE, deck);
+        testPlayer.draw(() -> Boolean.TRUE, deck);
 
         assertThat(testPlayer.getHandsCards()).hasSize(3);
 //        assertTrue(testPlayer.draw(() -> Boolean.TRUE, deck));
