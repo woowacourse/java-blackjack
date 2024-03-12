@@ -4,13 +4,16 @@ import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.GamePlayerResult;
 import blackjack.domain.result.Result;
 import blackjack.domain.result.ResultStatus;
+
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class ResultView {
-    private static final EnumMap<ResultStatus, String> resultBoard = initializeResultStatus();
+    private static final Map<ResultStatus, String> resultBoard = initializeResultStatus();
 
     public static void printResult(final Result result) {
         printDealerResult(result.getDealerResult());
@@ -42,8 +45,8 @@ public class ResultView {
         return dealerResult.getCountWithResultStatus(resultStatus) + resultBoard.get(resultStatus);
     }
 
-    private static EnumMap<ResultStatus, String> initializeResultStatus() {
-        final EnumMap<ResultStatus, String> resultStatusBoard = new EnumMap<>(ResultStatus.class);
+    private static Map<ResultStatus, String> initializeResultStatus() {
+        final Map<ResultStatus, String> resultStatusBoard = new EnumMap<>(ResultStatus.class);
         resultStatusBoard.put(ResultStatus.WIN, "승");
         resultStatusBoard.put(ResultStatus.DRAW, "무");
         resultStatusBoard.put(ResultStatus.LOSE, "패");

@@ -4,18 +4,19 @@ import blackjack.domain.common.Name;
 
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 public class DealerResult {
     private final Name name;
-    private final EnumMap<ResultStatus, Count> resultStatusBoard;
+    private final Map<ResultStatus, Count> resultStatusBoard;
 
-    public DealerResult(final Name name, final EnumMap<ResultStatus, Count> resultStatusBoard) {
+    public DealerResult(final Name name, final Map<ResultStatus, Count> resultStatusBoard) {
         this.name = name;
         this.resultStatusBoard = resultStatusBoard;
     }
 
     public static DealerResult of(final Name name, final List<GamePlayerResult> gamePlayerResults) {
-        final EnumMap<ResultStatus, Count> resultStatusBoard = new EnumMap(ResultStatus.class);
+        final Map<ResultStatus, Count> resultStatusBoard = new EnumMap(ResultStatus.class);
 
         for (final GamePlayerResult gamePlayerResult : gamePlayerResults) {
             increment(resultStatusBoard, gamePlayerResult.getResultStatus()
@@ -25,7 +26,7 @@ public class DealerResult {
         return new DealerResult(name, resultStatusBoard);
     }
 
-    private static void increment(final EnumMap<ResultStatus, Count> resultStatusBoard,
+    private static void increment(final Map<ResultStatus, Count> resultStatusBoard,
                                   final ResultStatus resultStatus) {
         resultStatusBoard.put(resultStatus, resultStatusBoard.getOrDefault(resultStatus, Count.initialValue())
                                                              .increment());
