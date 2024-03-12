@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
@@ -22,29 +23,18 @@ public class BlackjackController {
 		this.outputView = outputView;
 	}
 
-	public Players createPlayers() {
-		return new Players(inputView.readPlayerNames());
-	}
+	public void startGame() {
+		BlackjackGame blackjackGame = BlackjackGame.getInstance();
+		Dealer dealer = blackjackGame.createDealer();
+		Players players = blackjackGame.createPlayers(inputView.readPlayerNames());
 
-	public Deck createDeck() {
-		return Deck.createUnShuffled();
-	}
-
-	public Dealer createDealer(Deck deck) {
-		return Dealer.newInstance(deck);
-	}
-
-	public void startGame(Dealer dealer, Players players) {
-		dealInitCards(dealer, players);
+		dealInitCards(dealer, players, blackjackGame);
 		receiveAdditionalCard(dealer, players);
+		printResult(dealer, players, blackjackGame);
 	}
 
-	private void dealInitCards(Dealer dealer, Players players) {
-		for (Player player : players.getPlayers()) {
-			player.receiveInitCards(dealer.dealInit());
-		}
-		dealer.receiveInitCards(dealer.dealInit());
-
+	private void dealInitCards(Dealer dealer, Players players, BlackjackGame blackjackGame) {
+		blackjackGame.dealInitCards(dealer, players);
 		outputView.printInitCardStatus(dealer, players);
 	}
 
@@ -72,32 +62,14 @@ public class BlackjackController {
 		}
 	}
 
-	public void printResult(Dealer dealer, Players players) {
-		printTotalCardStatus(dealer, players);
-		printGameResult(dealer, players);
-	}
-
-	private void printTotalCardStatus(Dealer dealer, Players players) {
+	public void printResult(Dealer dealer, Players players, BlackjackGame blackjackGame) {
 		outputView.printTotalCardHandStatus(dealer, players);
+		printGameResult(dealer, players, blackjackGame);
 	}
 
-	private void printGameResult(Dealer dealer, Players players) {
-		Map<Player, GameResult> playerResults = new HashMap<>();
-		for (Player player : players.getPlayers()) {
-			playerResults.put(player, compareScore(dealer, player));
-		}
-
-		Map<GameResult, Long> dealerResult = getDealerResult(playerResults);
+	private void printGameResult(Dealer dealer, Players players, BlackjackGame blackjackGame) {
+		Map<Player, GameResult> playerResults = blackjackGame.getPlayerResults(players, dealer);
+		Map<GameResult, Long> dealerResult = blackjackGame.getDealerResult(playerResults);
 		outputView.printGameResult(dealerResult, playerResults);
-	}
-
-	private GameResult compareScore(Dealer dealer, Player player) {
-		return GameResult.of(dealer, player);
-	}
-
-	private Map<GameResult, Long> getDealerResult(Map<Player, GameResult> playerResults) {
-		return playerResults.values().stream()
-			.map(GameResult::reverse)
-			.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 	}
 }
