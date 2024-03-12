@@ -6,6 +6,7 @@ import java.util.List;
 public class Cards {
 
     private static final int INIT_CARD_SIZE = 2;
+    private static final int ACE_SCORE = 10;
     protected static final int MAX_SCORE = 21;
 
     protected final List<Card> cards;
@@ -36,8 +37,8 @@ public class Cards {
     public int bestSum() {
         long countAce = countAce();
         int sum = sum();
-        while (sum + 10 <= MAX_SCORE && countAce > 0) {
-            sum += 10;
+        while (sum + ACE_SCORE <= MAX_SCORE && countAce > 0) {
+            sum += ACE_SCORE;
             countAce--;
         }
         return sum;
