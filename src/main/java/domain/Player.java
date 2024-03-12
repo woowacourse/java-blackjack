@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 import static domain.Dealer.DEALER_NAME;
 
 public class Player extends Participant {
@@ -20,5 +22,18 @@ public class Player extends Participant {
 
     public boolean isHittable() {
         return getTotalScore() < MAX_SCORE_TO_HIT;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player that = (Player) o;
+        return Objects.equals(this.name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

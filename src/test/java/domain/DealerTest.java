@@ -13,7 +13,7 @@ class DealerTest {
     @DisplayName("딜러는 참가자를 상속한다.")
     @Test
     void extendsTest() {
-        Dealer dealer = new Dealer(new CardDeck());
+        Dealer dealer = new Dealer(CardDeck.createShuffledDeck());
 
         assertThat(dealer).isInstanceOf(Participant.class);
     }
@@ -21,7 +21,7 @@ class DealerTest {
     @DisplayName("손패가 16이하이면 히트한다.")
     @Test
     void canHit() {
-        Dealer dealer = new Dealer(new CardDeck());
+        Dealer dealer = new Dealer(CardDeck.createShuffledDeck());
         dealer.initHand(List.of(TEN_HEART, SIX_HEART));
 
         boolean canHit = dealer.isHittable();
@@ -32,7 +32,7 @@ class DealerTest {
     @DisplayName("손패가 17이상이면 스테이해야 한다.")
     @Test
     void cantHit() {
-        Dealer dealer = new Dealer(new CardDeck());
+        Dealer dealer = new Dealer(CardDeck.createShuffledDeck());
         dealer.initHand(List.of(TEN_HEART, SEVEN_HEART));
 
         boolean canHit = dealer.isHittable();
