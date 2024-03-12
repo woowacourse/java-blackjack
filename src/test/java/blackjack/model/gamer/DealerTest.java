@@ -2,30 +2,31 @@ package blackjack.model.gamer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.model.card.Rank;
+import blackjack.model.card.Pattern;
 import blackjack.model.card.Card;
-import blackjack.model.card.CardNumber;
-import blackjack.model.card.CardPattern;
-import blackjack.model.card.CardProperties;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    @DisplayName("딜러가 카드를 받는다.")
+    @DisplayName("딜러가 받은 카드 중 첫 번째 카드를 확인한다.")
     @Test
-    void receiveCard() {
+    void getFirstCard() {
         //given
         Dealer dealer = new Dealer();
-        CardProperties cardProperties = new CardProperties(CardPattern.CLOVER, CardNumber.FIVE);
-        Card card = new Card(cardProperties);
+        Card card = new Card(Pattern.CLOVER, Rank.FIVE);
+        Card card2 = new Card(Pattern.SPADE, Rank.ACE);
+
+        dealer.receiveCard(card);
+        dealer.receiveCard(card2);
 
         //when
-        dealer.receiveCard(card);
-        List<Card> dealerDeck = dealer.getHandDeck();
+        Card firstCard = dealer.getFirstCard();
 
         //then
-        assertThat(dealerDeck).containsExactly(card);
+        assertThat(firstCard).isEqualTo(card);
     }
 
     @DisplayName("딜러가 히트할 수 있는지 확인한다.")
@@ -33,34 +34,12 @@ class DealerTest {
     void canHit() {
         //given
         Dealer dealer = new Dealer();
-        CardProperties cardProperties = new CardProperties(CardPattern.CLOVER, CardNumber.FIVE);
-        Card card = new Card(cardProperties);
+        Card card = new Card(Pattern.CLOVER, Rank.FIVE);
 
         //when
         dealer.receiveCard(card);
 
         //then
         assertThat(dealer.canHit()).isTrue();
-    }
-
-    @DisplayName("딜러의 카드합을 확인한다.")
-    @Test
-    void calculateTotalScore() {
-        //given
-        Dealer dealer = new Dealer();
-        CardProperties cardProperties1 = new CardProperties(CardPattern.CLOVER, CardNumber.FIVE);
-        CardProperties cardProperties2 = new CardProperties(CardPattern.CLOVER, CardNumber.SEVEN);
-
-        Card card = new Card(cardProperties1);
-        Card card2 = new Card(cardProperties2);
-
-        dealer.receiveCard(card);
-        dealer.receiveCard(card2);
-
-        //when
-        int totalScore = dealer.calculateTotalScore();
-
-        //then
-        assertThat(totalScore).isEqualTo(12);
     }
 }
