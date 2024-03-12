@@ -18,7 +18,7 @@ class DealerTest {
 
     @DisplayName("딜러의 카드 합계가 16점 이하면 true를 반환한다")
     @Test
-    void testCanAddCard() {
+    void testCanHit() {
         Hand cards = new Hand(List.of(new Card(ACE, HEART), new Card(JACK, HEART)));
         Dealer dealer = new Dealer(cards);
         assertThat(dealer.isPossibleHit()).isTrue();
@@ -26,7 +26,7 @@ class DealerTest {
 
     @DisplayName("딜러의 카드 합계가 17점 이상이면 false를 반환한다")
     @Test
-    void testCanNotAddCard() {
+    void testCanNotHit() {
         Hand cards = new Hand(List.of(new Card(SEVEN, HEART), new Card(JACK, HEART)));
         Dealer dealer = new Dealer(cards);
         assertThat(dealer.isPossibleHit()).isFalse();
@@ -34,7 +34,7 @@ class DealerTest {
 
     @DisplayName("카드 1장을 획득하면 딜러의 카드가 1개가 증가한다")
     @Test
-    void shouldAddCardWhenAllowed() {
+    void testHitCard() {
         Hand cards = new Hand(List.of(new Card(ACE, HEART), new Card(JACK, HEART)));
         Dealer dealer = new Dealer(cards);
         Card card = new Card(TWO, DIAMOND);

@@ -26,7 +26,7 @@ class PlayerTest {
 
     @DisplayName("플레이어의 카드 합계가 21점 이하이면 true를 반환한다")
     @Test
-    void testCanAddCard() {
+    void testCanHit() {
         Hand cards = new Hand(List.of(new Card(ACE, HEART), new Card(JACK, HEART)));
         Player player = new Player("lily", cards);
         assertThat(player.isPossibleHit()).isTrue();
@@ -34,7 +34,7 @@ class PlayerTest {
 
     @DisplayName("플레이어의 카드 합계가 22점 이상이면 false를 반환한다")
     @Test
-    void testCanNotAddCard() {
+    void testCanNotHit() {
         Hand cards = new Hand(
             List.of(new Card(TEN, HEART), new Card(JACK, HEART), new Card(TWO, HEART))
         );
@@ -44,7 +44,7 @@ class PlayerTest {
 
     @DisplayName("카드 1장을 획득하면 플레이어의 카드가 1개가 증가한다")
     @Test
-    void shouldAddCardWhenAllowed() {
+    void testHitCard() {
         Hand cards = new Hand(List.of(new Card(ACE, HEART), new Card(JACK, HEART)));
         Player player = new Player("lily", cards);
         Card card = new Card(TWO, DIAMOND);
