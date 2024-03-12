@@ -4,5 +4,6 @@ public enum WinState {
 
     WIN,
     DRAW,
-    LOSE;
+    LOSE,
+    BLACK_JACK;
 }
