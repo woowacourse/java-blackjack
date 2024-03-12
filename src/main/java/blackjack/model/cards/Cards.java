@@ -1,6 +1,6 @@
 package blackjack.model.cards;
 
-import blackjack.model.blackjackgame.PlayerResultStatus;
+import blackjack.model.blackjackgame.PlayerProfitCalculator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,12 +39,12 @@ public final class Cards {
         return score;
     }
 
-    public PlayerResultStatus getPlayerResultStatus(Cards other) {
+    public PlayerProfitCalculator getPlayerResultStatus(Cards other) {
         if (isBlackJack() && other.isBlackJack()) {
-            return PlayerResultStatus.PUSH;
+            return PlayerProfitCalculator.PUSH;
         }
         if (isBlackJack()) {
-            return PlayerResultStatus.BLACKJACK;
+            return PlayerProfitCalculator.BLACKJACK;
         }
         return getCardsScore().getPlayerStatus(other.getCardsScore());
     }

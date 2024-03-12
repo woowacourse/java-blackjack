@@ -2,7 +2,7 @@ package blackjack.model.blackjackgame;
 
 import java.util.function.Function;
 
-public enum PlayerResultStatus {
+public enum PlayerProfitCalculator {
     BLACKJACK(value -> (value * 1.5)),
     WIN(value -> value),
     LOSE(value -> -value),
@@ -10,7 +10,7 @@ public enum PlayerResultStatus {
 
     private final Function<Double, Double> function;
 
-    PlayerResultStatus(Function<Double, Double> function) {
+    PlayerProfitCalculator(Function<Double, Double> function) {
         this.function = function;
     }
 

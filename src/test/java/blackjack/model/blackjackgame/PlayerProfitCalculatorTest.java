@@ -5,13 +5,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PlayerResultStatusTest {
+class PlayerProfitCalculatorTest {
 
     @DisplayName("블랙잭은 1.5배 연산한다.")
     @Test
     void calculateBlackjack() {
         var given = 3;
-        PlayerResultStatus blackjack = PlayerResultStatus.BLACKJACK;
+        PlayerProfitCalculator blackjack = PlayerProfitCalculator.BLACKJACK;
         var result = blackjack.calculate(given);
 
         assertThat(result).isEqualTo(4.5);
@@ -21,7 +21,7 @@ class PlayerResultStatusTest {
     @Test
     void calculateWin() {
         var given = 3;
-        PlayerResultStatus blackjack = PlayerResultStatus.WIN;
+        PlayerProfitCalculator blackjack = PlayerProfitCalculator.WIN;
         var result = blackjack.calculate(given);
 
         assertThat(result).isEqualTo(3);
@@ -31,7 +31,7 @@ class PlayerResultStatusTest {
     @Test
     void calculateLose() {
         var given = 3;
-        PlayerResultStatus blackjack = PlayerResultStatus.LOSE;
+        PlayerProfitCalculator blackjack = PlayerProfitCalculator.LOSE;
         var result = blackjack.calculate(given);
 
         assertThat(result).isEqualTo(-3);
@@ -41,7 +41,7 @@ class PlayerResultStatusTest {
     @Test
     void calculatePush() {
         var given = 3;
-        PlayerResultStatus blackjack = PlayerResultStatus.PUSH;
+        PlayerProfitCalculator blackjack = PlayerProfitCalculator.PUSH;
         var result = blackjack.calculate(given);
 
         assertThat(result).isEqualTo(0);

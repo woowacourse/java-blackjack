@@ -28,8 +28,8 @@ public class BlackJackController {
         List<Player> players = inputView.readPlayers();
         CardGenerator cardGenerator = new CardGenerator(new RandomIndexGenerator());
         printDistributedInfo(dealer, players, cardGenerator);
-        printFinalScore(players, dealer, cardGenerator);
-        printWinningResults(players, dealer);
+        printParticipantsFinalScore(players, dealer, cardGenerator);
+        printParticipantsProfits(players, dealer);
     }
 
     private void printDistributedInfo(Dealer dealer, List<Player> players, CardGenerator cardGenerator) {
@@ -42,7 +42,7 @@ public class BlackJackController {
         players.forEach(player -> player.addCards(cardGenerator.drawFirstCardsDealt()));
     }
 
-    private void printFinalScore(List<Player> players, Dealer dealer, CardGenerator cardGenerator) {
+    private void printParticipantsFinalScore(List<Player> players, Dealer dealer, CardGenerator cardGenerator) {
         executeMultipleTurns(players, cardGenerator);
         executeAdditionalDealerTurn(dealer, cardGenerator);
         outputView.printFinalScore(players, dealer);
@@ -61,7 +61,7 @@ public class BlackJackController {
         }
     }
 
-    private void printWinningResults(List<Player> players, Dealer dealer) {
+    private void printParticipantsProfits(List<Player> players, Dealer dealer) {
         PlayersResults playersResults = calculatePlayersResults(players, dealer);
         outputView.printGameResults(playersResults);
     }

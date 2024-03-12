@@ -3,7 +3,7 @@ package blackjack.model.participants;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.model.blackjackgame.PlayerResultStatus;
+import blackjack.model.blackjackgame.PlayerProfitCalculator;
 import blackjack.model.blackjackgame.Profit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,7 +23,7 @@ class BettingTest {
     @DisplayName("플레이어 결과를 받아 이익을 반환한다.")
     @ParameterizedTest
     @CsvSource(value = {"BLACKJACK,15", "WIN,10", "LOSE,-10", "PUSH,0"})
-    void getProfit(PlayerResultStatus given, int expected) {
+    void getProfit(PlayerProfitCalculator given, int expected) {
         Betting betting = new Betting(10);
         Profit profit = betting.getProfit(given);
 
