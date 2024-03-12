@@ -13,7 +13,7 @@ public abstract class Participant implements CardReceivable {
     protected final Name name;
     protected final Cards cards;
 
-    public Participant(final Name name, final Cards cards) {
+    protected Participant(final Name name, final Cards cards) {
         this.name = name;
         this.cards = cards;
     }
@@ -30,6 +30,10 @@ public abstract class Participant implements CardReceivable {
         cards.add(card);
     }
 
+    public boolean isBust() {
+        return cards.sum() > BUST_SIZE;
+    }
+
     public String getNameAsString() {
         return name.asString();
     }
@@ -42,7 +46,4 @@ public abstract class Participant implements CardReceivable {
         return cards.toList();
     }
 
-    public boolean isBust() {
-        return cards.sum() > BUST_SIZE;
-    }
 }
