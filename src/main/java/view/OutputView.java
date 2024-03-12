@@ -3,8 +3,8 @@ package view;
 import static domain.participant.Dealer.INIT_HANDS_SIZE;
 import static domain.participant.Dealer.THRESHOLD;
 
-import domain.participant.Player;
 import domain.Result;
+import domain.participant.Player;
 import dto.DealerHandsDto;
 import dto.ParticipantDto;
 import dto.ParticipantsDto;
@@ -17,6 +17,7 @@ public class OutputView {
     private static final String FORM = "%s카드: %s%n";
     private static final String TOTAL_SUM_FORM = "%s 카드: %s - 결과: %d%n";
     private static final String RESULT_FORM = "%s: %s%n";
+
 
     public void printStartDeal(final DealerHandsDto dealerHandsDto, final ParticipantsDto participantsDto) {
         final String dealerCard = dealerHandsDto.getDisplayedCard();
@@ -74,5 +75,9 @@ public class OutputView {
 
     public void printBlackJack() {
         System.out.printf("BLACK JACK!!!%n");
+    }
+
+    public void printException(final Throwable exception) {
+        System.out.println(exception.getMessage());
     }
 }

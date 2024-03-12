@@ -8,20 +8,21 @@ import domain.participant.Players;
 import dto.DealerHandsDto;
 import dto.ParticipantDto;
 import dto.ParticipantsDto;
-import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
-    private final InputView inputView;
+
+    private final InputController inputController;
     private final OutputView outputView;
 
-    public BlackJackController(final InputView inputView, final OutputView outputView) {
-        this.inputView = inputView;
+
+    public BlackJackController(final InputController inputController, final OutputView outputView) {
+        this.inputController = inputController;
         this.outputView = outputView;
     }
 
     public void run() {
-        final Players players = Players.from(inputView.readNames());
+        final Players players = inputController.getPlayers();
         final Dealer dealer = new Dealer(CardDeck.generate());
 
         initHands(players, dealer);
@@ -62,7 +63,7 @@ public class BlackJackController {
         boolean turnEnded = false;
 
         while (!turnEnded) {
-            Answer answer = Answer.from(inputView.readAnswer(player.getName()));
+            Answer answer = inputController.getAnswer(player.getName());
             dealer.deal(player, answer);
 
             printHandsIfRequired(player, handsChanged, answer);
