@@ -5,9 +5,11 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public enum ResultSymbol {
+    WIN_BY_BLACKJACK("승"),
     WIN("승"),
     PUSH("무"),
-    LOSE("패");
+    LOSE("패"),
+    LOSE_BY_BLACKJACK("패");
 
     private final String symbol;
 

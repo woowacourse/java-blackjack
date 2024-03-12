@@ -55,7 +55,7 @@ public class OutputView {
 
     public void printGameResults(PlayerResult playerResult, DealerResult dealerResult) {
         System.out.println();
-        System.out.println("### 최종 승패");
+        System.out.println("### 최종 수익");
         System.out.printf("%s: %s%n", DEALER_NAME, getDealerResultFormat(dealerResult));
         Map<Player, Result> gameResult = playerResult.getResult();
         printPlayerResultsFormat(gameResult);
@@ -80,13 +80,16 @@ public class OutputView {
     private void printPlayerResultsFormat(Map<Player, Result> gameResult) {
         gameResult.entrySet()
                 .stream()
-                .map(entry -> getPlayerResultFormat(entry.getKey().getName(),
-                        ResultSymbol.convertToSymbol(entry.getValue())))
+                .map(entry -> {
+                    Player player = entry.getKey();
+                    Result result = entry.getValue();
+                    return getPlayerResultFormat(player.getName(), result.calculate(player.getBetAmount()));
+                })
                 .forEach(System.out::print);
     }
 
-    private String getPlayerResultFormat(String name, String result) {
-        return String.format("%s: %s%n", name, result);
+    private String getPlayerResultFormat(String name, double resultAmount) {
+        return String.format("%s: %s%n", name, resultAmount);
     }
 
     private String getDealerResultFormat(DealerResult dealerResult) {

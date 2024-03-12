@@ -27,6 +27,9 @@ public class Dealer extends Participant {
     }
 
     private Result convertToDealerResult(Result playerResult) {
+        if (playerResult == Result.WIN_BY_BLACKJACK) {
+            return Result.LOSE_BY_BLACKJACK;
+        }
         if (playerResult == Result.WIN) {
             return Result.LOSE;
         }

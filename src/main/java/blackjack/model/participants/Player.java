@@ -82,4 +82,8 @@ public class Player extends Participant {
         }
         return Result.PUSH.calculate(betAmount);
     }
+
+    public int getBetAmount() {
+        return betAmount;
+    }
 }
