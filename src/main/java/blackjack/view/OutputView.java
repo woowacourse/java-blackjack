@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String DEALING_RESULT_INTRO = "\n딜러와 %s에게 2장을 나누었습니다.\n";
     private static final String PLAYER_CARDS_FORM = "%s카드: %s";
-    private static final String DEALER_DRAWING_FORM = "\n딜러는 16이하라 %d장의 카드를 더 받았습니다.\n";
+    private static final String DEALER_DRAWING_FORM = "\n딜러는 16이하라 1장의 카드를 더 받았습니다.";
     private static final String DEALER_CARDS_FORM = "\n딜러카드: %s";
     private static final String TOTAL_SCORE_FORM = " - 결과: %s\n";
     private static final String MATCH_RESULT_INTRO = "\n## 최종 승패";
@@ -57,7 +57,8 @@ public class OutputView {
     }
 
     public void printDealerDrawingCards(final Dealer dealer) {
-        System.out.printf(DEALER_DRAWING_FORM, dealer.getDrawCount());
+        int count = dealer.getDrawCount();
+        System.out.println(DEALER_DRAWING_FORM.repeat(count));
     }
 
     public void printDealerFinalCards(final DealerFinalCardsOutcome dealerFinalCardsOutcome) {
