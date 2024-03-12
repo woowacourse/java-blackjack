@@ -1,28 +1,28 @@
-package blackjack.player;
+package blackjack.participant;
 
 import blackjack.card.Card;
-import blackjack.player.state.DealerState;
-import blackjack.player.state.GameState;
-import blackjack.player.state.PlayerState;
+import blackjack.participant.state.DealerState;
+import blackjack.participant.state.GameState;
+import blackjack.participant.state.PlayerState;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class Player {
+public class Participant {
 
     private final Name name;
     private GameState state;
 
-    public Player(String name) {
+    public Participant(String name) {
         this(name, new PlayerState());
     }
 
-    private Player(String name, GameState state) {
+    private Participant(String name, GameState state) {
         this.name = new Name(name);
         this.state = state;
     }
 
-    public static Player createAsDealer() {
-        return new Player("딜러", new DealerState());
+    public static Participant createAsDealer() {
+        return new Participant("딜러", new DealerState());
     }
 
     public void drawCard(Card card) {

@@ -1,4 +1,4 @@
-package blackjack.player;
+package blackjack.participant;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;

@@ -1,6 +1,6 @@
-package blackjack.player.state;
+package blackjack.participant.state;
 
-import blackjack.player.Hand;
+import blackjack.participant.Hand;
 
 public class StandState extends TerminatedState {
 

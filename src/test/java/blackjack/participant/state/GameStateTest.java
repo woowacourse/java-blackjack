@@ -1,4 +1,4 @@
-package blackjack.player.state;
+package blackjack.participant.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

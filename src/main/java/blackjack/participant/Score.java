@@ -1,4 +1,4 @@
-package blackjack.player;
+package blackjack.participant;
 
 public class Score {
 

@@ -1,19 +1,19 @@
-package blackjack.player;
+package blackjack.participant;
 
 import blackjack.card.Deck;
 import java.util.List;
 
-public class Players {
+public class Participants {
 
     private static final int MIN_PLAYER_COUNT = 1;
     private static final int MAX_PLAYER_COUNT = 10;
 
-    private final List<Player> players;
+    private final List<Participant> participants;
 
-    public Players(List<String> playerNames) {
+    public Participants(List<String> playerNames) {
         validatePlayers(playerNames);
-        this.players = playerNames.stream()
-                .map(Player::new)
+        this.participants = playerNames.stream()
+                .map(Participant::new)
                 .toList();
     }
 
@@ -45,16 +45,16 @@ public class Players {
     }
 
     public void drawCardsForAll(Deck deck, int amount) {
-        players.forEach(player -> player.drawCards(deck::draw, amount));
+        participants.forEach(participant -> participant.drawCards(deck::draw, amount));
     }
 
     public List<String> getNames() {
-        return players.stream()
-                .map(Player::getName)
+        return participants.stream()
+                .map(Participant::getName)
                 .toList();
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    public List<Participant> getPlayers() {
+        return participants;
     }
 }

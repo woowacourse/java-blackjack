@@ -1,4 +1,4 @@
-package blackjack.player;
+package blackjack.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PlayerTest {
+class ParticipantTest {
 
     @Test
     @DisplayName("플레이어는 21점 미만이면 추가 드로우가 가능하다.")
@@ -20,11 +20,11 @@ class PlayerTest {
                 new Card(Shape.HEART, Number.JACK),
                 new Card(Shape.DIAMOND, Number.TEN)
         );
-        Player player = new Player("aru");
+        Participant participant = new Participant("aru");
         Iterator<Card> cardIterator = cards.iterator();
-        player.drawCards(cardIterator::next, 2);
+        participant.drawCards(cardIterator::next, 2);
         // when
-        boolean isDrawable = player.isDrawable();
+        boolean isDrawable = participant.isDrawable();
         // then
         assertThat(isDrawable).isTrue();
     }
@@ -38,10 +38,10 @@ class PlayerTest {
                 new Card(Shape.DIAMOND, Number.ACE)
         );
         Iterator<Card> cardIterator = cards.iterator();
-        Player player = new Player("atto");
-        player.drawCards(cardIterator::next, 2);
+        Participant participant = new Participant("atto");
+        participant.drawCards(cardIterator::next, 2);
         // when
-        boolean isDrawable = player.isDrawable();
+        boolean isDrawable = participant.isDrawable();
         // then
         assertThat(isDrawable).isFalse();
     }

@@ -1,11 +1,11 @@
-package blackjack.player.state;
+package blackjack.participant.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.card.Card;
 import blackjack.card.Number;
 import blackjack.card.Shape;
-import blackjack.player.Hand;
+import blackjack.participant.Hand;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
