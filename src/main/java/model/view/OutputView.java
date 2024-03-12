@@ -31,4 +31,9 @@ public class OutputView {
             System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
         }
     }
+
+    public void printFinalResult(String name, List<CardType> cards, int totalScore) {
+        System.out.print(name + "카드: " + String.join(", ", cards.stream().map(CardType::card).toList()));
+        System.out.println(" - 결과: " + totalScore);
+    }
 }

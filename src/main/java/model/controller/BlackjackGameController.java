@@ -42,6 +42,7 @@ public class BlackjackGameController {
         boolean dealerHit = blackjackGame.dealerHitsUnderSixteen(
                 new Card(CardDispenser.generateCardNumber(), CardDispenser.generateCardShape()));
         outputView.printDealerHitStatus(dealerHit);
+        printFinalResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
     }
 
     private void cardSettingBeforeGameStart(Players players, BlackjackGame blackjackGame) {
@@ -84,6 +85,13 @@ public class BlackjackGameController {
         }
         outputView.printBustInfo(player);
         return new Answer("n");
+    }
+
+    private void printFinalResult(Dealer dealer, Players players) {
+        outputView.printFinalResult(dealer.getName(), captureCardType(dealer), dealer.totalNumber());
+        players.getPlayers()
+                .forEach(player ->
+                        outputView.printFinalResult(player.getName(), captureCardType(player), player.totalNumber()));
     }
 
     private <T> T repeatUntilSuccess(Supplier<T> supplier) {
