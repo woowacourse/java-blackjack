@@ -31,6 +31,10 @@ public class Players {
         return dealerScore < player.calculateScore();
     }
 
+    public void betOnePlayerMoney(int money, int playerIndex) {
+        players.get(playerIndex).betMoney(money);
+    }
+
     public void receiveOnePlayerCard(Card card, int playerIndex) {
         players.get(playerIndex).receiveCard(card);
     }

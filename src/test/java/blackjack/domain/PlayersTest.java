@@ -54,6 +54,15 @@ class PlayersTest {
     }
 
     @Test
+    @DisplayName("한 플레이어는 돈을 배팅한다.")
+    void betOnePlayerMoneyTest() {
+        players.betOnePlayerMoney(3000, 0);
+        assertThat(siso.getMoney()).isEqualTo(3000);
+    }
+
+
+
+    @Test
     @DisplayName("한 플레이어는 하나의 카드를 받는다.")
     void receiveOnePlayerCardTest() {
         players.receiveOnePlayerCard(new Card(Shape.DIAMOND, Rank.TWO), 0);
