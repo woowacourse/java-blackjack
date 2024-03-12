@@ -113,7 +113,7 @@ class BlackJackGameTest {
         assertAll(
                 () -> assertFalse(blackJackGame.getPlayersResult(playersGroup).get(0).isWinner()),
                 () -> assertFalse(blackJackGame.getPlayersResult(playersGroup).get(1).isWinner()),
-                () -> assertEquals(blackJackGame.getDealerResult(playersGroup).winningCount(), 2)
+                () -> assertEquals(blackJackGame.getDealerResult(playersGroup).winningCount(), 0)
         );
     }
 

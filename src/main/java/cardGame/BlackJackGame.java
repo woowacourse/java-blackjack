@@ -71,7 +71,7 @@ public class BlackJackGame {
         if (isPush(player)) {
             return true;
         }
-        if (player.isBust()) {
+        if (isOnlyPlayerBust(player)) {
             return true;
         }
         return dealer.isWinner(player);
@@ -81,7 +81,7 @@ public class BlackJackGame {
         if (isPush(player)) {
             return true;
         }
-        if (dealer.isBust()) {
+        if (isOnlyDealerBust(player)) {
             return true;
         }
         return player.isWinner(dealer);
@@ -94,4 +94,11 @@ public class BlackJackGame {
         return player.getCardScore() == dealer.getCardScore();
     }
 
+    private boolean isOnlyDealerBust(Player player) {
+        return dealer.isBust() && !player.isBust();
+    }
+
+    private boolean isOnlyPlayerBust(Player player) {
+        return !dealer.isBust() && player.isBust();
+    }
 }
