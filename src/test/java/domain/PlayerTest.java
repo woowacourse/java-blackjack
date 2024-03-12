@@ -19,7 +19,7 @@ public class PlayerTest {
     @Test
     @DisplayName("게이머는 카드를 한 장 가져갈 수 있다.")
     void takeCard() {
-        Card card = new Card(CardType.SPADE, CardNumber.ACE);
+        Card card = Card.getCard(CardType.SPADE, CardNumber.ACE);
         Player player = new Player(new Name("test"), List.of(card));
         Assertions.assertThat(player.getCards()).isEqualTo(List.of(card));
     }
@@ -36,8 +36,8 @@ public class PlayerTest {
     void getTotalScore() {
         Player player = new Player(new Name("test"),
                 List.of(
-                        new Card(CardType.SPADE, CardNumber.ACE),
-                        new Card(CardType.SPADE, CardNumber.TEN)
+                        Card.getCard(CardType.SPADE, CardNumber.ACE),
+                        Card.getCard(CardType.SPADE, CardNumber.TEN)
                 ));
         Assertions.assertThat(player.getTotalScore())
                 .isEqualTo(21);
@@ -48,9 +48,9 @@ public class PlayerTest {
     void isBustTrue() {
         Player player = new Player(new Name("test"),
                 List.of(
-                        new Card(CardType.SPADE, CardNumber.TEN),
-                        new Card(CardType.SPADE, CardNumber.TEN),
-                        new Card(CardType.SPADE, CardNumber.TEN)
+                        Card.getCard(CardType.SPADE, CardNumber.TEN),
+                        Card.getCard(CardType.SPADE, CardNumber.TEN),
+                        Card.getCard(CardType.SPADE, CardNumber.TEN)
                 ));
         Assertions.assertThat(player.isBust())
                 .isTrue();
@@ -60,8 +60,8 @@ public class PlayerTest {
     @DisplayName("Bust가 아니면 false를 반환한다.")
     void isBustFalse() {
         Player player = new Player(new Name("test"), List.of(
-                new Card(CardType.SPADE, CardNumber.TEN),
-                new Card(CardType.SPADE, CardNumber.TEN)
+                Card.getCard(CardType.SPADE, CardNumber.TEN),
+                Card.getCard(CardType.SPADE, CardNumber.TEN)
         ));
         Assertions.assertThat(player.isBust())
                 .isFalse();

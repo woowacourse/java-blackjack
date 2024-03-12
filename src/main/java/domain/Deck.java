@@ -10,7 +10,7 @@ import java.util.List;
 public class Deck {
     private static final List<Card> CARDS_CACHE = Arrays.stream(CardType.values())
             .flatMap(type -> Arrays.stream(CardNumber.values())
-                    .map(number -> new Card(type, number)))
+                    .map(number -> Card.getCard(type, number)))
             .toList();
     private final List<Card> cards;
 

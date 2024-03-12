@@ -15,7 +15,7 @@ class DeckTest {
     @Test
     @DisplayName("가장 마지막에 있는 카드를 반환한다.")
     void draw() {
-        Card card = new Deck(List.of(new Card(CardType.SPADE, CardNumber.ACE)))
+        Card card = new Deck(List.of(Card.getCard(CardType.SPADE, CardNumber.ACE)))
                 .draw();
         Assertions.assertAll(
                 () -> assertThat(card.getCardType()).isEqualTo(CardType.SPADE),

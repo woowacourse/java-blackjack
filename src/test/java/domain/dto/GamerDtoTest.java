@@ -31,7 +31,7 @@ class GamerDtoTest {
     @DisplayName("카드들을 반환할 수 있다.")
     void getCards() {
         Player player = new Player(new Name("test"));
-        Card card = new Card(CardType.SPADE, CardNumber.ACE);
+        Card card = Card.getCard(CardType.SPADE, CardNumber.ACE);
         player.takeCard(card);
         GamerDto gamerDto = GamerDto.fromPlayer(player);
         Assertions.assertThat(gamerDto.getCards())
@@ -42,8 +42,8 @@ class GamerDtoTest {
     @DisplayName("카드 점수 합계를 반환한다.")
     void getTotalScore() {
         Player player = new Player(new Name("test"));
-        player.takeCard(new Card(CardType.SPADE, CardNumber.ACE));
-        player.takeCard(new Card(CardType.SPADE, CardNumber.TEN));
+        player.takeCard(Card.getCard(CardType.SPADE, CardNumber.ACE));
+        player.takeCard(Card.getCard(CardType.SPADE, CardNumber.TEN));
         GamerDto gamerDto = GamerDto.fromPlayer(player);
         Assertions.assertThat(gamerDto.getTotalScore())
                 .isEqualTo(21);
