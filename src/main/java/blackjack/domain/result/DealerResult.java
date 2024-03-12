@@ -16,7 +16,7 @@ public class DealerResult {
     }
 
     public static DealerResult of(final Name name, final List<GamePlayerResult> gamePlayerResults) {
-        final Map<ResultStatus, Count> resultStatusBoard = new EnumMap(ResultStatus.class);
+        final Map<ResultStatus, Count> resultStatusBoard = new EnumMap<>(ResultStatus.class);
 
         for (final GamePlayerResult gamePlayerResult : gamePlayerResults) {
             increment(resultStatusBoard, gamePlayerResult.getResultStatus()
@@ -37,7 +37,7 @@ public class DealerResult {
     }
 
     public int getCountWithResultStatus(final ResultStatus resultStatus) {
-        return resultStatusBoard.get(resultStatus)
-                                .toInt();
+        return resultStatusBoard.getOrDefault(resultStatus, Count.initialValue())
+                                .value();
     }
 }

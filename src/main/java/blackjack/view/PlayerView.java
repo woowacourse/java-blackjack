@@ -56,7 +56,7 @@ public class PlayerView {
         final String result = CardPrinter.printCards(participant.getCards());
         System.out.println(String.format("%s 카드: %s - 결과 : %d", participant.getNameAsString(), result,
                 participant.calculateScore()
-                           .toInt()));
+                           .value()));
     }
 
 }

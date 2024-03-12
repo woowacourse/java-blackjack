@@ -20,8 +20,4 @@ public record Score(int value) {
         }
         return ResultStatus.LOSE;
     }
-
-    public int toInt() {
-        return value;
-    }
 }

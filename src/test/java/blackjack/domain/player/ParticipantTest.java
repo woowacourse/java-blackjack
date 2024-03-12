@@ -39,7 +39,7 @@ public class ParticipantTest {
 
         var result = sut.calculateScore();
 
-        assertThat(result.toInt()).isEqualTo(12);
+        assertThat(result.value()).isEqualTo(12);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class ParticipantTest {
 
         var result = sut.calculateScore();
 
-        assertThat(result.toInt()).isEqualTo(19);
+        assertThat(result.value()).isEqualTo(19);
     }
 
     @Test
@@ -60,7 +60,7 @@ public class ParticipantTest {
 
         var result = sut.calculateScore();
 
-        assertThat(result.toInt()).isEqualTo(16);
+        assertThat(result.value()).isEqualTo(16);
     }
 
     @Test

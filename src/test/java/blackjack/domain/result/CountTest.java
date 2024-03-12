@@ -13,7 +13,7 @@ public class CountTest {
     public void Count_Instance_create_with_integer() {
         assertThatCode(() -> {
             final var sut = Count.valueOf(3);
-            assertThat(sut.toInt()).isEqualTo(3);
+            assertThat(sut.value()).isEqualTo(3);
         }).doesNotThrowAnyException();
     }
 
