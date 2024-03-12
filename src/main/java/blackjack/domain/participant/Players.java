@@ -11,14 +11,6 @@ public class Players {
         this.players = players;
     }
 
-    public static Players create(List<String> playerNames) {
-        List<Player> players = playerNames.stream()
-                .map(PlayerName::new)
-                .map(Player::new)
-                .toList();
-        return new Players(players);
-    }
-
     private void validate(List<Player> players) {
         validateEntryNotEmpty(players);
         validateEachPlayerNameUnique(players);
@@ -40,6 +32,14 @@ public class Players {
         return (int) players.stream()
                 .distinct()
                 .count();
+    }
+
+    public static Players create(List<String> playerNames) {
+        List<Player> players = playerNames.stream()
+                .map(PlayerName::new)
+                .map(Player::new)
+                .toList();
+        return new Players(players);
     }
 
     public List<Player> getPlayers() {
