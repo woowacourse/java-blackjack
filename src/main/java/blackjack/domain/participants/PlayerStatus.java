@@ -4,8 +4,8 @@ import blackjack.domain.cards.Card;
 import blackjack.domain.cards.Hand;
 
 public class PlayerStatus {
-    private static final int GAIN_BETING = 2;
-    private static final int LOSE_BETING = -1;
+    private static final int GAIN_BETTING = 1;
+    private static final int LOSE_BETTING = -1;
 
     private final Hand hand;
     private int money;
@@ -27,12 +27,16 @@ public class PlayerStatus {
         this.money += money;
     }
 
+    public void subtractMoney(int money) {
+        this.money -= money;
+    }
+
     public void calculateWinMoney() {
-        money *= GAIN_BETING;
+        money *= GAIN_BETTING;
     }
 
     public void calculateLoseMoney() {
-        money *= LOSE_BETING;
+        money *= LOSE_BETTING;
     }
 
     public int getMoney() {
