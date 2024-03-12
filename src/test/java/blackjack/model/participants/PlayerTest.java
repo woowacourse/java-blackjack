@@ -141,4 +141,67 @@ class PlayerTest {
 
         assertThat(player).extracting("betAmount").isEqualTo(3000);
     }
+
+    @DisplayName("플레이어만 블랙잭이면 블랙잭으로 승리한다")
+    @Test
+    void winBlackJack() {
+        List<Card> given = List.of(
+                new Card(CardNumber.ACE, CardShape.HEART),
+                new Card(CardNumber.TEN, CardShape.SPADE)
+        );
+        List<Card> comparison = List.of(
+                new Card(CardNumber.ACE, CardShape.HEART),
+                new Card(CardNumber.TWO, CardShape.CLOVER),
+                new Card(CardNumber.EIGHT, CardShape.SPADE)
+        );
+        Cards comparisonCards = new Cards();
+        comparisonCards.add(comparison);
+
+        Player player = new Player("ella");
+        player.addCards(given);
+        Result playerResult = player.getResult(comparisonCards);
+        assertThat(playerResult).isEqualTo(Result.WIN_BY_BLACKJACK);
+    }
+
+    @DisplayName("플레이어와 딜러가 모두 블랙잭이면 무승부이다")
+    @Test
+    void pushWithBlackJack() {
+        List<Card> given = List.of(
+                new Card(CardNumber.ACE, CardShape.HEART),
+                new Card(CardNumber.TEN, CardShape.SPADE)
+        );
+        List<Card> comparison = List.of(
+                new Card(CardNumber.ACE, CardShape.HEART),
+                new Card(CardNumber.TEN, CardShape.SPADE)
+        );
+        Cards comparisonCards = new Cards();
+        comparisonCards.add(comparison);
+
+        Player player = new Player("ella");
+        player.addCards(given);
+        Result playerResult = player.getResult(comparisonCards);
+        assertThat(playerResult).isEqualTo(Result.PUSH);
+    }
+
+    @DisplayName("카드를 추가로 뽑아 21을 초과할 경우 플레이어는 배팅 금액을 모두 잃는다")
+    @Test
+    void bustBetMoney() {
+        List<Card> given = List.of(
+                new Card(CardNumber.ACE, CardShape.HEART),
+                new Card(CardNumber.TEN, CardShape.SPADE),
+                new Card(CardNumber.FIVE, CardShape.DIAMOND)
+        );
+        List<Card> comparison = List.of(
+                new Card(CardNumber.ACE, CardShape.HEART),
+                new Card(CardNumber.TEN, CardShape.SPADE)
+        );
+        Cards comparisonCards = new Cards();
+        comparisonCards.add(comparison);
+
+        Player player = new Player("ella");
+        player.addCards(given);
+
+        double result = player.getBetResult(comparisonCards, 3000);
+        assertThat(result).isEqualTo(-3000);
+    }
 }
