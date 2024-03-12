@@ -10,31 +10,32 @@ public class Hand {
     private static final int INIT_CARD_COUNT = 2;
 
     private final List<Card> cards;
-    private Score score;
+    private final Score score;
 
     public Hand(List<Card> cards) {
         this.cards = cards;
-        updateScore();
+        this.score = calculateScore();
     }
 
     Hand() {
         this(new ArrayList<>());
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
-        updateScore();
+    public Hand addCard(Card card) {
+        List<Card> newCards = new ArrayList<>(cards);
+        newCards.add(card);
+        return new Hand(newCards);
     }
 
-    private void updateScore() {
-        Score newScore = calculateBaseScore();
+    private Score calculateScore() {
+        Score calculatedScore = calculateBaseScore();
         boolean hasAceInCards = cards.stream()
                 .anyMatch(Card::isAce);
 
         if (hasAceInCards) {
-            newScore = newScore.addAceScoreOnNotBust();
+            calculatedScore = calculatedScore.addAceScoreOnNotBust();
         }
-        this.score = newScore;
+        return calculatedScore;
     }
 
     private Score calculateBaseScore() {

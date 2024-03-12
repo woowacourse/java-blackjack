@@ -8,7 +8,7 @@ import java.util.List;
 public class Player {
 
     private final Name name;
-    protected final Hand hand;
+    protected Hand hand;
 
     Player(String name, Hand hand) {
         this.name = new Name(name);
@@ -20,7 +20,7 @@ public class Player {
     }
 
     public void drawCard(Deck deck) {
-        hand.addCard(deck.draw());
+        this.hand = hand.addCard(deck.draw());
     }
 
     public void drawCards(Deck deck, int amount) {
