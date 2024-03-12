@@ -7,8 +7,7 @@ import blackjack.model.cards.CardShape;
 import blackjack.model.cards.Cards;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
-import blackjack.model.results.PlayerResult;
-import blackjack.model.results.Result;
+import blackjack.model.results.PlayerProfit;
 import blackjack.view.symbol.CardNumberSymbol;
 import blackjack.view.symbol.CardShapeSymbol;
 import java.util.List;
@@ -51,11 +50,11 @@ public class OutputView {
                         player.getCards().getScore())));
     }
 
-    public void printGameResults(PlayerResult playerResult, int dealerResult) {
+    public void printGameResults(PlayerProfit playerProfit, int dealerResult) {
         System.out.println();
         System.out.println("### 최종 수익");
         System.out.printf("%s: %d%n", DEALER_NAME, dealerResult);
-        Map<Player, Result> gameResult = playerResult.getResult();
+        Map<Player, Integer> gameResult = playerProfit.getResult();
         printPlayerResultsFormat(gameResult);
     }
 
@@ -75,19 +74,15 @@ public class OutputView {
         return String.format("%s: %s - 결과: %d%n", name, getCardsText(cards), score);
     }
 
-    private void printPlayerResultsFormat(Map<Player, Result> gameResult) {
+    private void printPlayerResultsFormat(Map<Player, Integer> gameResult) {
         gameResult.entrySet()
                 .stream()
-                .map(entry -> {
-                    Player player = entry.getKey();
-                    Result result = entry.getValue();
-                    return getPlayerResultFormat(player.getName(), result.calculate(player.getBetAmount()));
-                })
+                .map(entry -> getPlayerResultFormat(entry.getKey().getName(), entry.getValue()))
                 .forEach(System.out::print);
     }
 
     private String getPlayerResultFormat(String name, int resultAmount) {
-        return String.format("%s: %s%n", name, resultAmount);
+        return String.format("%s: %d%n", name, resultAmount);
     }
 
     private String getPlayersNames(List<Player> players) {

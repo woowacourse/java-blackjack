@@ -5,6 +5,7 @@ import blackjack.model.deck.CardDeck;
 import blackjack.model.deck.RandomIndexGenerator;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
+import blackjack.model.results.PlayerProfit;
 import blackjack.model.results.PlayerResult;
 import blackjack.view.Command;
 import blackjack.view.InputView;
@@ -12,7 +13,6 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackJackController {
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -69,7 +69,8 @@ public class BlackJackController {
 
     private void printGameResults(BlackJackGame blackJackGame) {
         PlayerResult playerResult = blackJackGame.calculatePlayerResults();
-        int dealerResult = blackJackGame.calculateDealerBetResults(playerResult);
-        outputView.printGameResults(playerResult, dealerResult);
+        PlayerProfit playerProfit = blackJackGame.calculatePlayerProfit(playerResult);
+        int dealerProfit = blackJackGame.calculateDealerProfit(playerResult);
+        outputView.printGameResults(playerProfit, dealerProfit);
     }
 }

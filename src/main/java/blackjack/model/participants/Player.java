@@ -57,7 +57,7 @@ public class Player extends Participant {
         betAmount += betMoney;
     }
 
-    public double getBetResult(Cards otherCards, int betAmount) {
+    public int getBetResult(Cards otherCards, int betAmount) {
         if (cards.isBust()) {
             return Result.LOSE.calculate(betAmount);
         }
@@ -70,7 +70,7 @@ public class Player extends Participant {
         return compareScore(otherCards, betAmount);
     }
 
-    private double compareScore(Cards otherCards, int betAmount) {
+    private int compareScore(Cards otherCards, int betAmount) {
         int calculatedScore = cards.getScore();
         int otherScore = otherCards.getScore();
 

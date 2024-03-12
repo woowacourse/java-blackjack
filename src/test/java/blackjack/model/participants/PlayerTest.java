@@ -242,7 +242,7 @@ class PlayerTest {
 
         Player player = new Player("ella");
         player.addCards(given);
-        double playerResult = player.getBetResult(comparisonCards, 3000);
+        int playerResult = player.getBetResult(comparisonCards, 3000);
         assertThat(playerResult).isEqualTo(0);
     }
 
@@ -264,7 +264,7 @@ class PlayerTest {
 
         Player player = new Player("ella");
         player.addCards(given);
-        double playerResult = player.getBetResult(comparisonCards, 3000);
+        int playerResult = player.getBetResult(comparisonCards, 3000);
         assertThat(playerResult).isEqualTo(0);
     }
 
@@ -286,7 +286,7 @@ class PlayerTest {
 
         Player player = new Player("ella");
         player.addCards(given);
-        double playerResult = player.getBetResult(comparisonCards, 3000);
+        int playerResult = player.getBetResult(comparisonCards, 3000);
         assertThat(playerResult).isEqualTo(3000);
     }
 
@@ -308,7 +308,7 @@ class PlayerTest {
 
         Player player = new Player("ella");
         player.addCards(given);
-        double playerResult = player.getBetResult(comparisonCards, 3000);
+        int playerResult = player.getBetResult(comparisonCards, 3000);
         assertThat(playerResult).isEqualTo(3000);
     }
 }
