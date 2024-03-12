@@ -7,9 +7,14 @@ public class Card {
     private final CardProperties cardProperties;
     private int score;
 
-    public Card(CardProperties cardProperties) {
+    private Card(CardProperties cardProperties) {
         this.cardProperties = cardProperties;
         this.score = cardProperties.getCardNumber().getNumber();
+    }
+
+    public static Card of(CardPattern cardPattern, CardNumber cardNumber) {
+        CardProperties cardProperties = new CardProperties(cardPattern, cardNumber);
+        return new Card(cardProperties);
     }
 
     public CardPattern pattern() {
