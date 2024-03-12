@@ -9,6 +9,20 @@ import org.junit.jupiter.api.Test;
 
 class PlayerBetWalletTest {
 
+    @DisplayName("배팅 금액으로 지갑을 생성한다.")
+    @Test
+    void createBetWallet() {
+        //given
+        int betAmount = 100;
+
+        //when
+        PlayerBetWallet playerBetWallet = PlayerBetWallet.from(betAmount);
+
+
+        //then
+        assertThat(playerBetWallet.getBetAmount()).isEqualTo(betAmount);
+    }
+
     @DisplayName("배팅 금액이 100원 미만일 경우 예외를 발생시킨다.")
     @Test
     void createBetWalletByLowAmount() {
@@ -16,7 +30,7 @@ class PlayerBetWalletTest {
         int betAmount = 10;
 
         //when, then
-        assertThatThrownBy(() -> PlayerBetWallet.createByBetAmount(betAmount))
+        assertThatThrownBy(() -> PlayerBetWallet.from(betAmount))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -27,7 +41,7 @@ class PlayerBetWalletTest {
         int betAmount = 15;
 
         //when, then
-        assertThatThrownBy(() -> PlayerBetWallet.createByBetAmount(betAmount))
+        assertThatThrownBy(() -> PlayerBetWallet.from(betAmount))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -35,11 +49,11 @@ class PlayerBetWalletTest {
     @Test
     void calculatePayAmountByWin() {
         //given
-        PlayerBetWallet playerBetWallet = PlayerBetWallet.createByBetAmount(100);
+        PlayerBetWallet playerBetWallet = PlayerBetWallet.from(100);
         Result winResult = Result.WIN;
 
         //when
-        playerBetWallet.calculatePayAmount(winResult);
+        playerBetWallet.registerProfitAmount(winResult);
         int profitAmount = playerBetWallet.getProfitAmount();
 
         //then
@@ -50,11 +64,11 @@ class PlayerBetWalletTest {
     @Test
     void calculatePayAmountByBlackjack() {
         //given
-        PlayerBetWallet playerBetWallet = PlayerBetWallet.createByBetAmount(100);
+        PlayerBetWallet playerBetWallet = PlayerBetWallet.from(100);
         Result winResult = Result.BLACKJACK;
 
         //when
-        playerBetWallet.calculatePayAmount(winResult);
+        playerBetWallet.registerProfitAmount(winResult);
         int profitAmount = playerBetWallet.getProfitAmount();
 
         //then
@@ -65,11 +79,11 @@ class PlayerBetWalletTest {
     @Test
     void calculatePayAmountByPush() {
         //given
-        PlayerBetWallet playerBetWallet = PlayerBetWallet.createByBetAmount(100);
+        PlayerBetWallet playerBetWallet = PlayerBetWallet.from(100);
         Result winResult = Result.PUSH;
 
         //when
-        playerBetWallet.calculatePayAmount(winResult);
+        playerBetWallet.registerProfitAmount(winResult);
         int profitAmount = playerBetWallet.getProfitAmount();
 
         //then
@@ -80,11 +94,11 @@ class PlayerBetWalletTest {
     @Test
     void calculatePayAmountByLose() {
         //given
-        PlayerBetWallet playerBetWallet = PlayerBetWallet.createByBetAmount(100);
+        PlayerBetWallet playerBetWallet = PlayerBetWallet.from(100);
         Result winResult = Result.LOSE;
 
         //when
-        playerBetWallet.calculatePayAmount(winResult);
+        playerBetWallet.registerProfitAmount(winResult);
         int profitAmount = playerBetWallet.getProfitAmount();
 
         //then
@@ -95,26 +109,26 @@ class PlayerBetWalletTest {
     @Test
     void calculatePayAmountByNone() {
         //given
-        PlayerBetWallet playerBetWallet = PlayerBetWallet.createByBetAmount(100);
+        PlayerBetWallet playerBetWallet = PlayerBetWallet.from(100);
         Result winResult = Result.NONE;
 
         //when
-        playerBetWallet.calculatePayAmount(winResult);
+        playerBetWallet.registerProfitAmount(winResult);
         int profitAmount = playerBetWallet.getProfitAmount();
 
         //then
         assertThat(profitAmount).isEqualTo(0);
     }
 
-    @DisplayName("배팅 금액 대비 수익을 계산한다.")
+    @DisplayName("배팅 금액 대비 게임 수익을 계산한다.")
     @Test
     void calculateNetProfit() {
         //given
-        PlayerBetWallet playerBetWallet = PlayerBetWallet.createByBetAmount(100);
+        PlayerBetWallet playerBetWallet = PlayerBetWallet.from(100);
         Result winResult = Result.WIN;
 
         //when
-        playerBetWallet.calculatePayAmount(winResult);
+        playerBetWallet.registerProfitAmount(winResult);
         int netProfit = playerBetWallet.calculateNetProfit();
 
         //then
