@@ -1,7 +1,7 @@
 package controller;
 
 import domain.BlackJackGame;
-import domain.PlayerResults;
+import domain.Judgement;
 import domain.Players;
 import domain.deck.Deck;
 import domain.deck.strategy.ShuffledDeckGenerator;
@@ -23,8 +23,8 @@ public class BlackJackController {
         OutputView.printInitialCardsMessage(dealer, players);
         handOutCard(blackJackGame, dealer, players);
         OutputView.printCardsAndResult(dealer, players);
-        PlayerResults playerResults = blackJackGame.findPlayerResult(dealer, players);
-        OutputView.printFinalGameResult(playerResults);
+        Judgement judgement = Judgement.of(dealer, players);
+        OutputView.printFinalGameResult(judgement);
     }
 
     private Players readPlayers() {

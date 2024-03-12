@@ -1,8 +1,6 @@
 package view;
 
-import domain.PlayerResults;
-import domain.Players;
-import domain.Result;
+import domain.*;
 import domain.card.Card;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
@@ -95,14 +93,12 @@ public class OutputView {
         return rank + symbol;
     }
 
-    public static void printFinalGameResult(final PlayerResults playerResults) {
+    public static void printFinalGameResult(final Judgement judgement) {
         System.out.println(System.lineSeparator() + "## 최종 승패");
-        int winCount = playerResults.findWinCount();
-        int loseCount = playerResults.findLoseCount();
-        int tieCount = playerResults.findTieCount();
-        String message = String.format("딜러: %d승 %d패 %d무", loseCount, winCount, tieCount);
+        DealerResult dealerResult = judgement.getDealerResult();
+        String message = String.format("딜러: %d승 %d패 %d무", dealerResult.getWinCount(), dealerResult.getLoseCount(), dealerResult.getTieCount());
         System.out.println(message);
-        printPlayerResults(playerResults);
+        printPlayerResults(judgement.getPlayerResults());
     }
 
     private static void printPlayerResults(final PlayerResults playerResults) {

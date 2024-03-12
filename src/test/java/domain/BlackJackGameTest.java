@@ -159,33 +159,4 @@ public class BlackJackGameTest {
                 () -> assertThat(player.getHand()).hasSize(expectedPlayerSize)
         );
     }
-
-    @DisplayName("플레이어의 승패를 결정한다.")
-    @Test
-    void findResultsTest() {
-        // given
-        Dealer dealer = new Dealer();
-
-        Name name1 = new Name("pobi");
-        Name name2 = new Name("jason");
-        Player pobi = new Player(name1);
-        Player jason = new Player(name2);
-
-        Players players = new Players(List.of(pobi, jason));
-
-        BlackJackGame blackJackGame = new BlackJackGame(deck);
-        blackJackGame.prepareCards(dealer, players);
-
-        blackJackGame.takeTurn(pobi);
-        blackJackGame.takeTurn(dealer);
-
-        // when
-        PlayerResults playerResults = blackJackGame.findPlayerResult(dealer, players);
-
-        // then
-        assertAll(
-                () -> assertThat(playerResults.getResults().get(pobi)).isEqualTo(Result.WIN),
-                () -> assertThat(playerResults.getResults().get(jason)).isEqualTo(Result.LOSE)
-        );
-    }
 }
