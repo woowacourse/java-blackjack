@@ -23,7 +23,7 @@ public class BlackjackGame {
     }
 
     public boolean isPlayerCanHit(Player player, PlayerCommand playerCommand) {
-        return playerCommand != PlayerCommand.STAND && !player.isBust();
+        return playerCommand != PlayerCommand.STAND && !player.isBust() && !player.isBlackjack();
     }
 
     public void hitOrStand(Player player, PlayerCommand playerCommand) {
