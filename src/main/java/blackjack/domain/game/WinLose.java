@@ -1,4 +1,4 @@
-package domain.game;
+package blackjack.domain.game;
 
 public enum WinLose {
 

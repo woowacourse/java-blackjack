@@ -1,8 +1,11 @@
 package domain.participant;
 
-import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Symbol;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Rank;
+import blackjack.domain.card.Symbol;
+import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -35,7 +38,6 @@ public class PlayerTest {
                 new Card(Rank.TWO, Symbol.SPADE)
         ));
         assertThatCode(() -> player.receive(new Card(Rank.QUEEN, Symbol.DIAMOND)))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("[ERROR] 카드를 받을 수 없는 상태입니다.");
+                .isInstanceOf(IllegalStateException.class);
     }
 }

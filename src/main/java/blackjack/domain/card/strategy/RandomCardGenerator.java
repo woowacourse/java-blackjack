@@ -1,8 +1,8 @@
-package strategy;
+package blackjack.domain.card.strategy;
 
-import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Symbol;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Rank;
+import blackjack.domain.card.Symbol;
 
 import java.util.ArrayList;
 import java.util.Arrays;

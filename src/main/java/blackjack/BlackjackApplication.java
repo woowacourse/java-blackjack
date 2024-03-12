@@ -1,6 +1,8 @@
-import machine.BlackjackMachine;
-import view.InputView;
-import view.OutputView;
+package blackjack;
+
+import blackjack.machine.BlackjackMachine;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 public class BlackjackApplication {
 

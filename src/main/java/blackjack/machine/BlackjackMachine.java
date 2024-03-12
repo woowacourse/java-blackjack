@@ -1,15 +1,15 @@
-package machine;
+package blackjack.machine;
 
-import domain.game.BlackjackGame;
-import domain.game.Result;
-import domain.participant.Dealer;
-import domain.participant.Name;
-import domain.participant.Participants;
-import domain.participant.Player;
-import strategy.RandomCardGenerator;
-import view.HitStay;
-import view.InputView;
-import view.OutputView;
+import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.game.Result;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
+import blackjack.domain.card.strategy.RandomCardGenerator;
+import blackjack.view.HitStay;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 import java.util.List;
 

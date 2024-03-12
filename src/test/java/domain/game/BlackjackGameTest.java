@@ -1,12 +1,13 @@
 package domain.game;
 
-import domain.participant.Name;
-import domain.participant.Participants;
-import domain.participant.Player;
+import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import strategy.RandomCardGenerator;
+import blackjack.domain.card.strategy.RandomCardGenerator;
 
 import java.util.List;
 

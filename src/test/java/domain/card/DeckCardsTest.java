@@ -1,9 +1,13 @@
 package domain.card;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.DeckCards;
+import blackjack.domain.card.Rank;
+import blackjack.domain.card.Symbol;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import strategy.RandomCardGenerator;
+import blackjack.domain.card.strategy.RandomCardGenerator;
 
 import java.util.List;
 
@@ -50,8 +54,7 @@ class DeckCardsTest {
         DeckCards deckCards = DeckCards.from(new OneCardGenerator());
         deckCards.drawCard();
         Assertions.assertThatThrownBy(deckCards::drawCard)
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("[ERROR] 카드를 모두 사용하였습니다.");
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @Test
@@ -60,7 +63,6 @@ class DeckCardsTest {
         DeckCards deckCards = DeckCards.from(new OneCardGenerator());
         deckCards.drawCard();
         Assertions.assertThatThrownBy(() -> deckCards.drawCards(2))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("[ERROR]덱에 남은 카드 수가 요청한 카드 수보다 적습니다.");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

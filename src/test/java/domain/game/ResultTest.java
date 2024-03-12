@@ -1,11 +1,13 @@
 package domain.game;
 
-import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Symbol;
-import domain.participant.Dealer;
-import domain.participant.Name;
-import domain.participant.Player;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Rank;
+import blackjack.domain.card.Symbol;
+import blackjack.domain.game.Result;
+import blackjack.domain.game.WinLose;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

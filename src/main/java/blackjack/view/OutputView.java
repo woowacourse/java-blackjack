@@ -1,12 +1,12 @@
-package view;
+package blackjack.view;
 
-import domain.card.Card;
-import domain.game.BlackjackGame;
-import domain.game.Result;
-import domain.game.WinLose;
-import domain.participant.Dealer;
-import domain.participant.Participant;
-import domain.participant.Player;
+import blackjack.domain.card.Card;
+import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.game.Result;
+import blackjack.domain.game.WinLose;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
 
 import java.util.List;
 import java.util.stream.Collectors;

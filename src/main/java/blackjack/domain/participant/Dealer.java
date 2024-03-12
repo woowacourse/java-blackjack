@@ -1,6 +1,6 @@
-package domain.participant;
+package blackjack.domain.participant;
 
-import domain.card.Card;
+import blackjack.domain.card.Card;
 
 import java.util.List;
 

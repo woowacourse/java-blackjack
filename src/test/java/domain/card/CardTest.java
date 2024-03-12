@@ -1,5 +1,7 @@
 package domain.card;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -8,8 +10,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static domain.card.Rank.*;
-import static domain.card.Symbol.DIAMOND;
+import static blackjack.domain.card.Rank.*;
+import static blackjack.domain.card.Symbol.DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
