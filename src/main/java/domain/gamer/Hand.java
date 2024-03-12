@@ -11,6 +11,8 @@ public class Hand {
 
     private static final int CONDITION_DECIDING_A_SCORE = 10;
     private static final int A_SCORE_GAP = 10;
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int BLACKJACK_CARDS_COUNT = 2;
 
     protected final List<Card> cards;
 
@@ -54,6 +56,10 @@ public class Hand {
             return CardNumber.ACE.getScore() + A_SCORE_GAP;
         }
         return CardNumber.ACE.getScore();
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == BLACKJACK_CARDS_COUNT && calculateScore() == BLACKJACK_SCORE;
     }
 
     public List<Card> getCards() {

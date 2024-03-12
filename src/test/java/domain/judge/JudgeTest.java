@@ -59,6 +59,17 @@ class JudgeTest {
         assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.DRAW);
     }
 
+    @DisplayName("플레이어가 딜러를 상대로 승리하면서 블랙잭인지 판단한다.")
+    @Test
+    void decidePlayerBlackJackByDealer() {
+        Player player = new Player("player");
+        player.hit(new Card(CardNumber.ACE, CardShape.HEART));
+        player.hit(new Card(CardNumber.KING, CardShape.HEART));
+        Players players = new Players(List.of(player));
+        judge.decideResult(players, dealer);
+        assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.BLACK_JACK);
+    }
+
     @DisplayName("딜러의 모든 승리 패배 무승부 상태를 반환한다.")
     @Test
     void decideDealerResult() {

@@ -30,6 +30,10 @@ public class Judge {
             playerResult.put(player, WinState.LOSE);
             return;
         }
+        if (player.isBlackJackScore() && !dealer.isBlackJackScore()) {
+            playerResult.put(player, WinState.BLACK_JACK);
+            return;
+        }
         if (dealer.isBust()) {
             playerResult.put(player, WinState.WIN);
             return;

@@ -21,6 +21,10 @@ public class Player {
         hand.addCard(card);
     }
 
+    public boolean isBlackJackScore() {
+        return hand.isBlackJack();
+    }
+
     public boolean isBust() {
         return hand.calculateScore() > HIT_THRESHOLD;
     }
