@@ -17,12 +17,9 @@ public class Cards {
         this.cards = new ArrayList<>(cards);
     }
 
-    public Cards(final CardGenerator cardGenerator) {
-        this.cards = new ArrayList<>(deal(cardGenerator));
-    }
-
-    private List<Card> deal(final CardGenerator cardGenerator) {
-        return List.of(cardGenerator.pick(), cardGenerator.pick());
+    public static Cards deal(final CardGenerator cardGenerator) {
+        List<Card> firstCards = List.of(cardGenerator.pick(), cardGenerator.pick());
+        return new Cards(firstCards);
     }
 
     public void addCard(final CardGenerator cardGenerator) {

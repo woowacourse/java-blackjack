@@ -12,7 +12,7 @@ public class CardsTest {
     @DisplayName("딜러와 참여자들에게 카드를 2장씩 나누어 준다")
     void dealTest() {
         // when
-        Cards cards = new Cards(() -> new Card(Suit.HEART, Denomination.TWO));
+        Cards cards = Cards.deal(() -> new Card(Suit.HEART, Denomination.TWO));
 
         // then
         assertThat(cards.getCards()).hasSize(2);

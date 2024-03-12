@@ -14,7 +14,7 @@ public class Dealer {
     private final Cards cards;
 
     public Dealer(final CardGenerator cardGenerator) {
-        this.cards = new Cards(cardGenerator);
+        this.cards = Cards.deal(cardGenerator);
     }
 
     public void hitUntilEnd(final CardGenerator cardGenerator) {

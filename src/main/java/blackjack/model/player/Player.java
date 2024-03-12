@@ -16,7 +16,7 @@ public class Player {
     public Player(final String name, final CardGenerator cardGenerator) {
         validateName(name);
         this.name = name;
-        this.cards = new Cards(cardGenerator);
+        this.cards = Cards.deal(cardGenerator);
     }
 
     private void validateName(final String name) {
