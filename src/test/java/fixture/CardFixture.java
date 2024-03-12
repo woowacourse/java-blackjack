@@ -20,7 +20,6 @@ public class CardFixture {
         return Arrays.asList(cards);
     }
 
-
     public static List<Card> 전체_카드() {
         List<Card> cards = new ArrayList<>();
 
@@ -52,6 +51,4 @@ public class CardFixture {
                 .map(denomination -> new Card(denomination, emblem))
                 .toList();
     }
-
-
 }
