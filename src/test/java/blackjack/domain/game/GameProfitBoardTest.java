@@ -16,8 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.game.GameProfitBoard;
-import blackjack.domain.game.GameResult;
+import blackjack.domain.card.TestDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -41,7 +40,7 @@ class GameProfitBoardTest {
     }
 
     private Dealer generateBustedDealer() {
-        Deck deck = new Deck(bustedCards);
+        Deck deck = new TestDeck(bustedCards);
         Dealer bustedDealer = new Dealer();
         giveCardToPlayer(bustedDealer.getPlayer(), deck, bustedCards.size());
 
@@ -49,7 +48,7 @@ class GameProfitBoardTest {
     }
 
     private Player generateBustedPlayer() {
-        Deck deck = new Deck(bustedCards);
+        Deck deck = new TestDeck(bustedCards);
         Player bustedPlayer = Player.from("testPlayer", TEST_PLAYER_BET_AMOUNT);
         giveCardToPlayer(bustedPlayer, deck, bustedCards.size());
 
@@ -68,7 +67,7 @@ class GameProfitBoardTest {
     void noOneBustedTest(List<Card> playerCards, int expected) {
         List<Card> cards = new ArrayList<>(List.of(new Card(DIAMOND, KING), new Card(DIAMOND, NINE)));
         cards.addAll(playerCards);
-        Deck deck = new Deck(cards);
+        Deck deck = new TestDeck(cards);
 
         Dealer dealer = new Dealer();
         giveCardToPlayer(dealer.getPlayer(), deck, 2);
@@ -105,7 +104,7 @@ class GameProfitBoardTest {
     @MethodSource("playerCardsAndExpectedProfitWhenDealerBusted")
     @DisplayName("딜러만 버스트된 경우 플레이어는 배팅한 금액(승리), 혹은 금액의 1.5배(블랙잭)를 얻는다.")
     void dealerBustedTest(List<Card> playerCards, int expected) {
-        Deck deck = new Deck(playerCards);
+        Deck deck = new TestDeck(playerCards);
         Dealer bustedDealer = generateBustedDealer();
         Player player = Player.from("testPlayer", TEST_PLAYER_BET_AMOUNT);
         giveCardToPlayer(player, deck, 2);
@@ -132,7 +131,7 @@ class GameProfitBoardTest {
     @MethodSource("dealerCardsAndExpectedProfitWhenPlayerBusted")
     @DisplayName("플레이어가 버스트된 경우 플레이어는 딜러의 버스트 여부와 상관없이 배팅한 금액을 모두 잃는다.")
     void playerBustedTest(List<Card> dealerCards, int expected) {
-        Deck deck = new Deck(dealerCards);
+        Deck deck = new TestDeck(dealerCards);
         Dealer dealer = new Dealer();
         giveCardToPlayer(dealer.getPlayer(), deck, dealerCards.size());
         Player player = generateBustedPlayer();
@@ -166,7 +165,7 @@ class GameProfitBoardTest {
                 new Card(SPADE, ACE), new Card(CLOVER, KING),
                 new Card(HEART, ACE), new Card(DIAMOND, QUEEN)
         );
-        Deck deck = new Deck(bothBlackJackCards);
+        Deck deck = new TestDeck(bothBlackJackCards);
         Player player = Player.from("testPlayer", 0);
         Dealer dealer = new Dealer();
         giveCardToPlayer(player, deck, 2);
@@ -182,7 +181,7 @@ class GameProfitBoardTest {
     @DisplayName("딜러의 수익을 반환할 수 있다.")
     void calculateDealerResultTest() {
         List<Card> cards = generateCards();
-        Deck deck = new Deck(cards);
+        Deck deck = new TestDeck(cards);
 
         Dealer dealer = new Dealer();
         giveCardToPlayer(dealer.getPlayer(), deck, 2);

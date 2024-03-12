@@ -12,7 +12,7 @@ public class Deck {
 
     private final Queue<Card> cards;
 
-    public Deck(List<Card> cards) {
+    protected Deck(List<Card> cards) {
         validateUniqueCard(cards);
         this.cards = new LinkedList<>(cards);
     }

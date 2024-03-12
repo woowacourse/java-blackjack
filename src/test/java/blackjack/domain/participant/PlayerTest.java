@@ -12,8 +12,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.TestDeck;
 import blackjack.domain.game.Score;
-import blackjack.domain.participant.Player;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -49,7 +49,7 @@ class PlayerTest {
     @DisplayName("덱으로 부터 카드 한장을 받아올 수 있다.")
     void drawCardTest() {
         List<Card> cards = List.of(new Card(DIAMOND, TWO), new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR));
-        Deck deck = new Deck(cards);
+        Deck deck = new TestDeck(cards);
 
         Player player = Player.from("pedro", TEST_PLAYER_BET_AMOUNT);
         player.draw(deck);
@@ -62,7 +62,7 @@ class PlayerTest {
     @DisplayName("자신의 점수를 계산할 수 있다.")
     void calculateScoreTest() {
         List<Card> cards = List.of(new Card(DIAMOND, TWO), new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR));
-        Deck deck = new Deck(cards);
+        Deck deck = new TestDeck(cards);
 
         Player player = Player.from("pedro", TEST_PLAYER_BET_AMOUNT);
         for (int i = 0; i < cards.size(); i++) {
@@ -79,7 +79,7 @@ class PlayerTest {
     @MethodSource("cardsAndBustStatus")
     @DisplayName("자신의 버스트 여부를 판단할 수 있다.")
     void checkBustTest(List<Card> cards, boolean expected) {
-        Deck deck = new Deck(cards);
+        Deck deck = new TestDeck(cards);
 
         Player player = Player.from("pedro", TEST_PLAYER_BET_AMOUNT);
         for (int i = 0; i < cards.size(); i++) {

@@ -11,8 +11,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.TestDeck;
 import blackjack.domain.game.Score;
-import blackjack.domain.participant.Dealer;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +25,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러가 카드 한 장을 뽑는다.")
     void drawCardTest() {
-        Deck deck = new Deck(List.of(
+        Deck deck = new TestDeck(List.of(
                 new Card(DIAMOND, KING), new Card(DIAMOND, TWO), new Card(DIAMOND, FOUR)
         ));
         Dealer dealer = new Dealer();
@@ -41,7 +41,7 @@ class DealerTest {
     @MethodSource("cardsAndScore")
     @DisplayName("자신의 현재 점수가 17점 이상이 될 때까지 추가로 카드를 받는다.")
     void drawCardsUntilScoreBelow17Test(List<Card> cards, int expectedValue) {
-        Deck deck = new Deck(cards);
+        Deck deck = new TestDeck(cards);
         Dealer dealer = new Dealer();
 
         dealer.drawUntilExceedMinimum(deck);
