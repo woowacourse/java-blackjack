@@ -10,9 +10,7 @@ import java.util.List;
 public class BlackjackRule {
     public GameResult calculate(final Players players, final Dealer dealer) {
         final List<PlayerResult> playerResults = calculatePlayerResults(players, dealer);
-
-        final long playerWins = countPlayerWins(playerResults);
-        final DealerResult dealerResult = calculateDealerResult(players, dealer, playerWins);
+        final DealerResult dealerResult = calculateDealerResult(players, dealer, countPlayerWins(playerResults));
 
         return new GameResult(playerResults, dealerResult);
     }
