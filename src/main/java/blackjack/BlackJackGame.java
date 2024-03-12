@@ -102,7 +102,7 @@ public class BlackJackGame {
     }
 
     private void distributeNewCard(final Participant player, final Deck deck) {
-        player.receiveCard(deck.distribute());
+        player.draw(deck.distribute());
     }
 
     private void printFinalResult(final Dealer dealer, final Players players, final Referee referee) {

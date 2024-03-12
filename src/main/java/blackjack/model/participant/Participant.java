@@ -12,7 +12,7 @@ public class Participant {
         hand.add(cards);
     }
 
-    public void receiveCard(final Card card) {
+    public void draw(final Card card) {
         hand.add(card);
     }
 
