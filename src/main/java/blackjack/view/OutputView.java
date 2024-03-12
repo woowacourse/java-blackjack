@@ -83,10 +83,10 @@ public class OutputView {
     }
 
     private static String resolveFinalHandsAndScoreMessage(String participantName
-            , List<Card> participantHands, int participantHandsScore) {
+            , List<Card> participantHands, HandsScore handsScore) {
         return String.format(FINAL_HANDS_AND_SCORE_FORMAT
                 , resolveParticipantHandsMessage(participantName, participantHands)
-                , participantHandsScore);
+                , handsScore.toInt());
     }
 
     private static void printDealerProfitResult(String dealerName, GameResult gameResult) {
