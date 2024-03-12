@@ -41,7 +41,8 @@ public class BlackJackController {
     private void participantHit(Participant participant, Dealer dealer) {
         while (participant.canHit()) {
             String option = InputView.inputHitOption(participant.getName());
-            if (HitOption.isStayOption(option)) {
+            HitOption hitOption = HitOption.from(option);
+            if (hitOption.isStayOption()) {
                 break;
             }
             participant.receiveCard(dealer.draw());
