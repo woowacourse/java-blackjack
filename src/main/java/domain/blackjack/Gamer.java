@@ -19,7 +19,7 @@ abstract class Gamer {
     }
 
     public final int getRawSummationCardPoint() {
-        return blackJackGameMachine.getRawSummationCardPoint();
+        return blackJackGameMachine.calculateSummationCardPointAsInt();
     }
 
     public final GameResult calculateGameResult(Gamer other) {

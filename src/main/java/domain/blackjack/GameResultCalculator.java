@@ -24,8 +24,8 @@ public class GameResultCalculator {
 
     private static GameResult getGameResultWhenNobodyDead(BlackJackGameMachine baseBlackJackGameMachine,
                                                           BlackJackGameMachine otherBlackJackGameMachine) {
-        SummationCardPoint baseGamerSummationCardPoint = baseBlackJackGameMachine.getSummationCardPoint();
-        SummationCardPoint otherGamerSummationCardPoint = otherBlackJackGameMachine.getSummationCardPoint();
+        SummationCardPoint baseGamerSummationCardPoint = baseBlackJackGameMachine.calculateSummationCardPoint();
+        SummationCardPoint otherGamerSummationCardPoint = otherBlackJackGameMachine.calculateSummationCardPoint();
 
         if (baseGamerSummationCardPoint.isBiggerThan(otherGamerSummationCardPoint)) {
             return GameResult.WIN;

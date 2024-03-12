@@ -8,14 +8,14 @@ import domain.card.CardSelectStrategy;
 import domain.card.Deck;
 import java.util.List;
 
-public class BlackJackGameMachine {
+class BlackJackGameMachine {
     private final HoldingCards holdingCards;
 
-    public BlackJackGameMachine(HoldingCards holdingCards) {
+    BlackJackGameMachine(HoldingCards holdingCards) {
         this.holdingCards = holdingCards;
     }
 
-    public DrawResult draw(Deck deck, CardSelectStrategy cardSelectStrategy, CardDrawCondition cardDrawCondition) {
+    DrawResult draw(Deck deck, CardSelectStrategy cardSelectStrategy, CardDrawCondition cardDrawCondition) {
         if (isBust() || !cardDrawCondition.canDraw()) {
             return DrawResult.fail("카드를 더이상 뽑을 수 없습니다.", false);
         }
@@ -28,7 +28,7 @@ public class BlackJackGameMachine {
         }
     }
 
-    public SummationCardPoint getSummationCardPoint() {
+    SummationCardPoint calculateSummationCardPoint() {
         SummationCardPoint summationCardPoint = holdingCards.calculateTotalPoint();
         if (hasAceInHoldingCards()) {
             int rawPoint = fixPoint(summationCardPoint.summationCardPoint());
@@ -44,17 +44,17 @@ public class BlackJackGameMachine {
         }
         return rawPoint;
     }
-    
-    public List<Card> getRawHoldingCards() {
+
+    List<Card> getRawHoldingCards() {
         return List.copyOf(holdingCards.getHoldingCards());
     }
 
-    public int getRawSummationCardPoint() {
-        return getSummationCardPoint().summationCardPoint();
+    int calculateSummationCardPointAsInt() {
+        return calculateSummationCardPoint().summationCardPoint();
     }
 
     boolean isBust() {
-        return getSummationCardPoint().isDeadPoint();
+        return calculateSummationCardPoint().isDeadPoint();
     }
 
     boolean hasAceInHoldingCards() {

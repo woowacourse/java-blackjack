@@ -14,7 +14,7 @@ public final class DealerCardDrawCondition implements CardDrawCondition {
         final int rawDealerDrawThresholdPoint = 16;
         SummationCardPoint dealerDrawThresholdPoint = new SummationCardPoint(rawDealerDrawThresholdPoint);
 
-        SummationCardPoint summationCardPoint = blackJackGameMachine.getSummationCardPoint();
+        SummationCardPoint summationCardPoint = blackJackGameMachine.calculateSummationCardPoint();
         return !summationCardPoint.isBiggerThan(dealerDrawThresholdPoint);
     }
 }

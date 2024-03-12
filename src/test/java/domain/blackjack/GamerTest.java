@@ -44,7 +44,7 @@ class GamerTest {
         Deck deck = Deck.of(JACK_HEART, EIGHT_HEART);
         blackJackGameMachine.draw(deck, FIRST_CARD_SELECT_STRATEGY, new PlayerCardDrawCondition(blackJackGameMachine));
 
-        SummationCardPoint actual = blackJackGameMachine.getSummationCardPoint();
+        SummationCardPoint actual = blackJackGameMachine.calculateSummationCardPoint();
         SummationCardPoint expected = new SummationCardPoint(10);
 
         Assertions.assertThat(actual)
@@ -65,7 +65,7 @@ class GamerTest {
     @MethodSource("getSummationCardPointParameters")
     @DisplayName("게임 참가자의 점수가 잘 계산되는지 검증")
     void getSummationCardPoint(BlackJackGameMachine blackJackGameMachine, SummationCardPoint expected) {
-        SummationCardPoint summationCardPoint = blackJackGameMachine.getSummationCardPoint();
+        SummationCardPoint summationCardPoint = blackJackGameMachine.calculateSummationCardPoint();
         Assertions.assertThat(summationCardPoint)
                 .isEqualTo(expected);
     }

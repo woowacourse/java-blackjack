@@ -74,7 +74,7 @@ class BlackJackGameMachineTest {
     @MethodSource("getSummationCardPointParameters")
     @DisplayName("점수가 잘 계산되는지 검증")
     void getSummationCardPoint(BlackJackGameMachine blackJackGameMachine, SummationCardPoint expected) {
-        SummationCardPoint summationCardPoint = blackJackGameMachine.getSummationCardPoint();
+        SummationCardPoint summationCardPoint = blackJackGameMachine.calculateSummationCardPoint();
         Assertions.assertThat(summationCardPoint)
                 .isEqualTo(expected);
     }
