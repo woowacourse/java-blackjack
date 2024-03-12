@@ -83,4 +83,12 @@ public class OutputView {
     public void printException(final ErrorCode errorCode) {
         System.out.printf(ERROR_FORM, ErrorCodeMessage.from(errorCode).getMessage());
     }
+
+    public void printDealEndMessage(final boolean isBust) {
+        if (isBust) {
+            printBust();
+            return;
+        }
+        printBlackJack();
+    }
 }

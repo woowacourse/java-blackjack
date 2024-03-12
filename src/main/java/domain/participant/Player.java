@@ -15,4 +15,9 @@ public class Player extends Participant {
             throw new ReservedPlayerNameException(ErrorCode.RESERVED_NAME);
         }
     }
+
+    @Override
+    public boolean canDeal() {
+        return handsSum() <= Hands.BLACK_JACK;
+    }
 }

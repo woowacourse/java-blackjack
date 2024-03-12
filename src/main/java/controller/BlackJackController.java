@@ -63,7 +63,7 @@ public class BlackJackController {
         boolean turnEnded = false;
 
         while (!turnEnded) {
-            Answer answer = inputController.getAnswer(player.getName());
+            final Answer answer = inputController.getAnswer(player.getName());
             dealer.deal(player, answer);
 
             printHandsIfRequired(player, handsChanged, answer);
@@ -80,15 +80,11 @@ public class BlackJackController {
     }
 
     private boolean isTurnEnded(final Player player, final Answer answer) {
-        if (player.isBust()) {
-            outputView.printBust();
-            return true;
+        if (player.canDeal()) {
+            return !answer.isHit();
         }
-        if (player.isBlackJack()) {
-            outputView.printBlackJack();
-            return true;
-        }
-        return !answer.isHit();
+        outputView.printDealEndMessage(player.isBust());
+        return true;
     }
 
     private boolean shouldShowHands(final boolean handsChanged, final Answer answer) {

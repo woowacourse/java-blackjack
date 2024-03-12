@@ -1,7 +1,7 @@
 package domain.participant;
 
-import domain.card.Card;
 import domain.Result;
+import domain.card.Card;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,6 +15,8 @@ public abstract class Participant {
         this.hands = hands;
     }
 
+    public abstract boolean canDeal();
+
     public void add(final Card card) {
         hands.add(card);
     }
@@ -23,6 +25,7 @@ public abstract class Participant {
         return hands.isBust();
     }
 
+    //TODO 시작시에 블랙잭일 때 쓸거에용
     public boolean isBlackJack() {
         return hands.isBlackJack();
     }

@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class Hands {
 
-    private static final int BLACK_JACK = 21;
+    public static final int BLACK_JACK = 21;
     private static final int EXTRA_ACE_VALUE = 10;
 
     private final List<Card> cards;

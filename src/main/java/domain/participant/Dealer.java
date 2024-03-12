@@ -1,8 +1,8 @@
 package domain.participant;
 
 import domain.Answer;
-import domain.card.CardDeck;
 import domain.Result;
+import domain.card.CardDeck;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -38,7 +38,7 @@ public class Dealer extends Participant {
     }
 
     public void deal() {
-        while (isUnderThreshold()) {
+        while (canDeal()) {
             super.add(cardDeck.pop());
         }
     }
@@ -57,7 +57,8 @@ public class Dealer extends Participant {
         return dealerResult;
     }
 
-    private boolean isUnderThreshold() {
+    @Override
+    public boolean canDeal() {
         return handsSum() <= THRESHOLD;
     }
 }
