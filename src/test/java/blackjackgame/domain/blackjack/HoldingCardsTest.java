@@ -27,11 +27,4 @@ class HoldingCardsTest {
 
         Assertions.assertThat(actual).isEqualTo(expected);
     }
-
-    @Test
-    @DisplayName("Ace가 포함되었는지 여부 검증")
-    void hasAce() {
-        HoldingCards holdingCards = HoldingCards.of(new Card(ACE, HEART));
-        Assertions.assertThat(holdingCards.hasAce()).isTrue();
-    }
 }

@@ -8,8 +8,6 @@ import blackjackgame.domain.card.Deck;
 import java.util.List;
 
 public class CardHolder {
-    private static final int DIFFERENCE_AS_ACE_CHANGE_ONE_TO_ELEVEN = 10;
-
     private final String name;
     private final HoldingCards holdingCards;
 
@@ -30,20 +28,7 @@ public class CardHolder {
     }
 
     public SummationCardPoint getSummationCardPoint() {
-        SummationCardPoint summationCardPoint = holdingCards.calculateTotalPoint();
-        if (hasAceInHoldingCards()) {
-            int rawPoint = fixPoint(summationCardPoint.summationCardPoint());
-            return new SummationCardPoint(rawPoint);
-        }
-        return summationCardPoint;
-    }
-
-    private int fixPoint(int rawPoint) {
-        SummationCardPoint fixPoint = new SummationCardPoint(rawPoint + DIFFERENCE_AS_ACE_CHANGE_ONE_TO_ELEVEN);
-        if (!fixPoint.isDeadPoint()) {
-            return fixPoint.summationCardPoint();
-        }
-        return rawPoint;
+        return holdingCards.calculateTotalPoint();
     }
 
     public String getRawName() {
@@ -60,9 +45,5 @@ public class CardHolder {
 
     public boolean isDead() {
         return getSummationCardPoint().isDeadPoint();
-    }
-
-    boolean hasAceInHoldingCards() {
-        return holdingCards.hasAce();
     }
 }

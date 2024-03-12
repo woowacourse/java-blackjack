@@ -7,6 +7,7 @@ import java.util.List;
 
 public class HoldingCards {
     private static final int firstHoldingCardCount = 2;
+    private static final int DIFFERENCE_AS_ACE_CHANGE_ONE_TO_ELEVEN = 10;
 
     private final List<Card> holdingCards;
 
@@ -19,6 +20,23 @@ public class HoldingCards {
     }
 
     public SummationCardPoint calculateTotalPoint() {
+        SummationCardPoint summationCardPoint = calculateSum();
+        if (hasAce()) {
+            int rawPoint = fixPoint(summationCardPoint.summationCardPoint());
+            return new SummationCardPoint(rawPoint);
+        }
+        return summationCardPoint;
+    }
+
+    private int fixPoint(int rawPoint) {
+        SummationCardPoint fixPoint = new SummationCardPoint(rawPoint + DIFFERENCE_AS_ACE_CHANGE_ONE_TO_ELEVEN);
+        if (!fixPoint.isDeadPoint()) {
+            return fixPoint.summationCardPoint();
+        }
+        return rawPoint;
+    }
+
+    private SummationCardPoint calculateSum() {
         List<CardPoint> cardPoints = holdingCards.stream()
                 .map(CardPointCalculator::calculate)
                 .toList();
@@ -34,7 +52,7 @@ public class HoldingCards {
         return Collections.unmodifiableList(holdingCards);
     }
 
-    public boolean hasAce() {
+    private boolean hasAce() {
         return holdingCards.stream()
                 .anyMatch(Card::isCardNameAce);
     }
