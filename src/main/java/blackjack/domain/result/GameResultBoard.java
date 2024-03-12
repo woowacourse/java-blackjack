@@ -16,41 +16,27 @@ public class GameResultBoard {
         for (Player player : players) {
             PlayerName playerName = player.getPlayerName();
             Outcome playerOutcome = player.calculateOutcome();
-            GameResult gameResult = playerOutcome.compete(dealerOutcome);
-            if (playerOutcome.isBusted()) {
-                gameResult = GameResult.LOSE;
-            }
+            GameResult gameResult = calculateGameResult(playerOutcome, dealerOutcome);
             resultBoard.put(playerName, gameResult);
         }
     }
 
-    public GameResult getGameResult(Player player) {
-        return resultBoard.get(player.getPlayerName());
+    public GameResult findByPlayerName(PlayerName playerName) {
+        return resultBoard.get(playerName);
     }
 
-    public Map<GameResult, Integer> getDealerResult() {
-        return Map.of(
-                GameResult.WIN, getDealerWinCount(),
-                GameResult.DRAW, getDealerDrawCount(),
-                GameResult.LOSE, getDealerLoseCount()
-        );
+    public Map<PlayerName, GameResult> getResultBoard() {
+        return resultBoard;
     }
 
-    private int getDealerWinCount() {
-        return (int) resultBoard.values().stream()
-                .filter(playerResult -> playerResult.equals(GameResult.LOSE))
-                .count();
-    }
-
-    private int getDealerLoseCount() {
-        return (int) resultBoard.values().stream()
-                .filter(playerResult -> playerResult.equals(GameResult.WIN))
-                .count();
-    }
-
-    private int getDealerDrawCount() {
-        return (int) resultBoard.values().stream()
-                .filter(playerResult -> playerResult.equals(GameResult.DRAW))
-                .count();
+    private static GameResult calculateGameResult(Outcome playerOutcome, Outcome dealerOutcome) {
+        GameResult gameResult = playerOutcome.compete(dealerOutcome);
+        if (playerOutcome.isBusted()) {
+            gameResult = GameResult.LOSE;
+        }
+        if (playerOutcome.isBlackJack()) {
+            gameResult = GameResult.WIN_BY_BLACK_JACK;
+        }
+        return gameResult;
     }
 }
