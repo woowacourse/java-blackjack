@@ -5,6 +5,7 @@ import domain.player.Name;
 import domain.player.Player;
 import domain.player.PlayerNames;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -63,7 +64,7 @@ public class BlackJackGame {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return Collections.unmodifiableList(players);
     }
 
 }
