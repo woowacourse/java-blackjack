@@ -15,7 +15,6 @@ public class OutputView {
 
     private static final String LINE = System.lineSeparator();
     private static final String FORM = "%s카드: %s%n";
-    private static final String TOTAL_SUM_FORM = "%s 카드: %s - 결과: %d%n";
     private static final String RESULT_FORM = "%s: %s%n";
 
     public void printInitHands(final DealerHandsDto dealerHandsDto, final ParticipantsDto participantsDto) {
@@ -41,7 +40,7 @@ public class OutputView {
 
     public void printHandsResult(final ParticipantsDto participantsDto) {
         for (ParticipantDto participantDto : participantsDto.getParticipants()) {
-            System.out.printf(TOTAL_SUM_FORM, participantDto.name(), format(participantDto.cards()),
+            System.out.printf("%s 카드: %s - 결과: %d%n", participantDto.name(), format(participantDto.cards()),
                     participantDto.totalSum());
         }
         System.out.print(LINE);
@@ -55,6 +54,14 @@ public class OutputView {
         }
     }
 
+    public void printBust() {
+        System.out.printf("BUST%n");
+    }
+
+    public void printBlackJack() {
+        System.out.printf("BLACK JACK!!!%n");
+    }
+
     private String format(final Map<Result, Integer> dealerResult) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry<Result, Integer> entry : dealerResult.entrySet()) {
@@ -66,13 +73,5 @@ public class OutputView {
 
     private String format(final List<String> playerNames) {
         return String.join(", ", playerNames);
-    }
-
-    public void printBust() {
-        System.out.printf("BUST%n");
-    }
-
-    public void printBlackJack() {
-        System.out.printf("BLACK JACK!!!%n");
     }
 }

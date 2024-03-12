@@ -66,7 +66,7 @@ public class BlackJackController {
         boolean turnEnded = false;
 
         while (!turnEnded) {
-            final Answer answer = Answer.from(inputView.readAnswer(player.getName()));
+            final Answer answer = inputView.readAnswer(player.getName());
             dealer.deal(player, answer);
 
             printHandsIfRequired(player, handsChanged, answer);

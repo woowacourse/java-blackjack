@@ -39,7 +39,7 @@ public abstract class Participant {
         return hands.calculateResultBy(participant.getHands());
     }
 
-    public List<String> getCardNames() {
+    public List<Card> getCards() {
         return hands.getCards();
     }
 

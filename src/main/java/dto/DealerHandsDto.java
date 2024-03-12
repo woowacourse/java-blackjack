@@ -2,11 +2,16 @@ package dto;
 
 import domain.participant.Dealer;
 import java.util.List;
+import view.RankView;
+import view.ShapeView;
 
 public record DealerHandsDto(String name, String card) {
 
     public static DealerHandsDto from(final Dealer dealer) {
-        List<String> cards = dealer.getCardNames();
+        final List<String> cards = dealer.getCards().stream()
+                .map(card -> RankView.from(card.getRank()) + ShapeView.from(card.getShape()))
+                .toList();
+
         return new DealerHandsDto(dealer.getName(), cards.get(0));
     }
 

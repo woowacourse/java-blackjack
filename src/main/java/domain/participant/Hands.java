@@ -45,10 +45,11 @@ public class Hands {
         return cards.size();
     }
 
-    public List<String> getCards() {
-        return cards.stream()
-                .map(Card::toString)
-                .toList();
+    public List<Card> getCards() {
+        return cards;
+//        return cards.stream()
+//                .map(Card::toString)
+//                .toList();
     }
 
     public Result calculateResultBy(final Hands target) {

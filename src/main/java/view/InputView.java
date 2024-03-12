@@ -1,5 +1,6 @@
 package view;
 
+import domain.Answer;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,12 +24,12 @@ public class InputView {
         return names;
     }
 
-    public String readAnswer(String name) {
+    public Answer readAnswer(String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name);
         System.out.println();
         String rawAnswer = scanner.nextLine().trim();
         validateBlank(rawAnswer);
-        return rawAnswer;
+        return AnswerView.from(rawAnswer);
     }
 
     private void validateBlank(final String rawNames) {

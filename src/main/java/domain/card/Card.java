@@ -20,6 +20,14 @@ public class Card {
         return rank.getValue();
     }
 
+    public Rank getRank() {
+        return rank;
+    }
+
+    public Shape getShape() {
+        return shape;
+    }
+
     @Override
     public boolean equals(final Object target) {
         if (this == target) {
@@ -34,10 +42,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(rank, shape);
-    }
-
-    @Override
-    public String toString() {
-        return rank.getName() + shape.getName();
     }
 }
