@@ -1,12 +1,13 @@
 package blackjack.domain.card;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-
 import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.stream.IntStream;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.*;
 
 class DeckTest {
     @Test
@@ -22,7 +23,7 @@ class DeckTest {
                                 .toList()
                                 .size();
             assertThat(size).isEqualTo(52);
-        });
+        }).doesNotThrowAnyException();
     }
 
     @Test
@@ -38,5 +39,20 @@ class DeckTest {
 
         assertThat(sut.draw()).isEqualTo(card2);
         assertThat(sut.draw()).isEqualTo(card1);
+    }
+
+    @Test
+    @DisplayName("카드가 전부 소진되면 예외를 발생한다.")
+    public void Deck_Instance_throw_exception_when_empty() {
+        final Deque<Card> cards = new ArrayDeque<>();
+        final Card card1 = new Card(CardValue.ACE, CardSymbol.DIAMOND);
+        cards.add(card1);
+
+        final var sut = new Deck(cards);
+        sut.draw();
+
+        assertThatThrownBy(() -> {
+            sut.draw();
+        }).isInstanceOf(IllegalStateException.class);
     }
 }

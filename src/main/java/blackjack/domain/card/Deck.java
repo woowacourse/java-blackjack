@@ -5,10 +5,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Deck {
-    private final Deque<Card> deck;
+    private final Deque<Card> value;
 
     public Deck(final Deque<Card> cards) {
-        this.deck = cards;
+        this.value = cards;
     }
 
     public static Deck createPack() {
@@ -29,6 +29,7 @@ public class Deck {
     }
 
     public Card draw() {
-        return deck.pollLast();
+        return Optional.ofNullable(value.pollLast())
+                       .orElseThrow(() -> new IllegalStateException("카드가 전부 소진되었습니다."));
     }
 }
