@@ -22,7 +22,7 @@ class BettingPriceTest {
 
     @DisplayName("베팅 금액이 지정된 범위 내에 있으면 예외가 발생하지 않는다.")
     @ParameterizedTest
-    @ValueSource(ints = {100_000, 1_000, 5_000, 10_000})
+    @ValueSource(ints = {1_000, 5_000, 10_000, 100_000})
     void validBettingPriceBoundTest(int bettingPrice) {
         assertThatCode(() -> new BettingPrice(bettingPrice))
                 .doesNotThrowAnyException();
