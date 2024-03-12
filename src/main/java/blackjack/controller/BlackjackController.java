@@ -71,17 +71,22 @@ public class BlackjackController {
     private void dealToPlayers(Players players, BlackjackGame blackjackGame) {
         for (int i = 0; i < players.count(); i++) {
             Player player = players.findPlayerByIndex(i);
-            hitUntilStay(blackjackGame, player, i);
+            dealToPlayer(blackjackGame, i, player);
         }
     }
 
-    private void hitUntilStay(BlackjackGame blackjackGame, Player player, int playerIndex) {
+    private void dealToPlayer(BlackjackGame blackjackGame, int playerIndex, Player player) {
+        while (player.canReceiveCard()) {
+            hitUntilStay(blackjackGame, playerIndex, player);
+        }
+    }
+
+    private void hitUntilStay(final BlackjackGame blackjackGame, final int playerIndex, final Player player) {
         BlackjackAction action = replyOnException(() -> selectBlackjackAction(player.getName()));
 
-        while (action.isHit()) {
+        if (action.isHit()) {
             blackjackGame.dealToPlayer(playerIndex);
             outputView.printCardHandAfterHit(player);
-            action = replyOnException(() -> selectBlackjackAction(player.getName()));
         }
     }
 
