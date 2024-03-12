@@ -1,9 +1,9 @@
 package blackjack;
 
+import blackjack.controller.Game;
 import blackjack.domain.CardFactory;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
-import blackjack.domain.Game;
 import blackjack.domain.Players;
 import blackjack.view.InputView;
 import java.util.List;

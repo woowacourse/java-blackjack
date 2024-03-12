@@ -1,5 +1,10 @@
-package blackjack.domain;
+package blackjack.controller;
 
+import blackjack.domain.Dealer;
+import blackjack.domain.Player;
+import blackjack.domain.Players;
+import blackjack.domain.Result;
+import blackjack.domain.ResultStatus;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.LinkedHashMap;
@@ -10,6 +15,7 @@ import java.util.stream.Collectors;
 
 public class Game {
 
+    private static final int BLACKJACK_SCORE = 21;
     private final Dealer dealer;
     private final Players players;
 
@@ -57,8 +63,8 @@ public class Game {
     }
 
     private ResultStatus match(int dealerScore, int playerScore) {
-        boolean isDealerBust = dealerScore > 21;
-        boolean isPlayerBust = playerScore > 21;
+        boolean isDealerBust = dealerScore > BLACKJACK_SCORE;
+        boolean isPlayerBust = playerScore > BLACKJACK_SCORE;
         if (isDealerBust && isPlayerBust) {
             return ResultStatus.DRAW;
         }
