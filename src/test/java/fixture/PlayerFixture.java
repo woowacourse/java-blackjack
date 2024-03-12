@@ -4,8 +4,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
 import blackjack.domain.card.Hand;
-import blackjack.domain.player.Player;
-import blackjack.domain.player.PlayerName;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerName;
 import java.util.ArrayList;
 import java.util.List;
 

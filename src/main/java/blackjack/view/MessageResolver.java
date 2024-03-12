@@ -3,12 +3,12 @@ package blackjack.view;
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Participant;
-import blackjack.domain.player.Participants;
-import blackjack.domain.player.Player;
-import blackjack.domain.player.PlayerName;
-import blackjack.domain.player.Players;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerName;
+import blackjack.domain.participant.Players;
 
 import blackjack.domain.rule.Judge;
 import blackjack.view.mapper.CardRankMapper;

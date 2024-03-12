@@ -1,11 +1,11 @@
 package blackjack.domain.rule;
 
 import blackjack.domain.Result;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Participant;
-import blackjack.domain.player.Participants;
-import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

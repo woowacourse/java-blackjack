@@ -1,6 +1,6 @@
 package fixture;
 
-import blackjack.domain.player.Participants;
+import blackjack.domain.participant.Participants;
 import java.util.List;
 
 public class ParticipantsFixture {

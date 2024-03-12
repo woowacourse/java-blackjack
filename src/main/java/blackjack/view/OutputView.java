@@ -1,7 +1,7 @@
 package blackjack.view;
 
-import blackjack.domain.player.Participants;
-import blackjack.domain.player.Player;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
 import blackjack.domain.rule.Judge;
 
 public class OutputView {
