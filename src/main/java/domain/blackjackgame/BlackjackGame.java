@@ -57,7 +57,7 @@ public class BlackjackGame {
         return gameResult;
     }
 
-    private ResultStatus getResultStatus(Score dealerScore, Score playerScore) {
+    private ResultStatus getResultStatus(Score playerScore, Score dealerScore) {
         if (playerScore.isBustScore()) {
             return ResultStatus.LOSE;
         }
