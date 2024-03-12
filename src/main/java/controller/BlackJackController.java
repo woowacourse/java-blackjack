@@ -21,7 +21,7 @@ public class BlackJackController {
 
     public void run() throws IOException {
         Players players = readPlayerNames();
-        CardDeck cardDeck = new CardDeck();
+        CardDeck cardDeck = CardDeck.createShuffledDeck();
         Dealer dealer = new Dealer(cardDeck);
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
         blackJackGame.initHand();

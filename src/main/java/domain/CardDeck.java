@@ -8,14 +8,23 @@ public class CardDeck {
 
     private final Stack<Card> deck;
 
-    public CardDeck() {
+    private CardDeck() {
         List<Card> cards = Suit.getValues().stream()
                 .flatMap(mark -> Rank.getValues().stream()
                         .map(letter -> new Card(letter, mark)))
                 .toList();
         deck = new Stack<>();
         deck.addAll(cards);
-        shuffle();
+    }
+
+    public static CardDeck createShuffledDeck() {
+        CardDeck cardDeck = new CardDeck();
+        cardDeck.shuffle();
+        return cardDeck;
+    }
+
+    public static CardDeck createNotShuffledDeck() {
+        return new CardDeck();
     }
 
     private void shuffle() {
