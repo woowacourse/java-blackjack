@@ -2,7 +2,8 @@ package model.blackjackgame;
 
 import static model.card.CardNumber.FIVE;
 import static model.card.CardNumber.JACK;
-import static model.card.CardNumber.ONE;
+import static model.card.CardNumber.ACE;
+import static model.card.CardNumber.SEVEN;
 import static model.card.CardNumber.SIX;
 import static model.card.CardShape.CLOVER;
 import static model.card.CardShape.DIAMOND;
@@ -27,7 +28,7 @@ class ResultTest {
         BlackjackGame blackjackGame = prepareBlackjackGame();
         Cards cards = new Cards(
                 List.of(new Card(JACK, DIAMOND), new Card(FIVE, CLOVER), new Card(JACK, HEART),
-                        new Card(JACK, CLOVER), new Card(SIX, DIAMOND), new Card(ONE, SPADE))
+                        new Card(JACK, CLOVER), new Card(SIX, DIAMOND), new Card(ACE, SPADE))
         );
         blackjackGame.distributeCardsForSetting(cards);
         Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers());
@@ -41,7 +42,7 @@ class ResultTest {
         BlackjackGame blackjackGame = prepareBlackjackGame();
         Cards cards = new Cards(
                 List.of(new Card(JACK, DIAMOND), new Card(FIVE, CLOVER), new Card(JACK, HEART),
-                        new Card(JACK, CLOVER), new Card(SIX, DIAMOND), new Card(ONE, SPADE))
+                        new Card(JACK, CLOVER), new Card(SIX, DIAMOND), new Card(SEVEN, SPADE))
         );
         blackjackGame.distributeCardsForSetting(cards);
         Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers());

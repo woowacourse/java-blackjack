@@ -5,6 +5,9 @@ import java.util.List;
 
 public class Cards {
 
+    private static final int ACE_ADDITIONAL_SCORE = 10;
+    private static final int BLACKJACK_SCORE = 21;
+
     private final List<Card> cards;
 
     public Cards(List<Card> cards) {
@@ -12,9 +15,26 @@ public class Cards {
     }
 
     public int calculateTotalNumbers() {
+        int totalScore = totalScore();
+        boolean hasAce = hasAce();
+        if (hasAce && canAddAceScore(totalScore)) {
+            return totalScore + ACE_ADDITIONAL_SCORE;
+        }
+        return totalScore;
+    }
+
+    private int totalScore() {
         return cards.stream()
-            .mapToInt(card -> card.getNumber().getValue())
-            .sum();
+                .mapToInt(card -> card.getNumber().getValue())
+                .sum();
+    }
+
+    private boolean hasAce() {
+        return cards.stream().anyMatch(Card::isAce);
+    }
+
+    private boolean canAddAceScore(int totalScore) {
+        return totalScore + ACE_ADDITIONAL_SCORE <= BLACKJACK_SCORE;
     }
 
     public Cards add(Card card) {

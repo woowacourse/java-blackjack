@@ -1,8 +1,9 @@
 package model.dealer;
 
 import static model.card.CardNumber.JACK;
-import static model.card.CardNumber.ONE;
+import static model.card.CardNumber.ACE;
 import static model.card.CardNumber.SEVEN;
+import static model.card.CardNumber.SIX;
 import static model.card.CardNumber.TWO;
 import static model.card.CardShape.DIAMOND;
 import static model.card.CardShape.HEART;
@@ -19,7 +20,7 @@ class DealerTest {
     @DisplayName("딜러의 카드 합계가 16점 이하면 true를 반환한다")
     @Test
     void testCanAddCard() {
-        Cards cards = new Cards(List.of(new Card(ONE, HEART), new Card(JACK, HEART)));
+        Cards cards = new Cards(List.of(new Card(SIX, HEART), new Card(JACK, HEART)));
         Dealer dealer = new Dealer(cards);
         assertThat(dealer.isPossibleAddCard()).isTrue();
     }
@@ -35,7 +36,7 @@ class DealerTest {
     @DisplayName("카드 1장을 획득하면 카드가 1개 증가한 딜러 객체를 반환한다")
     @Test
     void shouldAddCardWhenAllowed() {
-        Cards cards = new Cards(List.of(new Card(ONE, HEART), new Card(JACK, HEART)));
+        Cards cards = new Cards(List.of(new Card(ACE, HEART), new Card(JACK, HEART)));
         Dealer dealer = new Dealer(cards);
         Card card = new Card(TWO, DIAMOND);
         Dealer updatedDealer = dealer.addCard(card);
