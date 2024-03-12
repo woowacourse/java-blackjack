@@ -1,5 +1,8 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Dealer extends Participant {
 
     public static final String DEALER_NAME = "딜러";
@@ -14,6 +17,16 @@ public class Dealer extends Participant {
 
     public Card dealCard() {
         return cardDeck.draw();
+    }
+
+    public List<Card> dealCard(int count) {
+        List<Card> cards = new ArrayList<>();
+
+        for (int i = 0; i < count; i++) {
+            cards.add(cardDeck.draw());
+        }
+
+        return cards;
     }
 
     public boolean isHittable() {
