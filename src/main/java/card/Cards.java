@@ -17,10 +17,6 @@ public class Cards {
         cards.add(card);
     }
 
-    public boolean isBlackJack() {
-        return countMaxScore() == MAX_BLACK_JACK_SCORE && countCard() == 2;
-    }
-
     public int countMaxScore() {
         int minimumScore = countMinimumScore();
 
