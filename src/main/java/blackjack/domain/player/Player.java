@@ -1,12 +1,9 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-
 import java.util.List;
 
 public class Player {
-    private static final int BUST_THRESHOLD = 21;
-
     protected final Hand hand;
     private final Name name;
 
@@ -20,7 +17,7 @@ public class Player {
     }
 
     public boolean isBust() {
-        return hand.calculateScore() <= BUST_THRESHOLD;
+        return hand.isBust();
     }
 
     public int getScore() {
