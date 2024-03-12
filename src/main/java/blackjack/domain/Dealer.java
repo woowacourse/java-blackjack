@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import java.util.List;
 
-// TODO 기능을 위한 has a 관계로 바라보기
 public class Dealer extends Participant {
     private static final HandsScore DEALER_DRAW_THRESHOLD = new HandsScore(16);
 
@@ -10,11 +9,9 @@ public class Dealer extends Participant {
         super(Name.dealerName());
     }
 
-    public PlayerState draw(Deck deck) {
-        if (shouldDraw()) {
-            addCard(deck.draw());
-        }
-        return canNextDraw();
+    @Override
+    public boolean canAddCard() {
+        return shouldDraw();
     }
 
     public Card getFirstCard() {
@@ -25,13 +22,6 @@ public class Dealer extends Participant {
 
         return hands.getHands()
                 .get(0);
-    }
-
-    private PlayerState canNextDraw() {
-        if (shouldDraw()) {
-            return PlayerState.RUNNING;
-        }
-        return PlayerState.FINISHED;
     }
 
     private boolean shouldDraw() {

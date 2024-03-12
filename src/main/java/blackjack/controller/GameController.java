@@ -11,8 +11,6 @@ public class GameController {
     private GameController() {
     }
 
-    // TODO 함수형 인터페이스를 적극적으로 사용해서 도메인으로 끌어내려보기
-
     public static void run() {
         Deck deck = Deck.createShuffledDeck();
         Game game = makeGame();
@@ -42,7 +40,8 @@ public class GameController {
     }
 
     private static void confirmDealerHands(Dealer dealer, Deck deck) {
-        while (dealer.draw(deck) == PlayerState.RUNNING) {
+        while (dealer.canAddCard()) {
+            dealer.addCard(deck.draw());
             OutputView.printDealerDrawMessage(dealer);
         }
     }
@@ -54,10 +53,8 @@ public class GameController {
     }
 
     private static void askDrawToPlayer(Player player, Deck deck) {
-        PlayerState playerState = PlayerState.RUNNING;
-        while (playerState == PlayerState.RUNNING) {
-            OutputView.printAskDrawMessage(player.getName());
-            playerState = player.draw(InputView::askDraw, deck);
+        while (InputView.askDraw(player.getName()) && player.canAddCard()) {
+            player.addCard(deck.draw());
             OutputView.printParticipantHands(player.getName(), player.getHandsCards());
         }
     }

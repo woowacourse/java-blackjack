@@ -12,7 +12,9 @@ public abstract class Participant {
         this.hands = new Hands();
     }
 
-    protected void addCard(Card card) {
+    abstract boolean canAddCard();
+
+    public void addCard(Card card) {
         hands.addCard(card);
     }
 

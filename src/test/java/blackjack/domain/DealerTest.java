@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DealerTest {
 
@@ -21,26 +23,20 @@ class DealerTest {
     @Test
     void should_AddCard_When_HandsScoreBelowThreshold() {
         Dealer dealer = new Dealer();
-        Deck deck = Deck.createShuffledDeck();
         dealer.addCard(new Card(Kind.SPADE, Value.JACK));
         dealer.addCard(new Card(Kind.HEART, Value.SIX));
 
-        dealer.draw(deck);
-
-        assertThat(dealer.getHandsCards()).hasSize(3);
+        assertTrue(dealer::canAddCard);
     }
 
-    @DisplayName("딜러는 자신의 패가 17이상이면 한장을 더 받지 않는다")
+    @DisplayName("딜러는 자신의 패가 17이상이면 한장을 더 받을 수 없다")
     @Test
     void should_NotAddCard_When_HandsScoreOverThreshold() {
         Dealer dealer = new Dealer();
-        Deck deck = Deck.createShuffledDeck();
         dealer.addCard(new Card(Kind.SPADE, Value.JACK));
         dealer.addCard(new Card(Kind.HEART, Value.SEVEN));
 
-        dealer.draw(deck);
-
-        assertThat(dealer.getHandsCards()).hasSize(2);
+        assertFalse(dealer::canAddCard);
     }
 
     @DisplayName("딜러는 첫번째 패의 첫장을 보여준다")
@@ -53,5 +49,4 @@ class DealerTest {
         assertThat(dealer.getFirstCard())
                 .isEqualTo(new Card(Kind.SPADE, Value.JACK));
     }
-
 }
