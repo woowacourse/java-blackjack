@@ -23,19 +23,9 @@ public class Referee {
         return players.stream()
                 .map(this::judgePlayerResult)
                 .collect(groupingBy(
-                        this::changeToOppositeResultCommand,
+                        ResultCommand::findOpposite,
                         () -> new EnumMap<>(ResultCommand.class),
                         reducing(0, i -> 1, Integer::sum)
                 ));
-    }
-
-    private ResultCommand changeToOppositeResultCommand(final ResultCommand originResult) {
-        if (originResult == ResultCommand.WIN) {
-            return ResultCommand.LOSE;
-        }
-        if (originResult == ResultCommand.LOSE) {
-            return ResultCommand.WIN;
-        }
-        return ResultCommand.DRAW;
     }
 }
