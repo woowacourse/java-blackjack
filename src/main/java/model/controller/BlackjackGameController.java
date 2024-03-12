@@ -69,7 +69,8 @@ public class BlackjackGameController {
     private void hitOrStay(Player player, BlackjackGame blackjackGame) {
         Answer answer = repeatUntilSuccess(inputView::requestHitAnswer, player);
         while (answer.isHit()) {
-            boolean continueHit = blackjackGame.hitForPlayer(player,
+            Player updatedPlayer = new UpdatedPlayer(blackjackGame, player).player();
+            boolean continueHit = blackjackGame.hitForPlayer(updatedPlayer,
                     new Card(CardDispenser.generateCardNumber(), CardDispenser.generateCardShape()));
             answer = hitResultInfo(continueHit, player, blackjackGame);
         }
