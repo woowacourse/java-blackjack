@@ -30,4 +30,16 @@ public class CardTest {
 
         assertThat(card.getSymbol()).isEqualTo(CardSuit.CLOVER);
     }
+
+    @DisplayName("카드가 Ace 라면 true 를 반환한다")
+    @Test
+    public void testIsAce1() {
+        assertThat(CardFixture.cloverAce().isAce()).isTrue();
+    }
+
+    @DisplayName("카드가 Ace 가 아니라면 false 를 반환한다")
+    @Test
+    public void testIsAce2() {
+        assertThat(CardFixture.heartJack().isAce()).isFalse();
+    }
 }

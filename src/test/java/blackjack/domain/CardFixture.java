@@ -9,4 +9,8 @@ class CardFixture {
     static Card diamond3() {
         return new Card(CardSuit.DIAMOND, CardNumber.THREE);
     }
+
+    static Card cloverAce() {
+        return new Card(CardSuit.CLOVER, CardNumber.ACE);
+    }
 }
