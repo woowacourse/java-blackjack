@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.dto.BettingMoneyDto;
 import blackjack.dto.PlayerDto;
 import java.util.List;
 import java.util.Map;
@@ -14,10 +15,10 @@ public class OutputView {
         System.out.println(playerName + ": 패");
     }
 
-    public void printMoneyResult(Map<String, Integer> bettingMoneyResult) {
+    public void printMoneyResult(List<BettingMoneyDto> bettingMoneyResult) {
         System.out.println("\n## 최종 수익");
-        for (String playerName: bettingMoneyResult.keySet()) {
-            System.out.printf("%s: %d\n",playerName, bettingMoneyResult.get(playerName));
+        for (BettingMoneyDto bettingMoneyDto : bettingMoneyResult) {
+            System.out.printf("%s: %d\n", bettingMoneyDto.playerName(), bettingMoneyDto.money());
         }
 
     }

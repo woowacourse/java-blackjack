@@ -6,9 +6,11 @@ import blackjack.domain.participants.Money;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
+import blackjack.dto.BettingMoneyDto;
 import blackjack.dto.PlayerDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,21 +109,21 @@ public class BlackjackGame {
     }
 
     private void handleBettingMoney(GameBoard gameBoard) {
-        Map<String, Integer> bettingMoneyResult = new LinkedHashMap<>();
+        List<BettingMoneyDto> bettingMoneyResult = new ArrayList<>();
         handleDealerBettingMoney(gameBoard, bettingMoneyResult);
         handlePlayersBettingMoney(gameBoard, bettingMoneyResult);
         outputView.printMoneyResult(bettingMoneyResult);
     }
 
-    private void handleDealerBettingMoney(GameBoard gameBoard, Map<String, Integer> bettingMoneyResult) {
+    private void handleDealerBettingMoney(GameBoard gameBoard, List<BettingMoneyDto> bettingMoneyResult) {
         Dealer dealer = gameBoard.getDealer();
-        bettingMoneyResult.put(dealer.getName().getValue(), dealer.getMoney().getValue());
+        bettingMoneyResult.add(BettingMoneyDto.from(dealer));
     }
 
-    private void handlePlayersBettingMoney(GameBoard gameBoard, Map<String, Integer> bettingMoneyResult) {
+    private void handlePlayersBettingMoney(GameBoard gameBoard, List<BettingMoneyDto> bettingMoneyResult) {
         Players players = gameBoard.getPlayers();
         for(int i = 0; i < gameBoard.countPlayers(); i++) {
-            bettingMoneyResult.put(players.getOnePlayerName(i).getValue(), players.getOnePlayerMoney(i).getValue());
+            bettingMoneyResult.add(BettingMoneyDto.from(players.getOnePlayer(i)));
         }
     }
 }
