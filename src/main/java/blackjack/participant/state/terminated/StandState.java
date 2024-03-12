@@ -16,6 +16,9 @@ public class StandState extends TerminatedState {
         if (opponentState.isBusted()) {
             return MatchResult.NORMAL_WIN;
         }
+        if (opponentState.isBlackJack()) {
+            return MatchResult.LOSE;
+        }
         return createMatchResultByScore(opponentState);
     }
 

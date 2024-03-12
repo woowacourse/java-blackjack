@@ -77,4 +77,23 @@ class StandStateTest {
         // then
         assertThat(matchResult).isEqualTo(MatchResult.LOSE);
     }
+
+    @Test
+    @DisplayName("블랙잭이 아닌 21점은 블랙잭에게 패배한다.")
+    void blackJackRankTest() {
+        // given
+        List<Card> cards = List.of(
+                new Card(Shape.SPADE, Number.TEN),
+                new Card(Shape.HEART, Number.TEN),
+                new Card(Shape.SPADE, Number.ACE));
+        List<Card> blackJackCards = List.of(
+                new Card(Shape.SPADE, Number.TEN),
+                new Card(Shape.HEART, Number.ACE));
+        StandState state = new StandState(new Hand(cards));
+        StandState blackJackState = new StandState(new Hand(blackJackCards));
+        // when
+        MatchResult matchResult = state.createMatchResult(blackJackState);
+        // then
+        assertThat(matchResult).isEqualTo(MatchResult.LOSE);
+    }
 }
