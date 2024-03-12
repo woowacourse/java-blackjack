@@ -16,7 +16,7 @@ import blackjack.domain.card.Hands;
 import blackjack.domain.player.bet.BetAmount;
 import blackjack.domain.player.bet.BetRevenue;
 import blackjack.domain.player.bet.BetStatus;
-import blackjack.domain.rule.state.Stand;
+import blackjack.domain.rule.state.StandState;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -39,7 +39,7 @@ class BetStatusTest {
     @ParameterizedTest(name = "딜러 카드 : {0}, 플레이어 카드 : {1}, 결과 : {2}")
     @MethodSource("handsAndWinStatus")
     void of(Hands dealerHands, Hands playerHands, BetStatus expected) {
-        BetStatus betStatus = BetStatus.of(Stand.from(dealerHands), Stand.from(playerHands));
+        BetStatus betStatus = BetStatus.of(StandState.from(dealerHands), StandState.from(playerHands));
 
         assertThat(betStatus).isEqualTo(expected);
     }

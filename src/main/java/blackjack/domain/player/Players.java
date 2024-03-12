@@ -2,45 +2,35 @@ package blackjack.domain.player;
 
 import static java.util.stream.Collectors.toMap;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
+import blackjack.domain.dealer.Dealer;
 import blackjack.domain.player.bet.BetAmount;
 import blackjack.domain.player.bet.BetRevenue;
 import blackjack.domain.player.bet.BetStatus;
-import blackjack.domain.rule.state.Init;
 import blackjack.domain.rule.state.State;
 import blackjack.exception.NeedRetryException;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
-import java.util.function.Function;
+import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 
 public class Players {
 
-    private final Map<PlayerName, State> stateRepository;
-    private final Map<PlayerName, BetAmount> betAmountRepository;
+    private final List<Player> players;
 
-    private Players(final Map<PlayerName, State> stateRepository,
-            final Map<PlayerName, BetAmount> betAmountRepository) {
-        this.stateRepository = stateRepository;
-        this.betAmountRepository = betAmountRepository;
+    private Players(final List<Player> players) {
+        this.players = players;
     }
 
-    public static Players from(final List<String> inputPlayerNames) {
-        final List<PlayerName> playerNames = inputPlayerNames.stream()
-                .map(PlayerName::new)
-                .toList();
-
+    public static Players of(final List<PlayerName> playerNames, final Dealer dealer) {
         validateDuplicate(playerNames);
 
-        final Map<PlayerName, State> playersStates = createEmptyRepository(playerNames, name -> new Init());
-        final Map<PlayerName, BetAmount> playersBetAmount = createEmptyRepository(playerNames, name -> new BetAmount(0));
-
-        return new Players(playersStates, playersBetAmount);
+        return new Players(playerNames.stream()
+                .map(name -> Player.of(name, dealer))
+                .toList());
     }
 
     private static void validateDuplicate(final List<PlayerName> playerNames) {
@@ -49,103 +39,62 @@ public class Players {
         }
     }
 
-    private static <T, U> Map<T, U> createEmptyRepository(final List<T> names, final Function<T, U> supplier) {
-        return names.stream()
-                .collect(toMap(Function.identity(),
-                        supplier,
-                        (v1, v2) -> v1,
-                        LinkedHashMap::new));
+    public void saveBetAmount(final Map<PlayerName, BetAmount> playerBetAmounts) {
+        players.forEach(player -> player.setBetAmount(playerBetAmounts.get(player.getName())));
     }
 
-    public void saveBetAmountByName(final int betAmount, final String name) {
-        final PlayerName playerName = new PlayerName(name);
-        validatePlayerName(playerName);
-
-        betAmountRepository.put(playerName, new BetAmount(betAmount));
-    }
-
-    private void validatePlayerName(final PlayerName name) {
-        if (!stateRepository.containsKey(name) || !betAmountRepository.containsKey(name)) {
-            throw new IllegalArgumentException("없는 참가자 입니다.");
+    public void hit(
+            final Dealer dealer,
+            final Predicate<PlayerName> isHitInput,
+            final BiConsumer<PlayerName, Hands> printHands
+    ) {
+        for (Player player : players) {
+            player.hit(dealer, isHitInput, printHands);
+            stand(player, printHands);
         }
     }
 
-    public void divideCard(final List<List<Card>> cardDump) {
-        validateCardSize(cardDump);
-        final Iterator<List<Card>> cardIterator = cardDump.iterator();
-
-        for (PlayerName name : stateRepository.keySet()) {
-            final List<Card> cards = cardIterator.next();
-            final State state = stateRepository.get(name);
-            final State newState = state.start(cards.get(0), cards.get(1));
-            stateRepository.put(name, newState);
+    private void stand(final Player player, final BiConsumer<PlayerName, Hands> printHands) {
+        if (player.isHit()) {
+            player.stand(printHands);
         }
-    }
-
-    private void validateCardSize(final List<List<Card>> cards) {
-        if (cards.size() != stateRepository.values().size()) {
-            throw new IllegalArgumentException("카드 묶음 수량이 플레이어 수량과 맞지 않습니다.");
-        }
-    }
-
-    public void addCardTo(final String name, final Card card) {
-        final State state = findState(name);
-        state.draw(card);
-    }
-
-    private State findState(final String name) {
-        final PlayerName playerName = new PlayerName(name);
-        validatePlayerName(playerName);
-
-        return stateRepository.get(playerName);
     }
 
     public Map<PlayerName, BetRevenue> determineBetRevenue(final State dealerState) {
-        final Map<PlayerName, BetRevenue> playersWinStatus = new LinkedHashMap<>();
+        final Map<PlayerName, BetRevenue> playerBetRevenue = new LinkedHashMap<>();
 
-        for (Entry<PlayerName, State> entry : stateRepository.entrySet()) {
-            final PlayerName name = entry.getKey();
-            final BetStatus betStatus = BetStatus.of(dealerState, entry.getValue());
-            final BetAmount betAmount = betAmountRepository.get(name);
+        for (final Player player : players) {
+            final BetStatus betStatus = BetStatus.of(dealerState, player.getState());
+            final BetAmount betAmount = player.getBetAmount();
 
-            playersWinStatus.put(name, betStatus.applyLeverage(betAmount));
-
+            playerBetRevenue.put(player.getName(), betStatus.applyLeverage(betAmount));
         }
-        return Collections.unmodifiableMap(playersWinStatus);
+
+        return Collections.unmodifiableMap(playerBetRevenue);
     }
 
     public boolean hasName(final String other) {
-        return stateRepository.keySet().stream()
+        return players.stream()
+                .map(Player::getName)
                 .anyMatch(name -> name.equals(new PlayerName(other)));
     }
 
-    public boolean isNotDead(final String name) {
-        final State state = findState(name);
-        return !state.getHands().calculateScore().isDead();
-    }
-
-    public boolean isAllDead() {
-        return stateRepository.values().stream()
-                .allMatch(state -> state.getHands().calculateScore().isDead());
-    }
-
-    public int count() {
-        return stateRepository.size();
-    }
-
-    public Hands getHandsOf(final String name) {
-        return findState(name).getHands();
-    }
-
-    public List<PlayerName> getNames() {
-        return stateRepository.keySet().stream().toList();
+    public boolean isAllBurst() {
+        return players.stream()
+                .allMatch(Player::isBurst);
     }
 
     public Map<PlayerName, Hands> getPlayersHands() {
-        return stateRepository.entrySet().stream()
-                .collect(toMap(Entry::getKey,
-                        entry -> entry.getValue().getHands(),
+        return players.stream()
+                .collect(toMap(Player::getName,
+                        Player::getHands,
                         (v1, v2) -> v1,
                         LinkedHashMap::new));
+    }
+
+    public List<PlayerName> getNames() {
+        return players.stream()
+                .map(Player::getName)
+                .toList();
     }
 }

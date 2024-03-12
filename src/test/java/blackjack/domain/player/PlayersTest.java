@@ -1,12 +1,9 @@
 package blackjack.domain.player;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
+import blackjack.domain.dealer.Dealer;
+import blackjack.domain.dealer.Deck;
 import blackjack.exception.NeedRetryException;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -17,49 +14,9 @@ class PlayersTest {
     @DisplayName("중복된 플레이어를 생성할 수 없다.")
     @Test
     void validateDuplicate() {
-        final List<String> names = List.of("kirby", "kirby");
-        assertThatThrownBy(() -> Players.from(names))
+        final List<PlayerName> names = List.of(new PlayerName("kirby"), new PlayerName("kirby"));
+        assertThatThrownBy(() -> Players.of(names, new Dealer(Deck.create())))
                 .isInstanceOf(NeedRetryException.class)
                 .hasMessage("중복된 이름의 참여자는 참여할 수 없습니다.");
-    }
-
-    @DisplayName("카드를 참가자 별로 2장씩 나눠준다.")
-    @Test
-    void divideCard() {
-        // given
-        String kirby = "kirby";
-        String pobi = "pobi";
-        Players players = Players.from(List.of(kirby, pobi));
-        Card card1 = Card.of(CardNumber.ACE, CardShape.SPADE);
-        Card card2 = Card.of(CardNumber.TWO, CardShape.SPADE);
-        Card card3 = Card.of(CardNumber.THREE, CardShape.SPADE);
-        Card card4 = Card.of(CardNumber.FOUR, CardShape.SPADE);
-        List<List<Card>> cardsBundle = List.of(List.of(card1, card2), List.of(card3, card4));
-
-        // when
-        players.divideCard(cardsBundle);
-
-        // then
-        assertAll(
-                () -> assertThat(players.getHandsOf(kirby).getCards())
-                        .hasSize(2)
-                        .containsExactly(card1, card2),
-                () -> assertThat(players.getHandsOf(pobi).getCards())
-                        .hasSize(2)
-                        .containsExactly(card3, card4));
-    }
-
-    @DisplayName("카드를 참가자에게 나눠줄 때 수량이 참가자 수의 2배와 다르면 안된다.")
-    @Test
-    void validateCardSize() {
-        // given
-        Players players = Players.from(List.of("kirby", "pobi"));
-        List<List<Card>> cards = List.of(List.of(Card.of(CardNumber.ACE, CardShape.SPADE),
-                Card.of(CardNumber.TWO, CardShape.SPADE)));
-
-        // when
-        assertThatThrownBy(() -> players.divideCard(cards))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("카드 묶음 수량이 플레이어 수량과 맞지 않습니다.");
     }
 }

@@ -3,18 +3,22 @@ package blackjack.domain.player.bet;
 import blackjack.exception.NeedRetryException;
 import java.util.Objects;
 
-public class BetAmount {
+public final class BetAmount {
 
     private final int value;
 
+    public BetAmount() {
+        value = 0;
+    }
+
     public BetAmount(final int value) {
-        validatePositive(value);
+        validatePositiveOrZero(value);
         this.value = value;
     }
 
-    private void validatePositive(final int value) {
+    private void validatePositiveOrZero(final int value) {
         if (value < 0) {
-            throw new NeedRetryException("배팅 금액은 양수만 가능합니다.");
+            throw new NeedRetryException("배팅 금액은 0이상만 가능합니다.");
         }
     }
 

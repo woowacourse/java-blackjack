@@ -1,7 +1,5 @@
 package blackjack.domain.player.bet;
 
-import blackjack.domain.rule.state.Blackjack;
-import blackjack.domain.rule.state.Burst;
 import blackjack.domain.rule.state.State;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
@@ -30,14 +28,22 @@ public enum BetStatus {
         this.condition = condition;
     }
     public static BetStatus of(final State dealerState, final State playerState) {
+        validateState(dealerState, playerState);
+
         return Arrays.stream(values())
                 .filter(betStatus -> betStatus.condition.test(dealerState, playerState))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("잘못된 점수입니다."));
     }
 
+    private static void validateState(final State dealerState, final State playerState) {
+        if (dealerState.isHit() || playerState.isHit()) {
+            throw new IllegalStateException("Hit 상태에서 결과를 계산할 수 없습니다.");
+        }
+    }
+
     private static boolean isStartBlackjack(final State state) {
-        return state instanceof Blackjack;
+        return state.isBlackjack();
     }
 
     private static boolean isNotStartBlackjack(final State state) {
@@ -45,7 +51,7 @@ public enum BetStatus {
     }
 
     private static boolean isBurst(final State state) {
-        return state instanceof Burst;
+        return state.isBurst();
     }
 
     private static boolean isNotBurst(final State state) {

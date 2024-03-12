@@ -3,17 +3,24 @@ package blackjack.domain.rule.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 
-public final class Burst implements State {
+public final class BurstState implements State {
 
     private final Hands hands;
+    private final int hitCount;
 
-    public Burst(final Hands hands) {
+    public BurstState(final Hands hands) {
         this.hands = hands;
+        this.hitCount = 0;
+    }
+
+    public BurstState(final Hands hands, final int hitCount) {
+        this.hands = hands;
+        this.hitCount = hitCount;
     }
 
     @Override
-    public State start(final Card first, final Card second) {
-        throw new UnsupportedOperationException(ERROR_MESSAGE);
+    public boolean isBurst() {
+        return true;
     }
 
     @Override
@@ -29,5 +36,10 @@ public final class Burst implements State {
     @Override
     public Hands getHands() {
         return new Hands(hands.getCards());
+    }
+
+    @Override
+    public int countHit() {
+        return hitCount;
     }
 }

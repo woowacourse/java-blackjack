@@ -7,21 +7,19 @@ import java.util.Map;
 
 public record BetRevenueResultDto(
         List<PlayerBetResultDto> playersBetResult,
-        DealerBetResultDto dealerBetResults
+        BetRevenue dealerRevenue
 ) {
 
     public static BetRevenueResultDto of(
             final Map<PlayerName, BetRevenue> playersBetResult,
-            final BetRevenue dealerBetRevenue,
-            final String dealerName
+            final BetRevenue dealerBetRevenue
     ) {
-        return new BetRevenueResultDto(convertToPlayersDto(playersBetResult), DealerBetResultDto.of(dealerName, dealerBetRevenue));
+        return new BetRevenueResultDto(convertToPlayersDto(playersBetResult), dealerBetRevenue);
     }
 
-    private static List<PlayerBetResultDto> convertToPlayersDto(
-            final Map<PlayerName, BetRevenue> playersBetResult) {
+    private static List<PlayerBetResultDto> convertToPlayersDto(final Map<PlayerName, BetRevenue> playersBetResult) {
         return playersBetResult.entrySet().stream()
-                .map(entry -> PlayerBetResultDto.of(entry.getKey(), entry.getValue()))
+                .map(entry -> new PlayerBetResultDto(entry.getKey(), entry.getValue()))
                 .toList();
     }
 }

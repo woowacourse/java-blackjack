@@ -1,14 +1,15 @@
 package blackjack.controller;
 
+import blackjack.domain.player.PlayerName;
+import blackjack.domain.player.bet.BetAmount;
 import blackjack.dto.BetRevenueResultDto;
-import blackjack.dto.DealerMoreCardsDto;
 import blackjack.dto.FinalHandsScoreDto;
-import blackjack.dto.PlayerCardsDto;
 import blackjack.exception.ExceptionHandler;
-import blackjack.service.BlackjackGame;
+import blackjack.domain.BlackjackGame;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
@@ -22,72 +23,39 @@ public class BlackjackController {
 
     public void run() {
         final BlackjackGame blackjackGame = initGame();
-        saveAllPlayersBetAmount(blackjackGame);
-
-        outputView.printStartCards(blackjackGame.start());
-
-        if (blackjackGame.isNotDealerBlackjack()) {
-            playGame(blackjackGame);
-        }
-
+        playGame(blackjackGame);
         finishGame(blackjackGame);
     }
 
     private BlackjackGame initGame() {
-        return ExceptionHandler.retryWithSupplier(() ->
+        final BlackjackGame blackjackGame = ExceptionHandler.retryWithSupplier(() ->
                 new BlackjackGame(inputView.readPlayerNames()), outputView::printError);
+
+        saveAllPlayersBetAmount(blackjackGame);
+        return blackjackGame;
     }
 
     private void saveAllPlayersBetAmount(final BlackjackGame blackjackGame) {
-        final List<String> playersName = blackjackGame.getPlayersName();
+        final List<PlayerName> playersName = blackjackGame.getPlayersName();
+        final Map<PlayerName, BetAmount> playerBetAmounts = readBetAmount(playersName);
 
-        for (final String name : playersName) {
-            saveBetAmount(blackjackGame, name);
-        }
+        blackjackGame.saveBetAmount(playerBetAmounts);
     }
 
-    private void saveBetAmount(final BlackjackGame blackjackGame, final String name) {
-        ExceptionHandler.retryWithRunnable(() ->
-                blackjackGame.saveBetAmountByName(inputView.readBetAmount(name), name), outputView::printError);
+    private Map<PlayerName, BetAmount> readBetAmount(final List<PlayerName> names) {
+        return ExceptionHandler.retryWithSupplier(() -> inputView.readBetAmounts(names), outputView::printError);
     }
 
     private void playGame(final BlackjackGame blackjackGame) {
-        final List<String> playerNames = blackjackGame.getPlayersName();
+        outputView.printStartCards(blackjackGame.getStartCards());
 
-        for (final String name : playerNames) {
-            runPlayerTurn(blackjackGame, name);
-        }
-
-        final DealerMoreCardsDto dealerMoreCards = blackjackGame.giveDealerMoreCards();
-        outputView.printDealerMoreCard(dealerMoreCards);
+        blackjackGame.playGame(this::needMoreCard, outputView::printPlayerCard, outputView::printDealerMoreCard);
     }
 
-    private void runPlayerTurn(final BlackjackGame blackjackGame, final String name) {
-        boolean isFirst = true;
-
-        while (isContinue(blackjackGame, name)) {
-            blackjackGame.addCardToPlayers(name);
-            printPlayerCards(blackjackGame, name);
-            isFirst = false;
-        }
-
-        if (isFirst) {
-            printPlayerCards(blackjackGame, name);
-        }
-    }
-
-    private boolean isContinue(final BlackjackGame blackjackGame, final String name) {
-        return blackjackGame.isPlayerAliveByName(name) && needMoreCard(name);
-    }
-
-    private boolean needMoreCard(final String name) {
+    private boolean needMoreCard(final PlayerName name) {
         return ExceptionHandler.retryWithSupplier(() -> inputView.readNeedMoreCard(name), outputView::printError);
     }
 
-    private void printPlayerCards(final BlackjackGame blackjackGame, final String name) {
-        final PlayerCardsDto playersCards = blackjackGame.getCardsOf(name);
-        outputView.printPlayerCard(playersCards);
-    }
 
     private void finishGame(final BlackjackGame blackjackGame) {
         final FinalHandsScoreDto finalHandsScore = blackjackGame.getFinalHandsScore();

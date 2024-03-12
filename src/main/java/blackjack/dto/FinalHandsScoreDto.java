@@ -6,13 +6,13 @@ import blackjack.domain.player.PlayerName;
 import java.util.List;
 import java.util.Map;
 
-public record FinalHandsScoreDto(List<PlayerHandsScoreDto> playersHandsScore, PlayerHandsScoreDto dealerHandsScore) {
+public record FinalHandsScoreDto(List<PlayerHandsScoreDto> playersHandsScore, Hands dealerHands) {
 
     public static FinalHandsScoreDto of(final Map<PlayerName, Hands> playersHands, final Dealer dealer) {
         final List<PlayerHandsScoreDto> handsScores = playersHands.entrySet().stream()
-                .map(entry -> PlayerHandsScoreDto.of(entry.getKey(), entry.getValue()))
+                .map(entry -> new PlayerHandsScoreDto(entry.getKey(), entry.getValue()))
                 .toList();
 
-        return new FinalHandsScoreDto(handsScores, PlayerHandsScoreDto.of(new PlayerName(Dealer.DEALER_NAME), dealer.getHands()));
+        return new FinalHandsScoreDto(handsScores, dealer.getHands());
     }
 }

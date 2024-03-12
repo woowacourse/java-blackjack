@@ -17,7 +17,7 @@ class BetAmountTest {
     void validateNegative(int betAmount) {
         assertThatThrownBy(() -> new BetAmount(betAmount))
                 .isInstanceOf(NeedRetryException.class)
-                .hasMessage("배팅 금액은 양수만 가능합니다.");
+                .hasMessage("배팅 금액은 0이상만 가능합니다.");
     }
 
     @DisplayName("배팅금액은 0이상이다.")

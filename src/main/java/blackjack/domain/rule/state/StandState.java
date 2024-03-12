@@ -3,28 +3,35 @@ package blackjack.domain.rule.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 
-public final class Stand implements State {
+public final class StandState implements State {
 
     private final Hands hands;
+    private final int hitCount;
 
-    public Stand(final Hands hands) {
+    public StandState(final Hands hands) {
         this.hands = hands;
+        this.hitCount = 0;
+    }
+
+    public StandState(final Hands hands, final int hitCount) {
+        this.hands = hands;
+        this.hitCount = hitCount;
     }
 
     public static State from(final Hands hands) {
         if (hands.calculateScore().isDead()) {
-            return new Burst(hands);
+            return new BurstState(hands);
         }
         if (hands.calculateScore().isBlackjack() && hands.isSizeOf(State.START_CARD_COUNT)) {
-            return new Blackjack(hands);
+            return new BlackjackState(hands);
         }
 
-        return new Stand(hands);
+        return new StandState(hands);
     }
 
     @Override
-    public State start(final Card first, final Card second) {
-        throw new UnsupportedOperationException(ERROR_MESSAGE);
+    public boolean isStand() {
+        return true;
     }
 
     @Override
@@ -33,12 +40,17 @@ public final class Stand implements State {
     }
 
     @Override
-    public Stand stand() {
-        return new Stand(hands);
+    public StandState stand() {
+        throw new UnsupportedOperationException(ERROR_MESSAGE);
     }
 
     @Override
     public Hands getHands() {
         return new Hands(hands.getCards());
+    }
+
+    @Override
+    public int countHit() {
+        return hitCount;
     }
 }
