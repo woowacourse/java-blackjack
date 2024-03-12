@@ -1,5 +1,11 @@
 package blackjackgame.domain.blackjack;
 
+import static blackjackgame.domain.blackjack.CardResult.BLACKJACK;
+import static blackjackgame.domain.blackjack.CardResult.BUST;
+import static blackjackgame.domain.blackjack.GameResult.BIG_WIN;
+import static blackjackgame.domain.blackjack.GameResult.LOSE;
+import static blackjackgame.domain.blackjack.GameResult.WIN;
+
 import blackjackgame.domain.gamers.CardHolder;
 
 public class GameResultCalculator {
@@ -7,29 +13,35 @@ public class GameResultCalculator {
     private GameResultCalculator() {
     }
 
-    public static GameResult calculate(CardHolder baseCardHolderGamer, CardHolder otherCardHolderGamer) {
-        if (baseCardHolderGamer.isDead() && otherCardHolderGamer.isDead()) {
-            return GameResult.TIE;
+    public static GameResult calculate(CardHolder baseCardHolder, CardHolder otherCardHolder) {
+        CardResult baseCardResult = baseCardHolder.getCardResult();
+        CardResult otherCardResult = otherCardHolder.getCardResult();
+
+        if (baseCardResult == BLACKJACK) {
+            return calculateWhenBaseBlackjack(otherCardResult);
         }
-        if (baseCardHolderGamer.isDead()) {
-            return GameResult.LOSE;
+        if (baseCardResult == BUST) {
+            return LOSE;
         }
-        if (otherCardHolderGamer.isDead()) {
-            return GameResult.WIN;
-        }
-        return getGameResultWhenNobodyDead(baseCardHolderGamer, otherCardHolderGamer);
+        return calculateWhenBaseNormal(otherCardResult,
+                baseCardHolder.getSummationCardPoint(), otherCardHolder.getSummationCardPoint());
     }
 
-    private static GameResult getGameResultWhenNobodyDead(CardHolder baseCardHolderGamer, CardHolder otherCardHolderGamer) {
-        SummationCardPoint baseGamerSummationCardPoint = baseCardHolderGamer.getSummationCardPoint();
-        SummationCardPoint otherGamerSummationCardPoint = otherCardHolderGamer.getSummationCardPoint();
+    private static GameResult calculateWhenBaseBlackjack(CardResult otherCardResult) {
+        if (otherCardResult == BLACKJACK) {
+            return WIN;
+        }
+        return BIG_WIN;
+    }
 
-        if (baseGamerSummationCardPoint.isBiggerThan(otherGamerSummationCardPoint)) {
-            return GameResult.WIN;
+    private static GameResult calculateWhenBaseNormal(CardResult otherCardResult, SummationCardPoint baseSummation,
+                                                      SummationCardPoint otherSummation) {
+        if (otherCardResult == BUST) {
+            return WIN;
         }
-        if (baseGamerSummationCardPoint.equals(otherGamerSummationCardPoint)) {
-            return GameResult.TIE;
+        if (otherSummation.isBiggerThan(baseSummation)) {
+            return LOSE;
         }
-        return GameResult.LOSE;
+        return WIN;
     }
 }

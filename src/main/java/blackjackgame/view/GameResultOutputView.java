@@ -33,7 +33,7 @@ public class GameResultOutputView {
         if (gameResult == GameResult.LOSE) {
             return "패";
         }
-        if (gameResult == GameResult.TIE) {
+        if (gameResult == GameResult.BIG_WIN) {
             return "무";
         }
         throw new IllegalArgumentException("없는 승패 입니다.");

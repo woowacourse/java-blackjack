@@ -11,7 +11,7 @@ public class HoldingCards {
 
     private final List<Card> holdingCards;
 
-    private HoldingCards(List<Card> holdingCards) {
+    public HoldingCards(List<Card> holdingCards) {
         this.holdingCards = holdingCards;
     }
 

@@ -1,5 +1,7 @@
 package blackjackgame.domain.gamers;
 
+import blackjackgame.domain.blackjack.CardResult;
+import blackjackgame.domain.blackjack.CardResultCalculator;
 import blackjackgame.domain.blackjack.HoldingCards;
 import blackjackgame.domain.blackjack.SummationCardPoint;
 import blackjackgame.domain.card.Card;
@@ -45,5 +47,9 @@ public class CardHolder {
 
     public boolean isDead() {
         return getSummationCardPoint().isDeadPoint();
+    }
+
+    public CardResult getCardResult() {
+        return CardResultCalculator.calculate(holdingCards);
     }
 }
