@@ -13,11 +13,6 @@ public class Dealer extends User {
     }
 
     @Override
-    public boolean isAddable() {
-        return userDeck.isAddable();
-    }
-
-    @Override
     public String getNameValue() {
         throw new IllegalStateException("딜러 이름을 불러오는 방식이 잘못되었습니다.");
     }

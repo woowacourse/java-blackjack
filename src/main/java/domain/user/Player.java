@@ -17,11 +17,6 @@ public class Player extends User {
     }
 
     @Override
-    public boolean isAddable() {
-        return userDeck.isAddable();
-    }
-
-    @Override
     public String getNameValue() {
         return name.value();
     }

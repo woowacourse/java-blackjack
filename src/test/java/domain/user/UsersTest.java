@@ -53,7 +53,7 @@ class UsersTest {
     void setStartCardsTest() {
         Users users = new Users(List.of(new Player(new Name("a"))));
 
-        users.setStartCards(new TotalDeck(TotalDeckGenerator.generate()));
+        users.setStartCards(new TotalDeck(new TotalDeckGenerator().generate()));
 
         User dealer = users.getUsers().get(0);
         assertThat(dealer.userDeck.getCards()).hasSize(2);

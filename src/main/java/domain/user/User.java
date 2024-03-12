@@ -23,9 +23,11 @@ public abstract class User {
         return userDeck.busted();
     }
 
-    public abstract boolean isPlayer();
+    public boolean isAddable() {
+        return userDeck.isAddable();
+    }
 
-    public abstract boolean isAddable();
+    public abstract boolean isPlayer();
 
     public List<Card> getVisibleCards() {
         return userDeck.getVisibleCards();
