@@ -12,12 +12,12 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class CardsTest {
+class HandTest {
 
     @DisplayName("카드 숫자 합 계산한다")
     @Test
     void testCalculateTotalCardNumbers() {
-        Cards cards = new Cards(
+        Hand cards = new Hand(
             List.of(new Card(JACK, DIAMOND), new Card(FIVE, CLOVER), new Card(ACE, HEART))
         );
         assertThat(cards.calculateTotalNumbers()).isEqualTo(16);

@@ -22,7 +22,7 @@ class RandomCardTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 5, 10, 29, 60})
     void testPickCards(int count) {
-        Cards cards = RandomCard.pickCards(count);
+        Hand cards = RandomCard.pickCards(count);
         assertThat(cards.getCards()).hasSize(count);
 
         cards.getCards().forEach(card -> {

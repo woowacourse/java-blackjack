@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.stream.Stream;
 import model.card.Card;
-import model.card.Cards;
+import model.card.Hand;
 import model.dealer.Dealer;
 import model.player.Player;
 import model.player.Players;
@@ -30,7 +30,7 @@ class BlackjackGameTest {
     @Test
     void testDistributeCardsForSetting() {
         BlackjackGame blackjackGame = prepareBlackjackGame();
-        Cards cards = new Cards(
+        Hand cards = new Hand(
             List.of(new Card(JACK, DIAMOND), new Card(FIVE, CLOVER), new Card(ACE, HEART),
                 new Card(SEVEN, CLOVER), new Card(SIX, DIAMOND), new Card(ACE, SPADE))
         );
@@ -71,7 +71,7 @@ class BlackjackGameTest {
     @DisplayName("최초 딜러의 카드 합이 16점 이하인지 유무를 반환한다")
     @ParameterizedTest
     @MethodSource("provideCardsAndExpectedCardSize")
-    void testIsDealerPossibleHit(Cards cards, boolean isPossibleHit) {
+    void testIsDealerPossibleHit(Hand cards, boolean isPossibleHit) {
         Dealer dealer = new Dealer(cards);
         Players players = Players.from(List.of("lily", "jojo"));
         BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
@@ -81,8 +81,8 @@ class BlackjackGameTest {
 
     private static Stream<Arguments> provideCardsAndExpectedCardSize() {
         return Stream.of(
-            Arguments.of(new Cards(List.of(new Card(JACK, DIAMOND), new Card(SEVEN, CLOVER))), false),
-            Arguments.of(new Cards(List.of(new Card(JACK, DIAMOND), new Card(SIX, CLOVER))), true)
+            Arguments.of(new Hand(List.of(new Card(JACK, DIAMOND), new Card(SEVEN, CLOVER))), false),
+            Arguments.of(new Hand(List.of(new Card(JACK, DIAMOND), new Card(SIX, CLOVER))), true)
         );
     }
 }

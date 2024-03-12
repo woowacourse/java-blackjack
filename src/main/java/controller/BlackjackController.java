@@ -6,7 +6,7 @@ import model.blackjackgame.BlackjackGame;
 import model.blackjackgame.GameResult;
 import model.blackjackgame.HitAnswer;
 import model.card.Card;
-import model.card.Cards;
+import model.card.Hand;
 import model.card.RandomCard;
 import model.dealer.Dealer;
 import model.player.Player;
@@ -36,7 +36,7 @@ public class BlackjackController {
 
     private void initGame(BlackjackGame blackjackGame) {
         int cardCount = blackjackGame.determineInitCardCount();
-        Cards cards = RandomCard.pickCards(cardCount);
+        Hand cards = RandomCard.pickCards(cardCount);
 
         blackjackGame.initCards(cards);
         OutputView.printInitCards(blackjackGame);

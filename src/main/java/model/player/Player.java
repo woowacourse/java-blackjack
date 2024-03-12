@@ -3,7 +3,7 @@ package model.player;
 import java.util.List;
 import java.util.Objects;
 import model.card.Card;
-import model.card.Cards;
+import model.card.Hand;
 
 public class Player {
 
@@ -11,13 +11,13 @@ public class Player {
     private static final int HIT_CONDITION = 22;
 
     private final String name;
-    private final Cards cards;
+    private final Hand cards;
 
     public Player(String name) {
-        this(name, new Cards(List.of()));
+        this(name, new Hand(List.of()));
     }
 
-    public Player(String name, Cards cards) {
+    public Player(String name, Hand cards) {
         validateEmptyName(name);
         this.name = name;
         this.cards = cards;
@@ -35,12 +35,12 @@ public class Player {
     }
 
     public Player hitCard(Card card) {
-        Cards addedCards = cards.add(card);
+        Hand addedCards = cards.add(card);
         return new Player(name, addedCards);
     }
 
     public Player hitCards(List<Card> cards) {
-        Cards addedCards = this.cards.addAll(cards);
+        Hand addedCards = this.cards.addAll(cards);
         return new Player(name, addedCards);
     }
 
@@ -69,7 +69,7 @@ public class Player {
         return name;
     }
 
-    public Cards getCards() {
+    public Hand getCards() {
         return cards;
     }
 }

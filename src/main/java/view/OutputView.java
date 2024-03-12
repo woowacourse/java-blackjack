@@ -13,7 +13,7 @@ import model.blackjackgame.GameResult;
 import model.blackjackgame.GameScore;
 import model.blackjackgame.ResultStatus;
 import model.card.Card;
-import model.card.Cards;
+import model.card.Hand;
 import model.dealer.Dealer;
 import model.player.Player;
 import model.player.Players;
@@ -82,7 +82,7 @@ public class OutputView {
         }
     }
 
-    private static String createCardsMessage(Cards cards) {
+    private static String createCardsMessage(Hand cards) {
         return cards.getCards()
             .stream()
             .map(Card::toString)

@@ -2,19 +2,19 @@ package model.dealer;
 
 import java.util.List;
 import model.card.Card;
-import model.card.Cards;
+import model.card.Hand;
 
 public class Dealer {
 
     private static final int HIT_CONDITION = 17;
 
-    private final Cards cards;
+    private final Hand cards;
 
     public Dealer() {
-        this(new Cards(List.of()));
+        this(new Hand(List.of()));
     }
 
-    public Dealer(Cards cards) {
+    public Dealer(Hand cards) {
         this.cards = cards;
     }
 
@@ -24,12 +24,12 @@ public class Dealer {
     }
 
     public Dealer hitCard(Card card) {
-        Cards addedCards = cards.add(card);
+        Hand addedCards = cards.add(card);
         return new Dealer(addedCards);
     }
 
     public Dealer hitCards(List<Card> cards) {
-        Cards addedCards = this.cards.addAll(cards);
+        Hand addedCards = this.cards.addAll(cards);
         return new Dealer(addedCards);
     }
 
@@ -37,7 +37,7 @@ public class Dealer {
         return cards.size();
     }
 
-    public Cards getCards() {
+    public Hand getCards() {
         return cards;
     }
 }

@@ -2,7 +2,7 @@ package model.blackjackgame;
 
 import java.util.List;
 import model.card.Card;
-import model.card.Cards;
+import model.card.Hand;
 import model.dealer.Dealer;
 import model.player.Player;
 import model.player.Players;
@@ -20,7 +20,7 @@ public class BlackjackGame {
         this.players = players;
     }
 
-    public void initCards(Cards cards) {
+    public void initCards(Hand cards) {
         List<Card> cardsElement = cards.getCards();
         dealer = dealer.hitCards(cardsElement.subList(0, INITIAL_CARD_COUNT));
         players = players.hitCards(cardsElement.subList(INITIAL_CARD_COUNT, cardsElement.size()));

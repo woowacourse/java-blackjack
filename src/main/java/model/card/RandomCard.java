@@ -27,10 +27,10 @@ public class RandomCard {
             .toList();
     }
 
-    public static Cards pickCards(int count) {
+    public static Hand pickCards(int count) {
         return Stream.generate(RandomCard::pickCard)
             .limit(count)
-            .collect(collectingAndThen(toList(), Cards::new));
+            .collect(collectingAndThen(toList(), Hand::new));
     }
 
     public static Card pickCard() {

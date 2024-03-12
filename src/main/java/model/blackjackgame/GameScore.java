@@ -1,9 +1,7 @@
 package model.blackjackgame;
 
-import java.util.List;
 import model.card.Card;
-import model.card.CardNumber;
-import model.card.Cards;
+import model.card.Hand;
 import model.dealer.Dealer;
 import model.player.Player;
 
@@ -24,29 +22,29 @@ public class GameScore {
     }
 
     public static GameScore from(Player player) {
-        Cards cards = player.getCards();
+        Hand cards = player.getCards();
         int totalScore = calculateTotalScore(cards);
         return new GameScore(player.getName(), totalScore);
     }
 
     public static GameScore from(Dealer dealer) {
-        Cards cards = dealer.getCards();
+        Hand cards = dealer.getCards();
         int totalScore = calculateTotalScore(cards);
         return new GameScore(DEALER_NAME, totalScore);
     }
 
-    private static int calculateTotalScore(Cards cards) {
-        List<Card> cardsElement = cards.getCards();
+    private static int calculateTotalScore(Hand cards) {
         int totalScore = cards.calculateTotalNumbers();
-        int countA = (int) cardsElement.stream()
-            .filter(card -> card.getNumber().equals(CardNumber.ACE))
-            .count();
-
-        while (totalScore < MINIMUM_SCORE_FOR_ACE_HIGH && countA > 0) {
+        while (totalScore < MINIMUM_SCORE_FOR_ACE_HIGH && hasAce(cards)) {
             totalScore += ACE_SCORE_HIGH - ACE_SCORE_LOW;
-            countA--;
         }
         return totalScore;
+    }
+
+    private static boolean hasAce(Hand cards) {
+        return cards.getCards()
+            .stream()
+            .anyMatch(Card::hasAce);
     }
 
     public boolean isNotBurst() {
