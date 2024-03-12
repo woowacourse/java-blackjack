@@ -6,23 +6,23 @@ import blackjack.domain.cards.Hand;
 
 public class Player {
     private final Name name;
-    private final Hand hand;
+    private final PlayerStatus playerStatus;
 
     public Player(Name name) {
         this.name = name;
-        this.hand = new Hand();
+        this.playerStatus = new PlayerStatus();
     }
 
     public void receiveCard(Card card) {
-        hand.addCard(card);
+        playerStatus.addCard(card);
     }
 
     public int calculateScore() {
-        return hand.calculateTotalScore();
+        return playerStatus.calculateScore();
     }
 
     public boolean isNotOver(int boundaryScore) {
-        return hand.calculateTotalScore() < boundaryScore;
+        return playerStatus.calculateScore() < boundaryScore;
     }
 
     public Name getName() {
@@ -30,6 +30,6 @@ public class Player {
     }
 
     public Hand getHand() {
-        return hand;
+        return playerStatus.getHand();
     }
 }
