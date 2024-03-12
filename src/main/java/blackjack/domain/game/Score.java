@@ -1,9 +1,12 @@
 package blackjack.domain.game;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Score {
-    // TODO: Score 객체 캐싱
+    private static final Map<Integer, Score> scorePool = new HashMap<>();
+
     private static final int MINIMUM_VALUE = 0;
     private static final int BLACKJACK_MAX_SCORE = 21;
     private static final int DEALER_MINIMUM_SCORE = 17;
@@ -33,7 +36,9 @@ public class Score {
     }
 
     public static Score of(int value) {
-        return new Score(value, false);
+        return scorePool.computeIfAbsent(
+                value, mapping -> new Score(value, false)
+        );
     }
 
     public static Score blackJackScore() {
