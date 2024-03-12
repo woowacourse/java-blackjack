@@ -1,5 +1,6 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static util.CardsSupplier.createSevenScoreWithTwoCards;
 import static util.CardsSupplier.createSixteenScoreWithTwoCards;
 import static util.ParticipantSupplier.createDealer;
@@ -13,13 +14,13 @@ import domain.card.Suit;
 import domain.constants.CardCommand;
 import domain.game.BlackJackGame;
 import domain.game.deck.Deck;
+import domain.game.deck.DeckGenerator;
 import domain.game.deck.RandomDeckGenerator;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
 import java.util.Arrays;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -33,9 +34,9 @@ class BlackJackGameTest {
 
         InitialCardStatus result = blackJackGame.initialize();
 
-        Assertions.assertThat(result.initialCardSize()).isEqualTo(2);
+        assertThat(result.initialCardSize()).isEqualTo(2);
         for (ParticipantHandStatus status : result.statuses()) {
-            Assertions.assertThat(status.hand().size()).isEqualTo(getExpectedSize(status));
+            assertThat(status.hand().size()).isEqualTo(getExpectedSize(status));
         }
     }
 
@@ -54,13 +55,14 @@ class BlackJackGameTest {
         void giveCardsToPlayerWhileNotBusted() {
             // given
             Player player = createPlayer("pobi", createSixteenScoreWithTwoCards());
+            CustomizedDeckGenerator generator = new CustomizedDeckGenerator();
             BlackJackGame blackJackGame = new BlackJackGame(
                     new Participants(List.of(player)),
-                    new Deck(List.of(
+                    generator.generate(
                             new Card(Denomination.TWO, Suit.CLOVER),
                             new Card(Denomination.FOUR, Suit.HEART),
                             new Card(Denomination.FOUR, Suit.DIAMOND)
-                    ))
+                    )
             );
 
             // when
@@ -72,7 +74,7 @@ class BlackJackGameTest {
             );
 
             // then
-            Assertions.assertThat(player.getCardSize()).isEqualTo(4);
+            assertThat(player.getCardSize()).isEqualTo(4);
         }
 
         @DisplayName("딜러가 아닌 참가자는 카드의 점수가 21 이하여도 STAND 명령을 주면 카드를 그만 받는다.")
@@ -80,12 +82,13 @@ class BlackJackGameTest {
         void giveCardsToPlayerWhileEnterHit() {
             // given
             Player player = createPlayer("pobi", createSixteenScoreWithTwoCards());
+            CustomizedDeckGenerator generator = new CustomizedDeckGenerator();
             BlackJackGame blackJackGame = new BlackJackGame(
                     new Participants(List.of(player)),
-                    new Deck(List.of(
+                    generator.generate(
                             new Card(Denomination.TWO, Suit.CLOVER),
                             new Card(Denomination.FOUR, Suit.DIAMOND)
-                    ))
+                    )
             );
 
             // when
@@ -97,7 +100,7 @@ class BlackJackGameTest {
             );
 
             // then
-            Assertions.assertThat(player.getCardSize()).isEqualTo(2);
+            assertThat(player.getCardSize()).isEqualTo(2);
         }
 
         @DisplayName("딜러는 카드의 점수가 17 미만인 동안 계속 카드를 받는다.")
@@ -105,13 +108,14 @@ class BlackJackGameTest {
         void giveCardsToDealerWhileUnderSeventeen() {
             // given
             Dealer dealer = createDealer(createSevenScoreWithTwoCards());
+            CustomizedDeckGenerator generator = new CustomizedDeckGenerator();
             BlackJackGame blackJackGame = new BlackJackGame(
                     new Participants(List.of(dealer)),
-                    new Deck(List.of(
+                    generator.generate(
                             new Card(Denomination.EIGHT, Suit.CLOVER),
                             new Card(Denomination.FIVE, Suit.DIAMOND),
                             new Card(Denomination.TWO, Suit.DIAMOND)
-                    ))
+                    )
             );
 
             // when
@@ -123,7 +127,15 @@ class BlackJackGameTest {
             );
 
             // then
-            Assertions.assertThat(dealer.getCardSize()).isEqualTo(4);
+            assertThat(dealer.getCardSize()).isEqualTo(4);
+        }
+    }
+
+    static class CustomizedDeckGenerator implements DeckGenerator {
+
+        @Override
+        public Deck generate(Card... cards) {
+            return new Deck(List.of(cards));
         }
     }
 }

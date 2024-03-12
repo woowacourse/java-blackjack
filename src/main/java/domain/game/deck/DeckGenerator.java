@@ -1,6 +1,8 @@
 package domain.game.deck;
 
+import domain.card.Card;
+
 @FunctionalInterface
 public interface DeckGenerator {
-    Deck generate();
+    Deck generate(Card... card);
 }

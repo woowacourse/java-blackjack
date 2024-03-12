@@ -9,13 +9,13 @@ import java.util.List;
 
 public class RandomDeckGenerator implements DeckGenerator {
     @Override
-    public Deck generate() {
-        List<Card> cards = new ArrayList<>();
+    public Deck generate(Card... cards) {
+        List<Card> createdCards = new ArrayList<>();
         for (Suit suit : Suit.values()) {
-            addCardsOfShape(cards, suit);
+            addCardsOfShape(createdCards, suit);
         }
-        Collections.shuffle(cards);
-        return new Deck(cards);
+        Collections.shuffle(createdCards);
+        return new Deck(createdCards);
     }
 
     private void addCardsOfShape(final List<Card> cards, final Suit suit) {
