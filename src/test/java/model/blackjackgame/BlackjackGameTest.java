@@ -47,16 +47,10 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = prepareBlackjackGame();
         Players players = blackjackGame.getPlayers();
         List<Player> playersElement = players.getPlayers();
-        List<Answer> answers = List.of(new Answer(true), new Answer(false));
         List<Card> cards = List.of(new Card(JACK, DIAMOND), new Card(FIVE, CLOVER));
-
-        for (int i = 0; i < answers.size(); i++) {
-            blackjackGame.hitOrStay(playersElement.get(i), answers.get(i), cards.get(i));
-        }
-
+        blackjackGame.hitForPlayer(playersElement.get(0), cards.get(0));
         Players updatedPlayers = blackjackGame.getPlayers();
         assertThat(updatedPlayers.getPlayers().get(0).cardsSize()).isEqualTo(1);
-        assertThat(updatedPlayers.getPlayers().get(1).cardsSize()).isEqualTo(0);
     }
 
     @DisplayName("딜러의 카드 합계가 16점 이하이면 카드가 1개 증가한 딜러 객체를 반환한다")
