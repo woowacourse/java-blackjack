@@ -1,9 +1,9 @@
 package domain;
 
 import domain.constant.GameResult;
-import domain.participant.Player;
+import domain.participant.PlayerName;
 
 import java.util.Map;
 
-public record GameResults(Map<Player, GameResult> playerGameResults) {
+public record GameResults(Map<PlayerName, GameResult> playerGameResults) {
 }

@@ -4,6 +4,7 @@ import domain.constant.GameResult;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
+import domain.participant.PlayerName;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,14 +31,14 @@ public class BlackJackGame {
     }
 
     public GameResults getGameResults(final Dealer dealer, final List<Player> players) {
-        Map<Player, GameResult> playerGameResults = new HashMap<>();
+        Map<PlayerName, GameResult> playerGameResults = new HashMap<>();
 
         players.forEach(player -> match(dealer, player, playerGameResults));
 
         return new GameResults(playerGameResults);
     }
 
-    private void match(final Dealer dealer, final Player player, final Map<Player, GameResult> playerGameResults) {
+    private void match(final Dealer dealer, final Player player, final Map<PlayerName, GameResult> playerGameResults) {
         if (dealer.isDealerWin(player)) {
             dealerWin(player, playerGameResults);
             return;
@@ -45,14 +46,14 @@ public class BlackJackGame {
         dealerLose(player, playerGameResults);
     }
 
-    private void dealerWin(final Player player, final Map<Player, GameResult> playerGameResults) {
-        playerGameResults.put(player, GameResult.LOSE);
+    private void dealerWin(final Player player, final Map<PlayerName, GameResult> playerGameResults) {
+        playerGameResults.put(player.getPlayerName(), GameResult.LOSE);
     }
 
-    private void dealerLose(final Player player, final Map<Player, GameResult> playerGameResults) {
+    private void dealerLose(final Player player, final Map<PlayerName, GameResult> playerGameResults) {
         if (player.isBlackJack()){
-            playerGameResults.put(player, GameResult.WIN_BY_BLACKJACK);
+            playerGameResults.put(player.getPlayerName(), GameResult.WIN_BY_BLACKJACK);
         }
-        playerGameResults.put(player, GameResult.WIN);
+        playerGameResults.put(player.getPlayerName(), GameResult.WIN);
     }
 }

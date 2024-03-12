@@ -72,6 +72,6 @@ public class OutputView {
         System.out.println("## 최종 수익");
         int dealerSum = -1 * bettingResult.values().stream().reduce(0, Integer::sum);
         System.out.println("딜러: " + dealerSum);
-        bettingResult.forEach((key, value) -> System.out.println(key + ": " + value));
+        bettingResult.forEach((key, value) -> System.out.println(key.value() + ": " + value));
     }
 }

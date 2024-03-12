@@ -1,9 +1,7 @@
 package controller;
 
 import domain.*;
-import domain.constant.GameResult;
 import domain.dto.DealerHandStatusDto;
-import domain.dto.PlayerGameResultDto;
 import domain.dto.PlayerHandStatusDto;
 import domain.dto.PlayingCardDto;
 import domain.participant.Dealer;
@@ -13,7 +11,6 @@ import domain.participant.PlayerNames;
 import view.InputView;
 import view.OutputView;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +44,7 @@ public class BlackJackController {
     }
 
     private void play(final BlackJackGame blackJackGame, final Betting betting, final Dealer dealer, final List<Player> players) {
-        setBettings(betting, players);
+        initBettingForPlayers(betting, players);
 
         firstDraw(blackJackGame, dealer, players);
         players.forEach(player -> playForPlayer(blackJackGame, player));
@@ -58,16 +55,22 @@ public class BlackJackController {
         OutputView.printFinalHandStatus(dealerHandStatusDto, playerHandStatusDtos);
     }
 
-    private void setBettings(final Betting betting, final List<Player> players) {
-        players.forEach(player -> setBetting(betting, player));
+    private void initBettingForPlayers(final Betting betting, final List<Player> players) {
+        players.forEach(player -> initBettingForPlayer(betting, player));
     }
 
-    private void setBetting(final Betting betting, final Player player) {
+    private void initBettingForPlayer(final Betting betting, final Player player) {
+        Amount amount = initAmount(player);
+        betting.setBetting(player.getPlayerName(), amount);
+    }
+
+    private Amount initAmount(final Player player) {
         try {
-            Amount amount = new Amount(InputView.inputAmount(player.getPlayerName().value()));
-            betting.setBetting(player.getPlayerName(), amount);
+            String inputAmount = InputView.inputAmount(player.getPlayerName().value());
+            return new Amount(inputAmount);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
+            return initAmount(player);
         }
     }
 
@@ -130,33 +133,9 @@ public class BlackJackController {
         OutputView.printDealerDrawMessage();
     }
 
-    private void finish(BlackJackGame blackJackGame, Betting betting, Dealer dealer, List<Player> players) {
+    private void finish(final BlackJackGame blackJackGame, final Betting betting, final Dealer dealer, final List<Player> players) {
         GameResults gameResults = blackJackGame.getGameResults(dealer, players);
-        Map<PlayerName, Integer> bettingResult = calculateBettings(betting, getPlayerGameResultDto(gameResults.playerGameResults()));
+        Map<PlayerName, Integer> bettingResult = betting.calculateBettingOnPlayers(gameResults);
         OutputView.printBettingResult(bettingResult);
-    }
-
-    private List<PlayerGameResultDto> getPlayerGameResultDto(final Map<Player, GameResult> playerGameResults) {
-        return playerGameResults.entrySet()
-                .stream()
-                .map(playerGameResult -> new PlayerGameResultDto(playerGameResult.getKey().getPlayerName(), playerGameResult.getValue()))
-                .toList();
-    }
-
-    private Map<PlayerName, Integer> calculateBettings(Betting betting, List<PlayerGameResultDto> playerGameResultDtos) {
-        Map<PlayerName, Integer> result = new HashMap<>();
-        playerGameResultDtos.forEach(
-                playerGameResultDto -> result.put(playerGameResultDto.playerName(), calculateBetting(betting, playerGameResultDto)));
-        return result;
-    }
-
-    private int calculateBetting(Betting betting, PlayerGameResultDto playerGameResultDto) {
-        if (playerGameResultDto.gameResult() == GameResult.WIN_BY_BLACKJACK) {
-            return (int) (betting.getBetting(playerGameResultDto.playerName()).getAmount() * 1.5);
-        }
-        if (playerGameResultDto.gameResult() == GameResult.WIN) {
-            return betting.getBetting(playerGameResultDto.playerName()).getAmount();
-        }
-        return betting.getBetting(playerGameResultDto.playerName()).getAmount() * -1;
     }
 }
