@@ -26,8 +26,6 @@ public abstract class Participant {
 
     public abstract boolean canHit();
 
-    public abstract boolean canNotHit();
-
     public String getName() {
         throw new IllegalCallerException("참여자의 이름이 정해지지 않았습니다");
     }
@@ -59,6 +57,9 @@ public abstract class Participant {
     }
 
     public boolean isPlayer() {
+        return false;
+    }
+    public boolean isDealer() {
         return false;
     }
     public List<Card> getHands() {

@@ -26,11 +26,6 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean canNotHit() {
-        return !canHit();
-    }
-
-    @Override
     public boolean isPlayer() {
         return true;
     }

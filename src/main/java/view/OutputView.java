@@ -16,12 +16,14 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 public class OutputView {
+    private static final String DEALER_NAME = "딜러";
+
     public static void printInitialStatus(final Dealer dealer, final Players players) {
         final List<String> playerNames = players.stream()
                 .map(Player::getName)
                 .toList();
 
-        System.out.println("딜러와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
+        System.out.println(DEALER_NAME + "와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
 
         printStatus(dealer);
         players.getValue().forEach(OutputView::printStatus);
@@ -33,7 +35,7 @@ public class OutputView {
         final StringBuilder stringBuilder = new StringBuilder(name + "카드: ");
         final List<String> cardInfos = new ArrayList<>();
         List<Card> hands = participant.getHands();
-        if (!participant.isPlayer()) {
+        if (participant.isDealer()) {
             hands = List.of(hands.get(0));
         }
         for (final var card : hands) {
@@ -69,7 +71,7 @@ public class OutputView {
         if (participant.isPlayer()) {
             return participant.getName();
         }
-        return "딜러";
+        return DEALER_NAME;
     }
 
     public static void printWinOrLose(final GameResult blackjackResult) {
@@ -81,7 +83,7 @@ public class OutputView {
     }
 
     private static void printDealerWinOrLose(final GameResult blackjackResult) {
-        System.out.print("딜러: ");
+        System.out.print(DEALER_NAME + ": ");
         final List<Integer> printOrder = List.of(blackjackResult.dealerWin(), blackjackResult.dealerLose(),
                 blackjackResult.dealerTie());
         final List<String> suffix = List.of("승", "패", "무");
@@ -109,7 +111,7 @@ public class OutputView {
 
     public static void printDealerHitMessage() {
         System.out.println();
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(DEALER_NAME + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     private static void printPlayerResult(final Player player, final PlayerResult playerResult) {

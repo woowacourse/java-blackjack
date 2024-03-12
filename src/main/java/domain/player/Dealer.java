@@ -27,8 +27,8 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean canNotHit() {
-        return !canHit();
+    public boolean isDealer() {
+        return true;
     }
 
     public PlayerResult compareHandsWith(final Player player) {
