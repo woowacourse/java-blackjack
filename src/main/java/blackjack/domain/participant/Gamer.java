@@ -15,19 +15,19 @@ public abstract class Gamer {
 
     abstract boolean canReceiveCard();
 
-    public boolean isBust() {
+    final public boolean isBust() {
         return hand.isBust();
     }
 
-    public boolean isBlackjack() {
+    final public boolean isBlackjack() {
         return hand.isBlackjack();
     }
 
-    public long getScore() {
+    final public long getScore() {
         return hand.calculateScore();
     }
 
-    public List<TrumpCard> getHandCards() {
+    final public List<TrumpCard> getHandCards() {
         return hand.getCards();
     }
 }
