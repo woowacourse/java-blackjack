@@ -47,7 +47,7 @@ public class BlackJackGame {
     }
 
     private void printPlayersInformation(Players players, Dealer dealer) {
-        outputView.printHandOutEvent(players, 2);
+        outputView.printHandOutEvent(players, Hand.INITIAL_HAND_SIZE);
         outputView.printDealerInitialHand(dealer);
         players.getPlayers().forEach(outputView::printPlayerHand);
     }

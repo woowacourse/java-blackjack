@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Hand {
 
-    private static final int INITIAL_HAND_SIZE = 2;
+    public static final int INITIAL_HAND_SIZE = 2;
     private static final int BLACK_JACK = 21;
     private static final int ACE_WEIGHT = 10;
 
