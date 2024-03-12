@@ -19,12 +19,12 @@ public class Card {
         return denomination.getScore();
     }
 
-    public String getDenominationExpression() {
-        return denomination.getExpression();
+    public Denomination getDenomination() {
+        return this.denomination;
     }
 
-    public String getEmblem() {
-        return emblem.getName();
+    public Emblem getEmblem() {
+        return this.emblem;
     }
 
     @Override

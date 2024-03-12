@@ -26,8 +26,8 @@ public class OutputView {
 
     private String generateOneCardHandMessage(Dealer dealer) {
         Card card = dealer.getFirstCardHand();
-        String message = card.getDenominationExpression() + card.getEmblem();
-        return formatCardHandMessage(dealer, message);
+        String cardDisplay = CardDisplay.generateCardMessage(card);
+        return formatCardHandMessage(dealer, cardDisplay);
     }
 
     private String generateAllCardHandMessage(Participant participant) {
@@ -37,7 +37,7 @@ public class OutputView {
 
     private String joinAllCardHand(List<Card> cardHand) {
         return cardHand.stream()
-                .map(card -> card.getDenominationExpression() + card.getEmblem())
+                .map(CardDisplay::generateCardMessage)
                 .collect(Collectors.joining(", "));
     }
 
