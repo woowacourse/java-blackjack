@@ -20,7 +20,7 @@ public class PlayerBetWallet {
     public static PlayerBetWallet from(int betAmount) {
         return new PlayerBetWallet(betAmount);
     }
-    
+
     public void registerProfitAmount(Result result) {
         validateAlreadySet();
         profitAmount = (int) (betAmount * result.getPayoutRate());
