@@ -17,16 +17,20 @@ public class GameController {
     }
 
     public static void run() {
-        Deck deck = Deck.createShuffledDeck();
-        Game game = makeGame();
-        Dealer gameDealer = game.getDealer();
-        Players gamePlayers = game.getPlayers();
+        try {
+            Deck deck = Deck.createShuffledDeck();
+            Game game = makeGame();
+            Dealer gameDealer = game.getDealer();
+            Players gamePlayers = game.getPlayers();
 
-        printInitialHands(gameDealer.getName(), gameDealer.getFirstCard(), gamePlayers.getPlayers());
-        confirmParticipantsHands(gamePlayers, deck, gameDealer);
+            printInitialHands(gameDealer.getName(), gameDealer.getFirstCard(), gamePlayers.getPlayers());
+            confirmParticipantsHands(gamePlayers, deck, gameDealer);
 
-        OutputView.printFinalHandsAndScoreMessage(gameDealer, gamePlayers);
-        OutputView.printGameResult(gameDealer.getName(), game.makeGameResult());
+            OutputView.printFinalHandsAndScoreMessage(gameDealer, gamePlayers);
+            OutputView.printGameResult(gameDealer.getName(), game.makeGameResult());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static Game makeGame() {
