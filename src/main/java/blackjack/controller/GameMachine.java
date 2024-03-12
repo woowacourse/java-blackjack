@@ -8,9 +8,9 @@ import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-public class GameController {
+public class GameMachine {
 
-    private GameController() {
+    private GameMachine() {
     }
 
     public static void run() {
