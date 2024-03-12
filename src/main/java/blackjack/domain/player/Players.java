@@ -35,4 +35,10 @@ public class Players {
 
         return distinctCount != names.size();
     }
+
+    public boolean isAllBusted() {
+        return playerGroup.stream().
+                map(Player::calculateOutcome)
+                .allMatch(Outcome::isBusted);
+    }
 }

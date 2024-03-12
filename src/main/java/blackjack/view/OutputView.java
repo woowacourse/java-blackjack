@@ -34,6 +34,11 @@ public class OutputView {
         System.out.println(name + "카드: " + generateCardsDescription(playerDto.cards()));
     }
 
+    public void printDealerDoesNotDraw() {
+        System.out.println();
+        System.out.println("플레이어가 모두 죽어 딜러는 카드를 뽑지 않습니다.");
+    }
+
     public void printExtraDealerDraw(int extraDrawCount) {
         System.out.println("딜러는 16이하라 " + extraDrawCount + "장의 카드를 더 받았습니다.");
     }
