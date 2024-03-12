@@ -12,7 +12,7 @@ public class Deck {
 	private final List<Card> cards;
 
 	public Deck(List<Card> cards) {
-		ArrayList<Card> copyDeck = new ArrayList<>(cards);
+		List<Card> copyDeck = new ArrayList<>(cards);
 		validate(copyDeck);
 		this.cards = copyDeck;
 	}
