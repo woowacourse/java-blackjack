@@ -114,7 +114,9 @@ public class OutputView {
 
 	private void printDealerGameResult(Map<GameResult, Long> dealerResult) {
 		System.out.println(
-			String.format("딜러: %d승 %d패", dealerResult.get(GameResult.WIN), dealerResult.get(GameResult.LOSE)));
+			String.format("딜러: %d승 %d패",
+					dealerResult.getOrDefault(GameResult.WIN, 0L),
+					dealerResult.getOrDefault(GameResult.LOSE, 0L)));
 	}
 
 	private void printPlayersGameResult(Map<Player, GameResult> playerResults) {
