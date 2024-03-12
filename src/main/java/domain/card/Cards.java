@@ -13,7 +13,7 @@ public class Cards {
     }
 
     public void addCard(Card card) {
-        if (sumAllCards().isBust()) {
+        if (sumAllCards().isBustScore()) {
             throw new IllegalStateException("버스트 상태에서는 카드를 추가할 수 없습니다.");
         }
         cards.add(card);
@@ -39,7 +39,7 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return sumAllCards().isBlackjack() && cards.size() == INIT_CARD_COUNT;
+        return sumAllCards().isBlackjackScore() && cards.size() == INIT_CARD_COUNT;
     }
 
     public List<Card> getCards() {

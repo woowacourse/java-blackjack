@@ -14,7 +14,7 @@ class ScoreTest {
 
         Score result = Score.get(score);
 
-        assertThat(result.isBust()).isTrue();
+        assertThat(result.isBustScore()).isTrue();
     }
 
     @Test
@@ -23,7 +23,7 @@ class ScoreTest {
 
         Score result = Score.get(score);
 
-        assertThat(result.isBlackjack()).isTrue();
+        assertThat(result.isBlackjackScore()).isTrue();
     }
 
     @Test
@@ -32,7 +32,7 @@ class ScoreTest {
 
         Score result = Score.get(score);
 
-        assertThat(result.isBlackjack()).isFalse();
+        assertThat(result.isBlackjackScore()).isFalse();
     }
 
     @ParameterizedTest

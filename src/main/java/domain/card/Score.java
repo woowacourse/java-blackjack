@@ -46,17 +46,17 @@ public class Score {
 
     public Score plusBonusScore() {
         Score plussedBonusScore = plus(BONUS_SCORE);
-        if (plussedBonusScore.isBust()) {
+        if (plussedBonusScore.isBustScore()) {
             return this;
         }
         return plussedBonusScore;
     }
 
-    public boolean isBust() {
+    public boolean isBustScore() {
         return this.isGreaterThan(BLACKJACK_SCORE);
     }
 
-    public boolean isBlackjack() {
+    public boolean isBlackjackScore() {
         return this.equals(BLACKJACK_SCORE);
     }
 

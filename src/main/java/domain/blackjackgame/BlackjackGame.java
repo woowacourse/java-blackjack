@@ -8,7 +8,6 @@ import domain.participant.Players;
 
 public class BlackjackGame {
     private static final int INITIAL_CARD_COUNT = 2;
-    private static final int BLACKJACK_SCORE = 21;
 
     private final Dealer dealer;
     private final Players players;
@@ -59,10 +58,10 @@ public class BlackjackGame {
     }
 
     private ResultStatus getResultStatus(Score dealerScore, Score playerScore) {
-        if (playerScore.isBust()) {
+        if (playerScore.isBustScore()) {
             return ResultStatus.LOSE;
         }
-        if (dealerScore.isBust()) {
+        if (dealerScore.isBustScore()) {
             return ResultStatus.WIN;
         }
         if (playerScore.isGreaterThan(dealerScore)) {
