@@ -2,18 +2,18 @@ package blackjack.game;
 
 public enum MatchResult {
 
-    DEALER_WIN,
-    PLAYER_NORMAL_WIN,
-    PLAYER_BLACKJACK_WIN,
+    LOSE,
+    NORMAL_WIN,
+    BLACKJACK_WIN,
     TIE,
     ;
 
     public static MatchResult chooseWinner(int playerScore, int dealerScore) {
         if (isPlayerWinningCondition(playerScore, dealerScore)) {
-            return PLAYER_NORMAL_WIN;
+            return NORMAL_WIN;
         }
         if (isDealerWinningCondition(playerScore, dealerScore)) {
-            return DEALER_WIN;
+            return LOSE;
         }
         return TIE;
     }

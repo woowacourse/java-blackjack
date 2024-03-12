@@ -12,21 +12,21 @@ public class StandState extends TerminatedState {
     }
 
     @Override
-    public MatchResult createMatchResult(GameState dealerState) {
-        if (dealerState.isBusted()) {
-            return MatchResult.PLAYER_NORMAL_WIN;
+    public MatchResult createMatchResult(GameState opponentState) {
+        if (opponentState.isBusted()) {
+            return MatchResult.NORMAL_WIN;
         }
-        return createMatchResultByScore(dealerState);
+        return createMatchResultByScore(opponentState);
     }
 
     private MatchResult createMatchResultByScore(GameState dealerState) {
         Score playerScore = getScore();
         Score dealerScore = dealerState.getScore();
         if (playerScore.isGreaterThan(dealerScore)) {
-            return MatchResult.PLAYER_NORMAL_WIN;
+            return MatchResult.NORMAL_WIN;
         }
         if (dealerScore.isGreaterThan(playerScore)) {
-            return MatchResult.DEALER_WIN;
+            return MatchResult.LOSE;
         }
         return MatchResult.TIE;
     }

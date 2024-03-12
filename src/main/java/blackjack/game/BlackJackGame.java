@@ -121,9 +121,9 @@ public class BlackJackGame {
 
     private void showDealerResult(MatchResults matchResults) {
         outputView.printDealerResult(
-                matchResults.getResultCount(MatchResult.DEALER_WIN),
+                matchResults.getResultCount(MatchResult.LOSE),
                 matchResults.getResultCount(MatchResult.TIE),
-                matchResults.getResultCount(MatchResult.PLAYER_NORMAL_WIN)
+                matchResults.getResultCount(MatchResult.NORMAL_WIN)
         );
     }
 

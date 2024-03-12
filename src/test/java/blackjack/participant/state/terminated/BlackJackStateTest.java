@@ -46,6 +46,6 @@ class BlackJackStateTest {
         // when
         MatchResult matchResult = state.createMatchResult(dealerState);
         // then
-        assertThat(matchResult).isEqualTo(MatchResult.PLAYER_BLACKJACK_WIN);
+        assertThat(matchResult).isEqualTo(MatchResult.BLACKJACK_WIN);
     }
 }

@@ -27,6 +27,6 @@ class BustedStateTest {
         // when
         MatchResult matchResult = state.createMatchResult(dealerState);
         // then
-        assertThat(matchResult).isEqualTo(MatchResult.DEALER_WIN);
+        assertThat(matchResult).isEqualTo(MatchResult.LOSE);
     }
 }

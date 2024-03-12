@@ -33,7 +33,7 @@ class StandStateTest {
         // when
         MatchResult matchResult = state.createMatchResult(dealerState);
         // then
-        assertThat(matchResult).isEqualTo(MatchResult.PLAYER_NORMAL_WIN);
+        assertThat(matchResult).isEqualTo(MatchResult.NORMAL_WIN);
     }
 
     @Test
@@ -60,7 +60,7 @@ class StandStateTest {
         // when
         MatchResult matchResult = state.createMatchResult(dealerState);
         // then
-        assertThat(matchResult).isEqualTo(MatchResult.PLAYER_NORMAL_WIN);
+        assertThat(matchResult).isEqualTo(MatchResult.NORMAL_WIN);
     }
 
     @Test
@@ -75,6 +75,6 @@ class StandStateTest {
         // when
         MatchResult matchResult = state.createMatchResult(dealerState);
         // then
-        assertThat(matchResult).isEqualTo(MatchResult.DEALER_WIN);
+        assertThat(matchResult).isEqualTo(MatchResult.LOSE);
     }
 }

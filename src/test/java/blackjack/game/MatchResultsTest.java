@@ -14,7 +14,7 @@ class MatchResultsTest {
     void getResultByNameTest() {
         MatchResults matchResults = new MatchResults();
         matchResults.addResult("aru", 20, 21);
-        assertThat(matchResults.getResultByName("aru")).isEqualTo(MatchResult.DEALER_WIN);
+        assertThat(matchResults.getResultByName("aru")).isEqualTo(MatchResult.LOSE);
     }
 
     @Test
@@ -38,9 +38,9 @@ class MatchResultsTest {
         matchResults.addResult("atto", 10, 10);
         matchResults.addResult("jazz", 20, 10);
         // when
-        int playerWinCount = matchResults.getResultCount(MatchResult.PLAYER_NORMAL_WIN);
+        int playerWinCount = matchResults.getResultCount(MatchResult.NORMAL_WIN);
         int tieCount = matchResults.getResultCount(MatchResult.TIE);
-        int dealerWinCount = matchResults.getResultCount(MatchResult.DEALER_WIN);
+        int dealerWinCount = matchResults.getResultCount(MatchResult.LOSE);
         // then
         assertAll(
                 () -> assertThat(playerWinCount).isEqualTo(1),

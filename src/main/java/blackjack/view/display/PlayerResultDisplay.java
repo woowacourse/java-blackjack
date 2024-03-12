@@ -5,8 +5,8 @@ import java.util.Arrays;
 
 public enum PlayerResultDisplay {
 
-    PLAYER_WIN(MatchResult.PLAYER_NORMAL_WIN, "승"),
-    PLAYER_LOSE(MatchResult.DEALER_WIN, "패"),
+    PLAYER_WIN(MatchResult.NORMAL_WIN, "승"),
+    PLAYER_LOSE(MatchResult.LOSE, "패"),
     TIE(MatchResult.TIE, "무");
 
     private final MatchResult result;

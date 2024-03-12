@@ -11,7 +11,7 @@ public class BustedState extends TerminatedState {
     }
 
     @Override
-    public MatchResult createMatchResult(GameState dealerState) {
-        return MatchResult.DEALER_WIN;
+    public MatchResult createMatchResult(GameState opponentState) {
+        return MatchResult.LOSE;
     }
 }

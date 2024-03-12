@@ -11,10 +11,10 @@ public class BlackJackState extends TerminatedState {
     }
 
     @Override
-    public MatchResult createMatchResult(GameState dealerState) {
-        if (dealerState.isBlackJack()) {
+    public MatchResult createMatchResult(GameState opponentState) {
+        if (opponentState.isBlackJack()) {
             return MatchResult.TIE;
         }
-        return MatchResult.PLAYER_BLACKJACK_WIN;
+        return MatchResult.BLACKJACK_WIN;
     }
 }
