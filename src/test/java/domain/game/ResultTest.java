@@ -56,8 +56,6 @@ class ResultTest {
         Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.WIN);
     }
 
-    // 버스트
-    // 플레이어 버스트 -> 플레이어 패배
     @Test
     @DisplayName("플레이어 패배: 플레이어 버스트(경계값 22점)")
     void playerLose_PlayerIsBusted() {
@@ -98,5 +96,50 @@ class ResultTest {
         Result result = Result.of(List.of(player), dealer);
 
         Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.LOSE);
+    }
+
+    @Test
+    @DisplayName("딜러의 승리 횟수를 셀 수 있다.")
+    void dealerWinCount() {
+        Player player1 = new Player(new Name("play1"));
+        Player player2 = new Player(new Name("play2"));
+        Dealer dealer = new Dealer();
+
+        player1.receive(new Card(Rank.TWO, Symbol.DIAMOND));
+        player2.receive(new Card(Rank.TWO, Symbol.SPADE));
+        dealer.receive(new Card(Rank.KING, Symbol.HEART));
+        Result result = Result.of(List.of(player1, player2), dealer);
+
+        Assertions.assertThat(result.dealerWinCount()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("딜러의 패배 횟수를 셀 수 있다.")
+    void dealerLoseCount() {
+        Player player1 = new Player(new Name("play1"));
+        Player player2 = new Player(new Name("play2"));
+        Dealer dealer = new Dealer();
+
+        player1.receive(new Card(Rank.KING, Symbol.DIAMOND));
+        player2.receive(new Card(Rank.KING, Symbol.SPADE));
+        dealer.receive(new Card(Rank.TWO, Symbol.HEART));
+        Result result = Result.of(List.of(player1, player2), dealer);
+
+        Assertions.assertThat(result.dealerLoseCount()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("딜러의 무승부 횟수를 셀 수 있다.")
+    void dealerTieCount() {
+        Player player1 = new Player(new Name("play1"));
+        Player player2 = new Player(new Name("play2"));
+        Dealer dealer = new Dealer();
+
+        player1.receive(new Card(Rank.KING, Symbol.DIAMOND));
+        player2.receive(new Card(Rank.KING, Symbol.SPADE));
+        dealer.receive(new Card(Rank.KING, Symbol.HEART));
+        Result result = Result.of(List.of(player1, player2), dealer);
+
+        Assertions.assertThat(result.dealerTieCount()).isEqualTo(2);
     }
 }
