@@ -16,13 +16,13 @@ public enum Denomination {
     KING(10),
     ;
 
-    private final int score;
+    private final Score value;
 
-    Denomination(int score) {
-        this.score = score;
+    Denomination(int value) {
+        this.value = Score.from(value);
     }
 
-    public int getScore() {
-        return this.score;
+    public Score getValue() {
+        return this.value;
     }
 }

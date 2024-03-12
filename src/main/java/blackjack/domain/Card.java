@@ -18,6 +18,10 @@ public class Card {
     }
 
     public Score getScore() {
-        return new Score(denomination.getScore());
+        return denomination.getValue();
+    }
+
+    public boolean isAce() {
+        return denomination == Denomination.ACE;
     }
 }

@@ -21,6 +21,6 @@ class CardTest {
     public void getScore() {
         Card card = new Card(Suit.CLOVER, Denomination.TWO);
 
-        assertThat(card.getScore()).isEqualTo(new Score(2));
+        assertThat(card.getScore()).isEqualTo(Score.from(2));
     }
 }
