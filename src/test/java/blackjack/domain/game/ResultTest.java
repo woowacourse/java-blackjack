@@ -2,6 +2,7 @@ package blackjack.domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.betting.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.fixture.CardsFixture;
 import blackjack.domain.participant.Dealer;
@@ -113,6 +114,41 @@ public class ResultTest {
                 Result result = Result.of(player, dealer);
                 assertThat(result).isEqualTo(Result.PLAYER_LOSE);
             }
+        }
+    }
+
+    @DisplayName("상금 테스트")
+    @Nested
+    class PrizeTest {
+
+        private static final Money BETTING_MONEY = new Money(10_000);
+
+        @DisplayName("플레이어만 블랙잭 일 경우 베팅 금액의 1.5배의 상금을 얻는다.")
+        @Test
+        void playerBlackjackTest() {
+            Money prize = Result.PLAYER_BLACKJACK.getPrize(BETTING_MONEY);
+            assertThat(prize).isEqualTo(BETTING_MONEY.multiply(1.5));
+        }
+
+        @DisplayName("플레이어의 일반승일 경우 베팅 금액 만큼의 상금을 얻는다.")
+        @Test
+        void playerWinTest() {
+            Money prize = Result.PLAYER_WIN.getPrize(BETTING_MONEY);
+            assertThat(prize).isEqualTo(BETTING_MONEY.multiply(1));
+        }
+
+        @DisplayName("무승부(PUSH) 일 경우 베팅 금액의 1.5배의 상금을 얻는다.")
+        @Test
+        void pushTest() {
+            Money prize = Result.PUSH.getPrize(BETTING_MONEY);
+            assertThat(prize).isEqualTo(Money.ZERO);
+        }
+
+        @DisplayName("플레이어가 패배 할 경우 베팅 금액을 잃는다.")
+        @Test
+        void playerLoseTest() {
+            Money prize = Result.PLAYER_LOSE.getPrize(BETTING_MONEY);
+            assertThat(prize).isEqualTo(BETTING_MONEY.multiply(-1));
         }
     }
 }

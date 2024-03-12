@@ -1,9 +1,11 @@
 package blackjack.domain.game;
 
+import blackjack.domain.betting.Money;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
+import java.util.function.Function;
 
 // TODO 리팩토링을 진지하게 깊이 많이많이 엄청 고민해보기
 /*
@@ -14,21 +16,24 @@ import java.util.function.BiPredicate;
 등등의 방법이 있어요 미래의 짱수님 ^^!
  */
 public enum Result {
-    PLAYER_BLACKJACK((player, dealer) ->
-            player.isBlackjack() && !dealer.isBlackjack()
+    PLAYER_BLACKJACK(
+            (player, dealer) ->
+                    player.isBlackjack() && !dealer.isBlackjack(),
+            bettingMoney -> bettingMoney.multiply(1.5)
     ),
-    PLAYER_WIN((player, dealer) -> {
-        if (player.isBusted()) {
-            return false;
-        }
-        if (dealer.isBusted()) {
-            return true;
-        }
-        if (!player.isBlackjack() && !dealer.isBusted()) {
-            return player.calculateScore() > dealer.calculateScore();
-        }
-        return false;
-    }),
+    PLAYER_WIN(
+            (player, dealer) -> {
+                if (player.isBusted()) {
+                    return false;
+                }
+                if (dealer.isBusted()) {
+                    return true;
+                }
+                if (!player.isBlackjack() && !dealer.isBusted()) {
+                    return player.calculateScore() > dealer.calculateScore();
+                }
+                return false;
+            }, Function.identity()),
     PUSH(((player, dealer) -> {
         if (player.isBusted() || dealer.isBusted()) {
             return false;
@@ -37,18 +42,22 @@ public enum Result {
             return true;
         }
         return player.calculateScore() == dealer.calculateScore();
-    })),
+    }), bettingMoney -> Money.ZERO),
     PLAYER_LOSE(((player, dealer) -> {
         if (player.isBusted() && !dealer.isBusted()) {
             return true;
         }
         return player.calculateScore() < dealer.calculateScore();
-    }));
+    }), bettingMoney -> bettingMoney.multiply(-1));
 
     private final BiPredicate<Player, Dealer> resultRule;
 
-    Result(BiPredicate<Player, Dealer> resultRule) {
+    //TODO 네이밍 + 다른 방법으로 리팩토링
+    private final Function<Money, Money> prizeConsumer;
+
+    Result(BiPredicate<Player, Dealer> resultRule, Function<Money, Money> prizeConsumer) {
         this.resultRule = resultRule;
+        this.prizeConsumer = prizeConsumer;
     }
 
     public static Result of(Player player, Dealer dealer) {
@@ -60,5 +69,9 @@ public enum Result {
 
     private boolean checkRule(Player player, Dealer dealer) {
         return resultRule.test(player, dealer);
+    }
+
+    public Money getPrize(Money money) {
+        return prizeConsumer.apply(money);
     }
 }

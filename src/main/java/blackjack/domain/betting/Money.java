@@ -1,0 +1,35 @@
+package blackjack.domain.betting;
+
+import java.util.Objects;
+
+public class Money {
+
+    public static final Money ZERO = new Money(0);
+
+    private final int amount;
+
+    public Money(int amount) {
+        this.amount = amount;
+    }
+
+    public Money multiply(double multipleAmount) {
+        return new Money((int) (amount * multipleAmount));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Money money = (Money) o;
+        return amount == money.amount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(amount);
+    }
+}
