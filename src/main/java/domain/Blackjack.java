@@ -19,14 +19,14 @@ public class Blackjack {
         this.dealer = dealer;
     }
 
-    public static Blackjack startGameWithInitialization(final Players players, final Dealer dealer) {
-        final Blackjack blackjack = new Blackjack(players, dealer);
+    public static Blackjack startGameWithInitialization(final Players players) {
+        final Blackjack blackjack = new Blackjack(players, new Dealer());
         blackjack.init();
         return blackjack;
     }
 
     public static Blackjack fromPlayerNamesWithInitialization(final List<String> names) {
-        return startGameWithInitialization(Players.from(names), new Dealer());
+        return startGameWithInitialization(Players.fromNames(names));
     }
 
     public void init() {
@@ -42,16 +42,14 @@ public class Blackjack {
     }
 
     public void playerHit(final String name) {
-        getPlayers().stream()
-                .filter(player -> player.getName().equals(name))
-                .forEach(player -> player.hit(dealer.draw()));
+        final Player player = players.findPlayerByName(name);
+        player.hit(dealer.draw());
     }
 
     private void dealInitialCards(final Participant player) {
         player.hit(dealer.draw());
         player.hit(dealer.draw());
     }
-
 
     public boolean canDealerHit() {
         return dealer.canHit();

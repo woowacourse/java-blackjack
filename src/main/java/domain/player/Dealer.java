@@ -30,11 +30,6 @@ public class Dealer extends Participant {
         return !canHit();
     }
 
-    @Override
-    public String getName() {
-        return "딜러";
-    }
-
     public PlayerResult compareHandsWith(final Player player) {
         if (player.isBust()) {
             return PlayerResult.WIN;
