@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.CardPattern;
-import blackjack.model.card.CardProperties;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,13 +15,12 @@ class DealerTest {
     @Test
     void receiveCard() {
         //given
-        Dealer dealer = new Dealer();
-        CardProperties cardProperties = new CardProperties(CardPattern.CLOVER, CardNumber.FIVE);
-        Card card = new Card(cardProperties);
+        Dealer dealer = Dealer.create();
+        Card card = Card.of(CardPattern.CLOVER, CardNumber.FIVE);
 
         //when
         dealer.receiveCard(card);
-        List<Card> dealerDeck = dealer.getHandDeck();
+        List<Card> dealerDeck = dealer.allCards();
 
         //then
         assertThat(dealerDeck).containsExactly(card);
@@ -32,9 +30,8 @@ class DealerTest {
     @Test
     void canHit() {
         //given
-        Dealer dealer = new Dealer();
-        CardProperties cardProperties = new CardProperties(CardPattern.CLOVER, CardNumber.FIVE);
-        Card card = new Card(cardProperties);
+        Dealer dealer = Dealer.create();
+        Card card = Card.of(CardPattern.CLOVER, CardNumber.FIVE);
 
         //when
         dealer.receiveCard(card);
@@ -47,17 +44,14 @@ class DealerTest {
     @Test
     void calculateTotalScore() {
         //given
-        Dealer dealer = new Dealer();
-        CardProperties cardProperties1 = new CardProperties(CardPattern.CLOVER, CardNumber.FIVE);
-        CardProperties cardProperties2 = new CardProperties(CardPattern.CLOVER, CardNumber.SEVEN);
-
-        Card card = new Card(cardProperties1);
-        Card card2 = new Card(cardProperties2);
+        Dealer dealer = Dealer.create();
+        Card card1 = Card.of(CardPattern.CLOVER, CardNumber.FIVE);
+        Card card2 = Card.of(CardPattern.CLOVER, CardNumber.SEVEN);
 
         //when
-        dealer.receiveCard(card);
+        dealer.receiveCard(card1);
         dealer.receiveCard(card2);
-        int totalScore = dealer.calculateTotalScore();
+        int totalScore = dealer.totalScore();
 
         //then
         assertThat(totalScore).isEqualTo(12);
