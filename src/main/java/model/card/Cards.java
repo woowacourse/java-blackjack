@@ -57,6 +57,10 @@ public class Cards {
         return calculateScore() > MAXIMUM_SUM;
     }
 
+    public boolean isHit() {
+        return !isNotHit();
+    }
+
     public int findPlayerDifference() {
         return Math.abs(MAXIMUM_SUM - calculateScore());
     }

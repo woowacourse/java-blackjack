@@ -39,6 +39,10 @@ public abstract class User {
         return cards.isNotHit();
     }
 
+    public boolean isHit() {
+        return cards.isHit();
+    }
+
     public int findPlayerDifference() {
         return cards.findPlayerDifference();
     }
