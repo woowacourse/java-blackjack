@@ -45,4 +45,21 @@ class DealerStateTest {
         // then
         assertThat(state).isInstanceOf(StandState.class);
     }
+
+    @Test
+    @DisplayName("stand로 전이할 때, 점수를 올바르게 계산한다.")
+    void standTransitionScoreTest() {
+        // given
+        List<Card> cards = List.of(
+                new Card(Shape.HEART, Number.JACK)
+        );
+        Card card = new Card(Shape.DIAMOND, Number.SEVEN);
+        Hand hand = new Hand(cards);
+        DealerState dealerState = new DealerState(hand);
+        // when
+        GameState state = dealerState.drawCard(card);
+        // then
+        assertThat(state.isTerminated()).isTrue();
+        assertThat(state.getScore().toInt()).isEqualTo(17);
+    }
 }
