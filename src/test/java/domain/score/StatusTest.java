@@ -14,7 +14,7 @@ class StatusTest {
         Bet bet = new Bet(20000);
         Bet revenue = Status.BLACKJACK.calculateRevenue(bet);
 
-        assertThat(revenue).isEqualTo(new Bet(30000));
+        assertThat(revenue.getAmount()).isEqualTo(30000);
     }
 
     @Test
@@ -23,7 +23,7 @@ class StatusTest {
         Bet bet = new Bet(20000);
         Bet revenue = Status.WIN.calculateRevenue(bet);
 
-        assertThat(revenue).isEqualTo(bet);
+        assertThat(revenue.getAmount()).isEqualTo(20000);
     }
 
     @Test
@@ -32,7 +32,7 @@ class StatusTest {
         Bet bet = new Bet(20000);
         Bet revenue = Status.LOSE.calculateRevenue(bet);
 
-        assertThat(revenue).isEqualTo(new Bet(-20000));
+        assertThat(revenue.getAmount()).isEqualTo(-20000);
     }
 
     @Test
@@ -41,6 +41,6 @@ class StatusTest {
         Bet bet = new Bet(20000);
         Bet revenue = Status.TIE.calculateRevenue(bet);
 
-        assertThat(revenue).isEqualTo(new Bet(0));
+        assertThat(revenue.getAmount()).isEqualTo(0);
     }
 }
