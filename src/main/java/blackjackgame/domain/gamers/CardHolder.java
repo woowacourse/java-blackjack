@@ -1,5 +1,7 @@
-package blackjackgame.domain.blackjack;
+package blackjackgame.domain.gamers;
 
+import blackjackgame.domain.blackjack.HoldingCards;
+import blackjackgame.domain.blackjack.SummationCardPoint;
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.CardDrawStrategy;
 import blackjackgame.domain.card.Deck;

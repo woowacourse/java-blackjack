@@ -8,6 +8,7 @@ import static blackjackgame.domain.card.CardName.SIX;
 import static blackjackgame.domain.card.CardType.HEART;
 
 import blackjackgame.domain.card.Card;
+import blackjackgame.domain.gamers.CardHolder;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

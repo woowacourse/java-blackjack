@@ -1,4 +1,6 @@
-package blackjackgame.domain.blackjack;
+package blackjackgame.domain.gamers;
+
+import blackjackgame.domain.blackjack.BetMoney;
 
 public class BetMaker {
     private final String name;

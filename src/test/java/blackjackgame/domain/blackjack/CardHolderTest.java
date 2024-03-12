@@ -11,6 +11,7 @@ import static blackjackgame.domain.card.CardType.SPADE;
 
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.Deck;
+import blackjackgame.domain.gamers.CardHolder;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

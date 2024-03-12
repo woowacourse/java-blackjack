@@ -1,5 +1,7 @@
 package blackjackgame.domain.blackjack;
 
+import blackjackgame.domain.gamers.CardHolder;
+
 public class TestPlayerCardDrawStrategy extends TestAbstractFirstCardDrawStrategy {
     private final CardHolder player;
 

@@ -1,5 +1,7 @@
 package blackjackgame.domain.blackjack;
 
+import blackjackgame.domain.gamers.CardHolder;
+
 public class GameResultCalculator {
 
     private GameResultCalculator() {

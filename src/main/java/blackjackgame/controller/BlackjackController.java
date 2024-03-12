@@ -1,13 +1,13 @@
 package blackjackgame.controller;
 
-import blackjackgame.domain.blackjack.BetMaker;
-import blackjackgame.domain.blackjack.BetMakers;
+import blackjackgame.domain.gamers.BetMaker;
+import blackjackgame.domain.gamers.BetMakers;
 import blackjackgame.domain.blackjack.BetMoney;
-import blackjackgame.domain.blackjack.BlackjackGame;
-import blackjackgame.domain.blackjack.CardHolder;
+import blackjackgame.domain.BlackjackGame;
+import blackjackgame.domain.gamers.CardHolder;
 import blackjackgame.domain.blackjack.GameResult;
 import blackjackgame.domain.blackjack.GameResultCalculator;
-import blackjackgame.domain.blackjack.CardHolders;
+import blackjackgame.domain.gamers.CardHolders;
 import blackjackgame.domain.blackjack.HoldingCards;
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.Deck;

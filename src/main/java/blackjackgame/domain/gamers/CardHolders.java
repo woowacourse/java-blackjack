@@ -1,5 +1,6 @@
-package blackjackgame.domain.blackjack;
+package blackjackgame.domain.gamers;
 
+import blackjackgame.domain.blackjack.PlayerRandomCardDrawStrategy;
 import blackjackgame.domain.card.Deck;
 import java.util.List;
 

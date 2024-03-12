@@ -16,7 +16,7 @@ public class HoldingCards {
         return new HoldingCards(new ArrayList<>(List.of(cards)));
     }
 
-    SummationCardPoint calculateTotalPoint() {
+    public SummationCardPoint calculateTotalPoint() {
         List<CardPoint> cardPoints = holdingCards.stream()
                 .map(CardPointCalculator::calculate)
                 .toList();
@@ -24,15 +24,15 @@ public class HoldingCards {
         return SummationCardPoint.of(cardPoints);
     }
 
-    void add(Card card) {
+    public void add(Card card) {
         holdingCards.add(card);
     }
 
-    List<Card> getHoldingCards() {
+    public List<Card> getHoldingCards() {
         return Collections.unmodifiableList(holdingCards);
     }
 
-    boolean hasAce() {
+    public boolean hasAce() {
         return holdingCards.stream()
                 .anyMatch(Card::isCardNameAce);
     }
