@@ -1,6 +1,6 @@
 package blackjack.model.card;
 
-public class Card {
+public final class Card {
     private final Suit suit;
     private final Denomination denomination;
 
