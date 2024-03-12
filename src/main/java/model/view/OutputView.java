@@ -21,4 +21,8 @@ public class OutputView {
     public void printCardsStock(String name, List<CardType> cards) {
         System.out.println(name + "카드: " + String.join(", ", cards.stream().map(CardType::card).toList()));
     }
+
+    public void printBustInfo(Player player) {
+        System.out.println(player.getName() + "님 버스트하였습니다");
+    }
 }
