@@ -34,13 +34,6 @@ public class Dealer extends Participant {
         return "딜러";
     }
 
-    public Map<PlayerResult, Integer> wrapUp(final Players players) {
-        final Map<PlayerResult, Integer> result = new HashMap<>();
-        players.stream()
-                .forEach(player -> result.merge(compareHandsWith(player), 1, Integer::sum));
-        return result;
-    }
-
     public PlayerResult compareHandsWith(final Player player) {
         if (player.isBust()) {
             return PlayerResult.WIN;
@@ -56,6 +49,13 @@ public class Dealer extends Participant {
         } else {
             return PlayerResult.WIN;
         }
+    }
+
+    public Map<PlayerResult, Integer> wrapUp(final Players players) {
+        final Map<PlayerResult, Integer> result = new HashMap<>();
+        players.stream()
+                .forEach(player -> result.merge(compareHandsWith(player), 1, Integer::sum));
+        return result;
     }
 
 }
