@@ -13,13 +13,13 @@ public class Deck {
         Collections.shuffle(cards);
     }
 
-    private Card pick() {
+    private Card draw() {
         return cards.remove(cards.size() - 1);
     }
 
-    public List<Card> pick(int count) {
+    public List<Card> draw(int count) {
         return IntStream.range(0, count)
-                .mapToObj(i -> pick())
+                .mapToObj(i -> draw())
                 .toList();
     }
 }

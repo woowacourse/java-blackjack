@@ -10,4 +10,8 @@ public record Card(CardSymbol symbol, CardScore score) {
                                 new Card(cardSymbol, cardScore)))
                 .toList();
     }
+
+    List<Integer> getScore() {
+        return score.get();
+    }
 }

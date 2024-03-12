@@ -50,13 +50,13 @@ public class RefereeTest {
         // given
         playerDeck = new Deck() {
             @Override
-            public List<Card> pick(int count) {
+            public List<Card> draw(int count) {
                 return List.of(new Card(SPADE, NINE), new Card(CLUB, QUEEN));
             }
         };
         dealerDeck = new Deck() {
             @Override
-            public List<Card> pick(int count) {
+            public List<Card> draw(int count) {
                 return List.of(new Card(SPADE, EIGHT), new Card(CLUB, QUEEN));
             }
         };
@@ -77,13 +77,13 @@ public class RefereeTest {
         // given
         playerDeck = new Deck() {
             @Override
-            public List<Card> pick(int count) {
+            public List<Card> draw(int count) {
                 return List.of(new Card(SPADE, NINE), new Card(CLUB, QUEEN), new Card(CLUB, THREE));
             }
         };
         dealerDeck = new Deck() {
             @Override
-            public List<Card> pick(int count) {
+            public List<Card> draw(int count) {
                 return List.of(new Card(SPADE, EIGHT), new Card(SPADE, TWO), new Card(CLUB, QUEEN));
             }
         };
@@ -104,13 +104,13 @@ public class RefereeTest {
         // given
         playerDeck = new Deck() {
             @Override
-            public List<Card> pick(int count) {
+            public List<Card> draw(int count) {
                 return List.of(new Card(SPADE, NINE), new Card(CLUB, SEVEN), new Card(CLUB, THREE));
             }
         };
         dealerDeck = new Deck() {
             @Override
-            public List<Card> pick(int count) {
+            public List<Card> draw(int count) {
                 return List.of(new Card(SPADE, NINE), new Card(CLUB, SEVEN), new Card(CLUB, THREE));
             }
         };
@@ -131,13 +131,13 @@ public class RefereeTest {
         // given
         playerDeck = new Deck() {
             @Override
-            public List<Card> pick(int count) {
+            public List<Card> draw(int count) {
                 return List.of(new Card(CLUB, ACE), new Card(CLUB, JACK));
             }
         };
         dealerDeck = new Deck() {
             @Override
-            public List<Card> pick(int count) {
+            public List<Card> draw(int count) {
                 return List.of(new Card(SPADE, NINE), new Card(CLUB, SEVEN), new Card(CLUB, FIVE));
             }
         };
@@ -158,13 +158,13 @@ public class RefereeTest {
         // given
         playerDeck = new Deck() {
             @Override
-            public List<Card> pick(int count) {
+            public List<Card> draw(int count) {
                 return List.of(new Card(CLUB, TWO), new Card(CLUB, JACK));
             }
         };
         dealerDeck = new Deck() {
             @Override
-            public List<Card> pick(int count) {
+            public List<Card> draw(int count) {
                 return List.of(new Card(SPADE, NINE), new Card(CLUB, SEVEN), new Card(CLUB, FIVE));
             }
         };
@@ -185,13 +185,13 @@ public class RefereeTest {
         // given
         playerDeck = new Deck() {
             @Override
-            public List<Card> pick(int count) {
+            public List<Card> draw(int count) {
                 return List.of(new Card(CLUB, KING), new Card(CLUB, JACK), new Card(CLUB, THREE));
             }
         };
         dealerDeck = new Deck() {
             @Override
-            public List<Card> pick(int count) {
+            public List<Card> draw(int count) {
                 return List.of(new Card(CLUB, KING), new Card(CLUB, JACK), new Card(CLUB, THREE));
             }
         };
@@ -212,13 +212,13 @@ public class RefereeTest {
         // given
         playerDeck = new Deck() {
             @Override
-            public List<Card> pick(int count) {
+            public List<Card> draw(int count) {
                 return List.of(new Card(CLUB, KING), new Card(CLUB, JACK));
             }
         };
         dealerDeck = new Deck() {
             @Override
-            public List<Card> pick(int count) {
+            public List<Card> draw(int count) {
                 return List.of(new Card(CLUB, KING), new Card(CLUB, JACK), new Card(CLUB, THREE));
             }
         };

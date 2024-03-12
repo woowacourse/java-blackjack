@@ -35,7 +35,7 @@ public class BlackjackController {
         dealer.deal(deck);
         players.forEach(player -> player.deal(deck));
 
-        OutputView.printCards(dealer.getName(), dealer.getCards());
+        OutputView.printCard(dealer.getName(), dealer.getFirstCard());
         players.forEach(player ->
                 OutputView.printCards(player.getName(), player.getCards()));
         OutputView.printNewLine();
@@ -82,7 +82,7 @@ public class BlackjackController {
     }
 
     private void dealerHitUntilBound(Dealer dealer, Deck deck) {
-        while (dealer.isHitUnderBound()) {
+        while (dealer.canContinue()) {
             dealer.hit(deck);
             OutputView.printDealerHitAnnounce();
         }

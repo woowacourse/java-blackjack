@@ -4,23 +4,30 @@ import blackjack.domain.card.Card;
 
 import java.util.List;
 
-public class Dealer extends Player {
+public class Dealer extends Gamer {
     public static final int HIT_UPPER_BOUND = 16;
     private static final String name = "딜러";
 
     public Dealer() {
-        super(name);
+        super();
+    }
+
+    @Override
+    public boolean canContinue() {
+        return getScore() <= HIT_UPPER_BOUND;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override
     public List<Card> getCards() {
-        if (isOnlyDeal()) {
-            return super.getCards().subList(0, 1);
-        }
         return super.getCards();
     }
 
-    public boolean isHitUnderBound() {
-        return cards.totalScore() <= HIT_UPPER_BOUND;
+    public Card getFirstCard() {
+        return hand.getCard(0);
     }
 }

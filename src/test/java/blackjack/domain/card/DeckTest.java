@@ -18,7 +18,7 @@ public class DeckTest {
         int expectedCount = 2;
 
         // when
-        List<Card> cards = deck.pick(count);
+        List<Card> cards = deck.draw(count);
 
         // then
         assertThat(cards.size()).isEqualTo(expectedCount);

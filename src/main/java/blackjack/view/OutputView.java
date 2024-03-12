@@ -26,8 +26,16 @@ public class OutputView {
         System.out.printf(LINE_SEPARATOR + DEAL_ANNOUNCE_FORMAT + LINE_SEPARATOR, nameFormat);
     }
 
+    public static void printCard(String name, Card card) {
+        System.out.printf(CARD_FORMAT + LINE_SEPARATOR, name, formatCard(card));
+    }
+
     public static void printCards(String name, List<Card> cards) {
         System.out.printf(CARD_FORMAT + LINE_SEPARATOR, name, formatCards(cards));
+    }
+
+    private static String formatCard(Card card) {
+        return CardScoreName.convert(card.score()) + CardSymbolName.convert(card.symbol());
     }
 
     private static String formatCards(List<Card> cards) {
@@ -36,9 +44,6 @@ public class OutputView {
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    private static String formatCard(Card card) {
-        return CardScoreName.convert(card.score()) + CardSymbolName.convert(card.symbol());
-    }
 
     public static void printNewLine() {
         System.out.println();

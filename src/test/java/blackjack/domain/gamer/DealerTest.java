@@ -23,10 +23,10 @@ class DealerTest {
         // given
         Dealer dealer = new Dealer();
         List<Card> cards = List.of(new Card(SPADE, NINE), new Card(CLUB, QUEEN));
-        List<Card> expectedCard = List.of(new Card(SPADE, NINE));
+        Card expectedCard = new Card(SPADE, NINE);
         Deck deck = new Deck() {
             @Override
-            public List<Card> pick(int count) {
+            public List<Card> draw(int count) {
                 return cards;
             }
         };
@@ -35,8 +35,7 @@ class DealerTest {
         dealer.deal(deck);
 
         // then
-        assertThat(dealer.getCards())
-                .isEqualTo(expectedCard);
+        assertThat(dealer.getFirstCard()).isEqualTo(expectedCard);
     }
 
     @Test
@@ -47,7 +46,7 @@ class DealerTest {
         List<Card> cards = List.of(new Card(SPADE, NINE), new Card(CLUB, SEVEN));
         Deck deck = new Deck() {
             @Override
-            public List<Card> pick(int count) {
+            public List<Card> draw(int count) {
                 return cards;
             }
         };
@@ -56,7 +55,7 @@ class DealerTest {
         dealer.deal(deck);
 
         // then
-        assertThat(dealer.isHitUnderBound()).isEqualTo(true);
+        assertThat(dealer.canContinue()).isEqualTo(true);
     }
 
     @Test
@@ -67,14 +66,14 @@ class DealerTest {
         List<Card> cards = List.of(new Card(SPADE, NINE), new Card(CLUB, SEVEN), new Card(CLUB, TWO));
         Deck deck = new Deck() {
             @Override
-            public List<Card> pick(int count) {
+            public List<Card> draw(int count) {
                 return cards;
             }
         };
 
         // when
         dealer.deal(deck);
-        if (dealer.isHitUnderBound()) {
+        if (dealer.canContinue()) {
             dealer.hit(deck);
         }
 
