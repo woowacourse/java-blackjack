@@ -28,6 +28,6 @@ public class BlackjackGame {
             GameResultStatus result = dealer.resultStatusOf(player);
             gameResult.put(player, result);
         });
-        return GameResultDto.from(gameResult, gameResult.ofDealer());
+        return new GameResultDto(gameResult, gameResult.ofDealer());
     }
 }

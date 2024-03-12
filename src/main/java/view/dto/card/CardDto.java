@@ -6,8 +6,8 @@ import domain.card.CardNumber;
 import java.util.Arrays;
 
 public record CardDto(String cardNumber, String cardShape) {
-    public static CardDto from(final Card card) {
-        return new CardDto(convertToPhrase(card.number()), card.shape().value());
+    public CardDto(final Card card) {
+        this(convertToPhrase(card.number()), card.shape().value());
     }
 
     private static String convertToPhrase(final CardNumber cardNumber) {

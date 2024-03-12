@@ -9,8 +9,8 @@ import java.util.Map;
 
 public record GameResultDto(Map<String, String> gameResult, Map<String, Integer> dealerResult) {
 
-    public static GameResultDto from(final GameResult gameResult, final GameResult dealerResult) {
-        return new GameResultDto(convertToPlayerResult(gameResult), convertToDealerResult(dealerResult));
+    public GameResultDto(final GameResult gameResult, final GameResult dealerResult) {
+        this(convertToPlayerResult(gameResult), convertToDealerResult(dealerResult));
     }
 
     private static Map<String, String> convertToPlayerResult(final GameResult gameResult) {
@@ -32,8 +32,7 @@ public record GameResultDto(Map<String, String> gameResult, Map<String, Integer>
                                     .count();
             resultDto.put(gameResultStatus.getValue(), count);
         }
-        resultDto.entrySet()
-                 .removeIf(entry -> entry.getValue() == 0);
+        resultDto.entrySet().removeIf(entry -> entry.getValue() == 0);
         return resultDto;
     }
 }

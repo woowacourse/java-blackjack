@@ -6,11 +6,14 @@ import java.util.List;
 
 public record CardsDto(List<CardDto> cards, int score) {
 
-    public static CardsDto from(final Cards cards, final int score) {
-        List<CardDto> cardDtos = cards.toList()
-                                      .stream()
-                                      .map(CardDto::from)
-                                      .toList();
-        return new CardsDto(cardDtos, score);
+    public CardsDto(final Cards cards, final int score) {
+        this(convertToCardDtos(cards), score);
+    }
+
+    private static List<CardDto> convertToCardDtos(final Cards cards) {
+        return cards.toList()
+                    .stream()
+                    .map(CardDto::new)
+                    .toList();
     }
 }

@@ -12,15 +12,15 @@ import java.util.List;
 
 public record ParticipantDto(String name, CardsDto cards) {
     public ParticipantDto(final String name) {
-        this(name, CardsDto.from(new Cards(), 0));
+        this(name, new CardsDto(new Cards(), 0));
     }
 
     public ParticipantDto(final Participant participant) {
-        this(participant.name().value(), CardsDto.from(participant.hand(), participant.cardSum()));
+        this(participant.name().value(), new CardsDto(participant.hand(), participant.cardSum()));
     }
 
     public ParticipantDto(final Participant participant, final Card card) {
-        this(participant.name().value(), CardsDto.from(new Cards(List.of(card)), participant.cardSum()));
+        this(participant.name().value(), new CardsDto(new Cards(List.of(card)), participant.cardSum()));
     }
 
     public static List<ParticipantDto> fromPlayers(final Players players) {

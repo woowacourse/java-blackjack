@@ -1,13 +1,11 @@
 package domain.participant;
 
-import static domain.BlackjackGame.DEALER_HIT_THRESHOLD;
-import static domain.result.GameResultStatus.PUSH;
-import static domain.result.GameResultStatus.LOSE;
-import static domain.result.GameResultStatus.WIN;
-
 import domain.card.Card;
 import domain.card.Cards;
 import domain.result.GameResultStatus;
+
+import static domain.BlackjackGame.DEALER_HIT_THRESHOLD;
+import static domain.result.GameResultStatus.*;
 
 public class Dealer extends Participant {
 
@@ -21,7 +19,7 @@ public class Dealer extends Participant {
     }
 
     public Card peek() {
-        return hand.peek();
+        return super.hand().peek();
     }
 
     public Card drawCard() {
