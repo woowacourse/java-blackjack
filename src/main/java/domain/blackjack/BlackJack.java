@@ -5,7 +5,6 @@ import domain.participant.Participant;
 import domain.participant.Participants;
 
 import java.util.LinkedHashMap;
-import java.util.function.BiConsumer;
 
 
 public class BlackJack {
@@ -23,12 +22,6 @@ public class BlackJack {
 
         for (Participant participant : participants.getValue()) {
             participant.receiveCard(dealer.draw(2));
-        }
-    }
-
-    public void startParticipantHit(BiConsumer<Participant, Dealer> participantHit) {
-        for (Participant participant : participants.getValue()) {
-            participantHit.accept(participant, dealer);
         }
     }
 

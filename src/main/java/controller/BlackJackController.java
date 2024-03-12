@@ -22,7 +22,7 @@ public class BlackJackController {
         blackJack.beginDealing();
         printParticipantsCards(blackJack);
 
-        blackJack.startParticipantHit(this::participantHit);
+        startParticipantHit(blackJack);
         dealerHit(blackJack);
 
         printScore(blackJack);
@@ -35,6 +35,14 @@ public class BlackJackController {
         OutputView.printDealerHands(blackJack.getDealer());
         for (Participant participant : participants.getValue()) {
             OutputView.printParticipantHands(participant);
+        }
+    }
+
+    public void startParticipantHit(BlackJack blackJack) {
+        Participants participants = blackJack.getParticipants();
+        Dealer dealer = blackJack.getDealer();
+        for (Participant participant : participants.getValue()) {
+            participantHit(participant, dealer);
         }
     }
 
