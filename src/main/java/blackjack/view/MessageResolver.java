@@ -1,33 +1,69 @@
 package blackjack.view;
 
-import blackjack.domain.DealerGameResult;
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Participant;
+import blackjack.domain.player.Participants;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.rule.Score;
 
+import blackjack.view.mapper.CardRankMapper;
+import blackjack.view.mapper.CardSuitMapper;
 import java.util.stream.Collectors;
 
 public class MessageResolver {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String SEPARATOR = ", ";
+    private static final String DEALER_NAME = "딜러";
+    private static final String PARTICIPANT_HAND_FORMAT = "%s 카드: %s";
 
-    public String resolveHandOutEventMessage(Players players, int handOutCount) {
-        String namesMessage = resolveNamesMessage(players);
-        String message = String.format("딜러와 %s에게 %d장을 나누었습니다.", namesMessage, handOutCount);
-        return String.join("", LINE_SEPARATOR, message);
+    public String resolveDealDescriptionMessage(Players players) {
+        return String.format("딜러와 %s에게 2장을 나누었습니다.", resolveNamesMessage(players));
     }
 
     private String resolveNamesMessage(Players players) {
         return players.getPlayers().stream()
-                .map(Player::getName)
+                .map(Player::getPlayerName)
                 .collect(Collectors.joining(SEPARATOR));
     }
 
-    public String resolvePlayerHandMessage(Player player) {
-        return String.format("%s 카드: %s", player.getName(), resolveHandMessage(player.getHand()));
+    public String resolveDealToAllMessage(Participants participants) {
+        return participants.getParticipants().stream()
+                .map(this::resolveDealToOneMessage)
+                .collect(Collectors.joining(LINE_SEPARATOR));
+    }
+
+    private String resolveDealToOneMessage(Participant participant) {
+        if (participant instanceof Dealer) {
+            return resolveDealerInitialHandMessage((Dealer) participant);
+        }
+        if (participant instanceof Player) {
+            return resolveParticipantHandMessage(participant);
+        }
+        throw new IllegalArgumentException();
+    }
+
+    private String resolveDealerInitialHandMessage(Dealer dealer) {
+        Card card = dealer.getHand().getCards().get(0);
+        return String.format(PARTICIPANT_HAND_FORMAT, DEALER_NAME, resolveCardMessage(card));
+    }
+
+    public String resolveParticipantHandMessage(Participant participant) {
+        return String.format(PARTICIPANT_HAND_FORMAT, resolveNameMessage(participant),
+                resolveHandMessage(participant.getHand()));
+    }
+
+    private String resolveNameMessage(Participant participant) {
+        if (participant instanceof Dealer) {
+            return DEALER_NAME;
+        }
+        if (participant instanceof Player) {
+            return ((Player) participant).getPlayerName();
+        }
+        throw new IllegalArgumentException();
     }
 
     private String resolveHandMessage(Hand hand) {
@@ -37,38 +73,40 @@ public class MessageResolver {
     }
 
     private String resolveCardMessage(Card card) {
-        return String.format("%s%s", card.getCardNumberName(), card.getCardShape());
+        String rankSymbol = CardRankMapper.toSymbol(card.getCardRank());
+        String suitSymbol = CardSuitMapper.toSymbol(card.getCardSuit());
+        return String.format("%s%s", rankSymbol, suitSymbol);
     }
 
-    public String resolveDealerHandMessage(Player dealer) {
-        Card card = dealer.getHand().getCards().get(0);
-        return String.format("%s: %s", dealer.getName(), resolveCardMessage(card));
+    public String resolveDrawToDealerMessage() {
+        return String.format("%s는 16이하라 한장의 카드를 더 받았습니다.", DEALER_NAME);
     }
 
-    public String resolveDealerPopCountMessage(int dealerDrawThreshold, int popCount) {
-        String message = String.format("딜러는 %d이하라 %d장의 카드를 더 받았습니다.", dealerDrawThreshold, popCount);
-        return String.join("", LINE_SEPARATOR, message, LINE_SEPARATOR);
+    public String resolveParticipantsHandScoreMessage(Participants participants) {
+        return participants.getParticipants().stream()
+                .map(this::resolveParticipantHandScoreMessage)
+                .collect(Collectors.joining(LINE_SEPARATOR));
     }
 
-    public String resolvePlayerScoreMessage(Player player, Score score) {
-        String handMessage = resolvePlayerHandMessage(player);
-        return String.format("%s - 결과: %d", handMessage, score.getValue());
+    private String resolveParticipantHandScoreMessage(Participant participant) {
+        return String.format("%s - 결과: %d", resolveParticipantHandMessage(participant),
+                participant.calculateHandTotal());
     }
 
-    public String resolvePlayerGameResult(Player player, boolean win) {
-        return String.format("%s: %s", player.getName(), resolveGameResultMessage(win));
+    public String resolveDealerResult(Result result) {
+        return String.format("%s: %d승 %d패", DEALER_NAME, result.getWinCount(), result.getLoseCount());
     }
 
-    private String resolveGameResultMessage(boolean win) {
-        if (win) {
-            return "승";
+    public String resolvePlayersResult(Players players, Dealer dealer) {
+        return players.getPlayers().stream()
+                .map(player -> resolvePlayerResult(player, dealer))
+                .collect(Collectors.joining(LINE_SEPARATOR));
+    }
+
+    private String resolvePlayerResult(Player player, Dealer dealer) {
+        if (player.judge(dealer).getWinCount() == 1) {
+            return String.format("%s: 승", player.getPlayerName());
         }
-        return "패";
-    }
-
-    public String resolveDealerGameResult(DealerGameResult dealerGameResult) {
-        String prefix = String.join("", LINE_SEPARATOR, "## 최종 승패");
-        String message = String.format("딜러: %d승 %d패", dealerGameResult.getWinCount(), dealerGameResult.getLoseCount());
-        return String.join("", prefix, LINE_SEPARATOR, message);
+        return String.format("%s: 패", player.getPlayerName());
     }
 }

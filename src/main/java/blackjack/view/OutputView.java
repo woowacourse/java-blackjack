@@ -1,9 +1,9 @@
 package blackjack.view;
 
-import blackjack.domain.DealerGameResult;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Participants;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.rule.Score;
 
 public class OutputView {
 
@@ -13,31 +13,26 @@ public class OutputView {
         this.messageResolver = messageResolver;
     }
 
-    public void printHandOutEvent(Players players, int handedCount) {
-        System.out.println(messageResolver.resolveHandOutEventMessage(players, handedCount));
+    public void printDealToAll(Participants participants) {
+        System.out.println(messageResolver.resolveDealDescriptionMessage(participants.getPlayers()));
+        System.out.println(messageResolver.resolveDealToAllMessage(participants));
     }
 
-    public void printPlayerHand(Player player) {
-        System.out.println(messageResolver.resolvePlayerHandMessage(player));
+    public void printDrawToPlayer(Player player) {
+        System.out.println(messageResolver.resolveParticipantHandMessage(player));
     }
 
-    public void printDealerPopCount(int dealerPopThreshold, int count) {
-        System.out.println(messageResolver.resolveDealerPopCountMessage(dealerPopThreshold, count));
+    public void printDrawToDealer() {
+        System.out.println(messageResolver.resolveDrawToDealerMessage());
     }
 
-    public void printPlayerScore(Player player, Score score) {
-        System.out.println(messageResolver.resolvePlayerScoreMessage(player, score));
+    public void printParticipantsHandScore(Participants participants) {
+        System.out.println(messageResolver.resolveParticipantsHandScoreMessage(participants));
     }
 
-    public void printPlayerGameResult(Player player, boolean win) {
-        System.out.println(messageResolver.resolvePlayerGameResult(player, win));
-    }
-
-    public void printDealerGameResult(DealerGameResult dealerGameResult) {
-        System.out.println(messageResolver.resolveDealerGameResult(dealerGameResult));
-    }
-
-    public void printDealerInitialHand(Player dealer) {
-        System.out.println(messageResolver.resolveDealerHandMessage(dealer));
+    public void printParticipantsResult(Dealer dealer, Players players) {
+        System.out.println("## 최종 승패");
+        System.out.println(messageResolver.resolveDealerResult(dealer.judge(players)));
+        System.out.println(messageResolver.resolvePlayersResult(players, dealer));
     }
 }
