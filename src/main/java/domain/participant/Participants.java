@@ -56,7 +56,10 @@ public class Participants {
     }
 
     public Dealer getDealer() {
-        return (Dealer) value.stream().filter(Participant::isDealer).findFirst().orElseThrow();
+        return (Dealer) value.stream()
+                .filter(Participant::isDealer)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("딜러가 포함되어 있지 않습니다."));
     }
 
     public List<Participant> getNotDealerParticipant() {
