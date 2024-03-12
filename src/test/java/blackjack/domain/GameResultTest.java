@@ -19,10 +19,10 @@ class GameResultTest {
         Dealer dealer = new Dealer();
 
         Player testPlayer = players.getPlayers().get(0);
-        testPlayer.addCard(Card.create(0));
-        testPlayer.addCard(Card.create(9));
+        testPlayer.addCard(Card.valueOf(0));
+        testPlayer.addCard(Card.valueOf(9));
 
-        dealer.addCard(Card.create(0));
+        dealer.addCard(Card.valueOf(0));
         GameResult gameResult = GameResult.of(dealer, players);
 
         assertThat(gameResult.getTargetResultCount(Result.WIN)).isOne();
@@ -35,12 +35,12 @@ class GameResultTest {
         Dealer dealer = new Dealer();
 
         Player testPlayer = players.getPlayers().get(0);
-        testPlayer.addCard(Card.create(0));
-        testPlayer.addCard(Card.create(9));
+        testPlayer.addCard(Card.valueOf(0));
+        testPlayer.addCard(Card.valueOf(9));
 
-        dealer.addCard(Card.create(9));
-        dealer.addCard(Card.create(9));
-        dealer.addCard(Card.create(9));
+        dealer.addCard(Card.valueOf(9));
+        dealer.addCard(Card.valueOf(9));
+        dealer.addCard(Card.valueOf(9));
 
         GameResult gameResult = GameResult.of(dealer, players);
 
@@ -54,11 +54,11 @@ class GameResultTest {
         Dealer dealer = new Dealer();
 
         Player testPlayer = players.getPlayers().get(0);
-        testPlayer.addCard(Card.create(0));
-        testPlayer.addCard(Card.create(1));
+        testPlayer.addCard(Card.valueOf(0));
+        testPlayer.addCard(Card.valueOf(1));
 
-        dealer.addCard(Card.create(0));
-        dealer.addCard(Card.create(9));
+        dealer.addCard(Card.valueOf(0));
+        dealer.addCard(Card.valueOf(9));
 
         GameResult gameResult = GameResult.of(dealer, players);
 
@@ -72,12 +72,12 @@ class GameResultTest {
         Dealer dealer = new Dealer();
 
         Player testPlayer = players.getPlayers().get(0);
-        testPlayer.addCard(Card.create(9));
-        testPlayer.addCard(Card.create(9));
-        testPlayer.addCard(Card.create(9));
+        testPlayer.addCard(Card.valueOf(9));
+        testPlayer.addCard(Card.valueOf(9));
+        testPlayer.addCard(Card.valueOf(9));
 
-        dealer.addCard(Card.create(9));
-        dealer.addCard(Card.create(9));
+        dealer.addCard(Card.valueOf(9));
+        dealer.addCard(Card.valueOf(9));
 
         GameResult gameResult = GameResult.of(dealer, players);
 
@@ -91,9 +91,9 @@ class GameResultTest {
         Dealer dealer = new Dealer();
 
         Player testPlayer = players.getPlayers().get(0);
-        testPlayer.addCard(Card.create(0));
+        testPlayer.addCard(Card.valueOf(0));
 
-        dealer.addCard(Card.create(0));
+        dealer.addCard(Card.valueOf(0));
 
         GameResult gameResult = GameResult.of(dealer, players);
 
@@ -107,13 +107,13 @@ class GameResultTest {
         Dealer dealer = new Dealer();
 
         Player testPlayer = players.getPlayers().get(0);
-        testPlayer.addCard(Card.create(9));
-        testPlayer.addCard(Card.create(9));
-        testPlayer.addCard(Card.create(9));
+        testPlayer.addCard(Card.valueOf(9));
+        testPlayer.addCard(Card.valueOf(9));
+        testPlayer.addCard(Card.valueOf(9));
 
-        dealer.addCard(Card.create(9));
-        dealer.addCard(Card.create(9));
-        dealer.addCard(Card.create(9));
+        dealer.addCard(Card.valueOf(9));
+        dealer.addCard(Card.valueOf(9));
+        dealer.addCard(Card.valueOf(9));
 
         GameResult gameResult = GameResult.of(dealer, players);
 

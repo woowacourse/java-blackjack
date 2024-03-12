@@ -17,6 +17,7 @@ public class Player extends Participant {
         return false;
     }
 
+    @Override
     public boolean canDraw() {
         return !isBurst();
     }

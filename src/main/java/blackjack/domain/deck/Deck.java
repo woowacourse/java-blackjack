@@ -18,7 +18,7 @@ public class Deck {
     public static Deck createShuffledDeck() {
         Deque<Card> cards = new ArrayDeque<>();
         makeShuffledOrder().stream()
-                .map(Card::create)
+                .map(Card::valueOf)
                 .forEach(cards::add);
         return new Deck(cards);
     }

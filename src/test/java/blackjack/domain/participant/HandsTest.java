@@ -13,10 +13,10 @@ class HandsTest {
     void should_addCard_IntoHands() {
         Hands hands = new Hands();
 
-        hands.addCard(Card.create(1));
+        hands.addCard(Card.valueOf(1));
         assertThat(hands.getHands()).hasSize(1);
 
-        hands.addCard(Card.create(13));
+        hands.addCard(Card.valueOf(13));
         assertThat(hands.getHands()).hasSize(2);
     }
 
@@ -25,8 +25,8 @@ class HandsTest {
     void should_HandsScore_Equals_SumOfCardScores() {
         Hands hands = new Hands();
 
-        hands.addCard(Card.create(1));
-        hands.addCard(Card.create(12));
+        hands.addCard(Card.valueOf(1));
+        hands.addCard(Card.valueOf(12));
 
         assertThat(hands.getHandsScore().getScore()).isEqualTo(12);
     }

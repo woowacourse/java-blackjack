@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.deck.Deck;
-import java.util.function.Consumer;
 
 public class Dealer extends Participant {
 
@@ -13,10 +12,9 @@ public class Dealer extends Participant {
         super(DEALER_NAME);
     }
 
-    public void draw(Consumer<String> consumer, Deck deck) {
-        while (shouldDraw()) {
+    public void draw(Deck deck) {
+        if (shouldDraw()) {
             addCard(deck.draw());
-            consumer.accept(name.getName());
         }
     }
 
@@ -31,5 +29,10 @@ public class Dealer extends Participant {
 
     private boolean shouldDraw() {
         return hands.getHandsScore().getScore() <= DEALER_DRAW_THRESHOLD;
+    }
+
+    @Override
+    public boolean canDraw() {
+        return shouldDraw();
     }
 }

@@ -45,8 +45,10 @@ public class GameController {
     }
 
     private static void confirmDealerHands(Dealer dealer, Deck deck) {
-        dealer.draw(OutputView::printDealerDrawMessage, deck);
-        System.out.println();
+        while (dealer.canDraw()) {
+            dealer.draw(deck);
+            OutputView.printDealerDrawMessage(dealer.getName());
+        }
     }
 
     private static void askDrawUntilConfirmHands(Players players, Deck deck) {

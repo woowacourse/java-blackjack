@@ -13,6 +13,8 @@ public abstract class Participant {
         this.hands = new Hands();
     }
 
+    abstract public boolean canDraw();
+
     public void addCard(Card card) {
         hands.addCard(card);
     }

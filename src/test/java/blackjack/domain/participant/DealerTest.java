@@ -2,11 +2,9 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Deck;
-import blackjack.view.OutputView;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,8 +15,8 @@ class DealerTest {
     void should_AddCard_When_HandsScoreBelowThreshold() {
         Dealer dealer = new Dealer();
         Deck deck = Deck.createShuffledDeck();
-        dealer.addCard(Card.create(9));
-        dealer.addCard(Card.create(5));
+        dealer.addCard(Card.valueOf(9));
+        dealer.addCard(Card.valueOf(5));
 
         dealer.addCard(deck.draw());
 
@@ -30,10 +28,10 @@ class DealerTest {
     void should_NotAddCard_When_HandsScoreOverThreshold() {
         Dealer dealer = new Dealer();
         Deck deck = Deck.createShuffledDeck();
-        dealer.addCard(Card.create(9));
-        dealer.addCard(Card.create(6));
+        dealer.addCard(Card.valueOf(9));
+        dealer.addCard(Card.valueOf(6));
 
-        dealer.draw(OutputView::printDealerDrawMessage, deck);
+        dealer.draw(deck);
 
         assertThat(dealer.hands.getHands()).hasSize(2);
     }
@@ -42,11 +40,11 @@ class DealerTest {
     @Test
     void should_ShowFirstCard() {
         Dealer dealer = new Dealer();
-        dealer.addCard(Card.create(6));
-        dealer.addCard(Card.create(45));
+        dealer.addCard(Card.valueOf(6));
+        dealer.addCard(Card.valueOf(45));
 
         assertThat(dealer.getFirstCardName())
-                .isEqualTo(Card.create(6)
+                .isEqualTo(Card.valueOf(6)
                         .getCardName());
     }
 

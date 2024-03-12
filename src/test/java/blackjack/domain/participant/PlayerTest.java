@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Deck;
@@ -15,8 +14,8 @@ class PlayerTest {
     void should_AddCard_When_PlayerAcceptDraw() {
         Deck deck = Deck.createShuffledDeck();
         Player testPlayer = new Player("pobi");
-        testPlayer.addCard(Card.create(0));
-        testPlayer.addCard(Card.create(1));
+        testPlayer.addCard(Card.valueOf(0));
+        testPlayer.addCard(Card.valueOf(1));
 
         testPlayer.attemptDraw(() -> Boolean.TRUE, deck);
 
@@ -28,10 +27,10 @@ class PlayerTest {
     void should_NotAddCard_When_PlayerRejectDraw() {
         Deck deck = Deck.createShuffledDeck();
         Player testPlayer = new Player("pobi");
-        testPlayer.addCard(Card.create(0));
-        testPlayer.addCard(Card.create(1));
+        testPlayer.addCard(Card.valueOf(0));
+        testPlayer.addCard(Card.valueOf(1));
 
-        testPlayer.attemptDraw(() -> Boolean.FALSE,deck);
+        testPlayer.attemptDraw(() -> Boolean.FALSE, deck);
 
         assertThat(testPlayer.getHandsCards()).hasSize(2);
     }
