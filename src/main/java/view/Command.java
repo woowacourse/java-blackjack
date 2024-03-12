@@ -6,6 +6,7 @@ public enum Command {
     ;
 
     private String command;
+
     Command(String command) {
         this.command = command;
     }

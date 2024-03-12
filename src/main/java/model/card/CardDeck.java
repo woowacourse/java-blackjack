@@ -1,9 +1,7 @@
 package model.card;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -55,5 +53,4 @@ public class CardDeck {
             throw new IllegalStateException("더 뽑을 카드가 없습니다.");
         }
     }
-
 }

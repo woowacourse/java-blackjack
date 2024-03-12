@@ -46,7 +46,8 @@ public class OutputView {
         System.out.println(System.lineSeparator() +
                 cardsToString(dealer) + PLAYER_CARD_SUM_MESSAGE.formatted(dealer.getValue().calculateScore()));
         for (Entry<String, Cards> participant : usersNameAndCards.entrySet()) {
-            System.out.println(cardsToString(participant) + PLAYER_CARD_SUM_MESSAGE.formatted(participant.getValue().calculateScore()));
+            System.out.println(cardsToString(participant) + PLAYER_CARD_SUM_MESSAGE.formatted(
+                    participant.getValue().calculateScore()));
         }
     }
 

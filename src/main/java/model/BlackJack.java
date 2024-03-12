@@ -31,13 +31,13 @@ public class BlackJack {
     }
 
     public void validateParticipantIsNotNull(Participants participants) {
-        if(participants == null) {
+        if (participants == null) {
             throw new IllegalArgumentException("참가자 없으면 게임이 진행되지 않습니다.");
         }
     }
 
     public void validateDealerIsNotNull(Dealer dealer) {
-        if(dealer == null) {
+        if (dealer == null) {
             throw new IllegalArgumentException("딜러가 없으면 게임이 진행되지 않습니다.");
         }
     }

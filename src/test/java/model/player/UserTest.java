@@ -62,7 +62,8 @@ class UserTest {
     @Test
     void addCards() {
         User user = new User("켬미",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {};
+                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
+        };
         List<Card> cards = List.of(new Card(CardShape.CLOVER, CardNumber.EIGHT),
                 new Card(CardShape.CLOVER, CardNumber.FIVE));
         user.addCards(cards);
@@ -73,7 +74,8 @@ class UserTest {
     @Test
     void calculateScore() {
         User user = new User("켬미",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {};
+                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
+        };
 
         assertThat(user.calculateScore()).isEqualTo(14);
     }
@@ -82,7 +84,8 @@ class UserTest {
     @Test
     void calculateScoreWithAce() {
         User user = new User("켬미",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {};
+                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
+        };
         user.addCard(new Card(CardShape.SPACE, CardNumber.ACE));
 
         assertThat(user.calculateScore()).isEqualTo(15);

@@ -7,7 +7,6 @@ import model.card.CardDeck;
 import model.card.CardNumber;
 import model.card.CardShape;
 import model.card.CardSize;
-import model.card.Cards;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

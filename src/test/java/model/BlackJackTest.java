@@ -72,7 +72,6 @@ class BlackJackTest {
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.DIAMOND, CardNumber.NINE)));
         participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
 
-
         Participants participants = new Participants(List.of(participant));
         BlackJack blackJack = new BlackJack(participants, dealer, cardDeck);
 
@@ -96,7 +95,7 @@ class BlackJackTest {
     @ParameterizedTest
     @MethodSource("createParticipant")
     void findWinOutcomeDealerOverThreshold(Participant participant) {
-       Dealer dealer = new Dealer(
+        Dealer dealer = new Dealer(
                 List.of(new Card(CardShape.SPACE, CardNumber.KING), new Card(CardShape.CLOVER, CardNumber.KING)));
 
         Participants participants = new Participants(List.of(participant));

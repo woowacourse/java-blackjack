@@ -4,8 +4,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import model.card.CardSize;
 import model.card.CardDeck;
+import model.card.CardSize;
 
 public class Participants {
     public static final int MINIMUM_PARTICIPANT_SIZE = 2;
@@ -24,10 +24,10 @@ public class Participants {
                 .collect(Collectors.toSet());
 
         if (!duplicates.isEmpty()) {
-            String duplicatedNames = duplicates.stream()
+            String duplicatedName = duplicates.stream()
                     .map(User::getName)
                     .collect(Collectors.joining(","));
-            throw new IllegalArgumentException("중복된 이름("+ duplicatedNames +")가 있습니다, 참가자들의 이름은 중복되면 안됩니다.");
+            throw new IllegalArgumentException("중복된 이름(" + duplicatedName + ")가 있습니다, 참가자들의 이름은 중복되면 안됩니다.");
         }
     }
 
