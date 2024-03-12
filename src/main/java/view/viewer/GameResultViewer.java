@@ -1,16 +1,26 @@
 package view.viewer;
 
-import static domain.game.GameResult.DRAW;
-import static domain.game.GameResult.LOSE;
-import static domain.game.GameResult.WIN;
-
 import domain.game.GameResult;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ResultViewer {
+public class GameResultViewer {
     private static final Integer NONE = 0;
-    private static final Map<GameResult, String> RESULT_VIEWER = Map.of(WIN, "승", DRAW, "무", LOSE, "패");
+    private static final Map<GameResult, String> RESULT_VIEWER = Arrays.stream(GameResult.values())
+            .collect(Collectors.toMap(
+                    Function.identity(),
+                    GameResultViewer::makeShow
+            ));
+
+    private static String makeShow(GameResult gameResult) {
+        return switch (gameResult) {
+            case WIN -> "승";
+            case DRAW -> "무";
+            case LOSE -> "패";
+        };
+    }
 
     public static String showDealerResult(Map<GameResult, Integer> dealerResult) {
         return dealerResult.entrySet()

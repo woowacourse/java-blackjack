@@ -8,8 +8,8 @@ import domain.user.Player;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import view.viewer.GameResultViewer;
 import view.viewer.HandViewer;
-import view.viewer.ResultViewer;
 
 public class OutputView {
     private static final String DEALER_NAME_VALUE = "딜러";
@@ -63,9 +63,9 @@ public class OutputView {
     public static void printFinalResult(PlayerResults playerResults) {
         System.out.println("\n## 최종 승패");
         Map<GameResult, Integer> dealerResult = playerResults.generateDealerResult();
-        System.out.println(DEALER_NAME_VALUE + ": " + ResultViewer.showDealerResult(dealerResult));
+        System.out.println(DEALER_NAME_VALUE + ": " + GameResultViewer.showDealerResult(dealerResult));
         playerResults.getPlayerResults()
                 .forEach(((player, result) ->
-                        System.out.println(player.getNameValue() + ": " + ResultViewer.show(result))));
+                        System.out.println(player.getNameValue() + ": " + GameResultViewer.show(result))));
     }
 }

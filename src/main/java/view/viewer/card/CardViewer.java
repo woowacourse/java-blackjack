@@ -14,12 +14,16 @@ public class CardViewer {
             .flatMap(CardViewer::makeCardsByShape)
             .collect(Collectors.toMap(
                     Function.identity(),
-                    card -> NumberViewer.show(card.number()) + ShapeViewer.show(card.shape())
+                    CardViewer::makeShow
             ));
 
     private static Stream<Card> makeCardsByShape(Shape shape) {
         return Arrays.stream(Number.values())
                 .map(number -> new Card(shape, number));
+    }
+
+    private static String makeShow(Card card) {
+        return NumberViewer.show(card.number()) + ShapeViewer.show(card.shape());
     }
 
     public static String show(Card card) {
