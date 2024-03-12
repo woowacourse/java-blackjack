@@ -15,9 +15,7 @@ public class Participants {
     }
 
     public static Participants create(List<String> playerNames) {
-        Players players = Players.create(playerNames);
-        Dealer dealer = new Dealer();
-        return new Participants(players, dealer);
+        return new Participants(Players.create(playerNames), new Dealer());
     }
 
     public void deal(CardDeck cardDeck) {
