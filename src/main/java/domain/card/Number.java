@@ -23,14 +23,18 @@ public enum Number {
         this.number = number;
     }
 
-    public int getValue() {
-        return number;
-    }
-
     public static int sumContainingSoftAce(int sum) {
         if (sum <= MAX_SOFT_ACE_CONVERTABLE_SUM) {
             return sum + SOFT_ACE_CONVERT_VALUE;
         }
         return sum;
+    }
+
+    public boolean isAce() {
+        return this == ACE;
+    }
+
+    public int getValue() {
+        return number;
     }
 }

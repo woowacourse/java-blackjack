@@ -43,9 +43,9 @@ public abstract class UserDeck {
 
     public abstract boolean isAddable();
 
-    public abstract List<Card> getVisibleCards();
-
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public abstract List<Card> getVisibleCards();
 }
