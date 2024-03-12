@@ -38,7 +38,7 @@ public class Player implements GameParticipant {
 
     @Override
     public boolean isBurst() {
-        return calculateScore() > 21;
+        return calculateScore() > MAX_SCORE;
     }
 
     @Override
