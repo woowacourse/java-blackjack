@@ -61,27 +61,28 @@ public class OutputView {
     public static void printWinOrLose(final GameResult blackjackResult) {
         System.out.println();
         System.out.println("## 최종 승패");
-        final Set<Entry<PlayerResult, Integer>> dealerEntries = blackjackResult.dealerResult().entrySet();
         final Set<Entry<Player, PlayerResult>> playerEntries = blackjackResult.playerResult().entrySet();
-        printDealerWinOrLose(dealerEntries);
+        printDealerWinOrLose(blackjackResult);
         printPlayerWinOrLose(playerEntries);
     }
 
-    private static void printDealerWinOrLose(final Set<Entry<PlayerResult, Integer>> dealerEntries) {
+    private static void printDealerWinOrLose(final GameResult blackjackResult) {
         System.out.print("딜러: ");
-        for (final var entry : dealerEntries) {
-            final PlayerResult result = entry.getKey();
-            final Integer value = entry.getValue();
-            printResultWithCounter(result, value);
+        final List<Integer> printOrder = List.of(blackjackResult.dealerWin(), blackjackResult.dealerLose(),
+                blackjackResult.dealerTie());
+        final List<String> suffix = List.of("승", "패", "무");
+
+        for (int i = 0; i < 3; i++) {
+            printResultWithCounter(printOrder.get(i), suffix.get(i));
         }
         System.out.println();
     }
 
-    private static void printResultWithCounter(final PlayerResult result, final Integer value) {
-        if (value <= 0) {
+    private static void printResultWithCounter(final int resultCount, final String suffix) {
+        if (resultCount <= 0) {
             return;
         }
-        System.out.print(value + " " + determineWinOrLose(result) + " ");
+        System.out.print(resultCount + " " + suffix + " ");
     }
 
     private static void printPlayerWinOrLose(final Set<Entry<Player, PlayerResult>> playerEntries) {
