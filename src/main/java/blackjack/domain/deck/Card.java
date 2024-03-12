@@ -4,7 +4,7 @@ public class Card {
     private static final int MAX_CARD_VALUE = 13;
 
     private final Kind kind;
-    private Value value;
+    private final Value value;
 
     private Card(Kind kind, Value value) {
         this.kind = kind;
