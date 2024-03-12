@@ -6,8 +6,8 @@ import blackjack.model.cardgenerator.CardGenerator;
 import java.util.List;
 
 public class Player {
+    private static final int MAX_DRAWABLE_SCORE = 21;
     private static final String INVALID_NAME_LENGTH = "참여자 이름은 한 글자 이상이다";
-    private static final int BLACKJACK_SCORE = 21;
 
     private final String name;
     private final Cards cards;
@@ -24,20 +24,20 @@ public class Player {
         }
     }
 
+    public void drawCard(final CardGenerator cardGenerator) {
+        cards.drawCard(cardGenerator);
+    }
+
+    public boolean canDrawCard() {
+        return cards.canDrawCardWithinScoreLimit(MAX_DRAWABLE_SCORE);
+    }
+
     public int calculateCardsTotalScore() {
         return cards.calculateTotalScore();
     }
 
     public boolean isBlackJack() {
         return cards.isBlackJack();
-    }
-
-    public boolean canDrawCard() {
-        return cards.canDrawCardWithinScoreLimit(BLACKJACK_SCORE);
-    }
-
-    public void drawCard(final CardGenerator cardGenerator) {
-        cards.drawCard(cardGenerator);
     }
 
     public List<Card> getCards() {

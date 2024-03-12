@@ -15,8 +15,14 @@ public class Dealer {
         this.cards = new Cards(cardGenerator);
     }
 
-    public void drawUntilEnd(final CardGenerator cardGenerator) {
-        cards.drawCardWithinScoreLimit(cardGenerator, MAX_DRAWABLE_SCORE);
+    public void drawCards(final CardGenerator cardGenerator) {
+        while (canDrawCard()) {
+            cards.drawCard(cardGenerator);
+        }
+    }
+
+    private boolean canDrawCard() {
+        return cards.canDrawCardWithinScoreLimit(MAX_DRAWABLE_SCORE);
     }
 
     public int calculateCardsTotalScore() {

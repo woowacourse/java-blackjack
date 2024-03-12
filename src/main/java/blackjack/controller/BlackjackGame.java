@@ -75,7 +75,7 @@ public class BlackjackGame {
     }
 
     private void drawDealerCards(final Dealer dealer, final CardGenerator cardGenerator) {
-        dealer.drawUntilEnd(cardGenerator);
+        dealer.drawCards(cardGenerator);
         outputView.printDealerDrawingCards(dealer);
     }
 
