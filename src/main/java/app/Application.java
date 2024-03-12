@@ -7,8 +7,7 @@ import view.ResultView;
 
 public class Application {
     public static void main(String[] args) throws Exception {
-        InputView inputView = new InputView();
-        try (inputView) {
+        try (InputView inputView = new InputView()) {
             new Casino(inputView, new ResultView()).play(new BlackjackGame());
         }
     }
