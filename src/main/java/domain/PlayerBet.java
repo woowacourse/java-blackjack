@@ -11,4 +11,12 @@ public class PlayerBet {
         this.player = player;
         this.betAmount = betAmount;
     }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public BetAmount getBetAmount() {
+        return betAmount;
+    }
 }

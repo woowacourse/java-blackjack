@@ -4,7 +4,9 @@ import java.util.regex.Pattern;
 
 public class BetAmount {
 
-    public static final int MIN_BETTING_AMOUNT = 10000;
+    private static final int MIN_BETTING_AMOUNT = 10000;
+    private static final int DRAW_AMOUNT = 0;
+    private static final double BLACK_JACK_RATE = 1.5;
 
     private final int betAmount;
 
@@ -28,5 +30,21 @@ public class BetAmount {
         if (Integer.parseInt(value) < MIN_BETTING_AMOUNT) {
             throw new IllegalArgumentException("[ERROR] 10000원 이상 베팅해주세요.");
         }
+    }
+
+    public int winAmount() {
+        return betAmount;
+    }
+
+    public int loseAmount() {
+        return -betAmount;
+    }
+
+    public int drawAmount() {
+        return DRAW_AMOUNT;
+    }
+
+    public int blackJackAmount() {
+        return (int) (betAmount * BLACK_JACK_RATE);
     }
 }
