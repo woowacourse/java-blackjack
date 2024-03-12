@@ -29,9 +29,4 @@ public class Dealer extends Participant {
     public List<Card> openFirstCard() {
         return List.of(hand.getFirstCard());
     }
-
-    // TODO: getName 없애기
-    public String getName() {
-        return "딜러";
-    }
 }

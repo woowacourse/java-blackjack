@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    public static final String DEALER_NAME = "딜러";
 
     public void println() {
         System.out.println();
@@ -19,7 +20,7 @@ public class OutputView {
 
     public void printDistributionSubject(final List<String> names) {
         String formattedName = String.join(", ", names);
-        System.out.println(String.format("딜러와 %s에게 2장을 나누었습니다.", formattedName));
+        System.out.println(String.format("%s와 %s에게 2장을 나누었습니다.", DEALER_NAME, formattedName));
     }
 
     public void printPlayersNamesAndCards(final List<NameCards> nameCards) {
@@ -38,7 +39,7 @@ public class OutputView {
     }
 
     public void printDealerHit() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(DEALER_NAME + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public void printFinalCardsAndScore(final List<NameCardsScore> nameCardsScores) {
@@ -53,7 +54,7 @@ public class OutputView {
     public void printDealerFinalResult(final List<DealerResultCount> dealerResults) {
         System.out.println();
         System.out.println("## 최종 승패");
-        System.out.println("딜러: " + formatFinalResult(dealerResults));
+        System.out.println(DEALER_NAME + ": " + formatFinalResult(dealerResults));
     }
 
     private String formatFinalResult(final List<DealerResultCount> dealerResults) {

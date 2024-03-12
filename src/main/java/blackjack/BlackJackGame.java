@@ -65,7 +65,7 @@ public class BlackJackGame {
 
     private List<NameCards> createDealerPlayersNameCards(final Dealer dealer, final Players players) {
         List<NameCards> dealerNameCards = new ArrayList<>(
-                List.of(new NameCards(dealer.getName(), dealer.openFirstCard())));
+                List.of(new NameCards(OutputView.DEALER_NAME, dealer.openFirstCard())));
         List<NameCards> playersNameCards = players.stream()
                 .map(NameCards::from)
                 .toList();
@@ -121,7 +121,7 @@ public class BlackJackGame {
 
     private void printFinalCardsAndScores(final Dealer dealer, final Players players) {
         outputView.println();
-        NameCardsScore dealerNameCardsScore = new NameCardsScore(dealer.getName(), dealer.openCards(),
+        NameCardsScore dealerNameCardsScore = new NameCardsScore(OutputView.DEALER_NAME, dealer.openCards(),
                 dealer.notifyScore());
         List<NameCardsScore> playerNameCardsScore = players.collectFinalResults();
         outputView.printFinalCardsAndScore(dealerNameCardsScore);
