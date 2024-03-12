@@ -1,9 +1,9 @@
 package blackjackgame.domain.blackjack;
 
 public class TestDealerCardDrawStrategy extends TestAbstractFirstCardDrawStrategy {
-    private final Gamer player;
+    private final CardHolderGamer player;
 
-    public TestDealerCardDrawStrategy(Gamer player) {
+    public TestDealerCardDrawStrategy(CardHolderGamer player) {
         this.player = player;
     }
 

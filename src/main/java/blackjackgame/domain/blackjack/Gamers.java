@@ -4,9 +4,9 @@ import blackjackgame.domain.card.Deck;
 import java.util.List;
 
 public class Gamers {
-    private final List<Gamer> players;
+    private final List<CardHolderGamer> players;
 
-    public Gamers(List<Gamer> players) {
+    public Gamers(List<CardHolderGamer> players) {
         this.players = players;
     }
 
@@ -16,11 +16,11 @@ public class Gamers {
 
     public List<String> getRawPlayersNames() {
         return players.stream()
-                .map(Gamer::getRawName)
+                .map(CardHolderGamer::getRawName)
                 .toList();
     }
 
-    public List<Gamer> getPlayers() {
+    public List<CardHolderGamer> getPlayers() {
         return players;
     }
 }

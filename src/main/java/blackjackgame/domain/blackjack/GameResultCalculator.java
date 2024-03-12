@@ -5,22 +5,22 @@ public class GameResultCalculator {
     private GameResultCalculator() {
     }
 
-    public static GameResult calculate(Gamer baseGamer, Gamer otherGamer) {
-        if (baseGamer.isDead() && otherGamer.isDead()) {
+    public static GameResult calculate(CardHolderGamer baseCardHolderGamer, CardHolderGamer otherCardHolderGamer) {
+        if (baseCardHolderGamer.isDead() && otherCardHolderGamer.isDead()) {
             return GameResult.TIE;
         }
-        if (baseGamer.isDead()) {
+        if (baseCardHolderGamer.isDead()) {
             return GameResult.LOSE;
         }
-        if (otherGamer.isDead()) {
+        if (otherCardHolderGamer.isDead()) {
             return GameResult.WIN;
         }
-        return getGameResultWhenNobodyDead(baseGamer, otherGamer);
+        return getGameResultWhenNobodyDead(baseCardHolderGamer, otherCardHolderGamer);
     }
 
-    private static GameResult getGameResultWhenNobodyDead(Gamer baseGamer, Gamer otherGamer) {
-        SummationCardPoint baseGamerSummationCardPoint = baseGamer.getSummationCardPoint();
-        SummationCardPoint otherGamerSummationCardPoint = otherGamer.getSummationCardPoint();
+    private static GameResult getGameResultWhenNobodyDead(CardHolderGamer baseCardHolderGamer, CardHolderGamer otherCardHolderGamer) {
+        SummationCardPoint baseGamerSummationCardPoint = baseCardHolderGamer.getSummationCardPoint();
+        SummationCardPoint otherGamerSummationCardPoint = otherCardHolderGamer.getSummationCardPoint();
 
         if (baseGamerSummationCardPoint.isBiggerThan(otherGamerSummationCardPoint)) {
             return GameResult.WIN;

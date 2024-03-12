@@ -19,7 +19,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class GamerTest {
+class CardHolderGamerTest {
 
     public static Stream<Arguments> isDeadParameters() {
         return Stream.of(
@@ -28,12 +28,20 @@ class GamerTest {
     }
 
     @Test
+    @DisplayName("이름과 손패를 갖는 게이머 클래스의 생성자를 만들 수 있다.")
+    void createGamerWithNameAndHoldingCardsConstructorTest() {
+        Assertions.assertThatCode(() ->
+                new CardHolderGamer("게이머", HoldingCards.of())
+        ).doesNotThrowAnyException();
+    }
+
+    @Test
     @DisplayName("게임 참가자가 카드를 뽑았을 때 점수가 올바르게 계산되는지 검증")
     void draw() {
-        Gamer Gamer = new Gamer("robin", HoldingCards.of());
-        Gamer.draw(Deck.of(new Card(JACK, HEART)), new TestPlayerCardDrawStrategy(Gamer));
+        CardHolderGamer CardHolderGamer = new CardHolderGamer("robin", HoldingCards.of());
+        CardHolderGamer.draw(Deck.of(new Card(JACK, HEART)), new TestPlayerCardDrawStrategy(CardHolderGamer));
 
-        SummationCardPoint actual = Gamer.getSummationCardPoint();
+        SummationCardPoint actual = CardHolderGamer.getSummationCardPoint();
         SummationCardPoint expected = new SummationCardPoint(10);
 
         Assertions.assertThat(actual).isEqualTo(expected);
@@ -42,14 +50,14 @@ class GamerTest {
     @Test
     @DisplayName("플레이어는 총합이 21이 넘으면 카드를 뽑을 수 없는지 검증")
     void validateDrawLimit() {
-        Gamer Gamer = new Gamer("robin", HoldingCards.of(
+        CardHolderGamer CardHolderGamer = new CardHolderGamer("robin", HoldingCards.of(
                 new Card(JACK, HEART), new Card(EIGHT, HEART), new Card(JACK, SPADE)
         ));
         Deck deck = Deck.of(
                 new Card(TWO, SPADE)
         );
 
-        Assertions.assertThatThrownBy(() -> Gamer.draw(deck, new TestPlayerCardDrawStrategy(Gamer)))
+        Assertions.assertThatThrownBy(() -> CardHolderGamer.draw(deck, new TestPlayerCardDrawStrategy(CardHolderGamer)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("카드를 더이상 뽑을 수 없습니다.");
     }
@@ -57,14 +65,14 @@ class GamerTest {
     @Test
     @DisplayName("딜러는 총합이 16이 넘으면 카드를 뽑을 수 없는지 검증")
     void validateDealerDrawLimit() {
-        Gamer gamer = new Gamer("robin", HoldingCards.of(
+        CardHolderGamer cardHolderGamer = new CardHolderGamer("robin", HoldingCards.of(
                 new Card(JACK, HEART), new Card(SEVEN, HEART)
         ));
         Deck deck = Deck.of(
                 new Card(TWO, SPADE)
         );
 
-        Assertions.assertThatThrownBy(() -> gamer.draw(deck, new TestDealerCardDrawStrategy(gamer)))
+        Assertions.assertThatThrownBy(() -> cardHolderGamer.draw(deck, new TestDealerCardDrawStrategy(cardHolderGamer)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("카드를 더이상 뽑을 수 없습니다.");
     }
@@ -73,10 +81,10 @@ class GamerTest {
     @MethodSource("isDeadParameters")
     @DisplayName("게이머의 점수가 21이 넘으면 죽었다고 판단하는지 검증")
     void isDead(Card additionalCard, boolean expected) {
-        Gamer gamer = new Gamer("robin", HoldingCards.of(
+        CardHolderGamer cardHolderGamer = new CardHolderGamer("robin", HoldingCards.of(
                 new Card(JACK, HEART), new Card(QUEEN, HEART), additionalCard
         ));
 
-        Assertions.assertThat(gamer.isDead()).isEqualTo(expected);
+        Assertions.assertThat(cardHolderGamer.isDead()).isEqualTo(expected);
     }
 }

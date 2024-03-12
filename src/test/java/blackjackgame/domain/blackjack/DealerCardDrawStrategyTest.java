@@ -30,7 +30,7 @@ class DealerCardDrawStrategyTest {
     @MethodSource("canDrawParameters")
     @DisplayName("딜러의 드로우 여부가 제대로 판단되는지 검증")
     void canDraw(HoldingCards holdingCards, boolean expected) {
-        Gamer dealer = new Gamer(DEALER_NAME, holdingCards);
+        CardHolderGamer dealer = new CardHolderGamer(DEALER_NAME, holdingCards);
         Assertions.assertThat(new DealerRandomCardDrawStrategy(dealer).canDraw())
                 .isEqualTo(expected);
     }

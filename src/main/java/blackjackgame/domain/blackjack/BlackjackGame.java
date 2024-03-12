@@ -6,10 +6,10 @@ import blackjackgame.view.OutputView;
 public class BlackjackGame {
     private static final int EXECUTION_COUNT = 2;
 
-    private final Gamer dealer;
+    private final CardHolderGamer dealer;
     private final Gamers players;
 
-    public BlackjackGame(Gamer dealer, Gamers players) {
+    public BlackjackGame(CardHolderGamer dealer, Gamers players) {
         this.dealer = dealer;
         this.players = players;
     }
@@ -23,11 +23,11 @@ public class BlackjackGame {
         dealer.draw(deck, new DealerRandomCardDrawStrategy(dealer), EXECUTION_COUNT);
     }
 
-    private void playerDraw(Deck deck, Gamer player) {
+    private void playerDraw(Deck deck, CardHolderGamer player) {
         player.draw(deck, new PlayerRandomCardDrawStrategy(player), EXECUTION_COUNT);
     }
 
-    public boolean isPlayerDead(Gamer player) {
+    public boolean isPlayerDead(CardHolderGamer player) {
         return player.isDead();
     }
 
@@ -40,7 +40,7 @@ public class BlackjackGame {
         }
     }
 
-    public void playerTryDraw(Deck deck, Gamer player) {
+    public void playerTryDraw(Deck deck, CardHolderGamer player) {
         try {
             playerDraw(deck, player);
         } catch (IllegalStateException e) {

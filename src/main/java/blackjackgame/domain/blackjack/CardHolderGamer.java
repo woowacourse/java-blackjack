@@ -5,13 +5,13 @@ import blackjackgame.domain.card.CardDrawStrategy;
 import blackjackgame.domain.card.Deck;
 import java.util.List;
 
-public class Gamer {
+public class CardHolderGamer {
     private static final int DIFFERENCE_AS_ACE_CHANGE_ONE_TO_ELEVEN = 10;
 
     private final String name;
     private final HoldingCards holdingCards;
 
-    public Gamer(String name, HoldingCards holdingCards) {
+    public CardHolderGamer(String name, HoldingCards holdingCards) {
         this.name = name;
         this.holdingCards = holdingCards;
     }
