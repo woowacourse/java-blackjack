@@ -17,25 +17,29 @@ public class GameController {
     }
 
     public static void run() {
-        try {
-            Game game = makeGame();
-            Dealer gameDealer = game.getDealer();
-            Players gamePlayers = game.getPlayers();
-            Deck deck = game.getDeck();
+        Game game = makeGame();
+        assert game != null;
+        Dealer gameDealer = game.getDealer();
+        Players gamePlayers = game.getPlayers();
+        Deck deck = game.getDeck();
 
-            printInitialHands(gameDealer.getName(), gameDealer.getFirstCard(), gamePlayers.getPlayers());
-            confirmParticipantsHands(gamePlayers, deck, gameDealer);
+        printInitialHands(gameDealer.getName(), gameDealer.getFirstCard(), gamePlayers.getPlayers());
+        confirmParticipantsHands(gamePlayers, deck, gameDealer);
 
-            OutputView.printFinalHandsAndScoreMessage(gameDealer, gamePlayers);
-            OutputView.printGameResult(gameDealer.getName(), game.makeGameResult());
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
+        OutputView.printFinalHandsAndScoreMessage(gameDealer, gamePlayers);
+        OutputView.printGameResult(gameDealer.getName(), game.makeGameResult());
     }
 
     private static Game makeGame() {
-        OutputView.printAskNameMessage();
-        return Game.of(InputView.readPlayerNamesAndBattings());
+        Game game = null;
+        try {
+            OutputView.printAskNameMessage();
+            return Game.of(InputView.readPlayerNamesAndBattings());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            makeGame();
+        }
+        return game;
     }
 
     private static void confirmParticipantsHands(Players players, Deck deck, Dealer dealer) {
