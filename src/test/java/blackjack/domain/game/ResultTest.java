@@ -1,12 +1,9 @@
-package domain.game;
+package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Symbol;
-import blackjack.domain.game.Result;
-import blackjack.domain.game.WinLose;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +22,7 @@ class ResultTest {
 
     @BeforeEach
     void beforeEach() {
-        player = new Player(new Name("name"));
+        player = Player.nameOf("name");
         dealer = new Dealer();
     }
 
@@ -114,9 +111,9 @@ class ResultTest {
         @BeforeEach
         void beforeEach() {
             players = new ArrayList<>(List.of(
-                    new Player(new Name("A")),
-                    new Player(new Name("B")),
-                    new Player(new Name("C"))));
+                    Player.nameOf("A"),
+                    Player.nameOf("B"),
+                    Player.nameOf("C")));
             dealer = new Dealer();
             dealer.receive(List.of(new Card(Rank.TEN, Symbol.CLUB), new Card(Rank.SEVEN, Symbol.CLUB)));
         }

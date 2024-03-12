@@ -1,12 +1,11 @@
 package blackjack.machine;
 
+import blackjack.domain.card.strategy.RandomCardGenerator;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.Result;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.domain.card.strategy.RandomCardGenerator;
 import blackjack.view.HitStay;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -41,7 +40,7 @@ public class BlackjackMachine {
     private BlackjackGame initializeGame() {
         List<String> names = inputView.readNames();
         List<Player> players = names.stream()
-                .map(name -> new Player(new Name(name)))
+                .map(Player::nameOf)
                 .toList();
         return new BlackjackGame(Participants.createWithDealer(players), new RandomCardGenerator());
     }

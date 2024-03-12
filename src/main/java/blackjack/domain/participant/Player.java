@@ -6,8 +6,12 @@ import java.util.List;
 
 public class Player extends Participant {
 
-    public Player(Name name) {
+    private Player(Name name) {
         super(name);
+    }
+
+    public static Player nameOf(String rawName) {
+        return new Player(new Name(rawName));
     }
 
     @Override

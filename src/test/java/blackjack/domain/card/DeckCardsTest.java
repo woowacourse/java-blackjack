@@ -1,13 +1,9 @@
-package domain.card;
+package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.DeckCards;
-import blackjack.domain.card.Rank;
-import blackjack.domain.card.Symbol;
+import blackjack.domain.card.strategy.RandomCardGenerator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import blackjack.domain.card.strategy.RandomCardGenerator;
 
 import java.util.List;
 
