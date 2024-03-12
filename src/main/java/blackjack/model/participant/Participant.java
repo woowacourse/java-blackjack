@@ -3,8 +3,7 @@ package blackjack.model.participant;
 import blackjack.model.deck.Card;
 import java.util.List;
 
-public class Participant {
-    private static final int HITTABLE_THRESHOLD = 21;
+public abstract class Participant {
 
     protected final Hand hand;
 
@@ -28,9 +27,7 @@ public class Participant {
         return hand.getCards();
     }
 
-    public boolean canHit() {
-        return hand.calculateScore() < HITTABLE_THRESHOLD;
-    }
+    public abstract boolean canHit();
 
     public boolean isBust() {
         return hand.isBust();

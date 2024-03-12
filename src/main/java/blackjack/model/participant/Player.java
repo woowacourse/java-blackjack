@@ -3,6 +3,7 @@ package blackjack.model.participant;
 import java.util.Objects;
 
 public class Player extends Participant {
+    private static final int HITTABLE_THRESHOLD = 21;
 
     private final String name;
 
@@ -15,6 +16,11 @@ public class Player extends Participant {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("이름에는 공백을 사용할 수 없습니다.");
         }
+    }
+
+    @Override
+    public boolean canHit() {
+        return hand.calculateScore() < HITTABLE_THRESHOLD;
     }
 
     public String getName() {
