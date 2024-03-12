@@ -21,7 +21,7 @@ public class Application {
         final GameBoard gameBoard = createGameBoard();
         drawInitialHands(gameBoard);
 
-        hit(gameBoard);
+        hitGamers(gameBoard);
 
         OutputView.printFinalState(
                 createDealerDto(gameBoard.getDealer().getHand()), createPlayerDtos(gameBoard.getPlayers()));
@@ -62,7 +62,7 @@ public class Application {
         return new PlayerDto(player.getName(), player.getHand().getCards(), player.getHand().calculateOptimalSum());
     }
 
-    private static void hit(GameBoard gameBoard) {
+    private static void hitGamers(GameBoard gameBoard) {
         hitPlayers(gameBoard);
         OutputView.printLineSeparator();
         hitDealer(gameBoard);
@@ -85,7 +85,7 @@ public class Application {
 
     private static void hitDealer(final GameBoard gameBoard) {
         while (gameBoard.canDealerHit()) {
-            gameBoard.hitPlayer();
+            gameBoard.hitDealer();
             OutputView.printDealerDrawMessage();
         }
     }

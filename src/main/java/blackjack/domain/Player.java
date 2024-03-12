@@ -4,14 +4,13 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import java.util.ArrayList;
 
-public class Player implements Gamer {
+public class Player extends Gamer {
 
     private final Name name;
-    private final Hand hand;
 
     private Player(final Name name, final Hand hand) {
+        super(hand);
         this.name = name;
-        this.hand = hand;
     }
 
     public static Player from(final String name) {
@@ -26,21 +25,6 @@ public class Player implements Gamer {
     @Override
     public boolean canDraw() {
         return hand.calculateOptimalSum() <= BLACKJACK;
-    }
-
-    @Override
-    public boolean isBust() {
-        return calculateScore() > BLACKJACK;
-    }
-
-    @Override
-    public boolean isBlackjack() {
-        return calculateScore() == BLACKJACK && hand.hasOnlyInitialCard();
-    }
-
-    @Override
-    public int calculateScore() {
-        return hand.calculateOptimalSum();
     }
 
     public Name getName() {

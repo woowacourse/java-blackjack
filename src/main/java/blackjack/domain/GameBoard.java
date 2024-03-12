@@ -18,7 +18,8 @@ public class GameBoard {
     }
 
     public void drawInitialDealerHand() {
-        dealer.drawInitialHand();
+        dealer.draw();
+        dealer.draw();
     }
 
     public void drawInitialPlayersHand() {
@@ -29,7 +30,7 @@ public class GameBoard {
         return dealer.openFirstCard();
     }
 
-    public void hitPlayer() {
+    public void hitDealer() {
         dealer.draw();
     }
 

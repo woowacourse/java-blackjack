@@ -1,14 +1,28 @@
 package blackjack.domain;
 
-public interface Gamer {
+import blackjack.domain.card.Hand;
 
-    int BLACKJACK = 21;
+public abstract class Gamer {
 
-    boolean canDraw();
+    protected static final int BLACKJACK = 21;
 
-    int calculateScore();
+    protected final Hand hand;
 
-    boolean isBust();
+    public Gamer(final Hand hand) {
+        this.hand = hand;
+    }
 
-    boolean isBlackjack();
+    public boolean isBust() {
+        return calculateScore() > BLACKJACK;
+    }
+
+    public boolean isBlackjack() {
+        return calculateScore() == BLACKJACK && hand.hasOnlyInitialCard();
+    }
+
+    public int calculateScore() {
+        return hand.calculateOptimalSum();
+    }
+
+    abstract boolean canDraw();
 }
