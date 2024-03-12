@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -264,8 +263,9 @@ class JudgeTest {
     }
 
     private void bustPlayerChoco(final Dealer dealer) {
-        IntStream.range(0, 10)
-                .forEach(i -> choco.draw(dealer));
+        for (int i = 0; i < 10; i++) {
+            choco.draw(dealer);
+        }
     }
 
     private void bustDealer() {
@@ -273,8 +273,9 @@ class JudgeTest {
     }
 
     private void deckDrawLoop(final int count) {
-        IntStream.range(0, count)
-                .forEach(i -> deck.draw());
+        for (int i = 0; i < count; i++) {
+            deck.draw();
+        }
     }
 
     private boolean isDealerResultWin(final DealerResult dealerResult) {

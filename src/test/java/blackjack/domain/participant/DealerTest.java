@@ -8,8 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.stream.IntStream;
-
 import static blackjack.fixture.TrumpCardFixture.aceSpadeTrumpCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -42,8 +40,9 @@ public class DealerTest {
     @Test
     void cantDrawExtraCard() {
         //given
-        IntStream.range(0, 4)
-                .forEach(i -> dealer.drawExtraCard());
+        for (int i = 0; i < 4; i++) {
+            dealer.drawExtraCard();
+        }
 
         //when
         dealer.drawExtraCard();

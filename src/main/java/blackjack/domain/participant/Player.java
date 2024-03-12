@@ -3,7 +3,6 @@ package blackjack.domain.participant;
 import blackjack.domain.card.TrumpCard;
 
 import java.util.regex.Pattern;
-import java.util.stream.IntStream;
 
 public class Player extends Gamer {
 
@@ -28,8 +27,9 @@ public class Player extends Gamer {
     }
 
     private void initialDraw(final Dealer dealer) {
-        IntStream.range(0, 2)
-                .forEach(i -> draw(dealer));
+        for (int i = 0; i < 2; i++) {
+            draw(dealer);
+        }
     }
 
     public void draw(final Dealer dealer) {

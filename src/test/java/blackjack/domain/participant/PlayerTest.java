@@ -8,8 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.stream.IntStream;
-
 import static blackjack.fixture.PlayerFixture.playerChoco;
 import static blackjack.fixture.PlayerFixture.playerClover;
 import static blackjack.fixture.TrumpCardFixture.threeSpadeTrumpCard;
@@ -56,8 +54,9 @@ public class PlayerTest {
     @Test
     void cantReceiveCard() {
         // when
-        IntStream.range(0, 6)
-                .forEach(i -> clover.draw(dealer));
+        for (int i = 0; i < 6; i++) {
+            clover.draw(dealer);
+        }
 
         //then
         assertThat(clover.canReceiveCard()).isFalse();

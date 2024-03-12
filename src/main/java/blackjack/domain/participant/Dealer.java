@@ -3,8 +3,6 @@ package blackjack.domain.participant;
 import blackjack.domain.Deck;
 import blackjack.domain.card.TrumpCard;
 
-import java.util.stream.IntStream;
-
 public class Dealer extends Gamer {
 
     public static final int DEALER_BOUND = 16;
@@ -19,8 +17,9 @@ public class Dealer extends Gamer {
     }
 
     private void initialDraw() {
-        IntStream.range(0, 2)
-                .forEach(i -> hand.add(draw()));
+        for (int i = 0; i < 2; i++) {
+            hand.add(draw());
+        }
     }
 
     public TrumpCard draw() {
