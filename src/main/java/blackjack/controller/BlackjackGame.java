@@ -1,6 +1,5 @@
 package blackjack.controller;
 
-import blackjack.domain.DrawDecision;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participants;
@@ -36,25 +35,20 @@ public class BlackjackGame {
     }
 
     private void drawToPlayer(Player player, CardDeck cardDeck) {
-        String playerName = player.getPlayerName();
-
-        DrawDecision drawDecision = DrawDecision.HIT;
-        while (player.isNotBust() && drawDecision == DrawDecision.HIT) {
-            drawDecision = inputView.readDrawDecision(playerName);
-            drawIfDrawDecisionIsHit(player, cardDeck, drawDecision);
-        }
-    }
-
-    private void drawIfDrawDecisionIsHit(Player player, CardDeck cardDeck, DrawDecision drawDecision) {
-        if (drawDecision == DrawDecision.HIT) {
-            player.hit(cardDeck.popCard());
+        String playerName = player.getPlayerName().getValue();
+        while (canPlayerHit(player.canHit(), playerName)) {
+            player.draw(cardDeck.popCard());
             outputView.printDrawToPlayer(player);
         }
     }
 
+    private boolean canPlayerHit(boolean canHit, String playerName) {
+        return canHit && inputView.readDrawDecision(playerName).isHit();
+    }
+
     private void drawToDealer(Dealer dealer, CardDeck cardDeck) {
         while (dealer.canHit()) {
-            dealer.hit(cardDeck.popCard());
+            dealer.draw(cardDeck.popCard());
             outputView.printDrawToDealer();
         }
     }

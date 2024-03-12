@@ -15,7 +15,7 @@ public abstract class Participant {
 
     public abstract boolean canHit();
 
-    public void hit(Card card) {
+    public void draw(Card card) {
         if (canHit()) {
             hand.append(card);
         }

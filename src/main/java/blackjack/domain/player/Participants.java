@@ -22,8 +22,8 @@ public class Participants {
 
     public void deal(CardDeck cardDeck) {
         for (Participant participant : getParticipants()) {
-            participant.hit(cardDeck.popCard());
-            participant.hit(cardDeck.popCard());
+            participant.draw(cardDeck.popCard());
+            participant.draw(cardDeck.popCard());
         }
     }
 

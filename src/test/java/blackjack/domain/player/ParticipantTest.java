@@ -26,7 +26,7 @@ class ParticipantTest {
         Card card = new Card(CardRank.ACE, CardSuit.HEART);
 
         // when
-        participant.hit(card);
+        participant.draw(card);
 
         // then
         assertThat(participant.getHand().getCards()).contains(card);
@@ -46,7 +46,7 @@ class ParticipantTest {
         Card card = new Card(CardRank.ACE, CardSuit.HEART);
 
         // when
-        participant.hit(card);
+        participant.draw(card);
 
         // then
         assertThat(participant.getHand().getCards()).doesNotContain(card);
