@@ -10,6 +10,7 @@ public class BlackjackHand {
 
     private static final int BLACKJACK_SCORE = 21;
     private static final int ACE_SPECIAL_SCORE = 10;
+    public static final int INITIAL_CARD_AMOUNT = 2;
 
     private final List<Card> cards;
 
@@ -40,6 +41,10 @@ public class BlackjackHand {
 
     public boolean isOverBlackjackScore() {
         return calculateInitialScore() > BLACKJACK_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == INITIAL_CARD_AMOUNT && calculateScore() == BLACKJACK_SCORE;
     }
 
     private int calculateInitialScore() {

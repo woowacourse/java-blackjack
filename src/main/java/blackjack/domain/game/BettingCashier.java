@@ -4,6 +4,7 @@ import blackjack.domain.participant.Player;
 
 public class BettingCashier {
 
+    public static final double BLACKJACK_MULTIPLE = 1.5;
     private final Betting betting;
     private final Result result;
 
@@ -23,11 +24,18 @@ public class BettingCashier {
     public int findProfitOf(Player player) {
         int money = betting.findMoneyOf(player);
         if (result.isPlayerWon(player)) {
-            return money;
+            return applyMultipleIfBlackjack(player, money);
         }
         if (result.isPlayerLose(player)) {
             return -money;
         }
         return 0;
+    }
+
+    private int applyMultipleIfBlackjack(Player player, int money) {
+        if (player.isBlackjack()) {
+            return (int) (money * BLACKJACK_MULTIPLE);
+        }
+        return money;
     }
 }

@@ -49,6 +49,21 @@ class BettingCashierTest {
     }
 
     @Test
+    @DisplayName("블랙잭으로 이기면 해당 금액의 1.5배만큼의 수익을 얻는다")
+    void findProfitOf_BlackjackWinner() {
+        Player blackjackWinner = Player.nameOf("name");
+        blackjackWinner.receive(List.of(
+                new Card(Rank.KING, Symbol.CLUB),
+                new Card(Rank.ACE, Symbol.CLUB)));
+
+        Betting betting = new Betting();
+        betting.bet(blackjackWinner, 10000);
+
+        BettingCashier cashier = new BettingCashier(betting, Result.of(List.of(blackjackWinner), new Dealer()));
+        assertThat(cashier.findProfitOf(blackjackWinner)).isEqualTo(15000);
+    }
+
+    @Test
     @DisplayName("패자는 해당 금액만큼의 수익을 잃는다")
     void findProfitOf_Loser() {
         Player loser = players.get(1);
@@ -84,4 +99,5 @@ class BettingCashierTest {
         BettingCashier cashier = new BettingCashier(betting, Result.of(players, dealer));
         assertThat(cashier.findProfitOfDealer()).isEqualTo(-5000);
     }
+
 }

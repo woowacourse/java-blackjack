@@ -44,6 +44,10 @@ public abstract class Participant {
         return blackjackHand.isOverBlackjackScore();
     }
 
+    public boolean isBlackjack() {
+        return blackjackHand.isBlackjack();
+    }
+
     public String getName() {
         return name.getName();
     }
