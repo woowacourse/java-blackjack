@@ -1,22 +1,34 @@
 package domain.user;
 
-import domain.deck.PlayerDeck;
+import domain.card.Card;
+import java.util.List;
 import java.util.Objects;
 
-public class Player extends User {
+public class Player {
     private final Name name;
+    private final Hand hand;
 
     public Player(Name name) {
-        super(new PlayerDeck());
         this.name = name;
+        this.hand = new Hand();
     }
 
-    @Override
-    public boolean isPlayer() {
-        return true;
+    public void addCard(Card card) {
+        hand.addCard(card);
     }
 
-    @Override
+    public int sumHand() {
+        return hand.sumCard();
+    }
+
+    public boolean busted() {
+        return hand.busted();
+    }
+
+    public List<Card> getAllCards() {
+        return hand.getCards();
+    }
+
     public String getNameValue() {
         return name.value();
     }

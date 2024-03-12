@@ -5,10 +5,10 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
 
-public class TotalDeck {
+public class Deck {
     private final Deque<Card> totalDeck;
 
-    public TotalDeck(List<Card> cards) {
+    public Deck(List<Card> cards) {
         totalDeck = new ArrayDeque<>(cards);
     }
 

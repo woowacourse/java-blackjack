@@ -7,11 +7,11 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class TotalDeckGeneratorTest {
+public class DeckGeneratorTest {
     @Test
     @DisplayName("전체 덱을 만든다.")
     void generateTest() {
-        List<Card> cards = new TotalDeckGenerator().generate();
+        List<Card> cards = new DeckGenerator().generate();
 
         assertThat(cards).hasSize(52);
     }

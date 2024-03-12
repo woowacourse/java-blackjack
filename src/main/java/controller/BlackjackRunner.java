@@ -1,17 +1,13 @@
 package controller;
 
-import static domain.game.State.BUSTED;
-import static domain.game.State.HITTABLE;
 import static view.Command.YES;
 
+import domain.Deck;
+import domain.DeckGenerator;
 import domain.ExceptionHandler;
-import domain.TotalDeck;
-import domain.TotalDeckGenerator;
 import domain.game.GameResult;
 import domain.game.PlayerResults;
-import domain.game.State;
 import domain.user.Player;
-import domain.user.User;
 import domain.user.Users;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -23,59 +19,40 @@ import view.OutputView;
 
 public class BlackjackRunner {
     public void play() {
-        TotalDeck totalDeck = new TotalDeck(new TotalDeckGenerator().generate());
+        Deck deck = new Deck(new DeckGenerator().generate());
         Users users = ExceptionHandler.handle(InputView::inputNames);
-        users.setStartCards(totalDeck);
+        users.putStartCards(deck);
         OutputView.printStartStatus(users);
-        run(users, totalDeck);
+        run(users, deck);
         showGameResult(users);
     }
 
-    private void run(Users users, TotalDeck totalDeck) {
-        for (User user : users.getPlayers()) {
-            hitOrStay(user, totalDeck);
+    private void run(Users users, Deck deck) {
+        for (Player player : users.getPlayers()) {
+            hitOrStay(player, deck);
         }
         while (users.isDealerCardAddable()) {
-            users.addDealerCard(totalDeck.getNewCard());
+            users.addDealerCard(deck.getNewCard());
             OutputView.printDealerHitMessage();
         }
     }
 
-    private void hitOrStay(User user, TotalDeck totalDeck) {
-        boolean addable = true;
-        while (addable) {
-            addable = isAddable(user, totalDeck);
+    private void hitOrStay(Player player, Deck deck) {
+        while (YES == inputValidatedCommand(player.getNameValue()) && !player.busted()) {
+            player.addCard(deck.getNewCard());
+            printByState(player);
         }
     }
 
-    private boolean isAddable(User user, TotalDeck totalDeck) {
-        Command command = ExceptionHandler.handle(
-                () -> InputView.inputAddCommand(user.getNameValue())
-        );
-        if (YES == command) {
-            hit(user, totalDeck);
-            printByState(user);
-            return user.isAddable();
-        }
-        return false;
+    private static Command inputValidatedCommand(String nameValue) {
+        return ExceptionHandler.handle(() -> InputView.inputAddCommand(nameValue));
     }
 
-    private void hit(User user, TotalDeck totalDeck) {
-        user.addCard(totalDeck.getNewCard());
-    }
-
-    private void printByState(User user) {
-        switch (hitResultState(user)) {
-            case HITTABLE -> OutputView.printPlayerAndVisibleCards(user);
-            case BUSTED -> OutputView.printBust(user);
+    private void printByState(Player player) {
+        OutputView.printUserAndCards(player.getNameValue(), player.getAllCards());
+        if (player.busted()) {
+            OutputView.printBust();
         }
-    }
-
-    private State hitResultState(User user) {
-        if (user.busted()) {
-            return BUSTED;
-        }
-        return HITTABLE;
     }
 
     private void showGameResult(Users users) {

@@ -1,4 +1,4 @@
-package domain.deck;
+package domain.user;
 
 import domain.card.Card;
 import domain.card.Number;
@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class UserDeck {
+public class Hand {
     private static final int BLACK_JACK_CONDITION = 21;
+    public static final int FIRST_INDEX = 0;
     protected final List<Card> cards;
 
-    public UserDeck() {
+    public Hand() {
         this.cards = new ArrayList<>();
     }
 
@@ -41,11 +42,11 @@ public abstract class UserDeck {
         return sumCard() > BLACK_JACK_CONDITION;
     }
 
-    public abstract boolean isAddable();
-
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 
-    public abstract List<Card> getVisibleCards();
+    public Card getFirstCard() {
+        return cards.get(FIRST_INDEX);
+    }
 }

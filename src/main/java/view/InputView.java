@@ -2,6 +2,7 @@ package view;
 
 import domain.user.Name;
 import domain.user.Player;
+import domain.user.Players;
 import domain.user.Users;
 import java.util.List;
 import java.util.Scanner;
@@ -15,7 +16,7 @@ public class InputView {
         List<Player> players = names.stream()
                 .map((name) -> new Player(new Name(name)))
                 .toList();
-        return new Users(players);
+        return new Users(new Players(players));
     }
 
     public static Command inputAddCommand(String name) {

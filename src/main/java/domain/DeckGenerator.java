@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class TotalDeckGenerator {
+public class DeckGenerator {
     private final List<Card> cards;
 
-    public TotalDeckGenerator() {
+    public DeckGenerator() {
         cards = Arrays.stream(Shape.values())
                 .flatMap(this::makeCardsByShape)
                 .collect(Collectors.toList());
