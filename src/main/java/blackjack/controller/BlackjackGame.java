@@ -4,10 +4,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.HandGenerator;
 import blackjack.domain.card.RandomDeck;
 import blackjack.domain.participant.*;
-import blackjack.domain.result.BlackjackResult;
-import blackjack.domain.result.PlayerBet;
-import blackjack.domain.result.PlayerBets;
-import blackjack.domain.result.Referee;
+import blackjack.domain.result.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -91,8 +88,8 @@ public class BlackjackGame {
     }
 
     private void printBlackjackResult(Participants participants, PlayerBets playerBets) {
-        Referee referee = participants.createRefereeByDealer();
-        BlackjackResult blackjackResult = referee.generateBlackjackResult(playerBets);
+        BetResultGenerator betResultGenerator = participants.createBetResultGenerator();
+        BlackjackResult blackjackResult = betResultGenerator.generateBetResultOf(playerBets);
         outputView.printBlackjackResult(blackjackResult);
     }
 

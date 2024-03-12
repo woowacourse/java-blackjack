@@ -33,8 +33,8 @@ public class Participants {
         return new PlayerTurnSelector(players);
     }
 
-    public Referee createRefereeByDealer() {
-        return new Referee(dealer);
+    public BetResultGenerator createBetResultGenerator() {
+        return new BetResultGenerator(dealer, Referee.getInstance());
     }
 
     public Dealer getDealer() {

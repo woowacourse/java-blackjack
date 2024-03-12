@@ -1,57 +1,58 @@
 package blackjack.domain.result;
 
-import blackjack.domain.card.HandGenerator;
 import blackjack.domain.card.Number;
-import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.testutil.CustomDeck;
+import java.util.List;
+
+import blackjack.testutil.ParticipantGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RefereeTest {
-    @DisplayName("올바르게 BlackjackGame을 생성한다.")
+    @DisplayName("플레이어가 이긴 경우 WIN을 반환한다.")
     @Test
-    void generateResultTest() {
-        Participants participants = createParticipants();
-        PlayerBets playerBets = createPlayerBet(participants, List.of(10_000, 5_000));
-        Referee referee = participants.createRefereeByDealer();
-        BlackjackResult blackjackResult = referee.generateBlackjackResult(playerBets);
-        Iterator<ParticipantProfit> expectedProfits = List.of(
-                new ParticipantProfit(new Name("딜러"), -10_000),
-                new ParticipantProfit(new Name("감자"), 15_000),
-                new ParticipantProfit(new Name("고구마"), -5_000)
-        ).iterator();
+    void playerWinResultTest() {
+        Player player = ParticipantGenerator.createPlayer(List.of(Number.TWO, Number.EIGHT, Number.SIX));
+        Dealer dealer = ParticipantGenerator.createDealer(List.of(Number.TWO, Number.FOUR));
+        Referee referee = Referee.getInstance();
+        HandResult playerResult = referee.getPlayerResult(player, dealer);
 
-        for (ParticipantProfit participantProfit : blackjackResult.getParticipantProfits()) {
-            ParticipantProfit expectedProfit = expectedProfits.next();
-            assertThat(participantProfit.getParticipantName()).isEqualTo(expectedProfit.getParticipantName());
-            assertThat(participantProfit.getProfit()).isEqualTo(expectedProfit.getProfit());
-        }
+        assertThat(playerResult).isEqualTo(HandResult.WIN);
     }
 
-    private static Participants createParticipants() {
-        List<Name> playerNames = List.of(new Name("감자"), new Name("고구마"));
-        List<Number> cardNumbers = List.of(Number.ACE, Number.JACK, Number.TWO, Number.TWO, Number.FIVE, Number.SIX);
-        HandGenerator handGenerator = new HandGenerator(new CustomDeck(cardNumbers));
-        return new Participants(playerNames, handGenerator);
+    @DisplayName("플레이어가 진 경우 LOSE를 반환한다.")
+    @Test
+    void playerLoseTest() {
+        Player player = ParticipantGenerator.createPlayer(List.of(Number.SEVEN, Number.TWO));
+        Dealer dealer = ParticipantGenerator.createDealer(List.of(Number.QUEEN, Number.SEVEN));
+        Referee referee = Referee.getInstance();
+        HandResult playerResult = referee.getPlayerResult(player, dealer);
+
+        assertThat(playerResult).isEqualTo(HandResult.LOSE);
     }
 
-    private static PlayerBets createPlayerBet(Participants participants, List<Integer> bettingPrices) {
-        List<Player> players = participants.getPlayers().getValues();
-        List<PlayerBet> playerBets = new ArrayList<>();
-        while (playerBets.size() < players.size()) {
-            int index = playerBets.size();
-            Player player = players.get(index);
-            int bettingPrice = bettingPrices.get(index);
-            playerBets.add(new PlayerBet(player, bettingPrice));
-        }
-        return new PlayerBets(playerBets);
+    @DisplayName("플레이어와 딜러가 무승부일 경우 DRAW를 반환한다.")
+    @Test
+    void playerDrawTest() {
+        Player player = ParticipantGenerator.createPlayer(List.of(Number.TWO, Number.SIX));
+        Dealer dealer = ParticipantGenerator.createDealer(List.of(Number.FOUR, Number.TWO, Number.TWO));
+        Referee referee = Referee.getInstance();
+        HandResult playerResult = referee.getPlayerResult(player, dealer);
+
+        assertThat(playerResult).isEqualTo(HandResult.DRAW);
+    }
+
+    @DisplayName("플레이어가 블랙잭으로 이긴 경우 BLACKJACK_WIN을 반환한다.")
+    @Test
+    void playerBlackjackWinTest() {
+        Player player = ParticipantGenerator.createPlayer(List.of(Number.ACE, Number.JACK));
+        Dealer dealer = ParticipantGenerator.createDealer(List.of(Number.FIVE, Number.SIX, Number.ACE));
+        Referee referee = Referee.getInstance();
+        HandResult playerResult = referee.getPlayerResult(player, dealer);
+
+        assertThat(playerResult).isEqualTo(HandResult.BLACKJACK_WIN);
     }
 }
