@@ -1,6 +1,7 @@
 package blackjack.participant;
 
 import blackjack.card.Card;
+import blackjack.game.MatchResult;
 import blackjack.participant.state.GameState;
 import blackjack.participant.state.playing.DealerState;
 import blackjack.participant.state.playing.PlayerState;
@@ -33,6 +34,10 @@ public class Participant {
         for (int i = 0; i < amount; i++) {
             drawCard(cardSupplier.get());
         }
+    }
+
+    public MatchResult matchResultVersus(Participant opponent) {
+        return state.createMatchResult(opponent.state);
     }
 
     public boolean isDrawable() {

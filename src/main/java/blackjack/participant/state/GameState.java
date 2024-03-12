@@ -20,7 +20,7 @@ public abstract class GameState {
 
     public abstract boolean isTerminated();
 
-    public abstract MatchResult createMatchResult(GameState dealerState);
+    public abstract MatchResult createMatchResult(GameState opponentState);
 
     public boolean isBlackJack() {
         return hand.isBlackJack();

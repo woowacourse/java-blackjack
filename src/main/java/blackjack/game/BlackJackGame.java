@@ -114,7 +114,7 @@ public class BlackJackGame {
     private MatchResults calculateMatchResults(Participant dealer, Participants participants) {
         MatchResults matchResults = new MatchResults();
         for (Participant participant : participants.getPlayers()) {
-            matchResults.addResult(participant.getName(), participant.getScore(), dealer.getScore());
+            matchResults.addResult(participant.getName(), participant, dealer);
         }
         return matchResults;
     }

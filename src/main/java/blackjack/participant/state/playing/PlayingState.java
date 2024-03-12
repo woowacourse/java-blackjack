@@ -22,7 +22,7 @@ public abstract class PlayingState extends GameState {
     }
 
     @Override
-    public MatchResult createMatchResult(GameState other) {
+    public MatchResult createMatchResult(GameState opponentState) {
         throw new UnsupportedOperationException("[ERROR] 종료 상태가 아니면 결과를 생성할 수 없습니다.");
     }
 }
