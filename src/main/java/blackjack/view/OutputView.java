@@ -57,7 +57,7 @@ public class OutputView {
     }
 
     public void printDealerDrawingCards(final Dealer dealer) {
-        System.out.printf(DEALER_DRAWING_FORM, dealer.getHitCount());
+        System.out.printf(DEALER_DRAWING_FORM, dealer.getDrawCount());
     }
 
     public void printDealerFinalCards(final DealerFinalCardsOutcome dealerFinalCardsOutcome) {

@@ -13,15 +13,15 @@ import org.junit.jupiter.api.Test;
 class DealerTest {
     @Test
     @DisplayName("딜러는 카드의 합이 17점 이상이 될 때까지 카드를 받는다")
-    void canHitTest() {
+    void canDrawTest() {
         // given
-        Card cardCreatedByDealing = new Card(Suit.HEART, Denomination.TWO);
-        Dealer dealer = new Dealer(new SequentialCardGenerator(List.of(cardCreatedByDealing, cardCreatedByDealing)));
+        Card dealCard = new Card(Suit.HEART, Denomination.TWO);
+        Dealer dealer = new Dealer(new SequentialCardGenerator(List.of(dealCard, dealCard)));
 
         // when
-        Card firstCardCreatedByHit = new Card(Suit.HEART, Denomination.TEN);
-        Card secondCardCreatedByHit = new Card(Suit.HEART, Denomination.FOUR);
-        dealer.drawUntilEnd(new SequentialCardGenerator(List.of(firstCardCreatedByHit, secondCardCreatedByHit)));
+        Card firstDrawCard = new Card(Suit.HEART, Denomination.TEN);
+        Card secondDrawCard = new Card(Suit.HEART, Denomination.FOUR);
+        dealer.drawUntilEnd(new SequentialCardGenerator(List.of(firstDrawCard, secondDrawCard)));
 
         // then
         int cardsTotal = dealer.calculateCardsTotalScore();

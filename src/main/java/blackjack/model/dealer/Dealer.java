@@ -6,8 +6,8 @@ import blackjack.model.cardgenerator.CardGenerator;
 import java.util.List;
 
 public class Dealer {
-    private static final int HIT_END_CONDITION = 17;
-    private static final int NON_HIT_COUNT = 2;
+    private static final int DRAW_END_CONDITION = 17;
+    private static final int NON_DRAW_COUNT = 2;
 
     private final Cards cards;
 
@@ -16,7 +16,7 @@ public class Dealer {
     }
 
     public void drawUntilEnd(final CardGenerator cardGenerator) {
-        cards.addCardUntilTotalScoreReached(cardGenerator, HIT_END_CONDITION);
+        cards.addCardUntilTotalScoreReached(cardGenerator, DRAW_END_CONDITION);
     }
 
     public int calculateCardsTotalScore() {
@@ -31,8 +31,8 @@ public class Dealer {
         return cards.isBlackJack();
     }
 
-    public int getHitCount() {
-        return cards.size() - NON_HIT_COUNT;
+    public int getDrawCount() {
+        return cards.size() - NON_DRAW_COUNT;
     }
 
     public Card getFirstCard() {
