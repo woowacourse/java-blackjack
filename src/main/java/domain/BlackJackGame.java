@@ -5,7 +5,6 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,29 +30,29 @@ public class BlackJackGame {
     }
 
     public GameResults getGameResults(final Dealer dealer, final List<Player> players) {
-        List<GameResult> dealerGameResults = new ArrayList<>();
         Map<Player, GameResult> playerGameResults = new HashMap<>();
 
-        players.forEach(player -> match(dealer, player, dealerGameResults, playerGameResults));
+        players.forEach(player -> match(dealer, player, playerGameResults));
 
-        return new GameResults(dealerGameResults, playerGameResults);
+        return new GameResults(playerGameResults);
     }
 
-    private void match(final Dealer dealer, final Player player, final List<GameResult> dealerGameResults, final Map<Player, GameResult> playerGameResults) {
+    private void match(final Dealer dealer, final Player player, final Map<Player, GameResult> playerGameResults) {
         if (dealer.isDealerWin(player)) {
-            dealerWin(player, dealerGameResults, playerGameResults);
+            dealerWin(player, playerGameResults);
             return;
         }
-        dealerLose(player, dealerGameResults, playerGameResults);
+        dealerLose(player, playerGameResults);
     }
 
-    private void dealerWin(final Player player, final List<GameResult> dealerGameResults, final Map<Player, GameResult> playerGameResults) {
-        dealerGameResults.add(GameResult.WIN);
+    private void dealerWin(final Player player, final Map<Player, GameResult> playerGameResults) {
         playerGameResults.put(player, GameResult.LOSE);
     }
 
-    private void dealerLose(final Player player, final List<GameResult> dealerGameResults, final Map<Player, GameResult> playerGameResults) {
-        dealerGameResults.add(GameResult.LOSE);
+    private void dealerLose(final Player player, final Map<Player, GameResult> playerGameResults) {
+        if (player.isBlackJack()){
+            playerGameResults.put(player, GameResult.WIN_BY_BLACKJACK);
+        }
         playerGameResults.put(player, GameResult.WIN);
     }
 }

@@ -36,4 +36,9 @@ public class InputView {
 
         throw new IllegalArgumentException(String.format("%s는 올바른 입력이 아닙니다. 카드를 받을지 여부는 y/n만 입력할 수 있습니다.", input));
     }
+
+    public static String inputAmount(String playerName) {
+        System.out.printf("%s의 배팅 금액은?%n", playerName);
+        return scanner.nextLine();
+    }
 }

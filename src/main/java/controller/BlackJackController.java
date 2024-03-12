@@ -1,8 +1,6 @@
 package controller;
 
-import domain.BlackJackGame;
-import domain.Deck;
-import domain.GameResults;
+import domain.*;
 import domain.constant.GameResult;
 import domain.dto.DealerHandStatusDto;
 import domain.dto.PlayerGameResultDto;
@@ -15,6 +13,7 @@ import domain.participant.PlayerNames;
 import view.InputView;
 import view.OutputView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,11 +22,13 @@ public class BlackJackController {
         Dealer dealer = Dealer.init();
         List<Player> players = initPlayers();
         BlackJackGame blackJackGame = new BlackJackGame(Deck.init());
+        Betting betting = Betting.getInstance();
 
-        play(blackJackGame, dealer, players);
+        play(blackJackGame, betting, dealer, players);
 
         GameResults gameResults = blackJackGame.getGameResults(dealer, players);
-        OutputView.printGameResult(gameResults.dealerGameResult(), getPlayerGameResultDto(gameResults.playerGameResults()));
+        Map<PlayerName, Integer> bettingResult = calculateBettings(betting, getPlayerGameResultDto(gameResults.playerGameResults()));
+        OutputView.printBettingResult(bettingResult);
     }
 
     private List<Player> initPlayers() {
@@ -47,7 +48,9 @@ public class BlackJackController {
         }
     }
 
-    private void play(final BlackJackGame blackJackGame, final Dealer dealer, final List<Player> players) {
+    private void play(final BlackJackGame blackJackGame, final Betting betting, final Dealer dealer, final List<Player> players) {
+        setBettings(betting, players);
+
         firstDraw(blackJackGame, dealer, players);
         players.forEach(player -> playForPlayer(blackJackGame, player));
         playForDealer(blackJackGame, dealer);
@@ -55,6 +58,19 @@ public class BlackJackController {
         DealerHandStatusDto dealerHandStatusDto = DealerHandStatusDto.of(dealer);
         List<PlayerHandStatusDto> playerHandStatusDtos = players.stream().map(PlayerHandStatusDto::of).toList();
         OutputView.printFinalHandStatus(dealerHandStatusDto, playerHandStatusDtos);
+    }
+
+    private void setBettings(final Betting betting, final List<Player> players) {
+        players.forEach(player -> setBetting(betting, player));
+    }
+
+    private void setBetting(final Betting betting, final Player player) {
+        try {
+            Amount amount = new Amount(InputView.inputAmount(player.getPlayerName().value()));
+            betting.setBetting(player.getPlayerName(), amount);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+        }
     }
 
     private void firstDraw(final BlackJackGame blackJackGame, final Dealer dealer, final List<Player> players) {
@@ -121,5 +137,22 @@ public class BlackJackController {
                 .stream()
                 .map(playerGameResult -> new PlayerGameResultDto(playerGameResult.getKey().getPlayerName(), playerGameResult.getValue()))
                 .toList();
+    }
+
+    private Map<PlayerName, Integer> calculateBettings(Betting betting, List<PlayerGameResultDto> playerGameResultDtos) {
+        Map<PlayerName, Integer> result = new HashMap<>();
+        playerGameResultDtos.forEach(
+                playerGameResultDto -> result.put(playerGameResultDto.playerName(), calculateBetting(betting, playerGameResultDto)));
+        return result;
+    }
+
+    private int calculateBetting(Betting betting, PlayerGameResultDto playerGameResultDto) {
+        if (playerGameResultDto.gameResult() == GameResult.WIN_BY_BLACKJACK) {
+            return (int) (betting.getBetting(playerGameResultDto.playerName()).getAmount() * 1.5);
+        }
+        if (playerGameResultDto.gameResult() == GameResult.WIN) {
+            return betting.getBetting(playerGameResultDto.playerName()).getAmount();
+        }
+        return betting.getBetting(playerGameResultDto.playerName()).getAmount() * -1;
     }
 }

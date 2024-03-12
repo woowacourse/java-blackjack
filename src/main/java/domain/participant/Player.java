@@ -24,4 +24,8 @@ public class Player extends Participant {
     public boolean isNotBurst() {
         return hand.isNotBurst();
     }
+
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
 }

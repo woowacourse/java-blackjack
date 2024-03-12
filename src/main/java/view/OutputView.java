@@ -1,13 +1,12 @@
 package view;
 
-import domain.constant.GameResult;
 import domain.dto.DealerHandStatusDto;
-import domain.dto.PlayerGameResultDto;
 import domain.dto.PlayerHandStatusDto;
 import domain.dto.PlayingCardDto;
 import domain.participant.PlayerName;
 
 import java.util.List;
+import java.util.Map;
 
 import static view.FormatConverter.*;
 
@@ -69,17 +68,10 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printGameResult(final List<GameResult> dealerGameResult, final List<PlayerGameResultDto> playerGameResultDtos) {
-        System.out.println("## 최종 승패");
-        long dealerWinCount = dealerGameResult.stream()
-                .filter(gameResult -> gameResult == GameResult.WIN)
-                .count();
-        long dealerLoseCount = dealerGameResult.size() - dealerWinCount;
-        System.out.println("딜러: " + dealerWinCount + "승 " + dealerLoseCount + "패");
-        playerGameResultDtos.forEach(playerGameResultDto -> System.out.println(getPlayerResult(playerGameResultDto)));
-    }
-
-    private static String getPlayerResult(final PlayerGameResultDto playerGameResultDto) {
-        return playerGameResultDto.playerName().value() + ": " + convertGameResultToString(playerGameResultDto.gameResult());
+    public static void printBettingResult(Map<PlayerName, Integer> bettingResult) {
+        System.out.println("## 최종 수익");
+        int dealerSum = -1 * bettingResult.values().stream().reduce(0, Integer::sum);
+        System.out.println("딜러: " + dealerSum);
+        bettingResult.forEach((key, value) -> System.out.println(key + ": " + value));
     }
 }
