@@ -6,13 +6,9 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum Result {
-    DEALER_WIN(
-            (dealer, player) -> player.isBust()
-                    || !dealer.isBust() && dealer.getTotalScore().compareTo(player.getTotalScore()) > 0),
-    PLAYER_WIN(
-            (dealer, player) -> dealer.isBust()
-                    || !player.isBust() && dealer.getTotalScore().compareTo(player.getTotalScore()) < 0),
-    PUSH((dealer, player) -> dealer.getTotalScore().compareTo(player.getTotalScore()) == 0);
+    DEALER_WIN(Result::isDealerWin),
+    PLAYER_WIN(Result::isPlayerWin),
+    PUSH(Result::isPush);
 
     private final BiPredicate<Dealer, Player> judgeResult;
 
@@ -25,5 +21,19 @@ public enum Result {
                 .filter(value -> value.judgeResult.test(dealer, player))
                 .findAny()
                 .orElseThrow();
+    }
+
+    private static boolean isDealerWin(final Dealer dealer, final Player player) {
+        return player.isBust()
+                || !dealer.isBust() && dealer.getTotalScore().compareTo(player.getTotalScore()) > 0;
+    }
+
+    private static boolean isPlayerWin(final Dealer dealer, final Player player) {
+        return dealer.isBust()
+                || !player.isBust() && dealer.getTotalScore().compareTo(player.getTotalScore()) < 0;
+    }
+
+    private static boolean isPush(final Dealer dealer, final Player player) {
+        return dealer.getTotalScore().compareTo(player.getTotalScore()) == 0;
     }
 }
