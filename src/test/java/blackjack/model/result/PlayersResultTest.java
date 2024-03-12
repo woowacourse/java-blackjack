@@ -8,12 +8,13 @@ import org.junit.jupiter.api.Test;
 
 class PlayersResultTest {
 
+    PlayersResult playersResult = new PlayersResult();
+
     @DisplayName("플레이어 결과에 '승리'를 추가한다.")
     @Test
     void addWin() {
         //given
-        PlayersResult playersResult = new PlayersResult();
-        Player player = new Player("test");
+        Player player = Player.from("test");
 
         //when
         playersResult.addWin(player);
@@ -23,12 +24,39 @@ class PlayersResultTest {
         assertThat(playerResult).isEqualTo(Result.WIN);
     }
 
+    @DisplayName("플레이어 결과에 '블랙잭'를 추가한다.")
+    @Test
+    void addBlackjack() {
+        //given
+        Player player = Player.from("test");
+
+        //when
+        playersResult.addBlackjack(player);
+        Result playerResult = playersResult.findPlayerResult(player);
+
+        //then
+        assertThat(playerResult).isEqualTo(Result.BLACKJACK);
+    }
+
+    @DisplayName("플레이어 결과에 '푸시'를 추가한다.")
+    @Test
+    void addTie() {
+        //given
+        Player player = Player.from("test");
+
+        //when
+        playersResult.addPush(player);
+        Result playerResult = playersResult.findPlayerResult(player);
+
+        //then
+        assertThat(playerResult).isEqualTo(Result.PUSH);
+    }
+
     @DisplayName("플레이어 결과에 '패배'를 추가한다.")
     @Test
     void addLose() {
         //given
-        PlayersResult playersResult = new PlayersResult();
-        Player player = new Player("test");
+        Player player = Player.from("test");
 
         //when
         playersResult.addLose(player);
@@ -36,21 +64,5 @@ class PlayersResultTest {
 
         //then
         assertThat(playerResult).isEqualTo(Result.LOSE);
-    }
-
-
-    @DisplayName("플레이어 결과에 '무승부'를 추가한다.")
-    @Test
-    void addTie() {
-        //given
-        PlayersResult playersResult = new PlayersResult();
-        Player player = new Player("test");
-
-        //when
-        playersResult.addTie(player);
-        Result playerResult = playersResult.findPlayerResult(player);
-
-        //then
-        assertThat(playerResult).isEqualTo(Result.TIE);
     }
 }
