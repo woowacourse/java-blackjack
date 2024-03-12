@@ -23,6 +23,10 @@ public class Dealer extends Participant {
         return deck.draw();
     }
 
+    public void receiveCard() {
+        super.receiveCard(deck.draw());
+    }
+
     public WinStatus calculateParticipantWinStatus(Participant participant) {
         if (participant.isBust()) {
             return WinStatus.LOSE;

@@ -36,12 +36,11 @@ class DealerTest {
     @Test
     void isWinner() {
         Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
 
         Participant participant = new Participant(new Name("one"));
         participant.receiveCard(new Card(Shape.HEART, Rank.KING));
         participant.receiveCard(new Card(Shape.HEART, Rank.TEN));
-
-        dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
 
         WinStatus winStatus = dealer.calculateParticipantWinStatus(participant);
         assertThat(winStatus).isEqualTo(WinStatus.WIN);
@@ -51,14 +50,13 @@ class DealerTest {
     @Test
     void isWinnerWhenSameScore() {
         Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
+        dealer.receiveCard(new Card(Shape.HEART, Rank.ACE));
 
         Participant participant = new Participant(new Name("one"));
         participant.receiveCard(new Card(Shape.HEART, Rank.KING));
         participant.receiveCard(new Card(Shape.HEART, Rank.THREE));
         participant.receiveCard(new Card(Shape.HEART, Rank.EIGHT));
-
-        dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
-        dealer.receiveCard(new Card(Shape.HEART, Rank.ACE));
 
         WinStatus winStatus = dealer.calculateParticipantWinStatus(participant);
         assertThat(winStatus).isEqualTo(WinStatus.LOSE);
@@ -68,13 +66,12 @@ class DealerTest {
     @Test
     void isWinnerWhenAllBlackJack() {
         Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
+        dealer.receiveCard(new Card(Shape.HEART, Rank.ACE));
 
         Participant participant = new Participant(new Name("one"));
         participant.receiveCard(new Card(Shape.HEART, Rank.KING));
         participant.receiveCard(new Card(Shape.DIA, Rank.ACE));
-
-        dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
-        dealer.receiveCard(new Card(Shape.HEART, Rank.ACE));
 
         WinStatus winStatus = dealer.calculateParticipantWinStatus(participant);
         assertThat(winStatus).isEqualTo(WinStatus.DRAW);
@@ -84,13 +81,12 @@ class DealerTest {
     @Test
     void isWinnerWhenParticipantBlackJack() {
         Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
+        dealer.receiveCard(new Card(Shape.HEART, Rank.TWO));
 
         Participant participant = new Participant(new Name("one"));
         participant.receiveCard(new Card(Shape.HEART, Rank.KING));
         participant.receiveCard(new Card(Shape.DIA, Rank.ACE));
-
-        dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
-        dealer.receiveCard(new Card(Shape.HEART, Rank.TWO));
 
         WinStatus winStatus = dealer.calculateParticipantWinStatus(participant);
         assertThat(winStatus).isEqualTo(WinStatus.BLACKJACK);

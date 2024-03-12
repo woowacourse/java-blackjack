@@ -15,8 +15,8 @@ public class Participant {
     private final Name name;
 
     public Participant(final Name name) {
-        this.hands = new Hands();
         this.name = name;
+        this.hands = new Hands();
     }
 
     public void receiveCard(Card card) {

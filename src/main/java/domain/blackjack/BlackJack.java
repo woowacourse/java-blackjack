@@ -17,8 +17,8 @@ public class BlackJack {
     }
 
     public void beginDealing(BiConsumer<Participants, Dealer> beginBlackJack) {
-        dealer.receiveCard(dealer.draw());
-        dealer.receiveCard(dealer.draw());
+        dealer.receiveCard();
+        dealer.receiveCard();
         participants.beginDealing(dealer);
 
         beginBlackJack.accept(participants, dealer);
@@ -31,7 +31,7 @@ public class BlackJack {
     public int dealerHit() {
         int count = 0;
         while (dealer.shouldHit()) {
-            dealer.receiveCard(dealer.draw());
+            dealer.receiveCard();
             count++;
         }
         return count;
