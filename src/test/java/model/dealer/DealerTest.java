@@ -32,15 +32,13 @@ class DealerTest {
         assertThat(dealer.isPossibleHit()).isFalse();
     }
 
-    @DisplayName("카드 1장을 획득하면 카드가 1개 증가한 딜러 객체를 반환한다")
+    @DisplayName("카드 1장을 획득하면 딜러의 카드가 1개가 증가한다")
     @Test
     void shouldAddCardWhenAllowed() {
         Hand cards = new Hand(List.of(new Card(ACE, HEART), new Card(JACK, HEART)));
         Dealer dealer = new Dealer(cards);
         Card card = new Card(TWO, DIAMOND);
-        Dealer updatedDealer = dealer.hitCard(card);
-
-        int expectedSize = cards.size() + 1;
-        assertThat(updatedDealer.handSize()).isEqualTo(expectedSize);
+        dealer.hitCard(card);
+        assertThat(dealer.handSize()).isEqualTo(3);
     }
 }

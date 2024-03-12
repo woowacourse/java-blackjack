@@ -8,7 +8,7 @@ public class Dealer {
 
     private static final int HIT_CONDITION = 17;
 
-    private final Hand hand;
+    private Hand hand;
 
     public Dealer() {
         this(new Hand(List.of()));
@@ -23,14 +23,12 @@ public class Dealer {
         return totalNumbers < HIT_CONDITION;
     }
 
-    public Dealer hitCard(Card card) {
-        Hand addedCards = hand.add(card);
-        return new Dealer(addedCards);
+    public void hitCard(Card card) {
+        hand = hand.add(card);
     }
 
-    public Dealer hitCards(List<Card> cards) {
-        Hand addedCards = this.hand.addAll(cards);
-        return new Dealer(addedCards);
+    public void hitCards(List<Card> cards) {
+        hand = hand.addAll(cards);
     }
 
     public Card getFirstCard() {

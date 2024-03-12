@@ -12,7 +12,7 @@ public class BlackjackGame {
     private static final int INITIAL_CARD_COUNT = 2;
     private static final int DEALER_COUNT = 1;
 
-    private Dealer dealer;
+    private final Dealer dealer;
     private final Players players;
 
     public BlackjackGame(Dealer dealer, Players players) {
@@ -22,7 +22,7 @@ public class BlackjackGame {
 
     public void initCards(Hand cards) {
         List<Card> cardsElement = cards.getCards();
-        dealer = dealer.hitCards(cardsElement.subList(0, INITIAL_CARD_COUNT));
+        dealer.hitCards(cardsElement.subList(0, INITIAL_CARD_COUNT));
         players.hitCards(cardsElement.subList(INITIAL_CARD_COUNT, cardsElement.size()));
     }
 
@@ -35,7 +35,7 @@ public class BlackjackGame {
     }
 
     public void dealerHit(Card card) {
-        dealer = dealer.hitCard(card);
+        dealer.hitCard(card);
     }
 
     public int determineInitCardCount() {
