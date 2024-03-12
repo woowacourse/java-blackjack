@@ -17,7 +17,7 @@ public class DealerTest {
     @Test
     void createDealerTest() {
         // When
-        Dealer dealer = Dealer.init();
+        Dealer dealer = Dealer.init(Deck.init());
 
         // Then
         assertThat(dealer).isNotNull();

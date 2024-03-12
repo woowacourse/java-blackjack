@@ -1,24 +1,23 @@
 package domain.playingcard;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static domain.playingcard.PlayingCardValue.values;
 
 public class Deck {
-    private final List<PlayingCard> playingCards;
+    private final Queue<PlayingCard> playingCards;
 
-    Deck(final List<PlayingCard> playingCards) {
+    Deck(final Queue<PlayingCard> playingCards) {
         this.playingCards = playingCards;
     }
 
     public static Deck init() {
-        List<PlayingCard> playingCards = new ArrayList<>(Arrays.stream(PlayingCardShape.values())
+        Queue<PlayingCard> playingCards = new LinkedList<>();
+        Arrays.stream(PlayingCardShape.values())
                 .flatMap(playingCardShape -> generateCardByShape(playingCardShape).stream())
-                .toList());
-        Collections.shuffle(playingCards);
+                .forEach(playingCards::offer);
+
+        Collections.shuffle((List<?>) playingCards);
 
         return new Deck(playingCards);
     }
@@ -30,6 +29,6 @@ public class Deck {
     }
 
     public PlayingCard drawn() {
-        return playingCards.remove(0);
+        return playingCards.poll();
     }
 }
