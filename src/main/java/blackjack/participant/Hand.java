@@ -60,7 +60,7 @@ public class Hand {
         return Collections.unmodifiableList(cards);
     }
 
-    public int getScore() {
-        return score.toInt();
+    public Score getScore() {
+        return score;
     }
 }

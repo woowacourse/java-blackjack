@@ -21,7 +21,7 @@ class HandTest {
         );
         Hand hand = new Hand(cards);
         // when, then
-        assertThat(hand.getScore()).isEqualTo(18);
+        assertThat(hand.getScore()).isEqualTo(new Score(18));
     }
 
     @Test
@@ -34,7 +34,7 @@ class HandTest {
         );
         Hand hand = new Hand(cards);
         // when, then
-        assertThat(hand.getScore()).isEqualTo(21);
+        assertThat(hand.getScore()).isEqualTo(new Score(21));
     }
 
     @Test
@@ -48,7 +48,7 @@ class HandTest {
         );
         Hand hand = new Hand(cards);
         // when, then
-        assertThat(hand.getScore()).isEqualTo(21);
+        assertThat(hand.getScore()).isEqualTo(new Score(21));
     }
 
     @Test

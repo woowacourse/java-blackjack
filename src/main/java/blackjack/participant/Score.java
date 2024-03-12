@@ -30,6 +30,10 @@ public class Score {
         return this;
     }
 
+    public boolean isGreaterThan(Score other) {
+        return value > other.value;
+    }
+
     public boolean isGreaterThan(int other) {
         return value > other;
     }

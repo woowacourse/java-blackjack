@@ -44,7 +44,8 @@ public class Participant {
     }
 
     public int getScore() {
-        return state.getScore();
+        Score score = state.getScore();
+        return score.toInt();
     }
 
     public List<Card> getCards() {

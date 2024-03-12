@@ -51,7 +51,7 @@
 - [x] 카드를 뽑지 않는다. 스탠드 상태로 전이한다.
 
 #### 뽑을 수 없는 상태 (TerminatedState)
-BurstedState, StandState, BlackJackState가 있다.
+BurstedState, StandState, BlackJackState가 있다. 해당 상태에서 상대 상태(딜러)를 받아 승리 여부를 판단한다.
 - [x] 카드를 뽑을 수 없다.
 - [x] 스탠드 상태로 전이할 수 없다.
 
@@ -70,6 +70,7 @@ BurstedState, StandState, BlackJackState가 있다.
 
 
 ### 게임 결과
+게임 결과는 각 상태(State)에서 판단한다.
 - [x] 게임 결과를 아래의 순서대로 올바르게 판단한다.
   1. 플레이어의 점수가 21점을 초과하면 딜러가 승리한다.
   2. 플레이어의 점수가 21점을 초과하지 않으면서 딜러의 점수가 21점을 초과하면 플레이어가 승리한다.

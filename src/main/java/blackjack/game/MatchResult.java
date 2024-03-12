@@ -4,7 +4,9 @@ public enum MatchResult {
 
     DEALER_WIN,
     PLAYER_WIN,
-    TIE;
+    PLAYER_BLACKJACK_WIN,
+    TIE,
+    ;
 
     public static MatchResult chooseWinner(int playerScore, int dealerScore) {
         if (isPlayerWinningCondition(playerScore, dealerScore)) {

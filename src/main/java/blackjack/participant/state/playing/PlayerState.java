@@ -5,9 +5,8 @@ import blackjack.participant.Hand;
 import blackjack.participant.state.GameState;
 import blackjack.participant.state.terminated.BlackJackState;
 import blackjack.participant.state.terminated.BustedState;
-import blackjack.participant.state.terminated.StandState;
 
-public class PlayerState extends GameState {
+public class PlayerState extends PlayingState {
 
     public PlayerState(Hand hand) {
         super(hand);
@@ -27,15 +26,5 @@ public class PlayerState extends GameState {
             return new BustedState(newHand);
         }
         return new PlayerState(newHand);
-    }
-
-    @Override
-    public GameState stand() {
-        return new StandState(hand);
-    }
-
-    @Override
-    public boolean isTerminated() {
-        return false;
     }
 }

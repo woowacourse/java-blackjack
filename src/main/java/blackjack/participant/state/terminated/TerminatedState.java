@@ -12,12 +12,12 @@ public abstract class TerminatedState extends GameState {
 
     @Override
     public GameState drawCard(Card card) {
-        throw new UnsupportedOperationException("현재 상태에서는 드로우 여부를 결정할 수 없습니다.");
+        throw new UnsupportedOperationException("[ERROR] 현재 상태에서는 드로우 여부를 결정할 수 없습니다.");
     }
 
     @Override
     public GameState stand() {
-        throw new UnsupportedOperationException("현재 상태에서는 스탠드 여부를 결정할 수 없습니다.");
+        throw new UnsupportedOperationException("[ERROR] 현재 상태에서는 스탠드 여부를 결정할 수 없습니다.");
     }
 
     @Override

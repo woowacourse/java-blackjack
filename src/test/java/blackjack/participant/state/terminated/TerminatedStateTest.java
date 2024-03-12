@@ -18,7 +18,7 @@ class TerminatedStateTest {
         List<Card> cards = List.of(
                 new Card(Shape.SPADE, Number.TEN),
                 new Card(Shape.SPADE, Number.TEN)
-                );
+        );
         GameState state = new PlayerState(new Hand(cards));
         return state.drawCard(new Card(Shape.SPADE, Number.TWO));
     }
@@ -32,7 +32,7 @@ class TerminatedStateTest {
         // when, then
         assertThatThrownBy(() -> state.drawCard(card))
                 .isInstanceOf(UnsupportedOperationException.class)
-                .hasMessage("현재 상태에서는 드로우 여부를 결정할 수 없습니다.");
+                .hasMessage("[ERROR] 현재 상태에서는 드로우 여부를 결정할 수 없습니다.");
     }
 
     @Test
@@ -43,6 +43,6 @@ class TerminatedStateTest {
         // when, then
         assertThatThrownBy(state::stand)
                 .isInstanceOf(UnsupportedOperationException.class)
-                .hasMessage("현재 상태에서는 스탠드 여부를 결정할 수 없습니다.");
+                .hasMessage("[ERROR] 현재 상태에서는 스탠드 여부를 결정할 수 없습니다.");
     }
 }
