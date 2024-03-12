@@ -7,12 +7,10 @@ import java.util.stream.Stream;
 
 public enum ValueView {
 
-    ACELOW_VIEW(Value.ACELOW, "A"), ACEHIGH_VIEW(Value.ACEHIGH, "A"),
-
-    TWO_VIEW(Value.TWO, "2"), THREE_VIEW(Value.THREE, "3"), FOUR_VIEW(Value.FOUR, "4"),
-    FIVE_VIEW(Value.FIVE, "5"), SIX_VIEW(Value.SIX, "6"), SEVEN_VIEW(Value.SEVEN, "7"),
-    EIGHT_VIEW(Value.EIGHT, "8"), NINE_VIEW(Value.NINE, "9"), TEN_VIEW(Value.TEN, "10"),
-    JACK_VIEW(Value.JACK, "J"), QUEEN_VIEW(Value.QUEEN, "Q"), KING_VIEW(Value.KING, "K");
+    ACE_VIEW(Value.ACE, "A"), TWO_VIEW(Value.TWO, "2"), THREE_VIEW(Value.THREE, "3"),
+    FOUR_VIEW(Value.FOUR, "4"), FIVE_VIEW(Value.FIVE, "5"), SIX_VIEW(Value.SIX, "6"),
+    SEVEN_VIEW(Value.SEVEN, "7"), EIGHT_VIEW(Value.EIGHT, "8"), NINE_VIEW(Value.NINE, "9"),
+    TEN_VIEW(Value.TEN, "10"), JACK_VIEW(Value.JACK, "J"), QUEEN_VIEW(Value.QUEEN, "Q"), KING_VIEW(Value.KING, "K");
 
     private final Value value;
     private final String valueName;
