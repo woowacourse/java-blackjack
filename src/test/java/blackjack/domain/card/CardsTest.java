@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class CardsTest {
@@ -24,7 +25,10 @@ public class CardsTest {
     }
 
     @ParameterizedTest
-    @MethodSource("cardValuesProvider")
+    @CsvSource({
+            "EIGHT, JACK, 18",
+            "FIVE, EIGHT, 13"
+    })
     @DisplayName("카드 목록의 숫자 합을 계산 한다.")
     public void Cards_Sum_of_cards_case1(CardValue cardValue1, CardValue cardValue2, int result) {
         List<CardValue> cardValues = List.of(cardValue1, cardValue2);
@@ -33,13 +37,6 @@ public class CardsTest {
         var sum = sut.sum();
 
         assertThat(sum).isEqualTo(result);
-    }
-
-    static Stream<Arguments> cardValuesProvider() {
-        return Stream.of(
-                arguments(CardValue.EIGHT, CardValue.JACK, 18),
-                arguments(CardValue.FIVE, CardValue.EIGHT, 13)
-        );
     }
 
     @Test
