@@ -22,12 +22,12 @@ public class Player extends Participant {
 
     @Override
     public boolean canHit() {
-        return calculateHandTotal() <= HIT_THRESHOLD;
+        return getHandScore() <= HIT_THRESHOLD;
     }
 
     public Result judge(Dealer dealer) {
-        int playerHandTotal = this.calculateHandTotal();
-        int dealerHandTotal = dealer.calculateHandTotal();
+        int playerHandTotal = this.getHandScore();
+        int dealerHandTotal = dealer.getHandScore();
 
         if (playerHandTotal > 21) {
             return Result.createLossResult();

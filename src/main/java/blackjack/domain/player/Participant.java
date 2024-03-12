@@ -21,12 +21,12 @@ public abstract class Participant {
         }
     }
 
-    public int calculateHandTotal() {
+    public int getHandScore() {
         return hand.calculateScoreTotalClosestToThreshold(BLACKJACK);
     }
 
     public boolean isNotBust() {
-        return calculateHandTotal() <= BLACKJACK;
+        return getHandScore() <= BLACKJACK;
     }
 
     public Hand getHand() {

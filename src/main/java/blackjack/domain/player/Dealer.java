@@ -17,7 +17,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canHit() {
-        return calculateHandTotal() < HIT_THRESHOLD;
+        return getHandScore() < HIT_THRESHOLD;
     }
 
     public Result judge(Players players) {
