@@ -8,6 +8,9 @@ import domain.gamer.Player;
 import domain.gamer.Players;
 import domain.judge.Judge;
 import domain.judge.WinState;
+import view.notations.CardNumberNotation;
+import view.notations.CardShapeNotation;
+import view.notations.WinStateNotation;
 
 import java.util.ArrayList;
 import java.util.List;

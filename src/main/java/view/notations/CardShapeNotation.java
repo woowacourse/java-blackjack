@@ -1,4 +1,4 @@
-package view;
+package view.notations;
 
 import domain.cards.cardinfo.CardShape;
 
