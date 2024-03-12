@@ -2,18 +2,12 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Optional;
-
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 
 public class Players {
     private static final int MIN_PLAYER_COUNT = 1;
     private static final int MAX_PLAYER_COUNT = 6;
-    private static final int UNIQUE_COUNT = 1;
 
     private final List<Player> players;
 
@@ -25,6 +19,7 @@ public class Players {
 
     private void validatePlayerCount(List<String> playerNames) {
         int playerCount = playerNames.size();
+
         if (playerCount < MIN_PLAYER_COUNT || MAX_PLAYER_COUNT < playerCount) {
             throw new IllegalArgumentException(
                     String.format("플레이어의 수는 %d ~ %d명이어야 합니다.", MIN_PLAYER_COUNT, MAX_PLAYER_COUNT)
@@ -33,26 +28,9 @@ public class Players {
     }
 
     private void validateDuplicatedName(List<String> playerNames) {
-        Map<String, Long> nameCounts = getNameCounts(playerNames);
-        Optional<String> duplicatedName = findDuplicatedName(nameCounts);
-        if (duplicatedName.isPresent()) {
-            throw new IllegalArgumentException(
-                    String.format("rejected value: %s - 중복된 이름이 존재합니다.", duplicatedName.get())
-            );
+        if (playerNames.size() != new HashSet<>(playerNames).size()) {
+            throw new IllegalArgumentException("중복된 이름이 존재합니다.");
         }
-    }
-
-    private Map<String, Long> getNameCounts(List<String> playerNames) {
-        return playerNames.stream()
-                .collect(groupingBy(name -> name, counting()));
-    }
-
-    private Optional<String> findDuplicatedName(Map<String, Long> nameCounts) {
-        return nameCounts.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue() > UNIQUE_COUNT)
-                .map(Entry::getKey)
-                .findFirst();
     }
 
     private List<Player> generatePlayers(List<String> playerNames) {
