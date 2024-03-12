@@ -58,4 +58,24 @@ class DealerTest {
                 Arguments.of(List.of(Number.FIVE, Number.SIX, Number.KING), false)
         );
     }
+
+    @DisplayName("딜러의 Hit 횟수를 올바르게 반환한다.")
+    @ParameterizedTest
+    @MethodSource("provideNumbersWithHitCount")
+    void hitAndCountCardsTest(List<Number> numbers, int hitCount) {
+        Deck deck = new CustomDeck(numbers);
+        HandGenerator handGenerator = new HandGenerator(deck);
+        Dealer dealer = new Dealer(handGenerator);
+
+        assertThat(dealer.hitAndCountCards(deck)).isEqualTo(hitCount);
+    }
+
+    private static Stream<Arguments> provideNumbersWithHitCount() {
+        return Stream.of(
+                Arguments.of(List.of(Number.ACE, Number.JACK), 0),
+                Arguments.of(List.of(Number.EIGHT, Number.NINE), 0),
+                Arguments.of(List.of(Number.FOUR, Number.FIVE, Number.NINE), 1),
+                Arguments.of(List.of(Number.ACE, Number.ACE, Number.ACE, Number.FOUR), 2)
+        );
+    }
 }
