@@ -1,7 +1,7 @@
 package blackjack.game;
 
 import blackjack.money.PlayerBet;
-import blackjack.participant.Participant;
+import blackjack.player.Player;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +13,7 @@ public class MatchResults {
         this.results = new HashMap<>();
     }
 
-    public void addResult(String playerName, Participant player, Participant dealer) {
+    public void addResult(String playerName, Player player, Player dealer) {
         MatchResult result = player.matchResultVersus(dealer);
         results.put(playerName, result);
     }

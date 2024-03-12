@@ -1,6 +1,6 @@
 package blackjack.card;
 
-import blackjack.participant.Score;
+import blackjack.player.Score;
 import java.util.Objects;
 
 public class Card {
