@@ -24,12 +24,12 @@ public class Application {
         drawInitialCards(gameBoard);
 
         hit(gameBoard);
-        OutputView.printFinalState(createDealerDto(gameBoard.getDealerCards()),
-                toDtos(gameBoard.getPlayers()));
+        OutputView.printFinalState(
+                createDealerDto(gameBoard.getDealerCards()), createPlayerDtos(gameBoard.getPlayers()));
 
-        final OutcomesDto dealerOutcome = createOutcomesDto(gameBoard.getDealerOutcomes());
-        final List<OutcomeDto> playerOutcomes = gameBoard.getPlayerOutcomeDtos();
-        OutputView.printFinalOutcomes(dealerOutcome, playerOutcomes);
+        final OutcomesDto dealerOutcomeDto = createOutcomesDto(gameBoard.getDealerOutcomes());
+        final List<OutcomeDto> playerOutcomeDtos = gameBoard.getPlayerOutcomeDtos();
+        OutputView.printFinalOutcomes(dealerOutcomeDto, playerOutcomeDtos);
     }
 
     private static GameBoard createGameBoard() {
@@ -40,23 +40,23 @@ public class Application {
     }
 
     private static void drawInitialCards(GameBoard gameBoard) {
-        final DealerDto dealerDto = createDealerDto(gameBoard.drawInitialDealerCards());
-        final List<PlayerDto> playersDto = toDtos(gameBoard.drawInitialPlayersCards());
+        final DealerDto dealerDto = createDealerDto(gameBoard.getDealerCards());
+        final List<PlayerDto> playerDtos = createPlayerDtos(gameBoard.drawInitialPlayersCards());
 
-        OutputView.printInitialState(dealerDto, playersDto);
+        OutputView.printInitialState(dealerDto, playerDtos);
     }
 
     private static DealerDto createDealerDto(final Cards cards) {
         return new DealerDto(cards.toList(), cards.calculateOptimalSum());
     }
 
-    private static List<PlayerDto> toDtos(final Players players) {
+    private static List<PlayerDto> createPlayerDtos(final Players players) {
         return players.getPlayers().stream()
-                .map(Application::toDto)
+                .map(Application::createPlayerDto)
                 .toList();
     }
 
-    private static PlayerDto toDto(final Player player) {
+    private static PlayerDto createPlayerDto(final Player player) {
         return new PlayerDto(player.getName(), player.getCards().toList(), player.getCards().calculateOptimalSum());
     }
 
@@ -77,7 +77,7 @@ public class Application {
     private static void hitPlayer(final GameBoard gameBoard, final Player player) {
         while (gameBoard.isHit(player) && InputView.readDoesWantHit(player.getName())) {
             gameBoard.hit(player);
-            OutputView.printCurrentState(toDto(player));
+            OutputView.printCurrentState(createPlayerDto(player));
         }
     }
 
