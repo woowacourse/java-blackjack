@@ -59,40 +59,41 @@ class HandDeckTest {
         assertThat(handDeck.calculateTotalScore()).isEqualTo(16);
     }
 
-    @DisplayName("덱에 11값으로 설정된 Ace 카드의 갯수를 반환한다.")
+    @DisplayName("덱에 에이스가 포함되어 있는 경우 모든 카드의 합을 최대한 21을 넘지 않으면서 21에 가까운 수로 계산한다.")
     @Test
-    void countElevenAce() {
+    void calculateTotalScore_whenDeckIncludesAceCard_1() {
         //given
         HandDeck handDeck = new HandDeck();
         Card card1 = new Card(Pattern.CLOVER, Rank.JACK);
         Card card2 = new Card(Pattern.SPADE, Rank.ACE);
         Card card3 = new Card(Pattern.SPADE, Rank.KING);
 
-        //when
         handDeck.addCard(card1);
         handDeck.addCard(card2);
+        handDeck.addCard(card3);
+
+        //when
+        int sumOfCards = handDeck.calculateTotalScore();
 
         //then
-        assertThat(handDeck.countElevenAce()).isEqualTo(2);
+        assertThat(sumOfCards).isEqualTo(21);
     }
 
-    @DisplayName("덱에 11값으로 설정된 Ace 중 제일 첫번쨰 Ace의 값을 1로 변경한다.")
+    @DisplayName("덱에 에이스가 포함되어 있는 경우 모든 카드의 합을 최대한 21을 넘지 않으면서 21에 가까운 수로 계산한다.")
     @Test
-    void switchAceValueInRow() {
+    void calculateTotalScore_whenDeckIncludesAceCard_2() {
         //given
         HandDeck handDeck = new HandDeck();
         Card card1 = new Card(Pattern.CLOVER, Rank.ACE);
         Card card2 = new Card(Pattern.SPADE, Rank.ACE);
 
-        //when
         handDeck.addCard(card1);
         handDeck.addCard(card2);
-        handDeck.switchAceValueInRow();
+
+        //when
+        int sumOfCards = handDeck.calculateTotalScore();
 
         //then
-        assertAll(
-                () -> assertThat(card1.getScore()).isEqualTo(1),
-                () -> assertThat(card2.getScore()).isEqualTo(11)
-        );
+        assertThat(sumOfCards).isEqualTo(12);
     }
 }

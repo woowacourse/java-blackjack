@@ -1,10 +1,14 @@
 package blackjack.model.deck;
 
+import blackjack.model.GameRule;
 import blackjack.model.card.Card;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class HandDeck {
+
+    private static final int ACE_VALUE_ADJUSTING = 10;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -20,19 +24,23 @@ public class HandDeck {
         int sum = cards.stream()
                 .mapToInt(Card::getCardScore)
                 .sum();
+
+        if (hasAceCard()) {
+            sum = adjustAceValueIfNotBusted(sum + ACE_VALUE_ADJUSTING);
+        }
+        return sum;
     }
 
-    public int countElevenAce() {
-        return (int) cards.stream()
-                .filter(Card::isElevenAce)
-                .count();
+    private int adjustAceValueIfNotBusted(int adjustedSum) {
+        if (!GameRule.isBusted(adjustedSum)) {
+            return adjustedSum;
+        }
+        return adjustedSum - ACE_VALUE_ADJUSTING;
     }
 
-    public void switchAceValueInRow() {
-        cards.stream()
-                .filter(Card::isElevenAce)
-                .findFirst()
-                .ifPresent(Card::switchAceValue);
+    private boolean hasAceCard() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 
     private void validateDuplicatedCard(Card card) {
