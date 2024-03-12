@@ -1,5 +1,9 @@
 package domain.participant;
 
+import domain.playingcard.Deck;
+
+import java.util.stream.IntStream;
+
 public class Dealer extends Participant {
     private static final int MAXIMUM_ENABLE_TOTAL_SCORE = 16;
 
@@ -7,8 +11,11 @@ public class Dealer extends Participant {
         super(hand);
     }
 
-    public static Dealer init() {
-        return new Dealer(Hand.init());
+    public static Dealer init(final Deck deck) {
+        Hand hand = Hand.init();
+        IntStream.range(0, 2)
+                .forEach(i -> hand.addCard(deck.drawn()));
+        return new Dealer(hand);
     }
 
     @Override

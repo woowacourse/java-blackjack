@@ -1,12 +1,11 @@
 import domain.game.GameResults;
-import domain.playingcard.Deck;
-import dto.DealerHandStatusDto;
-import dto.PlayerHandStatusDto;
-import dto.PlayingCardDto;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.PlayerName;
 import domain.participant.PlayerNames;
+import domain.playingcard.Deck;
+import dto.DealerHandStatusDto;
+import dto.PlayerHandStatusDto;
 import view.InputView;
 import view.OutputView;
 
@@ -15,9 +14,9 @@ import java.util.List;
 public class BlackJackGame {
 
     public void run() {
-        Dealer dealer = Dealer.init();
-        List<Player> players = initPlayers();
         Deck deck = Deck.init();
+        Dealer dealer = Dealer.init(deck);
+        List<Player> players = initPlayers(deck);
 
         play(deck, dealer, players);
 
@@ -25,10 +24,10 @@ public class BlackJackGame {
         OutputView.printGameResult(gameResults);
     }
 
-    private List<Player> initPlayers() {
+    private List<Player> initPlayers(Deck deck) {
         return initPlayerNames().values()
                 .stream()
-                .map(Player::of)
+                .map(playerName -> Player.of(playerName, deck))
                 .toList();
     }
 
@@ -43,7 +42,6 @@ public class BlackJackGame {
     }
 
     private void play(final Deck deck, final Dealer dealer, final List<Player> players) {
-        firstDraw(deck, dealer, players);
         players.forEach(player -> playForPlayer(deck, player));
         playForDealer(deck, dealer);
 
@@ -80,17 +78,5 @@ public class BlackJackGame {
             OutputView.printErrorMessage(e.getMessage());
             return inputDrawDecision(playerName);
         }
-    }
-
-    private void firstDraw(Deck deck, Dealer dealer, List<Player> players) {
-        for (int gameCount = 0; gameCount < 2; gameCount++) {
-            players.forEach(player -> player.draw(deck));
-            dealer.draw(deck);
-        }
-        PlayingCardDto dealerCardDto = PlayingCardDto.of(dealer.getHandCards().get(0));
-        List<PlayerHandStatusDto> playerHandStatusDtos = players.stream()
-                .map(PlayerHandStatusDto::of)
-                .toList();
-        OutputView.printFirstDrawStatus(dealerCardDto, playerHandStatusDtos);
     }
 }
