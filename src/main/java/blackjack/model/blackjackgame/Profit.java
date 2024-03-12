@@ -9,6 +9,18 @@ public final class Profit {
         this.value = value;
     }
 
+    public static Profit getDefaults() {
+        return new Profit(0);
+    }
+
+    public Profit sum(Profit other) {
+        return new Profit(value + other.value);
+    }
+
+    public Profit reverse() {
+        return new Profit(-value);
+    }
+
     public double getValue() {
         return value;
     }
