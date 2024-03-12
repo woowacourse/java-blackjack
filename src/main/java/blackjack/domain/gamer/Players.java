@@ -28,7 +28,9 @@ public class Players {
 
 	private void validateDuplication(List<String> players) {
 		long distinctCount = players.stream()
-			.distinct().count();
+				.distinct()
+				.count();
+
 		if (players.size() != distinctCount) {
 			throw new IllegalArgumentException(DUPLICATION_ERROR_MESSAGE);
 		}
