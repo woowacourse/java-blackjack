@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.card.CardSymbol;
+import blackjack.domain.card.Suit;
 
 public enum CardSymbolName {
     SPADE("스페이드"),
@@ -14,7 +14,7 @@ public enum CardSymbolName {
         this.name = name;
     }
 
-    public static String convert(CardSymbol cardSymbol) {
-        return valueOf(cardSymbol.name()).name;
+    public static String convert(Suit suit) {
+        return valueOf(suit.name()).name;
     }
 }

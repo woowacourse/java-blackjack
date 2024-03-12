@@ -16,8 +16,8 @@ public class Deck {
     }
 
     public static Deck make() {
-        List<Card> cards = Arrays.stream(CardScore.values())
-                .flatMap(score -> Arrays.stream(CardSymbol.values())
+        List<Card> cards = Arrays.stream(Rank.values())
+                .flatMap(score -> Arrays.stream(Suit.values())
                         .map(symbol -> new Card(score, symbol)))
                 .toList();
         return new Deck(new ArrayList<>(cards));

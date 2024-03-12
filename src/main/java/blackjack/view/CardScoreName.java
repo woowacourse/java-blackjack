@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.card.CardScore;
+import blackjack.domain.card.Rank;
 
 public enum CardScoreName {
     TWO("2"),
@@ -23,7 +23,7 @@ public enum CardScoreName {
         this.name = name;
     }
 
-    public static String convert(CardScore cardScore) {
-        return valueOf(cardScore.name()).name;
+    public static String convert(Rank rank) {
+        return valueOf(rank.name()).name;
     }
 }

@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 import java.util.List;
 
-public enum CardScore {
+public enum Rank {
     TWO(List.of(2)),
     THREE(List.of(3)),
     FOUR(List.of(4)),
@@ -19,7 +19,7 @@ public enum CardScore {
 
     private final List<Integer> scores;
 
-    CardScore(List<Integer> scores) {
+    Rank(List<Integer> scores) {
         this.scores = scores;
     }
 

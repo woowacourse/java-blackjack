@@ -13,18 +13,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static blackjack.domain.card.CardScore.ACE;
-import static blackjack.domain.card.CardScore.EIGHT;
-import static blackjack.domain.card.CardScore.FIVE;
-import static blackjack.domain.card.CardScore.JACK;
-import static blackjack.domain.card.CardScore.KING;
-import static blackjack.domain.card.CardScore.NINE;
-import static blackjack.domain.card.CardScore.QUEEN;
-import static blackjack.domain.card.CardScore.SEVEN;
-import static blackjack.domain.card.CardScore.THREE;
-import static blackjack.domain.card.CardScore.TWO;
-import static blackjack.domain.card.CardSymbol.CLUB;
-import static blackjack.domain.card.CardSymbol.SPADE;
+import static blackjack.domain.card.Rank.ACE;
+import static blackjack.domain.card.Rank.EIGHT;
+import static blackjack.domain.card.Rank.FIVE;
+import static blackjack.domain.card.Rank.JACK;
+import static blackjack.domain.card.Rank.KING;
+import static blackjack.domain.card.Rank.NINE;
+import static blackjack.domain.card.Rank.QUEEN;
+import static blackjack.domain.card.Rank.SEVEN;
+import static blackjack.domain.card.Rank.THREE;
+import static blackjack.domain.card.Rank.TWO;
+import static blackjack.domain.card.Suit.CLUB;
+import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("심판")

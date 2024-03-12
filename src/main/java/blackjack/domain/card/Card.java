@@ -1,4 +1,4 @@
 package blackjack.domain.card;
 
-public record Card(CardScore score, CardSymbol symbol) {
+public record Card(Rank score, Suit symbol) {
 }

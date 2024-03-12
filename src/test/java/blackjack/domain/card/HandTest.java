@@ -5,16 +5,16 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static blackjack.domain.card.CardScore.ACE;
-import static blackjack.domain.card.CardScore.EIGHT;
-import static blackjack.domain.card.CardScore.FIVE;
-import static blackjack.domain.card.CardScore.NINE;
-import static blackjack.domain.card.CardScore.QUEEN;
-import static blackjack.domain.card.CardScore.TWO;
-import static blackjack.domain.card.CardSymbol.CLUB;
-import static blackjack.domain.card.CardSymbol.DIAMOND;
-import static blackjack.domain.card.CardSymbol.HEART;
-import static blackjack.domain.card.CardSymbol.SPADE;
+import static blackjack.domain.card.Rank.ACE;
+import static blackjack.domain.card.Rank.EIGHT;
+import static blackjack.domain.card.Rank.FIVE;
+import static blackjack.domain.card.Rank.NINE;
+import static blackjack.domain.card.Rank.QUEEN;
+import static blackjack.domain.card.Rank.TWO;
+import static blackjack.domain.card.Suit.CLUB;
+import static blackjack.domain.card.Suit.DIAMOND;
+import static blackjack.domain.card.Suit.HEART;
+import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("패")

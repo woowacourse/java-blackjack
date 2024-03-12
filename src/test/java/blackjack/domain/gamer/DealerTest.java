@@ -9,11 +9,11 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static blackjack.domain.card.CardScore.NINE;
-import static blackjack.domain.card.CardScore.QUEEN;
-import static blackjack.domain.card.CardScore.SEVEN;
-import static blackjack.domain.card.CardSymbol.CLUB;
-import static blackjack.domain.card.CardSymbol.SPADE;
+import static blackjack.domain.card.Rank.NINE;
+import static blackjack.domain.card.Rank.QUEEN;
+import static blackjack.domain.card.Rank.SEVEN;
+import static blackjack.domain.card.Suit.CLUB;
+import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("딜러")

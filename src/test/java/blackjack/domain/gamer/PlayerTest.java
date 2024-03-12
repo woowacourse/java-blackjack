@@ -9,12 +9,12 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
-import static blackjack.domain.card.CardScore.ACE;
-import static blackjack.domain.card.CardScore.KING;
-import static blackjack.domain.card.CardScore.NINE;
-import static blackjack.domain.card.CardScore.TEN;
-import static blackjack.domain.card.CardSymbol.CLUB;
-import static blackjack.domain.card.CardSymbol.DIAMOND;
+import static blackjack.domain.card.Rank.ACE;
+import static blackjack.domain.card.Rank.KING;
+import static blackjack.domain.card.Rank.NINE;
+import static blackjack.domain.card.Rank.TEN;
+import static blackjack.domain.card.Suit.CLUB;
+import static blackjack.domain.card.Suit.DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
