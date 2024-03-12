@@ -81,7 +81,7 @@
 - [x] 카드 점수 비교 Player에게 메시지 던지기
 - [x] DTO 만들기
 - [x] 테스트 반복되는 생성로직을 Test Fixture 로 추출
-- [ ] OutputView, InputView 정적 클래스 ❌
+- [x] OutputView, InputView 정적 클래스 ❌
 
 ## 딜러가 덱 생성을 하고, 쥐고 있으면서 경기 진행
 - [x] 딜러와 플레이어 분리
