@@ -5,6 +5,7 @@ import blackjack.domain.common.Name;
 import blackjack.domain.card.Cards;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Participant implements CardReceivable {
     private static final int BUST_SIZE = 21;
@@ -22,7 +23,7 @@ public abstract class Participant implements CardReceivable {
         final Score score = Score.from(cards.sum());
         final Score maxScore = score.add(CHANGE_A_VALUE);
 
-        if (cards.containAce() && maxScore.toInt() <= BUST_SIZE) {
+        if (cards.containAce() && maxScore.value() <= BUST_SIZE) {
             return maxScore;
         }
         return score;
@@ -48,4 +49,15 @@ public abstract class Participant implements CardReceivable {
         return cards.toList();
     }
 
+    @Override
+    public boolean equals(final Object object) {
+        if (this == object) return true;
+        if (!(object instanceof final Participant that)) return false;
+        return Objects.equals(this.name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.name);
+    }
 }
