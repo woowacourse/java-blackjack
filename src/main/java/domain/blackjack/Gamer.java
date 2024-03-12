@@ -25,6 +25,4 @@ abstract class Gamer {
     public final BlackJackGameMachine getGamer() {
         return blackJackGameMachine;
     }
-
-    public abstract String getRawName();
 }

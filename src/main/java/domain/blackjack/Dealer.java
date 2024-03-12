@@ -21,11 +21,6 @@ public class Dealer extends Gamer {
         return blackJackGameMachine.draw(deck, cardSelectStrategy, new DealerCardDrawCondition(blackJackGameMachine));
     }
 
-    @Override
-    public String getRawName() {
-        return "딜러";
-    }
-
     public List<Card> getRawHoldingCardsWithoutFirstCard() {
         List<Card> rawHoldingCards = new ArrayList<>(blackJackGameMachine.getRawHoldingCards());
         rawHoldingCards.remove(0);

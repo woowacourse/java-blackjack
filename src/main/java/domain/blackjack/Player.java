@@ -20,7 +20,6 @@ public class Player extends Gamer {
         return blackJackGameMachine.draw(deck, cardSelectStrategy, new PlayerCardDrawCondition(blackJackGameMachine));
     }
 
-    @Override
     public String getRawName() {
         return name;
     }

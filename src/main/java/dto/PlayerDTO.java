@@ -3,12 +3,12 @@ package dto;
 import domain.card.Card;
 import java.util.List;
 
-public class GamerDTO {
+public class PlayerDTO {
     private final String name;
     private final List<Card> holdingCards;
     private final int summationCardPoint;
 
-    public GamerDTO(String name, List<Card> holdingCards, int summationCardPoint) {
+    public PlayerDTO(String name, List<Card> holdingCards, int summationCardPoint) {
         this.name = name;
         this.holdingCards = holdingCards;
         this.summationCardPoint = summationCardPoint;

@@ -11,8 +11,9 @@ import domain.blackjack.Player;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.RandomCardSelectStrategy;
+import dto.DealerDTO;
 import dto.DealerGameResultDTO;
-import dto.GamerDTO;
+import dto.PlayerDTO;
 import dto.PlayerGameResultDTO;
 import java.util.List;
 import java.util.Map;
@@ -69,15 +70,14 @@ public class BlackjackController {
 
     private static void printDealer(Dealer dealer) {
         List<Card> rawHoldingCards = dealer.getRawHoldingCardsWithoutFirstCard();
-        GamerDTO gamerDTO = new GamerDTO(dealer.getRawName(), rawHoldingCards,
-                dealer.getRawSummationCardPoint());
-        GamerOutputView.printWithoutSummationCardPoint(gamerDTO);
+        DealerDTO dealerDTO = new DealerDTO(rawHoldingCards, dealer.getRawSummationCardPoint());
+        GamerOutputView.printWithoutSummationCardPoint(dealerDTO);
     }
 
     private static void printPlayer(Player player) {
-        GamerDTO gamerDTO = new GamerDTO(player.getRawName(), player.getRawHoldingCards(),
+        PlayerDTO playerDTO = new PlayerDTO(player.getRawName(), player.getRawHoldingCards(),
                 player.getRawSummationCardPoint());
-        GamerOutputView.printWithoutSummationCardPoint(gamerDTO);
+        GamerOutputView.printWithoutSummationCardPoint(playerDTO);
     }
 
     private void playersTryDraw(Deck deck, List<Player> players) {
@@ -112,14 +112,14 @@ public class BlackjackController {
     }
 
     private void printDealerWithPoint(Dealer dealer) {
-        GamerDTO dealerDTO = new GamerDTO(dealer.getRawName(), dealer.getRawHoldingCards(),
+        DealerDTO dealerDTO = new DealerDTO(dealer.getRawHoldingCards(),
                 dealer.getRawSummationCardPoint());
         GamerOutputView.print(dealerDTO);
     }
 
     private void printPlayersWithPoint(List<Player> players) {
         for (Player player : players) {
-            GamerDTO playerDTO = new GamerDTO(player.getRawName(), player.getRawHoldingCards(),
+            PlayerDTO playerDTO = new PlayerDTO(player.getRawName(), player.getRawHoldingCards(),
                     player.getRawSummationCardPoint());
             GamerOutputView.print(playerDTO);
         }
