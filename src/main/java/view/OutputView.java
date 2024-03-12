@@ -68,10 +68,12 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printBettingResult(Map<PlayerName, Integer> bettingResult) {
+    public static void printDealerBettingResult(int dealerSum) {
         System.out.println("## 최종 수익");
-        int dealerSum = -1 * bettingResult.values().stream().reduce(0, Integer::sum);
         System.out.println("딜러: " + dealerSum);
+    }
+
+    public static void printPlayerBettingResult(Map<PlayerName, Integer> bettingResult) {
         bettingResult.forEach((key, value) -> System.out.println(key.value() + ": " + value));
     }
 }

@@ -136,6 +136,7 @@ public class BlackJackController {
     private void finish(final BlackJackGame blackJackGame, final Betting betting, final Dealer dealer, final List<Player> players) {
         GameResults gameResults = blackJackGame.getGameResults(dealer, players);
         Map<PlayerName, Integer> bettingResult = betting.calculateBettingOnPlayers(gameResults);
-        OutputView.printBettingResult(bettingResult);
+        OutputView.printDealerBettingResult(betting.getDealerBettingResult());
+        OutputView.printPlayerBettingResult(bettingResult);
     }
 }
