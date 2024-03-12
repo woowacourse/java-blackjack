@@ -1,10 +1,13 @@
 package domain.blackjack;
 
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Participants;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class BlackJack {
 
@@ -24,9 +27,9 @@ public class BlackJack {
         beginBlackJack.accept(participants, dealer);
     }
 
-    public void play(BiConsumer<Participant, Dealer> participantConsumer) {
+/*    public void play(BiConsumer<Participant, Dealer> participantConsumer) {
         participants.participantHit(participantConsumer, dealer);
-    }
+    }*/
 
     public int dealerHit() {
         int count = 0;
@@ -35,5 +38,9 @@ public class BlackJack {
             count++;
         }
         return count;
+    }
+
+    public void play2(Function<Name, String> function, Consumer<Participant> printParticipantHands) {
+        participants.participantsHit(function, printParticipantHands, dealer);
     }
 }

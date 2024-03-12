@@ -1,8 +1,11 @@
 package domain.participant;
 
+import domain.blackjack.HitOption;
+
 import java.util.List;
 import java.util.Set;
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class Participants {
 
@@ -35,11 +38,11 @@ public class Participants {
         }
     }
 
-    public void participantHit(BiConsumer<Participant, Dealer> participantConsumer, Dealer dealer) {
+/*    public void participantHit(BiConsumer<Participant, Dealer> participantConsumer, Dealer dealer) {
         for (Participant participant : value) {
             participantConsumer.accept(participant, dealer);
         }
-    }
+    }*/
 
     public List<Name> getNames() {
         return value.stream()
@@ -49,5 +52,18 @@ public class Participants {
 
     public List<Participant> getValue() {
         return value;
+    }
+
+    public void participantsHit(Function<Name, String> function, Consumer<Participant> printParticipantHands, Dealer dealer) {
+        for (Participant participant : value) {
+            participantHit2(function, printParticipantHands, dealer, participant);
+        }
+    }
+
+    private void participantHit2(Function<Name, String> function, Consumer<Participant> printParticipantHands, Dealer dealer, Participant participant) {
+        while (participant.canHit() && HitOption.isHit(function.apply(participant.getName()))) {
+            participant.receiveCard(dealer.draw());
+            printParticipantHands.accept(participant);
+        }
     }
 }

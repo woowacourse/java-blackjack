@@ -24,7 +24,8 @@ public class BlackJackController {
         BlackJack blackJack = new BlackJack(dealer, participants);
 
         blackJack.beginDealing(this::beginBlackJack);
-        blackJack.play(this::participantHit);
+        blackJack.play2(InputView::inputHitOption, OutputView::printParticipantHands);
+        //blackJack.play(this::participantHit);
         dealerHit(blackJack);
 
         printScore(dealer, participants);
@@ -47,16 +48,16 @@ public class BlackJackController {
         }
     }
 
-    private void participantHit(Participant participant, Dealer dealer) {
+/*    private void participantHit(Participant participant, Dealer dealer) {
         while (isHitOption(participant)) {
             participant.receiveCard(dealer.draw());
             OutputView.printParticipantHands(participant);
         }
-    }
+    }*/
 
-    private boolean isHitOption(Participant participant) {
-        return participant.canHit() && HIT_OPTION.equals(InputView.inputHitOption(participant.getName()));
-    }
+/*    private boolean isHitOption(Participant participant) {
+        return HIT_OPTION.equals(InputView.inputHitOption(participant.getName()));
+    }*/
 
     private void dealerHit(BlackJack blackJack) {
         OutputView.printDealerHit(blackJack.dealerHit());
