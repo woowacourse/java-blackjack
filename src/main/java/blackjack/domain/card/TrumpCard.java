@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import java.util.List;
 import java.util.Objects;
 
 public class TrumpCard {
@@ -13,6 +12,10 @@ public class TrumpCard {
         this.suit = suit;
     }
 
+    public boolean isAce() {
+        return rank.equals(Rank.ACE);
+    }
+
     public Rank getRank() {
         return rank;
     }
@@ -21,8 +24,8 @@ public class TrumpCard {
         return suit;
     }
 
-    public List<Integer> getScore() {
-        return rank.getScore();
+    public int getScore() {
+        return rank.getScore().get(0);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Rank;
 import blackjack.domain.card.TrumpCard;
 
 import java.util.ArrayList;
@@ -12,6 +11,7 @@ public class Hand {
     private static final int BLACKJACK_BOUND = 21;
     private static final int BLACKJACK_CARD_SIZE = 2;
     private static final int MAX_ACE_SCORE = 11;
+    private static final String NO_CARD_EXCEPTION = "손패에 카드가 부족하여 첫 번째 카드를 가져올 수 없습니다.";
 
     private final List<TrumpCard> trumpCards;
 
@@ -37,14 +37,14 @@ public class Hand {
 
     private long countAce() {
         return trumpCards.stream()
-                .filter(card -> (card.getRank() == Rank.ACE))
+                .filter(TrumpCard::isAce)
                 .count();
     }
 
     private int calculateScoreWithoutAce() {
         return trumpCards.stream()
-                .filter(card -> (card.getRank() != Rank.ACE))
-                .mapToInt(c -> c.getScore().get(0))
+                .filter(trumpCard -> !trumpCard.isAce())
+                .mapToInt(TrumpCard::getScore)
                 .sum();
     }
 
@@ -65,6 +65,10 @@ public class Hand {
     }
 
     public TrumpCard getFirstCard() {
+        if (trumpCards.isEmpty()) {
+            throw new IllegalStateException(NO_CARD_EXCEPTION);
+        }
+
         return trumpCards.get(0);
     }
 

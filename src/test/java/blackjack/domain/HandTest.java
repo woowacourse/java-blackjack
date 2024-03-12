@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static blackjack.fixture.TrumpCardFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("카드 손패")
 public class HandTest {
@@ -52,6 +53,14 @@ public class HandTest {
 
         //then
         assertThat(hand.getFirstCard()).isEqualTo(new TrumpCard(Rank.FOUR, Suit.SPADE));
+    }
+
+    @DisplayName("패가 비어있으면 첫 번째 카드 반환 시도 시 예외가 발생한다.")
+    @Test
+    void getFirstHandCardException() {
+        //when & then
+        assertThatThrownBy(() -> hand.getFirstCard())
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @DisplayName("에이스가 포함된 패의 점수를 반환한다.")
