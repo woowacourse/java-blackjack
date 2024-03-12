@@ -27,7 +27,9 @@ public class InputView {
     }
 
     private List<String> toList(String input) {
-        List<String> playerNames = Arrays.asList(input.split(DEFAULT_DELIMITER, -1));
+        List<String> playerNames = Arrays.stream(input.split(DEFAULT_DELIMITER, -1))
+                .map(String::trim)
+                .toList();
         validateInvalidPlayerName(playerNames);
         return playerNames;
     }
@@ -45,7 +47,7 @@ public class InputView {
 
     public boolean askForMoreCard(String name) {
         System.out.printf("%s는 한 장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", name, YES, NO);
-        String yesOrNo = scanner.nextLine();
+        String yesOrNo = scanner.nextLine().trim();
         validateInput(yesOrNo);
         if (YES.equals(yesOrNo)) {
             return true;
