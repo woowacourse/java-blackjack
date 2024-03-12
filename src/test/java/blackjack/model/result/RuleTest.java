@@ -7,8 +7,8 @@ import static blackjack.model.deck.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.deck.Card;
+import blackjack.model.deck.Deck;
 import blackjack.model.participant.Dealer;
-import blackjack.model.participant.Hand;
 import blackjack.model.participant.Player;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -19,10 +19,12 @@ class RuleTest {
     @Test
     @DisplayName("딜러와 비교하여 결과를 계산한다.")
     void calculateResult() {
-        Rule rule = new Rule(
-                new Dealer(new Hand(List.of(new Card(DIA, TEN), new Card(SPADE, TEN)))));
-        Player player = new Player("리브",
-                new Hand(List.of(new Card(DIA, ACE), new Card(SPADE, TEN))));
+        Dealer dealer = new Dealer(new Deck());
+        dealer.receiveInitialCards(List.of(new Card(DIA, TEN), new Card(SPADE, TEN)));
+        Player player = new Player("리브");
+        player.receiveInitialCards(List.of(new Card(DIA, ACE), new Card(SPADE, TEN)));
+        Rule rule = new Rule(dealer);
+
         assertThat(rule.calculateResult(player)).isEqualTo(ResultCommand.WIN);
     }
 

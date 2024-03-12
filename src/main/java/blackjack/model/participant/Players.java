@@ -2,7 +2,6 @@ package blackjack.model.participant;
 
 import blackjack.dto.NameCardsScore;
 import blackjack.model.deck.Card;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -10,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Players {
@@ -23,12 +23,10 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(final List<String> names, final List<Hand> cards) {
-        List<Player> players = new ArrayList<>();
-        for (int i = 0; i < names.size(); i++) {
-            players.add(new Player(names.get(i), cards.get(i)));
-        }
-        return new Players(players);
+    public static Players from(final List<String> names) {
+        return names.stream()
+                .map(Player::new)
+                .collect(Collectors.collectingAndThen(Collectors.toList(), Players::new));
     }
 
     private void validateNotDuplicateName(final List<Player> players) {
@@ -59,7 +57,7 @@ public class Players {
     }
 
     public void receiveInitialCards(Supplier<List<Card>> initialCards) {
-        for (Player player: players) {
+        for (Player player : players) {
             player.receiveInitialCards(initialCards.get());
         }
     }

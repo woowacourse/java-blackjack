@@ -8,6 +8,11 @@ public class Participant {
 
     protected final Hand hand;
 
+    public Participant() {
+        this.hand = new Hand();
+    }
+
+    // TODO: 없애기
     public Participant(Hand hand) {
         this.hand = hand;
     }

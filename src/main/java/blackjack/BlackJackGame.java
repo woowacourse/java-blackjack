@@ -4,6 +4,7 @@ import blackjack.dto.DealerResultCount;
 import blackjack.dto.NameCards;
 import blackjack.dto.NameCardsScore;
 import blackjack.dto.PlayerNameFinalResult;
+import blackjack.model.deck.Card;
 import blackjack.model.deck.Deck;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Participant;
@@ -22,31 +23,34 @@ import java.util.stream.Stream;
 public class BlackJackGame {
     private static final ConsoleReader CONSOLE_READER = new ConsoleReader();
 
-    private Deck deck;
-
     public void run() {
+        final Dealer dealer = new Dealer(new Deck());
         final Players players = registerPlayers();
-        final Dealer dealer = new Dealer(deck.distributeInitialCard());
         final Referee referee = new Referee(new Rule(dealer));
 
+        registerInitialCards(dealer, players);
         OutputView.printDistributionSubject(players.getNames());
         printInitialCards(dealer, players);
 
-        playPlayersTurn(players.getPlayers(), deck);
-        playDealerTurn(dealer, deck);
+        playPlayersTurn(players.getPlayers(), dealer);
+        playDealerTurn(dealer);
 
         printFinalResult(dealer, players, referee);
     }
 
     private Players registerPlayers() {
         try {
-            deck = new Deck();
             final List<String> names = InputView.readPlayerNames(CONSOLE_READER);
-            return Players.of(names, deck.distributeInitialCard(names.size()));
+            return Players.from(names);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return registerPlayers();
         }
+    }
+
+    private void registerInitialCards(final Dealer dealer, final Players players) {
+        dealer.receiveInitialCards(dealer.distributeInitialCard());
+        players.receiveInitialCards(dealer::distributeInitialCard);
     }
 
     private void printInitialCards(final Dealer dealer, final Players players) {
@@ -65,15 +69,15 @@ public class BlackJackGame {
                 .toList();
     }
 
-    private void playPlayersTurn(final List<Player> players, final Deck deck) {
+    private void playPlayersTurn(final List<Player> players, final Dealer dealer) {
         for (Player player : players) {
-            playPlayerTurn(player, deck);
+            playPlayerTurn(player, dealer);
         }
     }
 
-    private void playPlayerTurn(final Player player, final Deck deck) {
+    private void playPlayerTurn(final Player player, final Dealer dealer) {
         if (!player.isBust() && player.canHit()) {
-            distributeIfPlayerWant(isPlayerWantHit(player.getName()), player, deck);
+            distributeIfPlayerWant(isPlayerWantHit(player.getName()), player, dealer);
         }
     }
 
@@ -86,23 +90,23 @@ public class BlackJackGame {
         }
     }
 
-    private void distributeIfPlayerWant(final boolean isHit, final Player player, final Deck deck) {
+    private void distributeIfPlayerWant(final boolean isHit, final Player player, final Dealer dealer) {
         if (isHit) {
-            distributeNewCard(player, deck);
+            distributeNewCard(player, dealer.distributeCard());
             OutputView.printNameAndCards(NameCards.from(player));
-            playPlayerTurn(player, deck);
+            playPlayerTurn(player, dealer);
         }
     }
 
-    private void playDealerTurn(final Dealer dealer, final Deck deck) {
+    private void playDealerTurn(final Dealer dealer) {
         while (dealer.canHit()) {
             OutputView.printDealerHit();
-            distributeNewCard(dealer, deck);
+            distributeNewCard(dealer, dealer.distributeCard());
         }
     }
 
-    private void distributeNewCard(final Participant player, final Deck deck) {
-        player.draw(deck.distribute());
+    private void distributeNewCard(final Participant player, final Card card) {
+        player.draw(card);
     }
 
     private void printFinalResult(final Dealer dealer, final Players players, final Referee referee) {
