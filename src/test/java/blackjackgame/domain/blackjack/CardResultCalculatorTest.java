@@ -18,7 +18,7 @@ public class CardResultCalculatorTest {
 
     @Test
     @DisplayName("손패를 추가로 받지 않았으면서 손패의 합이 21이면 결과가 BLACKJACK이다.")
-    void gameResultBlackjackTest() {
+    void cardResultBlackjackTest() {
         HoldingCards holdingCards = HoldingCards.of(
                 new Card(JACK, SPADE), new Card(ACE, SPADE)
         );
@@ -29,7 +29,7 @@ public class CardResultCalculatorTest {
 
     @Test
     @DisplayName("손패의 합이 21을 넘기면 결과가 BUST이다.")
-    void gameResultBustTest() {
+    void cardResultBustTest() {
         HoldingCards holdingCards = HoldingCards.of(
                 new Card(JACK, SPADE), new Card(KING, SPADE), new Card(TWO, SPADE)
         );
@@ -40,7 +40,7 @@ public class CardResultCalculatorTest {
 
     @Test
     @DisplayName("손패의 합이 21 이하면 결과가 NORMAL이다.")
-    void gameResultNormalTest() {
+    void cardResultNormalTest() {
         HoldingCards holdingCards = HoldingCards.of(
                 new Card(JACK, SPADE), new Card(KING, SPADE)
         );
