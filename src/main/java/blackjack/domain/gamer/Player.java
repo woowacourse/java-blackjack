@@ -36,7 +36,7 @@ public class Player {
     }
 
     public int getScore() {
-        return hand.findMaximumScore();
+        return hand.calculateScore();
     }
 
     public List<Card> getCards() {

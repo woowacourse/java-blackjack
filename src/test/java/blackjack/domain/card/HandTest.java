@@ -31,7 +31,7 @@ public class HandTest {
         hand.add(List.of(new Card(NINE, DIAMOND), new Card(FIVE, DIAMOND)));
 
         // then
-        assertThat(hand.findMaximumScore()).isEqualTo(expectedScore);
+        assertThat(hand.calculateScore()).isEqualTo(expectedScore);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class HandTest {
         hand.add(new Card(ACE, HEART));
 
         // then
-        assertThat(hand.findMaximumScore()).isEqualTo(21);
+        assertThat(hand.calculateScore()).isEqualTo(21);
     }
 
     @Test
@@ -62,7 +62,7 @@ public class HandTest {
         hand.add(new Card(ACE, CLUB));
 
         // then
-        assertThat(hand.findMaximumScore()).isEqualTo(20);
+        assertThat(hand.calculateScore()).isEqualTo(20);
     }
 
     @Test
@@ -77,6 +77,6 @@ public class HandTest {
         hand.add(new Card(ACE, CLUB));
 
         // then
-        assertThat(hand.findMaximumScore()).isEqualTo(21);
+        assertThat(hand.calculateScore()).isEqualTo(21);
     }
 }

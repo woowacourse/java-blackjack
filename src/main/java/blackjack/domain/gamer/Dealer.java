@@ -15,7 +15,7 @@ public class Dealer extends Player {
     }
 
     public boolean isScoreUnderBound() {
-        return hand.findMaximumScore() <= HIT_UPPER_BOUND;
+        return hand.calculateScore() <= HIT_UPPER_BOUND;
     }
 
     @Override
