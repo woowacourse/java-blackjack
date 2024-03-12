@@ -33,16 +33,28 @@ public class Rule {
     }
 
     public static Status decideStatus(Cards targetCards, Cards otherCards) {
-        if (targetCards.isBurst() || otherCards.isGreaterThan(targetCards)) {
+        if (checkTargetLose(targetCards, otherCards)) {
             return Status.LOSE;
         }
-        if (targetCards.isBlackjack() && targetCards.isGreaterThan(otherCards)) {
+        if (checkTargetBlackjack(targetCards, otherCards)) {
             return Status.WIN_BLACKJACK;
         }
-        if (otherCards.isBurst() || targetCards.isGreaterThan(otherCards)) {
+        if (checkTargetWin(targetCards, otherCards)) {
             return Status.WIN;
         }
         return Status.TIE;
+    }
+
+    private static boolean checkTargetLose(Cards targetCards, Cards otherCards) {
+        return targetCards.isBurst() || otherCards.isGreaterThan(targetCards);
+    }
+
+    private static boolean checkTargetBlackjack(Cards targetCards, Cards otherCards) {
+        return targetCards.isBlackjack() && targetCards.isGreaterThan(otherCards);
+    }
+
+    private static boolean checkTargetWin(Cards targetCards, Cards otherCards) {
+        return otherCards.isBurst() || targetCards.isGreaterThan(otherCards);
     }
 
     public Map<Name, Income> getIncomes() {
