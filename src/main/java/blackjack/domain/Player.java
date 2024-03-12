@@ -21,7 +21,6 @@ public class Player implements Gamer {
         return new Player(new Name(name), hand);
     }
 
-    @Override
     public void draw(final Card card) {
         hand.add(card);
     }
@@ -40,7 +39,7 @@ public class Player implements Gamer {
         return name;
     }
 
-    public Hand getCards() {
+    public Hand getHand() {
         return hand;
     }
 }

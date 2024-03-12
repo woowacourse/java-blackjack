@@ -26,10 +26,10 @@ class GameBoardTest {
         final TestDeckFactory testDeckFactory = new TestDeckFactory();
         final Deck deck = testDeckFactory.create();
         final Players players = Players.from(List.of("pobi"));
-        final Dealer dealer = Dealer.create();
-        final GameBoard gameBoard = new GameBoard(deck, dealer, players);
-        gameBoard.drawInitialPlayersCards();
-        gameBoard.drawInitialDealerCards();
+        final Dealer dealer = Dealer.of(deck);
+        final GameBoard gameBoard = new GameBoard(dealer, players);
+        gameBoard.drawInitialPlayersHand();
+        gameBoard.drawInitialDealerHand();
 
         final List<Outcome> dealerOutcome = gameBoard.getDealerOutcomes();
 
@@ -42,10 +42,10 @@ class GameBoardTest {
         final TestDeckFactory testDeckFactory = new TestDeckFactory();
         final Deck deck = testDeckFactory.create();
         final Players players = Players.from(List.of("pobi"));
-        final Dealer dealer = Dealer.create();
-        final GameBoard gameBoard = new GameBoard(deck, dealer, players);
-        gameBoard.drawInitialPlayersCards();
-        gameBoard.drawInitialDealerCards();
+        final Dealer dealer = Dealer.of(deck);
+        final GameBoard gameBoard = new GameBoard(dealer, players);
+        gameBoard.drawInitialPlayersHand();
+        gameBoard.drawInitialDealerHand();
 
         final List<OutcomeDto> playerOutcomeDtos = gameBoard.getPlayerOutcomeDtos();
         final Name name = playerOutcomeDtos.get(0).getName();

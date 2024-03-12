@@ -18,10 +18,6 @@ public class Hand {
         cards.add(card);
     }
 
-    public Card findFirst() {
-        return cards.get(0);
-    }
-
     public int calculateOptimalSum() {
         final List<Number> numbers = cards.stream()
                 .map(Card::getNumber)

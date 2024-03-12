@@ -1,42 +1,40 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Hand;
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.Card;
 import blackjack.dto.OutcomeDto;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameBoard {
 
-    private final Deck deck;
     private final Dealer dealer;
     private final Players players;
 
-    public GameBoard(final Deck deck, final Dealer dealer, final Players players) {
-        this.deck = deck;
+    public GameBoard(final Dealer dealer, final Players players) {
         this.dealer = dealer;
         this.players = players;
     }
 
-    public Hand drawInitialDealerCards() {
-        drawTwoCards(dealer);
-        return new Hand(List.of(dealer.findFaceUpCard()));
+    public Card drawInitialDealerHand() {
+        final Card firstCard = dealer.draw();
+        dealer.draw();
+        return firstCard;
     }
 
-    public Players drawInitialPlayersCards() {
-        for (Player player : players.getPlayers()) {
-            drawTwoCards(player);
+    public Players drawInitialPlayersHand() {
+        for (final Player player : players.getPlayers()) {
+            player.draw(dealer.drawPlayerCard());
+            player.draw(dealer.drawPlayerCard());
         }
         return players;
     }
 
-    private void drawTwoCards(Gamer gamer) {
-        gamer.draw(deck.pop());
-        gamer.draw(deck.pop());
+    public void hit(final Dealer dealer) {
+        dealer.draw();
     }
 
-    public void hit(Gamer gamer) {
-        gamer.draw(deck.pop());
+    public void hit(final Player player) {
+        player.draw(dealer.drawPlayerCard());
     }
 
     public boolean isHit(Gamer gamer) {
@@ -46,7 +44,7 @@ public class GameBoard {
     public List<Outcome> getDealerOutcomes() {
         final List<Outcome> playerOutcomes = new ArrayList<>();
         for (final Player player : players.getPlayers()) {
-            playerOutcomes.add(Outcome.doesPlayerWin(dealer.getCards(), player.getCards()));
+            playerOutcomes.add(Outcome.doesPlayerWin(dealer.getHand(), player.getHand()));
         }
         return Outcome.reverse(playerOutcomes);
     }
@@ -54,14 +52,10 @@ public class GameBoard {
     public List<OutcomeDto> getPlayerOutcomeDtos() {
         final List<OutcomeDto> playerOutcomes = new ArrayList<>();
         for (final Player player : players.getPlayers()) {
-            final Outcome playerOutcome = Outcome.doesPlayerWin(dealer.getCards(), player.getCards());
+            final Outcome playerOutcome = Outcome.doesPlayerWin(dealer.getHand(), player.getHand());
             playerOutcomes.add(new OutcomeDto(player.getName(), playerOutcome));
         }
         return playerOutcomes;
-    }
-
-    public Hand getDealerCards() {
-        return dealer.getCards();
     }
 
     public Dealer getDealer() {

@@ -5,8 +5,9 @@ import blackjack.domain.GameBoard;
 import blackjack.domain.Outcome;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
-import blackjack.domain.card.Hand;
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.ShuffledDeckFactory;
 import blackjack.dto.DealerDto;
 import blackjack.dto.OutcomeDto;
@@ -25,7 +26,7 @@ public class Application {
 
         hit(gameBoard);
         OutputView.printFinalState(
-                createDealerDto(gameBoard.getDealerCards()), createPlayerDtos(gameBoard.getPlayers()));
+                createDealerDto(gameBoard.getDealer().getHand()), createPlayerDtos(gameBoard.getPlayers()));
 
         final OutcomesDto dealerOutcomeDto = createOutcomesDto(gameBoard.getDealerOutcomes());
         final List<OutcomeDto> playerOutcomeDtos = gameBoard.getPlayerOutcomeDtos();
@@ -34,16 +35,20 @@ public class Application {
 
     private static GameBoard createGameBoard() {
         Deck deck = new ShuffledDeckFactory().create();
-        Dealer dealer = Dealer.create();
+        Dealer dealer = Dealer.of(deck);
         Players players = Players.from(InputView.readPlayerNames());
-        return new GameBoard(deck, dealer, players);
+        return new GameBoard(dealer, players);
     }
 
     private static void drawInitialCards(GameBoard gameBoard) {
-        final DealerDto dealerDto = createDealerDto(gameBoard.drawInitialDealerCards());
-        final List<PlayerDto> playerDtos = createPlayerDtos(gameBoard.drawInitialPlayersCards());
+        final DealerDto dealerDto = createDealerDto(gameBoard.drawInitialDealerHand());
+        final List<PlayerDto> playerDtos = createPlayerDtos(gameBoard.drawInitialPlayersHand());
 
         OutputView.printInitialState(dealerDto, playerDtos);
+    }
+
+    private static DealerDto createDealerDto(final Card card) {
+        return createDealerDto(new Hand(List.of(card)));
     }
 
     private static DealerDto createDealerDto(final Hand hand) {
@@ -57,7 +62,7 @@ public class Application {
     }
 
     private static PlayerDto createPlayerDto(final Player player) {
-        return new PlayerDto(player.getName(), player.getCards().toList(), player.getCards().calculateOptimalSum());
+        return new PlayerDto(player.getName(), player.getHand().toList(), player.getHand().calculateOptimalSum());
     }
 
     private static void hit(GameBoard gameBoard) {
