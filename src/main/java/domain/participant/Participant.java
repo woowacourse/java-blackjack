@@ -9,6 +9,7 @@ import java.util.List;
 public class Participant {
 
     private static final int BLACK_JACK_COUNT = 21;
+    public static final int MIN_CARD_COUNT = 2;
 
     protected Hands hands;
     private final Name name;
@@ -31,7 +32,7 @@ public class Participant {
     }
 
     public boolean isBlackJack() {
-        return this.getScore() == 21 && this.getCardCount() == 2;
+        return this.getScore() == BLACK_JACK_COUNT && this.getCardCount() == MIN_CARD_COUNT;
     }
 
     public int getCardCount() {
