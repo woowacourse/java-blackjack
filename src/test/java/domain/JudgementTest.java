@@ -167,10 +167,10 @@ class JudgementTest {
         void setDeckAndDealerBust() {
             Card card1 = new Card(Symbol.CLOVER, Rank.KING);
             Card card2 = new Card(Symbol.CLOVER, Rank.BIG_ACE);
-            Card card3 = new Card(Symbol.DIAMOND, Rank.BIG_ACE);
+            Card card3 = new Card(Symbol.DIAMOND, Rank.THREE);
             Card card4 = new Card(Symbol.SPADE, Rank.KING);
             Card card5 = new Card(Symbol.CLOVER, Rank.SEVEN);
-            Card card6 = new Card(Symbol.SPADE, Rank.NINE);
+            Card card6 = new Card(Symbol.SPADE, Rank.BIG_ACE);
             Card card7 = new Card(Symbol.HEART, Rank.TEN);
             Card card8 = new Card(Symbol.CLOVER, Rank.TEN);
             Card card9 = new Card(Symbol.DIAMOND, Rank.TEN);
@@ -187,8 +187,6 @@ class JudgementTest {
         @Test
         void playerIsBlackJack() {
             // when
-            blackJackGame.takeTurn(pobi);
-            blackJackGame.takeTurn(pobi);
             Judgement judgement = Judgement.of(dealer, players);
 
             // then
@@ -214,28 +212,28 @@ class JudgementTest {
 
             // then
             assertAll(
-                    () -> assertThat(judgement.getDealerResult().getWinCount()).isEqualTo(2),
-                    () -> assertThat(judgement.getDealerResult().getLoseCount()).isEqualTo(0),
+                    () -> assertThat(judgement.getDealerResult().getWinCount()).isEqualTo(1),
+                    () -> assertThat(judgement.getDealerResult().getLoseCount()).isEqualTo(1),
                     () -> assertThat(judgement.getDealerResult().getTieCount()).isEqualTo(0),
-                    () -> assertThat(judgement.getPlayerResults().getResults().get(pobi)).isEqualTo(Result.LOSE),
+                    () -> assertThat(judgement.getPlayerResults().getResults().get(pobi)).isEqualTo(Result.WIN),
                     () -> assertThat(judgement.getPlayerResults().getResults().get(neo)).isEqualTo(Result.LOSE)
             );
         }
 
-        @DisplayName("플레이어(포비)와 딜러 모두 일반 점수인 경우, 점수가 같다면 무승부이다.")
+        @DisplayName("플레이어(네오)와 딜러 모두 일반 점수인 경우, 점수가 같다면 무승부이다.")
         @Test
         void playerIsSameNormalScore() {
             // when
-            blackJackGame.takeTurn(pobi);
+            blackJackGame.takeTurn(neo);
             Judgement judgement = Judgement.of(dealer, players);
 
             // then
             assertAll(
-                    () -> assertThat(judgement.getDealerResult().getWinCount()).isEqualTo(1),
-                    () -> assertThat(judgement.getDealerResult().getLoseCount()).isEqualTo(0),
+                    () -> assertThat(judgement.getDealerResult().getWinCount()).isEqualTo(0),
+                    () -> assertThat(judgement.getDealerResult().getLoseCount()).isEqualTo(1),
                     () -> assertThat(judgement.getDealerResult().getTieCount()).isEqualTo(1),
-                    () -> assertThat(judgement.getPlayerResults().getResults().get(pobi)).isEqualTo(Result.TIE),
-                    () -> assertThat(judgement.getPlayerResults().getResults().get(neo)).isEqualTo(Result.LOSE)
+                    () -> assertThat(judgement.getPlayerResults().getResults().get(pobi)).isEqualTo(Result.WIN),
+                    () -> assertThat(judgement.getPlayerResults().getResults().get(neo)).isEqualTo(Result.TIE)
             );
         }
     }
