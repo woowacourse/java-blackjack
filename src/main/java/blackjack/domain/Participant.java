@@ -28,17 +28,17 @@ public abstract class Participant {
         return hands.getHandsScore();
     }
 
-    public boolean hasHigherScore(Participant participant){
+    public boolean hasHigherScore(Participant participant) {
         return hands.getHandsScore()
                 .isHigherThan(participant.getHandsScore());
     }
 
-    public boolean hasSameScore(Participant participant){
+    public boolean hasSameScore(Participant participant) {
         return hands.getHandsScore()
                 .isSame(participant.getHandsScore());
     }
 
-    public boolean hasLowerScore(Participant participant){
+    public boolean hasLowerScore(Participant participant) {
         return hands.getHandsScore()
                 .isLowerThan(participant.getHandsScore());
     }

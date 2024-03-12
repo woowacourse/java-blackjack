@@ -9,8 +9,8 @@ import java.util.stream.Stream;
 
 public class Deck {
     private static final List<Card> CACHE_DECK = Stream.of(Kind.values())
-                                                .flatMap(kind -> Stream.of(Value.values()).map(value -> new Card(kind, value)))
-                                                .collect(Collectors.toList());
+            .flatMap(kind -> Stream.of(Value.values()).map(value -> new Card(kind, value)))
+            .collect(Collectors.toList());
 
     private final Deque<Card> cards;
 

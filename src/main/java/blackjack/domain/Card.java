@@ -5,7 +5,7 @@ import java.util.Objects;
 // TODO 성격에 따라 패키지 나누어보기
 public class Card {
     private final Kind kind;
-    private Value value;
+    private final Value value;
 
     public Card(Kind kind, Value value) {
         this.kind = kind;

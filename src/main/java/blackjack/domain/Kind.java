@@ -4,5 +4,5 @@ public enum Kind {
     SPADE,
     DIAMOND,
     HEART,
-    CLOVER;
+    CLOVER
 }
