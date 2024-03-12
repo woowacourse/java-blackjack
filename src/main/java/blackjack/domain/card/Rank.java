@@ -23,7 +23,17 @@ public enum Rank {
         this.scores = scores;
     }
 
-    public List<Integer> get() {
-        return scores;
+    public int get(int index) {
+        validateIndexRange(this, index);
+        return scores.get(index);
+    }
+
+    private void validateIndexRange(Rank rank, int index) {
+        if (rank != ACE && index != 0) {
+            throw new IllegalArgumentException("ACE를 제외한 Rank는 인덱스가 0이여야 합니다.");
+        }
+        if (rank == ACE && !(index == 0 || index == 1)) {
+            throw new IllegalArgumentException("ACE는 인덱스가 0이거나 1이여야 합니다.");
+        }
     }
 }
