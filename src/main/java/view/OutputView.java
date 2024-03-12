@@ -72,8 +72,8 @@ public class OutputView {
                 blackjackResult.dealerTie());
         final List<String> suffix = List.of("승", "패", "무");
 
-        for (int round = 0; round < 3; round++) {
-            printResultWithCounter(printOrder.get(round), suffix.get(round));
+        for (int order = 0; order < printOrder.size(); order++) {
+            printResultWithCounter(printOrder.get(order), suffix.get(order));
         }
         System.out.println();
     }

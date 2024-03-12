@@ -27,7 +27,10 @@ public abstract class Participant {
     public abstract boolean canHit();
 
     public abstract boolean canNotHit();
-    public abstract String getName();
+
+    public String getName() {
+        throw new IllegalCallerException("참여자의 이름이 정해지지 않았습니다");
+    }
 
     public void hit(final Card card) {
         hands.add(card);

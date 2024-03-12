@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Players {
-    private final int MAX_PLAYER_NUMBER = 8;
+    private static final int MAX_PLAYER_NUMBER = 8;
     private final List<Player> value;
 
     public Players(final List<Player> value) {
@@ -15,7 +15,7 @@ public class Players {
         this.value = value;
     }
 
-    public static Players from(final List<String> names) {
+    public static Players fromNames(final List<String> names) {
         return new Players(names.stream()
                 .map(name -> new Player(new Name(name)))
                 .collect(Collectors.toList()));
@@ -46,15 +46,15 @@ public class Players {
         return Set.copyOf(players).size() != players.size();
     }
 
-    public Stream<Player> stream() {
-        return this.value.stream();
-    }
-
     public Player findPlayerByName(final String name) {
         return this.value.stream()
                 .filter(r -> r.getName().equals(name))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("플레이어가 존재하지 않습니다."));
+    }
+
+    public Stream<Player> stream() {
+        return this.value.stream();
     }
 
     public List<Player> getValue() {
