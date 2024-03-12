@@ -3,6 +3,8 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import model.BlackJack;
 import model.card.CardSize;
 import model.card.CardDeck;
@@ -48,27 +50,7 @@ public class BlackJackController {
     }
 
     private void offerMoreCards(BlackJack blackJack) {
-        decideParticipantsPlay(blackJack);
-        decideDealerPlay(blackJack);
-    }
-
-    private void decideParticipantsPlay(BlackJack blackJack) {
-        for (Participant participant : blackJack.getParticipants()) {
-            decideParticipantPlay(participant, blackJack);
-        }
-    }
-
-    private void decideParticipantPlay(Participant participant, BlackJack blackJack) {
-        while (participant.isHit() && inputView.isOneMoreCard(participant.getName())) {
-            blackJack.offerCardToParticipant(participant, CardSize.ONE);
-            outputView.printPlayerCardMessage(participant.getName(), participant.getCards());
-        }
-    }
-
-    private void decideDealerPlay(BlackJack blackJack) {
-        while (blackJack.isDealerUnderThreshold()) {
-            outputView.printDealerAddCard();
-            blackJack.offerCardToDealer(CardSize.ONE);
-        }
+        blackJack.decideParticipantsPlay(inputView::isOneMoreCard, outputView::printPlayerCardMessage);
+        blackJack.decideDealerPlay(outputView::printDealerAddCard);
     }
 }

@@ -4,11 +4,12 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import model.card.CardSize;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import model.card.CardDeck;
+import model.card.CardSize;
 import model.card.Cards;
 import model.player.Dealer;
 import model.player.Participant;
@@ -41,7 +42,28 @@ public class BlackJack {
         }
     }
 
-    public void offerCardToParticipant(Participant participant, CardSize size) {
+    public void decideParticipantsPlay(Function<String, Boolean> isMoreCard, BiConsumer<String, Cards> callback) {
+        for (Participant participant : participants.getParticipants()) {
+            decideParticipantPlay(participant, isMoreCard, callback);
+        }
+    }
+
+    private void decideParticipantPlay(Participant participant,
+                                       Function<String, Boolean> isMoreCard, BiConsumer<String, Cards> callback) {
+        while (participant.isHit() && isMoreCard.apply(participant.getName())) {
+            offerCardToParticipant(participant, CardSize.ONE);
+            callback.accept(participant.getName(), participant.getCards());
+        }
+    }
+
+    public void decideDealerPlay(Runnable runnable) {
+        while (isDealerUnderThreshold()) {
+            runnable.run();
+            offerCardToDealer(CardSize.ONE);
+        }
+    }
+
+    private void offerCardToParticipant(Participant participant, CardSize size) {
         participants.offerCardToParticipant(cardDeck, participant, size);
     }
 
@@ -82,13 +104,5 @@ public class BlackJack {
 
     public Map<String, Cards> mapToDealerNameAndCards() {
         return Map.of(dealer.getName(), dealer.getCards());
-    }
-
-    public List<Participant> getParticipants() {
-        return Collections.unmodifiableList(participants.getParticipants());
-    }
-
-    public Dealer getDealer() {
-        return dealer;
     }
 }

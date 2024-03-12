@@ -8,10 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 import model.card.Card;
+import model.card.CardDeck;
 import model.card.CardNumber;
 import model.card.CardShape;
-import model.card.CardSize;
-import model.card.CardDeck;
 import model.player.Dealer;
 import model.player.Participant;
 import model.player.Participants;
@@ -51,22 +50,6 @@ class BlackJackTest {
                         () -> new BlackJack(new Participants(List.of(new Participant("배키", participantCards))), null,
                                 cardDeck))
                 .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @DisplayName("이름이 일치하는 참가자에게만 카드를 줄 수 있다.")
-    @Test
-    void offerCardToPlayer() {
-        Participants participants = new Participants(List.of(new Participant("배키",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE)))));
-        BlackJack blackJack = new BlackJack(participants, new Dealer(
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.TWO))),
-                cardDeck);
-
-        blackJack.offerCardToParticipant(new Participant("배키",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))), CardSize.ONE);
-
-        List<Participant> result = participants.getParticipants();
-        assertThat(result.get(0).getCards().getCards()).hasSize(3);
     }
 
     static Stream<Arguments> createDealer() {
