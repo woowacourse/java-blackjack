@@ -24,7 +24,7 @@ public enum Result {
     }
 
     private static boolean isDealerWin(final Dealer dealer, final Player player) {
-        return player.isBust()
+        return !dealer.isBust() && player.isBust()
                 || !dealer.isBust() && dealer.getScore().compareTo(player.getScore()) > 0;
     }
 
