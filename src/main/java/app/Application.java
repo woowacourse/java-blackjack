@@ -1,3 +1,5 @@
+package app;
+
 import controller.Casino;
 import domain.BlackjackGame;
 import view.InputView;
