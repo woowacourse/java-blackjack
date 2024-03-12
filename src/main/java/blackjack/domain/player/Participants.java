@@ -13,6 +13,12 @@ public class Participants {
         this.dealer = dealer;
     }
 
+    public static Participants create(List<String> playerNames) {
+        Players players = Players.create(playerNames);
+        Dealer dealer = new Dealer();
+        return new Participants(players, dealer);
+    }
+
     public Dealer getDealer() {
         return dealer;
     }

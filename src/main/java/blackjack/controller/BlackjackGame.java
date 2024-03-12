@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import blackjack.domain.DrawDecision;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.Hand;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Participants;
@@ -21,7 +20,7 @@ public class BlackjackGame {
     }
 
     public void play() {
-        Participants participants = createParticipants();
+        Participants participants = Participants.create(inputView.readNames());
         CardDeck cardDeck = CardDeck.createShuffledFullCardDeck();
 
         dealToAll(participants, cardDeck);
@@ -31,12 +30,6 @@ public class BlackjackGame {
         drawToDealer(participants.getDealer(), cardDeck);
         outputView.printParticipantsHandScore(participants);
         outputView.printParticipantsResult(participants.getDealer(), participants.getPlayers());
-    }
-
-    private Participants createParticipants() {
-        Players players = Players.from(inputView.readNames());
-        Dealer dealer = new Dealer(new Hand());
-        return new Participants(players, dealer);
     }
 
     private void dealToAll(Participants participants, CardDeck cardDeck) {

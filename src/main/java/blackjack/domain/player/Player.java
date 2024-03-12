@@ -11,6 +11,10 @@ public class Player extends Participant {
 
     private final PlayerName playerName;
 
+    public Player(PlayerName playerName) {
+        this(new Hand(), playerName);
+    }
+
     public Player(Hand hand, PlayerName playerName) {
         super(hand);
         this.playerName = playerName;

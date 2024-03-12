@@ -7,6 +7,10 @@ public class Dealer extends Participant {
 
     private static final int HIT_THRESHOLD = 17;
 
+    public Dealer() {
+        super(new Hand());
+    }
+
     public Dealer(Hand hand) {
         super(hand);
     }

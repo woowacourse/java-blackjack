@@ -6,11 +6,28 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("참가자들 테스트")
 class PlayersTest {
+
+    @DisplayName("주어진 플레이어 이름 리스트로 플레이어들을 생성한다.")
+    @Test
+    void testCreate() {
+        // given
+        List<String> playerNames = List.of("pobi", "jason");
+
+        // when
+        Players players = Players.create(playerNames);
+
+        // then
+        assertThat(players.getPlayers()).contains(
+                new Player(new PlayerName("pobi")),
+                new Player(new PlayerName("jason"))
+        );
+    }
 
     @DisplayName("참가자들 중 이름이 중복되는 경우는 생성 검증에 실패한다")
     @Test

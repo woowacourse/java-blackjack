@@ -1,6 +1,5 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Hand;
 import java.util.List;
 
 public class Players {
@@ -12,10 +11,10 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(List<String> playerNames) {
+    public static Players create(List<String> playerNames) {
         List<Player> players = playerNames.stream()
                 .map(PlayerName::new)
-                .map(playerName -> new Player(new Hand(), playerName))
+                .map(Player::new)
                 .toList();
         return new Players(players);
     }
