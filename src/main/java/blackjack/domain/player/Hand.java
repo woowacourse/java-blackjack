@@ -39,7 +39,7 @@ public class Hand {
                 .count();
     }
 
-    public int countPop() {
+    public int countDraw() {
         return cards.size() - INITIAL_HAND_SIZE;
     }
 

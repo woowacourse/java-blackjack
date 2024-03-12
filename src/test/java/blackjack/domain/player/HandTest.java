@@ -40,7 +40,7 @@ class HandTest {
         CardDeck cardDeck = CardDeck.createShuffledDeck();
         Hand hand = Hand.createHandFrom(cardDeck);
         hand.appendCard(cardDeck.popCard());
-        assertThat(hand.countPop()).isEqualTo(1);
+        assertThat(hand.countDraw()).isEqualTo(1);
     }
 
     @DisplayName("핸드에 에이스 카드가 몇개 있는지 확인할 수 있다")

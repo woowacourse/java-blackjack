@@ -22,8 +22,8 @@ public abstract class Participant {
         return hand.calculateScore();
     }
 
-    public int countPop() {
-        return hand.countPop();
+    public int countDraw() {
+        return hand.countDraw();
     }
 
     public abstract boolean canHit();
