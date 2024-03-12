@@ -1,6 +1,6 @@
 package domain.cards;
 
-import domain.gamer.GamerName;
+import domain.gamer.PlayerName;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -14,7 +14,7 @@ public class PlayerNameTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "123456789012345678901"})
     void createNameByInvalidLengthTest(String name) {
-        assertThatThrownBy(() -> new GamerName(name))
+        assertThatThrownBy(() -> new PlayerName(name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이름의 길이는 1 ~ 20 글자 사이로 입력해주세요.");
     }
@@ -23,7 +23,7 @@ public class PlayerNameTest {
     @ParameterizedTest
     @ValueSource(strings = {"1", "12345678901234567890"})
     void createNameByValidLengthTest(String name) {
-        assertThatCode(() -> new GamerName(name))
+        assertThatCode(() -> new PlayerName(name))
                 .doesNotThrowAnyException();
     }
 }
