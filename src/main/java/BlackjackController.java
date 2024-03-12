@@ -61,7 +61,7 @@ public class BlackjackController {
     }
 
     private boolean isHit(GamePlayer gamePlayer) {
-        BlackjackCommand command = InputView.inputBlackjackCommand(gamePlayer.getNameAsString());
+        BlackjackCommand command = InputView.inputBlackjackCommand(gamePlayer.getName());
         return command.isHit();
     }
 }

@@ -19,7 +19,7 @@ public class DealerTest {
 
         assertThatCode(() -> {
                     var sut = Dealer.createDefaultDealer(cards);
-                    assertThat(sut.getNameAsString()).isEqualTo("딜러");
+                    assertThat(sut.getName().asString()).isEqualTo("딜러");
                 }
         ).doesNotThrowAnyException();
     }

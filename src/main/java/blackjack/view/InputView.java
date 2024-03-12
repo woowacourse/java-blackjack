@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.player.Name;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -21,8 +22,8 @@ public class InputView {
                      .toList();
     }
 
-    public static BlackjackCommand inputBlackjackCommand(String playerName) {
-        System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", playerName));
+    public static BlackjackCommand inputBlackjackCommand(Name playerName) {
+        System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", playerName.asString()));
 
         return BlackjackCommand.from(input());
     }

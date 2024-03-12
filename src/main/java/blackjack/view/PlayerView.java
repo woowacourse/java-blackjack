@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.GamePlayer;
+import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import java.util.List;
@@ -24,10 +25,11 @@ public class PlayerView {
 
     private static void printPlayersPreview(Dealer dealer, List<GamePlayer> gamePlayers) {
         String result = gamePlayers.stream()
-                                   .map(GamePlayer::getNameAsString)
+                                   .map(GamePlayer::getName)
+                                   .map(Name::asString)
                                    .collect(Collectors.joining(","));
         System.out.println(
-                String.format("%s와 %s에게 2장을 나누었습니다.", dealer.getNameAsString(), result));
+                String.format("%s와 %s에게 2장을 나누었습니다.", dealer.getName().asString(), result));
     }
 
     private static void printPlayersFirstOpenCard(List<Player> players) {
@@ -36,7 +38,7 @@ public class PlayerView {
 
     public static void printPlayerOpenCards(Player player) {
         String result = CardPrinter.printCards(player.getOpenCards());
-        System.out.println(String.format("%s카드: %s", player.getNameAsString(), result));
+        System.out.println(String.format("%s카드: %s", player.getName().asString(), result));
     }
 
     public static void printPlayersWithScore(Players players) {
@@ -47,7 +49,7 @@ public class PlayerView {
 
     private static void printPlayerWithScore(Player player) {
         String result = CardPrinter.printCards(player.getCards());
-        System.out.println(String.format("%s 카드: %s - 결과 : %d", player.getNameAsString(), result,
+        System.out.println(String.format("%s 카드: %s - 결과 : %d", player.getName().asString(), result,
                 player.calculateScore()));
     }
 
