@@ -14,7 +14,7 @@ class ScoreTest {
     @DisplayName("카드의 점수를 정확하게 계산한다.")
     void calculateCardTest() {
         Card card = new Card(Shape.SPADE, Number.ACE);
-        assertThat(card.getScore()).isEqualTo(1);
+        assertThat(card.getScore()).isEqualTo(new Score(1));
     }
 
     @Test
