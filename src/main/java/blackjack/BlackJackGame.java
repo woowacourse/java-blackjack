@@ -21,7 +21,11 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class BlackJackGame {
-    private static final ConsoleReader CONSOLE_READER = new ConsoleReader();
+    private final InputView inputView;
+
+    public BlackJackGame(InputView inputView) {
+        this.inputView = inputView;
+    }
 
     public void run() {
         final Dealer dealer = new Dealer(new Deck());
@@ -40,7 +44,7 @@ public class BlackJackGame {
 
     private Players registerPlayers() {
         try {
-            final List<String> names = InputView.readPlayerNames(CONSOLE_READER);
+            final List<String> names = inputView.readPlayerName();
             return Players.from(names);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -83,7 +87,7 @@ public class BlackJackGame {
 
     private boolean isPlayerWantHit(final String name) {
         try {
-            return InputView.readHitOrNot(name, CONSOLE_READER);
+            return inputView.readHitOrNot(name);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return isPlayerWantHit(name);
