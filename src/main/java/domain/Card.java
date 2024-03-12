@@ -14,15 +14,15 @@ public class Card {
         return this.rank.isAce();
     }
 
-    public int getLetterValue() {
+    public int getRankValue() {
         return rank.getValue();
     }
 
-    public String getLetterText() {
+    public String getRankText() {
         return rank.getText();
     }
 
-    public String getMark() {
+    public String getSuit() {
         return suit.getName();
     }
 }

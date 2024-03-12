@@ -26,7 +26,7 @@ class PlayerTest {
         player.initHand(List.of(SEVEN_HEART, TEN_HEART));
 
         int actual = player.getTotalScore();
-        int expected = SEVEN_HEART.getLetterValue() + TEN_HEART.getLetterValue();
+        int expected = SEVEN_HEART.getRankValue() + TEN_HEART.getRankValue();
 
         assertThat(actual).isEqualTo(expected);
     }
