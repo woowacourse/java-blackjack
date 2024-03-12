@@ -5,34 +5,28 @@ import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Participants;
 
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class BlackJack {
 
-    private final Dealer dealer;
     private final Participants participants;
+    private final Deck deck;
 
-    public BlackJack(final Dealer dealer, final Participants participants) {
-        this.dealer = dealer;
+    public BlackJack(final Participants participants) {
         this.participants = participants;
+        this.deck = new Deck();
     }
 
-    public void beginDealing(BiConsumer<Participants, Dealer> beginBlackJack) {
-        dealer.receiveCard();
-        dealer.receiveCard();
-        participants.beginDealing(dealer);
+    public void beginDealing(Consumer<Participants> beginBlackJack) {
+        participants.beginDealing(deck);
 
-        beginBlackJack.accept(participants, dealer);
+        beginBlackJack.accept(participants);
     }
-
-/*    public void play(BiConsumer<Participant, Dealer> participantConsumer) {
-        participants.participantHit(participantConsumer, dealer);
-    }*/
 
     public int dealerHit() {
         int count = 0;
+        Dealer dealer = participants.getDealer();
         while (dealer.shouldHit()) {
             dealer.receiveCard();
             count++;
@@ -41,6 +35,6 @@ public class BlackJack {
     }
 
     public void play2(Function<Name, String> function, Consumer<Participant> printParticipantHands) {
-        participants.participantsHit(function, printParticipantHands, dealer);
+        participants.participantsHit(function, printParticipantHands);
     }
 }

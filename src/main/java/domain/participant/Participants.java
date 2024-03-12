@@ -1,11 +1,14 @@
 package domain.participant;
 
+import domain.blackjack.Deck;
 import domain.blackjack.HitOption;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Participants {
 
@@ -16,8 +19,8 @@ public class Participants {
 
     public Participants(final List<String> names) {
         validate(names);
-        value = names.stream().map(name -> new Participant(new Name(name)))
-                .toList();
+        value = names.stream().map(name -> new Participant(new Name(name))).collect(Collectors.toList());
+        value.add(new Dealer());
     }
 
     private static void validate(List<String> names) {
@@ -31,39 +34,43 @@ public class Participants {
         }
     }
 
-    public void beginDealing(Dealer dealer) {
+    public void beginDealing(Deck deck) {
         for (Participant participant : value) {
-            participant.receiveCard(dealer.draw());
-            participant.receiveCard(dealer.draw());
+            participant.receiveCard(deck.draw());
+            participant.receiveCard(deck.draw());
         }
     }
 
-/*    public void participantHit(BiConsumer<Participant, Dealer> participantConsumer, Dealer dealer) {
-        for (Participant participant : value) {
-            participantConsumer.accept(participant, dealer);
+    public void participantsHit(Function<Name, String> function, Consumer<Participant> printParticipantHands) {
+        for (Participant participant : getNotDealerParticipant()) {
+            participantHit(function, printParticipantHands, participant);
         }
-    }*/
+    }
+
+    private void participantHit(Function<Name, String> function, Consumer<Participant> printParticipantHands, Participant participant) {
+        Dealer dealer = getDealer();
+        while (participant.canHit() && HitOption.isHit(function.apply(participant.getName()))) {
+            participant.receiveCard(dealer.draw());
+            printParticipantHands.accept(participant);
+        }
+    }
+
+    public Dealer getDealer() {
+        return (Dealer) value.stream().filter(Participant::isDealer).findFirst().orElseThrow();
+    }
+
+    public List<Participant> getNotDealerParticipant() {
+        return value.stream().filter(participant -> !participant.isDealer()).toList();
+    }
 
     public List<Name> getNames() {
         return value.stream()
+                .filter(participant -> !participant.isDealer())
                 .map(Participant::getName)
                 .toList();
     }
 
     public List<Participant> getValue() {
-        return value;
-    }
-
-    public void participantsHit(Function<Name, String> function, Consumer<Participant> printParticipantHands, Dealer dealer) {
-        for (Participant participant : value) {
-            participantHit2(function, printParticipantHands, dealer, participant);
-        }
-    }
-
-    private void participantHit2(Function<Name, String> function, Consumer<Participant> printParticipantHands, Dealer dealer, Participant participant) {
-        while (participant.canHit() && HitOption.isHit(function.apply(participant.getName()))) {
-            participant.receiveCard(dealer.draw());
-            printParticipantHands.accept(participant);
-        }
+        return Collections.unmodifiableList(value);
     }
 }

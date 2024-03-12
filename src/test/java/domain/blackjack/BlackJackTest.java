@@ -1,6 +1,5 @@
 package domain.blackjack;
 
-import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Participants;
@@ -18,13 +17,12 @@ class BlackJackTest {
     @DisplayName("카드를 두장씩 나눠준다.")
     @Test
     void beginDealing() {
-        Dealer dealer = new Dealer();
         Participants participants = new Participants(List.of("one", "two"));
-        BlackJack blackJack = new BlackJack(dealer, participants);
-        blackJack.beginDealing((testParticipants, testDealer) -> {});
+        BlackJack blackJack = new BlackJack(participants);
+        blackJack.beginDealing(testParticipants -> {});
 
         Assertions.assertAll(
-                () -> assertThat(dealer.getCardCount()).isEqualTo(2),
+                () -> assertThat(participants.getDealer().getCardCount()).isEqualTo(2),
                 () -> assertThat(participants.getValue().get(0).getCardCount()).isEqualTo(2),
                 () -> assertThat(participants.getValue().get(1).getCardCount()).isEqualTo(2)
         );
@@ -32,9 +30,8 @@ class BlackJackTest {
 
     @Test
     void name() {
-        Dealer dealer = new Dealer();
         Participants participants = new Participants(List.of("one", "two"));
-        BlackJack blackJack = new BlackJack(dealer, participants);
+        BlackJack blackJack = new BlackJack(participants);
 
         Function<Name, String> function = new Function<Name, String>() {
             int i = 0;

@@ -1,6 +1,7 @@
 package domain.blackjack;
 
 public class BetAmount {
+
     private final int betAmount;
 
     public BetAmount(int betAmount) {

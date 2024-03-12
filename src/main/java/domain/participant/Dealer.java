@@ -31,6 +31,11 @@ public class Dealer extends Participant {
         return !isBlackJack();
     }
 
+    @Override
+    public boolean isDealer() {
+        return true;
+    }
+
     public WinStatus calculateParticipantWinStatus(Participant participant) {
         if (participant.isBust()) {
             return WinStatus.LOSE;
