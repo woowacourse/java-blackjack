@@ -12,6 +12,7 @@ public class CardDeck {
 
     public CardDeck() {
         deck = readyCards();
+        Collections.shuffle(deck);
     }
 
     private List<Card> readyCards() {
@@ -23,10 +24,6 @@ public class CardDeck {
     private Stream<Card> createCardsForPattern(CardPattern pattern) {
         return Stream.of(CardNumber.values())
                 .map(number -> new Card(number, pattern));
-    }
-
-    public void shuffleCard() {
-        Collections.shuffle(deck);
     }
 
     public Card pickCard() {

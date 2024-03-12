@@ -12,7 +12,7 @@ public class Dealer {
     private final Cards cards;
 
     public Dealer() {
-        cards = new Cards();
+        this.cards = new Cards();
         this.cardDeck = new CardDeck();
         initDealerCard();
     }
@@ -22,7 +22,6 @@ public class Dealer {
     }
 
     public Card dealCard() {
-        cardDeck.shuffleCard();
         return cardDeck.pickCard();
     }
 
@@ -30,8 +29,8 @@ public class Dealer {
         cards.addCard(dealCard());
     }
 
-    public boolean isDrawable() {
-        return cards.getMaxGameScore() <= MIN_DEALER_SCORE;
+    public boolean shouldDraw() {
+        return cards.getMinGameScore() <= MIN_DEALER_SCORE;
     }
 
     public int getMaxGameScore() {
