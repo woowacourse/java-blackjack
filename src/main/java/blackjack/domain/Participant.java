@@ -14,10 +14,6 @@ public abstract class Participant {
 
     protected void addCard(Card card) {
         hands.addCard(card);
-
-        if (hands.isBurst() && hands.hasHighAce()) {
-            hands.downgradeAce();
-        }
     }
 
     public List<Card> getHandsCards() {
@@ -28,8 +24,23 @@ public abstract class Participant {
         return name.getName();
     }
 
-    public int getHandsScore() {
+    public HandsScore getHandsScore() {
         return hands.getHandsScore();
+    }
+
+    public boolean hasHigherScore(Participant participant){
+        return hands.getHandsScore()
+                .isHigherThan(participant.getHandsScore());
+    }
+
+    public boolean hasSameScore(Participant participant){
+        return hands.getHandsScore()
+                .isSame(participant.getHandsScore());
+    }
+
+    public boolean hasLowerScore(Participant participant){
+        return hands.getHandsScore()
+                .isLowerThan(participant.getHandsScore());
     }
 
     public boolean isBurst() {

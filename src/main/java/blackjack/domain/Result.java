@@ -13,17 +13,17 @@ public enum Result {
     ),
     WIN((Player player, Dealer dealer)
             -> (dealer.isBurst() && player.isNotBurst())
-            || player.isNotBurst() && (player.getHandsScore() > dealer.getHandsScore())
+            || player.isNotBurst() && player.hasHigherScore(dealer)
             , moeny -> moeny
     ),
     LOSE((Player player, Dealer dealer)
             -> player.isBurst()
-            || player.isNotBurst() && (player.getHandsScore() < dealer.getHandsScore())
+            || player.isNotBurst() && player.hasLowerScore(dealer)
             , money -> -1 * money
     ),
     DRAW((Player player, Dealer dealer)
             -> (dealer.isNotBurst() && player.isNotBurst())
-            && (dealer.getHandsScore() == player.getHandsScore())
+            && player.hasSameScore(dealer)
             , money -> Result.nonProfit()
     );
 

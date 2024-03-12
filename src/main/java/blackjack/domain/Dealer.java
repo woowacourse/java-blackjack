@@ -4,7 +4,7 @@ import java.util.List;
 
 // TODO 기능을 위한 has a 관계로 바라보기
 public class Dealer extends Participant {
-    private static final int DEALER_DRAW_THRESHOLD = 16;
+    private static final HandsScore DEALER_DRAW_THRESHOLD = new HandsScore(16);
 
     public Dealer() {
         super(Name.dealerName());
@@ -35,6 +35,8 @@ public class Dealer extends Participant {
     }
 
     private boolean shouldDraw() {
-        return hands.getHandsScore() <= DEALER_DRAW_THRESHOLD;
+        HandsScore handsScore = getHandsScore();
+        return handsScore.isSame(DEALER_DRAW_THRESHOLD)
+                || handsScore.isLowerThan(DEALER_DRAW_THRESHOLD);
     }
 }
