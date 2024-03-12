@@ -1,8 +1,11 @@
 package domain.game;
 
+import static domain.constants.Outcome.WIN;
+
 import controller.dto.InitialCardStatus;
 import controller.dto.JudgeResult;
 import controller.dto.ParticipantHandStatus;
+import controller.dto.PlayerOutcome;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
@@ -70,7 +73,15 @@ public class BlackJackGame {
 
     public JudgeResult judge() {
         Referee referee = new Referee(participants);
-        return referee.judge();
+        List<PlayerOutcome> outcomes = referee.judge();
+
+        return new JudgeResult(outcomes, countWinner(outcomes));
+    }
+
+    private int countWinner(List<PlayerOutcome> results) {
+        return (int) results.stream()
+                .filter(result -> WIN.equals(result.outcome()))
+                .count();
     }
 
     public List<Participant> getParticipants() {

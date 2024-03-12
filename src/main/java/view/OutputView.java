@@ -89,7 +89,7 @@ public class OutputView {
     public void printJudgeResult(final JudgeResult judgeResult) {
         System.out.printf(JUDGE_RESULT_MESSAGE);
 
-        int winnersCount = judgeResult.countWinner();
+        int winnersCount = judgeResult.winnerCount();
         int losersCount = judgeResult.results().size() - winnersCount;
         System.out.printf(JUDGE_DEALER_RESULT_FORMAT, Dealer.DEALER_NAME, losersCount, winnersCount);
 

@@ -10,7 +10,6 @@ import static util.CardsSupplier.createSixteenScoreWithTwoCards;
 import static util.ParticipantSupplier.createDealer;
 import static util.ParticipantSupplier.createPlayer;
 
-import controller.dto.JudgeResult;
 import controller.dto.PlayerOutcome;
 import domain.constants.Outcome;
 import domain.game.Referee;
@@ -36,9 +35,9 @@ class RefereeTest {
 
             Referee referee = createReferee(player, dealer);
 
-            JudgeResult judgeResult = referee.judge();
+            List<PlayerOutcome> outcomes = referee.judge();
 
-            assertThat(judgeResult.results())
+            assertThat(outcomes)
                     .hasSize(1)
                     .containsExactly(new PlayerOutcome("pobi", Outcome.LOSE));
         }
@@ -51,9 +50,9 @@ class RefereeTest {
 
             Referee referee = createReferee(player, dealer);
 
-            JudgeResult judgeResult = referee.judge();
+            List<PlayerOutcome> outcomes = referee.judge();
 
-            assertThat(judgeResult.results())
+            assertThat(outcomes)
                     .hasSize(1)
                     .containsExactly(new PlayerOutcome("pobi", Outcome.WIN));
         }
@@ -70,9 +69,9 @@ class RefereeTest {
 
             Referee referee = createReferee(player, dealer);
 
-            JudgeResult judgeResult = referee.judge();
+            List<PlayerOutcome> outcomes = referee.judge();
 
-            assertThat(judgeResult.results())
+            assertThat(outcomes)
                     .hasSize(1)
                     .containsExactly(new PlayerOutcome("pobi", Outcome.WIN));
         }
@@ -85,9 +84,9 @@ class RefereeTest {
 
             Referee referee = createReferee(player, dealer);
 
-            JudgeResult judgeResult = referee.judge();
+            List<PlayerOutcome> outcomes = referee.judge();
 
-            assertThat(judgeResult.results())
+            assertThat(outcomes)
                     .hasSize(1)
                     .containsExactly(new PlayerOutcome("pobi", Outcome.LOSE));
         }
@@ -100,9 +99,9 @@ class RefereeTest {
 
             Referee referee = createReferee(player, dealer);
 
-            JudgeResult judgeResult = referee.judge();
+            List<PlayerOutcome> outcomes = referee.judge();
 
-            assertThat(judgeResult.results())
+            assertThat(outcomes)
                     .hasSize(1)
                     .containsExactly(new PlayerOutcome("pobi", Outcome.LOSE));
         }
@@ -119,9 +118,9 @@ class RefereeTest {
 
             Referee referee = createReferee(player, dealer);
 
-            JudgeResult judgeResult = referee.judge();
+            List<PlayerOutcome> outcomes = referee.judge();
 
-            assertThat(judgeResult.results())
+            assertThat(outcomes)
                     .hasSize(1)
                     .containsExactly(new PlayerOutcome("pobi", Outcome.WIN));
         }
@@ -134,9 +133,9 @@ class RefereeTest {
 
             Referee referee = createReferee(player, dealer);
 
-            JudgeResult judgeResult = referee.judge();
+            List<PlayerOutcome> outcomes = referee.judge();
 
-            assertThat(judgeResult.results())
+            assertThat(outcomes)
                     .hasSize(1)
                     .containsExactly(new PlayerOutcome("pobi", Outcome.WIN));
         }
@@ -149,9 +148,9 @@ class RefereeTest {
 
             Referee referee = createReferee(player, dealer);
 
-            JudgeResult judgeResult = referee.judge();
+            List<PlayerOutcome> outcomes = referee.judge();
 
-            assertThat(judgeResult.results())
+            assertThat(outcomes)
                     .hasSize(1)
                     .containsExactly(new PlayerOutcome("pobi", Outcome.WIN));
         }

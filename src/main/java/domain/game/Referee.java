@@ -1,9 +1,10 @@
 package domain.game;
 
-import controller.dto.JudgeResult;
+import controller.dto.PlayerOutcome;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
+import java.util.List;
 
 public class Referee {
     private final Participants participants;
@@ -12,15 +13,15 @@ public class Referee {
         this.participants = participants;
     }
 
-    public JudgeResult judge() {
+    public List<PlayerOutcome> judge() {
         if (participants.getDealer().isBusted()) {
-            return new JudgeResult(participants.getPlayersOutcomeIf(
+            return participants.getPlayersOutcomeIf(
                     Participant::isNotBusted
-            ));
+            );
         }
-        return new JudgeResult(participants.getPlayersOutcomeIf(
+        return participants.getPlayersOutcomeIf(
                 this::isWinner
-        ));
+        );
     }
 
     private boolean isWinner(final Player player) {

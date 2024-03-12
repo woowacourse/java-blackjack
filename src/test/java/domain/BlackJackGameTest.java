@@ -23,7 +23,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class RoundTest {
+class BlackJackGameTest {
 
     @DisplayName("게임을 시작하고 참가자들에게 2장 씩 카드를 분배한다.")
     @Test
