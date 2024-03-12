@@ -8,6 +8,7 @@ public class Hand {
     private static final int BUST_THRESHOLD = 21;
     private static final int DEALER_HIT_THRESHOLD = 16;
     private static final int FIRST_CARD_INDEX = 0;
+    private static final int A_SCORE_GAP = 10;
 
     private final List<Card> cards;
 
@@ -20,32 +21,28 @@ public class Hand {
     }
 
     public int calculateScore() {
-        int scoreExceptAce = sumExceptAceCards();
-        int scoreWithAce = sumAceCards(scoreExceptAce);
-        return scoreExceptAce + scoreWithAce;
+        int score = sumAllCards();
+        return decideScore(score);
     }
 
-    private int sumExceptAceCards() {
+    private int sumAllCards() {
         return cards.stream()
-                .filter(Card::isNotAce)
                 .mapToInt(Card::score)
                 .sum();
     }
 
-    private int sumAceCards(int score) {
-        int acesScore = 0;
-        for (Card aceCard : filterAceCards()) {
-            int aceScore = aceCard.decideAceScore(score);
-            score += aceScore;
-            acesScore += aceScore;
+    private int decideScore(int score) {
+        if (hasNotAce()) {
+            return score;
         }
-        return acesScore;
+        if (score + A_SCORE_GAP <= BUST_THRESHOLD) {
+            return score + A_SCORE_GAP;
+        }
+        return score;
     }
 
-    private List<Card> filterAceCards() {
-        return cards.stream()
-                .filter(Card::isAce)
-                .toList();
+    private boolean hasNotAce() {
+        return cards.stream().noneMatch(Card::isAce);
     }
 
     public boolean hasScoreUnderBustThreshold() {

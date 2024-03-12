@@ -18,16 +18,8 @@ public class Card {
         return cardNumber.equals(CardNumber.ACE);
     }
 
-    public boolean isNotAce() {
-        return !cardNumber.equals(CardNumber.ACE);
-    }
-
     public int score() {
         return cardNumber.getScore();
-    }
-
-    public int decideAceScore(int totalScore) {
-        return cardNumber.decideAceScore(totalScore);
     }
 
     public CardNumber getCardNumber() {
