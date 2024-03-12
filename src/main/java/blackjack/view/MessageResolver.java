@@ -21,7 +21,8 @@ public class MessageResolver {
     private static final String PARTICIPANT_HAND_FORMAT = "%s 카드: %s";
 
     public String resolveDealDescriptionMessage(Players players) {
-        return String.format("딜러와 %s에게 2장을 나누었습니다.", resolveNamesMessage(players));
+        String message = String.format("딜러와 %s에게 2장을 나누었습니다.", resolveNamesMessage(players));
+        return String.join("", LINE_SEPARATOR, message);
     }
 
     private String resolveNamesMessage(Players players) {
@@ -38,7 +39,7 @@ public class MessageResolver {
 
     private String resolveDealToOneMessage(Participant participant) {
         if (participant instanceof Dealer) {
-            return resolveDealerInitialHandMessage((Dealer) participant);
+            return resolveDealerFirstCardMessage(participant.getHand());
         }
         if (participant instanceof Player) {
             return resolveParticipantHandMessage(participant);
@@ -46,9 +47,8 @@ public class MessageResolver {
         throw new IllegalArgumentException();
     }
 
-    private String resolveDealerInitialHandMessage(Dealer dealer) {
-        Card card = dealer.getHand().getCards().get(0);
-        return String.format(PARTICIPANT_HAND_FORMAT, DEALER_NAME, resolveCardMessage(card));
+    private String resolveDealerFirstCardMessage(Hand hand) {
+        return String.format(PARTICIPANT_HAND_FORMAT, DEALER_NAME, resolveCardMessage(hand.getCards().get(0)));
     }
 
     public String resolveParticipantHandMessage(Participant participant) {

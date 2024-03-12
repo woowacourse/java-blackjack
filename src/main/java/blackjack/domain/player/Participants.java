@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card.CardDeck;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,13 @@ public class Participants {
         Players players = Players.create(playerNames);
         Dealer dealer = new Dealer();
         return new Participants(players, dealer);
+    }
+
+    public void deal(CardDeck cardDeck) {
+        for (Participant participant : getParticipants()) {
+            participant.hit(cardDeck.popCard());
+            participant.hit(cardDeck.popCard());
+        }
     }
 
     public Dealer getDealer() {
