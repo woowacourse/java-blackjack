@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class CardDeck {
 
@@ -36,11 +35,5 @@ public class CardDeck {
             throw new IllegalArgumentException("[ERROR] 남아있는 카드가 부족하여 카드를 뽑을 수 없습니다.");
         }
         return cards.poll();
-    }
-
-    public List<Card> popCards(int count) {
-        return IntStream.range(0, count)
-                .mapToObj(i -> popCard())
-                .toList();
     }
 }

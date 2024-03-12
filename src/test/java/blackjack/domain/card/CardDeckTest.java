@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +12,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class CardDeckTest {
+
+    @DisplayName("카드 덱이 비었는데 카드를 빼내서 반환하려고 하면 예외가 발생한다.")
+    @Test
+    void testPopCardWithEmptyDeck() {
+        // given
+        CardDeck cardDeck = new CardDeck(new ArrayList<>());
+
+        // when & then
+        assertThatThrownBy(cardDeck::popCard)
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 
     @DisplayName("카드 덱에서 카드를 한 장 빼내어 반환한다.")
     @Test
@@ -33,35 +45,6 @@ class CardDeckTest {
         );
     }
 
-    @DisplayName("카드 덱에서 카드를 지정한 개수만큼 빼내어 반환한다.")
-    @Test
-    void testPopCardsFromDeck() {
-        // given
-        List<Card> cards = new ArrayList<>();
-        cards.add(new Card(CardRank.TWO, CardSuit.HEART));
-        cards.add(new Card(CardRank.THREE, CardSuit.CLUB));
-        cards.add(new Card(CardRank.FOUR, CardSuit.DIAMOND));
-
-        CardDeck cardDeck = new CardDeck(cards);
-
-        // when
-        List<Card> actual = cardDeck.popCards(3);
-
-        // then
-        assertThat(actual).hasSize(3);
-    }
-
-    @DisplayName("카드 덱이 비었는데 카드를 빼내서 반환하려고 하면 예외가 발생한다.")
-    @Test
-    void testPopCardWithEmptyDeck() {
-        // given
-        CardDeck cardDeck = new CardDeck(new ArrayList<>());
-
-        // when & then
-        assertThatThrownBy(cardDeck::popCard)
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
     @DisplayName("모든 카드 랭크와 모양의 조합으로 이루어진 52장의 카드를 가지고 카드 덱을 생성한다.")
     @Test
     void testCreateFullCardDeck() {
@@ -69,7 +52,9 @@ class CardDeckTest {
         CardDeck shuffledFullCardDeck = CardDeck.createShuffledFullCardDeck();
 
         // when
-        List<Card> cards = shuffledFullCardDeck.popCards(52);
+        List<Card> cards = IntStream.range(0, 52)
+                .mapToObj(i -> shuffledFullCardDeck.popCard())
+                .toList();
 
         // then
         assertThat(cards)
