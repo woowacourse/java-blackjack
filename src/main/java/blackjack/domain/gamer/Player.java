@@ -19,10 +19,6 @@ public class Player extends Gamer {
 		cardHand.add(card);
 	}
 
-	public boolean isBust() {
-		return cardHand.isBurst();
-	}
-
 	@Override
 	public String toString() {
 		return "Player{" +

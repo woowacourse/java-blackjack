@@ -20,6 +20,10 @@ public class Gamer {
 		return cardHand.calculateScore();
 	}
 
+	public boolean isBust() {
+		return cardHand.isBurst();
+	}
+
 	@Override
 	public String toString() {
 		return "Gamer{" +
