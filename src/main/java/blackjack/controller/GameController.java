@@ -18,10 +18,10 @@ public class GameController {
 
     public static void run() {
         try {
-            Deck deck = Deck.createShuffledDeck();
             Game game = makeGame();
             Dealer gameDealer = game.getDealer();
             Players gamePlayers = game.getPlayers();
+            Deck deck = game.getDeck();
 
             printInitialHands(gameDealer.getName(), gameDealer.getFirstCard(), gamePlayers.getPlayers());
             confirmParticipantsHands(gamePlayers, deck, gameDealer);

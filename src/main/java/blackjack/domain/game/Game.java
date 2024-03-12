@@ -34,4 +34,8 @@ public class Game {
     public Players getPlayers() {
         return gameParticipants.getPlayers();
     }
+
+    public Deck getDeck() {
+        return deck;
+    }
 }
