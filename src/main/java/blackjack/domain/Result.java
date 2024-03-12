@@ -1,12 +1,14 @@
 package blackjack.domain;
 
+import java.util.List;
+
 public class Result {
 
     private static final Result WIN_RESULT = new Result(1, 0);
     private static final Result LOSS_RESULT = new Result(0, 1);
 
-    private int winCount;
-    private int loseCount;
+    private final int winCount;
+    private final int loseCount;
 
     public Result() {
         this(0, 0);
@@ -17,6 +19,11 @@ public class Result {
         this.loseCount = loseCount;
     }
 
+    public static Result create(List<Result> results) {
+        return results.stream()
+                .reduce(new Result(), Result::add);
+    }
+
     public static Result createWinResult() {
         return WIN_RESULT;
     }
@@ -25,9 +32,8 @@ public class Result {
         return LOSS_RESULT;
     }
 
-    public void updateOpponent(Result result) {
-        this.winCount += result.loseCount;
-        this.loseCount += result.winCount;
+    private Result add(Result other) {
+        return new Result(this.winCount + other.loseCount, this.loseCount + other.winCount);
     }
 
     public int getWinCount() {

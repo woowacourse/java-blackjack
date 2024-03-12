@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -34,16 +35,15 @@ class ResultTest {
         );
     }
 
-    @DisplayName("주어진 결과와 반대로 상대의 결과를 업데이트한다.")
+    @DisplayName("주어진 상대의 결과로 결과를 생성한다.")
     @Test
     void testUpdateOpponent() {
         // given
-        Result result = new Result();
+        Result winResult = Result.createWinResult();
+        Result lossResult = Result.createLossResult();
 
         // when
-        result.updateOpponent(Result.createWinResult());
-        result.updateOpponent(Result.createWinResult());
-        result.updateOpponent(Result.createLossResult());
+        Result result = Result.create(List.of(winResult, winResult, lossResult));
 
         // then
         assertAll(
