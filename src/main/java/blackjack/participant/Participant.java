@@ -40,6 +40,10 @@ public class Participant {
         return state.createMatchResult(opponent.state);
     }
 
+    public void stand() {
+        state = state.stand();
+    }
+
     public boolean isDrawable() {
         return !state.isTerminated();
     }

@@ -1,5 +1,6 @@
 package blackjack.game;
 
+import blackjack.money.PlayerBet;
 import blackjack.participant.Participant;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,17 +18,18 @@ public class MatchResults {
         results.put(playerName, result);
     }
 
-    public MatchResult getResultByName(String playerName) {
+    public int calculateProfitByBet(PlayerBet playerBet) {
+        String playerName = playerBet.name();
+        int betAmount = playerBet.betMoney().getAmount();
+
+        MatchResult result = getResultByName(playerName);
+        return result.calculateProfit(betAmount);
+    }
+
+    private MatchResult getResultByName(String playerName) {
         if (!results.containsKey(playerName)) {
             throw new IllegalArgumentException("[ERROR] 존재하지 않는 이름입니다.");
         }
         return results.get(playerName);
-    }
-
-    public int getResultCount(MatchResult result) {
-        return (int) results.values()
-                .stream()
-                .filter(matchResult -> matchResult == result)
-                .count();
     }
 }

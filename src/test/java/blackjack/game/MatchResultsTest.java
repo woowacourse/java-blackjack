@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import blackjack.money.BetMoney;
+import blackjack.money.PlayerBet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,9 +15,10 @@ class MatchResultsTest {
     @DisplayName("이름이 존재하지 않는 경우 예외를 발생시킨다.")
     void nameNotFoundTest() {
         // given
+        PlayerBet bet = new PlayerBet("aru", BetMoney.of(1_000));
         MatchResults matchResults = new MatchResults();
         // when, then
-        assertThatThrownBy(() -> matchResults.getResultByName("pobi"))
+        assertThatThrownBy(() -> matchResults.calculateProfitByBet(bet))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 존재하지 않는 이름입니다.");
     }

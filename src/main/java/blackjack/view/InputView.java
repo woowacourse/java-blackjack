@@ -21,4 +21,17 @@ public class InputView {
     public String readCommand() {
         return scanner.nextLine();
     }
+
+    public int readBetMoney() {
+        String input = scanner.nextLine();
+        return parseBetMoney(input);
+    }
+
+    private int parseBetMoney(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 베팅 금액은 숫자로 이루어져야 합니다.");
+        }
+    }
 }
