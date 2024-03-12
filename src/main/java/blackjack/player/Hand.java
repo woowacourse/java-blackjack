@@ -7,10 +7,14 @@ import java.util.List;
 
 public class Hand {
 
-    private final List<Card> cards;
+    private static final int INIT_CARD_COUNT = 2;
 
-    Hand(List<Card> cards) {
+    private final List<Card> cards;
+    private Score score;
+
+    public Hand(List<Card> cards) {
         this.cards = cards;
+        updateScore();
     }
 
     Hand() {
@@ -19,17 +23,18 @@ public class Hand {
 
     public void addCard(Card card) {
         cards.add(card);
+        updateScore();
     }
 
-    public int calculateScore() {
-        Score score = calculateBaseScore();
+    private void updateScore() {
+        Score newScore = calculateBaseScore();
         boolean hasAceInCards = cards.stream()
                 .anyMatch(Card::isAce);
 
         if (hasAceInCards) {
-            return score.addAceScoreOnNotBust().toInt();
+            newScore = newScore.addAceScoreOnNotBust();
         }
-        return score.toInt();
+        this.score = newScore;
     }
 
     private Score calculateBaseScore() {
@@ -40,5 +45,9 @@ public class Hand {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public int getScore() {
+        return score.toInt();
     }
 }

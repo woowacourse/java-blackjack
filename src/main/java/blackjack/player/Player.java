@@ -30,7 +30,7 @@ public class Player {
     }
 
     public boolean hasDrawableScore() {
-        return hand.calculateScore() < BlackJackGame.BLACKJACK_MAX_SCORE;
+        return hand.getScore() < BlackJackGame.BLACKJACK_MAX_SCORE;
     }
 
     public String getName() {
@@ -38,7 +38,7 @@ public class Player {
     }
 
     public int getScore() {
-        return hand.calculateScore();
+        return hand.getScore();
     }
 
     public List<Card> getCards() {
