@@ -13,6 +13,7 @@ import model.card.Card;
 import model.card.Hand;
 import model.dealer.Dealer;
 import model.player.Player;
+import model.result.ParticipantScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -23,19 +24,19 @@ class GameScoreTest {
     @DisplayName("플레이어의 카드 합이 21 또는 21에 가깝게 스코어를 계산한다")
     @ParameterizedTest
     @MethodSource("provideCardsAndExpectedScore")
-    void testCalculateGameScoreForPlayer(Hand cards, int expectedScore) {
-        Player player = new Player("jojo", cards);
-        GameScore gameScore = GameScore.from(player);
-        assertThat(gameScore.getScore()).isEqualTo(expectedScore);
+    void testCalculateGameScoreForPlayer(Hand hand, int expectedScore) {
+        Player player = new Player("jojo", hand);
+        ParticipantScore playerScore = ParticipantScore.from(player);
+        assertThat(playerScore.getScore()).isEqualTo(expectedScore);
     }
 
     @DisplayName("딜러의 카드 합이 21 또는 21에 가깝게 스코어를 계산한다")
     @ParameterizedTest
     @MethodSource("provideCardsAndExpectedScore")
-    void testCalculateGameScoreForDealer(Hand cards, int expectedScore) {
-        Dealer dealer = new Dealer(cards);
-        GameScore gameScore = GameScore.from(dealer);
-        assertThat(gameScore.getScore()).isEqualTo(expectedScore);
+    void testCalculateGameScoreForDealer(Hand hand, int expectedScore) {
+        Dealer dealer = new Dealer(hand);
+        ParticipantScore dealerScore = ParticipantScore.from(dealer);
+        assertThat(dealerScore.getScore()).isEqualTo(expectedScore);
     }
 
     private static Stream<Arguments> provideCardsAndExpectedScore() {

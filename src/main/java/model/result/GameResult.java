@@ -1,8 +1,6 @@
 package model.result;
 
 import java.util.List;
-import model.blackjackgame.GameScore;
-import model.blackjackgame.ResultStatus;
 import model.dealer.Dealer;
 import model.player.Players;
 
@@ -10,24 +8,24 @@ public class GameResult {
 
     private static final String NOT_EXIST_PLAYER = "존재하는 플레이어가 없습니다.";
 
-    private final GameScore dealerScore;
-    private final List<GameScore> playersScore;
+    private final ParticipantScore dealerScore;
+    private final List<ParticipantScore> playersScore;
 
-    private GameResult(GameScore dealerScore, List<GameScore> playersScore) {
+    private GameResult(ParticipantScore dealerScore, List<ParticipantScore> playersScore) {
         this.dealerScore = dealerScore;
         this.playersScore = playersScore;
     }
 
     public static GameResult of(Dealer dealer, Players players) {
-        GameScore dealerScore = GameScore.from(dealer);
-        List<GameScore> playersScore = players.getGroup()
+        ParticipantScore dealerScore = ParticipantScore.from(dealer);
+        List<ParticipantScore> playersScore = players.getGroup()
             .stream()
-            .map(GameScore::from)
+            .map(ParticipantScore::from)
             .toList();
         return new GameResult(dealerScore, playersScore);
     }
 
-    public ResultStatus decideResultStatus(GameScore self, GameScore opponent) {
+    public ResultStatus decideResultStatus(ParticipantScore self, ParticipantScore opponent) {
         int selfScore = self.getScore();
         int opponentScore = opponent.getScore();
 
@@ -46,17 +44,21 @@ public class GameResult {
 
     public int findPlayerScore(String playerName) {
         return playersScore.stream()
-            .filter(playerScore -> playerScore.getName().equals(playerName))
-            .map(GameScore::getScore)
+            .filter(playerScore -> playerScore.getParticipantName().equals(playerName))
             .findFirst()
+            .map(ParticipantScore::getScore)
             .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_PLAYER));
     }
 
-    public GameScore getDealerScore() {
+    public String dealerName() {
+        return dealerScore.getParticipantName();
+    }
+
+    public ParticipantScore getDealerScore() {
         return dealerScore;
     }
 
-    public List<GameScore> getPlayersScore() {
+    public List<ParticipantScore> getPlayersScore() {
         return playersScore;
     }
 }

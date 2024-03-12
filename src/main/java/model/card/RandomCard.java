@@ -1,8 +1,5 @@
 package model.card;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
-
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.Arrays;
 import java.util.List;
@@ -27,10 +24,10 @@ public class RandomCard {
             .toList();
     }
 
-    public static Hand pickCards(int count) {
+    public static List<Card> pickCards(int count) {
         return Stream.generate(RandomCard::pickCard)
             .limit(count)
-            .collect(collectingAndThen(toList(), Hand::new));
+            .toList();
     }
 
     public static Card pickCard() {

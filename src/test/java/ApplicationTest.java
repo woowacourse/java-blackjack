@@ -15,7 +15,7 @@ class ApplicationTest extends NsTest {
                 run("pobi,jason", "y", "n", "n");
                 assertThat(output()).contains(
                     "딜러와 pobi, jason에게 2장을 나누었습니다.",
-                    "딜러: 3다이아몬드",
+                    "딜러카드: 3다이아몬드",
                     "pobi카드: 2하트, 8스페이드",
                     "jason카드: 7클로버, K스페이드",
                     "pobi는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)",

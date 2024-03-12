@@ -1,36 +1,35 @@
-package model.blackjackgame;
+package model.result;
 
 import model.card.Card;
 import model.card.Hand;
 import model.dealer.Dealer;
 import model.player.Player;
 
-public class GameScore {
+public class ParticipantScore {
 
-    private static final String DEALER_NAME = "딜러";
     private static final int ACE_SCORE_HIGH = 11;
     private static final int ACE_SCORE_LOW = 1;
     private static final int MINIMUM_SCORE_FOR_ACE_HIGH = 12;
     private static final int BLACKJACK_SCORE = 21;
 
-    private final String name;
+    private final String participantName;
     private final int score;
 
-    public GameScore(String name, int score) {
-        this.name = name;
+    public ParticipantScore(String participantName, int score) {
+        this.participantName = participantName;
         this.score = score;
     }
 
-    public static GameScore from(Player player) {
+    public static ParticipantScore from(Player player) {
         Hand cards = player.getHand();
         int totalScore = calculateTotalScore(cards);
-        return new GameScore(player.getName(), totalScore);
+        return new ParticipantScore(player.getName(), totalScore);
     }
 
-    public static GameScore from(Dealer dealer) {
+    public static ParticipantScore from(Dealer dealer) {
         Hand cards = dealer.getHand();
         int totalScore = calculateTotalScore(cards);
-        return new GameScore(DEALER_NAME, totalScore);
+        return new ParticipantScore(dealer.getName(), totalScore);
     }
 
     private static int calculateTotalScore(Hand hand) {
@@ -55,8 +54,8 @@ public class GameScore {
         return score > BLACKJACK_SCORE;
     }
 
-    public String getName() {
-        return name;
+    public String getParticipantName() {
+        return participantName;
     }
 
     public int getScore() {

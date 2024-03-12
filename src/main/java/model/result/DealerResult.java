@@ -5,28 +5,29 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import model.blackjackgame.GameScore;
-import model.blackjackgame.ResultStatus;
 
 public class DealerResult {
 
     private static final Integer INITIAL_COUNT = 1;
 
+    private final String name;
+
     private final Map<ResultStatus, Integer> result;
 
-    private DealerResult(Map<ResultStatus, Integer> result) {
+    private DealerResult(String name, Map<ResultStatus, Integer> result) {
+        this.name = name;
         this.result = Collections.unmodifiableMap(result);
     }
 
     public static DealerResult from(GameResult gameResult) {
         Map<ResultStatus, Integer> result = new EnumMap<>(ResultStatus.class);
-        GameScore dealerScore = gameResult.getDealerScore();
+        ParticipantScore dealerScore = gameResult.getDealerScore();
 
-        for (GameScore playerScore : gameResult.getPlayersScore()) {
+        for (ParticipantScore playerScore : gameResult.getPlayersScore()) {
             ResultStatus resultStatus = gameResult.decideResultStatus(dealerScore, playerScore);
             result.merge(resultStatus, INITIAL_COUNT, Integer::sum);
         }
-        return new DealerResult(result);
+        return new DealerResult(gameResult.dealerName(), result);
     }
 
     public List<ResultStatus> allStatus() {
@@ -37,5 +38,9 @@ public class DealerResult {
 
     public Integer statusCount(ResultStatus resultStatus) {
         return result.getOrDefault(resultStatus, 0);
+    }
+
+    public String getName() {
+        return name;
     }
 }

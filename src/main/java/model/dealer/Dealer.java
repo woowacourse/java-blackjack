@@ -6,6 +6,7 @@ import model.card.Hand;
 
 public class Dealer {
 
+    private static final String NAME = "딜러";
     private static final int HIT_CONDITION = 17;
 
     private Hand hand;
@@ -41,5 +42,9 @@ public class Dealer {
 
     public Hand getHand() {
         return hand;
+    }
+
+    public String getName() {
+        return NAME;
     }
 }

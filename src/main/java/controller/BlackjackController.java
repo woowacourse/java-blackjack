@@ -3,15 +3,14 @@ package controller;
 import java.util.List;
 import java.util.function.Supplier;
 import model.blackjackgame.BlackjackGame;
-import model.result.DealerResult;
-import model.result.GameResult;
 import model.blackjackgame.HitAnswer;
 import model.card.Card;
-import model.card.Hand;
 import model.card.RandomCard;
 import model.dealer.Dealer;
 import model.player.Player;
 import model.player.Players;
+import model.result.DealerResult;
+import model.result.GameResult;
 import model.result.PlayersResult;
 import view.InputView;
 import view.OutputView;
@@ -38,14 +37,13 @@ public class BlackjackController {
 
     private void initGame(BlackjackGame blackjackGame) {
         int cardCount = blackjackGame.determineInitCardCount();
-        Hand cards = RandomCard.pickCards(cardCount);
-
-        blackjackGame.initCards(cards);
-        OutputView.printInitCards(blackjackGame);
+        List<Card> cards = RandomCard.pickCards(cardCount);
+        blackjackGame.initHand(cards);
+        OutputView.printInitHand(blackjackGame);
     }
 
     private void hitToPlayers(BlackjackGame blackjackGame) {
-        blackjackGame.getPlayersGroup()
+        blackjackGame.getPlayerGroup()
             .forEach(this::hitUntilStay);
     }
 
@@ -68,18 +66,16 @@ public class BlackjackController {
         if (blackjackGame.isDealerPossibleHit()) {
             Card card = RandomCard.pickCard();
             blackjackGame.dealerHit(card);
-            OutputView.printAfterDealerHit();
+            OutputView.printAfterDealerHit(blackjackGame.getDealer());
         }
     }
 
     private void finishGame(BlackjackGame blackjackGame) {
-        Dealer dealer = blackjackGame.getDealer();
-        Players players = blackjackGame.getPlayers();
-        GameResult gameResult = GameResult.of(dealer, players);
+        GameResult gameResult = blackjackGame.finishGame();
         DealerResult dealerResult = DealerResult.from(gameResult);
         PlayersResult playersResult = PlayersResult.from(gameResult);
 
-        OutputView.printFinalScore(dealer, players, gameResult);
+        OutputView.printFinalScore(blackjackGame, gameResult);
         OutputView.printGameResult(dealerResult, playersResult);
     }
 

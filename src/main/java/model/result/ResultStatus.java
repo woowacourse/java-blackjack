@@ -1,4 +1,4 @@
-package model.blackjackgame;
+package model.result;
 
 public enum ResultStatus {
     WIN("승"),

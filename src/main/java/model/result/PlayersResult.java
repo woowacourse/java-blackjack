@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import model.blackjackgame.GameScore;
-import model.blackjackgame.ResultStatus;
 
 public class PlayersResult {
 
@@ -17,11 +15,11 @@ public class PlayersResult {
 
     public static PlayersResult from(GameResult gameResult) {
         Map<String, ResultStatus> result = new HashMap<>();
-        GameScore dealerScore = gameResult.getDealerScore();
+        ParticipantScore dealerScore = gameResult.getDealerScore();
 
-        for (GameScore playerScore : gameResult.getPlayersScore()) {
+        for (ParticipantScore playerScore : gameResult.getPlayersScore()) {
             ResultStatus resultStatus = gameResult.decideResultStatus(playerScore, dealerScore);
-            result.put(playerScore.getName(), resultStatus);
+            result.put(playerScore.getParticipantName(), resultStatus);
         }
         return new PlayersResult(result);
     }
