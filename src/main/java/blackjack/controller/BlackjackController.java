@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.result.GameResult;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.UnShuffledDeckGenerator;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
@@ -28,8 +27,7 @@ public class BlackjackController {
 	}
 
 	public Deck createDeck() {
-		UnShuffledDeckGenerator deckGenerator = UnShuffledDeckGenerator.getInstance();
-		return deckGenerator.generate();
+		return Deck.createUnShuffled();
 	}
 
 	public Dealer createDealer(Deck deck) {

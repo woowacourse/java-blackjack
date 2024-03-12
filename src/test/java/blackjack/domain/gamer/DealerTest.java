@@ -14,16 +14,13 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import blackjack.domain.card.UnShuffledDeckGenerator;
 
 public class DealerTest {
 	private Deck deck;
 
 	@BeforeEach
 	void init() {
-		UnShuffledDeckGenerator deckGenerator = UnShuffledDeckGenerator.getInstance();
-
-		deck = deckGenerator.generate();
+		deck = Deck.createUnShuffled();
 	}
 
 	@DisplayName("딜러는 생성 시에 중복되지 않은 52장의 덱을 갖는다.")

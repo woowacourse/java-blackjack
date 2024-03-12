@@ -15,6 +15,28 @@ public class Deck {
 		this.cards = copyDeck;
 	}
 
+	public static Deck createUnShuffled() {
+		return new Deck(createCards());
+	}
+
+	private static List<Card> createCards() {
+		List<Card> cards = new ArrayList<>();
+		for (Suit suit : Suit.values()) {
+			cards.addAll(createCardsOfSuit(suit));
+		}
+
+		return cards;
+	}
+
+	private static List<Card> createCardsOfSuit(Suit suit) {
+		List<Card> cards = new ArrayList<>();
+		for (Rank rank : Rank.values()) {
+			cards.add(new Card(suit, rank));
+		}
+
+		return cards;
+	}
+
 	private void validate(List<Card> cards) {
 		validateDuplicate(cards);
 		validateSize(cards);
