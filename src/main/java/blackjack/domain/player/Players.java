@@ -1,12 +1,9 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Hand;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Players {
-
-    private static final int MAX_COUNT = 3;
 
     private final List<Player> players;
 
@@ -15,10 +12,12 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(List<PlayerName> playerNames) {
-        return new Players(playerNames.stream()
-                .map(playerName -> new Player(playerName, new Hand(new ArrayList<>())))
-                .toList());
+    public static Players from(List<String> playerNames) {
+        List<Player> players = playerNames.stream()
+                .map(PlayerName::new)
+                .map(playerName -> new Player(new Hand(), playerName))
+                .toList();
+        return new Players(players);
     }
 
     public int countPlayer() {
@@ -26,9 +25,14 @@ public class Players {
     }
 
     private void validate(List<Player> players) {
-        validateEachPlayerNameUnique(players);
         validateEntryNotEmpty(players);
-        validatePlayerCountRange(players);
+        validateEachPlayerNameUnique(players);
+    }
+
+    private void validateEntryNotEmpty(List<Player> players) {
+        if (players.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 플레이어가 없습니다");
+        }
     }
 
     private void validateEachPlayerNameUnique(List<Player> players) {
@@ -43,19 +47,7 @@ public class Players {
                 .count();
     }
 
-    private void validateEntryNotEmpty(List<Player> players) {
-        if (players.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 플레이어가 없습니다");
-        }
-    }
-
-    private void validatePlayerCountRange(List<Player> players) {
-        if (players.size() > MAX_COUNT) {
-            throw new IllegalArgumentException("[ERROR] 플레이어의 수는 " + MAX_COUNT + "이하여야 합니다");
-        }
-    }
-
     public List<Player> getPlayers() {
-        return players;
+        return List.copyOf(players);
     }
 }
