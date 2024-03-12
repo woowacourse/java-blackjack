@@ -14,11 +14,6 @@ public class Hand {
     public Hand() {
     }
 
-    // TODO: 없애기
-    public Hand(List<Card> cards) {
-        this.cards.addAll(cards);
-    }
-
     public void add(final List<Card> cards) {
         this.cards.addAll(cards);
     }
