@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class HoldingCards {
+    private static final int firstHoldingCardCount = 2;
+
     private final List<Card> holdingCards;
 
     private HoldingCards(List<Card> holdingCards) {
@@ -35,5 +37,17 @@ public class HoldingCards {
     public boolean hasAce() {
         return holdingCards.stream()
                 .anyMatch(Card::isCardNameAce);
+    }
+
+    public boolean noAdditionalCard() {
+        return holdingCards.size() == firstHoldingCardCount;
+    }
+
+    public boolean isSummationSameMaximum() {
+        return calculateTotalPoint().isMaximum();
+    }
+
+    public boolean isSummationExceedMaximum() {
+        return calculateTotalPoint().isDeadPoint();
     }
 }

@@ -10,4 +10,6 @@ public class BetMaker {
         this.name = name;
         this.betMoney = betMoney;
     }
+
+
 }

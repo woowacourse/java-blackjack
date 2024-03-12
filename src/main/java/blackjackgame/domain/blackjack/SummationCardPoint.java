@@ -18,6 +18,10 @@ public record SummationCardPoint(int summationCardPoint) {
         return summationCardPoint > otherPoint;
     }
 
+    public boolean isMaximum() {
+        return summationCardPoint == DEAD_POINT_THRESHOLD;
+    }
+
     public boolean isDeadPoint() {
         return this.isBiggerThan(new SummationCardPoint(DEAD_POINT_THRESHOLD));
     }
