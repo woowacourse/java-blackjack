@@ -3,20 +3,21 @@ package blackjack.domain.result;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Outcome;
 import blackjack.domain.player.Player;
+import blackjack.domain.player.PlayerName;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class GameResultBoard {
-    private final Map<String, GameResult> resultBoard = new HashMap<>();
+    private final Map<PlayerName, GameResult> resultBoard = new HashMap<>();
 
     public GameResultBoard(Dealer dealer, List<Player> players) {
         Outcome dealerOutcome = dealer.calculateOutcome();
         for (Player player : players) {
-            String playerName = player.getName();
+            PlayerName playerName = player.getPlayerName();
             Outcome playerOutcome = player.calculateOutcome();
             GameResult gameResult = playerOutcome.compete(dealerOutcome);
-            if (gameResult == GameResult.DRAW && playerOutcome.isBusted()) {
+            if (playerOutcome.isBusted()) {
                 gameResult = GameResult.LOSE;
             }
             resultBoard.put(playerName, gameResult);
@@ -24,7 +25,7 @@ public class GameResultBoard {
     }
 
     public GameResult getGameResult(Player player) {
-        return resultBoard.get(player.getName());
+        return resultBoard.get(player.getPlayerName());
     }
 
     public Map<GameResult, Integer> getDealerResult() {

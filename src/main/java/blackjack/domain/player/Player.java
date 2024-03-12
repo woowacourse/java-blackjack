@@ -39,6 +39,10 @@ public class Player {
         return outcome.getScore();
     }
 
+    public PlayerName getPlayerName() {
+        return playerName;
+    }
+
     public String getName() {
         return playerName.name();
     }
