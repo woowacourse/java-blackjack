@@ -20,7 +20,7 @@ public class Referee {
     }
 
     private PlayerGameResult judgeGameResult(Dealer dealer, Player player) {
-        if (player.isBust()) {
+        if (player.isBust() || dealer.isBlackjack()) {
             return PlayerGameResult.LOSE;
         }
         if (isPlayerWin(dealer, player)) {

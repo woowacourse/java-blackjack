@@ -252,4 +252,36 @@ public class RefereeTest {
 
         assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
     }
+
+    @Test
+    @DisplayName("딜러가 블랙잭이고 플레이어가 블랙잭이 아닌 21이면 딜러가 승리한다.")
+    void dealerBlackjackAndPlayerMaximumTest() {
+        List<String> name = List.of("lemone");
+        Players players = Players.from(name);
+        Dealer dealer = new Dealer(new Hand(List.of()));
+        Referee referee = new Referee();
+        Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
+        List<Card> playerCards = new ArrayList<>(List.of(new Card(KING, CLUB), new Card(NINE, CLUB), new Card(TWO, CLUB)));
+        List<Card> DealerCards = new ArrayList<>(List.of(new Card(ACE, CLUB), new Card(JACK, CLUB)));
+
+        Deck playerCardPicker = new Deck(playerCards) {
+            @Override
+            public List<Card> pickCards(int count) {
+                return playerCards;
+            }
+        };
+        Deck dealerCardPicker = new Deck(DealerCards) {
+            @Override
+            public List<Card> pickCards(int count) {
+                return DealerCards;
+            }
+        };
+
+        players.forEach(player -> player.draw(playerCardPicker.pickCards(2)));
+        dealer.draw(dealerCardPicker.pickCards(2));
+        referee.calculatePlayersResults(players, dealer);
+        expectedPlayersResult.put("lemone", PlayerGameResult.LOSE);
+
+        assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
+    }
 }
