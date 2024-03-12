@@ -38,6 +38,10 @@ public class BlackjackGameController {
         cardSettingBeforeGameStart(players, blackjackGame);
         printCardSetting(blackjackGame.getDealer(), blackjackGame.getPlayers());
         turnHitPlayers(blackjackGame.getPlayers(), blackjackGame);
+
+        boolean dealerHit = blackjackGame.dealerHitsUnderSixteen(
+                new Card(CardDispenser.generateCardNumber(), CardDispenser.generateCardShape()));
+        outputView.printDealerHitStatus(dealerHit);
     }
 
     private void cardSettingBeforeGameStart(Players players, BlackjackGame blackjackGame) {

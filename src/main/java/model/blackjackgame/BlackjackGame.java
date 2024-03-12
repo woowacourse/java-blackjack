@@ -37,10 +37,12 @@ public class BlackjackGame {
         return player.isBust();
     }
 
-    public void dealerHitsUnderSixteen(Card card) {
+    public boolean dealerHitsUnderSixteen(Card card) {
         if (dealer.isPossibleAddCard()) {
             dealer = dealer.addCard(card);
+            return true;
         }
+        return false;
     }
 
     public Dealer getDealer() {
