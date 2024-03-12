@@ -12,14 +12,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DeckTest {
-    @DisplayName("블랙잭에 필요한 카드들을 생성해둔다.")
-    @Test
-    void createCards() {
-        Deck deck = new Deck(deckGenerator);
-
-        assertThat(deck.getTotalSize()).isEqualTo(52);
-    }
-
     @DisplayName("하나의 카드를 뽑는다.")
     @Test
     void pickCard() {

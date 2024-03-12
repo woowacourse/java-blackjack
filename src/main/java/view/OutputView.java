@@ -57,6 +57,7 @@ public class OutputView {
 
     public void printDealerCardSavedMessage() {
         System.out.printf(DEALER_CARD_SAVED_MESSAGE);
+        System.out.println();
     }
 
     public void printResultHandStatus(final List<ParticipantHandStatus> participantHandStatuses) {

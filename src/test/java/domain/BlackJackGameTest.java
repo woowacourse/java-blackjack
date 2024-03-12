@@ -13,6 +13,7 @@ import domain.card.Suit;
 import domain.constants.CardCommand;
 import domain.game.BlackJackGame;
 import domain.game.deck.Deck;
+import domain.game.deck.RandomDeckGenerator;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
@@ -24,12 +25,11 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class BlackJackGameTest {
-
     @DisplayName("게임을 시작하고 참가자들에게 2장 씩 카드를 분배한다.")
     @Test
     void initializeBlackJackGame() {
         List<String> playerNames = Arrays.asList("pobi", "jason");
-        BlackJackGame blackJackGame = BlackJackGame.from(playerNames);
+        BlackJackGame blackJackGame = BlackJackGame.from(playerNames, new RandomDeckGenerator());
 
         InitialCardStatus result = blackJackGame.initialize();
 
