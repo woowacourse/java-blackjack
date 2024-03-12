@@ -1,11 +1,11 @@
 package blackjack.domain.player;
 
-import blackjack.domain.Result;
 import blackjack.domain.card.Hand;
+import blackjack.domain.rule.Score;
 
 public class Dealer extends Participant {
 
-    private static final int HIT_THRESHOLD = 17;
+    private static final Score HIT_THRESHOLD = new Score(16);
 
     public Dealer() {
         super(new Hand());
@@ -17,12 +17,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canHit() {
-        return getHandScore() < HIT_THRESHOLD;
-    }
-
-    public Result judge(Players players) {
-        Result result = new Result();
-        players.getPlayers().forEach(player -> result.updateOpponent(player.judge(this)));
-        return result;
+        return getHandScore().canHit(HIT_THRESHOLD);
     }
 }
