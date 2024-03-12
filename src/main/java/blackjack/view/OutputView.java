@@ -50,8 +50,8 @@ public class OutputView {
     }
 
     public void printPlayerResult(String name, MatchResult result) {
-        String resultDisplay = PlayerResultDisplay.getDisplayByResult(result);
-        System.out.println(name + ": " + resultDisplay);
+        PlayerResultDisplay resultDisplay = PlayerResultDisplay.getDisplayByResult(result);
+        System.out.println(name + ": " + resultDisplay.getNotation());
     }
 
     public void printNewLine() {
@@ -59,9 +59,9 @@ public class OutputView {
     }
 
     private String convertCard(Card card) {
-        String convertedNumber = CardNumberDisplay.getDisplayByNumber(card.getNumber());
-        String convertedShape = CardShapeDisplay.getDisplayByShape(card.getShape());
-        return convertedNumber + convertedShape;
+        CardNumberDisplay numberDisplay = CardNumberDisplay.getDisplayByNumber(card.getNumber());
+        CardShapeDisplay shapeDisplay = CardShapeDisplay.getDisplayByShape(card.getShape());
+        return numberDisplay.getNotation() + shapeDisplay.getNotation();
     }
 
     private String convertCards(List<Card> cards) {

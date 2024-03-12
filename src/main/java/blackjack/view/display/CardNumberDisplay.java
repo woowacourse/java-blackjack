@@ -20,18 +20,21 @@ public enum CardNumberDisplay {
     KING(Number.KING, "K");
 
     private final Number number;
-    private final String display;
+    private final String notation;
 
-    CardNumberDisplay(Number number, String display) {
+    CardNumberDisplay(Number number, String notation) {
         this.number = number;
-        this.display = display;
+        this.notation = notation;
     }
 
-    public static String getDisplayByNumber(Number number) {
+    public static CardNumberDisplay getDisplayByNumber(Number number) {
         return Arrays.stream(CardNumberDisplay.values())
                 .filter(displayNumber -> displayNumber.number == number)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 수입니다."))
-                .display;
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 수입니다."));
+    }
+
+    public String getNotation() {
+        return notation;
     }
 }
