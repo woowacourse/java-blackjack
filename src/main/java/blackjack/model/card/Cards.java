@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Cards {
     private static final int BLACK_JACK_CONDITION = 21;
-    private static final int BURST_CONDITION = 21;
     private static final int ACE_ADJUSTMENT = 10;
 
     private final List<Card> cards;
@@ -63,7 +62,7 @@ public class Cards {
     }
 
     public boolean isBurst() {
-        return calculateTotalScore() > BURST_CONDITION;
+        return calculateTotalScore() > BLACK_JACK_CONDITION;
     }
 
     public int size() {
