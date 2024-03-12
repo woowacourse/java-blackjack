@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.GameBoard;
+import blackjack.domain.participants.GameBoard;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.GameParticipant;
 import blackjack.domain.participants.Name;
