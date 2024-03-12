@@ -91,10 +91,10 @@ class DealerTest {
     @Test
     void dealerResult() {
         // given
-        Player loser1 = new Player(new Name("레디"), sum18Size2);
-        Player loser2 = new Player(new Name("피케이"), sum18Size2);
-        Player winner = new Player(new Name("제제"), sum21Size2);
-        Player tier = new Player(new Name("브라운"), sum20Size3);
+        final Player loser1 = new Player(new Name("레디"), sum18Size2);
+        final Player loser2 = new Player(new Name("피케이"), sum18Size2);
+        final Player winner = new Player(new Name("제제"), sum21Size2);
+        final Player tier = new Player(new Name("브라운"), sum20Size3);
 
         Players players = new Players(List.of(loser1, loser2, winner, tier));
         Dealer dealer = new Dealer(CardDeck.generate(), sum20Size3);
