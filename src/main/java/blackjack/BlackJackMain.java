@@ -10,6 +10,10 @@ public class BlackJackMain {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
         BlackJackGame blackJackGame = new BlackJackGame(inputView, outputView);
-        blackJackGame.play();
+        try {
+            blackJackGame.play();
+        } catch (Exception e) {
+            outputView.printExceptionMessage(e);
+        }
     }
 }

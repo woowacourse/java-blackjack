@@ -70,4 +70,8 @@ public class OutputView {
                 .toList();
         return String.join(", ", convertedCards);
     }
+
+    public void printExceptionMessage(Exception e) {
+        System.out.println(e.getMessage());
+    }
 }
