@@ -1,13 +1,12 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.participant.Name;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class NameTest {
     @DisplayName("이름에 정상적인 길이의 입력값이 들어왔을 때, Name 객체를 생성할 수 있다")

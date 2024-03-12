@@ -15,10 +15,7 @@ public abstract class Participant {
 
     public boolean addCard(Card card) {
         hands.addCard(card);
-        if (hands.isBurst()) {
-            return hands.downgradeAce();
-        }
-        return true;
+        return !isBurst();
     }
 
     public List<Card> getHandsCards() {
@@ -30,7 +27,8 @@ public abstract class Participant {
     }
 
     public int getHandsScore() {
-        return hands.getHandsScore();
+        return hands.getHandsScore()
+                    .getScore();
     }
 
     public boolean isBurst() {

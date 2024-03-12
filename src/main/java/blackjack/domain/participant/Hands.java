@@ -1,46 +1,28 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.deck.Value;
 import blackjack.domain.deck.Card;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hands {
-    private static final int DOWNGRADE_SCORE = 10;
 
     private final List<Card> hands;
-    private final HandsScore handsScore;
 
     public Hands() {
         this.hands = new ArrayList<>();
-        this.handsScore = new HandsScore();
     }
 
     public void addCard(Card card) {
-        handsScore.addScore(card.getScore());
         hands.add(card);
     }
 
-    public boolean downgradeAce() {
-        List<Value> values = hands.stream()
-                .map(Card::getValue)
-                .toList();
-
-        if (values.contains(Value.ACEHIGH)) {
-            hands.get(values.indexOf(Value.ACEHIGH))
-                    .downgradeAce();
-            handsScore.addScore(-DOWNGRADE_SCORE);
-            return true;
-        }
-        return false;
+    public HandsScore getHandsScore() {
+        return HandsScore.of(hands);
     }
+
 
     public boolean isBurst() {
-        return handsScore.isBurst();
-    }
-
-    public int getHandsScore() {
-        return handsScore.getScore();
+        return getHandsScore().isBurst();
     }
 
     public List<Card> getHands() {

@@ -25,6 +25,6 @@ public class Dealer extends Participant {
     }
 
     private boolean shouldDraw() {
-        return hands.getHandsScore() <= DEALER_DRAW_THRESHOLD;
+        return hands.getHandsScore().getScore() <= DEALER_DRAW_THRESHOLD;
     }
 }

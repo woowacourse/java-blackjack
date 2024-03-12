@@ -1,14 +1,13 @@
 package blackjack.domain.deck;
 
-import blackjack.domain.deck.Card;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import static blackjack.domain.deck.Kind.DIAMOND;
 import static blackjack.domain.deck.Kind.SPADE;
-import static blackjack.domain.deck.Value.ACEHIGH;
+import static blackjack.domain.deck.Value.ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class CardTest {
 
@@ -20,10 +19,10 @@ class CardTest {
 
         assertAll(
                 () -> assertThat(testCard1.getKind()).isEqualTo(SPADE),
-                () -> assertThat(testCard1.getValue()).isEqualTo(ACEHIGH),
+                () -> assertThat(testCard1.getValue()).isEqualTo(ACE),
 
                 () -> assertThat(testCard2.getKind()).isEqualTo(DIAMOND),
-                () -> assertThat(testCard2.getValue()).isEqualTo(ACEHIGH)
+                () -> assertThat(testCard2.getValue()).isEqualTo(ACE)
         );
     }
 

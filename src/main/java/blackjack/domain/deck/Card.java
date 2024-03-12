@@ -19,10 +19,6 @@ public class Card {
         return new Card(kind, value);
     }
 
-    public void downgradeAce() {
-        value = Value.ACELOW;
-    }
-
     public String getCardName() {
         return value.getValueName() + kind.getKindName();
     }
