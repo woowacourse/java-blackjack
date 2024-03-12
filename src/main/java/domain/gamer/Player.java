@@ -21,7 +21,7 @@ public class Player {
     }
 
     public boolean isDrawable() {
-        return cards.countMaxScore() <= MAX_BLACK_JACK_SCORE && cards.countMaxScore() != BUST;
+        return cards.getMinGameScore() <= MAX_BLACK_JACK_SCORE && cards.countMaxScore() != BUST;
     }
 
     public int getMaxGameScore() {

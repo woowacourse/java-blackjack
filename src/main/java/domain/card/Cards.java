@@ -51,7 +51,7 @@ public class Cards {
         return score > MAX_BLACK_JACK_SCORE;
     }
 
-    public int getMaxGameScore() {
+    public int getMinGameScore() {
         return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
