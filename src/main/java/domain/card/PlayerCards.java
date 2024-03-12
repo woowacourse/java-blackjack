@@ -2,7 +2,7 @@ package domain.card;
 
 import domain.BetAmount;
 import domain.Name;
-import domain.score.Status;
+import domain.result.Status;
 
 import java.util.List;
 

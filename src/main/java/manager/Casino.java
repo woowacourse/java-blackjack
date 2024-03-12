@@ -1,13 +1,13 @@
 package manager;
 
 import domain.BetAmount;
-import domain.Income;
+import domain.result.Income;
 import domain.Name;
 import domain.card.DealerCards;
 import domain.card.Deck;
 import domain.card.PlayerCards;
 import domain.card.RandomDrawStrategy;
-import domain.game.Rule;
+import domain.Rule;
 
 import java.util.LinkedHashMap;
 import java.util.List;

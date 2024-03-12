@@ -1,6 +1,6 @@
 package domain;
 
-import domain.score.Status;
+import domain.result.Status;
 
 public class BetAmount {
 

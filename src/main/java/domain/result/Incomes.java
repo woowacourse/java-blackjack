@@ -1,6 +1,7 @@
-package domain;
+package domain.result;
 
-import java.util.LinkedHashMap;
+import domain.Name;
+
 import java.util.Map;
 
 public class Incomes {

@@ -1,12 +1,11 @@
-package domain.game;
+package domain;
 
-import domain.Income;
-import domain.Incomes;
-import domain.Name;
+import domain.result.Income;
+import domain.result.Incomes;
 import domain.card.Cards;
 import domain.card.DealerCards;
 import domain.card.PlayerCards;
-import domain.score.Status;
+import domain.result.Status;
 
 import java.util.LinkedHashMap;
 import java.util.List;

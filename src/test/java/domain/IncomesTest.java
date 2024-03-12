@@ -1,5 +1,7 @@
 package domain;
 
+import domain.result.Income;
+import domain.result.Incomes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

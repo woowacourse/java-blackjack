@@ -1,12 +1,10 @@
-package domain.game;
+package domain;
 
-import domain.BetAmount;
-import domain.Name;
 import domain.card.Card;
 import domain.card.DealerCards;
 import domain.card.PlayerCards;
 import domain.card.Shape;
-import domain.score.Status;
+import domain.result.Status;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

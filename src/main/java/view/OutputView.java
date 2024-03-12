@@ -1,6 +1,6 @@
 package view;
 
-import domain.Income;
+import domain.result.Income;
 import domain.Name;
 import domain.card.Cards;
 import domain.card.DealerCards;

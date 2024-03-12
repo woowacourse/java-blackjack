@@ -1,6 +1,6 @@
 package domain;
 
-import domain.score.Status;
+import domain.result.Status;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
