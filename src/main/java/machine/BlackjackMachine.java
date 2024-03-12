@@ -32,7 +32,7 @@ public class BlackjackMachine {
     private void distributeStartingCards(BlackjackGame game) {
         game.distributeStartingCards();
         outputView.printDistributionMessage(game);
-        outputView.printAllParticipantsCards(game);
+        outputView.printStartingCardsOfAllParticipants(game);
     }
 
     private BlackjackGame initializeGame() {
@@ -49,13 +49,13 @@ public class BlackjackMachine {
     private void playPlayerTurn(BlackjackGame game, Player player) {
         while (player.isReceivable() && isHitRequested(player)) {
             game.giveOneCard(player);
-            outputView.printParticipantCards(player);
+            outputView.printNameAndCardsOfParticipant(player);
         }
         if (player.isBusted()) {
             outputView.printBustMessage(player);
             return;
         }
-        outputView.printParticipantCards(player);
+        outputView.printNameAndCardsOfParticipant(player);
     }
 
     private boolean isHitRequested(Player player) {
@@ -72,11 +72,11 @@ public class BlackjackMachine {
     }
 
     private void printCardsAndScores(BlackjackGame game) {
-        outputView.printAllParticipantsCardsWithScore(game);
+        outputView.printFinalCardsAndScoresOfAllParticipants(game);
     }
 
     private void printResult(BlackjackGame game) {
         Result result = Result.of(game.getPlayers(), game.getDealer());
-        outputView.printResult(game, result);
+        outputView.printWinLoseOfAllParticipants(game, result);
     }
 }

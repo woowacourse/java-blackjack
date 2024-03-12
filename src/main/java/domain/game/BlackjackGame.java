@@ -10,7 +10,7 @@ import strategy.CardGenerator;
 
 public class BlackjackGame {
 
-    public static final int STARTING_CARDS_AMOUNT = 2;
+    private static final int STARTING_CARDS_AMOUNT = 2;
 
     private final Participants participants;
     private final DeckCards deckCards;

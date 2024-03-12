@@ -1,70 +1,37 @@
 package view;
 
-import domain.card.Card;
-import domain.card.Symbol;
 import domain.game.BlackjackGame;
 import domain.game.Result;
-import domain.game.WinLose;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private static final String DELIMITER = ", ";
+    private static final int STARTING_CARDS_AMOUNT = 2;
 
-    public void printDistributionMessage(BlackjackGame game) {
-        String playerNames = game.getPlayers().stream()
-            .map(Participant::getName)
-            .collect(Collectors.joining(DELIMITER));
-        System.out.printf(
-            "%n딜러와 %s에게 %d장을 나누었습니다.%n", playerNames, BlackjackGame.STARTING_CARDS_AMOUNT);
+    private final MessageResolver resolver;
+
+    public OutputView(MessageResolver resolver) {
+        this.resolver = resolver;
     }
 
-    public void printAllParticipantsCards(BlackjackGame game) {
-        System.out.println(dealerNameAndCardsText(game.getDealer()));
+    public void printDistributionMessage(BlackjackGame game) {
+        System.out.printf("%n딜러와 %s에게 %d장을 나누었습니다.%n",
+            resolver.playerNamesText(game.getPlayers()),
+            STARTING_CARDS_AMOUNT);
+    }
+
+    public void printStartingCardsOfAllParticipants(BlackjackGame game) {
+        System.out.println(resolver.dealerNameAndStartingCardsText(game.getDealer()));
         for (Player player : game.getPlayers()) {
-            System.out.println(participantNameAndCardsText(player));
+            printNameAndCardsOfParticipant(player);
         }
         System.out.println();
     }
 
-    private String dealerNameAndCardsText(Dealer dealer) {
-        return dealer.getName() + " 카드: " + cardText(dealer.findShowingCard());
-    }
-
-    private String cardText(Card card) {
-        return card.rank().getDescription() + symbolText(card.symbol());
-    }
-
-    private String symbolText(Symbol symbol) {
-        Map<Symbol, String> symbolTextMap = Map.of(
-            Symbol.CLUB, "클로버", Symbol.DIAMOND, "다이아몬드",
-            Symbol.HEART, "하트", Symbol.SPADE, "스페이드"
-        );
-
-        try {
-            return symbolTextMap.get(symbol);
-        } catch (NullPointerException e) {
-            throw new IllegalArgumentException("[ERROR] 올바른 Symbol이 아닙니다.");
-        }
-    }
-
-    public void printParticipantCards(Participant participant) {
-        System.out.println(participantNameAndCardsText(participant));
-    }
-
-    private String participantNameAndCardsText(Participant participant) {
-        return participant.getName() + " 카드: " + cardsText(participant.getCards());
-    }
-
-    private String cardsText(List<Card> cards) {
-        return cards.stream()
-            .map(this::cardText)
-            .collect(Collectors.joining(DELIMITER));
+    public void printNameAndCardsOfParticipant(Participant participant) {
+        System.out.println(resolver.participantNameAndCardsText(participant));
     }
 
     public void printBustMessage(Participant participant) {
@@ -75,46 +42,26 @@ public class OutputView {
         System.out.printf("%n딜러는 %d이하라 한장의 카드를 더 받았습니다.%n", Dealer.THRESHOLD_SCORE);
     }
 
-    public void printAllParticipantsCardsWithScore(BlackjackGame game) {
+    public void printFinalCardsAndScoresOfAllParticipants(BlackjackGame game) {
         System.out.println();
-        System.out.println(
-            participantNameAndCardsText(game.getDealer()) + scoreText(game.getDealer().score()));
+        printFinalCardsAndScoresOfParticipant(game.getDealer());
         for (Player player : game.getPlayers()) {
-            System.out.println(participantNameAndCardsText(player) + scoreText(player.score()));
+            printFinalCardsAndScoresOfParticipant(player);
         }
         System.out.println();
     }
 
-    private String scoreText(int score) {
-        return " - 결과: " + score;
+    public void printFinalCardsAndScoresOfParticipant(Participant participant) {
+        System.out.printf("%s - 결과: %s%n",
+            resolver.participantNameAndCardsText(participant),
+            resolver.scoreText(participant.score()));
     }
 
-    public void printResult(BlackjackGame game, Result result) {
+    public void printWinLoseOfAllParticipants(BlackjackGame game, Result result) {
         System.out.println("## 최종 승패");
-        System.out.printf("딜러: %s%s%s%n",
-            resultText(result.dealerWinCount(), "승 "),
-            resultText(result.dealerTieCount(), "무 "),
-            resultText(result.dealerLoseCount(), "패")
-        );
+        System.out.println(resolver.dealerResultText(game.getDealer(), result));
         for (Player player : game.getPlayers()) {
-            System.out.println(player.getName() + ": " + winLoseText(result.playerWinLose(player)));
+            System.out.println(resolver.playerResultText(player, result));
         }
-    }
-
-    private String resultText(long resultCount, String resultSuffix) {
-        if (resultCount == 0) {
-            return "";
-        }
-        return resultCount + resultSuffix;
-    }
-
-    private String winLoseText(WinLose winLose) {
-        if (winLose == WinLose.WIN) {
-            return "승";
-        }
-        if (winLose == WinLose.LOSE) {
-            return "패";
-        }
-        return "무";
     }
 }
