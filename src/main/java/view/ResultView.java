@@ -1,84 +1,107 @@
 package view;
 
-import static domain.BlackjackGame.DEALER_HIT_THRESHOLD;
-import static domain.BlackjackGame.INITIAL_CARD_COUNT;
+import static domain.participant.dealer.Dealer.DEALER_HIT_THRESHOLD;
+import static domain.participant.dealer.Dealer.INITIAL_CARD_COUNT;
 
-import java.util.List;
+import java.util.EnumSet;
 
-import view.dto.GameResultDto;
-import view.dto.card.CardsDto;
-import view.dto.participant.DealerDto;
-import view.dto.participant.DealerResultDto;
-import view.dto.participant.ParticipantDto;
-import view.dto.participant.PlayerResultsDto;
-import view.dto.participant.PlayersDto;
+import domain.BlackjackResult;
+import domain.BlackjackResultStatus;
+import domain.card.Cards;
+import domain.participant.Participant;
+import domain.participant.dealer.Dealer;
+import domain.participant.dealer.DealerResult;
+import domain.participant.player.PlayerResults;
+import domain.participant.player.Players;
 
-public class ResultView {
+public class ResultView implements BlackjackViewParser {
 
-    public void printInitialCards(final DealerDto dealerDto, final PlayersDto playersDto) {
-        printInitialDealMessage(dealerDto, playersDto);
-        printParticipantHand(dealerDto);
-        printPlayerHands(playersDto);
+    private static final String PARTICIPANT_NAME_AND_CARDS = "%n%s: %s";
+
+    public void printInitialCards(final Dealer dealer, final Players players) {
+        printInitialDealMessage(dealer, players);
+        printDealerHand(dealer);
+        printPlayerHands(players);
         System.out.println();
     }
 
-    private void printInitialDealMessage(final DealerDto dealerDto, final PlayersDto playersDto) {
-        System.out.printf("%n%s와 %s에게 %d장을 나누었습니다.",
-                dealerDto.name(),
-                parsePlayerNames(playersDto),
+    private void printInitialDealMessage(final Dealer dealer, final Players players) {
+        System.out.printf(
+                "%n%s와 %s에게 %d장을 나누었습니다.%n",
+                parseName(dealer.name()),
+                parsePlayerNames(players),
                 INITIAL_CARD_COUNT
         );
     }
 
-    private String parsePlayerNames(final PlayersDto playersDto) {
-        return playersDto.players()
-                .stream()
-                .map(ParticipantDto::name)
-                .reduce((player1, player2) -> player1 + ", " + player2)
-                .orElse("");
-    }
-
-    public void printPlayerHands(final PlayersDto playersDto) {
-        playersDto.players().forEach(this::printParticipantHand);
-    }
-
-    public void printParticipantHand(final ParticipantDto participantDto) {
-        CardsDto cards = participantDto.getCards();
-        System.out.printf("%n%s: %s",
-                participantDto.name(),
-                cards.parseCards()
+    private void printDealerHand(final Dealer dealer) {
+        System.out.printf(
+                PARTICIPANT_NAME_AND_CARDS,
+                parseName(dealer.name()),
+                parseCard(dealer.peek())
         );
     }
 
-    public void printDealerCardMessage(final DealerDto dealerDto) {
-        System.out.printf("%n%s는 %s이하라 한장의 카드를 더 받습니다.%n%n",
-                dealerDto.name(),
+    public void printParticipantHand(final Participant participant) {
+        Cards cards = participant.hand();
+        System.out.printf(
+                PARTICIPANT_NAME_AND_CARDS,
+                parseName(participant.name()),
+                parseCards(cards)
+        );
+    }
+
+    public void printPlayerHands(final Players players) {
+        players.forEach(this::printParticipantHand);
+    }
+
+    public void printDealerHit(final Dealer dealer) {
+        System.out.printf(
+                "%n%s는 %s이하라 한장의 카드를 더 받습니다.%n",
+                parseName(dealer.name()),
                 DEALER_HIT_THRESHOLD
         );
     }
 
-    public void printResults(final List<ParticipantDto> participantDtos, final GameResultDto gameResultDto) {
-        System.out.println();
-        participantDtos.forEach(this::printCardAndSum);
-        System.out.println();
-        printGameResults(gameResultDto);
+    public void printCardsAndTotalOf(final Dealer dealer, final Players players) {
+        printCardAndSum(dealer);
+        players.forEach(this::printCardAndSum);
         System.out.println();
     }
 
-    private void printCardAndSum(final ParticipantDto participantDto) {
-        CardsDto cards = participantDto.getCards();
-        System.out.printf("%s: %s - 결과: %d%n",
-                participantDto.name(),
-                cards.parseCards(),
-                participantDto.score()
+    private void printCardAndSum(final Participant participant) {
+        Cards cards = participant.hand();
+        System.out.printf(
+                PARTICIPANT_NAME_AND_CARDS + " - 결과: %d",
+                parseName(participant.name()),
+                parseCards(cards),
+                participant.score()
         );
     }
 
-    private void printGameResults(final GameResultDto gameResultDto) {
-        DealerResultDto dealerResult = gameResultDto.getDealerResult();
-        PlayerResultsDto playerResults = gameResultDto.getPlayersResult();
-        System.out.println("## 최종 승패");
-        System.out.println(dealerResult.parseResult());
-        System.out.print(playerResults.parseResult());
+    public void printResult(final BlackjackResult result) {
+        System.out.println("\n## 최종 승패");
+        printDealerResult(result.dealerResult());
+        printPlayerResults(result.playerResults());
+    }
+
+    public void printDealerResult(final DealerResult result) {
+        String message = parseName(result.getDealerName()) + ": " +
+                EnumSet.allOf(BlackjackResultStatus.class)
+                        .stream()
+                        .filter(result::contains)
+                        .map(status -> result.countOf(status) + status.getValue())
+                        .reduce((status1, status2) -> status1 + " " + status2)
+                        .orElse("");
+        System.out.println(message);
+    }
+
+    public void printPlayerResults(final PlayerResults result) {
+        String message = result.getPlayers()
+                .stream()
+                .map(player -> parseName(player.name()) + ": " + parseResultStatus(result.statusOf(player)))
+                .reduce((result1, result2) -> result1 + "\n" + result2)
+                .orElse("");
+        System.out.println(message);
     }
 }
