@@ -76,9 +76,9 @@ class HandsTest {
         Hands hands = new Hands(List.of(card1, card2));
 
         // when
-        Hands firstCard = hands.getFirstCard();
+        Card firstCard = hands.getFirstCard();
 
         // then
-        assertThat(firstCard.getCards()).containsExactly(card1);
+        assertThat(firstCard).isEqualTo(card1);
     }
 }

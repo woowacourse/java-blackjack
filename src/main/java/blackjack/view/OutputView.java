@@ -114,15 +114,15 @@ public class OutputView {
         System.out.println("[ERROR] " + message);
     }
 
-    private <T> List<T> getExceptDealer(final List<T> resultDtos, Function<T, String> getName) {
+    private <T> List<T> getExceptDealer(final List<T> resultDtos, Predicate<T> matchName) {
         return resultDtos.stream()
-                .filter(item -> !getName.apply(item).equals(DealerFormat.DEALER.getSignal()))
+                .filter(resultDto -> !matchName.test(resultDto))
                 .toList();
     }
 
-    private <T> T getOnlyDealer(final List<T> resultDtos, Function<T, String> getName) {
+    private <T> T getOnlyDealer(final List<T> resultDtos, Predicate<T> matchName) {
         return resultDtos.stream()
-                .filter(item -> getName.apply(item).equals(DealerFormat.DEALER.getSignal()))
+                .filter(matchName)
                 .findAny()
                 .orElseThrow();
     }
