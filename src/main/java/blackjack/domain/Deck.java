@@ -5,10 +5,13 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Deck {
-    private static final int DECK_CARD_NUMBER = 52;
+    private static final List<Card> CACHE_DECK = Stream.of(Kind.values())
+                                                .flatMap(kind -> Stream.of(Value.values()).map(value -> new Card(kind, value)))
+                                                .collect(Collectors.toList());
+
     private final Deque<Card> cards;
 
     private Deck(Deque<Card> cards) {
@@ -16,19 +19,9 @@ public class Deck {
     }
 
     public static Deck createShuffledDeck() {
-        Deque<Card> cards = new ArrayDeque<>();
-        makeSuffledOrder().stream()
-                .map(Card::create)
-                .forEach(cards::add);
+        Collections.shuffle(CACHE_DECK);
+        Deque<Card> cards = new ArrayDeque<>(CACHE_DECK);
         return new Deck(cards);
-    }
-
-    private static List<Integer> makeSuffledOrder() {
-        List<Integer> cardOrder = IntStream.range(0, DECK_CARD_NUMBER)
-                .boxed()
-                .collect(Collectors.toList());
-        Collections.shuffle(cardOrder);
-        return cardOrder;
     }
 
     public Card draw() {

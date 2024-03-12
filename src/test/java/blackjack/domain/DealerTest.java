@@ -22,8 +22,8 @@ class DealerTest {
     void should_AddCard_When_HandsScoreBelowThreshold() {
         Dealer dealer = new Dealer();
         Deck deck = Deck.createShuffledDeck();
-        dealer.addCard(Card.create(9));
-        dealer.addCard(Card.create(5));
+        dealer.addCard(new Card(Kind.SPADE, Value.JACK));
+        dealer.addCard(new Card(Kind.HEART, Value.SIX));
 
         dealer.draw(deck);
 
@@ -35,23 +35,23 @@ class DealerTest {
     void should_NotAddCard_When_HandsScoreOverThreshold() {
         Dealer dealer = new Dealer();
         Deck deck = Deck.createShuffledDeck();
-        dealer.addCard(Card.create(9));
-        dealer.addCard(Card.create(6));
+        dealer.addCard(new Card(Kind.SPADE, Value.JACK));
+        dealer.addCard(new Card(Kind.HEART, Value.SEVEN));
 
         dealer.draw(deck);
 
         assertThat(dealer.getHandsCards()).hasSize(2);
     }
 
-    @DisplayName("딜러는 첫번째 패를 보여준다")
+    @DisplayName("딜러는 첫번째 패의 첫장을 보여준다")
     @Test
     void should_ShowFirstCard() {
         Dealer dealer = new Dealer();
-        dealer.addCard(Card.create(6));
-        dealer.addCard(Card.create(45));
+        dealer.addCard(new Card(Kind.SPADE, Value.JACK));
+        dealer.addCard(new Card(Kind.HEART, Value.SIX));
 
         assertThat(dealer.getFirstCard())
-                .isEqualTo(Card.create(6));
+                .isEqualTo(new Card(Kind.SPADE, Value.JACK));
     }
 
 }

@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static blackjack.domain.Kind.*;
+import static blackjack.domain.Value.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
@@ -28,9 +30,9 @@ class ResultTest {
     @ParameterizedTest
     @MethodSource("getPlayerAndDealer")
     void should_returnBlackJackWin_When_PlayerBlackJack_And_DealerIsNotBlackJack(Player testPlayer, Dealer dealer) {
-        testPlayer.addCard(Card.create(0));
-        testPlayer.addCard(Card.create(9));
-        dealer.addCard(Card.create(0));
+        testPlayer.addCard(new Card(SPADE, ACE)); // 플레이어 : 블랙잭
+        testPlayer.addCard(new Card(SPADE, TEN));
+        dealer.addCard(new Card(HEART, ACE)); // 딜러 : 11
 
         double profit = Result.calculateProfit(testPlayer, dealer);
 
@@ -41,9 +43,9 @@ class ResultTest {
     @ParameterizedTest
     @MethodSource("getPlayerAndDealer")
     void should_returnWin_When_PlayerHands_Higher_Than_DealerHands(Player testPlayer, Dealer dealer) {
-        testPlayer.addCard(Card.create(0));
-        testPlayer.addCard(Card.create(8));
-        dealer.addCard(Card.create(0));
+        testPlayer.addCard(new Card(SPADE, ACE)); // 플레이어 - 20
+        testPlayer.addCard(new Card(SPADE, NINE));
+        dealer.addCard(new Card(HEART, ACE)); // 딜러 - 11
 
         double profit = Result.calculateProfit(testPlayer, dealer);
 
@@ -53,12 +55,12 @@ class ResultTest {
     @DisplayName("플레이어 승 : 플레이어 - NonBurst, 딜러 - Burst")
     @ParameterizedTest
     @MethodSource("getPlayerAndDealer")
-    void should_returnWin_When_PlayerNonBurst_DealerBurst(Player testPlayer, Dealer dealer) {
-        testPlayer.addCard(Card.create(0));
-        testPlayer.addCard(Card.create(8));
-        dealer.addCard(Card.create(9));
-        dealer.addCard(Card.create(9));
-        dealer.addCard(Card.create(9));
+    void should_returnWin_When_PlayerNonBust_DealerBust(Player testPlayer, Dealer dealer) {
+        testPlayer.addCard(new Card(SPADE, ACE)); // player - 20
+        testPlayer.addCard(new Card(SPADE, NINE));
+        dealer.addCard(new Card(HEART, NINE)); // 딜러 - bust(27)
+        dealer.addCard(new Card(DIAMOND, NINE));
+        dealer.addCard(new Card(CLOVER, NINE));
 
         double profit = Result.calculateProfit(testPlayer, dealer);
 
@@ -69,10 +71,10 @@ class ResultTest {
     @ParameterizedTest
     @MethodSource("getPlayerAndDealer")
     void should_returnLose_When_PlayerHands_Lower_Than_DealerHands(Player testPlayer, Dealer dealer) {
-        testPlayer.addCard(Card.create(0));
-        testPlayer.addCard(Card.create(1));
-        dealer.addCard(Card.create(0));
-        dealer.addCard(Card.create(9));
+        testPlayer.addCard(new Card(SPADE, ACE)); // 플레이어 -13
+        testPlayer.addCard(new Card(SPADE, TWO));
+        dealer.addCard(new Card(HEART, ACE)); // 딜러 - 14
+        dealer.addCard(new Card(HEART, THREE));
 
         double profit = Result.calculateProfit(testPlayer, dealer);
 
@@ -82,12 +84,12 @@ class ResultTest {
     @DisplayName("플레이어 패 : 플레이어 - Burst, 딜러 - NonBurst")
     @ParameterizedTest
     @MethodSource("getPlayerAndDealer")
-    void should_returnLose_When_PlayerBurst_DealerNonBurst(Player testPlayer, Dealer dealer) {
-        testPlayer.addCard(Card.create(9));
-        testPlayer.addCard(Card.create(9));
-        testPlayer.addCard(Card.create(9)); //player -Bust
-        dealer.addCard(Card.create(9));
-        dealer.addCard(Card.create(9));
+    void should_returnLose_When_PlayerBust_DealerNonBust(Player testPlayer, Dealer dealer) {
+        testPlayer.addCard(new Card(SPADE, TEN)); //플레이어 - bust(30)
+        testPlayer.addCard(new Card(SPADE, JACK));
+        testPlayer.addCard(new Card(SPADE, QUEEN));
+        dealer.addCard(new Card(HEART, NINE)); //딜러 - 18
+        dealer.addCard(new Card(SPADE, NINE));
 
         double profit = Result.calculateProfit(testPlayer, dealer);
 
@@ -98,13 +100,12 @@ class ResultTest {
     @ParameterizedTest
     @MethodSource("getPlayerAndDealer")
     void should_returnDraw_When_Both_Burst(Player testPlayer, Dealer dealer) {
-        testPlayer.addCard(Card.create(9));
-        testPlayer.addCard(Card.create(9));
-        testPlayer.addCard(Card.create(9));
-
-        dealer.addCard(Card.create(9));
-        dealer.addCard(Card.create(9));
-        dealer.addCard(Card.create(9));
+        testPlayer.addCard(new Card(SPADE, TEN)); //플레이어 - bust(30)
+        testPlayer.addCard(new Card(SPADE, JACK));
+        testPlayer.addCard(new Card(SPADE, QUEEN));
+        dealer.addCard(new Card(HEART, NINE)); //딜러 - bust(27)
+        dealer.addCard(new Card(SPADE, NINE));
+        dealer.addCard(new Card(CLOVER, NINE));
 
         double profit = Result.calculateProfit(testPlayer, dealer);
 
@@ -115,8 +116,8 @@ class ResultTest {
     @ParameterizedTest
     @MethodSource("getPlayerAndDealer")
     void should_returnDraw_When_PlayerHands_Equal_DealerHands(Player testPlayer, Dealer dealer) {
-        testPlayer.addCard(Card.create(0));
-        dealer.addCard(Card.create(0));
+        testPlayer.addCard(new Card(SPADE, ACE)); // 플레이어 - 11
+        dealer.addCard(new Card(HEART, ACE)); //딜러 - 11
 
         double profit = Result.calculateProfit(testPlayer, dealer);
 
