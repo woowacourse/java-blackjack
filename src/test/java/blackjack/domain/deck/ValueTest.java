@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.deck;
 
 import blackjack.domain.deck.Value;
 import org.junit.jupiter.api.DisplayName;
