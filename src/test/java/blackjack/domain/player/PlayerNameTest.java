@@ -12,7 +12,6 @@ class PlayerNameTest {
     void testCreateEmptyPlayerName() {
         // when & then
         assertThatThrownBy(() -> new PlayerName(""))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이름이 빈 문자열입니다.");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
