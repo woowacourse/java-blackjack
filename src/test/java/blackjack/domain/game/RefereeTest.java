@@ -1,7 +1,6 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardPicker;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.gamer.Dealer;
@@ -27,13 +26,13 @@ public class RefereeTest {
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
 
-        CardPicker playerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
+        Deck playerCardPicker = new Deck(Arrays.asList(Card.values())) {
             @Override
             public List<Card> pickCards(int count) {
                 return List.of(Card.SPADE_NINE, Card.CLUB_QUEEN);
             }
         };
-        CardPicker dealerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
+        Deck dealerCardPicker = new Deck(Arrays.asList(Card.values())) {
             @Override
             public List<Card> pickCards(int count) {
                 return List.of(Card.SPADE_EIGHT, Card.CLUB_QUEEN);
@@ -57,13 +56,13 @@ public class RefereeTest {
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
 
-        CardPicker playerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
+        Deck playerCardPicker = new Deck(Arrays.asList(Card.values())) {
             @Override
             public List<Card> pickCards(int count) {
                 return List.of(Card.SPADE_NINE, Card.CLUB_QUEEN, Card.CLUB_THREE);
             }
         };
-        CardPicker dealerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
+        Deck dealerCardPicker = new Deck(Arrays.asList(Card.values())) {
             @Override
             public List<Card> pickCards(int count) {
                 return List.of(Card.SPADE_EIGHT, Card.SPADE_TWO, Card.CLUB_QUEEN);
@@ -87,13 +86,13 @@ public class RefereeTest {
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
 
-        CardPicker playerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
+        Deck playerCardPicker = new Deck(Arrays.asList(Card.values())) {
             @Override
             public List<Card> pickCards(int count) {
                 return List.of(Card.SPADE_NINE, Card.CLUB_SEVEN, Card.CLUB_THREE);
             }
         };
-        CardPicker dealerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
+        Deck dealerCardPicker = new Deck(Arrays.asList(Card.values())) {
             @Override
             public List<Card> pickCards(int count) {
                 return List.of(Card.SPADE_NINE, Card.CLUB_SEVEN, Card.CLUB_THREE);
@@ -117,13 +116,13 @@ public class RefereeTest {
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
 
-        CardPicker playerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
+        Deck playerCardPicker = new Deck(Arrays.asList(Card.values())) {
             @Override
             public List<Card> pickCards(int count) {
                 return List.of(Card.CLUB_ACE, Card.CLUB_JACK);
             }
         };
-        CardPicker dealerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
+        Deck dealerCardPicker = new Deck(Arrays.asList(Card.values())) {
             @Override
             public List<Card> pickCards(int count) {
                 return List.of(Card.SPADE_NINE, Card.CLUB_SEVEN, Card.CLUB_FIVE);
@@ -147,13 +146,13 @@ public class RefereeTest {
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
 
-        CardPicker playerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
+        Deck playerCardPicker = new Deck(Arrays.asList(Card.values())) {
             @Override
             public List<Card> pickCards(int count) {
                 return List.of(Card.CLUB_TWO, Card.CLUB_JACK);
             }
         };
-        CardPicker dealerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
+        Deck dealerCardPicker = new Deck(Arrays.asList(Card.values())) {
             @Override
             public List<Card> pickCards(int count) {
                 return List.of(Card.SPADE_NINE, Card.CLUB_SEVEN, Card.CLUB_FIVE);
@@ -176,13 +175,13 @@ public class RefereeTest {
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
 
-        CardPicker playerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
+        Deck playerCardPicker = new Deck(Arrays.asList(Card.values())) {
             @Override
             public List<Card> pickCards(int count) {
                 return List.of(Card.CLUB_KING, Card.CLUB_JACK, Card.CLUB_THREE);
             }
         };
-        CardPicker dealerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
+        Deck dealerCardPicker = new Deck(Arrays.asList(Card.values())) {
             @Override
             public List<Card> pickCards(int count) {
                 return List.of(Card.CLUB_KING, Card.CLUB_JACK, Card.CLUB_THREE);
@@ -205,13 +204,13 @@ public class RefereeTest {
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
 
-        CardPicker playerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
+        Deck playerCardPicker = new Deck(Arrays.asList(Card.values())) {
             @Override
             public List<Card> pickCards(int count) {
                 return List.of(Card.CLUB_KING, Card.CLUB_JACK);
             }
         };
-        CardPicker dealerCardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
+        Deck dealerCardPicker = new Deck(Arrays.asList(Card.values())) {
             @Override
             public List<Card> pickCards(int count) {
                 return List.of(Card.CLUB_KING, Card.CLUB_JACK, Card.CLUB_THREE);

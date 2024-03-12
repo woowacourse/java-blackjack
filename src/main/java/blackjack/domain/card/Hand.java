@@ -48,6 +48,12 @@ public class Hand {
         }
     }
 
+    public void tempMaximumScore() {
+        // 만약 에이스가 한번 나오면 다음 에이스는 1로 계산.
+
+
+    }
+
     public boolean isOverLimitScore() {
         return findMaximumScore() > MAX_LIMIT_SCORE;
     }

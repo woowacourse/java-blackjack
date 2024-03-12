@@ -1,7 +1,6 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardPicker;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.gamer.Dealer;
@@ -20,7 +19,7 @@ public class BlackjackTest {
         // given
         Dealer dealer = new Dealer(new Hand(List.of()));
         List<Card> cards = List.of(Card.SPADE_NINE, Card.CLUB_SEVEN);
-        CardPicker cardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
+        Deck cardPicker = new Deck(Arrays.asList(Card.values())) {
             @Override
             public List<Card> pickCards(int count) {
                 return cards;

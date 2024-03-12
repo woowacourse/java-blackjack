@@ -1,7 +1,6 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardPicker;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 import org.junit.jupiter.api.DisplayName;
@@ -20,14 +19,14 @@ class DealerTest {
         // given
         Dealer dealer = new Dealer(new Hand(List.of()));
         List<Card> cards = List.of(Card.SPADE_NINE, Card.CLUB_QUEEN);
-        List<Card> exptecedCard = List.of(Card.SPADE_NINE);
+        List<Card> expectedCard = List.of(Card.SPADE_NINE);
 
         // when
         dealer.draw(cards);
 
         // then
         assertThat(dealer.getCards())
-                .isEqualTo(exptecedCard);
+                .isEqualTo(expectedCard);
     }
 
     @Test
@@ -36,12 +35,13 @@ class DealerTest {
         // given
         Dealer dealer = new Dealer(new Hand(List.of()));
         List<Card> cards = List.of(Card.SPADE_NINE, Card.CLUB_SEVEN);
-        CardPicker cardPicker = new CardPicker(new Deck(Arrays.asList(Card.values()))) {
+        Deck cardPicker = new Deck(Arrays.asList(Card.values())) {
             @Override
             public List<Card> pickCards(int count) {
                 return cards;
             }
         };
+        dealer.draw(cardPicker.pickCards(2));
 
         // when & then
         assertThat(dealer.isScoreUnderBound()).isEqualTo(true);

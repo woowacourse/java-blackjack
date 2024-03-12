@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-// TODO: 카드피커 덱으로 이동
 public class Deck {
     private static final int PICK_CARD_INDEX = 0;
 
