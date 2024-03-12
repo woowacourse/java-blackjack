@@ -6,13 +6,11 @@ import java.util.ArrayList;
 public class Dealer implements GameParticipant {
 
     private static final int MAX_RECEIVE_SCORE = 17;
-    private static final String DEALER_NAME = "딜러";
+    private static final Name name = new Name("딜러");
 
-    private final Name name;
     private final Hands hands;
 
     public Dealer() {
-        this.name = new Name(DEALER_NAME);
         this.hands = new Hands(new ArrayList<>());
     }
 
