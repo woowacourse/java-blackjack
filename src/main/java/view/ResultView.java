@@ -66,19 +66,11 @@ public class ResultView {
     }
 
     private String resolveCardNumber(CardNumber cardNumber) {
-        if (cardNumber.equals(CardNumber.ACE)) {
-            return "A";
+        try {
+            return CardNumberNotation.findNotationByCardNumber(cardNumber);
+        } catch (IllegalArgumentException e) {
+            return String.valueOf(cardNumber.getScore());
         }
-        if (cardNumber.equals(CardNumber.JACK)) {
-            return "J";
-        }
-        if (cardNumber.equals(CardNumber.QUEEN)) {
-            return "Q";
-        }
-        if (cardNumber.equals(CardNumber.KING)) {
-            return "K";
-        }
-        return String.valueOf(cardNumber.getScore());
     }
 
     private String resolveCardShape(CardShape cardShape) {
