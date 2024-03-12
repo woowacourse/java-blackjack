@@ -22,27 +22,27 @@ public class GameScore {
     }
 
     public static GameScore from(Player player) {
-        Hand cards = player.getCards();
+        Hand cards = player.getHand();
         int totalScore = calculateTotalScore(cards);
         return new GameScore(player.getName(), totalScore);
     }
 
     public static GameScore from(Dealer dealer) {
-        Hand cards = dealer.getCards();
+        Hand cards = dealer.getHand();
         int totalScore = calculateTotalScore(cards);
         return new GameScore(DEALER_NAME, totalScore);
     }
 
-    private static int calculateTotalScore(Hand cards) {
-        int totalScore = cards.calculateTotalNumbers();
-        while (totalScore < MINIMUM_SCORE_FOR_ACE_HIGH && hasAce(cards)) {
+    private static int calculateTotalScore(Hand hand) {
+        int totalScore = hand.calculateTotalNumbers();
+        while (totalScore < MINIMUM_SCORE_FOR_ACE_HIGH && hasAce(hand)) {
             totalScore += ACE_SCORE_HIGH - ACE_SCORE_LOW;
         }
         return totalScore;
     }
 
-    private static boolean hasAce(Hand cards) {
-        return cards.getCards()
+    private static boolean hasAce(Hand hand) {
+        return hand.getCards()
             .stream()
             .anyMatch(Card::hasAce);
     }

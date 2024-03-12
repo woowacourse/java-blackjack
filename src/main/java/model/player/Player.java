@@ -11,16 +11,16 @@ public class Player {
     private static final int HIT_CONDITION = 22;
 
     private final String name;
-    private final Hand cards;
+    private final Hand hand;
 
     public Player(String name) {
         this(name, new Hand(List.of()));
     }
 
-    public Player(String name, Hand cards) {
+    public Player(String name, Hand hand) {
         validateEmptyName(name);
         this.name = name;
-        this.cards = cards;
+        this.hand = hand;
     }
 
     private void validateEmptyName(String name) {
@@ -30,17 +30,17 @@ public class Player {
     }
 
     public boolean isPossibleHit() {
-        int totalNumbers = cards.calculateTotalNumbers();
+        int totalNumbers = hand.calculateTotalNumbers();
         return totalNumbers < HIT_CONDITION;
     }
 
     public Player hitCard(Card card) {
-        Hand addedCards = cards.add(card);
+        Hand addedCards = hand.add(card);
         return new Player(name, addedCards);
     }
 
     public Player hitCards(List<Card> cards) {
-        Hand addedCards = this.cards.addAll(cards);
+        Hand addedCards = this.hand.addAll(cards);
         return new Player(name, addedCards);
     }
 
@@ -61,15 +61,15 @@ public class Player {
         return Objects.hash(name);
     }
 
-    public int cardsSize() {
-        return cards.size();
+    public int handSize() {
+        return hand.size();
     }
 
     public String getName() {
         return name;
     }
 
-    public Hand getCards() {
-        return cards;
+    public Hand getHand() {
+        return hand;
     }
 }

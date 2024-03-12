@@ -49,6 +49,6 @@ class PlayerTest {
         Player player = new Player("lily", cards);
         Card card = new Card(TWO, DIAMOND);
         Player updatedPlayer = player.hitCard(card);
-        assertThat(updatedPlayer.cardsSize()).isEqualTo(3);
+        assertThat(updatedPlayer.handSize()).isEqualTo(3);
     }
 }

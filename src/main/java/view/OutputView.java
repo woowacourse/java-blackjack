@@ -51,7 +51,7 @@ public class OutputView {
     }
 
     private static void printDealerCard(Dealer dealer) {
-        List<Card> cards = dealer.getCards().getCards();
+        List<Card> cards = dealer.getHand().getCards();
         System.out.printf(DEALER_CARD_FORMAT, cards.get(0));
     }
 
@@ -62,7 +62,7 @@ public class OutputView {
     }
 
     public static void printPlayerCard(Player player) {
-        String playerCards = createCardsMessage(player.getCards());
+        String playerCards = createCardsMessage(player.getHand());
         System.out.printf(CARDS_FORMAT, player.getName(), playerCards);
     }
 
@@ -71,22 +71,33 @@ public class OutputView {
     }
 
     public static void printFinalScore(Dealer dealer, Players players, GameResult gameResult) {
-        String dealerCards = createCardsMessage(dealer.getCards());
-        System.out.printf(FINAL_SCORE_FORMAT, DEALER_NAME, dealerCards,
-            gameResult.findDealerScore());
-        for (Player player : players.getGroup()) {
-            String playerName = player.getName();
-            String playerCards = createCardsMessage(player.getCards());
-            System.out.printf(FINAL_SCORE_FORMAT, playerName, playerCards,
-                gameResult.findPlayerScore(playerName));
-        }
+        printDealerFinalScore(dealer, gameResult);
+        printAllPlayersFinalScore(players, gameResult);
     }
 
-    private static String createCardsMessage(Hand cards) {
-        return cards.getCards()
+    private static void printDealerFinalScore(Dealer dealer, GameResult gameResult) {
+        String dealerCards = createCardsMessage(dealer.getHand());
+        System.out.printf(FINAL_SCORE_FORMAT, DEALER_NAME, dealerCards,
+            gameResult.findDealerScore());
+    }
+
+    private static String createCardsMessage(Hand hand) {
+        return hand.getCards()
             .stream()
             .map(Card::toString)
             .collect(collectingAndThen(toList(), result -> String.join(DELIMITER, result)));
+    }
+
+    private static void printAllPlayersFinalScore(Players players, GameResult gameResult) {
+        players.getGroup()
+            .forEach(player -> printPlayerFinalScore(player, gameResult));
+    }
+
+    private static void printPlayerFinalScore(Player player, GameResult gameResult) {
+        String playerName = player.getName();
+        String playerCards = createCardsMessage(player.getHand());
+        System.out.printf(FINAL_SCORE_FORMAT, playerName, playerCards,
+            gameResult.findPlayerScore(playerName));
     }
 
     public static void printGameResult(GameResult gameResult) {

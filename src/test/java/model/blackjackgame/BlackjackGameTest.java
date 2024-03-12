@@ -42,7 +42,7 @@ class BlackjackGameTest {
 
         assertThat(updatedDealer.cardsSize()).isEqualTo(2);
         updatedPlayers.getGroup()
-            .forEach(player -> assertThat(player.cardsSize()).isEqualTo(2));
+            .forEach(player -> assertThat(player.handSize()).isEqualTo(2));
     }
 
     private BlackjackGame prepareBlackjackGame() {
@@ -64,8 +64,8 @@ class BlackjackGameTest {
         }
 
         Players updatedPlayers = blackjackGame.getPlayers();
-        assertThat(updatedPlayers.getGroup().get(0).cardsSize()).isEqualTo(1);
-        assertThat(updatedPlayers.getGroup().get(1).cardsSize()).isEqualTo(1);
+        assertThat(updatedPlayers.getGroup().get(0).handSize()).isEqualTo(1);
+        assertThat(updatedPlayers.getGroup().get(1).handSize()).isEqualTo(1);
     }
 
     @DisplayName("최초 딜러의 카드 합이 16점 이하인지 유무를 반환한다")
