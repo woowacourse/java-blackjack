@@ -15,10 +15,14 @@ public enum CardNumber {
     QUEEN(10, "Q"),
     KING(10, "K");
 
-    private final int score;
+    private final Score score;
     private final String text;
 
     CardNumber(int score, String text) {
+        this(new Score(score), text);
+    }
+
+    CardNumber(Score score, String text) {
         this.score = score;
         this.text = text;
     }
@@ -31,7 +35,7 @@ public enum CardNumber {
         return ACE.equals(this);
     }
 
-    public int getScore() {
+    public Score getScore() {
         return score;
     }
 

@@ -11,7 +11,7 @@ public class Player extends Participant {
 
     @Override
     public boolean checkCanGetMoreCard() {
-        return !cards.isGreaterThanWinningScore();
+        return !cards.isBusted();
     }
 
     public PlayerResultStatus determineWinner(Dealer dealer) {

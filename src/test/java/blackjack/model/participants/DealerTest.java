@@ -15,33 +15,74 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class DealerTest {
 
-    @DisplayName("카드를 추가발급받는다")
-    @Test
-    void addCardLessThan() {
-        List<Card> given = List.of(
-                new Card(CardNumber.SIX, CardShape.HEART),
-                new Card(CardNumber.TEN, CardShape.CLOVER)
-        );
+    @DisplayName("기준 점수와 비교하여 카드를 더 받을 수 있는지 판단한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"FIVE,true", "SIX,true", "SEVEN,false", "EIGHT,false"})
+    void checkCanGetMoreCard(CardNumber given, boolean expected) {
         Dealer dealer = new Dealer();
-        dealer.addCards(given);
+        List<Card> cards = List.of(
+                new Card(given, CardShape.DIAMOND),
+                new Card(CardNumber.KING, CardShape.SPADE)
+        );
+        dealer.addCards(cards);
 
-        Card card = new Card(CardNumber.ACE, CardShape.DIAMOND);
-        dealer.addCard(card);
-
-        assertThat(dealer.getCards().getCards()).hasSize(3);
+        boolean result = dealer.checkCanGetMoreCard();
+        assertThat(result).isEqualTo(expected);
     }
 
-    @DisplayName("딜러 카드가 기준 점수보다 크면 플레이어는 이긴다.")
+    @DisplayName("비교하는 카드가 버스트라면 플레이어는 진다.")
     @Test
-    void compareScore() {
+    void getResultStatus() {
         List<Card> given = List.of(
                 new Card(CardNumber.SEVEN, CardShape.HEART),
+                new Card(CardNumber.TEN, CardShape.CLOVER)
+        );
+        List<Card> comparison = List.of(
+                new Card(CardNumber.KING, CardShape.HEART),
+                new Card(CardNumber.KING, CardShape.CLOVER),
+                new Card(CardNumber.KING, CardShape.CLOVER)
+        );
+        Cards comparisonCards = new Cards();
+        comparisonCards.add(comparison);
+
+        Dealer dealer = new Dealer();
+        dealer.addCards(given);
+        PlayerResultStatus playerResultStatus = dealer.getResultStatus(comparisonCards);
+        assertThat(playerResultStatus).isEqualTo(PlayerResultStatus.LOSE);
+    }
+
+    @DisplayName("둘다 버스트라면 플레이어는 진다.")
+    @Test
+    void getResultStatus3() {
+        List<Card> given = List.of(
+                new Card(CardNumber.KING, CardShape.HEART),
                 new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.QUEEN, CardShape.CLOVER)
+        );
+        List<Card> comparison = List.of(
+                new Card(CardNumber.KING, CardShape.HEART),
+                new Card(CardNumber.KING, CardShape.CLOVER),
+                new Card(CardNumber.KING, CardShape.CLOVER)
+        );
+        Cards comparisonCards = new Cards();
+        comparisonCards.add(comparison);
+
+        Dealer dealer = new Dealer();
+        dealer.addCards(given);
+        PlayerResultStatus playerResultStatus = dealer.getResultStatus(comparisonCards);
+        assertThat(playerResultStatus).isEqualTo(PlayerResultStatus.LOSE);
+    }
+
+    @DisplayName("딜러 카드만 버스트이면 플레이어는 이긴다.")
+    @Test
+    void getResultStatus2() {
+        List<Card> given = List.of(
+                new Card(CardNumber.KING, CardShape.HEART),
+                new Card(CardNumber.KING, CardShape.DIAMOND),
                 new Card(CardNumber.TEN, CardShape.SPADE)
         );
         List<Card> comparison = List.of(
-                new Card(CardNumber.ACE, CardShape.HEART),
-                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.TWO, CardShape.HEART),
                 new Card(CardNumber.TEN, CardShape.SPADE)
         );
         Cards comparisonCards = new Cards();
@@ -51,28 +92,6 @@ class DealerTest {
         dealer.addCards(given);
         PlayerResultStatus playerResultStatus = dealer.getResultStatus(comparisonCards);
         assertThat(playerResultStatus).isEqualTo(PlayerResultStatus.WIN);
-    }
-
-    @DisplayName("딜러 카드가 기준 점수보다 낮고 비교 카드 점수가 기준 점수보다 크면 플레이어는 진다.")
-    @Test
-    void compareScore2() {
-        List<Card> given = List.of(
-                new Card(CardNumber.ACE, CardShape.HEART),
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TEN, CardShape.SPADE)
-        );
-        List<Card> comparison = List.of(
-                new Card(CardNumber.TWO, CardShape.HEART),
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TEN, CardShape.SPADE)
-        );
-        Cards comparisonCards = new Cards();
-        comparisonCards.add(comparison);
-
-        Dealer dealer = new Dealer();
-        dealer.addCards(given);
-        PlayerResultStatus playerResultStatus = dealer.getResultStatus(comparisonCards);
-        assertThat(playerResultStatus).isEqualTo(PlayerResultStatus.LOSE);
     }
 
     @DisplayName("딜러 카드와 비교 카드 점수가 기준 점수보다 낮으면 두 점수의 대소관계로 결과를 낸다.")

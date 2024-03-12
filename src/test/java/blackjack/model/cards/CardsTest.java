@@ -18,9 +18,9 @@ class CardsTest {
         Cards given = new Cards();
         given.add(cards);
 
-        int score = given.getCardsScore();
+        Score score = given.getCardsScore();
 
-        assertThat(score).isEqualTo(18);
+        assertThat(score).isEqualTo(new Score(18));
     }
 
     @DisplayName("점수 총합을 반환한다.")
@@ -33,9 +33,9 @@ class CardsTest {
         );
         Cards given = new Cards();
         given.add(cards);
-        int score = given.getCardsScore();
+        Score score = given.getCardsScore();
 
-        assertThat(score).isEqualTo(12);
+        assertThat(score).isEqualTo(new Score(12));
     }
 
     @DisplayName("점수 총합이 21점을 초과하는지 여부를 반환한다.")
@@ -50,7 +50,7 @@ class CardsTest {
         Cards given = new Cards();
         given.add(cards);
 
-        boolean result = given.isGreaterThanWinningScore();
+        boolean result = given.isBusted();
 
         assertThat(result).isTrue();
     }

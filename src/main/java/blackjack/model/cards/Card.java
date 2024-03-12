@@ -2,7 +2,7 @@ package blackjack.model.cards;
 
 import java.util.Objects;
 
-public class Card {
+public final class Card {
     private final CardNumber cardNumber;
     private final CardShape cardShape;
 
@@ -15,7 +15,7 @@ public class Card {
         return cardNumber.isAce();
     }
 
-    public int getScore() {
+    public Score getScore() {
         return cardNumber.getScore();
     }
 

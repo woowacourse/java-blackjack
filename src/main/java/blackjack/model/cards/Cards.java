@@ -3,31 +3,36 @@ package blackjack.model.cards;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cards {
-    private static final int BOUNDARY_SCORE = 11;
-    private static final int EXTRA_SCORE = 10;
-    private static final int WINNING_SCORE = 21;
+public final class Cards {
+    private final List<Card> cards;
+    private Score score;
 
-    private final List<Card> cards = new ArrayList<>();
-    private int score = 0;
+    public Cards() {
+        this(List.of(), new Score(0));
+    }
+
+    private Cards(List<Card> cards, Score score) {
+        this.cards = new ArrayList<>(cards);
+        this.score = score;
+    }
+
 
     public void add(Card card) {
         cards.add(card);
-        score += card.getScore();
+        score = score.add(card.getScore());
     }
 
     public void add(List<Card> cardsToAdd) {
-        cards.addAll(cardsToAdd);
-        score += calculate(cardsToAdd);
+        cardsToAdd.forEach(this::add);
     }
 
-    public boolean isGreaterThanWinningScore() {
-        return score > WINNING_SCORE;
+    public boolean isBusted() {
+        return score.isBusted();
     }
 
-    public int getCardsScore() {
-        if (hasAce() && score <= BOUNDARY_SCORE) {
-            return score + EXTRA_SCORE;
+    public Score getCardsScore() {
+        if (hasAce()) {
+            return score.getScoreWhenHasAce();
         }
         return score;
     }
@@ -35,12 +40,6 @@ public class Cards {
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
-    }
-
-    private int calculate(List<Card> cardsToAdd) {
-        return cardsToAdd.stream()
-                .mapToInt(Card::getScore)
-                .sum();
     }
 
     public List<Card> getCards() {

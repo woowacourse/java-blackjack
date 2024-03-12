@@ -4,6 +4,7 @@ import blackjack.model.blackjackgame.PlayersGameResults;
 import blackjack.model.cards.Card;
 import blackjack.model.cards.Cards;
 import blackjack.model.participants.Dealer;
+import blackjack.model.participants.Participant;
 import blackjack.model.participants.Player;
 import java.util.List;
 import java.util.Map;
@@ -35,10 +36,14 @@ public class OutputView {
 
     public void printFinalScore(List<Player> players, Dealer dealer) {
         System.out.println();
-        System.out.print(getParticipantScoreFormat(DEALER_NAME, dealer.getCards(), dealer.getCards().getCardsScore()));
+        System.out.print(getParticipantScoreFormat(DEALER_NAME, dealer.getCards(), getValue(dealer)));
         players.forEach(player -> System.out.printf(
                 getParticipantScoreFormat(player.getName(), player.getCards(),
-                        player.getCards().getCardsScore())));
+                        getValue(player))));
+    }
+
+    private int getValue(Participant participant) {
+        return participant.getCards().getCardsScore().getValue();
     }
 
     public void printGameResults(PlayersGameResults playersGameResults) {
