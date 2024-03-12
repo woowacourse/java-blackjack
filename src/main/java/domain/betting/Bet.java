@@ -2,7 +2,7 @@ package domain.betting;
 
 import java.util.Objects;
 
-class Bet {
+public class Bet {
     private static final int MAXIMUM_BETTING_MONEY = 1_000_000;
     private static final int MINIMUM_BETTING_MONEY = 1_000;
     static final String INVALID_BETTING_MESSAGE = "베팅액은 최소 천원, 최대 백만원입니다.";
