@@ -6,12 +6,20 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private static void printVictory(Map<String, Boolean> victoryResult, String playerName) {
+    private void printVictory(Map<String, Boolean> victoryResult, String playerName) {
         if (victoryResult.get(playerName)) {
             System.out.println(playerName + ": 승");
             return;
         }
         System.out.println(playerName + ": 패");
+    }
+
+    public void printMoneyResult(Map<String, Integer> bettingMoneyResult) {
+        System.out.println("\n## 최종 수익");
+        for (String playerName: bettingMoneyResult.keySet()) {
+            System.out.printf("%s: %d\n",playerName, bettingMoneyResult.get(playerName));
+        }
+
     }
 
     public void printSetting(PlayerDto dealer, List<PlayerDto> players) {
