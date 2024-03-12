@@ -12,6 +12,10 @@ public class Bet {
         this.betAmount = betAmount;
     }
 
+    public Money calculateMultipleMoneyOfBet(double scope) {
+        return betAmount.multiply(scope);
+    }
+
     public PlayerName getPlayerName() {
         return playerName;
     }
