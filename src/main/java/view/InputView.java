@@ -1,6 +1,7 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -10,11 +11,11 @@ import java.util.Stack;
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static String[] inputPlayers() {
+    public static List<String> inputPlayers() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         final String input = scanner.nextLine();
         validatePlayers(input);
-        return input.split(",");
+        return Arrays.stream(input.split(",")).toList();
     }
 
     private static void validatePlayers(final String input) {

@@ -73,3 +73,12 @@ TODO:
 덱 중복 로직 개선
 
 사용자 이름은 5글자 이하여야한다
+
+
+
+The Pack
+The standard 52-card pack is used, but in most casinos several decks of cards are shuffled together. 
+The six-cards game (312 cards) is the most popular. 
+In addition, the dealer uses a blank plastic card, which is never dealt, 
+but is placed toward the bottom of the pack to indicate when it will be time for the cards to be reshuffled. When four or more decks are used, they are dealt from a shoe (a box that allows the dealer to remove cards one at a time, face down, without actually holding one or more packs).
+

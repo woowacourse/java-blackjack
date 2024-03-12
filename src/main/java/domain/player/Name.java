@@ -11,6 +11,7 @@ public class Name {
         this.value = name;
     }
 
+
     private void validate(final String name) {
         validateEmptiness(name);
         validateLength(name);

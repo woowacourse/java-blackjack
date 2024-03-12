@@ -1,17 +1,22 @@
 package domain.player;
 
-import domain.blackjack.OneOnOneResult;
+import domain.card.Card;
+import domain.card.Cards;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Dealer extends Player {
+public class Dealer extends Participant {
     private static final int HIT_UPPER_BOUND = 17;
-    private static final Dealer dealer = new Dealer();
 
-    private Dealer() {
-        super(new Name(""));
+    private final Cards decks = Cards.makeDecks();
+
+    public Dealer() {
+        super();
     }
 
-    public static Dealer getInstance() {
-        return dealer;
+
+    public Card draw() {
+        return decks.draw();
     }
 
     @Override
@@ -21,17 +26,36 @@ public class Dealer extends Player {
 
     @Override
     public boolean canNotHit() {
-        return false;
+        return !canHit();
     }
 
     @Override
-    public OneOnOneResult determineWinnerByComparing(final Player participant) {
-        if (isBust()) {
-            return OneOnOneResult.ONE_LOSE;
-        }
-        if (participant.isBust()) {
-            return OneOnOneResult.ONE_WIN;
-        }
-        return OneOnOneResult.fromCondition(calculateScore() > participant.calculateScore());
+    public String getName() {
+        return "딜러";
     }
+
+    public Map<PlayerResult, Integer> wrapUp(final Players players) {
+        final Map<PlayerResult, Integer> result = new HashMap<>();
+        players.stream()
+                .forEach(player -> result.merge(compareHandsWith(player), 1, Integer::sum));
+        return result;
+    }
+
+    public PlayerResult compareHandsWith(final Player player) {
+        if (player.isBust()) {
+            return PlayerResult.WIN;
+        }
+        if (isBust()) {
+            return PlayerResult.LOSE;
+        }
+
+        if (player.calculateScore() == calculateScore()) {
+            return PlayerResult.TIE;
+        } else if (player.calculateScore() > calculateScore()) {
+            return PlayerResult.LOSE;
+        } else {
+            return PlayerResult.WIN;
+        }
+    }
+
 }

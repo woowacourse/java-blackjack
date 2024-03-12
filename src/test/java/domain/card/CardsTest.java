@@ -6,25 +6,27 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class HandsTest {
+class CardsTest {
+
+
     @Test
     @DisplayName("중복되지 않는 카드를 뽑는다.")
     void draw() {
-        final Hands hands = Hands.makeOnePack();
+        final Cards deck = Cards.makeDecks();
         final Set<Card> cards = new HashSet<>();
-        for (int i = 0; i < 52; i++) {
-            cards.add(hands.draw());
+        for (int i = 0; i < 52 * 6; i++) {
+            cards.add(deck.draw());
         }
         Assertions.assertThat(cards).size().isEqualTo(52);
     }
 
     @Test
-    @DisplayName("52장이 넘는 카드를 뽑을 경우 예외를 발생한다.")
+    @DisplayName("정해진 수 이상의 카드를 뽑을 경우 예외를 발생한다.")
     void handsSize() {
-        final Hands hands = Hands.makeOnePack();
-        for (int i = 0; i < 52; i++) {
-            hands.draw();
+        final Cards cards = Cards.makeDecks();
+        for (int i = 0; i < 52 * 6; i++) {
+            cards.draw();
         }
-        Assertions.assertThatCode(hands::draw).isInstanceOf(IllegalStateException.class);
+        Assertions.assertThatCode(cards::draw).isInstanceOf(IllegalStateException.class);
     }
 }
