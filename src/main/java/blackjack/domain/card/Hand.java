@@ -1,10 +1,15 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
 
     private final List<Card> cards;
+
+    public Hand() {
+        this.cards = new ArrayList<>();
+    }
 
     public Hand(List<Card> cards) {
         this.cards = cards;
@@ -33,7 +38,7 @@ public class Hand {
                 .sum();
     }
 
-    public int countAce() {
+    private int countAce() {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
