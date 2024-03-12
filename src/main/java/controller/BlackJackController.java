@@ -9,6 +9,7 @@ import domain.gamer.Name;
 import domain.gamer.Player;
 import domain.gamer.Players;
 import domain.result.PlayerResults;
+import exception.CardReceiveException;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -77,7 +78,7 @@ public class BlackJackController {
         try {
             blackJackGame.giveCard(gamer);
             return true;
-        } catch (Exception exception) {
+        } catch (CardReceiveException exception) {
             return false;
         }
     }
