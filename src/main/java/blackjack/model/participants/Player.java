@@ -21,6 +21,9 @@ public class Player extends Participant {
         if (cards.isBust()) {
             return Result.LOSE;
         }
+        if (cards.isBlackJack() && !otherCards.isBlackJack()) {
+            return Result.WIN_BY_BLACKJACK;
+        }
         if (otherCards.isBust()) {
             return Result.WIN;
         }
