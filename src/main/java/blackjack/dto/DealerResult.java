@@ -7,6 +7,8 @@ import java.util.Map;
 
 public class DealerResult {
 
+    private static final String NONEXISTENT_KEY_EXCEPTION = "존재하지 않는 게임 결과입니다.";
+
     private final Map<GameResult, Integer> dealerResult;
 
     private DealerResult(final Map<GameResult, Integer> dealerResult) {
@@ -44,6 +46,10 @@ public class DealerResult {
     }
 
     public int findResultByGameResult(final GameResult gameResult) {
+        if (!dealerResult.containsKey(gameResult)) {
+            throw new IllegalArgumentException(NONEXISTENT_KEY_EXCEPTION);
+        }
+
         return dealerResult.get(gameResult);
     }
 
