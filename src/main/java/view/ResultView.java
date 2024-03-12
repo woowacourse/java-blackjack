@@ -140,12 +140,6 @@ public class ResultView {
     }
 
     private String resolvePlayerResult(WinState winState) {
-        if (winState == WinState.WIN) {
-            return "승";
-        }
-        if (winState == WinState.LOSE) {
-            return "패";
-        }
-        return "무";
+        return WinStateNotation.findNotationByWinState(winState);
     }
 }
