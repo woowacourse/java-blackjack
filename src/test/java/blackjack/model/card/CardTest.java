@@ -8,11 +8,28 @@ import org.junit.jupiter.api.Test;
 
 class CardTest {
 
+    @DisplayName("카드 패턴과 숫자로 카드를 생성한다.")
+    @Test
+    void createCard() {
+        //given
+        CardPattern cardPattern = CardPattern.DIAMOND;
+        CardNumber cardNumber = CardNumber.FIVE;
+
+        //when
+        Card card = Card.of(cardPattern, cardNumber);
+
+        //then
+        assertAll(
+                () -> assertThat(card.pattern()).isEqualTo(cardPattern),
+                () -> assertThat(card.number()).isEqualTo(cardNumber)
+        );
+    }
+
     @DisplayName("Score가 11인 Ace 카드라면 True를 반환한다.")
     @Test
     void isElevenAce() {
         //given
-        Card card = new Card(new CardProperties(CardPattern.CLOVER, CardNumber.ACE));
+        Card card = Card.of(CardPattern.CLOVER, CardNumber.ACE);
 
         //when, then
         assertThat(card.isElevenAce()).isTrue();
@@ -22,7 +39,7 @@ class CardTest {
     @Test
     void switchAceValue() {
         //given
-        Card card = new Card(new CardProperties(CardPattern.CLOVER, CardNumber.ACE));
+        Card card = Card.of(CardPattern.CLOVER, CardNumber.ACE);
 
         //when
         int unmodifiedScore = card.getScore();
