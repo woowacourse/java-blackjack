@@ -20,7 +20,6 @@ public class DeckGenerator {
     }
 
     private static List<Card> createDeck() {
-
         return Arrays.stream(Pattern.values())
                 .map(DeckGenerator::createCard)
                 .flatMap(List::stream)
