@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.participants.Profit;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -29,5 +30,10 @@ public class InputView {
         if (!YES.equals(command) && !NO.equals(command)) {
             throw new IllegalArgumentException(YES + " 또는 " + NO + "만 입력 가능합니다.");
         }
+    }
+
+    public int readBettingPrice(String name) {
+        System.out.printf("%s의 배팅 금액은?\n", name);
+        return Integer.parseInt(SCANNER.nextLine());
     }
 }

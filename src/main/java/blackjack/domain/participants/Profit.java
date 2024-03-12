@@ -40,4 +40,15 @@ public class Profit {
     public int hashCode() {
         return Objects.hash(profit, isPositive);
     }
+
+    public int getProfit() {
+        if (isPositive) {
+            return profit;
+        }
+        return profit * -1;
+    }
+
+    public boolean isPositive() {
+        return isPositive;
+    }
 }

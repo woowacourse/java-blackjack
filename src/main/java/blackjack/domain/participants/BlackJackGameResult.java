@@ -46,6 +46,10 @@ public class BlackJackGameResult {
         return gameResult.size();
     }
 
+    public State getState(Player player) {
+        return gameResult.get(player);
+    }
+
     public Map<Player, State> getGameResult() {
         return new HashMap<>(gameResult);
     }

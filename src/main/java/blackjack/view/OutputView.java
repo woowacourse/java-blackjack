@@ -1,8 +1,9 @@
 package blackjack.view;
 
-import blackjack.domain.participants.Player;
-import blackjack.domain.participants.BlackJackGameResult;
-import blackjack.domain.participants.State;
+import blackjack.domain.participants.BettingResult;
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.GameParticipant;
+import blackjack.domain.participants.Profit;
 import blackjack.dto.ParticipantDto;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,26 +56,16 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printGameResult(BlackJackGameResult blackJackGameResult) { // TODO 리팩터링
-        System.out.println("## 최종 승패");
-//        int dealerWinCount = blackJackGameResult.countDealerWin();
-//        int dealerLoseCount = blackJackGameResult.size() - dealerWinCount;
-//        System.out.printf("딜러: %d승 %무 %d패\n", dealerWinCount, dealerLoseCount);
-//        blackJackGameResult.getGameResult().keySet().forEach(player -> printVictory(blackJackGameResult, player));
+    public void printGameResult(BettingResult bettingResult) {
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %d\n", bettingResult.getDealerProfit());
+        bettingResult.getBettingResult()
+                .forEach(this::printProfit);
     }
 
-//    private static void printVictory(BlackJackGameResult blackJackGameResult, Player player) {
-//        State state = blackJackGameResult.getResult(player);
-//        if (state == State.WIN) {
-//            System.out.println(player.getName().getName() + ": 승");
-//            return;
-//        }
-//        if (state == State.TIE) {
-//            System.out.println(player.getName().getName() + ": 무");
-//            return;
-//        }
-//        System.out.println(player.getName().getName() + ": 패");
-//    }
+    private void printProfit(GameParticipant participant, Profit profit) {
+        System.out.printf("%s: %d\n", participant.getName().getName(), profit.getProfit());
+    }
 
     public void printNewLine() {
         System.out.println();

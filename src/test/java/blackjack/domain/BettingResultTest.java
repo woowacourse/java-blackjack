@@ -24,7 +24,8 @@ public class BettingResultTest {
         Profit profit = new Profit(1000);
 
         bettingResult.bet(takan, profit);
-        Profit result = bettingResult.calculateProfit(takan, State.WIN);
+        bettingResult.calculateProfit(takan, State.WIN);
+        Profit result = bettingResult.getProfit(takan);
 
         Assertions.assertThat(profit).isEqualTo(result);
     }
@@ -42,7 +43,8 @@ public class BettingResultTest {
         takan.receiveHands(hands);
         Profit profit = new Profit(1000);
         bettingResult.bet(takan, profit);
-        Profit result = bettingResult.calculateProfit(takan, State.WIN);
+        bettingResult.calculateProfit(takan, State.WIN);
+        Profit result = bettingResult.getProfit(takan);
 
         Assertions.assertThat(result).isEqualTo(profit.multiple(1.5));
     }
@@ -54,9 +56,10 @@ public class BettingResultTest {
         Player takan = new Player(new Name("타칸"));
 
         bettingResult.bet(takan, new Profit(1000));
-        Profit profit = bettingResult.calculateProfit(takan, State.TIE);
+        bettingResult.calculateProfit(takan, State.TIE);
+        Profit result = bettingResult.getProfit(takan);
 
-        Assertions.assertThat(profit).isEqualTo(new Profit(0));
+        Assertions.assertThat(result).isEqualTo(new Profit(0));
     }
 
     @Test
@@ -67,7 +70,8 @@ public class BettingResultTest {
         Profit profit = new Profit(1000);
 
         bettingResult.bet(takan, profit);
-        Profit result = bettingResult.calculateProfit(takan, State.LOSE);
+        bettingResult.calculateProfit(takan, State.LOSE);
+        Profit result = bettingResult.getProfit(takan);
 
         Assertions.assertThat(result).isEqualTo(profit.inverse());
     }
