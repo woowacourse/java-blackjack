@@ -22,6 +22,10 @@ public class OutputView {
         System.out.println(messageResolver.resolveParticipantHandMessage(player));
     }
 
+    public void printLineSeparator() {
+        System.out.println();
+    }
+
     public void printDrawToDealer() {
         System.out.println(messageResolver.resolveDrawToDealerMessage());
     }

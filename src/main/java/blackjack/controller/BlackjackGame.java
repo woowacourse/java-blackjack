@@ -32,6 +32,7 @@ public class BlackjackGame {
 
     private void drawToPlayers(Players players, CardDeck cardDeck) {
         players.getPlayers().forEach(player -> drawToPlayer(player, cardDeck));
+        outputView.printLineSeparator();
     }
 
     private void drawToPlayer(Player player, CardDeck cardDeck) {
