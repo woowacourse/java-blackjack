@@ -1,9 +1,6 @@
 package blackjack.domain.gameresult;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.gameresult.Batting;
-import blackjack.domain.gameresult.Result;
-import blackjack.domain.gameresult.ResultJudge;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
@@ -18,8 +15,8 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static blackjack.domain.card.Kind.*;
-import static blackjack.domain.gameresult.Result.*;
 import static blackjack.domain.card.Value.*;
+import static blackjack.domain.gameresult.Result.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 

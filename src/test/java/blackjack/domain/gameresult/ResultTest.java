@@ -1,6 +1,5 @@
 package blackjack.domain.gameresult;
 
-import blackjack.domain.gameresult.Result;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +19,7 @@ class ResultTest {
     @Test
     void should_returnOnetimesBatting_When_Win() {
         double profit = Result.calculateProfit(WIN, 100.0);
-        assertThat(profit).isEqualTo(100.0 * 1.0);
+        assertThat(profit).isEqualTo(100.0);
     }
 
     @DisplayName("패배: 배팅액의 손실")

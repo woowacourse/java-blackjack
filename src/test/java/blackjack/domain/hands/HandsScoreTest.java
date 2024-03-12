@@ -42,6 +42,7 @@ class HandsScoreTest {
                 () -> assertFalse(sameScore1.isSame(otherScore))
         );
     }
+
     @DisplayName("낮은 점수를 판단할 수 있다")
     @Test
     void isLowerThan() {
