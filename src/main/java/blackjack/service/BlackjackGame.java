@@ -8,8 +8,8 @@ import blackjack.domain.dealer.Dealer;
 import blackjack.domain.dealer.Deck;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
-import blackjack.domain.rule.GameRule;
-import blackjack.dto.DealerMoreCardDto;
+import blackjack.domain.rule.state.State;
+import blackjack.dto.DealerMoreCardsDto;
 import blackjack.dto.FinalHandsScoreDto;
 import blackjack.dto.PlayerCardsDto;
 import blackjack.dto.StartCardsDto;
@@ -37,9 +37,9 @@ public class BlackjackGame {
     }
 
     public StartCardsDto start() {
-        dealer.addCard(GameRule.START_CARD_COUNT);
+        dealer.start();
 
-        final List<List<Card>> cards = dealer.drawCards(players.count(), GameRule.START_CARD_COUNT);
+        final List<List<Card>> cards = dealer.drawCards(players.count(), State.START_CARD_COUNT);
         players.divideCard(cards);
 
         return getStartCards();
@@ -58,18 +58,18 @@ public class BlackjackGame {
         players.addCardTo(name, dealer.drawCard());
     }
 
-    public DealerMoreCardDto giveDealerMoreCard() {
+    public DealerMoreCardsDto giveDealerMoreCards() {
         if (players.isAllDead()) {
-            return DealerMoreCardDto.of(Dealer.DEALER_NAME, 0, Dealer.NEED_CARD_NUMBER_MAX);
+            return DealerMoreCardsDto.of(Dealer.DEALER_NAME, 0, Dealer.NEED_CARD_NUMBER_MAX);
         }
         int count = 0;
 
         while (dealer.needMoreCard()) {
-            dealer.addCard();
+            dealer.draw();
             count++;
         }
 
-        return DealerMoreCardDto.of(Dealer.DEALER_NAME, count, Dealer.NEED_CARD_NUMBER_MAX);
+        return DealerMoreCardsDto.of(Dealer.DEALER_NAME, count, Dealer.NEED_CARD_NUMBER_MAX);
     }
 
     public boolean isNotDealerBlackjack() {
@@ -85,7 +85,7 @@ public class BlackjackGame {
     }
 
     public BetRevenueResultDto getBetRevenueResults() {
-        final Map<PlayerName, BetRevenue> playersBetResult = players.determineBetRevenue(dealer.getHands());
+        final Map<PlayerName, BetRevenue> playersBetResult = players.determineBetRevenue(dealer.getState());
         final BetResult betResult = new BetResult(playersBetResult);
         final BetRevenue dealerRevenue = betResult.calculateDealerRevenue();
 

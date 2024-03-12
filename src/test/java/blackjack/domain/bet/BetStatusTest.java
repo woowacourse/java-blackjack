@@ -16,6 +16,7 @@ import blackjack.domain.card.Hands;
 import blackjack.domain.player.bet.BetAmount;
 import blackjack.domain.player.bet.BetRevenue;
 import blackjack.domain.player.bet.BetStatus;
+import blackjack.domain.rule.state.Stand;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -26,19 +27,19 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class BetStatusTest {
 
-    static final Hands score19count2 = new Hands(List.of(new Card(TEN, DIA), new Card(NINE, DIA)));
-    static final Hands score20count2 = new Hands(List.of(new Card(TEN, DIA), new Card(JACK, DIA)));
-    static final Hands score21count2 = new Hands(List.of(new Card(ACE, DIA), new Card(JACK, DIA)));
-    static final Hands score21count3 = new Hands(List.of(new Card(ACE, DIA), new Card(JACK, DIA), new Card(QUEEN, DIA)));
-    static final Hands score22count3 = new Hands(List.of(new Card(TEN, DIA), new Card(JACK, DIA), new Card(TWO, DIA)));
-    static final Hands score23count3 = new Hands(List.of(new Card(TEN, DIA), new Card(JACK, DIA), new Card(THREE, DIA)));
+    static final Hands score19count2 = new Hands(List.of(Card.of(TEN, DIA), Card.of(NINE, DIA)));
+    static final Hands score20count2 = new Hands(List.of(Card.of(TEN, DIA), Card.of(JACK, DIA)));
+    static final Hands score21count2 = new Hands(List.of(Card.of(ACE, DIA), Card.of(JACK, DIA)));
+    static final Hands score21count3 = new Hands(List.of(Card.of(ACE, DIA), Card.of(JACK, DIA), Card.of(QUEEN, DIA)));
+    static final Hands score22count3 = new Hands(List.of(Card.of(TEN, DIA), Card.of(JACK, DIA), Card.of(TWO, DIA)));
+    static final Hands score23count3 = new Hands(List.of(Card.of(TEN, DIA), Card.of(JACK, DIA), Card.of(THREE, DIA)));
 
 
     @DisplayName("딜러와 참여자의 카드들로 배팅결과를 계산한다.")
     @ParameterizedTest(name = "딜러 카드 : {0}, 플레이어 카드 : {1}, 결과 : {2}")
     @MethodSource("handsAndWinStatus")
     void of(Hands dealerHands, Hands playerHands, BetStatus expected) {
-        BetStatus betStatus = BetStatus.of(dealerHands, playerHands);
+        BetStatus betStatus = BetStatus.of(Stand.from(dealerHands), Stand.from(playerHands));
 
         assertThat(betStatus).isEqualTo(expected);
     }

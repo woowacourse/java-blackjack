@@ -1,38 +1,31 @@
 package blackjack.domain.card;
 
-import static java.util.stream.Collectors.toMap;
-
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 public record Card(CardNumber number, CardShape shape) {
 
     private static class CardCache {
 
-        static final Map<CardShape, Map<CardNumber, Card>> cache;
-        static Map<CardShape, Map<CardNumber, Card>> archivedCache;
+        static final Map<String, Card> cache;
 
         static {
-            archivedCache = new EnumMap<>(CardShape.class);
+            cache = new LinkedHashMap<>();
 
-            final List<CardNumber> numbers = Arrays.asList(CardNumber.values());
+            CardShape.stream().forEach(shape -> CardNumber.stream()
+                    .forEach(number -> cache.put(toKey(number, shape), new Card(number, shape))));
+        }
 
-            Arrays.stream(CardShape.values()).forEach(shape -> archivedCache.put(shape, numbers.stream().collect(
-                    toMap(Function.identity(), number -> new Card(number, shape), (v1, v2) -> v1,
-                            () -> new EnumMap<>(CardNumber.class)))));
-
-            cache = archivedCache;
+        private static String toKey(final CardNumber number, final CardShape shape) {
+            return number.name() + shape.name();
         }
 
         private CardCache() {
         }
     }
 
-    public static Card valueOf(final CardNumber number, final CardShape shape) {
-        return CardCache.cache.get(shape).get(number);
+    public static Card of(final CardNumber number, final CardShape shape) {
+        return CardCache.cache.get(CardCache.toKey(number, shape));
     }
 
     public boolean isAce() {

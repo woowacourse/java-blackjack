@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.dto.BetRevenueResultDto;
-import blackjack.dto.DealerMoreCardDto;
+import blackjack.dto.DealerMoreCardsDto;
 import blackjack.dto.FinalHandsScoreDto;
 import blackjack.dto.PlayerCardsDto;
 import blackjack.exception.ExceptionHandler;
@@ -52,14 +52,14 @@ public class BlackjackController {
     }
 
     private void playGame(final BlackjackGame blackjackGame) {
-        final List<String> participantName = blackjackGame.getPlayersName();
+        final List<String> playerNames = blackjackGame.getPlayersName();
 
-        for (final String name : participantName) {
+        for (final String name : playerNames) {
             runPlayerTurn(blackjackGame, name);
         }
 
-        final DealerMoreCardDto dealerMoreCard = blackjackGame.giveDealerMoreCard();
-        outputView.printDealerMoreCard(dealerMoreCard);
+        final DealerMoreCardsDto dealerMoreCards = blackjackGame.giveDealerMoreCards();
+        outputView.printDealerMoreCard(dealerMoreCards);
     }
 
     private void runPlayerTurn(final BlackjackGame blackjackGame, final String name) {
@@ -67,12 +67,12 @@ public class BlackjackController {
 
         while (isContinue(blackjackGame, name)) {
             blackjackGame.addCardToPlayers(name);
-            showPlayerCards(blackjackGame, name);
+            printPlayerCards(blackjackGame, name);
             isFirst = false;
         }
 
         if (isFirst) {
-            showPlayerCards(blackjackGame, name);
+            printPlayerCards(blackjackGame, name);
         }
     }
 
@@ -84,7 +84,7 @@ public class BlackjackController {
         return ExceptionHandler.retryWithSupplier(() -> inputView.readNeedMoreCard(name), outputView::printError);
     }
 
-    private void showPlayerCards(final BlackjackGame blackjackGame, final String name) {
+    private void printPlayerCards(final BlackjackGame blackjackGame, final String name) {
         final PlayerCardsDto playersCards = blackjackGame.getCardsOf(name);
         outputView.printPlayerCard(playersCards);
     }

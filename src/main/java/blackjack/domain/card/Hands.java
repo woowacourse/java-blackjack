@@ -1,15 +1,11 @@
 package blackjack.domain.card;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
-
-import blackjack.domain.rule.BlackjackStatus;
 import blackjack.domain.rule.Score;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Hands {
+public final class Hands {
 
     private static final int ACE_SCORE_GAP = CardNumber.ACE.getNumber() - CardNumber.ACE_BONUS_NUMBER;
 
@@ -23,8 +19,10 @@ public class Hands {
         this.cards = new ArrayList<>(cards);
     }
 
-    public void addCard(final Card card) {
-        cards.add(card);
+    public Hands addCard(final Card card) {
+        final List<Card> newCards = new ArrayList<>(cards);
+        newCards.add(card);
+        return new Hands(newCards);
     }
 
     public Score calculateScore() {
@@ -47,7 +45,7 @@ public class Hands {
     }
 
     private boolean isDeadScore(final int sum) {
-        return BlackjackStatus.from(new Score(sum)) == BlackjackStatus.DEAD;
+        return new Score(sum).isDead();
     }
 
     public boolean isScoreBiggerThan(final Hands other) {
@@ -66,8 +64,8 @@ public class Hands {
         return cards.size();
     }
 
-    public Hands getFirstCard() {
-        return cards.stream().limit(1).collect(collectingAndThen(toList(), Hands::new));
+    public Card getFirstCard() {
+        return cards.get(0);
     }
 
     public List<Card> getCards() {

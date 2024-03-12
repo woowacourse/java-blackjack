@@ -26,7 +26,7 @@ class DeckTest {
     @Test
     void validateDuplicate() {
         // given
-        Card expected = new Card(CardNumber.TWO, CardShape.CLOVER);
+        Card expected = Card.of(CardNumber.TWO, CardShape.CLOVER);
         Deck deck = new Deck(List.of(expected));
         // when
         Card card = deck.pick();

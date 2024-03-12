@@ -1,5 +1,8 @@
 package blackjack.domain.card;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 public enum CardNumber {
     TWO(2),
     THREE(3),
@@ -24,5 +27,9 @@ public enum CardNumber {
 
     public int getNumber() {
         return number;
+    }
+
+    public static Stream<CardNumber> stream() {
+        return Arrays.stream(values());
     }
 }

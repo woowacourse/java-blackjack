@@ -14,11 +14,11 @@ class DealerTest {
     @DisplayName("딜러는 카드의 합이 17 미만인 경우 카드가 더 필요하다.")
     @Test
     void needMoreCard() {
-        Card card1 = new Card(CardNumber.SEVEN, CardShape.HEART);
-        Card card2 = new Card(CardNumber.NINE, CardShape.HEART);
+        Card card1 = Card.of(CardNumber.SEVEN, CardShape.HEART);
+        Card card2 = Card.of(CardNumber.NINE, CardShape.HEART);
 
         Dealer dealer = new Dealer(new Deck(List.of(card1, card2)));
-        dealer.addCard(2);
+        dealer.start();
 
         boolean needMoreCard = dealer.needMoreCard();
 
@@ -28,11 +28,11 @@ class DealerTest {
     @DisplayName("딜러는 카드의 합이 17 이상인 경우 카드가 더 필요하지 않다.")
     @Test
     void needNoMoreCard() {
-        Card card1 = new Card(CardNumber.NINE, CardShape.HEART);
-        Card card2 = new Card(CardNumber.EIGHT, CardShape.HEART);
+        Card card1 = Card.of(CardNumber.NINE, CardShape.HEART);
+        Card card2 = Card.of(CardNumber.EIGHT, CardShape.HEART);
 
         Dealer dealer = new Dealer(new Deck(List.of(card1, card2)));
-        dealer.addCard(2);
+        dealer.start();
 
         boolean needMoreCard = dealer.needMoreCard();
 
@@ -43,8 +43,8 @@ class DealerTest {
     @Test
     void drawCard() {
         // given
-        final List<Card> expected = List.of(new Card(CardNumber.NINE, CardShape.HEART),
-                new Card(CardNumber.EIGHT, CardShape.HEART));
+        final List<Card> expected = List.of(Card.of(CardNumber.NINE, CardShape.HEART),
+                Card.of(CardNumber.EIGHT, CardShape.HEART));
 
         Dealer dealer = new Dealer(new Deck(expected));
 

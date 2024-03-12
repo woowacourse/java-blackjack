@@ -30,10 +30,10 @@ class PlayersTest {
         String kirby = "kirby";
         String pobi = "pobi";
         Players players = Players.from(List.of(kirby, pobi));
-        Card card1 = new Card(CardNumber.ACE, CardShape.SPADE);
-        Card card2 = new Card(CardNumber.TWO, CardShape.SPADE);
-        Card card3 = new Card(CardNumber.THREE, CardShape.SPADE);
-        Card card4 = new Card(CardNumber.FOUR, CardShape.SPADE);
+        Card card1 = Card.of(CardNumber.ACE, CardShape.SPADE);
+        Card card2 = Card.of(CardNumber.TWO, CardShape.SPADE);
+        Card card3 = Card.of(CardNumber.THREE, CardShape.SPADE);
+        Card card4 = Card.of(CardNumber.FOUR, CardShape.SPADE);
         List<List<Card>> cardsBundle = List.of(List.of(card1, card2), List.of(card3, card4));
 
         // when
@@ -54,8 +54,8 @@ class PlayersTest {
     void validateCardSize() {
         // given
         Players players = Players.from(List.of("kirby", "pobi"));
-        List<List<Card>> cards = List.of(List.of(new Card(CardNumber.ACE, CardShape.SPADE),
-                new Card(CardNumber.TWO, CardShape.SPADE)));
+        List<List<Card>> cards = List.of(List.of(Card.of(CardNumber.ACE, CardShape.SPADE),
+                Card.of(CardNumber.TWO, CardShape.SPADE)));
 
         // when
         assertThatThrownBy(() -> players.divideCard(cards))

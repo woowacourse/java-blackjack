@@ -2,9 +2,10 @@ package blackjack.domain.rule;
 
 import java.util.Objects;
 
-public class Score {
+public final class Score {
 
     private static final int VALUE_MIN = 2;
+    private static final int BLACKJACK_VALUE = 21;
 
     private final int value;
 
@@ -19,6 +20,14 @@ public class Score {
         }
     }
 
+    public boolean isBlackjack() {
+        return value == BLACKJACK_VALUE;
+    }
+
+    public boolean isDead() {
+        return value > BLACKJACK_VALUE;
+    }
+
     public boolean isBiggerThan(final Score other) {
         return this.value > other.value;
     }
@@ -27,7 +36,7 @@ public class Score {
         return this.value <= score.value;
     }
 
-    public int getValue() {
+    public int toInt() {
         return value;
     }
 

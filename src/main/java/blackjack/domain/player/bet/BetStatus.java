@@ -1,57 +1,62 @@
 package blackjack.domain.player.bet;
 
-import blackjack.domain.card.Hands;
-import blackjack.domain.rule.BlackjackStatus;
-import blackjack.domain.rule.GameRule;
+import blackjack.domain.rule.state.Blackjack;
+import blackjack.domain.rule.state.Burst;
+import blackjack.domain.rule.state.State;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum BetStatus {
     LUCKY(1.5,
-            (dealerHands, playerHands) -> isStartBlackjack(playerHands) && isNotStartBlackjack(dealerHands)),
+            (dealerState, playerState) -> isStartBlackjack(playerState) && isNotStartBlackjack(dealerState)),
     WIN(1,
-            (dealerHands, playerHands) -> isNotDead(playerHands)
-            && (isDead(dealerHands) || playerHands.isScoreBiggerThan(dealerHands))),
+            (dealerState, playerState) -> isNotBurst(playerState)
+            && (isBurst(dealerState) || isScoreBigger(playerState, dealerState))),
     LOSE(-1,
-            (dealerHands, playerHands) -> isDead(playerHands)
-            || (isStartBlackjack(dealerHands) && isNotStartBlackjack(playerHands))
-            || (isNotDead(dealerHands) && dealerHands.isScoreBiggerThan(playerHands))),
+            (dealerState, playerState) -> isBurst(playerState)
+            || (isStartBlackjack(dealerState) && isNotStartBlackjack(playerState))
+            || (isNotBurst(dealerState) && isScoreBigger(dealerState, playerState))),
     DRAW(0,
-            (dealerHands, playerHands) -> isNotDead(dealerHands) && isNotDead(playerHands)
-            && playerHands.isScoreSame(dealerHands));
+            (dealerState, playerState) -> isNotBurst(dealerState) && isNotBurst(playerState)
+            && isScoreSame(playerState, dealerState));
+
 
     private final double leverage;
-    private final BiPredicate<Hands, Hands> condition;
 
-    BetStatus(final double leverage, final BiPredicate<Hands, Hands> condition) {
+    private final BiPredicate<State, State> condition;
+
+    BetStatus(final double leverage, final BiPredicate<State, State> condition) {
         this.leverage = leverage;
         this.condition = condition;
     }
-
-    public static BetStatus of(final Hands dealerHands, final Hands playerHands) {
+    public static BetStatus of(final State dealerState, final State playerState) {
         return Arrays.stream(values())
-                .filter(winStatus -> winStatus.condition.test(dealerHands, playerHands))
+                .filter(betStatus -> betStatus.condition.test(dealerState, playerState))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("잘못된 점수입니다."));
     }
 
-    private static boolean isStartBlackjack(final Hands hands) {
-        return isBlackjack(hands) && hands.isSizeOf(GameRule.START_CARD_COUNT);
+    private static boolean isStartBlackjack(final State state) {
+        return state instanceof Blackjack;
     }
 
-    private static boolean isNotStartBlackjack(final Hands hands) {
-        return !isStartBlackjack(hands);
-    }
-    private static boolean isDead(final Hands hands) {
-        return BlackjackStatus.from(hands.calculateScore()) == BlackjackStatus.DEAD;
+    private static boolean isNotStartBlackjack(final State state) {
+        return !isStartBlackjack(state);
     }
 
-    private static boolean isNotDead(final Hands hands) {
-        return !isDead(hands);
+    private static boolean isBurst(final State state) {
+        return state instanceof Burst;
     }
 
-    private static boolean isBlackjack(final Hands hands) {
-        return BlackjackStatus.from(hands.calculateScore()) == BlackjackStatus.BLACKJACK;
+    private static boolean isNotBurst(final State state) {
+        return !isBurst(state);
+    }
+    private static boolean isScoreBigger(final State first, final State second) {
+        return first.getHands().isScoreBiggerThan(second.getHands());
+    }
+
+    private static boolean isScoreSame(final State first, final State second) {
+        return first.getHands().isScoreSame(second.getHands());
     }
 
     public BetRevenue applyLeverage(final BetAmount batAmount) {

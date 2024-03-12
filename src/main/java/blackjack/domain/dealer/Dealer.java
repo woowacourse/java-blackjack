@@ -1,9 +1,10 @@
 package blackjack.domain.dealer;
 
-import blackjack.domain.rule.BlackjackStatus;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import blackjack.domain.rule.Score;
+import blackjack.domain.rule.state.Init;
+import blackjack.domain.rule.state.State;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -13,15 +14,15 @@ public class Dealer {
     public static final String DEALER_NAME = "딜러";
 
     private final Deck deck;
-    private final Hands hands;
+    private State state;
 
     public Dealer(final Deck deck) {
         this.deck = deck;
-        this.hands = new Hands();
+        this.state = new Init();
     }
 
     public boolean needMoreCard() {
-        return hands.calculateScore().isSmallerOrEqual(new Score(NEED_CARD_NUMBER_MAX));
+        return state.getHands().calculateScore().isSmallerOrEqual(new Score(NEED_CARD_NUMBER_MAX));
     }
 
 
@@ -35,25 +36,27 @@ public class Dealer {
                 .toList();
     }
 
-    public void addCard() {
-        hands.addCard(drawCard());
+    public void draw() {
+        state = state.draw(drawCard());
     }
 
-    public void addCard(int count) {
-        while (count-- > 0) {
-            hands.addCard(drawCard());
-        }
+    public void start() {
+        state = state.start(drawCard(), drawCard());
     }
 
     public boolean isNotBlackjack() {
-        return BlackjackStatus.from(hands.calculateScore()) != BlackjackStatus.BLACKJACK;
+        return !state.getHands().calculateScore().isBlackjack();
     }
 
     public Hands getOpenedHands() {
-        return hands.getFirstCard();
+        return new Hands(List.of(state.getHands().getFirstCard()));
+    }
+
+    public State getState() {
+        return state;
     }
 
     public Hands getHands() {
-        return new Hands(hands.getCards());
+        return state.getHands();
     }
 }

@@ -25,10 +25,10 @@ class HandsTest {
             CardNumber cardNumber4,
             int expected) {
         // given
-        Card card1 = new Card(cardNumber1, CardShape.DIA);
-        Card card2 = new Card(cardNumber2, CardShape.HEART);
-        Card card3 = new Card(cardNumber3, CardShape.CLOVER);
-        Card card4 = new Card(cardNumber4, CardShape.SPADE);
+        Card card1 = Card.of(cardNumber1, CardShape.DIA);
+        Card card2 = Card.of(cardNumber2, CardShape.HEART);
+        Card card3 = Card.of(cardNumber3, CardShape.CLOVER);
+        Card card4 = Card.of(cardNumber4, CardShape.SPADE);
         List<Card> cards = List.of(card1, card2, card3, card4);
         Hands hands = new Hands(cards);
 
@@ -44,33 +44,32 @@ class HandsTest {
     @Test
     void add() {
         // given
-        Card card1 = new Card(CardNumber.ACE, CardShape.HEART);
-        Card card2 = new Card(CardNumber.ACE, CardShape.SPADE);
+        Card card1 = Card.of(CardNumber.ACE, CardShape.HEART);
+        Card card2 = Card.of(CardNumber.ACE, CardShape.SPADE);
         Hands hands = new Hands(List.of(card1, card2));
 
-        Card card3 = new Card(CardNumber.ACE, CardShape.CLOVER);
+        Card card3 = Card.of(CardNumber.ACE, CardShape.CLOVER);
 
         // when
-        hands.addCard(card3);
+        final Hands newHands = hands.addCard(card3);
 
         // then
-        assertThat(hands.getCards()).containsExactly(card1, card2, card3);
+        assertThat(newHands.getCards()).containsExactly(card1, card2, card3);
     }
 
     @DisplayName("첫번째 카드를 반환한다.")
     @Test
     void getFirstCard() {
         // given
-        Card card1 = new Card(CardNumber.ACE, CardShape.HEART);
-        Card card2 = new Card(CardNumber.ACE, CardShape.SPADE);
+        Card card1 = Card.of(CardNumber.ACE, CardShape.HEART);
+        Card card2 = Card.of(CardNumber.ACE, CardShape.SPADE);
         Hands hands = new Hands(List.of(card1, card2));
 
         // when
-        final Hands firstCard = hands.getFirstCard();
+        final Card firstCard = hands.getFirstCard();
 
         // then
-        assertThat(firstCard.getCards())
-                .hasSize(1)
-                .containsExactly(card1);
+        assertThat(firstCard)
+                .isEqualTo(card1);
     }
 }
