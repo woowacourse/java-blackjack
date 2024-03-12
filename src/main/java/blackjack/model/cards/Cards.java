@@ -1,9 +1,12 @@
 package blackjack.model.cards;
 
+import blackjack.model.blackjackgame.PlayerResultStatus;
 import java.util.ArrayList;
 import java.util.List;
 
 public final class Cards {
+    private static final int SIZE_WHEN_BLACKJACK = 2;
+
     private final List<Card> cards;
     private Score score;
 
@@ -15,7 +18,6 @@ public final class Cards {
         this.cards = new ArrayList<>(cards);
         this.score = score;
     }
-
 
     public void add(Card card) {
         cards.add(card);
@@ -37,9 +39,23 @@ public final class Cards {
         return score;
     }
 
+    public PlayerResultStatus getPlayerResultStatus(Cards other) {
+        if (isBlackJack() && other.isBlackJack()) {
+            return PlayerResultStatus.PUSH;
+        }
+        if (isBlackJack()) {
+            return PlayerResultStatus.BLACKJACK;
+        }
+        return getCardsScore().getPlayerStatus(other.getCardsScore());
+    }
+
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    private boolean isBlackJack() {
+        return cards.size() == SIZE_WHEN_BLACKJACK && getCardsScore().isBlackJack();
     }
 
     public List<Card> getCards() {

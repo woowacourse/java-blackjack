@@ -1,5 +1,6 @@
 package blackjack.model.cards;
 
+import blackjack.model.blackjackgame.PlayerResultStatus;
 import java.util.Objects;
 
 public final class Score {
@@ -14,6 +15,30 @@ public final class Score {
 
     public Score add(Score other) {
         return new Score(value + other.value);
+    }
+
+    public boolean isBlackJack() {
+        return value == BLACKJACK_SCORE;
+    }
+
+    public PlayerResultStatus getPlayerStatus(Score other) {
+        if (isBusted()) {
+            return PlayerResultStatus.LOSE;
+        }
+        if (other.isBusted()) {
+            return PlayerResultStatus.WIN;
+        }
+        return compare(other);
+    }
+
+    private PlayerResultStatus compare(Score other) {
+        if (isGreaterThan(other)) {
+            return PlayerResultStatus.WIN;
+        }
+        if (other.isGreaterThan(this)) {
+            return PlayerResultStatus.LOSE;
+        }
+        return PlayerResultStatus.PUSH;
     }
 
     public boolean isBusted() {
