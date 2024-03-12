@@ -64,7 +64,15 @@ public class Result {
                 .count();
     }
 
-    public WinLose playerWinLose(Player player) {
-        return resultMap.get(player);
+    public boolean isPlayerWon(Player player) {
+        return resultMap.get(player) == WinLose.WIN;
+    }
+
+    public boolean isPlayerLose(Player player) {
+        return resultMap.get(player) == WinLose.LOSE;
+    }
+
+    public boolean isPlayerTie(Player player) {
+        return resultMap.get(player) == WinLose.TIE;
     }
 }

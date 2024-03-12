@@ -34,7 +34,7 @@ class ResultTest {
 
         Result result = Result.of(List.of(player), dealer);
 
-        assertThat(result.playerWinLose(player)).isEqualTo(WinLose.TIE);
+        assertThat(result.isPlayerTie(player)).isTrue();
     }
 
     @Test
@@ -45,7 +45,7 @@ class ResultTest {
 
         Result result = Result.of(List.of(player), dealer);
 
-        assertThat(result.playerWinLose(player)).isEqualTo(WinLose.LOSE);
+        assertThat(result.isPlayerLose(player)).isTrue();
     }
 
     @Test
@@ -56,7 +56,7 @@ class ResultTest {
 
         Result result = Result.of(List.of(player), dealer);
 
-        assertThat(result.playerWinLose(player)).isEqualTo(WinLose.WIN);
+        assertThat(result.isPlayerWon(player)).isTrue();
     }
 
     @Test
@@ -69,7 +69,7 @@ class ResultTest {
 
         Result result = Result.of(List.of(player), dealer);
 
-        assertThat(result.playerWinLose(player)).isEqualTo(WinLose.LOSE);
+        assertThat(result.isPlayerLose(player)).isTrue();
     }
 
     @Test
@@ -82,7 +82,7 @@ class ResultTest {
 
         Result result = Result.of(List.of(player), dealer);
 
-        assertThat(result.playerWinLose(player)).isEqualTo(WinLose.WIN);
+        assertThat(result.isPlayerWon(player)).isTrue();
     }
 
     @Test
@@ -98,7 +98,7 @@ class ResultTest {
 
         Result result = Result.of(List.of(player), dealer);
 
-        assertThat(result.playerWinLose(player)).isEqualTo(WinLose.LOSE);
+        assertThat(result.isPlayerLose(player)).isTrue();
     }
 
     @Nested

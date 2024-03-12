@@ -76,7 +76,7 @@ public class OutputView {
                 resultText(result.countDealerLoses(), "패")
         );
         for (Player player : game.getPlayers()) {
-            System.out.println(player.getName() + ": " + winLoseText(result.playerWinLose(player)));
+            System.out.println(player.getName() + ": " + winLoseText(result, player));
         }
     }
 
@@ -87,11 +87,11 @@ public class OutputView {
         return resultCount + resultSuffix;
     }
 
-    private String winLoseText(WinLose winLose) {
-        if (winLose == WinLose.WIN) {
+    private String winLoseText(Result result, Player player) {
+        if (result.isPlayerWon(player)) {
             return "승";
         }
-        if (winLose == WinLose.LOSE) {
+        if (result.isPlayerLose(player)) {
             return "패";
         }
         return "무";
