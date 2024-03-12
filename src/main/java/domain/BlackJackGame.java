@@ -53,6 +53,7 @@ public class BlackJackGame {
     private void dealerLose(final Player player, final Map<PlayerName, GameResult> playerGameResults) {
         if (player.isBlackJack()){
             playerGameResults.put(player.getPlayerName(), GameResult.WIN_BY_BLACKJACK);
+            return;
         }
         playerGameResults.put(player.getPlayerName(), GameResult.WIN);
     }
