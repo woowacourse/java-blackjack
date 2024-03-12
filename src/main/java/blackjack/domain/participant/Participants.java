@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.HandGenerator;
 import blackjack.domain.result.*;
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Participants {
-    private static final int DEALER_PROFIT_INDEX = 0;
+    private static final int DEALER_INDEX = 0;
 
     private final Dealer dealer;
     private final Players players;
@@ -17,22 +18,23 @@ public class Participants {
         this.dealer = new Dealer(handGenerator);
     }
 
-    public BlackjackResult generateResult(Referee referee, PlayerBets playerBets) {
-        List<ParticipantProfit> participantProfits = new ArrayList<>();
-        for (PlayerBet playerBet : playerBets.getValues()) {
-            HandResult playerResult = referee.getPlayerResult(playerBet.getPlayer(), dealer);
-            participantProfits.add(playerBet.calculateProfit(playerResult));
-        }
-        ParticipantProfit dealerProfit = calculateDealerProfit(participantProfits);
-        participantProfits.add(DEALER_PROFIT_INDEX, dealerProfit);
-        return new BlackjackResult(participantProfits);
+    public int executeAndCountDealerHit(Deck deck) {
+        return dealer.hitAndCountCards(deck);
     }
 
-    private ParticipantProfit calculateDealerProfit(List<ParticipantProfit> playerProfits) {
-        double negatedPlayerProfits = playerProfits.stream()
-                .mapToDouble(ParticipantProfit::getNegatedProfit)
-                .sum();
-        return new ParticipantProfit(dealer.getName(), negatedPlayerProfits);
+    public List<InitialHand> getParticipantsInitialHand() {
+        List<InitialHand> participantsInitialHand = new ArrayList<>(players.getInitialHands());
+        InitialHand dealerHand = new InitialHand(dealer);
+        participantsInitialHand.add(DEALER_INDEX, dealerHand);
+        return participantsInitialHand;
+    }
+
+    public PlayerTurnSelector createPlayerTurnSelector() {
+        return new PlayerTurnSelector(players);
+    }
+
+    public Referee createRefereeByDealer() {
+        return new Referee(dealer);
     }
 
     public Dealer getDealer() {
