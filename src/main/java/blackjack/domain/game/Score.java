@@ -40,4 +40,8 @@ public class Score {
         }
         return this;
     }
+
+    public int getValue() {
+        return value;
+    }
 }

@@ -94,7 +94,8 @@ public class MessageResolver {
     }
 
     private String resolveParticipantHandScoreMessage(Participant participant) {
-        return String.format("%s - 결과: %d", resolveParticipantHandMessage(participant), participant.getHandScore());
+        return String.format("%s - 결과: %d", resolveParticipantHandMessage(participant),
+                participant.getHandScore().getValue());
     }
 
     public String resolveResultDescriptionMessage() {
