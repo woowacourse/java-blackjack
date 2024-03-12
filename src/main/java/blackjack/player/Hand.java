@@ -43,6 +43,18 @@ public class Hand {
                 .reduce(Score.zero(), Score::add);
     }
 
+    public boolean isBlackJack() {
+        return score.isBlackJackScore() && cards.size() == INIT_CARD_COUNT;
+    }
+
+    public boolean isBusted() {
+        return score.isBusted();
+    }
+
+    public boolean hasScoreGreaterThan(int other) {
+        return score.isGreaterThan(other);
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

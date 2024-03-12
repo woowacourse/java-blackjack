@@ -50,4 +50,25 @@ class ScoreTest {
         assertThat(result).isEqualTo(new Score(12));
     }
 
+    @Test
+    @DisplayName("블랙잭 점수 여부를 판단한다.")
+    void isBlackJackScoreTest() {
+        // given
+        Score notBlackJackScore = new Score(20);
+        Score blackJackScore = new Score(21);
+        // when, then
+        assertThat(notBlackJackScore.isBlackJackScore()).isFalse();
+        assertThat(blackJackScore.isBlackJackScore()).isTrue();
+    }
+
+    @Test
+    @DisplayName("버스트를 점수로 확인한다.")
+    void isBustedTest() {
+        // given
+        Score notBustedScore = new Score(21);
+        Score bustedScore = new Score(22);
+        // when, then
+        assertThat(notBustedScore.isBusted()).isFalse();
+        assertThat(bustedScore.isBusted()).isTrue();
+    }
 }

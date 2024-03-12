@@ -30,6 +30,18 @@ public class Score {
         return this;
     }
 
+    public boolean isGreaterThan(int other) {
+        return value > other;
+    }
+
+    public boolean isBlackJackScore() {
+        return value == BLACKJACK_SCORE;
+    }
+
+    public boolean isBusted() {
+        return value > BLACKJACK_SCORE;
+    }
+
     public int toInt() {
         return value;
     }
