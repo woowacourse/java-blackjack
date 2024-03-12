@@ -1,52 +1,73 @@
 package domain.card;
 
-import static domain.card.CardNumber.ACE;
+import static domain.card.CardRank.SOFT_ADDITION_SCORE;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Stack;
+import java.util.stream.Stream;
 
 public class Cards {
 
-    private final Stack<Card> cards;
+    private final List<Card> cards;
 
-    public Cards() {
-        this.cards = new Stack<>();
+    private Cards(final Collection<Card> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
-    public Cards(final Collection<Card> cards) {
-        this.cards = new Stack<>();
-        this.cards.addAll(cards);
+    public static Cards create() {
+        return new Cards(Collections.emptyList());
     }
 
+    public static Cards from(final Collection<Card> cards) {
+        return new Cards(cards);
+    }
     public void add(final Card card) {
         cards.add(card);
     }
 
     public Card draw() {
-        return cards.pop();
+        validateNotEmpty();
+        return cards.remove(0);
+    }
+
+    private void validateNotEmpty() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("카드가 없습니다.");
+        }
     }
 
     public Card peek() {
-        return cards.peek();
+        validateNotEmpty();
+        return cards.get(0);
     }
 
     public void shuffle() {
+        validateNotEmpty();
         Collections.shuffle(cards);
     }
 
-    public int sum() {
+    public boolean hasAce() {
+        validateNotEmpty();
+        return cards.stream().anyMatch(card -> card.rank() == CardRank.ACE);
+    }
+
+    public int score(final boolean isSoft) {
+        if (isSoft && hasAce()) {
+            return sum() + SOFT_ADDITION_SCORE;
+        }
+        return sum();
+    }
+
+    private int sum() {
+        validateNotEmpty();
         return cards.stream()
-                .mapToInt(Card::value)
+                .mapToInt(Card::score)
                 .sum();
     }
 
-    public boolean hasAce() {
-        return cards.stream().anyMatch(card -> card.number() == ACE);
-    }
-
-    public List<Card> toList() {
-        return List.copyOf(cards);
+    public Stream<Card> stream() {
+        return cards.stream();
     }
 }
