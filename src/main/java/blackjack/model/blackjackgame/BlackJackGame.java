@@ -50,6 +50,10 @@ public class BlackJackGame {
         return dealer.getResult(playerResult);
     }
 
+    public int calculateDealerBetResults(PlayerResult playerResult) {
+        return dealer.calculateFinalBetAmount(playerResult);
+    }
+
     public Dealer getDealer() {
         return dealer;
     }

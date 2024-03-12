@@ -26,6 +26,12 @@ public class Dealer extends Participant {
         return new DealerResult(result);
     }
 
+    public int calculateFinalBetAmount(PlayerResult playerResult) {
+        return playerResult.getResult().entrySet().stream()
+                .mapToInt(entry -> convertToDealerBetResult(entry.getValue(), entry.getKey().getBetAmount()))
+                .sum();
+    }
+
     private Result convertToDealerResult(Result playerResult) {
         if (playerResult == Result.WIN_BY_BLACKJACK) {
             return Result.LOSE_BY_BLACKJACK;
@@ -37,5 +43,18 @@ public class Dealer extends Participant {
             return Result.WIN;
         }
         return Result.PUSH;
+    }
+
+    private int convertToDealerBetResult(Result playerResult, int betAmount) {
+        if (playerResult == Result.WIN_BY_BLACKJACK) {
+            return Result.LOSE_BY_BLACKJACK.calculate(betAmount);
+        }
+        if (playerResult == Result.WIN) {
+            return Result.LOSE.calculate(betAmount);
+        }
+        if (playerResult == Result.LOSE) {
+            return Result.WIN.calculate(betAmount);
+        }
+        return Result.PUSH.calculate(betAmount);
     }
 }
