@@ -1,6 +1,6 @@
 package player;
 
-import card.CardDeck;
+import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -14,11 +14,9 @@ public class PlayersTest {
     @DisplayName("플레이어의 인원이 최소 2명보다 적을 경우 Error를 throw 한다.")
     @Test
     void isNotOverPossiblePlayerRange() {
-        List<String> names = List.of(
-                "pola"
-        );
+        List<Player> players = List.of(Player.joinGame("pola", new ArrayList<>()));
 
-        Assertions.assertThatThrownBy(() -> Players.from(names, new CardDeck()))
+        Assertions.assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("참가자의 인원은 최소 " + MINIMUM_PLAYER_RANGE + "에서 최대 " + MAXIMUM_PLAYER_RANGE + "명 까지 가능합니다.");
     }
@@ -26,19 +24,18 @@ public class PlayersTest {
     @DisplayName("플레이어의 인원이 최소 8명보다 많을 경우 Error를 throw 한다.")
     @Test
     void isOverPossiblePlayerRange() {
-        List<String> names = List.of(
-                "pola",
-                "ato",
-                "kaki",
-                "hogi",
-                "jazz",
-                "pobi",
-                "lisa",
-                "takan",
-                "siso"
+        List<Player> players = List.of(Player.joinGame("pola", new ArrayList<>()),
+                Player.joinGame("ato", new ArrayList<>()),
+                Player.joinGame("hogi", new ArrayList<>()),
+                Player.joinGame("jazz", new ArrayList<>()),
+                Player.joinGame("cola", new ArrayList<>()),
+                Player.joinGame("bumble", new ArrayList<>()),
+                Player.joinGame("neo", new ArrayList<>()),
+                Player.joinGame("sola", new ArrayList<>()),
+                Player.joinGame("bri", new ArrayList<>())
         );
 
-        Assertions.assertThatThrownBy(() -> Players.from(names, new CardDeck()))
+        Assertions.assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("참가자의 인원은 최소 " + MINIMUM_PLAYER_RANGE + "에서 최대 " + MAXIMUM_PLAYER_RANGE + "명 까지 가능합니다.");
     }
@@ -46,13 +43,12 @@ public class PlayersTest {
     @DisplayName("플레이어의 이름이 중복이 되는 경우 에러를 반환한다.")
     @Test
     void isPlayersHasDuplicateName() {
-        List<String> names = List.of(
-                "pola",
-                "pola",
-                "hogi"
+        List<Player> players = List.of(Player.joinGame("pola", new ArrayList<>()),
+                Player.joinGame("ato", new ArrayList<>()),
+                Player.joinGame("pola", new ArrayList<>())
         );
 
-        Assertions.assertThatThrownBy(() -> Players.from(names, new CardDeck()))
+        Assertions.assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("참가자는 중복된 이름을 가질 수 없습니다.");
     }

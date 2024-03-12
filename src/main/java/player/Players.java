@@ -1,6 +1,5 @@
 package player;
 
-import card.CardDeck;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -12,18 +11,10 @@ public class Players {
 
     private final List<Player> players;
 
-    private Players(List<Player> players) {
+    public Players(List<Player> players) {
+        validate(players);
+
         this.players = players;
-    }
-
-    public static Players from(List<String> playerNames, CardDeck cardDeck) {
-        validate(playerNames);
-
-        List<Player> players = playerNames.stream()
-                .map(name -> Player.joinGame(name, cardDeck.firstCardSettings()))
-                .toList();
-
-        return new Players(players);
     }
 
     public List<Player> getPlayers() {
@@ -40,24 +31,30 @@ public class Players {
         return players.size();
     }
 
-    private static void validate(List<String> players) {
+    private static void validate(List<Player> players) {
         validatePlayerCountRange(players);
         validateHasDuplicateName(players);
     }
 
-    private static void validateHasDuplicateName(List<String> players) {
-        int uniqueNameCount = countPlayerUniqueName(players);
+    private static void validateHasDuplicateName(List<Player> players) {
+        int uniqueNameCount = countPlayerUniqueName(getPlayerNames(players));
 
         if (players.size() != uniqueNameCount) {
             throw new IllegalArgumentException("참가자는 중복된 이름을 가질 수 없습니다.");
         }
     }
 
+    private static List<String> getPlayerNames(List<Player> players) {
+        return players.stream()
+                .map(player -> player.getName().getValue())
+                .toList();
+    }
+
     private static int countPlayerUniqueName(List<String> players) {
         return Set.copyOf(players).size();
     }
 
-    private static void validatePlayerCountRange(List<String> players) {
+    private static void validatePlayerCountRange(List<Player> players) {
         if (players.size() < MINIMUM_PLAYER_RANGE || MAXIMUM_PLAYER_RANGE < players.size()) {
             throw new IllegalArgumentException(
                     "참가자의 인원은 최소 " + MINIMUM_PLAYER_RANGE + "에서 최대 " + MAXIMUM_PLAYER_RANGE + "명 까지 가능합니다.");
