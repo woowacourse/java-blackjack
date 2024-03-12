@@ -88,7 +88,7 @@ public class BlackjackController {
 
         OutputView.printWinAnnounce();
         OutputView.printDealerWinStatus(dealer.getName(), referee.getDealerResult());
-        referee.getPlayersResults().forEach(OutputView::printPlayerWinStatus);
+        referee.getPlayersResults().forEach((key, value) -> OutputView.printPlayerWinStatus(key.getName(), value));
     }
 
 

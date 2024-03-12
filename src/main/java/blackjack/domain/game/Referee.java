@@ -15,7 +15,7 @@ public class Referee {
 
     public void calculatePlayersResults(Players players, Dealer dealer) {
         players.forEach(player ->
-                result.put(player.getName(), judgeGameResult(dealer, player))
+                result.put(player, judgeGameResult(dealer, player))
         );
     }
 
@@ -38,7 +38,7 @@ public class Referee {
                 dealer.isBust();
     }
 
-    public Map<String, PlayerGameResult> getPlayersResults() {
+    public Map<Player, PlayerGameResult> getPlayersResults() {
         return result.getPlayersResults();
     }
 

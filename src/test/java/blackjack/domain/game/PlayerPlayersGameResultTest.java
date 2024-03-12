@@ -1,9 +1,12 @@
 package blackjack.domain.game;
 
+import blackjack.domain.card.Hand;
+import blackjack.domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +22,7 @@ public class PlayerPlayersGameResultTest {
         expectedGameResults.put("lemone", PlayerGameResult.WIN);
 
         // when
-        playersGameResult.put("lemone", PlayerGameResult.WIN);
+        playersGameResult.put(new Player("lemone", new Hand(List.of())), PlayerGameResult.WIN);
 
         // then
         assertThat(playersGameResult.getPlayersResults()).isEqualTo(expectedGameResults);
@@ -36,10 +39,10 @@ public class PlayerPlayersGameResultTest {
         expectedResult.put(PlayerGameResult.PUSH, 1);
 
         // when
-        playersGameResult.put("lemone", PlayerGameResult.WIN);
-        playersGameResult.put("seyang", PlayerGameResult.LOSE);
-        playersGameResult.put("pobi", PlayerGameResult.PUSH);
-        playersGameResult.put("club", PlayerGameResult.WIN);
+        playersGameResult.put(new Player("lemone", new Hand(List.of())), PlayerGameResult.WIN);
+        playersGameResult.put(new Player("seyang", new Hand(List.of())), PlayerGameResult.LOSE);
+        playersGameResult.put(new Player("pobi", new Hand(List.of())), PlayerGameResult.PUSH);
+        playersGameResult.put(new Player("club", new Hand(List.of())), PlayerGameResult.WIN);
 
         // then
         assertThat(playersGameResult.getDealerResult()).isEqualTo(expectedResult);
