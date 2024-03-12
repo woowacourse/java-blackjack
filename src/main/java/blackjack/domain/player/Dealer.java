@@ -19,22 +19,15 @@ public class Dealer extends Participant {
 
 
     public ResultStatus checkPlayer(final GamePlayer gamePlayer) {
-        final int playerScore = gamePlayer.calculateScore();
-        final int dealerScore = calculateScore();
-
+        final var playerScore = gamePlayer.calculateScore();
+        final var dealerScore = calculateScore();
         if (gamePlayer.isBust()) {
             return ResultStatus.LOSE;
         }
         if (isBust()) {
             return ResultStatus.WIN;
         }
-        if (playerScore > dealerScore) {
-            return ResultStatus.WIN;
-        }
-        if (playerScore == dealerScore) {
-            return ResultStatus.DRAW;
-        }
-        return ResultStatus.LOSE;
+        return playerScore.compare(dealerScore);
     }
 
     public Card getFirstCard() {

@@ -9,10 +9,13 @@ import blackjack.domain.common.Names;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.GamePlayer;
 import blackjack.domain.player.Participant;
+import blackjack.domain.player.Score;
 import blackjack.domain.result.ResultStatus;
 import blackjack.fixture.CardFixture;
 import blackjack.fixture.PlayerFixture;
+
 import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,10 +24,10 @@ class BlackjackTest {
     @Test
     @DisplayName("이름 목록을 통해 플레이어를 생성하고 딜러와 플레이어에게 카드를 두장씩 나눠준다.")
     public void Blackjack_Accept_players() {
-        Blackjack blackjack = new Blackjack(CardFixture.카드_덱_생성());
-        Names names = Names.from(List.of("초롱", "조이썬"));
+        final Blackjack blackjack = new Blackjack(CardFixture.카드_덱_생성());
+        final Names names = Names.from(List.of("초롱", "조이썬"));
 
-        var result = blackjack.acceptPlayers(names);
+        final var result = blackjack.acceptPlayers(names);
 
         assertPlayer(result.dealer(), 8);
 
@@ -37,13 +40,13 @@ class BlackjackTest {
     @Test
     @DisplayName("블랙잭은 게임 결과를 종합한다.")
     public void Dealer_Count_result() {
-        GamePlayer gamePlayer = PlayerFixture.게임_플레이어_생성(List.of(CardValue.EIGHT, CardValue.THREE));
-        Name name = new Name("딜러");
-        Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
-        Dealer dealer = new Dealer(name, cards);
-        var sut = new Blackjack();
+        final GamePlayer gamePlayer = PlayerFixture.게임_플레이어_생성(List.of(CardValue.EIGHT, CardValue.THREE));
+        final Name name = new Name("딜러");
+        final Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
+        final Dealer dealer = new Dealer(name, cards);
+        final var sut = new Blackjack();
 
-        var result = sut.checkPlayersResult(dealer, List.of(gamePlayer));
+        final var result = sut.checkPlayersResult(dealer, List.of(gamePlayer));
 
         assertThat(result.getGamePlayerResults()
                          .get(0)
@@ -52,8 +55,8 @@ class BlackjackTest {
                          .getCountWithResultStatus(ResultStatus.WIN)).isEqualTo(1);
     }
 
-    private void assertPlayer(Participant participant, int value) {
-        assertThat(participant.calculateScore()).isEqualTo(value);
+    private void assertPlayer(final Participant participant, final int value) {
+        assertThat(participant.calculateScore()).isEqualTo(Score.from(value));
     }
 
 }

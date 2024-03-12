@@ -8,7 +8,7 @@ import java.util.List;
 
 public abstract class Participant implements CardReceivable {
     private static final int BUST_SIZE = 21;
-    private static final int CHANGE_A_VALUE = 10;
+    private static final Score CHANGE_A_VALUE = Score.from(10);
 
     protected final Name name;
     protected final Cards cards;
@@ -18,12 +18,14 @@ public abstract class Participant implements CardReceivable {
         this.cards = cards;
     }
 
-    public int calculateScore() {
-        final int sum = cards.sum();
-        if (cards.containAce() && sum + CHANGE_A_VALUE <= BUST_SIZE) {
-            return sum + CHANGE_A_VALUE;
+    public Score calculateScore() {
+        final Score score = Score.from(cards.sum());
+        final Score maxScore = score.add(CHANGE_A_VALUE);
+
+        if (cards.containAce() && maxScore.toInt() <= BUST_SIZE) {
+            return maxScore;
         }
-        return sum;
+        return score;
     }
 
     public void drawCard(final Card card) {
