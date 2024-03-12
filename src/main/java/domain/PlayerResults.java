@@ -9,20 +9,12 @@ import java.util.Map;
 public class PlayerResults {
     private final Map<Player, Result> results;
 
-    public PlayerResults(final Map<Player, Result> results) {
-        this.results = new LinkedHashMap<>(results);
+    public PlayerResults() {
+        this.results = new LinkedHashMap<>();
     }
 
-    public int findWinCount() {
-        return (int) results.values().stream().filter(result -> result.equals(Result.WIN)).count();
-    }
-
-    public int findLoseCount() {
-        return (int) results.values().stream().filter(result -> result.equals(Result.LOSE)).count();
-    }
-
-    public int findTieCount() {
-        return (int) results.values().stream().filter(result -> result.equals(Result.TIE)).count();
+    public void addResult(final Player player, final Result result) {
+        results.put(player,result);
     }
 
     public Map<Player, Result> getResults() {
