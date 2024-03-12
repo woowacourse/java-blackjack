@@ -20,9 +20,13 @@ public class Player {
         this.cards = cards;
     }
 
-    public boolean isPossibleAddCard() {
+    public boolean isNotBust() {
         int totalNumbers = cards.calculateTotalNumbers();
         return totalNumbers < ADD_CARD_CONDITION;
+    }
+
+    public boolean isBust() {
+        return !isNotBust();
     }
 
     public Player addCard(Card card) {

@@ -6,6 +6,7 @@ import model.card.Cards;
 import model.dealer.Dealer;
 import model.player.Player;
 import model.player.Players;
+import model.player.UpdatedPlayer;
 
 public class BlackjackGame {
 
@@ -23,10 +24,17 @@ public class BlackjackGame {
         players = players.addCards(cardsElement.subList(2, cardsElement.size()));
     }
 
-    public void hitOrStay(Player player, Answer answer, Card card) {
-        if (answer.isHit()) {
+    public boolean hitForPlayer(Player player, Card card) {
+        if (player.isNotBust()) {
             players = players.hit(player, card);
+            Player hittedPlayer = new UpdatedPlayer(this, player).player();
+            return !checkBust(hittedPlayer);
         }
+        return false;
+    }
+
+    private boolean checkBust(Player player) {
+        return player.isBust();
     }
 
     public void dealerHitsUnderSixteen(Card card) {
