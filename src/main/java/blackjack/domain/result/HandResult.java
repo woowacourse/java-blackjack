@@ -19,8 +19,7 @@ public enum HandResult {
     }
 
     public boolean match(Player player, Dealer dealer) {
-        MatchResult matchResult = playerResultMatcher.match(player, dealer);
-        return MatchResult.MATCH.equals(matchResult);
+        return playerResultMatcher.isResultMatched(player, dealer);
     }
 
     public double getProfitRate() {

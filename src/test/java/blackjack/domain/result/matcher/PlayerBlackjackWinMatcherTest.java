@@ -17,15 +17,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PlayerBlackjackWinMatcherTest {
     private final PlayerResultMatcher playerResultMatcher = new PlayerBlackjackWinMatcher();
 
-    @DisplayName("플레이어만 NaturalBlackjack일 경우 MATCH를 반환한다.")
+    @DisplayName("플레이어만 NaturalBlackjack일 경우 참을 반환한다.")
     @ParameterizedTest
     @MethodSource("provideNaturalBlackjackWin")
     void playerBlackjackLoseMatchTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
         Player player = ParticipantGenerator.createPlayer(playerNumbers);
         Dealer dealer = ParticipantGenerator.createDealer(dealerNumbers);
 
-        assertThat(playerResultMatcher.match(player, dealer))
-                .isEqualTo(MatchResult.MATCH);
+        assertThat(playerResultMatcher.isResultMatched(player, dealer))
+                .isEqualTo(true);
     }
 
     private static Stream<Arguments> provideNaturalBlackjackWin() {
@@ -37,15 +37,15 @@ class PlayerBlackjackWinMatcherTest {
     }
 
 
-    @DisplayName("플레이어만 NaturalBlackjack이 아닐 경우 NOT_MATCH를 반환한다.")
+    @DisplayName("플레이어만 NaturalBlackjack이 아닐 경우 거짓을 반환한다.")
     @ParameterizedTest
     @MethodSource("provideNotNaturalBlackjackWin")
     void playerNotBlackjackLoseMatchTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
         Player player = ParticipantGenerator.createPlayer(playerNumbers);
         Dealer dealer = ParticipantGenerator.createDealer(dealerNumbers);
 
-        assertThat(playerResultMatcher.match(player, dealer))
-                .isEqualTo(MatchResult.NOT_MATCH);
+        assertThat(playerResultMatcher.isResultMatched(player, dealer))
+                .isEqualTo(false);
     }
 
     private static Stream<Arguments> provideNotNaturalBlackjackWin() {

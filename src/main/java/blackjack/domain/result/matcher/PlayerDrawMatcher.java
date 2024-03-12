@@ -5,11 +5,8 @@ import blackjack.domain.participant.Player;
 
 public class PlayerDrawMatcher implements PlayerResultMatcher {
     @Override
-    public MatchResult match(Player player, Dealer dealer) {
-        if (!dealer.isBust() && areSameScore(player, dealer) && areSameNaturalBlackjack(player, dealer)) {
-            return MatchResult.MATCH;
-        }
-        return MatchResult.NOT_MATCH;
+    public boolean isResultMatched(Player player, Dealer dealer) {
+        return !dealer.isBust() && areSameScore(player, dealer) && areSameNaturalBlackjack(player, dealer);
     }
 
     private static boolean areSameScore(Player player, Dealer dealer) {

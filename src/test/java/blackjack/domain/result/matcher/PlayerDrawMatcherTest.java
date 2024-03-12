@@ -17,15 +17,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PlayerDrawMatcherTest {
     private final PlayerResultMatcher playerResultMatcher = new PlayerDrawMatcher();
 
-    @DisplayName("플레이어와 딜러가 모두 NaturalBlackjack일 경우 MATCH를 반환한다.")
+    @DisplayName("플레이어와 딜러가 모두 NaturalBlackjack일 경우 참을 반환한다.")
     @ParameterizedTest
     @MethodSource("provideBothNaturalBlackjack")
     void bothNaturalBlackjackTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
         Player player = ParticipantGenerator.createPlayer(playerNumbers);
         Dealer dealer = ParticipantGenerator.createDealer(dealerNumbers);
 
-        assertThat(playerResultMatcher.match(player, dealer))
-                .isEqualTo(MatchResult.MATCH);
+        assertThat(playerResultMatcher.isResultMatched(player, dealer))
+                .isEqualTo(true);
     }
 
     private static Stream<Arguments> provideBothNaturalBlackjack() {
@@ -35,15 +35,15 @@ class PlayerDrawMatcherTest {
         );
     }
 
-    @DisplayName("점수가 같지만, 플레이어와 딜러 중 한쪽만 NaturalBlackjack일 경우 NOT_MATCH를 반환한다.")
+    @DisplayName("점수가 같지만, 플레이어와 딜러 중 한쪽만 NaturalBlackjack일 경우 거짓을 반환한다.")
     @ParameterizedTest
     @MethodSource("provideNotSameNaturalBlackjack")
     void notSameNaturalBlackjackTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
         Player player = ParticipantGenerator.createPlayer(playerNumbers);
         Dealer dealer = ParticipantGenerator.createDealer(dealerNumbers);
 
-        assertThat(playerResultMatcher.match(player, dealer))
-                .isEqualTo(MatchResult.NOT_MATCH);
+        assertThat(playerResultMatcher.isResultMatched(player, dealer))
+                .isEqualTo(false);
     }
 
     private static Stream<Arguments> provideNotSameNaturalBlackjack() {
@@ -53,15 +53,15 @@ class PlayerDrawMatcherTest {
         );
     }
 
-    @DisplayName("점수와 NaturalBlackjack의 상태가 같을 경우 MATCH를 반환한다.")
+    @DisplayName("점수와 NaturalBlackjack의 상태가 같을 경우 참을 반환한다.")
     @ParameterizedTest
     @MethodSource("provideSameNaturalBlackjackAndScore")
     void sameNaturalBlackjackAndScoreTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
         Player player = ParticipantGenerator.createPlayer(playerNumbers);
         Dealer dealer = ParticipantGenerator.createDealer(dealerNumbers);
 
-        assertThat(playerResultMatcher.match(player, dealer))
-                .isEqualTo(MatchResult.MATCH);
+        assertThat(playerResultMatcher.isResultMatched(player, dealer))
+                .isEqualTo(true);
     }
 
     private static Stream<Arguments> provideSameNaturalBlackjackAndScore() {
@@ -71,15 +71,15 @@ class PlayerDrawMatcherTest {
         );
     }
 
-    @DisplayName("점수가 다를 경우 NOT_MATCH를 반환한다.")
+    @DisplayName("점수가 다를 경우 거짓을 반환한다.")
     @ParameterizedTest
     @MethodSource("provideDifferentScore")
     void differentScoreTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
         Player player = ParticipantGenerator.createPlayer(playerNumbers);
         Dealer dealer = ParticipantGenerator.createDealer(dealerNumbers);
 
-        assertThat(playerResultMatcher.match(player, dealer))
-                .isEqualTo(MatchResult.NOT_MATCH);
+        assertThat(playerResultMatcher.isResultMatched(player, dealer))
+                .isEqualTo(false);
     }
 
     private static Stream<Arguments> provideDifferentScore() {

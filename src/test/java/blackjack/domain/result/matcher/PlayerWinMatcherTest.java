@@ -17,15 +17,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PlayerWinMatcherTest {
     private final PlayerResultMatcher playerResultMatcher = new PlayerWinMatcher();
 
-    @DisplayName("딜러가 Bust면 MATCH를 반환한다.")
+    @DisplayName("딜러가 Bust면 참을 반환한다.")
     @ParameterizedTest
     @MethodSource("provideDealerBust")
     void dealerBustTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
         Player player = ParticipantGenerator.createPlayer(playerNumbers);
         Dealer dealer = ParticipantGenerator.createDealer(dealerNumbers);
 
-        assertThat(playerResultMatcher.match(player, dealer))
-                .isEqualTo(MatchResult.MATCH);
+        assertThat(playerResultMatcher.isResultMatched(player, dealer))
+                .isEqualTo(true);
     }
 
     private static Stream<Arguments> provideDealerBust() {
@@ -36,15 +36,15 @@ class PlayerWinMatcherTest {
         );
     }
 
-    @DisplayName("플레이어가 NaturalBlackjack인 경우 NOT_MATCH를 반환한다.")
+    @DisplayName("플레이어가 NaturalBlackjack인 경우 거짓을 반환한다.")
     @ParameterizedTest
     @MethodSource("providePlayerNaturalBlackjack")
     void playerIsNaturalBlackjackTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
         Player player = ParticipantGenerator.createPlayer(playerNumbers);
         Dealer dealer = ParticipantGenerator.createDealer(dealerNumbers);
 
-        assertThat(playerResultMatcher.match(player, dealer))
-                .isEqualTo(MatchResult.NOT_MATCH);
+        assertThat(playerResultMatcher.isResultMatched(player, dealer))
+                .isEqualTo(false);
     }
 
     private static Stream<Arguments> providePlayerNaturalBlackjack() {
@@ -54,15 +54,15 @@ class PlayerWinMatcherTest {
         );
     }
 
-    @DisplayName("플레이어가 이기고 있는 경우 MATCH를 반환한다.")
+    @DisplayName("플레이어가 이기고 있는 경우 참을 반환한다.")
     @ParameterizedTest
     @MethodSource("provideWinningPlayer")
     void playerIsWinningTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
         Player player = ParticipantGenerator.createPlayer(playerNumbers);
         Dealer dealer = ParticipantGenerator.createDealer(dealerNumbers);
 
-        assertThat(playerResultMatcher.match(player, dealer))
-                .isEqualTo(MatchResult.MATCH);
+        assertThat(playerResultMatcher.isResultMatched(player, dealer))
+                .isEqualTo(true);
     }
 
     private static Stream<Arguments> provideWinningPlayer() {

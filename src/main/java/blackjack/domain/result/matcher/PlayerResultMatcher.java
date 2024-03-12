@@ -5,5 +5,5 @@ import blackjack.domain.participant.Player;
 
 @FunctionalInterface
 public interface PlayerResultMatcher {
-    MatchResult match(Player player, Dealer dealer);
+    boolean isResultMatched(Player player, Dealer dealer);
 }

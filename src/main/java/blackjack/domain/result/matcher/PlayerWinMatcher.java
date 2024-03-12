@@ -5,11 +5,8 @@ import blackjack.domain.participant.Player;
 
 public class PlayerWinMatcher implements PlayerResultMatcher {
     @Override
-    public MatchResult match(Player player, Dealer dealer) {
-        if (dealer.isBust() || !player.isBlackjack() && isPlayerWinning(player, dealer)) {
-            return MatchResult.MATCH;
-        }
-        return MatchResult.NOT_MATCH;
+    public boolean isResultMatched(Player player, Dealer dealer) {
+        return dealer.isBust() || !player.isBlackjack() && isPlayerWinning(player, dealer);
     }
 
     private boolean isPlayerWinning(Player player, Dealer dealer) {

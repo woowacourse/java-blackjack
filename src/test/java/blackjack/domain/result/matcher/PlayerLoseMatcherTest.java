@@ -17,15 +17,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PlayerLoseMatcherTest {
     private final PlayerResultMatcher playerResultMatcher = new PlayerLoseMatcher();
 
-    @DisplayName("플레이어만 Bust인 경우 MATCH를 반환한다.")
+    @DisplayName("플레이어만 Bust인 경우 참을 반환한다.")
     @ParameterizedTest
     @MethodSource("provideOnlyPlayerBust")
     void onlyPlayerBustTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
         Player player = ParticipantGenerator.createPlayer(playerNumbers);
         Dealer dealer = ParticipantGenerator.createDealer(dealerNumbers);
 
-        assertThat(playerResultMatcher.match(player, dealer))
-                .isEqualTo(MatchResult.MATCH);
+        assertThat(playerResultMatcher.isResultMatched(player, dealer))
+                .isEqualTo(true);
     }
 
     private static Stream<Arguments> provideOnlyPlayerBust() {
@@ -36,15 +36,15 @@ class PlayerLoseMatcherTest {
         );
     }
 
-    @DisplayName("딜러가 버스트가 아니면서 플레이어의 점수가 딜러보다 적을 경우 MATCH를 반환한다.")
+    @DisplayName("딜러가 버스트가 아니면서 플레이어의 점수가 딜러보다 적을 경우 참을 반환한다.")
     @ParameterizedTest
     @MethodSource("providePlayerLessScore")
     void playerLessScoreTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
         Player player = ParticipantGenerator.createPlayer(playerNumbers);
         Dealer dealer = ParticipantGenerator.createDealer(dealerNumbers);
 
-        assertThat(playerResultMatcher.match(player, dealer))
-                .isEqualTo(MatchResult.MATCH);
+        assertThat(playerResultMatcher.isResultMatched(player, dealer))
+                .isEqualTo(true);
     }
 
     private static Stream<Arguments> providePlayerLessScore() {
@@ -54,15 +54,15 @@ class PlayerLoseMatcherTest {
         );
     }
 
-    @DisplayName("딜러만 NaturalBlackjack인 경우 MATCH를 반환한다.")
+    @DisplayName("딜러만 NaturalBlackjack인 경우 참을 반환한다.")
     @ParameterizedTest
     @MethodSource("provideOnlyDealerNaturalBlackjack")
     void onlyDealerNaturalBlackjackTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
         Player player = ParticipantGenerator.createPlayer(playerNumbers);
         Dealer dealer = ParticipantGenerator.createDealer(dealerNumbers);
 
-        assertThat(playerResultMatcher.match(player, dealer))
-                .isEqualTo(MatchResult.MATCH);
+        assertThat(playerResultMatcher.isResultMatched(player, dealer))
+                .isEqualTo(true);
     }
 
     private static Stream<Arguments> provideOnlyDealerNaturalBlackjack() {
@@ -72,15 +72,15 @@ class PlayerLoseMatcherTest {
         );
     }
 
-    @DisplayName("플레이어가 이긴 게 아닐 경우 NOT_MATCH를 반환한다.")
+    @DisplayName("플레이어가 이긴 게 아닐 경우 거짓을 반환한다.")
     @ParameterizedTest
     @MethodSource("providePlayerNotLose")
     void playerNotLoseTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
         Player player = ParticipantGenerator.createPlayer(playerNumbers);
         Dealer dealer = ParticipantGenerator.createDealer(dealerNumbers);
 
-        assertThat(playerResultMatcher.match(player, dealer))
-                .isEqualTo(MatchResult.NOT_MATCH);
+        assertThat(playerResultMatcher.isResultMatched(player, dealer))
+                .isEqualTo(false);
     }
 
     private static Stream<Arguments> providePlayerNotLose() {
