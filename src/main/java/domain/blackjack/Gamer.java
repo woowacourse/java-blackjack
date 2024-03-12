@@ -22,10 +22,6 @@ abstract class Gamer {
         return blackJackGameMachine.getRawSummationCardPoint();
     }
 
-    public final BlackJackGameMachine getGamer() {
-        return blackJackGameMachine;
-    }
-
     public final GameResult calculateGameResult(Gamer other) {
         return GameResultCalculator.calculate(blackJackGameMachine, other.blackJackGameMachine);
     }
