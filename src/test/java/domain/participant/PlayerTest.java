@@ -20,7 +20,7 @@ public class PlayerTest {
         PlayerName playerName = new PlayerName("kelly");
 
         // When
-        Player player = Player.of(playerName);
+        Player player = Player.of(playerName, Deck.init());
 
         // Then
         assertThat(player).isNotNull();

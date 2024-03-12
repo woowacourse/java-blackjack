@@ -56,7 +56,7 @@ public class HandTest {
     @Test
     void isBlackJackTest() {
         // Given
-        List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING), new PlayingCard(CLOVER, QUEEN), new PlayingCard(SPADE, ACE));
+        List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING), new PlayingCard(SPADE, ACE));
         Hand hand = new Hand(playingCards);
 
         // When
