@@ -24,6 +24,7 @@ public class OutputView {
 
         for (PlayerCards playerCard : playerCards) {
             printPlayerCards(playerCard);
+            System.out.println();
         }
         System.out.println();
     }
@@ -31,7 +32,7 @@ public class OutputView {
     public static void printPlayerCards(PlayerCards cards) {
         Name playerName = cards.getPlayerName();
         System.out.print(playerName + "카드: ");
-        System.out.println(formatCards(cards));
+        System.out.print(formatCards(cards));
     }
 
     private static String formatCards(Cards playerCard) {

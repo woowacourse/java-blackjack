@@ -32,10 +32,7 @@ public class Casino {
         printInitialCards(dealerCards, playerCardsBundle);
 
         for (PlayerCards playerCards : playerCardsBundle) {
-            while (playerCards.canDraw() && readHitOpinion(playerCards.getPlayerName())) {
-                playerCards.receive(deck.draw());
-                printPlayerCards(playerCards);
-            }
+            readPlayerHit(playerCards);
         }
 
         drawDealerCards(dealerCards);
@@ -45,6 +42,20 @@ public class Casino {
         Rule rule = Rule.of(dealerCards, playerCardsBundle);
         Map<Name, Income> incomes = rule.getIncomes();
         printIncomes(rule.getDealerIncome(), incomes);
+    }
+
+    private void readPlayerHit(PlayerCards playerCards) {
+        while (playerCards.canDraw()) {
+            boolean opinion = readHitOpinion(playerCards.getPlayerName());
+            if(!opinion){
+                printPlayerCards(playerCards);
+                System.out.println();
+                return;
+            }
+            playerCards.receive(deck.draw());
+            printPlayerCards(playerCards);
+            System.out.println();
+        }
     }
 
     private List<Name> readNames() {
