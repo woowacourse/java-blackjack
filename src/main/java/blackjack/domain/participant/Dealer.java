@@ -21,15 +21,16 @@ public class Dealer extends Participant {
         return cardDeck.draw();
     }
 
-    public boolean isNecessaryMoreCard() {
-        return calculateScore() < DEALER_MIN_SCORE_POLICY;
-    }
-
     public void shuffleCards() {
         cardDeck.shuffle(cardShuffleStrategy);
     }
 
     public Card getFirstCardHand() {
         return super.getCardHand().get(0);
+    }
+
+    @Override
+    public boolean canReceiveCard() {
+        return calculateScore() < DEALER_MIN_SCORE_POLICY;
     }
 }

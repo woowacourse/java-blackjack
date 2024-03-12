@@ -68,6 +68,6 @@ public class BlackjackGame {
     }
 
     public boolean shouldDealerDrawCard() {
-        return dealer.isNecessaryMoreCard();
+        return dealer.canReceiveCard();
     }
 }

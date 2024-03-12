@@ -6,7 +6,7 @@ import blackjack.domain.card.CardHand;
 import java.util.List;
 import java.util.Objects;
 
-public class Participant {
+public abstract class Participant {
     private final Name name;
     private final CardHand cardHand;
 
@@ -14,6 +14,8 @@ public class Participant {
         this.name = new Name(name);
         this.cardHand = new CardHand();
     }
+
+    public abstract boolean canReceiveCard();
 
     public void add(Card card) {
         cardHand.addCard(card);
