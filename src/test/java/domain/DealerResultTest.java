@@ -11,18 +11,19 @@ class DealerResultTest {
     DealerResult dealerResult;
 
     @BeforeEach
-    void init(){
+    void init() {
         dealerResult = new DealerResult();
     }
 
     @DisplayName("승 횟수를 1만큼 추가한다.")
     @Test
-    void addWinCount(){
+    void addWinCount() {
         //given
+        Result result = Result.WIN;
         int expectedCount = 1;
 
         //when
-        dealerResult.addWinCount();
+        dealerResult = dealerResult.addResult(result);
 
         //then
         assertThat(dealerResult.getWinCount()).isEqualTo(expectedCount);
@@ -30,12 +31,13 @@ class DealerResultTest {
 
     @DisplayName("패 횟수를 1만큼 추가한다.")
     @Test
-    void addLoseCount(){
+    void addLoseCount() {
         //given
+        Result result = Result.LOSE;
         int expectedCount = 1;
 
         //when
-        dealerResult.addLoseCount();
+        dealerResult = dealerResult.addResult(result);
 
         //then
         assertThat(dealerResult.getLoseCount()).isEqualTo(expectedCount);
@@ -43,12 +45,13 @@ class DealerResultTest {
 
     @DisplayName("무승부 횟수를 1만큼 추가한다.")
     @Test
-    void addTieCount(){
+    void addTieCount() {
         //given
+        Result result = Result.TIE;
         int expectedCount = 1;
 
         //when
-        dealerResult.addTieCount();
+        dealerResult = dealerResult.addResult(result);
 
         //then
         assertThat(dealerResult.getTieCount()).isEqualTo(expectedCount);
