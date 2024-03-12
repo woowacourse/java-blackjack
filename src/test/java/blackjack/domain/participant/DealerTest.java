@@ -25,7 +25,7 @@ class DealerTest {
     @Test
     void hitOneCard() {
         Dealer dealer = new Dealer();
-        Card card = new Card(CardRank.EIGHT, CardShape.DIAMOND);
+        Card card = Card.of(CardRank.EIGHT, CardShape.DIAMOND);
 
         dealer.hit(card);
 
@@ -36,9 +36,9 @@ class DealerTest {
     @Test
     void hitWhenIsNotPlayable() {
         Dealer dealer = new Dealer();
-        Card card1 = new Card(CardRank.KING, CardShape.DIAMOND);
-        Card card2 = new Card(CardRank.SEVEN, CardShape.DIAMOND);
-        Card card3 = new Card(CardRank.EIGHT, CardShape.DIAMOND);
+        Card card1 = Card.of(CardRank.KING, CardShape.DIAMOND);
+        Card card2 = Card.of(CardRank.SEVEN, CardShape.DIAMOND);
+        Card card3 = Card.of(CardRank.EIGHT, CardShape.DIAMOND);
         dealer.hit(card1);
         dealer.hit(card2);
 
@@ -50,8 +50,8 @@ class DealerTest {
     @Test
     void isPlayable() {
         Dealer dealer = new Dealer();
-        Card card1 = new Card(CardRank.KING, CardShape.DIAMOND);
-        Card card2 = new Card(CardRank.SEVEN, CardShape.DIAMOND);
+        Card card1 = Card.of(CardRank.KING, CardShape.DIAMOND);
+        Card card2 = Card.of(CardRank.SEVEN, CardShape.DIAMOND);
         dealer.hit(card1);
         dealer.hit(card2);
 
@@ -64,8 +64,8 @@ class DealerTest {
     @Test
     void getVisibleCards() {
         Dealer dealer = new Dealer();
-        Card card1 = new Card(CardRank.KING, CardShape.DIAMOND);
-        Card card2 = new Card(CardRank.SEVEN, CardShape.DIAMOND);
+        Card card1 = Card.of(CardRank.KING, CardShape.DIAMOND);
+        Card card2 = Card.of(CardRank.SEVEN, CardShape.DIAMOND);
         dealer.hit(card1);
         dealer.hit(card2);
 

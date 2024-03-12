@@ -82,14 +82,14 @@ class BettingsTest {
         bettings.placeBet(player1, new Money(1000));
         bettings.placeBet(player2, new Money(3000));
 
-        dealer.hit(new Card(CardRank.SEVEN, CardShape.CLOVER));
-        dealer.hit(new Card(CardRank.TEN, CardShape.HEART));
+        dealer.hit(Card.of(CardRank.SEVEN, CardShape.CLOVER));
+        dealer.hit(Card.of(CardRank.TEN, CardShape.HEART));
 
-        player1.hit(new Card(CardRank.EIGHT, CardShape.SPADE));
-        player1.hit(new Card(CardRank.TEN, CardShape.DIAMOND));
+        player1.hit(Card.of(CardRank.EIGHT, CardShape.SPADE));
+        player1.hit(Card.of(CardRank.TEN, CardShape.DIAMOND));
 
-        player2.hit(new Card(CardRank.ACE, CardShape.SPADE));
-        player2.hit(new Card(CardRank.JACK, CardShape.DIAMOND));
+        player2.hit(Card.of(CardRank.ACE, CardShape.SPADE));
+        player2.hit(Card.of(CardRank.JACK, CardShape.DIAMOND));
 
         // when
         Map<Player, Integer> profits = bettings.calculatePlayerProfits(dealer);
@@ -111,14 +111,14 @@ class BettingsTest {
         bettings.placeBet(player1, new Money(2000));
         bettings.placeBet(player2, new Money(3000));
 
-        dealer.hit(new Card(CardRank.QUEEN, CardShape.CLOVER));
-        dealer.hit(new Card(CardRank.JACK, CardShape.HEART));
+        dealer.hit(Card.of(CardRank.QUEEN, CardShape.CLOVER));
+        dealer.hit(Card.of(CardRank.JACK, CardShape.HEART));
 
-        player1.hit(new Card(CardRank.EIGHT, CardShape.SPADE));
-        player1.hit(new Card(CardRank.TEN, CardShape.DIAMOND));
+        player1.hit(Card.of(CardRank.EIGHT, CardShape.SPADE));
+        player1.hit(Card.of(CardRank.TEN, CardShape.DIAMOND));
 
-        player2.hit(new Card(CardRank.QUEEN, CardShape.SPADE));
-        player2.hit(new Card(CardRank.JACK, CardShape.DIAMOND));
+        player2.hit(Card.of(CardRank.QUEEN, CardShape.SPADE));
+        player2.hit(Card.of(CardRank.JACK, CardShape.DIAMOND));
 
         // when
         Map<Player, Integer> profits = bettings.calculatePlayerProfits(dealer);

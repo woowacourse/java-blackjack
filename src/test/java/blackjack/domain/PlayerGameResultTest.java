@@ -18,8 +18,8 @@ class PlayerGameResultTest {
         private final Dealer dealer = new Dealer();
 
         public DealerScoreLessThanOrEqual21() {
-            dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-            dealer.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
+            dealer.hit(Card.of(CardRank.KING, CardShape.DIAMOND));
+            dealer.hit(Card.of(CardRank.SEVEN, CardShape.DIAMOND));
         }
 
         @Nested
@@ -30,8 +30,8 @@ class PlayerGameResultTest {
             @Test
             void playerWin() {
                 Player player = new Player("pobi");
-                player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-                player.hit(new Card(CardRank.EIGHT, CardShape.DIAMOND));
+                player.hit(Card.of(CardRank.KING, CardShape.DIAMOND));
+                player.hit(Card.of(CardRank.EIGHT, CardShape.DIAMOND));
 
                 PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
@@ -42,8 +42,8 @@ class PlayerGameResultTest {
             @Test
             void playerLose() {
                 Player player = new Player("pobi");
-                player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-                player.hit(new Card(CardRank.SIX, CardShape.DIAMOND));
+                player.hit(Card.of(CardRank.KING, CardShape.DIAMOND));
+                player.hit(Card.of(CardRank.SIX, CardShape.DIAMOND));
 
                 PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
@@ -54,8 +54,8 @@ class PlayerGameResultTest {
             @Test
             void playerPush() {
                 Player player = new Player("pobi");
-                player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-                player.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
+                player.hit(Card.of(CardRank.KING, CardShape.DIAMOND));
+                player.hit(Card.of(CardRank.SEVEN, CardShape.DIAMOND));
 
                 PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
@@ -67,8 +67,8 @@ class PlayerGameResultTest {
         @Test
         void playerBlackjack() {
             Player player = new Player("pobi");
-            player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-            player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
+            player.hit(Card.of(CardRank.KING, CardShape.DIAMOND));
+            player.hit(Card.of(CardRank.ACE, CardShape.DIAMOND));
 
             PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
@@ -79,9 +79,9 @@ class PlayerGameResultTest {
         @Test
         void playerBust() {
             Player player = new Player("pobi");
-            player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-            player.hit(new Card(CardRank.SIX, CardShape.DIAMOND));
-            player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
+            player.hit(Card.of(CardRank.KING, CardShape.DIAMOND));
+            player.hit(Card.of(CardRank.SIX, CardShape.DIAMOND));
+            player.hit(Card.of(CardRank.QUEEN, CardShape.DIAMOND));
 
             PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
@@ -96,16 +96,16 @@ class PlayerGameResultTest {
         private final Dealer dealer = new Dealer();
 
         public DealerBlackjack() {
-            dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-            dealer.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
+            dealer.hit(Card.of(CardRank.KING, CardShape.DIAMOND));
+            dealer.hit(Card.of(CardRank.ACE, CardShape.DIAMOND));
         }
 
         @DisplayName("플레이어의 카드가 21점 이하이면 플레이어가 진다.")
         @Test
         void playerScoreLessThanOrEqual21() {
             Player player = new Player("pobi");
-            player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-            player.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
+            player.hit(Card.of(CardRank.KING, CardShape.DIAMOND));
+            player.hit(Card.of(CardRank.SEVEN, CardShape.DIAMOND));
 
             PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
@@ -116,8 +116,8 @@ class PlayerGameResultTest {
         @Test
         void playerBlackjack() {
             Player player = new Player("pobi");
-            player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
-            player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+            player.hit(Card.of(CardRank.ACE, CardShape.DIAMOND));
+            player.hit(Card.of(CardRank.KING, CardShape.DIAMOND));
 
             PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
@@ -128,9 +128,9 @@ class PlayerGameResultTest {
         @Test
         void playerBust() {
             Player player = new Player("pobi");
-            player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-            player.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
-            player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
+            player.hit(Card.of(CardRank.KING, CardShape.DIAMOND));
+            player.hit(Card.of(CardRank.SEVEN, CardShape.DIAMOND));
+            player.hit(Card.of(CardRank.QUEEN, CardShape.DIAMOND));
 
             PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
@@ -144,17 +144,17 @@ class PlayerGameResultTest {
         private final Dealer dealer = new Dealer();
 
         public DealerBust() {
-            dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-            dealer.hit(new Card(CardRank.SIX, CardShape.DIAMOND));
-            dealer.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
+            dealer.hit(Card.of(CardRank.KING, CardShape.DIAMOND));
+            dealer.hit(Card.of(CardRank.SIX, CardShape.DIAMOND));
+            dealer.hit(Card.of(CardRank.QUEEN, CardShape.DIAMOND));
         }
 
         @DisplayName("플레이어의 카드가 21점 이하이면 플레이어가 이긴다.")
         @Test
         void playerWin() {
             Player player = new Player("pobi");
-            player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-            player.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
+            player.hit(Card.of(CardRank.KING, CardShape.DIAMOND));
+            player.hit(Card.of(CardRank.SEVEN, CardShape.DIAMOND));
 
             PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
@@ -165,8 +165,8 @@ class PlayerGameResultTest {
         @Test
         void playerBlackjack() {
             Player player = new Player("pobi");
-            player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-            player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
+            player.hit(Card.of(CardRank.KING, CardShape.DIAMOND));
+            player.hit(Card.of(CardRank.ACE, CardShape.DIAMOND));
 
             PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
@@ -177,9 +177,9 @@ class PlayerGameResultTest {
         @Test
         void playerBust() {
             Player player = new Player("pobi");
-            player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-            player.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
-            player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
+            player.hit(Card.of(CardRank.KING, CardShape.DIAMOND));
+            player.hit(Card.of(CardRank.SEVEN, CardShape.DIAMOND));
+            player.hit(Card.of(CardRank.QUEEN, CardShape.DIAMOND));
 
             PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
@@ -191,13 +191,13 @@ class PlayerGameResultTest {
     @Test
     void dealerNotBlackjack21ScoreAndPlayerBlackjack() {
         Dealer dealer = new Dealer();
-        dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-        dealer.hit(new Card(CardRank.TWO, CardShape.DIAMOND));
-        dealer.hit(new Card(CardRank.NINE, CardShape.DIAMOND));
+        dealer.hit(Card.of(CardRank.KING, CardShape.DIAMOND));
+        dealer.hit(Card.of(CardRank.TWO, CardShape.DIAMOND));
+        dealer.hit(Card.of(CardRank.NINE, CardShape.DIAMOND));
 
         Player player = new Player("pobi");
-        player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
-        player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+        player.hit(Card.of(CardRank.ACE, CardShape.DIAMOND));
+        player.hit(Card.of(CardRank.KING, CardShape.DIAMOND));
 
         PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 
@@ -208,13 +208,13 @@ class PlayerGameResultTest {
     @Test
     void dealerBlackjackAndPlayerNotBlackjack21Score() {
         Dealer dealer = new Dealer();
-        dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-        dealer.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
+        dealer.hit(Card.of(CardRank.KING, CardShape.DIAMOND));
+        dealer.hit(Card.of(CardRank.ACE, CardShape.DIAMOND));
 
         Player player = new Player("pobi");
-        player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-        player.hit(new Card(CardRank.TWO, CardShape.DIAMOND));
-        player.hit(new Card(CardRank.NINE, CardShape.DIAMOND));
+        player.hit(Card.of(CardRank.KING, CardShape.DIAMOND));
+        player.hit(Card.of(CardRank.TWO, CardShape.DIAMOND));
+        player.hit(Card.of(CardRank.NINE, CardShape.DIAMOND));
 
         PlayerGameResult playerGameResult = PlayerGameResult.judge(dealer, player);
 

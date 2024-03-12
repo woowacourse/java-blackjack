@@ -30,7 +30,7 @@ public class Deck {
 
     private static List<Card> createRankCards(CardRank rank) {
         return Arrays.stream(CardShape.values())
-                .map(shape -> new Card(rank, shape))
+                .map(shape -> Card.of(rank, shape))
                 .toList();
     }
 
