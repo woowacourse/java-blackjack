@@ -29,7 +29,7 @@ class CardTest {
     @DisplayName("문자(String)와 모양(String)을 가지고 있다.")
     @Test
     void create_success() {
-        assertThatCode(() -> new Card(Letter.FOUR, Mark.DIAMOND))
+        assertThatCode(() -> new Card(Rank.FOUR, Suit.DIAMONDS))
                 .doesNotThrowAnyException();
     }
 

@@ -10,8 +10,8 @@ public class CardDeck {
     private final Stack<Card> deck;
 
     public CardDeck() {
-        List<Card> cards = Mark.getValues().stream()
-                .flatMap(mark -> Letter.getValues().stream()
+        List<Card> cards = Suit.getValues().stream()
+                .flatMap(mark -> Rank.getValues().stream()
                         .map(letter -> new Card(letter, mark)))
                 .toList();
         deck = new Stack<>();
