@@ -3,6 +3,8 @@ package domain;
 import domain.participant.Hands;
 import domain.participant.Name;
 import domain.participant.Player;
+import exception.InvalidPlayerName;
+import exception.ReservedPlayerNameException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +24,6 @@ class PlayerTest {
         final Hands hands = Hands.createEmptyHands();
 
         Assertions.assertThatThrownBy(() -> new Player(name, hands))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 사용할 수 없는 이름입니다.");
+                .isInstanceOf(ReservedPlayerNameException.class);
     }
 }

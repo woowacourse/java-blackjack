@@ -1,6 +1,7 @@
 package domain;
 
 import domain.card.CardDeck;
+import exception.NoMoreCardException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,6 @@ class CardDeckTest {
 
         //then
         Assertions.assertThatThrownBy(cardDeck::pop)
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("[ERROR] 카드덱이 비어있습니다.");
+                .isInstanceOf(NoMoreCardException.class);
     }
 }

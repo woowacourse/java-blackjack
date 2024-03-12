@@ -1,5 +1,8 @@
 package domain.participant;
 
+import constants.ErrorCode;
+import exception.InvalidPlayerName;
+
 public class Name {
 
     private final String value;
@@ -16,13 +19,13 @@ public class Name {
 
     private void validateNull(final String name) {
         if (name == null) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 참여자 이름입니다.");
+            throw new InvalidPlayerName(ErrorCode.BLANK_VALUE);
         }
     }
 
     private void validateBlank(final String name) {
         if (name.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 참여자 이름에 공백을 입력할 수 없습니다.");
+            throw new InvalidPlayerName(ErrorCode.BLANK_VALUE);
         }
     }
 

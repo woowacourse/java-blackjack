@@ -1,5 +1,7 @@
 package domain.card;
 
+import constants.ErrorCode;
+import exception.NoMoreCardException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +32,7 @@ public class CardDeck {
 
     public Card pop() {
         if (cards.isEmpty()) {
-            throw new IllegalStateException("[ERROR] 카드덱이 비어있습니다.");
+            throw new NoMoreCardException(ErrorCode.EMPTY_CARD);
         }
         return cards.pop();
     }

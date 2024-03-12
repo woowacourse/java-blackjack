@@ -2,6 +2,7 @@ package controller;
 
 import domain.Answer;
 import domain.participant.Players;
+import exception.CustomException;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -36,8 +37,8 @@ public class InputController {
         try {
             List<String> rawNames = inputView.readNames();
             return Players.from(rawNames);
-        } catch (IllegalArgumentException exception) {
-            outputView.printException(exception);
+        } catch (CustomException exception) {
+            outputView.printException(exception.getErrorCode());
             return null;
         }
     }
@@ -46,8 +47,8 @@ public class InputController {
         try {
             String value = inputView.readAnswer(name);
             return Answer.from(value);
-        } catch (IllegalArgumentException exception) {
-            outputView.printException(exception);
+        } catch (CustomException exception) {
+            outputView.printException(exception.getErrorCode());
             return null;
         }
     }

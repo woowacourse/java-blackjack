@@ -15,6 +15,8 @@ import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
+import exception.DuplicatePlayerNameException;
+import exception.InvalidPlayersSizeException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -35,8 +37,7 @@ class PlayersTest {
 
         //when & then
         Assertions.assertThatThrownBy(() -> Players.from(names))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 참여자 이름은 중복될 수 없습니다.");
+                .isInstanceOf(DuplicatePlayerNameException.class);
     }
 
     @DisplayName("총 참여자 수가 2이상 8이하이면 참여자를 생성한다.")
@@ -52,8 +53,7 @@ class PlayersTest {
     @MethodSource("invalidPlayersSizeParameterProvider")
     void invalidPlayersSize(final List<String> names) {
         Assertions.assertThatThrownBy(() -> Players.from(names))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 유효하지 않은 참여자 수입니다.");
+                .isInstanceOf(InvalidPlayersSizeException.class);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package domain;
 
+import exception.InvalidCommandException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,7 +13,6 @@ class AnswerTest {
     @ValueSource(strings = {"Y", "nn", "aa"})
     void invalidAnswer(String value) {
         Assertions.assertThatThrownBy(() -> Answer.from(value))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 유효하지 않은 대답입니다.");
+                .isInstanceOf(InvalidCommandException.class);
     }
 }

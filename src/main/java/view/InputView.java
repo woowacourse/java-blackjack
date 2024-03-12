@@ -1,5 +1,8 @@
 package view;
 
+import constants.ErrorCode;
+import exception.InvalidInputException;
+import exception.InvalidSeparatorException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -33,13 +36,13 @@ public class InputView {
 
     private void validateBlank(final String rawNames) {
         if (rawNames == null || rawNames.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 입력입니다.");
+            throw new InvalidInputException(ErrorCode.INVALID_INPUT);
         }
     }
 
     private void validateSeparators(final String rawNames) {
         if (isInvalidSeparator(rawNames)) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 구분자입니다.");
+            throw new InvalidSeparatorException(ErrorCode.INVALID_SEPARATOR);
         }
     }
 

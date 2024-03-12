@@ -1,6 +1,7 @@
 package domain;
 
 import domain.participant.Name;
+import exception.InvalidPlayerName;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,8 +15,7 @@ class NameTest {
     @ValueSource(strings = {"", " ", "  "})
     void BlankInputThrowException(String value) {
         Assertions.assertThatThrownBy(() -> new Name(value))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 참여자 이름에 공백을 입력할 수 없습니다.");
+                .isInstanceOf(InvalidPlayerName.class);
     }
 
     @DisplayName("null을 입력하면 예외를 발생시킨다.")
@@ -23,7 +23,6 @@ class NameTest {
     @NullSource
     void nullInputThrowException(String value) {
         Assertions.assertThatThrownBy(() -> new Name(value))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 유효하지 않은 참여자 이름입니다.");
+                .isInstanceOf(InvalidPlayerName.class);
     }
 }

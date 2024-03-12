@@ -1,6 +1,9 @@
 package domain.participant;
 
+import constants.ErrorCode;
 import domain.Result;
+import exception.DuplicatePlayerNameException;
+import exception.InvalidPlayersSizeException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,13 +57,13 @@ public class Players {
 
     private static void validateSize(final List<String> names) {
         if (names.size() < MIN_SIZE || MAX_SIZE < names.size()) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 참여자 수입니다.");
+            throw new InvalidPlayersSizeException(ErrorCode.INVALID_SIZE);
         }
     }
 
     private static void validateDuplicate(final List<String> names) {
         if (names.size() != Set.copyOf(names).size()) {
-            throw new IllegalArgumentException("[ERROR] 참여자 이름은 중복될 수 없습니다.");
+            throw new DuplicatePlayerNameException(ErrorCode.DUPLICATE_NAME);
         }
     }
 

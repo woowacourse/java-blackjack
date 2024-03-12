@@ -1,5 +1,7 @@
 package domain;
 
+import constants.ErrorCode;
+import exception.InvalidCommandException;
 import java.util.Arrays;
 
 public enum Answer {
@@ -17,7 +19,7 @@ public enum Answer {
         return Arrays.stream(Answer.values())
                 .filter(answer -> answer.value.equals(value))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 대답입니다."));
+                .orElseThrow(() -> new InvalidCommandException(ErrorCode.INVALID_COMMAND));
     }
 
     public boolean isHit() {

@@ -1,5 +1,8 @@
 package domain.participant;
 
+import constants.ErrorCode;
+import exception.ReservedPlayerNameException;
+
 public class Player extends Participant {
 
     public Player(final Name name, final Hands hands) {
@@ -9,7 +12,7 @@ public class Player extends Participant {
 
     private void validate(final Name name) {
         if (Dealer.NAME.equals(name.getValue())) {
-            throw new IllegalArgumentException("[ERROR] 사용할 수 없는 이름입니다.");
+            throw new ReservedPlayerNameException(ErrorCode.RESERVED_NAME);
         }
     }
 }
