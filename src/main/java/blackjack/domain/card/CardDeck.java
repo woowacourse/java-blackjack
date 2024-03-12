@@ -11,7 +11,7 @@ public class CardDeck {
 
     private final Queue<Card> cards;
 
-    public CardDeck(List<Card> cards) {
+    CardDeck(List<Card> cards) {
         this.cards = new LinkedList<>(cards);
     }
 
