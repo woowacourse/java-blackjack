@@ -13,7 +13,7 @@ import java.util.List;
 public class OutputView {
     public static void printPlayersStatus(final List<Player> players) {
         final List<String> names = players.stream()
-                .map(Player::getName)
+                .map(Player::name)
                 .toList();
         System.out.println("딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.");
 
@@ -24,9 +24,9 @@ public class OutputView {
     }
 
     public static void printPlayerStatus(final Player player) {
-        final StringBuilder stringBuilder = new StringBuilder(player.getName() + ": ");
+        final StringBuilder stringBuilder = new StringBuilder(player.name() + ": ");
         final List<String> cardInfos = new ArrayList<>();
-        for (final var card : player.getCards()) {
+        for (final var card : player.hand()) {
             final String denomination = denominationToMessage(card.getDenomination());
             final String symbol = symbolToMessage(card.getSymbol());
             cardInfos.add(denomination + symbol);
@@ -39,8 +39,8 @@ public class OutputView {
     public static void printResults(final List<Player> players) {
         System.out.println();
         players.forEach(player -> {
-            final StringBuilder stringBuilder = new StringBuilder(player.getName() + "카드: ");
-            final List<String> cardInfos = player.getCards()
+            final StringBuilder stringBuilder = new StringBuilder(player.name() + "카드: ");
+            final List<String> cardInfos = player.hand()
                     .stream()
                     .map(card -> denominationToMessage(card.getDenomination()) + symbolToMessage(card.getSymbol()))
                     .toList();
@@ -65,13 +65,13 @@ public class OutputView {
     }
 
     private static void printWinOrLose(final Player player, final Integer win, final Integer lose) {
-        if (player.getName().equals("딜러")) {
-            System.out.print(player.getName() + ": " + win + "승" + lose + "패");
+        if (player.name().equals("딜러")) {
+            System.out.print(player.name() + ": " + win + "승" + lose + "패");
             System.out.println();
             return;
         }
 
-        System.out.println(player.getName() + ": " + determineWinOrLose(win));
+        System.out.println(player.name() + ": " + determineWinOrLose(win));
     }
 
     private static String determineWinOrLose(final Integer win) {

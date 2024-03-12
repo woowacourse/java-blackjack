@@ -16,7 +16,7 @@ class BlackjackTest {
         final Dealer dealer = new Dealer(new Deck());
         final Blackjack blackjack = new Blackjack(players, dealer);
 
-        assertThat(blackjack.getDealer().getCards().size()).isEqualTo(2);
+        assertThat(blackjack.getDealer().hand().size()).isEqualTo(2);
     }
 
     @Test
@@ -26,7 +26,7 @@ class BlackjackTest {
         final Dealer dealer = new Dealer(new Deck());
         final Blackjack blackjack = new Blackjack(players, dealer);
 
-        assertThat(blackjack.getPlayers().get(0).getCards().size()).isEqualTo(2);
+        assertThat(blackjack.getPlayers().get(0).hand().size()).isEqualTo(2);
     }
 
     @Test
@@ -38,6 +38,6 @@ class BlackjackTest {
         final Player player = blackjack.getPlayers().get(0);
         blackjack.dealCard(player);
 
-        assertThat(player.getCards().size()).isEqualTo(3);
+        assertThat(player.hand().size()).isEqualTo(3);
     }
 }

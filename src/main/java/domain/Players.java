@@ -47,13 +47,6 @@ public class Players {
         return Set.copyOf(players).size() != players.size();
     }
 
-    public void dealCards(final Dealer dealer) {
-        for (final Player player : players) {
-            final List<Card> cards = dealer.drawCards(2);
-            player.dealCards(cards);
-        }
-    }
-
     public List<Player> getPlayers() {
         return players;
     }

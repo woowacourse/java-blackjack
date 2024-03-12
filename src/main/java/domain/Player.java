@@ -36,11 +36,11 @@ public class Player {
         return hand.isNotBust();
     }
 
-    public String getName() {
+    public String name() {
         return name.getName();
     }
 
-    public List<Card> getCards() {
+    public List<Card> hand() {
         return hand.cards();
     }
 

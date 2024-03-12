@@ -18,7 +18,7 @@ public class BlackjackRule {
     }
 
     private DealerResult calculateDealerResult(final Players players, final Dealer dealer, final long playerWins) {
-        return new DealerResult(dealer.getName(), (int) (players.size() - playerWins), (int) playerWins);
+        return new DealerResult(dealer.name(), (int) (players.size() - playerWins), (int) playerWins);
     }
 
     private List<PlayerResult> calculatePlayerResults(final Players players, final Dealer dealer) {
@@ -35,14 +35,14 @@ public class BlackjackRule {
 
     private PlayerResult match(final Player player, final Dealer dealer) {
         if (player.isBust()) {
-            return new PlayerResult(player.getName(), WinLose.LOSE);
+            return new PlayerResult(player.name(), WinLose.LOSE);
         }
         if (dealer.isBust()) {
-            return new PlayerResult(player.getName(), WinLose.WIN);
+            return new PlayerResult(player.name(), WinLose.WIN);
         }
         if (dealer.score() >= player.score()) {
-            return new PlayerResult(player.getName(), WinLose.LOSE);
+            return new PlayerResult(player.name(), WinLose.LOSE);
         }
-        return new PlayerResult(player.getName(), WinLose.WIN);
+        return new PlayerResult(player.name(), WinLose.WIN);
     }
 }

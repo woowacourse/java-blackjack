@@ -44,6 +44,6 @@ public class Application {
     }
 
     private static boolean wantToHit(final Player player) {
-        return InputView.inputHitCommand(player.getName()).equals("y");
+        return InputView.inputHitCommand(player.name()).equals("y");
     }
 }
