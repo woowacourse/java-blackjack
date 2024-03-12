@@ -1,47 +1,30 @@
 package blackjack.model.deck;
 
+import blackjack.model.GameRule;
+import blackjack.model.gamer.Score;
 import blackjack.model.card.Card;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HandDeck {
 
-    private final List<Card> cards = new ArrayList<>();
+    private final Deck deck = new Deck();
+    private Score score;
 
-    public void addCard(Card card) {
-        validateDuplicatedCard(card);
-        cards.add(card);
+    public void add(Card card) {
+        deck.add(card);
+        calculateDeckScore();
     }
 
-    public int calculateTotalScore() {
-        return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
+    public List<Card> cards() {
+        return deck.cards();
     }
 
-    public int countElevenAce() {
-        return (int) cards.stream()
-                .filter(Card::isElevenAce)
-                .count();
+    public int score() {
+        return score.getScore();
     }
 
-    public void switchAceValueInRow() {
-        cards.stream()
-                .filter(Card::isElevenAce)
-                .findFirst()
-                .ifPresent(Card::switchAceValue);
-    }
-
-    private void validateDuplicatedCard(Card card) {
-        if (cards.contains(card)) {
-            String cardNumber = card.number().getName();
-            String cardPattern = card.pattern().getName();
-            String errorMessage = String.format("[ERROR] 중복된 카드는 받을 수 없습니다.(중복된 카드 : %s%s)", cardNumber, cardPattern);
-            throw new IllegalArgumentException(errorMessage);
-        }
-    }
-
-    public List<Card> getCards() {
-        return new ArrayList<>(cards);
+    private void calculateDeckScore() {
+        GameRule.applyCardScoringRules(deck);
+        score = new Score(deck.calculateCardScore());
     }
 }
