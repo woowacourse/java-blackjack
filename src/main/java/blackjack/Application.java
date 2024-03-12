@@ -59,7 +59,7 @@ public class Application {
     }
 
     private static PlayerDto createPlayerDto(final Player player) {
-        return new PlayerDto(player.getName(), player.getHand().getCards(), player.getHand().calculateOptimalSum());
+        return new PlayerDto(player.getName(), player.getHand().getCards(), player.calculateScore());
     }
 
     private static void hitGamers(GameBoard gameBoard) {

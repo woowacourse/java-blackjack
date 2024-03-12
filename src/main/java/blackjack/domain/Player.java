@@ -30,8 +30,4 @@ public class Player extends Gamer {
     public Name getName() {
         return name;
     }
-
-    public Hand getHand() {
-        return hand;
-    }
 }

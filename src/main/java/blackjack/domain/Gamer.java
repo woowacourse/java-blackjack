@@ -12,6 +12,8 @@ public abstract class Gamer {
         this.hand = hand;
     }
 
+    abstract boolean canDraw();
+
     public boolean isBust() {
         return calculateScore() > BLACKJACK;
     }
@@ -24,5 +26,7 @@ public abstract class Gamer {
         return hand.calculateOptimalSum();
     }
 
-    abstract boolean canDraw();
+    public Hand getHand() {
+        return hand;
+    }
 }

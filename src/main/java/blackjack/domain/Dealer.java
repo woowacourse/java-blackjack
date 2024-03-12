@@ -36,8 +36,4 @@ public class Dealer extends Gamer {
     public boolean canDraw() {
         return hand.calculateOptimalSum() <= THRESHOLD;
     }
-
-    public Hand getHand() {
-        return hand;
-    }
 }
