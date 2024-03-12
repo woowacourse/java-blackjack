@@ -57,6 +57,10 @@ public class CardHand {
 		return value >= score;
 	}
 
+	public Card getFirstCard() {
+		return cards.get(0);
+	}
+
 	@Override
 	public String toString() {
 		return "CardHand{" +

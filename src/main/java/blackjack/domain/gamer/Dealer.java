@@ -50,6 +50,10 @@ public class Dealer extends Gamer {
 		return false;
 	}
 
+	public Card getInitCard() {
+		return cardHand.getFirstCard();
+	}
+
 	@Override
 	public String toString() {
 		return "Dealer{" +

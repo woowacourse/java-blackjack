@@ -44,7 +44,7 @@ public class OutputView {
 	}
 
 	private void printDealerInitCardHandStatusMessage(Dealer dealer) {
-		Card dealerInitCard = dealer.getCardHand().get(0);
+		Card dealerInitCard = dealer.getInitCard();
 		System.out.println(String.format("딜러: %s", createCardInfoText(dealerInitCard)));
 	}
 
