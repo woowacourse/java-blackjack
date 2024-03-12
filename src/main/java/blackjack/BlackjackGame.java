@@ -1,6 +1,7 @@
 package blackjack;
 
 import blackjack.domain.Deck;
+import blackjack.domain.Judge;
 import blackjack.domain.Players;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -31,7 +32,7 @@ public class BlackjackGame {
         initializeGame(dealer, players);
         printCardDistribute(dealer, players);
         requestExtraCard(dealer, players);
-        outputView.printTotalProfit(dealer.getProfit(), players.getPlayerProfits());
+        outputView.printTotalProfit(Judge.judge(dealer, players));
     }
 
     private Players createPlayers() {

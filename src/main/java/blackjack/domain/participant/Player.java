@@ -42,12 +42,22 @@ public class Player extends Gamer {
         return hand.calculateScore() < Hand.BLACKJACK_BOUND;
     }
 
+    public void win(final Profit dealerProfit) {
+        dealerProfit.lose(betting.getAmount());
+        profit.earn(betting.getAmount());
+    }
+
+    public void lose(final Profit dealerProfit) {
+        dealerProfit.earn(betting.getAmount());
+        profit.lose(betting.getAmount());
+    }
+
     public String getName() {
         return name;
     }
 
     @Override
     public String getProfit() {
-        return profit.getProfit();
+        return profit.toString();
     }
 }

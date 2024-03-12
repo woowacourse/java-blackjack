@@ -1,12 +1,7 @@
 package blackjack.domain;
 
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.BlackjackResult;
-import blackjack.dto.DealerResult;
 import blackjack.dto.PlayerInfo;
-import blackjack.dto.PlayerProfit;
-import blackjack.dto.PlayerResult;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -45,18 +40,6 @@ public class Players {
         return playerInfos.size() != names.size();
     }
 
-    public BlackjackResult createResult(final Dealer dealer) {
-        ResultStatus resultStatus = ResultStatus.init();
-        PlayerResult playerResult = new PlayerResult();
-
-        for (Player player : players) {
-            DealerResult result = Judge.judge(resultStatus, player, dealer, playerResult);
-            resultStatus.updateResultStatus(result);
-        }
-
-        return new BlackjackResult(DealerResult.of(resultStatus), playerResult);
-    }
-
     public List<String> getNames() {
         return players.stream()
                 .map(Player::getName)
@@ -65,11 +48,5 @@ public class Players {
 
     public List<Player> getPlayers() {
         return players;
-    }
-
-    public List<PlayerProfit> getPlayerProfits() {
-        return players.stream()
-                .map(player -> new PlayerProfit(player.getName(), player.getProfit()))
-                .toList();
     }
 }

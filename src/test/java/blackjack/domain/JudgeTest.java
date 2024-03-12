@@ -5,9 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.stategy.NoShuffleStrategy;
-import blackjack.dto.DealerResult;
+import blackjack.dto.BlackjackResult;
 import blackjack.dto.PlayerInfo;
-import blackjack.dto.PlayerResult;
 import blackjack.strategy.ShuffleStrategy;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -23,10 +22,10 @@ class JudgeTest {
 
     private Deck deck;
     private Dealer dealer;
-    private final List<PlayerInfo> playerInfos = List.of(PlayerInfo.of("choco", "10000"));
+    private final String bettingAmount = "10000";
+    private final List<PlayerInfo> playerInfos = List.of(PlayerInfo.of("choco", bettingAmount));
     private Players players;
     private Player choco;
-    ResultStatus resultStatus;
     private int bustDrawCount = 10;
 
     @DisplayName("딜러가 버스트된 경우")
@@ -35,7 +34,6 @@ class JudgeTest {
         @BeforeEach
         void setUp() {
             deck = new Deck(shuffleStrategy);
-            resultStatus = ResultStatus.init();
             deckDrawLoop(6);
             dealer = new Dealer(deck);
             dealer.draw(2);
@@ -50,14 +48,13 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));
-            PlayerResult playerResult = new PlayerResult();
 
             //when
             bustPlayerChoco();
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultDraw(dealerResult))
+            assertThat(isDealerResultDraw(result))
                     .isTrue();
         }
 
@@ -70,13 +67,12 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));
-            PlayerResult playerResult = new PlayerResult();
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultLose(dealerResult))
+            assertThat(isDealerResultLose(result))
                     .isTrue();
         }
 
@@ -88,13 +84,12 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));
-            PlayerResult playerResult = new PlayerResult();
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultLose(dealerResult))
+            assertThat(isDealerResultLose(result))
                     .isTrue();
         }
     }
@@ -105,7 +100,6 @@ class JudgeTest {
         @BeforeEach
         void setUp() {
             deck = new Deck(shuffleStrategy);
-            resultStatus = ResultStatus.init();
             deckDrawLoop(12);
             dealer = new Dealer(deck);
             dealer.draw(2);
@@ -119,14 +113,13 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));
-            PlayerResult playerResult = new PlayerResult();
 
             //when
             bustPlayerChoco();
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultWin(dealerResult))
+            assertThat(isDealerResultWin(result))
                     .isTrue();
         }
 
@@ -140,13 +133,12 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));
-            PlayerResult playerResult = new PlayerResult();
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultDraw(dealerResult))
+            assertThat(isDealerResultDraw(result))
                     .isTrue();
         }
 
@@ -158,13 +150,12 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));
-            PlayerResult playerResult = new PlayerResult();
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultWin(dealerResult))
+            assertThat(isDealerResultWin(result))
                     .isTrue();
         }
     }
@@ -177,7 +168,6 @@ class JudgeTest {
             deck = new Deck(shuffleStrategy);
             dealer = new Dealer(deck);
             dealer.draw(2);
-            resultStatus = ResultStatus.init();
         }
 
         @DisplayName("플레이어가 버스트되면 딜러가 승리한다.")
@@ -188,14 +178,13 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));
-            PlayerResult playerResult = new PlayerResult();
 
             //when
             bustPlayerChoco();
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultWin(dealerResult))
+            assertThat(isDealerResultWin(result))
                     .isTrue();
         }
 
@@ -209,13 +198,12 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));
-            PlayerResult playerResult = new PlayerResult();
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultLose(dealerResult))
+            assertThat(isDealerResultLose(result))
                     .isTrue();
         }
 
@@ -227,13 +215,12 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));
-            PlayerResult playerResult = new PlayerResult();
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultWin(dealerResult))
+            assertThat(isDealerResultWin(result))
                     .isTrue();
         }
 
@@ -246,13 +233,12 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));
-            PlayerResult playerResult = new PlayerResult();
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultLose(dealerResult))
+            assertThat(isDealerResultLose(result))
                     .isTrue();
         }
 
@@ -265,13 +251,12 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));
-            PlayerResult playerResult = new PlayerResult();
 
             //when
-            DealerResult dealerResult = Judge.judge(resultStatus, choco, dealer, playerResult);
+            BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultDraw(dealerResult))
+            assertThat(isDealerResultDraw(result))
                     .isTrue();
         }
     }
@@ -290,15 +275,15 @@ class JudgeTest {
                 .forEach(i -> deck.draw());
     }
 
-    private boolean isDealerResultWin(final DealerResult dealerResult) {
-        return dealerResult.getWins() == 1 && dealerResult.getLoses() == 0 && dealerResult.getDraws() == 0;
+    private boolean isDealerResultWin(final BlackjackResult blackjackResult) {
+        return blackjackResult.dealerProfit().equals(bettingAmount);
     }
 
-    private boolean isDealerResultLose(final DealerResult dealerResult) {
-        return dealerResult.getWins() == 0 && dealerResult.getLoses() == 1 && dealerResult.getDraws() == 0;
+    private boolean isDealerResultLose(final BlackjackResult blackjackResult) {
+        return blackjackResult.dealerProfit().equals("-" + bettingAmount);
     }
 
-    private boolean isDealerResultDraw(final DealerResult dealerResult) {
-        return dealerResult.getWins() == 0 && dealerResult.getLoses() == 0 && dealerResult.getDraws() == 1;
+    private boolean isDealerResultDraw(final BlackjackResult blackjackResult) {
+        return blackjackResult.dealerProfit().equals("0");
     }
 }

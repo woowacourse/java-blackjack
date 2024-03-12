@@ -61,4 +61,26 @@ public class PlayerTest {
         //then
         assertThat(choco.getHandCards()).contains(trumpCard);
     }
+
+    @DisplayName("승리 시, 배팅 금액을 받는다.")
+    @Test
+    void win() {
+        //given & when
+        choco.win(dealer.getDealerProfit());
+
+        //then
+        assertThat(choco.getProfit()).isEqualTo("10000");
+        assertThat(dealer.getDealerProfit().toString()).isEqualTo("-10000");
+    }
+
+    @DisplayName("패배 시, 배팅 금액을 잃는다.")
+    @Test
+    void lose() {
+        //given & when
+        choco.lose(dealer.getDealerProfit());
+
+        //then
+        assertThat(choco.getProfit()).isEqualTo("-10000");
+        assertThat(dealer.getDealerProfit().toString()).isEqualTo("10000");
+    }
 }

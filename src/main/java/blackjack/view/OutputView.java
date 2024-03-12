@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.participant.Dealer;
+import blackjack.dto.BlackjackResult;
 import blackjack.dto.PlayerProfit;
 import java.util.List;
 
@@ -13,7 +14,6 @@ public class OutputView {
     private static final String DEALER_ADDED_CARD = NEW_LINE + "딜러는 %d이하라 한장의 카드를 더 받았습니다." + NEW_LINE;
     private static final String RESULT_CARDS_STATUS = "%s카드: %s - 결과: %d" + NEW_LINE;
     private static final String DEALER_RESULT_CARDS_STATUS = NEW_LINE + "딜러 카드: %s - 결과: %d" + NEW_LINE;
-    private static final String DEALER_FINAL_RESULT = "딜러: %d승 %d패 %d무" + NEW_LINE;
     private static final String INVALID_CHOICE_EXCEPTION = "%s 또는 %s을 입력해주세요.";
     private static final String YES_CHOICE = "y";
     private static final String NO_CHOICE = "n";
@@ -66,10 +66,10 @@ public class OutputView {
         return choice.equals(YES_CHOICE);
     }
 
-    public void printTotalProfit(final String dealerProfit, final List<PlayerProfit> playerProfits) {
+    public void printTotalProfit(final BlackjackResult blackjackResult) {
         printProfitTitle();
-        printProfit(dealerProfit);
-        printProfit(playerProfits);
+        printProfit(blackjackResult.dealerProfit());
+        printProfit(blackjackResult.playerProfits());
     }
 
     private void printProfitTitle() {

@@ -31,7 +31,7 @@ public class Dealer extends Gamer {
 
     @Override
     public String getProfit() {
-        return profit.getProfit();
+        return profit.toString();
     }
 
     public void draw(final int count) {
@@ -49,5 +49,9 @@ public class Dealer extends Gamer {
 
     public boolean isSameScore(final long score) {
         return hand.calculateScore() == score;
+    }
+
+    public Profit getDealerProfit() {
+        return profit;
     }
 }

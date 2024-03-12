@@ -22,9 +22,10 @@ public class PlayersTest {
     private Deck deck;
     private Dealer dealer;
     private Players players;
-    private final PlayerInfo playerA = PlayerInfo.of("a", "10000");
-
-    private final PlayerInfo playerB = PlayerInfo.of("b", "200000");
+    private final String bettingAmountA = "10000";
+    private final String bettingAmountB = "200000";
+    private final PlayerInfo playerA = PlayerInfo.of("a", bettingAmountA);
+    private final PlayerInfo playerB = PlayerInfo.of("b", bettingAmountB);
 
     @BeforeEach
     void setUp() {
@@ -55,14 +56,16 @@ public class PlayersTest {
     @DisplayName("플레이어들의 승패를 계산한다.")
     @Test
     void decideResult() {
-        //given & when
-        BlackjackResult blackjackResult = players.createResult(dealer);
+        //given
+        String expectedProfitSum = String.valueOf(Integer.parseInt(bettingAmountA) + Integer.parseInt(bettingAmountB));
+
+        //when
+        BlackjackResult blackjackResult = Judge.judge(dealer, players);
 
         //then
-        assertThat(blackjackResult.findPlayerResultByName(playerA.name())).isEqualTo(GameResult.LOSE);
-        assertThat(blackjackResult.findPlayerResultByName(playerB.name())).isEqualTo(GameResult.LOSE);
-        assertThat(blackjackResult.getDealerResult().getWins()).isEqualTo(2);
-        assertThat(blackjackResult.getDealerResult().getLoses()).isEqualTo(0);
+        assertThat(blackjackResult.playerProfits().get(0).profit()).isEqualTo("-" + bettingAmountA);
+        assertThat(blackjackResult.playerProfits().get(1).profit()).isEqualTo("-" + bettingAmountB);
+        assertThat(blackjackResult.dealerProfit()).isEqualTo(expectedProfitSum);
     }
 
     @DisplayName("딜러가 버스트 된 경우 버스트 안된 참가자는 승리한다.")
@@ -76,7 +79,7 @@ public class PlayersTest {
                 .forEach(i -> bustedDealer.requestExtraCard());
 
         //then
-        BlackjackResult blackjackResult = players.createResult(bustedDealer);
-        assertThat(blackjackResult.findPlayerResultByName(playerA.name())).isEqualTo(GameResult.WIN);
+        BlackjackResult blackjackResult = Judge.judge(bustedDealer, players);
+        assertThat(blackjackResult.playerProfits().get(0).profit()).isEqualTo(bettingAmountA);
     }
 }

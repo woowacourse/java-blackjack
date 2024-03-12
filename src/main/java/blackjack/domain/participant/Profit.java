@@ -4,22 +4,26 @@ import java.math.BigDecimal;
 
 public class Profit {
 
-    private final BigDecimal amount;
-    private final boolean isMinus;
+    private BigDecimal amount;
 
-    private Profit(final BigDecimal amount, final boolean isMinus) {
+    private Profit(final BigDecimal amount) {
         this.amount = amount;
-        this.isMinus = isMinus;
     }
 
     public static Profit initProfit() {
-        return new Profit(new BigDecimal(0), false);
+        return new Profit(BigDecimal.ZERO);
     }
 
-    public String getProfit() {
-        if (isMinus) {
-            return "-" + amount;
-        }
+    public void earn(final BigDecimal amount) {
+        this.amount = this.amount.add(amount);
+    }
+
+    public void lose(final BigDecimal amount) {
+        this.amount = this.amount.subtract(amount);
+    }
+
+    @Override
+    public String toString() {
         return String.valueOf(amount);
     }
 }
