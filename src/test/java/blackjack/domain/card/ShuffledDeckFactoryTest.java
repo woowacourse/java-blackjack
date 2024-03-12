@@ -6,7 +6,7 @@ import java.util.Stack;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class DeckShuffleFactoryTest {
+class ShuffledDeckFactoryTest {
 
     @DisplayName("52장으로 구성된 덱에는 모든 종류의 카드가 한 장씩만 포함된다.")
     @Test
@@ -18,7 +18,7 @@ class DeckShuffleFactoryTest {
             }
         }
 
-        final Deck actual = new DeckShuffleFactory().create();
+        final Deck actual = new ShuffledDeckFactory().create();
         final Stack<Card> actualCards = new Stack<>();
         for (int cardIndex = 0; cardIndex < 52; cardIndex++) {
             actualCards.push(actual.pop());

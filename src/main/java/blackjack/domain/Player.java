@@ -1,7 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import java.util.ArrayList;
 
 public class Player implements Gamer {
@@ -9,38 +9,38 @@ public class Player implements Gamer {
     private static final int THRESHOLD = 21;
 
     private final Name name;
-    private final Cards cards;
+    private final Hand hand;
 
-    private Player(final Name name, final Cards cards) {
+    private Player(final Name name, final Hand hand) {
         this.name = name;
-        this.cards = cards;
+        this.hand = hand;
     }
 
     public static Player from(final String name) {
-        final Cards cards = new Cards(new ArrayList<>());
-        return new Player(new Name(name), cards);
+        final Hand hand = new Hand(new ArrayList<>());
+        return new Player(new Name(name), hand);
     }
 
     @Override
     public void draw(final Card card) {
-        cards.add(card);
+        hand.add(card);
     }
 
     @Override
     public boolean canDraw() {
-        return cards.calculateOptimalSum() <= THRESHOLD;
+        return hand.calculateOptimalSum() <= THRESHOLD;
     }
 
     @Override
     public int calculateScore() {
-        return cards.calculateOptimalSum();
+        return hand.calculateOptimalSum();
     }
 
     public Name getName() {
         return name;
     }
 
-    public Cards getCards() {
-        return cards;
+    public Hand getCards() {
+        return hand;
     }
 }

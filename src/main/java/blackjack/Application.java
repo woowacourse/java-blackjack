@@ -5,9 +5,9 @@ import blackjack.domain.GameBoard;
 import blackjack.domain.Outcome;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.DeckShuffleFactory;
+import blackjack.domain.card.ShuffledDeckFactory;
 import blackjack.dto.DealerDto;
 import blackjack.dto.OutcomeDto;
 import blackjack.dto.OutcomesDto;
@@ -33,21 +33,21 @@ public class Application {
     }
 
     private static GameBoard createGameBoard() {
-        Deck deck = new DeckShuffleFactory().create();
+        Deck deck = new ShuffledDeckFactory().create();
         Dealer dealer = Dealer.create();
         Players players = Players.from(InputView.readPlayerNames());
         return new GameBoard(deck, dealer, players);
     }
 
     private static void drawInitialCards(GameBoard gameBoard) {
-        final DealerDto dealerDto = createDealerDto(gameBoard.getDealerCards());
+        final DealerDto dealerDto = createDealerDto(gameBoard.drawInitialDealerCards());
         final List<PlayerDto> playerDtos = createPlayerDtos(gameBoard.drawInitialPlayersCards());
 
         OutputView.printInitialState(dealerDto, playerDtos);
     }
 
-    private static DealerDto createDealerDto(final Cards cards) {
-        return new DealerDto(cards.toList(), cards.calculateOptimalSum());
+    private static DealerDto createDealerDto(final Hand hand) {
+        return new DealerDto(hand.toList(), hand.calculateOptimalSum());
     }
 
     private static List<PlayerDto> createPlayerDtos(final Players players) {

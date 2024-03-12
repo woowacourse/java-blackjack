@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -13,14 +13,14 @@ public enum Outcome {
 
     private static final int BLACKJACK_CANDIDATE = 21;
 
-    public static Outcome doesPlayerWin(final Cards dealerCards, final Cards playerCards) {
-        final int dealerScore = dealerCards.calculateOptimalSum();
-        final int playerScore = playerCards.calculateOptimalSum();
+    public static Outcome doesPlayerWin(final Hand dealerHand, final Hand playerHand) {
+        final int dealerScore = dealerHand.calculateOptimalSum();
+        final int playerScore = playerHand.calculateOptimalSum();
         if (isBust(dealerScore) || isBust(playerScore)) {
-            return calculateBustCase(dealerCards, playerCards);
+            return calculateBustCase(dealerHand, playerHand);
         }
-        if (isBlackJack(dealerCards) || isBlackJack(playerCards)) {
-            return calculateBlackJackCase(dealerCards, playerCards);
+        if (isBlackJack(dealerHand) || isBlackJack(playerHand)) {
+            return calculateBlackJackCase(dealerHand, playerHand);
         }
         return calculateNormalCase(dealerScore, playerScore);
     }
@@ -29,25 +29,25 @@ public enum Outcome {
         return score > BLACKJACK_CANDIDATE;
     }
 
-    private static Outcome calculateBustCase(final Cards dealerCards, final Cards playerCards) {
-        if (isBust(dealerCards.calculateOptimalSum()) && isBust(playerCards.calculateOptimalSum())) {
+    private static Outcome calculateBustCase(final Hand dealerHand, final Hand playerHand) {
+        if (isBust(dealerHand.calculateOptimalSum()) && isBust(playerHand.calculateOptimalSum())) {
             return Outcome.PUSH;
         }
-        if (isBust(dealerCards.calculateOptimalSum())) {
+        if (isBust(dealerHand.calculateOptimalSum())) {
             return Outcome.WIN;
         }
         return Outcome.LOSE;
     }
 
-    private static boolean isBlackJack(Cards cards) {
-        return cards.calculateOptimalSum() == BLACKJACK_CANDIDATE && cards.hasOnlyInitialCard();
+    private static boolean isBlackJack(Hand hand) {
+        return hand.calculateOptimalSum() == BLACKJACK_CANDIDATE && hand.hasOnlyInitialCard();
     }
 
-    private static Outcome calculateBlackJackCase(final Cards dealerCards, final Cards playerCards) {
-        if (isBlackJack(dealerCards) && isBlackJack(playerCards)) {
+    private static Outcome calculateBlackJackCase(final Hand dealerHand, final Hand playerHand) {
+        if (isBlackJack(dealerHand) && isBlackJack(playerHand)) {
             return Outcome.PUSH;
         }
-        if (isBlackJack(dealerCards)) {
+        if (isBlackJack(dealerHand)) {
             return Outcome.LOSE;
         }
         return Outcome.WIN;

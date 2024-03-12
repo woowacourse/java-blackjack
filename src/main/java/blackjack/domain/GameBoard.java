@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Deck;
 import blackjack.dto.OutcomeDto;
 import java.util.ArrayList;
@@ -18,9 +18,9 @@ public class GameBoard {
         this.players = players;
     }
 
-    public Cards drawInitialDealerCards() {
+    public Hand drawInitialDealerCards() {
         drawTwoCards(dealer);
-        return new Cards(List.of(dealer.findFaceUpCard()));
+        return new Hand(List.of(dealer.findFaceUpCard()));
     }
 
     public Players drawInitialPlayersCards() {
@@ -60,7 +60,7 @@ public class GameBoard {
         return playerOutcomes;
     }
 
-    public Cards getDealerCards() {
+    public Hand getDealerCards() {
         return dealer.getCards();
     }
 

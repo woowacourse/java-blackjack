@@ -1,43 +1,43 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import java.util.ArrayList;
 
 public class Dealer implements Gamer {
 
     private static final int THRESHOLD = 16;
 
-    private final Cards cards;
+    private final Hand hand;
 
-    private Dealer(final Cards cards) {
-        this.cards = cards;
+    private Dealer(final Hand hand) {
+        this.hand = hand;
     }
 
     public static Dealer create() {
-        return new Dealer(new Cards(new ArrayList<>()));
+        return new Dealer(new Hand(new ArrayList<>()));
     }
 
     @Override
     public void draw(final Card card) {
-        cards.add(card);
+        hand.add(card);
     }
 
     @Override
     public boolean canDraw() {
-        return cards.calculateOptimalSum() <= THRESHOLD;
+        return hand.calculateOptimalSum() <= THRESHOLD;
     }
 
     @Override
     public int calculateScore() {
-        return cards.calculateOptimalSum();
+        return hand.calculateOptimalSum();
     }
 
     public Card findFaceUpCard() {
-        return cards.findFirst();
+        return hand.findFirst();
     }
 
-    public Cards getCards() {
-        return cards;
+    public Hand getCards() {
+        return hand;
     }
 }

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-public class DeckShuffleFactory implements DeckFactory {
+public class ShuffledDeckFactory implements DeckFactory {
 
     @Override
     public Deck create() {
