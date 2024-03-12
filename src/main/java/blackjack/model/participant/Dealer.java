@@ -10,7 +10,7 @@ public class Dealer extends Participant {
     private final Deck deck;
 
     public Dealer(final Deck deck) {
-        this.deck = deck;
+        this.deck = deck.makeDeck();
     }
 
     @Override

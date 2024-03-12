@@ -15,6 +15,7 @@ class DeckTest {
     @BeforeEach
     void init() {
         deck = new Deck();
+        deck.makeDeck();
     }
 
     @Test

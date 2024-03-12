@@ -15,23 +15,26 @@ public class Deck {
     private final Deque<Card> deck;
 
     public Deck() {
-        final Deque<Card> newDeck = makeDeck();
-        validateSize(newDeck);
-        this.deck = newDeck;
+        this.deck = new ArrayDeque<>();
     }
 
-    private void validateSize(final Deque<Card> deck) {
+    private Deck(final Deque<Card> deck) {
+        this.deck = new ArrayDeque<>(deck);
+    }
+
+    private void validateSize(final List<Card> deck) {
         if (deck.size() != BLACKJACK_CARD_COUNT) {
             throw new IllegalStateException("카드의 수가 52개가 아닙니다.");
         }
     }
 
-    private Deque<Card> makeDeck() {
+    public Deck makeDeck() {
         List<Card> originDeck = Arrays.stream(Shape.values())
                 .flatMap(this::matchScore)
                 .collect(Collectors.toList());
-        return shuffleDeck(originDeck);
-    }
+        validateSize(originDeck);
+        return new Deck(shuffleDeck(originDeck));
+    };
 
     private Stream<Card> matchScore(Shape shape) {
         return Arrays.stream(Score.values())
