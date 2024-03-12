@@ -6,11 +6,19 @@ public final class Score {
 
     private static final Score BLACKJACK_SCORE = new Score(21);
     private static final Score ACE_SPECIAL_SCORE = new Score(10);
+    private static final int MINIMUM_SCORE = 0;
 
     private final int value;
 
     public Score(int value) {
+        validate(value);
         this.value = value;
+    }
+
+    private void validate(int value) {
+        if (value < MINIMUM_SCORE) {
+            throw new IllegalArgumentException(String.format("[ERROR] 점수는 %d점 이상이어야 합니다.", MINIMUM_SCORE));
+        }
     }
 
     public static Score totalScoreOf(ParticipantCards cards) {
@@ -25,7 +33,7 @@ public final class Score {
         return cards.getCards()
             .stream()
             .map(Card::score)
-            .reduce(new Score(0), Score::add);
+            .reduce(new Score(MINIMUM_SCORE), Score::add);
     }
 
     private Score addAceSpecialScore(Score previousScore) {
