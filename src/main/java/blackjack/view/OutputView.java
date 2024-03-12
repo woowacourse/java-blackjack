@@ -108,8 +108,8 @@ public class OutputView {
     }
 
     private String convertCardText(Card card) {
-        String cardNumberText = card.getCardNumber().getText();
-        String cardShapeText = card.getCardShape().getText();
-        return cardNumberText + cardShapeText;
+        CardNumberText cardNumberText = CardNumberText.from(card.getCardNumber());
+        CardShapeText cardShapeText = CardShapeText.from(card.getCardShape());
+        return cardNumberText.getText() + cardShapeText.getText();
     }
 }
