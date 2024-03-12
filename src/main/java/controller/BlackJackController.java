@@ -7,7 +7,6 @@ import dto.PlayersResultDto;
 import view.InputView;
 import view.OutputView;
 
-import java.io.IOException;
 import java.util.List;
 
 public class BlackJackController {
@@ -19,8 +18,8 @@ public class BlackJackController {
         this.outputView = outputView;
     }
 
-    public void run() throws IOException {
-        Players players = readPlayerNames();
+    public void run() {
+        Players players = readPlayers();
         CardDeck cardDeck = CardDeck.createShuffledDeck();
         Dealer dealer = new Dealer(cardDeck);
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
@@ -31,7 +30,7 @@ public class BlackJackController {
         printGameResult(blackJackGame);
     }
 
-    private Players readPlayerNames() throws IOException {
+    private Players readPlayers() {
         List<String> inputNames = inputView.readPlayerNames();
 
         return new Players(inputNames);
@@ -45,7 +44,7 @@ public class BlackJackController {
         outputView.printInitialHand(playerInitDtos);
     }
 
-    private void repeatHitUntilStand(BlackJackGame blackJackGame) throws IOException {
+    private void repeatHitUntilStand(BlackJackGame blackJackGame) {
         for (Player player : blackJackGame.getPlayers()) {
             repeatHitUntilPlayerStand(blackJackGame, player);
         }
@@ -53,7 +52,7 @@ public class BlackJackController {
         repeatHitUntilDealerStand(blackJackGame);
     }
 
-    private void repeatHitUntilPlayerStand(BlackJackGame blackJackGame, Player player) throws IOException {
+    private void repeatHitUntilPlayerStand(BlackJackGame blackJackGame, Player player) {
         while (player.isHittable() && inputView.readCommand(player.getName()).equals("y")) {
             blackJackGame.hitParticipant(player);
             outputView.printHandAfterHit(PlayerDto.from(player));
