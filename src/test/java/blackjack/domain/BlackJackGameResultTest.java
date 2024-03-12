@@ -8,13 +8,13 @@ import blackjack.domain.card.Shape;
 import blackjack.domain.participants.Hands;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
-import blackjack.domain.participants.WinOrLose;
+import blackjack.domain.participants.BlackJackGameResult;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class WinOrLoseTest {
+public class BlackJackGameResultTest {
 
     private List<Player> players;
 
@@ -43,24 +43,24 @@ public class WinOrLoseTest {
     @Test
     @DisplayName("플레이어가 모두 패배한 테스트")
     void victoryLoseTest() {
-        WinOrLose winOrLose = new WinOrLose(players, 21);
+        BlackJackGameResult blackJackGameResult = new BlackJackGameResult(players, 21);
 
-        assertThat(winOrLose.countDealerWin()).isEqualTo(2);
+        assertThat(blackJackGameResult.countDealerWin()).isEqualTo(2);
     }
 
     @Test
     @DisplayName("플레이어의 승리가 포함된 테스트")
     void victoryWinTest() {
-        WinOrLose winOrLose = new WinOrLose(players, 17);
+        BlackJackGameResult blackJackGameResult = new BlackJackGameResult(players, 17);
 
-        assertThat(winOrLose.countDealerWin()).isEqualTo(0);
+        assertThat(blackJackGameResult.countDealerWin()).isEqualTo(0);
     }
 
     @Test
     @DisplayName("한명의 플레이어만 승리한 테스트")
     void victorySingleWinTest() {
-        WinOrLose winOrLose = new WinOrLose(players, 19);
+        BlackJackGameResult blackJackGameResult = new BlackJackGameResult(players, 19);
 
-        assertThat(winOrLose.countDealerWin()).isEqualTo(1);
+        assertThat(blackJackGameResult.countDealerWin()).isEqualTo(1);
     }
 }

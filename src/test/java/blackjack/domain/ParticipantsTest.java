@@ -11,10 +11,9 @@ import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
-import blackjack.domain.participants.WinOrLose;
+import blackjack.domain.participants.BlackJackGameResult;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -90,8 +89,8 @@ class ParticipantsTest {
                 new ArrayList<>(List.of(hands1, hands2, hands3))
         );
 
-        WinOrLose winOrLose = participants.calculateWinOrLose();
-        assertThat(winOrLose.getResult(siso)).isFalse();
+        BlackJackGameResult blackJackGameResult = participants.calculateWinOrLose();
+        assertThat(blackJackGameResult.getResult(siso)).isFalse();
     }
 
     @Test

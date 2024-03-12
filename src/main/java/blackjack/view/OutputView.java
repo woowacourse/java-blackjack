@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.participants.Player;
-import blackjack.domain.participants.WinOrLose;
+import blackjack.domain.participants.BlackJackGameResult;
 import blackjack.dto.ParticipantDto;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,16 +54,16 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printWinOrLose(WinOrLose winOrLose) {
+    public void printWinOrLose(BlackJackGameResult blackJackGameResult) {
         System.out.println("## 최종 승패");
-        int dealerWinCount = winOrLose.countDealerWin();
-        int dealerLoseCount = winOrLose.size() - dealerWinCount;
+        int dealerWinCount = blackJackGameResult.countDealerWin();
+        int dealerLoseCount = blackJackGameResult.size() - dealerWinCount;
         System.out.printf("딜러: %d승 %d패\n", dealerWinCount, dealerLoseCount);
-        winOrLose.getWinOrLose().keySet().forEach(player -> printVictory(winOrLose, player));
+        blackJackGameResult.getWinOrLose().keySet().forEach(player -> printVictory(blackJackGameResult, player));
     }
 
-    private static void printVictory(WinOrLose winOrLose, Player player) {
-        if (winOrLose.getResult(player)) {
+    private static void printVictory(BlackJackGameResult blackJackGameResult, Player player) {
+        if (blackJackGameResult.getResult(player)) {
             System.out.println(player.getName().getName() + ": 승");
             return;
         }

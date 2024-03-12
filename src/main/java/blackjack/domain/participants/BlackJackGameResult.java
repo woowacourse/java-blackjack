@@ -5,10 +5,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WinOrLose {
+public class BlackJackGameResult {
     private final Map<Player, Boolean> winOrLose;
 
-    public WinOrLose(List<Player> players, int dealerScore) {
+    public BlackJackGameResult(List<Player> players, int dealerScore) {
         this.winOrLose = new LinkedHashMap<>();
         players.forEach(player -> winOrLose.put(player, player.isWin(dealerScore)));
     }

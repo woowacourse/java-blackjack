@@ -53,7 +53,7 @@ public class GameBoard {
         player.hit(deck.drawCard());
     }
 
-    public WinOrLose calculateWinOrLose() {
+    public BlackJackGameResult calculateWinOrLose() {
         return participants.calculateWinOrLose();
     }
 

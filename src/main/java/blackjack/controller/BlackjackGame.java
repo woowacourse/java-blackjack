@@ -6,7 +6,7 @@ import blackjack.domain.participants.GameParticipant;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
-import blackjack.domain.participants.WinOrLose;
+import blackjack.domain.participants.BlackJackGameResult;
 import blackjack.dto.ParticipantDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -90,7 +90,7 @@ public class BlackjackGame {
     }
 
     private void handleWinOrLose(GameBoard gameBoard) {
-        WinOrLose winOrLose = gameBoard.calculateWinOrLose();
-        outputView.printWinOrLose(winOrLose);
+        BlackJackGameResult blackJackGameResult = gameBoard.calculateWinOrLose();
+        outputView.printWinOrLose(blackJackGameResult);
     }
 }
