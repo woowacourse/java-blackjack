@@ -55,13 +55,14 @@ public class BlackJackController {
 
     private void repeatHitUntilPlayerStand(BlackJackGame blackJackGame, Player player) throws IOException {
         while (player.isHittable() && inputView.readCommand(player.getName()).equals("y")) {
-            blackJackGame.hitPlayer(player);
+            blackJackGame.hitParticipant(player);
             outputView.printHandAfterHit(PlayerDto.from(player));
         }
     }
 
     private void repeatHitUntilDealerStand(BlackJackGame blackJackGame) {
-        while (blackJackGame.hitDealer()) {
+        while (blackJackGame.isDealerHittable()) {
+            blackJackGame.hitDealer();
             outputView.printDealerHitMessage();
         }
     }
