@@ -15,20 +15,16 @@ public class Hand {
                 .mapToInt(Card::getNumber)
                 .sum();
 
-        final int aceCount = getAceCount();
-        for (int i = 0; i < aceCount; i++) {
-            if (minimumSum + 10 <= 21) {
-                minimumSum += 10;
-            }
+        final int sumWithAdditionalScore = minimumSum + 10;
+        if (hasAceCard() && sumWithAdditionalScore <= 21) {
+            return sumWithAdditionalScore;
         }
-
         return minimumSum;
     }
 
-    private int getAceCount() {
-        return (int) cards.stream()
-                .filter(Card::isAceCard)
-                .count();
+    private boolean hasAceCard() {
+        return cards.stream()
+                .anyMatch(Card::isAceCard);
     }
 
     public void add(final Card card) {
