@@ -1,8 +1,8 @@
 package domain.participant;
 
 import domain.Answer;
-import domain.card.CardDeck;
 import domain.Result;
+import domain.card.CardDeck;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -48,7 +48,7 @@ public class Dealer extends Participant {
     }
 
     public Map<Result, Integer> getDealerResult(final Players players) {
-        Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
+        final Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
 
         for (Result value : players.getPlayersResult(this).values()) {
             Result reversed = value.reverse();

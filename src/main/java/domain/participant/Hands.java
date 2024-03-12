@@ -1,7 +1,7 @@
 package domain.participant;
 
-import domain.card.Card;
 import domain.Result;
+import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,8 +21,8 @@ public class Hands {
         return new Hands(new ArrayList<>());
     }
 
-    public int sum() {
-        int total = cards.stream()
+    public int sum() { //TODO score, 숫자 비교 더하기 -> 클래스 분리 ????
+        final int total = cards.stream()
                 .mapToInt(Card::getCardNumber)
                 .sum();
 

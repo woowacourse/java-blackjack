@@ -12,6 +12,7 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -62,7 +63,7 @@ public class BlackJackController {
         boolean turnEnded = false;
 
         while (!turnEnded) {
-            Answer answer = Answer.from(inputView.readAnswer(player.getName()));
+            final Answer answer = Answer.from(inputView.readAnswer(player.getName()));
             dealer.deal(player, answer);
 
             printHandsIfRequired(player, handsChanged, answer);
@@ -83,10 +84,12 @@ public class BlackJackController {
             outputView.printBust();
             return true;
         }
+
         if (player.isBlackJack()) {
             outputView.printBlackJack();
             return true;
         }
+
         return !answer.isHit();
     }
 

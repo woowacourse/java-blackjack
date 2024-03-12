@@ -22,9 +22,11 @@ public enum Result {
         if (Result.WIN.equals(this)) {
             return LOSE;
         }
+
         if (Result.LOSE.equals(this)) {
             return WIN;
         }
+
         return TIE;
     }
 
