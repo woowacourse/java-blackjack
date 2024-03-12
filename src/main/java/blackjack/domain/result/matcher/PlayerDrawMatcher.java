@@ -17,6 +17,6 @@ public class PlayerDrawMatcher implements PlayerResultMatcher {
     }
 
     private boolean areSameNaturalBlackjack(Player player, Dealer dealer) {
-        return player.isNaturalBlackjack() == dealer.isNaturalBlackjack();
+        return player.isBlackjack() == dealer.isBlackjack();
     }
 }

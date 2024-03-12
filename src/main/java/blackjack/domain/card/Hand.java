@@ -6,7 +6,7 @@ import java.util.List;
 public class Hand {
     private static final int BLACKJACK = 21;
     private static final int ACE_ALTERNATIVE_SCORE = 10;
-    private static final int NATURAL_BLACKJACK_CARD_COUNT = 2;
+    private static final int BLACKJACK_CARD_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -19,24 +19,23 @@ public class Hand {
     }
 
     public boolean isTotalScoreGreaterThan(int score) {
-        return getCardTotalScore() > score;
+        return getOptimizedScore() > score;
     }
 
-    public boolean isNaturalBlackjack() {
-        return cards.size() == NATURAL_BLACKJACK_CARD_COUNT && isScoreBlackjack();
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_CARD_COUNT && isScoreBlackjack();
     }
 
-    public boolean isScoreBlackjack() {
+    private boolean isScoreBlackjack() {
         return getOptimizedScore() == BLACKJACK;
     }
 
     public int getOptimizedScore() {
         int cardTotalScore = getCardTotalScore();
-        if (cardTotalScore >= BLACKJACK) {
+        if (!hasAce() || cardTotalScore + ACE_ALTERNATIVE_SCORE > BLACKJACK) {
             return cardTotalScore;
         }
-        int aceCountForAlter = countAceForAlter(cardTotalScore);
-        return aceCountForAlter * ACE_ALTERNATIVE_SCORE + cardTotalScore;
+        return cardTotalScore + ACE_ALTERNATIVE_SCORE;
     }
 
     private int getCardTotalScore() {
@@ -45,12 +44,9 @@ public class Hand {
                 .sum();
     }
 
-    private int countAceForAlter(int cardTotalScore) {
-        int aceCount = (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
-        int remainedScoreToBlackjack = BLACKJACK - cardTotalScore;
-        return Math.min(aceCount, remainedScoreToBlackjack / ACE_ALTERNATIVE_SCORE);
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 
     public void addCard(Card card) {

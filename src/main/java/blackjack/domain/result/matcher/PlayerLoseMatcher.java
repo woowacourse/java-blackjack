@@ -10,7 +10,7 @@ public class PlayerLoseMatcher implements PlayerResultMatcher {
         if (player.isBust() && !isDealerBust) {
             return MatchResult.MATCH;
         }
-        if ((!isDealerBust && player.getScore() < dealer.getScore()) || (dealer.isNaturalBlackjack() && !player.isNaturalBlackjack())) {
+        if ((!isDealerBust && player.getScore() < dealer.getScore()) || (dealer.isBlackjack() && !player.isBlackjack())) {
             return MatchResult.MATCH;
         }
         return MatchResult.NOT_MATCH;
