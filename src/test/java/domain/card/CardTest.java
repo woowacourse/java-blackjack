@@ -35,19 +35,19 @@ class CardTest {
 
     static Stream<Arguments> rankScoreStream() {
         return Stream.of(
-            arguments(KING, new Score(10)),
-            arguments(QUEEN, new Score(10)),
-            arguments(JACK, new Score(10)),
-            arguments(TEN, new Score(10)),
-            arguments(NINE, new Score(9)),
-            arguments(EIGHT, new Score(8)),
-            arguments(SEVEN, new Score(7)),
-            arguments(SIX, new Score(6)),
-            arguments(FIVE, new Score(5)),
-            arguments(FOUR, new Score(4)),
-            arguments(THREE, new Score(3)),
-            arguments(TWO, new Score(2)),
-            arguments(ACE, new Score(1))
+            arguments(KING, Score.valueOf(10)),
+            arguments(QUEEN, Score.valueOf(10)),
+            arguments(JACK, Score.valueOf(10)),
+            arguments(TEN, Score.valueOf(10)),
+            arguments(NINE, Score.valueOf(9)),
+            arguments(EIGHT, Score.valueOf(8)),
+            arguments(SEVEN, Score.valueOf(7)),
+            arguments(SIX, Score.valueOf(6)),
+            arguments(FIVE, Score.valueOf(5)),
+            arguments(FOUR, Score.valueOf(4)),
+            arguments(THREE, Score.valueOf(3)),
+            arguments(TWO, Score.valueOf(2)),
+            arguments(ACE, Score.valueOf(1))
         );
     }
 }

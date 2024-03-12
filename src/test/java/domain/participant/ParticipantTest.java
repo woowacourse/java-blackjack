@@ -48,6 +48,6 @@ class ParticipantTest {
     void score_NoException() {
         Participant participant = new Player(new Name("name"));
         participant.receive(new Card(Rank.NINE, Symbol.CLUB));
-        assertThat(participant.score()).isEqualTo(new Score(9));
+        assertThat(participant.score()).isEqualTo(Score.valueOf(9));
     }
 }

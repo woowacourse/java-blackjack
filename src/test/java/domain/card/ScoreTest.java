@@ -10,6 +10,18 @@ import org.junit.jupiter.api.Test;
 class ScoreTest {
 
     @Test
+    @DisplayName("성공: 인스턴스 캐싱")
+    void cache() {
+        Score cachedScore = Score.valueOf(31);
+        Score notCachedScore = Score.valueOf(32);
+
+        Assertions.assertAll(
+            () -> assertThat(cachedScore).isSameAs(Score.valueOf(31)),
+            () -> assertThat(notCachedScore).isNotSameAs(Score.valueOf(32))
+        );
+    }
+
+    @Test
     @DisplayName("성공: 카드들의 총점 계산 가능")
     void totalScoreOf() {
         ParticipantCards participantCards = new ParticipantCards();
@@ -18,22 +30,22 @@ class ScoreTest {
             new Card(Rank.SEVEN, Symbol.HEART),
             new Card(Rank.FOUR, Symbol.CLUB)
         ));
-        assertThat(Score.totalScoreOf(participantCards)).isEqualTo(new Score(21));
+        assertThat(Score.totalScoreOf(participantCards)).isEqualTo(Score.valueOf(21));
     }
 
     @Test
     @DisplayName("성공: 점수를 더할 수 있다.")
     void add() {
-        Score score = new Score(10);
-        Score otherScore = new Score(5);
+        Score score = Score.valueOf(10);
+        Score otherScore = Score.valueOf(5);
 
-        assertThat(score.add(otherScore)).isEqualTo(new Score(15));
+        assertThat(score.add(otherScore)).isEqualTo(Score.valueOf(15));
     }
 
     @Test
     @DisplayName("성공: 22점은 버스트이다.")
     void isBust_True_isNotBust_False() {
-        Score bustScore = new Score(22);
+        Score bustScore = Score.valueOf(22);
         Assertions.assertAll(
             () -> assertThat(bustScore.isBust()).isTrue(),
             () -> assertThat(bustScore.isNotBust()).isFalse()
@@ -43,7 +55,7 @@ class ScoreTest {
     @Test
     @DisplayName("성공: 21점은 버스트가 아니다.")
     void isBust_False_isNotBust_True() {
-        Score bustScore = new Score(21);
+        Score bustScore = Score.valueOf(21);
         Assertions.assertAll(
             () -> assertThat(bustScore.isBust()).isFalse(),
             () -> assertThat(bustScore.isNotBust()).isTrue()
@@ -53,8 +65,8 @@ class ScoreTest {
     @Test
     @DisplayName("성공: 점수끼리 비교가 가능하다.")
     void isGreaterThan_isLessThan() {
-        Score greater = new Score(10);
-        Score less = new Score(9);
+        Score greater = Score.valueOf(10);
+        Score less = Score.valueOf(9);
 
         Assertions.assertAll(
             () -> assertThat(greater.isGreaterThan(less)).isTrue(),

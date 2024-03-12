@@ -1,24 +1,32 @@
 package domain.card;
 
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public final class Score {
 
     private static final Score BLACKJACK_SCORE = new Score(21);
     private static final Score ACE_SPECIAL_SCORE = new Score(10);
     private static final int MINIMUM_SCORE = 0;
+    private static final int MAXIMUM_SCORE = 31;
+    private static final Map<Integer, Score> CACHE = IntStream.rangeClosed(MINIMUM_SCORE, MAXIMUM_SCORE)
+        .boxed()
+        .collect(Collectors.toMap(i -> i, Score::new));
 
     private final int value;
 
-    public Score(int value) {
+    private Score(int value) {
         validate(value);
         this.value = value;
     }
 
-    private void validate(int value) {
-        if (value < MINIMUM_SCORE) {
-            throw new IllegalArgumentException(String.format("[ERROR] 점수는 %d점 이상이어야 합니다.", MINIMUM_SCORE));
+    public static Score valueOf(int rawScore) {
+        if (rawScore < MINIMUM_SCORE || MAXIMUM_SCORE < rawScore) {
+            return new Score(rawScore);
         }
+        return CACHE.get(rawScore);
     }
 
     public static Score totalScoreOf(ParticipantCards cards) {
@@ -34,6 +42,12 @@ public final class Score {
             .stream()
             .map(Card::score)
             .reduce(new Score(MINIMUM_SCORE), Score::add);
+    }
+
+    private void validate(int value) {
+        if (value < MINIMUM_SCORE) {
+            throw new IllegalArgumentException(String.format("[ERROR] 점수는 %d점 이상이어야 합니다.", MINIMUM_SCORE));
+        }
     }
 
     private Score addAceSpecialScore(Score previousScore) {

@@ -58,7 +58,7 @@ class ParticipantCardsTest {
             new Card(Rank.SEVEN, Symbol.HEART),
             new Card(Rank.FOUR, Symbol.CLUB)
         ));
-        assertThat(participantCards.totalScore()).isEqualTo(new Score(21));
+        assertThat(participantCards.totalScore()).isEqualTo(Score.valueOf(21));
     }
 
     @Test
@@ -70,7 +70,7 @@ class ParticipantCardsTest {
             new Card(Rank.SEVEN, Symbol.HEART),
             new Card(Rank.FIVE, Symbol.CLUB)
         ));
-        assertThat(participantCards.totalScore()).isEqualTo(new Score(22));
+        assertThat(participantCards.totalScore()).isEqualTo(Score.valueOf(22));
     }
 
     // 12, 22로 계산될 수 있으나, 21이하 점수 중 최고점인 12을 반환한다.
@@ -82,7 +82,7 @@ class ParticipantCardsTest {
             new Card(Rank.ACE, Symbol.DIAMOND),
             new Card(Rank.ACE, Symbol.HEART)
         ));
-        assertThat(participantCards.totalScore()).isEqualTo(new Score(12));
+        assertThat(participantCards.totalScore()).isEqualTo(Score.valueOf(12));
     }
 
     // 11, 21, 31으로 계산될 수 있으나, 21이하 점수 중 최고점인 21을 반환한다.
@@ -95,6 +95,6 @@ class ParticipantCardsTest {
             new Card(Rank.ACE, Symbol.HEART),
             new Card(Rank.NINE, Symbol.CLUB)
         ));
-        assertThat(participantCards.totalScore()).isEqualTo(new Score(21));
+        assertThat(participantCards.totalScore()).isEqualTo(Score.valueOf(21));
     }
 }
