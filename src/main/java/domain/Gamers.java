@@ -1,6 +1,10 @@
 package domain;
 
+import controller.dto.gamer.GamerHandScore;
+import controller.dto.gamer.GamerHandStatus;
+import java.util.ArrayList;
 import java.util.List;
+import view.CardName;
 
 public class Gamers {
     private final List<Gamer> gamers;
@@ -13,16 +17,40 @@ public class Gamers {
         return gamers;
     }
 
-    public List<String> getGamerNames() {
+    private List<Integer> getGamerResultScore() {
+        List<Integer> scores = new ArrayList<>();
+        for (Gamer gamer : gamers) {
+            scores.add(gamer.calculateResultScore());
+        }
+        return scores;
+    }
+
+    public List<GamerHandScore> getCurrentGamerHandScore() {
+        List<GamerHandStatus> gamerHandStatuses = getPlayerHandStatuses();
+        List<Integer> scores = getGamerResultScore();
+
+        List<GamerHandScore> gamerHandScores = new ArrayList<>();
+        for (int i = 0; i < gamerHandStatuses.size(); i++) {
+            gamerHandScores.add(new GamerHandScore(gamerHandStatuses.get(i), scores.get(i)));
+        }
+
+        return gamerHandScores;
+    }
+
+    public List<GamerHandStatus> getPlayerHandStatuses() {
+        List<GamerHandStatus> gamerHandStatuses = new ArrayList<>();
+
+        for (Gamer gamer : gamers) {
+            gamerHandStatuses.add(
+                    new GamerHandStatus(gamer.getName(), CardName.getHandStatusAsString(gamer.getHand()))
+            );
+        }
+        return gamerHandStatuses;
+    }
+
+    public List<String> getNames() {
         return gamers.stream()
                 .map(Gamer::getName)
                 .toList();
-    }
-
-    public Gamer getGamerByName(final String name) {
-        return gamers.stream()
-                .filter(gamer -> gamer.getName().equals(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 플레이어입니다."));
     }
 }

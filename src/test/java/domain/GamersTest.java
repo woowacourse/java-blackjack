@@ -18,7 +18,7 @@ class GamersTest {
         Gamers gamers = new Gamers(gamerList);
 
         // when
-        List<String> gamerNames = gamers.getGamerNames();
+        List<String> gamerNames = gamers.getNames();
 
         // then
         assertThat(gamerNames).containsExactly("pobi", "honux");

@@ -1,6 +1,7 @@
 package domain;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import domain.constants.Score;
 import domain.constants.Shape;
@@ -17,8 +18,19 @@ class DealerTest {
 
         Dealer dealer = new Dealer(hand);
 
-        boolean isUp = dealer.isUpToThreshold();
-        assertTrue(isUp);
+        boolean isNotUp = dealer.isNotUpToThreshold();
+        assertFalse(isNotUp);
+    }
+
+    @DisplayName("딜러의 점수가 16점 이하일 때까지 카드를 뽑고, 그 횟수를 반환한다.")
+    @Test
+    void cardDrawCount() {
+        Hand hand = underThresholdHand();
+
+        Dealer dealer = new Dealer(hand);
+
+        int count = dealer.cardDrawCount();
+        assertThat(count).isEqualTo(1);
     }
 
     private Hand overThresholdHand() {
@@ -26,6 +38,15 @@ class DealerTest {
         hand.saveCards(new ArrayList<>(Arrays.asList(
                 new Card(Score.KING, Shape.SPADE),
                 new Card(Score.KING, Shape.HEART)
+        )));
+        return hand;
+    }
+
+    private Hand underThresholdHand() {
+        Hand hand = new Hand();
+        hand.saveCards(new ArrayList<>(Arrays.asList(
+                new Card(Score.TEN, Shape.SPADE),
+                new Card(Score.SIX, Shape.HEART)
         )));
         return hand;
     }

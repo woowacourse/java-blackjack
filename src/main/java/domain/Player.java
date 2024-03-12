@@ -43,8 +43,8 @@ public class Player {
         return getHandSize() <= dealer.getHandSize();
     }
 
-    public boolean isAbleToDrawCard() {
-        return hand.calculateScoreWhileRound() < BLACKJACK_SCORE;
+    public boolean isNotAbleToDrawCard() {
+        return hand.calculateScoreWhileRound() >= BLACKJACK_SCORE;
     }
 
     public boolean isBusted() {

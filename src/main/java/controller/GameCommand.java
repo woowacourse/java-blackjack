@@ -2,5 +2,9 @@ package controller;
 
 public enum GameCommand {
     HIT,
-    STAND
+    STAND;
+
+    public boolean isHit() {
+        return this.equals(HIT);
+    }
 }

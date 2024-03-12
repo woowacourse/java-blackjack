@@ -68,8 +68,8 @@ class PlayerTest {
 
         Player player = new Player(bustedCards);
 
-        boolean ableToDrawCard = player.isAbleToDrawCard();
-        assertThat(ableToDrawCard).isFalse();
+        boolean ableToDrawCard = player.isNotAbleToDrawCard();
+        assertThat(ableToDrawCard).isTrue();
     }
 
     private Hand createNormalWithTwoCards() {

@@ -1,16 +1,15 @@
 package controller;
 
+import static view.CardName.getHandStatusAsString;
+
 import controller.dto.GameResult;
 import controller.dto.PlayerResult;
-import controller.dto.dealer.DealerHandScore;
-import controller.dto.dealer.DealerHandStatus;
-import controller.dto.gamer.GamerHandScore;
 import controller.dto.gamer.GamerHandStatus;
 import domain.Dealer;
+import domain.Deck;
 import domain.GameRule;
 import domain.Gamer;
 import domain.Gamers;
-import domain.Player;
 import java.util.ArrayList;
 import java.util.List;
 import view.CardName;
@@ -18,105 +17,83 @@ import view.InputView;
 import view.OutputView;
 
 public class Game {
-    private final InputView inputView;
-    private final OutputView outputView;
+    private final Dealer dealer = new Dealer();
+    private final Gamers gamers;
 
-    public Game(final InputView inputView, final OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+    public Game(final List<String> gamerNames) {
+        this.gamers = new Gamers(gamerNames.stream()
+                .map(Gamer::new)
+                .toList());
     }
 
-    public void run() {
-        Round round = start();
-        startRound(round);
-        giveCardToDealer(round);
-
-        outputView.printHandStatusWithScore(
-                getCurrentDealerHandScore(round),
-                getCurrentGamerHandScore(round),
-                round.getGamerNames()
-        );
-        outputView.printGameResult(getResults(round));
+    public void readyGame(final OutputView outputView) {
+        initiateGameCondition(dealer, gamers);
+        printInitiateGameResult(outputView);
     }
 
-    private Round start() {
-        List<String> names = inputView.enterPlayerNames();
-        Dealer dealer = new Dealer();
+    private void initiateGameCondition(final Dealer dealer, final Gamers gamers) {
+        Deck.shuffle();
 
-        Round round = new Round(dealer, names);
-        Gamers gamers = round.getGamers();
-        round.initiateGameCondition();
-
-        outputView.printNoticeAfterStartGame(names);
-        outputView.printDealerStatusAfterStartGame(CardName.getDealerHandStatusWithHiddenCard(dealer.getHand()));
-        outputView.printPlayerStatusAfterStartGame(names, CardName.getGamerHandStatus(gamers));
-
-        return round;
-    }
-
-    private List<Integer> getGamerResultScore(final Round round) {
-        List<Integer> scores = new ArrayList<>();
-        Gamers gamers = round.getGamers();
-        for (Player player : gamers.listOf()) {
-            scores.add(player.calculateResultScore());
-        }
-        return scores;
-    }
-
-    private int getDealerResultScore(final Round round) {
-        return getDealer(round).calculateResultScore();
-    }
-
-    private Dealer getDealer(final Round round) {
-        return round.getDealer();
-    }
-
-    private DealerHandScore getCurrentDealerHandScore(final Round round) {
-        Dealer dealer = round.getDealer();
-
-        DealerHandStatus dealerHand = new DealerHandStatus(CardName.getHandStatusAsString(dealer.getHand()));
-        return new DealerHandScore(dealerHand, getDealerResultScore(round));
-    }
-
-    private List<GamerHandScore> getCurrentGamerHandScore(final Round round) {
-        List<GamerHandStatus> gamerHandStatuses = getPlayerHandStatuses(round);
-        List<Integer> scores = getGamerResultScore(round);
-
-        List<GamerHandScore> gamerHandScores = new ArrayList<>();
-        for (int i = 0; i < gamerHandStatuses.size(); i++) {
-            gamerHandScores.add(new GamerHandScore(gamerHandStatuses.get(i), scores.get(i)));
-        }
-
-        return gamerHandScores;
-    }
-
-    private List<GamerHandStatus> getPlayerHandStatuses(final Round round) {
-        List<GamerHandStatus> gamerHandStatuses = new ArrayList<>();
-        Gamers gamers = round.getGamers();
+        dealer.pickTwoCards();
         for (Gamer gamer : gamers.listOf()) {
-            gamerHandStatuses.add(
-                    new GamerHandStatus(gamer.getName(), CardName.getHandStatusAsString(gamer.getHand()))
-            );
-        }
-        return gamerHandStatuses;
-    }
-
-    private void startRound(final Round round) {
-        List<String> names = round.getGamerNames();
-        for (String name : names) {
-            round.giveCardToGamer(name, outputView, inputView);
+            gamer.pickTwoCards();
         }
     }
 
-    private void giveCardToDealer(final Round round) {
-        int count = round.giveCardsToDealer();
+    private void printInitiateGameResult(final OutputView outputView) {
+        outputView.printNoticeAfterStartGame(gamers.getNames());
+        outputView.printDealerStatusAfterStartGame(CardName.getDealerHandStatusWithHiddenCard(dealer.getHand()));
+        outputView.printPlayerStatusAfterStartGame(gamers.getNames(), CardName.getGamerHandStatus(gamers));
+    }
+
+    public void playGame(final InputView inputView, final OutputView outputView) {
+        for (Gamer gamer : gamers.listOf()) {
+            giveCardToGamer(gamer, outputView, inputView);
+        }
+    }
+
+    private void giveCardToGamer(final Gamer gamer, final OutputView outputView, final InputView inputView) {
+        GamerHandStatus currentHand = new GamerHandStatus(gamer.getName(), getHandStatusAsString(gamer.getHand()));
+        GameCommand command = inputCommand(gamer.getName(), inputView);
+
+        while (command.isHit()) {
+            gamer.pickOneCard();
+            currentHand = new GamerHandStatus(gamer.getName(), getHandStatusAsString(gamer.getHand()));
+            if (gamer.isNotAbleToDrawCard()) {
+                break;
+            }
+            outputView.printCardStatus(gamer.getName(), currentHand);
+            command = inputCommand(gamer.getName(), inputView);
+        }
+        outputView.printCardStatus(gamer.getName(), currentHand);
+    }
+
+    private GameCommand inputCommand(final String name, final InputView inputView) {
+        return GameCommand.valueOf(inputView.decideToGetMoreCard(name));
+    }
+
+    public void printDealerDrawMessage(final OutputView outputView) {
+        int count = dealer.cardDrawCount();
         outputView.printDealerPickMessage(count);
     }
 
-    public GameResult getResults(final Round round) {
-        GameRule rule = new GameRule(round.getDealer(), round.getGamers());
+    public void printResult(final OutputView outputView) {
+        printCardStatusAndScores(outputView);
+        outputView.printGameResult(getResults());
+    }
+
+    private void printCardStatusAndScores(final OutputView outputView) {
+        outputView.printHandStatusWithScore(
+                dealer.getCurrentDealerHandScore(),
+                gamers.getCurrentGamerHandScore(),
+                gamers.getNames()
+        );
+    }
+
+    private GameResult getResults() {
+        GameRule rule = new GameRule(dealer, gamers);
         List<Boolean> results = rule.judge();
-        List<String> names = round.getGamerNames();
+        List<String> names = gamers.getNames();
 
         List<PlayerResult> playerResults = new ArrayList<>();
         for (int i = 0; i < names.size(); i++) {
