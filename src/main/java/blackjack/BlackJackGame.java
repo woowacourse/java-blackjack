@@ -1,7 +1,5 @@
 package blackjack;
 
-import static blackjack.domain.DrawDecision.YES;
-
 import blackjack.domain.DrawDecision;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
@@ -62,7 +60,7 @@ public class BlackJackGame {
     }
 
     private void completePlayerHand(Player participant, CardDeck cardDeck) {
-        while (participant.canHit() && readHitDecision(participant) == YES) {
+        while (participant.canHit() && readHitDecision(participant).isYes()) {
             participant.appendCard(cardDeck.popCard());
             outputView.printPlayerHand(participant);
         }

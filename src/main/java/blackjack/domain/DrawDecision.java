@@ -19,4 +19,8 @@ public enum DrawDecision {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] " + YES.code + "또는 " + NO.code + "로 입력해주세요"));
     }
+
+    public boolean isYes() {
+        return this == YES;
+    }
 }
