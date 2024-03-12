@@ -28,19 +28,14 @@ public class Referee {
     }
 
     private MatchResult determineMatchResult(final Player player) {
-        if (dealer.isBlackJack() && player.isBlackJack()) {
-            return MatchResult.PUSH;
-        }
-        if (checkPlayerWinning(player)) {
+        if (dealer.isBust()) {
             return MatchResult.WIN;
         }
-        return MatchResult.LOSE;
-    }
-
-    private boolean checkPlayerWinning(final Player player) {
+        if (player.isBust()) {
+            return MatchResult.LOSE;
+        }
         Score playerTotalScore = player.calculateCardsTotalScore();
         Score dealerTotalScore = dealer.calculateCardsTotalScore();
-        return dealer.isBust() ||
-                (!player.isBust() && playerTotalScore.equalToOrGreaterThan(dealerTotalScore));
+        return MatchResult.decideByScore(playerTotalScore, dealerTotalScore);
     }
 }
