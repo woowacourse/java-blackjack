@@ -74,20 +74,7 @@ public class ResultView {
     }
 
     private String resolveCardShape(CardShape cardShape) {
-        StringBuilder stringBuilder = new StringBuilder();
-        if (cardShape.equals(CardShape.HEART)) {
-            stringBuilder.append("하트");
-        }
-        if (cardShape.equals(CardShape.CLOVER)) {
-            stringBuilder.append("클로버");
-        }
-        if (cardShape.equals(CardShape.DIAMOND)) {
-            stringBuilder.append("다이아몬드");
-        }
-        if (cardShape.equals(CardShape.SPADE)) {
-            stringBuilder.append("스페이드");
-        }
-        return stringBuilder.toString();
+        return CardShapeNotation.findNotationByCardShape(cardShape);
     }
 
     public void printDealerHitMessage(Dealer dealer, Card card) {
