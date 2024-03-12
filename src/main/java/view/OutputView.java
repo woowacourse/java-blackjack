@@ -68,7 +68,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printDealerBettingResult(int dealerSum) {
+    public static void printDealerBettingResult(final int dealerSum) {
         System.out.println("## 최종 수익");
         System.out.println("딜러: " + dealerSum);
     }

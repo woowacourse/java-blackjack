@@ -19,13 +19,13 @@ public class InputView {
         return Arrays.stream(inputString.split(",")).toList();
     }
 
-    public static boolean inputDrawDecision(PlayerName playerName) {
+    public static boolean inputDrawDecision(final PlayerName playerName) {
         System.out.println(playerName.value() + "은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String inputString = scanner.nextLine();
         return convertInputToDecision(inputString);
     }
 
-    private static boolean convertInputToDecision(String input) {
+    private static boolean convertInputToDecision(final String input) {
         if (input.equals(YES)) {
             return true;
         }
@@ -37,7 +37,7 @@ public class InputView {
         throw new IllegalArgumentException(String.format("%s는 올바른 입력이 아닙니다. 카드를 받을지 여부는 y/n만 입력할 수 있습니다.", input));
     }
 
-    public static String inputAmount(String playerName) {
+    public static String inputAmount(final String playerName) {
         System.out.printf("%s의 배팅 금액은?%n", playerName);
         return scanner.nextLine();
     }

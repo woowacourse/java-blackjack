@@ -5,7 +5,7 @@ public class Amount {
 
     private final int amount;
 
-    public Amount(String value) {
+    public Amount(final String value) {
         int parsedValue = validateParse(value);
         validateAmount(parsedValue);
         this.amount = parsedValue;
@@ -22,7 +22,7 @@ public class Amount {
         }
     }
 
-    private void validateAmount(int parsedValue) {
+    private void validateAmount(final int parsedValue) {
         if (parsedValue <= 0 || parsedValue > MAX_AMOUNT) {
             throw new IllegalArgumentException(String.format("%d는 올바른 배팅 금액이 아닙니다. 배팅 금액은 %d원 이하의 양의 정수만 가능합니다.", parsedValue, MAX_AMOUNT));
         }

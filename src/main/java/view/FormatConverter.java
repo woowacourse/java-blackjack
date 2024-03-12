@@ -2,7 +2,6 @@ package view;
 
 import domain.PlayingCardShape;
 import domain.PlayingCardValue;
-import domain.constant.GameResult;
 
 import java.util.Map;
 
@@ -36,12 +35,5 @@ public final class FormatConverter {
 
     public static String convertPlayingCardValueToString(final PlayingCardValue playingCardValue) {
         return PLAYING_CARD_VALUE_STRING.get(playingCardValue);
-    }
-
-    public static String convertGameResultToString(final GameResult gameResult) {
-        if (gameResult == GameResult.WIN) {
-            return "승";
-        }
-        return "패";
     }
 }

@@ -5,7 +5,7 @@ import domain.PlayingCardShape;
 import domain.PlayingCardValue;
 
 public record PlayingCardDto(PlayingCardShape playingCardShape, PlayingCardValue playingCardValue) {
-    public static PlayingCardDto of(PlayingCard playingCard) {
+    public static PlayingCardDto of(final PlayingCard playingCard) {
         return new PlayingCardDto(playingCard.playingCardShape(), playingCard.playingCardValue());
     }
 }
