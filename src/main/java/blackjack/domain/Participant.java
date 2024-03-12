@@ -43,12 +43,12 @@ public abstract class Participant {
                 .isLowerThan(participant.getHandsScore());
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return hands.isBurst();
     }
 
-    public boolean isNotBurst() {
-        return !isBurst();
+    public boolean isNotBust() {
+        return !isBust();
     }
 
     public boolean isBlackJack() {

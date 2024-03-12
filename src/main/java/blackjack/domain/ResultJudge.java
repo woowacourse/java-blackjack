@@ -20,17 +20,17 @@ public class ResultJudge {
     }
 
     private static boolean isWin(Player player, Dealer dealer) {
-        return (dealer.isBurst() && player.isNotBurst())
-                || player.isNotBurst() && player.hasHigherScore(dealer);
+        return (dealer.isBust() && player.isNotBust())
+                || player.isNotBust() && player.hasHigherScore(dealer);
     }
 
     private static boolean isLose(Player player, Dealer dealer) {
-        return player.isBurst()
-                || player.isNotBurst() && player.hasLowerScore(dealer);
+        return player.isBust()
+                || player.isNotBust() && player.hasLowerScore(dealer);
     }
 
     private boolean isDraw(Player player, Dealer dealer) {
-        return (dealer.isNotBurst() && player.isNotBurst())
+        return (dealer.isNotBust() && player.isNotBust())
                 && player.hasSameScore(dealer);
     }
 }
