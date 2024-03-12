@@ -5,7 +5,6 @@ import static blackjack.model.deck.Score.FIVE;
 import static blackjack.model.deck.Score.FOUR;
 import static blackjack.model.deck.Score.NINE;
 import static blackjack.model.deck.Score.SEVEN;
-import static blackjack.model.deck.Score.SIX;
 import static blackjack.model.deck.Score.TEN;
 import static blackjack.model.deck.Score.THREE;
 import static blackjack.model.deck.Score.TWO;
@@ -38,13 +37,10 @@ class RefereeTest {
         @DisplayName("플레이어의 합이 딜러보다 크면 플레이어가 승리한다.")
         void playerWinWhenBiggerThanDealer() {
             Player player = new Player("몰리", new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, TEN))));
-            Players players = Players.of(
-                    List.of("몰리"),
-                    List.of(new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, TEN)))));
             Dealer dealer = new Dealer(
                     new Hand(List.of(new Card(SPADE, SEVEN), new Card(DIA, TEN))));
 
-            Referee referee = new Referee(new Rule(dealer), players);
+            Referee referee = new Referee(new Rule(dealer));
             assertThat(referee.judgePlayerResult(player)).isEqualTo(WIN);
         }
 
@@ -52,14 +48,11 @@ class RefereeTest {
         @DisplayName("플레이어 결과가 딜러의 결과와 동일하지만 카드 수는 적은 경우 플레이어가 승리한다.")
         void playerWinWhenHasLittleCardsThanDealer() {
             Player player = new Player("몰리", new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, TEN))));
-            Players players = Players.of(
-                    List.of("몰리"),
-                    List.of(new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, TEN)))));
             Dealer dealer = new Dealer(new Hand(
                     List.of(new Card(SPADE, SEVEN), new Card(DIA, TEN),
                             new Card(DIA, THREE))));
 
-            Referee referee = new Referee(new Rule(dealer), players);
+            Referee referee = new Referee(new Rule(dealer));
             assertThat(referee.judgePlayerResult(player)).isEqualTo(WIN);
         }
     }
@@ -72,14 +65,11 @@ class RefereeTest {
         @DisplayName("플레이어 카드만 블랙잭인 경우 플레이어가 승리한다.")
         void playerWinWhenOnlyPlayerBlackJack() {
             Player player = new Player("몰리", new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, ACE))));
-            Players players = Players.of(
-                    List.of("몰리"),
-                    List.of(new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, ACE)))));
             Dealer dealer = new Dealer(new Hand(
                     List.of(new Card(SPADE, SEVEN), new Card(DIA, TEN),
                             new Card(DIA, FOUR))));
 
-            Referee referee = new Referee(new Rule(dealer), players);
+            Referee referee = new Referee(new Rule(dealer));
             assertThat(referee.judgePlayerResult(player)).isEqualTo(WIN);
         }
 
@@ -88,15 +78,11 @@ class RefereeTest {
         void playerWinWhenHasLittleCardsThanDealer() {
             Player player = new Player("몰리",
                     new Hand(List.of(new Card(CLOVER, TEN), new Card(CLOVER, NINE), new Card(SPADE, TWO))));
-            Players players = Players.of(
-                    List.of("몰리"),
-                    List.of(new Hand(List.of(new Card(CLOVER, TEN), new Card(CLOVER, NINE),
-                            new Card(SPADE, TWO)))));
             Dealer dealer = new Dealer(new Hand(
                     List.of(new Card(SPADE, SEVEN), new Card(DIA, FIVE),
                             new Card(CLOVER, FIVE), new Card(DIA, FOUR))));
 
-            Referee referee = new Referee(new Rule(dealer), players);
+            Referee referee = new Referee(new Rule(dealer));
             assertThat(referee.judgePlayerResult(player)).isEqualTo(WIN);
         }
     }
@@ -109,15 +95,11 @@ class RefereeTest {
         @DisplayName("플레이어 결과가 21이하인 경우 플레이어가 승리한다.")
         void playerWinWhenOnlyPlayerNotBust() {
             Player player = new Player("몰리", new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, FOUR))));
-            Players players = Players.of(
-                    List.of("몰리"),
-                    List.of(new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, FOUR),
-                            new Card(DIA, SIX)))));
             Dealer dealer = new Dealer(new Hand(
                     List.of(new Card(SPADE, FOUR), new Card(DIA, TEN),
                             new Card(DIA, TEN))));
 
-            Referee referee = new Referee(new Rule(dealer), players);
+            Referee referee = new Referee(new Rule(dealer));
             assertThat(referee.judgePlayerResult(player)).isEqualTo(WIN);
         }
 
@@ -126,15 +108,11 @@ class RefereeTest {
         void playerLoseWhenAllBust() {
             Player player = new Player("몰리",
                     new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, FOUR), new Card(CLOVER, TEN))));
-            Players players = Players.of(
-                    List.of("몰리"),
-                    List.of(new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, FOUR),
-                            new Card(CLOVER, TEN)))));
             Dealer dealer = new Dealer(new Hand(
                     List.of(new Card(SPADE, FOUR), new Card(DIA, TEN),
                             new Card(DIA, TEN))));
 
-            Referee referee = new Referee(new Rule(dealer), players);
+            Referee referee = new Referee(new Rule(dealer));
             assertThat(referee.judgePlayerResult(player)).isEqualTo(LOSE);
         }
     }
@@ -147,13 +125,10 @@ class RefereeTest {
         @DisplayName("플레이어와 딜러 모두 블랙잭이면 딜러가 승리한다.")
         void bothBlackJack() {
             Player player = new Player("몰리", new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, ACE))));
-            Players players = Players.of(
-                    List.of("몰리"),
-                    List.of(new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, ACE)))));
             Dealer dealer = new Dealer(
                     new Hand(List.of(new Card(HEART, ACE), new Card(DIA, TEN))));
 
-            Referee referee = new Referee(new Rule(dealer), players);
+            Referee referee = new Referee(new Rule(dealer));
             assertThat(referee.judgePlayerResult(player)).isEqualTo(DRAW);
         }
 
@@ -161,13 +136,10 @@ class RefereeTest {
         @DisplayName("플레이어와 딜러의 결과, 카드 수가 모두 동일한 경우")
         void sameScoreAndCount() {
             Player player = new Player("몰리", new Hand(List.of(new Card(CLOVER, FIVE), new Card(SPADE, FIVE))));
-            Players players = Players.of(
-                    List.of("몰리"),
-                    List.of(new Hand(List.of(new Card(CLOVER, FIVE), new Card(SPADE, FIVE)))));
             Dealer dealer = new Dealer(
                     new Hand(List.of(new Card(HEART, FIVE), new Card(DIA, FIVE))));
 
-            Referee referee = new Referee(new Rule(dealer), players);
+            Referee referee = new Referee(new Rule(dealer));
             assertThat(referee.judgePlayerResult(player)).isEqualTo(DRAW);
         }
     }
@@ -186,7 +158,7 @@ class RefereeTest {
         Dealer dealer = new Dealer(
                 new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, TEN))));
 
-        Referee referee = new Referee(new Rule(dealer), players);
-        assertThat(referee.judgeDealerResult()).containsAllEntriesOf(Map.of(WIN, 1, LOSE, 1, DRAW, 1));
+        Referee referee = new Referee(new Rule(dealer));
+        assertThat(referee.judgeDealerResult(players)).containsAllEntriesOf(Map.of(WIN, 1, LOSE, 1, DRAW, 1));
     }
 }

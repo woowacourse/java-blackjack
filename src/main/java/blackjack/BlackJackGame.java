@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.dto.DealerResultCount;
 import blackjack.dto.NameCards;
 import blackjack.dto.NameCardsScore;
 import blackjack.dto.PlayerNameFinalResult;
@@ -8,7 +9,6 @@ import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
 import blackjack.model.result.Referee;
-import blackjack.model.result.ResultCommand;
 import blackjack.model.result.Rule;
 import blackjack.util.ConsoleReader;
 import blackjack.view.InputView;
@@ -16,7 +16,6 @@ import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 public class BlackJackGame {
@@ -27,7 +26,7 @@ public class BlackJackGame {
     public void run() {
         final Players players = registerPlayers();
         final Dealer dealer = new Dealer(deck.distributeInitialCard());
-        final Referee referee = new Referee(new Rule(dealer), players);
+        final Referee referee = new Referee(new Rule(dealer));
 
         OutputView.printDistributionSubject(players.getNames());
         printInitialCards(dealer, players);
@@ -120,11 +119,18 @@ public class BlackJackGame {
     }
 
     private void printFinalResultCommand(final Referee referee, final Players players) {
-        Map<ResultCommand, Integer> dealerResults = referee.judgeDealerResult();
-        OutputView.printDealerFinalResult(dealerResults);
+        printDealerFinalResultCount(referee, players);
         List<PlayerNameFinalResult> playerNameFinalResults = players.stream()
                 .map(player -> PlayerNameFinalResult.from(player, referee.judgePlayerResult(player)))
                 .toList();
         OutputView.printFinalResults(playerNameFinalResults);
+    }
+
+    private void printDealerFinalResultCount(final Referee referee, final Players players) {
+        List<DealerResultCount> dealerResults = referee.judgeDealerResult(players)
+                .entrySet().stream()
+                .map(dealerResult -> new DealerResultCount(dealerResult.getKey(), dealerResult.getValue()))
+                .toList();
+        OutputView.printDealerFinalResult(dealerResults);
     }
 }
