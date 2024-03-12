@@ -53,7 +53,8 @@ public class BlackjackController {
 
         boolean isRun = true;
         while (isRun) {
-            PlayerCommand command = requestUntilValid(() -> PlayerCommand.from(InputView.readPlayerCommand(player.getName())));
+            PlayerCommand command = requestUntilValid(() ->
+                    PlayerCommand.from(InputView.readPlayerCommand(player.getName())));
             blackjackGame.hitOrStand(player, command);
             isRun = blackjackGame.isPlayerCanHit(player, command);
             printDealCards(player, command);
