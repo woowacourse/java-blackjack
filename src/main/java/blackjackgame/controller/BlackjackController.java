@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 public class BlackjackController {
     private static final String DEALER_NAME = "딜러";
+    private static final int INITIAL_MONEY = 0;
 
     public void startBlackjackGame(Deck deck) {
         BlackjackGame blackjackGame = initBlackJackGame();
@@ -59,7 +60,7 @@ public class BlackjackController {
     }
 
     private static BetMakerGamer makeBetMakerDealer() {
-        return new BetMakerGamer(DEALER_NAME, new BetMoney(0));
+        return new BetMakerGamer(DEALER_NAME, new BetMoney(INITIAL_MONEY));
     }
 
     private static List<CardHolderGamer> makeCardHolderPlayers(List<String> playerNames) {
