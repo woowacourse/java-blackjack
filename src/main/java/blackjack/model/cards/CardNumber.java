@@ -17,15 +17,15 @@ public enum CardNumber {
 
     private final Score score;
 
-    CardNumber(int score) {
+    CardNumber(final int score) {
         this(new Score(score));
     }
 
-    CardNumber(Score score) {
+    CardNumber(final Score score) {
         this.score = score;
     }
 
-    public static CardNumber generate(int index) {
+    public static CardNumber generate(final int index) {
         return values()[index];
     }
 

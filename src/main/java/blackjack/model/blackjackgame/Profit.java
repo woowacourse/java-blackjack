@@ -5,7 +5,7 @@ import java.util.Objects;
 public final class Profit {
     private final double value;
 
-    public Profit(double value) {
+    public Profit(final double value) {
         this.value = value;
     }
 
@@ -13,7 +13,7 @@ public final class Profit {
         return new Profit(0);
     }
 
-    public Profit sum(Profit other) {
+    public Profit sum(final Profit other) {
         return new Profit(value + other.value);
     }
 

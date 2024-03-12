@@ -8,7 +8,7 @@ import java.util.Map;
 public final class PlayersResults {
     private final Map<Player, Profit> results;
 
-    public PlayersResults(Map<Player, Profit> results) {
+    public PlayersResults(final Map<Player, Profit> results) {
         this.results = new HashMap<>(results);
     }
 

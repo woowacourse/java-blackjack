@@ -6,8 +6,7 @@ public enum CardShape {
     HEART,
     CLOVER;
 
-    public static CardShape generate(int index) {
+    public static CardShape generate(final int index) {
         return values()[index];
     }
-
 }

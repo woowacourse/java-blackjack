@@ -10,11 +10,11 @@ public enum PlayerProfitCalculator {
 
     private final Function<Double, Double> function;
 
-    PlayerProfitCalculator(Function<Double, Double> function) {
+    PlayerProfitCalculator(final Function<Double, Double> function) {
         this.function = function;
     }
 
-    public Double calculate(double value) {
+    public Double calculate(final double value) {
         return function.apply(value);
     }
 }

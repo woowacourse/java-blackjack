@@ -9,11 +9,11 @@ public final class Score {
 
     private final int value;
 
-    public Score(int value) {
+    public Score(final int value) {
         this.value = value;
     }
 
-    public Score add(Score other) {
+    public Score add(final Score other) {
         return new Score(value + other.value);
     }
 
@@ -21,7 +21,7 @@ public final class Score {
         return value == BLACKJACK_SCORE;
     }
 
-    public PlayerProfitCalculator getPlayerStatus(Score other) {
+    public PlayerProfitCalculator getPlayerStatus(final Score other) {
         if (isBusted()) {
             return PlayerProfitCalculator.LOSE;
         }
@@ -31,7 +31,7 @@ public final class Score {
         return compare(other);
     }
 
-    private PlayerProfitCalculator compare(Score other) {
+    private PlayerProfitCalculator compare(final Score other) {
         if (isGreaterThan(other)) {
             return PlayerProfitCalculator.WIN;
         }
@@ -45,7 +45,7 @@ public final class Score {
         return value > BLACKJACK_SCORE;
     }
 
-    public boolean isGreaterThan(Score other) {
+    public boolean isGreaterThan(final Score other) {
         return value > other.value;
     }
 

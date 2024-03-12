@@ -1,11 +1,11 @@
 package blackjack.controller;
 
 import blackjack.model.blackjackgame.PlayersResults;
+import blackjack.model.blackjackgame.Profit;
 import blackjack.model.generator.CardGenerator;
 import blackjack.model.generator.RandomIndexGenerator;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
-import blackjack.model.blackjackgame.Profit;
 import blackjack.view.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -18,7 +18,7 @@ public class BlackJackController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackJackController(InputView inputView, OutputView outputView) {
+    public BlackJackController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
@@ -32,41 +32,43 @@ public class BlackJackController {
         printParticipantsProfits(players, dealer);
     }
 
-    private void printDistributedInfo(Dealer dealer, List<Player> players, CardGenerator cardGenerator) {
+    private void printDistributedInfo(final Dealer dealer, final List<Player> players,
+                                      final CardGenerator cardGenerator) {
         distributeCards(dealer, players, cardGenerator);
         outputView.printDistributedCardsInfo(players, dealer);
     }
 
-    private void distributeCards(Dealer dealer, List<Player> players, CardGenerator cardGenerator) {
+    private void distributeCards(final Dealer dealer, final List<Player> players, final CardGenerator cardGenerator) {
         dealer.addCards(cardGenerator.drawFirstCardsDealt());
         players.forEach(player -> player.addCards(cardGenerator.drawFirstCardsDealt()));
     }
 
-    private void printParticipantsFinalScore(List<Player> players, Dealer dealer, CardGenerator cardGenerator) {
+    private void printParticipantsFinalScore(final List<Player> players, Dealer dealer,
+                                             final CardGenerator cardGenerator) {
         executeMultipleTurns(players, cardGenerator);
         executeAdditionalDealerTurn(dealer, cardGenerator);
         outputView.printFinalScore(players, dealer);
     }
 
-    private void executeMultipleTurns(List<Player> players, CardGenerator cardGenerator) {
+    private void executeMultipleTurns(final List<Player> players, final CardGenerator cardGenerator) {
         for (int index = 0; index < players.size(); index++) {
             drawCardWithCommand(players, index, cardGenerator);
         }
     }
 
-    private void executeAdditionalDealerTurn(Dealer dealer, CardGenerator cardGenerator) {
+    private void executeAdditionalDealerTurn(final Dealer dealer, final CardGenerator cardGenerator) {
         if (dealer.checkCanGetMoreCard()) {
             dealer.addCard(cardGenerator.drawCard());
             outputView.printDealerChange();
         }
     }
 
-    private void printParticipantsProfits(List<Player> players, Dealer dealer) {
+    private void printParticipantsProfits(final List<Player> players, final Dealer dealer) {
         PlayersResults playersResults = calculatePlayersResults(players, dealer);
         outputView.printGameResults(playersResults);
     }
 
-    private void drawCardWithCommand(List<Player> players, int index, CardGenerator cardGenerator) {
+    private void drawCardWithCommand(final List<Player> players, final int index, final CardGenerator cardGenerator) {
         Player player = players.get(index);
         while (checkCanGetMoreCard(player) && inputView.readCommand(player) == Command.YES) {
             Player findPlayer = players.get(index);
@@ -75,14 +77,14 @@ public class BlackJackController {
         }
     }
 
-    private boolean checkCanGetMoreCard(Player player) {
+    private boolean checkCanGetMoreCard(final Player player) {
         if (!player.checkCanGetMoreCard()) {
             outputView.printInvalidDrawCardState();
         }
         return player.checkCanGetMoreCard();
     }
 
-    private PlayersResults calculatePlayersResults(List<Player> players, Dealer dealer) {
+    private PlayersResults calculatePlayersResults(final List<Player> players, final Dealer dealer) {
         Map<Player, Profit> result = new LinkedHashMap<>();
         players.forEach(player -> result.put(player, player.getProfit(dealer)));
         return new PlayersResults(result);

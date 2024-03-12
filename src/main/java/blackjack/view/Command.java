@@ -7,11 +7,11 @@ public enum Command {
     NO("n");
     private final String text;
 
-    Command(String text) {
+    Command(final String text) {
         this.text = text;
     }
 
-    public static Command generate(String text) {
+    public static Command generate(final String text) {
         return Arrays.stream(values())
                 .filter(command -> command.getText().equals(text))
                 .findFirst()

@@ -13,11 +13,11 @@ public abstract class Participant {
 
     public abstract boolean checkCanGetMoreCard();
 
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         cards.add(card);
     }
 
-    public void addCards(List<Card> cardToAdd) {
+    public void addCards(final List<Card> cardToAdd) {
         cards.add(cardToAdd);
     }
 

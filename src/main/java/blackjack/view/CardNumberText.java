@@ -21,12 +21,12 @@ public enum CardNumberText {
     private final CardNumber cardNumber;
     private final String text;
 
-    CardNumberText(CardNumber cardNumber, String text) {
+    CardNumberText(final CardNumber cardNumber, final String text) {
         this.cardNumber = cardNumber;
         this.text = text;
     }
 
-    public static CardNumberText from(CardNumber cardNumber) {
+    public static CardNumberText from(final CardNumber cardNumber) {
         return Arrays.stream(values())
                 .filter(text -> text.cardNumber.equals(cardNumber))
                 .findFirst()

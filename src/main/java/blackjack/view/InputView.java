@@ -26,34 +26,34 @@ public class InputView {
                 .toList();
     }
 
-    private Betting readMoney(String name) {
+    private Betting readMoney(final String name) {
         return repeatUntilSuccess(() -> getMoney(name));
     }
 
-    public Betting getMoney(String name) {
+    public Betting getMoney(final String name) {
         System.out.println(name + "의 배팅 금액은?");
         String input = scanner.nextLine();
         return new Betting(parseInt(input));
     }
 
-    public Command readCommand(Player player) {
+    public Command readCommand(final Player player) {
         return repeatUntilSuccess(() -> getCommand(player));
     }
 
-    private Command getCommand(Player player) {
+    private Command getCommand(final Player player) {
         String message = String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getName());
         System.out.println(message);
         String input = scanner.nextLine();
         return Command.generate(input);
     }
 
-    private void validateMultipleInputs(String input) {
+    private void validateMultipleInputs(final String input) {
         if (input == null || input.isBlank() || input.endsWith(INPUT_DELIMITER)) {
             throw new IllegalArgumentException("입력값은 공백이거나 구분자로 끝날 수 없다.");
         }
     }
 
-    private int parseInt(String value) {
+    private int parseInt(final String value) {
         try {
             return Integer.parseInt(value);
         } catch (NumberFormatException e) {
@@ -61,7 +61,7 @@ public class InputView {
         }
     }
 
-    private <T> T repeatUntilSuccess(Supplier<T> supplier) {
+    private <T> T repeatUntilSuccess(final Supplier<T> supplier) {
         try {
             return supplier.get();
         } catch (IllegalArgumentException e) {

@@ -15,17 +15,17 @@ public final class Cards {
         this(List.of(), new Score(0));
     }
 
-    private Cards(List<Card> cards, Score score) {
+    private Cards(final List<Card> cards, final Score score) {
         this.cards = new ArrayList<>(cards);
         this.score = score;
     }
 
-    public void add(Card card) {
+    public void add(final Card card) {
         cards.add(card);
         score = score.add(card.getScore());
     }
 
-    public void add(List<Card> cardsToAdd) {
+    public void add(final List<Card> cardsToAdd) {
         cardsToAdd.forEach(this::add);
     }
 
@@ -40,7 +40,7 @@ public final class Cards {
         return score;
     }
 
-    public PlayerProfitCalculator getPlayerResultStatus(Cards other) {
+    public PlayerProfitCalculator getPlayerResultStatus(final Cards other) {
         if (isBlackJack() && other.isBlackJack()) {
             return PlayerProfitCalculator.PUSH;
         }

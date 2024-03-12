@@ -9,18 +9,18 @@ public final class Betting {
 
     private final int amount;
 
-    public Betting(int amount) {
+    public Betting(final int amount) {
         validateMoney(amount);
         this.amount = amount;
     }
 
-    private void validateMoney(int amount) {
+    private void validateMoney(final int amount) {
         if (amount < MINIMUM_AMOUNT) {
             throw new IllegalArgumentException("금액은 " + MINIMUM_AMOUNT + "보다 작을 수 없다.");
         }
     }
 
-    public Profit getProfit(PlayerProfitCalculator playerProfitCalculator) {
+    public Profit getProfit(final PlayerProfitCalculator playerProfitCalculator) {
         return new Profit(playerProfitCalculator.calculate(amount));
     }
 

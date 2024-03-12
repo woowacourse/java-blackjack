@@ -12,12 +12,12 @@ public enum CardShapeText {
     private final CardShape cardShape;
     private final String text;
 
-    CardShapeText(CardShape cardShape, String text) {
+    CardShapeText(final CardShape cardShape, final String text) {
         this.cardShape = cardShape;
         this.text = text;
     }
 
-    public static CardShapeText from(CardShape cardShape) {
+    public static CardShapeText from(final CardShape cardShape) {
         return Arrays.stream(values())
                 .filter(text -> text.cardShape.equals(cardShape))
                 .findFirst()

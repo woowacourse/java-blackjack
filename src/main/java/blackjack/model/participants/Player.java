@@ -7,7 +7,7 @@ public class Player extends Participant {
     private final String name;
     private final Betting betting;
 
-    public Player(String name, Betting betting) {
+    public Player(final String name, final Betting betting) {
         this.name = name;
         this.betting = betting;
     }
@@ -17,11 +17,11 @@ public class Player extends Participant {
         return !cards.isBusted();
     }
 
-    public Profit getProfit(Participant participant) {
+    public Profit getProfit(final Participant participant) {
         return betting.getProfit(getScoreStatus(participant));
     }
 
-    private PlayerProfitCalculator getScoreStatus(Participant participant) {
+    private PlayerProfitCalculator getScoreStatus(final Participant participant) {
         return cards.getPlayerResultStatus(participant.cards);
     }
 
