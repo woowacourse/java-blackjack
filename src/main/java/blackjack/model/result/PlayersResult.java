@@ -12,12 +12,16 @@ public class PlayersResult {
         playerResult.put(player, Result.WIN);
     }
 
-    public void addLose(Player player) {
-        playerResult.put(player, Result.LOSE);
+    public void addBlackjack(Player player) {
+        playerResult.put(player, Result.BLACKJACK);
     }
 
-    public void addTie(Player player) {
-        playerResult.put(player, Result.TIE);
+    public void addPush(Player player) {
+        playerResult.put(player, Result.PUSH);
+    }
+
+    public void addLose(Player player) {
+        playerResult.put(player, Result.LOSE);
     }
 
     public Result findPlayerResult(Player player) {
