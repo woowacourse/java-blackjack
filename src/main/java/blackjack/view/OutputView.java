@@ -9,7 +9,7 @@ import java.util.List;
 public class OutputView {
 
     private static final String NEW_LINE = System.lineSeparator();
-    private static final String CARD_DISTRIBUTE = NEW_LINE + "딜러와 %s에게 2장을 나누었습니다." + NEW_LINE;
+    private static final String CARD_DISTRIBUTE = "딜러와 %s에게 2장을 나누었습니다." + NEW_LINE;
     private static final String DEALER_CARD_STATUS = "딜러: %s" + NEW_LINE;
     private static final String CARD_STATUS = "%s: %s" + NEW_LINE;
     private static final String DEALER_ADDED_CARD = NEW_LINE + "딜러는 %d이하라 한장의 카드를 더 받았습니다." + NEW_LINE;

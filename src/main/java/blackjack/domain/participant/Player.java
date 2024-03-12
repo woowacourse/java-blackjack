@@ -13,6 +13,7 @@ public class Player extends Gamer {
     private static final Set<String> reservedNames = Set.of("딜러");
 
     private final String name;
+//    private final Betting betting;
 
     public Player(final String name) {
         super();

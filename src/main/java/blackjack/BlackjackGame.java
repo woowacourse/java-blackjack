@@ -8,6 +8,7 @@ import blackjack.strategy.RandomShuffleStrategy;
 import blackjack.view.CardView;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class BlackjackGame {
@@ -24,8 +25,7 @@ public class BlackjackGame {
 
     public void start() {
         Dealer dealer = new Dealer(new Deck(new RandomShuffleStrategy()));
-        Players players = Players.of(inputView.readPlayersName());
-
+        Players players = createPlayers();
 
         initializeGame(dealer, players);
         printCardDistribute(dealer, players);
@@ -33,7 +33,14 @@ public class BlackjackGame {
         outputView.printFinalResult(players, players.createResult(dealer));
     }
 
-    public void initializeGame(final Dealer dealer, final Players players) {
+    private Players createPlayers() {
+        List<String> names = inputView.readPlayersName();
+        List<String> bettingAmounts = inputView.readBettingAmounts(names);
+
+        return Players.of(names);
+    }
+
+    private void initializeGame(final Dealer dealer, final Players players) {
         dealer.draw(BLACKJACK_INIT_CARD_AMOUNT);
 
         IntStream.range(0, BLACKJACK_INIT_CARD_AMOUNT)

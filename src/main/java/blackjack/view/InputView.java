@@ -12,9 +12,11 @@ public class InputView {
     private static final String MORE_CARD_CHOICE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String NAME_SEPARATOR = ",";
     private static final String IOEXCEPTION_ERROR = "입력 과정 도중 에러가 발생했습니다.";
+    public static final String BETTING_AMOUNT_INPUT = "%s의 배팅 금액은?";
 
     private static final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
     private static final InputView instance = new InputView();
+
 
     private InputView() {
     }
@@ -38,6 +40,24 @@ public class InputView {
         System.out.printf(MORE_CARD_CHOICE + System.lineSeparator(), name);
         try {
             return bufferedReader.readLine();
+        } catch (IOException exception) {
+            throw new IllegalArgumentException(IOEXCEPTION_ERROR);
+        }
+    }
+
+    public List<String> readBettingAmounts(final List<String> names) {
+        System.out.println();
+        return names.stream()
+                .map(this::readBettingAmount)
+                .toList();
+    }
+
+    private String readBettingAmount(final String name) {
+        System.out.printf(BETTING_AMOUNT_INPUT + System.lineSeparator(), name);
+        try {
+            String input = bufferedReader.readLine();
+            System.out.println();
+            return input;
         } catch (IOException exception) {
             throw new IllegalArgumentException(IOEXCEPTION_ERROR);
         }
