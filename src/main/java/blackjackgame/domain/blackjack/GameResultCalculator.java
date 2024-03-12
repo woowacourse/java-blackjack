@@ -5,7 +5,7 @@ public class GameResultCalculator {
     private GameResultCalculator() {
     }
 
-    public static GameResult calculate(CardHolderGamer baseCardHolderGamer, CardHolderGamer otherCardHolderGamer) {
+    public static GameResult calculate(CardHolder baseCardHolderGamer, CardHolder otherCardHolderGamer) {
         if (baseCardHolderGamer.isDead() && otherCardHolderGamer.isDead()) {
             return GameResult.TIE;
         }
@@ -18,7 +18,7 @@ public class GameResultCalculator {
         return getGameResultWhenNobodyDead(baseCardHolderGamer, otherCardHolderGamer);
     }
 
-    private static GameResult getGameResultWhenNobodyDead(CardHolderGamer baseCardHolderGamer, CardHolderGamer otherCardHolderGamer) {
+    private static GameResult getGameResultWhenNobodyDead(CardHolder baseCardHolderGamer, CardHolder otherCardHolderGamer) {
         SummationCardPoint baseGamerSummationCardPoint = baseCardHolderGamer.getSummationCardPoint();
         SummationCardPoint otherGamerSummationCardPoint = otherCardHolderGamer.getSummationCardPoint();
 

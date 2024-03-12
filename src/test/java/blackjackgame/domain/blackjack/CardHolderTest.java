@@ -19,7 +19,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class CardHolderGamerTest {
+class CardHolderTest {
 
     public static Stream<Arguments> isDeadParameters() {
         return Stream.of(
@@ -31,14 +31,14 @@ class CardHolderGamerTest {
     @DisplayName("이름과 손패를 갖는 게이머 클래스의 생성자를 만들 수 있다.")
     void createGamerWithNameAndHoldingCardsConstructorTest() {
         Assertions.assertThatCode(() ->
-                new CardHolderGamer("게이머", HoldingCards.of())
+                new CardHolder("게이머", HoldingCards.of())
         ).doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("게임 참가자가 카드를 뽑았을 때 점수가 올바르게 계산되는지 검증")
     void draw() {
-        CardHolderGamer CardHolderGamer = new CardHolderGamer("robin", HoldingCards.of());
+        CardHolder CardHolderGamer = new CardHolder("robin", HoldingCards.of());
         CardHolderGamer.draw(Deck.of(new Card(JACK, HEART)), new TestPlayerCardDrawStrategy(CardHolderGamer));
 
         SummationCardPoint actual = CardHolderGamer.getSummationCardPoint();
@@ -50,7 +50,7 @@ class CardHolderGamerTest {
     @Test
     @DisplayName("플레이어는 총합이 21이 넘으면 카드를 뽑을 수 없는지 검증")
     void validateDrawLimit() {
-        CardHolderGamer CardHolderGamer = new CardHolderGamer("robin", HoldingCards.of(
+        CardHolder CardHolderGamer = new CardHolder("robin", HoldingCards.of(
                 new Card(JACK, HEART), new Card(EIGHT, HEART), new Card(JACK, SPADE)
         ));
         Deck deck = Deck.of(
@@ -65,7 +65,7 @@ class CardHolderGamerTest {
     @Test
     @DisplayName("딜러는 총합이 16이 넘으면 카드를 뽑을 수 없는지 검증")
     void validateDealerDrawLimit() {
-        CardHolderGamer cardHolderGamer = new CardHolderGamer("robin", HoldingCards.of(
+        CardHolder cardHolderGamer = new CardHolder("robin", HoldingCards.of(
                 new Card(JACK, HEART), new Card(SEVEN, HEART)
         ));
         Deck deck = Deck.of(
@@ -81,7 +81,7 @@ class CardHolderGamerTest {
     @MethodSource("isDeadParameters")
     @DisplayName("게이머의 점수가 21이 넘으면 죽었다고 판단하는지 검증")
     void isDead(Card additionalCard, boolean expected) {
-        CardHolderGamer cardHolderGamer = new CardHolderGamer("robin", HoldingCards.of(
+        CardHolder cardHolderGamer = new CardHolder("robin", HoldingCards.of(
                 new Card(JACK, HEART), new Card(QUEEN, HEART), additionalCard
         ));
 

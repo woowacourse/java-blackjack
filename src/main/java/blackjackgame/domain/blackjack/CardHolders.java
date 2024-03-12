@@ -3,10 +3,10 @@ package blackjackgame.domain.blackjack;
 import blackjackgame.domain.card.Deck;
 import java.util.List;
 
-public class CardHolderGamers {
-    private final List<CardHolderGamer> players;
+public class CardHolders {
+    private final List<CardHolder> players;
 
-    public CardHolderGamers(List<CardHolderGamer> players) {
+    public CardHolders(List<CardHolder> players) {
         this.players = players;
     }
 
@@ -16,11 +16,11 @@ public class CardHolderGamers {
 
     public List<String> getRawPlayerNames() {
         return players.stream()
-                .map(CardHolderGamer::getRawName)
+                .map(CardHolder::getRawName)
                 .toList();
     }
 
-    public List<CardHolderGamer> getPlayers() {
+    public List<CardHolder> getPlayers() {
         return players;
     }
 }

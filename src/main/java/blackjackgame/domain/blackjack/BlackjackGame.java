@@ -7,13 +7,13 @@ import java.util.List;
 public class BlackjackGame {
     private static final int EXECUTION_COUNT = 2;
 
-    private final CardHolderGamer cardHolderDealer;
-    private final BetMakerGamer betMakerDealer;
-    private final CardHolderGamers cardHolderPlayers;
-    private final BetMakerGamers betMakerPlayers;
+    private final CardHolder cardHolderDealer;
+    private final BetMaker betMakerDealer;
+    private final CardHolders cardHolderPlayers;
+    private final BetMakers betMakerPlayers;
 
-    public BlackjackGame(CardHolderGamer cardHolderDealer, BetMakerGamer betMakerDealer,
-                         CardHolderGamers cardHolderPlayers, BetMakerGamers betMakerPlayers) {
+    public BlackjackGame(CardHolder cardHolderDealer, BetMaker betMakerDealer,
+                         CardHolders cardHolderPlayers, BetMakers betMakerPlayers) {
         this.cardHolderDealer = cardHolderDealer;
         this.betMakerDealer = betMakerDealer;
         this.cardHolderPlayers = cardHolderPlayers;
@@ -29,11 +29,11 @@ public class BlackjackGame {
         cardHolderDealer.draw(deck, new DealerRandomCardDrawStrategy(cardHolderDealer), EXECUTION_COUNT);
     }
 
-    private void playerDraw(Deck deck, CardHolderGamer player) {
+    private void playerDraw(Deck deck, CardHolder player) {
         player.draw(deck, new PlayerRandomCardDrawStrategy(player), EXECUTION_COUNT);
     }
 
-    public boolean isPlayerDead(CardHolderGamer player) {
+    public boolean isPlayerDead(CardHolder player) {
         return player.isDead();
     }
 
@@ -46,7 +46,7 @@ public class BlackjackGame {
         }
     }
 
-    public void playerTryDraw(Deck deck, CardHolderGamer player) {
+    public void playerTryDraw(Deck deck, CardHolder player) {
         try {
             playerDraw(deck, player);
         } catch (IllegalStateException e) {
@@ -54,11 +54,11 @@ public class BlackjackGame {
         }
     }
 
-    public CardHolderGamer getCardHolderDealer() {
+    public CardHolder getCardHolderDealer() {
         return cardHolderDealer;
     }
 
-    public List<CardHolderGamer> getRawPlayers() {
+    public List<CardHolder> getRawPlayers() {
         return cardHolderPlayers.getPlayers();
     }
 

@@ -41,26 +41,26 @@ class GameResultCalculatorTest {
 
     public static Stream<Arguments> getGameResultParameters() {
         return Stream.of(
-                Arguments.of(new CardHolderGamer(firstGamerName, ONLY_SEVEN_HEART), new CardHolderGamer(secondGamerName, ONLY_SIX_HEART),
+                Arguments.of(new CardHolder(firstGamerName, ONLY_SEVEN_HEART), new CardHolder(secondGamerName, ONLY_SIX_HEART),
                         WIN),
-                Arguments.of(new CardHolderGamer(firstGamerName, ONLY_SIX_HEART), new CardHolderGamer(secondGamerName, ONLY_SEVEN_HEART),
+                Arguments.of(new CardHolder(firstGamerName, ONLY_SIX_HEART), new CardHolder(secondGamerName, ONLY_SEVEN_HEART),
                         LOSE),
-                Arguments.of(new CardHolderGamer(firstGamerName, ONLY_SEVEN_HEART), new CardHolderGamer(secondGamerName, ONLY_SEVEN_HEART),
+                Arguments.of(new CardHolder(firstGamerName, ONLY_SEVEN_HEART), new CardHolder(secondGamerName, ONLY_SEVEN_HEART),
                         TIE),
-                Arguments.of(new CardHolderGamer(firstGamerName, DEAD_CARDS), new CardHolderGamer(secondGamerName, ONLY_SEVEN_HEART), LOSE),
-                Arguments.of(new CardHolderGamer(firstGamerName, ONLY_SEVEN_HEART), new CardHolderGamer(secondGamerName, DEAD_CARDS), WIN),
-                Arguments.of(new CardHolderGamer(firstGamerName, DEAD_CARDS), new CardHolderGamer(secondGamerName, DEAD_CARDS), TIE),
-                Arguments.of(new CardHolderGamer(firstGamerName, WIN_CARDS_WITH_ACE), new CardHolderGamer(secondGamerName, TWO_SIX_CARDS),
+                Arguments.of(new CardHolder(firstGamerName, DEAD_CARDS), new CardHolder(secondGamerName, ONLY_SEVEN_HEART), LOSE),
+                Arguments.of(new CardHolder(firstGamerName, ONLY_SEVEN_HEART), new CardHolder(secondGamerName, DEAD_CARDS), WIN),
+                Arguments.of(new CardHolder(firstGamerName, DEAD_CARDS), new CardHolder(secondGamerName, DEAD_CARDS), TIE),
+                Arguments.of(new CardHolder(firstGamerName, WIN_CARDS_WITH_ACE), new CardHolder(secondGamerName, TWO_SIX_CARDS),
                         WIN),
-                Arguments.of(new CardHolderGamer(firstGamerName, WIN_CARDS_WITH_ACE),
-                        new CardHolderGamer(secondGamerName, WIN_CARDS_WITHOUT_ACE), TIE)
+                Arguments.of(new CardHolder(firstGamerName, WIN_CARDS_WITH_ACE),
+                        new CardHolder(secondGamerName, WIN_CARDS_WITHOUT_ACE), TIE)
         );
     }
 
     @ParameterizedTest
     @MethodSource("getGameResultParameters")
     @DisplayName("승부가 잘 결정되는지 검증")
-    void calculate(CardHolderGamer cardHolderGamer1, CardHolderGamer cardHolderGamer2, GameResult expected) {
+    void calculate(CardHolder cardHolderGamer1, CardHolder cardHolderGamer2, GameResult expected) {
         Assertions.assertThat(GameResultCalculator.calculate(cardHolderGamer1, cardHolderGamer2))
                 .isEqualTo(expected);
     }

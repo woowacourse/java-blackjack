@@ -1,9 +1,9 @@
 package blackjackgame.domain.blackjack;
 
 public class PlayerRandomCardDrawStrategy extends AbstractRandomCardDrawStrategy {
-    private final CardHolderGamer player;
+    private final CardHolder player;
 
-    public PlayerRandomCardDrawStrategy(CardHolderGamer player) {
+    public PlayerRandomCardDrawStrategy(CardHolder player) {
         this.player = player;
     }
 
