@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Hand {
@@ -11,10 +12,21 @@ public class Hand {
     private static final int BLACKJACK_SCORE = 21;
     private static final int BLACKJACK_CARD_SIZE = 2;
 
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
 
-    public void add(Card card) {
-        cards.add(card);
+    public Hand() {
+        cards = new ArrayList<>();
+    }
+
+    private Hand(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
+    }
+
+    public Hand add(Card card) {
+        List<Card> newCards = new ArrayList<>(cards);
+        newCards.add(card);
+
+        return new Hand(newCards);
     }
 
     public int calculateScore() {
@@ -49,6 +61,6 @@ public class Hand {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 }

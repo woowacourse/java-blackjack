@@ -5,7 +5,7 @@ import java.util.List;
 
 public abstract class Participant {
 
-    private final Hand hand;
+    private Hand hand;
     private final Name name;
 
     protected Participant(String name) {
@@ -18,7 +18,7 @@ public abstract class Participant {
             throw new IllegalStateException("카드를 더이상 받을 수 없습니다.");
         }
 
-        hand.add(card);
+        hand = hand.add(card);
     }
 
     protected abstract boolean isPlayable();

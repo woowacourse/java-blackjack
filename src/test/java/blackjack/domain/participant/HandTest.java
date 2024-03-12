@@ -15,7 +15,7 @@ class HandTest {
     void add() {
         Hand hand = new Hand();
 
-        hand.add(new Card(CardRank.EIGHT, CardShape.DIAMOND));
+        hand = hand.add(new Card(CardRank.EIGHT, CardShape.DIAMOND));
 
         List<Card> cards = hand.getCards();
         assertThat(cards).hasSize(1);
@@ -25,8 +25,8 @@ class HandTest {
     @Test
     void calculateScore() {
         Hand hand = new Hand();
-        hand.add(new Card(CardRank.EIGHT, CardShape.DIAMOND));
-        hand.add(new Card(CardRank.FOUR, CardShape.CLOVER));
+        hand = hand.add(new Card(CardRank.EIGHT, CardShape.DIAMOND));
+        hand = hand.add(new Card(CardRank.FOUR, CardShape.CLOVER));
 
         int score = hand.calculateScore();
 
@@ -37,9 +37,9 @@ class HandTest {
     @Test
     void calculateScoreWithMinAce() {
         Hand hand = new Hand();
-        hand.add(new Card(CardRank.ACE, CardShape.DIAMOND));
-        hand.add(new Card(CardRank.KING, CardShape.CLOVER));
-        hand.add(new Card(CardRank.JACK, CardShape.CLOVER));
+        hand = hand.add(new Card(CardRank.ACE, CardShape.DIAMOND));
+        hand = hand.add(new Card(CardRank.KING, CardShape.CLOVER));
+        hand = hand.add(new Card(CardRank.JACK, CardShape.CLOVER));
 
         int score = hand.calculateScore();
 
@@ -50,8 +50,8 @@ class HandTest {
     @Test
     void calculateScoreWithMaxAce() {
         Hand hand = new Hand();
-        hand.add(new Card(CardRank.ACE, CardShape.DIAMOND));
-        hand.add(new Card(CardRank.JACK, CardShape.CLOVER));
+        hand = hand.add(new Card(CardRank.ACE, CardShape.DIAMOND));
+        hand = hand.add(new Card(CardRank.JACK, CardShape.CLOVER));
 
         int score = hand.calculateScore();
 
@@ -62,9 +62,9 @@ class HandTest {
     @Test
     void isBust() {
         Hand hand = new Hand();
-        hand.add(new Card(CardRank.JACK, CardShape.DIAMOND));
-        hand.add(new Card(CardRank.KING, CardShape.CLOVER));
-        hand.add(new Card(CardRank.TWO, CardShape.DIAMOND));
+        hand = hand.add(new Card(CardRank.JACK, CardShape.DIAMOND));
+        hand = hand.add(new Card(CardRank.KING, CardShape.CLOVER));
+        hand = hand.add(new Card(CardRank.TWO, CardShape.DIAMOND));
 
         boolean result = hand.isBust();
 
@@ -75,8 +75,8 @@ class HandTest {
     @Test
     void isBlackJack() {
         Hand hand = new Hand();
-        hand.add(new Card(CardRank.ACE, CardShape.DIAMOND));
-        hand.add(new Card(CardRank.KING, CardShape.CLOVER));
+        hand = hand.add(new Card(CardRank.ACE, CardShape.DIAMOND));
+        hand = hand.add(new Card(CardRank.KING, CardShape.CLOVER));
 
         boolean result = hand.isBlackJack();
 
@@ -87,9 +87,9 @@ class HandTest {
     @Test
     void isNotBlackJack() {
         Hand hand = new Hand();
-        hand.add(new Card(CardRank.TWO, CardShape.DIAMOND));
-        hand.add(new Card(CardRank.KING, CardShape.CLOVER));
-        hand.add(new Card(CardRank.NINE, CardShape.DIAMOND));
+        hand = hand.add(new Card(CardRank.TWO, CardShape.DIAMOND));
+        hand = hand.add(new Card(CardRank.KING, CardShape.CLOVER));
+        hand = hand.add(new Card(CardRank.NINE, CardShape.DIAMOND));
 
         boolean result = hand.isBlackJack();
 
