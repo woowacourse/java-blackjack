@@ -1,16 +1,19 @@
 package blackjack.view;
 
+import blackjack.domain.Name;
+import blackjack.domain.Outcome;
 import blackjack.domain.card.Card;
 import blackjack.dto.DealerDto;
-import blackjack.dto.OutcomeDto;
-import blackjack.dto.OutcomesDto;
 import blackjack.dto.PlayerDto;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.StringJoiner;
 
 public class OutputView {
 
     private static final String DEALER = "딜러";
+    public static final long NO_COUNT = 0L;
 
     public static void printInitialState(DealerDto dealerDto, List<PlayerDto> playerDtos) {
         System.out.println(System.lineSeparator() + DEALER + "와 " + makePlayerName(playerDtos) + "에게 2장을 나누었습니다.");
@@ -55,25 +58,27 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printFinalOutcomes(final OutcomesDto dealerOutcomesDto, final List<OutcomeDto> outcomeDtos) {
+    public static void printFinalOutcomes(final Map<Outcome, Long> dealerOutcome, final Map<Name, Outcome> playerOutcomes) {
         System.out.println("## 최종 승패");
-        printDealerFinalOutcome(dealerOutcomesDto);
-        printPlayersFinalOutcome(outcomeDtos);
+        printDealerOutcome(dealerOutcome);
+        printPlayersOutcome(playerOutcomes);
     }
 
-    private static void printDealerFinalOutcome(final OutcomesDto dealerOutcomesDto) {
-        System.out.print(
-                DEALER + ": " + dealerOutcomesDto.getWinCount() + "승 " + dealerOutcomesDto.getLoseCount() + "패 ");
-        if (dealerOutcomesDto.getPushCount() > 0) {
-            System.out.print(dealerOutcomesDto.getPushCount() + "무");
+    private static void printDealerOutcome(final Map<Outcome, Long> dealerOutcome) {
+        System.out.print(DEALER + ": " +
+                        dealerOutcome.getOrDefault(Outcome.WIN, NO_COUNT) + "승 " +
+                        dealerOutcome.getOrDefault(Outcome.LOSE, NO_COUNT) + "패 ");
+
+        final Long pushCount = dealerOutcome.getOrDefault(Outcome.PUSH, NO_COUNT);
+        if (pushCount != NO_COUNT) {
+            System.out.print(pushCount + "무");
         }
         System.out.println();
     }
 
-    private static void printPlayersFinalOutcome(final List<OutcomeDto> outcomeDtos) {
-        for (OutcomeDto outcomeDto : outcomeDtos) {
-            System.out.println(
-                    outcomeDto.getName().value() + ": " + OutcomeTranslator.translate(outcomeDto.getOutcome()));
+    private static void printPlayersOutcome(final Map<Name, Outcome> playerOutcomes) {
+        for (final Entry<Name, Outcome> entry : playerOutcomes.entrySet()) {
+            System.out.println(entry.getKey().value() + ": " + OutcomeTranslator.translate(entry.getValue()));
         }
     }
 

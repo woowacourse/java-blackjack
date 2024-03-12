@@ -151,13 +151,27 @@ class OutcomeTest {
         assertThat(outcome).isEqualTo(Outcome.PUSH);
     }
 
-    @DisplayName("승패 결과들을 반전한다.")
+    @DisplayName("승을 패로 반전한다.")
     @Test
-    void reverseWinningResult() {
-        final List<Outcome> outcomes = List.of(Outcome.WIN, Outcome.LOSE, Outcome.PUSH);
+    void convertWinToLose() {
+        final Outcome convertedOutcome = Outcome.reverse(Outcome.WIN);
 
-        final List<Outcome> reverseOutcomes = Outcome.reverse(outcomes);
+        assertThat(convertedOutcome).isEqualTo(Outcome.LOSE);
+    }
 
-        assertThat(reverseOutcomes).containsExactly(Outcome.LOSE, Outcome.WIN, Outcome.PUSH);
+    @DisplayName("패를 승으로 반전한다.")
+    @Test
+    void convertLoseToWin() {
+        final Outcome convertedOutcome = Outcome.reverse(Outcome.LOSE);
+
+        assertThat(convertedOutcome).isEqualTo(Outcome.WIN);
+    }
+
+    @DisplayName("무는 반전해도 무다.")
+    @Test
+    void convertPushToPush() {
+        final Outcome convertedOutcome = Outcome.reverse(Outcome.PUSH);
+
+        assertThat(convertedOutcome).isEqualTo(Outcome.PUSH);
     }
 }

@@ -63,13 +63,7 @@ public enum Outcome {
         return Outcome.PUSH;
     }
 
-    public static List<Outcome> reverse(final List<Outcome> outcomes) {
-        return outcomes.stream()
-                .map(Outcome::reverse)
-                .toList();
-    }
-
-    private static Outcome reverse(final Outcome outcome) {
+    public static Outcome reverse(final Outcome outcome) {
         if (outcome == Outcome.WIN) {
             return Outcome.LOSE;
         }

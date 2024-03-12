@@ -1,9 +1,11 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.dto.OutcomeDto;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameBoard {
 
@@ -41,21 +43,22 @@ public class GameBoard {
         return gamer.canDraw();
     }
 
-    public List<Outcome> getDealerOutcomes() {
-        final List<Outcome> playerOutcomes = new ArrayList<>();
-        for (final Player player : players.getPlayers()) {
-            playerOutcomes.add(Outcome.doesPlayerWin(dealer.getHand(), player.getHand()));
-        }
-        return Outcome.reverse(playerOutcomes);
-    }
-
-    public List<OutcomeDto> getPlayerOutcomeDtos() {
-        final List<OutcomeDto> playerOutcomes = new ArrayList<>();
+    public List<Outcome> getDealerOutcome() {
+        final List<Outcome> dealerOutcomes = new ArrayList<>();
         for (final Player player : players.getPlayers()) {
             final Outcome playerOutcome = Outcome.doesPlayerWin(dealer.getHand(), player.getHand());
-            playerOutcomes.add(new OutcomeDto(player.getName(), playerOutcome));
+            dealerOutcomes.add(Outcome.reverse(playerOutcome));
         }
-        return playerOutcomes;
+        return Collections.unmodifiableList(dealerOutcomes);
+    }
+
+    public Map<Name, Outcome> getPlayerOutcomes() {
+        final Map<Name, Outcome> playerOutcomes = new LinkedHashMap<>();
+        for (final Player player : players.getPlayers()) {
+            final Outcome playerOutcome = Outcome.doesPlayerWin(dealer.getHand(), player.getHand());
+            playerOutcomes.put(player.getName(), playerOutcome);
+        }
+        return Collections.unmodifiableMap(playerOutcomes);
     }
 
     public Dealer getDealer() {

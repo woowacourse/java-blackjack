@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Deck;
-import blackjack.dto.OutcomeDto;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,11 +13,13 @@ class GameBoardTest {
 
     //@formatter:off
     /**
-     * 카드 순서
+     * 카드 저장 순서
      * Ace카드 HEART, SPADE, CLOVER, DIAMOND 순서대로 4장
      * 2카드 HEART, SPADE, CLOVER, DIAMOND 순서대로 4장
      * ...
      * KING카드 HEART, SPADE, CLOVER, DIAMOND 순서대로 4장
+     *
+     * 카드 pop 순서는 카드 저장 순서의 역순이다.
      */
     //@formatter:on
     @DisplayName("딜러의 최종 승패를 알려준다.")
@@ -31,7 +33,7 @@ class GameBoardTest {
         gameBoard.drawInitialPlayersHand();
         gameBoard.drawInitialDealerHand();
 
-        final List<Outcome> dealerOutcome = gameBoard.getDealerOutcomes();
+        final List<Outcome> dealerOutcome = gameBoard.getDealerOutcome();
 
         assertThat(dealerOutcome).containsExactly(Outcome.PUSH);
     }
@@ -41,20 +43,18 @@ class GameBoardTest {
     void informPlayersOutcome() {
         final TestDeckFactory testDeckFactory = new TestDeckFactory();
         final Deck deck = testDeckFactory.create();
-        final Players players = Players.from(List.of("pobi"));
+        final Players players = Players.from(List.of("pobi", "jason"));
         final Dealer dealer = Dealer.of(deck);
         final GameBoard gameBoard = new GameBoard(dealer, players);
-        gameBoard.drawInitialPlayersHand();
         gameBoard.drawInitialDealerHand();
+        gameBoard.drawInitialPlayersHand();
 
-        final List<OutcomeDto> playerOutcomeDtos = gameBoard.getPlayerOutcomeDtos();
-        final Name name = playerOutcomeDtos.get(0).getName();
-        final Outcome outcome = playerOutcomeDtos.get(0).getOutcome();
+        final Map<Name, Outcome> playerOutcomes = gameBoard.getPlayerOutcomes();
 
         assertAll(
-                () -> assertThat(playerOutcomeDtos.size()).isEqualTo(players.getPlayers().size()),
-                () -> assertThat(name).isEqualTo(new Name("pobi")),
-                () -> assertThat(outcome).isEqualTo(Outcome.PUSH)
+                () -> assertThat(playerOutcomes.size()).isEqualTo(players.getPlayers().size()),
+                () -> assertThat(playerOutcomes.get(new Name("pobi"))).isEqualTo(Outcome.PUSH),
+                () -> assertThat(playerOutcomes.get(new Name("jason"))).isEqualTo(Outcome.PUSH)
         );
     }
 }

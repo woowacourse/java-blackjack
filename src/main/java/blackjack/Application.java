@@ -10,13 +10,10 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.ShuffledDeckFactory;
 import blackjack.dto.DealerDto;
-import blackjack.dto.OutcomeDto;
-import blackjack.dto.OutcomesDto;
 import blackjack.dto.PlayerDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
-import java.util.Map;
 
 public class Application {
 
@@ -25,12 +22,10 @@ public class Application {
         drawInitialCards(gameBoard);
 
         hit(gameBoard);
+
         OutputView.printFinalState(
                 createDealerDto(gameBoard.getDealer().getHand()), createPlayerDtos(gameBoard.getPlayers()));
-
-        final OutcomesDto dealerOutcomeDto = createOutcomesDto(gameBoard.getDealerOutcomes());
-        final List<OutcomeDto> playerOutcomeDtos = gameBoard.getPlayerOutcomeDtos();
-        OutputView.printFinalOutcomes(dealerOutcomeDto, playerOutcomeDtos);
+        OutputView.printFinalOutcomes(Outcome.countByKind(gameBoard.getDealerOutcome()), gameBoard.getPlayerOutcomes());
     }
 
     private static GameBoard createGameBoard() {
@@ -92,14 +87,5 @@ public class Application {
             gameBoard.hit(dealer);
             OutputView.printDealerDrawMessage();
         }
-    }
-
-    private static OutcomesDto createOutcomesDto(final List<Outcome> outcomes) {
-        final Map<Outcome, Long> outcomeCounts = Outcome.countByKind(outcomes);
-        return new OutcomesDto(
-                outcomeCounts.getOrDefault(Outcome.WIN, 0L).intValue(),
-                outcomeCounts.getOrDefault(Outcome.LOSE, 0L).intValue(),
-                outcomeCounts.getOrDefault(Outcome.PUSH, 0L).intValue()
-        );
     }
 }

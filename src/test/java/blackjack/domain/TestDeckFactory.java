@@ -13,11 +13,13 @@ public class TestDeckFactory implements DeckFactory {
 
     //@formatter:off
     /**
-     * 카드 순서
+     * 카드 저장 순서
      * Ace카드 HEART, SPADE, CLOVER, DIAMOND 순서대로 4장
      * 2카드 HEART, SPADE, CLOVER, DIAMOND 순서대로 4장
      * ...
      * KING카드 HEART, SPADE, CLOVER, DIAMOND 순서대로 4장
+     *
+     * 카드 pop 순서는 카드 저장 순서의 역순이다.
      */
     //@formatter:on
     @Override
