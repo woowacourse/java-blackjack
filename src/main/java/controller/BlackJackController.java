@@ -26,9 +26,7 @@ public class BlackJackController {
 
         play(blackJackGame, betting, dealer, players);
 
-        GameResults gameResults = blackJackGame.getGameResults(dealer, players);
-        Map<PlayerName, Integer> bettingResult = calculateBettings(betting, getPlayerGameResultDto(gameResults.playerGameResults()));
-        OutputView.printBettingResult(bettingResult);
+        finish(blackJackGame, betting, dealer, players);
     }
 
     private List<Player> initPlayers() {
@@ -130,6 +128,12 @@ public class BlackJackController {
             OutputView.printErrorMessage(e.getMessage());
         }
         OutputView.printDealerDrawMessage();
+    }
+
+    private void finish(BlackJackGame blackJackGame, Betting betting, Dealer dealer, List<Player> players) {
+        GameResults gameResults = blackJackGame.getGameResults(dealer, players);
+        Map<PlayerName, Integer> bettingResult = calculateBettings(betting, getPlayerGameResultDto(gameResults.playerGameResults()));
+        OutputView.printBettingResult(bettingResult);
     }
 
     private List<PlayerGameResultDto> getPlayerGameResultDto(final Map<Player, GameResult> playerGameResults) {
