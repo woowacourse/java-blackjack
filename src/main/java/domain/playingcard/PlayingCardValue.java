@@ -19,6 +19,6 @@ public enum PlayingCardValue {
     }
 
     public boolean isTenValueCard() {
-        return this == TEN || this == JACK || this == QUEEN || this == KING;
+        return this.value == 10;
     }
 }
