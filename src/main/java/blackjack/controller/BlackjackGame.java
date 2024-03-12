@@ -59,7 +59,7 @@ public class BlackjackGame {
     }
 
     private void drawPlayerCards(final Player player, final CardGenerator cardGenerator) {
-        boolean isContinue = player.canDraw();
+        boolean isContinue = player.canDrawCard();
         while (isContinue) {
             isContinue = drawPlayerCard(player, cardGenerator);
         }
@@ -68,10 +68,10 @@ public class BlackjackGame {
     private boolean drawPlayerCard(final Player player, final CardGenerator cardGenerator) {
         Command command = retryOnException(() -> inputView.askPlayerDrawOrStandCommand(player.getName()));
         if (command.isDraw()) {
-            player.draw(cardGenerator);
+            player.drawCard(cardGenerator);
             outputView.printPlayerDrawingCards(player);
         }
-        return player.canDraw() && command.isDraw();
+        return player.canDrawCard() && command.isDraw();
     }
 
     private void drawDealerCards(final Dealer dealer, final CardGenerator cardGenerator) {

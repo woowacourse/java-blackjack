@@ -6,7 +6,7 @@ import blackjack.model.cardgenerator.CardGenerator;
 import java.util.List;
 
 public class Dealer {
-    private static final int DRAW_END_CONDITION = 17;
+    private static final int MAX_DRAWABLE_SCORE = 16;
     private static final int NON_DRAW_COUNT = 2;
 
     private final Cards cards;
@@ -16,7 +16,7 @@ public class Dealer {
     }
 
     public void drawUntilEnd(final CardGenerator cardGenerator) {
-        cards.addCardUntilTotalScoreReached(cardGenerator, DRAW_END_CONDITION);
+        cards.drawCardWithinScoreLimit(cardGenerator, MAX_DRAWABLE_SCORE);
     }
 
     public int calculateCardsTotalScore() {

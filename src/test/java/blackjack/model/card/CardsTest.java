@@ -84,7 +84,7 @@ class CardsTest {
         Cards cards = new Cards(arbitraryCards);
 
         // when
-        cards.addCard(() -> new Card(Suit.HEART, Denomination.TWO));
+        cards.drawCard(() -> new Card(Suit.HEART, Denomination.TWO));
 
         // then
         assertThat(cards.getCards()).hasSize(3);

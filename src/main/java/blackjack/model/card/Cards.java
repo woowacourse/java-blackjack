@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
-    private static final int BLACK_JACK_SCORE = 21;
+    private static final int BLACKJACK_SCORE = 21;
     private static final int ACE_ADDITIONAL_SCORE = 10;
 
     private final List<Card> cards;
@@ -22,14 +22,18 @@ public class Cards {
         return List.of(cardGenerator.pick(), cardGenerator.pick());
     }
 
-    public void addCard(final CardGenerator cardGenerator) {
+    public void drawCard(final CardGenerator cardGenerator) {
         cards.add(cardGenerator.pick());
     }
 
-    public void addCardUntilTotalScoreReached(final CardGenerator cardGenerator, int targetTotalScore) {
-        while (calculateTotalScore() < targetTotalScore) {
+    public void drawCardWithinScoreLimit(final CardGenerator cardGenerator, int maxDrawableScore) {
+        while (canDrawCardWithinScoreLimit(maxDrawableScore)) {
             cards.add(cardGenerator.pick());
         }
+    }
+
+    public boolean canDrawCardWithinScoreLimit(int maxDrawableScore) {
+        return calculateTotalScore() <= maxDrawableScore;
     }
 
     public int calculateTotalScore() {
@@ -50,18 +54,18 @@ public class Cards {
     }
 
     private int addAceScoreIfNotBust(int total) {
-        if (total + ACE_ADDITIONAL_SCORE <= BLACK_JACK_SCORE) {
+        if (total + ACE_ADDITIONAL_SCORE <= BLACKJACK_SCORE) {
             return total + ACE_ADDITIONAL_SCORE;
         }
         return total;
     }
 
     public boolean isBlackJack() {
-        return calculateTotalScore() == BLACK_JACK_SCORE;
+        return calculateTotalScore() == BLACKJACK_SCORE;
     }
 
     public boolean isBust() {
-        return calculateTotalScore() > BLACK_JACK_SCORE;
+        return calculateTotalScore() > BLACKJACK_SCORE;
     }
 
     public int size() {
