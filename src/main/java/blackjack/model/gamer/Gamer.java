@@ -9,7 +9,7 @@ public abstract class Gamer {
     protected final HandDeck handDeck = new HandDeck();
 
     public void receiveCard(Card card) {
-        handDeck.addCard(card);
+        handDeck.add(card);
     }
 
     public List<Card> allCards() {
