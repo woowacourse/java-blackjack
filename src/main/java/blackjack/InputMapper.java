@@ -1,6 +1,8 @@
 package blackjack;
 
 import blackjack.domain.DrawDecision;
+import blackjack.domain.bet.Bet;
+import blackjack.domain.bet.Money;
 import blackjack.domain.player.PlayerName;
 import java.util.Arrays;
 import java.util.List;
@@ -18,5 +20,9 @@ public class InputMapper {
 
     public DrawDecision mapToDrawDecision(String target) {
         return DrawDecision.from(target);
+    }
+
+    public Bet mapToBet(String name, int betAmount) {
+        return new Bet(new PlayerName(name), new Money(betAmount));
     }
 }
