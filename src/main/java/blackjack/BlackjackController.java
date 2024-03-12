@@ -33,7 +33,7 @@ public class BlackjackController {
 
     private static void givePlayerMoreCardsIfWanted(final CardGame cardGame, final Player player) {
         final String playerName = player.getName();
-        while (player.isAlive() && InputView.askForMoreCard(playerName)) {
+        while (player.isBust() && InputView.askForMoreCard(playerName)) {
             cardGame.giveCard(player);
             OutputView.printPlayerCard(player);
         }

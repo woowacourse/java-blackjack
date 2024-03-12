@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PlayerTest {
 
     @Test
-    void 플레이어는_죽었는지_여부를_반환한다() {
+    void 플레이어가_BUST_되었는지_여부를_반환한다() {
         // given
         Player player = player(
                 new Card(KING, CLOVER),
@@ -21,9 +21,9 @@ public class PlayerTest {
                 new Card(KING, HEART));
 
         // when
-        boolean isAlive = player.isAlive();
+        boolean isBust = player.isBust();
 
         // then
-        assertThat(isAlive).isFalse();
+        assertThat(isBust).isFalse();
     }
 }

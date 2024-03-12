@@ -20,7 +20,7 @@ public class Player {
     }
 
     // TODO: 이름 변경
-    public boolean isAlive() {
+    public boolean isBust() {
         return hand.calculateScore() <= BUST_THRESHOLD;
     }
 
