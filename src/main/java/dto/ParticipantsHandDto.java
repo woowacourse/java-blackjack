@@ -8,7 +8,7 @@ public record ParticipantsHandDto(List<ParticipantHandDto> playerHands) {
 
     public static ParticipantsHandDto from(List<Participant> participants) {
         List<ParticipantHandDto> participantHandDtos = participants.stream()
-                .map(participant -> ParticipantHandDto.from(participant))
+                .map(ParticipantHandDto::from)
                 .toList();
 
         return new ParticipantsHandDto(participantHandDtos);
