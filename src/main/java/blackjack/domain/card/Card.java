@@ -11,6 +11,10 @@ public class Card {
 		this.rank = rank;
 	}
 
+	public boolean isAce() {
+		return rank == Rank.ACE;
+	}
+
 	public boolean isRank(Rank rank) {
 		return this.rank == rank;
 	}
