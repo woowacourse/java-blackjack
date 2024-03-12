@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Cards {
+    private static final int INIT_CARD_COUNT = 2;
     private final List<Card> cards;
 
     public Cards() {
@@ -35,6 +36,10 @@ public class Cards {
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    public boolean isBlackjack() {
+        return sumAllCards().isBlackjack() && cards.size() == INIT_CARD_COUNT;
     }
 
     public List<Card> getCards() {
