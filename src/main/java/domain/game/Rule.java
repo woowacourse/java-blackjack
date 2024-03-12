@@ -35,19 +35,19 @@ public class Rule {
     }
 
     public static Status decideStatus(Cards targetCards, Cards otherCards) {
-        if (targetCards.bestSum() > STANDARD) {
+        if (targetCards.isBurst()) {
             return Status.LOSE;
         }
 
-        if (otherCards.bestSum() > STANDARD) {
+        if (otherCards.isBurst()) {
             return Status.WIN;
         }
 
-        if (otherCards.bestSum() < targetCards.bestSum()) {
+        if (targetCards.isGreaterThan(otherCards)) {
             return Status.WIN;
         }
 
-        if (otherCards.bestSum() > targetCards.bestSum()) {
+        if (otherCards.isGreaterThan(targetCards)) {
             return Status.LOSE;
         }
         return Status.TIE;

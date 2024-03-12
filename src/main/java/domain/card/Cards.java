@@ -21,6 +21,14 @@ public class Cards {
         }
     }
 
+    public boolean isBurst() {
+        return bestSum() > MAX_SCORE;
+    }
+
+    public boolean isGreaterThan(Cards other) {
+        return this.bestSum() > other.bestSum();
+    }
+
     public void receive(Card card) {
         cards.add(card);
     }
