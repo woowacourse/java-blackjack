@@ -3,8 +3,8 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
-import domain.card.Score;
-import domain.card.Shape;
+import domain.card.Denomination;
+import domain.card.Suit;
 import domain.participant.Hand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -18,8 +18,8 @@ public class HandTest {
         @Test
         void calculateScoreWithNoAce() {
             Hand hand = new Hand();
-            hand.saveCard(new Card(Score.EIGHT, Shape.CLOVER));
-            hand.saveCard(new Card(Score.NINE, Shape.CLOVER));
+            hand.saveCard(new Card(Denomination.EIGHT, Suit.CLOVER));
+            hand.saveCard(new Card(Denomination.NINE, Suit.CLOVER));
 
             int totalScore = hand.calculateScore();
             assertThat(totalScore).isEqualTo(17);
@@ -29,9 +29,9 @@ public class HandTest {
         @Test
         void drawAceCardAndCalculateScoreOne() {
             Hand hand = new Hand();
-            hand.saveCard(new Card(Score.EIGHT, Shape.CLOVER));
-            hand.saveCard(new Card(Score.ACE, Shape.CLOVER));
-            hand.saveCard(new Card(Score.THREE, Shape.CLOVER));
+            hand.saveCard(new Card(Denomination.EIGHT, Suit.CLOVER));
+            hand.saveCard(new Card(Denomination.ACE, Suit.CLOVER));
+            hand.saveCard(new Card(Denomination.THREE, Suit.CLOVER));
 
             int totalScore = hand.calculateScore();
             assertThat(totalScore).isEqualTo(12);
@@ -45,8 +45,8 @@ public class HandTest {
         @Test
         void calculateScoreWithNoAce() {
             Hand hand = new Hand();
-            hand.saveCard(new Card(Score.EIGHT, Shape.CLOVER));
-            hand.saveCard(new Card(Score.NINE, Shape.CLOVER));
+            hand.saveCard(new Card(Denomination.EIGHT, Suit.CLOVER));
+            hand.saveCard(new Card(Denomination.NINE, Suit.CLOVER));
 
             int totalScore = hand.calculateResultScore();
             assertThat(totalScore).isEqualTo(17);
@@ -56,9 +56,9 @@ public class HandTest {
         @Test
         void calculateScoreWithAceIfBusted() {
             Hand hand = new Hand();
-            hand.saveCard(new Card(Score.EIGHT, Shape.CLOVER));
-            hand.saveCard(new Card(Score.ACE, Shape.CLOVER));
-            hand.saveCard(new Card(Score.THREE, Shape.CLOVER));
+            hand.saveCard(new Card(Denomination.EIGHT, Suit.CLOVER));
+            hand.saveCard(new Card(Denomination.ACE, Suit.CLOVER));
+            hand.saveCard(new Card(Denomination.THREE, Suit.CLOVER));
 
             int totalScore = hand.calculateResultScore();
             assertThat(totalScore).isEqualTo(12);

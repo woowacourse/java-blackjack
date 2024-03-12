@@ -3,28 +3,28 @@ package domain.card;
 import java.util.Objects;
 
 public class Card {
-    private final Score score;
-    private final Shape shape;
+    private final Denomination denomination;
+    private final Suit suit;
 
-    public Card(Score score, Shape shape) {
-        this.score = score;
-        this.shape = shape;
+    public Card(Denomination denomination, Suit suit) {
+        this.denomination = denomination;
+        this.suit = suit;
     }
 
     public boolean isAceCard() {
-        return this.score.equals(Score.ACE);
+        return this.denomination.equals(Denomination.ACE);
     }
 
     public int getScore() {
-        return score.getValue();
+        return denomination.getValue();
     }
 
     public String getName() {
-        return score.getName();
+        return denomination.getName();
     }
 
     public String getShape() {
-        return shape.getName();
+        return suit.getName();
     }
 
     @Override
@@ -36,11 +36,11 @@ public class Card {
             return false;
         }
         final Card card = (Card) o;
-        return score == card.score && shape == card.shape;
+        return denomination == card.denomination && suit == card.suit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score, shape);
+        return Objects.hash(denomination, suit);
     }
 }

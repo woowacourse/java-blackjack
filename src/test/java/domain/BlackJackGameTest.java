@@ -8,8 +8,8 @@ import static util.ParticipantSupplier.createPlayer;
 import controller.dto.InitialCardStatus;
 import controller.dto.ParticipantHandStatus;
 import domain.card.Card;
-import domain.card.Score;
-import domain.card.Shape;
+import domain.card.Denomination;
+import domain.card.Suit;
 import domain.constants.CardCommand;
 import domain.game.BlackJackGame;
 import domain.game.Deck;
@@ -57,9 +57,9 @@ class BlackJackGameTest {
             BlackJackGame blackJackGame = new BlackJackGame(
                     new Participants(List.of(player)),
                     new Deck(List.of(
-                            new Card(Score.TWO, Shape.CLOVER),
-                            new Card(Score.FOUR, Shape.HEART),
-                            new Card(Score.FOUR, Shape.DIAMOND)
+                            new Card(Denomination.TWO, Suit.CLOVER),
+                            new Card(Denomination.FOUR, Suit.HEART),
+                            new Card(Denomination.FOUR, Suit.DIAMOND)
                     ))
             );
 
@@ -83,8 +83,8 @@ class BlackJackGameTest {
             BlackJackGame blackJackGame = new BlackJackGame(
                     new Participants(List.of(player)),
                     new Deck(List.of(
-                            new Card(Score.TWO, Shape.CLOVER),
-                            new Card(Score.FOUR, Shape.DIAMOND)
+                            new Card(Denomination.TWO, Suit.CLOVER),
+                            new Card(Denomination.FOUR, Suit.DIAMOND)
                     ))
             );
 
@@ -108,9 +108,9 @@ class BlackJackGameTest {
             BlackJackGame blackJackGame = new BlackJackGame(
                     new Participants(List.of(dealer)),
                     new Deck(List.of(
-                            new Card(Score.EIGHT, Shape.CLOVER),
-                            new Card(Score.FIVE, Shape.DIAMOND),
-                            new Card(Score.TWO, Shape.DIAMOND)
+                            new Card(Denomination.EIGHT, Suit.CLOVER),
+                            new Card(Denomination.FIVE, Suit.DIAMOND),
+                            new Card(Denomination.TWO, Suit.DIAMOND)
                     ))
             );
 

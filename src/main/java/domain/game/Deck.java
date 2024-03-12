@@ -1,8 +1,8 @@
 package domain.game;
 
 import domain.card.Card;
-import domain.card.Score;
-import domain.card.Shape;
+import domain.card.Denomination;
+import domain.card.Suit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,14 +24,14 @@ public class Deck {
     }
 
     private void create() {
-        for (Shape shape : Shape.values()) {
-            addCardsOfShape(shape);
+        for (Suit suit : Suit.values()) {
+            addCardsOfShape(suit);
         }
     }
 
-    private void addCardsOfShape(final Shape shape) {
-        for (Score score : Score.values()) {
-            cards.add(new Card(score, shape));
+    private void addCardsOfShape(final Suit suit) {
+        for (Denomination denomination : Denomination.values()) {
+            cards.add(new Card(denomination, suit));
         }
     }
 

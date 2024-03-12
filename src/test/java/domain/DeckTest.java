@@ -3,8 +3,8 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
-import domain.card.Score;
-import domain.card.Shape;
+import domain.card.Denomination;
+import domain.card.Suit;
 import domain.game.Deck;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +24,12 @@ class DeckTest {
     @Test
     void pickCard() {
         List<Card> cards = new ArrayList<>();
-        cards.add(new Card(Score.ACE, Shape.CLOVER));
-        cards.add(new Card(Score.FIVE, Shape.DIAMOND));
-        cards.add(new Card(Score.EIGHT, Shape.HEART));
+        cards.add(new Card(Denomination.ACE, Suit.CLOVER));
+        cards.add(new Card(Denomination.FIVE, Suit.DIAMOND));
+        cards.add(new Card(Denomination.EIGHT, Suit.HEART));
 
         Deck createdDeck = new Deck(cards);
         Card picked = createdDeck.pick();
-        assertThat(picked).isEqualTo(new Card(Score.ACE, Shape.CLOVER));
+        assertThat(picked).isEqualTo(new Card(Denomination.ACE, Suit.CLOVER));
     }
 }

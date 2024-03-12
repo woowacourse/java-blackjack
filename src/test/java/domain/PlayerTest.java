@@ -3,8 +3,8 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
-import domain.card.Score;
-import domain.card.Shape;
+import domain.card.Denomination;
+import domain.card.Suit;
 import domain.constants.CardCommand;
 import domain.game.Deck;
 import domain.participant.Player;
@@ -18,7 +18,7 @@ class PlayerTest {
     @Test
     void saveCard() {
         Player player = new Player("pobi");
-        player.pickCard(new Deck(List.of(new Card(Score.ACE, Shape.CLOVER))), 1);
+        player.pickCard(new Deck(List.of(new Card(Denomination.ACE, Suit.CLOVER))), 1);
         int totalSize = player.getCardSize();
         assertThat(totalSize).isEqualTo(1);
     }
@@ -31,9 +31,9 @@ class PlayerTest {
         void hitWhenAlreadyBusted() {
             Player player = new Player("pobi");
             Deck deck = new Deck(List.of(
-                    new Card(Score.TEN, Shape.CLOVER),
-                    new Card(Score.TEN, Shape.DIAMOND),
-                    new Card(Score.THREE, Shape.CLOVER)
+                    new Card(Denomination.TEN, Suit.CLOVER),
+                    new Card(Denomination.TEN, Suit.DIAMOND),
+                    new Card(Denomination.THREE, Suit.CLOVER)
             ));
             player.pickCard(deck, 3);
 
@@ -46,9 +46,9 @@ class PlayerTest {
         void standWhenAlreadyBusted() {
             Player player = new Player("pobi");
             Deck deck = new Deck(List.of(
-                    new Card(Score.TEN, Shape.CLOVER),
-                    new Card(Score.TEN, Shape.DIAMOND),
-                    new Card(Score.THREE, Shape.CLOVER)
+                    new Card(Denomination.TEN, Suit.CLOVER),
+                    new Card(Denomination.TEN, Suit.DIAMOND),
+                    new Card(Denomination.THREE, Suit.CLOVER)
             ));
             player.pickCard(deck, 3);
 
@@ -61,8 +61,8 @@ class PlayerTest {
         void hitWhenDoesNotBusted() {
             Player player = new Player("pobi");
             Deck deck = new Deck(List.of(
-                    new Card(Score.TEN, Shape.CLOVER),
-                    new Card(Score.TEN, Shape.DIAMOND)
+                    new Card(Denomination.TEN, Suit.CLOVER),
+                    new Card(Denomination.TEN, Suit.DIAMOND)
             ));
             player.pickCard(deck, 2);
 
@@ -75,8 +75,8 @@ class PlayerTest {
         void standWhenDoesNotBusted() {
             Player player = new Player("pobi");
             Deck deck = new Deck(List.of(
-                    new Card(Score.TEN, Shape.CLOVER),
-                    new Card(Score.TEN, Shape.DIAMOND)
+                    new Card(Denomination.TEN, Suit.CLOVER),
+                    new Card(Denomination.TEN, Suit.DIAMOND)
             ));
             player.pickCard(deck, 2);
 
