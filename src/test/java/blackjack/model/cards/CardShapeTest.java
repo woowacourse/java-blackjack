@@ -11,18 +11,18 @@ import org.junit.jupiter.params.provider.ValueSource;
 class CardShapeTest {
     @DisplayName("순서로 카드 모양을 결정한다.")
     @ParameterizedTest
-    @CsvSource(value = {"1,SPADE", "2,DIAMOND", "3,HEART", "4,CLOVER"})
+    @CsvSource(value = {"0,SPADE", "1,DIAMOND", "2,HEART", "3,CLOVER"})
     void generate(int givenOrder, CardShape expected) {
         CardShape cardShape = CardShape.generate(givenOrder);
 
         assertThat(cardShape).isEqualTo(expected);
     }
 
-    @DisplayName("유효하지 않은 숫자를 입력하면 예외가 발생한다")
+    @DisplayName("유효하지 않은 인덱스를 입력하면 예외가 발생한다")
     @ParameterizedTest
-    @ValueSource(ints = {-1, 0, 5, 6})
+    @ValueSource(ints = {-1, 5, 6})
     void validate(int givenOrder) {
         assertThatThrownBy(() -> CardShape.generate(givenOrder))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(ArrayIndexOutOfBoundsException.class);
     }
 }
