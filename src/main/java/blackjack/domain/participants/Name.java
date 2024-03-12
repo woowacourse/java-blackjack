@@ -1,11 +1,11 @@
 package blackjack.domain.participants;
 
 public class Name {
-    private final String name;
+    private final String value;
 
-    public Name(String name) {
-        validate(name);
-        this.name = name;
+    public Name(String value) {
+        validate(value);
+        this.value = value;
     }
 
     private void validate(String name) {
@@ -14,7 +14,7 @@ public class Name {
         }
     }
 
-    public String getName() {
-        return name;
+    public String getValue() {
+        return value;
     }
 }
