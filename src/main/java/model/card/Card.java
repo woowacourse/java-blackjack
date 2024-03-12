@@ -14,6 +14,10 @@ public class Card {
         return number == CardNumber.ACE;
     }
 
+    public int getNumberScore() {
+        return number.getScore();
+    }
+
     public CardNumber getNumber() {
         return number;
     }
