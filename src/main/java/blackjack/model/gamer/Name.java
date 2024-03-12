@@ -18,7 +18,7 @@ public class Name {
 
     private void validateNameLength(String name) {
         if (name.isEmpty() || name.length() > 10) {
-            throw new IllegalArgumentException("[ERROR] 이름 길이는 0~10자만 가능합니다.");
+            throw new IllegalArgumentException("[ERROR] 이름 길이는 1~10자만 가능합니다.");
         }
     }
 
