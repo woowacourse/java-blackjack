@@ -16,10 +16,10 @@ public class BlackJackGame {
     }
 
     public void initHand() {
-        dealer.initHand(List.of(dealer.dealCard(), dealer.dealCard()));
+        dealer.initHand(dealer.dealCard(2));
 
         for (Player player : players) {
-            player.initHand(List.of(dealer.dealCard(), dealer.dealCard()));
+            player.initHand(dealer.dealCard(2));
         }
     }
 
