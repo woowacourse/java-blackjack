@@ -3,10 +3,10 @@ package blackjack.domain.participant;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class PlayerIterator {
+public class PlayerTurnSelector {
     private final Queue<Player> players;
 
-    public PlayerIterator(Players players) {
+    public PlayerTurnSelector(Players players) {
         this.players = new LinkedList<>(players.getValues());
     }
 
@@ -14,7 +14,7 @@ public class PlayerIterator {
         return !players.isEmpty();
     }
 
-    public void increaseOrderByActionAndHand(PlayerAction playerAction) {
+    public void updateTurnByActionAndHand(PlayerAction playerAction) {
         if (playerAction.equals(PlayerAction.STAND) || !getPlayer().canHit()) {
             players.poll();
         }

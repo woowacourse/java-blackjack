@@ -13,15 +13,15 @@ import java.util.stream.IntStream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-class PlayerIteratorTest {
+class PlayerTurnSelectorTest {
     private static final String VALID_NAME = "감자";
     @DisplayName("현재 플레이어를 올바르게 반환한다.")
     @Test
     void getPlayerTest() {
         Players players = createPlayers(List.of(Number.JACK, Number.QUEEN));
         Player expectedPlayer = getPlayerByIndex(players, 0);
-        PlayerIterator playerIterator = new PlayerIterator(players);
-        assertThat(playerIterator.getPlayer()).isEqualTo(expectedPlayer);
+        PlayerTurnSelector playerTurnSelector = new PlayerTurnSelector(players);
+        assertThat(playerTurnSelector.getPlayer()).isEqualTo(expectedPlayer);
     }
 
     @DisplayName("현재 플레이어가 Hit이 불가능해지면 순서를 증가시킨다.")
@@ -29,10 +29,10 @@ class PlayerIteratorTest {
     void updateByCurrentPlayerHitTest() {
         Players players = createPlayers(List.of(Number.JACK, Number.QUEEN, Number.ACE, Number.EIGHT));
         Player expectedPlayer = getPlayerByIndex(players, 1);
-        PlayerIterator playerIterator = new PlayerIterator(players);
+        PlayerTurnSelector playerTurnSelector = new PlayerTurnSelector(players);
         bustFirstPlayer(players);
-        playerIterator.increaseOrderByActionAndHand(PlayerAction.STAND);
-        assertThat(playerIterator.getPlayer()).isEqualTo(expectedPlayer);
+        playerTurnSelector.updateTurnByActionAndHand(PlayerAction.STAND);
+        assertThat(playerTurnSelector.getPlayer()).isEqualTo(expectedPlayer);
     }
 
     private static void bustFirstPlayer(Players players) {
@@ -44,10 +44,10 @@ class PlayerIteratorTest {
     @Test
     void hasNextTest() {
         Players players = createPlayers(List.of(Number.ACE, Number.JACK, Number.FIVE, Number.SIX));
-        PlayerIterator playerIterator = new PlayerIterator(players);
-        playerIterator.increaseOrderByActionAndHand(PlayerAction.STAND);
-        playerIterator.increaseOrderByActionAndHand(PlayerAction.STAND);
-        assertFalse(playerIterator.hasNext());
+        PlayerTurnSelector playerTurnSelector = new PlayerTurnSelector(players);
+        playerTurnSelector.updateTurnByActionAndHand(PlayerAction.STAND);
+        playerTurnSelector.updateTurnByActionAndHand(PlayerAction.STAND);
+        assertFalse(playerTurnSelector.hasNext());
     }
 
     private static Players createPlayers(List<Number> numbers) {

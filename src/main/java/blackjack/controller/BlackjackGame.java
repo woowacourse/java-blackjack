@@ -65,20 +65,20 @@ public class BlackjackGame {
     }
 
     private void playersHitCard(Players players) {
-        PlayerIterator playerIterator = new PlayerIterator(players);
-        while (playerIterator.hasNext()) {
-            hitIfCurrentPlayerWants(playerIterator);
+        PlayerTurnSelector playerTurnSelector = new PlayerTurnSelector(players);
+        while (playerTurnSelector.hasNext()) {
+            hitIfCurrentPlayerWants(playerTurnSelector);
         }
     }
 
-    private void hitIfCurrentPlayerWants(PlayerIterator playerIterator) {
-        Player player = playerIterator.getPlayer();
+    private void hitIfCurrentPlayerWants(PlayerTurnSelector playerTurnSelector) {
+        Player player = playerTurnSelector.getPlayer();
         PlayerAction playerAction = retryOnException(() -> getPlayerAction(player));
         if (playerAction.equals(PlayerAction.HIT)) {
             player.addCard(RandomDeck.getInstance());
         }
         outputView.printPlayerHand(player);
-        playerIterator.increaseOrderByActionAndHand(playerAction);
+        playerTurnSelector.updateTurnByActionAndHand(playerAction);
     }
 
     private PlayerAction getPlayerAction(Player player) {
