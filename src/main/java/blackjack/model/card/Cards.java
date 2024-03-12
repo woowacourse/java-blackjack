@@ -61,7 +61,7 @@ public class Cards {
         return calculateTotalScore() == BLACK_JACK_CONDITION;
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return calculateTotalScore() > BLACK_JACK_CONDITION;
     }
 
