@@ -47,7 +47,7 @@ public class BlackJackController {
         }
 
         dealer.deal();
-        printDealerHandsChangedMessage(dealer.countAddedHands());
+        printDealerHandsChangedMessage(dealer.countAddedHands(), dealer.getName());
     }
 
     private void printFinalResult(final Players players, final Dealer dealer) {
@@ -55,9 +55,9 @@ public class BlackJackController {
         outputView.printGameResult(dealer.calculateResultBy(players), players.calculateResultBy(dealer));
     }
 
-    private void printDealerHandsChangedMessage(final int turn) {
+    private void printDealerHandsChangedMessage(final int turn, final String name) {
         for (int i = 0; i < turn; i++) {
-            outputView.printDealerHandsChangedMessage();
+            outputView.printDealerHandsChangedMessage(name);
         }
     }
 

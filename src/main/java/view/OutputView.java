@@ -22,8 +22,8 @@ public class OutputView {
         final String dealerCard = dealerHandsDto.getCard();
 
         final List<String> playerNames = participantsDto.getNames();
-        System.out.printf("딜러와 %s 에게 %d장을 나누었습니다.%n", format(playerNames), INIT_HANDS_SIZE);
-        System.out.printf("딜러: %s%n", dealerCard);
+        System.out.printf("%s와 %s 에게 %d장을 나누었습니다.%n", dealerHandsDto.name(), format(playerNames), INIT_HANDS_SIZE);
+        System.out.printf(RESULT_FORM, dealerHandsDto.name(), dealerCard);
 
         for (ParticipantDto participantDto : participantsDto.getParticipants()) {
             System.out.printf(FORM, participantDto.name(), format(participantDto.cards()));
@@ -35,8 +35,8 @@ public class OutputView {
         System.out.printf(FORM, participantDto.name(), format(participantDto.cards()));
     }
 
-    public void printDealerHandsChangedMessage() {
-        System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.%n%n", THRESHOLD);
+    public void printDealerHandsChangedMessage(final String name) {
+        System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.%n%n", name, THRESHOLD);
     }
 
     public void printHandsResult(final ParticipantsDto participantsDto) {
