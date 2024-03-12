@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Shape;
 import blackjack.domain.card.Value;
+import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -28,6 +29,10 @@ public class OutputView {
             Map.entry(Value.JACK, "J"), Map.entry(Value.QUEEN, "Q"),
             Map.entry(Value.KING, "K")
     );
+
+    public void printStartStatus(BlackJackGame blackJackGame) {
+        printStartStatus(blackJackGame.getDealer(), blackJackGame.getPlayers());
+    }
 
     public void printStartStatus(Dealer dealer, Players players) {
         System.out.println();

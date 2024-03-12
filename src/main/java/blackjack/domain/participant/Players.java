@@ -7,9 +7,11 @@ public class Players {
 
     private static final int MAX_PLAYERS_SIZE = 4;
 
+    private final Dealer dealer;
     private final List<Player> players;
 
-    private Players(List<Player> players) {
+    private Players(Dealer dealer, List<Player> players) {
+        this.dealer = dealer;
         validateSize(players);
         validateDistinct(players);
         this.players = players;
@@ -19,7 +21,7 @@ public class Players {
         List<Player> players = names.stream()
                 .map(Player::from)
                 .toList();
-        return new Players(players);
+        return new Players(new Dealer(), players);
     }
 
     private void validateSize(List<Player> players) {
@@ -42,18 +44,31 @@ public class Players {
     }
 
     public void drawStartCards(Deck deck) {
+        dealer.drawStartCards(deck);
         for (Player player : players) {
             player.drawStartCards(deck);
         }
-    }
-
-    public List<Player> getPlayers() {
-        return players;
     }
 
     public void play(PlayerTurn playTurn, Deck deck) {
         for (Player player : players) {
             playTurn.play(player, deck);
         }
+    }
+
+    public boolean isDealerDraw(Deck deck) {
+        if (dealer.isDrawable()) {
+            dealer.add(deck.draw());
+            return true;
+        }
+        return false;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 }

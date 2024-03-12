@@ -1,6 +1,7 @@
 package blackjack;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -14,30 +15,28 @@ public class BlackJackGameController {
     private final OutputView outputView = new OutputView();
 
     public void run() {
-        Deck deck = Deck.createShuffledDeck();
-        Dealer dealer = new Dealer();
-        Players players = createPlayers();
-        drawStartCards(dealer, players, deck);
-        play(players, dealer, deck);
-        printResult(dealer, players);
+        BlackJackGame game = createBlackjackGame();
+        drawStartCards(game);
+        drawAdditionalCard(game);
+        printResult(game.getDealer(), game.getPlayers());
     }
 
-    private Players createPlayers() {
-        List<String> names = inputView.inputPlayerNames();
-        return Players.from(names);
+    private BlackJackGame createBlackjackGame() {
+        List<String> playerNames = inputView.inputPlayerNames();
+        BlackJackGame game = new BlackJackGame(playerNames);
+        return game;
     }
 
-    private void drawStartCards(Dealer dealer, Players players, Deck deck) {
-        dealer.drawStartCards(deck);
-        players.drawStartCards(deck);
-        outputView.printStartStatus(dealer, players);
+    private void drawStartCards(BlackJackGame game) {
+        game.drawStartCards();
+        outputView.printStartStatus(game);
     }
 
-    private void play(Players players, Dealer dealer, Deck deck) {
-        players.play(this::playTurn, deck);
-        while (dealer.isDrawable()) {
+    //TODO 아래 두 로직을 합칠 수 있을지 고민해보기 (요구사항)
+    private void drawAdditionalCard(BlackJackGame game) {
+        game.drawAdditionalCard(this::playTurn);
+        while (game.isDealerDraw()) {
             outputView.printDealerDraw();
-            dealer.add(deck.draw());
         }
     }
 
@@ -48,6 +47,7 @@ public class BlackJackGameController {
         }
     }
 
+    //TODO 사용 파라미터 수정
     private void printResult(Dealer dealer, Players players) {
         outputView.printEndingStatus(dealer, players);
         int winCount = dealer.calculateWinCount(players);
