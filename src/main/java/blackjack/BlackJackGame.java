@@ -1,6 +1,5 @@
 package blackjack;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Hand;
@@ -65,8 +64,7 @@ public class BlackJackGame {
 
     private void completeDealerHand(Dealer dealer, CardDeck cardDeck) {
         while (dealer.canHit()) {
-            Card card = cardDeck.popCard();
-            dealer.appendCard(card);
+            dealer.appendCard(cardDeck.popCard());
         }
     }
 
