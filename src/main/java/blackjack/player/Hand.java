@@ -17,7 +17,7 @@ public class Hand {
         this.score = calculateScore();
     }
 
-    Hand() {
+    public Hand() {
         this(new ArrayList<>());
     }
 

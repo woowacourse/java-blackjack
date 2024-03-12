@@ -3,26 +3,25 @@ package blackjack.player.state;
 import blackjack.card.Card;
 import blackjack.player.Hand;
 
-public class PlayerState extends GameState {
+public class DealerState extends GameState {
 
-    public PlayerState(Hand hand) {
+    private static final int MAX_DRAWING_SCORE = 16;
+
+    public DealerState(Hand hand) {
         super(hand);
     }
 
-    public PlayerState() {
+    public DealerState() {
         super(new Hand());
     }
 
     @Override
     public GameState drawCard(Card card) {
         Hand newHand = hand.addCard(card);
-        if (newHand.isBlackJack()) {
-            return new BlackJackState(newHand);
+        if (newHand.hasScoreGreaterThan(MAX_DRAWING_SCORE)) {
+            return stand();
         }
-        if (newHand.isBusted()) {
-            return new BustedState(newHand);
-        }
-        return new PlayerState(newHand);
+        return new DealerState(newHand);
     }
 
     @Override

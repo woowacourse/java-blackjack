@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 class TerminatedStateTest {
 
-    private PlayerState createTerminatedState() {
+    private GameState createTerminatedState() {
         List<Card> cards = List.of(
                 new Card(Shape.SPADE, Number.TEN),
                 new Card(Shape.SPADE, Number.TEN),
@@ -25,7 +25,7 @@ class TerminatedStateTest {
     @DisplayName("종료 상태에서는 드로우를 할 수 없다.")
     void unsupportedOperationOnDrawTest() {
         // given
-        PlayerState state = createTerminatedState();
+        GameState state = createTerminatedState();
         Card card = new Card(Shape.SPADE, Number.TEN);
         // when, then
         assertThatThrownBy(() -> state.drawCard(card))
@@ -37,7 +37,7 @@ class TerminatedStateTest {
     @DisplayName("종료 상태에서는 스탠드를 할 수 없다.")
     void unsupportedOperationOnStandTest() {
         // given
-        PlayerState state = createTerminatedState();
+        GameState state = createTerminatedState();
         // when, then
         assertThatThrownBy(state::stand)
                 .isInstanceOf(UnsupportedOperationException.class)

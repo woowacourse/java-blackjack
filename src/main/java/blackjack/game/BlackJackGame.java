@@ -1,7 +1,7 @@
 package blackjack.game;
 
+import blackjack.card.Card;
 import blackjack.card.Deck;
-import blackjack.player.Dealer;
 import blackjack.player.Player;
 import blackjack.player.Players;
 import blackjack.view.Command;
@@ -24,7 +24,7 @@ public class BlackJackGame {
 
     public void play() {
         Deck deck = Deck.createShuffledFullDeck();
-        Dealer dealer = new Dealer();
+        Player dealer = Player.createAsDealer();
 
         Players players = createPlayers();
         initGame(deck, dealer, players);
@@ -43,15 +43,16 @@ public class BlackJackGame {
         return players;
     }
 
-    private void initGame(Deck deck, Dealer dealer, Players players) {
+    private void initGame(Deck deck, Player dealer, Players players) {
         players.drawCardsForAll(deck, BLACKJACK_INIT_CARD_AMOUNT);
-        dealer.drawCards(deck, BLACKJACK_INIT_CARD_AMOUNT);
+        dealer.drawCards(deck::draw, BLACKJACK_INIT_CARD_AMOUNT);
         outputView.printInitializeBlackJack(players.getNames());
         showInitCard(dealer, players);
     }
 
-    private void showInitCard(Dealer dealer, Players players) {
-        outputView.printDealerFirstCard(dealer.getFirstCard());
+    private void showInitCard(Player dealer, Players players) {
+        // TODO: exception check
+        outputView.printDealerFirstCard(dealer.getCards().get(0));
 
         for (Player player : players.getPlayers()) {
             outputView.printPlayerCards(player.getName(), player.getCards());
@@ -71,10 +72,11 @@ public class BlackJackGame {
         if (command.isNo()) {
             return;
         }
-        player.drawCard(deck);
+        Card card = deck.draw();
+        player.drawCard(card);
         outputView.printPlayerCards(player.getName(), player.getCards());
 
-        if (player.hasDrawableScore()) {
+        if (player.isDrawable()) {
             playerDrawMore(deck, player);
         }
     }
@@ -85,15 +87,16 @@ public class BlackJackGame {
         return Command.from(input);
     }
 
-    private void dealerDrawMore(Deck deck, Dealer dealer) {
-        while (dealer.hasDrawableScore()) {
-            dealer.drawCard(deck);
+    private void dealerDrawMore(Deck deck, Player dealer) {
+        while (dealer.isDrawable()) {
+            Card card = deck.draw();
+            dealer.drawCard(card);
             outputView.printDealerDrawCard();
             outputView.printNewLine();
         }
     }
 
-    private void showCardsWithScore(Dealer dealer, Players players) {
+    private void showCardsWithScore(Player dealer, Players players) {
         outputView.printDealerCardsWithScore(dealer.getCards(), dealer.getScore());
         for (Player player : players.getPlayers()) {
             outputView.printPlayerCardsWithScore(player.getName(), player.getCards(), player.getScore());
@@ -101,14 +104,14 @@ public class BlackJackGame {
         outputView.printNewLine();
     }
 
-    private void showMatchResult(Dealer dealer, Players players) {
+    private void showMatchResult(Player dealer, Players players) {
         MatchResults matchResults = calculateMatchResults(dealer, players);
         outputView.printResultStart();
         showDealerResult(matchResults);
         showPlayersResult(players, matchResults);
     }
 
-    private MatchResults calculateMatchResults(Dealer dealer, Players players) {
+    private MatchResults calculateMatchResults(Player dealer, Players players) {
         MatchResults matchResults = new MatchResults();
         for (Player player : players.getPlayers()) {
             matchResults.addResult(player.getName(), player.getScore(), dealer.getScore());

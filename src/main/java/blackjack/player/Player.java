@@ -1,36 +1,42 @@
 package blackjack.player;
 
 import blackjack.card.Card;
-import blackjack.card.Deck;
-import blackjack.game.BlackJackGame;
+import blackjack.player.state.DealerState;
+import blackjack.player.state.GameState;
+import blackjack.player.state.PlayerState;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class Player {
 
     private final Name name;
-    protected Hand hand;
+    private GameState state;
 
-    Player(String name, Hand hand) {
+    public Player(String name) {
+        this(name, new PlayerState());
+    }
+
+    private Player(String name, GameState state) {
         this.name = new Name(name);
-        this.hand = hand;
+        this.state = state;
     }
 
-    Player(String name) {
-        this(name, new Hand());
+    public static Player createAsDealer() {
+        return new Player("딜러", new DealerState());
     }
 
-    public void drawCard(Deck deck) {
-        this.hand = hand.addCard(deck.draw());
+    public void drawCard(Card card) {
+        state = state.drawCard(card);
     }
 
-    public void drawCards(Deck deck, int amount) {
+    public void drawCards(Supplier<Card> cardSupplier, int amount) {
         for (int i = 0; i < amount; i++) {
-            drawCard(deck);
+            drawCard(cardSupplier.get());
         }
     }
 
-    public boolean hasDrawableScore() {
-        return hand.getScore() < BlackJackGame.BLACKJACK_MAX_SCORE;
+    public boolean isDrawable() {
+        return !state.isTerminated();
     }
 
     public String getName() {
@@ -38,10 +44,10 @@ public class Player {
     }
 
     public int getScore() {
-        return hand.getScore();
+        return state.getScore();
     }
 
     public List<Card> getCards() {
-        return hand.getCards();
+        return state.cards();
     }
 }
