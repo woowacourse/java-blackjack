@@ -1,5 +1,6 @@
 package domain.player;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -57,7 +58,7 @@ public class Players {
     }
 
     public List<Player> getValue() {
-        return value;
+        return Collections.unmodifiableList(value);
     }
 
 }

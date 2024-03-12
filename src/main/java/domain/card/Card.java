@@ -22,21 +22,4 @@ public class Card {
     public Suit getSymbol() {
         return suit;
     }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final Card card = (Card) o;
-        return rank == card.rank && Objects.equals(suit, card.suit);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(rank, suit);
-    }
 }

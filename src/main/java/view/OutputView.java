@@ -72,8 +72,8 @@ public class OutputView {
                 blackjackResult.dealerTie());
         final List<String> suffix = List.of("승", "패", "무");
 
-        for (int i = 0; i < 3; i++) {
-            printResultWithCounter(printOrder.get(i), suffix.get(i));
+        for (int round = 0; round < 3; round++) {
+            printResultWithCounter(printOrder.get(round), suffix.get(round));
         }
         System.out.println();
     }
@@ -125,7 +125,7 @@ public class OutputView {
         if (rank == Rank.KING) {
             return "K";
         }
-        return "" + rank.getValue();
+        return String.valueOf(rank.getValue());
     }
 
     private static String symbolToMessage(final Suit suit) {

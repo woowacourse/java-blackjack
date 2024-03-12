@@ -91,7 +91,7 @@ class BlackjackTest {
     }
 
     @Test
-    @DisplayName("둘 다 버스트 되지 않고 점수가 같으면 둘 다 무승부가 된다")
+    @DisplayName("플레이어와 버스트 둘 다 버스트 되지 않고 점수가 같으면 무승부가 된다")
     void tie() {
         final Dealer dealer = new Dealer();
         final Player teba = new Player(new Name("테바"));
