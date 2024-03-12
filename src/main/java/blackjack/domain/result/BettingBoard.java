@@ -14,4 +14,21 @@ public class BettingBoard {
     public Money findByPlayerName(PlayerName playerName) {
         return board.get(playerName);
     }
+
+    public void calculateMoney(Map<PlayerName, GameResult> resultBoard) {
+        for (PlayerName playerName : resultBoard.keySet()) {
+            GameResult gameResult = resultBoard.get(playerName);
+            Money money = board.get(playerName);
+            Money calculatedMoney = money.multiply(gameResult.getMoneyRate());
+            board.replace(playerName, calculatedMoney);
+        }
+    }
+
+    public Money calculateDealerMoney() {
+        int playerMoneySum = board.values().stream()
+                .mapToInt(Money::money)
+                .sum();
+        Money playersIncome = new Money(playerMoneySum);
+        return playersIncome.multiply(-1);
+    }
 }

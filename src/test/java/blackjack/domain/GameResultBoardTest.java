@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import static blackjack.domain.card.Shape.CLOVER;
 import static blackjack.domain.card.Shape.DIAMOND;
 import static blackjack.domain.card.Shape.SPADE;
 import static blackjack.domain.card.Value.ACE;
@@ -8,8 +9,8 @@ import static blackjack.domain.card.Value.KING;
 import static blackjack.domain.card.Value.NINE;
 import static blackjack.domain.card.Value.QUEEN;
 import static blackjack.domain.card.Value.TEN;
+import static blackjack.domain.card.Value.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
@@ -19,7 +20,6 @@ import blackjack.domain.result.GameResult;
 import blackjack.domain.result.GameResultBoard;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,17 +42,14 @@ class GameResultBoardTest {
         giveCardToPlayer(player, deck, 2);
 
         GameResultBoard gameResultBoard = new GameResultBoard(dealer, List.of(player));
-
-        assertThat(gameResultBoard.getGameResult(player)).isEqualTo(expected);
+        GameResult gameResult = gameResultBoard.findByPlayerName(player.getPlayerName());
+        assertThat(gameResult).isEqualTo(expected);
     }
 
-    static Stream<Arguments> playerAndGameResult() {
+    private static Stream<Arguments> playerAndGameResult() {
         return Stream.of(
                 Arguments.arguments(
-                        List.of(new Card(DIAMOND, ACE), new Card(DIAMOND, QUEEN)), GameResult.WIN
-                ),
-                Arguments.arguments(
-                        List.of(new Card(SPADE, ACE), new Card(SPADE, QUEEN)), GameResult.WIN
+                        List.of(new Card(CLOVER, KING), new Card(CLOVER, QUEEN)), GameResult.WIN
                 ),
                 Arguments.arguments(
                         List.of(new Card(SPADE, KING), new Card(SPADE, NINE)), GameResult.DRAW
@@ -64,42 +61,39 @@ class GameResultBoardTest {
     }
 
     @Test
-    @DisplayName("딜러의 전적을 반환할 수 있다.")
-    void calculateDealerResultTest() {
-        List<Card> cards = generateCards();
+    @DisplayName("딜러와 플레이어들 모두 버스트가 되면 플레이어가 패배한다.")
+    void calculateGameResultWhenBustTest() {
+        List<Card> cards = new ArrayList<>(
+                List.of(new Card(DIAMOND, KING), new Card(DIAMOND, QUEEN), new Card(DIAMOND, NINE),
+                        new Card(SPADE, TWO), new Card(SPADE, QUEEN), new Card(SPADE, KING)));
         Deck deck = new Deck(cards);
 
         Dealer dealer = new Dealer();
-        giveCardToPlayer(dealer.getPlayer(), deck, 2);
+        giveCardToPlayer(dealer.getPlayer(), deck, 3);
+        Player player = new Player("testPlayer");
+        giveCardToPlayer(player, deck, 3);
 
-        List<Player> players = generatePlayers();
-        players.forEach(player -> giveCardToPlayer(player, deck, 2));
-
-        GameResultBoard gameResultBoard = new GameResultBoard(dealer, players);
-        Map<GameResult, Integer> dealerResult = gameResultBoard.getDealerResult();
-
-        assertAll(
-                () -> assertThat(dealerResult).containsEntry(GameResult.WIN, 1),
-                () -> assertThat(dealerResult).containsEntry(GameResult.DRAW, 1),
-                () -> assertThat(dealerResult).containsEntry(GameResult.LOSE, 2)
-        );
+        GameResultBoard gameResultBoard = new GameResultBoard(dealer, List.of(player));
+        GameResult gameResult = gameResultBoard.findByPlayerName(player.getPlayerName());
+        assertThat(gameResult).isEqualTo(GameResult.LOSE);
     }
 
-    private List<Card> generateCards() {
-        return List.of(
-                new Card(DIAMOND, KING), new Card(DIAMOND, NINE), // Dealer
-                new Card(DIAMOND, ACE), new Card(DIAMOND, QUEEN), // dealer lose
-                new Card(SPADE, ACE), new Card(SPADE, QUEEN), // dealer lose
-                new Card(SPADE, KING), new Card(SPADE, NINE), // draw
-                new Card(SPADE, TEN), new Card(SPADE, EIGHT) // dealer win
-        );
-    }
+    @Test
+    @DisplayName("플레이어가 블랙잭으로 이기는 경우가 있다.")
+    void calculateGameResultWhenPlayerBlackJackTest() {
+        List<Card> cards = new ArrayList<>(
+                List.of(new Card(DIAMOND, KING), new Card(DIAMOND, QUEEN), new Card(DIAMOND, NINE),
+                        new Card(SPADE, ACE), new Card(SPADE, KING)));
+        Deck deck = new Deck(cards);
 
-    private List<Player> generatePlayers() {
-        List<String> playerNames = List.of("loki", "pedro", "poke", "alpaca");
-        return playerNames.stream()
-                .map(Player::new)
-                .toList();
+        Dealer dealer = new Dealer();
+        giveCardToPlayer(dealer.getPlayer(), deck, 3);
+        Player player = new Player("testPlayer");
+        giveCardToPlayer(player, deck, 2);
+
+        GameResultBoard gameResultBoard = new GameResultBoard(dealer, List.of(player));
+        GameResult gameResult = gameResultBoard.findByPlayerName(player.getPlayerName());
+        assertThat(gameResult).isEqualTo(GameResult.WIN_BY_BLACK_JACK);
     }
 
     private void giveCardToPlayer(Player player, Deck deck, int drawAmount) {
