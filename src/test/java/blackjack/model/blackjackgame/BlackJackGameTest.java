@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.model.cards.Card;
 import blackjack.model.cards.Cards;
-import blackjack.model.deck.CardDeck;
-import blackjack.model.deck.RandomIndexGenerator;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
 import blackjack.model.results.PlayerProfit;
@@ -28,8 +26,7 @@ class BlackJackGameTest {
                 new Player("daon"),
                 new Player("ella")
         );
-        CardDeck cardDeck = new CardDeck(new RandomIndexGenerator());
-        BlackJackGame blackJackGame = new BlackJackGame(dealer, players, cardDeck);
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, players);
 
         blackJackGame.distributeCards();
         List<Card> dealerCards = dealer.getCards().getCards();
@@ -54,8 +51,7 @@ class BlackJackGameTest {
                 player,
                 new Player("ella")
         );
-        CardDeck cardDeck = new CardDeck(new RandomIndexGenerator());
-        BlackJackGame blackJackGame = new BlackJackGame(dealer, players, cardDeck);
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, players);
 
         blackJackGame.update(0);
         Player findPlayer = blackJackGame.getPlayers().get(0);
@@ -69,7 +65,7 @@ class BlackJackGameTest {
         Dealer dealer = new Dealer();
         List<Player> players = List.of(new Player("ella"), new Player("daon"));
         PlayerResult playerResult = new PlayerResult(createResultsForBet());
-        BlackJackGame blackJackGame = new BlackJackGame(dealer, players, new CardDeck(new RandomIndexGenerator()));
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, players);
 
         PlayerProfit playerProfit = blackJackGame.calculatePlayerProfit(playerResult);
 

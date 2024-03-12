@@ -1,23 +1,17 @@
 package blackjack.model.cards;
 
-import java.util.Arrays;
+import java.util.Random;
 
 public enum CardShape {
-    SPADE(0),
-    DIAMOND(1),
-    HEART(2),
-    CLOVER(3);
+    SPADE,
+    DIAMOND,
+    HEART,
+    CLOVER;
 
-    private final int order;
+    private static final Random random = new Random();
 
-    CardShape(int order) {
-        this.order = order;
-    }
-
-    public static CardShape generate(int number) {
-        return Arrays.stream(values())
-                .filter(cardShape -> cardShape.order == number)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("카드모양을 고르는 숫자가 올바르지 않습니다."));
+    public static CardShape generate() {
+        CardShape[] cardShapes = values();
+        return cardShapes[random.nextInt(cardShapes.length)];
     }
 }

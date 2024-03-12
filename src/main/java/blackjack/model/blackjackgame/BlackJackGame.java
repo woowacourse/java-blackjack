@@ -14,22 +14,20 @@ import java.util.Map;
 public class BlackJackGame {
     private final Dealer dealer;
     private final List<Player> players;
-    private final CardDeck cardDeck;
 
-    public BlackJackGame(Dealer dealer, List<Player> players, CardDeck cardDeck) {
+    public BlackJackGame(Dealer dealer, List<Player> players) {
         this.dealer = dealer;
-        this.cardDeck = cardDeck;
         this.players = new ArrayList<>(players);
     }
 
     public void distributeCards() {
-        dealer.addCards(cardDeck.drawCards());
-        players.forEach(player -> player.addCards(cardDeck.drawCards()));
+        dealer.addCards(CardDeck.drawCards());
+        players.forEach(player -> player.addCards(CardDeck.drawCards()));
     }
 
     public void update(int index) {
         Player player = players.get(index);
-        player.addCard(cardDeck.drawCard());
+        player.addCard(CardDeck.drawCard());
     }
 
     public boolean checkDealerState() {
@@ -37,7 +35,7 @@ public class BlackJackGame {
     }
 
     public void updateDealer() {
-        dealer.addCard(cardDeck.drawCard());
+        dealer.addCard(CardDeck.drawCard());
     }
 
     public PlayerResult calculatePlayerResults() {
