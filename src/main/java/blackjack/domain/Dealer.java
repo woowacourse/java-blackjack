@@ -44,6 +44,16 @@ public class Dealer implements Gamer {
     }
 
     @Override
+    public boolean isBust() {
+        return calculateScore() > BLACKJACK;
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return calculateScore() == BLACKJACK && hand.hasOnlyInitialCard();
+    }
+
+    @Override
     public int calculateScore() {
         return hand.calculateOptimalSum();
     }

@@ -6,8 +6,6 @@ import java.util.ArrayList;
 
 public class Player implements Gamer {
 
-    private static final int THRESHOLD = 21;
-
     private final Name name;
     private final Hand hand;
 
@@ -27,7 +25,17 @@ public class Player implements Gamer {
 
     @Override
     public boolean canDraw() {
-        return hand.calculateOptimalSum() <= THRESHOLD;
+        return hand.calculateOptimalSum() <= BLACKJACK;
+    }
+
+    @Override
+    public boolean isBust() {
+        return calculateScore() > BLACKJACK;
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return calculateScore() == BLACKJACK && hand.hasOnlyInitialCard();
     }
 
     @Override

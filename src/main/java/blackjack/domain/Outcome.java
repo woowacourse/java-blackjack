@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Hand;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -11,49 +10,40 @@ public enum Outcome {
 
     WIN, LOSE, PUSH;
 
-    private static final int BLACKJACK_CANDIDATE = 21;
-
-    public static Outcome doesPlayerWin(final Hand dealerHand, final Hand playerHand) {
-        final int dealerScore = dealerHand.calculateOptimalSum();
-        final int playerScore = playerHand.calculateOptimalSum();
-        if (isBust(dealerScore) || isBust(playerScore)) {
-            return calculateBustCase(dealerHand, playerHand);
+    public static Outcome doesPlayerWin(final Dealer dealer, final Player player) {
+        if (dealer.isBust() || player.isBust()) {
+            return calculateBustCase(dealer, player);
         }
-        if (isBlackJack(dealerHand) || isBlackJack(playerHand)) {
-            return calculateBlackJackCase(dealerHand, playerHand);
+        if (dealer.isBlackjack() || player.isBlackjack()) {
+            return calculateBlackjackCase(dealer, player);
         }
-        return calculateNormalCase(dealerScore, playerScore);
+        return calculateNormalCase(dealer, player);
     }
 
-    private static boolean isBust(int score) {
-        return score > BLACKJACK_CANDIDATE;
-    }
-
-    private static Outcome calculateBustCase(final Hand dealerHand, final Hand playerHand) {
-        if (isBust(dealerHand.calculateOptimalSum()) && isBust(playerHand.calculateOptimalSum())) {
+    private static Outcome calculateBustCase(final Dealer dealer, final Player player) {
+        if (dealer.isBust() && player.isBust()) {
             return Outcome.PUSH;
         }
-        if (isBust(dealerHand.calculateOptimalSum())) {
+        if (dealer.isBust()) {
             return Outcome.WIN;
         }
         return Outcome.LOSE;
     }
 
-    private static boolean isBlackJack(Hand hand) {
-        return hand.calculateOptimalSum() == BLACKJACK_CANDIDATE && hand.hasOnlyInitialCard();
-    }
-
-    private static Outcome calculateBlackJackCase(final Hand dealerHand, final Hand playerHand) {
-        if (isBlackJack(dealerHand) && isBlackJack(playerHand)) {
+    private static Outcome calculateBlackjackCase(final Dealer dealer, final Player player) {
+        if (dealer.isBlackjack() && player.isBlackjack()) {
             return Outcome.PUSH;
         }
-        if (isBlackJack(dealerHand)) {
+        if (dealer.isBlackjack()) {
             return Outcome.LOSE;
         }
         return Outcome.WIN;
     }
 
-    private static Outcome calculateNormalCase(final int dealerScore, final int playerScore) {
+    private static Outcome calculateNormalCase(final Dealer dealer, final Player player) {
+        final int dealerScore = dealer.calculateScore();
+        final int playerScore = player.calculateScore();
+
         if (dealerScore < playerScore) {
             return Outcome.WIN;
         }

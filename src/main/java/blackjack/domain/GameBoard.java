@@ -44,7 +44,7 @@ public class GameBoard {
     public List<Outcome> getDealerOutcome() {
         final List<Outcome> dealerOutcomes = new ArrayList<>();
         for (final Player player : players.getPlayers()) {
-            final Outcome playerOutcome = Outcome.doesPlayerWin(dealer.getHand(), player.getHand());
+            final Outcome playerOutcome = Outcome.doesPlayerWin(dealer, player);
             dealerOutcomes.add(Outcome.reverse(playerOutcome));
         }
         return Collections.unmodifiableList(dealerOutcomes);
@@ -53,7 +53,7 @@ public class GameBoard {
     public Map<Name, Outcome> getPlayerOutcomes() {
         final Map<Name, Outcome> playerOutcomes = new LinkedHashMap<>();
         for (final Player player : players.getPlayers()) {
-            final Outcome playerOutcome = Outcome.doesPlayerWin(dealer.getHand(), player.getHand());
+            final Outcome playerOutcome = Outcome.doesPlayerWin(dealer, player);
             playerOutcomes.put(player.getName(), playerOutcome);
         }
         return Collections.unmodifiableMap(playerOutcomes);
