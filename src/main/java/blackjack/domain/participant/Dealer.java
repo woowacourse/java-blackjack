@@ -27,17 +27,14 @@ public class Dealer extends Gamer {
         return deck.draw();
     }
 
-    public boolean drawExtraCard() {
+    public void drawExtraCard() {
         if (canReceiveCard()) {
             hand.add(draw());
-            return true;
         }
-
-        return false;
     }
 
     @Override
-    boolean canReceiveCard() {
+    public boolean canReceiveCard() {
         return hand.calculateScore() <= DEALER_BOUND;
     }
 

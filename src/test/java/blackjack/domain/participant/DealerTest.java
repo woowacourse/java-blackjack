@@ -41,12 +41,15 @@ public class DealerTest {
     @DisplayName("딜러는 16점 이상이면 더 이상 카드를 받지 않는다.")
     @Test
     void cantDrawExtraCard() {
-        //when
-        IntStream.range(0, 6)
+        //given
+        IntStream.range(0, 4)
                 .forEach(i -> dealer.drawExtraCard());
 
+        //when
+        dealer.drawExtraCard();
+
         //then
-        assertThat(dealer.drawExtraCard()).isEqualTo(false);
+        assertThat(dealer.getScore()).isEqualTo(20L);
     }
 
     @DisplayName("딜러의 첫번째 카드를 공개한다.")
