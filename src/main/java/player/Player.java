@@ -28,11 +28,4 @@ public class Player extends GameParticipantCards {
     public Name getName() {
         return name;
     }
-
-    public boolean isWinner(int dealerScore) {
-        if (isBust()) {
-            return false;
-        }
-        return dealerScore < getCardScore();
-    }
 }

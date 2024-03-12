@@ -3,9 +3,7 @@ package dealer;
 import card.Card;
 import card.CardDeck;
 import cardGame.GameParticipantCards;
-import dealer.dto.DealerWinningResult;
 import java.util.List;
-import player.Players;
 
 public class Dealer extends GameParticipantCards {
 
@@ -23,13 +21,5 @@ public class Dealer extends GameParticipantCards {
 
     private boolean isNotOverMinScore() {
         return getCardScore() <= MIN_DEALER_SCORE;
-    }
-
-    public DealerWinningResult getWinningResult(Players players) {
-        int winningCount = (int) players.getPlayers().stream()
-                .filter(player -> !player.isWinner(getCardScore()))
-                .count();
-
-        return new DealerWinningResult(winningCount, players.getSize() - winningCount);
     }
 }

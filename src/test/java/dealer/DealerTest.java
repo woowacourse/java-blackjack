@@ -1,12 +1,9 @@
 package dealer;
 
 import card.CardDeck;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import player.Players;
 
 class DealerTest {
 
@@ -21,14 +18,5 @@ class DealerTest {
         dealer.getExtraCard(cardDeck);
 
         Assertions.assertTrue(dealer.getCardScore() > MIN_DEALER_SCORE);
-    }
-
-    @DisplayName("딜러 시점의 우승 정보를 가져온다")
-    @Test
-    void getDealerWinningResult() {
-        Players players = Players.from(List.of("pola", "poll"), new CardDeck());
-        Dealer dealer = new Dealer(new ArrayList<>());
-
-        org.assertj.core.api.Assertions.assertThat(dealer.getWinningResult(players).winningCount()).isEqualTo(0);
     }
 }
