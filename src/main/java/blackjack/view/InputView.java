@@ -29,7 +29,7 @@ public class InputView {
     }
 
     public static String readPlayerCommand(String name) {
-        System.out.printf(ASK_ONE_MORE_CARD + LINE_SEPARATOR, name);
+        System.out.printf(LINE_SEPARATOR + ASK_ONE_MORE_CARD + LINE_SEPARATOR, name);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         try {
             return bufferedReader.readLine();

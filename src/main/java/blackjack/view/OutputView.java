@@ -39,16 +39,12 @@ public class OutputView {
         return CardScoreName.convert(card.score()) + CardSymbolName.convert(card.symbol());
     }
 
-    public static void printNewLine() {
-        System.out.println();
-    }
-
     public static void printErrorMessage(String message) {
         System.out.println(ERROR_PREFIX + message);
     }
 
     public static void printDealerHitAnnounce() {
-        System.out.println(DEALER_HIT_FORMAT);
+        System.out.println(LINE_SEPARATOR + DEALER_HIT_FORMAT + LINE_SEPARATOR);
     }
 
     public static void printGamerCards(String name, List<Card> cards, int totalScore) {
