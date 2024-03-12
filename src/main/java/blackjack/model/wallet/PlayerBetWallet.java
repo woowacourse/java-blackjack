@@ -2,17 +2,51 @@ package blackjack.model.wallet;
 
 import blackjack.model.result.Result;
 
-public class PlayerBetWallet extends BetWallet {
+public class PlayerBetWallet {
+
+    private static final int MIN_BET_AMOUNT = 100;
+    private static final int BET_AMOUNT_UNIT = 10;
+
+    private final int betAmount;
+    private int profitAmount;
 
     private PlayerBetWallet(int betAmount) {
-        super(betAmount);
+        validateMinimumBetAmount(betAmount);
+        validateBetAmountUnit(betAmount);
+        this.betAmount = betAmount;
+        this.profitAmount = 0;
     }
 
-    public static PlayerBetWallet createByBetAmount(int betAmount) {
+    public static PlayerBetWallet from(int betAmount) {
         return new PlayerBetWallet(betAmount);
     }
 
-    public void calculatePayAmount(Result result) {
+    //TODO : 검증
+    public void registerProfitAmount(Result result) {
         profitAmount = (int) (betAmount * result.getPayoutRate());
+    }
+
+    public int calculateNetProfit() {
+        return profitAmount - betAmount;
+    }
+
+    private void validateMinimumBetAmount(int betAmount) {
+        if (betAmount < MIN_BET_AMOUNT) {
+            throw new IllegalArgumentException("[ERROR] 배팅은 100원부터 가능합니다.");
+        }
+    }
+
+    private void validateBetAmountUnit(int betAmount) {
+        if (betAmount % BET_AMOUNT_UNIT != 0) {
+            throw new IllegalArgumentException("[ERROR] 배팅은 10원 단위로만 가능합니다.");
+        }
+    }
+
+    public int getBetAmount() {
+        return betAmount;
+    }
+
+    public int getProfitAmount() {
+        return profitAmount;
     }
 }
