@@ -13,11 +13,11 @@ class BlackJackGameTest {
     @Test
     void create() {
         List<String> names = List.of("위브", "산초");
-        PlayerNames playerNames = new PlayerNames(names);
+        Players players = new Players(names);
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer(cardDeck);
 
-        assertThatCode(() -> new BlackJackGame(playerNames, dealer))
+        assertThatCode(() -> new BlackJackGame(players, dealer))
                 .doesNotThrowAnyException();
     }
 }

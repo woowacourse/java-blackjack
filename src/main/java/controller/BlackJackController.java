@@ -20,24 +20,25 @@ public class BlackJackController {
     }
 
     public void run() throws IOException {
-        PlayerNames playerNames = readPlayerNames();
+        Players players = readPlayerNames();
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer(cardDeck);
-        BlackJackGame blackJackGame = new BlackJackGame(playerNames, dealer);
+        BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
+        blackJackGame.initHand();
 
         printInitialDealAndHand(blackJackGame);
         repeatHitUntilStand(blackJackGame);
         printGameResult(blackJackGame);
     }
 
-    private PlayerNames readPlayerNames() throws IOException {
+    private Players readPlayerNames() throws IOException {
         List<String> inputNames = inputView.readPlayerNames();
 
-        return new PlayerNames(inputNames);
+        return new Players(inputNames);
     }
 
     private void printInitialDealAndHand(BlackJackGame blackJackGame) {
-        List<Player> initialParticipants = blackJackGame.getEveryParticipants();
+        List<Participant> initialParticipants = blackJackGame.getEveryParticipants();
         List<PlayerDto> playerInitDtos = toPlayerDtos(initialParticipants);
 
         outputView.printInitialDeal(playerInitDtos);
@@ -74,9 +75,9 @@ public class BlackJackController {
         outputView.printWinLoss(dealerResultDto, playersResultDto);
     }
 
-    private List<PlayerDto> toPlayerDtos(List<Player> players) {
-        return players.stream()
-                .map(PlayerDto::from)
+    private List<PlayerDto> toPlayerDtos(List<Participant> participants) {
+        return participants.stream()
+                .map(participant -> PlayerDto.from((Player) participant))
                 .toList();
     }
 }

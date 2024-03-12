@@ -1,12 +1,15 @@
 package domain;
 
+import java.util.LinkedList;
 import java.util.List;
-
-import static domain.Player.BLACK_JACK;
 
 public class Hand {
 
     private final List<Card> cards;
+
+    public Hand() {
+        this.cards = new LinkedList<>();
+    }
 
     public Hand(List<Card> cards) {
         this.cards = cards;
@@ -18,8 +21,12 @@ public class Hand {
                 .sum();
     }
 
+    public void add(List<Card> cards) {
+        this.cards.addAll(cards);
+    }
+
     public void add(Card card) {
-        cards.add(card);
+        this.cards.add(card);
     }
 
     public int countAceCard() {
@@ -41,7 +48,7 @@ public class Hand {
     }
 
     private boolean isBustWithAce(int sum, int aceCount) {
-        return sum > BLACK_JACK && aceCount > 0;
+        return sum > 21 && aceCount > 0;
     }
 
     public List<Card> getCards() {
