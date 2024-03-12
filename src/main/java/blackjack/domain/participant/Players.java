@@ -17,6 +17,12 @@ public class Players {
                 .toList();
     }
 
+    public List<InitialHand> getInitialHands() {
+        return values.stream()
+                .map(InitialHand::new)
+                .toList();
+    }
+
     public List<Player> getValues() {
         return values;
     }
