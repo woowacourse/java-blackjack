@@ -26,7 +26,7 @@ public class BlackjackRule {
             calculate(dealer, player, 1, 0);
             return;
         }
-        if (dealer.calculateScore() >= player.calculateScore()) {
+        if (dealer.score() >= player.score()) {
             calculate(dealer, player, 0, 1);
         }
     }

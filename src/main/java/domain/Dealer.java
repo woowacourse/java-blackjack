@@ -15,7 +15,7 @@ public class Dealer extends Player {
 
     @Override
     public boolean isNotBust() {
-        return calculateScore() < 17;
+        return score() < 17;
     }
 
     public Card drawSingleCard() {

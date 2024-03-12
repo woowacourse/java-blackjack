@@ -1,57 +1,41 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Player {
-    private static final int ACE_LOW = 1;
-    private static final int ACE_HIGH = 11;
     private static final int BUST_CONDITION = 21;
 
     private final Name name;
-    private final List<Card> cards = new ArrayList<>();
+    private final Hand hand;
 
-    public Player(final Name name) {
+    public Player(final Name name, final Hand hand) {
         this.name = name;
+        this.hand = hand;
     }
 
-    public void dealCards(final List<Card> initialCards) {
-        cards.addAll(initialCards);
+    public Player(final Name name) {
+        this(name, new Hand());
+    }
+
+    public void dealCards(final List<Card> cards) {
+        hand.addAll(cards);
     }
 
     public void dealCard(final Card card) {
-        cards.add(card);
+        hand.add(card);
     }
 
-    public int calculateScore() {
-        int score = 0;
-        for (final Card card : cards) {
-            score += determineScore(card, score);
-        }
-        return score;
-    }
-
-    private int determineScore(final Card card, final int score) {
-        if (card.isAce()) {
-            return determineAceScore(score);
-        }
-        return card.score();
-    }
-
-    private int determineAceScore(final int score) {
-        if (score + ACE_HIGH <= BUST_CONDITION) {
-            return ACE_HIGH;
-        }
-        return ACE_LOW;
+    public int score() {
+        return hand.score();
     }
 
     public boolean isBust() {
-        return calculateScore() > BUST_CONDITION;
+        return score() > BUST_CONDITION;
     }
 
     public boolean isNotBust() {
-        return calculateScore() <= BUST_CONDITION;
+        return score() <= BUST_CONDITION;
     }
 
     public String getName() {
@@ -59,7 +43,7 @@ public class Player {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return hand.cards();
     }
 
     @Override

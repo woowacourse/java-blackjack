@@ -44,7 +44,7 @@ public class OutputView {
                     .toList();
             stringBuilder.append(String.join(", ", cardInfos));
             System.out.print(stringBuilder);
-            System.out.println(" - 결과 : " + player.calculateScore());
+            System.out.println(" - 결과 : " + player.score());
         });
     }
 

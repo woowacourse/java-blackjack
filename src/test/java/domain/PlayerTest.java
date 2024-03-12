@@ -31,7 +31,7 @@ class PlayerTest {
         player.dealCard(new Card(Denomination.FIVE, Suit.CLUBS));
         player.dealCard(new Card(Denomination.ACE, Suit.CLUBS));
 
-        Assertions.assertThat(player.calculateScore()).isEqualTo(21);
+        Assertions.assertThat(player.score()).isEqualTo(21);
     }
 
     @Test
@@ -43,7 +43,7 @@ class PlayerTest {
         player.dealCard(new Card(Denomination.KING, Suit.CLUBS));
         player.dealCard(new Card(Denomination.ACE, Suit.CLUBS));
 
-        Assertions.assertThat(player.calculateScore()).isEqualTo(21);
+        Assertions.assertThat(player.score()).isEqualTo(21);
     }
 
     @ParameterizedTest
