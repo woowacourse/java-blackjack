@@ -3,7 +3,6 @@ package blackjack.model.deck;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.CardPattern;
-import blackjack.model.card.CardProperties;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +24,7 @@ public class DeckGenerator {
 
     private static List<Card> createCard(CardPattern cardPattern) {
         return Arrays.stream(CardNumber.values())
-                .map(cardNumber -> new Card(new CardProperties(cardPattern, cardNumber)))
+                .map(cardNumber -> Card.of(cardPattern, cardNumber))
                 .collect(Collectors.toList());
     }
 }
