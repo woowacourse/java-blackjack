@@ -3,7 +3,7 @@ package blackjack.domain;
 public class Player {
 
     private final String name;
-    protected final Hand hand;
+    private final Hand hand;
 
     public Player(String name) {
         this.name = name;
@@ -20,7 +20,7 @@ public class Player {
     }
 
     public boolean canHit() {
-        return hand.calculate() <= 21;
+        return calculate() <= 21;
     }
 
     public void putCard(Card card) {

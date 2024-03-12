@@ -19,6 +19,6 @@ public class Dealer extends Player {
 
     @Override
     public boolean canHit() {
-        return hand.calculate() <= 16;
+        return calculate() <= 16;
     }
 }
