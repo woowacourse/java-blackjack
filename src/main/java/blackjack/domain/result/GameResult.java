@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
@@ -9,15 +9,15 @@ public enum GameResult {
 
 	public static GameResult of(Dealer dealer, Player player) {
 		if (player.isBust() || player.getScore() <= dealer.getScore()) {
-			return GameResult.LOSE;
+			return LOSE;
 		}
-		return GameResult.WIN;
+		return WIN;
 	}
 
 	public GameResult reverse() {
-		if (this.equals(GameResult.WIN)) {
-			return GameResult.LOSE;
+		if (this == WIN) {
+			return LOSE;
 		}
-		return GameResult.WIN;
+		return WIN;
 	}
 }

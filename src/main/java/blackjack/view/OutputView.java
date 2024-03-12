@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 
-import blackjack.domain.GameResult;
+import blackjack.domain.result.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;

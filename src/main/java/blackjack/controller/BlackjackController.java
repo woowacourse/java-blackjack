@@ -1,11 +1,11 @@
-package blackjack;
+package blackjack.controller;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import blackjack.domain.GameResult;
+import blackjack.domain.result.GameResult;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.UnShuffledDeckGenerator;
 import blackjack.domain.gamer.Dealer;
