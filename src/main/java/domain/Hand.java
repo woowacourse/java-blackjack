@@ -49,6 +49,14 @@ class Hand {
         cards.add(card);
     }
 
+    public boolean isBust() {
+        return score() > BLACKJACK_CONDITION;
+    }
+
+    public boolean isNotBust() {
+        return score() <= BLACKJACK_CONDITION;
+    }
+
     public List<Card> cards() {
         return Collections.unmodifiableList(cards);
     }

@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Player {
-    private static final int BUST_CONDITION = 21;
-
     private final Name name;
     private final Hand hand;
 
@@ -31,11 +29,11 @@ public class Player {
     }
 
     public boolean isBust() {
-        return score() > BUST_CONDITION;
+        return hand.isBust();
     }
 
     public boolean isNotBust() {
-        return score() <= BUST_CONDITION;
+        return hand.isNotBust();
     }
 
     public String getName() {

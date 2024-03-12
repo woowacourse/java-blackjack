@@ -15,10 +15,10 @@ class PlayerTest {
         return Stream.of(
                 Arguments.of(
                         List.of(new Card(Denomination.KING, Suit.CLUBS), new Card(Denomination.KING, Suit.HEART),
-                                new Card(Denomination.KING, Suit.SPADE)), false),
+                                new Card(Denomination.KING, Suit.SPADE)), true),
                 Arguments.of(
                         List.of(new Card(Denomination.FIVE, Suit.CLUBS), new Card(Denomination.FOUR, Suit.HEART),
-                                new Card(Denomination.THREE, Suit.SPADE)), true)
+                                new Card(Denomination.THREE, Suit.SPADE)), false)
         );
     }
 
@@ -56,6 +56,6 @@ class PlayerTest {
         player.dealCard(cards.get(1));
         player.dealCard(cards.get(2));
 
-        Assertions.assertThat(player.isNotBust()).isEqualTo(expected);
+        Assertions.assertThat(player.isBust()).isEqualTo(expected);
     }
 }
