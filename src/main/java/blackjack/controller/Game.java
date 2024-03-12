@@ -29,12 +29,12 @@ public class Game {
         initializeHands();
 
         List<Player> players = this.players.getPlayers();
-        OutputView.printInitialHand(dealer, players);
+        OutputView.printInitialHands(dealer, players);
 
         playerTurn(players, dealer);
         dealerTurn(dealer);
 
-        OutputView.printHandWithScore(dealer, players);
+        OutputView.printHandsWithScore(dealer, players);
         OutputView.printResult(calculateResult(), dealer);
     }
 

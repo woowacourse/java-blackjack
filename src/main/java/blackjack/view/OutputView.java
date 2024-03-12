@@ -11,34 +11,27 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static void printInitialHand(Dealer dealer, List<Player> players) {
-        System.out.println();
-        System.out.println(dealOutMessage(dealer, players));
+    private static final String LINE_SEPARATOR = System.lineSeparator();
 
-        System.out.println(dealerSingleCard(dealer));
-        players.forEach(OutputView::printTotalHand);
-        System.out.println();
+    public static void printInitialHands(Dealer dealer, List<Player> players) {
+        System.out.println(initialHandsMessageBuilder(dealer, players));
     }
 
     public static void printTotalHand(Player player) {
         System.out.println(allCardInHand(player));
     }
 
-    public static void printHandWithScore(Dealer dealer, List<Player> players) {
-        System.out.println();
-        System.out.println(allCardInHand(dealer) + resultScore(dealer));
-        players.forEach(
-                player -> System.out.println(allCardInHand(player) + resultScore(player)));
+    public static void printHandsWithScore(Dealer dealer, List<Player> players) {
+        System.out.println(handWithScoreMessageBuilder(dealer, players));
     }
 
     public static void printResult(Result result, Dealer dealer) {
-        Map<Player, ResultStatus> results = result.getResults();
-        Map<ResultStatus, Long> resultStatusLongMap = result.calculateDealerResult();
+        Map<Player, ResultStatus> playerResults = result.getResults();
+        Map<ResultStatus, Long> dealerResult = result.calculateDealerResult();
 
-        System.out.println();
         System.out.println("## 최종 승패");
-        printDealerResult(dealer, resultStatusLongMap);
-        printPlayerResult(results);
+        System.out.println(dealerResultMessageBuilder(dealer, dealerResult));
+        System.out.print(playerResultsMessageBuilder(playerResults));
     }
 
     public static void printBust() {
@@ -53,12 +46,24 @@ public class OutputView {
         System.out.println(message);
     }
 
+    private static StringBuilder initialHandsMessageBuilder(Dealer dealer, List<Player> players) {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(dealOutMessage(dealer, players))
+                .append(dealerSingleCard(dealer));
+        for (Player player : players) {
+            builder.append(allCardInHand(player))
+                    .append(LINE_SEPARATOR);
+        }
+        return builder;
+    }
+
     private static String dealOutMessage(Dealer dealer, List<Player> players) {
         String commaSeparatePlayerNames = players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
 
-        return String.format("%s와 %s에게 2장을 나누었습니다.", dealer.getName(), commaSeparatePlayerNames);
+        return String.format("%n%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), commaSeparatePlayerNames);
     }
 
     private static String dealerSingleCard(Dealer dealer) {
@@ -67,7 +72,24 @@ public class OutputView {
             throw new IllegalStateException("카드가 없습니다.");
         }
 
-        return String.format("%s: %s", dealer.getName(), extractCardName(cards.get(0)));
+        return String.format("%s: %s%n", dealer.getName(), extractCardName(cards.get(0)));
+    }
+
+    private static StringBuilder handWithScoreMessageBuilder(Dealer dealer, List<Player> players) {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(LINE_SEPARATOR)
+                .append(getHandWithScoreMessage(dealer))
+                .append(LINE_SEPARATOR);
+        for (Player player : players) {
+            builder.append(getHandWithScoreMessage(player))
+                    .append(LINE_SEPARATOR);
+        }
+        return builder;
+    }
+
+    private static String getHandWithScoreMessage(Player player) {
+        return allCardInHand(player) + resultScore(player);
     }
 
     private static String allCardInHand(Player player) {
@@ -79,24 +101,29 @@ public class OutputView {
         return String.format("%s: %s", player.getName(), hand);
     }
 
-    private static String extractCardName(Card card) {
-        return card.getNumber().getName() + card.getSymbol().getName();
-    }
-
     private static String resultScore(Player player) {
         int score = player.calculate();
         return String.format(" - 결과: %d", score);
     }
 
-    private static void printDealerResult(Dealer dealer, Map<ResultStatus, Long> dealerResult) {
-        System.out.printf("%s: ", dealer.getName());
-        dealerResult.forEach((key, value) ->
-                System.out.print(value + key.getName() + " "));
-        System.out.println();
+    private static String extractCardName(Card card) {
+        return card.getNumber().getName() + card.getSymbol().getName();
     }
 
-    private static void printPlayerResult(Map<Player, ResultStatus> results) {
-        results.forEach(
-                ((player, status) -> System.out.printf("%s: %s%n", player.getName(), status.getName())));
+    private static StringBuilder dealerResultMessageBuilder(Dealer dealer, Map<ResultStatus, Long> dealerResult) {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(String.format("%s: ", dealer.getName()));
+        dealerResult.forEach((key, value) ->
+                builder.append(String.format(value + key.getName() + " ")));
+        return builder;
+    }
+
+    private static StringBuilder playerResultsMessageBuilder(Map<Player, ResultStatus> playerResults) {
+        StringBuilder builder = new StringBuilder();
+
+        playerResults.forEach(
+                ((player, status) -> builder.append(String.format("%s: %s%n", player.getName(), status.getName()))));
+        return builder;
     }
 }
