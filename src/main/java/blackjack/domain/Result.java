@@ -5,7 +5,7 @@ import java.util.function.UnaryOperator;
 public enum Result {
 
     BLACKJACK_WIN(money -> 1.5 * money),
-    WIN(moeny -> moeny),
+    WIN(money -> money),
     LOSE(money -> -1 * money),
     DRAW(money -> Result.nonProfit());
 
