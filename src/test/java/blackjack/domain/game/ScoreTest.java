@@ -3,8 +3,6 @@ package blackjack.domain.game;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.game.GameResult;
-import blackjack.domain.game.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -104,5 +102,16 @@ class ScoreTest {
 
         GameResult actual = currentScore.compareWith(relativeScore);
         assertThat(actual).isEqualTo(GameResult.DRAW);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {20, 21, 22})
+    @DisplayName("블랙잭이 아닌 Score 객체를 생성할 경우 점수가 같으면 같은 객체가 생성된다.")
+    void scoreCachingTest(int value) {
+        Score score1 = Score.of(value);
+        Score score2 = Score.of(value);
+        int expected = System.identityHashCode(score1);
+
+        assertThat(System.identityHashCode(score2)).isEqualTo(expected);
     }
 }
