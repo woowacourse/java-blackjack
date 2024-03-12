@@ -12,13 +12,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
-    private Hand hand;
     private Dealer dealer;
 
     @BeforeEach
     void init() {
-        hand = new Hand(List.of(new Card(CLOVER, FIVE), new Card(CLOVER, FOUR)));
-        dealer = new Dealer(hand);
+        dealer = new Dealer(new Hand(List.of(new Card(CLOVER, FIVE), new Card(CLOVER, FOUR))));
     }
 
     @Test

@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.dto.NameCards;
 import blackjack.dto.NameCardsScore;
+import blackjack.dto.PlayerNameFinalResult;
 import blackjack.model.deck.Card;
 import blackjack.model.result.ResultCommand;
 import blackjack.view.display.result.ResultCommandDisplay;
@@ -67,8 +68,12 @@ public class OutputView {
                 .collect(Collectors.joining(" "));
     }
 
-    public static void printFinalResult(final Map<String, ResultCommand> playerResults) {
-        playerResults.forEach((name, result) -> System.out.println(formatFinalResult(name, result)));
+    public static void printFinalResults(final List<PlayerNameFinalResult> playerNameFinalResults) {
+        playerNameFinalResults.forEach(OutputView::printFinalResult);
+    }
+
+    private static void printFinalResult(final PlayerNameFinalResult playerNameFinalResult) {
+        System.out.println(formatFinalResult(playerNameFinalResult.name(), playerNameFinalResult.result()));
     }
 
     private static String formatFinalResult(final String name, final ResultCommand result) {

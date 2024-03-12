@@ -2,6 +2,7 @@ package blackjack;
 
 import blackjack.dto.NameCards;
 import blackjack.dto.NameCardsScore;
+import blackjack.dto.PlayerNameFinalResult;
 import blackjack.model.deck.Deck;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
@@ -13,7 +14,6 @@ import blackjack.util.ConsoleReader;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +55,8 @@ public class BlackJackGame {
     }
 
     private List<NameCards> createDealerPlayersNameCards(final Dealer dealer, final Players players) {
-        List<NameCards> dealerNameCards = new ArrayList<>(List.of(new NameCards(dealer.getName(), dealer.openFirstCard())));
+        List<NameCards> dealerNameCards = new ArrayList<>(
+                List.of(new NameCards(dealer.getName(), dealer.openFirstCard())));
         List<NameCards> playersNameCards = players.stream()
                 .map(NameCards::from)
                 .toList();
@@ -106,7 +107,7 @@ public class BlackJackGame {
 
     private void printFinalResult(final Dealer dealer, final Players players, final Referee referee) {
         printFinalCardsAndScores(dealer, players);
-        printFinalResultCommand(referee);
+        printFinalResultCommand(referee, players);
     }
 
     private void printFinalCardsAndScores(final Dealer dealer, final Players players) {
@@ -118,10 +119,12 @@ public class BlackJackGame {
         OutputView.printFinalCardsAndScore(playerNameCardsScore);
     }
 
-    private void printFinalResultCommand(final Referee referee) {
+    private void printFinalResultCommand(final Referee referee, final Players players) {
         Map<ResultCommand, Integer> dealerResults = referee.judgeDealerResult();
         OutputView.printDealerFinalResult(dealerResults);
-        Map<String, ResultCommand> playerResults = referee.judgePlayerResult();
-        OutputView.printFinalResult(playerResults);
+        List<PlayerNameFinalResult> playerNameFinalResults = players.stream()
+                .map(player -> PlayerNameFinalResult.from(player, referee.judgePlayerResult(player)))
+                .toList();
+        OutputView.printFinalResults(playerNameFinalResults);
     }
 }

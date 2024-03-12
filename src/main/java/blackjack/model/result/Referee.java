@@ -15,6 +15,10 @@ public class Referee {
         this.players = players;
     }
 
+    public ResultCommand judgePlayerResult(final Player player) {
+        return rule.calculateResult(player);
+    }
+
     public Map<String, ResultCommand> judgePlayerResult() {
         Map<String, ResultCommand> result = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
