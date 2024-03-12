@@ -62,7 +62,7 @@ public class Player extends Participant {
         return Objects.hash(playerName);
     }
 
-    public String getPlayerName() {
-        return playerName.getValue();
+    public PlayerName getPlayerName() {
+        return playerName;
     }
 }

@@ -7,6 +7,7 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Participants;
 import blackjack.domain.player.Player;
+import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
 
 import blackjack.view.mapper.CardRankMapper;
@@ -28,6 +29,7 @@ public class MessageResolver {
     private String resolveNamesMessage(Players players) {
         return players.getPlayers().stream()
                 .map(Player::getPlayerName)
+                .map(PlayerName::getValue)
                 .collect(Collectors.joining(SEPARATOR));
     }
 
@@ -61,7 +63,7 @@ public class MessageResolver {
             return DEALER_NAME;
         }
         if (participant instanceof Player) {
-            return ((Player) participant).getPlayerName();
+            return ((Player) participant).getPlayerName().getValue();
         }
         throw new IllegalArgumentException();
     }
@@ -105,8 +107,8 @@ public class MessageResolver {
 
     private String resolvePlayerResult(Player player, Dealer dealer) {
         if (player.judge(dealer).getWinCount() == 1) {
-            return String.format("%s: 승", player.getPlayerName());
+            return String.format("%s: 승", player.getPlayerName().getValue());
         }
-        return String.format("%s: 패", player.getPlayerName());
+        return String.format("%s: 패", player.getPlayerName().getValue());
     }
 }
