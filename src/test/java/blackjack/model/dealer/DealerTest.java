@@ -21,7 +21,7 @@ class DealerTest {
         // when
         Card firstCardCreatedByHit = new Card(Suit.HEART, Denomination.TEN);
         Card secondCardCreatedByHit = new Card(Suit.HEART, Denomination.FOUR);
-        dealer.hitUntilEnd(new SequentialCardGenerator(List.of(firstCardCreatedByHit, secondCardCreatedByHit)));
+        dealer.drawUntilEnd(new SequentialCardGenerator(List.of(firstCardCreatedByHit, secondCardCreatedByHit)));
 
         // then
         int cardsTotal = dealer.calculateCardsTotalScore();

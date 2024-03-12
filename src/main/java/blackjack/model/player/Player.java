@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Player {
     private static final String INVALID_NAME_LENGTH = "참여자 이름은 한 글자 이상이다";
-    private static final int HIT_CONDITION = 21;
+    private static final int BLACKJACK_CONDITION = 21;
 
     private final String name;
     private final Cards cards;
@@ -32,12 +32,12 @@ public class Player {
         return cards.isBlackJack();
     }
 
-    public boolean canHit() {
+    public boolean canDraw() {
         int cardsTotal = cards.calculateTotalScore();
-        return cardsTotal <= HIT_CONDITION;
+        return cardsTotal <= BLACKJACK_CONDITION;
     }
 
-    public void hit(final CardGenerator cardGenerator) {
+    public void draw(final CardGenerator cardGenerator) {
         cards.addCard(cardGenerator);
     }
 

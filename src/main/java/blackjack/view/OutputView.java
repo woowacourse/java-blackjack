@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String DEALING_RESULT_INTRO = "\n딜러와 %s에게 2장을 나누었습니다.\n";
     private static final String PLAYER_CARDS_FORM = "%s카드: %s";
-    private static final String DEALER_ACTION_FORM = "\n딜러는 16이하라 %d장의 카드를 더 받았습니다.\n";
-    private static final String DEALER_CARDS_FORM = "\n딜러 카드: %s";
+    private static final String DEALER_DRAWING_FORM = "\n딜러는 16이하라 %d장의 카드를 더 받았습니다.\n";
+    private static final String DEALER_CARDS_FORM = "\n딜러카드: %s";
     private static final String TOTAL_SCORE_FORM = " - 결과: %s\n";
     private static final String MATCH_RESULT_INTRO = "\n## 최종 승패";
     public static final String DEALER_MATCH_RESULT_PREFIX = "딜러: ";
@@ -26,7 +26,7 @@ public class OutputView {
     public static final String DEALER_MATCH_RESULT_FORM = "%s승 %s패 %s무";
     public static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
 
-    public void printDealingResult(final Players players, final Dealer dealer) {
+    public void printDealingCards(final Players players, final Dealer dealer) {
         String names = String.join(", ", players.getNames());
         System.out.printf(DEALING_RESULT_INTRO, names);
         System.out.printf(DEALER_CARDS_FORM, formatCard(dealer.getFirstCard()));
@@ -34,10 +34,6 @@ public class OutputView {
         for (Player player : players.getPlayers()) {
             System.out.println(formatPlayerCards(player));
         }
-    }
-
-    private String formatCard(final Card card) {
-        return card.getDenomination().getName() + card.getSuit().getName();
     }
 
     private String formatPlayerCards(final Player player) {
@@ -52,12 +48,16 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
     }
 
-    public void printPlayerActionResult(final Player player) {
+    private String formatCard(final Card card) {
+        return card.getDenomination().getName() + card.getSuit().getName();
+    }
+
+    public void printPlayerDrawingCards(final Player player) {
         System.out.println(formatPlayerCards(player));
     }
 
-    public void printDealerActionResult(final Dealer dealer) {
-        System.out.printf(DEALER_ACTION_FORM, dealer.getHitCount());
+    public void printDealerDrawingCards(final Dealer dealer) {
+        System.out.printf(DEALER_DRAWING_FORM, dealer.getHitCount());
     }
 
     public void printDealerFinalCards(final DealerFinalCardsOutcome dealerFinalCardsOutcome) {

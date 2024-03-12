@@ -31,7 +31,7 @@ class PlayerTest {
         Player player = new Player("dora", new SequentialCardGenerator(cards));
 
         // when & then
-        assertThat(player.canHit()).isTrue();
+        assertThat(player.canDraw()).isTrue();
     }
 
     @Test
@@ -45,7 +45,7 @@ class PlayerTest {
         Player player = new Player("dora", new SequentialCardGenerator(cards));
 
         // when
-        player.hit(() -> new Card(Suit.HEART, Denomination.TWO));
+        player.draw(() -> new Card(Suit.HEART, Denomination.TWO));
 
         // then
         assertThat(player.getCards()).hasSize(3);

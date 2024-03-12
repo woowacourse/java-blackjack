@@ -15,7 +15,7 @@ public class Dealer {
         this.cards = new Cards(cardGenerator);
     }
 
-    public void hitUntilEnd(final CardGenerator cardGenerator) {
+    public void drawUntilEnd(final CardGenerator cardGenerator) {
         cards.addCardUntilTotalScoreReached(cardGenerator, HIT_END_CONDITION);
     }
 

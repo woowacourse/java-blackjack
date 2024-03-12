@@ -15,27 +15,23 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-public class BlackjackController {
+public class BlackjackGame {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackjackController(InputView inputView, OutputView outputView) {
+    public BlackjackGame(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
 
-    public void run() {
-        Game game = prepare();
-        play(game);
-        end(game);
-    }
-
-    private Game prepare() {
+    public void play() {
         CardGenerator cardGenerator = new RandomCardGenerator();
         Players players = retryOnException(() -> preparePlayers(cardGenerator));
         Dealer dealer = new Dealer(cardGenerator);
-        outputView.printDealingResult(players, dealer);
-        return new Game(players, dealer, cardGenerator);
+
+        dealCards(players, dealer, cardGenerator);
+        drawCards(players, dealer, cardGenerator);
+        showResult(players, dealer);
     }
 
     private Players preparePlayers(final CardGenerator cardGenerator) {
@@ -43,53 +39,52 @@ public class BlackjackController {
         return new Players(playerNames, cardGenerator);
     }
 
-    private void play(final Game game) {
-        if (canAction(game.dealer())) {
+    private void dealCards(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
+        // TODO: deal 로직 분리
+        outputView.printDealingCards(players, dealer);
+    }
+
+    private void drawCards(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
+        if (isGameEnd(dealer, players)) {
             return;
         }
-        doAction(game.players(), game.dealer(), game.cardGenerator());
-    }
-
-    private boolean canAction(final Dealer dealer) {
-        return dealer.isBlackJack();
-    }
-
-    private void doAction(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
         for (Player player : players.getPlayers()) {
-            doPlayerActionUtilEnd(player, cardGenerator);
+            drawPlayerCards(player, cardGenerator);
         }
-        doDealerAction(dealer, cardGenerator);
+        drawDealerCards(dealer, cardGenerator);
     }
 
-    private void doPlayerActionUtilEnd(final Player player, final CardGenerator cardGenerator) {
-        boolean isContinue = player.canHit();
+    private boolean isGameEnd(final Dealer dealer, final Players players) {
+        return dealer.isBlackJack(); // TODO: players 전부 블랙잭인지도 확인
+    }
+
+    private void drawPlayerCards(final Player player, final CardGenerator cardGenerator) {
+        boolean isContinue = player.canDraw();
         while (isContinue) {
-            isContinue = doPlayerAction(player, cardGenerator);
+            isContinue = drawPlayerCard(player, cardGenerator);
         }
     }
 
-    private boolean doPlayerAction(final Player player, final CardGenerator cardGenerator) {
+    private boolean drawPlayerCard(final Player player, final CardGenerator cardGenerator) {
         boolean command = retryOnException(() -> inputView.askHitOrStandCommand(player.getName()));
         if (command) {
-            player.hit(cardGenerator);
-            outputView.printPlayerActionResult(player);
+            player.draw(cardGenerator);
+            outputView.printPlayerDrawingCards(player);
         }
-        return player.canHit() && command;
+        return player.canDraw() && command;
     }
 
-    private void doDealerAction(Dealer dealer, CardGenerator cardGenerator) {
-        dealer.hitUntilEnd(cardGenerator);
-        outputView.printDealerActionResult(dealer);
+    private void drawDealerCards(final Dealer dealer, final CardGenerator cardGenerator) {
+        dealer.drawUntilEnd(cardGenerator);
+        outputView.printDealerDrawingCards(dealer);
     }
 
-    private void end(final Game game) {
-        Players players = game.players();
-        Dealer dealer = game.dealer();
-        showCardOutcome(players, dealer);
+    private void showResult(final Players players, final Dealer dealer) {
+        showCardsOutcome(players, dealer);
         showMatchResult(players, dealer);
     }
 
-    private void showCardOutcome(final Players players, final Dealer dealer) {
+    private void showCardsOutcome(final Players players, final Dealer dealer) {
         DealerFinalCardsOutcome dealerFinalCardsOutcome = DealerFinalCardsOutcome.of(dealer);
         List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes = players.captureFinalCardsOutcomes();
         outputView.printDealerFinalCards(dealerFinalCardsOutcome);
