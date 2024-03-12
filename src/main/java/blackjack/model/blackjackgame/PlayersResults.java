@@ -1,13 +1,15 @@
 package blackjack.model.blackjackgame;
 
 import blackjack.model.participants.Player;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public final class PlayersResults {
     private final Map<Player, Profit> results;
 
     public PlayersResults(Map<Player, Profit> results) {
-        this.results = results;
+        this.results = new HashMap<>(results);
     }
 
     public Profit getDealerProfit() {
@@ -18,6 +20,6 @@ public final class PlayersResults {
     }
 
     public Map<Player, Profit> getResults() {
-        return results;
+        return Collections.unmodifiableMap(results);
     }
 }

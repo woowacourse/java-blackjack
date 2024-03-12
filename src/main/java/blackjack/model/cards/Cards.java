@@ -2,6 +2,7 @@ package blackjack.model.cards;
 
 import blackjack.model.blackjackgame.PlayerProfitCalculator;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public final class Cards {
@@ -59,6 +60,6 @@ public final class Cards {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 }
