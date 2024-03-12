@@ -10,18 +10,21 @@ public enum PlayerResultDisplay {
     TIE(MatchResult.TIE, "무");
 
     private final MatchResult result;
-    private final String display;
+    private final String notation;
 
-    PlayerResultDisplay(MatchResult result, String display) {
+    PlayerResultDisplay(MatchResult result, String notation) {
         this.result = result;
-        this.display = display;
+        this.notation = notation;
     }
 
-    public static String getDisplayByResult(MatchResult result) {
+    public static PlayerResultDisplay getDisplayByResult(MatchResult result) {
         return Arrays.stream(values())
                 .filter(displayResult -> displayResult.result == result)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 결과입니다."))
-                .display;
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 결과입니다."));
+    }
+
+    public String getNotation() {
+        return notation;
     }
 }
