@@ -35,10 +35,12 @@ public class Dealer implements Playable {
         return hand.countSize();
     }
 
+    @Override
     public boolean canHit() {
         return hand.calculateScore() <= HITTABLE_THRESHOLD;
     }
 
+    @Override
     public boolean isBust() {
         return hand.isBust();
     }

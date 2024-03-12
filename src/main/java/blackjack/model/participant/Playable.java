@@ -9,4 +9,6 @@ public interface Playable {
     List<Card> openCards();
     int getScore();
     int getCardCount();
+    boolean canHit();
+    boolean isBust();
 }
