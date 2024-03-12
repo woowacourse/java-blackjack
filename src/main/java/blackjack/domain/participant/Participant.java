@@ -35,11 +35,11 @@ public class Participant {
     }
 
     public boolean isNotBlackjack() {
-        return !getStatus().isBlackjack();
+        return getStatus() != BlackjackStatus.BLACKJACK;
     }
 
     public boolean isNotDead() {
-        return !getStatus().isDead();
+        return getStatus() != BlackjackStatus.DEAD;
     }
 
     public Hands getHands() {
@@ -50,4 +50,3 @@ public class Participant {
         return name;
     }
 }
-

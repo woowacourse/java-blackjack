@@ -1,15 +1,21 @@
 package blackjack.domain.result;
 
 public enum WinStatus {
-    LOSE,
-    DRAW,
-    WIN;
+    LOSE("패"),
+    DRAW("무"),
+    WIN("승");
+
+    private final String name;
+
+    WinStatus(final String name) {
+        this.name = name;
+    }
 
     public static WinStatus of(final Score dealerScore, final Score playerScore) {
-        if (BlackjackStatus.from(playerScore).isDead()) {
+        if (BlackjackStatus.from(playerScore) == BlackjackStatus.DEAD) {
             return LOSE;
         }
-        if (BlackjackStatus.from(dealerScore).isDead() || playerScore.isBiggerThan(dealerScore)) {
+        if (BlackjackStatus.from(dealerScore) == BlackjackStatus.DEAD || playerScore.isBiggerThan(dealerScore)) {
             return WIN;
         }
         if (dealerScore.isBiggerThan(playerScore)) {
@@ -26,5 +32,9 @@ public enum WinStatus {
             return WIN;
         }
         return DRAW;
+    }
+
+    public String getName() {
+        return name;
     }
 }

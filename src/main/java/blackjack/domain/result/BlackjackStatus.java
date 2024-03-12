@@ -17,12 +17,4 @@ public enum BlackjackStatus {
         }
         return ALIVE;
     }
-
-    public boolean isDead() {
-        return this == DEAD;
-    }
-
-    public boolean isBlackjack() {
-        return this == BLACKJACK;
-    }
 }

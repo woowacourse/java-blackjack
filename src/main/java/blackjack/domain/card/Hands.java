@@ -14,7 +14,7 @@ public class Hands {
     }
 
     private void validateDuplicate(final List<Card> cards) {
-        if (Set.copyOf(cards).size() != cards.size()) {
+        if (new HashSet<>(cards).size() != cards.size()) {
             throw new IllegalArgumentException("중복된 카드는 존재할 수 없습니다.");
         }
     }
@@ -25,7 +25,7 @@ public class Hands {
 
     public int sum() {
         return cards.stream()
-                .mapToInt(card -> card.getNumberName().getNumber())
+                .mapToInt(Card::getScore)
                 .sum();
     }
 
@@ -35,10 +35,8 @@ public class Hands {
                 .count();
     }
 
-    public Hands getFirstCard() {
-        return cards.stream()
-                .limit(1)
-                .collect(collectingAndThen(toList(), Hands::new));
+    public Card getFirstCard() {
+        return cards.get(0);
     }
 
     public List<Card> getCards() {
