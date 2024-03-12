@@ -1,15 +1,13 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 public class CardDeck {
-    private final Stack<Card> cardDeck;
+    private final List<Card> cardDeck;
 
     public CardDeck(List<Card> cards) {
-        Stack<Card> cardDeck = new Stack<>();
-        cardDeck.addAll(cards);
-        this.cardDeck = cardDeck;
+        this.cardDeck = new ArrayList<>(cards);
     }
 
     public void shuffle(CardShuffleStrategy cardShuffleStrategy) {
@@ -17,9 +15,9 @@ public class CardDeck {
     }
 
     public Card draw() {
-        if (cardDeck.empty()) {
+        if (cardDeck.isEmpty()) {
             throw new IllegalArgumentException("카드덱의 카드를 모두 소진했습니다.");
         }
-        return cardDeck.pop();
+        return cardDeck.remove(cardDeck.size() - 1);
     }
 }
