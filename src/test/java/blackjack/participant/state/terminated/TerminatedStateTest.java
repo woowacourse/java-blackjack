@@ -1,4 +1,4 @@
-package blackjack.participant.state;
+package blackjack.participant.state.terminated;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -6,6 +6,8 @@ import blackjack.card.Card;
 import blackjack.card.Number;
 import blackjack.card.Shape;
 import blackjack.participant.Hand;
+import blackjack.participant.state.GameState;
+import blackjack.participant.state.playing.PlayerState;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,10 +17,10 @@ class TerminatedStateTest {
     private GameState createTerminatedState() {
         List<Card> cards = List.of(
                 new Card(Shape.SPADE, Number.TEN),
-                new Card(Shape.SPADE, Number.TEN),
                 new Card(Shape.SPADE, Number.TEN)
-        );
-        return new TerminatedState(new Hand(cards));
+                );
+        GameState state = new PlayerState(new Hand(cards));
+        return state.drawCard(new Card(Shape.SPADE, Number.TWO));
     }
 
     @Test

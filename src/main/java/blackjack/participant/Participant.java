@@ -1,9 +1,9 @@
 package blackjack.participant;
 
 import blackjack.card.Card;
-import blackjack.participant.state.DealerState;
 import blackjack.participant.state.GameState;
-import blackjack.participant.state.PlayerState;
+import blackjack.participant.state.playing.DealerState;
+import blackjack.participant.state.playing.PlayerState;
 import java.util.List;
 import java.util.function.Supplier;
 

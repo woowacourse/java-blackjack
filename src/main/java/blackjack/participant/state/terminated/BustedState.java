@@ -1,4 +1,4 @@
-package blackjack.participant.state;
+package blackjack.participant.state.terminated;
 
 import blackjack.participant.Hand;
 

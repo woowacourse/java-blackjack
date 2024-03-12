@@ -1,9 +1,10 @@
-package blackjack.participant.state;
+package blackjack.participant.state.terminated;
 
 import blackjack.card.Card;
 import blackjack.participant.Hand;
+import blackjack.participant.state.GameState;
 
-public class TerminatedState extends GameState {
+public abstract class TerminatedState extends GameState {
 
     protected TerminatedState(Hand hand) {
         super(hand);

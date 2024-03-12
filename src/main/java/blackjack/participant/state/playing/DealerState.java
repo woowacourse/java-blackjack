@@ -1,7 +1,9 @@
-package blackjack.participant.state;
+package blackjack.participant.state.playing;
 
 import blackjack.card.Card;
 import blackjack.participant.Hand;
+import blackjack.participant.state.GameState;
+import blackjack.participant.state.terminated.StandState;
 
 public class DealerState extends GameState {
 
