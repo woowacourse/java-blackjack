@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
@@ -21,11 +20,6 @@ public class CardDeck {
 
     private void shuffle() {
         Collections.shuffle(deck);
-    }
-
-    public Hand initHand() {
-        List<Card> initialCards = new ArrayList<>(List.of(draw(), draw()));
-        return new Hand(initialCards);
     }
 
     public Card draw() {
