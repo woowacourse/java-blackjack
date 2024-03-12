@@ -98,7 +98,7 @@ class ScoreTest {
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("만약 합이 21을 초과하지 않으면 Ace는 11로 계산한다.")
+    @DisplayName("점수가 21을 초과하지 않으면 Ace는 11로 계산한다.")
     @Test
     void testAdjustAceScore() {
         // given
@@ -111,7 +111,7 @@ class ScoreTest {
         assertThat(actual).extracting("value").isEqualTo(21);
     }
 
-    @DisplayName("만약 합이 21을 초과하면 Ace를 11로 계산하지 않는다.")
+    @DisplayName("점수가 21을 초과하면 Ace를 11로 계산하지 않는다.")
     @Test
     void testNotAdjustAceScore() {
         // given
