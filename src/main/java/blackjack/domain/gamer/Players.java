@@ -37,7 +37,7 @@ public class Players {
 	}
 
 	private void validateSize(List<String> players) {
-		if (players.size() < MIN_SIZE || players.size() > MAX_SIZE) {
+		if (players.size() < MIN_SIZE || MAX_SIZE < players.size()) {
 			throw new IllegalArgumentException(SIZE_ERROR_MESSAGE);
 		}
 	}
