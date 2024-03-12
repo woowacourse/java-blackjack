@@ -5,6 +5,9 @@ import blackjack.domain.participant.Player;
 
 public class ResultJudge {
 
+    private ResultJudge() {
+    }
+
     public static Result makeResult(Player player, Dealer dealer) {
         if (isBlackJackWin(player, dealer)) {
             return Result.BLACKJACK_WIN;
@@ -15,7 +18,10 @@ public class ResultJudge {
         if (isLose(player, dealer)) {
             return Result.LOSE;
         }
-        return Result.DRAW;
+        if (isDraw(player, dealer)) {
+            return Result.DRAW;
+        }
+        throw new IllegalArgumentException("승패가 정해지지 않았습니다.");
     }
 
     private static boolean isBlackJackWin(Player player, Dealer dealer) {
@@ -32,7 +38,7 @@ public class ResultJudge {
                 || player.isNotBust() && player.hasLowerScore(dealer);
     }
 
-    private boolean isDraw(Player player, Dealer dealer) {
+    private static boolean isDraw(Player player, Dealer dealer) {
         return (dealer.isNotBust() && player.isNotBust())
                 && player.hasSameScore(dealer);
     }
