@@ -32,7 +32,7 @@ class RefereeTest {
                 new Card(9, Shape.CLUB),
                 new Card(10, Shape.SPADE)
         ));
-        revenue = scoreBoard.getPlayerScore().get(capy);
+        revenue = scoreBoard.getPlayerRevenue().get(capy);
     }
 
     @Test

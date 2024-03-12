@@ -5,14 +5,12 @@ import domain.card.DealerCards;
 import domain.card.PlayerCards;
 import domain.player.Bet;
 import domain.player.Name;
-import domain.score.Score;
+import domain.score.Revenue;
 import domain.score.ScoreBoard;
 import domain.score.Status;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.StringJoiner;
 
 public class OutputView {
 
@@ -72,16 +70,15 @@ public class OutputView {
         System.out.println();
         System.out.println("## 최종 승패");
         System.out.print("딜러: ");
+        printDealerScore(scoreBoard);
 
-        Score dealerScore = scoreBoard.getDealerScore();
-        StringJoiner stringJoiner = new StringJoiner(" ");
-        Arrays.stream(Status.values())
-                .filter(status -> status != Status.BLACKJACK)
-                .forEach(status -> stringJoiner.add(dealerScore.getScore(status) + outcome.get(status)));
-        System.out.println(stringJoiner);
-
-        Map<Name, Bet> playerScore = scoreBoard.getPlayerScore();
+        Map<Name, Bet> playerScore = scoreBoard.getPlayerRevenue();
         playerScore.forEach((name, bet) -> System.out.println(name + ": " + bet.getAmount()));
+    }
+
+    private void printDealerScore(ScoreBoard scoreBoard) {
+        Revenue dealerRevenue = scoreBoard.getDealerScore();
+        System.out.println(dealerRevenue.getAmount());
     }
 
     public void printDealerGivenCard() {

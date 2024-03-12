@@ -9,28 +9,28 @@ import java.util.Map;
 
 public class ScoreBoard {
 
-    private final Score dealerScore = new Score();
-    private final Map<Name, Bet> playerScore;
+    private final Revenue dealerRevenue = new Revenue();
+    private final Map<Name, Bet> playerRevenue;
 
-    public ScoreBoard(Map<Name, Bet> playerScore) {
-        this.playerScore = new HashMap<>(playerScore);
+    public ScoreBoard(Map<Name, Bet> playerRevenue) {
+        this.playerRevenue = new HashMap<>(playerRevenue);
     }
 
     public void updatePlayerScore(Name name, Status status) {
-        Bet bet = playerScore.get(name);
+        Bet bet = playerRevenue.get(name);
         Bet revenue = status.calculateRevenue(bet);
-        playerScore.put(name, revenue);
+        playerRevenue.put(name, revenue);
     }
 
-    public void updateDealerScore(Status status) {
-        dealerScore.increaseScore(status);
+    public void calculateDealerRevenue() {
+        dealerRevenue.calculate(playerRevenue.values().stream().toList());
     }
 
-    public Map<Name, Bet> getPlayerScore() {
-        return Collections.unmodifiableMap(playerScore);
+    public Revenue getDealerScore() {
+        return dealerRevenue;
     }
 
-    public Score getDealerScore() {
-        return dealerScore;
+    public Map<Name, Bet> getPlayerRevenue() {
+        return Collections.unmodifiableMap(playerRevenue);
     }
 }
