@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Hand {
     public static final int ACE_ADDITIONAL_SCORE = 10;
-    public static final int BUST_THRESHOLD = 21;    // TODO: BUST_THRESHOLD 가 분산되어 있음
+    public static final int BUST_THRESHOLD = 21;
 
     private final List<Card> cards = new ArrayList<>();
 
