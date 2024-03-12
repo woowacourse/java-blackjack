@@ -23,6 +23,7 @@ public class Cards {
     public static Cards from(final Collection<Card> cards) {
         return new Cards(cards);
     }
+
     public void add(final Card card) {
         cards.add(card);
     }
@@ -34,7 +35,7 @@ public class Cards {
 
     private void validateNotEmpty() {
         if (cards.isEmpty()) {
-            throw new IllegalStateException("카드가 없습니다.");
+            throw new IllegalStateException("카드가 없습니다. 카드를 추가하세요.");
         }
     }
 
