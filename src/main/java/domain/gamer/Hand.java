@@ -24,7 +24,11 @@ public class Hand {
     }
 
     public boolean isBlackJack() {
-        return sum() == MAX_SUM && cards.size() == BLACKJACK_CARD_COUNT_COND;
+        int aceCount = (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
+
+        return aceCount == 1 && cards.size() == BLACKJACK_CARD_COUNT_COND;
     }
 
     public int sum() {
