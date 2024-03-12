@@ -74,4 +74,18 @@ class HandTest {
         Hand hand = TestHandCreator.of(1, 1, 1);
         assertThat(hand.calculateScore().getValue()).isEqualTo(13);
     }
+
+    @DisplayName("손패가 블랙잭인지 알 수 있다")
+    @Test
+    void testIsBlackJack() {
+        Hand hand = TestHandCreator.of(1, 10);
+        assertThat(hand.isBlackJack()).isTrue();
+    }
+
+    @DisplayName("손패의 점수가 21이더라도 드로우 한 이력이 있으면 블랙잭이 아니다")
+    @Test
+    void testIsNotBlackJack() {
+        Hand hand = TestHandCreator.of(2, 9, 10);
+        assertThat(hand.isBlackJack()).isFalse();
+    }
 }
