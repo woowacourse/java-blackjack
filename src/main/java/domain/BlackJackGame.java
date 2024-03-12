@@ -5,7 +5,6 @@ import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Player;
 import domain.gamer.Players;
-import domain.result.DealerResult;
 import domain.result.PlayerResults;
 import domain.result.Result;
 import java.util.LinkedHashMap;

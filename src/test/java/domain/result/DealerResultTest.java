@@ -1,7 +1,6 @@
 package domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import domain.gamer.Name;
 import domain.gamer.Player;

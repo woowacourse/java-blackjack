@@ -3,8 +3,8 @@ package domain.gamer;
 import exception.NotAllowedNameException;
 
 public class Player extends Gamer {
-    private static final int STAY_CONDITION = 21;
     public static final String DEALER_NAME = "딜러";
+    private static final int STAY_CONDITION = 21;
 
     public Player(final Name name) {
         super(name);
