@@ -44,21 +44,21 @@ public class BlackjackController {
     }
 
     private void play(final Game game) {
-        Players players = game.players();
-        CardGenerator cardGenerator = game.cardGenerator();
-        Dealer dealer = game.dealer();
-        if (dealer.isBlackJack()) {
+        if (canAction(game.dealer())) {
             return;
         }
-        doAction(players, dealer, cardGenerator);
+        doAction(game.players(), game.dealer(), game.cardGenerator());
+    }
+
+    private boolean canAction(final Dealer dealer) {
+        return dealer.isBlackJack();
     }
 
     private void doAction(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
         for (Player player : players.getPlayers()) {
             doPlayerActionUtilEnd(player, cardGenerator);
         }
-        dealer.doAction(cardGenerator);
-        outputView.printDealerActionResult(dealer);
+        doDealerAction(dealer, cardGenerator);
     }
 
     private void doPlayerActionUtilEnd(final Player player, final CardGenerator cardGenerator) {
@@ -77,6 +77,11 @@ public class BlackjackController {
         return player.canHit() && command;
     }
 
+    private void doDealerAction(Dealer dealer, CardGenerator cardGenerator) {
+        dealer.hitUntilEnd(cardGenerator);
+        outputView.printDealerActionResult(dealer);
+    }
+    
     private void end(final Game game) {
         Players players = game.players();
         Dealer dealer = game.dealer();

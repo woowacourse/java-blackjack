@@ -30,7 +30,7 @@ public class CardsTest {
         Cards cards = new Cards(arbitraryCards);
 
         // when
-        int actualTotal = cards.calculateCardsTotal();
+        int actualTotal = cards.calculateTotalScore();
 
         // then
         int expectedTotal = arbitraryCards.stream()
@@ -53,7 +53,7 @@ public class CardsTest {
         Cards cards = new Cards(arbitraryCards);
 
         // when
-        int actualTotal = cards.calculateCardsTotal();
+        int actualTotal = cards.calculateTotalScore();
 
         // then
         assertThat(actualTotal).isEqualTo(21);
