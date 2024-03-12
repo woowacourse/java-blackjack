@@ -4,9 +4,7 @@ import java.util.List;
 
 import blackjack.dto.CardDto;
 import blackjack.dto.DealerInitialHandDto;
-import blackjack.dto.DealerResultDto;
 import blackjack.dto.GamerHandDto;
-import blackjack.dto.PlayerResultsDto;
 
 public class OutputView {
 
@@ -84,37 +82,6 @@ public class OutputView {
 			.append(COLON_WITH_SPACE)
 			.append(score);
 		System.out.println(builder);
-	}
-
-	public void printFinalResult(DealerResultDto dealerResultDto, PlayerResultsDto playerResultsDto) {
-		System.out.println("## 최종 승패");
-		printDealerResult(dealerResultDto);
-		printPlayerResults(playerResultsDto);
-	}
-
-	private void printDealerResult(DealerResultDto dealerResultDto) {
-		int winCount = dealerResultDto.winCount();
-		int loseCount = dealerResultDto.loseCount();
-		printResult(dealerResultDto.name(), formatDealerResult(winCount, loseCount));
-	}
-
-	private void printResult(String name, String result) {
-		System.out.println(name + COLON_WITH_SPACE + result);
-	}
-
-	private String formatDealerResult(int winCount, int loseCount) {
-		StringBuilder stringBuilder = new StringBuilder();
-		if (winCount > 0) {
-			stringBuilder.append(winCount).append("승 ");
-		}
-		if (loseCount > 0) {
-			stringBuilder.append(loseCount).append("패");
-		}
-		return stringBuilder.toString();
-	}
-
-	private void printPlayerResults(PlayerResultsDto playerResultsDto) {
-		playerResultsDto.playerNameResults().forEach(this::printResult);
 	}
 
 	public void printEmptyLine() {

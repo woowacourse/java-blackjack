@@ -1,7 +1,5 @@
 package blackjack.domain.gamer;
 
-import java.util.List;
-
 import blackjack.domain.BlackjackConstants;
 
 public class Dealer extends BlackjackGamer {
@@ -15,17 +13,5 @@ public class Dealer extends BlackjackGamer {
 	@Override
 	public boolean canReceiveCard() {
 		return getScore() < BlackjackConstants.DEALER_MINIMUM_VALUE.getValue();
-	}
-
-	public int calculateWinCount(List<GameResult> playerResults) {
-		return (int)playerResults.stream()
-			.filter(GameResult::isLose)
-			.count();
-	}
-
-	public int calculateLoseCount(List<GameResult> playerResults) {
-		return (int)playerResults.stream()
-			.filter(GameResult::isWin)
-			.count();
 	}
 }

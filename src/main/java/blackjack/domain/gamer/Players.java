@@ -49,10 +49,4 @@ public class Players {
 	public List<Player> getPlayers() {
 		return List.copyOf(players);
 	}
-
-	public List<GameResult> getAllPlayerGameResults(Dealer dealer) {
-		return players.stream()
-			.map(player -> player.getGameResult(dealer))
-			.toList();
-	}
 }

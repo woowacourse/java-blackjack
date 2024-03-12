@@ -8,9 +8,7 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.dto.DealerInitialHandDto;
-import blackjack.dto.DealerResultDto;
 import blackjack.dto.GamerHandDto;
-import blackjack.dto.PlayerResultsDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -38,7 +36,6 @@ public class BlackjackController {
 		distributeCardToPlayers(players, deck);
 		distributeCardToDealer(dealer, deck);
 		printAllGamerScores(dealer, players);
-		printResult(dealer, players);
 	}
 
 	private Players getPlayers() {
@@ -107,12 +104,5 @@ public class BlackjackController {
 		players.getPlayers().forEach(player -> outputView.printScore(
 			GamerHandDto.fromGamer(player), player.getScore()
 		));
-	}
-
-	private void printResult(Dealer dealer, Players players) {
-		PlayerResultsDto playerResultsDto = PlayerResultsDto.ofPlayersAndDealerScore(players, dealer);
-		DealerResultDto dealerResultDto = DealerResultDto.ofDealerAndPlayers(dealer, players);
-
-		outputView.printFinalResult(dealerResultDto, playerResultsDto);
 	}
 }
