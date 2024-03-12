@@ -20,7 +20,7 @@ public class BlackjackController {
     public void playBlackJack() {
         Players players = joinPlayer();
         processGame(players);
-        checkGameResult(players);
+        printGameResult(players);
     }
 
     private Players joinPlayer() {
@@ -37,7 +37,7 @@ public class BlackjackController {
         PlayerView.printPlayersWithScore(players);
     }
 
-    private void checkGameResult(Players players) {
+    private void printGameResult(Players players) {
         Result result = blackjack.compareResults(players.getDealer(), players.getGamePlayers());
         ResultView.printResult(result);
     }
