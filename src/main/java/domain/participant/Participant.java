@@ -12,7 +12,7 @@ public abstract class Participant {
         this.hand = hand;
     }
 
-    abstract public boolean isDrawable();
+    public abstract boolean isDrawable();
 
     public void draw(final Deck deck) {
         hand.addCard(deck.drawn());
@@ -27,7 +27,7 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return hand.isBust();
+        return hand.getTotalScore().isBustValue();
     }
 
     public boolean isBlackJack() {

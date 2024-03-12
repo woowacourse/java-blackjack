@@ -23,7 +23,7 @@ public class DealerTest {
         assertThat(dealer).isNotNull();
     }
 
-    @DisplayName("딜러의 손패 합이 16이하이면 true를 반환한다.")
+    @DisplayName("딜러가 카드를 뽑을 수 있는 상태이면 true를 반환한다.")
     @Test
     void isDrawableTest() {
         // Given
@@ -44,7 +44,7 @@ public class DealerTest {
         // Given
         Deck deck = Deck.init();
         Hand initHand = Hand.init();
-        int totalScore = initHand.getTotalScore().getTotalScore();
+        int totalScore = initHand.getTotalScore().value();
         Dealer dealer = new Dealer(initHand);
 
         // When

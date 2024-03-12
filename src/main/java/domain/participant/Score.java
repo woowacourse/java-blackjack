@@ -4,15 +4,9 @@ import domain.playingcard.PlayingCard;
 
 import java.util.List;
 
-public class Score {
+public record Score(int value) {
     private static final int BLACKJACK_CONDITION_VALUE = 21;
     private static final int ACE_ADDITIONAL_VALUE = 10;
-
-    private final int totalScore;
-
-    private Score(final int totalScore) {
-        this.totalScore = totalScore;
-    }
 
     public static Score of(final List<PlayingCard> playingCards) {
         int totalScore = playingCards.stream()
@@ -35,19 +29,15 @@ public class Score {
         return (totalScore + ACE_ADDITIONAL_VALUE) <= BLACKJACK_CONDITION_VALUE;
     }
 
-    public boolean isBigger(final int otherScore) {
-        return this.totalScore > otherScore;
+    public boolean isBigger(final Score other) {
+        return this.value > other.value;
     }
 
-    public boolean isLower(final int otherScore) {
-        return this.totalScore < otherScore;
+    public boolean isBustValue() {
+        return this.value > BLACKJACK_CONDITION_VALUE;
     }
 
-    public boolean isLowerOrEqual(final int otherScore) {
-        return this.totalScore <= otherScore;
-    }
-
-    public int getTotalScore() {
-        return totalScore;
+    public boolean isEqualOrLess(int target) {
+        return this.value <= target;
     }
 }

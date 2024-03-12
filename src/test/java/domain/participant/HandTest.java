@@ -31,24 +31,10 @@ public class HandTest {
         Hand hand = new Hand(playingCards);
 
         // When
-        int result = hand.getTotalScore().getTotalScore();
+        int result = hand.getTotalScore().value();
 
         // Then
         assertThat(result).isEqualTo(11);
-    }
-
-    @DisplayName("손패에 있는 카드의 합이 21을 넘으면 true반환한다.")
-    @Test
-    void isBustTest() {
-        // Given
-        List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING), new PlayingCard(CLOVER, QUEEN), new PlayingCard(SPADE, NINE));
-        Hand hand = new Hand(playingCards);
-
-        // When
-        boolean isBust = hand.isBust();
-
-        // Then
-        assertThat(isBust).isTrue();
     }
 
     @DisplayName("손패에 새로운 카드를 추가한다.")
@@ -56,7 +42,7 @@ public class HandTest {
     void addCardTest() {
         // Given
         Hand hand = Hand.init();
-        int totalScore = hand.getTotalScore().getTotalScore();
+        int totalScore = hand.getTotalScore().value();
         PlayingCard card = new PlayingCard(DIAMOND, NINE);
 
         // When

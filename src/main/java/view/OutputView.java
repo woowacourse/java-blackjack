@@ -73,22 +73,22 @@ public class OutputView {
             final List<PlayerHandStatusDto> playerHandStatuses
     ) {
         System.out.println("딜러 카드: " + convertPlayingCardsToPrintMessage(dealerHandStatus.playingCards())
-                + " - 결과: " + dealerHandStatus.playerTotalScore().getTotalScore());
+                + " - 결과: " + dealerHandStatus.playerTotalScore().value());
         playerHandStatuses.forEach(playerHandStatus -> {
             System.out.println(convertPlayerCardsToPrintMessage(playerHandStatus.playerName(), playerHandStatus.playingCards())
-                    + " - 결과: " + playerHandStatus.playerTotalScore().getTotalScore());
+                    + " - 결과: " + playerHandStatus.playerTotalScore().value());
         });
         System.out.println();
     }
 
     public static void printGameResult(final GameResults gameResults) {
         System.out.println("## 최종 승패");
-        List<GameResult> dealerGameResults = gameResults.getDealerGameResults();
+        List<GameResult> dealerGameResults = gameResults.dealerGameResults();
         System.out.println("딜러: "
                 + getDealerGameResultCount(dealerGameResults, WIN) + "승 "
                 + getDealerGameResultCount(dealerGameResults, LOSE) + "패 "
                 + getDealerGameResultCount(dealerGameResults, DRAW) + "무");
-        gameResults.getPlayerGameResults()
+        gameResults.playerGameResults()
                 .forEach((key, value) ->
                         System.out.println(convertPlayerGameResultToPrintMessage(key, value)));
     }

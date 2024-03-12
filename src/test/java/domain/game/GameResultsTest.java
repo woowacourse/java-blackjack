@@ -7,6 +7,8 @@ import domain.participant.Player;
 import domain.participant.PlayerName;
 import domain.playingcard.PlayingCard;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -16,6 +18,7 @@ import static domain.playingcard.PlayingCardShape.*;
 import static domain.playingcard.PlayingCardValue.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class GameResultsTest {
     @DisplayName("플레이어가 버스트면 딜러가 승리한다.")
     @Test
@@ -27,8 +30,8 @@ class GameResultsTest {
 
         // When
         GameResults gameResults = GameResults.of(dealer, List.of(player));
-        GameResult dealerGameResult = gameResults.getDealerGameResults().get(0);
-        GameResult playerGameResult = gameResults.getPlayerGameResults().get(playerName);
+        GameResult dealerGameResult = gameResults.dealerGameResults().get(0);
+        GameResult playerGameResult = gameResults.playerGameResults().get(playerName);
 
         // Then
         assertThat(dealerGameResult).isEqualTo(WIN);
@@ -46,8 +49,8 @@ class GameResultsTest {
 
         // When
         GameResults gameResults = GameResults.of(dealer, List.of(player));
-        GameResult dealerGameResult = gameResults.getDealerGameResults().get(0);
-        GameResult playerGameResult = gameResults.getPlayerGameResults().get(playerName);
+        GameResult dealerGameResult = gameResults.dealerGameResults().get(0);
+        GameResult playerGameResult = gameResults.playerGameResults().get(playerName);
 
         // Then
         assertThat(dealerGameResult).isEqualTo(WIN);
@@ -66,8 +69,8 @@ class GameResultsTest {
 
         // When
         GameResults gameResults = GameResults.of(dealer, List.of(player));
-        GameResult dealerGameResult = gameResults.getDealerGameResults().get(0);
-        GameResult playerGameResult = gameResults.getPlayerGameResults().get(playerName);
+        GameResult dealerGameResult = gameResults.dealerGameResults().get(0);
+        GameResult playerGameResult = gameResults.playerGameResults().get(playerName);
 
         // Then
         assertThat(dealerGameResult).isEqualTo(WIN);
@@ -85,8 +88,8 @@ class GameResultsTest {
 
         // When
         GameResults gameResults = GameResults.of(dealer, List.of(player));
-        GameResult dealerGameResult = gameResults.getDealerGameResults().get(0);
-        GameResult playerGameResult = gameResults.getPlayerGameResults().get(playerName);
+        GameResult dealerGameResult = gameResults.dealerGameResults().get(0);
+        GameResult playerGameResult = gameResults.playerGameResults().get(playerName);
 
         // Then
         assertThat(dealerGameResult).isEqualTo(LOSE);
@@ -104,8 +107,8 @@ class GameResultsTest {
 
         // When
         GameResults gameResults = GameResults.of(dealer, List.of(player));
-        GameResult dealerGameResult = gameResults.getDealerGameResults().get(0);
-        GameResult playerGameResult = gameResults.getPlayerGameResults().get(playerName);
+        GameResult dealerGameResult = gameResults.dealerGameResults().get(0);
+        GameResult playerGameResult = gameResults.playerGameResults().get(playerName);
 
         // Then
         assertThat(dealerGameResult).isEqualTo(LOSE);
@@ -124,8 +127,8 @@ class GameResultsTest {
 
         // When
         GameResults gameResults = GameResults.of(dealer, List.of(player));
-        GameResult dealerGameResult = gameResults.getDealerGameResults().get(0);
-        GameResult playerGameResult = gameResults.getPlayerGameResults().get(playerName);
+        GameResult dealerGameResult = gameResults.dealerGameResults().get(0);
+        GameResult playerGameResult = gameResults.playerGameResults().get(playerName);
 
         // Then
         assertThat(dealerGameResult).isEqualTo(LOSE);
@@ -142,8 +145,27 @@ class GameResultsTest {
 
         // When
         GameResults gameResults = GameResults.of(dealer, List.of(player));
-        GameResult dealerGameResult = gameResults.getDealerGameResults().get(0);
-        GameResult playerGameResult = gameResults.getPlayerGameResults().get(playerName);
+        GameResult dealerGameResult = gameResults.dealerGameResults().get(0);
+        GameResult playerGameResult = gameResults.playerGameResults().get(playerName);
+
+        // Then
+        assertThat(dealerGameResult).isEqualTo(DRAW);
+        assertThat(playerGameResult).isEqualTo(DRAW);
+    }
+
+    @Test
+    void 플레이어와_딜러의_손패합이_같으면_무승부_판정을_내린다() {
+        // Given
+        PlayerName playerName = new PlayerName("kelly");
+        Hand playerHand = new Hand(List.of(new PlayingCard(DIAMOND, FOUR), new PlayingCard(CLOVER, FIVE)));
+        Player player = new Player(playerName, playerHand);
+        Hand dealerHand = new Hand(List.of(new PlayingCard(HEART, TWO), new PlayingCard(SPADE, SEVEN)));
+        Dealer dealer = new Dealer(dealerHand);
+
+        // When
+        GameResults gameResults = GameResults.of(dealer, List.of(player));
+        GameResult dealerGameResult = gameResults.dealerGameResults().get(0);
+        GameResult playerGameResult = gameResults.playerGameResults().get(playerName);
 
         // Then
         assertThat(dealerGameResult).isEqualTo(DRAW);

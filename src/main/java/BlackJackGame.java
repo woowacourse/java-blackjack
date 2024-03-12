@@ -21,7 +21,6 @@ public class BlackJackGame {
 
         play(deck, dealer, players);
 
-//        GameResults gameResults = dealer.determineGameResults(players);
         GameResults gameResults = GameResults.of(dealer, players);
         OutputView.printGameResult(gameResults);
     }

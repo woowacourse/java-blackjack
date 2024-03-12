@@ -10,14 +10,7 @@ import java.util.*;
 import static domain.constant.GameResult.*;
 import static java.util.Collections.*;
 
-public class GameResults {
-    private final List<GameResult> dealerGameResults;
-    private final Map<PlayerName, GameResult> playerGameResults;
-
-    public GameResults(final List<GameResult> dealerGameResults, final Map<PlayerName, GameResult> playerGameResults) {
-        this.dealerGameResults = dealerGameResults;
-        this.playerGameResults = playerGameResults;
-    }
+public record GameResults(List<GameResult> dealerGameResults, Map<PlayerName, GameResult> playerGameResults) {
 
     public static GameResults of(Dealer dealer, List<Player> players) {
         List<GameResult> dealerGameResults = new ArrayList<>();
@@ -33,27 +26,15 @@ public class GameResults {
             final List<GameResult> dealerGameResults,
             final Map<PlayerName, GameResult> playerGameResults
     ) {
-        if (isDealerWin(dealer, player)) {
+        if (dealer.isWin(player)) {
             addGameResult(dealerGameResults, playerGameResults, player, WIN, LOSE);
             return;
         }
-        if (isPlayerWin(dealer, player)) {
+        if (player.isWin(dealer)) {
             addGameResult(dealerGameResults, playerGameResults, player, LOSE, WIN);
             return;
         }
         addGameResult(dealerGameResults, playerGameResults, player, DRAW, DRAW);
-    }
-
-    private static boolean isDealerWin(Dealer dealer, Player player) {
-        return player.isBust()
-                || (dealer.isBlackJack() && !player.isBlackJack())
-                || (!dealer.isBust() && dealer.getTotalScore().isBigger(player.getTotalScore().getTotalScore()));
-    }
-
-    private static boolean isPlayerWin(Dealer dealer, Player player) {
-        return (dealer.isBust() && !player.isBust())
-                || (player.isBlackJack() && !dealer.isBlackJack())
-                || player.getTotalScore().isBigger(dealer.getTotalScore().getTotalScore());
     }
 
     private static void addGameResult(
@@ -65,13 +46,5 @@ public class GameResults {
     ) {
         dealerGameResults.add(dealerGameResult);
         playerGameResults.put(player.getPlayerName(), playerGameResult);
-    }
-
-    public List<GameResult> getDealerGameResults() {
-        return unmodifiableList(dealerGameResults);
-    }
-
-    public Map<PlayerName, GameResult> getPlayerGameResults() {
-        return unmodifiableMap(playerGameResults);
     }
 }

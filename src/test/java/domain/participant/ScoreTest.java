@@ -24,7 +24,7 @@ class ScoreTest {
         Score score = Score.of(playingCards);
 
         // Then
-        assertThat(score.getTotalScore()).isEqualTo(9);
+        assertThat(score.value()).isEqualTo(9);
     }
 
     @Test
@@ -36,7 +36,7 @@ class ScoreTest {
         Score score = Score.of(playingCards);
 
         // Then
-        assertThat(score.getTotalScore()).isEqualTo(18);
+        assertThat(score.value()).isEqualTo(18);
     }
 
     @Test
@@ -52,6 +52,6 @@ class ScoreTest {
         Score score = Score.of(playingCards);
 
         // Then
-        assertThat(score.getTotalScore()).isEqualTo(18);
+        assertThat(score.value()).isEqualTo(18);
     }
 }

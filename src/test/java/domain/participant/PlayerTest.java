@@ -26,7 +26,7 @@ public class PlayerTest {
         assertThat(player).isNotNull();
     }
 
-    @DisplayName("플레이어가 버스트가 아니면 True를 반환한다.")
+    @DisplayName("플레이어가 카드를 뽑을 수 있는 상태이면 true를 반환한다.")
     @Test
     void isDrawableTest() {
         // Given
@@ -47,7 +47,7 @@ public class PlayerTest {
         // Given
         Deck deck = Deck.init();
         Hand initHand = Hand.init();
-        int totalScore = initHand.getTotalScore().getTotalScore();
+        int totalScore = initHand.getTotalScore().value();
         Player player = new Player(new PlayerName("kelly"), initHand);
 
         // When
