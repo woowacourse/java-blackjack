@@ -52,6 +52,15 @@ public class Hand {
         return cards.size() == INITIAL_COUNT;
     }
 
+    public boolean isNotBust() {
+        Score handScore = calculate();
+        return handScore.isNotBurst();
+    }
+
+    public boolean isBust() {
+        return !isNotBust();
+    }
+
     public List<Card> getCards() {
         return new ArrayList<>(cards);
     }

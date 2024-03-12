@@ -50,4 +50,23 @@ class HandTest {
 
         assertThat(initialHand.isBlackJack()).isTrue();
     }
+
+    @DisplayName("핸드가 21점 이하면 버스트가 아니다")
+    @Test
+    public void isNotBustTrue() {
+        Hand hand = Hand.of(CardFixture.fromSuitCloverWith(Denomination.TEN),
+                CardFixture.fromSuitCloverWith(Denomination.ACE));
+
+        assertThat(hand.isNotBust()).isTrue();
+    }
+
+    @DisplayName("핸드가 21점 초과면 버스트다")
+    @Test
+    public void isBustTrue() {
+        Hand hand = Hand.of(CardFixture.fromSuitCloverWith(Denomination.TEN),
+                CardFixture.fromSuitCloverWith(Denomination.KING),
+                CardFixture.fromSuitCloverWith(Denomination.TWO));
+
+        assertThat(hand.isBust()).isTrue();
+    }
 }
