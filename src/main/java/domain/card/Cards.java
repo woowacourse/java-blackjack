@@ -12,21 +12,21 @@ public class Cards {
     }
 
     public void addCard(Card card) {
-        if (sumAllScore().isBust()) {
+        if (sumAllCards().isBust()) {
             throw new IllegalStateException("버스트 상태에서는 카드를 추가할 수 없습니다.");
         }
         cards.add(card);
     }
 
-    public Score sumAllScore() {
-        Score score = sum();
+    public Score sumAllCards() {
+        Score score = sumScores();
         if (hasAce()) {
             return score.plusBonusScore();
         }
         return score;
     }
 
-    private Score sum() {
+    private Score sumScores() {
         return cards.stream()
                 .map(Card::getScore)
                 .reduce(Score.ZERO, Score::plus);

@@ -20,7 +20,7 @@ public class Participant {
     }
 
     public Score calculateScore() {
-        return cards.sumAllScore();
+        return cards.sumAllCards();
     }
 
     public String getName() {

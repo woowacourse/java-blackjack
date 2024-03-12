@@ -32,41 +32,41 @@ class CardsTest {
         cards.addCard(카드(Denomination.TEN));
         cards.addCard(카드(Denomination.SIX));
 
-        Score score = cards.sumAllScore();
+        Score score = cards.sumAllCards();
 
         assertThat(score).isEqualTo(Score.get(16));
     }
 
     @Test
-    void Ace는_1_또는_11로_계산할_수_있다_1() {
+    void Ace_6은_17이다() {
         Cards cards = new Cards();
         cards.addCard(카드(Denomination.ACE));
         cards.addCard(카드(Denomination.SIX));
 
-        Score result = cards.sumAllScore();
+        Score result = cards.sumAllCards();
 
         assertThat(result).isEqualTo(Score.get(17));
     }
 
     @Test
-    void Ace는_1_또는_11로_계산할_수_있다_2() {
+    void Ace_Ace는_12이다() {
         Cards cards = new Cards();
         cards.addCard(카드(Denomination.ACE));
         cards.addCard(카드(Denomination.ACE));
 
-        Score result = cards.sumAllScore();
+        Score result = cards.sumAllCards();
 
         assertThat(result).isEqualTo(Score.get(12));
     }
 
     @Test
-    void Ace는_1_또는_11로_계산할_수_있다_3() {
+    void King_Jack_Ace는_21이다() {
         Cards cards = new Cards();
         cards.addCard(카드(Denomination.ACE));
         cards.addCard(카드(Denomination.KING));
         cards.addCard(카드(Denomination.JACK));
 
-        Score result = cards.sumAllScore();
+        Score result = cards.sumAllCards();
 
         assertThat(result).isEqualTo(Score.get(21));
     }
