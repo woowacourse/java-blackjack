@@ -82,7 +82,7 @@ public class PlayerTest {
         player.hit(cards.removeLast());
 
         // when
-        boolean stay = player.isOverTurn();
+        boolean stay = player.canHit();
 
         // then
         assertThat(stay).isTrue();
@@ -96,7 +96,7 @@ public class PlayerTest {
         player.hit(cards.removeLast());
 
         // when
-        boolean stay = player.isOverTurn();
+        boolean stay = player.canHit();
 
         // then
         assertThat(stay).isFalse();

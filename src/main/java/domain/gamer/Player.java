@@ -3,6 +3,7 @@ package domain.gamer;
 import exception.NotAllowedNameException;
 
 public class Player extends Gamer {
+    private static final int STAY_CONDITION = 21;
     public static final String DEALER_NAME = "딜러";
 
     public Player(final Name name) {
@@ -17,7 +18,7 @@ public class Player extends Gamer {
     }
 
     @Override
-    public boolean isOverTurn() {
-        return getHand().isBust();
+    int getStayCondition() {
+        return STAY_CONDITION;
     }
 }

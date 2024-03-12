@@ -75,7 +75,7 @@ public class DealerTest {
         dealer.hit(cards.removeLast());
 
         // when
-        boolean stay = dealer.isOverTurn();
+        boolean stay = dealer.canHit();
 
         // then
         assertThat(stay).isFalse();
@@ -90,7 +90,7 @@ public class DealerTest {
         dealer.hit(cards.removeLast());
 
         // when
-        boolean stay = dealer.isOverTurn();
+        boolean stay = dealer.canHit();
 
         // then
         assertThat(stay).isTrue();
