@@ -5,23 +5,24 @@ import blackjackgame.domain.card.Deck;
 import java.util.List;
 
 public class CardHolders {
-    private final List<CardHolder> players;
+    private final List<CardHolder> cardHolders;
 
     public CardHolders(List<CardHolder> players) {
-        this.players = players;
+        this.cardHolders = players;
     }
 
     public void drawNTimes(Deck deck, int execution_count) {
-        players.forEach(player -> player.draw(deck, new PlayerRandomCardDrawStrategy(player), execution_count));
+        cardHolders.forEach(cardHolder ->
+                cardHolder.draw(deck, new PlayerRandomCardDrawStrategy(cardHolder), execution_count));
     }
 
     public List<String> getRawPlayerNames() {
-        return players.stream()
+        return cardHolders.stream()
                 .map(CardHolder::getRawName)
                 .toList();
     }
 
     public List<CardHolder> getCardHolders() {
-        return players;
+        return cardHolders;
     }
 }

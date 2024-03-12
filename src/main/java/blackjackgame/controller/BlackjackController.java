@@ -5,6 +5,7 @@ import blackjackgame.domain.blackjack.BetMoney;
 import blackjackgame.domain.blackjack.GameResult;
 import blackjackgame.domain.blackjack.GameResultCalculator;
 import blackjackgame.domain.blackjack.HoldingCards;
+import blackjackgame.domain.blackjack.PlayerRandomCardDrawStrategy;
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.Deck;
 import blackjackgame.domain.gamers.BetMaker;
@@ -120,14 +121,14 @@ public class BlackjackController {
     }
 
     private void playersTryDraw(BlackjackGame blackjackGame, Deck deck) {
-        List<CardHolder> players = blackjackGame.getRawPlayers();
-        players.forEach(player -> playerTryDraw(blackjackGame, deck, player));
+        List<CardHolder> cardHolders = blackjackGame.getRawPlayers();
+        cardHolders.forEach(cardHolder -> playerTryDraw(deck, cardHolder));
     }
 
-    private void playerTryDraw(BlackjackGame blackjackGame, Deck deck, CardHolder player) {
-        while(!blackjackGame.isPlayerDead(player) && inputYesOrNo(player)) {
-            blackjackGame.playerTryDraw(deck, player);
-            printPlayer(player);
+    private void playerTryDraw(Deck deck, CardHolder cardHolder) {
+        while(!cardHolder.isDead() && inputYesOrNo(cardHolder.getRawName())) {
+            cardHolder.draw(deck, new PlayerRandomCardDrawStrategy(cardHolder));
+            printPlayer(cardHolder);
         }
     }
 
@@ -135,8 +136,8 @@ public class BlackjackController {
         blackjackGame.dealerTryDraw(deck);
     }
 
-    private static boolean inputYesOrNo(CardHolder player) {
-        OutputView.printPlayerAdditionalCardMessage(player.getRawName());
+    private static boolean inputYesOrNo(String playerName) {
+        OutputView.printPlayerAdditionalCardMessage(playerName);
         return YesOrNoInputView.getYNAsBoolean();
     }
 
