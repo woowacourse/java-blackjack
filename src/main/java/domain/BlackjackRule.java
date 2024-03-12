@@ -9,14 +9,22 @@ import java.util.List;
 
 public class BlackjackRule {
     public GameResult calculate(final Players players, final Dealer dealer) {
-        final List<PlayerResult> playerResults = players.getPlayers().stream()
-                .map(player -> match(player, dealer))
-                .toList();
+        final List<PlayerResult> playerResults = calculatePlayerResults(players, dealer);
 
         final long playerWins = countPlayerWins(playerResults);
+        final DealerResult dealerResult = calculateDealerResult(players, dealer, playerWins);
 
-        final DealerResult dealerResult = new DealerResult(dealer.getName(), (int) (players.size() - playerWins), (int) playerWins);
         return new GameResult(playerResults, dealerResult);
+    }
+
+    private DealerResult calculateDealerResult(final Players players, final Dealer dealer, final long playerWins) {
+        return new DealerResult(dealer.getName(), (int) (players.size() - playerWins), (int) playerWins);
+    }
+
+    private List<PlayerResult> calculatePlayerResults(final Players players, final Dealer dealer) {
+        return players.getPlayers().stream()
+                .map(player -> match(player, dealer))
+                .toList();
     }
 
     private long countPlayerWins(final List<PlayerResult> playerResults) {
