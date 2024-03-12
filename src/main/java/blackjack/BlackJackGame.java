@@ -29,7 +29,7 @@ public class BlackJackGame {
         printPlayersInformation(players, dealer);
 
         completePlayersHand(players, cardDeck);
-        completeDealerHand(dealer, cardDeck);
+        dealer.completeHand(cardDeck);
         outputView.printDealerPopCount(Dealer.HIT_THRESHOLD, dealer.countDraw());
 
         printParticipantScore(dealer);
@@ -59,12 +59,6 @@ public class BlackJackGame {
         while (participant.canHit() && inputView.readDrawDecision(participant.getName()).isYes()) {
             participant.appendCard(cardDeck.popCard());
             outputView.printPlayerHand(participant);
-        }
-    }
-
-    private void completeDealerHand(Dealer dealer, CardDeck cardDeck) {
-        while (dealer.canHit()) {
-            dealer.appendCard(cardDeck.popCard());
         }
     }
 
