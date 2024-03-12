@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.GameBoard;
+import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
@@ -36,6 +37,7 @@ public class BlackjackGame {
         proceedDealerTurn(gameBoard);
         handleResult(gameBoard);
         handleVictory(gameBoard);
+        handleBettingMoney(gameBoard);
     }
 
     private void startBetting(GameBoard gameBoard) {
@@ -101,5 +103,24 @@ public class BlackjackGame {
         playerVictory.forEach(
                 (key, value) -> playerNameVictory.put(key.getName().getValue(), playerVictory.get(key)));
         outputView.printResult(playerNameVictory);
+    }
+
+    private void handleBettingMoney(GameBoard gameBoard) {
+        Map<String, Integer> bettingMoneyResult = new LinkedHashMap<>();
+        handleDealerBettingMoney(gameBoard, bettingMoneyResult);
+        handlePlayersBettingMoney(gameBoard, bettingMoneyResult);
+        outputView.printMoneyResult(bettingMoneyResult);
+    }
+
+    private void handleDealerBettingMoney(GameBoard gameBoard, Map<String, Integer> bettingMoneyResult) {
+        Dealer dealer = gameBoard.getDealer();
+        bettingMoneyResult.put(dealer.getName().getValue(), dealer.getMoney());
+    }
+
+    private void handlePlayersBettingMoney(GameBoard gameBoard, Map<String, Integer> bettingMoneyResult) {
+        Players players = gameBoard.getPlayers();
+        for(int i = 0; i < gameBoard.countPlayers(); i++) {
+            bettingMoneyResult.put(players.getOnePlayerName(i).getValue(), players.getOnePlayerMoney(i));
+        }
     }
 }
