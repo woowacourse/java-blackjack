@@ -6,6 +6,7 @@ import blackjack.dto.NameCardsScore;
 import blackjack.dto.PlayerNameFinalResult;
 import blackjack.model.deck.Deck;
 import blackjack.model.participant.Dealer;
+import blackjack.model.participant.Participant;
 import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
 import blackjack.model.result.Referee;
@@ -100,7 +101,7 @@ public class BlackJackGame {
         }
     }
 
-    private void distributeNewCard(final Player player, final Deck deck) {
+    private void distributeNewCard(final Participant player, final Deck deck) {
         player.receiveCard(deck.distribute());
     }
 

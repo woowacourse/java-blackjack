@@ -45,6 +45,7 @@ public class Deck {
         return new ArrayDeque<>(originDeck);
     }
 
+    // TODO: 아래 애들 없애기
     public Hand distributeInitialCard() {
         return new Hand(List.of(distribute(), distribute()));
     }
