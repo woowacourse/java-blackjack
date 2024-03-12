@@ -28,8 +28,4 @@ public class Deck {
 
         return trumpCards.poll();
     }
-
-    public Queue<TrumpCard> getCards() {
-        return trumpCards;
-    }
 }

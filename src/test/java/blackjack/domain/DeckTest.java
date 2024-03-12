@@ -21,16 +21,6 @@ public class DeckTest {
         deck = new Deck(shuffleStrategy);
     }
 
-    @DisplayName("원하는 순서로 생성에 성공한다.")
-    @Test
-    void shuffleCardInMyOrder() {
-        // given
-        TrumpCard trumpCardAceSpade = aceSpadeTrumpCard();
-
-        // when & then
-        assertThat(deck.getCards().poll()).isEqualTo(trumpCardAceSpade);
-    }
-
     @DisplayName("카드 뭉치의 첫 번째 카드를 반환한다.")
     @Test
     void draw() {
