@@ -1,6 +1,6 @@
 package view;
 
-import domain.dto.BettingResultDto;
+import domain.dto.BettingResult;
 import domain.dto.DealerHandStatusDto;
 import domain.dto.PlayerHandStatusDto;
 import domain.dto.PlayingCardDto;
@@ -73,7 +73,7 @@ public class OutputView {
         System.out.println("딜러: " + dealerSum);
     }
 
-    public static void printPlayerBettingResult(final BettingResultDto bettingResult) {
+    public static void printPlayerBettingResult(final BettingResult bettingResult) {
         bettingResult.result().forEach((key, value) -> System.out.println(key.value() + ": " + value));
     }
 }
