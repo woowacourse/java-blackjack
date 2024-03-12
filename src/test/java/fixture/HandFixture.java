@@ -6,17 +6,9 @@ import blackjack.domain.card.CardSuit;
 import blackjack.domain.card.Hand;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class HandFixture {
-
-    public static Hand of(int... numbers) {
-        return new Hand(Arrays.stream(numbers)
-                .mapToObj(CardFixture::from)
-                .collect(Collectors.toList()));
-    }
 
     public static Hand createHandWithScoreTotal21() {
         List<Card> cards = new ArrayList<>();

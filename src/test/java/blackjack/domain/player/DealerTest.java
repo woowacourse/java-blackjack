@@ -31,7 +31,7 @@ class DealerTest {
     @Test
     void testCanNotHit() {
         // given
-        Hand hand = HandFixture.createHandWithScoreTotal21();
+        Hand hand = HandFixture.createHandWithScoreTotal16();
         hand.append(new Card(CardRank.ACE, CardSuit.HEART));
 
         Dealer dealer = new Dealer(hand);
