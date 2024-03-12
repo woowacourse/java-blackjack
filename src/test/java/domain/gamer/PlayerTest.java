@@ -1,10 +1,8 @@
-package player;
+package domain.gamer;
 
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardPattern;
-import domain.gamer.Name;
-import domain.gamer.Player;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
