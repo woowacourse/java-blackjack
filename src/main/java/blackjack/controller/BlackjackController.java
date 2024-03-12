@@ -1,11 +1,9 @@
 package blackjack.controller;
 
 import blackjack.domain.Blackjack;
-import blackjack.domain.card.Card;
 import blackjack.domain.common.Names;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.GamePlayer;
-import blackjack.domain.player.Players;
 import blackjack.domain.result.Result;
 import blackjack.view.BlackjackCommand;
 import blackjack.view.InputView;
@@ -20,48 +18,50 @@ public class BlackjackController {
     }
 
     public void playBlackJack() {
-        final Players players = joinPlayer();
+        joinPlayer();
 
-        processGame(players);
+        processGame();
 
-        checkGameResult(players);
+        checkGameResult();
     }
 
-    private Players joinPlayer() {
+    private void joinPlayer() {
         final Names names = Names.from(InputView.inputPlayerNames());
-        final Players players = blackjack.acceptPlayers(names);
-        PlayerView.printPlayers(players.dealer(), players.gamePlayers());
-        return players;
+        blackjack.acceptPlayers(names);
+        PlayerView.printPlayers(blackjack.getDealer(), blackjack.getGamePlayers());
     }
 
-    private void processGame(final Players players) {
-        players.gamePlayers()
-               .forEach(gamePlayer -> processGamePlayer(blackjack, gamePlayer));
-        processDealer(blackjack, players.dealer());
-        PlayerView.printPlayersWithScore(players);
+    private void processGame() {
+        processGamePlayers();
+        processDealer();
+        PlayerView.printPlayersWithScore(blackjack.getDealer(), blackjack.getGamePlayers());
     }
 
-    private void checkGameResult(final Players players) {
-        final Result result = blackjack.checkPlayersResult(players.dealer(), players.gamePlayers());
+    private void processGamePlayers() {
+        blackjack.getGamePlayers()
+                 .forEach(this::processGamePlayer);
+    }
+
+    private void processGamePlayer(final GamePlayer gamePlayer) {
+        while (gamePlayer.isReceivable() && isHit(gamePlayer)) {
+            blackjack.participantHitCard(gamePlayer);
+            PlayerView.printGamePlayer(gamePlayer);
+        }
+    }
+
+    private void checkGameResult() {
+        final Result result = blackjack.checkPlayersResult();
         ResultView.printResult(result);
     }
 
-    private void processDealer(final Blackjack blackjack, final Dealer dealer) {
+    private void processDealer() {
+        final Dealer dealer = blackjack.getDealer();
         if (dealer.isReceivable()) {
             PlayerView.printDealerDrawMessage();
-            final Card card = blackjack.draw();
-            dealer.drawCard(card);
+            blackjack.participantHitCard(dealer);
             return;
         }
         PlayerView.printDealerNotDrawMessage();
-    }
-
-    private void processGamePlayer(final Blackjack blackjack, final GamePlayer gamePlayer) {
-        while (gamePlayer.isReceivable() && isHit(gamePlayer)) {
-            final Card card = blackjack.draw();
-            gamePlayer.drawCard(card);
-            PlayerView.printGamePlayer(gamePlayer);
-        }
     }
 
     private boolean isHit(final GamePlayer gamePlayer) {
