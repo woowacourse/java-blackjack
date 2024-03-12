@@ -1,16 +1,18 @@
 package blackjack.domain;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CardFactory {
 
     public List<Card> createBlackJackCard() {
-        return Arrays.stream(CardSuit.values())
-                .flatMap(suit -> Arrays.stream(CardNumber.values())
-                        .map(number -> new Card(suit, number)))
-                .collect(Collectors.toList());
-    }
+        List<Card> cards = new ArrayList<>();
 
+        for (CardSuit suit : CardSuit.values()) {
+            for (CardNumber number : CardNumber.values()) {
+                cards.add(new Card(suit, number));
+            }
+        }
+        return cards;
+    }
 }
