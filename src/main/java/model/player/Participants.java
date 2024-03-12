@@ -8,7 +8,8 @@ import model.card.CardSize;
 import model.card.CardDeck;
 
 public class Participants {
-
+    public static final int MINIMUM_PARTICIPANT_SIZE = 2;
+    public static final int MAXIMUM_PARTICIPANT_SIZE = 8;
     private final List<Participant> participants;
 
     public Participants(List<Participant> participants) {
@@ -31,8 +32,8 @@ public class Participants {
     }
 
     private void validateParticipantSize(List<Participant> participants) {
-        if (participants.isEmpty()) {
-            throw new IllegalArgumentException("참가자의 수는 1명 이상이어야 합니다.");
+        if (participants.size() < MINIMUM_PARTICIPANT_SIZE || participants.size() > MAXIMUM_PARTICIPANT_SIZE) {
+            throw new IllegalArgumentException("참가자의 수는 2~8명이어야 합니다.");
         }
     }
 
