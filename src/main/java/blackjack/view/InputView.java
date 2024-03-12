@@ -28,4 +28,9 @@ public class InputView {
                 HitStay.STAY.getInput());
         return HitStay.from(scanner.nextLine());
     }
+
+    public int readMoney(Player player) {
+        System.out.printf("%s의 배팅 금액은?%n", player.getName());
+        return Integer.parseInt(scanner.nextLine());
+    }
 }

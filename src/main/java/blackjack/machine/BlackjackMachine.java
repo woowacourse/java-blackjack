@@ -1,6 +1,8 @@
 package blackjack.machine;
 
 import blackjack.domain.card.strategy.RandomCardGenerator;
+import blackjack.domain.game.Betting;
+import blackjack.domain.game.BettingCashier;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.Result;
 import blackjack.domain.participant.Dealer;
@@ -24,11 +26,21 @@ public class BlackjackMachine {
 
     public void run() {
         BlackjackGame game = initializeGame();
+        Betting betting = takeBet(game);
         distributeStartingCards(game);
         playPlayersTurn(game);
         playDealerTurn(game);
         printCardsAndScores(game);
-        printResult(game);
+//        printResult(game);
+        printBettingResult(betting, game);
+    }
+
+    private Betting takeBet(BlackjackGame game) {
+        Betting betting = new Betting();
+        for (Player player : game.getPlayers()) {
+            betting.bet(player, inputView.readMoney(player));
+        }
+        return betting.unmodifiableBetting();
     }
 
     private void distributeStartingCards(BlackjackGame game) {
@@ -83,5 +95,11 @@ public class BlackjackMachine {
     private void printResult(BlackjackGame game) {
         Result result = Result.of(game.getPlayers(), game.getDealer());
         outputView.printResult(game, result);
+    }
+
+    private void printBettingResult(Betting betting, BlackjackGame game) {
+        Result result = Result.of(game.getPlayers(), game.getDealer());
+        BettingCashier cashier = new BettingCashier(betting, result);
+        outputView.printProfit(game, cashier);
     }
 }

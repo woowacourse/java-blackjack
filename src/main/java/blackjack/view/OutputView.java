@@ -1,9 +1,9 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.BettingCashier;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.Result;
-import blackjack.domain.game.WinLose;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
@@ -95,5 +95,17 @@ public class OutputView {
             return "패";
         }
         return "무";
+    }
+
+    public void printProfit(BlackjackGame game, BettingCashier cashier) {
+        System.out.println("## 최종 수익");
+        printProfit(game.getDealer(), cashier.findProfitOfDealer());
+        for (Player player : game.getPlayers()) {
+            printProfit(player, cashier.findProfitOf(player));
+        }
+    }
+
+    public void printProfit(Participant participant, int profit) {
+        System.out.printf("%s: %d%n", participant.getName(), profit);
     }
 }
