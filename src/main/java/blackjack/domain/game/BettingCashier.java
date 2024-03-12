@@ -12,8 +12,16 @@ public class BettingCashier {
         this.result = result;
     }
 
+    public int findProfitOfDealer() {
+        int totalProfit = 0;
+        for (Player player : betting.getPlayers()) {
+            totalProfit += findProfitOf(player);
+        }
+        return -totalProfit;
+    }
+
     public int findProfitOf(Player player) {
-        int money = betting.get(player);
+        int money = betting.findMoneyOf(player);
         if (result.isPlayerWon(player)) {
             return money;
         }

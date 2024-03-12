@@ -2,9 +2,7 @@ package blackjack.domain.game;
 
 import blackjack.domain.participant.Player;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Betting {
 
@@ -25,11 +23,18 @@ public class Betting {
         bettingMap.put(player, money);
     }
 
-    public int get(Player player) {
-        return bettingMap.get(player);
+    public int findMoneyOf(Player player) {
+        if (bettingMap.containsKey(player)) {
+            return bettingMap.get(player);
+        }
+        throw new IllegalArgumentException("[ERROR] 존재하지 않는 플레이어입니다.");
     }
 
     public Betting unmodifiableBetting() {
         return new Betting(Collections.unmodifiableMap(bettingMap));
+    }
+
+    public Set<Player> getPlayers() {
+        return bettingMap.keySet();
     }
 }

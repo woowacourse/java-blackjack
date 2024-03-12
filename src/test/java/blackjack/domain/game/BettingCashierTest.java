@@ -40,33 +40,48 @@ class BettingCashierTest {
     @Test
     @DisplayName("승자는 해당 금액만큼의 수익을 얻는다")
     void findProfitOf_Winner() {
-        Player loser = players.get(0);
+        Player winner = players.get(0);
         Betting betting = new Betting();
-        betting.bet(loser, 10000);
+        betting.bet(winner, 10000);
 
         BettingCashier cashier = new BettingCashier(betting, Result.of(players, dealer));
-        assertThat(cashier.findProfitOf(loser)).isEqualTo(10000);
+        assertThat(cashier.findProfitOf(winner)).isEqualTo(10000);
     }
 
     @Test
     @DisplayName("패자는 해당 금액만큼의 수익을 잃는다")
     void findProfitOf_Loser() {
-        Player tier = players.get(1);
+        Player loser = players.get(1);
         Betting betting = new Betting();
-        betting.bet(tier, 10000);
+        betting.bet(loser, 10000);
 
         BettingCashier cashier = new BettingCashier(betting, Result.of(players, dealer));
-        assertThat(cashier.findProfitOf(tier)).isEqualTo(-10000);
+        assertThat(cashier.findProfitOf(loser)).isEqualTo(-10000);
     }
 
     @Test
     @DisplayName("무승부는 수익이 없다(0원 이다)")
     void findProfitOf_Tier() {
-        Player winner = players.get(2);
+        Player tier = players.get(2);
         Betting betting = new Betting();
-        betting.bet(winner, 10000);
+        betting.bet(tier, 10000);
 
         BettingCashier cashier = new BettingCashier(betting, Result.of(players, dealer));
-        assertThat(cashier.findProfitOf(winner)).isEqualTo(0);
+        assertThat(cashier.findProfitOf(tier)).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("딜러는 모든 참가자 수익만큼 돈을 잃는다")
+    void findProfitOfDealer() {
+        Player winner = players.get(0);
+        Player loser = players.get(1);
+        Player tier = players.get(2);
+        Betting betting = new Betting();
+        betting.bet(winner, 10000);
+        betting.bet(loser, 5000);
+        betting.bet(tier, 100);
+
+        BettingCashier cashier = new BettingCashier(betting, Result.of(players, dealer));
+        assertThat(cashier.findProfitOfDealer()).isEqualTo(-5000);
     }
 }
