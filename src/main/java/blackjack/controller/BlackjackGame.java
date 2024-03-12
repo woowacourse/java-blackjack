@@ -9,19 +9,18 @@ import blackjack.domain.player.Participants;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.view.InputView;
+import blackjack.view.MessageResolver;
 import blackjack.view.OutputView;
 
-public class BlackJackController {
+public class BlackjackGame {
 
-    private final InputView inputView;
-    private final OutputView outputView;
+    private final InputView inputView = new InputView();
+    private final OutputView outputView = new OutputView(new MessageResolver());
 
-    public BlackJackController(InputView inputView, OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+    public BlackjackGame() {
     }
 
-    public void run() {
+    public void play() {
         Participants participants = createParticipants();
         CardDeck cardDeck = CardDeck.createShuffledFullCardDeck();
 
@@ -48,13 +47,14 @@ public class BlackJackController {
     }
 
     private void drawToPlayers(Players players, CardDeck cardDeck) {
-        players.getPlayers().forEach(player -> dealToPlayer(player, cardDeck));
+        players.getPlayers().forEach(player -> drawToPlayer(player, cardDeck));
     }
 
-    private void dealToPlayer(Player player, CardDeck cardDeck) {
+    private void drawToPlayer(Player player, CardDeck cardDeck) {
+        String playerName = player.getPlayerName();
+
         DrawDecision drawDecision = DrawDecision.HIT;
         while (player.isNotBust() && drawDecision == DrawDecision.HIT) {
-            String playerName = player.getPlayerName();
             drawDecision = inputView.readDrawDecision(playerName);
             drawIfDrawDecisionIsHit(player, cardDeck, drawDecision);
         }
