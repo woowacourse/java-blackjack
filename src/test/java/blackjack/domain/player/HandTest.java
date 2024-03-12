@@ -1,7 +1,6 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.player.Hand;
 import org.junit.jupiter.api.Test;
 
 import static blackjack.domain.card.CardNumber.JACK;
@@ -18,7 +17,7 @@ public class HandTest {
         hand.add(new Card(QUEEN, SPADE));
         hand.add(new Card(KING, SPADE));
 
-        int sum = hand.getSum();
+        int sum = hand.calculateScore();
 
         assertThat(sum).isEqualTo(30);
     }

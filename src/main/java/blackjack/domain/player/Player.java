@@ -20,11 +20,11 @@ public class Player {
     }
 
     public boolean isAlive() {
-        return hand.getSum() <= BUST_THRESHOLD;
+        return hand.calculateScore() <= BUST_THRESHOLD;
     }
 
     public int getScore() {
-        return hand.getSum();
+        return hand.calculateScore();
     }
 
     public List<Card> getCards() {

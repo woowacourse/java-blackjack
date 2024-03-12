@@ -7,19 +7,25 @@ import java.util.Collections;
 import java.util.List;
 
 public class Hand {
+    public static final int ACE_ADDITIONAL_SCORE = 10;
+    public static final int BUST_THRESHOLD = 21;    // TODO: BUST_THRESHOLD 가 분산되어 있음
+
     private final List<Card> cards = new ArrayList<>();
 
-    // TODO: 메서드 분리, 상수 분리 필요
-    public int getSum() {
-        int minimumSum = cards.stream()
-                .mapToInt(Card::getNumber)
-                .sum();
+    public int calculateScore() {
+        final int initialScore = calculateInitialScore();
+        final int sumWithAdditionalScore = initialScore + ACE_ADDITIONAL_SCORE;
 
-        final int sumWithAdditionalScore = minimumSum + 10;
-        if (hasAceCard() && sumWithAdditionalScore <= 21) {
+        if (hasAceCard() && sumWithAdditionalScore <= BUST_THRESHOLD) {
             return sumWithAdditionalScore;
         }
-        return minimumSum;
+        return initialScore;
+    }
+
+    private int calculateInitialScore() {
+        return cards.stream()
+                .mapToInt(Card::getNumber)
+                .sum();
     }
 
     private boolean hasAceCard() {

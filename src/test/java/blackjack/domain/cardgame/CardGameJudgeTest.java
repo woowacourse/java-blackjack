@@ -93,7 +93,7 @@ public class CardGameJudgeTest {
     void 카드_합계가_딜러와_플레이어_모두_21_이하인_경우_숫자가_큰_사람이_승리한다() {
         CardGameJudge cardGameJudge = new CardGameJudge();
 
-        Player player = player(new Card(ACE, HEART));
+        Player player = player(new Card(TWO, HEART));
         Dealer dealer = dealer(new Card(KING, SPADE));
 
         var result = cardGameJudge.judge(dealer, List.of(player))
