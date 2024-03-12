@@ -4,22 +4,28 @@ import java.util.Objects;
 
 public class Card {
 
-    private final CardProperties cardProperties;
-    private int score;
+    private final Pattern pattern;
+    private final Rank rank;
 
-    public Card(CardProperties cardProperties) {
-        this.cardProperties = cardProperties;
-        this.score = cardProperties.getCardNumber().getNumber();
+    public Card(Pattern pattern, Rank rank) {
+        this.pattern = pattern;
+        this.rank = rank;
     }
 
-    public boolean isElevenAce() {
-        return score == 11 && cardProperties.getCardNumber() == CardNumber.ACE;
+    public boolean isAce() {
+        return rank == Rank.ACE;
     }
 
-    public void switchAceValue() {
-        if (score == CardNumber.ACE.getNumber()) {
-            score = 1;
-        }
+    public Rank getCardNumber() {
+        return rank;
+    }
+
+    public Pattern getCardPattern() {
+        return pattern;
+    }
+
+    public int getCardScore() {
+        return rank.getNumber();
     }
 
     @Override
@@ -30,20 +36,12 @@ public class Card {
         if (object == null || getClass() != object.getClass()) {
             return false;
         }
-        Card card = (Card) object;
-        return score == card.score && Objects.equals(cardProperties, card.cardProperties);
+        Card that = (Card) object;
+        return pattern == that.pattern && rank == that.rank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardProperties, score);
-    }
-
-    public CardProperties getCardProperties() {
-        return cardProperties;
-    }
-
-    public int getScore() {
-        return score;
+        return Objects.hash(pattern, rank);
     }
 }
