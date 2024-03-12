@@ -29,6 +29,10 @@ public abstract class Participant {
         return hand.countDraw();
     }
 
+    public boolean hasBlackJackHand() {
+        return hand.isBlackJack();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
