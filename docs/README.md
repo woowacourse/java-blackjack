@@ -78,3 +78,15 @@
 * [x] 메서드 컨벤션 작성 및 확인
 * [x] final 컨벤션 통일
 * [x] CardDeck 생성자 닫기
+
+<br>
+
+* [ ] 예외 시 재입력 기능
+* [ ] 예외 메시지 상수화
+* [ ] CardDeck 웨어하우스로 바라보기
+* [ ] 컨트롤러 메서드 수정하기
+* [ ] Participant 추상 클래스 대신 클래스로 변경하기
+* [ ] model 과 view 분리하기 
+  * Result
+  * Rank
+  * Shape
