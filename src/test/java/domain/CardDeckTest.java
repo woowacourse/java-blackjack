@@ -15,13 +15,4 @@ class CardDeckTest {
         assertThat(cardDeck.draw())
                 .isInstanceOf(Card.class);
     }
-
-    @DisplayName("최초 손 패를 생산한다.")
-    @Test
-    void initHand() {
-        CardDeck cardDeck = new CardDeck();
-
-        assertThat(cardDeck.initHand())
-                .isInstanceOf(Hand.class);
-    }
 }
