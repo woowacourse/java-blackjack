@@ -16,17 +16,29 @@ public class OutputView {
                 .map(playerCard -> playerCard.getPlayerName().toString())
                 .toList();
 
+        printCardDivide(names);
+
+        printDealerFirstCard(dealerCards);
+
+        printPlayersCards(playerCards);
         System.out.println();
-        System.out.println("딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.");
+    }
 
-        String firstCard = dealerCards.getFirstCard();
-        System.out.println("딜러: " + firstCard);
-
+    private static void printPlayersCards(List<PlayerCards> playerCards) {
         for (PlayerCards playerCard : playerCards) {
             printPlayerCards(playerCard);
             System.out.println();
         }
+    }
+
+    private static void printDealerFirstCard(DealerCards dealerCards) {
+        String firstCard = dealerCards.getFirstCard();
+        System.out.println("딜러: " + firstCard);
+    }
+
+    private static void printCardDivide(List<String> names) {
         System.out.println();
+        System.out.println("딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.");
     }
 
     public static void printPlayerCards(PlayerCards cards) {
