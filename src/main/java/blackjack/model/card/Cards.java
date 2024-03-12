@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
-    private static final int BLACK_JACK_CONDITION = 21;
-    private static final int ACE_ADJUSTMENT = 10;
+    private static final int BLACK_JACK_SCORE = 21;
+    private static final int ACE_ADDITIONAL_SCORE = 10;
 
     private final List<Card> cards;
 
@@ -38,8 +38,8 @@ public class Cards {
                 .mapToInt(Denomination::getScore)
                 .sum();
 
-        if (hasAce() && canBeAdjusted(total)) {
-            return adjustTotalForAce(total);
+        if (hasAce()) {
+            return addAceScoreIfNotBust(total);
         }
         return total;
     }
@@ -49,20 +49,19 @@ public class Cards {
                 .anyMatch(card -> card.getDenomination().isAce());
     }
 
-    private boolean canBeAdjusted(int total) {
-        return total + ACE_ADJUSTMENT <= BLACK_JACK_CONDITION;
-    }
-
-    private int adjustTotalForAce(int total) {
-        return total + ACE_ADJUSTMENT;
+    private int addAceScoreIfNotBust(int total) {
+        if (total + ACE_ADDITIONAL_SCORE <= BLACK_JACK_SCORE) {
+            return total + ACE_ADDITIONAL_SCORE;
+        }
+        return total;
     }
 
     public boolean isBlackJack() {
-        return calculateTotalScore() == BLACK_JACK_CONDITION;
+        return calculateTotalScore() == BLACK_JACK_SCORE;
     }
 
     public boolean isBust() {
-        return calculateTotalScore() > BLACK_JACK_CONDITION;
+        return calculateTotalScore() > BLACK_JACK_SCORE;
     }
 
     public int size() {
