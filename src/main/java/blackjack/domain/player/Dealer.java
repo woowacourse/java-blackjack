@@ -24,6 +24,6 @@ public class Dealer extends Player {
 
     @Override
     public boolean isReceivable() {
-        return cards.sum() <= RECEIVE_SIZE && !isBlackjack();
+        return cards.calculateScore() <= RECEIVE_SIZE && !isBlackjack();
     }
 }

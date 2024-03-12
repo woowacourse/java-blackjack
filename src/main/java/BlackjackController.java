@@ -42,16 +42,6 @@ public class BlackjackController {
         ResultView.printResult(result);
     }
 
-    private void processDealer(Blackjack blackjack, Dealer dealer) {
-        if (dealer.isReceivable()) {
-            PlayerView.printDealerDrawMessage();
-            Card card = blackjack.draw();
-            dealer.drawCard(card);
-            return;
-        }
-        PlayerView.printDealerNotDrawMessage();
-    }
-
     private void processGamePlayer(Blackjack blackjack, GamePlayer gamePlayer) {
         while (gamePlayer.isReceivable() && isHit(gamePlayer)) {
             Card card = blackjack.draw();
@@ -63,5 +53,14 @@ public class BlackjackController {
     private boolean isHit(GamePlayer gamePlayer) {
         BlackjackCommand command = InputView.inputBlackjackCommand(gamePlayer.getName());
         return command.isHit();
+    }
+
+    private void processDealer(Blackjack blackjack, Dealer dealer) {
+        while (dealer.isReceivable()) {
+            PlayerView.printDealerDrawMessage();
+            Card card = blackjack.draw();
+            dealer.drawCard(card);
+        }
+        PlayerView.printDealerNotDrawMessage();
     }
 }

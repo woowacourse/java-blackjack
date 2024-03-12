@@ -43,4 +43,12 @@ public class DealerTest {
 
         assertThat(sut.isReceivable()).isFalse();
     }
+
+    @Test
+    public void test() {
+        Name name = new Name("딜러");
+        Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.ACE, CardValue.KING));
+        var sut = new Dealer(name, cards);
+        assertThat(sut.isReceivable()).isFalse();
+    }
 }
