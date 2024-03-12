@@ -5,6 +5,7 @@ import java.util.Stack;
 public class Deck {
 
     static final String ERROR_DECK_IS_EMPTY = "더이상 카드를 뽑을 수 없습니다.";
+    
     private final Stack<Card> deck;
 
     public Deck(final DeckFactory deckFactory) {
