@@ -1,14 +1,11 @@
 package blackjack.player;
 
 import blackjack.card.Card;
-import blackjack.game.BlackJackGame;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Hand {
-
-    private static final int ADDITIONAL_ACE_SCORE = 10;
 
     private final List<Card> cards;
 
@@ -20,35 +17,25 @@ public class Hand {
         this(new ArrayList<>());
     }
 
+    public void addCard(Card card) {
+        cards.add(card);
+    }
+
     public int calculateScore() {
-        int minimumScore = calculateMinimumScore();
-        int maximumScore = calculateMaximumScore();
-
-        if (maximumScore > BlackJackGame.BLACKJACK_MAX_SCORE) {
-            return minimumScore;
-        }
-        return maximumScore;
-    }
-
-    private int calculateMinimumScore() {
-        return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
-    }
-
-    private int calculateMaximumScore() {
-        int score = calculateMinimumScore();
+        Score score = calculateBaseScore();
         boolean hasAceInCards = cards.stream()
                 .anyMatch(Card::isAce);
 
         if (hasAceInCards) {
-            return score + ADDITIONAL_ACE_SCORE;
+            return score.addAceScoreOnNotBust().toInt();
         }
-        return score;
+        return score.toInt();
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
+    private Score calculateBaseScore() {
+        return cards.stream()
+                .map(Card::getScore)
+                .reduce(Score.zero(), Score::add);
     }
 
     public List<Card> getCards() {

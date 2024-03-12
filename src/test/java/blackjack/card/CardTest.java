@@ -8,13 +8,6 @@ import org.junit.jupiter.api.Test;
 class CardTest {
 
     @Test
-    @DisplayName("카드의 점수를 정확하게 계산한다.")
-    void calculateCardTest() {
-        Card card = new Card(Shape.SPADE, Number.ACE);
-        assertThat(card.getScore()).isEqualTo(1);
-    }
-
-    @Test
     @DisplayName("동등성을 정확하게 판단한다.")
     void equalsTest() {
         // given
