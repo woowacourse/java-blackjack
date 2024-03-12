@@ -1,26 +1,31 @@
 package domain;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class BlackJackGame {
 
-    private final List<Player> players = new ArrayList<>();
+    private final List<Player> players;
     private final Dealer dealer;
 
-    public BlackJackGame(PlayerNames playerNames, Dealer dealer) {
+    public BlackJackGame(Players players, Dealer dealer) {
         this.dealer = dealer;
+        this.players = players.getPlayers();
+    }
 
-        List<String> names = playerNames.names();
-        for (String name : names) {
-            Name playerName = new Name(name);
-            Player player = new Player(playerName, dealer.dealHand());
-            this.players.add(player);
+    public void initHand() {
+        dealer.initHand(List.of(dealer.dealCard(), dealer.dealCard()));
+
+        for (Player player : players) {
+            player.initHand(List.of(dealer.dealCard(), dealer.dealCard()));
         }
     }
 
-    public void hitPlayer(Player targetPlayer) {
-        if (targetPlayer.isHittable()) {
-            targetPlayer.hit(dealer.dealCard());
+    public void hitPlayer(Participant participant) {
+        if (participant.isHittable()) {
+            participant.hit(dealer.dealCard());
         }
     }
 
@@ -40,8 +45,8 @@ public class BlackJackGame {
         return results;
     }
 
-    public List<Player> getEveryParticipants() {
-        List<Player> participants = new LinkedList<>(players);
+    public List<Participant> getEveryParticipants() {
+        List<Participant> participants = new LinkedList<>(players);
         participants.add(0, dealer);
         return participants;
     }
