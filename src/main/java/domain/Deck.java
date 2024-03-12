@@ -6,16 +6,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Deck {
-    private static final List<Card> CARDS_CACHE = Arrays.stream(CardType.values())
-            .flatMap(type -> Arrays.stream(CardNumber.values())
-                    .map(number -> Card.getCard(type, number)))
-            .toList();
     private final List<Card> cards;
 
     public Deck() {
-        cards = new ArrayList<>(CARDS_CACHE);
+        this.cards = Arrays.stream(CardType.values())
+                .flatMap(type -> Arrays.stream(CardNumber.values()).map(number -> Card.getCard(type, number)))
+                .collect(Collectors.toList());
     }
 
     Deck(List<Card> cards) {
