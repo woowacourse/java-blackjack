@@ -5,15 +5,15 @@ import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 import model.blackjackgame.BlackjackGame;
-import model.blackjackgame.DealerResult;
-import model.blackjackgame.GameResult;
-import model.blackjackgame.GameScore;
 import model.blackjackgame.ResultStatus;
 import model.card.Card;
 import model.card.Hand;
 import model.dealer.Dealer;
 import model.player.Player;
 import model.player.Players;
+import model.result.DealerResult;
+import model.result.GameResult;
+import model.result.PlayersResult;
 
 public class OutputView {
 
@@ -97,10 +97,10 @@ public class OutputView {
             gameResult.findPlayerScore(playerName));
     }
 
-    public static void printGameResult(GameResult gameResult, DealerResult dealerResult) {
+    public static void printGameResult(DealerResult dealerResult, PlayersResult playersResult) {
         System.out.print(GAME_RESULT_INTRO);
         printDealerGameResult(dealerResult);
-        printAllPlayerGameResults(gameResult);
+        printAllPlayerGameResults(playersResult);
     }
 
     private static void printDealerGameResult(DealerResult dealerResult) {
@@ -116,16 +116,14 @@ public class OutputView {
         return dealerResult.statusCount(resultStatus) + resultStatus.getDisplayName();
     }
 
-    private static void printAllPlayerGameResults(GameResult gameResult) {
-        gameResult.getPlayersScore()
-            .forEach(playerScore -> printPlayerGameResult(playerScore, gameResult));
-
+    private static void printAllPlayerGameResults(PlayersResult playersResult) {
+        playersResult.allPlayerName()
+                .forEach(playerName -> printPlayerGameResult(playerName, playersResult));
     }
 
-    private static void printPlayerGameResult(GameScore playerScore, GameResult gameResult) {
-        ResultStatus result = gameResult.decideResultStatus(playerScore,
-            gameResult.getDealerScore());
-        System.out.printf(GAMER_RESULT_FORMAT, playerScore.getName(), result.getDisplayName());
+    private static void printPlayerGameResult(String playerName, PlayersResult playersResult) {
+        ResultStatus resultStatus = playersResult.findPlayerResult(playerName);
+        System.out.printf(GAMER_RESULT_FORMAT, playerName, resultStatus.getDisplayName());
     }
 
     public static void printExceptionMessage(String message) {

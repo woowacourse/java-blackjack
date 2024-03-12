@@ -1,6 +1,8 @@
-package model.blackjackgame;
+package model.result;
 
 import java.util.List;
+import model.blackjackgame.GameScore;
+import model.blackjackgame.ResultStatus;
 import model.dealer.Dealer;
 import model.player.Players;
 

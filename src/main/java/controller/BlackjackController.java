@@ -3,8 +3,8 @@ package controller;
 import java.util.List;
 import java.util.function.Supplier;
 import model.blackjackgame.BlackjackGame;
-import model.blackjackgame.DealerResult;
-import model.blackjackgame.GameResult;
+import model.result.DealerResult;
+import model.result.GameResult;
 import model.blackjackgame.HitAnswer;
 import model.card.Card;
 import model.card.Hand;
@@ -12,6 +12,7 @@ import model.card.RandomCard;
 import model.dealer.Dealer;
 import model.player.Player;
 import model.player.Players;
+import model.result.PlayersResult;
 import view.InputView;
 import view.OutputView;
 
@@ -76,9 +77,10 @@ public class BlackjackController {
         Players players = blackjackGame.getPlayers();
         GameResult gameResult = GameResult.of(dealer, players);
         DealerResult dealerResult = DealerResult.from(gameResult);
+        PlayersResult playersResult = PlayersResult.from(gameResult);
 
         OutputView.printFinalScore(dealer, players, gameResult);
-        OutputView.printGameResult(gameResult, dealerResult);
+        OutputView.printGameResult(dealerResult, playersResult);
     }
 
     private static <T> T retryOnException(Supplier<T> retryOperation) {

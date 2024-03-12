@@ -1,10 +1,12 @@
-package model.blackjackgame;
+package model.result;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import model.blackjackgame.GameScore;
+import model.blackjackgame.ResultStatus;
 
 public class DealerResult {
 
