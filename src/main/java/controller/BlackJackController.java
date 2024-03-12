@@ -1,9 +1,7 @@
 package controller;
 
 import domain.*;
-import dto.DealerResultDto;
-import dto.PlayerDto;
-import dto.PlayersResultDto;
+import dto.*;
 import view.InputView;
 import view.OutputView;
 
@@ -25,7 +23,8 @@ public class BlackJackController {
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
         blackJackGame.initHand();
 
-        printInitialDealAndHand(blackJackGame);
+        printInitialDealMessage(blackJackGame);
+        printInitialHand(blackJackGame);
         repeatHitUntilStand(blackJackGame);
         printGameResult(blackJackGame);
     }
@@ -36,12 +35,16 @@ public class BlackJackController {
         return new Players(inputNames);
     }
 
-    private void printInitialDealAndHand(BlackJackGame blackJackGame) {
-        List<Participant> initialParticipants = blackJackGame.getEveryParticipants();
-        List<PlayerDto> playerInitDtos = toPlayerDtos(initialParticipants);
+    private void printInitialDealMessage(BlackJackGame blackJackGame) {
+        List<Player> players = blackJackGame.getPlayers();
+        PlayersNameDto playersNameDto = PlayersNameDto.from(players);
+        outputView.printInitialDealMessage(playersNameDto);
+    }
 
-        outputView.printInitialDeal(playerInitDtos);
-        outputView.printInitialHand(playerInitDtos);
+    private void printInitialHand(BlackJackGame blackJackGame) {
+        List<Participant> initialParticipants = blackJackGame.getEveryParticipants();
+        ParticipantsHandDto participantsHandDto = ParticipantsHandDto.from(initialParticipants);
+        outputView.printInitialHand(participantsHandDto);
     }
 
     private void repeatHitUntilStand(BlackJackGame blackJackGame) {
@@ -55,7 +58,7 @@ public class BlackJackController {
     private void repeatHitUntilPlayerStand(BlackJackGame blackJackGame, Player player) {
         while (player.isHittable() && inputView.readCommand(player.getName()).equals("y")) {
             blackJackGame.hitParticipant(player);
-            outputView.printHandAfterHit(PlayerDto.from(player));
+            outputView.printHandAfterHit(ParticipantHandDto.from(player));
         }
     }
 
@@ -67,17 +70,11 @@ public class BlackJackController {
     }
 
     private void printGameResult(BlackJackGame blackJackGame) {
-        List<PlayerDto> playerDtos = toPlayerDtos(blackJackGame.getEveryParticipants());
-        DealerResultDto dealerResultDto = DealerResultDto.from(blackJackGame.getGameResults());
-        PlayersResultDto playersResultDto = PlayersResultDto.from(blackJackGame.getGameResults());
+        ParticipantsHandDto participantHandDtos = ParticipantsHandDto.from(blackJackGame.getEveryParticipants());
+        DealerWinLossDto dealerWinLossDto = DealerWinLossDto.from(blackJackGame.getGameResults());
+        PlayersWinLossDto playersWinLossDto = PlayersWinLossDto.from(blackJackGame.getGameResults());
 
-        outputView.printFinalHandAndScore(playerDtos);
-        outputView.printWinLoss(dealerResultDto, playersResultDto);
-    }
-
-    private List<PlayerDto> toPlayerDtos(List<Participant> participants) {
-        return participants.stream()
-                .map(participant -> PlayerDto.from((Player) participant))
-                .toList();
+        outputView.printFinalHandAndScore(participantHandDtos);
+        outputView.printWinLoss(dealerWinLossDto, playersWinLossDto);
     }
 }
