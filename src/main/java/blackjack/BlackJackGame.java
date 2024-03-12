@@ -37,7 +37,7 @@ public class BlackJackGame {
         outputView.printDistributionSubject(players.getNames());
         printInitialCards(dealer, players);
 
-        playPlayersTurn(players.getPlayers(), dealer);
+        playPlayersTurn(players, dealer);
         playDealerTurn(dealer);
 
         printFinalResult(dealer, players, referee);
@@ -74,10 +74,8 @@ public class BlackJackGame {
                 .toList();
     }
 
-    private void playPlayersTurn(final List<Player> players, final Dealer dealer) {
-        for (Player player : players) {
-            playPlayerTurn(player, dealer);
-        }
+    private void playPlayersTurn(final Players players, final Dealer dealer) {
+        players.playEachPlayerTurns(this::playPlayerTurn, dealer);
     }
 
     private void playPlayerTurn(final Player player, final Dealer dealer) {

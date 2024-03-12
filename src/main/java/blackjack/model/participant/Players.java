@@ -2,12 +2,10 @@ package blackjack.model.participant;
 
 import blackjack.dto.NameCardsScore;
 import blackjack.model.deck.Card;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -54,12 +52,14 @@ public class Players {
         }
     }
 
-    public Stream<Player> stream() {
-        return players.stream();
+    public void playEachPlayerTurns(BiConsumer<Player, Dealer> playTurn, Dealer dealer) {
+        for (Player player : players) {
+            playTurn.accept(player, dealer);
+        }
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+    public Stream<Player> stream() {
+        return players.stream();
     }
 
     public List<String> getNames() {
