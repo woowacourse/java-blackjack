@@ -6,11 +6,23 @@ import java.util.List;
 
 public class Hand {
 
-    private final List<Card> hand = new ArrayList<>();
+    public static final int ACE_ADDITIONAL_VALUE = 10;
+    public static final int BLACKJACK_SCORE = 21;
+
+    private final List<Card> hand;
+
+    public Hand() {
+        this.hand = new ArrayList<>();
+    }
 
     public int calculate() {
-        int aceCounts = getAceCounts();
-        return calculateCardNumber(aceCounts);
+        int sum = calculateWithDefaultAceNumber();
+
+        if (hasAce() && isAceAddable(sum)) {
+            sum += ACE_ADDITIONAL_VALUE;
+        }
+
+        return sum;
     }
 
     public void put(Card card) {
@@ -21,27 +33,18 @@ public class Hand {
         return Collections.unmodifiableList(hand);
     }
 
-    private int getAceCounts() {
-        return (int) hand.stream()
-                .filter(Card::isAce)
-                .count();
-    }
-
-    private int calculateCardNumber(int aceCounts) {
-        int sum = calculateWithDefaultAceNumber();
-        for (int i = 0; i < aceCounts && !isAceAddable(sum); i++) {
-            sum += 10;
-        }
-        return sum;
-    }
-
     private int calculateWithDefaultAceNumber() {
         return hand.stream()
                 .mapToInt(card -> card.getNumber().getValue())
                 .sum();
     }
 
+    private boolean hasAce() {
+        return hand.stream()
+                .anyMatch(Card::isAce);
+    }
+
     private boolean isAceAddable(int sum) {
-        return sum + 10 > 21;
+        return sum + ACE_ADDITIONAL_VALUE > BLACKJACK_SCORE;
     }
 }
