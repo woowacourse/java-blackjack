@@ -1,11 +1,9 @@
 package blackjack.domain.card;
 
 import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
-import java.util.stream.Collectors;
 
 public class Deck {
 
@@ -18,20 +16,10 @@ public class Deck {
     }
 
     public static Deck createShuffledDeck() {
-        List<Card> cards = Arrays.stream(CardRank.values())
-                .map(Deck::createRankCards)
-                .flatMap(List::stream)
-                .collect(Collectors.toList());
-
+        List<Card> cards = Card.getCards();
         Collections.shuffle(cards);
 
         return new Deck(cards);
-    }
-
-    private static List<Card> createRankCards(CardRank rank) {
-        return Arrays.stream(CardShape.values())
-                .map(shape -> Card.of(rank, shape))
-                .toList();
     }
 
     private void validateDuplicated(List<Card> cards) {

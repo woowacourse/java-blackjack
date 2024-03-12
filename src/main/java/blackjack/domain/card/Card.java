@@ -1,6 +1,8 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -12,15 +14,23 @@ public class Card {
 
     static {
         for (CardRank cardRank : CardRank.values()) {
-            for (CardShape cardShape : CardShape.values()) {
-                CARD_POOL.put(toKey(cardRank, cardShape), new Card(cardRank, cardShape));
-            }
+            generateRankCards(cardRank);
+        }
+    }
+
+    private static void generateRankCards(CardRank cardRank) {
+        for (CardShape cardShape : CardShape.values()) {
+            CARD_POOL.put(toKey(cardRank, cardShape), new Card(cardRank, cardShape));
         }
     }
 
     private Card(CardRank cardRank, CardShape cardShape) {
         this.cardRank = cardRank;
         this.cardShape = cardShape;
+    }
+
+    public static List<Card> getCards() {
+        return new ArrayList<>(CARD_POOL.values());
     }
 
     public static Card of(CardRank cardRank, CardShape cardShape) {
