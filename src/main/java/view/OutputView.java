@@ -35,7 +35,7 @@ public class OutputView {
         System.out.printf(FORM, participantDto.name(), format(participantDto.cards()));
     }
 
-    public void printDealerTurnMessage() {
+    public void printDealerHandsChangedMessage() {
         System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.%n%n", THRESHOLD);
     }
 

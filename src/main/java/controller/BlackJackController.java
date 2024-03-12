@@ -26,26 +26,10 @@ public class BlackJackController {
         final Dealer dealer = Dealer.from(CardDeck.generate());
 
         initHands(players, dealer);
-        dealWithPlayers(players, dealer);
-
-        if (!players.isAllBust()) {
-            dealer.deal();
-            printDealerTurnMessage(dealer.countAddedHands());
-        }
+        dealToPlayers(players, dealer);
+        dealToDealerIfPossible(players, dealer);
 
         printFinalResult(players, dealer);
-    }
-
-    private void printDealerTurnMessage(final int turn) {
-        for (int i = 0; i < turn; i++) {
-            outputView.printDealerTurnMessage();
-        }
-    }
-
-    private void dealWithPlayers(final Players players, final Dealer dealer) {
-        for (Player player : players.getPlayers()) {
-            deal(player, dealer);
-        }
     }
 
     private void initHands(final Players players, final Dealer dealer) {
@@ -53,9 +37,28 @@ public class BlackJackController {
         outputView.printInitHands(DealerHandsDto.from(dealer), ParticipantsDto.from(players));
     }
 
+    private void dealToPlayers(final Players players, final Dealer dealer) {
+        players.getPlayers().forEach(player -> deal(player, dealer));
+    }
+
+    private void dealToDealerIfPossible(Players players, Dealer dealer) {
+        if (players.isAllBust()) {
+            return;
+        }
+
+        dealer.deal();
+        printDealerHandsChangedMessage(dealer.countAddedHands());
+    }
+
     private void printFinalResult(final Players players, final Dealer dealer) {
         outputView.printHandsResult(ParticipantsDto.from(dealer, players));
         outputView.printGameResult(dealer.calculateResultBy(players), players.calculateResultBy(dealer));
+    }
+
+    private void printDealerHandsChangedMessage(final int turn) {
+        for (int i = 0; i < turn; i++) {
+            outputView.printDealerHandsChangedMessage();
+        }
     }
 
     private void deal(final Player player, final Dealer dealer) {

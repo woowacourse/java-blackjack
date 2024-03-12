@@ -42,6 +42,10 @@ public class Players {
         return result;
     }
 
+    public List<Player> getPlayers() {
+        return names;
+    }
+
     private static List<Player> mapToPlayers(final List<String> names) {
         return names.stream()
                 .map(String::trim)
@@ -64,9 +68,5 @@ public class Players {
         if (names.size() != Set.copyOf(names).size()) {
             throw new IllegalArgumentException("[ERROR] 참여자 이름은 중복될 수 없습니다.");
         }
-    }
-
-    public List<Player> getPlayers() {
-        return names;
     }
 }

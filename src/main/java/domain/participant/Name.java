@@ -9,6 +9,10 @@ public class Name {
         this.value = value;
     }
 
+    public String getValue() {
+        return value;
+    }
+
     private void validate(final String name) {
         validateNull(name);
         validateBlank(name);
@@ -24,9 +28,5 @@ public class Name {
         if (name.isBlank()) {
             throw new IllegalArgumentException("[ERROR] 참여자 이름에 공백을 입력할 수 없습니다.");
         }
-    }
-
-    public String getValue() {
-        return value;
     }
 }
