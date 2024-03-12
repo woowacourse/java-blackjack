@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import model.blackjackgame.Answer;
 import model.blackjackgame.BlackjackGame;
 import model.card.Card;
@@ -19,6 +20,8 @@ import model.view.OutputView;
 
 public class BlackjackGameController {
 
+    private static final int CARD_COUNT_FOR_SETTING = 2;
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -28,20 +31,29 @@ public class BlackjackGameController {
     }
 
     public void run() {
-        Players players = inputView.requestPlayersName();
+        Players players = repeatUntilSuccess(inputView::requestPlayersName);
         Dealer dealer = new Dealer();
         BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
+
+        cardSettingBeforeGameStart(players, blackjackGame);
+        printCardSetting(blackjackGame.getDealer(), blackjackGame.getPlayers());
         turnHitPlayers(blackjackGame.getPlayers(), blackjackGame);
+    }
+
+    private void cardSettingBeforeGameStart(Players players, BlackjackGame blackjackGame) {
         List<Card> generatedCards = new ArrayList<>();
-        for (int i = 0; i < (players.getPlayers().size() + 1) * 2; i++) {
+        for (int i = 0; i < (players.getPlayers().size() + 1) * CARD_COUNT_FOR_SETTING; i++) {
             generatedCards.add(new Card(CardDispenser.generateCardNumber(), CardDispenser.generateCardShape()));
         }
         Cards cards = new Cards(generatedCards);
         blackjackGame.distributeCardsForSetting(cards);
-        outputView.printDistributeCards(blackjackGame.getDealer(), players);
-        outputView.printCardsStock(blackjackGame.getDealer().getName(),
-                Collections.singletonList(captureCardType(blackjackGame.getDealer()).get(0)));
-        blackjackGame.getPlayers().getPlayers()
+    }
+
+    private void printCardSetting(Dealer dealer, Players players) {
+        outputView.printDistributeCards(dealer, players);
+        outputView.printCardsStock(dealer.getName(),
+                Collections.singletonList(captureCardType(dealer).get(0)));
+        players.getPlayers()
                 .forEach(player -> outputView.printCardsStock(player.getName(), captureCardType(player)));
     }
 
@@ -68,6 +80,14 @@ public class BlackjackGameController {
         }
         outputView.printBustInfo(player);
         return new Answer("n");
+    }
+
+    private <T> T repeatUntilSuccess(Supplier<T> supplier) {
+        try {
+            return supplier.get();
+        } catch (IllegalArgumentException e) {
+            return repeatUntilSuccess(supplier);
+        }
     }
 
     private <T, R> R repeatUntilSuccess(Function<T, R> function, T input) {
