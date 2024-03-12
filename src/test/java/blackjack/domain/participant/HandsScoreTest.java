@@ -18,11 +18,11 @@ class HandsScoreTest {
         List<Card> notOverCards = List.of(Card.valueOf(0), Card.valueOf(9));
         HandsScore handsScore = HandsScore.of(notOverCards);
 
-        assertFalse(handsScore.isBurst());
+        assertFalse(handsScore.isBust());
 
         List<Card> overCards = List.of(Card.valueOf(0), Card.valueOf(13), Card.valueOf(9));
         handsScore = HandsScore.of(overCards);
-        assertTrue(handsScore.isBurst());
+        assertTrue(handsScore.isBust());
     }
 
     @DisplayName("에이스는 21이 초과되지 않으면 11로 사용할 수 있다")

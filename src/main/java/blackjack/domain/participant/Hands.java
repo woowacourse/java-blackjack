@@ -21,8 +21,8 @@ public class Hands {
     }
 
 
-    public boolean isBurst() {
-        return getHandsScore().isBurst();
+    public boolean isBust() {
+        return getHandsScore().isBust();
     }
 
     public List<Card> getHands() {

@@ -27,12 +27,12 @@ public class GameResult {
     }
 
     private static Result judgeResult(Dealer dealer, Player player) {
-        if ((dealer.isBurst() && player.isBurst())
+        if ((dealer.isBust() && player.isBust())
                 || dealer.getHandsScore() == player.getHandsScore()) {
             return Result.DRAW;
         }
-        if (dealer.isBurst()
-                || ((player.getHandsScore() > dealer.getHandsScore()) && !player.isBurst())) {
+        if (dealer.isBust()
+                || ((player.getHandsScore() > dealer.getHandsScore()) && !player.isBust())) {
             return Result.WIN;
         }
         return Result.LOSE;

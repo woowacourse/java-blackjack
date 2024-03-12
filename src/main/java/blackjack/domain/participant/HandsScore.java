@@ -33,7 +33,7 @@ public class HandsScore {
         return handsScore;
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return handsScore > BLACK_JACK;
     }
 }

@@ -32,7 +32,7 @@ public abstract class Participant {
                 .getScore();
     }
 
-    public boolean isBurst() {
-        return hands.isBurst();
+    public boolean isBust() {
+        return hands.isBust();
     }
 }
