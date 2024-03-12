@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CardsTest {
+class CardsTest {
     @Test
     @DisplayName("딜러와 참여자들에게 카드를 2장씩 나누어 준다")
     void dealTest() {

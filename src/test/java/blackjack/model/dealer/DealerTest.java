@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class DealerTest {
+class DealerTest {
     @Test
     @DisplayName("딜러는 카드의 합이 17점 이상이 될 때까지 카드를 받는다")
     void canHitTest() {

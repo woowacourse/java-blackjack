@@ -13,7 +13,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class RefereeTest {
+class RefereeTest {
     @Test
     @DisplayName("딜러와 플레이어의 카드 합을 비교하여 승패를 가린다")
     void determineOutcomeTest() {
