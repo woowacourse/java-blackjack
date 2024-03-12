@@ -152,8 +152,6 @@ public class BlackJackGameTest {
     @Test
     void findResultsTest() {
         // given
-        Dealer dealer = new Dealer();
-
         Name name1 = new Name("pobi");
         Name name2 = new Name("jason");
         Player pobi = new Player(name1);
@@ -169,7 +167,7 @@ public class BlackJackGameTest {
         // 제이슨 : 7 클로버, K 스페이드 (합계 : 17)
 
         // when
-        PlayerResults playerResults = blackJackGame.findPlayerResult(dealer, players);
+        PlayerResults playerResults = blackJackGame.createPlayerResults(dealer, players);
 
         // then
         assertAll(

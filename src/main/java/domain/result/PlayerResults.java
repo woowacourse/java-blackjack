@@ -12,24 +12,6 @@ public class PlayerResults {
         this.results = new LinkedHashMap<>(results);
     }
 
-    public int findWinCount() {
-        return (int) results.values().stream()
-                .filter(result -> result.equals(Result.WIN))
-                .count();
-    }
-
-    public int findLoseCount() {
-        return (int) results.values().stream()
-                .filter(result -> result.equals(Result.LOSE))
-                .count();
-    }
-
-    public int findTieCount() {
-        return (int) results.values().stream()
-                .filter(result -> result.equals(Result.TIE))
-                .count();
-    }
-
     public Map<Player, Result> getResults() {
         return Collections.unmodifiableMap(results);
     }

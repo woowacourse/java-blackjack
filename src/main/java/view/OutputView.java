@@ -5,6 +5,7 @@ import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Player;
 import domain.gamer.Players;
+import domain.result.DealerResult;
 import domain.result.PlayerResults;
 import domain.result.Result;
 import java.util.ArrayList;
@@ -95,17 +96,15 @@ public class OutputView {
         return rank + symbol;
     }
 
-    public static void printFinalGameResult(final PlayerResults playerResults) {
+    public static void printFinalGameResult(final DealerResult dealerResult, final PlayerResults playerResults) {
         System.out.println("## 최종 승패");
-        printDealerResult(playerResults);
+        printDealerResult(dealerResult);
         printPlayerResults(playerResults);
     }
 
-    private static void printDealerResult(final PlayerResults playerResults) {
-        int winCount = playerResults.findWinCount();
-        int loseCount = playerResults.findLoseCount();
-        int tieCount = playerResults.findTieCount();
-        String message = String.format("딜러: %d승 %d패 %d무", loseCount, winCount, tieCount);
+    private static void printDealerResult(final DealerResult dealerResult) {
+        String message = String.format("딜러: %d승 %d패 %d무", dealerResult.getWinCount(), dealerResult.getLoseCount(),
+                dealerResult.getTieCount());
         System.out.println(message);
     }
 

@@ -8,6 +8,7 @@ import domain.gamer.Gamer;
 import domain.gamer.Name;
 import domain.gamer.Player;
 import domain.gamer.Players;
+import domain.result.DealerResult;
 import domain.result.PlayerResults;
 import exception.CardReceiveException;
 import java.util.List;
@@ -25,8 +26,9 @@ public class BlackJackController {
         OutputView.printInitialCardsMessage(dealer, players);
         handOutCard(blackJackGame, dealer, players);
         OutputView.printCardsAndResult(dealer, players);
-        PlayerResults playerResults = blackJackGame.findPlayerResult(dealer, players);
-        OutputView.printFinalGameResult(playerResults);
+        PlayerResults playerResults = blackJackGame.createPlayerResults(dealer, players);
+        DealerResult dealerResult = DealerResult.createOppositeResult(playerResults);
+        OutputView.printFinalGameResult(dealerResult, playerResults);
     }
 
     private Players createPlayers() {

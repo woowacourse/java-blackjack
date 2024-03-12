@@ -5,6 +5,7 @@ import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Player;
 import domain.gamer.Players;
+import domain.result.DealerResult;
 import domain.result.PlayerResults;
 import domain.result.Result;
 import java.util.LinkedHashMap;
@@ -36,7 +37,7 @@ public class BlackJackGame {
         gamer.hit(deck.draw());
     }
 
-    public PlayerResults findPlayerResult(final Dealer dealer, final Players players) {
+    public PlayerResults createPlayerResults(final Dealer dealer, final Players players) {
         Map<Player, Result> playerResults = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
             Result playerResult = Result.getPlayerResultWith(player, dealer);

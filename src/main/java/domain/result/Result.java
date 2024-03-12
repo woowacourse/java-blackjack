@@ -28,6 +28,11 @@ public enum Result {
     }
 
     private static boolean isPlayerLose(final Player player, final Dealer dealer) {
+        int playerScore = player.calculateTotalScore();
+        int dealerScore = dealer.calculateTotalScore();
+        if (playerScore < dealerScore && !dealer.isBust()) {
+            return true;
+        }
         if (player.isBust() && dealer.isBust()) {
             return true;
         }
@@ -41,6 +46,11 @@ public enum Result {
     }
 
     private static boolean isPlayerWin(final Player player, final Dealer dealer) {
+        int playerScore = player.calculateTotalScore();
+        int dealerScore = dealer.calculateTotalScore();
+        if (playerScore > dealerScore && !player.isBust()) {
+            return true;
+        }
         if (player.isBlackJack() && !dealer.isBlackJack()) {
             return true;
         }
@@ -60,6 +70,16 @@ public enum Result {
             return Result.LOSE;
         }
         return Result.TIE;
+    }
+
+    public Result getOppositeResult() {
+        if (this == WIN) {
+            return LOSE;
+        }
+        if (this == LOSE) {
+            return WIN;
+        }
+        return TIE;
     }
 
     public String getName() {
