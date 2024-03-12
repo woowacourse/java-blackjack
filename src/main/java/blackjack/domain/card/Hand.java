@@ -14,12 +14,12 @@ public class Hand {
         this.myCards = new ArrayList<>(myCards);
     }
 
-    public void addCard(Card card) {
-        myCards.add(card);
+    public void add(List<Card> cards) {
+        myCards.addAll(cards);
     }
 
-    public void addCards(List<Card> cards) {
-        myCards.addAll(cards);
+    public void add(Card card) {
+        myCards.add(card);
     }
 
     public int compareScoreTo(Hand otherHand) {
@@ -29,7 +29,7 @@ public class Hand {
     // TODO: 간단한 로직으로 수정
     public int findMaximumScore() {
         Set<Integer> scoreCases = new HashSet<>();
-        List<List<Integer>> cardsScores = myCards.stream().map(card -> card.getScore().get()).toList();
+        List<List<Integer>> cardsScores = myCards.stream().map(card -> card.score().get()).toList();
         calculateScoreCases(scoreCases, cardsScores, 0, 0);
 
         return scoreCases.stream()

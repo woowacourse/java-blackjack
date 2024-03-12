@@ -6,9 +6,14 @@ import blackjack.domain.card.Hand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
+import static blackjack.domain.card.CardScore.NINE;
+import static blackjack.domain.card.CardScore.QUEEN;
+import static blackjack.domain.card.CardScore.SEVEN;
+import static blackjack.domain.card.CardSymbol.CLUB;
+import static blackjack.domain.card.CardSymbol.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("딜러")
@@ -18,8 +23,8 @@ class DealerTest {
     void getFirstCardTest() {
         // given
         Dealer dealer = new Dealer(new Hand(List.of()));
-        List<Card> cards = List.of(Card.SPADE_NINE, Card.CLUB_QUEEN);
-        List<Card> expectedCard = List.of(Card.SPADE_NINE);
+        List<Card> cards = List.of(new Card(NINE, SPADE), new Card(QUEEN, CLUB));
+        List<Card> expectedCard = List.of(new Card(NINE, SPADE));
 
         // when
         dealer.draw(cards);
@@ -34,8 +39,8 @@ class DealerTest {
     void dealerHitUpperBoundTest() {
         // given
         Dealer dealer = new Dealer(new Hand(List.of()));
-        List<Card> cards = List.of(Card.SPADE_NINE, Card.CLUB_SEVEN);
-        Deck cardPicker = new Deck(Arrays.asList(Card.values())) {
+        List<Card> cards = new ArrayList<>(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB)));
+        Deck cardPicker = new Deck(cards) {
             @Override
             public List<Card> pickCards(int count) {
                 return cards;

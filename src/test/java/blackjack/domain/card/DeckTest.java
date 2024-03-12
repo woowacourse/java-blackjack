@@ -3,7 +3,6 @@ package blackjack.domain.card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,7 +13,7 @@ public class DeckTest {
     @DisplayName("카드를 두장 뽑는다.")
     void cardsPickTest() {
         // given
-        Deck deck = new Deck(Arrays.asList(Card.values()));
+        Deck deck = Deck.make();
 
         // when
         List<Card> card = deck.pickCards(2);

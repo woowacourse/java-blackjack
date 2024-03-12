@@ -7,19 +7,24 @@ import blackjack.domain.gamer.Dealer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
+import static blackjack.domain.card.CardScore.NINE;
+import static blackjack.domain.card.CardScore.SEVEN;
+import static blackjack.domain.card.CardSymbol.CLUB;
+import static blackjack.domain.card.CardSymbol.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("블랙잭")
 public class BlackjackTest {
     @Test
     @DisplayName("딜러의 카드의 합이 16 이하이면 카드를 한장 더 뽑늗다.")
     void dealerHitTest() {
         // given
         Dealer dealer = new Dealer(new Hand(List.of()));
-        List<Card> cards = List.of(Card.SPADE_NINE, Card.CLUB_SEVEN);
-        Deck cardPicker = new Deck(Arrays.asList(Card.values())) {
+        List<Card> cards = new ArrayList<>(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB)));
+        Deck cardPicker = new Deck(cards) {
             @Override
             public List<Card> pickCards(int count) {
                 return cards;

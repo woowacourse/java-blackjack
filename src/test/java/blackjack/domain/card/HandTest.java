@@ -5,6 +5,16 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static blackjack.domain.card.CardScore.ACE;
+import static blackjack.domain.card.CardScore.EIGHT;
+import static blackjack.domain.card.CardScore.FIVE;
+import static blackjack.domain.card.CardScore.NINE;
+import static blackjack.domain.card.CardScore.QUEEN;
+import static blackjack.domain.card.CardScore.TWO;
+import static blackjack.domain.card.CardSymbol.CLUB;
+import static blackjack.domain.card.CardSymbol.DIAMOND;
+import static blackjack.domain.card.CardSymbol.HEART;
+import static blackjack.domain.card.CardSymbol.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("패")
@@ -15,11 +25,10 @@ public class HandTest {
     void cardsSumTest() {
         // given
         Hand hand = new Hand(List.of());
-        List<Card> cards = List.of(Card.DIAMOND_NINE, Card.DIAMOND_FIVE);
         int expectedScore = 9 + 5;
 
         // when
-        hand.addCards(cards);
+        hand.add(List.of(new Card(NINE, DIAMOND), new Card(FIVE, DIAMOND)));
 
         // then
         assertThat(hand.findMaximumScore()).isEqualTo(expectedScore);
@@ -32,10 +41,10 @@ public class HandTest {
         Hand hand = new Hand(List.of());
 
         // when
-        hand.addCard(Card.SPADE_NINE);
-        hand.addCard(Card.CLUB_QUEEN);
-        hand.addCard(Card.CLUB_ACE);
-        hand.addCard(Card.HEART_ACE);
+        hand.add(new Card(NINE, SPADE));
+        hand.add(new Card(QUEEN, CLUB));
+        hand.add(new Card(ACE, CLUB));
+        hand.add(new Card(ACE, HEART));
 
         // then
         assertThat(hand.findMaximumScore()).isEqualTo(21);
@@ -48,9 +57,9 @@ public class HandTest {
         Hand hand = new Hand(List.of());
 
         // when
-        hand.addCard(Card.SPADE_NINE);
-        hand.addCard(Card.CLUB_QUEEN);
-        hand.addCard(Card.CLUB_ACE);
+        hand.add(new Card(NINE, SPADE));
+        hand.add(new Card(QUEEN, CLUB));
+        hand.add(new Card(ACE, CLUB));
 
         // then
         assertThat(hand.findMaximumScore()).isEqualTo(20);
@@ -63,9 +72,9 @@ public class HandTest {
         Hand hand = new Hand(List.of());
 
         // when
-        hand.addCard(Card.SPADE_TWO);
-        hand.addCard(Card.CLUB_EIGHT);
-        hand.addCard(Card.CLUB_ACE);
+        hand.add(new Card(TWO, SPADE));
+        hand.add(new Card(EIGHT, CLUB));
+        hand.add(new Card(ACE, CLUB));
 
         // then
         assertThat(hand.findMaximumScore()).isEqualTo(21);

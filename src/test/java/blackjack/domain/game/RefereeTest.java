@@ -8,11 +8,23 @@ import blackjack.domain.gamer.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static blackjack.domain.card.CardScore.ACE;
+import static blackjack.domain.card.CardScore.EIGHT;
+import static blackjack.domain.card.CardScore.FIVE;
+import static blackjack.domain.card.CardScore.JACK;
+import static blackjack.domain.card.CardScore.KING;
+import static blackjack.domain.card.CardScore.NINE;
+import static blackjack.domain.card.CardScore.QUEEN;
+import static blackjack.domain.card.CardScore.SEVEN;
+import static blackjack.domain.card.CardScore.THREE;
+import static blackjack.domain.card.CardScore.TWO;
+import static blackjack.domain.card.CardSymbol.CLUB;
+import static blackjack.domain.card.CardSymbol.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("심판")
@@ -25,17 +37,19 @@ public class RefereeTest {
         Dealer dealer = new Dealer(new Hand(List.of()));
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
+        List<Card> playerCards = new ArrayList<>(List.of(new Card(NINE, SPADE), new Card(QUEEN, CLUB)));
+        List<Card> DealerCards = new ArrayList<>(List.of(new Card(EIGHT, SPADE), new Card(QUEEN, CLUB)));
 
-        Deck playerCardPicker = new Deck(Arrays.asList(Card.values())) {
+        Deck playerCardPicker = new Deck(playerCards) {
             @Override
             public List<Card> pickCards(int count) {
-                return List.of(Card.SPADE_NINE, Card.CLUB_QUEEN);
+                return playerCards;
             }
         };
-        Deck dealerCardPicker = new Deck(Arrays.asList(Card.values())) {
+        Deck dealerCardPicker = new Deck(DealerCards) {
             @Override
             public List<Card> pickCards(int count) {
-                return List.of(Card.SPADE_EIGHT, Card.CLUB_QUEEN);
+                return DealerCards;
             }
         };
 
@@ -55,17 +69,19 @@ public class RefereeTest {
         Dealer dealer = new Dealer(new Hand(List.of()));
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
+        List<Card> playerCards = new ArrayList<>(List.of(new Card(NINE, SPADE), new Card(QUEEN, CLUB), new Card(THREE, CLUB)));
+        List<Card> DealerCards = new ArrayList<>(List.of(new Card(EIGHT, SPADE), new Card(QUEEN, CLUB), new Card(TWO, SPADE)));
 
-        Deck playerCardPicker = new Deck(Arrays.asList(Card.values())) {
+        Deck playerCardPicker = new Deck(playerCards) {
             @Override
             public List<Card> pickCards(int count) {
-                return List.of(Card.SPADE_NINE, Card.CLUB_QUEEN, Card.CLUB_THREE);
+                return playerCards;
             }
         };
-        Deck dealerCardPicker = new Deck(Arrays.asList(Card.values())) {
+        Deck dealerCardPicker = new Deck(DealerCards) {
             @Override
             public List<Card> pickCards(int count) {
-                return List.of(Card.SPADE_EIGHT, Card.SPADE_TWO, Card.CLUB_QUEEN);
+                return DealerCards;
             }
         };
 
@@ -85,17 +101,19 @@ public class RefereeTest {
         Dealer dealer = new Dealer(new Hand(List.of()));
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
+        List<Card> playerCards = new ArrayList<>(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB), new Card(THREE, CLUB)));
+        List<Card> DealerCards = new ArrayList<>(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB), new Card(THREE, SPADE)));
 
-        Deck playerCardPicker = new Deck(Arrays.asList(Card.values())) {
+        Deck playerCardPicker = new Deck(playerCards) {
             @Override
             public List<Card> pickCards(int count) {
-                return List.of(Card.SPADE_NINE, Card.CLUB_SEVEN, Card.CLUB_THREE);
+                return playerCards;
             }
         };
-        Deck dealerCardPicker = new Deck(Arrays.asList(Card.values())) {
+        Deck dealerCardPicker = new Deck(DealerCards) {
             @Override
             public List<Card> pickCards(int count) {
-                return List.of(Card.SPADE_NINE, Card.CLUB_SEVEN, Card.CLUB_THREE);
+                return DealerCards;
             }
         };
 
@@ -115,17 +133,19 @@ public class RefereeTest {
         Dealer dealer = new Dealer(new Hand(List.of()));
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
+        List<Card> playerCards = new ArrayList<>(List.of(new Card(ACE, CLUB), new Card(JACK, CLUB)));
+        List<Card> DealerCards = new ArrayList<>(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB), new Card(FIVE, CLUB)));
 
-        Deck playerCardPicker = new Deck(Arrays.asList(Card.values())) {
+        Deck playerCardPicker = new Deck(playerCards) {
             @Override
             public List<Card> pickCards(int count) {
-                return List.of(Card.CLUB_ACE, Card.CLUB_JACK);
+                return playerCards;
             }
         };
-        Deck dealerCardPicker = new Deck(Arrays.asList(Card.values())) {
+        Deck dealerCardPicker = new Deck(DealerCards) {
             @Override
             public List<Card> pickCards(int count) {
-                return List.of(Card.SPADE_NINE, Card.CLUB_SEVEN, Card.CLUB_FIVE);
+                return DealerCards;
             }
         };
 
@@ -145,19 +165,22 @@ public class RefereeTest {
         Dealer dealer = new Dealer(new Hand(List.of()));
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
+        List<Card> playerCards = new ArrayList<>(List.of(new Card(TWO, CLUB), new Card(JACK, CLUB)));
+        List<Card> DealerCards = new ArrayList<>(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB), new Card(FIVE, CLUB)));
 
-        Deck playerCardPicker = new Deck(Arrays.asList(Card.values())) {
+        Deck playerCardPicker = new Deck(playerCards) {
             @Override
             public List<Card> pickCards(int count) {
-                return List.of(Card.CLUB_TWO, Card.CLUB_JACK);
+                return playerCards;
             }
         };
-        Deck dealerCardPicker = new Deck(Arrays.asList(Card.values())) {
+        Deck dealerCardPicker = new Deck(DealerCards) {
             @Override
             public List<Card> pickCards(int count) {
-                return List.of(Card.SPADE_NINE, Card.CLUB_SEVEN, Card.CLUB_FIVE);
+                return DealerCards;
             }
         };
+
         players.forEach(player -> player.draw(playerCardPicker.pickCards(2)));
         dealer.draw(dealerCardPicker.pickCards(2));
         referee.calculatePlayersResults(players, dealer);
@@ -174,19 +197,22 @@ public class RefereeTest {
         Dealer dealer = new Dealer(new Hand(List.of()));
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
+        List<Card> playerCards = new ArrayList<>(List.of(new Card(KING, CLUB), new Card(JACK, CLUB), new Card(THREE, CLUB)));
+        List<Card> DealerCards = new ArrayList<>(List.of(new Card(KING, CLUB), new Card(JACK, CLUB), new Card(THREE, CLUB)));
 
-        Deck playerCardPicker = new Deck(Arrays.asList(Card.values())) {
+        Deck playerCardPicker = new Deck(playerCards) {
             @Override
             public List<Card> pickCards(int count) {
-                return List.of(Card.CLUB_KING, Card.CLUB_JACK, Card.CLUB_THREE);
+                return playerCards;
             }
         };
-        Deck dealerCardPicker = new Deck(Arrays.asList(Card.values())) {
+        Deck dealerCardPicker = new Deck(DealerCards) {
             @Override
             public List<Card> pickCards(int count) {
-                return List.of(Card.CLUB_KING, Card.CLUB_JACK, Card.CLUB_THREE);
+                return DealerCards;
             }
         };
+
         players.forEach(player -> player.draw(playerCardPicker.pickCards(2)));
         dealer.draw(dealerCardPicker.pickCards(2));
         referee.calculatePlayersResults(players, dealer);
@@ -203,19 +229,22 @@ public class RefereeTest {
         Dealer dealer = new Dealer(new Hand(List.of()));
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
+        List<Card> playerCards = new ArrayList<>(List.of(new Card(KING, CLUB), new Card(JACK, CLUB)));
+        List<Card> DealerCards = new ArrayList<>(List.of(new Card(KING, CLUB), new Card(JACK, CLUB), new Card(THREE, CLUB)));
 
-        Deck playerCardPicker = new Deck(Arrays.asList(Card.values())) {
+        Deck playerCardPicker = new Deck(playerCards) {
             @Override
             public List<Card> pickCards(int count) {
-                return List.of(Card.CLUB_KING, Card.CLUB_JACK);
+                return playerCards;
             }
         };
-        Deck dealerCardPicker = new Deck(Arrays.asList(Card.values())) {
+        Deck dealerCardPicker = new Deck(DealerCards) {
             @Override
             public List<Card> pickCards(int count) {
-                return List.of(Card.CLUB_KING, Card.CLUB_JACK, Card.CLUB_THREE);
+                return DealerCards;
             }
         };
+
         players.forEach(player -> player.draw(playerCardPicker.pickCards(2)));
         dealer.draw(dealerCardPicker.pickCards(2));
         referee.calculatePlayersResults(players, dealer);
