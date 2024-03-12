@@ -2,25 +2,23 @@ package domain;
 
 import java.util.List;
 
-import static domain.Name.DEALER_NAME_MESSAGE;
-
-public record PlayerNames(List<String> names) {
+public class Players {
 
     static final String NAME_DUPLICATE_MESSAGE = "중복된 이름은 허용하지 않습니다.";
-    static final String NAMES_SIZE_INVALID_MESSAGE = "참가자는 1명 이상 10명 이하 입니다.";
     private static final int MINIMUM_NAMES_SIZE = 1;
     private static final int MAXIMUM_NAMES_SIZE = 10;
+    static final String NAMES_SIZE_INVALID_MESSAGE
+            = String.format("참가자는 %d명 이상 %d명 이하 입니다.", MINIMUM_NAMES_SIZE, MAXIMUM_NAMES_SIZE);
 
-    public PlayerNames {
-        validateNotDealerName(names);
+    private final List<Player> players;
+
+    public Players(List<String> names) {
         validateDuplicate(names);
         validatePlayerNamesSize(names);
-    }
 
-    private void validateNotDealerName(List<String> names) {
-        if (names.contains("딜러")) {
-            throw new IllegalArgumentException(DEALER_NAME_MESSAGE);
-        }
+        this.players = names.stream()
+                .map(Player::new)
+                .toList();
     }
 
     private void validateDuplicate(List<String> names) {
@@ -38,5 +36,9 @@ public record PlayerNames(List<String> names) {
         if (!isValidateLength) {
             throw new IllegalArgumentException(NAMES_SIZE_INVALID_MESSAGE);
         }
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }
