@@ -27,37 +27,31 @@ public class GameManager {
         finish(blackJackGame);
     }
 
-    /**
-     * 게임의 참가자를 생성하고 2장 씩 나누어주어 게임을 초기 세팅하는 메서드
-     */
     private BlackJackGame start() {
         BlackJackGame blackJackGame = BlackJackGame.from(inputView.enterPlayerNames());
         outputView.printInitialHandStatus(blackJackGame.initialize());
         return blackJackGame;
     }
 
-    /**
-     * 딜러와 플레이어에게 돌아가며 카드를 나누어주는 메서드
-     */
     private void rotate(final BlackJackGame blackJackGame) {
         List<Participant> participants = blackJackGame.getParticipants();
         for (Participant participant : participants) {
             blackJackGame.giveCard(
                     participant,
-                    getAction(participant),
-                    getSupplier(participant)
+                    getActionAfterPick(participant),
+                    getDecisionToContinue(participant)
             );
         }
     }
 
-    private ActionAfterPick getAction(final Participant participant) {
+    private ActionAfterPick getActionAfterPick(final Participant participant) {
         if (participant instanceof Player) {
             return outputView::printHandStatus;
         }
         return handStatus -> outputView.printDealerCardSavedMessage();
     }
 
-    private DecisionToContinue getSupplier(final Participant participant) {
+    private DecisionToContinue getDecisionToContinue(final Participant participant) {
         if (participant instanceof Player) {
             return () -> CardCommand.from(
                     inputView.requestCommandWhetherGetMoreCard(participant.getName())
@@ -66,9 +60,6 @@ public class GameManager {
         return () -> CardCommand.HIT;
     }
 
-    /**
-     * 게임의 결과를 출력하고 최종 승패를 출력하는 메서드
-     */
     private void finish(final BlackJackGame blackJackGame) {
         List<ParticipantHandStatus> participantHandStatuses = blackJackGame.createHandStatuses();
         outputView.printResultHandStatus(participantHandStatuses);
