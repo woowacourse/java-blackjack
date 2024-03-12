@@ -14,6 +14,8 @@ public abstract class Participant {
         this.hand = hand;
     }
 
+    public abstract boolean canHit();
+
     public void appendCard(Card card) {
         hand.appendCard(card);
     }
@@ -25,8 +27,6 @@ public abstract class Participant {
     public int countDraw() {
         return hand.countDraw();
     }
-
-    public abstract boolean canHit();
 
     @Override
     public boolean equals(Object o) {
