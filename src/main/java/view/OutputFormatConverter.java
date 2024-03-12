@@ -6,6 +6,7 @@ import domain.playingcard.PlayingCardValue;
 
 import java.util.Map;
 
+import static domain.constant.GameResult.LOSE;
 import static domain.constant.GameResult.WIN;
 import static domain.playingcard.PlayingCardShape.*;
 import static domain.playingcard.PlayingCardValue.*;
@@ -43,6 +44,9 @@ public final class OutputFormatConverter {
         if (gameResult == WIN) {
             return "승";
         }
-        return "패";
+        if (gameResult == LOSE) {
+            return "패";
+        }
+        return "무";
     }
 }
