@@ -6,6 +6,7 @@ import static java.util.stream.Collectors.summingInt;
 import domain.blackjack.Dealer;
 import domain.blackjack.DrawResult;
 import domain.blackjack.GameResult;
+import domain.blackjack.HoldingCards;
 import domain.blackjack.Player;
 import domain.card.Card;
 import domain.card.Deck;
@@ -16,44 +17,44 @@ import dto.PlayerGameResultDTO;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import view.NameInputView;
 import view.OutputView;
 import view.YesOrNoInputView;
 import view.gamer.GamerOutputView;
 import view.gameresult.GameResultOutputView;
 
 public class BlackjackController {
-    private final Dealer dealer;
-    private final List<Player> players;
-
-    public BlackjackController(Dealer dealer, List<Player> players) {
-        this.dealer = dealer;
-        this.players = players;
-    }
 
     public void startBlackjackGame(Deck deck) {
-        initDealerAndPlayers(deck);
-        printDealerAndPlayers();
+        final Dealer dealer = Dealer.of(HoldingCards.of());
+        OutputView.printStartGame();
+        final List<Player> players = NameInputView.getNames().stream()
+                .map(name -> Player.from(name, HoldingCards.of()))
+                .toList();
+        initDealerAndPlayers(deck, dealer, players);
+        printDealerAndPlayers(dealer, players);
 
-        playersTryDraw(deck);
-        dealerTryDraw(deck);
+        playersTryDraw(deck, players);
+        dealerTryDraw(deck, dealer);
 
-        printDealerWithPoint();
-        printPlayersWithPoint();
+        printDealerWithPoint(dealer);
+        printPlayersWithPoint(players);
 
-        printDealerGameResult();
-        printPlayersGameResult();
+        printDealerGameResult(dealer, players);
+        printPlayersGameResult(dealer, players);
     }
 
-    private void initDealerAndPlayers(Deck deck) {
-        for (int index = 0; index < 2; index++) {
-            dealerDraw(deck);
+    private void initDealerAndPlayers(Deck deck, Dealer dealer, List<Player> players) {
+        final int initialDrawCount = 2;
+        IntStream.range(0, initialDrawCount).forEach(index -> {
+            dealerDraw(deck, dealer);
             players.forEach(player -> playerDraw(deck, player));
-        }
-        String namesOutput = players.stream().map(Player::getRawName).collect(Collectors.joining(", "));
-        OutputView.print("딜러와 %s에게 2장을 나누었습니다.".formatted(namesOutput));
+        });
+        OutputView.printInitGameDoneMessage(players.stream().map(Player::getRawName).toList());
     }
 
-    private DrawResult dealerDraw(Deck deck) {
+    private DrawResult dealerDraw(Deck deck, Dealer dealer) {
         return dealer.draw(deck, new RandomCardSelectStrategy());
     }
 
@@ -61,7 +62,7 @@ public class BlackjackController {
         return player.draw(deck, new RandomCardSelectStrategy());
     }
 
-    private void printDealerAndPlayers() {
+    private void printDealerAndPlayers(Dealer dealer, List<Player> players) {
         printDealer(dealer);
         players.forEach(BlackjackController::printPlayer);
     }
@@ -79,7 +80,7 @@ public class BlackjackController {
         GamerOutputView.printWithoutSummationCardPoint(gamerDTO);
     }
 
-    private void playersTryDraw(Deck deck) {
+    private void playersTryDraw(Deck deck, List<Player> players) {
         players.forEach(player -> playerTryDraw(deck, player));
     }
 
@@ -91,8 +92,7 @@ public class BlackjackController {
     }
 
     private boolean playerTryDrawOnce(Deck deck, Player player) {
-        OutputView.print("%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)".formatted(player.getRawName()));
-        boolean needToDraw = YesOrNoInputView.getYNAsBoolean();
+        boolean needToDraw = YesOrNoInputView.getYNAsBoolean(player.getRawName());
         DrawResult drawResult = null;
         if (needToDraw) {
             drawResult = playerDraw(deck, player);
@@ -104,21 +104,20 @@ public class BlackjackController {
         return drawResult.hasNextChance();
     }
 
-
-    private void dealerTryDraw(Deck deck) {
-        DrawResult drawResult = dealerDraw(deck);
+    private void dealerTryDraw(Deck deck, Dealer dealer) {
+        DrawResult drawResult = dealerDraw(deck, dealer);
         if (drawResult.isSuccess()) {
-            OutputView.print("딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+            OutputView.printDealerDrawDone();
         }
     }
 
-    private void printDealerWithPoint() {
+    private void printDealerWithPoint(Dealer dealer) {
         GamerDTO dealerDTO = new GamerDTO(dealer.getRawName(), dealer.getRawHoldingCards(),
                 dealer.getRawSummationCardPoint());
         GamerOutputView.print(dealerDTO);
     }
 
-    private void printPlayersWithPoint() {
+    private void printPlayersWithPoint(List<Player> players) {
         for (Player player : players) {
             GamerDTO playerDTO = new GamerDTO(player.getRawName(), player.getRawHoldingCards(),
                     player.getRawSummationCardPoint());
@@ -126,7 +125,7 @@ public class BlackjackController {
         }
     }
 
-    private void printDealerGameResult() {
+    private void printDealerGameResult(Dealer dealer, List<Player> players) {
         Map<GameResult, Integer> dealerGameResultCounts = players.stream()
                 .collect(Collectors.groupingBy(player -> calculate(dealer.getGamer(), player.getGamer()),
                         summingInt(value -> 1)));
@@ -134,7 +133,7 @@ public class BlackjackController {
         GameResultOutputView.print(dealerGameResultDTO);
     }
 
-    private void printPlayersGameResult() {
+    private void printPlayersGameResult(Dealer dealer, List<Player> players) {
         List<PlayerGameResultDTO> playerGameResultDTOS = players.stream()
                 .map(player -> new PlayerGameResultDTO(player.getRawName(),
                         calculate(player.getGamer(), dealer.getGamer())))

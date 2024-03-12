@@ -15,4 +15,8 @@ public class Console {
         }
         return input;
     }
+
+    public static void print(String output) {
+        System.out.print(output);
+    }
 }
