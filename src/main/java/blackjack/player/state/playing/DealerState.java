@@ -3,6 +3,8 @@ package blackjack.player.state.playing;
 import blackjack.card.Card;
 import blackjack.player.Hand;
 import blackjack.player.state.GameState;
+import blackjack.player.state.terminated.BlackJackState;
+import blackjack.player.state.terminated.BustedState;
 import blackjack.player.state.terminated.StandState;
 
 public class DealerState extends PlayingState {
@@ -20,6 +22,12 @@ public class DealerState extends PlayingState {
     @Override
     public GameState drawCard(Card card) {
         Hand newHand = hand.addCard(card);
+        if (newHand.isBusted()) {
+            return new BustedState(newHand);
+        }
+        if (newHand.isBlackJack()) {
+            return new BlackJackState(newHand);
+        }
         if (newHand.hasScoreGreaterThan(MAX_DRAWING_SCORE)) {
             return new StandState(newHand);
         }

@@ -7,6 +7,7 @@ import blackjack.card.Number;
 import blackjack.card.Shape;
 import blackjack.player.Hand;
 import blackjack.player.state.GameState;
+import blackjack.player.state.terminated.BustedState;
 import blackjack.player.state.terminated.StandState;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -61,5 +62,22 @@ class DealerStateTest {
         // then
         assertThat(state.isTerminated()).isTrue();
         assertThat(state.getScore().toInt()).isEqualTo(17);
+    }
+
+    @Test
+    @DisplayName("딜러가 세 번째 카드를 뽑아 21점을 넘어가면, Busted로 전이된다.")
+    void dealerBustedTest() {
+        // given
+        List<Card> cards = List.of(
+                new Card(Shape.HEART, Number.JACK),
+                new Card(Shape.DIAMOND, Number.SIX)
+        );
+        Card card = new Card(Shape.HEART, Number.SIX);
+        Hand hand = new Hand(cards);
+        DealerState dealerState = new DealerState(hand);
+        // when
+        GameState state = dealerState.drawCard(card);
+        // then
+        assertThat(state).isInstanceOf(BustedState.class);
     }
 }
