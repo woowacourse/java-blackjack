@@ -10,13 +10,15 @@ class CardsTest {
 
 
     @Test
-    @DisplayName("중복되지 않는 카드를 뽑는다.")
+    @DisplayName("서로 다른 카드의 개수는 52개다.")
     void draw() {
         final Cards deck = Cards.makeDecks();
         final Set<Card> cards = new HashSet<>();
+        
         for (int i = 0; i < 52 * 6; i++) {
             cards.add(deck.draw());
         }
+
         Assertions.assertThat(cards).size().isEqualTo(52);
     }
 
@@ -27,6 +29,7 @@ class CardsTest {
         for (int i = 0; i < 52 * 6; i++) {
             cards.draw();
         }
+
         Assertions.assertThatCode(cards::draw).isInstanceOf(IllegalStateException.class);
     }
 }
