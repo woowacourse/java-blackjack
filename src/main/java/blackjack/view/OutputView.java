@@ -35,7 +35,7 @@ public class OutputView {
     }
 
     public void printParticipantsResult(Dealer dealer, Players players) {
-        System.out.println("## 최종 승패");
+        System.out.println(messageResolver.resolveResultDescriptionMessage());
         System.out.println(messageResolver.resolveDealerResult(dealer.judge(players)));
         System.out.println(messageResolver.resolvePlayersResult(players, dealer));
     }

@@ -85,13 +85,18 @@ public class MessageResolver {
     }
 
     public String resolveParticipantsHandScoreMessage(Participants participants) {
-        return participants.getParticipants().stream()
+        String message = participants.getParticipants().stream()
                 .map(this::resolveParticipantHandScoreMessage)
                 .collect(Collectors.joining(LINE_SEPARATOR));
+        return String.join("", LINE_SEPARATOR, message);
     }
 
     private String resolveParticipantHandScoreMessage(Participant participant) {
         return String.format("%s - 결과: %d", resolveParticipantHandMessage(participant), participant.getHandScore());
+    }
+
+    public String resolveResultDescriptionMessage() {
+        return String.join("", LINE_SEPARATOR, "## 최종 승패");
     }
 
     public String resolveDealerResult(Result result) {
