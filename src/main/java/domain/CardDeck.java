@@ -6,14 +6,13 @@ import java.util.Stack;
 
 public class CardDeck {
 
-    private final Stack<Card> deck;
+    private final Stack<Card> deck = new Stack<>();
 
     private CardDeck() {
         List<Card> cards = Suit.getValues().stream()
-                .flatMap(mark -> Rank.getValues().stream()
-                        .map(letter -> new Card(letter, mark)))
+                .flatMap(suit -> Rank.getValues().stream()
+                        .map(rank -> new Card(rank, suit)))
                 .toList();
-        deck = new Stack<>();
         deck.addAll(cards);
     }
 
@@ -28,7 +27,7 @@ public class CardDeck {
     }
 
     private void shuffle() {
-        Collections.shuffle(deck);
+        Collections.shuffle(this.deck);
     }
 
     public Card draw() {
