@@ -8,9 +8,10 @@ import java.util.Objects;
 public class Player extends Participant {
 
     private static final int START_CARD_SIZE = 2;
+
     private final Name name;
 
-    Player(List<Card> cards, Name name) {
+    public Player(List<Card> cards, Name name) {
         super(cards);
         this.name = Objects.requireNonNull(name);
     }

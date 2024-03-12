@@ -13,7 +13,7 @@ public class Dealer extends Participant {
         super(Collections.emptyList());
     }
 
-    Dealer(List<Card> cards) {
+    public Dealer(List<Card> cards) {
         super(cards);
     }
 
