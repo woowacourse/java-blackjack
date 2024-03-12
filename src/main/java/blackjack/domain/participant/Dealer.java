@@ -11,7 +11,7 @@ public class Dealer extends Gamer {
     private final Deck deck;
 
     public Dealer(final Deck deck) {
-        super();
+        super(Betting.noBetting());
 
         this.deck = deck;
     }

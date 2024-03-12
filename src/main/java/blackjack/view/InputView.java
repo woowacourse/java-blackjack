@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.dto.PlayerInfo;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,7 +26,7 @@ public class InputView {
         return instance;
     }
 
-    public List<String> readPlayersName() {
+    private List<String> readPlayersName() {
         System.out.println(PLAYER_NAME_INPUT);
         try {
             return Arrays.stream(bufferedReader.readLine().split(NAME_SEPARATOR))
@@ -45,19 +46,20 @@ public class InputView {
         }
     }
 
-    public List<String> readBettingAmounts(final List<String> names) {
+    public List<PlayerInfo> readPlayerInfos() {
+        List<String> names = readPlayersName();
         System.out.println();
         return names.stream()
                 .map(this::readBettingAmount)
                 .toList();
     }
 
-    private String readBettingAmount(final String name) {
+    private PlayerInfo readBettingAmount(final String name) {
         System.out.printf(BETTING_AMOUNT_INPUT + System.lineSeparator(), name);
         try {
             String input = bufferedReader.readLine();
             System.out.println();
-            return input;
+            return PlayerInfo.of(name, input);
         } catch (IOException exception) {
             throw new IllegalArgumentException(IOEXCEPTION_ERROR);
         }

@@ -7,9 +7,11 @@ import java.util.List;
 public abstract class Gamer {
 
     protected final Hand hand;
+    protected final Betting betting;
 
-    public Gamer() {
+    public Gamer(final Betting betting) {
         this.hand = new Hand();
+        this.betting = betting;
     }
 
     abstract boolean canReceiveCard();

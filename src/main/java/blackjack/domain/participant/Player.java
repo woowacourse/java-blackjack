@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Hand;
 import blackjack.domain.card.Card;
+import blackjack.dto.PlayerInfo;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -13,13 +14,12 @@ public class Player extends Gamer {
     private static final Set<String> reservedNames = Set.of("딜러");
 
     private final String name;
-//    private final Betting betting;
 
-    public Player(final String name) {
-        super();
+    public Player(final PlayerInfo playerInfo) {
+        super(playerInfo.betting());
 
-        validate(name);
-        this.name = name;
+        validate(playerInfo.name());
+        this.name = playerInfo.name();
     }
 
     private void validate(final String name) {

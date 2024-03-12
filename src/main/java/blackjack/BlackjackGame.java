@@ -4,6 +4,7 @@ import blackjack.domain.Deck;
 import blackjack.domain.Players;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.dto.PlayerInfo;
 import blackjack.strategy.RandomShuffleStrategy;
 import blackjack.view.CardView;
 import blackjack.view.InputView;
@@ -34,10 +35,8 @@ public class BlackjackGame {
     }
 
     private Players createPlayers() {
-        List<String> names = inputView.readPlayersName();
-        List<String> bettingAmounts = inputView.readBettingAmounts(names);
-
-        return Players.of(names);
+        List<PlayerInfo> playerInfos = inputView.readPlayerInfos();
+        return Players.of(playerInfos);
     }
 
     private void initializeGame(final Dealer dealer, final Players players) {

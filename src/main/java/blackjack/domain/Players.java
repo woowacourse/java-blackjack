@@ -4,9 +4,11 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.dto.BlackjackResult;
 import blackjack.dto.DealerResult;
+import blackjack.dto.PlayerInfo;
 import blackjack.dto.PlayerResult;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Players {
 
@@ -18,24 +20,28 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(final List<String> names) {
-        validate(names);
+    public static Players of(final List<PlayerInfo> playerInfos) {
+        validate(playerInfos);
 
-        List<Player> players = names.stream()
+        List<Player> players = playerInfos.stream()
                 .map(Player::new)
                 .toList();
 
         return new Players(players);
     }
 
-    private static void validate(final List<String> names) {
-        if (isDuplicated(names)) {
+    private static void validate(final List<PlayerInfo> playerInfos) {
+        if (isDuplicated(playerInfos)) {
             throw new IllegalArgumentException(NAME_DUPLICATED_EXCEPTION);
         }
     }
 
-    private static boolean isDuplicated(final List<String> names) {
-        return names.size() != Set.copyOf(names).size();
+    private static boolean isDuplicated(final List<PlayerInfo> playerInfos) {
+        Set<String> names = playerInfos.stream()
+                .map(PlayerInfo::name)
+                .collect(Collectors.toSet());
+
+        return playerInfos.size() != names.size();
     }
 
     public BlackjackResult createResult(final Dealer dealer) {
