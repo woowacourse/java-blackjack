@@ -1,7 +1,5 @@
 package domain.blackjack;
 
-import domain.Blackjack;
-import domain.GameResult;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;

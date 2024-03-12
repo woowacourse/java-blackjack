@@ -1,4 +1,4 @@
-import domain.Blackjack;
+import domain.blackjack.Blackjack;
 import java.util.List;
 import view.InputView;
 import view.OutputView;

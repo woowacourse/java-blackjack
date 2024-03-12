@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.card.Cards;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Dealer extends Participant {
@@ -48,7 +49,7 @@ public class Dealer extends Participant {
     }
 
     public Map<PlayerResult, Integer> wrapUp(final Players players) {
-        final Map<PlayerResult, Integer> result = new HashMap<>();
+        final Map<PlayerResult, Integer> result = new LinkedHashMap<>();
         players.stream()
                 .forEach(player -> result.merge(compareHandsWith(player), 1, Integer::sum));
         return Collections.unmodifiableMap(result);
