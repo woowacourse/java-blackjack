@@ -1,19 +1,18 @@
 package blackjack.domain.dealer;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Hands;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.result.Score;
 import java.util.List;
 
 public class Dealer extends Participant {
     private static final Score NEED_CARD_CRITERION = new Score(17);
-    public static final String DEALER_SIGNAL = "DEALER";
+    public static final String DEALER_NAME = "딜러";
 
     private final Deck deck;
 
     public Dealer(final Deck deck) {
-        super(DEALER_SIGNAL);
+        super(DEALER_NAME);
         this.deck = deck;
     }
 
@@ -42,7 +41,7 @@ public class Dealer extends Participant {
         return deck.pick(count);
     }
 
-    public Hands getFirstCard() {
+    public Card getFirstCard() {
         return hands.getFirstCard();
     }
 }

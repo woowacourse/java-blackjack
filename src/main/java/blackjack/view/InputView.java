@@ -28,14 +28,13 @@ public class InputView {
 
     private void validateDealerSignal(final List<String> names) {
         if (hasDealerSignal(names)) {
-            throw new IllegalArgumentException(
-                    DealerFormat.DEALER.name() + " or " + DealerFormat.DEALER.getFormat() + " 라는 이름을 사용할 수 없습니다.");
+            throw new IllegalArgumentException(Dealer.DEALER_NAME + " 라는 이름을 사용할 수 없습니다.");
         }
     }
 
     private boolean hasDealerSignal(final List<String> names) {
         return names.stream()
-                .anyMatch(DealerFormat.DEALER::isSignal);
+                .anyMatch(Dealer.DEALER_NAME::equals);
     }
 
     public boolean readNeedMoreCard(final String name) {

@@ -14,12 +14,17 @@ public class Card {
     public boolean isAce() {
         return number == CardNumber.ACE;
     }
-    public CardNumber getNumberName() {
+
+    public int getScore() {
+        return number.getScore();
+    }
+
+    public CardNumber getNumber() {
         return number;
     }
 
-    public String getShapeName() {
-        return shape.name();
+    public CardShape getShape() {
+        return shape;
     }
 
     @Override

@@ -1,12 +1,9 @@
 package blackjack.domain.card;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
-
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Hands {
     private final List<Card> cards;
