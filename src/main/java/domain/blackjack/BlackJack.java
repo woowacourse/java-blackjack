@@ -24,17 +24,17 @@ public class BlackJack {
         beginBlackJack.accept(participants);
     }
 
+    public void play(Function<Name, String> isHitOption, Consumer<Participant> printParticipantHands) {
+        participants.participantsHit(isHitOption, printParticipantHands, deck);
+    }
+
     public int dealerHit() {
         int count = 0;
         Dealer dealer = participants.getDealer();
         while (dealer.shouldHit()) {
-            dealer.receiveCard();
+            dealer.receiveCard(deck.draw());
             count++;
         }
         return count;
-    }
-
-    public void play2(Function<Name, String> function, Consumer<Participant> printParticipantHands) {
-        participants.participantsHit(function, printParticipantHands);
     }
 }

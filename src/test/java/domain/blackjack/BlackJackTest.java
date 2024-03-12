@@ -23,8 +23,8 @@ class BlackJackTest {
 
         Assertions.assertAll(
                 () -> assertThat(participants.getDealer().getCardCount()).isEqualTo(2),
-                () -> assertThat(participants.getValue().get(0).getCardCount()).isEqualTo(2),
-                () -> assertThat(participants.getValue().get(1).getCardCount()).isEqualTo(2)
+                () -> assertThat(participants.getNotDealerParticipant().get(0).getCardCount()).isEqualTo(2),
+                () -> assertThat(participants.getNotDealerParticipant().get(1).getCardCount()).isEqualTo(2)
         );
     }
 
@@ -33,7 +33,7 @@ class BlackJackTest {
         Participants participants = new Participants(List.of("one", "two"));
         BlackJack blackJack = new BlackJack(participants);
 
-        Function<Name, String> function = new Function<Name, String>() {
+        Function<Name, String> testFunction = new Function<Name, String>() {
             int i = 0;
             @Override
             public String apply(Name name) {
@@ -45,10 +45,10 @@ class BlackJackTest {
             }
         };
 
-        blackJack.play2(function, Participant::getName);
+        blackJack.play(testFunction, Participant::getName);
 
-        List<Participant> participants1 = participants.getValue();
+        List<Participant> notDealerParticipants = participants.getNotDealerParticipant();
 
-        assertThat(participants1.get(0).getCardCount()).isEqualTo(2);
+        assertThat(notDealerParticipants.get(0).getCardCount()).isEqualTo(2);
     }
 }

@@ -21,7 +21,7 @@ public class BlackJackController {
         BlackJack blackJack = new BlackJack(participants);
 
         blackJack.beginDealing(this::beginBlackJack);
-        blackJack.play2(InputView::inputHitOption, OutputView::printParticipantHands);
+        blackJack.play(InputView::inputHitOption, OutputView::printParticipantHands);
         dealerHit(blackJack);
 
         printScore(participants);

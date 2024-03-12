@@ -3,7 +3,6 @@ package domain.participant;
 import domain.blackjack.Deck;
 import domain.blackjack.HitOption;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -41,16 +40,15 @@ public class Participants {
         }
     }
 
-    public void participantsHit(Function<Name, String> function, Consumer<Participant> printParticipantHands) {
+    public void participantsHit(Function<Name, String> isHitOption, Consumer<Participant> printParticipantHands, Deck deck) {
         for (Participant participant : getNotDealerParticipant()) {
-            participantHit(function, printParticipantHands, participant);
+            participantHit(isHitOption, printParticipantHands, participant, deck);
         }
     }
 
-    private void participantHit(Function<Name, String> function, Consumer<Participant> printParticipantHands, Participant participant) {
-        Dealer dealer = getDealer();
-        while (participant.canHit() && HitOption.isHit(function.apply(participant.getName()))) {
-            participant.receiveCard(dealer.draw());
+    private void participantHit(Function<Name, String> isHitOption, Consumer<Participant> printParticipantHands, Participant participant, Deck deck) {
+        while (participant.canHit() && HitOption.isHit(isHitOption.apply(participant.getName()))) {
+            participant.receiveCard(deck.draw());
             printParticipantHands.accept(participant);
         }
     }
@@ -66,14 +64,9 @@ public class Participants {
         return value.stream().filter(participant -> !participant.isDealer()).toList();
     }
 
-    public List<Name> getNames() {
-        return value.stream()
-                .filter(participant -> !participant.isDealer())
+    public List<Name> getNotDealerNames() {
+        return getNotDealerParticipant().stream()
                 .map(Participant::getName)
                 .toList();
-    }
-
-    public List<Participant> getValue() {
-        return Collections.unmodifiableList(value);
     }
 }

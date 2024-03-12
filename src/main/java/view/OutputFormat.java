@@ -14,7 +14,7 @@ public class OutputFormat {
     private static final String DELIMITER = ", ";
 
     public String formatParticipantNames(Participants participants) {
-        List<Name> names = participants.getNames();
+        List<Name> names = participants.getNotDealerNames();
         List<String> participantNames = new ArrayList<>();
         for (Name name : names) {
             participantNames.add(name.getValue());
