@@ -5,8 +5,7 @@ import blackjack.domain.card.CardRank;
 public class Score {
 
     private static final int BLACKJACK = 21;
-    private static final int ACE_SCORE_DIFFERENCE =
-            CardRank.ACE.getSpecialScore().value - CardRank.ACE.getScore().value;
+    private static final int ACE_SCORE_DIFFERENCE = CardRank.ACE.getSpecialScore() - CardRank.ACE.getScore();
 
     private final int value;
 
