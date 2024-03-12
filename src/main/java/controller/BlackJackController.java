@@ -23,7 +23,7 @@ public class BlackJackController {
 
     public void run() {
         final Players players = Players.from(inputView.readNames());
-        final Dealer dealer = new Dealer(CardDeck.generate());
+        final Dealer dealer = Dealer.from(CardDeck.generate());
 
         initHands(players, dealer);
         dealWithPlayers(players, dealer);

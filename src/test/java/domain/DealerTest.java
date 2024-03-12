@@ -28,7 +28,7 @@ class DealerTest {
         //given
         final Players players = Players.from(List.of("레디", "제제"));
         final CardDeck cardDeck = CardDeck.generate();
-        final Dealer dealer = new Dealer(cardDeck);
+        final Dealer dealer = Dealer.from(cardDeck);
 
         //when
         dealer.initHands(players);
@@ -47,7 +47,7 @@ class DealerTest {
         final Players players = new Players(List.of(hitPlayer, stayPlayer));
 
         final CardDeck cardDeck = CardDeck.generate();
-        final Dealer dealer = new Dealer(cardDeck);
+        final Dealer dealer = Dealer.from(cardDeck);
         dealer.initHands(players);
 
         //when
