@@ -1,8 +1,10 @@
 package domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerTest {
     @Test
@@ -14,7 +16,7 @@ class PlayerTest {
         player.dealCard(new Card(Denomination.FIVE, Suit.CLUBS));
         player.dealCard(new Card(Denomination.ACE, Suit.CLUBS));
 
-        Assertions.assertThat(player.score()).isEqualTo(21);
+        assertThat(player.score()).isEqualTo(21);
     }
 
     @Test
@@ -26,7 +28,7 @@ class PlayerTest {
         player.dealCard(new Card(Denomination.KING, Suit.CLUBS));
         player.dealCard(new Card(Denomination.ACE, Suit.CLUBS));
 
-        Assertions.assertThat(player.score()).isEqualTo(21);
+        assertThat(player.score()).isEqualTo(21);
     }
 
     @Test
@@ -38,7 +40,7 @@ class PlayerTest {
         player.dealCard(new Card(Denomination.JACK, Suit.CLUBS));
         player.dealCard(new Card(Denomination.QUEEN, Suit.CLUBS));
 
-        Assertions.assertThat(player.isBust()).isEqualTo(true);
+        assertThat(player.isBust()).isEqualTo(true);
     }
 
     @Test
@@ -50,6 +52,15 @@ class PlayerTest {
         player.dealCard(new Card(Denomination.JACK, Suit.CLUBS));
         player.dealCard(new Card(Denomination.ACE, Suit.CLUBS));
 
-        Assertions.assertThat(player.canHit()).isEqualTo(true);
+        assertThat(player.canHit()).isEqualTo(true);
+    }
+
+    @DisplayName("플레이어는 [딜러] 이름을 사용할 수 없다.")
+    @Test
+    void playerIsNotDealer() {
+        final Name name = new Name("딜러");
+
+        assertThatThrownBy(() -> new Player(name))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
