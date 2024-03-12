@@ -19,7 +19,6 @@ public class Player {
         hand.add(card);
     }
 
-    // TODO: 이름 변경
     public boolean isBust() {
         return hand.calculateScore() <= BUST_THRESHOLD;
     }

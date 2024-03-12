@@ -10,12 +10,10 @@ public class Dealer extends Player {
         super(NAME);
     }
 
-    // TODO: 테스트 코드 추가
     public boolean isMoreCardNeeded() {
         return this.hand.calculateScore() <= HIT_THRESHOLD;
     }
 
-    // TODO: 테스트 코드 추가
     public Card getFirstCard() {
         try {
             return hand.getAllCards().get(0);
