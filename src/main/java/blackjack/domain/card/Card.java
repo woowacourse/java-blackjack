@@ -3,9 +3,9 @@ package blackjack.domain.card;
 import java.util.Arrays;
 import java.util.List;
 
-public record Card(CardSymbol symbol, CardScore score) {
+public record Card(CardSuit suit, CardScore score) {
     public static List<Card> getAll() {
-        return Arrays.stream(CardSymbol.values()).flatMap(cardSymbol ->
+        return Arrays.stream(CardSuit.values()).flatMap(cardSymbol ->
                         Arrays.stream(CardScore.values()).map(cardScore ->
                                 new Card(cardSymbol, cardScore)))
                 .toList();

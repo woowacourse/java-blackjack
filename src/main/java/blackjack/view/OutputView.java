@@ -35,7 +35,7 @@ public class OutputView {
     }
 
     private static String formatCard(Card card) {
-        return CardScoreName.convert(card.score()) + CardSymbolName.convert(card.symbol());
+        return CardScoreName.convert(card.score()) + CardSuitName.convert(card.suit());
     }
 
     private static String formatCards(List<Card> cards) {
