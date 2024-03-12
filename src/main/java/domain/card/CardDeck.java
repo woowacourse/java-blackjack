@@ -12,11 +12,11 @@ public class CardDeck {
 
     private final Deque<Card> cards;
 
-    private CardDeck(final Deque<Card> cards) {
+    public CardDeck(final Deque<Card> cards) {
         this.cards = cards;
     }
 
-    public static CardDeck generate(int size) {
+    protected static CardDeck generate(int size) {
         final List<Card> deck = new ArrayList<>();
 
         for (int i = 0; i < size; i++) {

@@ -2,8 +2,13 @@ package domain.participant;
 
 import domain.Answer;
 import domain.Result;
+import domain.card.Card;
 import domain.card.CardDeck;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 public class Dealer extends Participant {
@@ -17,12 +22,21 @@ public class Dealer extends Participant {
 
     public Dealer() {
         super(DEALER_NAME, Hands.createEmptyHands());
-        this.cardDeck = CardDeck.generate(DECK_SIZE);
+        this.cardDeck = new CardDeck(generate());
     }
 
     public Dealer(final Hands hands) {
         super(DEALER_NAME, hands);
-        this.cardDeck = CardDeck.generate(DECK_SIZE);
+        this.cardDeck = new CardDeck(generate());
+    }
+
+    private static ArrayDeque<Card> generate() {
+        final List<Card> deck = new ArrayList<>();
+        for (int i = 0; i < DECK_SIZE; i++) {
+            deck.addAll(Card.values());
+        }
+        Collections.shuffle(deck);
+        return new ArrayDeque<>(deck);
     }
 
     public void initHands(final Players players) {
