@@ -4,14 +4,11 @@ import constants.ErrorCode;
 import exception.NoMoreCardException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
 public class CardDeck {
-
-    private static final int DECK_SIZE = 6;
 
     private final Deque<Card> cards;
 
@@ -19,13 +16,12 @@ public class CardDeck {
         this.cards = cards;
     }
 
-    public static CardDeck generate() {
+    public static CardDeck generate(int size) {
         final List<Card> deck = new ArrayList<>();
 
-        for (int i = 0; i < DECK_SIZE; i++) {
-            deck.addAll(generateOneCardDeck());
+        for (int i = 0; i < size; i++) {
+            deck.addAll(Card.values());
         }
-
         Collections.shuffle(deck);
         return new CardDeck(new ArrayDeque<>(deck));
     }
@@ -39,17 +35,5 @@ public class CardDeck {
 
     public int size() {
         return cards.size();
-    }
-
-    private static List<Card> generateOneCardDeck() {
-        return Arrays.stream(Shape.values())
-                .flatMap(shape -> matching(shape).stream())
-                .toList();
-    }
-
-    private static List<Card> matching(final Shape shape) {
-        return Arrays.stream(Rank.values())
-                .map(rank -> new Card(rank, shape))
-                .toList();
     }
 }

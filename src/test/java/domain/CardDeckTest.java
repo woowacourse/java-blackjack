@@ -1,5 +1,7 @@
 package domain;
 
+import static domain.participant.Dealer.DECK_SIZE;
+
 import domain.card.CardDeck;
 import exception.NoMoreCardException;
 import org.assertj.core.api.Assertions;
@@ -12,7 +14,7 @@ class CardDeckTest {
     @Test
     void generate() {
         // given
-        CardDeck cardDeck = CardDeck.generate();
+        CardDeck cardDeck = CardDeck.generate(DECK_SIZE);
 
         // when && then
         Assertions.assertThat(cardDeck.size()).isEqualTo(52 * 6);
@@ -22,7 +24,7 @@ class CardDeckTest {
     @DisplayName("카드가 없는데 카드를 뽑을 경우 예외가 발생한다.")
     void pop() {
         //given
-        CardDeck cardDeck = CardDeck.generate();
+        CardDeck cardDeck = CardDeck.generate(DECK_SIZE);
 
         //when
         int cardSize = 52 * 6;

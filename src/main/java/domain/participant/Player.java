@@ -1,5 +1,7 @@
 package domain.participant;
 
+import static domain.participant.Dealer.DEALER_NAME;
+
 import constants.ErrorCode;
 import exception.ReservedPlayerNameException;
 
@@ -11,7 +13,7 @@ public class Player extends Participant {
     }
 
     private void validate(final Name name) {
-        if (Dealer.NAME.equals(name.getValue())) {
+        if (DEALER_NAME.equals(name)) {
             throw new ReservedPlayerNameException(ErrorCode.RESERVED_NAME);
         }
     }

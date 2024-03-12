@@ -10,7 +10,6 @@ import static domain.Result.LOSE;
 import static domain.Result.TIE;
 import static domain.Result.WIN;
 
-import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
@@ -92,7 +91,7 @@ class PlayersTest {
         Player tier = new Player(new Name("수달"), sum20Size3);
 
         Players players = new Players(List.of(loser, winner, tier));
-        Dealer dealer = new Dealer(CardDeck.generate(), sum20Size3);
+        Dealer dealer = new Dealer(sum20Size3);
 
         //when & then
         Map<Player, Result> expected = Map.of(loser, LOSE, winner, WIN, tier, TIE);
@@ -103,7 +102,7 @@ class PlayersTest {
     @DisplayName("딜러가 버스트일때 참여자가 버스트가 아니면 WIN")
     void all() {
         //given
-        Dealer bustDealer = new Dealer(CardDeck.generate(), bustHands);
+        Dealer bustDealer = new Dealer(bustHands);
         Player winner1 = new Player(new Name("레디"), sum18Size2);
         Player winner2 = new Player(new Name("브라운"), sum20Size2);
         Player loser = new Player(new Name("제제"), bustHands);

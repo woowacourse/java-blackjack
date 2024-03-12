@@ -1,7 +1,6 @@
 package controller;
 
 import domain.Answer;
-import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -23,7 +22,7 @@ public class BlackJackController {
 
     public void run() {
         final Players players = inputController.getPlayers();
-        final Dealer dealer = new Dealer(CardDeck.generate());
+        final Dealer dealer = new Dealer();
 
         initHands(players, dealer);
         dealWithPlayers(players, dealer);

@@ -2,6 +2,7 @@ package domain.participant;
 
 import constants.ErrorCode;
 import exception.InvalidPlayerNameException;
+import java.util.Objects;
 
 public class Name {
 
@@ -31,5 +32,21 @@ public class Name {
 
     public String getValue() {
         return value;
+    }
+
+    @Override
+    public boolean equals(final Object target) {
+        if (this == target) {
+            return true;
+        }
+        if (!(target instanceof Name name)) {
+            return false;
+        }
+        return Objects.equals(value, name.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(value);
     }
 }

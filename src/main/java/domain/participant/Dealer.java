@@ -10,18 +10,19 @@ public class Dealer extends Participant {
 
     public static final int INIT_HANDS_SIZE = 2;
     public static final int THRESHOLD = 16;
-    public static final String NAME = "딜러";
+    public static final int DECK_SIZE = 6;
+    public static final Name DEALER_NAME = new Name("딜러");
 
     private final CardDeck cardDeck;
 
-    public Dealer(final CardDeck cardDeck) {
-        super(new Name(NAME), Hands.createEmptyHands());
-        this.cardDeck = cardDeck;
+    public Dealer() {
+        super(DEALER_NAME, Hands.createEmptyHands());
+        this.cardDeck = CardDeck.generate(DECK_SIZE);
     }
 
-    public Dealer(final CardDeck cardDeck, final Hands hands) {
-        super(new Name(NAME), hands);
-        this.cardDeck = cardDeck;
+    public Dealer(final Hands hands) {
+        super(DEALER_NAME, hands);
+        this.cardDeck = CardDeck.generate(DECK_SIZE);
     }
 
     public void initHands(final Players players) {

@@ -8,7 +8,6 @@ import static domain.Result.LOSE;
 import static domain.Result.TIE;
 import static domain.Result.WIN;
 
-import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Hands;
 import domain.participant.Name;
@@ -27,8 +26,7 @@ class DealerTest {
     void dealCards() {
         //given
         final Players players = Players.from(List.of("레디", "제제"));
-        final CardDeck cardDeck = CardDeck.generate();
-        final Dealer dealer = new Dealer(cardDeck);
+        final Dealer dealer = new Dealer();
 
         //when
         dealer.initHands(players);
@@ -46,8 +44,7 @@ class DealerTest {
 
         final Players players = new Players(List.of(hitPlayer, stayPlayer));
 
-        final CardDeck cardDeck = CardDeck.generate();
-        final Dealer dealer = new Dealer(cardDeck);
+        final Dealer dealer = new Dealer();
         dealer.initHands(players);
 
         //when
@@ -63,7 +60,7 @@ class DealerTest {
     @DisplayName("딜러의 카드의 합이 17이상이 될때까지 카드를 추가한다.")
     void dealerDeal() {
         //given
-        final Dealer dealer = new Dealer(CardDeck.generate(), sum10Size2);
+        final Dealer dealer = new Dealer(sum10Size2);
 
         //when
         dealer.deal();
@@ -77,7 +74,7 @@ class DealerTest {
     @Test
     void dealerNoDeal() {
         //given
-        final Dealer dealer = new Dealer(CardDeck.generate(), sum18Size2);
+        final Dealer dealer = new Dealer(sum18Size2);
 
         //when
         dealer.deal();
@@ -97,7 +94,7 @@ class DealerTest {
         Player tier = new Player(new Name("브라운"), sum20Size3);
 
         Players players = new Players(List.of(loser1, loser2, winner, tier));
-        Dealer dealer = new Dealer(CardDeck.generate(), sum20Size3);
+        Dealer dealer = new Dealer(sum20Size3);
 
         // when
         Map<Result, Integer> expected = Map.of(WIN, 2, LOSE, 1, TIE, 1);
