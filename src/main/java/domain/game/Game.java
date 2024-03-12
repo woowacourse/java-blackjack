@@ -73,4 +73,16 @@ public class Game {
         return new PlayerResults(playerResults);
     }
 
+    public DealerResult generateDealerResult() {
+        Map<Result, Integer> dealerResult = users.getPlayers()
+                .stream()
+                .collect(Collectors.toMap(
+                        player -> users.generatePlayerResult(player).reverse(),
+                        value -> 1,
+                        (oldValue, newValue) -> oldValue + 1,
+                        LinkedHashMap::new
+                ));
+        return new DealerResult(dealerResult);
+    }
+
 }

@@ -57,7 +57,7 @@ public class GameTest {
 
         Game game = new Game(totalDeck, users);
         PlayerResults playerResults = game.generatePlayerResults();
-        DealerResult dealerResult = playerResults.generateDealerResult();
+        DealerResult dealerResult = game.generateDealerResult();
 
         assertAll(
                 () -> assertThat(playerResults.getPlayerResults().get(player)).isEqualTo(LOSE),

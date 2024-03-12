@@ -67,7 +67,7 @@ public class ResultView {
     public static void showResult(Game game) {
         System.out.println("\n## 최종 승패");
         PlayerResults playerResults = game.generatePlayerResults();
-        DealerResult dealerResult = playerResults.generateDealerResult();
+        DealerResult dealerResult = game.generateDealerResult();
         System.out.println("딜러: " + dealerResult.getResultDetail());
 
         playerResults.getPlayerResults()
