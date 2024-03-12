@@ -35,8 +35,8 @@ public class BlackJackGame {
         }
     }
 
-    public boolean canPlayerMoreHit(Player player, HitOption hitOption) {
-        return player.canHit() && hitOption.doHit();
+    public boolean canPlayerMoreHit(Player player) {
+        return player.canHit();
     }
 
     public Card allowHit(Player player, Deck deck) {

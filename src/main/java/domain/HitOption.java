@@ -6,11 +6,7 @@ public class HitOption {
     private static final String NO = "n";
     private String value;
 
-    public HitOption() {
-        this.value = YES;
-    }
-
-    public void makeNewOption(String value) {
+    public HitOption(String value) {
         validate(value);
         this.value = value;
     }

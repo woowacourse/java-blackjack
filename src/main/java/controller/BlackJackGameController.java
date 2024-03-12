@@ -17,6 +17,8 @@ import java.util.List;
 
 public class BlackJackGameController {
 
+    private static final String INIT_HIT_OPTION = "y";
+
     private final InputView inputView;
     private final ResultView resultView;
 
@@ -63,9 +65,9 @@ public class BlackJackGameController {
     }
 
     private void progressPlayerGame(BlackJackGame blackJackGame, Deck deck, Player player) {
-        HitOption hitOption = new HitOption();
-        while (blackJackGame.canPlayerMoreHit(player, hitOption)) {
-            hitOption.makeNewOption(inputView.readHitOrNot(player));
+        HitOption hitOption = new HitOption(INIT_HIT_OPTION);
+        while (blackJackGame.canPlayerMoreHit(player) && hitOption.doHit()) {
+            hitOption = new HitOption(inputView.readHitOrNot(player));
             doHitByOption(blackJackGame, deck, player, hitOption);
         }
     }
