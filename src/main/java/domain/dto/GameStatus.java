@@ -1,6 +1,7 @@
 package domain.dto;
 
-import domain.BlackJackGame;
+import domain.Dealer;
+import domain.Player;
 import java.util.Collections;
 import java.util.List;
 
@@ -8,11 +9,11 @@ public class GameStatus {
     private final List<GamerDto> gamerDtos;
     private final GamerDto dealerDto;
 
-    public GameStatus(BlackJackGame blackJackGame) {
-        this.gamerDtos = blackJackGame.getPlayers().stream()
+    public GameStatus(Dealer dealer, List<Player> players) {
+        this.dealerDto = GamerDto.fromDealer(dealer);
+        this.gamerDtos = players.stream()
                 .map(GamerDto::fromPlayer)
                 .toList();
-        this.dealerDto = GamerDto.fromDealer(blackJackGame.getDealer());
     }
 
     public List<GamerDto> getGamerDtos() {

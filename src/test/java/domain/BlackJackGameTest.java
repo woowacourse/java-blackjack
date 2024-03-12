@@ -17,7 +17,7 @@ public class BlackJackGameTest {
                 new Player(new Name("test"))
         ));
         blackJackGame.initialDealing();
-        Assertions.assertThat(new GameStatus(blackJackGame)
+        Assertions.assertThat(new GameStatus(blackJackGame.getDealer(), blackJackGame.getPlayers())
                         .getGamerDtoFromName("test")
                         .getCards().size())
                 .isEqualTo(2);
@@ -31,7 +31,7 @@ public class BlackJackGameTest {
         ));
         blackJackGame.initialDealing();
         blackJackGame.drawCardFromName("test");
-        Assertions.assertThat(new GameStatus(blackJackGame)
+        Assertions.assertThat(new GameStatus(blackJackGame.getDealer(), blackJackGame.getPlayers())
                         .getGamerDtoFromName("test")
                         .getCards().size())
                 .isEqualTo(3);
@@ -80,7 +80,7 @@ public class BlackJackGameTest {
         ));
         blackJackGame.initialDealing();
         blackJackGame.drawDealerCard();
-        GameStatus gameStatus = new GameStatus(blackJackGame);
+        GameStatus gameStatus = new GameStatus(blackJackGame.getDealer(), blackJackGame.getPlayers());
         GamerDto gamerDto = gameStatus.getDealerDto();
         Assertions.assertThat(gamerDto.getTotalScore()).isGreaterThan(16);
     }

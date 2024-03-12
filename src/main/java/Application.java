@@ -29,7 +29,7 @@ public class Application {
 
     private static List<GamerDto> showInitialStatus(BlackJackGame blackJackGame) {
         blackJackGame.initialDealing();
-        GameStatus gameInitStatusDto = new GameStatus(blackJackGame);
+        GameStatus gameInitStatusDto = new GameStatus(blackJackGame.getDealer(), blackJackGame.getPlayers());
         OutputView.printInitialStatus(gameInitStatusDto);
         return gameInitStatusDto.getGamerDtos();
     }
@@ -68,7 +68,7 @@ public class Application {
     }
 
     private static void showFinalStatus(BlackJackGame blackJackGame) {
-        OutputView.printTotalStatus(new GameStatus(blackJackGame));
+        OutputView.printTotalStatus(new GameStatus(blackJackGame.getDealer(), blackJackGame.getPlayers()));
         OutputView.printGameResult(blackJackGame.getGameResult());
     }
 }
