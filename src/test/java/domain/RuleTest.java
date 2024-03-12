@@ -24,6 +24,18 @@ class RuleTest {
     }
 
     @Test
+    @DisplayName("딜러가 버스트인 경우 승을 반환한다.")
+    void decideStatus_WIN_DealerBurst() {
+        DealerCards dealerCards = new DealerCards(List.of(new Card(10, Shape.CLUB), new Card(10, Shape.HEART)));
+        PlayerCards playerCards = new PlayerCards(
+                new Name("capy"), new BetAmount(1000), List.of(new Card(7, Shape.CLUB), new Card(10, Shape.HEART)));
+
+        dealerCards.receive(new Card(2, Shape.CLUB));
+
+        Assertions.assertThat(Rule.decideStatus(playerCards, dealerCards)).isEqualTo(Status.WIN);
+    }
+
+    @Test
     @DisplayName("플레이어가 블랙잭인 경우 블랙잭을 반환한다.")
     void decideStatus_BLACKJACK() {
         DealerCards dealerCards = new DealerCards(List.of(new Card(5, Shape.CLUB), new Card(10, Shape.HEART)));

@@ -27,6 +27,10 @@ public class Cards {
         return bestSum() > MAX_SCORE;
     }
 
+    public boolean isNotBurst() {
+        return !isBurst();
+    }
+
     public boolean isBlackjack() {
         return cards.size() == INIT_SIZE && bestSum() == MAX_SCORE;
     }

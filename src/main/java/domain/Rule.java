@@ -45,11 +45,11 @@ public class Rule {
     }
 
     private static boolean checkTargetLose(Cards targetCards, Cards otherCards) {
-        return targetCards.isBurst() || otherCards.isGreaterThan(targetCards);
+        return targetCards.isBurst() || otherCards.isNotBurst() && otherCards.isGreaterThan(targetCards);
     }
 
     private static boolean checkTargetBlackjack(Cards targetCards, Cards otherCards) {
-        return targetCards.isBlackjack() && targetCards.isGreaterThan(otherCards);
+        return targetCards.isBlackjack() && (otherCards.isBurst() || targetCards.isGreaterThan(otherCards));
     }
 
     private static boolean checkTargetWin(Cards targetCards, Cards otherCards) {
