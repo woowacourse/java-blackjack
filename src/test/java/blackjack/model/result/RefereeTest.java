@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.model.deck.Card;
 import blackjack.model.deck.Deck;
 import blackjack.model.participant.Dealer;
-import blackjack.model.participant.Hand;
 import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
 import java.util.List;

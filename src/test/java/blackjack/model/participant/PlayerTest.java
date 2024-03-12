@@ -47,7 +47,7 @@ class PlayerTest {
     @Nested
     @DisplayName("플레이어 카드 받기")
     class ReceiveCard {
-        Player player;
+        private Player player;
 
         @BeforeEach
         void init() {

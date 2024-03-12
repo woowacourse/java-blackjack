@@ -1,6 +1,7 @@
 package blackjack.model.deck;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.NoSuchElementException;
 import org.assertj.core.api.Assertions;
@@ -31,7 +32,7 @@ class DeckTest {
     @Test
     @DisplayName("카드 한 세트(52장)을 다 소진할 경우 예외가 발생한다.")
     void throwErrorWhenNoCard() {
-        Assertions.assertThatThrownBy(() -> deck.distributeInitialCard(27))
+        assertThatThrownBy(() -> deck.distributeInitialCard(27))
                 .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("카드가 부족합니다.");
     }
