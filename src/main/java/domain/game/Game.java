@@ -2,9 +2,8 @@ package domain.game;
 
 import domain.Command;
 import domain.deck.TotalDeck;
-import domain.deck.UserDeck;
-import domain.user.Name;
 import domain.user.Player;
+import domain.user.User;
 import domain.user.Users;
 
 import java.util.LinkedHashMap;
@@ -29,12 +28,8 @@ public class Game {
         return users.makeIndex();
     }
 
-    public Name getNameByIndex(Index index) {
-        return users.getNameByIndex(index);
-    }
-
-    public UserDeck getUserDeckByIndex(Index index) {
-        return users.geUserDeckByIndex(index);
+    public User getUserByIndex(Index index) {
+        return users.getUserByIndex(index);
     }
 
     public State determineState(Command command, Index index) {

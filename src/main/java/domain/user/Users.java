@@ -3,7 +3,6 @@ package domain.user;
 import domain.BlackjackException;
 import domain.card.Card;
 import domain.deck.TotalDeck;
-import domain.deck.UserDeck;
 import domain.game.Index;
 import domain.game.Result;
 
@@ -48,8 +47,8 @@ public class Users {
         return new Index(users.size());
     }
 
-    public Name getNameByIndex(Index index) {
-        return users.get(index.getCurrent()).name;
+    public User getUserByIndex(Index index) {
+        return users.get(index.getCurrent());
     }
 
     public void addCardOfCurrentUser(Card newCard, Index index) {
@@ -91,9 +90,5 @@ public class Users {
 
     public Dealer getDealer() {
         return (Dealer) users.get(DEALER_INDEX);
-    }
-
-    public UserDeck geUserDeckByIndex(Index index) {
-        return users.get(index.getCurrent()).getUserDeck();
     }
 }

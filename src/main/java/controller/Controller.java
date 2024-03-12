@@ -1,24 +1,22 @@
 package controller;
 
 import domain.Command;
+import domain.DealerDto;
 import domain.ExceptionHandler;
-import domain.card.Card;
+import domain.UserDto;
 import domain.deck.TotalDeck;
 import domain.deck.TotalDeckGenerator;
-import domain.deck.UserDeck;
 import domain.game.Game;
 import domain.game.Index;
 import domain.game.State;
-import domain.user.Name;
+import domain.user.Player;
 import domain.user.User;
 import domain.user.Users;
 import view.InputView;
 import view.ResultView;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static domain.game.State.BUST;
 import static domain.game.State.HIT;
@@ -35,29 +33,13 @@ public class Controller {
     }
 
     private void showStartStatus(Users users) {
-        List<Name> names = getNameOfUsers(users);
-        Name dealerName = users.getDealer().getName();
-        Card dealerCard = users.getDealer().getVisibleCard();
-        Map<Name, List<Card>> userCards = getCardOfUsers(users);
-        ResultView.showStartStatus(names, dealerName, dealerCard, userCards);
-    }
-
-    private List<Name> getNameOfUsers(Users users) {
-        return users.getPlayers()
-                .stream()
-                .map(User::getName)
-                .collect(Collectors.toList());
-    }
-
-    private Map<Name, List<Card>> getCardOfUsers(Users users) {
-        return users.getPlayers()
-                .stream()
-                .collect(Collectors.toMap(
-                        User::getName,
-                        user -> user.getUserDeck().getCards(),
-                        (oldValue, newValue) -> newValue,
-                        LinkedHashMap::new
-                ));
+        List<UserDto> userDtos = new ArrayList<>();
+        List<Player> players = users.getPlayers();
+        for (Player player : players) {
+            userDtos.add(UserDto.from(player));
+        }
+        DealerDto dealerDto = DealerDto.from(users.getDealer());
+        ResultView.showStartStatus(userDtos, dealerDto);
     }
 
     private void hitOrStay(Game game) {
@@ -72,29 +54,34 @@ public class Controller {
     }
 
     private Index hitOrStayOnce(Game game, final Index index) {
-        Name userName = game.getNameByIndex(index);
-        UserDeck userDeck = game.getUserDeckByIndex(index);
+        User user = game.getUserByIndex(index);
+        UserDto userDto = UserDto.from(user);
         Command command = ExceptionHandler.handle(
-                () -> InputView.inputAddCommand(userName)
+                () -> InputView.inputAddCommand(userDto.name)
         );
         State state = game.determineState(command, index);
-        return getIndex(state, index, userName, userDeck.getCards());
+        return getIndex(state, index, userDto);
     }
 
-    private Index getIndex(State state, Index index, Name name, List<Card> userDeck) {
+    private Index getIndex(State state, Index index, UserDto userDto) {
         if (state == HIT) {
-            ResultView.printPlayerAndDeck(name, userDeck);
+            ResultView.printPlayerAndDeck(userDto.name, userDto.cards);
             return index;
         }
         if (state == BUST) {
-            ResultView.printBust(name, userDeck);
+            ResultView.printBust(userDto.name, userDto.cards);
             return index.next();
         }
         return index.next();
     }
 
     private void showGameResult(Users users, Game game) {
-        ResultView.showCardsAndSum(users);
+        List<UserDto> userDtos = new ArrayList<>();
+        List<User> gameCompletedUsers = users.getUsers();
+        for (User user : gameCompletedUsers) {
+            userDtos.add(UserDto.from(user));
+        }
+        ResultView.showCardsAndSum(userDtos);
         ResultView.showResult(game.generatePlayerResults(), game.generateDealerResult());
     }
 }
