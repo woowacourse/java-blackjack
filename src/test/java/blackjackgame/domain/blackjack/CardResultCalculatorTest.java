@@ -2,6 +2,7 @@ package blackjackgame.domain.blackjack;
 
 import static blackjackgame.domain.blackjack.CardResult.BLACKJACK;
 import static blackjackgame.domain.blackjack.CardResult.BUST;
+import static blackjackgame.domain.blackjack.CardResult.NORMAL;
 import static blackjackgame.domain.card.CardName.ACE;
 import static blackjackgame.domain.card.CardName.JACK;
 import static blackjackgame.domain.card.CardName.KING;
@@ -35,5 +36,16 @@ public class CardResultCalculatorTest {
         CardResult cardResult = CardResultCalculator.calculate(holdingCards);
 
         Assertions.assertThat(cardResult).isEqualTo(BUST);
+    }
+
+    @Test
+    @DisplayName("손패의 합이 21 이하면 결과가 NORMAL이다.")
+    void gameResultNormalTest() {
+        HoldingCards holdingCards = HoldingCards.of(
+                new Card(JACK, SPADE), new Card(KING, SPADE)
+        );
+        CardResult cardResult = CardResultCalculator.calculate(holdingCards);
+
+        Assertions.assertThat(cardResult).isEqualTo(NORMAL);
     }
 }
