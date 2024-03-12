@@ -16,7 +16,6 @@ public class Player extends Gamer {
 
     @Override
     public boolean canHit() {
-        int cardScore = handDeck.calculateTotalScore();
-        return GameRule.playerHitRule(cardScore);
+        return GameRule.playerHitRule(calculateTotalScore());
     }
 }

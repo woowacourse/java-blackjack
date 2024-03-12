@@ -9,12 +9,11 @@ public class Dealer extends Gamer {
     }
 
     public Card getFirstCard() {
-        return handDeck.getCards().get(0);
+        return getHandDeck().get(0);
     }
 
     @Override
     public boolean canHit() {
-        int cardScore = handDeck.calculateTotalScore();
-        return GameRule.dealerHitRule(cardScore);
+        return GameRule.dealerHitRule(calculateTotalScore());
     }
 }
