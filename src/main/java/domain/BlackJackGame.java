@@ -28,7 +28,7 @@ public class BlackJackGame {
     }
 
     public void hitDealer() {
-        dealer.hit(dealer.dealCard());
+        hitParticipant(dealer);
     }
 
     public boolean isDealerHittable() {
