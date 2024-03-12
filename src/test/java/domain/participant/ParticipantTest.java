@@ -40,7 +40,7 @@ class ParticipantTest {
             new Card(Rank.QUEEN, Symbol.HEART),
             new Card(Rank.TWO, Symbol.DIAMOND)
         ));
-        assertThat(participant.isBusted()).isTrue();
+        assertThat(participant.isBust()).isTrue();
     }
 
     @Test

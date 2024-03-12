@@ -8,6 +8,6 @@ public class Player extends Participant {
 
     @Override
     public boolean isReceivable() {
-        return !isBusted();
+        return !isBust();
     }
 }

@@ -24,10 +24,10 @@ public class Result {
     }
 
     private static WinLose decideWinLose(Player player, Dealer dealer) {
-        if (player.isBusted()) {
+        if (player.isBust()) {
             return WinLose.LOSE;
         }
-        if (dealer.isBusted()) {
+        if (dealer.isBust()) {
             return WinLose.WIN;
         }
         return decideWinLoseByScore(player, dealer);

@@ -51,7 +51,7 @@ public class BlackjackMachine {
             game.giveOneCard(player);
             outputView.printNameAndCardsOfParticipant(player);
         }
-        if (player.isBusted()) {
+        if (player.isBust()) {
             outputView.printBustMessage(player);
             return;
         }

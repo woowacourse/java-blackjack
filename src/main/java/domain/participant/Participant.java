@@ -38,7 +38,7 @@ public abstract class Participant {
         return cards.totalScore();
     }
 
-    public boolean isBusted() {
+    public boolean isBust() {
         return cards.totalScore().isBust();
     }
 
