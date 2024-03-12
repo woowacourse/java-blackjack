@@ -1,12 +1,15 @@
 package blackjack.model.participants;
 
-import blackjack.view.PlayerResultStatus;
+import blackjack.model.blackjackgame.PlayerResultStatus;
+import blackjack.model.blackjackgame.Profit;
 
 public class Player extends Participant {
     private final String name;
+    private final Betting betting;
 
-    public Player(String name) {
+    public Player(String name, Betting betting) {
         this.name = name;
+        this.betting = betting;
     }
 
     @Override
@@ -14,8 +17,12 @@ public class Player extends Participant {
         return !cards.isBusted();
     }
 
-    public PlayerResultStatus determineWinner(Dealer dealer) {
-        return dealer.getResultStatus(cards);
+    public Profit getProfit(Participant participant) {
+        return betting.getProfit(getScoreStatus(participant));
+    }
+
+    private PlayerResultStatus getScoreStatus(Participant participant) {
+        return cards.getPlayerResultStatus(participant.cards);
     }
 
     public String getName() {
