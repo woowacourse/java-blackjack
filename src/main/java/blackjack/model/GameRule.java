@@ -37,7 +37,7 @@ public class GameRule {
         decideTie(player, gameResult);
     }
 
-    private static boolean isBusted(int cardScore) {
+    public static boolean isBusted(int cardScore) {
         return cardScore > BUST_STANDARD;
     }
 
