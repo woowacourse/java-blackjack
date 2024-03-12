@@ -42,21 +42,11 @@ public class BlackJackGameResult {
                 player.calculateScore() == Player.MAX_SCORE;
     }
 
-    public int countDealerWin() { // TODO 이제 필요 없지 않나?
-        return (int) gameResult.values().stream()
-                .filter(state -> state == State.WIN)
-                .count();
-    }
-
     public int size() {
         return gameResult.size();
     }
 
     public Map<Player, State> getGameResult() {
         return new HashMap<>(gameResult);
-    }
-
-    public State getResult(Player player) {
-        return gameResult.get(player);
     }
 }

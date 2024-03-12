@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Shape;
@@ -17,31 +15,29 @@ import org.junit.jupiter.api.Test;
 
 class PlayersTest {
 
-    private Player siso;
-    private Player takan;
-    private Players players;
+    private Player siso = new Player(new Name("시소"));
+    private Player takan = new Player(new Name("타칸"));;
+    private Players players = new Players(List.of(siso, takan));
 
-    @BeforeEach
-    void beforeEach() {
-        siso = new Player(new Name("시소"));
-        takan = new Player(new Name("타칸"));
 
-        Hands sisoHands = new Hands(List.of(
-                new Card(Shape.HEART, Rank.JACK),
-                new Card(Shape.HEART, Rank.SIX))
+    @Test
+    @DisplayName("손 패를 모든 플레이어들에게 분배한다.")
+    void distributeHands() {
+        List<Hands> hands = List.of(
+                new Hands(List.of(
+                        new Card(Shape.HEART, Rank.JACK),
+                        new Card(Shape.HEART, Rank.SIX))
+                ),
+                new Hands(List.of(
+                        new Card(Shape.SPADE, Rank.ACE),
+                        new Card(Shape.SPADE, Rank.JACK))
+                )
         );
 
-        Hands takanHands = new Hands(List.of(
-                new Card(Shape.SPADE, Rank.ACE),
-                new Card(Shape.SPADE, Rank.JACK))
-        );
+        players.distributeHands(hands);
 
-        siso.receiveHands(sisoHands);
-        takan.receiveHands(takanHands);
-
-        List<Player> playerList = List.of(siso, takan);
-        players = new Players(playerList);
-
+        Assertions.assertThat(siso.getHandsSize()).isEqualTo(2);
+        Assertions.assertThat(takan.getHandsSize()).isEqualTo(2);
     }
 
     @Test
