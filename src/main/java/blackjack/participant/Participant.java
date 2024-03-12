@@ -56,4 +56,12 @@ public class Participant {
     public List<Card> getCards() {
         return state.cards();
     }
+
+    public Card getFirstCard() {
+        List<Card> cards = getCards();
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("[ERROR] 카드를 가지고있지 않습니다.");
+        }
+        return getCards().get(0);
+    }
 }

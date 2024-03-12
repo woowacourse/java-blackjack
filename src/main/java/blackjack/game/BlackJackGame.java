@@ -49,8 +49,7 @@ public class BlackJackGame {
     }
 
     private void showInitCard(Participant dealer, Participants participants) {
-        // TODO: exception check
-        outputView.printDealerFirstCard(dealer.getCards().get(0));
+        outputView.printDealerFirstCard(dealer.getFirstCard());
 
         for (Participant participant : participants.getPlayers()) {
             outputView.printPlayerCards(participant.getName(), participant.getCards());

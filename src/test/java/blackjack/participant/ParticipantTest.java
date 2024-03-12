@@ -1,6 +1,7 @@
 package blackjack.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.card.Card;
 import blackjack.card.Number;
@@ -44,5 +45,16 @@ class ParticipantTest {
         boolean isDrawable = participant.isDrawable();
         // then
         assertThat(isDrawable).isFalse();
+    }
+
+    @Test
+    @DisplayName("카드가 없을 때, 첫 번째 카드를 확인하면 예외를 발생시킨다.")
+    void emptyHandGetFirstCardTest() {
+        // given
+        Participant participant = new Participant("aru");
+        // when, then
+        assertThatThrownBy(participant::getFirstCard)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 카드를 가지고있지 않습니다.");
     }
 }
