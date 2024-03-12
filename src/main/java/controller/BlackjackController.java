@@ -29,12 +29,11 @@ import view.gameresult.GameResultOutputView;
 public class BlackjackController {
 
     public void startBlackjackGame(Deck deck) {
-        final Dealer dealer = Dealer.of(HoldingCards.of());
         OutputView.printStartGame();
-        final List<Player> players = NameInputView.getNames().stream()
-                .map(name -> Player.from(name, HoldingCards.of()))
-                .toList();
-        initDealerAndPlayers(deck, dealer, players);
+        final Dealer dealer = generateDealer();
+        final List<Player> players = generatePlayers();
+
+        initialDraw(deck, dealer, players);
         printDealerAndPlayers(dealer, players);
 
         playersTryDraw(deck, players);
@@ -47,13 +46,23 @@ public class BlackjackController {
         printPlayersGameResult(dealer, players);
     }
 
-    private void initDealerAndPlayers(Deck deck, Dealer dealer, List<Player> players) {
+
+    private Dealer generateDealer() {
+        return Dealer.of(HoldingCards.of());
+    }
+
+    private List<Player> generatePlayers() {
+        return NameInputView.getNames().stream()
+                .map(name -> Player.from(name, HoldingCards.of()))
+                .toList();
+    }
+
+    private void initialDraw(Deck deck, Dealer dealer, List<Player> players) {
         final int initialDrawCount = 2;
         IntStream.range(0, initialDrawCount).forEach(index -> {
-            dealerDraw(deck, dealer);
             players.forEach(player -> playerDraw(deck, player));
+            dealerDraw(deck, dealer);
         });
-        OutputView.printInitGameDoneMessage(players.stream().map(Player::getRawName).toList());
     }
 
     private DrawResult dealerDraw(Deck deck, Dealer dealer) {
