@@ -71,4 +71,37 @@ public class PlayerTest {
 
         assertThat(player.getMoney()).isEqualTo(3000);
     }
+
+    @Test
+    @DisplayName("플레이어가 돈을 잃었다.")
+    void loseMoneyTest() {
+        Player player = new Player(new Name("이름"));
+
+        player.betMoney(3000);
+        player.loseMoney(2000);
+
+        assertThat(player.getMoney()).isEqualTo(1000);
+    }
+
+    @Test
+    @DisplayName("플레이어가 배팅에 성공했다.")
+    void earnBetSuccessMoneyTest() {
+        Player player = new Player(new Name("이름"));
+
+        player.betMoney(3000);
+        player.earnBetSuccessMoney();
+
+        assertThat(player.getMoney()).isEqualTo(3000);
+    }
+
+    @Test
+    @DisplayName("플레이어가 배팅에 실패했다.")
+    void payBetFailMoneyTest() {
+        Player player = new Player(new Name("이름"));
+
+        player.betMoney(3000);
+        player.earnBetSuccessMoney();
+
+        assertThat(player.getMoney()).isEqualTo(3000);
+    }
 }

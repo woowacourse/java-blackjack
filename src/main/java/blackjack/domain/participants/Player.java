@@ -29,6 +29,18 @@ public class Player {
         playerStatus.addMoney(money);
     }
 
+    public void loseMoney(int money) {
+        playerStatus.subtractMoney(money);
+    }
+
+    public void earnBetSuccessMoney() {
+        playerStatus.calculateWinMoney();
+    }
+
+    public void payBetFailMoney() {
+        playerStatus.calculateLoseMoney();
+    }
+
     public Name getName() {
         return name;
     }
