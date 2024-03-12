@@ -7,14 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static blackjack.domain.game.BlackjackGame.DEAL_CARDS_COUNT;
 import static blackjack.domain.gamer.Dealer.HIT_UPPER_BOUND;
 
 public class OutputView {
     static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String ERROR_PREFIX = "[ERROR] ";
     private static final String DELIMITER = ", ";
-    private static final String DEAL_ANNOUNCE_FORMAT = String.format("%%s와 %%s에게 %d장을 나누었습니다.", DEAL_CARDS_COUNT);
+    private static final String DEAL_ANNOUNCE_FORMAT = String.format("%%s와 %%s에게 2장을 나누었습니다.");
     private static final String DEALER_HIT_FORMAT = String.format("딜러는 %d 이하라 한장의 카드를 더 받았습니다.", HIT_UPPER_BOUND);
     private static final String CARD_FORMAT = "%s 카드 : %s";
     private static final String RESULT_SCORES_FORMAT = " - 결과: %d";
@@ -37,7 +36,7 @@ public class OutputView {
     }
 
     private static String formatCard(Card card) {
-        return CardScoreName.convert(card.getScore()) + CardSymbolName.convert(card.getSymbol());
+        return CardScoreName.convert(card.score()) + CardSymbolName.convert(card.symbol());
     }
 
     public static void printNewLine() {

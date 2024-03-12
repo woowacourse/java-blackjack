@@ -18,12 +18,12 @@ public class Player {
         this.hand = hand;
     }
 
-    public void draw(Card card) {
-        hand.addCard(card);
+    public void draw(List<Card> cards) {
+        hand.add(cards);
     }
 
-    public void draw(List<Card> cards) {
-        hand.addCards(cards);
+    public void draw(Card card) {
+        hand.add(card);
     }
 
     public boolean isBlackjack() {

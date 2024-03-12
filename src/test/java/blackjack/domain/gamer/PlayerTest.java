@@ -9,6 +9,12 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
+import static blackjack.domain.card.CardScore.ACE;
+import static blackjack.domain.card.CardScore.KING;
+import static blackjack.domain.card.CardScore.NINE;
+import static blackjack.domain.card.CardScore.TEN;
+import static blackjack.domain.card.CardSymbol.CLUB;
+import static blackjack.domain.card.CardSymbol.DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -30,7 +36,7 @@ public class PlayerTest {
         // given
         Player player = new Player("lemone", new Hand(List.of()));
         // when
-        player.draw(List.of(Card.CLUB_ACE, Card.CLUB_NINE));
+        player.draw(List.of(new Card(ACE, CLUB), new Card(NINE, CLUB)));
 
         // then
         assertThat(player.getCards().size()).isEqualTo(2);
@@ -41,8 +47,9 @@ public class PlayerTest {
     void gameHitTest() {
         // given
         Player player = new Player("lemone", new Hand(List.of()));
+
         // when
-        player.draw(Card.DIAMOND_KING);
+        player.draw(new Card(KING, DIAMOND));
 
         // then
         assertThat(player.getCards().size()).isEqualTo(1);
@@ -53,8 +60,9 @@ public class PlayerTest {
     void blackjackTest() {
         // given
         Player player = new Player("lemone", new Hand(List.of()));
+
         // when
-        player.draw(List.of(Card.DIAMOND_TEN, Card.CLUB_ACE));
+        player.draw(List.of(new Card(TEN, DIAMOND), new Card(ACE, CLUB)));
 
         // then
         assertThat(player.isBlackjack()).isEqualTo(true);
