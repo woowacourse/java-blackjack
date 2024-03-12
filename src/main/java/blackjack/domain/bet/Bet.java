@@ -16,8 +16,8 @@ public class Bet {
         return betAmount.multiply(scope);
     }
 
-    public PlayerName getPlayerName() {
-        return playerName;
+    public String getPlayerName() {
+        return playerName.getValue();
     }
 
     public Money getBetAmount() {
