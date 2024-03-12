@@ -5,6 +5,7 @@ import blackjack.domain.participant.Player;
 import blackjack.dto.BlackjackResult;
 import blackjack.dto.DealerResult;
 import blackjack.dto.PlayerInfo;
+import blackjack.dto.PlayerProfit;
 import blackjack.dto.PlayerResult;
 import java.util.List;
 import java.util.Set;
@@ -64,5 +65,11 @@ public class Players {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public List<PlayerProfit> getPlayerProfits() {
+        return players.stream()
+                .map(player -> new PlayerProfit(player.getName(), player.getProfit()))
+                .toList();
     }
 }

@@ -45,11 +45,4 @@ public class DealerTest {
         //when & then
         assertThat(dealer.showFirstCard()).isEqualTo(trumpCardAceSpade);
     }
-
-    @DisplayName("딜러 생성 시 잔고는 0원이다.")
-    @Test
-    void dealerBetting() {
-        //given & when & then
-        assertThat(dealer.betting).isEqualTo(Betting.noBetting());
-    }
 }

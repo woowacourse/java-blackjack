@@ -31,7 +31,7 @@ public class BlackjackGame {
         initializeGame(dealer, players);
         printCardDistribute(dealer, players);
         requestExtraCard(dealer, players);
-        outputView.printFinalResult(players, players.createResult(dealer));
+        outputView.printTotalProfit(dealer.getProfit(), players.getPlayerProfits());
     }
 
     private Players createPlayers() {

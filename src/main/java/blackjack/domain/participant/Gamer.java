@@ -7,14 +7,16 @@ import java.util.List;
 public abstract class Gamer {
 
     protected final Hand hand;
-    protected final Betting betting;
+    protected final Profit profit;
 
-    public Gamer(final Betting betting) {
+    public Gamer() {
         this.hand = new Hand();
-        this.betting = betting;
+        this.profit = Profit.initProfit();
     }
 
     abstract boolean canReceiveCard();
+
+    abstract String getProfit();
 
     public boolean isBust() {
         return hand.calculateScore() > Hand.BLACKJACK_BOUND;

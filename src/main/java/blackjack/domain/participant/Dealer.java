@@ -11,7 +11,7 @@ public class Dealer extends Gamer {
     private final Deck deck;
 
     public Dealer(final Deck deck) {
-        super(Betting.noBetting());
+        super();
 
         this.deck = deck;
     }
@@ -27,6 +27,11 @@ public class Dealer extends Gamer {
     @Override
     boolean canReceiveCard() {
         return hand.calculateScore() <= DEALER_BOUND;
+    }
+
+    @Override
+    public String getProfit() {
+        return profit.getProfit();
     }
 
     public void draw(final int count) {

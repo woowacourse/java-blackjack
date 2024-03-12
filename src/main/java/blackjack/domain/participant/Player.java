@@ -14,12 +14,14 @@ public class Player extends Gamer {
     private static final Set<String> reservedNames = Set.of("딜러");
 
     private final String name;
+    protected final Betting betting;
 
     public Player(final PlayerInfo playerInfo) {
-        super(playerInfo.betting());
+        super();
 
         validate(playerInfo.name());
         this.name = playerInfo.name();
+        this.betting = playerInfo.betting();
     }
 
     private void validate(final String name) {
@@ -42,5 +44,10 @@ public class Player extends Gamer {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String getProfit() {
+        return profit.getProfit();
     }
 }

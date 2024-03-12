@@ -1,9 +1,7 @@
 package blackjack.view;
 
-import blackjack.domain.Players;
 import blackjack.domain.participant.Dealer;
-import blackjack.dto.BlackjackResult;
-import blackjack.dto.DealerResult;
+import blackjack.dto.PlayerProfit;
 import java.util.List;
 
 public class OutputView {
@@ -15,12 +13,13 @@ public class OutputView {
     private static final String DEALER_ADDED_CARD = NEW_LINE + "딜러는 %d이하라 한장의 카드를 더 받았습니다." + NEW_LINE;
     private static final String RESULT_CARDS_STATUS = "%s카드: %s - 결과: %d" + NEW_LINE;
     private static final String DEALER_RESULT_CARDS_STATUS = NEW_LINE + "딜러 카드: %s - 결과: %d" + NEW_LINE;
-    private static final String FINAL_RESULT_TITLE = NEW_LINE + "## 최종 승패";
     private static final String DEALER_FINAL_RESULT = "딜러: %d승 %d패 %d무" + NEW_LINE;
     private static final String INVALID_CHOICE_EXCEPTION = "%s 또는 %s을 입력해주세요.";
     private static final String YES_CHOICE = "y";
     private static final String NO_CHOICE = "n";
-    public static final String NAME_DELIMITER = ", ";
+    private static final String NAME_DELIMITER = ", ";
+    private static final String PROFIT_TITLE = NEW_LINE + "## 최종 수익";
+    private static final String PROFIT_FORMAT = "%s: %s" + NEW_LINE;
 
     private static final OutputView instance = new OutputView();
 
@@ -59,27 +58,31 @@ public class OutputView {
         return String.join(NAME_DELIMITER, strings);
     }
 
-    public void printFinalResult(final Players players, final BlackjackResult blackjackResult) {
-        System.out.println(FINAL_RESULT_TITLE);
-
-        printDealerFinalResult(blackjackResult.getDealerResult());
-        for (String name : players.getNames()) {
-            System.out.printf(CARD_STATUS, name, ResultView.toResultView(blackjackResult.findPlayerResultByName(name)));
-        }
-    }
-
-    private void printDealerFinalResult(final DealerResult dealerResult) {
-        System.out.printf(
-                DEALER_FINAL_RESULT, dealerResult.getWins(), dealerResult.getLoses(), dealerResult.getDraws()
-        );
-    }
-
     public boolean isMoreChoice(final String choice) {
         if (!List.of(YES_CHOICE, NO_CHOICE).contains(choice)) {
             throw new IllegalArgumentException(String.format(INVALID_CHOICE_EXCEPTION, YES_CHOICE, NO_CHOICE));
         }
 
         return choice.equals(YES_CHOICE);
+    }
+
+    public void printTotalProfit(final String dealerProfit, final List<PlayerProfit> playerProfits) {
+        printProfitTitle();
+        printProfit(dealerProfit);
+        printProfit(playerProfits);
+    }
+
+    private void printProfitTitle() {
+        System.out.println(PROFIT_TITLE);
+    }
+
+    private void printProfit(final String dealerProfit) {
+        System.out.printf(PROFIT_FORMAT, "딜러", dealerProfit);
+    }
+
+    private void printProfit(final List<PlayerProfit> playerProfits) {
+        playerProfits.forEach(
+                playerProfit -> System.out.printf(PROFIT_FORMAT, playerProfit.name(), playerProfit.profit()));
     }
 
     public void printNewLine() {
