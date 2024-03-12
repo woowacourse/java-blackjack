@@ -1,18 +1,13 @@
 package domain.participant;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import static domain.card.CardShape.HEART;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
-import domain.participant.Name;
-import domain.participant.Participant;
-import domain.participant.Player;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static domain.card.CardShape.HEART;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ParticipantTest {
 
@@ -21,8 +16,7 @@ class ParticipantTest {
     void cardSum() {
         Participant participant = new Participant(new Name("zeus"));
         participant.receive(new Card(CardShape.SPADE, CardNumber.JACK));
-        assertThat(participant.cardSum())
-                .isEqualTo(10);
+        assertThat(participant.cardSum()).isEqualTo(10);
     }
 
     @DisplayName("카드의 합계로 `Bust`를 판단한다.")
