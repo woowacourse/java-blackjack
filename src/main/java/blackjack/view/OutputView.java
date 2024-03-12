@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.Players;
 import blackjack.domain.participant.Dealer;
 import blackjack.dto.BlackjackResult;
 import blackjack.dto.DealerResult;
@@ -58,11 +59,11 @@ public class OutputView {
         return String.join(NAME_DELIMITER, strings);
     }
 
-    public void printFinalResult(final List<String> names, final BlackjackResult blackjackResult) {
+    public void printFinalResult(final Players players, final BlackjackResult blackjackResult) {
         System.out.println(FINAL_RESULT_TITLE);
 
         printDealerFinalResult(blackjackResult.getDealerResult());
-        for (String name : names) {
+        for (String name : players.getNames()) {
             System.out.printf(CARD_STATUS, name, ResultView.toResultView(blackjackResult.findPlayerResultByName(name)));
         }
     }
