@@ -75,4 +75,8 @@ public class Hand {
     public Card getFirstCard() {
         return cards.get(0);
     }
+
+    public boolean isBust() {
+        return calculateScore() > BLACKJACK_SCORE;
+    }
 }

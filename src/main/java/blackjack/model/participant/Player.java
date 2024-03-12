@@ -3,7 +3,7 @@ package blackjack.model.participant;
 import blackjack.model.deck.Card;
 import java.util.List;
 
-public class Player {
+public class Player implements Playable {
     private static final int HITTABLE_THRESHOLD = 21;
 
     protected final Name name;
@@ -18,12 +18,24 @@ public class Player {
         return new Player(new Name(rawName), hand);
     }
 
+    @Override
     public void receiveCard(final Card card) {
         this.hand = hand.addCard(card);
     }
 
+    @Override
     public List<Card> openCards() {
         return hand.getCards();
+    }
+
+    @Override
+    public int getScore() {
+        return hand.calculateScore();
+    }
+
+    @Override
+    public int getCardCount() {
+        return hand.countSize();
     }
 
     public boolean canHit() {
@@ -31,15 +43,7 @@ public class Player {
     }
 
     public boolean isBust() {
-        return hand.calculateScore() > HITTABLE_THRESHOLD;
-    }
-
-    public int getScore() {
-        return hand.calculateScore();
-    }
-
-    public int getCardCount() {
-        return hand.countSize();
+        return hand.isBust();
     }
 
     public Name getName() {
