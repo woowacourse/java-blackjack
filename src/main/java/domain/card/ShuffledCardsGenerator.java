@@ -1,8 +1,8 @@
 package domain.card;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class ShuffledCardsGenerator {
@@ -15,12 +15,13 @@ public class ShuffledCardsGenerator {
     }
 
     private List<Card> generateBlackJackCards() {
+        List<Card> blackJackCards = new ArrayList<>();
         List<Card> cards = generateCardsOfOnePack();
 
-        return IntStream.range(0, DUPLICATES_COUNT)
-                .mapToObj(i -> cards)
-                .flatMap(List::stream)
-                .toList();
+        for (int count = 0; count < DUPLICATES_COUNT; count++) {
+            blackJackCards.addAll(cards);
+        }
+        return blackJackCards;
     }
 
     private List<Card> generateCardsOfOnePack() {
