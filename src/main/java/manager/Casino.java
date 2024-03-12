@@ -8,8 +8,6 @@ import domain.card.Deck;
 import domain.card.PlayerCards;
 import domain.card.RandomDrawStrategy;
 import domain.game.Rule;
-import view.InputView;
-import view.OutputView;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -31,31 +29,13 @@ public class Casino {
         List<PlayerCards> playerCardsBundle = makePlayerCards(betAmounts);
         printInitialCards(dealerCards, playerCardsBundle);
 
-        for (PlayerCards playerCards : playerCardsBundle) {
-            readPlayerHit(playerCards);
-        }
+        readPlayersHit(playerCardsBundle);
 
         drawDealerCards(dealerCards);
 
         printResults(dealerCards, playerCardsBundle);
 
-        Rule rule = Rule.of(dealerCards, playerCardsBundle);
-        Map<Name, Income> incomes = rule.getIncomes();
-        printIncomes(rule.getDealerIncome(), incomes);
-    }
-
-    private void readPlayerHit(PlayerCards playerCards) {
-        while (playerCards.canDraw()) {
-            boolean opinion = readHitOpinion(playerCards.getPlayerName());
-            if(!opinion){
-                printPlayerCards(playerCards);
-                System.out.println();
-                return;
-            }
-            playerCards.receive(deck.draw());
-            printPlayerCards(playerCards);
-            System.out.println();
-        }
+        printFinalIncomes(dealerCards, playerCardsBundle);
     }
 
     private List<Name> readNames() {
@@ -81,11 +61,37 @@ public class Casino {
                 .map(betAmount -> new PlayerCards(betAmount.getKey(), betAmount.getValue(), deck.drawInitialHands()))
                 .toList();
     }
-    
+
+    private void readPlayersHit(List<PlayerCards> playerCardsBundle) {
+        for (PlayerCards playerCards : playerCardsBundle) {
+            readPlayerHit(playerCards);
+        }
+    }
+
+    private void readPlayerHit(PlayerCards playerCards) {
+        while (playerCards.canDraw()) {
+            boolean opinion = readHitOpinion(playerCards.getPlayerName());
+            if (!opinion) {
+                printPlayerCards(playerCards);
+                System.out.println();
+                return;
+            }
+            playerCards.receive(deck.draw());
+            printPlayerCards(playerCards);
+            System.out.println();
+        }
+    }
+
     private void drawDealerCards(DealerCards dealerCards) {
         while (dealerCards.canDraw()) {
             dealerCards.receive(deck.draw());
             printDealerGivenCard();
         }
+    }
+
+    private void printFinalIncomes(DealerCards dealerCards, List<PlayerCards> playerCardsBundle) {
+        Rule rule = Rule.of(dealerCards, playerCardsBundle);
+        Map<Name, Income> incomes = rule.getIncomes();
+        printIncomes(rule.getDealerIncome(), incomes);
     }
 }
