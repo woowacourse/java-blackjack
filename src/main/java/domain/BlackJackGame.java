@@ -23,18 +23,16 @@ public class BlackJackGame {
         }
     }
 
-    public void hitPlayer(Participant participant) {
-        if (participant.isHittable()) {
-            participant.hit(dealer.dealCard());
-        }
+    public void hitParticipant(Participant participant) {
+        participant.hit(dealer.dealCard());
     }
 
-    public boolean hitDealer() {
-        if (dealer.isHittable()) {
-            hitPlayer(dealer);
-            return true;
-        }
-        return false;
+    public void hitDealer() {
+        dealer.hit(dealer.dealCard());
+    }
+
+    public boolean isDealerHittable() {
+        return dealer.isHittable();
     }
 
     public Map<Player, Result> getGameResults() {
