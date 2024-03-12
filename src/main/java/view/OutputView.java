@@ -3,7 +3,7 @@ package view;
 import domain.BlackjackResult;
 import domain.Denomination;
 import domain.Player;
-import domain.Symbol;
+import domain.Suit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,14 +96,14 @@ public class OutputView {
         return "" + denomination.getValue();
     }
 
-    private static String symbolToMessage(final Symbol symbol) {
-        if (symbol == Symbol.HEART) {
+    private static String symbolToMessage(final Suit symbol) {
+        if (symbol == Suit.HEART) {
             return "하트";
         }
-        if (symbol == Symbol.CLUBS) {
+        if (symbol == Suit.CLUBS) {
             return "클로버";
         }
-        if (symbol == Symbol.SPADE) {
+        if (symbol == Suit.SPADE) {
             return "스페이드";
         }
         return "다이아몬드";

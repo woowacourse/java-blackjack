@@ -48,8 +48,8 @@ class BlackjackTest {
         final Dealer dealer = new Dealer(new Deck());
         final Player teba = new Player(new Name("테바"));
         final Player jonge = new Player(new Name("종이"));
-        teba.dealCard(new Card(Denomination.ACE, Symbol.CLUBS));
-        jonge.dealCard(new Card(Denomination.ACE, Symbol.HEART));
+        teba.dealCard(new Card(Denomination.ACE, Suit.CLUBS));
+        jonge.dealCard(new Card(Denomination.ACE, Suit.HEART));
         final Blackjack blackjack = new Blackjack(new Players(new ArrayList<>(List.of(teba, jonge))), dealer);
 
         final BlackjackResult blackjackResultDTO = blackjack.finishGame();

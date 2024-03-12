@@ -1,6 +1,6 @@
 package domain;
 
-public enum Symbol {
+public enum Suit {
     HEART,
     SPADE,
     CLUBS,

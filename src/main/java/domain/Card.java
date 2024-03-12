@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class Card {
     private final Denomination denomination;
-    private final Symbol symbol;
+    private final Suit symbol;
 
-    public Card(final Denomination number, final Symbol symbol) {
+    public Card(final Denomination number, final Suit symbol) {
         this.denomination = number;
         this.symbol = symbol;
     }
@@ -19,7 +19,7 @@ public class Card {
         return denomination;
     }
 
-    public Symbol getSymbol() {
+    public Suit getSymbol() {
         return symbol;
     }
 

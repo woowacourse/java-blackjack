@@ -13,7 +13,7 @@ public class Deck {
     private List<Card> createCards() {
         return Arrays.stream(Denomination.values())
                 .flatMap(denomination ->
-                        Arrays.stream(Symbol.values())
+                        Arrays.stream(Suit.values())
                                 .map(symbol -> new Card(denomination, symbol)))
                 .collect(Collectors.toList());
     }

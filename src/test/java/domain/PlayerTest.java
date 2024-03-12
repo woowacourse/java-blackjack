@@ -14,11 +14,11 @@ class PlayerTest {
     public static Stream<Arguments> argumentProvider() {
         return Stream.of(
                 Arguments.of(
-                        List.of(new Card(Denomination.KING, Symbol.CLUBS), new Card(Denomination.KING, Symbol.HEART),
-                                new Card(Denomination.KING, Symbol.SPADE)), false),
+                        List.of(new Card(Denomination.KING, Suit.CLUBS), new Card(Denomination.KING, Suit.HEART),
+                                new Card(Denomination.KING, Suit.SPADE)), false),
                 Arguments.of(
-                        List.of(new Card(Denomination.FIVE, Symbol.CLUBS), new Card(Denomination.FOUR, Symbol.HEART),
-                                new Card(Denomination.THREE, Symbol.SPADE)), true)
+                        List.of(new Card(Denomination.FIVE, Suit.CLUBS), new Card(Denomination.FOUR, Suit.HEART),
+                                new Card(Denomination.THREE, Suit.SPADE)), true)
         );
     }
 
@@ -27,9 +27,9 @@ class PlayerTest {
     void sum() {
         final Player player = new Player(new Name("지쳐버린종이"));
 
-        player.dealCard(new Card(Denomination.FIVE, Symbol.CLUBS));
-        player.dealCard(new Card(Denomination.FIVE, Symbol.CLUBS));
-        player.dealCard(new Card(Denomination.ACE, Symbol.CLUBS));
+        player.dealCard(new Card(Denomination.FIVE, Suit.CLUBS));
+        player.dealCard(new Card(Denomination.FIVE, Suit.CLUBS));
+        player.dealCard(new Card(Denomination.ACE, Suit.CLUBS));
 
         Assertions.assertThat(player.calculateScore()).isEqualTo(21);
     }
@@ -39,9 +39,9 @@ class PlayerTest {
     void sum2() {
         final Player player = new Player(new Name("지쳐버린종이"));
 
-        player.dealCard(new Card(Denomination.KING, Symbol.CLUBS));
-        player.dealCard(new Card(Denomination.KING, Symbol.CLUBS));
-        player.dealCard(new Card(Denomination.ACE, Symbol.CLUBS));
+        player.dealCard(new Card(Denomination.KING, Suit.CLUBS));
+        player.dealCard(new Card(Denomination.KING, Suit.CLUBS));
+        player.dealCard(new Card(Denomination.ACE, Suit.CLUBS));
 
         Assertions.assertThat(player.calculateScore()).isEqualTo(21);
     }

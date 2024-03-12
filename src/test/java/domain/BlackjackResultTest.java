@@ -14,9 +14,9 @@ class BlackjackResultTest {
     void playerBust() {
         final Dealer dealer = new Dealer(new Deck());
         final Player teba = new Player(new Name("테바"));
-        teba.dealCard(new Card(Denomination.JACK, Symbol.CLUBS));
-        teba.dealCard(new Card(Denomination.KING, Symbol.CLUBS));
-        teba.dealCard(new Card(Denomination.SIX, Symbol.CLUBS));
+        teba.dealCard(new Card(Denomination.JACK, Suit.CLUBS));
+        teba.dealCard(new Card(Denomination.KING, Suit.CLUBS));
+        teba.dealCard(new Card(Denomination.SIX, Suit.CLUBS));
         final Blackjack blackjack = new Blackjack(new Players(new ArrayList<>(List.of(teba))), dealer);
 
         final BlackjackResult blackjackResultDTO = blackjack.finishGame();
@@ -32,9 +32,9 @@ class BlackjackResultTest {
     void dealerBust() {
         final Dealer dealer = new Dealer(new Deck());
         final Player teba = new Player(new Name("테바"));
-        dealer.dealCard(new Card(Denomination.JACK, Symbol.CLUBS));
-        dealer.dealCard(new Card(Denomination.KING, Symbol.CLUBS));
-        dealer.dealCard(new Card(Denomination.SIX, Symbol.CLUBS));
+        dealer.dealCard(new Card(Denomination.JACK, Suit.CLUBS));
+        dealer.dealCard(new Card(Denomination.KING, Suit.CLUBS));
+        dealer.dealCard(new Card(Denomination.SIX, Suit.CLUBS));
         final Blackjack blackjack = new Blackjack(new Players(new ArrayList<>(List.of(teba))), dealer);
 
         final BlackjackResult blackjackResultDTO = blackjack.finishGame();
