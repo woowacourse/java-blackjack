@@ -22,7 +22,7 @@ public enum ShapeDisplay {
         return Arrays.stream(ShapeDisplay.values())
                 .filter(converter -> converter.shape == shape)
                 .findFirst()
-                .get()
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 Shape 입니다."))
                 .value;
     }
 }

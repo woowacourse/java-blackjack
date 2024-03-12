@@ -31,7 +31,7 @@ public enum ScoreDisplay {
         return Arrays.stream(ScoreDisplay.values())
                 .filter(scoreDisplay -> scoreDisplay.score == score)
                 .findFirst()
-                .get()
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 Score 입니다."))
                 .value;
     }
 }

@@ -21,7 +21,7 @@ public enum ResultCommandDisplay {
         return Arrays.stream(ResultCommandDisplay.values())
                 .filter(resultCommandDisplay -> resultCommandDisplay.result == result)
                 .findFirst()
-                .get()
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 ResultCommand 입니다."))
                 .value;
     }
 }
