@@ -1,45 +1,24 @@
 package domain;
 
-import java.util.List;
+import static domain.Dealer.DEALER_NAME;
 
-public class Player {
+public class Player extends Participant {
 
-    protected static final int BLACK_JACK = 21;
+    static final int MAX_SCORE_TO_HIT = 21;
+    static final String DEALER_NAME_MESSAGE = "딜러라는 이름은 사용할 수 없습니다.";
 
-    private final Name name;
-    private final Hand hand;
-
-    public Player(Name name, Hand hand) {
-        this.name = name;
-        this.hand = hand;
+    Player(String name) {
+        super(validateNameNotEqualToDealer(name));
     }
 
-    Player(List<Card> cards) {
-        this.name = new Name("Test");
-        this.hand = new Hand(cards);
-    }
-
-    public void hit(Card card) {
-        this.hand.add(card);
-    }
-
-    public boolean isBust() {
-        return getTotalScore() > BLACK_JACK;
+    private static String validateNameNotEqualToDealer(String name) {
+        if (DEALER_NAME.equals(name)) {
+            throw new IllegalArgumentException(DEALER_NAME_MESSAGE);
+        }
+        return name;
     }
 
     public boolean isHittable() {
-        return getTotalScore() < BLACK_JACK;
-    }
-
-    public int getTotalScore() {
-        return hand.calculateScore();
-    }
-
-    public Hand getHand() {
-        return hand;
-    }
-
-    public String getName() {
-        return name.name();
+        return getTotalScore() < MAX_SCORE_TO_HIT;
     }
 }
