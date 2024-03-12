@@ -7,11 +7,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private static final String ACCEPT_DRAW_MESSAGE = "y";
-    private static final String REJECT_DRAW_MESSAGE = "n";
-    private static final String ASK_DRAW_MESSAGE = "는/은 한장의 카드를 더 받겠습니까?(예는 "
-            + ACCEPT_DRAW_MESSAGE + ", 아니오는 " + REJECT_DRAW_MESSAGE + ")";
-
     private static final String FINAL_HANDS_AND_SCORE_FORMAT = "%s - 결과: %d";
     private static final String FINAL_RESULT_FORMAT = "%s: %.0f" + System.lineSeparator();
     private static final String FINAL_RESULT_MESSAGE = System.lineSeparator() + "## 최종 수익";
@@ -42,10 +37,6 @@ public class OutputView {
 
     public static void printParticipantHands(String participantName, List<Card> participantHands) {
         System.out.println(resolveParticipantHandsMessage(participantName, participantHands));
-    }
-
-    public static void printAskDrawMessage(String playerName) {
-        System.out.println(playerName + ASK_DRAW_MESSAGE);
     }
 
     public static void printDealerDrawMessage(Dealer dealer) {
