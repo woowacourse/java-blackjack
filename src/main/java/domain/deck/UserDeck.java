@@ -11,7 +11,7 @@ public class UserDeck {
     private static final int ACE_CONVERT_MAX_CONDITION = 11;
     private static final int BLACK_JACK_CONDITION = 21;
 
-    final List<Card> cards;
+    protected final List<Card> cards;
 
     public UserDeck() {
         cards = new ArrayList<>();
