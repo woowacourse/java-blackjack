@@ -31,8 +31,10 @@ public class Casino {
         List<PlayerCards> playerCardsBundle = makePlayerCards(names, deck);
         outputView.printInitialCards(dealerCards, playerCardsBundle);
 
+        Referee referee = new Referee(scoreBoard);
         playGame(deck, dealerCards, playerCardsBundle);
-        determineOutcome(dealerCards, playerCardsBundle, scoreBoard);
+        determineOutcome(dealerCards, playerCardsBundle, referee);
+        outputView.printScores(scoreBoard);
     }
 
     private Map<Name, Bet> readBets(Names names) {
@@ -54,11 +56,9 @@ public class Casino {
         }
     }
 
-    private void determineOutcome(DealerCards dealerCards, List<PlayerCards> playerCardsBundle, ScoreBoard scoreBoard) {
-        Referee referee = new Referee(scoreBoard);
+    private void determineOutcome(DealerCards dealerCards, List<PlayerCards> playerCardsBundle, Referee referee) {
         referee.decideResult(dealerCards, playerCardsBundle);
         outputView.printResults(dealerCards, playerCardsBundle);
-        outputView.printScores(scoreBoard);
     }
 
     private Names readNames() {

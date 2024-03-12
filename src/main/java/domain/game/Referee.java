@@ -6,6 +6,10 @@ import domain.score.ScoreBoard;
 import domain.score.Status;
 
 import java.util.List;
+import java.util.function.Consumer;
+
+import static domain.score.Status.LOSE;
+import static domain.score.Status.WIN;
 
 public class Referee {
 
@@ -17,13 +21,44 @@ public class Referee {
     }
 
     public void decideResult(DealerCards dealer, List<PlayerCards> players) {
-        players.forEach(player -> decideResult(dealer, player));
+        Status dealerStatus = rule.decideDealerStatus(dealer);
+        checkBlackjackPlayers(players, dealerStatus);
+        checkBustPlayers(players);
+        checkRemainPlayers(dealer, players, dealerStatus);
     }
 
-    private void decideResult(DealerCards dealer, PlayerCards player) {
-        Status dealerStatus = rule.decideStatus(dealer, player);
-        Status playerStatus = rule.decideStatus(player, dealer);
-        scoreBoard.updateDealerScore(dealerStatus);
-        scoreBoard.updatePlayerScore(player.getPlayerName(), playerStatus);
+    private void checkBlackjackPlayers(List<PlayerCards> players, Status dealerStatus) {
+        Status playerStatus = rule.decidePlayerBlackjackStatus(dealerStatus);
+        players.stream()
+                .filter(rule::isBlackJack)
+                .forEach(updatePlayerScore(playerStatus));
+    }
+
+    private void checkBustPlayers(List<PlayerCards> players) {
+        players.stream()
+                .filter(rule::isBust)
+                .forEach(updatePlayerScore(LOSE));
+    }
+
+    private void checkRemainPlayers(DealerCards dealer, List<PlayerCards> players, Status dealerStatus) {
+        players.stream()
+                .filter(player -> !rule.isBlackJack(player) && !rule.isBust(player))
+                .forEach(getWinConsumer(dealerStatus, dealer));
+    }
+
+    private Consumer<PlayerCards> getWinConsumer(Status dealerStatus, DealerCards dealer) {
+        if (dealerStatus == LOSE) {
+            return updatePlayerScore(WIN);
+        }
+        return player -> compareToDealer(dealer, player);
+    }
+
+    private Consumer<PlayerCards> updatePlayerScore(Status status) {
+        return player -> scoreBoard.updatePlayerScore(player.getPlayerName(), status);
+    }
+
+    private void compareToDealer(DealerCards dealer, PlayerCards player) {
+        Status status = rule.decidePlayerStatus(dealer.bestSum(), player);
+        scoreBoard.updatePlayerScore(player.getPlayerName(), status);
     }
 }
