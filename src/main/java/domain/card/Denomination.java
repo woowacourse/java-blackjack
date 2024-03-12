@@ -21,11 +21,11 @@ public enum Denomination {
         this.score = Score.get(score);
     }
 
-    public boolean isAce() {
+    boolean isAce() {
         return this == ACE;
     }
 
-    public Score getScore() {
+    Score getScore() {
         return this.score;
     }
 }
