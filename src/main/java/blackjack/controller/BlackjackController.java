@@ -92,7 +92,7 @@ public class BlackjackController {
         Map<Player, Integer> playerProfit = bettings.calculatePlayerProfits(participants.getDealer());
         int dealerProfit = bettings.calculateDealerProfit(playerProfit);
 
-        outputView.printAllCardsWithScore(participants.getValue());
+        outputView.printAllCardsWithScore(participants.getDealer(), participants.getPlayers());
         outputView.printProfits(playerProfit, dealerProfit);
     }
 }

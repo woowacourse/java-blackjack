@@ -1,8 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Participants {
@@ -51,24 +49,14 @@ public class Participants {
     }
 
     public void drawInitialCards(Deck deck) {
-        for (Participant participant : getValue()) {
-            drawInitialCardForParticipant(deck, participant);
-        }
+        drawInitialCardForParticipant(deck, dealer);
+        players.forEach(player -> drawInitialCardForParticipant(deck, player));
     }
 
     private void drawInitialCardForParticipant(Deck deck, Participant participant) {
         for (int i = 0; i < INITIAL_DRAW_COUNT; i++) {
             participant.hit(deck.draw());
         }
-    }
-
-    public List<Participant> getValue() {
-        List<Participant> participants = new ArrayList<>();
-
-        participants.add(dealer);
-        participants.addAll(players);
-
-        return Collections.unmodifiableList(participants);
     }
 
     public Dealer getDealer() {
