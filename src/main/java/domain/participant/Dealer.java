@@ -23,31 +23,31 @@ public class Dealer extends Participant {
         return deck.draw();
     }
 
-    public WinStatus isWinner(Participant participant) {
+    public WinStatus calculateParticipantWinStatus(Participant participant) {
         if (participant.isBust()) {
             return WinStatus.LOSE;
         }
         if (isBust()) {
             return WinStatus.WIN;
         }
-        return isWinnerWhenNotBust(participant);
+        return calculateParticipantWinStatusWhenNotBust(participant);
     }
 
-    private WinStatus isWinnerWhenNotBust(Participant participant) {
+    private WinStatus calculateParticipantWinStatusWhenNotBust(Participant participant) {
         if (participant.isBlackJack() && isBlackJack()) {
             return WinStatus.DRAW;
         }
         if (participant.isBlackJack()) {
             return WinStatus.BLACKJACK;
         }
-        return isWinnerWhenNotBlackJack(participant);
+        return calculateParticipantWinStatusWhenNotBlackJack(participant);
     }
 
-    private WinStatus isWinnerWhenNotBlackJack(Participant participant) {
+    private WinStatus calculateParticipantWinStatusWhenNotBlackJack(Participant participant) {
         int participantScore = participant.getScore();
         int dealerScore = getScore();
         if (participantScore == dealerScore) {
-            return isWinnerByCardCount(participant);
+            return calculateParticipantWinStatusByCardCount(participant);
         }
         if (participantScore > dealerScore) {
             return WinStatus.WIN;
@@ -55,7 +55,7 @@ public class Dealer extends Participant {
         return WinStatus.LOSE;
     }
 
-    private WinStatus isWinnerByCardCount(Participant participant) {
+    private WinStatus calculateParticipantWinStatusByCardCount(Participant participant) {
         if (participant.getCardCount() < getCardCount()) {
             return WinStatus.WIN;
         }
