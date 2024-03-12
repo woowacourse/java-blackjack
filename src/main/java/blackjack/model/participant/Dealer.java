@@ -15,7 +15,7 @@ public class Dealer extends Player {
         return hand.calculateScore() <= HITTABLE_THRESHOLD;
     }
 
-    public List<Card> openCard() {
+    public List<Card> openFirstCard() {
         return List.of(hand.getFirstCard());
     }
 }

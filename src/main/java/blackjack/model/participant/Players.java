@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 public class Players {
     private static final int MAXIMUM_PLAYER_SIZE = 10;
@@ -54,6 +55,10 @@ public class Players {
         return players.stream()
                 .map(player -> new NameCardsScore(player.getName(), player.openCards(), player.notifyScore()))
                 .toList();
+    }
+
+    public Stream<Player> stream() {
+        return players.stream();
     }
 
     public List<Player> getPlayers() {

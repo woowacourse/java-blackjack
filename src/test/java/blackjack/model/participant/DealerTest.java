@@ -30,6 +30,6 @@ class DealerTest {
     @Test
     @DisplayName("딜러는 2장의 카드를 받고 한 장의 카드만 공개한다.")
     void openCard() {
-        assertThat(dealer.openCard()).containsExactly(new Card(CLOVER, FIVE));
+        assertThat(dealer.openFirstCard()).containsExactly(new Card(CLOVER, FIVE));
     }
 }

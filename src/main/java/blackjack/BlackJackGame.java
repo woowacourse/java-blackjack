@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.dto.NameCards;
 import blackjack.dto.NameCardsScore;
 import blackjack.model.deck.Deck;
 import blackjack.model.participant.Dealer;
@@ -11,8 +12,12 @@ import blackjack.model.result.Rule;
 import blackjack.util.ConsoleReader;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class BlackJackGame {
     private static final ConsoleReader CONSOLE_READER = new ConsoleReader();
@@ -45,10 +50,18 @@ public class BlackJackGame {
     }
 
     private void printInitialCards(final Dealer dealer, final Players players) {
-        OutputView.printNameAndCards(dealer.getName(), dealer.openCard());
-        players.collectCardsOfEachPlayer()
-                .forEach(OutputView::printNameAndCards);
-        OutputView.println();
+        final List<NameCards> nameCards = createDealerPlayersNameCards(dealer, players);
+        OutputView.printPlayersNamesAndCards(nameCards);
+    }
+
+    private List<NameCards> createDealerPlayersNameCards(final Dealer dealer, final Players players) {
+        List<NameCards> dealerNameCards = new ArrayList<>(List.of(new NameCards(dealer.getName(), dealer.openFirstCard())));
+        List<NameCards> playersNameCards = players.stream()
+                .map(NameCards::from)
+                .toList();
+        return Stream.of(dealerNameCards, playersNameCards)
+                .flatMap(Collection::stream)
+                .toList();
     }
 
     private void playPlayersTurn(final List<Player> players, final Deck deck) {
@@ -75,7 +88,7 @@ public class BlackJackGame {
     private void distributeIfPlayerWant(final boolean isHit, final Player player, final Deck deck) {
         if (isHit) {
             distributeNewCard(player, deck);
-            OutputView.printNameAndCards(player.getName(), player.openCards());
+            OutputView.printNameAndCards(NameCards.from(player));
             playPlayerTurn(player, deck);
         }
     }

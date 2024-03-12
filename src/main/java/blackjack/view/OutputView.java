@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.dto.NameCards;
 import blackjack.dto.NameCardsScore;
 import blackjack.model.deck.Card;
 import blackjack.model.result.ResultCommand;
@@ -25,8 +26,13 @@ public class OutputView {
         System.out.println(String.format("딜러와 %s에게 2장을 나누었습니다.", formattedName));
     }
 
-    public static void printNameAndCards(final String name, final List<Card> cards) {
-        System.out.println(name + ": " + convert(cards));
+    public static void printPlayersNamesAndCards(final List<NameCards> nameCards) {
+        nameCards.forEach(OutputView::printNameAndCards);
+        System.out.println();
+    }
+
+    public static void printNameAndCards(final NameCards nameCards) {
+        System.out.println(nameCards.name() + ": " + convert(nameCards.cards()));
     }
 
     private static String convert(final List<Card> cards) {
