@@ -25,11 +25,19 @@ public class Player {
         return playerStatus.calculateScore() < boundaryScore;
     }
 
+    public void betMoney(int money) {
+        playerStatus.addMoney(money);
+    }
+
     public Name getName() {
         return name;
     }
 
     public Hand getHand() {
         return playerStatus.getHand();
+    }
+
+    public int getMoney() {
+        return playerStatus.getMoney();
     }
 }

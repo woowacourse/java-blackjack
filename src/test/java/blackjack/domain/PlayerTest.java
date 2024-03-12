@@ -61,4 +61,14 @@ public class PlayerTest {
 
         assertThat(player.isNotOver(21)).isFalse();
     }
+
+    @Test
+    @DisplayName("플레이어가 돈을 배팅한다.")
+    void betMoneyTest() {
+        Player player = new Player(new Name("이름"));
+
+        player.betMoney(3000);
+
+        assertThat(player.getMoney()).isEqualTo(3000);
+    }
 }
