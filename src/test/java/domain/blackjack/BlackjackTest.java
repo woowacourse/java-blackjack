@@ -24,6 +24,7 @@ class BlackjackTest {
     void initializeDealer() {
         final Dealer dealer = new Dealer();
         Blackjack.startGameWithInitialization(Players.from(List.of("a", "b")), dealer);
+
         assertThat(dealer.getHands().size()).isEqualTo(2);
     }
 
@@ -32,6 +33,7 @@ class BlackjackTest {
     void initializePlayers() {
         final Blackjack blackjack = Blackjack.startGameWithInitialization(Players.from(List.of("a", "b")),
                 new Dealer());
+
         assertThat(blackjack.getPlayers().getValue().get(0).getHands().size()).isEqualTo(2);
     }
 
@@ -57,7 +59,7 @@ class BlackjackTest {
     }
 
     @Test
-    @DisplayName("플레이어가 버스트 되고 딜러가 버스트 되지 않으면 딜러가 게임을 이긴다")
+    @DisplayName("플레이어가 버스트 되면 딜러가 게임을 이긴다")
     void playerBust() {
         final Dealer dealer = new Dealer();
         final Player teba = new Player(new Name("테바"));
@@ -86,5 +88,22 @@ class BlackjackTest {
 
         assertThat(gameResult.dealerLose()).isEqualTo(1);
         assertThat(gameResult.playerResult(teba)).isSameAs(PlayerResult.WIN);
+    }
+
+    @Test
+    @DisplayName("둘 다 버스트 되지 않고 점수가 같으면 둘 다 무승부가 된다")
+    void tie() {
+        final Dealer dealer = new Dealer();
+        final Player teba = new Player(new Name("테바"));
+        dealer.hit(new Card(Rank.TEN, Suit.CLUBS));
+        dealer.hit(new Card(Rank.TEN, Suit.CLUBS));
+        teba.hit(new Card(Rank.TEN, Suit.CLUBS));
+        teba.hit(new Card(Rank.TEN, Suit.CLUBS));
+        final Blackjack blackjack = new Blackjack(new Players(List.of(teba)), dealer);
+
+        final GameResult gameResult = blackjack.finishGame();
+
+        assertThat(gameResult.dealerTie()).isEqualTo(1);
+        assertThat(gameResult.playerResult(teba)).isSameAs(PlayerResult.TIE);
     }
 }
