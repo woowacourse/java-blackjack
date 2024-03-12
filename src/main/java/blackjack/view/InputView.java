@@ -18,10 +18,10 @@ public class InputView {
     public List<String> askPlayerNames() {
         System.out.println(ASK_PLAYER_NAMES);
         String input = scanner.nextLine();
-        return formatPlayerNames(input);
+        return convertInputToPlayerNames(input);
     }
 
-    private List<String> formatPlayerNames(final String input) {
+    private List<String> convertInputToPlayerNames(final String input) {
         return Arrays.stream(input.split(","))
                 .map(String::trim)
                 .toList();
@@ -30,10 +30,10 @@ public class InputView {
     public boolean askHitOrStandCommand(final String name) {
         System.out.printf(ASK_HIT_OR_STAND, name);
         String input = scanner.nextLine();
-        return formatHitOrStandCommand(input);
+        return convertInputToHitOrStandCommand(input);
     }
 
-    private boolean formatHitOrStandCommand(String input) {
+    private boolean convertInputToHitOrStandCommand(String input) {
         if (input.equals("y")) {
             return true;
         }
