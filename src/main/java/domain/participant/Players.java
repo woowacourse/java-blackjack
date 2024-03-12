@@ -67,7 +67,7 @@ public class Players {
 
     public Player findPlayerByIndex(int index) {
         if (isOutOfRange(index)) {
-            throw new IllegalArgumentException("인덱스가 범위를 벗어났습니다.");
+            throw new IndexOutOfBoundsException("인덱스가 범위를 벗어났습니다.");
         }
         return this.players.get(index);
     }

@@ -54,7 +54,7 @@ class PlayersTest {
         Players players = new Players(List.of("뽀로로", "프린", "포비"));
 
         assertThatThrownBy(() -> players.findPlayerByIndex(invalidIndex))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
+                .isExactlyInstanceOf(IndexOutOfBoundsException.class)
                 .hasMessageContaining("인덱스가 범위를 벗어났습니다.");
     }
 }

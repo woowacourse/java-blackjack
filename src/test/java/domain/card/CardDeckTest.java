@@ -24,6 +24,6 @@ class CardDeckTest {
         cardDeck.draw();
 
         assertThatThrownBy(cardDeck::draw)
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+                .isExactlyInstanceOf(IllegalStateException.class);
     }
 }
