@@ -46,14 +46,15 @@ public class Dealer extends Participant {
         return handsSize() - INIT_HANDS_SIZE;
     }
 
-    public Map<Result, Integer> getDealerResult(final Players players) {
-        final Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
+    public Map<Result, Integer> calculateResultBy(final Players players) {
+        final Map<Result, Integer> result = new EnumMap<>(Result.class);
 
-        for (Result value : players.getPlayersResult(this).values()) {
+        for (Result value : players.calculateResultBy(this).values()) {
             Result reversed = value.reverse();
-            dealerResult.put(reversed, dealerResult.getOrDefault(reversed, 0) + 1);
+            result.put(reversed, result.getOrDefault(reversed, 0) + 1);
         }
-        return dealerResult;
+
+        return result;
     }
 
     private boolean isUnderThreshold() {

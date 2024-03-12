@@ -1,22 +1,16 @@
 package dto;
 
-import domain.participant.Participant;
+import domain.participant.Dealer;
 import java.util.List;
 
-public class DealerHandsDto {
+public record DealerHandsDto(String card) {
 
-    private final String displayedCard;
-
-    private DealerHandsDto(final String displayedCard) {
-        this.displayedCard = displayedCard;
-    }
-
-    public static DealerHandsDto from(final Participant dealer) {
+    public static DealerHandsDto from(final Dealer dealer) {
         List<String> cards = dealer.getCardNames();
         return new DealerHandsDto(cards.get(0));
     }
 
-    public String getDisplayedCard() {
-        return displayedCard;
+    public String getCard() {
+        return card;
     }
 }

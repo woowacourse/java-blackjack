@@ -21,7 +21,7 @@ public class Hands {
         return new Hands(new ArrayList<>());
     }
 
-    public int sum() { //TODO score, 숫자 비교 더하기 -> 클래스 분리 ????
+    public int sum() {
         final int total = cards.stream()
                 .mapToInt(Card::getCardNumber)
                 .sum();
@@ -41,11 +41,6 @@ public class Hands {
         return sum() == BLACK_JACK;
     }
 
-    private boolean hasAce() {
-        return cards.stream()
-                .anyMatch(Card::isAce);
-    }
-
     public int size() {
         return cards.size();
     }
@@ -56,8 +51,8 @@ public class Hands {
                 .toList();
     }
 
-    public Result calculateResult(final Hands target) {
-        return Result.calculateOf(this, target);
+    public Result calculateResultBy(final Hands target) {
+        return Result.calculate(this, target);
     }
 
     private int calculateTotalByAce(final int total) {
@@ -66,6 +61,11 @@ public class Hands {
         }
 
         return total;
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 
     @Override

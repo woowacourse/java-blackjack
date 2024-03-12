@@ -3,8 +3,8 @@ package view;
 import static domain.participant.Dealer.INIT_HANDS_SIZE;
 import static domain.participant.Dealer.THRESHOLD;
 
-import domain.participant.Player;
 import domain.Result;
+import domain.participant.Player;
 import dto.DealerHandsDto;
 import dto.ParticipantDto;
 import dto.ParticipantsDto;
@@ -18,14 +18,14 @@ public class OutputView {
     private static final String TOTAL_SUM_FORM = "%s 카드: %s - 결과: %d%n";
     private static final String RESULT_FORM = "%s: %s%n";
 
-    public void printStartDeal(final DealerHandsDto dealerHandsDto, final ParticipantsDto participantsDto) {
-        final String dealerCard = dealerHandsDto.getDisplayedCard();
+    public void printInitHands(final DealerHandsDto dealerHandsDto, final ParticipantsDto participantsDto) {
+        final String dealerCard = dealerHandsDto.getCard();
 
         final List<String> playerNames = participantsDto.getNames();
         System.out.printf("딜러와 %s 에게 %d장을 나누었습니다.%n", format(playerNames), INIT_HANDS_SIZE);
         System.out.printf("딜러: %s%n", dealerCard);
 
-        for (ParticipantDto participantDto : participantsDto.getPlayers()) {
+        for (ParticipantDto participantDto : participantsDto.getParticipants()) {
             System.out.printf(FORM, participantDto.name(), format(participantDto.cards()));
         }
         System.out.print(LINE);
@@ -40,7 +40,7 @@ public class OutputView {
     }
 
     public void printHandsResult(final ParticipantsDto participantsDto) {
-        for (ParticipantDto participantDto : participantsDto.getPlayers()) {
+        for (ParticipantDto participantDto : participantsDto.getParticipants()) {
             System.out.printf(TOTAL_SUM_FORM, participantDto.name(), format(participantDto.cards()),
                     participantDto.totalSum());
         }

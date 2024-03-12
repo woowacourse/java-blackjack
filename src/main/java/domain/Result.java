@@ -30,7 +30,7 @@ public enum Result {
         return TIE;
     }
 
-    public static Result calculateOf(final Hands hands, final Hands target) {
+    public static Result calculate(final Hands hands, final Hands target) {
         return Arrays.stream(Result.values())
                 .filter(result -> result.condition.test(hands, target))
                 .findFirst()

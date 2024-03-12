@@ -50,12 +50,12 @@ public class BlackJackController {
 
     private void initHands(final Players players, final Dealer dealer) {
         dealer.initHands(players);
-        outputView.printStartDeal(DealerHandsDto.from(dealer), ParticipantsDto.of(players));
+        outputView.printInitHands(DealerHandsDto.from(dealer), ParticipantsDto.from(players));
     }
 
     private void printFinalResult(final Players players, final Dealer dealer) {
-        outputView.printHandsResult(ParticipantsDto.of(dealer, players));
-        outputView.printGameResult(dealer.getDealerResult(players), players.getPlayersResult(dealer));
+        outputView.printHandsResult(ParticipantsDto.from(dealer, players));
+        outputView.printGameResult(dealer.calculateResultBy(players), players.calculateResultBy(dealer));
     }
 
     private void deal(final Player player, final Dealer dealer) {

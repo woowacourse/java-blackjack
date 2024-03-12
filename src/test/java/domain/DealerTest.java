@@ -103,6 +103,6 @@ class DealerTest {
         Map<Result, Integer> expected = Map.of(WIN, 2, LOSE, 1, TIE, 1);
 
         // then
-        Assertions.assertThat(dealer.getDealerResult(players)).isEqualTo(expected);
+        Assertions.assertThat(dealer.calculateResultBy(players)).isEqualTo(expected);
     }
 }

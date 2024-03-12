@@ -96,7 +96,7 @@ class PlayersTest {
 
         //when & then
         final Map<Player, Result> expected = Map.of(loser, LOSE, winner, WIN, tier, TIE);
-        Assertions.assertThat(players.getPlayersResult(dealer)).isEqualTo(expected);
+        Assertions.assertThat(players.calculateResultBy(dealer)).isEqualTo(expected);
     }
 
     @Test
@@ -115,8 +115,8 @@ class PlayersTest {
         final Map<Result, Integer> expectedDealerResult = Map.of(WIN, 1, LOSE, 2);
 
         //then
-        Assertions.assertThat(players.getPlayersResult(bustDealer)).isEqualTo(expectedPlayerResult);
-        Assertions.assertThat(bustDealer.getDealerResult(players)).isEqualTo(expectedDealerResult);
+        Assertions.assertThat(players.calculateResultBy(bustDealer)).isEqualTo(expectedPlayerResult);
+        Assertions.assertThat(bustDealer.calculateResultBy(players)).isEqualTo(expectedDealerResult);
     }
 
     static Stream<Arguments> validPlayersSizeParameterProvider() {

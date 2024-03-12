@@ -1,7 +1,7 @@
 package domain.participant;
 
-import domain.card.Card;
 import domain.Result;
+import domain.card.Card;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,8 +35,8 @@ public abstract class Participant {
         return hands.size();
     }
 
-    public Result calculateResult(final Participant participant) {
-        return hands.calculateResult(participant.getHands());
+    public Result calculateResultBy(final Participant participant) {
+        return hands.calculateResultBy(participant.getHands());
     }
 
     public List<String> getCardNames() {

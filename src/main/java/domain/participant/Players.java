@@ -32,11 +32,13 @@ public class Players {
                 .allMatch(Player::isBust);
     }
 
-    public Map<Player, Result> getPlayersResult(final Dealer dealer) {
+    public Map<Player, Result> calculateResultBy(final Dealer dealer) {
         final Map<Player, Result> result = new LinkedHashMap<>();
+
         for (Player name : names) {
-            result.put(name, name.calculateResult(dealer));
+            result.put(name, name.calculateResultBy(dealer));
         }
+
         return result;
     }
 
@@ -49,7 +51,7 @@ public class Players {
 
     private static void validate(final List<String> names) {
         validateSize(names);
-        validateDuplicate(names);
+        validateDuplication(names);
     }
 
     private static void validateSize(final List<String> names) {
@@ -58,7 +60,7 @@ public class Players {
         }
     }
 
-    private static void validateDuplicate(final List<String> names) {
+    private static void validateDuplication(final List<String> names) {
         if (names.size() != Set.copyOf(names).size()) {
             throw new IllegalArgumentException("[ERROR] 참여자 이름은 중복될 수 없습니다.");
         }
