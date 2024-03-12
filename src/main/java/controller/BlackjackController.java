@@ -49,10 +49,7 @@ public class BlackjackController {
     }
 
     private Players generatePlayers() {
-        List<Player> players = NameInputView.getNames().stream()
-                .map(name -> Player.from(name, HoldingCards.of()))
-                .toList();
-        return new Players(players);
+        return new Players(NameInputView.getNames());
     }
 
     private void initialDraw(Deck deck, Dealer dealer, Players players) {
