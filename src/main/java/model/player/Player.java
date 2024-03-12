@@ -11,7 +11,7 @@ public class Player {
     private static final int HIT_CONDITION = 22;
 
     private final String name;
-    private final Hand hand;
+    private Hand hand;
 
     public Player(String name) {
         this(name, new Hand(List.of()));
@@ -34,14 +34,12 @@ public class Player {
         return totalNumbers < HIT_CONDITION;
     }
 
-    public Player hitCard(Card card) {
-        Hand addedCards = hand.add(card);
-        return new Player(name, addedCards);
+    public void hitCard(Card card) {
+        hand = hand.add(card);
     }
 
-    public Player hitCards(List<Card> cards) {
-        Hand addedCards = this.hand.addAll(cards);
-        return new Player(name, addedCards);
+    public void hitCards(List<Card> cards) {
+        hand = hand.addAll(cards);
     }
 
     @Override

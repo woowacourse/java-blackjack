@@ -13,7 +13,7 @@ public class BlackjackGame {
     private static final int DEALER_COUNT = 1;
 
     private Dealer dealer;
-    private Players players;
+    private final Players players;
 
     public BlackjackGame(Dealer dealer, Players players) {
         this.dealer = dealer;
@@ -23,12 +23,11 @@ public class BlackjackGame {
     public void initCards(Hand cards) {
         List<Card> cardsElement = cards.getCards();
         dealer = dealer.hitCards(cardsElement.subList(0, INITIAL_CARD_COUNT));
-        players = players.hitCards(cardsElement.subList(INITIAL_CARD_COUNT, cardsElement.size()));
+        players.hitCards(cardsElement.subList(INITIAL_CARD_COUNT, cardsElement.size()));
     }
 
-    public Player playerHit(Player player, Card card) {
-        players = players.hit(player, card);
-        return players.findPlayer(player);
+    public void playerHit(Player player, Card card) {
+        player.hitCard(card);
     }
 
     public boolean isDealerPossibleHit() {

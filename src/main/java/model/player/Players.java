@@ -3,7 +3,6 @@ package model.player;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -47,33 +46,13 @@ public class Players {
             .collect(collectingAndThen(toList(), Players::new));
     }
 
-    public Players hitCards(List<Card> cards) {
+    public void hitCards(List<Card> cards) {
         int index = 0;
-        List<Player> updatedPlayers = new ArrayList<>();
         for (Player player : group) {
             List<Card> cardsToAssign = cards.subList(index, index + CARDS_PER_PLAYER);
-            Player updatedPlayer = player.hitCards(cardsToAssign);
-            updatedPlayers.add(updatedPlayer);
+            player.hitCards(cardsToAssign);
             index += CARDS_PER_PLAYER;
         }
-        return new Players(updatedPlayers);
-    }
-
-    public Players hit(Player player, Card card) {
-        List<Player> updatedGroup = new ArrayList<>(group);
-        Player updatedPlayer = player.hitCard(card);
-
-        int index = updatedGroup.indexOf(player);
-        updatedGroup.set(index, updatedPlayer);
-
-        return new Players(updatedGroup);
-    }
-
-    public Player findPlayer(Player player) {
-        return group.stream()
-            .filter(groupPlayer -> groupPlayer.equals(player))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_PLAYER));
     }
 
     public List<String> names() {

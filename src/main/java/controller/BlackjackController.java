@@ -45,12 +45,13 @@ public class BlackjackController {
 
     private void hitToPlayers(BlackjackGame blackjackGame) {
         blackjackGame.getPlayersGroup()
-            .forEach(player -> hitUntilStay(blackjackGame, player));
+            .forEach(this::hitUntilStay);
     }
 
-    private void hitUntilStay(BlackjackGame blackjackGame, Player player) {
+    private void hitUntilStay(Player player) {
         while (player.isPossibleHit() && prepareHitAnswer(player).isHit()) {
-            player = hit(blackjackGame, player);
+            Card card = RandomCard.pickCard();
+            player.hitCard(card);
             OutputView.printPlayerCard(player);
         }
     }
@@ -60,11 +61,6 @@ public class BlackjackController {
             String hitAnswer = InputView.askHitAnswer(player);
             return HitAnswer.of(hitAnswer);
         });
-    }
-
-    private Player hit(BlackjackGame blackjackGame, Player player) {
-        Card card = RandomCard.pickCard();
-        return blackjackGame.playerHit(player, card);
     }
 
     private void hitToDealer(BlackjackGame blackjackGame) {
