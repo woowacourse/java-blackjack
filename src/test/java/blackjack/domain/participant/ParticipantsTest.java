@@ -1,8 +1,10 @@
 package blackjack.domain.participant;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.card.Deck;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -39,5 +41,18 @@ class ParticipantsTest {
         List<String> playerNames = List.of("딜러");
         assertThatThrownBy(() -> new Participants(playerNames))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("참여자들은 초기 카드를 뽑을 수 있다.")
+    @Test
+    void drawInitialCards() {
+        Participants participants = new Participants(List.of("아톰", "구름"));
+        Deck deck = Deck.createShuffledDeck();
+
+        participants.drawInitialCards(deck);
+
+        assertThat(participants.getDealer().getCards()).hasSize(2);
+        assertThat(participants.getPlayers().get(0).getCards()).hasSize(2);
+        assertThat(participants.getPlayers().get(1).getCards()).hasSize(2);
     }
 }

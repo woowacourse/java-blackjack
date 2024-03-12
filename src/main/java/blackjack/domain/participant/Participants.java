@@ -1,10 +1,13 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Deck;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Participants {
+
+    private static final int INITIAL_DRAW_COUNT = 2;
 
     private final Dealer dealer = new Dealer();
     private final List<Player> players;
@@ -44,6 +47,18 @@ public class Participants {
     private void validateInvalidPlayerName(List<String> playerNames, String dealerName) {
         if (playerNames.contains(dealerName)) {
             throw new IllegalArgumentException(String.format("플레이어 이름은 '%s'가 될 수 없습니다.", dealerName));
+        }
+    }
+
+    public void drawInitialCards(Deck deck) {
+        for (Participant participant : getValue()) {
+            drawInitialCardForParticipant(deck, participant);
+        }
+    }
+
+    private void drawInitialCardForParticipant(Deck deck, Participant participant) {
+        for (int i = 0; i < INITIAL_DRAW_COUNT; i++) {
+            participant.hit(deck.draw());
         }
     }
 

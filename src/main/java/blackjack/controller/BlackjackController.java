@@ -4,7 +4,6 @@ import blackjack.domain.Bettings;
 import blackjack.domain.Money;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
@@ -49,10 +48,7 @@ public class BlackjackController {
     }
 
     private void initialDeal(Participants participants, Deck deck) {
-        for (Participant participant : participants.getValue()) {
-            participant.hit(deck.draw());
-            participant.hit(deck.draw());
-        }
+        participants.drawInitialCards(deck);
 
         outputView.printInitialDeal(participants.getDealer(), participants.getPlayers());
     }
