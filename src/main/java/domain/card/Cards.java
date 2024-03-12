@@ -7,6 +7,7 @@ public class Cards {
 
     private static final int INIT_CARD_SIZE = 2;
     private static final int ACE_SCORE = 10;
+    private static final int INIT_SIZE = 2;
     protected static final int MAX_SCORE = 21;
 
     protected final List<Card> cards;
@@ -24,6 +25,10 @@ public class Cards {
 
     public boolean isBurst() {
         return bestSum() > MAX_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == INIT_SIZE && bestSum() == MAX_SCORE;
     }
 
     public boolean isGreaterThan(Cards other) {

@@ -15,8 +15,6 @@ import java.util.stream.Collectors;
 
 public class Rule {
 
-    private static final int STANDARD = 21;
-
     private final Incomes incomes;
 
     private Rule(Incomes incomes) {
@@ -28,27 +26,21 @@ public class Rule {
                 .collect(Collectors.toMap(
                         playerCards -> playerCards.getPlayerName(),
                         playerCards -> new Income(playerCards.determineIncome(decideStatus(playerCards, dealerCards))),
-                        (x,y) -> y,
+                        (x, y) -> y,
                         LinkedHashMap::new
                 ));
         return new Rule(new Incomes(incomes));
     }
 
     public static Status decideStatus(Cards targetCards, Cards otherCards) {
-        if (targetCards.isBurst()) {
+        if (targetCards.isBurst() || otherCards.isGreaterThan(targetCards)) {
             return Status.LOSE;
         }
-
-        if (otherCards.isBurst()) {
-            return Status.WIN;
+        if (targetCards.isBlackjack() && targetCards.isGreaterThan(otherCards)) {
+            return Status.WIN_BLACKJACK;
         }
-
-        if (targetCards.isGreaterThan(otherCards)) {
+        if (otherCards.isBurst() || targetCards.isGreaterThan(otherCards)) {
             return Status.WIN;
-        }
-
-        if (otherCards.isGreaterThan(targetCards)) {
-            return Status.LOSE;
         }
         return Status.TIE;
     }
