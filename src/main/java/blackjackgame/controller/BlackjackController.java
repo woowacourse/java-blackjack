@@ -1,11 +1,13 @@
 package blackjackgame.controller;
 
 import blackjackgame.domain.blackjack.BetMakerGamer;
+import blackjackgame.domain.blackjack.BetMakerGamers;
 import blackjackgame.domain.blackjack.BetMoney;
 import blackjackgame.domain.blackjack.BlackjackGame;
+import blackjackgame.domain.blackjack.CardHolderGamer;
 import blackjackgame.domain.blackjack.GameResult;
 import blackjackgame.domain.blackjack.GameResultCalculator;
-import blackjackgame.domain.blackjack.CardHolderGamer;
+import blackjackgame.domain.blackjack.CardHolderGamers;
 import blackjackgame.domain.blackjack.HoldingCards;
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.Deck;
@@ -38,8 +40,8 @@ public class BlackjackController {
         BetMakerGamer betMakerGamer = makeBetMakerDealer();
 
         List<String> playerNames = NameInputView.getNames();
-        List<CardHolderGamer> cardHolderGamers = makeCardHolderPlayers(playerNames);
-        List<BetMakerGamer> betMakerGamers = makeBetMakerPlayers(playerNames);
+        CardHolderGamers cardHolderGamers = new CardHolderGamers(makeCardHolderPlayers(playerNames));
+        BetMakerGamers betMakerGamers = new BetMakerGamers(makeBetMakerPlayers(playerNames));
 
         return new BlackjackGame(cardHolderDealer, betMakerGamer, cardHolderGamers, betMakerGamers);
     }
@@ -91,7 +93,7 @@ public class BlackjackController {
     }
 
     private void printDealer(BlackjackGame blackjackGame) {
-        GamerDTO dealerDTO = makeGamerDTO(blackjackGame.getDealer());
+        GamerDTO dealerDTO = makeGamerDTO(blackjackGame.getCardHolderDealer());
         GamerOutputView.printOutputWithoutSummationCardPoint(dealerDTO);
     }
 
@@ -135,7 +137,7 @@ public class BlackjackController {
     }
 
     private void printDealerAndPlayersWithPoint(BlackjackGame blackjackGame) {
-        GamerDTO dealerDTO = makeGamerDTO(blackjackGame.getDealer());
+        GamerDTO dealerDTO = makeGamerDTO(blackjackGame.getCardHolderDealer());
         GamerOutputView.generateOutputWithSummationCardPoint(dealerDTO);
 
         for (CardHolderGamer player : blackjackGame.getRawPlayers()) {
@@ -154,7 +156,7 @@ public class BlackjackController {
 
     private DealerGameResultDTO makeDealerGameResultDTO(BlackjackGame blackjackGame) {
         Map<GameResult, Integer> dealerGameResultCounts = blackjackGame.getRawPlayers().stream()
-                .collect(Collectors.groupingBy(player -> GameResultCalculator.calculate(blackjackGame.getDealer(), player),
+                .collect(Collectors.groupingBy(player -> GameResultCalculator.calculate(blackjackGame.getCardHolderDealer(), player),
                         Collectors.summingInt(value -> 1)));
         return new DealerGameResultDTO(dealerGameResultCounts);
     }
@@ -162,7 +164,7 @@ public class BlackjackController {
     private List<PlayerGameResultDTO> makePlayerGameResultDTO(BlackjackGame blackjackGame) {
         return blackjackGame.getRawPlayers().stream()
                 .map(player -> new PlayerGameResultDTO(player.getRawName(),
-                        GameResultCalculator.calculate(player, blackjackGame.getDealer())))
+                        GameResultCalculator.calculate(player, blackjackGame.getCardHolderDealer())))
                 .toList();
     }
 }

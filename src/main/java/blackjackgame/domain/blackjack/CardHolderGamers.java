@@ -3,10 +3,10 @@ package blackjackgame.domain.blackjack;
 import blackjackgame.domain.card.Deck;
 import java.util.List;
 
-public class Gamers {
+public class CardHolderGamers {
     private final List<CardHolderGamer> players;
 
-    public Gamers(List<CardHolderGamer> players) {
+    public CardHolderGamers(List<CardHolderGamer> players) {
         this.players = players;
     }
 

@@ -7,28 +7,26 @@ import java.util.List;
 public class BlackjackGame {
     private static final int EXECUTION_COUNT = 2;
 
-//    private final CardHolderGamer cardHolderDealer;
-    private final CardHolderGamer dealer;
+    private final CardHolderGamer cardHolderDealer;
     private final BetMakerGamer betMakerDealer;
-//    private final List<CardHolderGamer> cardHolderPlayers;
-    private final Gamers players;
-    private final List<BetMakerGamer> betMakerPlayers;
+    private final CardHolderGamers cardHolderPlayers;
+    private final BetMakerGamers betMakerPlayers;
 
     public BlackjackGame(CardHolderGamer cardHolderDealer, BetMakerGamer betMakerDealer,
-                         List<CardHolderGamer> cardHolderPlayers, List<BetMakerGamer> betMakerPlayers) {
-        this.dealer = cardHolderDealer;
+                         CardHolderGamers cardHolderPlayers, BetMakerGamers betMakerPlayers) {
+        this.cardHolderDealer = cardHolderDealer;
         this.betMakerDealer = betMakerDealer;
-        this.players = new Gamers(cardHolderPlayers);
+        this.cardHolderPlayers = cardHolderPlayers;
         this.betMakerPlayers = betMakerPlayers;
     }
 
     public void initDealerAndPlayers(Deck deck) {
         dealerDraw(deck);
-        players.drawNTimes(deck, EXECUTION_COUNT);
+        cardHolderPlayers.drawNTimes(deck, EXECUTION_COUNT);
     }
 
     private void dealerDraw(Deck deck) {
-        dealer.draw(deck, new DealerRandomCardDrawStrategy(dealer), EXECUTION_COUNT);
+        cardHolderDealer.draw(deck, new DealerRandomCardDrawStrategy(cardHolderDealer), EXECUTION_COUNT);
     }
 
     private void playerDraw(Deck deck, CardHolderGamer player) {
@@ -56,19 +54,19 @@ public class BlackjackGame {
         }
     }
 
-    public CardHolderGamer getDealer() {
-        return dealer;
+    public CardHolderGamer getCardHolderDealer() {
+        return cardHolderDealer;
     }
 
     public List<CardHolderGamer> getRawPlayers() {
-        return players.getPlayers();
+        return cardHolderPlayers.getPlayers();
     }
 
     public String getRawDealerName() {
-        return dealer.getRawName();
+        return cardHolderDealer.getRawName();
     }
 
     public List<String> getRawPlayerNames() {
-        return players.getRawPlayerNames();
+        return cardHolderPlayers.getRawPlayerNames();
     }
 }
