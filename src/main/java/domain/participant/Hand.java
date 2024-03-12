@@ -43,22 +43,15 @@ public class Hand {
         int sum = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
-        int aceCardCount = 0;
-        for (Card card : cards) {
-            aceCardCount = increaseCountIfAceCard(card, aceCardCount);
-        }
+
+        int aceCardCount = (int) cards.stream()
+                .filter(Card::isAceCard)
+                .count();
         while (aceCardCount > 0 && sum > BLACKJACK_SCORE) {
             aceCardCount--;
             sum -= ALTER_ACE_GAP;
         }
         return sum;
-    }
-
-    private int increaseCountIfAceCard(final Card card, final int aceCardCount) {
-        if (card.isAceCard()) {
-            return aceCardCount + 1;
-        }
-        return aceCardCount;
     }
 
     public int size() {
