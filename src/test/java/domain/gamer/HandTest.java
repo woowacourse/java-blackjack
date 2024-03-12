@@ -21,7 +21,7 @@ public class HandTest {
         assertThat(hand.calculateScore()).isEqualTo(9);
     }
 
-    @DisplayName("A를 제외한 나머지 카드의 합이 10 이하인 경우 A는 11로 계산한다.")
+    @DisplayName("A를 1로 계산한 모든 카드의 합에 10을 더해도 21을 넘지 않으면 A는 11로 계산한다.")
     @Test
     void calculateScoreWhenUnderThresholdTest() {
         Hand hand = new Hand();
@@ -32,14 +32,14 @@ public class HandTest {
         assertThat(hand.calculateScore()).isEqualTo(21);
     }
 
-    @DisplayName("A를 제외한 나머지 카드의 합이 10 초과인 경우 A는 1로 계산한다.")
+    @DisplayName("A를 1로 계산한 모든 카드의 합에 10을 더해 21을 넘으면 A는 1로 계산한다.")
     @Test
     void calculateScoreWhenOverThresholdTest() {
         Hand hand = new Hand();
-        hand.addCard(new Card(CardNumber.KING, CardShape.HEART));
-        hand.addCard(new Card(CardNumber.KING, CardShape.SPADE));
+        hand.addCard(new Card(CardNumber.ACE, CardShape.HEART));
         hand.addCard(new Card(CardNumber.ACE, CardShape.SPADE));
+        hand.addCard(new Card(CardNumber.KING, CardShape.SPADE));
 
-        assertThat(hand.calculateScore()).isEqualTo(21);
+        assertThat(hand.calculateScore()).isEqualTo(12);
     }
 }

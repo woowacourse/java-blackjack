@@ -1,7 +1,6 @@
 package domain.gamer;
 
 import domain.cards.Card;
-import domain.cards.cardinfo.CardNumber;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,7 +8,6 @@ import java.util.List;
 
 public class Hand {
 
-    private static final int CONDITION_DECIDING_A_SCORE = 10;
     private static final int A_SCORE_GAP = 10;
     private static final int BLACKJACK_SCORE = 21;
     private static final int BLACKJACK_CARDS_COUNT = 2;
@@ -25,37 +23,29 @@ public class Hand {
     }
 
     public int calculateScore() {
-        int scoreExceptAce = sumExceptAceCards();
-        return sumAceCards(scoreExceptAce);
+        int cardsScoreSum = sumAllCards();
+        return addAceScore(cardsScoreSum);
     }
 
-    private int sumExceptAceCards() {
+    private int sumAllCards() {
         return cards.stream()
-                .filter(Card::isNotAce)
                 .mapToInt(Card::score)
                 .sum();
     }
 
-    private int sumAceCards(int score) {
+    private int addAceScore(int score) {
         int currentScore = score;
         for (Card card : cards) {
-            currentScore = addAceScore(card, currentScore);
+            currentScore = decideAceScore(card, currentScore);
         }
         return currentScore;
     }
 
-    private int addAceScore(Card card, int currentScore) {
-        if (card.isAce()) {
-            return currentScore + decideAceScore(currentScore);
+    private int decideAceScore(Card card, int currentScore) {
+        if (card.isAce() && currentScore + A_SCORE_GAP <= BLACKJACK_SCORE) {
+            return currentScore + A_SCORE_GAP;
         }
         return currentScore;
-    }
-
-    private int decideAceScore(int currentScore) {
-        if (currentScore <= CONDITION_DECIDING_A_SCORE) {
-            return CardNumber.ACE.getScore() + A_SCORE_GAP;
-        }
-        return CardNumber.ACE.getScore();
     }
 
     public boolean isBlackJack() {
