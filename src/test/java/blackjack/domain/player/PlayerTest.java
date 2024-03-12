@@ -14,13 +14,16 @@ public class PlayerTest {
 
     @Test
     void 플레이어는_죽었는지_여부를_반환한다() {
+        // given
         Player player = player(
                 new Card(KING, CLOVER),
                 new Card(KING, SPADE),
                 new Card(KING, HEART));
 
+        // when
         boolean isAlive = player.isAlive();
 
+        // then
         assertThat(isAlive).isFalse();
     }
 }

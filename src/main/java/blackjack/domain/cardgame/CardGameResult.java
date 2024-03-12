@@ -11,6 +11,7 @@ import static blackjack.domain.cardgame.WinningStatus.WIN;
 public class CardGameResult {
     private final Map<Player, WinningStatus> totalResult;
 
+    // TODO: final 키워드 추가
     public CardGameResult(Map<Player, WinningStatus> totalResult) {
         this.totalResult = totalResult;
     }
