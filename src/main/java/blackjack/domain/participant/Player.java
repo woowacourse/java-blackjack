@@ -43,6 +43,11 @@ public class Player extends Gamer {
     }
 
     public void win(final Profit dealerProfit) {
+        if (hand.isBlackjack()) {
+            dealerProfit.lose(betting.getBlackjackAmount());
+            profit.earn(betting.getBlackjackAmount());
+            return;
+        }
         dealerProfit.lose(betting.getAmount());
         profit.earn(betting.getAmount());
     }

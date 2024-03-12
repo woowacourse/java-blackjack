@@ -83,4 +83,19 @@ public class PlayerTest {
         assertThat(choco.getProfit()).isEqualTo("-10000");
         assertThat(dealer.getDealerProfit().toString()).isEqualTo("10000");
     }
+
+    @DisplayName("블랙잭으로 승리 시, 배팅 금액의 1.5배를 받는다.")
+    @Test
+    void winBlackjack() {
+        //given
+        dealer.draw(12);
+        choco.draw(dealer.draw());
+        choco.draw(dealer.draw());
+
+        //when
+        choco.win(dealer.getDealerProfit());
+
+        //then
+        assertThat(choco.getProfit()).isEqualTo("15000.0");
+    }
 }

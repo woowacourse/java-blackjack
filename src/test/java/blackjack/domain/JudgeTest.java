@@ -26,7 +26,7 @@ class JudgeTest {
     private final List<PlayerInfo> playerInfos = List.of(PlayerInfo.of("choco", bettingAmount));
     private Players players;
     private Player choco;
-    private int bustDrawCount = 10;
+    private final int bustDrawCount = 10;
 
     @DisplayName("딜러가 버스트된 경우")
     @Nested
@@ -54,7 +54,7 @@ class JudgeTest {
             BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultDraw(result))
+            assertThat(isDealerDraw(result))
                     .isTrue();
         }
 
@@ -72,7 +72,7 @@ class JudgeTest {
             BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultLose(result))
+            assertThat(isDealerLoseByBlackjack(result))
                     .isTrue();
         }
 
@@ -89,7 +89,7 @@ class JudgeTest {
             BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultLose(result))
+            assertThat(isDealerLose(result))
                     .isTrue();
         }
     }
@@ -119,7 +119,7 @@ class JudgeTest {
             BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultWin(result))
+            assertThat(isDealerWin(result))
                     .isTrue();
         }
 
@@ -138,7 +138,7 @@ class JudgeTest {
             BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultDraw(result))
+            assertThat(isDealerDraw(result))
                     .isTrue();
         }
 
@@ -155,7 +155,7 @@ class JudgeTest {
             BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultWin(result))
+            assertThat(isDealerWin(result))
                     .isTrue();
         }
     }
@@ -184,7 +184,7 @@ class JudgeTest {
             BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultWin(result))
+            assertThat(isDealerWin(result))
                     .isTrue();
         }
 
@@ -203,7 +203,7 @@ class JudgeTest {
             BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultLose(result))
+            assertThat(isDealerLoseByBlackjack(result))
                     .isTrue();
         }
 
@@ -220,7 +220,7 @@ class JudgeTest {
             BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultWin(result))
+            assertThat(isDealerWin(result))
                     .isTrue();
         }
 
@@ -238,7 +238,7 @@ class JudgeTest {
             BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultLose(result))
+            assertThat(isDealerLose(result))
                     .isTrue();
         }
 
@@ -256,7 +256,7 @@ class JudgeTest {
             BlackjackResult result = Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerResultDraw(result))
+            assertThat(isDealerDraw(result))
                     .isTrue();
         }
     }
@@ -275,15 +275,20 @@ class JudgeTest {
                 .forEach(i -> deck.draw());
     }
 
-    private boolean isDealerResultWin(final BlackjackResult blackjackResult) {
-        return blackjackResult.dealerProfit().equals(bettingAmount);
+    private boolean isDealerWin(final BlackjackResult blackjackResult) {
+        return Double.parseDouble(blackjackResult.dealerProfit()) == Double.parseDouble(bettingAmount);
     }
 
-    private boolean isDealerResultLose(final BlackjackResult blackjackResult) {
-        return blackjackResult.dealerProfit().equals("-" + bettingAmount);
+    private boolean isDealerLose(final BlackjackResult blackjackResult) {
+        return Double.parseDouble(blackjackResult.dealerProfit()) == Double.parseDouble("-" + bettingAmount);
     }
 
-    private boolean isDealerResultDraw(final BlackjackResult blackjackResult) {
-        return blackjackResult.dealerProfit().equals("0");
+    private boolean isDealerLoseByBlackjack(final BlackjackResult blackjackResult) {
+        return Double.parseDouble(blackjackResult.dealerProfit()) == Double.parseDouble("-" + bettingAmount) * 1.5;
+    }
+
+    private boolean isDealerDraw(final BlackjackResult blackjackResult) {
+        return Double.parseDouble(blackjackResult.dealerProfit()) == Double.parseDouble("0");
+
     }
 }
