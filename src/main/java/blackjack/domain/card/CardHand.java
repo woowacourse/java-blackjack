@@ -52,12 +52,19 @@ public class CardHand {
 		return calculateScore() > BLACKJACK_SCORE;
 	}
 
-	public List<Card> getCards() {
-		return Collections.unmodifiableList(cards);
-	}
-
 	public boolean isScoreLessOrEqual(int value) {
 		int score = calculateScore();
 		return value >= score;
+	}
+
+	@Override
+	public String toString() {
+		return "CardHand{" +
+				"cards=" + cards +
+				'}';
+	}
+
+	public List<Card> getCards() {
+		return Collections.unmodifiableList(cards);
 	}
 }

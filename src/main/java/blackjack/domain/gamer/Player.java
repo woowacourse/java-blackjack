@@ -23,6 +23,14 @@ public class Player extends Gamer {
 		return cardHand.isBurst();
 	}
 
+	@Override
+	public String toString() {
+		return "Player{" +
+				"name=" + name +
+				", cardHand=" + cardHand +
+				'}';
+	}
+
 	public String getName() {
 		return name.getValue();
 	}

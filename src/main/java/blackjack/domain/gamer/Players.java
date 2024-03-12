@@ -42,6 +42,13 @@ public class Players {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "Players{" +
+				"players=" + players +
+				'}';
+	}
+
 	public List<Player> getPlayers() {
 		return players;
 	}

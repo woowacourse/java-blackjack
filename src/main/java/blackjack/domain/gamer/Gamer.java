@@ -20,6 +20,13 @@ public class Gamer {
 		return cardHand.calculateScore();
 	}
 
+	@Override
+	public String toString() {
+		return "Gamer{" +
+				"cardHand=" + cardHand +
+				'}';
+	}
+
 	public List<Card> getCardHand() {
 		return cardHand.getCards();
 	}

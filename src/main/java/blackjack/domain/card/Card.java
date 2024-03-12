@@ -11,20 +11,12 @@ public class Card {
 		this.rank = rank;
 	}
 
-	public int getScore() {
-		return rank.getScore();
-	}
-
-	public String getSuitName() {
-		return suit.getName();
-	}
-
-	public String getRankName() {
-		return rank.getName();
-	}
-
 	public boolean isRank(Rank rank) {
 		return this.rank == rank;
+	}
+
+	public int getScore() {
+		return rank.getScore();
 	}
 
 	@Override
@@ -40,5 +32,21 @@ public class Card {
 	@Override
 	public int hashCode() {
 		return Objects.hash(suit, rank);
+	}
+
+	@Override
+	public String toString() {
+		return "Card{" +
+				"suit=" + suit +
+				", rank=" + rank +
+				'}';
+	}
+
+	public String getSuitName() {
+		return suit.getName();
+	}
+
+	public String getRankName() {
+		return rank.getName();
 	}
 }

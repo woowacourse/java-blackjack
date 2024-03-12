@@ -49,4 +49,12 @@ public class Dealer extends Gamer {
 		}
 		return false;
 	}
+
+	@Override
+	public String toString() {
+		return "Dealer{" +
+				"deck=" + deck +
+				", cardHand=" + cardHand +
+				'}';
+	}
 }

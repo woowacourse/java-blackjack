@@ -80,4 +80,11 @@ public class Deck {
 	public int size() {
 		return cards.size();
 	}
+
+	@Override
+	public String toString() {
+		return "Deck{" +
+				"cards=" + cards +
+				'}';
+	}
 }
