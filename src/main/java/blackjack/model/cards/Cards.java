@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
+    public static final int INITIAL_CARD_SIZE = 2;
     private static final int BOUNDARY_SCORE = 11;
     private static final int EXTRA_SCORE = 10;
     private static final int WINNING_SCORE = 21;
-
     private final List<Card> cards = new ArrayList<>();
     private int score = 0;
 
@@ -23,6 +23,10 @@ public class Cards {
 
     public boolean isBust() {
         return score > WINNING_SCORE;
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == INITIAL_CARD_SIZE && score == WINNING_SCORE;
     }
 
     private void updateCardsScore() {

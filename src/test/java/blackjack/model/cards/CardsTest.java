@@ -70,4 +70,31 @@ class CardsTest {
 
         assertThat(given.getCards()).hasSize(3);
     }
+
+    @DisplayName("블랙잭인지 여부를 판별한다")
+    @Test
+    void isBlackJack() {
+        List<Card> cards = List.of(
+                new Card(CardNumber.ACE, CardShape.HEART),
+                new Card(CardNumber.TEN, CardShape.CLOVER)
+        );
+        Cards given = new Cards();
+        given.add(cards);
+
+        assertThat(given.isBlackJack()).isTrue();
+    }
+
+    @DisplayName("블랙잭인지 여부를 판별한다")
+    @Test
+    void isNotBlackJack() {
+        List<Card> cards = List.of(
+                new Card(CardNumber.ACE, CardShape.HEART),
+                new Card(CardNumber.TWO, CardShape.CLOVER),
+                new Card(CardNumber.EIGHT, CardShape.CLOVER)
+        );
+        Cards given = new Cards();
+        given.add(cards);
+
+        assertThat(given.isBlackJack()).isFalse();
+    }
 }
