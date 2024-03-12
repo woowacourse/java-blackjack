@@ -1,15 +1,30 @@
 package model.blackjackgame;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
 public class DealerResult {
 
+    private static final Integer INITIAL_COUNT = 1;
+
     private final Map<ResultStatus, Integer> result;
 
-    public DealerResult(Map<ResultStatus, Integer> result) {
-        this.result = Map.copyOf(result);
+    private DealerResult(Map<ResultStatus, Integer> result) {
+        this.result = Collections.unmodifiableMap(result);
+    }
+
+    public static DealerResult from(GameResult gameResult) {
+        Map<ResultStatus, Integer> result = new EnumMap<>(ResultStatus.class);
+        GameScore dealerScore = gameResult.getDealerScore();
+
+        for (GameScore playerScore : gameResult.getPlayersScore()) {
+            ResultStatus resultStatus = gameResult.decideResultStatus(dealerScore, playerScore);
+            result.merge(resultStatus, INITIAL_COUNT, Integer::sum);
+        }
+        return new DealerResult(result);
     }
 
     public List<ResultStatus> allStatus() {

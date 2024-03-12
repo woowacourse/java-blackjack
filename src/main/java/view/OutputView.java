@@ -111,7 +111,8 @@ public class OutputView {
         System.out.printf(GAMER_RESULT_FORMAT, DEALER_NAME, result);
     }
 
-    private static String createResultMessage(ResultStatus resultStatus, DealerResult dealerResult) {
+    private static String createResultMessage(ResultStatus resultStatus,
+        DealerResult dealerResult) {
         return dealerResult.statusCount(resultStatus) + resultStatus.getDisplayName();
     }
 
@@ -122,7 +123,8 @@ public class OutputView {
     }
 
     private static void printPlayerGameResult(GameScore playerScore, GameResult gameResult) {
-        ResultStatus result = gameResult.findGameResult(playerScore, gameResult.getDealerScore());
+        ResultStatus result = gameResult.decideResultStatus(playerScore,
+            gameResult.getDealerScore());
         System.out.printf(GAMER_RESULT_FORMAT, playerScore.getName(), result.getDisplayName());
     }
 
