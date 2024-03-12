@@ -18,6 +18,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+@DisplayName("승패")
 class JudgementTest {
 
     SettedDeckGenerator settedDecksGenerator;
@@ -38,19 +39,6 @@ class JudgementTest {
         neo = new Player(name2);
 
         players = new Players(List.of(pobi, neo));
-
-        Card card1 = new Card(Symbol.DIAMOND, Rank.EIGHT);
-        Card card2 = new Card(Symbol.CLOVER, Rank.BIG_ACE);
-        Card card3 = new Card(Symbol.SPADE, Rank.KING);
-        Card card4 = new Card(Symbol.CLOVER, Rank.SEVEN);
-        Card card5 = new Card(Symbol.SPADE, Rank.EIGHT);
-        Card card6 = new Card(Symbol.HEART, Rank.TWO);
-        Card card7 = new Card(Symbol.CLOVER, Rank.NINE);
-        Card card8 = new Card(Symbol.DIAMOND, Rank.THREE);
-
-        List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8);
-        SettedDeckGenerator settedDecksGenerator = new SettedDeckGenerator(cards);
-        deck = Deck.createByStrategy(settedDecksGenerator);
     }
 
     @DisplayName("딜러가 버스트인 경우")
@@ -117,7 +105,7 @@ class JudgementTest {
     @Nested
     class ifDealerBlackJack {
         @BeforeEach
-        void setDeckAndDealerBust() {
+        void setDeckAndDealerBlackJack() {
             Card card1 = new Card(Symbol.CLOVER, Rank.KING);
             Card card2 = new Card(Symbol.CLOVER, Rank.BIG_ACE);
             Card card3 = new Card(Symbol.DIAMOND, Rank.FOUR);
@@ -133,11 +121,12 @@ class JudgementTest {
             deck = Deck.createByStrategy(settedDecksGenerator);
             blackJackGame = new BlackJackGame(deck);
             blackJackGame.prepareCards(dealer, players);
+            blackJackGame.takeTurn(dealer);
         }
 
         @DisplayName("플레이어(포비)도 블랙잭이라면 무승부이다.")
         @Test
-        void playerNotBust() {
+        void playerIsBlackJack() {
             // when
             Judgement judgement = Judgement.of(dealer, players);
 
@@ -153,11 +142,91 @@ class JudgementTest {
 
         @DisplayName("플레이어(네오)가 블랙잭이 아니라면 딜러가 이긴다.")
         @Test
-        void playerIsBust() {
+        void playerIsNotBlackJack() {
             // given
             blackJackGame.takeTurn(neo);
 
             // when
+            Judgement judgement = Judgement.of(dealer, players);
+
+            // then
+            assertAll(
+                    () -> assertThat(judgement.getDealerResult().getWinCount()).isEqualTo(1),
+                    () -> assertThat(judgement.getDealerResult().getLoseCount()).isEqualTo(0),
+                    () -> assertThat(judgement.getDealerResult().getTieCount()).isEqualTo(1),
+                    () -> assertThat(judgement.getPlayerResults().getResults().get(pobi)).isEqualTo(Result.TIE),
+                    () -> assertThat(judgement.getPlayerResults().getResults().get(neo)).isEqualTo(Result.LOSE)
+            );
+        }
+    }
+
+    @DisplayName("딜러가 일반 숫자(버스트도 아니고, 블랙잭도 아닌)인 경우")
+    @Nested
+    class ifDealerNormalNumber {
+        @BeforeEach
+        void setDeckAndDealerBust() {
+            Card card1 = new Card(Symbol.CLOVER, Rank.KING);
+            Card card2 = new Card(Symbol.CLOVER, Rank.BIG_ACE);
+            Card card3 = new Card(Symbol.DIAMOND, Rank.BIG_ACE);
+            Card card4 = new Card(Symbol.SPADE, Rank.KING);
+            Card card5 = new Card(Symbol.CLOVER, Rank.SEVEN);
+            Card card6 = new Card(Symbol.SPADE, Rank.NINE);
+            Card card7 = new Card(Symbol.HEART, Rank.TEN);
+            Card card8 = new Card(Symbol.CLOVER, Rank.TEN);
+            Card card9 = new Card(Symbol.DIAMOND, Rank.TEN);
+
+            List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8, card9);
+            settedDecksGenerator = new SettedDeckGenerator(cards);
+            deck = Deck.createByStrategy(settedDecksGenerator);
+            blackJackGame = new BlackJackGame(deck);
+            blackJackGame.prepareCards(dealer, players);
+            blackJackGame.takeTurn(dealer);
+        }
+
+        @DisplayName("플레이어(포비)가 블랙잭이라면 플레이어가 이긴다.")
+        @Test
+        void playerIsBlackJack() {
+            // when
+            blackJackGame.takeTurn(pobi);
+            blackJackGame.takeTurn(pobi);
+            Judgement judgement = Judgement.of(dealer, players);
+
+            // then
+            assertAll(
+                    () -> assertThat(judgement.getDealerResult().getWinCount()).isEqualTo(1),
+                    () -> assertThat(judgement.getDealerResult().getLoseCount()).isEqualTo(1),
+                    () -> assertThat(judgement.getDealerResult().getTieCount()).isEqualTo(0),
+                    () -> assertThat(judgement.getPlayerResults().getResults().get(pobi)).isEqualTo(Result.WIN),
+                    () -> assertThat(judgement.getPlayerResults().getResults().get(neo)).isEqualTo(Result.LOSE)
+            );
+        }
+
+        @DisplayName("플레이어(네오)가 버스트라면 딜러가 이긴다.")
+        @Test
+        void playerIsBust() {
+            // given
+            blackJackGame.takeTurn(neo);
+            blackJackGame.takeTurn(neo);
+            blackJackGame.takeTurn(neo);
+
+            // when
+            Judgement judgement = Judgement.of(dealer, players);
+
+            // then
+            assertAll(
+                    () -> assertThat(judgement.getDealerResult().getWinCount()).isEqualTo(2),
+                    () -> assertThat(judgement.getDealerResult().getLoseCount()).isEqualTo(0),
+                    () -> assertThat(judgement.getDealerResult().getTieCount()).isEqualTo(0),
+                    () -> assertThat(judgement.getPlayerResults().getResults().get(pobi)).isEqualTo(Result.LOSE),
+                    () -> assertThat(judgement.getPlayerResults().getResults().get(neo)).isEqualTo(Result.LOSE)
+            );
+        }
+
+        @DisplayName("플레이어(포비)와 딜러 모두 일반 점수인 경우, 점수가 같다면 무승부이다.")
+        @Test
+        void playerIsSameNormalScore() {
+            // when
+            blackJackGame.takeTurn(pobi);
             Judgement judgement = Judgement.of(dealer, players);
 
             // then
