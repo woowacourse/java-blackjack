@@ -1,82 +1,85 @@
 package view;
 
-import dto.DealerResultDto;
-import dto.PlayerDto;
-import dto.PlayersResultDto;
+import domain.Dealer;
+import dto.*;
 
 import java.util.List;
 import java.util.Map;
 
 public class OutputView {
 
-    public void printInitialDeal(List<PlayerDto> playerDtos) {
-        List<String> playerNames = playerDtos.stream().map(PlayerDto::name).toList();
+    public void printInitialDealMessage(PlayersNameDto playersNameDto) {
+        List<String> playerNames = playersNameDto.names();
         String joinedPlayerNames = String.join(", ", playerNames);
-        String message = String.format("%s에게 2장을 나누었습니다.", joinedPlayerNames);
+        String message = String.format("%s와 %s에게 2장을 나누었습니다.", Dealer.DEALER_NAME, joinedPlayerNames);
         System.out.println(message);
     }
 
-    public void printInitialHand(List<PlayerDto> playerDtos) {
+    public void printInitialHand(ParticipantsHandDto participantsHandDto) {
+        List<ParticipantHandDto> participantHandDtos = participantsHandDto.playerHands();
         StringBuilder stringBuilder = new StringBuilder();
-        for (PlayerDto playerDto : playerDtos) {
-            stringBuilder.append(buildInitialHand(playerDto));
+
+        for (ParticipantHandDto participantHandDto : participantHandDtos) {
+            stringBuilder.append(buildInitialHand(participantHandDto));
         }
 
         System.out.println(stringBuilder);
     }
 
-    private String buildInitialHand(PlayerDto playerDto) {
-        if (playerDto.name().equals("딜러")) {
-            return playerDto.name() + ": " + playerDto.hands().get(0) + "\n";
+    private String buildInitialHand(ParticipantHandDto participantHandDto) {
+        if (participantHandDto.name().equals("딜러")) {
+            return participantHandDto.name() + ": " + participantHandDto.hands().get(0) + "\n";
         }
 
-        return buildPlayerCards(playerDto) + "\n";
+        return buildPlayerCards(participantHandDto) + "\n";
     }
 
-    public void printHandAfterHit(PlayerDto playerDto) {
-        System.out.println(buildPlayerCards(playerDto));
+    public void printHandAfterHit(ParticipantHandDto participantHandDto) {
+        System.out.println(buildPlayerCards(participantHandDto));
     }
 
     public void printDealerHitMessage() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printFinalHandAndScore(List<PlayerDto> playerDtos) {
+    public void printFinalHandAndScore(ParticipantsHandDto participantsHandDto) {
         System.out.println();
-        for (PlayerDto playerDto : playerDtos) {
-            System.out.println(buildPlayerCardsWithResult(playerDto));
+        List<ParticipantHandDto> participantHandDtos = participantsHandDto.playerHands();
+
+        for (ParticipantHandDto participantHandDto : participantHandDtos) {
+            System.out.println(buildPlayerCardsWithResult(participantHandDto));
         }
     }
 
-    private String buildPlayerCardsWithResult(PlayerDto playerDto) {
-        return buildPlayerCards(playerDto) + " - 결과: " + playerDto.score();
+    private String buildPlayerCardsWithResult(ParticipantHandDto participantHandDto) {
+        return buildPlayerCards(participantHandDto) + " - 결과: " + participantHandDto.score();
     }
 
-    private String buildPlayerCards(PlayerDto playerDto) {
-        String hands = String.join(", ", playerDto.hands());
-        return playerDto.name() + ": " + hands;
+    private String buildPlayerCards(ParticipantHandDto participantHandDto) {
+        String hands = String.join(", ", participantHandDto.hands());
+        return participantHandDto.name() + ": " + hands;
     }
 
-    public void printWinLoss(DealerResultDto dealerResultDto, PlayersResultDto playersResultDto) {
+    public void printWinLoss(DealerWinLossDto dealerWinLossDto, PlayersWinLossDto playersWinLossDto) {
         System.out.println("\n## 최종 승패");
-        printDealerWinLoss(dealerResultDto);
-        printPlayerWinLoss(playersResultDto);
+        printDealerWinLoss(dealerWinLossDto);
+        printPlayerWinLoss(playersWinLossDto);
     }
 
-    private void printDealerWinLoss(DealerResultDto dealerResultDto) {
+    private void printDealerWinLoss(DealerWinLossDto dealerWinLossDto) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("딜러: ");
-        stringBuilder.append(dealerResultDto.winCount() + "승 ");
-        stringBuilder.append(dealerResultDto.lossCount() + "패 ");
-        if (dealerResultDto.pushCount() != 0) {
-            stringBuilder.append(dealerResultDto.winCount() + "무");
+        stringBuilder.append(dealerWinLossDto.winCount() + "승 ");
+        stringBuilder.append(dealerWinLossDto.lossCount() + "패 ");
+        if (dealerWinLossDto.pushCount() != 0) {
+            stringBuilder.append(dealerWinLossDto.winCount() + "무");
         }
         System.out.println(stringBuilder);
     }
 
-    private void printPlayerWinLoss(PlayersResultDto playersResultDto) {
+    private void printPlayerWinLoss(PlayersWinLossDto playersWinLossDto) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Map.Entry<String, String> playerResult : playersResultDto.playerResults().entrySet()) {
+        for (Map.Entry<String, String> playerResult : playersWinLossDto.playerResults().entrySet()) {
             stringBuilder.append(playerResult.getKey() + ": " + playerResult.getValue() + "\n");
         }
         System.out.println(stringBuilder);
