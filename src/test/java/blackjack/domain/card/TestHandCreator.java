@@ -1,6 +1,5 @@
-package blackjack.domain.player;
+package blackjack.domain.card;
 
-import blackjack.domain.card.TestCardCreator;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 

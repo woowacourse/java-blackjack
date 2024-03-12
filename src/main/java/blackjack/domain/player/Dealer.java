@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Hand;
 
 public class Dealer extends Participant {
 
