@@ -1,6 +1,8 @@
 package blackjack.game;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,5 +18,23 @@ class MatchResultsTest {
         assertThatThrownBy(() -> matchResults.getResultByName("pobi"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 존재하지 않는 이름입니다.");
+    }
+
+    @Test
+    @DisplayName("각 승패 상태에 따른 이득을 계산한다.")
+    void calculateProfitTest() {
+        // given
+        int amount = 10_000;
+        int tieProfit = MatchResult.TIE.calculateProfit(amount);
+        int loseProfit = MatchResult.LOSE.calculateProfit(amount);
+        int normalWinProfit = MatchResult.NORMAL_WIN.calculateProfit(amount);
+        int blackjackWinProfit = MatchResult.BLACKJACK_WIN.calculateProfit(amount);
+        // when, then
+        assertAll(
+                () -> assertThat(tieProfit).isEqualTo(0),
+                () -> assertThat(loseProfit).isEqualTo(-10_000),
+                () -> assertThat(normalWinProfit).isEqualTo(10_000),
+                () -> assertThat(blackjackWinProfit).isEqualTo(15_000)
+        );
     }
 }

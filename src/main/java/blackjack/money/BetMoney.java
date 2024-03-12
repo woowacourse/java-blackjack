@@ -31,4 +31,8 @@ public class BetMoney {
     private boolean isNotDivisibleByUnit(int amount) {
         return amount % BET_MONEY_UNIT != 0;
     }
+
+    public int getAmount() {
+        return amount;
+    }
 }
