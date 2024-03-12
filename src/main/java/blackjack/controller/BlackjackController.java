@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.RandomShuffleStrategy;
 import blackjack.domain.game.Referee;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
@@ -15,7 +16,7 @@ import java.util.function.Supplier;
 public class BlackjackController {
 
     public void run() {
-        Deck deck = new Deck();
+        Deck deck = createDeckWithRandomShuffle();
         Dealer dealer = new Dealer(deck);
         Players players = requestPlayers(deck);
         Referee referee = new Referee();
@@ -24,6 +25,10 @@ public class BlackjackController {
         processHitOrStand(dealer, players);
         referee.calculatePlayersResults(dealer, players);
         printResult(dealer, referee);
+    }
+
+    private Deck createDeckWithRandomShuffle() {
+        return new Deck(new RandomShuffleStrategy());
     }
 
     private Players requestPlayers(Deck deck) {

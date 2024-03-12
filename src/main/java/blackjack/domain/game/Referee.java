@@ -23,7 +23,7 @@ public class Referee {
         if (player.isBust()) {
             return GameResult.LOSE;
         }
-        if (isWinCondition(player, dealer)) {
+        if (isWinCondition(dealer, player)) {
             return GameResult.WIN;
         }
         if (dealer.getScore() == player.getScore()) {
@@ -32,7 +32,7 @@ public class Referee {
         return GameResult.LOSE;
     }
 
-    private boolean isWinCondition(Player player, Dealer dealer) {
+    private boolean isWinCondition(Dealer dealer, Player player) {
         return player.getScore() > dealer.getScore() ||
                 player.isBlackjack() ||
                 dealer.isBust();

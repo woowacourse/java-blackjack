@@ -1,16 +1,14 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
 public class Deck {
     private final List<Card> cards;
 
-    public Deck() {
-        cards = new ArrayList<>(Card.getAll());
-        Collections.shuffle(cards);
+    public Deck(ShuffleStrategy shuffleStrategy) {
+        cards = new ArrayList<>(shuffleStrategy.shuffle(Card.getAll()));
     }
 
     private Card draw() {

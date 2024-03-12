@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 @DisplayName("카드 점수 이름")
 class CardScoreNameTest {
     @Test
-    @DisplayName("카드 점수 이름이 모두 변환 된다.")
+    @DisplayName("이 모두 변환 된다.")
     void convertAllTest() {
         // given & when & then
         assertThatCode(() ->

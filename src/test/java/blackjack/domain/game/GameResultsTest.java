@@ -3,7 +3,6 @@ package blackjack.domain.game;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,37 +10,36 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("게임 결과들")
 public class GameResultsTest {
     @Test
-    @DisplayName("게임 결과들에서 플레이어의 승패 결과를 Map으로 반환한다.")
-    void createPlayersGameResultsTest() {
+    @DisplayName("에서 플레이어의 승패 결과를 반환한다.")
+    void getPlayersResults() {
         // given
         GameResults gameResults = new GameResults();
-        Map<String, GameResult> expectedGameResults = new HashMap<>();
-        expectedGameResults.put("lemone", GameResult.WIN);
 
         // when
         gameResults.put("lemone", GameResult.WIN);
 
         // then
-        assertThat(gameResults.getPlayersResults()).isEqualTo(expectedGameResults);
+        assertThat(gameResults.getPlayersResults())
+                .isEqualTo(Map.of("lemone", GameResult.WIN));
     }
 
     @Test
-    @DisplayName("게임 결과들에서 딜러 승패 결과를 Map으로 반환한다.")
-    void createDealerResulTest() {
+    @DisplayName("에서 딜러의 승패 결과를 반환한다.")
+    void getDealerResult() {
         // given
         GameResults gameResults = new GameResults();
-        Map<GameResult, Integer> expectedResult = new HashMap<>();
-        expectedResult.put(GameResult.WIN, 1);
-        expectedResult.put(GameResult.LOSE, 2);
-        expectedResult.put(GameResult.DRAW, 1);
+        Map<GameResult, Integer> expectedDealerResult =
+                Map.of(GameResult.WIN, 2, GameResult.LOSE, 3, GameResult.DRAW, 1);
 
         // when
         gameResults.put("lemone", GameResult.WIN);
         gameResults.put("seyang", GameResult.LOSE);
         gameResults.put("pobi", GameResult.DRAW);
+        gameResults.put("solla", GameResult.LOSE);
         gameResults.put("club", GameResult.WIN);
+        gameResults.put("choco", GameResult.WIN);
 
         // then
-        assertThat(gameResults.getDealerResult()).isEqualTo(expectedResult);
+        assertThat(gameResults.getDealerResult()).isEqualTo(expectedDealerResult);
     }
 }

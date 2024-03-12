@@ -7,74 +7,53 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static blackjack.domain.card.CardScore.NINE;
-import static blackjack.domain.card.CardScore.QUEEN;
-import static blackjack.domain.card.CardScore.SEVEN;
-import static blackjack.domain.card.CardScore.TWO;
-import static blackjack.domain.card.CardSymbol.CLUB;
-import static blackjack.domain.card.CardSymbol.SPADE;
+import static blackjack.domain.card.CardScore.*;
+import static blackjack.domain.card.CardSuit.CLUB;
+import static blackjack.domain.card.CardSuit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("딜러")
 class DealerTest {
     @Test
-    @DisplayName("딜러의 첫 카드를 반환한다.")
-    void getFirstCardTest() {
+    @DisplayName("는 딜 이후 첫 카드만 반환할 수 있다.")
+    void getFirstCard() {
         // given
-        Dealer dealer = new Dealer();
-        List<Card> cards = List.of(new Card(SPADE, NINE), new Card(CLUB, QUEEN));
-        Card expectedCard = new Card(SPADE, NINE);
-        Deck deck = new Deck() {
-            @Override
-            public List<Card> draw(int count) {
-                return cards;
-            }
-        };
+        Dealer dealer = new Dealer(new Deck(cards ->
+                List.of(new Card(SPADE, NINE), new Card(CLUB, QUEEN))));
+        Card expectedCard = new Card(CLUB, QUEEN);
 
         // when
-        dealer.deal(deck);
+        dealer.deal();
 
         // then
         assertThat(dealer.getFirstCard()).isEqualTo(expectedCard);
     }
 
     @Test
-    @DisplayName("딜러의 카드의 합이 16 이하이면 true를 반환하는 메소드를 테스트한다.")
-    void dealerHitUpperBoundTest() {
+    @DisplayName("의 카드 합이 16 이하이면 계속 진행할 수 있다.")
+    void canContinue() {
         // given
-        Dealer dealer = new Dealer();
-        List<Card> cards = List.of(new Card(SPADE, NINE), new Card(CLUB, SEVEN));
-        Deck deck = new Deck() {
-            @Override
-            public List<Card> draw(int count) {
-                return cards;
-            }
-        };
+        Dealer dealer = new Dealer(new Deck(cards ->
+                List.of(new Card(SPADE, NINE), new Card(CLUB, SEVEN))));
 
         // when
-        dealer.deal(deck);
+        dealer.deal();
 
         // then
         assertThat(dealer.canContinue()).isEqualTo(true);
     }
 
     @Test
-    @DisplayName("딜러의 카드의 합이 16 이하이면 카드를 한장 더 뽑늗다.")
-    void dealerHitTest() {
+    @DisplayName("의 카드 합이 16 이하이면 카드를 한장 더 뽑는다.")
+    void hit() {
         // given
-        Dealer dealer = new Dealer();
-        List<Card> cards = List.of(new Card(SPADE, NINE), new Card(CLUB, SEVEN), new Card(CLUB, TWO));
-        Deck deck = new Deck() {
-            @Override
-            public List<Card> draw(int count) {
-                return cards;
-            }
-        };
+        Dealer dealer = new Dealer(new Deck(cards ->
+                List.of(new Card(SPADE, NINE), new Card(CLUB, SEVEN), new Card(CLUB, TWO))));
 
         // when
-        dealer.deal(deck);
+        dealer.deal();
         if (dealer.canContinue()) {
-            dealer.hit(deck);
+            dealer.hit();
         }
 
         // then

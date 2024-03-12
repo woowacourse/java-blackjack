@@ -10,8 +10,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GameResultTest {
 
     @Test
-    @DisplayName("게임 결과가 반대로도 출력되는지 확인한다.")
-    void reverseTest() {
+    @DisplayName("는 반대로도 출력된다.")
+    void reverse() {
         // given &  when & then
         assertThat(WIN.reverse()).isEqualTo(LOSE);
         assertThat(LOSE.reverse()).isEqualTo(WIN);

@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("카드")
 class CardTest {
     @Test
-    @DisplayName("총 52장 이다.")
+    @DisplayName("는 총 52장 이다.")
     void cardNumTest() {
         // given
         List<Card> cards = Card.getAll();
