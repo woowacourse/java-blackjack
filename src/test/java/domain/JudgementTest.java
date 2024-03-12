@@ -166,14 +166,14 @@ class JudgementTest {
         @BeforeEach
         void setDeckAndDealerBust() {
             Card card1 = new Card(Symbol.CLOVER, Rank.KING);
-            Card card2 = new Card(Symbol.CLOVER, Rank.BIG_ACE);
-            Card card3 = new Card(Symbol.DIAMOND, Rank.THREE);
+            Card card2 = new Card(Symbol.CLOVER, Rank.TWO);
+            Card card3 = new Card(Symbol.DIAMOND, Rank.TWO);
             Card card4 = new Card(Symbol.SPADE, Rank.KING);
             Card card5 = new Card(Symbol.CLOVER, Rank.SEVEN);
             Card card6 = new Card(Symbol.SPADE, Rank.BIG_ACE);
             Card card7 = new Card(Symbol.HEART, Rank.TEN);
             Card card8 = new Card(Symbol.CLOVER, Rank.TEN);
-            Card card9 = new Card(Symbol.DIAMOND, Rank.TEN);
+            Card card9 = new Card(Symbol.DIAMOND, Rank.NINE);
 
             List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8, card9);
             settedDecksGenerator = new SettedDeckGenerator(cards);
@@ -222,7 +222,7 @@ class JudgementTest {
 
         @DisplayName("플레이어(네오)와 딜러 모두 일반 점수인 경우, 점수가 같다면 무승부이다.")
         @Test
-        void playerIsSameNormalScore() {
+        void playerIsSameNormalScoreAndSame() {
             // when
             blackJackGame.takeTurn(neo);
             Judgement judgement = Judgement.of(dealer, players);
@@ -234,6 +234,24 @@ class JudgementTest {
                     () -> assertThat(judgement.getDealerResult().getTieCount()).isEqualTo(1),
                     () -> assertThat(judgement.getPlayerResults().getResults().get(pobi)).isEqualTo(Result.WIN),
                     () -> assertThat(judgement.getPlayerResults().getResults().get(neo)).isEqualTo(Result.TIE)
+            );
+        }
+
+        @DisplayName("플레이어(네오)와 딜러 모두 일반 점수인 경우, 플레이어의 점수가 더 높으면 플레이어가 이긴다.")
+        @Test
+        void playerIsSameNormalScoreAndSmaller() {
+            // when
+            blackJackGame.takeTurn(neo);
+            blackJackGame.takeTurn(neo);
+            Judgement judgement = Judgement.of(dealer, players);
+
+            // then
+            assertAll(
+                    () -> assertThat(judgement.getDealerResult().getWinCount()).isEqualTo(0),
+                    () -> assertThat(judgement.getDealerResult().getLoseCount()).isEqualTo(2),
+                    () -> assertThat(judgement.getDealerResult().getTieCount()).isEqualTo(0),
+                    () -> assertThat(judgement.getPlayerResults().getResults().get(pobi)).isEqualTo(Result.WIN),
+                    () -> assertThat(judgement.getPlayerResults().getResults().get(neo)).isEqualTo(Result.WIN)
             );
         }
     }
