@@ -13,42 +13,42 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-class PlayerTest {
+class ParticipantTest {
     @Test
     @DisplayName("플레이어는 자신이 갖는 카드 합계를 계산할 수 있다")
     void sum() {
-        final Player player = new Participant(new Name("지쳐버린종이"));;
+        final Participant participant = new Player(new Name("지쳐버린종"));;
 
-        player.hit(new Card(Rank.FIVE, Suit.CLUBS));
-        player.hit(new Card(Rank.FIVE, Suit.CLUBS));
-        player.hit(new Card(Rank.ACE, Suit.CLUBS));
+        participant.hit(new Card(Rank.FIVE, Suit.CLUBS));
+        participant.hit(new Card(Rank.FIVE, Suit.CLUBS));
+        participant.hit(new Card(Rank.ACE, Suit.CLUBS));
 
-        Assertions.assertThat(player.calculateScore()).isEqualTo(21);
+        Assertions.assertThat(participant.calculateScore()).isEqualTo(21);
     }
 
     @Test
     @DisplayName("플레이어는 자신이 갖는 카드 합계를 계산할 수 있다")
     void sum2() {
-        final Player player = new Participant(new Name("지쳐버린종이"));;
+        final Participant participant = new Player(new Name("지쳐버린종"));;
 
-        player.hit(new Card(Rank.KING, Suit.CLUBS));
-        player.hit(new Card(Rank.KING, Suit.CLUBS));
-        player.hit(new Card(Rank.ACE, Suit.CLUBS));
+        participant.hit(new Card(Rank.KING, Suit.CLUBS));
+        participant.hit(new Card(Rank.KING, Suit.CLUBS));
+        participant.hit(new Card(Rank.ACE, Suit.CLUBS));
 
-        Assertions.assertThat(player.calculateScore()).isEqualTo(21);
+        Assertions.assertThat(participant.calculateScore()).isEqualTo(21);
     }
 
     @ParameterizedTest
     @MethodSource("argumentProvider")
     @DisplayName("플레이어의 버스트 여부를 반환한다.")
     void alive(final List<Card> cards, final boolean expected) {
-        final Player player = new Participant(new Name("지쳐버린종이"));
+        final Participant participant = new Player(new Name("지쳐버린종"));
 
-        player.hit(cards.get(0));
-        player.hit(cards.get(1));
-        player.hit(cards.get(2));
+        participant.hit(cards.get(0));
+        participant.hit(cards.get(1));
+        participant.hit(cards.get(2));
 
-        Assertions.assertThat(player.isNotBust()).isEqualTo(expected);
+        Assertions.assertThat(participant.isNotBust()).isEqualTo(expected);
     }
 
 

@@ -1,32 +1,61 @@
 package domain.player;
 
-import domain.blackjack.OneOnOneResult;
+import domain.card.Card;
+import domain.card.Cards;
+import domain.card.Rank;
+import java.util.List;
 
-public class Participant extends Player {
-    private static final int HIT_UPPER_BOUND = 21;
+public abstract class Participant {
+    private static final int ACE_HIGH = 11;
+    static final int PERFECT_SCORE = 21;
 
-    public Participant(final Name name) {
-        super(name);
+    private final Cards hands;
+
+    public Participant() {
+        this.hands = Cards.makeEmptyDeck();
     }
 
-    @Override
-    public boolean canHit() {
-        return calculateScore() < HIT_UPPER_BOUND;
+    public boolean isBust() {
+        return calculateScore() > PERFECT_SCORE;
     }
 
-    @Override
-    public boolean canNotHit() {
-        return !canHit();
+    public boolean isNotBust() {
+        return !isBust();
     }
 
-    @Override
-    public OneOnOneResult determineWinnerByComparing(final Player dealer) {
-        if (isBust()) {
-            return OneOnOneResult.ONE_LOSE;
+    public abstract boolean canHit();
+
+    public abstract boolean canNotHit();
+    public abstract String getName();
+
+    public void hit(final Card card) {
+        hands.add(card);
+    }
+
+    public int calculateScore() {
+        int score = 0;
+        for (final Card card : hands.getValue()) {
+            score += determineScore(card, score);
         }
-        if (dealer.isBust()) {
-            return OneOnOneResult.ONE_WIN;
-        }
-        return OneOnOneResult.fromCondition(calculateScore() > dealer.calculateScore());
+        return score;
     }
+
+    private int determineScore(final Card card, final int score) {
+        if (card.getRank() == Rank.ACE) {
+            return determineAceScore(score);
+        }
+        return card.getRankValue();
+    }
+
+    private int determineAceScore(final int score) {
+        if (score + ACE_HIGH <= PERFECT_SCORE) {
+            return ACE_HIGH;
+        }
+        return Rank.ACE.getValue();
+    }
+
+    public List<Card> getHands() {
+        return hands.getValue();
+    }
+
 }

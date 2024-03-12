@@ -1,43 +1,34 @@
-//import domain.blackjack.Blackjack;
-//import domain.player.Player;
-//import domain.player.Players;
-//import view.InputView;
-//import view.OutputView;
-//
-//public class Application {
-//    public static void main(final String[] args) {
-//        final Blackjack blackjack = createBlackjack();
-//        OutputView.printPlayersStatus(blackjack.getPlayers());
-//
-//        playGame(blackjack);
-//        OutputView.printResults(blackjack.getPlayers());
-//
-//        OutputView.printBlackjackResults(blackjack.finishGame());
-//    }
-//
-//    private static void playGame(final Blackjack blackjack) {
-//        for (final Player player : blackjack.getParticipants()) {
-//            drawCardDuringPlayerTurn(player, blackjack);
-//        }
-//
-//        final Player dealer = blackjack.getDealer();
-//
-//        if (dealer.isNotBust()) {
-//            blackjack.dealCard(dealer);
-//            OutputView.printDealerHitMessage();
-//        }
-//    }
-//
-//    private static Blackjack createBlackjack() {
-//        final String[] names = InputView.inputPlayers();
-//        final Players players = Players.from(names);
-//        return new Blackjack(players);
-//    }
-//
-//    private static void drawCardDuringPlayerTurn(final Player player, final Blackjack blackjack) {
-//        while (player.canHit() && InputView.tryHit(player.getName())) {
-//            blackjack.dealCard(player);
-//            OutputView.printPlayerStatus(player);
-//        }
-//    }
-//}
+import domain.Blackjack;
+import java.util.List;
+import view.InputView;
+import view.OutputView;
+
+public class Application {
+    public static void main(final String[] args) {
+        final List<String> names = InputView.inputPlayers();
+        final Blackjack blackjack = Blackjack.fromPlayerNamesWithInitialization(names);
+        OutputView.printInitialStatus(blackjack.getDealer(), blackjack.getPlayers());
+
+        playGame(blackjack, names);
+
+        OutputView.printResults(blackjack.getDealer(), blackjack.getPlayers());
+        OutputView.printWinOrLose(blackjack.finishGame());
+    }
+
+    private static void playGame(final Blackjack blackjack, final List<String> names) {
+        names.forEach(name -> tryHit(blackjack, name));
+
+        while (blackjack.canDealerHit()) {
+            blackjack.dealerHit();
+            OutputView.printDealerHitMessage();
+        }
+    }
+
+    private static void tryHit(final Blackjack blackjack, final String name) {
+        while (blackjack.canPlayerHit(name) && InputView.tryHit(name)) {
+            blackjack.playerHit(name);
+            OutputView.printStatus(blackjack.getPlayer(name));
+        }
+    }
+
+}
