@@ -19,14 +19,14 @@ public class Dealer extends Participant {
 
     private int convertToDealerBetResult(Result playerResult, int betAmount) {
         if (playerResult == Result.WIN_BY_BLACKJACK) {
-            return Result.LOSE_BY_BLACKJACK.calculate(betAmount);
+            return Result.LOSE_BY_BLACKJACK.getProfit(betAmount);
         }
         if (playerResult == Result.WIN) {
-            return Result.LOSE.calculate(betAmount);
+            return Result.LOSE.getProfit(betAmount);
         }
         if (playerResult == Result.LOSE) {
-            return Result.WIN.calculate(betAmount);
+            return Result.WIN.getProfit(betAmount);
         }
-        return Result.PUSH.calculate(betAmount);
+        return Result.PUSH.getProfit(betAmount);
     }
 }

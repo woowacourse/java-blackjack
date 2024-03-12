@@ -59,13 +59,13 @@ public class Player extends Participant {
 
     public int getBetResult(Cards otherCards, int betAmount) {
         if (cards.isBust()) {
-            return Result.LOSE.calculate(betAmount);
+            return Result.LOSE.getProfit(betAmount);
         }
         if (cards.isBlackJack() && !otherCards.isBlackJack()) {
-            return Result.WIN_BY_BLACKJACK.calculate(betAmount);
+            return Result.WIN_BY_BLACKJACK.getProfit(betAmount);
         }
         if (otherCards.isBust()) {
-            return Result.WIN.calculate(betAmount);
+            return Result.WIN.getProfit(betAmount);
         }
         return compareScore(otherCards, betAmount);
     }
@@ -75,12 +75,12 @@ public class Player extends Participant {
         int otherScore = otherCards.getScore();
 
         if (calculatedScore > otherScore) {
-            return Result.WIN.calculate(betAmount);
+            return Result.WIN.getProfit(betAmount);
         }
         if (calculatedScore < otherScore) {
-            return Result.LOSE.calculate(betAmount);
+            return Result.LOSE.getProfit(betAmount);
         }
-        return Result.PUSH.calculate(betAmount);
+        return Result.PUSH.getProfit(betAmount);
     }
 
     public int getBetAmount() {
