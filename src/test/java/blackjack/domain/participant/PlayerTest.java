@@ -18,10 +18,9 @@ class PlayerTest {
         testPlayer.addCard(Card.create(0));
         testPlayer.addCard(Card.create(1));
 
-        testPlayer.draw(() -> Boolean.TRUE, deck);
+        testPlayer.attemptDraw(() -> Boolean.TRUE, deck);
 
         assertThat(testPlayer.getHandsCards()).hasSize(3);
-//        assertTrue(testPlayer.draw(() -> Boolean.TRUE, deck));
     }
 
     @DisplayName("플레이어가 카드 추가를 거부하면, 카드는 추가되지 않는다")
@@ -32,6 +31,8 @@ class PlayerTest {
         testPlayer.addCard(Card.create(0));
         testPlayer.addCard(Card.create(1));
 
-        assertFalse(testPlayer.draw(() -> Boolean.FALSE, deck));
+        testPlayer.attemptDraw(() -> Boolean.FALSE,deck);
+
+        assertThat(testPlayer.getHandsCards()).hasSize(2);
     }
 }

@@ -9,10 +9,15 @@ public class Player extends Participant {
         super(name);
     }
 
-    public boolean draw(BooleanSupplier supplier, Deck deck) {
+    public boolean attemptDraw(BooleanSupplier supplier, Deck deck) {
         if (supplier.getAsBoolean()) {
-            return addCard(deck.draw());
+            addCard(deck.draw());
+            return true;
         }
         return false;
+    }
+
+    public boolean canDraw() {
+        return !isBurst();
     }
 }

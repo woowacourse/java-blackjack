@@ -13,9 +13,8 @@ public abstract class Participant {
         this.hands = new Hands();
     }
 
-    public boolean addCard(Card card) {
+    public void addCard(Card card) {
         hands.addCard(card);
-        return !isBurst();
     }
 
     public List<Card> getHandsCards() {
@@ -28,7 +27,7 @@ public abstract class Participant {
 
     public int getHandsScore() {
         return hands.getHandsScore()
-                    .getScore();
+                .getScore();
     }
 
     public boolean isBurst() {

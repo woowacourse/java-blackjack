@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Deck;
+import blackjack.view.OutputView;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +33,9 @@ class DealerTest {
         dealer.addCard(Card.create(9));
         dealer.addCard(Card.create(6));
 
-        assertFalse(dealer.draw(deck));
+        dealer.draw(OutputView::printDealerDrawMessage, deck);
+
+        assertThat(dealer.hands.getHands()).hasSize(2);
     }
 
     @DisplayName("딜러는 첫번째 패를 보여준다")

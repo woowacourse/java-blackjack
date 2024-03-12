@@ -45,10 +45,7 @@ public class GameController {
     }
 
     private static void confirmDealerHands(Dealer dealer, Deck deck) {
-        System.out.println();
-        while (dealer.draw(deck)) {
-            OutputView.printDealerDrawMessage(dealer);
-        }
+        dealer.draw(OutputView::printDealerDrawMessage, deck);
         System.out.println();
     }
 
@@ -60,9 +57,9 @@ public class GameController {
 
     private static void askDrawToPlayer(Player player, Deck deck) {
         boolean isDraw = true;
-        while (isDraw) {
+        while (player.canDraw() && isDraw) {
             OutputView.printAskDrawMessage(player.getName());
-            isDraw = player.draw(InputView::askDraw, deck);
+            isDraw = player.attemptDraw(InputView::askDraw, deck);
             OutputView.printParticipantHands(player);
         }
     }

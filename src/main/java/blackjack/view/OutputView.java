@@ -1,12 +1,12 @@
 package blackjack.view;
 
+import blackjack.domain.GameResult;
+import blackjack.domain.Result;
 import blackjack.domain.deck.Card;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.GameResult;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.Result;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -53,12 +53,13 @@ public class OutputView {
         System.out.println(playerName + ASK_DRAW_MESSAGE);
     }
 
-    public static void printDealerDrawMessage(Dealer dealer) {
-        System.out.println(dealer.getName() + "는 "
+    public static void printDealerDrawMessage(String name) {
+        System.out.println(System.lineSeparator() + name + "는 "
                 + DEALER_DRAW_THRESHOLD + "이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printFinalHandsAndScoreMessage(Dealer dealer, Players players) {
+        System.out.println();
         System.out.println(resolveFinalHandsAndScoreMessage(dealer));
         for (Player player : players.getPlayers()) {
             System.out.println(resolveFinalHandsAndScoreMessage(player));
