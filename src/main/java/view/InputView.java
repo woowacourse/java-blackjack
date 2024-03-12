@@ -21,6 +21,17 @@ public class InputView {
     private static void validatePlayers(final String input) {
         validateEmptiness(input);
         validateEdgeDelimiter(input);
+        validateDealerName(input);
+    }
+
+    private static void validateDealerName(final String input) {
+        if (hasDealer(input)) {
+            throw new IllegalArgumentException("딜러라는 이름을 사용할 수 없습니다");
+        }
+    }
+
+    private static boolean hasDealer(final String input) {
+        return Arrays.stream(input.split(",")).map(String::trim).anyMatch(name -> name.equals("딜러"));
     }
 
     private static void validateEdgeDelimiter(final String input) {

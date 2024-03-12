@@ -39,13 +39,17 @@ public class Dealer extends Participant {
             return PlayerResult.LOSE;
         }
 
+        return compareScore(player);
+    }
+
+    private PlayerResult compareScore(final Player player) {
         if (player.calculateScore() == calculateScore()) {
             return PlayerResult.TIE;
-        } else if (player.calculateScore() > calculateScore()) {
-            return PlayerResult.LOSE;
-        } else {
-            return PlayerResult.WIN;
         }
+        if (player.calculateScore() > calculateScore()) {
+            return PlayerResult.LOSE;
+        }
+        return PlayerResult.WIN;
     }
 
     public Map<PlayerResult, Integer> wrapUp(final Players players) {
