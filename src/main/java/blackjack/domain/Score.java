@@ -43,6 +43,10 @@ public class Score {
         return value <= BLACKJACK_SCORE;
     }
 
+    public boolean isBlackJackScore() {
+        return value == BLACKJACK_SCORE;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

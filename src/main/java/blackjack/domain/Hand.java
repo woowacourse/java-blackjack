@@ -13,7 +13,7 @@ public class Hand {
         this.cards = cards;
     }
 
-    public static Hand from(Card... cards) {
+    public static Hand of(Card... cards) {
         return new Hand(new ArrayList<>(Arrays.asList(cards)));
     }
 
@@ -32,7 +32,17 @@ public class Hand {
                 .reduce(Score.from(0), Score::add);
     }
 
+    public Hand add(Card card) {
+        ArrayList<Card> newCards = new ArrayList<>(cards);
+        newCards.add(card);
+        return new Hand(newCards);
+    }
+
     private boolean hasAce() {
         return cards.stream().anyMatch(Card::isAce);
+    }
+
+    public List<Card> getCards() {
+        return new ArrayList<>(cards);
     }
 }

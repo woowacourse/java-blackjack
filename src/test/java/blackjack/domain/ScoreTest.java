@@ -27,4 +27,14 @@ public class ScoreTest {
         assertThat(notBurstScore.isNotBurst()).isTrue();
         assertThat(burstScore.isNotBurst()).isFalse();
     }
+
+    @DisplayName("점수가 21점인지 반환한다")
+    @Test
+    public void isBlackJackScore() {
+        Score blackJackScore = Score.from(21);
+        Score nonBlackJackScore = Score.from(22);
+
+        assertThat(blackJackScore.isBlackJackScore()).isTrue();
+        assertThat(nonBlackJackScore.isBlackJackScore()).isFalse();
+    }
 }

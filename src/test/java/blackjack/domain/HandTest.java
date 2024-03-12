@@ -2,41 +2,40 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class HandTest {
 
-    @DisplayName("핸드에 들어있는 카드의 점수를 계산한다")
+    @DisplayName("핸드에 에이스가 두 장 이상이면 한 장만 11점으로 계산한다")
     @Test
-    public void calculate() {
-        Hand hand = Hand.from(new Card(Suit.CLOVER, Denomination.TWO), new Card(Suit.DIAMOND, Denomination.JACK));
+    public void calculateTotalScore() {
+        Hand hand = Hand.of(new Card(Suit.CLOVER, Denomination.ACE), new Card(Suit.DIAMOND, Denomination.ACE));
 
         assertThat(hand.calculate()).isEqualTo(Score.from(12));
-    }
-
-    @DisplayName("핸드에 들어있는 에이스의 점수를 11로 더하여 계산한다")
-    @Test
-    public void calculateAceToEleven() {
-        Hand hand = Hand.from(new Card(Suit.CLOVER, Denomination.ACE), new Card(Suit.DIAMOND, Denomination.JACK));
-
-        assertThat(hand.calculate()).isEqualTo(Score.from(21));
     }
 
     @DisplayName("다른 카드와 ACE를 11로 계산했을 때 21이 넘는다면 ACE를 1로 계산한다")
     @Test
     public void calculateAceToOne() {
-        Hand hand = Hand.from(new Card(Suit.CLOVER, Denomination.ACE), new Card(Suit.DIAMOND, Denomination.JACK),
+        Hand hand = Hand.of(new Card(Suit.CLOVER, Denomination.ACE), new Card(Suit.DIAMOND, Denomination.JACK),
                 new Card(Suit.SPADE, Denomination.KING));
 
         assertThat(hand.calculate()).isEqualTo(Score.from(21));
     }
 
-    @DisplayName("핸드에 에이스가 두 장 이상이면 한 장만 11점으로 계산한다")
+    @DisplayName("핸드에 카드를 추가하면 해당 카드가 추가된 새로운 핸드가 반환된다")
     @Test
-    public void calculateTotalScore() {
-        Hand hand = Hand.from(new Card(Suit.CLOVER, Denomination.ACE), new Card(Suit.DIAMOND, Denomination.ACE));
+    public void add() {
+        Hand hand = Hand.of(new Card(Suit.SPADE, Denomination.KING), new Card(Suit.DIAMOND, Denomination.ACE));
 
-        assertThat(hand.calculate()).isEqualTo(Score.from(12));
+        Hand newHand = hand.add(new Card(Suit.CLOVER, Denomination.ACE));
+        List<Card> cards = newHand.getCards();
+        Card addedCard = cards.get(cards.size() - 1);
+
+        assertThat(cards.size()).isEqualTo(3);
+        assertThat(addedCard.getSuit()).isEqualTo(Suit.CLOVER);
+        assertThat(addedCard.getDenomination()).isEqualTo(Denomination.ACE);
     }
 }
