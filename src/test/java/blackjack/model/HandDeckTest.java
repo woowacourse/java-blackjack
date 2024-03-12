@@ -4,10 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import blackjack.model.card.Rank;
+import blackjack.model.card.Pattern;
 import blackjack.model.card.Card;
-import blackjack.model.card.CardNumber;
-import blackjack.model.card.CardPattern;
-import blackjack.model.card.CardProperties;
 import blackjack.model.deck.HandDeck;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +19,7 @@ class HandDeckTest {
     void addCard() {
         //given
         HandDeck handDeck = new HandDeck();
-        Card card = new Card(new CardProperties(CardPattern.CLOVER, CardNumber.EIGHT));
+        Card card = new Card(Pattern.CLOVER, Rank.EIGHT);
 
         //when
         handDeck.addCard(card);
@@ -35,8 +34,8 @@ class HandDeckTest {
     void addCard_duplicateCard() {
         //given
         HandDeck handDeck = new HandDeck();
-        Card card1 = new Card(new CardProperties(CardPattern.CLOVER, CardNumber.EIGHT));
-        Card card2 = new Card(new CardProperties(CardPattern.CLOVER, CardNumber.EIGHT));
+        Card card1 = new Card(Pattern.CLOVER, Rank.EIGHT);
+        Card card2 = new Card(Pattern.CLOVER, Rank.EIGHT);
 
         handDeck.addCard(card1);
         //when, then
@@ -49,8 +48,8 @@ class HandDeckTest {
     void calculateTotalScore() {
         //given
         HandDeck handDeck = new HandDeck();
-        Card card1 = new Card(new CardProperties(CardPattern.CLOVER, CardNumber.EIGHT));
-        Card card2 = new Card(new CardProperties(CardPattern.SPADE, CardNumber.EIGHT));
+        Card card1 = new Card(Pattern.CLOVER, Rank.EIGHT);
+        Card card2 = new Card(Pattern.SPADE, Rank.EIGHT);
 
         //when
         handDeck.addCard(card1);
@@ -65,8 +64,9 @@ class HandDeckTest {
     void countElevenAce() {
         //given
         HandDeck handDeck = new HandDeck();
-        Card card1 = new Card(new CardProperties(CardPattern.CLOVER, CardNumber.ACE));
-        Card card2 = new Card(new CardProperties(CardPattern.SPADE, CardNumber.ACE));
+        Card card1 = new Card(Pattern.CLOVER, Rank.JACK);
+        Card card2 = new Card(Pattern.SPADE, Rank.ACE);
+        Card card3 = new Card(Pattern.SPADE, Rank.KING);
 
         //when
         handDeck.addCard(card1);
@@ -81,8 +81,8 @@ class HandDeckTest {
     void switchAceValueInRow() {
         //given
         HandDeck handDeck = new HandDeck();
-        Card card1 = new Card(new CardProperties(CardPattern.CLOVER, CardNumber.ACE));
-        Card card2 = new Card(new CardProperties(CardPattern.SPADE, CardNumber.ACE));
+        Card card1 = new Card(Pattern.CLOVER, Rank.ACE);
+        Card card2 = new Card(Pattern.SPADE, Rank.ACE);
 
         //when
         handDeck.addCard(card1);

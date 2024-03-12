@@ -2,10 +2,9 @@ package blackjack.model.gamer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.model.card.Rank;
+import blackjack.model.card.Pattern;
 import blackjack.model.card.Card;
-import blackjack.model.card.CardNumber;
-import blackjack.model.card.CardPattern;
-import blackjack.model.card.CardProperties;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,8 +16,7 @@ class PlayerTest {
     void receiveCard() {
         //given
         Player player = new Player("ted");
-        CardProperties cardProperties = new CardProperties(CardPattern.CLOVER, CardNumber.FIVE);
-        Card card = new Card(cardProperties);
+        Card card = new Card(Pattern.CLOVER, Rank.FIVE);
 
         //when
         player.receiveCard(card);
@@ -33,8 +31,7 @@ class PlayerTest {
     void canHit() {
         //given
         Player player = new Player("ted");
-        CardProperties cardProperties = new CardProperties(CardPattern.CLOVER, CardNumber.FIVE);
-        Card card = new Card(cardProperties);
+        Card card = new Card(Pattern.CLOVER, Rank.FIVE);
 
         //when
         player.receiveCard(card);
@@ -48,11 +45,9 @@ class PlayerTest {
     void calculateTotalScore() {
         //given
         Player player = new Player("ted");
-        CardProperties cardProperties1 = new CardProperties(CardPattern.CLOVER, CardNumber.FIVE);
-        CardProperties cardProperties2 = new CardProperties(CardPattern.CLOVER, CardNumber.SEVEN);
 
-        Card card = new Card(cardProperties1);
-        Card card2 = new Card(cardProperties2);
+        Card card = new Card(Pattern.CLOVER, Rank.FIVE);
+        Card card2 = new Card(Pattern.CLOVER, Rank.SEVEN);
 
         player.receiveCard(card);
         player.receiveCard(card2);

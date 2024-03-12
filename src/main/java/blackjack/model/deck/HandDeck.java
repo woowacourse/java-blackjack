@@ -17,8 +17,8 @@ public class HandDeck {
     }
 
     public int calculateTotalScore() {
-        return cards.stream()
-                .mapToInt(Card::getScore)
+        int sum = cards.stream()
+                .mapToInt(Card::getCardScore)
                 .sum();
     }
 

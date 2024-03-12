@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.model.card.Card;
-import blackjack.model.card.CardProperties;
 import blackjack.model.gamer.Dealer;
 import blackjack.model.gamer.Player;
 import blackjack.model.result.GameResult;
@@ -91,7 +90,7 @@ public class OutputView {
 
         for (Player player : playersResult.keySet()) {
             String playerName = player.getPlayerName();
-            String playerResult = playersResult.get(player).getName();
+            String playerResult = ResultView.convertResultName(playersResult.get(player));
             System.out.printf("%s : %s" + NEW_LINE, playerName, playerResult);
         }
     }
@@ -112,13 +111,12 @@ public class OutputView {
     }
 
     private static String convertCardNameFormat(Card card) {
-        CardProperties cardProperties = card.getCardProperties();
-        return cardProperties.getCardNumber().getName() + cardProperties.getCardPattern().getName();
+        return RankView.convertRankName(card.getCardNumber()) + PatternView.convertPatternName(card.getCardPattern());
     }
 
     private static String dealerWinFormat(int dealerWins) {
         if (dealerWins > 0) {
-            return String.format("%d승", dealerWins);
+            return String.format("%d승 ", dealerWins);
         }
 
         return NONE;
@@ -126,7 +124,7 @@ public class OutputView {
 
     private static String dealerLoseFormat(int dealerLoses) {
         if (dealerLoses > 0) {
-            return String.format(" %d패", dealerLoses);
+            return String.format("%d패 ", dealerLoses);
         }
 
         return NONE;
@@ -134,7 +132,7 @@ public class OutputView {
 
     private static String dealerTiesFormat(int dealerTies) {
         if (dealerTies > 0) {
-            return String.format(" %d무", dealerTies);
+            return String.format("%d무", dealerTies);
         }
 
         return NONE;
