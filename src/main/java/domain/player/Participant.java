@@ -3,6 +3,7 @@ package domain.player;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Rank;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
@@ -55,7 +56,7 @@ public abstract class Participant {
     }
 
     public List<Card> getHands() {
-        return hands.getValue();
+        return Collections.unmodifiableList(hands.getValue());
     }
 
 }

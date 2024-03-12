@@ -33,4 +33,11 @@ class PlayersTest {
         assertThatCode(() -> new Players(players)).isInstanceOf(IllegalArgumentException.class);
     }
 
+    @Test
+    @DisplayName("플레이어의 이름을 찾을 때 존재하지 않는 이름이라면 예외가 발생한다")
+    void nameNotExist() {
+        final Players players = Players.from(List.of("a", "b", "c"));
+
+        assertThatCode(() -> players.findPlayerByName("d")).isInstanceOf(IllegalArgumentException.class);
+    }
 }

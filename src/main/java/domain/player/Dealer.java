@@ -2,6 +2,7 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.Cards;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,7 +56,6 @@ public class Dealer extends Participant {
         final Map<PlayerResult, Integer> result = new HashMap<>();
         players.stream()
                 .forEach(player -> result.merge(compareHandsWith(player), 1, Integer::sum));
-        return result;
+        return Collections.unmodifiableMap(result);
     }
-
 }
