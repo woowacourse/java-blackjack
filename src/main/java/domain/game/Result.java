@@ -37,6 +37,10 @@ public enum Result {
         return this == PUSH;
     }
 
+    public boolean isPlayerBlackJack() {
+        return this == PLAYER_BLACK_JACK;
+    }
+
     private static boolean isDealerWin(final Dealer dealer, final Player player) {
         return player.isBust()
                 || !dealer.isBust() && dealer.getScore().compareTo(player.getScore()) > 0;
