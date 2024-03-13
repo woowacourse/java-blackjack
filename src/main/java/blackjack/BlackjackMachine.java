@@ -99,7 +99,7 @@ public class BlackjackMachine {
 
     private void printBettingResult(Betting betting, BlackjackGame game) {
         Result result = Result.of(game.getPlayers(), game.getDealer());
-        BettingCashier cashier = new BettingCashier(betting, result);
+        BettingCashier cashier = BettingCashier.of(betting, result);
         outputView.printProfit(game, cashier);
     }
 }

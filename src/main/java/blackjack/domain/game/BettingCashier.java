@@ -2,30 +2,37 @@ package blackjack.domain.game;
 
 import blackjack.domain.participant.Player;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class BettingCashier {
 
-    private final Betting betting;
-    private final Result result;
+    private final Map<Player, BlackjackMoney> moneyMap;
 
-    public BettingCashier(Betting betting, Result result) {
-        this.betting = betting;
-        this.result = result;
+    private BettingCashier(Map<Player, BlackjackMoney> moneyMap) {
+        this.moneyMap = moneyMap;
+    }
+
+    public static BettingCashier of(Betting betting, Result result) {
+        Map<Player, BlackjackMoney> moneyMap = new HashMap<>();
+
+        for (Player player : betting.getPlayers()) {
+            BlackjackMoney money = betting.findMoneyOf(player);
+            BlackjackMoney multipleMoney = money.applyMultiple(result.getMultiple(player));
+
+            moneyMap.put(player, multipleMoney);
+        }
+        return new BettingCashier(moneyMap);
     }
 
     public BlackjackMoney findProfitOfDealer() {
-        BlackjackMoney totalProfit = new BlackjackMoney();
-        for (Player player : betting.getPlayers()) {
-            totalProfit = totalProfit.add(findProfitOf(player));
-        }
-        return totalProfit.toNegative();
+        return moneyMap.values().stream()
+                .map(BlackjackMoney::toNegative)
+                .reduce(BlackjackMoney::add)
+                .orElseThrow(IllegalStateException::new);
     }
 
     public BlackjackMoney findProfitOf(Player player) {
-        BlackjackMoney money = betting.findMoneyOf(player);
-        return applyMultiple(money, player);
-    }
-
-    private BlackjackMoney applyMultiple(BlackjackMoney money, Player player) {
-        return money.applyMultiple(result.getPlayerState(player).getMultiple());
+        return moneyMap.get(player);
     }
 }
