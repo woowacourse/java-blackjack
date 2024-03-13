@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Hand;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.Referee;
 import blackjack.domain.gamer.Dealer;
@@ -12,7 +11,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayerCommand;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
@@ -20,9 +18,10 @@ import java.util.stream.IntStream;
 public class BlackjackController {
 
     public void run() {
-        Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
-        Players players = requestUntilValid(() -> Players.from(InputView.readPlayersName()));
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
+        Dealer dealer = new Dealer(new Gamer(blackjackGame.makeInitialHand()));
+        Players players = requestUntilValid(() ->
+                Players.from(InputView.readPlayersName(), blackjackGame.makeInitialHand()));
 
         dealAndPrintResult(blackjackGame, dealer, players);
 

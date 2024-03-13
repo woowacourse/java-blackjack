@@ -16,10 +16,10 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(List<String> names) {
+    public static Players from(List<String> names, Hand hand) {
         validateDuplicate(names);
         return new Players(names.stream()
-                .map(name -> new Player(new Gamer(new Hand(List.of())), name))
+                .map(name -> new Player(new Gamer(hand), name))
                 .toList());
     }
 

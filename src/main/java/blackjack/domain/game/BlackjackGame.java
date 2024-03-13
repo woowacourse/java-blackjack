@@ -1,9 +1,12 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Hand;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+
+import java.util.List;
 
 public class BlackjackGame {
     public static final int DEAL_CARDS_COUNT = 2;
@@ -12,6 +15,10 @@ public class BlackjackGame {
 
     public BlackjackGame(Deck deck) {
         this.deck = deck;
+    }
+
+    public Hand makeInitialHand() {
+        return new Hand(List.of());
     }
 
     public void deal(Dealer dealer, Players players) {

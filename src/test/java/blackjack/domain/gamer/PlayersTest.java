@@ -1,5 +1,6 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.card.Hand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +21,7 @@ public class PlayersTest {
         List<String> expectedNames = List.of("pobi", "lemone", "seyang");
 
         // when
-        Players blackJackGame = Players.from(names);
+        Players blackJackGame = Players.from(names, new Hand(List.of()));
 
         // then
         assertThat(blackJackGame.getNames())
@@ -33,7 +34,7 @@ public class PlayersTest {
     @DisplayName("없을 경우 예외가 발생한다.")
     void validateNoPlayer(String names) {
         // given & when & then
-        assertThatCode(() -> Players.from(List.of(names)))
+        assertThatCode(() -> Players.from(List.of(names), new Hand(List.of())))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("공백이 아닌 플레이어를 입력해 주세요.");
     }
@@ -44,7 +45,7 @@ public class PlayersTest {
         // given
         List<String> names = List.of("pobi", "pobi");
         // when & then
-        assertThatCode(() -> Players.from(names))
+        assertThatCode(() -> Players.from(names, new Hand(List.of())))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("플레이어 이름은 중복될 수 없습니다.");
     }
