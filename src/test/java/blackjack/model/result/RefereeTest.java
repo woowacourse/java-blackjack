@@ -40,7 +40,7 @@ class RefereeTest {
         void init() {
             player = new Player("몰리");
             dealer = new Dealer(new Deck());
-            referee = new Referee(new Rule(dealer));
+            referee = new Referee(dealer);
         }
 
         @Test
@@ -73,7 +73,7 @@ class RefereeTest {
         void init() {
             player = new Player("몰리");
             dealer = new Dealer(new Deck());
-            referee = new Referee(new Rule(dealer));
+            referee = new Referee(dealer);
         }
 
         @Test
@@ -107,7 +107,7 @@ class RefereeTest {
         void init() {
             player = new Player("몰리");
             dealer = new Dealer(new Deck());
-            referee = new Referee(new Rule(dealer));
+            referee = new Referee(dealer);
         }
 
         @Test
@@ -140,7 +140,7 @@ class RefereeTest {
         void init() {
             player = new Player("몰리");
             dealer = new Dealer(new Deck());
-            referee = new Referee(new Rule(dealer));
+            referee = new Referee(dealer);
         }
 
         @Test

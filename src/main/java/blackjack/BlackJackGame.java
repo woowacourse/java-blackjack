@@ -9,9 +9,8 @@ import blackjack.model.deck.Deck;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
-import blackjack.model.result.Referee;
 import blackjack.model.result.ResultCommand;
-import blackjack.model.result.Rule;
+import blackjack.model.result.Referee;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class BlackJackGame {
     public void run() {
         final Dealer dealer = new Dealer(new Deck());
         final Players players = registerPlayers();
-        final Referee referee = new Referee(new Rule(dealer));
+        final Referee referee = new Referee(dealer);
         final Bets bets = registerBets(players);
 
         registerInitialCards(dealer, players);
