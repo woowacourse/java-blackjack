@@ -1,12 +1,12 @@
 package blackjack.view;
 
-import blackjack.domain.dto.CardDto;
-import blackjack.domain.dto.DealerInitialHandDto;
-import blackjack.domain.dto.DealerResultDto;
-import blackjack.domain.dto.HandDto;
-import blackjack.domain.dto.PlayerGameResultsDto;
-import blackjack.domain.dto.PlayerHandDto;
-import blackjack.domain.dto.PlayersHandDto;
+import blackjack.dto.CardDto;
+import blackjack.dto.DealerInitialHandDto;
+import blackjack.dto.DealerResultDto;
+import blackjack.dto.HandDto;
+import blackjack.dto.PlayerGameResultsDto;
+import blackjack.dto.PlayerHandDto;
+import blackjack.dto.PlayersHandDto;
 import blackjack.view.object.CardNumberOutput;
 import blackjack.view.object.CardShapeOutput;
 import blackjack.view.object.GameResultOutput;

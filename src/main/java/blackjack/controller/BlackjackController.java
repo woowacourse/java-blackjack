@@ -1,17 +1,17 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.dto.DealerInitialHandDto;
-import blackjack.domain.dto.DealerResultDto;
-import blackjack.domain.dto.HandDto;
-import blackjack.domain.dto.PlayerGameResultsDto;
-import blackjack.domain.dto.PlayerHandDto;
-import blackjack.domain.dto.PlayersHandDto;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.GameResult;
 import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import blackjack.dto.DealerInitialHandDto;
+import blackjack.dto.DealerResultDto;
+import blackjack.dto.HandDto;
+import blackjack.dto.PlayerGameResultsDto;
+import blackjack.dto.PlayerHandDto;
+import blackjack.dto.PlayersHandDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.object.Command;
@@ -104,7 +104,7 @@ public class BlackjackController {
     }
 
     private void printResult(Dealer dealer, Players players) {
-        Map<Name, GameResult> playerGameResults = players.collectPlayerGameResults(dealer.getScore());
+        Map<Name, GameResult> playerGameResults = players.collectPlayerGameResults(dealer.getHandValue());
         PlayerGameResultsDto playerGameResultsDto = PlayerGameResultsDto.fromPlayerGameResults(playerGameResults);
         List<GameResult> playerResults = new ArrayList<>(playerGameResultsDto.resultMap().values());
         DealerResultDto dealerResultDto = DealerResultDto.fromPlayerResults(playerResults);

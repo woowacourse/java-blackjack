@@ -1,4 +1,4 @@
-package blackjack.domain.dto;
+package blackjack.dto;
 
 import blackjack.domain.gamer.Hand;
 import java.util.List;
