@@ -1,7 +1,6 @@
 package view;
 
 import domain.Profit;
-import domain.WinState;
 import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
 import domain.cards.cardinfo.CardShape;
@@ -16,7 +15,6 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import view.mapper.CardNumberMapper;
 import view.mapper.CardShapeMapper;
-import view.mapper.WinStateMapper;
 
 public class ResultView {
 
@@ -87,36 +85,6 @@ public class ResultView {
             stringBuilder.append(String.format("%s - 결과: %d\n", resolvePlayerCards(gamer), gamer.finalizeCardsScore()));
         }
         System.out.println(stringBuilder);
-    }
-
-    public void printFinalResult(Dealer dealer, Judge judge) {
-        System.out.println("## 최종 승패");
-        System.out.println(resolveDealerFinalResult(dealer, judge));
-        System.out.println(resolvePlayersFinalResult(judge));
-    }
-
-    private String resolveDealerFinalResult(Dealer dealer, Judge judge) {
-        return String.format("%s: %s", dealer.getPlayerName(), resolveDealerWinState(judge.getDealerResult()));
-    }
-
-    private String resolveDealerWinState(Map<WinState, Integer> dealerResult) {
-        List<String> results = dealerResult.entrySet().stream()
-                .filter(entry -> entry.getValue() > 0)
-                .map(entry -> entry.getValue() + WinStateMapper.toExpression(entry.getKey()))
-                .toList();
-        return String.join(" ", results);
-    }
-
-    private String resolvePlayersFinalResult(Judge judge) {
-        Map<Player, WinState> playersResult = judge.getPlayersResult();
-        List<String> results = playersResult.entrySet().stream()
-                .map(playerWinState -> resolvePlayerFinalResult(playerWinState.getKey(), playerWinState.getValue()))
-                .toList();
-        return String.join(LINE_SEPARATOR, results);
-    }
-
-    private String resolvePlayerFinalResult(Player player, WinState playerWinState) {
-        return String.format("%s: %s", player.getPlayerName(), WinStateMapper.toExpression(playerWinState));
     }
 
     public void printFinalProfit(Dealer dealer, Judge judge) {
