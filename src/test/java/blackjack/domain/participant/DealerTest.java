@@ -39,15 +39,6 @@ class DealerTest {
     }
 
     @Test
-    void 딜러는_카드를_받을_수_있다() {
-        dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.KING));
-
-        assertThat(dealer).extracting("cardHand")
-                .extracting("cards", InstanceOfAssertFactories.list(Card.class))
-                .hasSize(1);
-    }
-
-    @Test
     void 딜러_카드의_총_점수를_계산할_수_있다() {
         dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.KING));
         dealer.receiveCard(new Card(Suit.SPADE, Denomination.SIX));

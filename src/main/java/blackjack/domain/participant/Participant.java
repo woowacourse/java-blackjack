@@ -2,21 +2,23 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
+import blackjack.domain.state.Hit;
+import blackjack.domain.state.State;
 
 public class Participant {
     private final Name name;
-    private final CardHand cardHand;
+    private State state;
 
     public Participant(final String name) {
         this.name = new Name(name);
-        this.cardHand = new CardHand();
+        this.state = new Hit(new CardHand());
     }
 
     public void receiveCard(final Card card) {
-        cardHand.receiveCard(card);
+        state = state.draw(card);
     }
 
     public int calculateScore() {
-        return cardHand.sumAllScore();
+        return state.calculateScore();
     }
 }

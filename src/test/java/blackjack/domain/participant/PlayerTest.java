@@ -18,15 +18,6 @@ class PlayerTest {
     }
 
     @Test
-    void 플레이어는_카드를_받을_수_있다() {
-        player.receiveCard(new Card(Suit.DIAMOND, Denomination.KING));
-
-        assertThat(player).extracting("cardHand")
-                .extracting("cards", InstanceOfAssertFactories.list(Card.class))
-                .hasSize(1);
-    }
-
-    @Test
     void 플레이어_카드의_총_점수를_계산할_수_있다() {
         player.receiveCard(new Card(Suit.DIAMOND, Denomination.KING));
         player.receiveCard(new Card(Suit.SPADE, Denomination.SIX));
