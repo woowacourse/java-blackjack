@@ -40,7 +40,7 @@ public class DeckTest {
     public void initializeHand() {
         Deck deck = Deck.of(new CardFactory(), cards -> cards);
 
-        Hand hand = deck.initializeHand();
+        Hand hand = Hand.of(deck.draw(), deck.draw());
         List<Card> cards = hand.getCards();
 
         assertThat(cards.size()).isEqualTo(2);

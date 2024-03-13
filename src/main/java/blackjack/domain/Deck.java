@@ -21,8 +21,4 @@ public class Deck {
         }
         return deck.remove(deck.size() - 1);
     }
-
-    public Hand initializeHand() {
-        return Hand.of(draw(), draw());
-    }
 }
