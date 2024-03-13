@@ -4,6 +4,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.dto.BlackjackResult;
+import blackjack.dto.DealerResult;
 import blackjack.dto.PlayerResult;
 import blackjack.strategy.ShuffleStrategy;
 import org.junit.jupiter.api.BeforeEach;
@@ -75,11 +76,13 @@ public class PlayersTest {
         playerResult.addResult(choco, GameResult.WIN);
         playerResult.addResult(clover, GameResult.LOSE);
 
+        BlackjackResult blackjackResult = new BlackjackResult(DealerResult.of(0, 0, 0), playerResult);
+
         Map<Player, Integer> profitResult = new HashMap<>();
         profitResult.put(choco, 0);
         profitResult.put(clover, -2000);
 
         //when & then
-        assertThat(players.calculateProfits(playerResult)).isEqualTo(profitResult);
+        assertThat(players.calculateProfits(blackjackResult)).isEqualTo(profitResult);
     }
 }

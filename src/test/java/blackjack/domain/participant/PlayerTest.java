@@ -93,10 +93,10 @@ public class PlayerTest {
     @DisplayName("플레이어는 배팅 금액과 결과를 토대로 수익률을 계산한다.")
     @Test
     void calculateProfit() {
-        //given & when & then
+        //when & then
         assertAll(
-                () -> assertThat(clover.calculateProfit(GameResult.WIN)).isEqualTo(0),
-                () -> assertThat(choco.calculateProfit(GameResult.LOSE)).isEqualTo(-2000)
+                () -> assertThat(clover.calculateProfit(GameResult.WIN)).isEqualTo(1000),
+                () -> assertThat(choco.calculateProfit(GameResult.LOSE)).isEqualTo(-1000)
         );
     }
 }

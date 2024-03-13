@@ -55,11 +55,11 @@ public class Players {
         return Collections.unmodifiableList(players);
     }
 
-    public Map<Player, Integer> calculateProfits(final PlayerResult playerResult) {
+    public Map<Player, Integer> calculateProfits(final BlackjackResult blackjackResult) {
         Map<Player, Integer> profitResult = new HashMap<>();
 
         for (Player player : players) {
-            GameResult gameResult = playerResult.findByName(player.getName());
+            GameResult gameResult = blackjackResult.findPlayerResultByName(player.getName());
             profitResult.put(player, player.calculateProfit(gameResult));
         }
 

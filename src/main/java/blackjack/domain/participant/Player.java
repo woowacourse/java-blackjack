@@ -62,6 +62,6 @@ public class Player extends Gamer {
     }
 
     public int calculateProfit(final GameResult gameResult) {
-        return gameResult.getProfit(batting, isBlackjack()) - batting;
+        return gameResult.getProfit(batting, isBlackjack());
     }
 }

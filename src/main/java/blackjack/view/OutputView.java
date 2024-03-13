@@ -2,9 +2,11 @@ package blackjack.view;
 
 import blackjack.domain.GameResult;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import blackjack.dto.BlackjackResult;
 
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
@@ -88,5 +90,11 @@ public class OutputView {
 
     public void printNewLine() {
         System.out.println();
+    }
+
+    public void printFianlProfit(Map<Player, Integer> calculateProfits) {
+        System.out.println("## 최종 수익");
+        calculateProfits.entrySet()
+                .forEach(entry -> System.out.println(entry.getKey().getName() + ": " + entry.getValue()));
     }
 }
