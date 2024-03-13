@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Stream;
 import model.Outcome;
 import model.card.Card;
+import model.card.CardDeck;
 import model.card.CardNumber;
 import model.card.CardShape;
 import org.assertj.core.api.Assertions;
@@ -50,8 +51,8 @@ class ParticipantTest {
     void findOutcomeDraw() {
         Participant participant = new Participant("배키",
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE)));
-        Dealer dealer = new Dealer(
-                List.of(new Card(CardShape.CLOVER, CardNumber.NINE), new Card(CardShape.HEART, CardNumber.FIVE)));
+        Dealer dealer = new Dealer(new CardDeck(CardDeck.createCards()),
+                ()->List.of(new Card(CardShape.CLOVER, CardNumber.NINE), new Card(CardShape.HEART, CardNumber.FIVE)));
 
         Outcome playerOutcome = participant.findOutcome(dealer);
 
@@ -74,18 +75,18 @@ class ParticipantTest {
     @ParameterizedTest
     @MethodSource("createParticipant")
     void findOutcomeLose(Participant participant) {
-        Dealer dealer = new Dealer(
-                List.of(new Card(CardShape.SPACE, CardNumber.KING), new Card(CardShape.SPACE, CardNumber.JACK)));
+        Dealer dealer = new Dealer(new CardDeck(CardDeck.createCards()),
+                ()->List.of(new Card(CardShape.SPACE, CardNumber.KING), new Card(CardShape.SPACE, CardNumber.JACK)));
         Outcome playerOutcome = participant.findOutcome(dealer);
 
         Assertions.assertThat(playerOutcome).isEqualTo(Outcome.LOSE);
     }
 
     static Stream<Arguments> createDealer() {
-        Dealer underThresholdDealer = new Dealer(
-                List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
-        Dealer overThresholdDealer = new Dealer(
-                List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
+        Dealer underThresholdDealer = new Dealer(new CardDeck(CardDeck.createCards()),
+                ()->List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
+        Dealer overThresholdDealer = new Dealer(new CardDeck(CardDeck.createCards()),
+                ()->List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
         overThresholdDealer.addCard(new Card(CardShape.HEART, CardNumber.NINE));
         return Stream.of(Arguments.of(
                 underThresholdDealer,

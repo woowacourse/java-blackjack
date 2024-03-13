@@ -36,8 +36,8 @@ public class BlackJackController {
     private BlackJack createBlackJack(List<String> names) {
         CardDeck cardDeck = new CardDeck(CardDeck.createCards());
         Participants participants = createParticipants(names, cardDeck);
-        Dealer dealer = new Dealer(cardDeck.selectRandomCards(CardSize.TWO));
-        return new BlackJack(participants, dealer, cardDeck);
+        Dealer dealer = new Dealer(cardDeck, () -> cardDeck.selectRandomCards(CardSize.TWO));
+        return new BlackJack(participants, dealer);
     }
 
     private Participants createParticipants(List<String> names, CardDeck cardDeck) {

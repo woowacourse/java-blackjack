@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import model.card.CardDeck;
-import model.card.CardSize;
 
 public class Participants {
     public static final int MINIMUM_PARTICIPANT_SIZE = 2;
@@ -37,12 +35,9 @@ public class Participants {
         }
     }
 
-    public void offerCardToParticipant(CardDeck cardDeck, Participant receiver, CardSize size) {
-        User foundUser = participants.stream()
-                .filter(player -> player.equals(receiver))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("참가자(" + receiver.getName() + ")가 존재하지 않습니다."));
-        foundUser.addCards(cardDeck.selectRandomCards(size));
+    public boolean isExistParticipant(Participant receiver) {
+        return participants.stream()
+                .anyMatch(player -> player.equals(receiver));
     }
 
     public List<String> findParticipantsName() {

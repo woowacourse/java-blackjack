@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import model.card.CardDeck;
 import model.card.CardSize;
 import model.card.Cards;
 import model.player.Dealer;
@@ -20,14 +19,12 @@ public class BlackJack {
 
     private final Participants participants;
     private final Dealer dealer;
-    private final CardDeck cardDeck;
 
-    public BlackJack(Participants participants, Dealer dealer, CardDeck cardDeck) {
+    public BlackJack(Participants participants, Dealer dealer) {
         validateParticipantIsNotNull(participants);
         validateDealerIsNotNull(dealer);
         this.participants = participants;
         this.dealer = dealer;
-        this.cardDeck = cardDeck;
     }
 
     public void validateParticipantIsNotNull(Participants participants) {
@@ -64,11 +61,14 @@ public class BlackJack {
     }
 
     private void offerCardToParticipant(Participant participant, CardSize size) {
-        participants.offerCardToParticipant(cardDeck, participant, size);
+        if (participants.isExistParticipant(participant)) {
+            dealer.offerCardToParticipant(participant, size);
+        }
+        throw new IllegalArgumentException("참가자(" + participant.getName() + ")가 존재하지 않습니다.");
     }
 
     public void offerCardToDealer(CardSize size) {
-        dealer.addCards(cardDeck.selectRandomCards(size));
+        dealer.addCards(dealer.takeCardFromDeck(size));
     }
 
     public Map<Participant, Outcome> matchParticipantsOutcome() {
