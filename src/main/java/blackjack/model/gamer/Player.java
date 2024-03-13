@@ -1,26 +1,36 @@
 package blackjack.model.gamer;
 
-import blackjack.model.GameRule;
+import blackjack.model.result.Result;
 
 public class Player extends Gamer {
 
-    private final Name name;
+    private final PlayerStatus playerStatus;
 
-    private Player(String name) {
-        this.name = new Name(name);
+    private Player(Name name, int betAmount) {
+        this.playerStatus = new PlayerStatus(name, betAmount);
     }
 
-    public static Player from(String playerName) {
-        return new Player(playerName);
+    public static Player of(Name name, int betAmount) {
+        return new Player(name, betAmount);
+    }
+
+    public void applyResult(Result result) {
+        playerStatus.registerProfitAmount(result);
     }
 
     public String name() {
-        return name.getName();
+        return playerStatus.name();
     }
 
-    @Override
-    public boolean canHit() {
-        int totalScore = handDeck.score();
-        return GameRule.playerHitRule(totalScore);
+    public int betAmount() {
+        return playerStatus.betAmount();
+    }
+
+    public int profitAmount() {
+        return playerStatus.profitAmount();
+    }
+
+    public int netProfit() {
+        return playerStatus.calculateNetProfit();
     }
 }
