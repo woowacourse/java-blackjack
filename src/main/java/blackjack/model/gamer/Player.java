@@ -1,8 +1,8 @@
 package blackjack.model.gamer;
 
-import blackjack.model.GameRule;
-
 public class Player extends Gamer {
+
+    private static final int PLAYER_HIT_MAX_SCORE = 21;
 
     private final Name playerName;
 
@@ -16,6 +16,6 @@ public class Player extends Gamer {
 
     @Override
     public boolean canHit() {
-        return GameRule.playerHitRule(calculateTotalScore());
+        return calculateTotalScore() <= PLAYER_HIT_MAX_SCORE;
     }
 }

@@ -1,9 +1,10 @@
 package blackjack.model.gamer;
 
-import blackjack.model.GameRule;
 import blackjack.model.card.Card;
 
 public class Dealer extends Gamer {
+
+    private static final int DEALER_HIT_MAX_SCORE = 16;
 
     public Dealer() {
     }
@@ -14,6 +15,6 @@ public class Dealer extends Gamer {
 
     @Override
     public boolean canHit() {
-        return GameRule.dealerHitRule(calculateTotalScore());
+        return calculateTotalScore() <= DEALER_HIT_MAX_SCORE;
     }
 }

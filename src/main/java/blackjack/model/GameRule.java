@@ -7,18 +7,8 @@ import blackjack.model.result.GameResult;
 public class GameRule {
 
     private static final int BUST_STANDARD = 21;
-    private static final int PLAYER_HIT_MAX_SCORE = 21;
-    private static final int DEALER_HIT_MAX_SCORE = 16;
 
     private GameRule() {
-    }
-
-    public static boolean playerHitRule(int cardScore) {
-        return cardScore <= PLAYER_HIT_MAX_SCORE;
-    }
-
-    public static boolean dealerHitRule(int cardScore) {
-        return cardScore <= DEALER_HIT_MAX_SCORE;
     }
 
     public static void decideWinner(Dealer dealer, Player player, GameResult gameResult) {

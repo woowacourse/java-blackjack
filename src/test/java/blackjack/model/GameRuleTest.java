@@ -1,40 +1,21 @@
 package blackjack.model;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
-import blackjack.model.card.Rank;
-import blackjack.model.card.Pattern;
 import blackjack.model.card.Card;
+import blackjack.model.card.Pattern;
+import blackjack.model.card.Rank;
 import blackjack.model.gamer.Dealer;
 import blackjack.model.gamer.Player;
 import blackjack.model.result.GameResult;
 import blackjack.model.result.Result;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 class GameRuleTest {
-
-    @DisplayName("플레이어의 점수가 21이하면 히트할 수 있다.")
-    @Test
-    void playerHitRule() {
-        //given
-        int playerScore = 20;
-
-        //when, then
-        assertThat(GameRule.playerHitRule(playerScore)).isTrue();
-    }
-
-    @DisplayName("딜러의 점수가 16이하면 히트할 수 있다.")
-    @Test
-    void dealerHitRule() {
-        //given
-        int dealerScore = 16;
-
-        //when, then
-        assertThat(GameRule.dealerHitRule(dealerScore)).isTrue();
-    }
 
     @DisplayName("딜러와 플레이어가 둘 다 버스트면 딜러가 승리한다.")
     @Test
