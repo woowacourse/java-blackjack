@@ -46,7 +46,7 @@ class BlackJackTest {
             }
         };
 
-        blackJack.play(testFunction, Player::getName);
+        blackJack.play(testFunction, participantDto -> {});
 
         assertThat(players.getValue().get(0).getCardCount()).isEqualTo(2);
     }
