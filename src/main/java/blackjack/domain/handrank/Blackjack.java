@@ -1,9 +1,13 @@
 package blackjack.domain.handrank;
 
 public final class Blackjack implements HankRank {
+
     @Override
     public SingleMatchResult matchAtDealer(HankRank playerHandRank) {
-        return null;
+        if (playerHandRank.isBlackjack()) {
+            return SingleMatchResult.DRAW;
+        }
+        return SingleMatchResult.DEALER_WIN;
     }
 
     @Override
