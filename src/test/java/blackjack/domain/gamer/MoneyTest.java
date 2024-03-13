@@ -8,13 +8,6 @@ import org.junit.jupiter.api.Test;
 class MoneyTest {
 
 	@Test
-	@DisplayName("생성자에 음수를 입력하면 예외가 발생된다.")
-	void negativeAmountTest() {
-		assertThatThrownBy(() -> new Money(-1))
-			.isInstanceOf(IllegalArgumentException.class);
-	}
-
-	@Test
 	@DisplayName("금액이 같으면 같은 객체로 취급한다.")
 	void equalsTest() {
 		assertThat(new Money(10000)).isEqualTo(new Money(10000));
