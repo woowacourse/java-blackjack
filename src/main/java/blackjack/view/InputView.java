@@ -37,4 +37,12 @@ public class InputView {
             throw new IllegalArgumentException("y 혹은 n만 입력할 수 있습니다.");
         }
     }
+
+    public static int readBettingAmount(final Supplier<String> reader) {
+        try {
+            return Integer.parseInt(reader.get());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자만 입력할 수 있습니다.");
+        }
+    }
 }
