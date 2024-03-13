@@ -5,7 +5,6 @@ import static domain.game.GameResult.WIN;
 
 import domain.Deck;
 import domain.game.GameResult;
-import domain.game.PlayerResults;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,8 +26,8 @@ public class GameUsers {
         dealer.putStartCards(deck);
     }
 
-    public PlayerResults generatePlayerResults() {
-        Map<Player, GameResult> playerResults = players.getPlayers()
+    public Map<Player, GameResult> generatePlayerResults() {
+        return players.getPlayers()
                 .stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
@@ -36,17 +35,20 @@ public class GameUsers {
                         (oldValue, newValue) -> newValue,
                         LinkedHashMap::new
                 ));
-        return new PlayerResults(playerResults);
     }
 
     private GameResult generatePlayerResult(Player player) {
-        if (player.busted()) {
+        if (player.busted() || dealerBlackjackOnly(player)) {
             return LOSE;
         }
         if (dealer.busted()) {
             return WIN;
         }
         return GameResult.compare(player.sumHand(), dealer.sumHand());
+    }
+
+    private boolean dealerBlackjackOnly(Player player) {
+        return !player.isBlackJack() && dealer.isBlackJack();
     }
 
     public List<Player> getPlayers() {

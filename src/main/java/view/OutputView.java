@@ -1,14 +1,11 @@
 package view;
 
 import domain.card.Card;
-import domain.game.GameResult;
-import domain.game.PlayerResults;
+import domain.game.PlayersMoney;
 import domain.user.GameUsers;
 import domain.user.Player;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-import view.viewer.GameResultViewer;
 import view.viewer.HandViewer;
 
 public class OutputView {
@@ -45,6 +42,10 @@ public class OutputView {
         return name + "카드: " + HandViewer.show(cards);
     }
 
+    public static void printBlackjack(String nameValue) {
+        System.out.println("\n" + nameValue + " 블랙잭!");
+    }
+
     public static void printBust() {
         System.out.println("버스트!");
     }
@@ -63,12 +64,11 @@ public class OutputView {
                                 + " - 결과: " + player.sumHand()));
     }
 
-    public static void printFinalResult(PlayerResults playerResults) {
-        System.out.println("\n## 최종 승패");
-        Map<GameResult, Integer> dealerResult = playerResults.generateDealerResult();
-        System.out.println(DEALER_NAME_VALUE + ": " + GameResultViewer.showDealerResult(dealerResult));
-        playerResults.getPlayerResults()
-                .forEach(((player, result) ->
-                        System.out.println(player.getNameValue() + ": " + GameResultViewer.show(result))));
+    public static void printFinalResult(PlayersMoney playersMoney) {
+        System.out.println("\n## 최종 수익");
+        System.out.println(DEALER_NAME_VALUE + ": " + playersMoney.calculateDealerMoney());
+        playersMoney.getPlayersMoney()
+                .forEach(((player, betAmount) ->
+                        System.out.println(player.getNameValue() + ": " + betAmount.value())));
     }
 }
