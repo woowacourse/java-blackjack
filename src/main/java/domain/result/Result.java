@@ -4,72 +4,57 @@ import domain.gamer.Dealer;
 import domain.gamer.Player;
 
 public enum Result {
-    WIN("승"),
-    LOSE("패"),
-    TIE("무");
+    WIN(1.0),
+    LOSE(-1.0),
+    TIE(0.0),
+    BlACK_JACK(1.5);
 
-    private final String name;
+    private final double dividend;
 
-    Result(final String name) {
-        this.name = name;
+    Result(final double dividend) {
+        this.dividend = dividend;
     }
 
     public static Result getPlayerResultWith(final Player player, final Dealer dealer) {
-        if (isPlayerLose(player, dealer)) {
-            return Result.LOSE;
+        if (player.isBust() || dealer.isBust()) {
+            return findResultBustCase(player, dealer);
         }
-        if (player.isBlackJack() && dealer.isBlackJack()) {
-            return Result.TIE;
-        }
-        if (isPlayerWin(player, dealer)) {
-            return Result.WIN;
+        if (player.isBlackJack() || dealer.isBlackJack()) {
+            return findResultBlackJackCase(player, dealer);
         }
         return compareScoreWith(player, dealer);
     }
 
-    private static boolean isPlayerLose(final Player player, final Dealer dealer) {
-        int playerScore = player.calculateTotalScore();
-        int dealerScore = dealer.calculateTotalScore();
-        if (playerScore < dealerScore && !dealer.isBust()) {
-            return true;
+    private static Result findResultBustCase(final Player player, final Dealer dealer) {
+        if (player.isBust() && !dealer.isBust()) {
+            return LOSE;
         }
-        if (player.isBust() && dealer.isBust()) {
-            return true;
+        if (!player.isBust() && dealer.isBust()) {
+            return WIN;
         }
-        if (!player.isBlackJack() && dealer.isBlackJack()) {
-            return true;
-        }
-        if (player.isBust()) {
-            return true;
-        }
-        return false;
+        return LOSE;
     }
 
-    private static boolean isPlayerWin(final Player player, final Dealer dealer) {
-        int playerScore = player.calculateTotalScore();
-        int dealerScore = dealer.calculateTotalScore();
-        if (playerScore > dealerScore && !player.isBust()) {
-            return true;
-        }
+    private static Result findResultBlackJackCase(final Player player, final Dealer dealer) {
         if (player.isBlackJack() && !dealer.isBlackJack()) {
-            return true;
+            return BlACK_JACK;
         }
-        if (dealer.isBust()) {
-            return true;
+        if (!player.isBlackJack() && dealer.isBlackJack()) {
+            return LOSE;
         }
-        return false;
+        return TIE;
     }
 
     private static Result compareScoreWith(final Player player, final Dealer dealer) {
         int playerScore = player.calculateTotalScore();
         int dealerScore = dealer.calculateTotalScore();
         if (playerScore > dealerScore && !player.isBust()) {
-            return Result.WIN;
+            return WIN;
         }
         if (playerScore < dealerScore && !dealer.isBust()) {
-            return Result.LOSE;
+            return LOSE;
         }
-        return Result.TIE;
+        return TIE;
     }
 
     public Result getOppositeResult() {
@@ -82,7 +67,7 @@ public enum Result {
         return TIE;
     }
 
-    public String getName() {
-        return name;
+    public int calculateProfit(final int amount) {
+        return (int) (amount * dividend);
     }
 }
