@@ -5,6 +5,7 @@ import blackjack.domain.card.RandomShuffleStrategy;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import blackjack.domain.money.Money;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayerCommand;
@@ -19,6 +20,7 @@ public class BlackjackController {
         Dealer dealer = new Dealer(deck);
         Players players = requestPlayers(deck);
 
+        requestBetting(dealer, players);
         processDeal(dealer, players);
         processHitOrStand(dealer, players);
         printResult(dealer, players);
@@ -30,6 +32,14 @@ public class BlackjackController {
 
     private Players requestPlayers(Deck deck) {
         return requestUntilValid(() -> Players.of(InputView.readPlayersName(), deck));
+    }
+
+    private void requestBetting(Dealer dealer, Players players) {
+        for (Player player : players.get()) {
+            String name = player.getName();
+            Money money = requestUntilValid(() -> Money.from(InputView.readPlayerBetting(name)));
+            dealer.keepPlayerMoney(name, money);
+        }
     }
 
     private void processDeal(Dealer dealer, Players players) {

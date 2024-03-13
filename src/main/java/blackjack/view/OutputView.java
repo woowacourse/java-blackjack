@@ -23,7 +23,7 @@ public class OutputView {
 
     public static void printDealAnnounce(List<String> names) {
         String nameFormat = String.join(DELIMITER, names);
-        System.out.printf(LINE_SEPARATOR + DEAL_ANNOUNCE_FORMAT + LINE_SEPARATOR, nameFormat);
+        System.out.printf(DEAL_ANNOUNCE_FORMAT + LINE_SEPARATOR, nameFormat);
     }
 
     public static void printCard(String name, Card card) {
@@ -70,6 +70,7 @@ public class OutputView {
     private static void printRevenue(String name, double revenue) {
         if (revenue == (long) revenue) {
             System.out.printf(REVENUE_NO_DECIMAL_FORMAT + LINE_SEPARATOR, name, revenue);
+            return;
         }
         System.out.printf(REVENUE_DECIMAL_FORMAT + LINE_SEPARATOR, name, revenue);
     }

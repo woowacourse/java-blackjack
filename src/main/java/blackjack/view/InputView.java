@@ -7,10 +7,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import static blackjack.view.OutputView.LINE_SEPARATOR;
+import static blackjack.view.OutputView.printNewLine;
 
 public class InputView {
     private static final String NAME_DELIMITER = ",";
     private static final String ASK_PLAYER_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String ASK_BETTING = "%s의 배팅 금액은?";
     private static final String ASK_ONE_MORE_CARD = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String IO_ERROR = "입력이 잘못되었습니다.";
 
@@ -18,7 +20,21 @@ public class InputView {
         System.out.println(ASK_PLAYER_NAMES);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         try {
-            return parseNames(bufferedReader.readLine());
+            List<String> names = parseNames(bufferedReader.readLine());
+            printNewLine();
+            return names;
+        } catch (IOException e) {
+            throw new IllegalArgumentException(IO_ERROR);
+        }
+    }
+
+    public static String readPlayerBetting(String name) {
+        System.out.printf(ASK_BETTING + LINE_SEPARATOR, name);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            String money = bufferedReader.readLine();
+            System.out.println();
+            return money;
         } catch (IOException e) {
             throw new IllegalArgumentException(IO_ERROR);
         }
