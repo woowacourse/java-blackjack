@@ -6,7 +6,9 @@ import java.util.regex.Pattern;
 
 public class Betting {
 
-    public static final String BETTING_INVALID_FORMAT = "배팅 금액은 0이상의 숫자로 입력해주세요.";
+    private static final String INVALID_BETTING_FORMAT = "배팅 금액은 0이상의 숫자로 입력해주세요.";
+    private static final String INVALID_BETTING_RANGE = "배팅 금액은 100이상으로 입력해주세요.";
+    private static final int MIN_BET_AMOUNT = 100;
     private static final Pattern PATTERN = Pattern.compile("^[+]?([0-9]*[.])?[0-9]+$");
     private final BigDecimal blackjackMultiplier = new BigDecimal("1.5");
     private final BigDecimal winMultiplier = new BigDecimal("2");
@@ -20,7 +22,10 @@ public class Betting {
 
     private void validate(final String amount) {
         if (!PATTERN.matcher(amount).matches() || Double.parseDouble(amount) <= 0) {
-            throw new IllegalArgumentException(BETTING_INVALID_FORMAT);
+            throw new IllegalArgumentException(INVALID_BETTING_FORMAT);
+        }
+        if (Double.parseDouble(amount) < MIN_BET_AMOUNT) {
+            throw new IllegalArgumentException(INVALID_BETTING_RANGE);
         }
     }
 

@@ -14,7 +14,15 @@ class BettingTest {
     @DisplayName("적절하지 않은 가격 형식에 에외가 발생한다.")
     @ParameterizedTest
     @ValueSource(strings = {"0", "-1000", "", "   ", "asd", "12emcsaf4"})
-    void createBettingException(final String amount) {
+    void createBettingException_InvalidFormat(final String amount) {
+        //given & when & then
+        assertThatThrownBy(() -> new Betting(amount)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("적절하지 않은 가격 범위에 에외가 발생한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"-1000", "80", "10.1"})
+    void createBettingException_InvalidRange(final String amount) {
         //given & when & then
         assertThatThrownBy(() -> new Betting(amount)).isInstanceOf(IllegalArgumentException.class);
     }
