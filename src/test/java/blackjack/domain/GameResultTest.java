@@ -27,7 +27,7 @@ class GameResultTest {
         dealer.addCard(Card.valueOf(7));
         GameResult gameResult = GameResult.of(dealer, players);
 
-        assertThat(gameResult.getTargetResultCount(Result.WIN)).isOne();
+        assertThat(gameResult.getGameResult().get(player1)).isEqualTo(Result.WIN);
     }
 
     @DisplayName("플레이어 승 : 플레이어 - NonBurst, 딜러 - Burst")
