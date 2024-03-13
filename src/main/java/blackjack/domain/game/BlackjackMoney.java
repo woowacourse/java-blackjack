@@ -5,6 +5,10 @@ public class BlackjackMoney {
     public static final double BlackjackMultiple = 1.5;
     private final int amount;
 
+    public BlackjackMoney() {
+        this.amount = 0;
+    }
+
     public BlackjackMoney(int amount) {
         this.amount = amount;
     }
@@ -15,6 +19,10 @@ public class BlackjackMoney {
 
     public BlackjackMoney applyBlackjackMultiple() {
         return new BlackjackMoney((int) (amount * BlackjackMultiple));
+    }
+
+    public BlackjackMoney add(BlackjackMoney money) {
+        return new BlackjackMoney(amount + money.amount);
     }
 
     public int getAmount() {
