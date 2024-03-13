@@ -29,7 +29,12 @@ public class Deck {
     }
 
     public Card draw() {
-        return Optional.ofNullable(value.pollLast())
-                       .orElseThrow(() -> new IllegalStateException("카드가 전부 소진되었습니다."));
+        final var card = value.pollLast();
+
+        if (card == null) {
+            throw new IllegalStateException("카드가 전부 소진되었습니다.");
+        }
+        
+        return card;
     }
 }
