@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Deck;
+import blackjack.domain.GameResult;
 import blackjack.domain.card.TrumpCard;
 import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.strategy.ShuffleStrategy;
@@ -15,6 +16,7 @@ import static blackjack.fixture.PlayerFixture.playerClover;
 import static blackjack.fixture.TrumpCardFixture.threeSpadeTrumpCard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("플레이어")
 public class PlayerTest {
@@ -86,5 +88,15 @@ public class PlayerTest {
 
         //then
         assertThat(choco.getHandCards()).contains(trumpCard);
+    }
+
+    @DisplayName("플레이어는 배팅 금액과 결과를 토대로 수익률을 계산한다.")
+    @Test
+    void calculateProfit() {
+        //given & when & then
+        assertAll(
+                () -> assertThat(clover.calculateProfit(GameResult.WIN)).isEqualTo(0),
+                () -> assertThat(choco.calculateProfit(GameResult.LOSE)).isEqualTo(-2000)
+        );
     }
 }

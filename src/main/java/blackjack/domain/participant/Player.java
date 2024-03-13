@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.GameResult;
 import blackjack.domain.card.TrumpCard;
 
 import java.util.regex.Pattern;
@@ -58,5 +59,9 @@ public class Player extends Gamer {
 
     public String getName() {
         return name;
+    }
+
+    public int calculateProfit(final GameResult gameResult) {
+        return gameResult.getProfit(batting, isBlackjack()) - batting;
     }
 }
