@@ -25,4 +25,13 @@ public class MoneyTest {
                 .isThrownBy(() -> new Money(money))
                 .withMessage("0원 이하의 금액을 베팅할 수 없습니다.");
     }
+
+    @Test
+    @DisplayName("현재 금액에 전달 받은 숫자를 곱한다.")
+    void multiply() {
+        Money money = new Money(1_000);
+        Money newMoney = money.multiply(1.5);
+
+        assertThat(newMoney.getMoney()).isEqualTo(1_500);
+    }
 }

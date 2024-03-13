@@ -14,6 +14,10 @@ public class Money {
         }
     }
 
+    public Money multiply(final double multiplier) {
+        return new Money((int) (money * multiplier));
+    }
+
     public int getMoney() {
         return money;
     }
