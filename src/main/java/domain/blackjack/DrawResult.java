@@ -12,8 +12,8 @@ class DrawResult {
         return new DrawResult(drawFailCause.getMessage(), hasNextChance);
     }
 
-    static DrawResult fail(String failCause, boolean hasNextChance) {
-        return new DrawResult(failCause, hasNextChance);
+    static DrawResult fail() {
+        return new DrawResult("카드를 더이상 뽑을 수 없습니다.", false);
     }
 
     private DrawResult(String failCause, boolean hasNextChance) {

@@ -7,7 +7,6 @@ import domain.card.RandomCardSelectStrategy;
 import java.util.List;
 
 abstract class Gamer {
-    private static final int INITIAL_CARD_COUNT = 2;
     protected final BlackJackGameMachine blackJackGameMachine;
     private final int bettingMoney;
 
@@ -42,13 +41,10 @@ abstract class Gamer {
     }
 
     final boolean isBlackJack() {
-        List<Card> rawHoldingCards = blackJackGameMachine.getRawHoldingCards();
-        int holdingCardCount = rawHoldingCards.size();
-        SummationCardPoint summationCardPoint = calculateSummationCardPoint();
-        return holdingCardCount == INITIAL_CARD_COUNT && summationCardPoint.isBlackJackPoint();
+        return blackJackGameMachine.isBlackJack();
     }
 
-    int getBettingMoney() {
+    final int getBettingMoney() {
         return bettingMoney;
     }
 }
