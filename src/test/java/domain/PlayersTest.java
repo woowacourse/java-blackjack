@@ -151,10 +151,6 @@ class PlayersTest {
         Name name = new Name("test");
         Player player = new Player(name);
         Players players = new Players(List.of(player));
-        Deck deck = Deck.withCustomCards(
-                new Card(CardType.CLOVER, CardNumber.TEN),
-                new Card(CardType.HEART, CardNumber.TEN),
-                new Card(CardType.DIAMOND, CardNumber.TEN));
         Assertions.assertThatThrownBy(() -> players.isBustFromName(new Name("wrong")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("존재하지 않는 참여자 입니다.");
