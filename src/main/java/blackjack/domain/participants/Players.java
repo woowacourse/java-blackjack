@@ -1,34 +1,24 @@
 package blackjack.domain.participants;
 
 
+import static blackjack.domain.participants.Player.BLACKJACK_SCORE;
+
 import blackjack.domain.cards.Card;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Players {
-    public static final int MAX_SCORE = 21;
-
     private final List<Player> players;
 
     public Players(List<Player> players) {
         this.players = players;
     }
 
-    public Map<Player, Boolean> calculateVictory(int dealerScore) {
-        Map<Player, Boolean> result = new LinkedHashMap<>();
-        players.forEach(player -> result.put(player, isPlayerWin(player, dealerScore)));
+    public Map<Player, Victory> calculateVictory(int dealerScore, boolean isDealerBlackjack) {
+        Map<Player, Victory> result = new LinkedHashMap<>();
+        players.forEach(player -> result.put(player, player.checkVictory(dealerScore, isDealerBlackjack)));
         return result;
-    }
-
-    private boolean isPlayerWin(Player player, int dealerScore) {
-        if (player.calculateScore() > MAX_SCORE) {
-            return false;
-        }
-        if (dealerScore > MAX_SCORE) {
-            return true;
-        }
-        return dealerScore < player.calculateScore();
     }
 
     public void betOnePlayerMoney(Money money, int playerIndex) {
@@ -40,7 +30,7 @@ public class Players {
     }
 
     public boolean isOnePlayerNotOver(int playerIndex) {
-        return players.get(playerIndex).isNotOver(MAX_SCORE);
+        return players.get(playerIndex).isNotOver(BLACKJACK_SCORE);
     }
 
     public int size() {
@@ -49,10 +39,6 @@ public class Players {
 
     public Name getOnePlayerName(int playerIndex) {
         return players.get(playerIndex).getName();
-    }
-
-    public Money getOnePlayerMoney(int playerIndex) {
-        return players.get(playerIndex).getMoney();
     }
 
     public Player getOnePlayer(int playerIndex) {

@@ -9,6 +9,7 @@ import blackjack.domain.participants.Money;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
+import blackjack.domain.participants.Victory;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +31,7 @@ class PlayersTest {
         siso.receiveCard(new Card(Shape.HEART, Rank.SIX)); // 16
 
         takan.receiveCard(new Card(Shape.SPADE, Rank.ACE));
-        takan.receiveCard(new Card(Shape.SPADE, Rank.JACK)); // 13
+        takan.receiveCard(new Card(Shape.SPADE, Rank.JACK)); // 21
 
 
         List<Player> playerList = List.of(siso, takan);
@@ -40,18 +41,18 @@ class PlayersTest {
 
     @Test
     @DisplayName("딜러보다 점수가 낮은 플레이어는 패배한다.")
-    void calculateResultFailTest() {
-        Map<Player, Boolean> result = players.calculateVictory(20);
+    void calculateVictoryFailTest() {
+        Map<Player, Victory> result = players.calculateVictory(20, false);
 
-        assertThat(result.get(siso)).isFalse();
+        assertThat(result.get(siso)).isEqualTo(Victory.LOSE);
     }
 
     @Test
     @DisplayName("딜러보다 점수가 높은 플레이어는 승리한다.")
     void calculateResultSuccessTest() {
-        Map<Player, Boolean> result = players.calculateVictory(20);
+        Map<Player, Victory> result = players.calculateVictory(20, false);
 
-        assertThat(result.get(takan)).isTrue();
+        assertThat(result.get(takan)).isEqualTo(Victory.BLACKJACK_WIN);
     }
 
     @Test
