@@ -47,9 +47,9 @@ public class Players {
         players.forEach(player -> player.initCard(deck));
     }
 
-    public Map<Name, GameResult> collectPlayerGameResults(HandValue dealerHandValue) {
-        Map<Name, GameResult> playerGameResults = new LinkedHashMap<>();
-        players.forEach(player -> playerGameResults.put(player.getName(), player.compete(dealerHandValue)));
+    public Map<Player, GameResult> collectPlayerGameResults(HandValue dealerHandValue) {
+        Map<Player, GameResult> playerGameResults = new LinkedHashMap<>();
+        players.forEach(player -> playerGameResults.put(player, player.compete(dealerHandValue)));
 
         return playerGameResults;
     }

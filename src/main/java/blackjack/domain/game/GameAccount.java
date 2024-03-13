@@ -1,5 +1,6 @@
 package blackjack.domain.game;
 
+import blackjack.domain.gamer.GameResult;
 import blackjack.domain.gamer.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -14,5 +15,14 @@ public class GameAccount {
 
     public Money findMoney(Player player) {
         return store.get(player);
+    }
+
+    public void applyGameResults(Map<Player, GameResult> gameResults) {
+        for (Player player : gameResults.keySet()) {
+            Money money = store.get(player);
+            GameResult gameResult = gameResults.get(player);
+            Money gameResultMoney = money.multipleRatio(gameResult.getRatio());
+            store.put(player, gameResultMoney);
+        }
     }
 }
