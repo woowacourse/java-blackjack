@@ -14,7 +14,8 @@ class PlayersTest {
     void should_ThrowIllegalArgumentException_When_Lower_Than_Minimum_PlayerNumber() {
         List<Player> playerNames = List.of();
         assertThatThrownBy(() -> new Players(playerNames))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임 참여자는 최소 1명에서 최대 8명까지 가능합니다");
     }
 
     @DisplayName("게임의 플레이어는 최대 8명까지 참여할 수 있습니다")
@@ -26,6 +27,7 @@ class PlayersTest {
                 .map((input) -> new Player(input.toString(), input))
                 .toList();
         assertThatThrownBy(() -> new Players(players))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임 참여자는 최소 1명에서 최대 8명까지 가능합니다");
     }
 }

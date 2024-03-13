@@ -11,6 +11,7 @@ class BetMoneyTest {
     @Test
     void should_throwIllegalArgumentException_When_NotNumber() {
         assertThatThrownBy(() -> new BetMoney(-1))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("배팅금액은 0이상이어야 합니다.");
     }
 }

@@ -25,6 +25,7 @@ class DeckTest {
         }
 
         assertThatThrownBy(shuffledDeck::draw)
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("덱에 카드가 더이상 없습니다.");
     }
 }

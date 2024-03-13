@@ -22,7 +22,9 @@ class NameTest {
     @ValueSource(strings = {"1234567890123456"})
     void invalidNameLengthTest(String invalidLengthName) {
         assertThatThrownBy(() -> new Name(invalidLengthName))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임 참여자의 이름은 " + 1 + "이상 "
+                        + 15 + "이하의 길이로 구성되어야 합니다.");
     }
 
     @DisplayName("이름에 영어/숫자/한글 이외의 문자가 있다면 Name객체를 생성할 수 없다")
@@ -30,6 +32,7 @@ class NameTest {
     @ValueSource(strings = {"-", "a@"})
     void invalidNameRuleTest(String invalidLengthName) {
         assertThatThrownBy(() -> new Name(invalidLengthName))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임 요소의 이름은 영숫자 또는 한글로 구성되어야 합니다.");
     }
 }
