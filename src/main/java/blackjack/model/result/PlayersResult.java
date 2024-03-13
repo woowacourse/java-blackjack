@@ -20,7 +20,7 @@ public class PlayersResult {
 
     private void validatePlayerNull(Result result, Player player) {
         if (result == null) {
-            String errorMessage = String.format("[ERROR] 해당 플레이어의 결과가 없습니다. (플레이어 : %s", player.name());
+            String errorMessage = String.format("[ERROR] 해당 플레이어의 결과가 없습니다. (플레이어 : %s)", player.name());
             throw new IllegalArgumentException(errorMessage);
         }
     }
