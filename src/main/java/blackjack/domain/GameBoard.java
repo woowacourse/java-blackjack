@@ -4,7 +4,9 @@ import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
+import blackjack.domain.participants.Victory;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class GameBoard {
     public static final int INITIAL_CARD_COUNT = 2;
@@ -50,26 +52,35 @@ public class GameBoard {
         dealer.receiveCard(dealer.drawCard());
     }
 
-    public Map<Player, Boolean> calculateVictory() {
-        Map<Player, Boolean> victory = players.calculateVictory(dealer.calculateScore());
-        calculateBettingMoney(victory);
-        return victory;
+    public Map<Player, Victory> calculateVictory() {
+        return players.calculateVictory(dealer.calculateScore(), dealer.isBlackjack());
     }
 
-    private void calculateBettingMoney(Map<Player, Boolean> victory) {
+    public void calculateBettingMoney(Map<Player, Victory> victory) {
         for(Player onePlayer: victory.keySet()) {
-            calculateOnePlayerBettingMoney(victory.get(onePlayer), onePlayer);
+            calculateOnePlayerBettingMoney(onePlayer, victory.get(onePlayer));
         }
     }
 
-    private void calculateOnePlayerBettingMoney(Boolean victory, Player onePlayer) {
-        if (victory) {
-            dealer.loseMoney(onePlayer.getMoney());
-            onePlayer.earnBetSuccessMoney();
-            return;
+    private void calculateOnePlayerBettingMoney(Player onePlayer, Victory victory) {
+        float benefit = calculateBenefit(victory);
+        if (victory.equals(Victory.LOSE)) {
+            dealer.gainMoney(onePlayer.getMoney());
+
         }
-        dealer.gainMoney(onePlayer.getMoney());
-        onePlayer.payBetFailMoney();
+        onePlayer.checkBettingMoney(benefit);
+        if(victory.equals(Victory.BLACKJACK_WIN) || victory.equals(Victory.WIN)) {
+            dealer.loseMoney(onePlayer.getMoney());
+
+        }
+    }
+
+    private float calculateBenefit(Victory victory) {
+        return Stream.of(Victory.BLACKJACK_WIN, Victory.WIN, Victory.TIE)
+                .filter(targetVictory -> targetVictory.equals(victory))
+                .findFirst()
+                .map(Victory::getBenefit)
+                .orElse(Victory.LOSE.getBenefit());
     }
 
     public Name getPlayerName(int playerIndex) {

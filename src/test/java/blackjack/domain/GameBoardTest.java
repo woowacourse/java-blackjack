@@ -6,9 +6,11 @@ import blackjack.domain.cards.Card;
 import blackjack.domain.cards.Rank;
 import blackjack.domain.cards.Shape;
 import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Money;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
+import blackjack.domain.participants.Victory;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -93,17 +95,17 @@ public class GameBoardTest {
     }
 
     @Test
-    @DisplayName("플레이어가 모두 패배한 테스트")
+    @DisplayName("플레이어의 무승부가 포함된 테스트")
     void victoryLoseTest() {
         Dealer dealer = gameBoard.getDealer();
         dealer.receiveCard(new Card(Shape.HEART, Rank.ACE));
         dealer.receiveCard(new Card(Shape.HEART, Rank.JACK));
 
-        Map<Player, Boolean> victoryResult = gameBoard.calculateVictory();
+        Map<Player, Victory> victoryResult = gameBoard.calculateVictory();
 
 
-        assertThat(victoryResult.get(siso)).isFalse();
-        assertThat(victoryResult.get(takan)).isFalse();
+        assertThat(victoryResult.get(siso)).isEqualTo(Victory.LOSE);
+        assertThat(victoryResult.get(takan)).isEqualTo(Victory.TIE);
     }
 
     @Test
@@ -113,9 +115,65 @@ public class GameBoardTest {
         dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
         dealer.receiveCard(new Card(Shape.HEART, Rank.JACK));
 
-        Map<Player, Boolean> victoryResult = gameBoard.calculateVictory();
+        Map<Player, Victory> victoryResult = gameBoard.calculateVictory();
 
-        assertThat(victoryResult.get(takan)).isTrue();
-        assertThat(victoryResult.get(siso)).isFalse();
+        assertThat(victoryResult.get(takan)).isEqualTo(Victory.BLACKJACK_WIN);
+        assertThat(victoryResult.get(siso)).isEqualTo(Victory.LOSE);
+    }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭으로 이겼을 때 배팅 이익을 잘 계산한다.")
+    void calculateBettingMoneyWhenBlackjackWinTest() {
+        takan.betMoney(new Money(1000));
+        Dealer dealer = gameBoard.getDealer();
+        dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
+        dealer.receiveCard(new Card(Shape.HEART, Rank.EIGHT));
+
+        gameBoard.calculateBettingMoney(gameBoard.calculateVictory());
+
+        assertThat(takan.getMoney().getValue()).isEqualTo(1500);
+        assertThat(dealer.getMoney().getValue()).isEqualTo(-1500);
+    }
+
+    @Test
+    @DisplayName("플레이어가 이겼을 때 배팅 이익을 잘 계산한다.")
+    void calculateBettingMoneyWhenWinTest() {
+        siso.betMoney(new Money(1000));
+        Dealer dealer = gameBoard.getDealer();
+        dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
+        dealer.receiveCard(new Card(Shape.HEART, Rank.FIVE));
+
+        gameBoard.calculateBettingMoney(gameBoard.calculateVictory());
+
+        assertThat(siso.getMoney().getValue()).isEqualTo(1000);
+        assertThat(dealer.getMoney().getValue()).isEqualTo(-1000);
+    }
+
+    @Test
+    @DisplayName("플레이어가 비겼을 때 배팅 이익을 잘 계산한다.")
+    void calculateBettingMoneyWhenTieTest() {
+        siso.betMoney(new Money(1000));
+        Dealer dealer = gameBoard.getDealer();
+        dealer.receiveCard(new Card(Shape.HEART, Rank.JACK));
+        dealer.receiveCard(new Card(Shape.HEART, Rank.SIX));
+
+        gameBoard.calculateBettingMoney(gameBoard.calculateVictory());
+
+        assertThat(siso.getMoney().getValue()).isEqualTo(0);
+        assertThat(dealer.getMoney().getValue()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("플레이어가 졌을 때 배팅 이익을 잘 계산한다.")
+    void calculateBettingMoneyWhenLoseTest() {
+        siso.betMoney(new Money(1000));
+        Dealer dealer = gameBoard.getDealer();
+        dealer.receiveCard(new Card(Shape.HEART, Rank.JACK));
+        dealer.receiveCard(new Card(Shape.HEART, Rank.EIGHT));
+
+        gameBoard.calculateBettingMoney(gameBoard.calculateVictory());
+
+        assertThat(siso.getMoney().getValue()).isEqualTo(-1000);
+        assertThat(dealer.getMoney().getValue()).isEqualTo(1000);
     }
 }
