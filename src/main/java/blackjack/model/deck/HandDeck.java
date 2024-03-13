@@ -1,8 +1,8 @@
 package blackjack.model.deck;
 
-import blackjack.model.GameRule;
-import blackjack.model.gamer.Score;
 import blackjack.model.card.Card;
+import blackjack.model.gameRule.GameRule;
+import blackjack.model.gamer.Score;
 import java.util.List;
 
 public class HandDeck {
@@ -15,6 +15,10 @@ public class HandDeck {
         calculateDeckScore();
     }
 
+    public int deckSize() {
+        return deck.size();
+    }
+
     public List<Card> cards() {
         return deck.cards();
     }
@@ -24,7 +28,7 @@ public class HandDeck {
     }
 
     private void calculateDeckScore() {
-        GameRule.applyCardScoringRules(deck);
+        GameRule.applyCardScoringRule(deck);
         score = new Score(deck.calculateCardScore());
     }
 }
