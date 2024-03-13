@@ -1,0 +1,19 @@
+package blackjack.model;
+
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+public class MoneyTest {
+
+    @ParameterizedTest
+    @CsvSource(value = {"-1", "0"})
+    @DisplayName("양의 정수가 아닌값이면 예외를 던진다.")
+    void createMoneyByNotPositiveInteger(int money) {
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> new Money(money))
+                .withMessage("0원 이하의 금액을 베팅할 수 없습니다.");
+    }
+}
