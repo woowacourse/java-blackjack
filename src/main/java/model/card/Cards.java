@@ -21,12 +21,8 @@ public class Cards {
         }
     }
 
-    public void addCards(List<Card> card) {
-        cards.addAll(card);
-    }
-
-    public void addCard(Card card) {
-        cards.add(card);
+    public void addCards(List<Card> addCards) {
+        cards.addAll(addCards);
     }
 
     public int calculateScore() {
@@ -53,16 +49,16 @@ public class Cards {
         return result;
     }
 
+    public int findPlayerDifference() {
+        return Math.abs(MAXIMUM_SUM - calculateScore());
+    }
+
     public boolean isNotHit() {
         return calculateScore() > MAXIMUM_SUM;
     }
 
     public boolean isHit() {
         return !isNotHit();
-    }
-
-    public int findPlayerDifference() {
-        return Math.abs(MAXIMUM_SUM - calculateScore());
     }
 
     public List<Card> getCards() {
