@@ -44,4 +44,14 @@ class BettingTest {
         assertThatCode(() -> unmodifiableBetting.bet(Player.nameOf("a"), 1))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
+
+    @Test
+    @DisplayName("실패: unmodifiableBetting의 불변화")
+    void unmodifiable_Exception_Make_Unmodifiable() {
+        Betting betting = new Betting();
+        Betting unmodifiableBetting = betting.unmodifiableBetting();
+
+        assertThatCode(unmodifiableBetting::unmodifiableBetting)
+                .isInstanceOf(UnsupportedOperationException.class);
+    }
 }

@@ -34,10 +34,29 @@ public class Betting {
     }
 
     public Betting unmodifiableBetting() {
-        return new Betting(Collections.unmodifiableMap(bettingMap));
+        return new UnmodifiableBetting(bettingMap);
     }
 
     public Set<Player> getPlayers() {
         return Collections.unmodifiableSet(bettingMap.keySet());
+    }
+
+    private static class UnmodifiableBetting extends Betting {
+
+        private UnmodifiableBetting(Map<Player, BlackjackMoney> bettingMap) {
+            super(new HashMap<>(bettingMap));
+        }
+
+        @Override
+        public void bet(Player player, int money) {
+            throw new UnsupportedOperationException(
+                    String.format("사용할 수 없는 메소드입니다. class: %s", this.getClass().getName()));
+        }
+
+        @Override
+        public Betting unmodifiableBetting() {
+            throw new UnsupportedOperationException(
+                    String.format("사용할 수 없는 메소드입니다. class: %s", this.getClass().getName()));
+        }
     }
 }
