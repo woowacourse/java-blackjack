@@ -1,15 +1,16 @@
 package domain;
 
-import domain.result.Income;
-import domain.result.Incomes;
 import domain.card.Cards;
 import domain.card.DealerCards;
 import domain.card.PlayerCards;
+import domain.result.Income;
+import domain.result.Incomes;
 import domain.result.Status;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Rule {
@@ -62,5 +63,25 @@ public class Rule {
 
     public int getDealerIncome() {
         return incomes.getDealerIncome();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rule rule = (Rule) o;
+        return Objects.equals(incomes, rule.incomes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(incomes);
+    }
+
+    @Override
+    public String toString() {
+        return "Rule{" +
+                "incomes=" + incomes +
+                '}';
     }
 }

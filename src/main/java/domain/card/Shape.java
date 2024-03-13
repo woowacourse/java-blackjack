@@ -2,10 +2,7 @@ package domain.card;
 
 public enum Shape {
 
-    SPADE("스페이드"),
-    DIAMONDS("다이아몬드"),
-    HEART("하트"),
-    CLUB("클로버");
+    SPADE("스페이드"), DIAMONDS("다이아몬드"), HEART("하트"), CLUB("클로버");
 
     private final String shape;
 
@@ -20,5 +17,10 @@ public enum Shape {
 
     public String getShape() {
         return shape;
+    }
+
+    @Override
+    public String toString() {
+        return "Shape{" + "shape='" + shape + '\'' + '}';
     }
 }

@@ -37,4 +37,12 @@ public enum CardNumber {
     public String getSign() {
         return sign;
     }
+
+    @Override
+    public String toString() {
+        return "CardNumber{" +
+                "value=" + value +
+                ", sign='" + sign + '\'' +
+                '}';
+    }
 }
