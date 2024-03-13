@@ -50,4 +50,17 @@ class ParticipantTest {
         participant.receive(new Card(Rank.NINE, Symbol.CLUB));
         assertThat(participant.calculateScore()).isEqualTo(9);
     }
+
+    @Test
+    @DisplayName("성공: 객체간 점수를 비교할 수 있다")
+    void isBiggerThan() {
+        Participant bigParticipant = Player.nameOf("big");
+        Participant smallParticipant = Player.nameOf("small");
+
+        bigParticipant.receive(new Card(Rank.KING, Symbol.CLUB));
+        smallParticipant.receive(new Card(Rank.TWO, Symbol.CLUB));
+
+        assertThat(bigParticipant.isBiggerThan(smallParticipant)).isTrue();
+        assertThat(smallParticipant.isBiggerThan(bigParticipant)).isFalse();
+    }
 }

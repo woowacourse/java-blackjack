@@ -47,10 +47,10 @@ public class Result {
     }
 
     private static PlayerState decidePlayerStateByScore(Player player, Dealer dealer) {
-        if (dealer.calculateScore() < player.calculateScore()) {
+        if (player.isBiggerThan(dealer)) {
             return PlayerState.WIN;
         }
-        if (dealer.calculateScore() > player.calculateScore()) {
+        if (dealer.isBiggerThan(player)) {
             return PlayerState.LOSE;
         }
         return PlayerState.TIE;

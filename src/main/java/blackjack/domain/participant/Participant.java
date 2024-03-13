@@ -20,6 +20,10 @@ public abstract class Participant {
 
     public abstract List<Card> findShowingCards();
 
+    public boolean isBiggerThan(Participant participant) {
+        return calculateScore() - participant.calculateScore() > 0;
+    }
+
     public void receive(Card receivedCard) {
         if (isReceivable()) {
             blackjackHand.receive(receivedCard);
