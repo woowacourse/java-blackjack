@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 public class BettingBoard {
     private static final String PLAYER_NOT_FOUND = "배팅 보드에서 해당 플레이어를 찾을 수 없습니다.";
 
-    private final Map<String, BettingMoney> bettings; // Todo: Player를 저장할 것인가 Player의 name을 저장할 것인가
+    private final Map<String, BettingMoney> bettings;
 
     public BettingBoard(final Map<String, BettingMoney> bettings) {
         this.bettings = Map.copyOf(bettings);
