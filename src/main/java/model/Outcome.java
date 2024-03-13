@@ -1,18 +1,22 @@
 package model;
 
 public enum Outcome {
-    WIN,
-    LOSE,
-    DRAW,
-    ;
-
-    public Outcome reverse() {
-        if (this == Outcome.WIN) {
+    WIN {
+        public Outcome reverse() {
             return Outcome.LOSE;
         }
-        if (this == Outcome.LOSE) {
+    },
+    LOSE {
+        public Outcome reverse() {
             return Outcome.WIN;
         }
-        return this;
-    }
+    },
+    DRAW {
+        public Outcome reverse() {
+            return Outcome.DRAW;
+        }
+    },
+    ;
+
+    public abstract Outcome reverse();
 }
