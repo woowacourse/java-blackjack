@@ -32,12 +32,12 @@ public class PlayerStatus {
         this.money = this.money.subtract(money);
     }
 
-    public void calculateWinMoney() {
-        this.money = this.money.multiply(GAIN_BETTING);
+    public void calculateBettingMoney(float benefit) {
+        this.money = this.money.multiply(benefit);
     }
 
-    public void calculateLoseMoney() {
-        this.money = this.money.multiply(LOSE_BETTING);
+    public int checkHandSize() {
+        return hand.size();
     }
 
     public Money getMoney() {
