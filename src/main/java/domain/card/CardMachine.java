@@ -13,12 +13,8 @@ public class CardMachine {
     private CardMachine() {}
 
     public static Cards cardDecks() {
-        return cardDecks(DEFAULT_NUMBER_OF_DECKS);
-    }
-
-    private static Cards cardDecks(final int numberOfDecks) {
         List<Card> cardDecks = new ArrayList<>();
-        for (int i = 0; i < numberOfDecks; i++) {
+        for (int i = 0; i < DEFAULT_NUMBER_OF_DECKS; i++) {
             cardDecks.addAll(createCardDeck());
         }
         return Cards.from(cardDecks);
