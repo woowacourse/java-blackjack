@@ -36,4 +36,14 @@ public class InputView {
             throw new IllegalArgumentException("[ERROR] " + HIT_OPTION_YES + " 혹은 " + HIT_OPTION_NO + " 만 입력 가능합니다.");
         }
     }
+
+    public int readBattingAmount(Player player) {
+        System.out.println(player.getPlayerName() + "의 배팅 금액은?");
+        String rawBattingAmount = scanner.nextLine();
+        try {
+            return Integer.parseInt(rawBattingAmount);
+        } catch (NumberFormatException ex) {
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 숫자로 입력해주세요.");
+        }
+    }
 }
