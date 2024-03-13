@@ -1,6 +1,6 @@
 package domain.player;
 
-import dto.CardResponse;
+import domain.card.Card;
 import dto.PlayerResponse;
 import dto.PlayerResult;
 import java.util.Objects;
@@ -20,7 +20,7 @@ public class Player extends Participant {
     }
 
     public PlayerResponse toPlayerResponse() {
-        return new PlayerResponse(getName(), getHands().stream().map(CardResponse::of).toList(),
+        return new PlayerResponse(getName(), getHands().stream().map(Card::toCardResponse).toList(),
                 calculateScore());
     }
 

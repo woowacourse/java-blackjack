@@ -2,7 +2,6 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.Cards;
-import dto.CardResponse;
 import dto.DealerResponse;
 import dto.PlayerResult;
 import java.util.Collections;
@@ -58,7 +57,7 @@ public class Dealer extends Participant {
 
     public DealerResponse toDealerResponse() {
         return new DealerResponse(getHands().stream().
-                map(CardResponse::of)
+                map(Card::toCardResponse)
                 .toList(), calculateScore());
     }
 }
