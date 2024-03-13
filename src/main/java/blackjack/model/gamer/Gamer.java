@@ -12,6 +12,10 @@ public abstract class Gamer {
         handDeck.add(card);
     }
 
+    public int deckSize() {
+        return handDeck.deckSize();
+    }
+
     public List<Card> allCards() {
         return handDeck.cards();
     }
@@ -19,6 +23,4 @@ public abstract class Gamer {
     public int totalScore() {
         return handDeck.score();
     }
-
-    public abstract boolean canHit();
 }
