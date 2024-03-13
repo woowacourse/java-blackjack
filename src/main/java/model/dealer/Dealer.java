@@ -28,10 +28,6 @@ public class Dealer {
         hand = hand.add(card);
     }
 
-    public void hitCards(List<Card> cards) {
-        hand = hand.addAll(cards);
-    }
-
     public Card getFirstCard() {
         return hand.getCards().get(0);
     }

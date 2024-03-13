@@ -37,10 +37,6 @@ public class Player {
         hand = hand.add(card);
     }
 
-    public void hitCards(List<Card> cards) {
-        hand = hand.addAll(cards);
-    }
-
     public int handSize() {
         return hand.size();
     }

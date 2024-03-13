@@ -7,6 +7,7 @@
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
 ## 용어 정리
+
 - Deque : 카드 1묶음. 52장의 모든 카드를 지칭
 - CardShuffler : 카드를 섞어 주는 머신
 - Hit : 카드를 더 뽑는 것
@@ -68,7 +69,7 @@
 ### 카드 셔플러
 
 - [x] 덱의 개수만큼 카드를 생성하여 셔플
-  - [x] 덱의 개수 1 미만 불가
+    - [x] 덱의 개수 1 미만 불가
 - [x] 카드 1장 뽑기
 
 ### 입력

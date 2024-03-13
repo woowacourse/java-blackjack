@@ -4,9 +4,6 @@ import java.util.List;
 import java.util.function.Supplier;
 import model.blackjackgame.BlackjackGame;
 import model.blackjackgame.HitAnswer;
-import model.card.Card;
-import model.card.RandomCard;
-import model.dealer.Dealer;
 import model.player.Player;
 import model.player.Players;
 import model.result.DealerResult;
@@ -19,13 +16,26 @@ public class BlackjackController {
 
     public void run() {
         Players players = preparePlayers();
-        Dealer dealer = new Dealer();
-        BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
+        BlackjackGame blackjackGame = new BlackjackGame();
 
-        initGame(blackjackGame);
-        hitToPlayers(blackjackGame);
-        hitToDealer(blackjackGame);
-        finishGame(blackjackGame);
+        blackjackGame.dealInitialCards(players);
+        OutputView.printInitialCards(blackjackGame, players);
+
+        askHitAndPrintCards(players, blackjackGame);
+        dealerTurnAndPrint(blackjackGame);
+        GameResult gameResult = blackjackGame.finish(players);
+
+        DealerResult dealerResult = DealerResult.from(gameResult);
+        PlayersResult playersResult = PlayersResult.from(gameResult);
+        OutputView.printFinalScore(blackjackGame, players, gameResult);
+        OutputView.printGameResult(dealerResult, playersResult);
+    }
+
+    private void dealerTurnAndPrint(BlackjackGame blackjackGame) {
+        boolean isDealerHit = blackjackGame.dealerHitTurn();
+        if (isDealerHit) {
+            OutputView.printAfterDealerHit(blackjackGame.getDealer());
+        }
     }
 
     private Players preparePlayers() {
@@ -35,22 +45,14 @@ public class BlackjackController {
         });
     }
 
-    private void initGame(BlackjackGame blackjackGame) {
-        int cardCount = blackjackGame.determineInitCardCount();
-        List<Card> cards = RandomCard.pickCards(cardCount);
-        blackjackGame.initHand(cards);
-        OutputView.printInitHand(blackjackGame);
+    private void askHitAndPrintCards(Players players, BlackjackGame blackjackGame) {
+        players.getGroup()
+            .forEach(player -> askHitAndPrintCards(blackjackGame, player));
     }
 
-    private void hitToPlayers(BlackjackGame blackjackGame) {
-        blackjackGame.getPlayerGroup()
-            .forEach(this::hitUntilStay);
-    }
-
-    private void hitUntilStay(Player player) {
+    private void askHitAndPrintCards(BlackjackGame blackjackGame, Player player) {
         while (player.isPossibleHit() && prepareHitAnswer(player).isHit()) {
-            Card card = RandomCard.pickCard();
-            player.hitCard(card);
+            blackjackGame.dealCard(player);
             OutputView.printPlayerCard(player);
         }
     }
@@ -60,23 +62,6 @@ public class BlackjackController {
             String hitAnswer = InputView.askHitAnswer(player);
             return HitAnswer.of(hitAnswer);
         });
-    }
-
-    private void hitToDealer(BlackjackGame blackjackGame) {
-        if (blackjackGame.isDealerPossibleHit()) {
-            Card card = RandomCard.pickCard();
-            blackjackGame.dealerHit(card);
-            OutputView.printAfterDealerHit(blackjackGame.getDealer());
-        }
-    }
-
-    private void finishGame(BlackjackGame blackjackGame) {
-        GameResult gameResult = blackjackGame.finishGame();
-        DealerResult dealerResult = DealerResult.from(gameResult);
-        PlayersResult playersResult = PlayersResult.from(gameResult);
-
-        OutputView.printFinalScore(blackjackGame, gameResult);
-        OutputView.printGameResult(dealerResult, playersResult);
     }
 
     private static <T> T retryOnException(Supplier<T> retryOperation) {

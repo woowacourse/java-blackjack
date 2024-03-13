@@ -31,9 +31,8 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printInitHand(BlackjackGame blackjackGame) {
+    public static void printInitialCards(BlackjackGame blackjackGame, Players players) {
         Dealer dealer = blackjackGame.getDealer();
-        Players players = blackjackGame.getPlayers();
         printInitHandIntro(dealer, players);
         printDealerFirstCard(dealer);
         printAllPlayerHands(players);
@@ -72,16 +71,19 @@ public class OutputView {
         System.out.printf(DEALER_HIT, dealer.getName());
     }
 
-    public static void printFinalScore(BlackjackGame blackjackGame, GameResult gameResult) {
+
+    public static void printFinalScore(BlackjackGame blackjackGame, Players players,
+        GameResult gameResult) {
         Dealer dealer = blackjackGame.getDealer();
-        Players players = blackjackGame.getPlayers();
         printDealerFinalScore(dealer, gameResult);
         printAllPlayerFinalScores(players, gameResult);
     }
 
+
     private static void printDealerFinalScore(Dealer dealer, GameResult gameResult) {
         String handMessage = createHandMessage(dealer.getHand());
-        System.out.printf(FINAL_SCORE_FORMAT, dealer.getName(), handMessage, gameResult.findDealerScore());
+        System.out.printf(FINAL_SCORE_FORMAT, dealer.getName(), handMessage,
+            gameResult.findDealerScore());
     }
 
     private static void printAllPlayerFinalScores(Players players, GameResult gameResult) {
@@ -117,7 +119,7 @@ public class OutputView {
 
     private static void printAllPlayerGameResults(PlayersResult playersResult) {
         playersResult.allPlayerName()
-                .forEach(playerName -> printPlayerGameResult(playerName, playersResult));
+            .forEach(playerName -> printPlayerGameResult(playerName, playersResult));
     }
 
     private static void printPlayerGameResult(String playerName, PlayersResult playersResult) {
