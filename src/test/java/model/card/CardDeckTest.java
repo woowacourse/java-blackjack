@@ -11,7 +11,7 @@ class CardDeckTest {
     @Test
     void validateNotEmpty() {
         CardDeck cardDeck = new CardDeck(CardDeck.createCards());
-        for (int i = 0; i < 48; i++) {
+        for (int i = 0; i < 52; i++) {
             cardDeck.selectRandomCards(CardSize.ONE);
         }
         assertThatThrownBy(() -> cardDeck.selectRandomCards(CardSize.ONE))

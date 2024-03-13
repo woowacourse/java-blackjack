@@ -16,14 +16,10 @@ public class CardDeck {
     }
 
     public CardDeck(Set<Card> cards) {
-        if (cards.size() != 48) {
-            throw new IllegalArgumentException("카드는 총 48개여야 합니다.");
+        if (cards.size() != 52) {
+            throw new IllegalArgumentException("카드는 총 52개여야 합니다.");
         }
         this.cards = cards;
-    }
-
-    public List<Card> selectRandomCards(CardSize size) {
-        return Stream.generate(this::selectRandomCard).limit(size.getSize()).toList();
     }
 
     public static List<Card> createCards() {
@@ -40,6 +36,10 @@ public class CardDeck {
         }
     }
 
+    public List<Card> selectRandomCards(CardSize size) {
+        return Stream.generate(this::selectRandomCard).limit(size.getSize()).toList();
+    }
+
     private Card selectRandomCard() {
         validateCardDeckNotEmpty();
         int removeIndex = new Random().nextInt(cards.size());
@@ -48,7 +48,7 @@ public class CardDeck {
         return card;
     }
 
-    void validateCardDeckNotEmpty() {
+    private void validateCardDeckNotEmpty() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("더 뽑을 카드가 없습니다.");
         }
