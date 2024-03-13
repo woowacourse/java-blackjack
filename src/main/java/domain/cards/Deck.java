@@ -15,8 +15,4 @@ public class Deck {
     public Card pickOneCard() {
         return cards.remove(FIRST_CARD);
     }
-
-    public boolean isUsedAll() {
-        return cards.isEmpty();
-    }
 }
