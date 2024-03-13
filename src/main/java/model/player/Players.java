@@ -10,9 +10,6 @@ import model.card.Card;
 
 public class Players {
 
-    private static final String INVALID_PLAYERS_SIZE = "플레이어 수는 1명 이상이어야 합니다.";
-    private static final String INVALID_PLAYER_NAMES_UNIQUE = "플레이어 이름은 중복될 수 없습니다.";
-
     private final List<Player> players;
 
     private Players(List<Player> players) {
@@ -33,14 +30,14 @@ public class Players {
 
     private static void validateEmpty(List<String> playerNames) {
         if (playerNames.isEmpty()) {
-            throw new IllegalArgumentException(INVALID_PLAYERS_SIZE);
+            throw new IllegalArgumentException("플레이어 수는 1명 이상이어야 합니다.");
         }
     }
 
     private static void validatePlayerNamesUnique(List<String> playerNames) {
         Set<String> uniqueNames = new HashSet<>(playerNames);
         if (uniqueNames.size() < playerNames.size()) {
-            throw new IllegalArgumentException(INVALID_PLAYER_NAMES_UNIQUE);
+            throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
     }
 

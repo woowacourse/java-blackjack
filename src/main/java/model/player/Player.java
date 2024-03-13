@@ -6,7 +6,6 @@ import model.card.Hand;
 
 public class Player {
 
-    private static final String INVALID_NAME_LENGTH = "플레이어 이름은 빈 값일 수 없습니다.";
     private static final int HIT_CONDITION = 22;
 
     private final String name;
@@ -24,7 +23,7 @@ public class Player {
 
     private void validateEmptyName(String name) {
         if (name.isEmpty()) {
-            throw new IllegalArgumentException(INVALID_NAME_LENGTH);
+            throw new IllegalArgumentException("플레이어 이름은 빈 값일 수 없습니다.");
         }
     }
 

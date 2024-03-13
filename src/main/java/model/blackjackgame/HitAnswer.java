@@ -4,7 +4,6 @@ public class HitAnswer {
 
     private static final String YES = "y";
     private static final String NO = "n";
-    private static final String INVALID_ANSWER = "y 혹은 n 중 하나를 입력해 주세요.";
 
     private final boolean isHit;
 
@@ -24,7 +23,7 @@ public class HitAnswer {
         if (NO.equals(answer)) {
             return false;
         }
-        throw new IllegalArgumentException(INVALID_ANSWER);
+        throw new IllegalArgumentException("y 혹은 n 중 하나를 입력해 주세요.");
     }
 
     public boolean isHit() {
