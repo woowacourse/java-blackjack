@@ -21,9 +21,6 @@ public enum HitOption {
     }
 
     public static boolean isHit(HitOption isHit) {
-        if (isHit == YES) {
-            return true;
-        }
-        return false;
+        return isHit == YES;
     }
 }
