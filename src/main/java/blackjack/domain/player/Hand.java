@@ -6,20 +6,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static blackjack.domain.player.Player.BUST_CONDITION;
+
 public class Hand {
     private static final int BONUS_SCORE = 10;
     private static final int NON_SCORE = 0;
 
     private final List<Card> cards = new ArrayList<>();
 
-    int getScore(final int bustCondition) {
+    int getScore() {
         final int minimumScore = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
-
         final int bonusScore = this.getBonusScore();
 
-        if (minimumScore + bonusScore <= bustCondition) {
+        if (minimumScore + bonusScore <= BUST_CONDITION) {
             return minimumScore + bonusScore;
         }
         return minimumScore;

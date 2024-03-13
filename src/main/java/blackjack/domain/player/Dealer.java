@@ -16,7 +16,7 @@ public class Dealer extends Player {
     }
 
     public boolean isMoreCardNeeded() {
-        return this.hand.getScore(BUST_CONDITION) <= HIT_CONDITION;
+        return this.getScore() <= HIT_CONDITION;
     }
 
     public Card getFirstCard() {
@@ -28,29 +28,13 @@ public class Dealer extends Player {
     }
 
     public CardGameResult judgeWithPlayers(final List<Player> players) {
-        Map<Player, WinningStatus> result = new LinkedHashMap<>();
+        final Map<Player, WinningStatus> result = new LinkedHashMap<>();
 
         for (final Player player : players) {
-            WinningStatus winningStatus = doesPlayerWin(this.getScore(), player.getScore());
+            WinningStatus winningStatus = WinningStatus.doesPlayerWin(this, player);
             result.put(player, winningStatus);
         }
 
         return new CardGameResult(result);
-    }
-
-    private WinningStatus doesPlayerWin(final int dealerScore, final int playerScore) {
-        if (playerScore > BUST_CONDITION) {
-            return WinningStatus.LOSE;
-        }
-        if (dealerScore > BUST_CONDITION) {
-            return WinningStatus.WIN;
-        }
-        if (dealerScore == playerScore) {
-            return WinningStatus.PUSH;
-        }
-        if (dealerScore < playerScore) {
-            return WinningStatus.WIN;
-        }
-        return WinningStatus.LOSE;
     }
 }

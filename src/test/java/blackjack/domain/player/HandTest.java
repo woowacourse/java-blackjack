@@ -11,8 +11,6 @@ import static blackjack.domain.card.CardShape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HandTest {
-    private static final int BUST_CONDITION = 21;
-
     @Test
     void 가진_패의_숫자의_합계를_구할_수_있다() {
         Hand hand = new Hand();
@@ -20,7 +18,7 @@ public class HandTest {
         hand.add(new Card(QUEEN, SPADE));
         hand.add(new Card(KING, SPADE));
 
-        int sum = hand.getScore(BUST_CONDITION);
+        int sum = hand.getScore();
 
         assertThat(sum).isEqualTo(30);
     }
@@ -33,7 +31,7 @@ public class HandTest {
         hand.add(new Card(ACE, SPADE));
         hand.add(new Card(ACE, SPADE));
 
-        int sum = hand.getScore(BUST_CONDITION);
+        int sum = hand.getScore();
 
         assertThat(sum).isEqualTo(14);
     }
@@ -44,7 +42,7 @@ public class HandTest {
         hand.add(new Card(ACE, SPADE));
         hand.add(new Card(KING, SPADE));
 
-        int sum = hand.getScore(BUST_CONDITION);
+        int sum = hand.getScore();
 
         assertThat(sum).isEqualTo(21);
     }

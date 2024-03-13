@@ -5,7 +5,7 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Player {
-    protected static final int BUST_CONDITION = 21;
+    static final int BUST_CONDITION = 21;
 
     protected final Hand hand;
     private final Name name;
@@ -20,11 +20,11 @@ public class Player {
     }
 
     public final boolean isAlive() {
-        return hand.getScore(BUST_CONDITION) <= BUST_CONDITION;
+        return hand.getScore() <= BUST_CONDITION;
     }
 
     public final int getScore() {
-        return hand.getScore(BUST_CONDITION);
+        return hand.getScore();
     }
 
     public final List<Card> getCards() {
