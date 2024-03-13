@@ -9,13 +9,13 @@ import java.util.Set;
 
 public class Betting {
 
-    private final Map<Player, Integer> bettingMap;
+    private final Map<Player, BlackjackMoney> bettingMap;
 
     public Betting() {
         this(new HashMap<>());
     }
 
-    private Betting(Map<Player, Integer> bettingMap) {
+    private Betting(Map<Player, BlackjackMoney> bettingMap) {
         this.bettingMap = bettingMap;
     }
 
@@ -23,10 +23,10 @@ public class Betting {
         if (money <= 0) {
             throw new IllegalArgumentException("배팅 액수는 양수여야 합니다.");
         }
-        bettingMap.put(player, money);
+        bettingMap.put(player, new BlackjackMoney(money));
     }
 
-    public int findMoneyOf(Player player) {
+    public BlackjackMoney findMoneyOf(Player player) {
         if (bettingMap.containsKey(player)) {
             return bettingMap.get(player);
         }

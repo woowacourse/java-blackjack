@@ -4,8 +4,6 @@ import blackjack.domain.participant.Player;
 
 public class BettingCashier {
 
-    private static final double BLACKJACK_MULTIPLE = 1.5;
-
     private final Betting betting;
     private final Result result;
 
@@ -14,28 +12,28 @@ public class BettingCashier {
         this.result = result;
     }
 
-    public int findProfitOfDealer() {
-        int totalProfit = 0;
+    public BlackjackMoney findProfitOfDealer() {
+        BlackjackMoney totalProfit = new BlackjackMoney();
         for (Player player : betting.getPlayers()) {
-            totalProfit += findProfitOf(player);
+            totalProfit = totalProfit.add(findProfitOf(player));
         }
-        return -totalProfit;
+        return totalProfit.toNegative();
     }
 
-    public int findProfitOf(Player player) {
-        int money = betting.findMoneyOf(player);
+    public BlackjackMoney findProfitOf(Player player) {
+        BlackjackMoney money = betting.findMoneyOf(player);
         if (result.isPlayerWon(player)) {
             return applyMultipleIfBlackjack(player, money);
         }
         if (result.isPlayerLose(player)) {
-            return -money;
+            return money.toNegative();
         }
-        return 0;
+        return new BlackjackMoney();
     }
 
-    private int applyMultipleIfBlackjack(Player player, int money) {
+    private BlackjackMoney applyMultipleIfBlackjack(Player player, BlackjackMoney money) {
         if (player.isBlackjack()) {
-            return (int) (money * BLACKJACK_MULTIPLE);
+            return money.applyBlackjackMultiple();
         }
         return money;
     }

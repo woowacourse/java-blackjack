@@ -99,9 +99,9 @@ public class OutputView {
 
     public void printProfit(BlackjackGame game, BettingCashier cashier) {
         System.out.println("## 최종 수익");
-        printProfit(game.getDealer(), cashier.findProfitOfDealer());
+        printProfit(game.getDealer(), cashier.findProfitOfDealer().getAmount());
         for (Player player : game.getPlayers()) {
-            printProfit(player, cashier.findProfitOf(player));
+            printProfit(player, cashier.findProfitOf(player).getAmount());
         }
     }
 

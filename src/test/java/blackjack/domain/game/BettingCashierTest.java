@@ -45,7 +45,7 @@ class BettingCashierTest {
         betting.bet(winner, 10_000);
 
         BettingCashier cashier = new BettingCashier(betting, Result.of(players, dealer));
-        assertThat(cashier.findProfitOf(winner)).isEqualTo(10_000);
+        assertThat(cashier.findProfitOf(winner).getAmount()).isEqualTo(10_000);
     }
 
     @Test
@@ -60,7 +60,7 @@ class BettingCashierTest {
         betting.bet(blackjackWinner, 10_000);
 
         BettingCashier cashier = new BettingCashier(betting, Result.of(List.of(blackjackWinner), new Dealer()));
-        assertThat(cashier.findProfitOf(blackjackWinner)).isEqualTo(15_000);
+        assertThat(cashier.findProfitOf(blackjackWinner).getAmount()).isEqualTo(15_000);
     }
 
     @Test
@@ -71,7 +71,7 @@ class BettingCashierTest {
         betting.bet(loser, 10_000);
 
         BettingCashier cashier = new BettingCashier(betting, Result.of(players, dealer));
-        assertThat(cashier.findProfitOf(loser)).isEqualTo(-10_000);
+        assertThat(cashier.findProfitOf(loser).getAmount()).isEqualTo(-10_000);
     }
 
     @Test
@@ -82,7 +82,7 @@ class BettingCashierTest {
         betting.bet(tier, 10_000);
 
         BettingCashier cashier = new BettingCashier(betting, Result.of(players, dealer));
-        assertThat(cashier.findProfitOf(tier)).isEqualTo(0);
+        assertThat(cashier.findProfitOf(tier).getAmount()).isEqualTo(0);
     }
 
     @Test
@@ -97,6 +97,6 @@ class BettingCashierTest {
         betting.bet(tier, 100);
 
         BettingCashier cashier = new BettingCashier(betting, Result.of(players, dealer));
-        assertThat(cashier.findProfitOfDealer()).isEqualTo(-5_000);
+        assertThat(cashier.findProfitOfDealer().getAmount()).isEqualTo(-5_000);
     }
 }
