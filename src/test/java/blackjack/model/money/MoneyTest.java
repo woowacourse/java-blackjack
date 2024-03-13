@@ -2,7 +2,6 @@ package blackjack.model.money;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.model.money.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

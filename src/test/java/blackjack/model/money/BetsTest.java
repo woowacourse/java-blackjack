@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.Assertions.entry;
 
-import blackjack.model.money.Bets;
-import blackjack.model.money.Money;
 import blackjack.model.participant.Player;
 import blackjack.model.result.ResultCommand;
 import java.util.LinkedHashMap;

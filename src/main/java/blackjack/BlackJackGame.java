@@ -137,11 +137,11 @@ public class BlackJackGame {
 
     private void printResultProfits(final Referee referee, final Players players, final Bets bets) {
         final Map<Player, ResultCommand> playerResultCommands = players.matchPlayerResultCommands(referee, players);
-        printDealerResultProfit(referee, playerResultCommands, bets);
+        printDealerResultProfit(playerResultCommands, bets);
         printPlayersResultProfit(playerResultCommands, bets);
     }
 
-    private void printDealerResultProfit(final Referee referee, final Map<Player, ResultCommand> playerResultCommands,
+    private void printDealerResultProfit(final Map<Player, ResultCommand> playerResultCommands,
                                          final Bets bets) {
         final Money dealerProfit = bets.calculateDealerProfit(playerResultCommands);
         outputView.printDealerProfit(dealerProfit.getMoney());
