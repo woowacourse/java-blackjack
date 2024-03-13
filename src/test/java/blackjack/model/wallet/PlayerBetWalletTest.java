@@ -45,9 +45,9 @@ class PlayerBetWalletTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("승리했을 때 받게 되는 금액을 계산한다.")
+    @DisplayName("승리했을 때 받게 되는 금액을 등록한다.")
     @Test
-    void calculatePayAmountByWin() {
+    void registerProfitAmountByWin() {
         //given
         PlayerBetWallet playerBetWallet = PlayerBetWallet.from(100);
         Result winResult = Result.WIN;
@@ -60,9 +60,9 @@ class PlayerBetWalletTest {
         assertThat(profitAmount).isEqualTo(200);
     }
 
-    @DisplayName("블랙잭일 때 받게 되는 금액을 계산한다.")
+    @DisplayName("블랙잭일 때 받게 되는 금액을 등록한다.")
     @Test
-    void calculatePayAmountByBlackjack() {
+    void registerProfitAmounttByBlackjack() {
         //given
         PlayerBetWallet playerBetWallet = PlayerBetWallet.from(100);
         Result winResult = Result.BLACKJACK;
@@ -75,9 +75,9 @@ class PlayerBetWalletTest {
         assertThat(profitAmount).isEqualTo(150);
     }
 
-    @DisplayName("푸시일 때 받게 되는 금액을 계산한다.")
+    @DisplayName("푸시일 때 받게 되는 금액을 등록한다.")
     @Test
-    void calculatePayAmountByPush() {
+    void registerProfitAmountByPush() {
         //given
         PlayerBetWallet playerBetWallet = PlayerBetWallet.from(100);
         Result winResult = Result.PUSH;
@@ -90,9 +90,9 @@ class PlayerBetWalletTest {
         assertThat(profitAmount).isEqualTo(100);
     }
 
-    @DisplayName("패배했을 때 받게 되는 금액을 계산한다.")
+    @DisplayName("패배했을 때 받게 되는 금액을 등록한다.")
     @Test
-    void calculatePayAmountByLose() {
+    void registerProfitAmountByLose() {
         //given
         PlayerBetWallet playerBetWallet = PlayerBetWallet.from(100);
         Result winResult = Result.LOSE;
@@ -105,9 +105,9 @@ class PlayerBetWalletTest {
         assertThat(profitAmount).isEqualTo(0);
     }
 
-    @DisplayName("결과가 없을 때 받게 되는 금액을 계산한다.")
+    @DisplayName("결과가 없을 때 받게 되는 금액을 등록한다.")
     @Test
-    void calculatePayAmountByNone() {
+    void registerProfitAmountByNone() {
         //given
         PlayerBetWallet playerBetWallet = PlayerBetWallet.from(100);
         Result winResult = Result.NONE;
@@ -122,7 +122,7 @@ class PlayerBetWalletTest {
 
     @DisplayName("수익금을 두 번 이상등록하는 경우 예외를 발생시킨다.")
     @Test
-    void calculatePayAmountByAlreadySet() {
+    void registerProfitAmountByAlreadySet() {
         //given
         PlayerBetWallet playerBetWallet = PlayerBetWallet.from(100);
         playerBetWallet.registerProfitAmount(Result.WIN);
