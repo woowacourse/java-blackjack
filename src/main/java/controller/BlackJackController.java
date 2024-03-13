@@ -1,6 +1,8 @@
 package controller;
 
 import domain.Answer;
+import domain.BetAmount;
+import domain.Bettings;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -24,6 +26,13 @@ public class BlackJackController {
     public void run() {
         final Players players = Players.from(inputView.readNames());
         final Dealer dealer = Dealer.from(CardDeck.generate());
+
+        final Bettings bettings = new Bettings();
+
+        for (Player player : players.getPlayers()) {
+            final BetAmount betAmount = new BetAmount(inputView.readBetAmount(player.getName()));
+            bettings.save(player, betAmount);
+        }
 
         initHands(players, dealer);
         dealToPlayers(players, dealer);

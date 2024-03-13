@@ -27,10 +27,16 @@ public class InputView {
 
     public Answer readAnswer(String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name);
-        System.out.println();
         String rawAnswer = scanner.nextLine().trim();
         validateBlank(rawAnswer);
         return AnswerView.from(rawAnswer);
+    }
+
+    public int readBetAmount(String name) {
+        System.out.printf("%s의 배팅 금액은?%n", name);
+        int rawBetAmount = Integer.parseInt(scanner.nextLine());
+        System.out.println();
+        return rawBetAmount;
     }
 
     private void validateBlank(final String rawNames) {
