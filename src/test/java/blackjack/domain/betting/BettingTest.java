@@ -2,7 +2,10 @@ package blackjack.domain.betting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.game.Result;
+import blackjack.domain.game.result.PlayerBlackjack;
+import blackjack.domain.game.result.PlayerLose;
+import blackjack.domain.game.result.PlayerWin;
+import blackjack.domain.game.result.Push;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +35,7 @@ public class BettingTest {
             betting.bet(player, BETTING_MONEY);
 
             //when
-            Money prize = betting.getPrize(Result.PLAYER_BLACKJACK, player);
+            Money prize = betting.getPrize(PlayerBlackjack.getInstance(), player);
 
             //then
             assertThat(prize).isEqualTo(BETTING_MONEY.multiply(1.5));
@@ -46,7 +49,7 @@ public class BettingTest {
             betting.bet(player, BETTING_MONEY);
 
             //when
-            Money prize = betting.getPrize(Result.PLAYER_WIN, player);
+            Money prize = betting.getPrize(PlayerWin.getInstance(), player);
 
             //then
             assertThat(prize).isEqualTo(BETTING_MONEY.multiply(1));
@@ -60,7 +63,7 @@ public class BettingTest {
             betting.bet(player, BETTING_MONEY);
 
             //when
-            Money prize = betting.getPrize(Result.PUSH, player);
+            Money prize = betting.getPrize(Push.getInstance(), player);
 
             //then
             assertThat(prize).isEqualTo(Money.ZERO);
@@ -74,7 +77,7 @@ public class BettingTest {
             betting.bet(player, BETTING_MONEY);
 
             //when
-            Money prize = betting.getPrize(Result.PLAYER_LOSE, player);
+            Money prize = betting.getPrize(PlayerLose.getInstance(), player);
 
             //then
             assertThat(prize).isEqualTo(BETTING_MONEY.multiply(-1));

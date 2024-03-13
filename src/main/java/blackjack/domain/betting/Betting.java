@@ -1,6 +1,6 @@
 package blackjack.domain.betting;
 
-import blackjack.domain.game.Result;
+import blackjack.domain.game.result.GameResult;
 import blackjack.domain.participant.Player;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +13,7 @@ public class Betting {
         bettingMoney.put(player, money);
     }
 
-    public Money getPrize(Result result, Player player) {
-        return result.getPrize(bettingMoney.get(player));
+    public Money getPrize(GameResult result, Player player) {
+        return result.calculatePrize(bettingMoney.get(player));
     }
 }
