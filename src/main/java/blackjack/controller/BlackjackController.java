@@ -37,7 +37,7 @@ public class BlackjackController {
         blackjackGame.deal(dealer, players);
 
         OutputView.printDealAnnounce(players.getNames());
-        OutputView.printDealerDealCard(dealer.getCards());
+        OutputView.printDealerDealCard(dealer.getFirstDealCard());
 
         for (Player player : players.getPlayers()) {
             OutputView.printDealCards(player.getName(), player.getCards());

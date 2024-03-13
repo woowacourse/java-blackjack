@@ -34,11 +34,11 @@ public class Dealer {
         return gamer.isBlackjack();
     }
 
+    public Card getFirstDealCard() {
+        return gamer.hand.getMyCardAt(FIRST_DEAL_CARD_INDEX);
+    }
 
     public List<Card> getCards() {
-        if (gamer.getCards().size() == 2) {
-            return List.of(gamer.hand.getMyCardAt(FIRST_DEAL_CARD_INDEX));
-        }
         return gamer.hand.getMyCards();
     }
 

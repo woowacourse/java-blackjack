@@ -21,13 +21,13 @@ class DealerTest {
     void getFirstCardTest() {
         // given
         Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
-        List<Card> expectedCard = List.of(new Card(NINE, SPADE));
+        Card expectedCard = new Card(NINE, SPADE);
 
         // when
         dealer.draw(List.of(new Card(NINE, SPADE), new Card(QUEEN, CLUB)));
 
         // then
-        assertThat(dealer.getCards()).isEqualTo(expectedCard);
+        assertThat(dealer.getFirstDealCard()).isEqualTo(expectedCard);
     }
 
     @Test

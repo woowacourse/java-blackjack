@@ -26,8 +26,8 @@ public class OutputView {
         System.out.printf(LINE_SEPARATOR + DEAL_ANNOUNCE_FORMAT + LINE_SEPARATOR, nameFormat);
     }
 
-    public static void printDealerDealCard(List<Card> cards) {
-        System.out.printf(CARD_FORMAT + LINE_SEPARATOR, DEALER_NAME, formatCards(cards));
+    public static void printDealerDealCard(Card card) {
+        System.out.printf(CARD_FORMAT + LINE_SEPARATOR, DEALER_NAME, card);
     }
 
     public static void printDealCards(String name, List<Card> cards) {
