@@ -1,7 +1,7 @@
 package blackjack.model.participant;
 
 import blackjack.dto.NameCardsScore;
-import blackjack.model.Bets;
+import blackjack.model.money.Bets;
 import blackjack.model.deck.Card;
 import java.util.HashSet;
 import java.util.List;

@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.money;
 
 import blackjack.model.participant.Player;
 import blackjack.model.result.ResultCommand;

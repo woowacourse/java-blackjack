@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.money;
 
 import java.util.Objects;
 

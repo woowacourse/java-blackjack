@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.model.Money;
+import blackjack.model.money.Money;
 import blackjack.model.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
