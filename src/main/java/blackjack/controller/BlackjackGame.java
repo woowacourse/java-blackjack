@@ -11,9 +11,7 @@ import blackjack.dto.PlayerDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackGame {
     private final InputView inputView = new InputView();
@@ -39,7 +37,6 @@ public class BlackjackGame {
         proceedPlayerTurn(gameBoard);
         proceedDealerTurn(gameBoard);
         handleResult(gameBoard);
-        handleVictory(gameBoard);
         handleBettingMoney(gameBoard);
     }
 
@@ -100,16 +97,9 @@ public class BlackjackGame {
         outputView.printScoreResult(dealerDto, playersDto);
     }
 
-    private void handleVictory(GameBoard gameBoard) {
-        Map<Player, Boolean> playerVictory = gameBoard.calculateVictory();
-        Map<String, Boolean> playerNameVictory = new LinkedHashMap<>();
-        playerVictory.forEach(
-                (key, value) -> playerNameVictory.put(key.getName().getValue(), playerVictory.get(key)));
-        outputView.printResult(playerNameVictory);
-    }
-
     private void handleBettingMoney(GameBoard gameBoard) {
         List<BettingMoneyDto> bettingMoneyResult = new ArrayList<>();
+        gameBoard.calculateBettingMoney(gameBoard.calculateVictory());
         handleDealerBettingMoney(gameBoard, bettingMoneyResult);
         handlePlayersBettingMoney(gameBoard, bettingMoneyResult);
         outputView.printMoneyResult(bettingMoneyResult);
