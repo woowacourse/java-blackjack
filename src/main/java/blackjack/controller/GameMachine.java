@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.domain.Game;
 import blackjack.domain.GameResult;
 import blackjack.domain.deck.Deck;
+import blackjack.domain.participant.BetMoney;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -45,7 +46,8 @@ public class GameMachine {
     private static Players createPlayers(List<String> playerNames) {
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            Player player = new Player(playerName, InputView.readBetAmount(playerName));
+            BetMoney betMoney = new BetMoney(InputView.readBetAmount(playerName));
+            Player player = new Player(playerName, betMoney);
             players.add(player);
         }
         return new Players(players);

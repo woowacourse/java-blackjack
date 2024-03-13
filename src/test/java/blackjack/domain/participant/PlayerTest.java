@@ -13,7 +13,7 @@ class PlayerTest {
     @Test
     void should_AddCard_When_PlayerAcceptDraw() {
         Deck deck = Deck.createShuffledDeck();
-        Player testPlayer = new Player("pobi", 1);
+        Player testPlayer = new Player("pobi", new BetMoney(1));
         testPlayer.addCard(Card.valueOf(0));
         testPlayer.addCard(Card.valueOf(1));
 
@@ -26,7 +26,7 @@ class PlayerTest {
     @Test
     void should_NotAddCard_When_PlayerRejectDraw() {
         Deck deck = Deck.createShuffledDeck();
-        Player testPlayer = new Player("pobi", 1);
+        Player testPlayer = new Player("pobi", new BetMoney(1));
         testPlayer.addCard(Card.valueOf(0));
         testPlayer.addCard(Card.valueOf(1));
 

@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.in;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -24,7 +25,7 @@ class PlayersTest {
 
         List<Player> players = Stream.iterate(1, (i) -> i + 1).
                 limit(9)
-                .map((input) -> new Player(input.toString(), input))
+                .map((input) -> new Player(input.toString(), new BetMoney(input)))
                 .toList();
         assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)

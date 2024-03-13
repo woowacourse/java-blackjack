@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.deck.Deck;
+import blackjack.domain.participant.BetMoney;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -16,7 +17,7 @@ class GameTest {
     @Test
     void should_getTwoCards_To_InitialHands() {
         Deck deck = Deck.createShuffledDeck();
-        Players players = new Players(List.of(new Player("pobi", 1)));
+        Players players = new Players(List.of(new Player("pobi", new BetMoney(1))));
         Dealer dealer = new Dealer();
 
         Game game = Game.of(deck, dealer, players);

@@ -7,9 +7,9 @@ public class Player extends Participant {
 
     private final BetMoney betMoney;
 
-    public Player(String name, int betMoney) {
+    public Player(String name, BetMoney betMoney) {
         super(name);
-        this.betMoney = new BetMoney(betMoney);
+        this.betMoney = betMoney;
     }
 
     public boolean attemptDraw(BooleanSupplier supplier, Deck deck) {
