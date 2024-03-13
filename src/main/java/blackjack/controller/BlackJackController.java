@@ -64,7 +64,7 @@ public class BlackJackController {
         outputView.printDealerInitialCard(dealerCards.get(0));
 
         List<PlayerDto> playerDtos = players.getPlayers().stream()
-                .map(PlayerDto::from)
+                .map(player -> new PlayerDto(player.getName(), player.getCards()))
                 .toList();
         outputView.printPlayerInitialCards(playerDtos);
     }
@@ -72,7 +72,9 @@ public class BlackJackController {
     private void doRound(Player player, Deck deck) {
         while (!player.isBusted() && hasAdditionalCardRequest(player)) {
             player.draw(deck);
-            outputView.printPlayerCard(PlayerDto.from(player));
+            outputView.printPlayerCard(
+                    new PlayerDto(player.getName(), player.getCards())
+            );
         }
     }
 
@@ -99,10 +101,15 @@ public class BlackJackController {
     }
 
     private void printCardStatus(Dealer dealer, Players players) {
-        PlayerResultDto dealerResult = PlayerResultDto.from(dealer.getPlayer());
+        Player dealerPlayer = dealer.getPlayer();
+        PlayerDto dealerPlayerDto = new PlayerDto(dealerPlayer.getName(), dealerPlayer.getCards());
+        PlayerResultDto dealerResult = new PlayerResultDto(dealerPlayerDto, dealerPlayer.getScoreValue());
 
         List<PlayerResultDto> playerResultDtos = players.getPlayers().stream()
-                .map(PlayerResultDto::from)
+                .map(player -> new PlayerResultDto(
+                        new PlayerDto(player.getName(), player.getCards()),
+                        player.getScoreValue()
+                ))
                 .toList();
         outputView.printCardStatus(dealerResult, playerResultDtos);
     }
