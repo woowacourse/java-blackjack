@@ -9,6 +9,7 @@ import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.PlayerName;
 import blackjack.domain.participant.Players;
+import fixture.CardFixture;
 import fixture.DealerFixture;
 import fixture.HandFixture;
 import fixture.PlayerFixture;
@@ -28,7 +29,7 @@ class JudgeTest {
         Dealer dealer = new Dealer(new Hand());
 
         Hand hand = HandFixture.createHandWithScoreTotal21();
-        hand.append(new Card(CardRank.ACE, CardSuit.HEART));
+        hand.append(CardFixture.createAHeart());
         Player player = new Player(hand, new PlayerName("pobi"));
 
         Participants participants = new Participants(new Players(List.of(player)), dealer);
@@ -54,7 +55,7 @@ class JudgeTest {
     void testDealerBust() {
         // given
         Hand hand = HandFixture.createHandWithScoreTotal21();
-        hand.append(new Card(CardRank.ACE, CardSuit.HEART));
+        hand.append(CardFixture.createAHeart());
         Dealer dealer = new Dealer(hand);
 
         Player player = new Player(new Hand(), new PlayerName("pobi"));

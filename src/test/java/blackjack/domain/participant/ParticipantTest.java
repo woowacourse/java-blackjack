@@ -2,10 +2,8 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardRank;
-import blackjack.domain.card.CardSuit;
 import blackjack.domain.card.Hand;
+import fixture.CardFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,13 +20,11 @@ class ParticipantTest {
             }
         };
 
-        Card card = new Card(CardRank.ACE, CardSuit.HEART);
-
         // when
-        participant.draw(card);
+        participant.draw(CardFixture.createAHeart());
 
         // then
-        assertThat(participant.getHand().getCards()).contains(card);
+        assertThat(participant.getHand().getCards()).contains(CardFixture.createAHeart());
     }
 
     @DisplayName("히트 조건을 만족하지 못하면 핸드에 카드를 추가하지 않는다.")
@@ -42,12 +38,10 @@ class ParticipantTest {
             }
         };
 
-        Card card = new Card(CardRank.ACE, CardSuit.HEART);
-
         // when
-        participant.draw(card);
+        participant.draw(CardFixture.createAHeart());
 
         // then
-        assertThat(participant.getHand().getCards()).doesNotContain(card);
+        assertThat(participant.getHand().getCards()).doesNotContain(CardFixture.createAHeart());
     }
 }

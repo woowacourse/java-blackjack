@@ -1,9 +1,7 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardRank;
-import blackjack.domain.card.CardSuit;
 import blackjack.domain.card.Hand;
+import fixture.CardFixture;
 import fixture.HandFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +30,7 @@ class PlayerTest {
     void testCanNotHit() {
         // given
         Hand hand = HandFixture.createHandWithScoreTotal21();
-        hand.append(new Card(CardRank.ACE, CardSuit.HEART));
+        hand.append(CardFixture.createAHeart());
 
         Player player = new Player(hand, new PlayerName("pobi"));
 

@@ -2,10 +2,8 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardRank;
-import blackjack.domain.card.CardSuit;
 import blackjack.domain.card.Hand;
+import fixture.CardFixture;
 import fixture.HandFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +30,7 @@ class DealerTest {
     void testCanNotHit() {
         // given
         Hand hand = HandFixture.createHandWithScoreTotal16();
-        hand.append(new Card(CardRank.ACE, CardSuit.HEART));
+        hand.append(CardFixture.createAHeart());
 
         Dealer dealer = new Dealer(hand);
 

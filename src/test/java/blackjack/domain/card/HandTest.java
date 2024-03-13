@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.game.Score;
+import fixture.CardFixture;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -14,15 +15,13 @@ class HandTest {
     @Test
     void testAppend() {
         // given
-        Card card = new Card(CardRank.THREE, CardSuit.DIAMOND);
-
         Hand hand = new Hand(new ArrayList<>());
 
         // when
-        hand.append(card);
+        hand.append(CardFixture.createAHeart());
 
         // then
-        assertThat(hand.getCards()).containsExactly(card);
+        assertThat(hand.getCards()).containsExactly(CardFixture.createAHeart());
     }
 
     @DisplayName("핸드에 Ace가 있을 때 합이 21을 초과하지 않으면 Ace는 11로 계산한다.")
@@ -30,9 +29,9 @@ class HandTest {
     void testCalculateScoreAcePresentAndNotBust() {
         // given
         List<Card> cards = new ArrayList<>();
-        cards.add(new Card(CardRank.ACE, CardSuit.HEART));
-        cards.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
-        cards.add(new Card(CardRank.NINE, CardSuit.HEART));
+        cards.add(CardFixture.createAHeart());
+        cards.add(CardFixture.createADiamond());
+        cards.add(CardFixture.create9Heart());
         Hand hand = new Hand(cards);
 
         // when
@@ -47,9 +46,9 @@ class HandTest {
     void testCalculateScoreAcePresentAndBust() {
         // given
         List<Card> cards = new ArrayList<>();
-        cards.add(new Card(CardRank.ACE, CardSuit.HEART));
-        cards.add(new Card(CardRank.TWO, CardSuit.HEART));
-        cards.add(new Card(CardRank.NINE, CardSuit.HEART));
+        cards.add(CardFixture.createAHeart());
+        cards.add(CardFixture.create2Heart());
+        cards.add(CardFixture.create9Heart());
         Hand hand = new Hand(cards);
 
         // when
@@ -64,8 +63,8 @@ class HandTest {
     void testCalculateScoreAceAbsent() {
         // given
         List<Card> cards = new ArrayList<>();
-        cards.add(new Card(CardRank.TWO, CardSuit.HEART));
-        cards.add(new Card(CardRank.NINE, CardSuit.HEART));
+        cards.add(CardFixture.create2Heart());
+        cards.add(CardFixture.create9Heart());
         Hand hand = new Hand(cards);
 
         // when
@@ -74,5 +73,4 @@ class HandTest {
         // then
         assertThat(score).extracting("value").isEqualTo(11);
     }
-
 }

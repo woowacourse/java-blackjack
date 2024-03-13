@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import fixture.CardFixture;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,8 +30,7 @@ class CardDeckTest {
     void testPopCard() {
         // given
         List<Card> cards = new ArrayList<>();
-        Card card = new Card(CardRank.ACE, CardSuit.HEART);
-        cards.add(card);
+        cards.add(CardFixture.createAHeart());
 
         CardDeck cardDeck = new CardDeck(cards);
 
@@ -39,7 +39,7 @@ class CardDeckTest {
 
         // then
         assertAll(
-                () -> assertThat(actual).isEqualTo(card),
+                () -> assertThat(actual).isEqualTo(CardFixture.createAHeart()),
                 () -> assertThatThrownBy(cardDeck::popCard)
                         .isInstanceOf(IllegalArgumentException.class)
         );
