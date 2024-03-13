@@ -7,7 +7,7 @@ import static java.util.stream.Collectors.toList;
 import model.blackjackgame.BlackjackGame;
 import model.result.ResultStatus;
 import model.card.Card;
-import model.card.Hand;
+import model.card.Cards;
 import model.dealer.Dealer;
 import model.player.Player;
 import model.player.Players;
@@ -18,10 +18,10 @@ import model.result.PlayersResult;
 public class OutputView {
 
     private static final String NEWLINE = System.lineSeparator();
-    private static final String HAND_DELIMITER = ", ";
+    private static final String CARDS_DELIMITER = ", ";
     private static final String GAME_RESULT_DELIMITER = " ";
-    private static final String INIT_HAND_INTRO = NEWLINE + "%s와 %s에게 2장을 나누었습니다." + NEWLINE;
-    private static final String HAND_FORMAT = "%s카드: %s" + NEWLINE;
+    private static final String INIT_CARDS_INTRO = NEWLINE + "%s와 %s에게 2장을 나누었습니다." + NEWLINE;
+    private static final String CARDS_FORMAT = "%s카드: %s" + NEWLINE;
     private static final String DEALER_HIT = NEWLINE + "%s는 16이하라 한장의 카드를 더 받았습니다." + NEWLINE;
     private static final String FINAL_SCORE_FORMAT = NEWLINE + "%s카드: %s - 결과: %d";
     private static final String GAME_RESULT_INTRO = NEWLINE + NEWLINE + "## 최종 승패";
@@ -33,44 +33,43 @@ public class OutputView {
 
     public static void printInitialCards(BlackjackGame blackjackGame, Players players) {
         Dealer dealer = blackjackGame.getDealer();
-        printInitHandIntro(dealer, players);
+        printInitCardsIntro(dealer, players);
         printDealerFirstCard(dealer);
-        printAllPlayerHands(players);
+        printAllPlayerCards(players);
     }
 
-    private static void printInitHandIntro(Dealer dealer, Players players) {
-        String playerNames = String.join(HAND_DELIMITER, players.names());
-        System.out.printf(INIT_HAND_INTRO, dealer.getName(), playerNames);
+    private static void printInitCardsIntro(Dealer dealer, Players players) {
+        String playerNames = String.join(CARDS_DELIMITER, players.names());
+        System.out.printf(INIT_CARDS_INTRO, dealer.getName(), playerNames);
     }
 
     private static void printDealerFirstCard(Dealer dealer) {
         String name = dealer.getName();
         Card firstCard = dealer.getFirstCard();
-        System.out.printf(HAND_FORMAT, name, firstCard);
+        System.out.printf(CARDS_FORMAT, name, firstCard);
     }
 
-    private static void printAllPlayerHands(Players players) {
+    private static void printAllPlayerCards(Players players) {
         players.getPlayers()
             .forEach(OutputView::printPlayerCard);
         System.out.println();
     }
 
     public static void printPlayerCard(Player player) {
-        String handMessage = createHandMessage(player.getHand());
-        System.out.printf(HAND_FORMAT, player.getName(), handMessage);
+        String cardsMessage = createCardsMessage(player.getCards());
+        System.out.printf(CARDS_FORMAT, player.getName(), cardsMessage);
     }
 
-    private static String createHandMessage(Hand hand) {
-        return hand.getCards()
+    private static String createCardsMessage(Cards cards) {
+        return cards.getCards()
             .stream()
             .map(Card::toString)
-            .collect(collectingAndThen(toList(), result -> String.join(HAND_DELIMITER, result)));
+            .collect(collectingAndThen(toList(), result -> String.join(CARDS_DELIMITER, result)));
     }
 
     public static void printAfterDealerHit(Dealer dealer) {
         System.out.printf(DEALER_HIT, dealer.getName());
     }
-
 
     public static void printFinalScore(BlackjackGame blackjackGame, Players players,
         GameResult gameResult) {
@@ -79,10 +78,9 @@ public class OutputView {
         printAllPlayerFinalScores(players, gameResult);
     }
 
-
     private static void printDealerFinalScore(Dealer dealer, GameResult gameResult) {
-        String handMessage = createHandMessage(dealer.getHand());
-        System.out.printf(FINAL_SCORE_FORMAT, dealer.getName(), handMessage,
+        String cardsMessage = createCardsMessage(dealer.getCards());
+        System.out.printf(FINAL_SCORE_FORMAT, dealer.getName(), cardsMessage,
             gameResult.findDealerScore());
     }
 
@@ -93,8 +91,8 @@ public class OutputView {
 
     private static void printPlayerFinalScore(Player player, GameResult gameResult) {
         String playerName = player.getName();
-        String handMessage = createHandMessage(player.getHand());
-        System.out.printf(FINAL_SCORE_FORMAT, playerName, handMessage,
+        String cardsMessage = createCardsMessage(player.getCards());
+        System.out.printf(FINAL_SCORE_FORMAT, playerName, cardsMessage,
             gameResult.findPlayerScore(playerName));
     }
 

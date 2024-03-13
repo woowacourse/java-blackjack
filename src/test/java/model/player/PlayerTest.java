@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import model.card.Card;
-import model.card.Hand;
+import model.card.Cards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +27,7 @@ class PlayerTest {
     @DisplayName("플레이어의 카드 합계가 21점 이하이면 true를 반환한다")
     @Test
     void testCanHit() {
-        Hand cards = new Hand(List.of(new Card(ACE, HEART), new Card(JACK, HEART)));
+        Cards cards = new Cards(List.of(new Card(ACE, HEART), new Card(JACK, HEART)));
         Player player = new Player("lily", cards);
         assertThat(player.isPossibleHit()).isTrue();
     }
@@ -35,7 +35,7 @@ class PlayerTest {
     @DisplayName("플레이어의 카드 합계가 22점 이상이면 false를 반환한다")
     @Test
     void testCanNotHit() {
-        Hand cards = new Hand(
+        Cards cards = new Cards(
             List.of(new Card(TEN, HEART), new Card(JACK, HEART), new Card(TWO, HEART))
         );
         Player player = new Player("lily", cards);
@@ -45,10 +45,10 @@ class PlayerTest {
     @DisplayName("카드 1장을 획득하면 플레이어의 카드가 1개가 증가한다")
     @Test
     void testHitCard() {
-        Hand cards = new Hand(List.of(new Card(ACE, HEART), new Card(JACK, HEART)));
+        Cards cards = new Cards(List.of(new Card(ACE, HEART), new Card(JACK, HEART)));
         Player player = new Player("lily", cards);
         Card card = new Card(TWO, DIAMOND);
         player.hitCard(card);
-        assertThat(player.handSize()).isEqualTo(3);
+        assertThat(player.cardsSize()).isEqualTo(3);
     }
 }

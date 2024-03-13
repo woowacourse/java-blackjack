@@ -16,14 +16,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class HandTest {
+class CardsTest {
 
     @DisplayName("카드 숫자 합 계산한다")
     @ParameterizedTest
     @MethodSource("provideCardsAndExpectedTotal")
-    void testCalculateTotalCardNumbers(List<Card> cards, int expectedTotal) {
-        Hand hand = new Hand(cards);
-        assertThat(hand.calculateTotalNumbers()).isEqualTo(expectedTotal);
+    void testCalculateTotalCardNumbers(List<Card> cardValues, int expectedTotal) {
+        Cards cards = new Cards(cardValues);
+        assertThat(cards.calculateTotalNumbers()).isEqualTo(expectedTotal);
     }
 
     public static Stream<Arguments> provideCardsAndExpectedTotal() {

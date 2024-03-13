@@ -3,11 +3,11 @@ package model.card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hand {
+public class Cards {
 
     private final List<Card> cards;
 
-    public Hand(List<Card> cards) {
+    public Cards(List<Card> cards) {
         this.cards = List.copyOf(cards);
     }
 
@@ -17,16 +17,10 @@ public class Hand {
             .sum();
     }
 
-    public Hand add(Card card) {
+    public Cards add(Card card) {
         List<Card> addedCards = new ArrayList<>(cards);
         addedCards.add(card);
-        return new Hand(addedCards);
-    }
-
-    public Hand addAll(List<Card> cards) {
-        List<Card> addedCards = new ArrayList<>(this.cards);
-        addedCards.addAll(cards);
-        return new Hand(addedCards);
+        return new Cards(addedCards);
     }
 
     public int size() {

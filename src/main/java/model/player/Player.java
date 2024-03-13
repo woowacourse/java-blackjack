@@ -2,23 +2,23 @@ package model.player;
 
 import java.util.List;
 import model.card.Card;
-import model.card.Hand;
+import model.card.Cards;
 
 public class Player {
 
     private static final int HIT_CONDITION = 22;
 
     private final String name;
-    private Hand hand;
+    private Cards cards;
 
     public Player(String name) {
-        this(name, new Hand(List.of()));
+        this(name, new Cards(List.of()));
     }
 
-    public Player(String name, Hand hand) {
+    public Player(String name, Cards cards) {
         validateEmptyName(name);
         this.name = name;
-        this.hand = hand;
+        this.cards = cards;
     }
 
     private void validateEmptyName(String name) {
@@ -28,23 +28,23 @@ public class Player {
     }
 
     public boolean isPossibleHit() {
-        int totalNumbers = hand.calculateTotalNumbers();
+        int totalNumbers = cards.calculateTotalNumbers();
         return totalNumbers < HIT_CONDITION;
     }
 
     public void hitCard(Card card) {
-        hand = hand.add(card);
+        cards = cards.add(card);
     }
 
-    public int handSize() {
-        return hand.size();
+    public int cardsSize() {
+        return cards.size();
     }
 
     public String getName() {
         return name;
     }
 
-    public Hand getHand() {
-        return hand;
+    public Cards getCards() {
+        return cards;
     }
 }

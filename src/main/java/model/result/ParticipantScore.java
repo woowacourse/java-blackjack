@@ -1,7 +1,7 @@
 package model.result;
 
 import model.card.Card;
-import model.card.Hand;
+import model.card.Cards;
 import model.dealer.Dealer;
 import model.player.Player;
 
@@ -21,27 +21,27 @@ public class ParticipantScore {
     }
 
     public static ParticipantScore from(Player player) {
-        Hand cards = player.getHand();
+        Cards cards = player.getCards();
         int totalScore = calculateTotalScore(cards);
         return new ParticipantScore(player.getName(), totalScore);
     }
 
     public static ParticipantScore from(Dealer dealer) {
-        Hand cards = dealer.getHand();
+        Cards cards = dealer.getCards();
         int totalScore = calculateTotalScore(cards);
         return new ParticipantScore(dealer.getName(), totalScore);
     }
 
-    private static int calculateTotalScore(Hand hand) {
-        int totalScore = hand.calculateTotalNumbers();
-        while (totalScore < MINIMUM_SCORE_FOR_ACE_HIGH && hasAce(hand)) {
+    private static int calculateTotalScore(Cards cards) {
+        int totalScore = cards.calculateTotalNumbers();
+        while (totalScore < MINIMUM_SCORE_FOR_ACE_HIGH && hasAce(cards)) {
             totalScore += ACE_SCORE_HIGH - ACE_SCORE_LOW;
         }
         return totalScore;
     }
 
-    private static boolean hasAce(Hand hand) {
-        return hand.getCards()
+    private static boolean hasAce(Cards cards) {
+        return cards.getCards()
             .stream()
             .anyMatch(Card::isAce);
     }
