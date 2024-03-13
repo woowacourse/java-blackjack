@@ -51,6 +51,14 @@ public class GameResult {
                 .count();
     }
 
+    public long getDealerProfit() {
+        int totalPlayerProfit = 0;
+        for (Player player : gameResult.keySet()) {
+            totalPlayerProfit += gameResult.get(player).getBetProfit(player.getBetMoney());
+        }
+        return -totalPlayerProfit;
+    }
+
     public Map<Player, Result> getGameResult() {
         return gameResult;
     }

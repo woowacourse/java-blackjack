@@ -24,4 +24,8 @@ public class Player extends Participant {
     public boolean canDraw() {
         return !isBust();
     }
+
+    public int getBetMoney() {
+        return betMoney.getBetMoney();
+    }
 }

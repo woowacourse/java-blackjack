@@ -164,4 +164,23 @@ class GameResultTest {
 
         assertThat(gameResult.getGameResult().get(player1)).isEqualTo(Result.DRAW);
     }
+
+    @DisplayName("딜러의 수익을 계산합니다")
+    @Test
+    void should_returnDealerProfit() {
+        Player player1 = new Player("pobi", 1_000);
+        Players players = new Players(List.of(player1));
+        Dealer dealer = new Dealer();
+
+        Player testPlayer = players.getPlayers().get(0);
+        testPlayer.addCard(Card.valueOf(0));
+        testPlayer.addCard(Card.valueOf(8));
+
+        dealer.addCard(Card.valueOf(0));
+        dealer.addCard(Card.valueOf(7));
+
+        GameResult gameResult = GameResult.of(dealer, players);
+
+        assertThat(gameResult.getDealerProfit()).isEqualTo(-1_000);
+    }
 }
