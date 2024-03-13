@@ -2,6 +2,8 @@ package blackjack.player;
 
 public class Score {
 
+    private static final int BLACKJACK = 21;
+
     private int score;
 
     public Score(int score) {
@@ -14,5 +16,13 @@ public class Score {
 
     public Score add(Score other) {
         return new Score(this.score + other.score);
+    }
+
+    public boolean isBust() {
+        return score > BLACKJACK;
+    }
+
+    public boolean isNotBust() {
+        return !isBust();
     }
 }
