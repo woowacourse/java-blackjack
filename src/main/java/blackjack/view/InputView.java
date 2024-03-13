@@ -53,11 +53,18 @@ public class InputView {
     }
 
     private Command getCommand(final Player player) {
-        String playerName = player.getPlayerInfo().getName().getValue();
-        String message = String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", playerName);
-        System.out.println(message);
+        System.out.println();
+        System.out.println(getReceiveMoreCardFormat(player));
         String input = scanner.nextLine();
         return Command.generate(input);
+    }
+
+    private String getReceiveMoreCardFormat(final Player player) {
+        return String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", getPlayerName(player));
+    }
+
+    private String getPlayerName(final Player player) {
+        return player.getPlayerInfo().getName().getValue();
     }
 
     private void validateMultipleInputs(final String input) {
