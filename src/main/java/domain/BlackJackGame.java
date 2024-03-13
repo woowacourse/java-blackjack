@@ -1,9 +1,6 @@
 package domain;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BlackJackGame {
 
@@ -46,10 +43,10 @@ public class BlackJackGame {
     public List<Participant> getEveryParticipants() {
         List<Participant> participants = new LinkedList<>(players);
         participants.add(0, dealer);
-        return participants;
+        return Collections.unmodifiableList(participants);
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return Collections.unmodifiableList(players);
     }
 }
