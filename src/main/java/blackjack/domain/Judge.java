@@ -9,21 +9,21 @@ public class Judge {
     private Judge() {
     }
 
-    public static void judge(final Player player, final Dealer dealer, final Profits profits) {
+    public static void judge(final Profits profits, final Dealer dealer, final Player player) {
         if (dealer.isBust()) {
-            judgeWhenDealerBust(profits, player);
+            judgeWhenDealerBust(player, profits);
             return;
         }
 
         if (dealer.isBlackjack()) {
-            judgeWhenDealerBlackjack(profits, player);
+            judgeWhenDealerBlackjack(player, profits);
             return;
         }
 
-        judgeWhenDealerNormal(dealer, profits, player);
+        judgeWhenDealerNormal(profits, dealer, player);
     }
 
-    public static void judgeWhenDealerBust(final Profits profits, final Player player) {
+    public static void judgeWhenDealerBust(final Player player, final Profits profits) {
         if (player.isBust()) {
             draw(profits, player);
             return;
@@ -33,7 +33,7 @@ public class Judge {
     }
 
     public static void judgeWhenDealerBlackjack(
-            final Profits profits, final Player player) {
+            final Player player, final Profits profits) {
         if (player.isBlackjack()) {
             draw(profits, player);
             return;
@@ -43,7 +43,7 @@ public class Judge {
     }
 
     public static void judgeWhenDealerNormal(
-            final Dealer dealer, final Profits profits, final Player player) {
+            final Profits profits, final Dealer dealer, final Player player) {
         if (player.isBust()) {
             playerLose(profits, player);
             return;
@@ -54,11 +54,11 @@ public class Judge {
             return;
         }
 
-        judgeWhenNormalTogether(dealer, profits, player);
+        judgeWhenNormalTogether(profits, dealer, player);
     }
 
     private static void judgeWhenNormalTogether(
-            final Dealer dealer, final Profits profits, final Player player) {
+            final Profits profits, final Dealer dealer, final Player player) {
         if (dealer.isSameScore(player.getScore())) {
             draw(profits, player);
             return;

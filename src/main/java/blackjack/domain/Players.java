@@ -44,7 +44,7 @@ public class Players {
         Profits profits = new Profits();
 
         for (Player player : players) {
-            Judge.judge(player, dealer, profits);
+            Judge.judge(profits, dealer, player);
         }
 
         return profits;
@@ -53,21 +53,4 @@ public class Players {
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
-
-//    public Map<Player, Integer> calculateProfits(final PlayerResult playerResult) {
-//        Map<Player, Integer> profitResult = new HashMap<>();
-//
-//        for (Player player : players) {
-//            GameResult gameResult = playerResult.findByName(player.getName());
-//            profitResult.put(player, player.calculateProfit(gameResult));
-//        }
-//
-//        return profitResult;
-//    }
-
-//    public int sumProfits(final PlayerResult playerResult) {
-//        return calculateProfits(playerResult).values().stream()
-//                .mapToInt(i -> i)
-//                .sum();
-//    }
 }

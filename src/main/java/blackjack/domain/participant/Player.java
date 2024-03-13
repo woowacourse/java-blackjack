@@ -57,11 +57,11 @@ public class Player extends Gamer {
         return !hand.isBust() && !hand.isBlackjack();
     }
 
-    public String getName() {
-        return name;
-    }
-
     public int calculateProfit(final GameResult gameResult) {
         return gameResult.getProfit(batting, isBlackjack());
+    }
+
+    public String getName() {
+        return name;
     }
 }
