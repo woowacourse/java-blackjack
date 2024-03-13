@@ -1,14 +1,12 @@
-package domain.user;
+package domain.game;
 
-import domain.game.GameResult;
-
-public record BetAmount(int value) {
+public record Money(int value) {
     private static final double BLACK_JACK_MULTIPLIER = 1.5;
     private static final double WIN_MULTIPLIER = 1;
     private static final double DRAW_MULTIPLIER = 0;
     private static final double LOSE_MULTIPLIER = -1;
 
-    public BetAmount change(GameResult gameResult) {
+    public Money change(GameResult gameResult) {
         return switch (gameResult) {
             case WIN -> times(WIN_MULTIPLIER);
             case DRAW -> times(DRAW_MULTIPLIER);
@@ -16,11 +14,11 @@ public record BetAmount(int value) {
         };
     }
 
-    public BetAmount changeByBlackJack() {
+    public Money changeByBlackJack() {
         return times(BLACK_JACK_MULTIPLIER);
     }
 
-    private BetAmount times(double multiplier) {
-        return new BetAmount((int) (this.value * multiplier));
+    private Money times(double multiplier) {
+        return new Money((int) (this.value * multiplier));
     }
 }
