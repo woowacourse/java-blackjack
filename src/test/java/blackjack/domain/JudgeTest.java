@@ -275,11 +275,12 @@ class JudgeTest {
     }
 
     private boolean isDealerLose(final BlackjackResult blackjackResult) {
-        return Double.parseDouble(blackjackResult.dealerProfit()) == Double.parseDouble("-" + bettingAmount);
+        return Double.parseDouble(blackjackResult.dealerProfit()) == Double.parseDouble(
+                "-" + Double.parseDouble(bettingAmount) * 2);
     }
 
     private boolean isDealerLoseByBlackjack(final BlackjackResult blackjackResult) {
-        return Double.parseDouble(blackjackResult.dealerProfit()) == Double.parseDouble("-" + bettingAmount) * 1.5;
+        return Double.parseDouble(blackjackResult.dealerProfit()) == Double.parseDouble("-" + bettingAmount) * 3.5;
     }
 
     private boolean isDealerDraw(final BlackjackResult blackjackResult) {

@@ -19,17 +19,31 @@ class BettingTest {
         assertThatThrownBy(() -> new Betting(amount)).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("1.5배의 배팅금액을 받는다.")
+    @DisplayName("2배의 배팅금액을 받는다.")
     @Test
-    void getBlackjackAmount() {
+    void getWinAmount() {
         //given
         int amount = 1000;
-        double multiplier = 1.5;
+        int multiplier = 2;
 
         //when
         Betting betting = new Betting(String.valueOf(amount));
 
         //then
-        assertThat(betting.getBlackjackAmount()).isEqualTo(String.valueOf(amount * multiplier));
+        assertThat(betting.getWinAmount().intValue()).isEqualTo(amount * multiplier);
+    }
+
+    @DisplayName("승리 금액과 1.5배의 배팅금액을 받는다.")
+    @Test
+    void getBlackjackAmount() {
+        //given
+        int amount = 1000;
+        double multiplier = 3.5;
+
+        //when
+        Betting betting = new Betting(String.valueOf(amount));
+
+        //then
+        assertThat(betting.getBlackjackAmount().doubleValue()).isEqualTo(amount * multiplier);
     }
 }

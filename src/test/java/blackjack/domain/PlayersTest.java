@@ -76,13 +76,10 @@ public class PlayersTest {
                 .forEach(i -> players.getPlayers().get(1).draw(dealer.draw()));
         bustedDealer.initialDeal();
         bustedDealer.draw();
-        System.out.println(bustedDealer.getHandCards().get(0).getRank());
-        System.out.println(bustedDealer.getHandCards().get(0).getSuit());
-        System.out.println(bustedDealer.getHandCards().get(1).getRank());
-        System.out.println(bustedDealer.getHandCards().get(1).getSuit());
 
         //then
         BlackjackResult blackjackResult = Judge.judge(bustedDealer, players);
-        assertThat(blackjackResult.playerProfits().get(0).profit()).isEqualTo(bettingAmountA);
+        assertThat(Double.parseDouble(blackjackResult.playerProfits().get(0).profit()))
+                .isEqualTo(Double.parseDouble(bettingAmountA) * 2);
     }
 }

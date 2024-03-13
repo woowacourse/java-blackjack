@@ -68,8 +68,8 @@ public class PlayerTest {
         choco.win(dealer.getDealerProfit());
 
         //then
-        assertThat(choco.getProfit()).isEqualTo("10000");
-        assertThat(dealer.getDealerProfit().toString()).isEqualTo("-10000");
+        assertThat(choco.getProfit()).isEqualTo("20000");
+        assertThat(dealer.getDealerProfit().toString()).isEqualTo("-20000");
     }
 
     @DisplayName("패배 시, 배팅 금액을 잃는다.")
@@ -83,7 +83,7 @@ public class PlayerTest {
         assertThat(dealer.getDealerProfit().toString()).isEqualTo("10000");
     }
 
-    @DisplayName("블랙잭으로 승리 시, 배팅 금액의 1.5배를 받는다.")
+    @DisplayName("블랙잭으로 승리 시, 승리 금액에서 배팅 금액의 1.5배를 더 받는다.")
     @Test
     void winBlackjack() {
         //given
@@ -95,6 +95,6 @@ public class PlayerTest {
         choco.win(dealer.getDealerProfit());
 
         //then
-        assertThat(choco.getProfit()).isEqualTo("15000.0");
+        assertThat(choco.getProfit()).isEqualTo("35000.0");
     }
 }

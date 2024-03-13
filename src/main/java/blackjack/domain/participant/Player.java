@@ -48,8 +48,8 @@ public class Player extends Gamer {
             profit.earn(betting.getBlackjackAmount());
             return;
         }
-        dealerProfit.lose(betting.getAmount());
-        profit.earn(betting.getAmount());
+        dealerProfit.lose(betting.getWinAmount());
+        profit.earn(betting.getWinAmount());
     }
 
     public void lose(final Profit dealerProfit) {

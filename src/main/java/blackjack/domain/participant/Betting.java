@@ -9,6 +9,7 @@ public class Betting {
     public static final String BETTING_INVALID_FORMAT = "배팅 금액은 0이상의 숫자로 입력해주세요.";
     private static final Pattern PATTERN = Pattern.compile("^[+]?([0-9]*[.])?[0-9]+$");
     private final BigDecimal blackjackMultiplier = new BigDecimal("1.5");
+    private final BigDecimal winMultiplier = new BigDecimal("2");
 
     private final BigDecimal amount;
 
@@ -24,7 +25,11 @@ public class Betting {
     }
 
     public BigDecimal getBlackjackAmount() {
-        return amount.multiply(blackjackMultiplier);
+        return getWinAmount().add(amount.multiply(blackjackMultiplier));
+    }
+
+    public BigDecimal getWinAmount() {
+        return amount.multiply(winMultiplier);
     }
 
     public BigDecimal getAmount() {
