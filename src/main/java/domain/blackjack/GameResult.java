@@ -13,7 +13,6 @@ public enum GameResult {
         return TIE;
     }
 
-    //todo 메서드 이름 변경
     int calculateMoney(int bettingMoney) {
         if (this == WIN) {
             return bettingMoney;
