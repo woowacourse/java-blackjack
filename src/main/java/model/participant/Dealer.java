@@ -3,8 +3,9 @@ package model.participant;
 import java.util.List;
 import model.card.Card;
 import model.card.Cards;
+import model.game.HitAction;
 
-public class Dealer {
+public class Dealer implements HitAction {
 
     private static final String NAME = "딜러";
     private static final int HIT_CONDITION = 17;
@@ -19,11 +20,13 @@ public class Dealer {
         this.cards = cards;
     }
 
+    @Override
     public boolean isPossibleHit() {
         int totalNumbers = cards.calculateTotalNumbers();
         return totalNumbers < HIT_CONDITION;
     }
 
+    @Override
     public void hitCard(Card card) {
         cards = cards.add(card);
     }
