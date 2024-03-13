@@ -29,6 +29,10 @@ public class Dealer {
         return hand.busted();
     }
 
+    public boolean isBlackJack() {
+        return hand.isBlackjack();
+    }
+
     public boolean isAddable() {
         return hand.sumCard() <= MAX_ADDABLE;
     }

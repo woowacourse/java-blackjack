@@ -25,6 +25,10 @@ public class Player {
         return hand.busted();
     }
 
+    public boolean isBlackJack() {
+        return hand.isBlackjack();
+    }
+
     public List<Card> getAllCards() {
         return hand.getCards();
     }
