@@ -5,10 +5,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class BattingTest {
-    // TODO 배팅 가능과 불가능 여부 나누어 테스트 해보기
-    @DisplayName("배팅실패 : 1원미만 10_000_000원 초과의 배팅액을 넣을 수 없다")
+    @DisplayName("배팅 성공 : 1원이상 10_000_000원 이하의 배팅액을 넣을 수 있다")
+    @ParameterizedTest
+    @ValueSource(doubles = {1, 10_000_000})
+    void should_getBattingInstance_When_GiveValidRangedBat(double validRangedBat) {
+        assertDoesNotThrow(() -> Batting.from(validRangedBat));
+    }
+
+    @DisplayName("배팅 실패 : 1원미만 10_000_000원 초과의 배팅액을 넣을 수 없다")
     @ParameterizedTest
     @ValueSource(doubles = {-1, 10_000_001})
     void should_ThrowIllegalArgumentException_When_GiveOutRangedBat(double outRangedBat) {
