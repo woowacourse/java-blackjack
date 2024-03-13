@@ -44,7 +44,22 @@ class DealerTest {
 
         dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.KING));
 
-        assertThat(dealer).extracting("cards", InstanceOfAssertFactories.list(Card.class))
+        assertThat(dealer).extracting("cardHand")
+                .extracting("cards", InstanceOfAssertFactories.list(Card.class))
                 .hasSize(1);
+    }
+
+    @Test
+    void 딜러_카드의_총_점수를_계산할_수_있다() {
+        final CardDeck cardDeck = new CardDeck();
+        final CardShuffleStrategy cardShuffleStrategy = new ReverseCardShuffleStrategy();
+        final Dealer dealer = new Dealer(cardDeck, cardShuffleStrategy);
+
+        dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.KING));
+        dealer.receiveCard(new Card(Suit.SPADE, Denomination.SIX));
+
+        final int result = dealer.calculateScore();
+
+        assertThat(result).isEqualTo(16);
     }
 }

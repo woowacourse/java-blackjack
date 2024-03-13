@@ -2,20 +2,18 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardHand;
 import blackjack.domain.strategy.CardShuffleStrategy;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Dealer {
     private final CardDeck cardDeck;
     private final CardShuffleStrategy cardShuffleStrategy;
-    private final List<Card> cards;
+    private final CardHand cardHand;
 
     public Dealer(final CardDeck cardDeck, final CardShuffleStrategy cardShuffleStrategy) {
         this.cardDeck = cardDeck;
         this.cardShuffleStrategy = cardShuffleStrategy;
-        this.cards = new ArrayList<>();
+        this.cardHand = new CardHand();
     }
 
     public void shuffleCards() {
@@ -27,6 +25,10 @@ public class Dealer {
     }
 
     public void receiveCard(final Card card) {
-        cards.add(card);
+        cardHand.receiveCard(card);
+    }
+
+    public int calculateScore() {
+        return cardHand.sumAllScore();
     }
 }
