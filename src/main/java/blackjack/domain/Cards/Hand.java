@@ -1,6 +1,6 @@
 package blackjack.domain.cards;
 
-import blackjack.domain.participants.Players;
+import blackjack.domain.participants.Player;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,7 +40,7 @@ public class Hand {
     }
 
     private static boolean canAddAceBonusScore(int totalScore) {
-        return totalScore + ACE_BONUS_SCORE <= Players.MAX_SCORE;
+        return totalScore + ACE_BONUS_SCORE <= Player.BLACKJACK_SCORE;
     }
 
     private boolean hasAce() {

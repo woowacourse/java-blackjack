@@ -11,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class HandTest {
-
     @Test
     @DisplayName("카드를 잘 추가한다")
     void addCardTest() {
