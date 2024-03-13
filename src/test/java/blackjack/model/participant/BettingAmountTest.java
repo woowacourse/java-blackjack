@@ -22,4 +22,11 @@ class BettingAmountTest {
         BettingAmount bettingAmount = new BettingAmount(1_000);
         assertThat(bettingAmount.multiple(1.5)).isEqualTo(new BettingAmount(1_500));
     }
+
+    @Test
+    @DisplayName("배팅 금액의 전체를 잃는다.")
+    void payAll() {
+        BettingAmount bettingAmount = new BettingAmount(1_000);
+        assertThat(bettingAmount.payAll()).isEqualTo(new BettingAmount(0));
+    }
 }
