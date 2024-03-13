@@ -41,6 +41,19 @@ class JudgementTest {
         players = new Players(List.of(pobi, neo));
     }
 
+    private void prepareCards(final Dealer dealer, final Players players) {
+        dealer.receive(drawTwoCards(deck));
+        for (final Player player : players.getPlayers()) {
+            player.receive(drawTwoCards(deck));
+        }
+    }
+
+    private List<Card> drawTwoCards(final Deck deck) {
+        return Stream.generate(deck::draw)
+                .limit(2)
+                .toList();
+    }
+
     @DisplayName("딜러가 버스트인 경우")
     @Nested
     class ifDealerBust {
@@ -253,18 +266,5 @@ class JudgementTest {
             );
         }
 
-    }
-
-    private void prepareCards(final Dealer dealer, final Players players) {
-        dealer.receive(drawTwoCards(deck));
-        for (final Player player : players.getPlayers()) {
-            player.receive(drawTwoCards(deck));
-        }
-    }
-
-    private List<Card> drawTwoCards(final Deck deck) {
-        return Stream.generate(deck::draw)
-                .limit(2)
-                .toList();
     }
 }

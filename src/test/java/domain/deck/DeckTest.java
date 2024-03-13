@@ -1,9 +1,9 @@
 package domain.deck;
 
-import strategy.SettedShuffleStrategy;
-import strategy.RandomShuffleStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import strategy.RandomShuffleStrategy;
+import strategy.SettedShuffleStrategy;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class DeckTest {
         // given
         SettedShuffleStrategy shuffleStrategy = new SettedShuffleStrategy(List.of());
         Deck deck = new Deck(shuffleStrategy);
-        for(int i=0;i<DECK_SIZE;i++){
+        for (int i = 0; i < DECK_SIZE; i++) {
             deck.draw();
         }
 
