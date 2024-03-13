@@ -32,10 +32,10 @@ public class Hand {
 
     public int getOptimizedScore() {
         int cardTotalScore = getCardTotalScore();
-        if (!hasAce() || cardTotalScore + ACE_ALTERNATIVE_SCORE > BLACKJACK) {
-            return cardTotalScore;
+        if (hasAce() && cardTotalScore + ACE_ALTERNATIVE_SCORE <= BLACKJACK) {
+            return cardTotalScore + ACE_ALTERNATIVE_SCORE;
         }
-        return cardTotalScore + ACE_ALTERNATIVE_SCORE;
+        return cardTotalScore;
     }
 
     private int getCardTotalScore() {
