@@ -38,7 +38,8 @@ public class InputView {
         }
     }
 
-    public static int readBettingAmount(final Supplier<String> reader) {
+    public static int readBettingAmount(final Name playerName, final Supplier<String> reader) {
+        System.out.println(playerName.getRawName() + "의 배팅 금액은?");
         try {
             return Integer.parseInt(reader.get());
         } catch (NumberFormatException e) {
