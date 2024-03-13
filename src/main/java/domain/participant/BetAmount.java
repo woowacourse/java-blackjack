@@ -18,6 +18,14 @@ public final class BetAmount {
         return new BetAmount(value);
     }
 
+    public BetAmount multiply(int profitMultiplier) {
+        return new BetAmount(value * profitMultiplier);
+    }
+
+    public int getValue() {
+        return value;
+    }
+
     @Override
 
     public boolean equals(Object o) {
