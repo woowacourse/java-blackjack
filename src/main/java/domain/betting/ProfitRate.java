@@ -19,7 +19,7 @@ public enum ProfitRate {
         this.rate = rate;
     }
 
-    public static ProfitRate of(final Result result) {
+    public static ProfitRate from(final Result result) {
         return Arrays.stream(ProfitRate.values())
                 .filter(value -> value.judgeProfit.test(result))
                 .findAny()
