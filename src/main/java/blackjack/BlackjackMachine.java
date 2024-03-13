@@ -1,4 +1,4 @@
-package blackjack.machine;
+package blackjack;
 
 import blackjack.domain.card.strategy.RandomCardGenerator;
 import blackjack.domain.game.Betting;

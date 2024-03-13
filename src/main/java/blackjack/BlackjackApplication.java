@@ -1,6 +1,5 @@
 package blackjack;
 
-import blackjack.machine.BlackjackMachine;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
