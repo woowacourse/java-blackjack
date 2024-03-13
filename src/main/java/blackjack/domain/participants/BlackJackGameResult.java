@@ -24,12 +24,12 @@ public class BlackJackGameResult {
     }
 
     private boolean isWin(Player player, Dealer dealer) {
-         if (player.isBurst()) {
-             return false;
-         }
-         if (dealer.isBurst()) {
-             return true;
-         }
+        if (player.isBurst()) {
+            return false;
+        }
+        if (dealer.isBurst()) {
+            return true;
+        }
         return player.calculateScore() > dealer.calculateScore();
     }
 

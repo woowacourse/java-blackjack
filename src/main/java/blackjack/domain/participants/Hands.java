@@ -10,6 +10,7 @@ public class Hands {
 
     public static final int ACE_BONUS_SCORE = 10;
     public static final int NO_BONUS_SCORE = 0;
+
     private final List<Card> cards;
 
     public Hands(List<Card> cards) {
@@ -48,13 +49,14 @@ public class Hands {
                 .anyMatch(Card::isAce);
     }
 
-    private boolean canAddAceBonusScore(int middleScore) {
-        return middleScore + ACE_BONUS_SCORE <= Player.MAX_SCORE;
-    }
 
     public void receiveHands(Hands newHands) {
         cards.clear();
         cards.addAll(newHands.cards);
+    }
+
+    private boolean canAddAceBonusScore(int middleScore) {
+        return middleScore + ACE_BONUS_SCORE <= Player.MAX_SCORE;
     }
 
     public List<Card> getCards() {

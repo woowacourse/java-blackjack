@@ -7,14 +7,14 @@ import java.util.Random;
 
 public class Deck {
 
-    private static final Random RANDOM  = new Random();
+    private static final Random RANDOM = new Random();
 
     private final List<Card> deck;
 
     public Deck() {
         this.deck = initDeck();
     }
-    
+
     private List<Card> initDeck() {
         List<Card> result = new LinkedList<>();
         Arrays.stream(Rank.values())

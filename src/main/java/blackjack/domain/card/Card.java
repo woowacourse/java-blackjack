@@ -3,7 +3,7 @@ package blackjack.domain.card;
 import java.util.Objects;
 
 public class Card {
-    
+
     private final Shape shape;
     private final Rank rank;
 

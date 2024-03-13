@@ -16,7 +16,6 @@ public class Player implements GameParticipant {
         this.hands = new Hands(new ArrayList<>());
     }
 
-
     @Override
     public void receiveHands(Hands newHands) {
         this.hands.receiveHands(newHands);

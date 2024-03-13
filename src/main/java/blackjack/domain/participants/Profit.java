@@ -24,6 +24,10 @@ public class Profit {
         return new Profit(profit, !isPositive);
     }
 
+    public boolean isPositive() {
+        return isPositive;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -46,9 +50,5 @@ public class Profit {
             return profit;
         }
         return profit * -1;
-    }
-
-    public boolean isPositive() {
-        return isPositive;
     }
 }
