@@ -29,12 +29,11 @@ public class Referee {
 
     // Todo: [리팩토링] 딜러에게 플레이어의 결과를 판단해달라고 요청하는 것은 과한 책임일까
     private MatchResult determineMatchResult(final Player player) {
-        // Todo: [규칙 변경] 플레이어가 버스트라면 무조건 플레이어의 패배
-        if (dealer.isBust()) {
-            return MatchResult.WIN;
-        }
         if (player.isBust()) {
             return MatchResult.LOSE;
+        }
+        if (dealer.isBust()) {
+            return MatchResult.WIN;
         }
         Score playerTotalScore = player.calculateCardsTotalScore();
         Score dealerTotalScore = dealer.calculateCardsTotalScore();
