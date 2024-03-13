@@ -144,16 +144,12 @@ public class BlackJackGame {
     }
 
     private void showDealerProfit(Player dealer, PlayerBets playerBets, MatchResults matchResults) {
-        int playersProfit = playerBets.stream()
-                .mapToInt(matchResults::calculateProfitByBet)
-                .sum();
-        int dealerProfit = playersProfit * -1;
-
+        int dealerProfit = playerBets.calculateDealerProfit(matchResults);
         outputView.printPlayerResult(dealer.getName(), dealerProfit);
     }
 
     private void showPlayersResult(PlayerBets playerBets, MatchResults matchResults) {
-        playerBets.stream()
+        playerBets.getPlayerBets()
                 .forEach(bet -> showSingleResult(matchResults, bet));
     }
 

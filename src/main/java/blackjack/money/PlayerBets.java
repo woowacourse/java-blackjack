@@ -1,8 +1,9 @@
 package blackjack.money;
 
+import blackjack.game.MatchResults;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 public class PlayerBets {
 
@@ -16,8 +17,15 @@ public class PlayerBets {
         playerBets.put(name, new PlayerBet(name, betMoney));
     }
 
-    public Stream<PlayerBet> stream() {
-        return playerBets.values()
-                .stream();
+    public int calculateDealerProfit(MatchResults matchResults) {
+        int playersProfit = playerBets.values()
+                .stream()
+                .mapToInt(matchResults::calculateProfitByBet)
+                .sum();
+        return playersProfit * -1;
+    }
+
+    public List<PlayerBet> getPlayerBets() {
+        return List.copyOf(playerBets.values());
     }
 }
