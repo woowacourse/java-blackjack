@@ -3,14 +3,14 @@ package blackjack.model.participants;
 import blackjack.model.cards.Cards;
 import blackjack.model.results.Result;
 import blackjack.vo.Money;
+import blackjack.vo.Name;
 
 public class Player extends Participant {
-    private final String name;
+    private final Name name;
     private Money betAmount = new Money();
 
     public Player(String name) {
-        validateName(name);
-        this.name = name;
+        this.name = new Name(name);
     }
 
     @Override
@@ -31,10 +31,8 @@ public class Player extends Participant {
         return compareScore(otherCards);
     }
 
-    private void validateName(String name) {
-        if (name.isBlank()) {
-            throw new IllegalArgumentException("이름은 공백일 수 없습니다.");
-        }
+    public void betMoney(int betMoney) {
+        betAmount = new Money(betMoney);
     }
 
     private Result compareScore(Cards otherCards) {
@@ -51,11 +49,7 @@ public class Player extends Participant {
     }
 
     public String getName() {
-        return name;
-    }
-
-    public void betMoney(int betMoney) {
-        betAmount = new Money(betMoney);
+        return name.value();
     }
 
     public Money getBetAmount() {
