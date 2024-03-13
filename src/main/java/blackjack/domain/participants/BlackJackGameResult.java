@@ -37,9 +37,7 @@ public class BlackJackGameResult {
         if (player.isBurst() || dealer.isBurst()) {
             return false;
         }
-        return player.calculateScore() == dealer.calculateScore() &&
-                player.getHandsSize() == dealer.getHandsSize() &&
-                player.calculateScore() == Player.MAX_SCORE;
+        return player.isBlackjack() && dealer.isBlackjack();
     }
 
     public int size() {

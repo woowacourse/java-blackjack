@@ -8,6 +8,7 @@ public interface GameParticipant {
     int calculateScore();
     boolean canHit();
     boolean isBurst();
+    boolean isBlackjack();
     Name getName();
     Hands getHands();
     int getHandsSize();

@@ -16,9 +16,6 @@ public class Player implements GameParticipant {
         this.hands = new Hands(new ArrayList<>());
     }
 
-    public boolean isBlackjack() { // TODO 상태 계산에도 활용할 필요가 있나?? 딜러도 필요한가??
-        return hands.size() == 2 && hands.calculateScore() == MAX_SCORE;
-    }
 
     @Override
     public void receiveHands(Hands newHands) {
@@ -43,6 +40,11 @@ public class Player implements GameParticipant {
     @Override
     public boolean isBurst() {
         return calculateScore() > MAX_SCORE;
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return hands.size() == 2 && hands.calculateScore() == MAX_SCORE;
     }
 
     @Override

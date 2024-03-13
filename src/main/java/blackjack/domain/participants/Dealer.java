@@ -40,6 +40,11 @@ public class Dealer implements GameParticipant {
     }
 
     @Override
+    public boolean isBlackjack() {
+        return hands.size() == 2 && hands.calculateScore() == Player.MAX_SCORE;
+    }
+
+    @Override
     public int getHandsSize() {
         return hands.size();
     }
