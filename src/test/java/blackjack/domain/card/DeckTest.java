@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.*;
 class DeckTest {
     @Test
     @DisplayName("52개의 카드를 가진 덱을 생성 한다.")
-    public void Deck_Instance_create_one_pack() {
+    public void create_one_pack_with_52_card() {
 
         assertThatCode(() -> {
             var sut = Deck.createPack();
@@ -28,7 +28,7 @@ class DeckTest {
 
     @Test
     @DisplayName("카드를 위에서 부터 하나씩 뽑는다.")
-    public void Deck_Draw_one_card() {
+    public void draw_one_card() {
         ArrayDeque<Card> cards = new ArrayDeque<>();
         Card card1 = new Card(CardValue.ACE, CardSymbol.DIAMOND);
         Card card2 = new Card(CardValue.FOUR, CardSymbol.HEART);
@@ -43,7 +43,7 @@ class DeckTest {
 
     @Test
     @DisplayName("카드가 전부 소진되면 예외를 발생한다.")
-    public void Deck_Instance_throw_exception_when_empty() {
+    public void throw_exception_when_empty() {
         final Deque<Card> cards = new ArrayDeque<>();
         final Card card1 = new Card(CardValue.ACE, CardSymbol.DIAMOND);
         cards.add(card1);

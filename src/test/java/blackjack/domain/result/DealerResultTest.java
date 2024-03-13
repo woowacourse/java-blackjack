@@ -26,7 +26,7 @@ class DealerResultTest {
 
     @Test
     @DisplayName("딜러 이름과 게임 플레이어 결과 리스트를 통해 딜러 결과를 생성한다.")
-    void DealerResult_Instance_create_with_gamePlayerResultList() {
+    void create_with_gamePlayerResultList() {
         Name name = new Name("초롱");
         ResultStatus resultStatus = ResultStatus.DRAW;
         GamePlayerResult gamePlayerResult = new GamePlayerResult(name, resultStatus);
@@ -37,7 +37,7 @@ class DealerResultTest {
         }).doesNotThrowAnyException();
     }
 
-    private static final Stream<Arguments> resultStatusMaskingParam() {
+    private static Stream<Arguments> resultStatusMaskingParam() {
         return Arrays.stream(ResultStatus.values())
                      .map(resultStatus ->
                              Arguments.of(resultStatus, resultStatus.reverse())
@@ -47,7 +47,7 @@ class DealerResultTest {
     @ParameterizedTest(name = "플레이어 결과 {0} 은 딜러의 {1}가 된다.")
     @MethodSource("resultStatusMaskingParam")
     @DisplayName("게임 플레이어의 결과와 딜러의 결과는 반대이다.")
-    void DealerResult_Reverse_of_gamePlayerResult(final ResultStatus resultStatus, final ResultStatus reverseStatus) {
+    void reverse_of_gamePlayerResult(final ResultStatus resultStatus, final ResultStatus reverseStatus) {
         final Name name = new Name("초롱");
         final GamePlayerResult gamePlayerResult = new GamePlayerResult(name, resultStatus);
         final var sut = DealerResult.of(dealerName, List.of(gamePlayerResult));

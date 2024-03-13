@@ -23,7 +23,7 @@ public class ParticipantTest {
 
     @Test
     @DisplayName("이름과 카드 일급 컬렉션을 통해서 플레이어를 생성 한다.")
-    public void GamePlayer_Instance_create_with_name_and_cards() {
+    public void create_with_name_and_cards() {
         Name name = new Name("초롱");
         Cards cards = new Cards(List.of(new Card(CardValue.EIGHT, CardSymbol.CLOVER),
                 new Card(CardValue.ACE, CardSymbol.DIAMOND)));
@@ -34,7 +34,7 @@ public class ParticipantTest {
 
     @Test
     @DisplayName("플레이어는 카드들 숫자 합 중 최대값을 결정한다.")
-    public void GamePlayer_Determine_max_number_sum_of_cards() {
+    public void determine_max_number_sum_of_cards() {
         var sut = PlayerFixture.참가자_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
 
         var result = sut.calculateScore();
@@ -44,7 +44,7 @@ public class ParticipantTest {
 
     @Test
     @DisplayName("숫자 합이 21이 넘지 않으면 플레이어는 에이스를 11로 결정한다.")
-    public void GamePlayer_Determine_ace_is_11_if_not_exceed_21() {
+    public void determine_ace_is_11_if_not_exceed_21() {
         var sut = PlayerFixture.참가자_생성(List.of(CardValue.EIGHT, CardValue.ACE));
 
         var result = sut.calculateScore();

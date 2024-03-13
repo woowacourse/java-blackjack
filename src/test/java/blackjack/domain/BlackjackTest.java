@@ -18,7 +18,7 @@ class BlackjackTest {
 
     @Test
     @DisplayName("이름 목록을 통해 플레이어를 생성하고 딜러와 플레이어에게 카드를 두장씩 나눠준다.")
-    void Blackjack_Accept_players() {
+    void accept_players() {
         final Blackjack blackjack = new Blackjack(CardFixture.카드_덱_생성());
         final Names names = Names.from(List.of("초롱", "조이썬"));
 
@@ -33,8 +33,8 @@ class BlackjackTest {
     }
 
     @Test
-    @DisplayName("블랙잭은 게임 결과를 종합한다.")
-    void Dealer_Count_result() {
+    @DisplayName("딜러가 게임 결과를 종합한다.")
+    void dealer_Count_result() {
         final var names = Names.from(List.of("초롱", "조이썬"));
         final var sut = new Blackjack(CardFixture.카드_덱_생성());
         sut.acceptPlayers(names);

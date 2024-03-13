@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ScoreTest {
     @Test
     @DisplayName("숫자를 통해 점수를 생성한다.")
-    void Score_Instance_create_with_int() {
+    void create_with_int() {
         final int value = 10;
 
         final var sut = Score.from(value);
@@ -32,7 +32,7 @@ class ScoreTest {
     @ParameterizedTest(name = "{0} 과 {1} 을 비교하면 {2} 의 결과가 나온다")
     @MethodSource("maskingScoreParam")
     @DisplayName("점수를 비교해서 결과를 반환한다.")
-    void Score_compare_of_score(final int value1, final int value2, final ResultStatus resultStatus) {
+    void compare_of_score(final int value1, final int value2, final ResultStatus resultStatus) {
         final Score score1 = Score.from(value1);
         final Score score2 = Score.from(value2);
 
