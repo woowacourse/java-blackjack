@@ -11,5 +11,7 @@ public interface State {
 
     List<Card> getCards();
 
+    int calculateScore();
+
     double calculateProfit(Money money);
 }

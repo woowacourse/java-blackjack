@@ -39,6 +39,11 @@ public class Hit implements State {
     }
 
     @Override
+    public int calculateScore() {
+        return hand.calculateScore();
+    }
+
+    @Override
     public double calculateProfit(final Money money) {
         return 0;
     }

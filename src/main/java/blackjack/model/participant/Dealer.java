@@ -2,6 +2,8 @@ package blackjack.model.participant;
 
 import blackjack.model.deck.Card;
 import blackjack.model.deck.Deck;
+import blackjack.model.state.Hit;
+import blackjack.model.state.State;
 import java.util.List;
 
 public class Dealer extends Participant {
