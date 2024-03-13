@@ -26,19 +26,34 @@ public class Judge {
     }
 
     private void decidePlayerResult(Player player, Dealer dealer) {
+        if (decidePlayerBust(player)) return;
+        if (decidePlayerBlackJack(player, dealer)) return;
+        if (decideDealerBust(player, dealer)) return;
+        playerResult.put(player, judgePlayerWinState(player, dealer));
+    }
+
+    private boolean decidePlayerBust(Player player) {
         if (player.isBust()) {
             playerResult.put(player, WinState.LOSE);
-            return;
+            return true;
         }
+        return false;
+    }
+
+    private boolean decidePlayerBlackJack(Player player, Dealer dealer) {
         if (player.isBlackJackScore() && !dealer.isBlackJackScore()) {
             playerResult.put(player, WinState.BLACK_JACK);
-            return;
+            return true;
         }
+        return false;
+    }
+
+    private boolean decideDealerBust(Player player, Dealer dealer) {
         if (dealer.isBust()) {
             playerResult.put(player, WinState.WIN);
-            return;
+            return true;
         }
-        playerResult.put(player, judgePlayerWinState(player, dealer));
+        return false;
     }
 
     private WinState judgePlayerWinState(Player player, Dealer dealer) {
