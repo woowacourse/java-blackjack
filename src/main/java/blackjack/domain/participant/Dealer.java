@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.strategy.CardShuffleStrategy;
 
@@ -14,5 +15,9 @@ public class Dealer {
 
     public void shuffleCards() {
         cardDeck.shuffle(cardShuffleStrategy);
+    }
+
+    public Card pickCard() {
+        return cardDeck.draw();
     }
 }
