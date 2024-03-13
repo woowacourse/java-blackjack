@@ -24,18 +24,26 @@ public class Result {
 
     private void createPlayersResult(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
-            playerResult.put(player.getName(), calculatePlayerResult(dealer.totalNumber(), player.totalNumber()));
+            playerResult.put(player.getName(), calculatePlayerResult(dealer, player));
         }
     }
 
-    private String calculatePlayerResult(int dealerNumber, int playerNumber) {
-        if (dealerNumber < playerNumber) {
+    private String calculatePlayerResult(Dealer dealer, Player player) {
+        if (calculatePlayerWin(dealer, player)) {
             return WIN_WORD;
         }
-        if (dealerNumber > playerNumber) {
+        if (calculatePlayerFail(dealer, player)) {
             return FAIL_WORD;
         }
         return DRAW_WORD;
+    }
+
+    private boolean calculatePlayerWin(Dealer dealer, Player player) {
+        return dealer.totalNumber() < player.totalNumber() && player.isNotBust();
+    }
+
+    private boolean calculatePlayerFail(Dealer dealer, Player player) {
+        return dealer.totalNumber() > player.totalNumber() || player.isBust();
     }
 
     private String createDealerResult() {

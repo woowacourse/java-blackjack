@@ -1,6 +1,8 @@
 package model.view;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import model.card.CardType;
 import model.dealer.Dealer;
 import model.player.Player;
@@ -32,8 +34,16 @@ public class OutputView {
         }
     }
 
-    public void printFinalResult(String name, List<CardType> cards, int totalScore) {
+    public void printFinalCardStatus(String name, List<CardType> cards, int totalScore) {
         System.out.print(name + "카드: " + String.join(", ", cards.stream().map(CardType::card).toList()));
         System.out.println(" - 결과: " + totalScore);
+    }
+
+    public void printFinalResult(String dealerResult, Map<String, String> playerResult) {
+        System.out.println("## 최종 승패");
+        System.out.println("딜러: " + dealerResult);
+        for (Entry<String, String> entrySet : playerResult.entrySet()) {
+            System.out.println(String.join(": ", entrySet.getKey(), entrySet.getValue()));
+        }
     }
 }

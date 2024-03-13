@@ -7,6 +7,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import model.blackjackgame.Answer;
 import model.blackjackgame.BlackjackGame;
+import model.blackjackgame.Result;
 import model.card.Card;
 import model.card.CardDispenser;
 import model.card.CardType;
@@ -42,7 +43,9 @@ public class BlackjackGameController {
         turnHitPlayers(blackjackGame.getPlayers(), blackjackGame);
         turnHitDealer(blackjackGame);
 
-        printFinalResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
+        printFinalCardStatus(blackjackGame.getDealer(), blackjackGame.getPlayers());
+        Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers());
+        outputView.printFinalResult(result.getDealerResult(), result.getPlayerResult());
     }
 
     private void cardSettingBeforeGameStart(Players players, BlackjackGame blackjackGame) {
@@ -92,11 +95,12 @@ public class BlackjackGameController {
         outputView.printDealerHitStatus(dealerHit);
     }
 
-    private void printFinalResult(Dealer dealer, Players players) {
-        outputView.printFinalResult(dealer.getName(), captureCardType(dealer), dealer.totalNumber());
+    private void printFinalCardStatus(Dealer dealer, Players players) {
+        outputView.printFinalCardStatus(dealer.getName(), captureCardType(dealer), dealer.totalNumber());
         players.getPlayers()
                 .forEach(player ->
-                        outputView.printFinalResult(player.getName(), captureCardType(player), player.totalNumber()));
+                        outputView.printFinalCardStatus(player.getName(), captureCardType(player),
+                                player.totalNumber()));
     }
 
     private <T> T repeatUntilSuccess(Supplier<T> supplier) {
