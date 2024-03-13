@@ -10,15 +10,15 @@ import java.util.List;
 
 import static view.ResultView.DELIMITER;
 
-public class InputView implements AutoCloseable {
+public class InputView {
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
 
     public List<ParticipantDto> askPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = requireNotBlank(readLine());
         return Arrays.stream(input.split(DELIMITER))
-                                             .map(name -> new ParticipantDto(name.trim()))
-                                             .toList();
+                     .map(name -> new ParticipantDto(name.trim()))
+                     .toList();
     }
 
     private String requireNotBlank(final String input) {
@@ -44,10 +44,5 @@ public class InputView implements AutoCloseable {
             System.out.println(exception.getMessage());
             return readLine();
         }
-    }
-
-    @Override
-    public void close() throws Exception {
-        READER.close();
     }
 }
