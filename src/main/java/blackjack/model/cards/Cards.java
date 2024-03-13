@@ -22,7 +22,7 @@ public final class Cards {
 
     public void add(final Card card) {
         cards.add(card);
-        score = score.add(card.getScore());
+        score = score.sum(card.getScore());
     }
 
     public void add(final List<Card> cardsToAdd) {

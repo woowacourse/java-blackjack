@@ -10,7 +10,6 @@ import blackjack.view.OutputView;
 import java.util.stream.IntStream;
 
 public class BlackJackController {
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -49,18 +48,6 @@ public class BlackJackController {
                 .forEach(index -> drawCardWithCommand(players, index, cardGenerator));
     }
 
-    private void executeAdditionalDealerTurn(final Dealer dealer, final CardGenerator cardGenerator) {
-        if (dealer.checkCanGetMoreCard()) {
-            dealer.addCard(cardGenerator.drawCard());
-            outputView.printDealerChange();
-        }
-    }
-
-    private void printParticipantsProfits(final Players players, final Dealer dealer) {
-        players.calculatePlayersResults(dealer);
-        outputView.printGameResults(players);
-    }
-
     private void drawCardWithCommand(final Players players, final int index, final CardGenerator cardGenerator) {
         while (checkCanGetMoreCard(players, index) && inputView.readCommand(players.getPlayer(index)) == Command.YES) {
             players.updatePlayer(index, cardGenerator);
@@ -74,5 +61,17 @@ public class BlackJackController {
             outputView.printInvalidDrawCardState();
         }
         return result;
+    }
+
+    private void executeAdditionalDealerTurn(final Dealer dealer, final CardGenerator cardGenerator) {
+        if (dealer.checkCanGetMoreCard()) {
+            dealer.addCard(cardGenerator.drawCard());
+            outputView.printDealerChange();
+        }
+    }
+
+    private void printParticipantsProfits(final Players players, final Dealer dealer) {
+        players.calculatePlayersResults(dealer);
+        outputView.printGameResults(players);
     }
 }

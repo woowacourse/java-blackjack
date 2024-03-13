@@ -13,7 +13,7 @@ public final class Score {
         this.value = value;
     }
 
-    public Score add(final Score other) {
+    public Score sum(final Score other) {
         return new Score(value + other.value);
     }
 
@@ -31,16 +31,6 @@ public final class Score {
         return compare(other);
     }
 
-    private PlayerProfitCalculator compare(final Score other) {
-        if (isGreaterThan(other)) {
-            return PlayerProfitCalculator.WIN;
-        }
-        if (other.isGreaterThan(this)) {
-            return PlayerProfitCalculator.LOSE;
-        }
-        return PlayerProfitCalculator.PUSH;
-    }
-
     public boolean isBusted() {
         return value > BLACKJACK_SCORE;
     }
@@ -54,6 +44,16 @@ public final class Score {
             return new Score(value + ACE_ADDITIONAL_SCORE);
         }
         return this;
+    }
+
+    private PlayerProfitCalculator compare(final Score other) {
+        if (isGreaterThan(other)) {
+            return PlayerProfitCalculator.WIN;
+        }
+        if (other.isGreaterThan(this)) {
+            return PlayerProfitCalculator.LOSE;
+        }
+        return PlayerProfitCalculator.PUSH;
     }
 
     public int getValue() {

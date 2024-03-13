@@ -14,7 +14,7 @@ class ScoreTest {
     void add() {
         Score score = new Score(1);
         Score otherScore = new Score(3);
-        Score result = score.add(otherScore);
+        Score result = score.sum(otherScore);
 
         assertThat(result).isEqualTo(new Score(4));
     }
