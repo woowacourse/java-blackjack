@@ -38,7 +38,8 @@ public class BlackJackGame {
         return new GameResults(playerGameResults);
     }
 
-    private void match(final Dealer dealer, final Player player, final Map<PlayerName, GameResult> playerGameResults) {
+    private void match(final Dealer dealer, final Player player,
+                       final Map<PlayerName, GameResult> playerGameResults) {
         if (dealer.isDealerWin(player)) {
             dealerWin(player, playerGameResults);
             return;

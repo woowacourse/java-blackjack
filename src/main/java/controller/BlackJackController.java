@@ -43,7 +43,8 @@ public class BlackJackController {
         }
     }
 
-    private void play(final BlackJackGame blackJackGame, final Betting betting, final Dealer dealer, final List<Player> players) {
+    private void play(final BlackJackGame blackJackGame, final Betting betting,
+                      final Dealer dealer, final List<Player> players) {
         initBettingForPlayers(betting, players);
 
         firstDraw(blackJackGame, dealer, players);
@@ -51,7 +52,9 @@ public class BlackJackController {
         playForDealer(blackJackGame, dealer);
 
         DealerHandStatusDto dealerHandStatusDto = DealerHandStatusDto.of(dealer);
-        List<PlayerHandStatusDto> playerHandStatusDtos = players.stream().map(PlayerHandStatusDto::of).toList();
+        List<PlayerHandStatusDto> playerHandStatusDtos = players.stream()
+                .map(PlayerHandStatusDto::of)
+                .toList();
         OutputView.printFinalHandStatus(dealerHandStatusDto, playerHandStatusDtos);
     }
 
@@ -93,7 +96,7 @@ public class BlackJackController {
         }
     }
 
-    private static void playOneTurnForPlayer(final BlackJackGame blackJackGame, final Player player) {
+    private void playOneTurnForPlayer(final BlackJackGame blackJackGame, final Player player) {
         try {
             blackJackGame.drawForParticipant(player);
         } catch (IllegalStateException e) {
@@ -133,7 +136,8 @@ public class BlackJackController {
         OutputView.printDealerDrawMessage();
     }
 
-    private void finish(final BlackJackGame blackJackGame, final Betting betting, final Dealer dealer, final List<Player> players) {
+    private void finish(final BlackJackGame blackJackGame, final Betting betting,
+                        final Dealer dealer, final List<Player> players) {
         GameResults gameResults = blackJackGame.getGameResults(dealer, players);
         BettingResult bettingResult = new BettingResult(gameResults.calculateBettingOnPlayers(betting));
         OutputView.printDealerBettingResult(bettingResult.getDealerBettingResult());
