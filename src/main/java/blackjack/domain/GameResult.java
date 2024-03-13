@@ -10,7 +10,6 @@ public class GameResult {
     private static final int INITIAL_DRAW_CARD_NUMBER = 2;
     private static final int BLACK_JACK = 21;
 
-
     private final Map<Player, Result> gameResult;
 
     private GameResult(Map<Player, Result> gameResult) {
