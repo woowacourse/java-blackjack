@@ -22,29 +22,29 @@ import domain.card.Card;
 import domain.participant.Hands;
 import java.util.List;
 
-class HandsTestFixture {
+public class HandsTestFixture {
 
-    static final Hands sum10Size2 = new Hands(List.of(new Card(FIVE, SPADE), new Card(FIVE, HEART)));
-    static final Hands sum17Size3One = new Hands(
+    public static final Hands sum10Size2 = new Hands(List.of(new Card(FIVE, SPADE), new Card(FIVE, HEART)));
+    public static final Hands sum17Size3One = new Hands(
             List.of(new Card(SEVEN, SPADE), new Card(FOUR, SPADE), new Card(SIX, SPADE)));
-    static final Hands sum17Size3Two = new Hands(
+    public static final Hands sum17Size3Two = new Hands(
             List.of(new Card(TEN, SPADE), new Card(THREE, SPADE), new Card(FOUR, SPADE)));
-    static final Hands sum18Size2 = new Hands(List.of(new Card(EIGHT, CLOVER), new Card(TEN, DIAMOND)));
-    static final Hands sum19Size4Ace11 = new Hands(
+    public static final Hands sum18Size2 = new Hands(List.of(new Card(EIGHT, CLOVER), new Card(TEN, DIAMOND)));
+    public static final Hands sum19Size4Ace11 = new Hands(
             List.of(new Card(ACE, DIAMOND), new Card(TWO, CLOVER), new Card(FOUR, CLOVER), new Card(TWO, CLOVER)));
-    static final Hands sum19Size3Ace1 = new Hands(
+    public static final Hands sum19Size3Ace1 = new Hands(
             List.of(new Card(ACE, HEART), new Card(NINE, SPADE), new Card(NINE, CLOVER)));
-    static final Hands sum20Size2 = new Hands(List.of(new Card(NINE, SPADE), new Card(ACE, SPADE)));
-    static final Hands sum20Size3 = new Hands(
+    public static final Hands sum20Size2 = new Hands(List.of(new Card(NINE, SPADE), new Card(ACE, SPADE)));
+    public static final Hands sum20Size3 = new Hands(
             List.of(new Card(SEVEN, SPADE), new Card(TWO, SPADE), new Card(ACE, SPADE)));
-    static final Hands sum20Size3Ace1 = new Hands(
+    public static final Hands sum20Size3Ace1 = new Hands(
             List.of(new Card(ACE, DIAMOND), new Card(EIGHT, CLOVER), new Card(FIVE, CLOVER), new Card(SIX, CLOVER)));
-    static final Hands sum21Size3 = new Hands(
+    public static final Hands sum21Size3 = new Hands(
             List.of(new Card(QUEEN, HEART), new Card(SIX, SPADE), new Card(FIVE, CLOVER)));
-    static final Hands sum21Size3Ace11 = new Hands(
+    public static final Hands sum21Size3Ace11 = new Hands(
             List.of(new Card(ACE, HEART), new Card(EIGHT, SPADE), new Card(TWO, CLOVER)));
-    static final Hands bustHands = new Hands(
+    public static final Hands bustHands = new Hands(
             List.of(new Card(EIGHT, DIAMOND), new Card(TWO, DIAMOND), new Card(TWO, DIAMOND), new Card(KING, CLOVER)));
-    static final Hands noBustHands = new Hands(List.of(new Card(JACK, HEART), new Card(TEN, SPADE)));
-    static final Hands blackJack = new Hands(List.of(new Card(JACK, HEART), new Card(ACE, SPADE)));
+    public static final Hands noBustHands = new Hands(List.of(new Card(JACK, HEART), new Card(TEN, SPADE)));
+    public static final Hands blackJack = new Hands(List.of(new Card(JACK, HEART), new Card(ACE, SPADE)));
 }
