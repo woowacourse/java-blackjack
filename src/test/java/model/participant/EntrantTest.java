@@ -7,7 +7,7 @@ import java.util.List;
 import model.card.Card;
 import model.card.Emblem;
 import model.card.Number;
-import model.dto.FaceUpResult;
+import service.dto.FaceUpResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

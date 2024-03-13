@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Queue;
 import java.util.stream.Collectors;
 import model.card.Card;
-import model.dto.FaceUpResult;
+import service.dto.FaceUpResult;
 
 public class Entrant {
     private final Dealer dealer;

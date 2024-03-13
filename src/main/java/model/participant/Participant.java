@@ -2,7 +2,7 @@ package model.participant;
 
 import model.card.Card;
 import model.card.CardDeck;
-import model.dto.FaceUpResult;
+import service.dto.FaceUpResult;
 
 public abstract class Participant {
 

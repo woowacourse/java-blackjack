@@ -1,9 +1,9 @@
 package view;
 
 import java.util.List;
-import model.dto.DealerScoreResult;
-import model.dto.FaceUpResult;
-import model.dto.PlayerScoreResult;
+import service.dto.DealerScoreResult;
+import service.dto.FaceUpResult;
+import service.dto.PlayerScoreResult;
 import model.casino.MatchResult;
 
 public class OutputView {

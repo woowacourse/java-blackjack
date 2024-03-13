@@ -1,21 +1,26 @@
-package model.casino;
+package service;
 
-import static java.util.Collections.*;
-import static model.casino.MatchResult.*;
+import static java.util.Collections.frequency;
+import static model.casino.MatchResult.DRAW;
+import static model.casino.MatchResult.LOSE;
+import static model.casino.MatchResult.WIN;
 
 import java.util.EnumMap;
 import java.util.List;
 import model.Choice;
-import model.dto.DealerScoreResult;
-import model.dto.FaceUpResult;
-import model.dto.PlayerScoreResult;
+import model.casino.CardDispenser;
+import model.casino.CardShuffleMachine;
+import model.casino.MatchResult;
 import model.participant.Entrant;
+import service.dto.DealerScoreResult;
+import service.dto.FaceUpResult;
+import service.dto.PlayerScoreResult;
 
-public class Casino {
+public class CasinoService {
     private final Entrant entrant;
     private final CardDispenser cardDispenser;
 
-    public Casino(Entrant entrant, CardShuffleMachine cardShuffleMachine) {
+    public CasinoService(Entrant entrant, CardShuffleMachine cardShuffleMachine) {
         this.entrant = entrant;
         this.cardDispenser = new CardDispenser(cardShuffleMachine);
     }
