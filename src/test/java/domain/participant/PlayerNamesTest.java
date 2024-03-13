@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static domain.participant.PlayerNames.MAX_PLAYER_NUMBER;
+
 public class PlayerNamesTest {
 
     @DisplayName("플레이어 이름들을 입력하면 인스턴스를 생성한다.")
@@ -42,6 +44,6 @@ public class PlayerNamesTest {
         // When & Then
         Assertions.assertThatThrownBy(() -> PlayerNames.of(inputPlayerNames))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("게임에 참여할 사람은 ", "명 이하여야 합니다.");
+                .hasMessageContaining(String.format("게임에 참여할 사람은 %d명 이하여야 합니다.", MAX_PLAYER_NUMBER));
     }
 }
