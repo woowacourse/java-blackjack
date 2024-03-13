@@ -57,7 +57,7 @@ public class BlackJack {
     }
 
     public void decideDealerPlay(Runnable runnable) {
-        while (isDealerUnderThreshold()) {
+        while (dealer.isHit()) {
             runnable.run();
             offerCardToDealer(CardSize.ONE);
         }
@@ -78,10 +78,6 @@ public class BlackJack {
                         participant -> participant,
                         participant -> participant.findOutcome(dealer)
                 ));
-    }
-
-    public boolean isDealerUnderThreshold() {
-        return dealer.isHit();
     }
 
     public Map<Outcome, Long> getDealerOutCome() {
