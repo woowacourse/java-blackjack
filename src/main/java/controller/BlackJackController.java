@@ -3,9 +3,9 @@ package controller;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.Players;
+import domain.gamer.PlayersCreator;
 import dto.AllPlayerResultDto;
 import dto.DealerResultDto;
-import dto.GameResultDto;
 import dto.InitCardDto;
 import dto.PlayerCardStateDto;
 import view.InputView;
@@ -22,7 +22,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        Players players = Players.settingPlayers(inputView.inputPlayerNames());
+        Players players = new PlayersCreator().create(inputView.inputPlayerNames());
         Dealer dealer = new Dealer();
 
         players.initCard(dealer);
@@ -53,6 +53,6 @@ public class BlackJackController {
     private void showResult(Players players, Dealer dealer) {
         outputView.printDealerScore(DealerResultDto.makeDealerResultDto(dealer));
         outputView.printPlayersScore(AllPlayerResultDto.makeAllPlayerResultDto(players));
-        outputView.printResult(GameResultDto.makeGameResultDto(players, dealer), players.getNames());
+        outputView.printResult(players.getResult(dealer.getMaxGameScore()));
     }
 }
