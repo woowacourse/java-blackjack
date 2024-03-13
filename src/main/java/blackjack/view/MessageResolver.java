@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.cardgame.CardGameResult;
+import blackjack.domain.cardgame.WinningStatus;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 
@@ -16,6 +17,9 @@ import static blackjack.domain.card.CardShape.CLOVER;
 import static blackjack.domain.card.CardShape.DIAMOND;
 import static blackjack.domain.card.CardShape.HEART;
 import static blackjack.domain.card.CardShape.SPADE;
+import static blackjack.domain.cardgame.WinningStatus.LOSE;
+import static blackjack.domain.cardgame.WinningStatus.PUSH;
+import static blackjack.domain.cardgame.WinningStatus.WIN;
 
 public class MessageResolver {
     private static final Map<CardShape, String> CARD_SHAPE_NAME_MAP = Map.of(
@@ -33,6 +37,12 @@ public class MessageResolver {
             Map.entry(NINE, "9"), Map.entry(TEN, "10"),
             Map.entry(JACK, "J"), Map.entry(QUEEN, "Q"),
             Map.entry(KING, "K")
+    );
+
+    private static final Map<WinningStatus, String> WINNING_STATUS_NAME_MAP = Map.of(
+            WIN, "승",
+            PUSH, "무",
+            LOSE, "패"
     );
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
@@ -91,7 +101,7 @@ public class MessageResolver {
         return cardGameResult.totalResult()
                 .entrySet()
                 .stream()
-                .map(result -> result.getKey().getName() + ": " + result.getValue().getValue())
+                .map(result -> result.getKey().getName() + ": " + WINNING_STATUS_NAME_MAP.get(result.getValue()))
                 .collect(Collectors.joining(LINE_SEPARATOR));
     }
 
