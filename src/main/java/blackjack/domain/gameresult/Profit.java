@@ -28,7 +28,15 @@ public class Profit {
         }
     }
 
-    public Double getProfit() {
+    public static double maxProfitRate(){
+        return MAX_PROFIT_RATE;
+    }
+
+    public static double minProfitRate(){
+        return MIN_PROFIT_RATE;
+    }
+
+    public double getProfit() {
         return Profit;
     }
 
