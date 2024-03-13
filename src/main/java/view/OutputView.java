@@ -42,8 +42,8 @@ public class OutputView {
 
     public static void printFinalFaceUpResult(FaceUpResult dealerFaceUpResult, List<FaceUpResult> playerFaceUpResults) {
         System.out.print(System.lineSeparator());
-        printSingleFinalFaceUp(dealerFaceUpResult);
-        playerFaceUpResults.forEach(OutputView::printSingleFinalFaceUp);
+        printSinglePlayerFinalFaceUp(dealerFaceUpResult);
+        playerFaceUpResults.forEach(OutputView::printSinglePlayerFinalFaceUp);
     }
 
     public static void printSingleFaceUp(FaceUpResult result) {
@@ -51,7 +51,7 @@ public class OutputView {
                 result.getCardsAsStrings()));
     }
 
-    private static void printSingleFinalFaceUp(FaceUpResult result) {
+    private static void printSinglePlayerFinalFaceUp(FaceUpResult result) {
         printMessage(result.getPartipantNameAsString() + NAME_CARD_DELIMITER + String.join(CARD_DELIMITER,
                 result.getCardsAsStrings()) + " - 결과: " + result.hand());
     }
