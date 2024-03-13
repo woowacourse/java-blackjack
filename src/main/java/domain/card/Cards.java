@@ -51,7 +51,7 @@ public class Cards {
         return score > MAX_BLACK_JACK_SCORE;
     }
 
-    public int getMinGameScore() {
+    public int getScoreByAceToOne() {
         return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
@@ -61,5 +61,9 @@ public class Cards {
         return cards.stream()
                 .map(Card::getCardName)
                 .collect(Collectors.toList());
+    }
+
+    public int getSize() {
+        return cards.size();
     }
 }

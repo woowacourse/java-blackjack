@@ -17,7 +17,7 @@ public class Player extends Gamer {
     }
 
     public boolean isDrawable() {
-        return cards.getMinGameScore() <= MAX_BLACK_JACK_SCORE && cards.countMaxScore() != BUST;
+        return cards.getScoreByAceToOne() <= MAX_BLACK_JACK_SCORE && cards.countMaxScore() != BUST;
     }
 
     public Name getName() {
