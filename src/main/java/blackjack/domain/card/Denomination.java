@@ -28,10 +28,10 @@ public enum Denomination {
     }
 
     public String getExpression() {
-        return this.expression;
+        return expression;
     }
 
     public int getScore() {
-        return this.score;
+        return score;
     }
 }
