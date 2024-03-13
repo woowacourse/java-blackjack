@@ -16,11 +16,11 @@ public record ParticipantDto(String name, CardsDto cards) {
     }
 
     public ParticipantDto(final Participant participant) {
-        this(participant.name().value(), new CardsDto(participant.hand(), participant.cardSum()));
+        this(participant.name().value(), new CardsDto(participant.hand(), participant.score()));
     }
 
     public ParticipantDto(final Participant participant, final Card card) {
-        this(participant.name().value(), new CardsDto(new Cards(List.of(card)), participant.cardSum()));
+        this(participant.name().value(), new CardsDto(new Cards(List.of(card)), participant.score()));
     }
 
     public static List<ParticipantDto> fromPlayers(final Players players) {

@@ -11,14 +11,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ParticipantTest {
 
-    @DisplayName("참가자는 카드의 합을 구할 수 있다.")
-    @Test
-    void cardSum() {
-        Participant participant = new Player(new Name("zeus"));
-        participant.receive(new Card(CardShape.SPADE, CardNumber.JACK));
-        assertThat(participant.cardSum()).isEqualTo(10);
-    }
-
     @DisplayName("카드의 합계로 `Bust`를 판단한다.")
     @Test
     void isBust() {

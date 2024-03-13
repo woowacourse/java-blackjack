@@ -1,62 +1,47 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Hand;
 
-import java.util.Objects;
+import static domain.BlackjackGame.BLACKJACK_SCORE;
 
 public abstract class Participant {
 
     private final Name name;
-    private final Cards hand;
+    private final Hand hand;
 
     public Participant(final Name name) {
         this.name = name;
-        hand = new Cards();
+        hand = new Hand();
     }
+
+    public abstract boolean canReceiveMoreCard();
 
     public void receive(final Card card) {
         hand.add(card);
     }
 
-    public int cardSum() {
-        int total = hand.sum();
-        if (hasAceAsEleven(total)) {
-            return total + 10;
-        }
-        return total;
+    public Card peekCard() {
+        return hand.peek();
     }
 
-    private boolean hasAceAsEleven(final int total) {
-        return hand.hasAce() && total + 10 <= 21;
+    public int score() {
+        return hand.score();
     }
 
     public boolean isBust() {
-        return hand.sum() > 21;
+        return hand.getCards().sum() > BLACKJACK_SCORE;
     }
 
     public boolean isBlackjack() {
-        return hand.sum() == 21;
+        return hand.getCards().sum() == BLACKJACK_SCORE;
     }
 
     public Name name() {
-        return name;
+        return new Name(name);
     }
 
-    public Cards hand() {
-        return hand;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Participant that = (Participant) o;
-        return Objects.equals(name, that.name) && Objects.equals(hand, that.hand);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, hand);
+    public Hand hand() {
+        return new Hand(hand);
     }
 }
