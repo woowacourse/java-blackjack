@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import static view.InputView.*;
 import static view.OutputView.*;
 
-public class Casino {
+public class BlackjackGameManager {
 
     private final Deck deck = new Deck(new RandomDrawStrategy());
 
