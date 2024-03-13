@@ -27,11 +27,12 @@ class BlackJackResultTest {
     void getDealerResult() {
         BlackJackResult blackJackResult = new BlackJackResult(20, Map.of(
                 new Name("test"), 10,
-                new Name("test2"), 21));
+                new Name("test2"), 10,
+                new Name("test3"), 21));
         Map<GamerResult, Integer> dealerResult = blackJackResult.getDealerResult();
         Assertions.assertThat(dealerResult)
                 .isEqualTo(Map.of(
-                        GamerResult.WIN, 1,
+                        GamerResult.WIN, 2,
                         GamerResult.LOSE, 1));
     }
 }

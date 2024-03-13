@@ -19,7 +19,7 @@ public class BlackJackResult {
         return playersScore.values()
                 .stream()
                 .collect(Collectors.groupingBy(
-                        value -> getJudgePlayerResult(dealerScore, value),
+                        value -> getJudgePlayerResult(dealerScore, value).getOpponentGameResult(),
                         Collectors.summingInt(count -> 1)));
     }
 
