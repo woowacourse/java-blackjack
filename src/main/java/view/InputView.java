@@ -29,8 +29,9 @@ public class InputView {
     }
 
     public int readBet(Name name) {
+        System.out.println();
+        System.out.println(name + "의 배팅 금액은?");
         try {
-            System.out.println(name + "의 배팅 금액은?");
             return Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e) {
             System.out.println("숫자를 입력해주세요.");
