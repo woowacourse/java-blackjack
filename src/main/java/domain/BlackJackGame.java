@@ -5,9 +5,11 @@ import domain.cards.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.Players;
+import domain.judge.Judge;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackGame {
 
@@ -24,9 +26,7 @@ public class BlackJackGame {
     public void shareInitCards(Deck deck) {
         List<Player> players = new ArrayList<>(this.players.getPlayers());
         players.add(dealer);
-        for (Player player : players) {
-            hitInitCards(player, deck);
-        }
+        players.forEach(player -> hitInitCards(player, deck));
     }
 
     private void hitInitCards(Player player, Deck deck) {
@@ -35,8 +35,8 @@ public class BlackJackGame {
         }
     }
 
-    public boolean canPlayerMoreHit(Player player) {
-        return player.canHit();
+    public boolean canPlayerMoreHit(Player player, HitOption hitOption) {
+        return player.canHit() && hitOption.doHit();
     }
 
     public Card allowHit(Player player, Deck deck) {
@@ -47,5 +47,11 @@ public class BlackJackGame {
 
     public boolean canDealerMoreHit(Dealer dealer) {
         return dealer.canHit();
+    }
+
+    public Map<Player, BetAmount> makeResultOfGame(Cashier cashier) {
+        Judge judge = new Judge();
+        judge.decideResult(players, dealer);
+        return cashier.calculatePlayersProfits(judge.getPlayerResult(), dealer);
     }
 }
