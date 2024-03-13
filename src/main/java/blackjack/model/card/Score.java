@@ -36,10 +36,6 @@ public class Score {
         return value < criterion.value;
     }
 
-    public boolean equalToOrGreaterThan(final Score criterion) {
-        return value >= criterion.value;
-    }
-
     public boolean greaterThan(final Score criterion) {
         return value > criterion.value;
     }
