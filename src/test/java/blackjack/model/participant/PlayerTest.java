@@ -1,7 +1,6 @@
 package blackjack.model.participant;
 
 import static blackjack.model.deck.Score.ACE;
-import static blackjack.model.deck.Score.QUEEN;
 import static blackjack.model.deck.Score.TEN;
 import static blackjack.model.deck.Score.THREE;
 import static blackjack.model.deck.Score.TWO;
@@ -12,10 +11,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import blackjack.model.deck.Card;
-import blackjack.model.state.finished.BlackJack;
-import blackjack.model.state.finished.Bust;
-import blackjack.model.state.playing.Hit;
-import blackjack.model.state.finished.Stand;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -98,50 +93,5 @@ class PlayerTest {
         player.draw(new Card(SPADE, TWO));
 
         assertThat(player.canHit()).isFalse();
-    }
-
-    @Nested
-    @DisplayName("플레이어의 현재 상태")
-    class StateOfPlayer {
-        private Player player;
-
-        @BeforeEach
-        void init() {
-            player = new Player("리브");
-        }
-
-        @Test
-        @DisplayName("카드의 점수가 21 미만이면 Hit 상태이다.")
-        void hit() {
-            player.receiveInitialCards(List.of(new Card(SPADE, TWO), new Card(DIA, THREE)));
-
-            assertThat(player.getState()).isInstanceOf(Hit.class);
-        }
-
-        @Test
-        @DisplayName("2장의 카드로 21점이면 BlackJack 상태이다.")
-        void blackJack() {
-            player.receiveInitialCards(List.of(new Card(SPADE, ACE), new Card(DIA, QUEEN)));
-
-            assertThat(player.getState()).isInstanceOf(BlackJack.class);
-        }
-
-        @Test
-        @DisplayName("카드의 점수가 21을 초과하면 Bust 상태이다.")
-        void bust() {
-            player.receiveInitialCards(List.of(new Card(SPADE, QUEEN), new Card(DIA, QUEEN)));
-            player.draw(new Card(CLOVER, TWO));
-
-            assertThat(player.getState()).isInstanceOf(Bust.class);
-        }
-
-        @Test
-        @DisplayName("플레이어가 더 이상 카드를 받지 않는 것을 선택하면 Stand 상태가 된다.")
-        void stand() {
-            player.receiveInitialCards(List.of(new Card(SPADE, QUEEN), new Card(DIA, QUEEN)));
-            player.stand();
-
-            assertThat(player.getState()).isInstanceOf(Stand.class);
-        }
     }
 }

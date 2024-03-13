@@ -15,11 +15,11 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canHit() {
-        return state.calculateScore() <= HITTABLE_THRESHOLD;
+        return hand.calculateScore() <= HITTABLE_THRESHOLD;
     }
 
     public boolean isBlackJack() {
-        return state.isBlackJack();
+        return hand.isBlackJack();
     }
 
     public List<Card> distributeInitialCard() {
@@ -31,7 +31,7 @@ public class Dealer extends Participant {
     }
 
     public List<Card> openFirstCard() {
-        final List<Card> cards = state.hand().getCards();
+        final List<Card> cards = hand.getCards();
         return List.of(cards.get(0));
     }
 }

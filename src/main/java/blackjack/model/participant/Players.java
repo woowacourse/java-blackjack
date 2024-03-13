@@ -2,12 +2,9 @@ package blackjack.model.participant;
 
 import blackjack.dto.NameCardsScore;
 import blackjack.model.Bets;
-import blackjack.model.Money;
 import blackjack.model.deck.Card;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -65,7 +62,7 @@ public class Players {
 
     public Bets createBets(Function<String, Integer> readBetMoney) {
         final Bets bets = new Bets();
-        for (Player player: players) {
+        for (Player player : players) {
             final int money = readBetMoney.apply(player.getName());
             bets.addBet(player, money);
         }

@@ -1,6 +1,5 @@
 package blackjack.model.participant;
 
-import blackjack.model.state.State;
 import java.util.Objects;
 
 public class Player extends Participant {
@@ -21,23 +20,15 @@ public class Player extends Participant {
 
     @Override
     public boolean canHit() {
-        return state.calculateScore() < HITTABLE_THRESHOLD;
-    }
-
-    public void stand() {
-        state = state.stand();
+        return hand.calculateScore() < HITTABLE_THRESHOLD;
     }
 
     public boolean isBlackJack() {
-        return state.isBlackJack();
+        return hand.isBlackJack();
     }
 
     public String getName() {
         return name;
-    }
-
-    public State getState() {
-        return state;
     }
 
     @Override
