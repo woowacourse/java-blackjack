@@ -103,4 +103,17 @@ class PlayerTest {
             assertThat(isHittable).isTrue();
         }
     }
+
+    @Test
+    @DisplayName("현재 플레이어가 블랙잭인지를 판단한다.")
+    void isBlackJack() {
+        List<Card> cards = new ArrayList<>(List.of(TEN_HEARTS, ACE_HEARTS));
+        Hand hand = new Hand(cards);
+        Name name = new Name("wiib");
+        Player player = new Player(name, hand);
+
+        boolean isBlackJack = player.isBlackJack();
+
+        assertThat(isBlackJack).isTrue();
+    }
 }
