@@ -1,9 +1,5 @@
 package blackjack.model.result;
 
-import blackjack.model.card.Card;
-import blackjack.model.card.Denomination;
-import blackjack.model.card.Suit;
-import blackjack.model.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -20,12 +16,12 @@ class BettingBoardTest {
     @DisplayName("플레이어의 게임 결과로 수익을 구한다")
     void determineProfitTest(MatchResult matchResult, double expectedProfit) {
         // given
-        Player mia = new Player("mia", () -> new Card(Suit.HEART, Denomination.TEN));
-        Map<Player, BettingMoney> bettingMoneys = Map.of(mia, new BettingMoney(1000));
+        String playerName = "mia";
+        Map<String, BettingMoney> bettingMoneys = Map.of(playerName, new BettingMoney(1000));
         BettingBoard bettingBoard = new BettingBoard(bettingMoneys);
 
         // when
-        BettingMoney bettingMoney = bettingBoard.determineProfit(mia, matchResult);
+        BettingMoney bettingMoney = bettingBoard.determineProfit(playerName, matchResult);
 
         // then
         assertThat(bettingMoney.getAmount()).isEqualTo(expectedProfit);

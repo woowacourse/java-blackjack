@@ -44,10 +44,10 @@ public class BlackJackController {
     }
 
     private BettingBoard prepareBettingBoard(final Players players) {
-        Map<Player, BettingMoney> board = new HashMap<>();
-        for (Player player : players.getPlayers()) {
-            int bettingMoney = retryOnException(() -> inputView.askBettingMoney(player.getName()));
-            board.put(player, new BettingMoney(bettingMoney));
+        Map<String, BettingMoney> board = new HashMap<>();
+        for (String playerName : players.getNames()) {
+            int bettingMoney = retryOnException(() -> inputView.askBettingMoney(playerName));
+            board.put(playerName, new BettingMoney(bettingMoney));
         }
         return new BettingBoard(board);
     }
@@ -97,7 +97,7 @@ public class BlackJackController {
         List<PlayerProfit> playerProfits = new ArrayList<>();
         for (Player player : players.getPlayers()) {
             MatchResult matchResult = dealer.determinePlayerMatchResult(player);
-            BettingMoney profit = bettingBoard.determineProfit(player, matchResult);
+            BettingMoney profit = bettingBoard.determineProfit(player.getName(), matchResult);
             playerProfits.add(new PlayerProfit(player.getName(), profit.getAmount()));
         }
         outputView.printFinalProfits(playerProfits);
