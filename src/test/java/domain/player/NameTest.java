@@ -1,0 +1,26 @@
+package domain.player;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+class NameTest {
+
+    @Test
+    @DisplayName("이름이 비어 있으면 예외를 발생시킨다")
+    void blank() {
+        assertThatCode(() -> new Name("")).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("비어");
+    }
+
+    @Test
+    @DisplayName("이름이 5글자를 초과하면 예외가 발생한다")
+    void nameLength() {
+        assertThatCode(() -> new Name("123456")).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("이름 길이");
+    }
+
+}
