@@ -26,26 +26,26 @@ public class Player {
 
     public void hit(
             final Dealer dealer,
-            final Predicate<PlayerName> isHitInput,
-            final BiConsumer<PlayerName, Hands> printHands
+            final Predicate<PlayerName> callBefore,
+            final BiConsumer<PlayerName, Hands> callAfter
     ) {
-        while (isContinueHit(isHitInput)) {
+        while (isContinueHit(callBefore)) {
             final Card card = dealer.drawCard();
             state = state.draw(card);
-            printHands.accept(getName(), getHands());
+            callAfter.accept(getName(), getHands());
         }
 
-        stand(printHands);
+        stand(callAfter);
     }
 
-    private boolean isContinueHit(final Predicate<PlayerName> isHitInput) {
-        return state.isHit() && isHitInput.test(getName());
+    private boolean isContinueHit(final Predicate<PlayerName> callBefore) {
+        return state.isHit() && callBefore.test(getName());
     }
 
-    private void stand(final BiConsumer<PlayerName, Hands> printHands) {
+    private void stand(final BiConsumer<PlayerName, Hands> callAfter) {
         state = state.stand();
         if (state.countHit() == 0) {
-            printHands.accept(getName(), getHands());
+            callAfter.accept(getName(), getHands());
         }
     }
 
