@@ -28,4 +28,9 @@ public class BettingBoard {
         BettingAmount bettingAmount = moneys.get(player);
         return bettingAmount;
     }
+
+    public BettingAmount payMoneyWhenPlayerBust(final Player player) {
+        BettingAmount bettingAmount = moneys.get(player);
+        return bettingAmount.payAll();
+    }
 }

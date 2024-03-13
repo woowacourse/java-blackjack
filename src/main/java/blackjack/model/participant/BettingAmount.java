@@ -16,6 +16,14 @@ public class BettingAmount {
         }
     }
 
+    public BettingAmount multiple(final double profitRate) {
+        return new BettingAmount((int) (money * profitRate));
+    }
+
+    public BettingAmount payAll() {
+        return new BettingAmount(0);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -31,9 +39,5 @@ public class BettingAmount {
     @Override
     public int hashCode() {
         return Objects.hash(money);
-    }
-
-    public BettingAmount multiple(final double profitRate) {
-        return new BettingAmount((int) (this.money * profitRate));
     }
 }

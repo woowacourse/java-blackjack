@@ -23,7 +23,7 @@ class BettingBoardTest {
         Map<Player, BettingAmount> moneyByPlayer = Map.of(player, bettingAmount);
 
         BettingBoard bettingBoard = new BettingBoard(moneyByPlayer);
-        assertThat(bettingBoard.giveWinnerMoneyByBlackJack(player)).isEqualTo(bettingAmount.multiple(1.5));
+        assertThat(bettingBoard.giveWinnerMoneyByBlackJack(player)).isEqualTo(new BettingAmount(1500));
     }
 
     @Test
@@ -34,7 +34,7 @@ class BettingBoardTest {
         Map<Player, BettingAmount> moneyByPlayer = Map.of(player, bettingAmount);
 
         BettingBoard bettingBoard = new BettingBoard(moneyByPlayer);
-        assertThat(bettingBoard.giveTieMoneyByBlackJack(player)).isEqualTo(bettingAmount);
+        assertThat(bettingBoard.giveTieMoneyByBlackJack(player)).isEqualTo(new BettingAmount(1000));
     }
 
     @Test
@@ -45,6 +45,17 @@ class BettingBoardTest {
         Map<Player, BettingAmount> moneyByPlayer = Map.of(player, bettingAmount);
 
         BettingBoard bettingBoard = new BettingBoard(moneyByPlayer);
-        assertThat(bettingBoard.giveWinnerMoneyWhenDealerBust(player)).isEqualTo(bettingAmount);
+        assertThat(bettingBoard.giveWinnerMoneyWhenDealerBust(player)).isEqualTo(new BettingAmount(1000));
+    }
+
+    @Test
+    @DisplayName("21을 초과한 경우 플레이어의 배팅 금액은 모두 잃는다.")
+    void payMoneyWhenPlayerBust() {
+        Player player = Player.of("몰리", new Hand(List.of(new Card(Shape.DIA, Score.TEN), new Card(Shape.DIA, Score.ACE))));
+        BettingAmount bettingAmount = new BettingAmount(1000);
+        Map<Player, BettingAmount> moneyByPlayer = Map.of(player, bettingAmount);
+
+        BettingBoard bettingBoard = new BettingBoard(moneyByPlayer);
+        assertThat(bettingBoard.payMoneyWhenPlayerBust(player)).isEqualTo(new BettingAmount(0));
     }
 }
