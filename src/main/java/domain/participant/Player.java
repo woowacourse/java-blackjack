@@ -11,7 +11,7 @@ public class Player extends Participant {
 
     @Override
     public boolean canDeal() {
-        return handsSum() <= BLACK_JACK;
+        return handsSum() < BLACK_JACK;
     }
 
     private void validate(final Name name) {
