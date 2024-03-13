@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.game.Score;
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PlayerCards {
@@ -58,7 +59,7 @@ public class PlayerCards {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 
     public int size() {
