@@ -55,7 +55,7 @@ public class BlackjackGame {
     }
 
     private boolean isGameEnd(final Dealer dealer, final Players players) {
-        return dealer.isBlackJack(); // TODO: players 전부 블랙잭인지도 확인
+        return dealer.isBlackJack() || players.isAllBlackJack();
     }
 
     private void drawPlayerCards(final Player player, final CardGenerator cardGenerator) {

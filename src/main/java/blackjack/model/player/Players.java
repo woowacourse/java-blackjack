@@ -37,6 +37,11 @@ public class Players {
         }
     }
 
+    public boolean isAllBlackJack() {
+        return players.stream()
+                .allMatch(Player::isBlackJack);
+    }
+
     public List<PlayerFinalCardsOutcome> captureFinalCardsOutcomes() {
         return players.stream()
                 .map(PlayerFinalCardsOutcome::of)
