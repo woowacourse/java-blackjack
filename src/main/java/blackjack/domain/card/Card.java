@@ -20,6 +20,10 @@ public class Card {
         return value.getMaxScore();
     }
 
+    public boolean isAce() {
+        return value.isAce();
+    }
+
     @Override
     public boolean equals(Object object) {
         if (this == object) {
@@ -43,9 +47,5 @@ public class Card {
 
     public Shape getShape() {
         return shape;
-    }
-
-    public boolean isAce() {
-        return value.isAce();
     }
 }
