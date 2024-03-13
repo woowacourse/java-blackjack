@@ -12,10 +12,10 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(final List<String> playerNames, final CardGenerator cardGenerator) {
+    public Players(final List<String> playerNames) {
         validate(playerNames);
         this.players = playerNames.stream()
-                .map(name -> new Player(name, cardGenerator))
+                .map(Player::new)
                 .toList();
     }
 
@@ -35,6 +35,10 @@ public class Players {
         if (uniquePlayerNames.size() != playerNames.size()) {
             throw new IllegalArgumentException(DUPLICATED_NAMES);
         }
+    }
+
+    public void dealCards(final CardGenerator cardGenerator) {
+        players.forEach(player -> player.dealCards(cardGenerator));
     }
 
     public boolean isAllBlackJack() {

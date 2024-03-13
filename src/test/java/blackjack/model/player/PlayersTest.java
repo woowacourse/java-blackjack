@@ -19,7 +19,7 @@ class PlayersTest {
     @DisplayName("참여자 수는 1명 이상이 아니면 예외가 발생한다")
     void validatePlayersCountTest() {
         // when & then
-        assertThatThrownBy(() -> new Players(List.of(), () -> new Card(Suit.HEART, Denomination.TWO)))
+        assertThatThrownBy(() -> new Players(List.of()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -28,7 +28,7 @@ class PlayersTest {
     @DisplayName("참여자 이름은 중복되면 예외가 발생한다")
     void validateDuplicatedNamesTest(List<String> names) {
         // when & then
-        assertThatThrownBy(() -> new Players(names, () -> new Card(Suit.HEART, Denomination.TWO)))
+        assertThatThrownBy(() -> new Players(names))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -43,10 +43,11 @@ class PlayersTest {
     @DisplayName("모든 참여자가 블랙잭이면 true를 반환한다")
     void isAllBlackJackTest() {
         // given
-        Card aceCard = new Card(Suit.HEART, Denomination.ACE);
-        Card jackCard = new Card(Suit.HEART, Denomination.JACK);
-        Players players = new Players(List.of("mia", "dora"),
-                new SequentialCardGenerator(List.of(aceCard, jackCard, aceCard, jackCard)));
+        Players players = new Players(List.of("mia", "dora"));
+        players.dealCards(new SequentialCardGenerator(List.of(
+                new Card(Suit.HEART, Denomination.ACE), new Card(Suit.HEART, Denomination.JACK),
+                new Card(Suit.HEART, Denomination.ACE), new Card(Suit.HEART, Denomination.JACK)
+        )));
 
         // when
         boolean actual = players.isAllBlackJack();

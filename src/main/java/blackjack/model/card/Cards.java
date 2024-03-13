@@ -1,6 +1,5 @@
 package blackjack.model.card;
 
-import blackjack.model.cardgenerator.CardGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,16 +10,12 @@ public class Cards {
 
     private final List<Card> cards;
 
-    Cards(final List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
+    public Cards() {
+        this.cards = new ArrayList<>();
     }
 
-    public Cards(final CardGenerator cardGenerator) {
-        this.cards = new ArrayList<>(deal(cardGenerator));
-    }
-
-    private List<Card> deal(final CardGenerator cardGenerator) {
-        return List.of(cardGenerator.pick(), cardGenerator.pick());
+    public void addCards(final List<Card> cards) {
+        this.cards.addAll(cards);
     }
 
     public void addCard(final Card card) {

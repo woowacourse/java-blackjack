@@ -15,13 +15,17 @@ class DealerTest {
     @DisplayName("딜러는 카드의 합이 17점 이상이 될 때까지 카드를 받는다")
     void canDrawTest() {
         // given
-        Card dealCard = new Card(Suit.HEART, Denomination.TWO);
-        Dealer dealer = new Dealer(new SequentialCardGenerator(List.of(dealCard, dealCard)));
+        Dealer dealer = new Dealer();
+        dealer.dealCards(new SequentialCardGenerator(List.of(
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.HEART, Denomination.TWO)
+        )));
 
         // when
-        Card firstDrawCard = new Card(Suit.HEART, Denomination.TEN);
-        Card secondDrawCard = new Card(Suit.HEART, Denomination.FOUR);
-        dealer.drawCards(new SequentialCardGenerator(List.of(firstDrawCard, secondDrawCard)));
+        dealer.drawCards(new SequentialCardGenerator(List.of(
+                new Card(Suit.HEART, Denomination.TEN),
+                new Card(Suit.HEART, Denomination.FOUR)
+        )));
 
         // then
         int cardsTotal = dealer.calculateCardsTotalScore();

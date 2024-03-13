@@ -11,8 +11,13 @@ public class Dealer {
 
     private final Cards cards;
 
-    public Dealer(final CardGenerator cardGenerator) {
-        this.cards = new Cards(cardGenerator);
+    public Dealer() {
+        this.cards = new Cards();
+    }
+
+    public void dealCards(final CardGenerator cardGenerator) {
+        List<Card> receivedCards = List.of(cardGenerator.pick(), cardGenerator.pick());
+        cards.addCards(receivedCards);
     }
 
     public void drawCards(final CardGenerator cardGenerator) {

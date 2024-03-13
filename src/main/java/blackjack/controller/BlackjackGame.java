@@ -25,22 +25,23 @@ public class BlackjackGame {
     }
 
     public void play() {
+        Players players = retryOnException(this::preparePlayers);
+        Dealer dealer = new Dealer();
         CardGenerator cardGenerator = new RandomCardGenerator();
-        Players players = retryOnException(() -> preparePlayers(cardGenerator));
-        Dealer dealer = new Dealer(cardGenerator);
 
         dealCards(players, dealer, cardGenerator);
         drawCards(players, dealer, cardGenerator);
         showResult(players, dealer);
     }
 
-    private Players preparePlayers(final CardGenerator cardGenerator) {
+    private Players preparePlayers() {
         List<String> playerNames = inputView.askPlayerNames();
-        return new Players(playerNames, cardGenerator);
+        return new Players(playerNames);
     }
 
     private void dealCards(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
-        // TODO: deal 로직 분리
+        players.dealCards(cardGenerator);
+        dealer.dealCards(cardGenerator);
         outputView.printDealingCards(players, dealer);
     }
 

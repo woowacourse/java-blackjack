@@ -12,16 +12,21 @@ public class Player {
     private final String name;
     private final Cards cards;
 
-    public Player(final String name, final CardGenerator cardGenerator) {
+    public Player(final String name) {
         validateName(name);
         this.name = name;
-        this.cards = new Cards(cardGenerator);
+        this.cards = new Cards();
     }
 
     private void validateName(final String name) {
         if (name.isEmpty()) {
             throw new IllegalArgumentException(INVALID_NAME_LENGTH);
         }
+    }
+
+    public void dealCards(final CardGenerator cardGenerator) {
+        List<Card> receivedCards = List.of(cardGenerator.pick(), cardGenerator.pick());
+        cards.addCards(receivedCards);
     }
 
     public void drawCard(final CardGenerator cardGenerator) {

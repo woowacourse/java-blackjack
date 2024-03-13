@@ -18,16 +18,16 @@ class RefereeTest {
     @DisplayName("딜러와 플레이어의 카드 합을 비교하여 승패를 가린다")
     void determineOutcomeTest() {
         // given
-        List<Card> playerCards = List.of(
-                new Card(Suit.HEART, Denomination.TWO),
-                new Card(Suit.HEART, Denomination.TWO)
-        );
-        Players players = new Players(List.of("mia"), new SequentialCardGenerator(playerCards));
-        List<Card> dealerCards = List.of(
+        Players players = new Players(List.of("mia"));
+        players.dealCards(new SequentialCardGenerator(List.of(
+                new Card(Suit.HEART, Denomination.TWO), new Card(Suit.HEART, Denomination.TWO)
+        )));
+
+        Dealer dealer = new Dealer();
+        dealer.dealCards(new SequentialCardGenerator(List.of(
                 new Card(Suit.HEART, Denomination.TEN),
                 new Card(Suit.HEART, Denomination.TEN)
-        );
-        Dealer dealer = new Dealer(new SequentialCardGenerator(dealerCards));
+        )));
 
         // when
         Referee referee = new Referee(players, dealer);
