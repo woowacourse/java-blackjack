@@ -24,12 +24,12 @@ public class Cards {
 
     public static Cards deck() {
         List<Card> cards = Arrays.stream(CardShape.values())
-                                 .flatMap(Cards::addCard)
+                                 .flatMap(Cards::totalCardsOf)
                                  .toList();
         return new Cards(cards);
     }
 
-    private static Stream<Card> addCard(final CardShape cardShape) {
+    private static Stream<Card> totalCardsOf(final CardShape cardShape) {
         return EnumSet.allOf(CardNumber.class)
                       .stream()
                       .map(cardNumber -> new Card(cardShape, cardNumber));
