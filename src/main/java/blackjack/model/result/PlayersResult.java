@@ -8,23 +8,20 @@ public class PlayersResult {
 
     private final Map<Player, Result> playerResult = new HashMap<>();
 
-    public void addWin(Player player) {
-        playerResult.put(player, Result.WIN);
-    }
-
-    public void addBlackjack(Player player) {
-        playerResult.put(player, Result.BLACKJACK);
-    }
-
-    public void addPush(Player player) {
-        playerResult.put(player, Result.PUSH);
-    }
-
-    public void addLose(Player player) {
-        playerResult.put(player, Result.LOSE);
+    public void add(Player player, Result result) {
+        playerResult.put(player, result);
     }
 
     public Result findPlayerResult(Player player) {
-        return playerResult.get(player);
+        Result result = playerResult.get(player);
+        validatePlayerNull(result, player);
+        return result;
+    }
+
+    private void validatePlayerNull(Result result, Player player) {
+        if (result == null) {
+            String errorMessage = String.format("[ERROR] 해당 플레이어의 결과가 없습니다. (플레이어 : %s", player.name());
+            throw new IllegalArgumentException(errorMessage);
+        }
     }
 }

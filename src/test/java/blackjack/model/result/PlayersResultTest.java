@@ -2,67 +2,28 @@ package blackjack.model.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.model.gamer.Name;
 import blackjack.model.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 class PlayersResultTest {
 
     PlayersResult playersResult = new PlayersResult();
 
-    @DisplayName("플레이어 결과에 '승리'를 추가한다.")
-    @Test
-    void addWin() {
+    @DisplayName("플레이어 결과를 추가한다.")
+    @ParameterizedTest
+    @EnumSource(Result.class)
+    void addWin(Result result) {
         //given
-        Player player = Player.from("test");
+        Player player = Player.of(Name.from("test"), 100);
 
         //when
-        playersResult.addWin(player);
+        playersResult.add(player, result);
         Result playerResult = playersResult.findPlayerResult(player);
 
         //then
-        assertThat(playerResult).isEqualTo(Result.WIN);
-    }
-
-    @DisplayName("플레이어 결과에 '블랙잭'를 추가한다.")
-    @Test
-    void addBlackjack() {
-        //given
-        Player player = Player.from("test");
-
-        //when
-        playersResult.addBlackjack(player);
-        Result playerResult = playersResult.findPlayerResult(player);
-
-        //then
-        assertThat(playerResult).isEqualTo(Result.BLACKJACK);
-    }
-
-    @DisplayName("플레이어 결과에 '푸시'를 추가한다.")
-    @Test
-    void addTie() {
-        //given
-        Player player = Player.from("test");
-
-        //when
-        playersResult.addPush(player);
-        Result playerResult = playersResult.findPlayerResult(player);
-
-        //then
-        assertThat(playerResult).isEqualTo(Result.PUSH);
-    }
-
-    @DisplayName("플레이어 결과에 '패배'를 추가한다.")
-    @Test
-    void addLose() {
-        //given
-        Player player = Player.from("test");
-
-        //when
-        playersResult.addLose(player);
-        Result playerResult = playersResult.findPlayerResult(player);
-
-        //then
-        assertThat(playerResult).isEqualTo(Result.LOSE);
+        assertThat(playerResult).isEqualTo(result);
     }
 }
