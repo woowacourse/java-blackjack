@@ -22,8 +22,4 @@ public class Card {
     public Rank getRank() {
         return rank;
     }
-
-    public Suit getSymbol() {
-        return suit;
-    }
 }

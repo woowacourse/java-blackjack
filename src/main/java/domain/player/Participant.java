@@ -26,10 +26,6 @@ public abstract class Participant {
 
     public abstract boolean canHit();
 
-    public String getName() {
-        throw new IllegalCallerException("참여자의 이름이 정해지지 않았습니다");
-    }
-
     public void hit(final Card card) {
         hands.add(card);
     }
@@ -54,6 +50,10 @@ public abstract class Participant {
             return ACE_HIGH;
         }
         return Rank.ACE.getValue();
+    }
+
+    public String getName() {
+        throw new IllegalCallerException("참여자의 이름이 정해지지 않았습니다");
     }
 
     public List<Card> getHands() {
