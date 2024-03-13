@@ -57,8 +57,8 @@ public class BlackjackGame {
     }
 
     private void printInitialHandsOf(Participants participants) {
-        List<InitialHand> participantsInitialHand = participants.getParticipantsInitialHand();
-        outputView.printInitialHands(participantsInitialHand);
+        InitialHands initialHands = participants.getParticipantsInitialHand();
+        outputView.printInitialHands(initialHands);
     }
 
     private void participantsHitCard(Participants participants) {

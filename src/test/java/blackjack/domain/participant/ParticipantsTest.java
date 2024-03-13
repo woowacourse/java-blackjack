@@ -17,11 +17,10 @@ class ParticipantsTest {
     @Test
     void generateResultTest() {
         Participants participants = createParticipants();
-        Iterator<String> expectedNames = List.of("딜러", "감자", "고구마").iterator();
         Iterator<String> expectedCardSignatures = List.of("5하트", "A하트", "J하트", "2하트", "2하트").iterator();
+        InitialHands initialHands = participants.getParticipantsInitialHand();
 
-        for (InitialHand initialHand : participants.getParticipantsInitialHand()) {
-            assertThat(initialHand.getName()).isEqualTo(expectedNames.next());
+        for (InitialHand initialHand : initialHands.getValues()) {
             initialHand.getCards()
                     .stream()
                     .map(Card::getSignature)

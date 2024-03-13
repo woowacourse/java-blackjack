@@ -18,20 +18,18 @@ public class OutputView {
     private static final String GAME_RESULT_PREFIX = "## 최종 수익";
     private static final String PROFIT_FORMAT = "%s: %.0f";
 
-    public void printInitialHands(List<InitialHand> initialHands) {
-        List<String> names = initialHands.stream()
-                .map(InitialHand::getName)
-                .toList();
-        printHandOutMessage(names);
-        initialHands.stream()
+    public void printInitialHands(InitialHands initialHands) {
+        printHandOutMessage(initialHands);
+        initialHands.getValues()
+                .stream()
                 .map(this::getFormattedParticipantHand)
                 .forEach(System.out::println);
     }
 
-    private void printHandOutMessage(List<String> names) {
-        String firstName = names.get(0);
-        String othersName = String.join(DELIMITER, names.subList(1, names.size()));
-        String handOutMessage = String.format(HAND_OUT_MESSAGE, firstName, othersName);
+    private void printHandOutMessage(InitialHands initialHands) {
+        String dealerName = initialHands.getDealerName();
+        String playersName = String.join(DELIMITER, initialHands.getPlayersName());
+        String handOutMessage = String.format(HAND_OUT_MESSAGE, dealerName, playersName);
         printNewLine();
         System.out.println(handOutMessage);
     }

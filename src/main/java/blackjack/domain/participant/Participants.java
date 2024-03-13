@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Participants {
-    private static final int DEALER_INDEX = 0;
-
     private final Dealer dealer;
     private final Players players;
 
@@ -22,11 +20,10 @@ public class Participants {
         return dealer.hitAndCountCards(deck);
     }
 
-    public List<InitialHand> getParticipantsInitialHand() {
-        List<InitialHand> participantsInitialHand = new ArrayList<>(players.getInitialHands());
+    public InitialHands getParticipantsInitialHand() {
+        List<InitialHand> playersHand = players.getInitialHands();
         InitialHand dealerHand = new InitialHand(dealer);
-        participantsInitialHand.add(DEALER_INDEX, dealerHand);
-        return participantsInitialHand;
+        return new InitialHands(dealerHand, playersHand);
     }
 
     public PlayerTurnSelector createPlayerTurnSelector() {
