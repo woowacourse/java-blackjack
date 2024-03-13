@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 class BettingAmountTest {
 
     @Test
-    @DisplayName("금액 입력 시 0 이하의 숫자인 경우")
+    @DisplayName("금액 입력 시 0 이하의 숫자인 경우 예외를 발생한다.")
     void createBettingAmountByNotPositiveNumber() {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> new BettingAmount(-1))
