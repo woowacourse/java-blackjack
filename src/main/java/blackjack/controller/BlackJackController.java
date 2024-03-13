@@ -1,24 +1,21 @@
 package blackjack.controller;
 
-import blackjack.model.betting.BettingBoard;
-import blackjack.model.betting.BettingMoney;
 import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.cardgenerator.RandomCardGenerator;
 import blackjack.model.dealer.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
 import blackjack.model.player.isHit;
-import blackjack.model.referee.Referee;
+import blackjack.model.result.BettingBoard;
+import blackjack.model.result.BettingMoney;
+import blackjack.model.result.MatchResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
-import blackjack.view.dto.PlayerMatchResult;
+import blackjack.view.dto.PlayerProfit;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Supplier;
 
 public class BlackJackController {
@@ -38,7 +35,7 @@ public class BlackJackController {
         outputView.printDealingResult(players, dealer);
 
         play(players, dealer, cardGenerator);
-        end(players, dealer);
+        end(players, dealer, bettingBoard);
     }
 
     private Players preparePlayers(final CardGenerator cardGenerator) {
@@ -84,9 +81,9 @@ public class BlackJackController {
         return isHit.from(askContinuance);
     }
 
-    private void end(final Players players, final Dealer dealer) {
+    private void end(final Players players, final Dealer dealer, final BettingBoard bettingBoard) {
         showCardOutcome(players, dealer);
-        showMatchResult(players, dealer);
+        showMatchResult(players, dealer, bettingBoard);
     }
 
     private void showCardOutcome(final Players players, final Dealer dealer) {
@@ -96,10 +93,14 @@ public class BlackJackController {
         outputView.printPlayersFinalCards(playerFinalCardsOutcomes);
     }
 
-    private void showMatchResult(final Players players, final Dealer dealer) {
-        Referee referee = new Referee(players, dealer);
-        List<PlayerMatchResult> playerMatchResults = referee.determinePlayersMatchResult();
-        outputView.printMatchResult(playerMatchResults);
+    private void showMatchResult(final Players players, final Dealer dealer, final BettingBoard bettingBoard) {
+        List<PlayerProfit> playerProfits = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            MatchResult matchResult = dealer.determinePlayerMatchResult(player);
+            BettingMoney profit = bettingBoard.determineProfit(player, matchResult);
+            playerProfits.add(new PlayerProfit(player.getName(), profit.getAmount()));
+        }
+        outputView.printFinalProfits(playerProfits);
     }
 
     public <T> T retryOnException(final Supplier<T> retryOperation) {

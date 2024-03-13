@@ -4,13 +4,11 @@ import blackjack.model.card.Card;
 import blackjack.model.dealer.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
-import blackjack.model.referee.MatchResult;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
-import blackjack.view.dto.PlayerMatchResult;
+import blackjack.view.dto.PlayerProfit;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -19,12 +17,8 @@ public class OutputView {
     private static final String DEALER_ACTION_FORM = "\n딜러는 16이하라 %d장의 카드를 더 받았습니다.\n";
     private static final String DEALER_CARDS_FORM = "\n딜러 카드: %s";
     private static final String TOTAL_SCORE_FORM = " - 결과: %s\n";
-    private static final String MATCH_RESULT_INTRO = "\n## 최종 승패";
-    public static final String DEALER_MATCH_RESULT_PREFIX = "딜러: ";
-    public static final String WIN_MESSAGE = "승";
-    public static final String LOSE_MESSAGE = "패";
-    public static final String TIE_MESSAGE = "무";
-    public static final String DEALER_MATCH_RESULT_FORM = "%s승 %s패 %s무";
+    private static final String FINAL_PROFIT_INTRO = "\n## 최종 수익";
+    public static final String DEALER_PROFIT_PREFIX = "딜러: ";
     public static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
 
     public void printDealingResult(final Players players, final Dealer dealer) {
@@ -78,35 +72,23 @@ public class OutputView {
         }
     }
 
-    public void printMatchResult(final List<PlayerMatchResult> playerMatchResults) {
-        System.out.println(MATCH_RESULT_INTRO);
-        System.out.println(formatDealerMatchResult(playerMatchResults));
-        for (PlayerMatchResult playerMatchResult : playerMatchResults) {
-            System.out.println(formatPlayerMatchResult(playerMatchResult));
+    public void printFinalProfits(final List<PlayerProfit> playerProfits) {
+        System.out.println(FINAL_PROFIT_INTRO);
+        System.out.println(formatDealerProfit(playerProfits));
+        for (PlayerProfit playerProfit : playerProfits) {
+            System.out.println(formatPlayerProfit(playerProfit));
         }
     }
 
-    private String formatDealerMatchResult(final List<PlayerMatchResult> playerMatchResults) {
-        Map<MatchResult, Long> outcomeCounts = playerMatchResults.stream()
-                .collect(Collectors.groupingBy(PlayerMatchResult::matchResult, Collectors.counting()));
-        long winCount = outcomeCounts.getOrDefault(MatchResult.LOSE, 0L);
-        long loseCount = outcomeCounts.getOrDefault(MatchResult.WIN, 0L);
-        long tieCount = outcomeCounts.getOrDefault(MatchResult.PUSH, 0L);
-        return DEALER_MATCH_RESULT_PREFIX + String.format(DEALER_MATCH_RESULT_FORM, winCount, loseCount, tieCount);
+    private String formatDealerProfit(final List<PlayerProfit> playerProfits) {
+        double profit = (-1) * playerProfits.stream()
+                .mapToDouble(PlayerProfit::profit)
+                .sum();
+        return DEALER_PROFIT_PREFIX + profit;
     }
 
-    private String formatPlayerMatchResult(final PlayerMatchResult playerMatchResult) {
-        return playerMatchResult.name() + ": " + formatMatchResult(playerMatchResult.matchResult());
-    }
-
-    private String formatMatchResult(final MatchResult matchResult) {
-        if (matchResult == MatchResult.WIN) {
-            return WIN_MESSAGE;
-        }
-        if (matchResult == MatchResult.LOSE) {
-            return LOSE_MESSAGE;
-        }
-        return TIE_MESSAGE;
+    private String formatPlayerProfit(final PlayerProfit playerProfit) {
+        return playerProfit.name() + ": " + playerProfit.profit();
     }
 
     public void printException(final String errorMessage) {
