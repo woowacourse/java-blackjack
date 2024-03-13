@@ -9,6 +9,7 @@ import view.BlackJackGameCommand;
 import view.InputView;
 import view.ResultView;
 import view.dto.participant.ParticipantDto;
+import view.dto.result.GameResultDto;
 
 public class Casino {
 
@@ -20,23 +21,23 @@ public class Casino {
         this.resultView = resultView;
     }
 
-    public void play(final BlackjackGame game) {
-        Dealer dealer = new Dealer(Cards.deck());
-        dealer.shuffleCards();
-        Players players = ParticipantDto.toPlayers(inputView.askPlayerNames());
-        game.ready(dealer, players);
-        proceed(dealer, players);
-        result(game, dealer, players);
+    public void open() {
+        BlackjackGame game = new BlackjackGame(new Dealer(Cards.deck()),
+                ParticipantDto.toPlayers(inputView.askPlayerNames()));
+        game.setUp();
+        playOf(game);
+        resultOf(game);
     }
 
-    private void proceed(final Dealer dealer, final Players players) {
-        resultView.printInitialCards(
-                new ParticipantDto(dealer, dealer.peek()),
+    private void playOf(final BlackjackGame game) {
+        Dealer dealer = game.dealer();
+        Players players = game.players();
+        resultView.printInitialCards(new ParticipantDto(dealer, dealer.peekCard()),
                 ParticipantDto.fromPlayers(players));
         players.forEach(player -> askReceiveMoreCard(dealer, player));
-        if (dealer.canHit()) {
+        if (dealer.canReceiveMoreCard()) {
             resultView.printDealerCardMessage(new ParticipantDto(dealer));
-            dealer.deal(dealer);
+            game.handOutCards(dealer, dealer, 1);
         }
     }
 
@@ -52,11 +53,12 @@ public class Casino {
         }
     }
 
-    private void result(final BlackjackGame game, final Dealer dealer, final Players players) {
+    private void resultOf(final BlackjackGame game) {
         resultView.printResults(
-                new ParticipantDto(dealer),
-                ParticipantDto.fromPlayers(players),
-                game.resultsOf(dealer, players)
+                new ParticipantDto(game.dealer()),
+                ParticipantDto.fromPlayers(game.players()),
+                new GameResultDto(game.resultsOfDealerPosition(),
+                        game.resultsOfPlayerPosition())
         );
     }
 }

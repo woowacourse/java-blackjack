@@ -1,33 +1,58 @@
 package domain;
 
-import domain.participant.*;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Players;
 import domain.result.GameResult;
 import domain.result.GameResultStatus;
-import view.dto.result.GameResultDto;
-
-import java.util.stream.IntStream;
 
 public class BlackjackGame {
 
     public static final int INITIAL_CARD_COUNT = 2;
     public static final int DEALER_HIT_THRESHOLD = 16;
+    public static final int BLACKJACK_SCORE = 21;
 
-    public void ready(final Dealer dealer, final Players players) {
-        giveCards(dealer, dealer);
-        players.forEach(player -> giveCards(dealer, player));
+    private final Dealer dealer;
+    private final Players players;
+
+    public BlackjackGame(final Dealer dealer, final Players players) {
+        this.dealer = dealer;
+        this.players = players;
     }
 
-    private void giveCards(final Dealer dealer, final Participant participant) {
-        IntStream.range(0, INITIAL_CARD_COUNT)
-                 .forEach(__ -> dealer.deal(participant));
+    public void setUp() {
+        dealer.shuffleCards();
+        handOutCards(dealer, dealer, INITIAL_CARD_COUNT);
+        players.forEach(player -> handOutCards(dealer, player, INITIAL_CARD_COUNT));
     }
 
-    public GameResultDto resultsOf(final Dealer dealer, final Players players) {
+    public void handOutCards(final Dealer dealer, final Participant participant, final int count) {
+        for (int i = 0; i < count; i++) {
+            dealer.deal(participant);
+        }
+    }
+
+    public GameResult resultsOfPlayerPosition() {
         GameResult gameResult = new GameResult();
-        players.forEach(player -> {
-            GameResultStatus result = dealer.resultStatusOf(player);
-            gameResult.put(player, result);
-        });
-        return new GameResultDto(gameResult, gameResult.ofDealer());
+        players.forEach(player -> gameResult.put(player, getResultOf(player, dealer)));
+        return gameResult;
+    }
+
+    public GameResult resultsOfDealerPosition() {
+        GameResult gameResult = new GameResult();
+        players.forEach(player -> gameResult.put(player, getResultOf(dealer, player)));
+        return gameResult;
+    }
+
+    private GameResultStatus getResultOf(Participant standardTarget, Participant comparisonTarget) {
+        return GameResultStatus.comparedTo(standardTarget.score(), comparisonTarget.score());
+    }
+
+    public Dealer dealer() {
+        return dealer;
+    }
+
+    public Players players() {
+        return players;
     }
 }
