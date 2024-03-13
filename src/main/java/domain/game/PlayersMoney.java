@@ -2,6 +2,7 @@ package domain.game;
 
 import domain.user.BetAmount;
 import domain.user.Player;
+import java.util.Collections;
 import java.util.Map;
 
 public class PlayersMoney {
@@ -21,5 +22,14 @@ public class PlayersMoney {
         if (player.isBlackJack()) {
             playersMoney.replace(player, playersMoney.get(player).changeByBlackJack());
         }
+    }
+
+    public void changeByPlayerResults(Map<Player, GameResult> playerResults) {
+        playersMoney.forEach(
+                (player, betAmount) -> playersMoney.replace(player, betAmount.change(playerResults.get(player))));
+    }
+
+    public Map<Player, BetAmount> getPlayersMoney() {
+        return Collections.unmodifiableMap(playersMoney);
     }
 }

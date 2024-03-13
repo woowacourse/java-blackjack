@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class PlayersMoneyTest {
     @Test
@@ -40,5 +42,21 @@ class PlayersMoneyTest {
         playersMoney.changeIfBlackjack();
 
         assertThat(playersMoney.getPlayersMoney().get(player).value()).isEqualTo(1000);
+    }
+
+    @ParameterizedTest(name = "{1}")
+    @CsvSource(value = {"WIN,이긴 경우", "DRAW,비긴 경우", "LOSE,진 경우"})
+    @DisplayName("플레이 결과에 따라 플레이어의 돈을 바꾼다.")
+    void changeByPlayerResultsWinTest(GameResult gameResult, String whichCase) {
+        Player player = new Player(new Name("aa"));
+        BetAmount betAmount = new BetAmount(1000);
+
+        PlayersMoney playersMoney = new PlayersMoney(new HashMap<>(Map.of(player, betAmount)));
+
+        Map<Player, GameResult> playerResults = Map.of(player, gameResult);
+
+        playersMoney.changeByPlayerResults(playerResults);
+
+        assertThat(playersMoney.getPlayersMoney()).containsExactly(Map.entry(player, betAmount.change(gameResult)));
     }
 }
