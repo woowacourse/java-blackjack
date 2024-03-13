@@ -13,6 +13,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 import blackjack.model.deck.Card;
 import blackjack.model.state.BlackJack;
+import blackjack.model.state.Bust;
 import blackjack.model.state.Hit;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -112,6 +113,15 @@ class PlayerTest {
             player.receiveInitialCards(List.of(new Card(SPADE, ACE), new Card(DIA, QUEEN)));
 
             assertThat(player.getState()).isInstanceOf(BlackJack.class);
+        }
+
+        @Test
+        @DisplayName("카드의 점수가 21을 초과하면 Bust 상태이다.")
+        void bust() {
+            player.receiveInitialCards(List.of(new Card(SPADE, QUEEN), new Card(DIA, QUEEN)));
+            player.draw(new Card(CLOVER, TWO));
+
+            assertThat(player.getState()).isInstanceOf(Bust.class);
         }
     }
 }

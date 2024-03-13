@@ -35,6 +35,10 @@ public class Player extends Participant {
         }
     }
 
+    public void draw(final Card card) {
+        state = state.draw(card);
+    }
+
     public String getName() {
         return name;
     }
