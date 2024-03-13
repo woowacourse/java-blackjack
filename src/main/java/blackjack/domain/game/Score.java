@@ -53,12 +53,12 @@ public class Score {
         return scoreValue > BLACKJACK_MAX_SCORE;
     }
 
-    private boolean isGreaterThan(Score relativeScore) {
-        return value > relativeScore.value;
+    private boolean isGreaterThan(Score other) {
+        return value > other.value;
     }
 
-    private boolean isLessThan(Score relativeScore) {
-        return value < relativeScore.value;
+    private boolean isLessThan(Score other) {
+        return value < other.value;
     }
 
     public boolean isLessThanDealerMinimumScore() {
