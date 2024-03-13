@@ -1,4 +1,4 @@
-package blackjack.model.referee;
+package blackjack.model.result;
 
 import blackjack.model.card.Score;
 
