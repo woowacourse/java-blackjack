@@ -2,11 +2,7 @@ package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.common.Name;
-import blackjack.domain.result.DealerResult;
-import blackjack.domain.result.GamePlayerResult;
-import blackjack.domain.result.Result;
-import blackjack.domain.result.ResultStatus;
+import blackjack.domain.player.Name;
 
 import java.util.List;
 

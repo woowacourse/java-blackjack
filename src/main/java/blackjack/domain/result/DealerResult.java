@@ -1,6 +1,6 @@
 package blackjack.domain.result;
 
-import blackjack.domain.common.Name;
+import blackjack.domain.player.Name;
 
 import java.util.EnumMap;
 import java.util.List;

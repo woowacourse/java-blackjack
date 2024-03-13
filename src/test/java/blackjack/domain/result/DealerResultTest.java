@@ -3,7 +3,7 @@ package blackjack.domain.result;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.common.Name;
+import blackjack.domain.player.Name;
 
 import java.util.Arrays;
 import java.util.List;

@@ -2,10 +2,7 @@ package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.jupiter.api.Assertions.*;
 
-import blackjack.domain.common.Name;
-import blackjack.domain.player.Players;
 import blackjack.fixture.PlayerFixture;
 
 import java.util.List;

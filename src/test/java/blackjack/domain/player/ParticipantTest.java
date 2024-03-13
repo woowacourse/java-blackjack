@@ -4,8 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Cards;
-import blackjack.domain.common.Name;
-import blackjack.domain.player.GamePlayer;
 import blackjack.fixture.ParticipantImpl;
 import blackjack.fixture.PlayerFixture;
 

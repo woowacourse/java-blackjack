@@ -1,7 +1,7 @@
 package blackjack.fixture;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.common.Name;
+import blackjack.domain.player.Name;
 import blackjack.domain.player.Participant;
 
 public class ParticipantImpl extends Participant {

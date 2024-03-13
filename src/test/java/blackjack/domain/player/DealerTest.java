@@ -9,7 +9,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Cards;
-import blackjack.domain.common.Name;
 import blackjack.domain.result.ResultStatus;
 import blackjack.fixture.CardFixture;
 import blackjack.fixture.PlayerFixture;

@@ -1,6 +1,6 @@
 package blackjack.domain.result;
 
-import blackjack.domain.common.Name;
+import blackjack.domain.player.Name;
 
 public class GamePlayerResult {
     private final Name name;
