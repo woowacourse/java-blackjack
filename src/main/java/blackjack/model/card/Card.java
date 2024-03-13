@@ -29,15 +29,11 @@ public class Card {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (object == null || getClass() != object.getClass()) {
-            return false;
-        }
-        Card that = (Card) object;
-        return pattern == that.pattern && rank == that.rank;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return pattern == card.pattern && rank == card.rank;
     }
 
     @Override
