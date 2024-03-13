@@ -1,13 +1,13 @@
-package view.dto.card;
+package domain.card;
 
-public enum CardPhrase {
+public enum CardNumberPhrase {
     ACE("A"),
     JACK("J"),
     QUEEN("Q"),
     KING("K");
     private final String phrase;
 
-    CardPhrase(final String phrase) {
+    CardNumberPhrase(final String phrase) {
         this.phrase = phrase;
     }
 
