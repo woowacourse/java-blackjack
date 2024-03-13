@@ -7,6 +7,8 @@ import blackjack.strategy.ShuffleStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static blackjack.fixture.PlayerFixture.playerChoco;
 import static blackjack.fixture.PlayerFixture.playerClover;
@@ -31,12 +33,23 @@ public class PlayerTest {
         clover = playerClover(dealer);
     }
 
-    @DisplayName("사용자의 이름은 숫자와 영어만 가능하다")
+    @DisplayName("사용자의 이름이 형식에 맞지 않으면 예외가 발생한다.")
     @Test
     void validateName() {
+        //given
         String name = "noValidName123";
 
-        assertThatThrownBy(() -> new Player(name, dealer))
+        //when & then
+        assertThatThrownBy(() -> new Player(name, dealer, "1000"))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("배팅 금액이 형식에 맞지 않으면 예외가 발생한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"-1", "0", "1000a"})
+    void validateBatting(String batting) {
+        //when & then
+        assertThatThrownBy(() -> new Player("name", dealer, batting))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

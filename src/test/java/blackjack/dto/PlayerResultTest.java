@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("플레이어 결과")
 class PlayerResultTest {
@@ -21,7 +20,7 @@ class PlayerResultTest {
         PlayerResult playerResult = new PlayerResult();
         Deck deck = new Deck(new NoShuffleStrategy());
         Dealer dealer = new Dealer(deck);
-        playerResult.addResult(new Player("exist", dealer), GameResult.WIN);
+        playerResult.addResult(new Player("exist", dealer, "10000"), GameResult.WIN);
 
         //when & then
         assertThatThrownBy(() -> playerResult.findByName("nonExist"))

@@ -24,14 +24,21 @@ public class BlackjackGame {
 
     public void start() {
         Deck deck = new Deck(new RandomShuffleStrategy());
+        Dealer dealer = new Dealer(deck);
 
         List<String> names = inputView.readPlayersName();
-        Dealer dealer = new Dealer(deck);
-        Players players = Players.of(names, dealer);
+        List<String> battings = readPlayersBatting(names);
+        Players players = Players.of(names, battings, dealer);
 
         printCardDistribute(names, players, dealer);
         extraCardRequest(dealer, players);
         outputView.printFinalResult(names, players.createResult(dealer));
+    }
+
+    private List<String> readPlayersBatting(final List<String> names) {
+        return names.stream()
+                .map(inputView::readPlayerBatting)
+                .toList();
     }
 
     private void printCardDistribute(final List<String> names, final Players players, final Dealer dealer) {

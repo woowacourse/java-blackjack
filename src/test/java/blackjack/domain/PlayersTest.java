@@ -24,12 +24,13 @@ public class PlayersTest {
     private Players players;
     private final String nameA = "a";
     private final String nameB = "b";
+    private final String batting = "1000";
 
     @BeforeEach
     void setUp() {
         deck = new Deck(shuffleStrategy);
         dealer = new Dealer(deck);
-        players = Players.of(List.of(nameA, nameB), dealer);
+        players = Players.of(List.of(nameA, nameB), List.of(batting, batting), dealer);
     }
 
     @DisplayName("플레이어 이름이 중복되면 예외가 발생한다.")
@@ -37,9 +38,11 @@ public class PlayersTest {
     void validateDuplicatedNames() {
         //given
         List<String> names = List.of("choco", "choco", "chip");
+        List<String> battings = List.of("1000", "1000", "1000");
 
         //when & then
-        assertThatThrownBy(() -> Players.of(names, dealer)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Players.of(names, battings, dealer))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("참가자간의 승패를 계산한다.")

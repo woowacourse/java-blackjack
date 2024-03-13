@@ -23,6 +23,7 @@ class JudgeTest {
     private Deck deck;
     private Dealer dealer;
     private final List<String> playerNames = List.of("choco");
+    private final List<String> battings = List.of("1000");
     private Players players;
     private Player choco;
     private DealerResult initDealerResult;
@@ -45,7 +46,7 @@ class JudgeTest {
         @Test
         void drawWhenBustTogether() {
             //given
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames, battings, dealer);
             choco = players.getPlayers().get(0);
             PlayerResult playerResult = new PlayerResult();
 
@@ -64,7 +65,7 @@ class JudgeTest {
             //given
             deckDrawLoop(3);
 
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames, battings, dealer);
             choco = players.getPlayers().get(0);
             PlayerResult playerResult = new PlayerResult();
 
@@ -80,7 +81,7 @@ class JudgeTest {
         @Test
         void loseWhenPlayerNormal() {
             //given
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames, battings, dealer);
             choco = players.getPlayers().get(0);
             PlayerResult playerResult = new PlayerResult();
 
@@ -110,7 +111,7 @@ class JudgeTest {
         @Test
         void winWhenPlayerBust() {
             //given
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames, battings, dealer);
             choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
@@ -130,7 +131,7 @@ class JudgeTest {
             //given
             deckDrawLoop(11);
 
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames, battings, dealer);
             choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
@@ -147,7 +148,7 @@ class JudgeTest {
         @Test
         void winWhenPlayerNormal() {
             //given
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames, battings, dealer);
             choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
@@ -175,7 +176,7 @@ class JudgeTest {
         @Test
         void winWhenPlayerBust() {
             //given
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames, battings, dealer);
             choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
@@ -195,7 +196,7 @@ class JudgeTest {
             //given
             deckDrawLoop(10);
 
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames, battings, dealer);
             choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
@@ -212,7 +213,7 @@ class JudgeTest {
         @Test
         void winWhenPlayerNormalWithSmallerScore() {
             //given
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames, battings, dealer);
             choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
@@ -230,7 +231,7 @@ class JudgeTest {
         void loseWhenPlayerNormalWithBiggerScore() {
             //given
             deckDrawLoop(5);
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames, battings, dealer);
             choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
@@ -248,7 +249,7 @@ class JudgeTest {
         void drawWhenPlayerNormalWithSameScore() {
             //given
             deckDrawLoop(3);
-            players = Players.of(playerNames, dealer);
+            players = Players.of(playerNames, battings, dealer);
             choco = players.getPlayers().get(0);
 
             PlayerResult playerResult = new PlayerResult();
