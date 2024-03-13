@@ -1,10 +1,7 @@
 package domain.deck;
 
-import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Symbol;
-import domain.deck.strategy.SettedDeckGenerator;
-import domain.deck.strategy.ShuffledDeckGenerator;
+import domain.deck.strategy.SettedShuffleStrategy;
+import domain.deck.strategy.RandomShuffleStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,15 +12,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class DeckTest {
 
+    private static final int DECK_SIZE = 312;
+
     @DisplayName("52 * 6개의 카드를 생성한다.")
     @Test
     void createDecksTest() {
         // given
-        int expectedSize = 312;
+        int expectedSize = DECK_SIZE;
 
         // when
-        ShuffledDeckGenerator decksGenerator = new ShuffledDeckGenerator();
-        Deck deck = Deck.createByStrategy(decksGenerator);
+        RandomShuffleStrategy shuffleStrategy = new RandomShuffleStrategy();
+        Deck deck = new Deck(shuffleStrategy);
 
         // then
         assertThat(deck.getCards()).hasSize(expectedSize);
@@ -33,9 +32,11 @@ public class DeckTest {
     @Test
     void emptyDecksTest() {
         // given
-        SettedDeckGenerator decksGenerator = new SettedDeckGenerator(List.of(new Card(Symbol.CLOVER, Rank.BIG_ACE)));
-        Deck deck = Deck.createByStrategy(decksGenerator);
-        deck.draw();
+        SettedShuffleStrategy shuffleStrategy = new SettedShuffleStrategy(List.of());
+        Deck deck = new Deck(shuffleStrategy);
+        for(int i=0;i<DECK_SIZE;i++){
+            deck.draw();
+        }
 
         // then
         assertThatThrownBy(deck::draw)

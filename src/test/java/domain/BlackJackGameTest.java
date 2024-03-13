@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
 import domain.deck.Deck;
-import domain.deck.strategy.SettedDeckGenerator;
+import domain.deck.strategy.SettedShuffleStrategy;
 import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Player;
@@ -32,8 +32,8 @@ public class BlackJackGameTest {
         Card card8 = new Card(Symbol.DIAMOND, Rank.THREE);
 
         List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8);
-        SettedDeckGenerator settedDecksGenerator = new SettedDeckGenerator(cards);
-        deck = Deck.createByStrategy(settedDecksGenerator);
+        SettedShuffleStrategy shuffleStrategy = new SettedShuffleStrategy(cards);
+        deck = new Deck(shuffleStrategy);
     }
 
     @DisplayName("딜러와 플레이어에게 카드를 2장씩 준다.")

@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
 import domain.deck.Deck;
-import domain.deck.strategy.SettedDeckGenerator;
+import domain.deck.strategy.SettedShuffleStrategy;
 import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Player;
@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @DisplayName("승패")
 class JudgementTest {
 
-    SettedDeckGenerator settedDecksGenerator;
+    SettedShuffleStrategy shuffleStrategy;
     Deck deck;
     Dealer dealer;
     Players players;
@@ -57,8 +57,8 @@ class JudgementTest {
             Card card9 = new Card(Symbol.DIAMOND, Rank.SEVEN);
 
             List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8, card9);
-            settedDecksGenerator = new SettedDeckGenerator(cards);
-            deck = Deck.createByStrategy(settedDecksGenerator);
+            shuffleStrategy = new SettedShuffleStrategy(cards);
+            deck = new Deck(shuffleStrategy);
             blackJackGame = new BlackJackGame(deck);
             blackJackGame.prepareCards(dealer, players);
             blackJackGame.takeTurn(dealer);
@@ -117,8 +117,8 @@ class JudgementTest {
             Card card9 = new Card(Symbol.DIAMOND, Rank.TEN);
 
             List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8, card9);
-            settedDecksGenerator = new SettedDeckGenerator(cards);
-            deck = Deck.createByStrategy(settedDecksGenerator);
+            shuffleStrategy = new SettedShuffleStrategy(cards);
+            deck = new Deck(shuffleStrategy);
             blackJackGame = new BlackJackGame(deck);
             blackJackGame.prepareCards(dealer, players);
             blackJackGame.takeTurn(dealer);
@@ -176,8 +176,8 @@ class JudgementTest {
             Card card9 = new Card(Symbol.DIAMOND, Rank.NINE);
 
             List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8, card9);
-            settedDecksGenerator = new SettedDeckGenerator(cards);
-            deck = Deck.createByStrategy(settedDecksGenerator);
+            shuffleStrategy = new SettedShuffleStrategy(cards);
+            deck = new Deck(shuffleStrategy);
             blackJackGame = new BlackJackGame(deck);
             blackJackGame.prepareCards(dealer, players);
             blackJackGame.takeTurn(dealer);
