@@ -66,3 +66,9 @@
 - [x] 테스트 코드에서 사용하는 테스트 객체 생성 역할을 분리
 - [x] view만을 위한 enum 추가
 - [x] Card Enum화
+
+## 2단계 구현 전 리팩토링
+
+- [ ] GameResultCalculator가 Gamer를 매개변수로 받도록 리팩토링
+- [ ] BlackJackGame 추가
+- [ ] 대부분의 도메인 클래스 패키지 프라이빗으로 수정
