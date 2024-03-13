@@ -35,4 +35,8 @@ public abstract class Participant {
     public boolean isBust() {
         return hands.isBust();
     }
+
+    public int getHandsSize() {
+        return hands.size();
+    }
 }

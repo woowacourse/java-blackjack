@@ -7,6 +7,8 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameMachine {
 
@@ -29,7 +31,14 @@ public class GameMachine {
 
     private static Game makeGame(Deck deck) {
         OutputView.printAskNameMessage();
-        Players players = new Players(InputView.readNames());
+
+        List<String> playerList = InputView.readNames();
+        List<Player> players1 = new ArrayList<>();
+        for (String string : playerList) {
+            players1.add(new Player(string, InputView.readBetAmount(string)));
+        }
+        Players players = new Players(players1);
+
         Dealer dealer = new Dealer();
         return Game.of(deck, dealer, players);
     }

@@ -30,4 +30,9 @@ public class InputView {
         throw new IllegalArgumentException("대답은 " + ACCEPT_DRAW_MESSAGE + " 혹은 "
                 + REJECT_DRAW_MESSAGE + "만 가능합니다");
     }
+
+    public static int readBetAmount(String playerName) {
+        System.out.println(playerName + "얼마?");
+        return Integer.parseInt(scanner.nextLine());
+    }
 }

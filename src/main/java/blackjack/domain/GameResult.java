@@ -7,6 +7,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameResult {
+    private static final int INITIAL_DRAW_CARD_NUMBER = 2;
+    private static final int BLACK_JACK = 21;
+
 
     private final Map<Player, Result> gameResult;
 
@@ -30,6 +33,9 @@ public class GameResult {
         if ((dealer.isBust() && player.isBust())
                 || dealer.getHandsScore() == player.getHandsScore()) {
             return Result.DRAW;
+        }
+        if (player.getHandsSize() == INITIAL_DRAW_CARD_NUMBER && player.getHandsScore() == BLACK_JACK) {
+            return Result.BLACK_JACK;
         }
         if (dealer.isBust()
                 || ((player.getHandsScore() > dealer.getHandsScore()) && !player.isBust())) {

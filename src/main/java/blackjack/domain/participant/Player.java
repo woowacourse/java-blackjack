@@ -5,8 +5,11 @@ import java.util.function.BooleanSupplier;
 
 public class Player extends Participant {
 
-    public Player(String name) {
+    private final BetMoney betMoney;
+
+    public Player(String name, int betMoney) {
         super(name);
+        this.betMoney = new BetMoney(betMoney);
     }
 
     public boolean attemptDraw(BooleanSupplier supplier, Deck deck) {

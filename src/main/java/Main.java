@@ -2,6 +2,12 @@ import blackjack.controller.GameMachine;
 
 public class Main {
     public static void main(String[] args) {
-        GameMachine.run();
+        try {
+            GameMachine.run();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            System.exit(0);
+        }
     }
 }

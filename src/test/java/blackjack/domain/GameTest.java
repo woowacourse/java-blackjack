@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -15,13 +16,12 @@ class GameTest {
     @Test
     void should_getTwoCards_To_InitialHands() {
         Deck deck = Deck.createShuffledDeck();
-        Players players = new Players(List.of("pobi", "honux"));
+        Players players = new Players(List.of(new Player("pobi", 1)));
         Dealer dealer = new Dealer();
 
         Game game = Game.of(deck, dealer, players);
 
         assertThat(dealer.getHandsCards()).hasSize(2);
-        assertThat(players.getPlayers())
-                .allMatch(player -> player.getHandsCards().size() == 2);
+        assertThat(players.getPlayers().get(0).getHandsCards()).hasSize(2);
     }
 }
