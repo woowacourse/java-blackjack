@@ -1,12 +1,12 @@
 package view;
 
-import domain.gamer.Name;
+import domain.GameResult;
 import dto.AllPlayerResultDto;
 import dto.DealerResultDto;
-import dto.GameResultDto;
 import dto.InitCardDto;
 import dto.PlayerCardStateDto;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
@@ -55,21 +55,16 @@ public class OutputView {
                     playerCardState.name() + "카드: " + changeFormat(playerCardState.playerCards()) + " - 결과: "
                             + allPlayerResult.playersScore().get(i));
         }
-
     }
 
-    public void printResult(GameResultDto gameResult, List<Name> playerNames) {
+    public void printResult(GameResult gameResult) {
         System.out.println("\n## 최종 승패");
-        List<Boolean> result = gameResult.gameResult();
-        System.out.printf("딜러: %d승 %d패\n", gameResult.dealerWinCount(),
-                result.size() - gameResult.dealerWinCount());
+        System.out.printf("딜러: %d승 %d패\n", gameResult.countDealerWin(), gameResult.countDealerLose());
 
-        for (int i = 0; i < result.size(); i++) {
+        Map<String, String> result = gameResult.getResult();
+        for (String playerName : result.keySet()) {
             String winOrLose = "패";
-            if (result.get(i)) {
-                winOrLose = "승";
-            }
-            System.out.println(playerNames.get(i).getValue() + ": " + winOrLose);
+            System.out.printf("%s: %s\n", playerName, result.get(playerName));
         }
     }
 }
