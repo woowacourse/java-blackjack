@@ -14,6 +14,11 @@ public final class NormalRank implements HankRank {
     }
 
     @Override
+    public int getScore() {
+        return score;
+    }
+
+    @Override
     public boolean isBlackjack() {
         return false;
     }

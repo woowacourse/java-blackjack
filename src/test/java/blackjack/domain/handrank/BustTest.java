@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class BustTest {
 
-    private static HankRank BUST = new Bust();
+    private static HankRank BUST = new Bust(22);
 
     @DisplayName("플레이어, 딜러 모두 버스트인 경우 딜러가 이긴다.")
     @Test

@@ -1,5 +1,7 @@
 package blackjack.domain.handrank;
 
+import blackjack.domain.card.Hand;
+
 public final class Blackjack implements HankRank {
 
     @Override
@@ -8,6 +10,11 @@ public final class Blackjack implements HankRank {
             return SingleMatchResult.DRAW;
         }
         return SingleMatchResult.DEALER_WIN;
+    }
+
+    @Override
+    public int getScore() {
+        return Hand.BLACKJACK_SCORE;
     }
 
     @Override

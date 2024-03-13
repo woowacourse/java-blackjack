@@ -2,6 +2,12 @@ package blackjack.domain.handrank;
 
 public final class Bust implements HankRank {
 
+    private final int score;
+
+    public Bust(int score) {
+        this.score = score;
+    }
+
     @Override
     public SingleMatchResult matchAtDealer(HankRank playerHandRank) {
         if (playerHandRank.isBust()) {
@@ -11,6 +17,11 @@ public final class Bust implements HankRank {
             return SingleMatchResult.PLAYER_BLACKJACK;
         }
         return SingleMatchResult.PLAYER_WIN;
+    }
+
+    @Override
+    public int getScore() {
+        return score;
     }
 
     @Override
