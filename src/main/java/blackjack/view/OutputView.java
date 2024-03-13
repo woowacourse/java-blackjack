@@ -50,7 +50,7 @@ public class OutputView {
     }
 
     public void printPlayerResult(String name, MatchResult result) {
-        String resultDisplay = PlayerResultDisplay.getDisplayByResult(result);
+        String resultDisplay = PlayerResultDisplay.getDisplayByResult(result).getDisplay();
         System.out.println(name + ": " + resultDisplay);
     }
 
@@ -59,8 +59,8 @@ public class OutputView {
     }
 
     private String convertCard(Card card) {
-        String convertedRank = CardRankDisplay.getDisplayByRank(card.getRank());
-        String convertedShape = CardShapeDisplay.getDisplayByShape(card.getShape());
+        String convertedRank = CardRankDisplay.getDisplayByRank(card.getRank()).getDisplay();
+        String convertedShape = CardShapeDisplay.getDisplayByShape(card.getShape()).getDisplay();
         return convertedRank + convertedShape;
     }
 

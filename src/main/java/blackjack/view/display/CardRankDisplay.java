@@ -27,11 +27,14 @@ public enum CardRankDisplay {
         this.display = display;
     }
 
-    public static String getDisplayByRank(Rank rank) {
+    public static CardRankDisplay getDisplayByRank(Rank rank) {
         return Arrays.stream(CardRankDisplay.values())
                 .filter(displayNumber -> displayNumber.rank == rank)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 수입니다."))
-                .display;
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 수입니다."));
+    }
+
+    public String getDisplay() {
+        return display;
     }
 }

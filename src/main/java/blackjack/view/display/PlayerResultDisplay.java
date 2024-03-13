@@ -16,11 +16,14 @@ public enum PlayerResultDisplay {
         this.display = display;
     }
 
-    public static String getDisplayByResult(MatchResult result) {
+    public static PlayerResultDisplay getDisplayByResult(MatchResult result) {
         return Arrays.stream(values())
                 .filter(displayResult -> displayResult.result == result)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 결과입니다."))
-                .display;
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 결과입니다."));
+    }
+
+    public String getDisplay() {
+        return display;
     }
 }
