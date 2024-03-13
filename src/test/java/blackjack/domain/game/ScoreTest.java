@@ -97,8 +97,8 @@ class ScoreTest {
     @Test
     @DisplayName("둘 다 블랙잭인 경우 DRAW 상태로 판단한다.")
     void bothBlackJackTest() {
-        Score currentScore = Score.blackJackScore();
-        Score relativeScore = Score.blackJackScore();
+        Score currentScore = Score.blackJack();
+        Score relativeScore = Score.blackJack();
 
         GameResult actual = currentScore.compareWith(relativeScore);
         assertThat(actual).isEqualTo(GameResult.DRAW);

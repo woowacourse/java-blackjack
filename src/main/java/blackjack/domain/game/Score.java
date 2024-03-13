@@ -41,7 +41,7 @@ public class Score {
         );
     }
 
-    public static Score blackJackScore() {
+    public static Score blackJack() {
         return new Score(BLACKJACK_MAX_SCORE, true);
     }
 

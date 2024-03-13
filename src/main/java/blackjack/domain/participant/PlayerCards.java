@@ -29,7 +29,7 @@ public class PlayerCards {
                 .sum();
 
         if (isBlackJackStatus(scoreValue)) {
-            return Score.blackJackScore();
+            return Score.blackJack();
         }
         Score score = Score.of(scoreValue);
         int currentAceAmount = getAceCount();
