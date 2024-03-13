@@ -76,7 +76,7 @@ public class OutputView {
                 resultText(result.countDealerLoses(), "패")
         );
         for (Player player : game.getPlayers()) {
-            System.out.println(player.getName() + ": " + winLoseText(result, player));
+            System.out.println(player.getName() + ": " + playerStateText(result, player));
         }
     }
 
@@ -87,14 +87,8 @@ public class OutputView {
         return resultCount + resultSuffix;
     }
 
-    private String winLoseText(Result result, Player player) {
-        if (result.isPlayerWon(player)) {
-            return "승";
-        }
-        if (result.isPlayerLose(player)) {
-            return "패";
-        }
-        return "무";
+    private String playerStateText(Result result, Player player) {
+        return result.getPlayerState(player).getDescription();
     }
 
     public void printProfit(BlackjackGame game, BettingCashier cashier) {

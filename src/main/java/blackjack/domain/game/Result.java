@@ -9,70 +9,68 @@ import java.util.Map;
 
 public class Result {
 
-    private final Map<Player, WinLose> resultMap;
+    private final Map<Player, PlayerState> resultMap;
 
-    private Result(Map<Player, WinLose> resultMap) {
+    private Result(Map<Player, PlayerState> resultMap) {
         this.resultMap = resultMap;
     }
 
     public static Result of(List<Player> players, Dealer dealer) {
-        Map<Player, WinLose> currentResultMap = new LinkedHashMap<>();
+        Map<Player, PlayerState> currentResultMap = new LinkedHashMap<>();
 
         for (Player player : players) {
-            WinLose winLose = decideWinLose(player, dealer);
-            currentResultMap.put(player, winLose);
+            PlayerState playerState = decidePlayerState(player, dealer);
+            currentResultMap.put(player, playerState);
         }
 
         return new Result(currentResultMap);
     }
 
-    private static WinLose decideWinLose(Player player, Dealer dealer) {
+    private static PlayerState decidePlayerState(Player player, Dealer dealer) {
+        if (player.isBlackjack()) {
+            if (dealer.isBlackjack()) {
+                return PlayerState.TIE;
+            }
+            return PlayerState.BLACKJACK;
+        }
         if (player.isBusted()) {
-            return WinLose.LOSE;
+            return PlayerState.LOSE;
         }
         if (dealer.isBusted()) {
-            return WinLose.WIN;
+            return PlayerState.WIN;
         }
-        return decideWinLoseByScore(player, dealer);
+        return decidePlayerStateByScore(player, dealer);
     }
 
-    private static WinLose decideWinLoseByScore(Player player, Dealer dealer) {
+    private static PlayerState decidePlayerStateByScore(Player player, Dealer dealer) {
         if (dealer.calculateScore() < player.calculateScore()) {
-            return WinLose.WIN;
+            return PlayerState.WIN;
         }
         if (dealer.calculateScore() > player.calculateScore()) {
-            return WinLose.LOSE;
+            return PlayerState.LOSE;
         }
-        return WinLose.TIE;
+        return PlayerState.TIE;
     }
 
     public long countDealerWins() {
         return resultMap.values().stream()
-                .filter(value -> value == WinLose.LOSE)
+                .filter(value -> value == PlayerState.LOSE)
                 .count();
     }
 
     public long countDealerLoses() {
         return resultMap.values().stream()
-                .filter(value -> value == WinLose.WIN)
+                .filter(value -> value == PlayerState.WIN || value == PlayerState.BLACKJACK)
                 .count();
     }
 
     public long countDealerTies() {
         return resultMap.values().stream()
-                .filter(value -> value == WinLose.TIE)
+                .filter(value -> value == PlayerState.TIE)
                 .count();
     }
 
-    public boolean isPlayerWon(Player player) {
-        return resultMap.get(player) == WinLose.WIN;
-    }
-
-    public boolean isPlayerLose(Player player) {
-        return resultMap.get(player) == WinLose.LOSE;
-    }
-
-    public boolean isPlayerTie(Player player) {
-        return resultMap.get(player) == WinLose.TIE;
+    public PlayerState getPlayerState(Player player) {
+        return resultMap.get(player);
     }
 }

@@ -17,6 +17,10 @@ public class BlackjackMoney {
         return new BlackjackMoney(-amount);
     }
 
+    public BlackjackMoney applyMultiple(double multiple) {
+        return new BlackjackMoney((int) (amount * multiple));
+    }
+
     public BlackjackMoney applyBlackjackMultiple() {
         return new BlackjackMoney((int) (amount * BlackjackMultiple));
     }

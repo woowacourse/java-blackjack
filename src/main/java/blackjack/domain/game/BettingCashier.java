@@ -22,19 +22,10 @@ public class BettingCashier {
 
     public BlackjackMoney findProfitOf(Player player) {
         BlackjackMoney money = betting.findMoneyOf(player);
-        if (result.isPlayerWon(player)) {
-            return applyMultipleIfBlackjack(player, money);
-        }
-        if (result.isPlayerLose(player)) {
-            return money.toNegative();
-        }
-        return new BlackjackMoney();
+        return applyMultiple(money, player);
     }
 
-    private BlackjackMoney applyMultipleIfBlackjack(Player player, BlackjackMoney money) {
-        if (player.isBlackjack()) {
-            return money.applyBlackjackMultiple();
-        }
-        return money;
+    private BlackjackMoney applyMultiple(BlackjackMoney money, Player player) {
+        return money.applyMultiple(result.getPlayerState(player).getMultiple());
     }
 }
