@@ -34,25 +34,24 @@ public class InputView {
 
     public List<PlayerBetAmountDto> readBetAmounts(final PlayerNames names) {
         return names.getNames().stream()
-                .map(name -> new PlayerBetAmountDto(name, readBetAmount()))
+                .map(name -> new PlayerBetAmountDto(name, readBetAmount(name)))
                 .toList();
     }
 
-    private BetAmount readBetAmount() {
+    private BetAmount readBetAmount(final PlayerName name) {
         try {
+            System.out.println(name.getName() + "의 배팅 금액은?");
             return new BetAmount(readInt());
         } catch (final NeedRetryException e) {
             System.out.println("[ERROR] " + e.getMessage());
-            return readBetAmount();
+            return readBetAmount(name);
         }
     }
 
     private int readInt() {
-        final String input = SCANNER.nextLine();
-
         try {
-            return Integer.parseInt(input);
-        } catch (NumberFormatException e) {
+            return Integer.parseInt(SCANNER.nextLine());
+        } catch (final NumberFormatException e) {
             throw new NeedRetryException("숫자만 입력할 수 있습니다.");
         }
     }

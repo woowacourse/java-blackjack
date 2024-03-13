@@ -63,10 +63,4 @@ public class Players {
                         (v1, v2) -> v1,
                         LinkedHashMap::new));
     }
-
-    public List<PlayerName> getNames() {
-        return players.stream()
-                .map(Player::getName)
-                .toList();
-    }
 }

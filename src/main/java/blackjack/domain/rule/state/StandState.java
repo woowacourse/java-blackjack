@@ -37,5 +37,4 @@ public final class StandState extends State {
         }
         return BetLeverage.TIE;
     }
-
 }

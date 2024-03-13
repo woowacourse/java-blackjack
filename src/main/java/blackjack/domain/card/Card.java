@@ -36,14 +36,6 @@ public record Card(CardNumber number, CardShape shape) {
         return number.getNumber();
     }
 
-    public String getNumberName() {
-        return number.name();
-    }
-
-    public String getShapeName() {
-        return shape.name();
-    }
-
     @Override
     public String toString() {
         return number.name() + "_" + shape.name();

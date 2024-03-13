@@ -48,22 +48,6 @@ public final class Hands {
         return new Score(sum).isBurst();
     }
 
-    public boolean isScoreBiggerThan(final Hands other) {
-        return this.calculateScore().isBiggerThan(other.calculateScore());
-    }
-
-    public boolean isScoreSame(final Hands other) {
-        return this.calculateScore().equals(other.calculateScore());
-    }
-
-    public boolean isSizeOf(final int size) {
-        return this.size() == size;
-    }
-
-    public int size() {
-        return cards.size();
-    }
-
     public Card getFirstCard() {
         return cards.get(0);
     }

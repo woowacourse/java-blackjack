@@ -7,10 +7,6 @@ public final class BetAmount {
 
     private final int value;
 
-    public BetAmount() {
-        value = 0;
-    }
-
     public BetAmount(final int value) {
         validatePositiveOrZero(value);
         this.value = value;
