@@ -26,6 +26,6 @@ public class Dealer extends Gamer {
     }
 
     public boolean shouldDraw() {
-        return cards.getMinGameScore() <= MIN_DEALER_SCORE;
+        return cards.getScoreByAceToOne() <= MIN_DEALER_SCORE;
     }
 }
