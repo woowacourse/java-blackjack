@@ -11,6 +11,10 @@ public class Card {
         this.value = value;
     }
 
+    public boolean hasValue(Value targetValue){
+        return value == targetValue;
+    }
+
     // TODO boilerplate 코드 컨벤션
     @Override
     public boolean equals(Object o) {

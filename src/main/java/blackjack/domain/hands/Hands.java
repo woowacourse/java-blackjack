@@ -1,10 +1,11 @@
 package blackjack.domain.hands;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Value;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static blackjack.domain.card.Value.ACE;
 
 public class Hands {
     private static final HandsScore BLACK_JACK = new HandsScore(21);
@@ -34,11 +35,9 @@ public class Hands {
         return getHandsScore().isSame(BLACK_JACK);
     }
 
-    // TODO 카드에게 값이 있는지 물어보기
     private boolean hasAce() {
         return hands.stream()
-                .map(Card::getValue)
-                .anyMatch(value -> value == Value.ACE);
+                .anyMatch(card -> card.hasValue(ACE));
     }
 
     private int calculateScoreSum() {
