@@ -33,6 +33,10 @@ public class Hand {
         return Score.from(this);
     }
 
+    public int size() {
+        return cards.size();
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
