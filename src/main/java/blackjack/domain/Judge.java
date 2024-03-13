@@ -6,84 +6,89 @@ import blackjack.dto.Profits;
 
 public class Judge {
 
-    private Judge() {
+    private final Dealer dealer;
+    private final Player player;
+
+    public Judge(Dealer dealer, Player player) {
+        this.dealer = dealer;
+        this.player = player;
     }
 
-    public static void judge(final Profits profits, final Dealer dealer, final Player player) {
+    public void judge(final Profits profits) {
         if (dealer.isBust()) {
-            judgeWhenDealerBust(player, profits);
+            judgeWhenDealerBust(profits);
             return;
         }
 
         if (dealer.isBlackjack()) {
-            judgeWhenDealerBlackjack(player, profits);
+            judgeWhenDealerBlackjack(profits);
             return;
         }
 
-        judgeWhenDealerNormal(profits, dealer, player);
+        judgeWhenDealerNormal(profits);
     }
 
-    public static void judgeWhenDealerBust(final Player player, final Profits profits) {
+    public void judgeWhenDealerBust(final Profits profits) {
         if (player.isBust()) {
-            draw(profits, player);
+            draw(profits);
             return;
         }
 
-        playerWin(profits, player);
+        playerWin(profits);
     }
 
-    public static void judgeWhenDealerBlackjack(
-            final Player player, final Profits profits) {
+    public void judgeWhenDealerBlackjack(
+            final Profits profits) {
         if (player.isBlackjack()) {
-            draw(profits, player);
+            draw(profits);
             return;
         }
 
-        playerLose(profits, player);
+        playerLose(profits);
     }
 
-    public static void judgeWhenDealerNormal(
-            final Profits profits, final Dealer dealer, final Player player) {
+    public void judgeWhenDealerNormal(
+            final Profits profits) {
         if (player.isBust()) {
-            playerLose(profits, player);
+            playerLose(profits);
             return;
         }
 
         if (player.isBlackjack()) {
-            playerWin(profits, player);
+            playerWin(profits);
             return;
         }
 
-        judgeWhenNormalTogether(profits, dealer, player);
+        judgeWhenNormalTogether(profits);
     }
 
-    private static void judgeWhenNormalTogether(
-            final Profits profits, final Dealer dealer, final Player player) {
+    private void judgeWhenNormalTogether(
+            final Profits profits) {
         if (dealer.isSameScore(player.getScore())) {
-            draw(profits, player);
+            draw(profits);
             return;
         }
 
         if (dealer.getScore() > player.getScore()) {
-            playerLose(profits, player);
+            playerLose(profits);
             return;
         }
 
-        playerWin(profits, player);
+        playerWin(profits);
     }
 
-    private static void playerLose(
-            final Profits profits, final Player player) {
+    private void playerLose(
+            final Profits profits) {
         profits.addProfit(player, GameResult.LOSE);
     }
 
-    private static void playerWin(
-            final Profits profits, final Player player) {
+    private void playerWin(
+            final Profits profits) {
         profits.addProfit(player, GameResult.WIN);
     }
 
-    private static void draw(
-            final Profits profits, final Player player) {
+    private void draw(
+            final Profits profits) {
         profits.addProfit(player, GameResult.DRAW);
     }
 }

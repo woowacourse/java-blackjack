@@ -44,7 +44,7 @@ public class Players {
         Profits profits = new Profits();
 
         for (Player player : players) {
-            Judge.judge(profits, dealer, player);
+            new Judge(dealer, player).judge(profits);
         }
 
         return profits;

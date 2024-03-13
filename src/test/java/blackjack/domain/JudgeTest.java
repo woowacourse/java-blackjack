@@ -51,7 +51,7 @@ class JudgeTest {
 
             //when
             bustPlayerChoco(dealer);
-            Judge.judge(profits, dealer, choco);
+            new Judge(dealer, choco).judge(profits);
 
             //then
             assertThat(isDraw(profits))
@@ -68,7 +68,7 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             //when
-            Judge.judge(profits, dealer, choco);
+            new Judge(dealer, choco).judge(profits);
 
             //then
             assertThat(isPlayerResultWin(profits))
@@ -83,7 +83,7 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             //when
-            Judge.judge(profits, dealer, choco);
+            new Judge(dealer, choco).judge(profits);
 
             //then
             assertThat(isPlayerResultWin(profits))
@@ -114,7 +114,7 @@ class JudgeTest {
             //when
 
             bustPlayerChoco(dealer);
-            Judge.judge(profits, dealer, choco);
+            new Judge(dealer, choco).judge(profits);
 
             //then
             assertThat(isPlayerResultLose(profits))
@@ -131,7 +131,7 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             //when
-            Judge.judge(profits, dealer, choco);
+            new Judge(dealer, choco).judge(profits);
 
             //then
             assertThat(isDraw(profits))
@@ -146,7 +146,7 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             //when
-            Judge.judge(profits, dealer, choco);
+            new Judge(dealer, choco).judge(profits);
 
             //then
             assertThat(isPlayerResultLose(profits))
@@ -173,7 +173,7 @@ class JudgeTest {
 
             //when
             bustPlayerChoco(dealer);
-            Judge.judge(profits, dealer, choco);
+            new Judge(dealer, choco).judge(profits);
 
             //then
             assertThat(isPlayerResultLose(profits))
@@ -190,7 +190,7 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             //when
-            Judge.judge(profits, dealer, choco);
+            new Judge(dealer, choco).judge(profits);
 
             //then
             assertThat(isPlayerResultWin(profits))
@@ -205,7 +205,7 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             //when
-            Judge.judge(profits, dealer, choco);
+            new Judge(dealer, choco).judge(profits);
 
             //then
             assertThat(isPlayerResultLose(profits))
@@ -221,7 +221,7 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             //when
-            Judge.judge(profits, dealer, choco);
+            new Judge(dealer, choco).judge(profits);
 
             //then
             assertThat(isPlayerResultWin(profits))
@@ -237,7 +237,7 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             //when
-            Judge.judge(profits, dealer, choco);
+            new Judge(dealer, choco).judge(profits);
 
             //then
             assertThat(isDraw(profits))
