@@ -32,12 +32,12 @@ public class InputView {
             .toList();
     }
 
-    public static String askHitAnswer(Player player) {
-        System.out.printf(determineHitAnswerPrompt(player), player.getName());
+    public static String askHitChoice(Player player) {
+        System.out.printf(determineHitChoicePrompt(player), player.getName());
         return Console.readLine().strip();
     }
 
-    private static String determineHitAnswerPrompt(Player player) {
+    private static String determineHitChoicePrompt(Player player) {
         String name = player.getName();
         char lastLetter = name.charAt(name.length() - 1);
         if (isVowelEnglish(lastLetter) || isVowelKorean(lastLetter)) {

@@ -3,7 +3,7 @@ package controller;
 import java.util.List;
 import java.util.function.Supplier;
 import model.blackjackgame.BlackjackGame;
-import model.blackjackgame.HitAnswer;
+import model.blackjackgame.HitChoice;
 import model.player.Player;
 import model.player.Players;
 import model.result.DealerResult;
@@ -51,16 +51,16 @@ public class BlackjackController {
     }
 
     private void askHitAndPrintCards(BlackjackGame blackjackGame, Player player) {
-        while (player.isPossibleHit() && prepareHitAnswer(player).isHit()) {
+        while (player.isPossibleHit() && prepareHitChoice(player).isHit()) {
             blackjackGame.dealCard(player);
             OutputView.printPlayerCard(player);
         }
     }
 
-    private HitAnswer prepareHitAnswer(Player player) {
+    private HitChoice prepareHitChoice(Player player) {
         return retryOnException(() -> {
-            String hitAnswer = InputView.askHitAnswer(player);
-            return HitAnswer.of(hitAnswer);
+            String hitChoice = InputView.askHitChoice(player);
+            return HitChoice.findHitChoice(hitChoice);
         });
     }
 

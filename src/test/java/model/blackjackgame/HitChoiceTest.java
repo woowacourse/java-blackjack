@@ -7,20 +7,20 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class HitAnswerTest {
+class HitChoiceTest {
 
-    @DisplayName("y 와 n 중 하나의 문자가 들어오면 객체 생성 성공")
+    @DisplayName("y 와 n 중 하나의 문자가 들어오면 객체 반환 성공")
     @ParameterizedTest
     @ValueSource(strings = {"y", "n"})
-    void testValidHitAnswer(String isHitAnswer) {
-        assertThatCode(() -> HitAnswer.of(isHitAnswer)).doesNotThrowAnyException();
+    void testValidHitChoice(String hitChoice) {
+        assertThatCode(() -> HitChoice.findHitChoice(hitChoice)).doesNotThrowAnyException();
     }
 
     @DisplayName("y 와 n 이외의 문자가 들어오면 예외 발생")
     @ParameterizedTest
     @ValueSource(strings = {"예", "아니요", "Y", "N", "", "1", "2"})
-    void testInvalidHitAnswer(String isHitAnswer) {
-        assertThatThrownBy(() -> HitAnswer.of(isHitAnswer))
+    void testInvalidHitChoice(String hitChoice) {
+        assertThatThrownBy(() -> HitChoice.findHitChoice(hitChoice))
             .isInstanceOf(IllegalArgumentException.class);
     }
 }
