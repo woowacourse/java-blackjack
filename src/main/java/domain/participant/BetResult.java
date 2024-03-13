@@ -27,6 +27,11 @@ public class BetResult {
                 BetAmount profit = betAmount.multiply(winStatus.getProfitMultiplier());
                 betAmountByParticipant.replace(participant, profit);
             }
+
+            if (WinStatus.LOSE == winStatusEntry.getValue()) {
+                BetAmount profit = betAmount.multiply(winStatus.getProfitMultiplier());
+                betAmountByParticipant.replace(participant, profit);
+            }
         }
     }
 }

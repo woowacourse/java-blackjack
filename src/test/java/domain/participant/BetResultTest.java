@@ -47,4 +47,27 @@ class BetResultTest {
         BetAmount findProfit = betResult.findByParticipant(participant);
         assertThat(findProfit.getValue()).isEqualTo(1000);
     }
+
+    @DisplayName("플레이어가 패배시, 배팅 금액을 모두 잃는다.")
+    @Test
+    void profitWhenLose() {
+        //given
+        Participant participant = new Participant(new Name("rush"));
+        BetAmount betAmount = BetAmount.from(1000);
+
+        Dealer dealer = new Dealer();
+
+        LinkedHashMap<Participant, BetAmount> betAmountByParticipant = new LinkedHashMap<>();
+        betAmountByParticipant.put(participant, betAmount);
+        BetResult betResult = new BetResult(betAmountByParticipant);
+
+        LinkedHashMap<Participant, WinStatus> winStatusByParticipant = new LinkedHashMap<>();
+        winStatusByParticipant.put(participant, WinStatus.LOSE);
+
+        //when
+        betResult.updateToProfit(winStatusByParticipant);
+        //then
+        BetAmount findProfit = betResult.findByParticipant(participant);
+        assertThat(findProfit.getValue()).isEqualTo(-1000);
+    }
 }
