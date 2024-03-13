@@ -9,11 +9,22 @@ import org.junit.jupiter.api.Test;
 
 public class DeckGeneratorTest {
     @Test
-    @DisplayName("전체 덱을 만든다.")
+    @DisplayName("덱의 크기는 52장이다.")
     void generateTest() {
         List<Card> cards = new DeckGenerator().generate();
 
         assertThat(cards).hasSize(52);
+    }
+
+    @Test
+    @DisplayName("덱은 생성될때마다 셔플된다.")
+    void generateIsShuffleTest() {
+        DeckGenerator deckGenerator = new DeckGenerator();
+        List<Card> cards1 = deckGenerator.generate();
+        List<Card> cards2 = deckGenerator.generate();
+
+        assertThat(cards1).containsExactlyInAnyOrderElementsOf(cards2)
+                .isNotEqualTo(cards2);
     }
 }
 
