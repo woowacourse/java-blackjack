@@ -12,10 +12,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import blackjack.model.deck.Card;
-import blackjack.model.state.BlackJack;
-import blackjack.model.state.Bust;
-import blackjack.model.state.Hit;
-import blackjack.model.state.Stand;
+import blackjack.model.state.finished.BlackJack;
+import blackjack.model.state.finished.Bust;
+import blackjack.model.state.playing.Hit;
+import blackjack.model.state.finished.Stand;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

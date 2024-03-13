@@ -43,14 +43,6 @@ class HandTest {
     }
 
     @Test
-    @DisplayName("제일 첫 번째 카드 하나를 꺼낸다.")
-    void getFirstCard() {
-        hand.add(List.of(new Card(CLOVER, FIVE), new Card(DIA, ACE)));
-
-        assertThat(hand.getFirstCard()).isEqualTo(new Card(CLOVER, FIVE));
-    }
-
-    @Test
     @DisplayName("카드의 합을 계산할 수 있다.")
     void calculateScore() {
         hand.add(List.of(new Card(CLOVER, FIVE), new Card(CLOVER, FOUR)));

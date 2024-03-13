@@ -1,7 +1,7 @@
 package blackjack.model.participant;
 
 import blackjack.model.deck.Card;
-import blackjack.model.state.Hit;
+import blackjack.model.state.playing.Hit;
 import blackjack.model.state.State;
 import java.util.List;
 
@@ -30,20 +30,20 @@ public abstract class Participant {
     }
 
     public List<Card> openCards() {
-        return state.getCards();
+        return state.hand().getCards();
     }
 
     public abstract boolean canHit();
 
     public boolean isBust() {
-        return hand.isBust();
+        return state.hand().isBust();
     }
 
     public boolean hasManyCardsThan(Participant other) {
-        return hand.hasManyThan(other.hand);
+        return state.hand().hasManyThan(other.hand);
     }
 
     public boolean hasSameCardsSizeThan(Participant other) {
-        return hand.hasSameSizeWith(other.hand);
+        return state.hand().hasSameSizeWith(other.hand);
     }
 }

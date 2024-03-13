@@ -1,9 +1,9 @@
-package blackjack.model.state;
+package blackjack.model.state.finished;
 
 import blackjack.model.Money;
 import blackjack.model.deck.Card;
 import blackjack.model.participant.Hand;
-import java.util.List;
+import blackjack.model.state.State;
 
 public class Stand implements State {
     private final Hand hand;
@@ -23,8 +23,8 @@ public class Stand implements State {
     }
 
     @Override
-    public List<Card> getCards() {
-        return hand.getCards();
+    public Hand hand() {
+        return hand;
     }
 
     @Override

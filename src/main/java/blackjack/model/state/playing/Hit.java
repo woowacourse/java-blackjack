@@ -1,8 +1,12 @@
-package blackjack.model.state;
+package blackjack.model.state.playing;
 
 import blackjack.model.Money;
 import blackjack.model.deck.Card;
 import blackjack.model.participant.Hand;
+import blackjack.model.state.finished.BlackJack;
+import blackjack.model.state.finished.Bust;
+import blackjack.model.state.finished.Stand;
+import blackjack.model.state.State;
 import java.util.List;
 
 public class Hit implements State {
@@ -34,8 +38,8 @@ public class Hit implements State {
     }
 
     @Override
-    public List<Card> getCards() {
-        return hand.getCards();
+    public Hand hand() {
+        return hand;
     }
 
     @Override

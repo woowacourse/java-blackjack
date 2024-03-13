@@ -2,8 +2,6 @@ package blackjack.model.participant;
 
 import blackjack.model.deck.Card;
 import blackjack.model.deck.Deck;
-import blackjack.model.state.Hit;
-import blackjack.model.state.State;
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -17,7 +15,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canHit() {
-        return hand.calculateScore() <= HITTABLE_THRESHOLD;
+        return state.calculateScore() <= HITTABLE_THRESHOLD;
     }
 
     public List<Card> distributeInitialCard() {
@@ -29,7 +27,7 @@ public class Dealer extends Participant {
     }
 
     public List<Card> openFirstCard() {
-        final List<Card> cards = state.getCards();
+        final List<Card> cards = state.hand().getCards();
         return List.of(cards.get(0));
     }
 }
