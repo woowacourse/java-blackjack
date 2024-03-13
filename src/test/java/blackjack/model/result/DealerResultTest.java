@@ -17,7 +17,7 @@ class DealerResultTest {
         dealerResult.addWin();
 
         //then
-        assertThat(dealerResult.getDealerResult()).containsExactly(Result.WIN);
+        assertThat(dealerResult.getDealerResult()).containsExactly(ResultState.WIN);
     }
 
     @DisplayName("결과값 '패배'를 추가한다.")
@@ -30,7 +30,7 @@ class DealerResultTest {
         dealerResult.addLose();
 
         //then
-        assertThat(dealerResult.getDealerResult()).containsExactly(Result.LOSE);
+        assertThat(dealerResult.getDealerResult()).containsExactly(ResultState.LOSE);
     }
 
     @DisplayName("결과값 '무승부'를 추가한다.")
@@ -43,7 +43,7 @@ class DealerResultTest {
         dealerResult.addTie();
 
         //then
-        assertThat(dealerResult.getDealerResult()).containsExactly(Result.TIE);
+        assertThat(dealerResult.getDealerResult()).containsExactly(ResultState.TIE);
     }
 
     @DisplayName("결과값에 '승리' 개수를 반환한다.")

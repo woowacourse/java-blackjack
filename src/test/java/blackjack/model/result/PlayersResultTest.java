@@ -18,11 +18,11 @@ class PlayersResultTest {
 
         //when
         playersResult.addWin(player);
-        Map<Player, Result> result = playersResult.getPlayerResult();
-        Result playerResult = result.get(player);
+        Map<Player, ResultState> result = playersResult.getPlayerResult();
+        ResultState playerResult = result.get(player);
 
         //then
-        assertThat(playerResult).isEqualTo(Result.WIN);
+        assertThat(playerResult).isEqualTo(ResultState.WIN);
     }
 
     @DisplayName("플레이어 결과에 '패배'를 추가한다.")
@@ -34,11 +34,11 @@ class PlayersResultTest {
 
         //when
         playersResult.addLose(player);
-        Map<Player, Result> result = playersResult.getPlayerResult();
-        Result playerResult = result.get(player);
+        Map<Player, ResultState> result = playersResult.getPlayerResult();
+        ResultState playerResult = result.get(player);
 
         //then
-        assertThat(playerResult).isEqualTo(Result.LOSE);
+        assertThat(playerResult).isEqualTo(ResultState.LOSE);
     }
 
 
@@ -51,10 +51,10 @@ class PlayersResultTest {
 
         //when
         playersResult.addTie(player);
-        Map<Player, Result> result = playersResult.getPlayerResult();
-        Result playerResult = result.get(player);
+        Map<Player, ResultState> result = playersResult.getPlayerResult();
+        ResultState playerResult = result.get(player);
 
         //then
-        assertThat(playerResult).isEqualTo(Result.TIE);
+        assertThat(playerResult).isEqualTo(ResultState.TIE);
     }
 }

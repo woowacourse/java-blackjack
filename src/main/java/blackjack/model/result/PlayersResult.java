@@ -6,24 +6,24 @@ import java.util.Map;
 
 public class PlayersResult {
 
-    private final Map<Player, Result> playerResult = new LinkedHashMap<>();
+    private final Map<Player, ResultState> playerResult = new LinkedHashMap<>();
 
     public PlayersResult() {
     }
 
     public void addWin(Player player) {
-        playerResult.put(player, Result.WIN);
+        playerResult.put(player, ResultState.WIN);
     }
 
     public void addLose(Player player) {
-        playerResult.put(player, Result.LOSE);
+        playerResult.put(player, ResultState.LOSE);
     }
 
     public void addTie(Player player) {
-        playerResult.put(player, Result.TIE);
+        playerResult.put(player, ResultState.TIE);
     }
 
-    public Map<Player, Result> getPlayerResult() {
+    public Map<Player, ResultState> getPlayerResult() {
         return playerResult;
     }
 }

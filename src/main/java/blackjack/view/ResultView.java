@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.model.result.Result;
+import blackjack.model.result.ResultState;
 
 import java.util.Arrays;
 
@@ -15,9 +15,9 @@ public enum ResultView {
         this.resultName = resultName;
     }
 
-    public static String convertResultName(Result result) {
+    public static String convertResultName(ResultState resultState) {
         return Arrays.stream(ResultView.values())
-                .filter(resultView -> resultView.name().equals(result.name()))
+                .filter(resultView -> resultView.name().equals(resultState.name()))
                 .findFirst()
                 .orElseThrow()
                 .resultName;

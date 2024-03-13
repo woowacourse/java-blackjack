@@ -4,7 +4,7 @@ import blackjack.model.card.Card;
 import blackjack.model.gamer.Dealer;
 import blackjack.model.gamer.Player;
 import blackjack.model.result.GameResult;
-import blackjack.model.result.Result;
+import blackjack.model.result.ResultState;
 import java.util.List;
 import java.util.Map;
 
@@ -86,7 +86,7 @@ public class OutputView {
     }
 
     private static void printPlayerResult(GameResult gameResult) {
-        Map<Player, Result> playersResult = gameResult.getPlayersResult();
+        Map<Player, ResultState> playersResult = gameResult.getPlayersResult();
 
         for (Player player : playersResult.keySet()) {
             String playerName = player.getPlayerName();

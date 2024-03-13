@@ -6,7 +6,7 @@ import blackjack.model.card.Rank;
 import blackjack.model.gamer.Dealer;
 import blackjack.model.gamer.Player;
 import blackjack.model.result.GameResult;
-import blackjack.model.result.Result;
+import blackjack.model.result.ResultState;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -38,13 +38,13 @@ class GameScoreRuleTest {
         GameResult gameResult = new GameResult();
         gameScoreRule.decideWinner(dealer, player, gameResult);
 
-        Map<Player, Result> playersResult = gameResult.getPlayersResult();
-        Result playerResult = playersResult.get(player);
+        Map<Player, ResultState> playersResult = gameResult.getPlayersResult();
+        ResultState playerResult = playersResult.get(player);
 
         //then
         assertAll(
                 () -> assertThat(gameResult.countDealerWins()).isEqualTo(1),
-                () -> assertThat(playerResult).isEqualTo(Result.LOSE)
+                () -> assertThat(playerResult).isEqualTo(ResultState.LOSE)
         );
     }
 
@@ -67,13 +67,13 @@ class GameScoreRuleTest {
         GameResult gameResult = new GameResult();
         gameScoreRule.decideWinner(dealer, player, gameResult);
 
-        Map<Player, Result> playersResult = gameResult.getPlayersResult();
-        Result playerResult = playersResult.get(player);
+        Map<Player, ResultState> playersResult = gameResult.getPlayersResult();
+        ResultState playerResult = playersResult.get(player);
 
         //then
         assertAll(
                 () -> assertThat(gameResult.countDealerLoses()).isEqualTo(1),
-                () -> assertThat(playerResult).isEqualTo(Result.WIN)
+                () -> assertThat(playerResult).isEqualTo(ResultState.WIN)
         );
     }
 
@@ -94,13 +94,13 @@ class GameScoreRuleTest {
         GameResult gameResult = new GameResult();
         gameScoreRule.decideWinner(dealer, player, gameResult);
 
-        Map<Player, Result> playersResult = gameResult.getPlayersResult();
-        Result playerResult = playersResult.get(player);
+        Map<Player, ResultState> playersResult = gameResult.getPlayersResult();
+        ResultState playerResult = playersResult.get(player);
 
         //then
         assertAll(
                 () -> assertThat(gameResult.countDealerWins()).isEqualTo(1),
-                () -> assertThat(playerResult).isEqualTo(Result.LOSE)
+                () -> assertThat(playerResult).isEqualTo(ResultState.LOSE)
         );
     }
 
@@ -121,13 +121,13 @@ class GameScoreRuleTest {
         GameResult gameResult = new GameResult();
         gameScoreRule.decideWinner(dealer, player, gameResult);
 
-        Map<Player, Result> playersResult = gameResult.getPlayersResult();
-        Result playerResult = playersResult.get(player);
+        Map<Player, ResultState> playersResult = gameResult.getPlayersResult();
+        ResultState playerResult = playersResult.get(player);
 
         //then
         assertAll(
                 () -> assertThat(gameResult.countDealerTies()).isEqualTo(1),
-                () -> assertThat(playerResult).isEqualTo(Result.TIE)
+                () -> assertThat(playerResult).isEqualTo(ResultState.TIE)
         );
     }
 

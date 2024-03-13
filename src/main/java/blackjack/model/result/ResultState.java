@@ -1,10 +1,10 @@
 package blackjack.model.result;
 
-public enum Result {
+public enum ResultState {
     WIN,
     LOSE,
     TIE;
 
-    Result() {
+    ResultState() {
     }
 }
