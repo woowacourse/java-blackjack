@@ -5,6 +5,7 @@ import domain.gamer.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class InputView {
 
@@ -18,9 +19,17 @@ public class InputView {
         return Arrays.asList(rawNames.split(","));
     }
 
-    public String readPlayerBet(Player player) {
+    public int readPlayerBet(Player player) {
         System.out.println(LINE_SEPARATOR + player.getPlayerName() + "의 배팅 금액은?");
-        return scanner.nextLine();
+        String userBetInput = scanner.nextLine();
+        validateDigit(userBetInput);
+        return Integer.parseInt(userBetInput);
+    }
+
+    private void validateDigit(String value) {
+        if (!Pattern.matches("\\d+", value)) {
+            throw new IllegalArgumentException("[ERROR] 숫자만 입력해주세요.");
+        }
     }
 
     public String readHitOrNot(Player player) {
