@@ -4,7 +4,12 @@ public class HitOption {
 
     private static final String YES = "y";
     private static final String NO = "n";
+
     private String value;
+
+    public HitOption() {
+        this.value = YES;
+    }
 
     public HitOption(String value) {
         validate(value);
