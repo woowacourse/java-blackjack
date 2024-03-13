@@ -18,10 +18,10 @@ public class Deck {
     private final Stack<Card> cards;
 
     public Deck(ShuffleStrategy shuffleStrategy) {
-        Stack<Card> cards = Stream.generate(this::createCardPack)
+        List<Card> cards = Stream.generate(this::createCardPack)
                 .limit(DECKS_COUNT)
                 .flatMap(Collection::stream)
-                .collect(Collectors.toCollection(Stack::new));
+                .collect(Collectors.toList());
         this.cards = shuffleStrategy.shuffle(cards);
     }
 

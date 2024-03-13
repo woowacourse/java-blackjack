@@ -4,13 +4,13 @@ import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
 import domain.deck.Deck;
-import domain.deck.strategy.SettedShuffleStrategy;
 import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import strategy.SettedShuffleStrategy;
 
 import java.util.List;
 

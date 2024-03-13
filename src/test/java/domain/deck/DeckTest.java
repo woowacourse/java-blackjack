@@ -1,6 +1,6 @@
 package domain.deck;
 
-import domain.deck.strategy.SettedShuffleStrategy;
+import strategy.SettedShuffleStrategy;
 import strategy.RandomShuffleStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

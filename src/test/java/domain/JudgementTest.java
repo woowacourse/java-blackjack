@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
 import domain.deck.Deck;
-import domain.deck.strategy.SettedShuffleStrategy;
+import strategy.SettedShuffleStrategy;
 import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Player;

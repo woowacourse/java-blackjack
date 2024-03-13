@@ -1,7 +1,6 @@
-package domain.deck.strategy;
+package strategy;
 
 import domain.card.Card;
-import strategy.ShuffleStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +15,11 @@ public class SettedShuffleStrategy implements ShuffleStrategy {
     }
 
     @Override
-    public Stack<Card> shuffle(Stack<Card> cards) {
+    public Stack<Card> shuffle(List<Card> cards) {
         cards.removeAll(this.cards);
-        for (final Card card : this.cards) {
-            cards.push(card);
-        }
-        return cards;
+        cards.addAll(this.cards);
+        Stack<Card> settedCards = new Stack<>();
+        settedCards.addAll(cards);
+        return settedCards;
     }
 }
