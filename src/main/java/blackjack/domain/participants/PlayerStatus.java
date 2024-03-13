@@ -4,10 +4,6 @@ import blackjack.domain.cards.Card;
 import blackjack.domain.cards.Hand;
 
 public class PlayerStatus {
-    private static final int GAIN_BETTING = 1;
-    private static final int LOSE_BETTING = -1;
-
-
     private final Hand hand;
     private Money money;
 

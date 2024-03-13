@@ -103,7 +103,6 @@ public class GameBoardTest {
 
         Map<Player, Victory> victoryResult = gameBoard.calculateVictory();
 
-
         assertThat(victoryResult.get(siso)).isEqualTo(Victory.LOSE);
         assertThat(victoryResult.get(takan)).isEqualTo(Victory.TIE);
     }

@@ -57,7 +57,7 @@ public class GameBoard {
     }
 
     public void calculateBettingMoney(Map<Player, Victory> victory) {
-        for(Player onePlayer: victory.keySet()) {
+        for (Player onePlayer : victory.keySet()) {
             calculateOnePlayerBettingMoney(onePlayer, victory.get(onePlayer));
         }
     }
@@ -69,7 +69,7 @@ public class GameBoard {
 
         }
         onePlayer.checkBettingMoney(benefit);
-        if(victory.equals(Victory.BLACKJACK_WIN) || victory.equals(Victory.WIN)) {
+        if (victory.equals(Victory.BLACKJACK_WIN) || victory.equals(Victory.WIN)) {
             dealer.loseMoney(onePlayer.getMoney());
 
         }

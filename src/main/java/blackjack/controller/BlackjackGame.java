@@ -42,7 +42,7 @@ public class BlackjackGame {
 
     private void startBetting(GameBoard gameBoard) {
         Players players = gameBoard.getPlayers();
-        for(int i = 0; i < players.size(); i++) {
+        for (int i = 0; i < players.size(); i++) {
             int money = inputView.readMoney(players.getOnePlayerName(i).getValue());
             players.betOnePlayerMoney(new Money(money), i);
         }
@@ -112,7 +112,7 @@ public class BlackjackGame {
 
     private void handlePlayersBettingMoney(GameBoard gameBoard, List<BettingMoneyDto> bettingMoneyResult) {
         Players players = gameBoard.getPlayers();
-        for(int i = 0; i < gameBoard.countPlayers(); i++) {
+        for (int i = 0; i < gameBoard.countPlayers(); i++) {
             bettingMoneyResult.add(BettingMoneyDto.from(players.getOnePlayer(i)));
         }
     }

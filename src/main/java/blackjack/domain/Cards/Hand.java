@@ -15,6 +15,10 @@ public class Hand {
         this.cards = new LinkedList<>();
     }
 
+    private static boolean canAddAceBonusScore(int totalScore) {
+        return totalScore + ACE_BONUS_SCORE <= Player.BLACKJACK_SCORE;
+    }
+
     public void addCard(Card card) {
         cards.add(card);
     }
@@ -37,10 +41,6 @@ public class Hand {
             return ACE_BONUS_SCORE;
         }
         return NO_BONUS_SCORE;
-    }
-
-    private static boolean canAddAceBonusScore(int totalScore) {
-        return totalScore + ACE_BONUS_SCORE <= Player.BLACKJACK_SCORE;
     }
 
     private boolean hasAce() {

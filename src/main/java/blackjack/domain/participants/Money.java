@@ -3,7 +3,6 @@ package blackjack.domain.participants;
 import java.util.Objects;
 
 public class Money {
-
     public static final int INITIAL_MONEY = 0;
 
     private final int value;

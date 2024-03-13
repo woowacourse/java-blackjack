@@ -33,7 +33,6 @@ class PlayersTest {
         takan.receiveCard(new Card(Shape.SPADE, Rank.ACE));
         takan.receiveCard(new Card(Shape.SPADE, Rank.JACK)); // 21
 
-
         List<Player> playerList = List.of(siso, takan);
         players = new Players(playerList);
 
@@ -61,7 +60,6 @@ class PlayersTest {
         players.betOnePlayerMoney(new Money(3000), 0);
         assertThat(siso.getMoney().equals(new Money(3000))).isTrue();
     }
-
 
 
     @Test
