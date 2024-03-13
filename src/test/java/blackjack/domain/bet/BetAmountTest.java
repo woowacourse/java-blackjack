@@ -3,7 +3,6 @@ package blackjack.domain.bet;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.player.bet.BetAmount;
 import blackjack.exception.NeedRetryException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

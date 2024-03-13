@@ -5,25 +5,25 @@ import java.util.Arrays;
 
 public enum CardNumberFormat {
 
-    TWO("2"),
-    THREE("3"),
-    FOUR("4"),
-    FIVE("5"),
-    SIX("6"),
-    SEVEN("7"),
-    EIGHT("8"),
-    NINE("9"),
-    TEN("10"),
-    JACK("J"),
-    QUEEN("Q"),
-    KING("K"),
-    ACE("A");
+    TWO(CardNumber.TWO,"2"),
+    THREE(CardNumber.THREE,"3"),
+    FOUR(CardNumber.FOUR,"4"),
+    FIVE(CardNumber.FIVE,"5"),
+    SIX(CardNumber.SIX,"6"),
+    SEVEN(CardNumber.SEVEN,"7"),
+    EIGHT(CardNumber.EIGHT,"8"),
+    NINE(CardNumber.NINE,"9"),
+    TEN(CardNumber.TEN,"10"),
+    JACK(CardNumber.JACK,"J"),
+    QUEEN(CardNumber.QUEEN,"Q"),
+    KING(CardNumber.KING,"K"),
+    ACE(CardNumber.ACE,"A");
 
     private final CardNumber number;
     private final String format;
 
-    CardNumberFormat(final String format) {
-        this.number = CardNumber.valueOf(name());
+    CardNumberFormat(final CardNumber number, final String format) {
+        this.number = number;
         this.format = format;
     }
 

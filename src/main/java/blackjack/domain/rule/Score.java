@@ -24,7 +24,7 @@ public final class Score {
         return value == BLACKJACK_VALUE;
     }
 
-    public boolean isDead() {
+    public boolean isBurst() {
         return value > BLACKJACK_VALUE;
     }
 

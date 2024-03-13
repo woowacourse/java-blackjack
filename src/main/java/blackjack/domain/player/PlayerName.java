@@ -3,7 +3,7 @@ package blackjack.domain.player;
 import blackjack.exception.NeedRetryException;
 import java.util.Objects;
 
-public class PlayerName {
+public final class PlayerName {
 
     private final String name;
 

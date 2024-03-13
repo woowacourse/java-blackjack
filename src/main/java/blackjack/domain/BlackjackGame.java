@@ -3,11 +3,11 @@ package blackjack.domain;
 import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
 import blackjack.domain.dealer.Deck;
-import blackjack.domain.player.BetResult;
+import blackjack.domain.player.PlayerBetResult;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
-import blackjack.domain.player.bet.BetAmount;
-import blackjack.domain.player.bet.BetRevenue;
+import blackjack.domain.bet.BetAmount;
+import blackjack.domain.bet.BetRevenue;
 import blackjack.dto.BetRevenueResultDto;
 import blackjack.dto.FinalHandsScoreDto;
 import blackjack.dto.StartCardsDto;
@@ -68,13 +68,14 @@ public class BlackjackGame {
     }
 
     public FinalHandsScoreDto getFinalHandsScore() {
-        return FinalHandsScoreDto.of(players.getPlayersHands(), dealer);
+        return FinalHandsScoreDto.of(players.getPlayersHands(), dealer.getHands());
     }
 
     public BetRevenueResultDto getBetRevenueResults() {
-        final Map<PlayerName, BetRevenue> playersBetResult = players.determineBetRevenue(dealer.getState());
-        final BetResult betResult = new BetResult(playersBetResult);
-        final BetRevenue dealerRevenue = betResult.calculateDealerRevenue();
+        final Map<PlayerName, BetRevenue> playersBetResult = players.determineBetRevenue(dealer);
+        final PlayerBetResult playerBetResult = new PlayerBetResult(playersBetResult);
+
+        final BetRevenue dealerRevenue = playerBetResult.calculateDealerRevenue();
 
         return BetRevenueResultDto.of(playersBetResult, dealerRevenue);
     }

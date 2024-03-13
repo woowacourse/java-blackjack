@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.player.PlayerName;
-import blackjack.domain.player.bet.BetAmount;
+import blackjack.domain.bet.BetAmount;
 import blackjack.exception.NeedRetryException;
 import blackjack.view.format.CardRequestFormat;
 import java.util.Arrays;
@@ -37,11 +37,20 @@ public class InputView {
 
         for (final PlayerName name : names) {
             System.out.printf("%n%s의 배팅 금액은?%n", name.getName());
-            final BetAmount betAmount = new BetAmount(readInt());
+            final BetAmount betAmount = readBetAmount();
             playerBetAmount.put(name, betAmount);
         }
 
         return playerBetAmount;
+    }
+
+    private BetAmount readBetAmount() {
+        try {
+            return new BetAmount(readInt());
+        } catch (final NeedRetryException e) {
+            System.out.println("[ERROR] " + e.getMessage());
+            return readBetAmount();
+        }
     }
 
     private int readInt() {

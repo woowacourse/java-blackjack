@@ -45,7 +45,7 @@ public final class Hands {
     }
 
     private boolean isDeadScore(final int sum) {
-        return new Score(sum).isDead();
+        return new Score(sum).isBurst();
     }
 
     public boolean isScoreBiggerThan(final Hands other) {

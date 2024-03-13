@@ -1,32 +1,28 @@
 package blackjack.domain.rule.state;
 
+import blackjack.domain.bet.BetLeverage;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 
-public final class BlackjackState implements State {
-
-    private final Hands hands;
-    private final int hitCount;
+public final class BlackjackState extends State {
 
     public BlackjackState(final Hands hands) {
-        this.hands = hands;
-        this.hitCount = 0;
+        super(hands, 0);
     }
 
     public BlackjackState(final Hands hands, final int hitCount) {
-        this.hands = hands;
-        this.hitCount = hitCount;
-    }
-
-    @Override
-    public boolean isBlackjack() {
-        return true;
+        super(hands, hitCount);
     }
 
     @Override
     public State draw(final Card card) {
         final Hands newHands = hands.addCard(card);
-        return new BurstState(newHands, hitCount + 1);
+
+        if (newHands.calculateScore().isBurst()) {
+            return new BurstState(newHands, hitCount + 1);
+        }
+
+        return new PlayerHitState(newHands, hitCount + 1);
     }
 
     @Override
@@ -35,12 +31,15 @@ public final class BlackjackState implements State {
     }
 
     @Override
-    public Hands getHands() {
-        return new Hands(hands.getCards());
+    public BetLeverage calculateBetLeverage(final State other) {
+        if (other.isBlackjack()) {
+            return BetLeverage.DRAW;
+        }
+        return BetLeverage.LUCKY;
     }
 
     @Override
-    public int countHit() {
-        return hitCount;
+    public boolean isBlackjack() {
+        return true;
     }
 }

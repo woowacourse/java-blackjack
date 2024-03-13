@@ -4,16 +4,16 @@ import blackjack.domain.card.CardShape;
 import java.util.Arrays;
 
 public enum CardShapeFormat {
-    CLOVER("클로버"),
-    DIA("다이아몬드"),
-    SPADE("스페이드"),
-    HEART("하트");
+    CLOVER(CardShape.CLOVER, "클로버"),
+    DIA(CardShape.DIA, "다이아몬드"),
+    SPADE(CardShape.SPADE, "스페이드"),
+    HEART(CardShape.HEART, "하트");
 
     private final CardShape shape;
     private final String format;
 
-    CardShapeFormat(final String format) {
-        this.shape = CardShape.valueOf(name());
+    CardShapeFormat(final CardShape shape, final String format) {
+        this.shape = shape;
         this.format = format;
     }
 

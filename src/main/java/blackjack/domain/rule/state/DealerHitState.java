@@ -1,29 +1,21 @@
 package blackjack.domain.rule.state;
 
+import blackjack.domain.bet.BetLeverage;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import blackjack.domain.rule.Score;
 import java.util.List;
 
-public final class DealerHitState implements State {
+public final class DealerHitState extends State {
 
     public static final int NEED_CARD_NUMBER_MAX = 16;
 
-    private final Hands hands;
-    private final int hitCount;
-
     private DealerHitState(final Hands hands) {
-        this.hands = hands;
-        this.hitCount = 0;
+        super(hands, 0);
     }
 
     public DealerHitState(final Hands hands, final int hitCount) {
-        this.hands = hands;
-        this.hitCount = hitCount;
-    }
-
-    private static boolean needMoreCard(final Hands hands) {
-        return hands.calculateScore().isSmallerOrEqual(new Score(NEED_CARD_NUMBER_MAX));
+        super(hands, hitCount);
     }
 
     public static State start(final Card first, final Card second) {
@@ -40,6 +32,10 @@ public final class DealerHitState implements State {
         return new StandState(hands);
     }
 
+    private static boolean needMoreCard(final Hands hands) {
+        return hands.calculateScore().isSmallerOrEqual(new Score(NEED_CARD_NUMBER_MAX));
+    }
+
     @Override
     public boolean isHit() {
         return needMoreCard(hands);
@@ -49,7 +45,7 @@ public final class DealerHitState implements State {
     public State draw(final Card card) {
         final Hands newHands = hands.addCard(card);
 
-        if (newHands.calculateScore().isDead()) {
+        if (newHands.calculateScore().isBurst()) {
             return new BurstState(newHands, hitCount + 1);
         }
 
@@ -66,12 +62,7 @@ public final class DealerHitState implements State {
     }
 
     @Override
-    public Hands getHands() {
-        return new Hands(hands.getCards());
-    }
-
-    @Override
-    public int countHit() {
-        return hitCount;
+    public BetLeverage calculateBetLeverage(final State other) {
+        throw new UnsupportedOperationException(ERROR_MESSAGE);
     }
 }

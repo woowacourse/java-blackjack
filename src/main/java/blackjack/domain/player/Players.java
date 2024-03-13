@@ -4,10 +4,9 @@ import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
-import blackjack.domain.player.bet.BetAmount;
-import blackjack.domain.player.bet.BetRevenue;
-import blackjack.domain.player.bet.BetStatus;
-import blackjack.domain.rule.state.State;
+import blackjack.domain.bet.BetAmount;
+import blackjack.domain.bet.BetRevenue;
+import blackjack.domain.bet.BetLeverage;
 import blackjack.exception.NeedRetryException;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -48,7 +47,7 @@ public class Players {
             final Predicate<PlayerName> isHitInput,
             final BiConsumer<PlayerName, Hands> printHands
     ) {
-        for (Player player : players) {
+        for (final Player player : players) {
             player.hit(dealer, isHitInput, printHands);
             stand(player, printHands);
         }
@@ -60,14 +59,14 @@ public class Players {
         }
     }
 
-    public Map<PlayerName, BetRevenue> determineBetRevenue(final State dealerState) {
+    public Map<PlayerName, BetRevenue> determineBetRevenue(final Dealer dealer) {
         final Map<PlayerName, BetRevenue> playerBetRevenue = new LinkedHashMap<>();
 
         for (final Player player : players) {
-            final BetStatus betStatus = BetStatus.of(dealerState, player.getState());
+            final BetLeverage betLeverage = player.calculateBetLeverage(dealer);
             final BetAmount betAmount = player.getBetAmount();
 
-            playerBetRevenue.put(player.getName(), betStatus.applyLeverage(betAmount));
+            playerBetRevenue.put(player.getName(), betLeverage.applyLeverage(betAmount));
         }
 
         return Collections.unmodifiableMap(playerBetRevenue);

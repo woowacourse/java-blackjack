@@ -9,7 +9,6 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public final class Deck {
 
@@ -45,12 +44,6 @@ public final class Deck {
         validateEmpty();
 
         return cards.pop();
-    }
-
-    public List<Card> pick(final int count) {
-        return Stream.generate(this::pick)
-                .limit(count)
-                .toList();
     }
 
     private void validateEmpty() {

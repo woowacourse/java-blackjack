@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
 import blackjack.domain.player.PlayerName;
-import blackjack.domain.player.bet.BetRevenue;
+import blackjack.domain.bet.BetRevenue;
 import blackjack.domain.rule.state.DealerHitState;
 import blackjack.domain.rule.state.State;
 import blackjack.dto.BetRevenueResultDto;

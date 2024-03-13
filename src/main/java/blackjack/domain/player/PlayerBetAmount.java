@@ -1,6 +1,6 @@
 package blackjack.domain.player;
 
-import blackjack.domain.player.bet.BetAmount;
+import blackjack.domain.bet.BetAmount;
 
 public final class PlayerBetAmount {
 

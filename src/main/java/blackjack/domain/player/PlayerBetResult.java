@@ -1,13 +1,13 @@
 package blackjack.domain.player;
 
-import blackjack.domain.player.bet.BetRevenue;
+import blackjack.domain.bet.BetRevenue;
 import java.util.Map;
 
-public class BetResult {
+public final class PlayerBetResult {
 
     private final Map<PlayerName, BetRevenue> playersBetRevenue;
 
-    public BetResult(final Map<PlayerName, BetRevenue> playersBetRevenue) {
+    public PlayerBetResult(final Map<PlayerName, BetRevenue> playersBetRevenue) {
         this.playersBetRevenue = playersBetRevenue;
     }
 

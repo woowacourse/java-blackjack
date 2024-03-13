@@ -1,37 +1,30 @@
 package blackjack.domain.rule.state;
 
+import blackjack.domain.bet.BetLeverage;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
+import blackjack.domain.rule.Score;
 
-public final class StandState implements State {
-
-    private final Hands hands;
-    private final int hitCount;
+public final class StandState extends State {
 
     public StandState(final Hands hands) {
-        this.hands = hands;
-        this.hitCount = 0;
+        super(hands, 0);
     }
 
     public StandState(final Hands hands, final int hitCount) {
-        this.hands = hands;
-        this.hitCount = hitCount;
+        super(hands, hitCount);
     }
 
     public static State from(final Hands hands) {
-        if (hands.calculateScore().isDead()) {
+        final Score score = hands.calculateScore();
+
+        if (score.isBurst()) {
             return new BurstState(hands);
         }
-        if (hands.calculateScore().isBlackjack() && hands.isSizeOf(State.START_CARD_COUNT)) {
+        if (score.isBlackjack() && hands.isSizeOf(State.START_CARD_COUNT)) {
             return new BlackjackState(hands);
         }
-
         return new StandState(hands);
-    }
-
-    @Override
-    public boolean isStand() {
-        return true;
     }
 
     @Override
@@ -45,12 +38,17 @@ public final class StandState implements State {
     }
 
     @Override
-    public Hands getHands() {
-        return new Hands(hands.getCards());
-    }
+    public BetLeverage calculateBetLeverage(final State other) {
+        if (other.isBurst()) {
+            return BetLeverage.WIN;
+        }
+        if (other.isBlackjack() || other.getHands().calculateScore().isBiggerThan(hands.calculateScore())) {
+            return BetLeverage.LOSE;
+        }
+        if (hands.calculateScore().isBiggerThan(other.getHands().calculateScore())) {
+            return BetLeverage.WIN;
+        }
+        return BetLeverage.DRAW;
 
-    @Override
-    public int countHit() {
-        return hitCount;
     }
 }

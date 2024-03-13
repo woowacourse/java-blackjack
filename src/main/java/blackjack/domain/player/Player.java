@@ -3,9 +3,9 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
-import blackjack.domain.player.bet.BetAmount;
-import blackjack.domain.rule.state.HitState;
-import blackjack.domain.rule.state.StandState;
+import blackjack.domain.bet.BetAmount;
+import blackjack.domain.bet.BetLeverage;
+import blackjack.domain.rule.state.PlayerHitState;
 import blackjack.domain.rule.state.State;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
@@ -21,11 +21,7 @@ public class Player {
     }
 
     public static Player of(final PlayerName name, final Dealer dealer) {
-        return new Player(new PlayerBetAmount(name), HitState.start(dealer.drawCard(), dealer.drawCard()));
-    }
-
-    public PlayerName getName() {
-        return playerBetAmount.getName();
+        return new Player(new PlayerBetAmount(name), PlayerHitState.start(dealer.drawCard(), dealer.drawCard()));
     }
 
     public void setBetAmount(final BetAmount betAmount) {
@@ -44,9 +40,8 @@ public class Player {
         }
     }
 
-    public void hit(final Card card, final BiConsumer<PlayerName, Hands> printHands) {
-        state = state.draw(card);
-        printHands.accept(getName(), getHands());
+    public boolean isContinueHit(final Predicate<PlayerName> isHitInput) {
+        return state.isHit() && isHitInput.test(getName());
     }
 
     public void stand(final BiConsumer<PlayerName, Hands> printHands) {
@@ -56,8 +51,8 @@ public class Player {
         }
     }
 
-    public boolean isContinueHit(final Predicate<PlayerName> isHitInput) {
-        return state.isHit() && isHitInput.test(getName());
+    public BetLeverage calculateBetLeverage(final Dealer dealer) {
+        return dealer.calculateBetLeverage(state);
     }
 
     public boolean isBurst() {
@@ -72,11 +67,15 @@ public class Player {
         return state.getHands();
     }
 
+    public PlayerName getName() {
+        return playerBetAmount.getName();
+    }
+
     public BetAmount getBetAmount() {
         return playerBetAmount.getBetAmount();
     }
 
     public State getState() {
-        return new StandState(state.getHands());
+        return state;
     }
 }
