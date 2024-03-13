@@ -3,6 +3,7 @@ package blackjack.domain.money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 @DisplayName("돈")
@@ -29,5 +30,16 @@ public class MoneyTest {
         assertThatCode(() -> Money.from(money))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("배팅할 금액을 음수일 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("에 비율 상수를 곱하여 금액을 얻을 수 있다.")
+    void applyRate() {
+        // given
+        Money money = Money.from("5000");
+
+        // when & then
+        assertThat(money.applyRate(MoneyRate.BLACKJACK))
+                .isEqualTo(7500);
     }
 }
