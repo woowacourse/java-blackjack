@@ -3,6 +3,7 @@ package domain.player;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.Hand;
+import domain.game.Score;
 import java.util.List;
 
 public class Dealer extends Player {
@@ -33,6 +34,6 @@ public class Dealer extends Player {
 
     @Override
     public boolean isHittable() {
-        return this.getScore().compareTo(MAX_SCORE_TO_HIT) <= 0;
+        return this.getScore().compareTo(Score.from(MAX_SCORE_TO_HIT)) <= 0;
     }
 }

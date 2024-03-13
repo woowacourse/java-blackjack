@@ -40,7 +40,7 @@ public class Score implements Comparable<Score> {
         return SCORE_POOL.get(sum);
     }
 
-    static Score from(final int value) {
+    public static Score from(final int value) {
         validateRange(value);
         return SCORE_POOL.get(value);
     }
@@ -66,10 +66,6 @@ public class Score implements Comparable<Score> {
     @Override
     public int compareTo(final Score that) {
         return Integer.compare(this.value, that.value);
-    }
-
-    public int compareTo(final int that) {
-        return Integer.compare(this.value, that);
     }
 
     @Override
