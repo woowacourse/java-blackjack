@@ -1,6 +1,7 @@
 package domain.deck.strategy;
 
 import domain.card.Card;
+import strategy.ShuffleStrategy;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package domain.deck.strategy;
+package strategy;
 
 import domain.card.Card;
 

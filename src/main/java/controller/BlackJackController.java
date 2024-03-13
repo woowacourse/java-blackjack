@@ -4,7 +4,7 @@ import domain.BlackJackGame;
 import domain.Judgement;
 import domain.Players;
 import domain.deck.Deck;
-import domain.deck.strategy.RandomShuffleStrategy;
+import strategy.RandomShuffleStrategy;
 import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Player;

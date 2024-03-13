@@ -3,7 +3,7 @@ package domain.deck;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
-import domain.deck.strategy.ShuffleStrategy;
+import strategy.ShuffleStrategy;
 
 import java.util.Collection;
 import java.util.Collections;
