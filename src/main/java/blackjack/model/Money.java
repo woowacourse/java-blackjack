@@ -13,4 +13,8 @@ public class Money {
             throw new IllegalArgumentException("0원 이하의 금액을 베팅할 수 없습니다.");
         }
     }
+
+    public int getMoney() {
+        return money;
+    }
 }

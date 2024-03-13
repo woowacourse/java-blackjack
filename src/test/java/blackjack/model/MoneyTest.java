@@ -1,12 +1,21 @@
 package blackjack.model;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 public class MoneyTest {
+
+    @Test
+    @DisplayName("전달 받은 금액으로 Money를 생성한다.")
+    void createMoney() {
+        int money = 1_000;
+        assertThat(new Money(money).getMoney()).isEqualTo(money);
+    }
 
     @ParameterizedTest
     @CsvSource(value = {"-1", "0"})
