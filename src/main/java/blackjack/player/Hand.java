@@ -38,6 +38,22 @@ public class Hand {
                 .reduce(Score.zero(), Score::add);
     }
 
+    public Card getFirstCard() {
+        return getCard(0);
+    }
+
+    public Card getSecondCard() {
+        return getCard(1);
+    }
+
+    private Card getCard(int index) {
+        try {
+            return cards.get(index);
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalStateException("[ERROR] 카드를 가지고 있지 않습니다.");
+        }
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

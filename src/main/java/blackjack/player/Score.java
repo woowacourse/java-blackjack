@@ -23,11 +23,15 @@ public class Score {
         return new Score(value + other.value);
     }
 
-    public Score addAceScoreOnNotBust() {
-        if (value + ADDITIONAL_ACE_SCORE <= BLACKJACK_SCORE) {
+    public Score addAceScoreOnSoftHand() {
+        if (isSoftHandScore()) {
             return this.add(ADDITIONAL_ACE_SCORE);
         }
         return this;
+    }
+
+    private boolean isSoftHandScore() {
+        return value + ADDITIONAL_ACE_SCORE <= BLACKJACK_SCORE;
     }
 
     public int toInt() {

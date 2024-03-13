@@ -24,9 +24,9 @@ public class BlackJackGame {
 
     public void play() {
         Deck deck = Deck.createShuffledFullDeck();
+        Players players = createPlayers();
         Dealer dealer = new Dealer();
 
-        Players players = createPlayers();
         initGame(deck, dealer, players);
         playersDrawMore(deck, players);
         dealerDrawMore(deck, dealer);
@@ -38,20 +38,20 @@ public class BlackJackGame {
     private Players createPlayers() {
         outputView.printNamesRequest();
         List<String> names = inputView.readNames();
-        Players players = new Players(names);
+        Players players = Players.create(names);
         outputView.printNewLine();
         return players;
     }
 
     private void initGame(Deck deck, Dealer dealer, Players players) {
-        players.drawCardsForAll(deck, BLACKJACK_INIT_CARD_AMOUNT);
-        dealer.drawCards(deck, BLACKJACK_INIT_CARD_AMOUNT);
+        players.drawCardsForAll(deck::draw, BLACKJACK_INIT_CARD_AMOUNT);
+        dealer.drawCards(deck::draw, BLACKJACK_INIT_CARD_AMOUNT);
         outputView.printInitializeBlackJack(players.getNames());
         showInitCard(dealer, players);
     }
 
     private void showInitCard(Dealer dealer, Players players) {
-        outputView.printDealerFirstCard(dealer.getFirstCard());
+        outputView.printDealerFirstCard(dealer.revealCardsOnFirstPhase());
 
         for (Player player : players.getPlayers()) {
             outputView.printPlayerCards(player.getName(), player.getCards());
@@ -71,7 +71,7 @@ public class BlackJackGame {
         if (command.isNo()) {
             return;
         }
-        player.drawCard(deck);
+        player.drawCard(deck.draw());
         outputView.printPlayerCards(player.getName(), player.getCards());
 
         if (player.hasDrawableScore()) {
@@ -87,7 +87,7 @@ public class BlackJackGame {
 
     private void dealerDrawMore(Deck deck, Dealer dealer) {
         while (dealer.hasDrawableScore()) {
-            dealer.drawCard(deck);
+            dealer.drawCard(deck.draw());
             outputView.printDealerDrawCard();
             outputView.printNewLine();
         }

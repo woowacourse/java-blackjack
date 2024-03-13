@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PlayerTest {
+class ParticipantTest {
 
     @Test
     @DisplayName("플레이어는 21점 미만이면 추가 드로우가 가능하다.")
@@ -20,9 +20,9 @@ class PlayerTest {
                 new Card(Shape.DIAMOND, Number.TEN)
         );
         Hand hand = new Hand(cards);
-        Player player = new Player("aru", hand);
+        Participant Participant = new Participant("aru", hand);
         // when
-        boolean isDrawable = player.hasDrawableScore();
+        boolean isDrawable = Participant.hasDrawableScore();
         // then
         assertThat(isDrawable).isTrue();
     }
@@ -36,9 +36,9 @@ class PlayerTest {
                 new Card(Shape.DIAMOND, Number.ACE)
         );
         Hand hand = new Hand(cards);
-        Player player = new Player("atto", hand);
+        Participant Participant = new Participant("atto", hand);
         // when
-        boolean isDrawable = player.hasDrawableScore();
+        boolean isDrawable = Participant.hasDrawableScore();
         // then
         assertThat(isDrawable).isFalse();
     }

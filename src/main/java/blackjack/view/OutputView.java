@@ -17,8 +17,8 @@ public class OutputView {
         System.out.println("딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.");
     }
 
-    public void printDealerFirstCard(Card card) {
-        System.out.println("딜러: " + convertCard(card));
+    public void printDealerFirstCard(List<Card> cards) {
+        System.out.println("딜러: " + convertCard(cards.get(0)));
     }
 
     public void printPlayerCards(String name, List<Card> cards) {

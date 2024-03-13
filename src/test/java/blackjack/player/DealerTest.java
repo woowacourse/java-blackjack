@@ -55,7 +55,10 @@ class DealerTest {
         Hand hand = new Hand(cards);
         Dealer dealer = new Dealer(hand);
         // when, then
-        assertThat(dealer.getFirstCard()).isEqualTo(new Card(Shape.HEART, Number.JACK));
+        List<Card> dealerCards = dealer.revealCardsOnFirstPhase();
+        assertThat(dealerCards).containsExactlyElementsOf(
+                List.of(new Card(Shape.HEART, Number.JACK))
+        );
     }
 
     @Test
@@ -66,8 +69,8 @@ class DealerTest {
         Hand hand = new Hand(cards);
         Dealer dealer = new Dealer(hand);
         // when, then
-        assertThatThrownBy(dealer::getFirstCard)
+        assertThatThrownBy(dealer::revealCardsOnFirstPhase)
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("[ERROR] 딜러가 카드를 가지고 있지 않습니다.");
+                .hasMessage("[ERROR] 카드를 가지고 있지 않습니다.");
     }
 }

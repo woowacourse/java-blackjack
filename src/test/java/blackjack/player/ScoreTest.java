@@ -34,7 +34,7 @@ class ScoreTest {
         // given
         Score score = new Score(11);
         // when
-        Score result = score.addAceScoreOnNotBust();
+        Score result = score.addAceScoreOnSoftHand();
         // then
         assertThat(result).isEqualTo(new Score(21));
     }
@@ -45,7 +45,7 @@ class ScoreTest {
         // given
         Score score = new Score(12);
         // when
-        Score result = score.addAceScoreOnNotBust();
+        Score result = score.addAceScoreOnSoftHand();
         // then
         assertThat(result).isEqualTo(new Score(12));
     }

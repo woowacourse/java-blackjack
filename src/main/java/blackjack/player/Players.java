@@ -1,7 +1,9 @@
 package blackjack.player;
 
-import blackjack.card.Deck;
+import blackjack.card.Card;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class Players {
 
@@ -10,32 +12,39 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> playerNames) {
-        validatePlayers(playerNames);
-        this.players = playerNames.stream()
-                .map(Player::new)
-                .toList();
+    private Players(List<Player> players) {
+        this.players = players;
     }
 
-    private void validatePlayers(List<String> playerNames) {
+    public static Players create(List<String> playerNames) {
+        validatePlayers(playerNames);
+
+        ArrayList<Player> players = new ArrayList<>();
+        playerNames.stream()
+                .map(Participant::new)
+                .forEach(players::add);
+        return new Players(players);
+    }
+
+    private static void validatePlayers(List<String> playerNames) {
         validateNotNull(playerNames);
         validateSize(playerNames);
         validateUniqueNames(playerNames);
     }
 
-    private void validateNotNull(List<String> playerNames) {
+    private static void validateNotNull(List<String> playerNames) {
         if (playerNames == null) {
             throw new IllegalArgumentException("[ERROR] 플레이어로 null이 전달되었습니다.");
         }
     }
 
-    private void validateSize(List<String> playerNames) {
+    private static void validateSize(List<String> playerNames) {
         if (playerNames.size() < MIN_PLAYER_COUNT || playerNames.size() > MAX_PLAYER_COUNT) {
             throw new IllegalArgumentException("[ERROR] 플레이어의 수는 1명 이상 10명 이하여야 합니다.");
         }
     }
 
-    private void validateUniqueNames(List<String> playerNames) {
+    private static void validateUniqueNames(List<String> playerNames) {
         int distinctNameCount = (int) playerNames.stream()
                 .distinct()
                 .count();
@@ -44,8 +53,8 @@ public class Players {
         }
     }
 
-    public void drawCardsForAll(Deck deck, int amount) {
-        players.forEach(player -> player.drawCards(deck, amount));
+    public void drawCardsForAll(Supplier<Card> cardSupplier, int amount) {
+        players.forEach(player -> player.drawCards(cardSupplier, amount));
     }
 
     public List<String> getNames() {
