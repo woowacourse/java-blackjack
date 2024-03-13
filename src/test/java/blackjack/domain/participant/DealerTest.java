@@ -4,9 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
-import blackjack.domain.strategy.CardShuffleStrategy;
 import blackjack.domain.strategy.ReverseCardShuffleStrategy;
-import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,9 +16,8 @@ class DealerTest {
     @BeforeEach
     void setUp() {
         final CardDeck cardDeck = new CardDeck();
-        final CardShuffleStrategy cardShuffleStrategy = new ReverseCardShuffleStrategy();
 
-        dealer = new Dealer(cardDeck, cardShuffleStrategy);
+        dealer = new Dealer(cardDeck);
     }
 
     @Test
@@ -32,7 +29,7 @@ class DealerTest {
 
     @Test
     void 딜러는_카드를_셔플할_수_있다() {
-        dealer.shuffleCards();
+        dealer.shuffleCards(new ReverseCardShuffleStrategy());
         final Card card = dealer.pickCard();
 
         assertThat(card).isEqualTo(new Card(Suit.HEART, Denomination.ACE));

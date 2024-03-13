@@ -9,15 +9,13 @@ public class Dealer extends Participant {
     private static final int DEALER_MIN_SCORE_POLICY = 16;
 
     private final CardDeck cardDeck;
-    private final CardShuffleStrategy cardShuffleStrategy;
 
-    public Dealer(final CardDeck cardDeck, final CardShuffleStrategy cardShuffleStrategy) {
+    public Dealer(final CardDeck cardDeck) {
         super(DEFAULT_NAME_OF_DEALER);
         this.cardDeck = cardDeck;
-        this.cardShuffleStrategy = cardShuffleStrategy;
     }
 
-    public void shuffleCards() {
+    public void shuffleCards(final CardShuffleStrategy cardShuffleStrategy) {
         cardDeck.shuffle(cardShuffleStrategy);
     }
 
