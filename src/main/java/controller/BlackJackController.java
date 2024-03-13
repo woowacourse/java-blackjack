@@ -11,13 +11,14 @@ import view.OutputView;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackController {
 
     public void run() {
         List<String> names = InputView.inputParticipantName();
         Participants participants = new Participants(names);
-        LinkedHashMap<Participant, BetAmount> betAmount = createBetAmount(participants);
+        Map<Participant, BetAmount> betAmount = createBetAmount(participants);
         BlackJack blackJack = new BlackJack(participants);
 
         blackJack.beginDealing(this::beginBlackJack);
@@ -55,7 +56,7 @@ public class BlackJackController {
         }
     }
 
-    private void printResult(LinkedHashMap<Participant, BetAmount> bet, Dealer dealer) {
+    private void printResult(Map<Participant, BetAmount> bet, Dealer dealer) {
         BettingResult bettingResult = new BettingResult(bet, dealer);
         OutputView.printBlackJackResult(bettingResult);
     }
