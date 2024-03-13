@@ -32,15 +32,20 @@ public class GameMachine {
     private static Game makeGame(Deck deck) {
         OutputView.printAskNameMessage();
 
-        List<String> playerList = InputView.readNames();
-        List<Player> players1 = new ArrayList<>();
-        for (String string : playerList) {
-            players1.add(new Player(string, InputView.readBetAmount(string)));
-        }
-        Players players = new Players(players1);
+        List<String> playerNames = InputView.readNames();
+        Players players = createPlayers(playerNames);
 
         Dealer dealer = new Dealer();
         return Game.of(deck, dealer, players);
+    }
+
+    private static Players createPlayers(List<String> playerNames) {
+        List<Player> players = new ArrayList<>();
+        for (String playerName : playerNames) {
+            Player player = new Player(playerName, InputView.readBetAmount(playerName));
+            players.add(player);
+        }
+        return new Players(players);
     }
 
     private static void confirmParticipantsHands(Players players, Deck deck, Dealer dealer) {
