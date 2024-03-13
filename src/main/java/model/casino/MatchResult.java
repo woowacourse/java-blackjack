@@ -1,9 +1,9 @@
-package model.dto;
+package model.casino;
 
 public enum MatchResult {
     WIN("승"), DRAW("무"), LOSE("패");
 
-    public static final int BUST_THRESHOLD = 22;
+    private static final int BUST_THRESHOLD = 22;
     private final String value;
 
     MatchResult(String value) {

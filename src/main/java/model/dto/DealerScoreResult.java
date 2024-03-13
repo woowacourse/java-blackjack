@@ -1,6 +1,7 @@
 package model.dto;
 
 import java.util.EnumMap;
+import model.casino.MatchResult;
 
 public record DealerScoreResult(EnumMap<MatchResult, Integer> scoreStorage) {
     public String getVictoryScoreAsString(MatchResult matchResult){

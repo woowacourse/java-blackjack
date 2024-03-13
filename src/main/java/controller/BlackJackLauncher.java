@@ -50,7 +50,7 @@ public class BlackJackLauncher {
     }
 
     private void showPlayerChoiceResult(Choice playerChoice, FaceUpResult currentPlayerFaceUpInfo) {
-        if (playerChoice.isYes() || (!playerChoice.isYes() && currentPlayerFaceUpInfo.cards()
+        if (playerChoice.isHit() || (!playerChoice.isHit() && currentPlayerFaceUpInfo.cards()
                 .size() == 2)) {
             OutputView.printSinglePlayerFaceUp(currentPlayerFaceUpInfo);
         }

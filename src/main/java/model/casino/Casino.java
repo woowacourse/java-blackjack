@@ -1,7 +1,7 @@
 package model.casino;
 
 import static java.util.Collections.*;
-import static model.dto.MatchResult.*;
+import static model.casino.MatchResult.*;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -9,7 +9,6 @@ import model.Choice;
 import model.dto.DealerScoreResult;
 import model.dto.FaceUpResult;
 import model.dto.PlayerScoreResult;
-import model.dto.MatchResult;
 import model.participant.Entrant;
 
 public class Casino {
@@ -32,7 +31,7 @@ public class Casino {
     }
 
     public void distinctPlayerChoice(Choice choice) {
-        if (choice.isYes()) {
+        if (choice.isHit()) {
             hitCardToPlayer();
             return;
         }
@@ -78,13 +77,13 @@ public class Casino {
 
     public DealerScoreResult calculateDealerResult() {
         EnumMap<MatchResult, Integer> dealerScoreBoard = new EnumMap<>(MatchResult.class);
-        List<MatchResult> dealerScores = calculatePlayerResults()
+        List<MatchResult> playerScores = calculatePlayerResults()
                 .stream()
                 .map(PlayerScoreResult::matchResult)
                 .toList();
-        dealerScoreBoard.put(WIN, frequency(dealerScores, LOSE));
-        dealerScoreBoard.put(DRAW, frequency(dealerScores, DRAW));
-        dealerScoreBoard.put(LOSE, frequency(dealerScores, WIN));
+        dealerScoreBoard.put(WIN, frequency(playerScores, LOSE));
+        dealerScoreBoard.put(DRAW, frequency(playerScores, DRAW));
+        dealerScoreBoard.put(LOSE, frequency(playerScores, WIN));
         return new DealerScoreResult(dealerScoreBoard);
     }
 

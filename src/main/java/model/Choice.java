@@ -22,7 +22,7 @@ public enum Choice {
         throw new IllegalArgumentException("[ERROR] y 혹은 n만 입력 가능합니다.");
     }
 
-    public boolean isYes() {
+    public boolean isHit() {
         return choice;
     }
 }
