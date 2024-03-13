@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import blackjack.domain.strategy.CardShuffleStrategy;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,5 +23,9 @@ public class CardDeck {
             this.cardDeck = initializeCardDeck();
         }
         return cardDeck.remove(cardDeck.size() - 1);
+    }
+
+    public void shuffle(final CardShuffleStrategy cardShuffleStrategy) {
+        cardShuffleStrategy.shuffle(cardDeck);
     }
 }
