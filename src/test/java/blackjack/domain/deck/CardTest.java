@@ -42,8 +42,10 @@ class CardTest {
     @DisplayName("범위를 초과하는 카드를 가져올 수 없다")
     @Test
     void should_ThrowIllegalArgumentException_When_find_OverOrderCard() {
-        assertThatThrownBy(() -> Card.valueOf(52))
+        int invalidCardOrder = 52;
+
+        assertThatThrownBy(() -> Card.valueOf(invalidCardOrder))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("존재하지 않는 카드번호 입니다.");
+                .hasMessage("입력값: ("+invalidCardOrder+") 는 존재하지 않는 카드번호 입니다.");
     }
 }

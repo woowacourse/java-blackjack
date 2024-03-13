@@ -24,7 +24,7 @@ public class Card {
         if (CACHE.containsKey(cardOrder)) {
             return CACHE.get(cardOrder);
         }
-        throw new IllegalStateException("존재하지 않는 카드번호 입니다.");
+        throw new IllegalStateException("입력값: ("+cardOrder+") 는 존재하지 않는 카드번호 입니다.");
     }
 
     private static Card create(int cardOrder) {
