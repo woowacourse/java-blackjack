@@ -2,7 +2,9 @@ package blackjack.domain.game;
 
 public class BlackjackMoney {
 
-    public static final double BlackjackMultiple = 1.5;
+    public static final double BLACKJACK_MULTIPLE = 1.5;
+    public static final int NEGATIVE_MULTIPLE = -1;
+
     private final int amount;
 
     public BlackjackMoney() {
@@ -14,7 +16,7 @@ public class BlackjackMoney {
     }
 
     public BlackjackMoney toNegative() {
-        return new BlackjackMoney(-amount);
+        return applyMultiple(NEGATIVE_MULTIPLE);
     }
 
     public BlackjackMoney applyMultiple(double multiple) {
