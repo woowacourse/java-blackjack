@@ -1,14 +1,15 @@
 package domain;
 
 import domain.constant.CardNumber;
+import domain.constant.GamerResult;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static domain.constant.BlackJackGameConfig.BUST_THRESHOLD;
-
 public class Hand {
     private static final int ACE_VALUE_GAP = 10;
+    private static final int BUST_THRESHOLD = 21;
+    private static final int INITIAL_CARD_COUNT = 2;
     private final List<Card> cards;
 
     public Hand() {
@@ -18,7 +19,6 @@ public class Hand {
     public void add(Card card) {
         cards.add(card);
     }
-
 
     public int getResultScore() {
         int total = getTotalScore();
@@ -38,13 +38,52 @@ public class Hand {
                 .orElse(0);
     }
 
-
     private boolean containsAce() {
         return cards.stream().anyMatch(Card::isAce);
     }
 
-    public boolean isBust() { return getResultScore() > BUST_THRESHOLD; }
+    public boolean isBust() {
+        return getResultScore() > BUST_THRESHOLD;
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public GamerResult judge(Hand opponent) {
+        return judgeBust(opponent);
+    }
+
+    private GamerResult judgeBust(Hand opponent) {
+        if (this.isBust()) {
+            return GamerResult.LOSE;
+        }
+        if (opponent.isBust()) {
+            return GamerResult.WIN;
+        }
+        return judgeBlackJack(opponent);
+    }
+
+    private GamerResult judgeBlackJack(Hand opponent) {
+        if (this.isBlackJack() && opponent.isBlackJack()) {
+            return GamerResult.WIN;
+        }
+        return judgeScore(opponent);
+    }
+
+    private boolean isBlackJack() {
+        return this.getResultScore() == BUST_THRESHOLD && cards.size() == INITIAL_CARD_COUNT;
+    }
+
+    private GamerResult judgeScore(Hand opponent) {
+        if (this.getResultScore() > opponent.getResultScore()) {
+            return GamerResult.WIN;
+        }
+        if (this.getResultScore() < opponent.getResultScore()) {
+            return GamerResult.LOSE;
+        }
+        return GamerResult.DRAW;
+    }
+
+
 }

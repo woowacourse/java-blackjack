@@ -1,7 +1,5 @@
 package domain.constant;
 
-import static domain.constant.BlackJackGameConfig.BUST_THRESHOLD;
-
 public enum GamerResult {
     WIN("승"),
     DRAW("무"),
@@ -10,16 +8,6 @@ public enum GamerResult {
 
     GamerResult(String result) {
         this.result = result;
-    }
-
-    public static GamerResult judge(int dealerScore, int playerScore) {
-        if (playerScore > BUST_THRESHOLD || (dealerScore <= BUST_THRESHOLD && dealerScore > playerScore)) {
-            return GamerResult.WIN;
-        }
-        if (dealerScore > BUST_THRESHOLD || dealerScore < playerScore) {
-            return GamerResult.LOSE;
-        }
-        return GamerResult.DRAW;
     }
 
     public GamerResult getOpponentGameResult() {

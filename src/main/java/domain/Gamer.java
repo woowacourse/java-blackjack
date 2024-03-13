@@ -1,5 +1,6 @@
 package domain;
 
+import domain.constant.GamerResult;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -43,5 +44,9 @@ public abstract class Gamer {
 
     public boolean isBust() {
         return hand.isBust();
+    }
+
+    public GamerResult judge(Gamer opponent) {
+        return this.hand.judge(opponent.hand);
     }
 }
