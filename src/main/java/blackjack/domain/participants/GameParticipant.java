@@ -2,22 +2,48 @@ package blackjack.domain.participants;
 
 import blackjack.domain.card.Card;
 
-public interface GameParticipant {
-    void receiveHands(Hands newHands);
+public abstract class GameParticipant {
+    public static final int MAX_SCORE = 21;
 
-    void hit(Card card);
+    protected final Name name;
+    protected final Hands hands;
 
-    int calculateScore();
+    public GameParticipant(Name name, Hands hands) {
+        this.name = name;
+        this.hands = hands;
+    }
 
-    boolean canHit();
+    public abstract boolean canHit();
 
-    boolean isBurst();
+    public void receiveHands(Hands newHands) {
+        this.hands.receiveHands(newHands);
+    }
 
-    boolean isBlackjack();
+    public void hit(Card card) {
+        hands.addCard(card);
+    }
 
-    Name getName();
+    public int calculateScore() {
+        return hands.calculateScore();
+    }
 
-    Hands getHands();
+    public boolean isBurst() {
+        return calculateScore() > MAX_SCORE;
+    }
 
-    int getHandsSize();
+    public boolean isBlackjack() {
+        return hands.size() == 2 && hands.calculateScore() == MAX_SCORE;
+    }
+
+    public int getHandsSize() {
+        return hands.size();
+    }
+
+    public Name getName() {
+        return name;
+    }
+
+    public Hands getHands() {
+        return hands;
+    }
 }
