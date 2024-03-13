@@ -11,16 +11,16 @@ public class Deck {
     private List<Card> cards;
 
     public Deck(List<Card> cards) {
-        Collections.shuffle(cards);
         this.cards = cards;
     }
 
     public static Deck make() {
-        List<Card> cards = Arrays.stream(Rank.values())
+        List<Card> cards = new ArrayList<>(Arrays.stream(Rank.values())
                 .flatMap(score -> Arrays.stream(Suit.values())
                         .map(symbol -> new Card(score, symbol)))
-                .toList();
-        return new Deck(new ArrayList<>(cards));
+                .toList());
+        Collections.shuffle(cards);
+        return new Deck(cards);
     }
 
     public Card pickCard() {
