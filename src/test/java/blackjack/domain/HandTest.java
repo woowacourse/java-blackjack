@@ -1,8 +1,8 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import blackjack.domain.card.TrumpCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,8 +14,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("카드 손패")
 public class HandTest {
 
-    private final TrumpCard trumpCardFourSpade = fourSpadeTrumpCard();
-    private final TrumpCard trumpCardFiveSpade = fiveSpadeTrumpCard();
+    private final Card cardFourSpade = fourSpadeTrumpCard();
+    private final Card cardFiveSpade = fiveSpadeTrumpCard();
 
     private Hand hand;
 
@@ -28,18 +28,18 @@ public class HandTest {
     @Test
     void addCard() {
         //when
-        hand.add(trumpCardFourSpade, trumpCardFiveSpade);
+        hand.add(cardFourSpade, cardFiveSpade);
 
         //then
         assertThat(hand.getCards())
-                .contains(trumpCardFourSpade, trumpCardFiveSpade);
+                .contains(cardFourSpade, cardFiveSpade);
     }
 
     @DisplayName("패에 있는 카드들의 점수를 반환한다.")
     @Test
     void calculateScore() {
         //when
-        hand.add(trumpCardFourSpade, trumpCardFiveSpade);
+        hand.add(cardFourSpade, cardFiveSpade);
 
         //then
         assertThat(hand.calculateScore()).isEqualTo(9);
@@ -49,10 +49,10 @@ public class HandTest {
     @Test
     void getFirstHandCard() {
         //when
-        hand.add(trumpCardFourSpade, trumpCardFiveSpade);
+        hand.add(cardFourSpade, cardFiveSpade);
 
         //then
-        assertThat(hand.getFirstCard()).isEqualTo(new TrumpCard(Rank.FOUR, Suit.SPADE));
+        assertThat(hand.getFirstCard()).isEqualTo(new Card(Rank.FOUR, Suit.SPADE));
     }
 
     @DisplayName("패가 비어있으면 첫 번째 카드 반환 시도 시 예외가 발생한다.")
@@ -67,20 +67,20 @@ public class HandTest {
     @Test
     void calculateScoreWithAce() {
         //given
-        TrumpCard trumpCardAceClover = aceCloverTrumpCard();
-        TrumpCard trumpCardAceDiamond = aceDiamondTrumpCard();
-        TrumpCard trumpCardAceSpade = aceSpadeTrumpCard();
-        TrumpCard trumpCardKingSpade = kingSpadeTrumpCard();
+        Card cardAceClover = aceCloverTrumpCard();
+        Card cardAceDiamond = aceDiamondTrumpCard();
+        Card cardAceSpade = aceSpadeTrumpCard();
+        Card cardKingSpade = kingSpadeTrumpCard();
 
         //when
         Hand hand1 = new Hand();
-        hand1.add(trumpCardAceClover, trumpCardAceDiamond);
+        hand1.add(cardAceClover, cardAceDiamond);
 
         Hand hand2 = new Hand();
-        hand2.add(trumpCardAceClover, trumpCardAceDiamond, trumpCardAceSpade, trumpCardFourSpade);
+        hand2.add(cardAceClover, cardAceDiamond, cardAceSpade, cardFourSpade);
 
         Hand hand3 = new Hand();
-        hand3.add(trumpCardKingSpade, trumpCardFourSpade, trumpCardAceClover, trumpCardAceDiamond, trumpCardAceSpade);
+        hand3.add(cardKingSpade, cardFourSpade, cardAceClover, cardAceDiamond, cardAceSpade);
 
         //then
         assertThat(hand1.calculateScore()).isEqualTo(12);
@@ -92,7 +92,7 @@ public class HandTest {
     @Test
     void isBust() {
         //given
-        hand.add(threeSpadeTrumpCard(), kingSpadeTrumpCard(), trumpCardFourSpade, fiveSpadeTrumpCard());
+        hand.add(threeSpadeTrumpCard(), kingSpadeTrumpCard(), cardFourSpade, fiveSpadeTrumpCard());
 
         //when & then
         assertThat(hand.isBust()).isTrue();

@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Deck;
 import blackjack.domain.GameResult;
-import blackjack.domain.card.TrumpCard;
+import blackjack.domain.card.Card;
 import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.strategy.ShuffleStrategy;
 import org.junit.jupiter.api.BeforeEach;
@@ -81,13 +81,13 @@ public class PlayerTest {
     @Test
     void draw() {
         //given
-        TrumpCard trumpCard = threeSpadeTrumpCard();
+        Card card = threeSpadeTrumpCard();
 
         //when
         choco.draw(dealer);
 
         //then
-        assertThat(choco.getHandCards()).contains(trumpCard);
+        assertThat(choco.getHandCards()).contains(card);
     }
 
     @DisplayName("플레이어는 배팅 금액과 결과를 토대로 수익률을 계산한다.")

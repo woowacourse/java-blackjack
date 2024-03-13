@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Deck;
 import blackjack.domain.Players;
-import blackjack.domain.card.TrumpCard;
+import blackjack.domain.card.Card;
 import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.dto.Profits;
 import blackjack.strategy.ShuffleStrategy;
@@ -22,7 +22,7 @@ public class DealerTest {
 
     private Deck deck;
     private Dealer dealer;
-    private final TrumpCard trumpCardAceSpade = aceSpadeTrumpCard();
+    private final Card cardAceSpade = aceSpadeTrumpCard();
 
     @BeforeEach
     void setUp() {
@@ -37,7 +37,7 @@ public class DealerTest {
         dealer.drawExtraCard();
 
         //then
-        assertThat(dealer.getHandCards()).contains(trumpCardAceSpade);
+        assertThat(dealer.getHandCards()).contains(cardAceSpade);
     }
 
     @DisplayName("딜러는 16점 이상이면 더 이상 카드를 받지 않는다.")
@@ -59,7 +59,7 @@ public class DealerTest {
     @Test
     void showFirstCard() {
         //when & then
-        assertThat(dealer.showFirstCard()).isEqualTo(trumpCardAceSpade);
+        assertThat(dealer.showFirstCard()).isEqualTo(cardAceSpade);
     }
 
     @DisplayName("딜러는 자신의 수익률을 계산한다.")

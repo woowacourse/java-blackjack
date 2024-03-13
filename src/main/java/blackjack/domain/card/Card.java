@@ -2,12 +2,12 @@ package blackjack.domain.card;
 
 import java.util.Objects;
 
-public class TrumpCard {
+public class Card {
 
     private final Rank rank;
     private final Suit suit;
 
-    public TrumpCard(final Rank rank, final Suit suit) {
+    public Card(final Rank rank, final Suit suit) {
         this.rank = rank;
         this.suit = suit;
     }
@@ -36,8 +36,8 @@ public class TrumpCard {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        TrumpCard trumpCard = (TrumpCard) o;
-        return getRank() == trumpCard.getRank() && getSuit() == trumpCard.getSuit();
+        Card card = (Card) o;
+        return getRank() == card.getRank() && getSuit() == card.getSuit();
     }
 
     @Override

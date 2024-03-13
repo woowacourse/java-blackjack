@@ -1,36 +1,36 @@
 package blackjack.fixture;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import blackjack.domain.card.TrumpCard;
 
 public class TrumpCardFixture {
 
-    public static TrumpCard aceSpadeTrumpCard() {
-        return new TrumpCard(Rank.ACE, Suit.SPADE);
+    public static Card aceSpadeTrumpCard() {
+        return new Card(Rank.ACE, Suit.SPADE);
     }
 
-    public static TrumpCard aceCloverTrumpCard() {
-        return new TrumpCard(Rank.ACE, Suit.CLOVER);
+    public static Card aceCloverTrumpCard() {
+        return new Card(Rank.ACE, Suit.CLOVER);
     }
 
-    public static TrumpCard aceDiamondTrumpCard() {
-        return new TrumpCard(Rank.ACE, Suit.DIAMOND);
+    public static Card aceDiamondTrumpCard() {
+        return new Card(Rank.ACE, Suit.DIAMOND);
     }
 
-    public static TrumpCard fourSpadeTrumpCard() {
-        return new TrumpCard(Rank.FOUR, Suit.SPADE);
+    public static Card fourSpadeTrumpCard() {
+        return new Card(Rank.FOUR, Suit.SPADE);
     }
 
-    public static TrumpCard fiveSpadeTrumpCard() {
-        return new TrumpCard(Rank.FIVE, Suit.SPADE);
+    public static Card fiveSpadeTrumpCard() {
+        return new Card(Rank.FIVE, Suit.SPADE);
     }
 
-    public static TrumpCard kingSpadeTrumpCard() {
-        return new TrumpCard(Rank.KING, Suit.SPADE);
+    public static Card kingSpadeTrumpCard() {
+        return new Card(Rank.KING, Suit.SPADE);
     }
 
-    public static TrumpCard threeSpadeTrumpCard() {
-        return new TrumpCard(Rank.THREE, Suit.SPADE);
+    public static Card threeSpadeTrumpCard() {
+        return new Card(Rank.THREE, Suit.SPADE);
     }
 }

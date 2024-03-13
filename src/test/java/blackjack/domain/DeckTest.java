@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.card.TrumpCard;
+import blackjack.domain.card.Card;
 import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.strategy.ShuffleStrategy;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,9 +25,9 @@ public class DeckTest {
     @Test
     void draw() {
         //given
-        TrumpCard trumpCardAceSpade = aceSpadeTrumpCard();
+        Card cardAceSpade = aceSpadeTrumpCard();
 
         //when & then
-        assertThat(deck.draw()).isEqualTo(trumpCardAceSpade);
+        assertThat(deck.draw()).isEqualTo(cardAceSpade);
     }
 }

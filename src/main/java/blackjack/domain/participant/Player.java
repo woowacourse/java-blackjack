@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.GameResult;
-import blackjack.domain.card.TrumpCard;
+import blackjack.domain.card.Card;
 
 import java.util.regex.Pattern;
 
@@ -47,8 +47,8 @@ public class Player extends Gamer {
 
     public void draw(final Dealer dealer) {
         if (canReceiveCard()) {
-            TrumpCard trumpCard = dealer.draw();
-            hand.add(trumpCard);
+            Card card = dealer.draw();
+            hand.add(card);
         }
     }
 

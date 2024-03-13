@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.card.TrumpCard;
+import blackjack.domain.card.Card;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,14 +13,14 @@ public class Hand {
     private static final int MAX_ACE_SCORE = 11;
     private static final String NO_CARD_EXCEPTION = "손패에 카드가 부족하여 첫 번째 카드를 가져올 수 없습니다.";
 
-    private final List<TrumpCard> trumpCards;
+    private final List<Card> cards;
 
     public Hand() {
-        this.trumpCards = new ArrayList<>();
+        this.cards = new ArrayList<>();
     }
 
-    public void add(final TrumpCard... trumpCard) {
-        trumpCards.addAll(List.of(trumpCard));
+    public void add(final Card... card) {
+        cards.addAll(List.of(card));
     }
 
     public long calculateScore() {
@@ -36,15 +36,15 @@ public class Hand {
     }
 
     private long countAce() {
-        return trumpCards.stream()
-                .filter(TrumpCard::isAce)
+        return cards.stream()
+                .filter(Card::isAce)
                 .count();
     }
 
     private int calculateScoreWithoutAce() {
-        return trumpCards.stream()
+        return cards.stream()
                 .filter(trumpCard -> !trumpCard.isAce())
-                .mapToInt(TrumpCard::getScore)
+                .mapToInt(Card::getScore)
                 .sum();
     }
 
@@ -61,18 +61,18 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return calculateScore() == BLACKJACK_BOUND && trumpCards.size() == BLACKJACK_CARD_SIZE;
+        return calculateScore() == BLACKJACK_BOUND && cards.size() == BLACKJACK_CARD_SIZE;
     }
 
-    public TrumpCard getFirstCard() {
-        if (trumpCards.isEmpty()) {
+    public Card getFirstCard() {
+        if (cards.isEmpty()) {
             throw new IllegalStateException(NO_CARD_EXCEPTION);
         }
 
-        return trumpCards.get(0);
+        return cards.get(0);
     }
 
-    public List<TrumpCard> getCards() {
-        return Collections.unmodifiableList(trumpCards);
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

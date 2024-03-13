@@ -2,7 +2,7 @@ package blackjack;
 
 import blackjack.domain.Deck;
 import blackjack.domain.Players;
-import blackjack.domain.card.TrumpCard;
+import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.dto.Profits;
@@ -107,13 +107,13 @@ public class BlackjackGame {
         outputView.printHandCards(player.getName(), makeCardOutput(player.getHandCards()));
     }
 
-    private List<String> makeCardOutput(final List<TrumpCard> trumpCards) {
-        return trumpCards.stream()
+    private List<String> makeCardOutput(final List<Card> cards) {
+        return cards.stream()
                 .map(this::makeCardOutput)
                 .toList();
     }
 
-    private String makeCardOutput(final TrumpCard trumpCard) {
-        return RankView.toSymbol(trumpCard.getRank()) + SuitView.toSuitView(trumpCard.getSuit());
+    private String makeCardOutput(final Card card) {
+        return RankView.toSymbol(card.getRank()) + SuitView.toSuitView(card.getSuit());
     }
 }

@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Deck;
-import blackjack.domain.card.TrumpCard;
+import blackjack.domain.card.Card;
 import blackjack.dto.Profits;
 
 public class Dealer extends Gamer {
@@ -23,7 +23,7 @@ public class Dealer extends Gamer {
         }
     }
 
-    public TrumpCard draw() {
+    public Card draw() {
         return deck.draw();
     }
 
@@ -38,7 +38,7 @@ public class Dealer extends Gamer {
         return hand.calculateScore() <= DEALER_BOUND;
     }
 
-    public TrumpCard showFirstCard() {
+    public Card showFirstCard() {
         return hand.getFirstCard();
     }
 
