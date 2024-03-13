@@ -3,7 +3,9 @@ package blackjack.view;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
@@ -17,6 +19,16 @@ class InputViewTest {
         InputView inputView = new InputView(() -> names);
 
         assertThat(inputView.readPlayerName()).containsExactly("몰리", "리브");
+    }
+
+    @Test
+    @DisplayName("숫자가 아닌 값을 입력하면 예외를 던진다.")
+    void readBetAmountByNotNumber() {
+        InputView inputView = new InputView(() -> "돈");
+
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> inputView.readBetAmount("리브"))
+                .withMessage("숫자를 입력해 주세요.");
     }
 
     @Test
