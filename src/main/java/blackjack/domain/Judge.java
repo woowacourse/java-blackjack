@@ -2,88 +2,88 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.PlayerResult;
+import blackjack.dto.Profits;
 
 public class Judge {
 
     private Judge() {
     }
 
-    public static void judge(final Player player, final Dealer dealer, final PlayerResult playerResult) {
+    public static void judge(final Player player, final Dealer dealer, final Profits profits) {
         if (dealer.isBust()) {
-            judgeWhenDealerBust(playerResult, player);
+            judgeWhenDealerBust(profits, player);
             return;
         }
 
         if (dealer.isBlackjack()) {
-            judgeWhenDealerBlackjack(playerResult, player);
+            judgeWhenDealerBlackjack(profits, player);
             return;
         }
 
-        judgeWhenDealerNormal(dealer, playerResult, player);
+        judgeWhenDealerNormal(dealer, profits, player);
     }
 
-    public static void judgeWhenDealerBust(final PlayerResult playerResult, final Player player) {
+    public static void judgeWhenDealerBust(final Profits profits, final Player player) {
         if (player.isBust()) {
-            draw(playerResult, player);
+            draw(profits, player);
             return;
         }
 
-        playerWin(playerResult, player);
+        playerWin(profits, player);
     }
 
     public static void judgeWhenDealerBlackjack(
-            final PlayerResult playerResult, final Player player) {
+            final Profits profits, final Player player) {
         if (player.isBlackjack()) {
-            draw(playerResult, player);
+            draw(profits, player);
             return;
         }
 
-        playerLose(playerResult, player);
+        playerLose(profits, player);
     }
 
     public static void judgeWhenDealerNormal(
-            final Dealer dealer, final PlayerResult playerResult, final Player player) {
+            final Dealer dealer, final Profits profits, final Player player) {
         if (player.isBust()) {
-            playerLose(playerResult, player);
+            playerLose(profits, player);
             return;
         }
 
         if (player.isBlackjack()) {
-            playerWin(playerResult, player);
+            playerWin(profits, player);
             return;
         }
 
-        judgeWhenNormalTogether(dealer, playerResult, player);
+        judgeWhenNormalTogether(dealer, profits, player);
     }
 
     private static void judgeWhenNormalTogether(
-            final Dealer dealer, final PlayerResult playerResult, final Player player) {
+            final Dealer dealer, final Profits profits, final Player player) {
         if (dealer.isSameScore(player.getScore())) {
-            draw(playerResult, player);
+            draw(profits, player);
             return;
         }
 
         if (dealer.getScore() > player.getScore()) {
-            playerLose(playerResult, player);
+            playerLose(profits, player);
             return;
         }
 
-        playerWin(playerResult, player);
+        playerWin(profits, player);
     }
 
     private static void playerLose(
-            final PlayerResult playerResult, final Player player) {
-        playerResult.addResult(player, GameResult.LOSE);
+            final Profits profits, final Player player) {
+        profits.addProfit(player, GameResult.LOSE);
     }
 
     private static void playerWin(
-            final PlayerResult playerResult, final Player player) {
-        playerResult.addResult(player, GameResult.WIN);
+            final Profits profits, final Player player) {
+        profits.addProfit(player, GameResult.WIN);
     }
 
     private static void draw(
-            final PlayerResult playerResult, final Player player) {
-        playerResult.addResult(player, GameResult.DRAW);
+            final Profits profits, final Player player) {
+        profits.addProfit(player, GameResult.DRAW);
     }
 }

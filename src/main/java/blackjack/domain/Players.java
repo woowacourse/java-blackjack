@@ -2,9 +2,12 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.PlayerResult;
+import blackjack.dto.Profits;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 public class Players {
 
@@ -37,34 +40,34 @@ public class Players {
         return names.size() != Set.copyOf(names).size();
     }
 
-    public PlayerResult createResult(final Dealer dealer) {
-        PlayerResult playerResult = new PlayerResult();
+    public Profits createResult(final Dealer dealer) {
+        Profits profits = new Profits();
 
         for (Player player : players) {
-            Judge.judge(player, dealer, playerResult);
+            Judge.judge(player, dealer, profits);
         }
 
-        return playerResult;
+        return profits;
     }
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 
-    public Map<Player, Integer> calculateProfits(final PlayerResult playerResult) {
-        Map<Player, Integer> profitResult = new HashMap<>();
+//    public Map<Player, Integer> calculateProfits(final PlayerResult playerResult) {
+//        Map<Player, Integer> profitResult = new HashMap<>();
+//
+//        for (Player player : players) {
+//            GameResult gameResult = playerResult.findByName(player.getName());
+//            profitResult.put(player, player.calculateProfit(gameResult));
+//        }
+//
+//        return profitResult;
+//    }
 
-        for (Player player : players) {
-            GameResult gameResult = playerResult.findByName(player.getName());
-            profitResult.put(player, player.calculateProfit(gameResult));
-        }
-
-        return profitResult;
-    }
-
-    public int sumProfits(final PlayerResult playerResult) {
-        return calculateProfits(playerResult).values().stream()
-                .mapToInt(i -> i)
-                .sum();
-    }
+//    public int sumProfits(final PlayerResult playerResult) {
+//        return calculateProfits(playerResult).values().stream()
+//                .mapToInt(i -> i)
+//                .sum();
+//    }
 }

@@ -1,10 +1,9 @@
 package blackjack.view;
 
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
+import blackjack.dto.Profits;
 
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
 
@@ -67,10 +66,10 @@ public class OutputView {
         return choice.equals(YES_CHOICE);
     }
 
-    public void printFinalProfit(final int dealerProfit, final Map<Player, Integer> calculateProfits) {
+    public void printFinalProfit(final int dealerProfit, final Profits profits) {
         System.out.println(FINAL_RESULT_TITLE);
         System.out.printf(DEALER_FINAL_RESULT, dealerProfit);
-        calculateProfits.forEach(
+        profits.getProfits().forEach(
                 (key, value) -> System.out.println(key.getName() + ": " + value)
         );
     }

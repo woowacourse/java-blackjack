@@ -3,15 +3,13 @@ package blackjack.domain;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.stategy.NoShuffleStrategy;
-import blackjack.dto.PlayerResult;
+import blackjack.dto.Profits;
 import blackjack.strategy.ShuffleStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -48,35 +46,35 @@ public class PlayersTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("참가자간의 승패를 계산한다.")
-    @Test
-    void decideResult() {
-        //given
-        PlayerResult playersResult = players.createResult(dealer);
-
-        //when & then
-        assertAll(
-                () -> assertThat(playersResult.findByName(nameA)).isEqualTo(GameResult.LOSE),
-                () -> assertThat(playersResult.findByName(nameB)).isEqualTo(GameResult.LOSE)
-        );
-    }
+//    @DisplayName("참가자간의 승패를 계산한다.")
+//    @Test
+//    void decideResult() {
+//        //given
+//        Profits profits = players.createResult(dealer);
+//
+//        //when & then
+//        assertAll(
+//                () -> assertThat(profits.findByPlayer(players.getPlayers().get(0))).isEqualTo(GameResult.LOSE),
+//                () -> assertThat(profits.findByPlayer(players.getPlayers().get(1))).isEqualTo(GameResult.LOSE)
+//        );
+//    }
 
     @DisplayName("플레이어들의 승패를 토대로 수익률을 계산한다.")
     @Test
     void calculateProfits() {
         //given
         Player choco = players.getPlayers().get(0);
+        choco.draw(dealer);
         Player clover = players.getPlayers().get(1);
 
-        PlayerResult playerResult = new PlayerResult();
-        playerResult.addResult(choco, GameResult.WIN);
-        playerResult.addResult(clover, GameResult.LOSE);
-
-        Map<Player, Integer> profitResult = new HashMap<>();
-        profitResult.put(choco, 1000);
-        profitResult.put(clover, -1000);
+        Profits profits = new Profits();
+        profits.addProfit(choco, GameResult.WIN);
+        profits.addProfit(clover, GameResult.LOSE);
 
         //when & then
-        assertThat(players.calculateProfits(playerResult)).isEqualTo(profitResult);
+        assertAll(
+                () -> assertThat(players.createResult(dealer).findByPlayer(choco)).isEqualTo(1000),
+                () -> assertThat(players.createResult(dealer).findByPlayer(clover)).isEqualTo(-1000)
+        );
     }
 }
