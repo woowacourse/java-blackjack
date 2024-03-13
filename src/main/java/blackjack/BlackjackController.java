@@ -66,7 +66,6 @@ public class BlackjackController {
     }
 
     private void printCardGameResult(final Dealer dealer, final List<Player> players) {
-        final CardGameResult cardGameResult = dealer.judgeWithPlayers(players);
-        outputView.printResult(cardGameResult);
+        outputView.printResult(CardGameResult.of(dealer, players));
     }
 }
