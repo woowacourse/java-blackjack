@@ -52,7 +52,7 @@ public class Players {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return Collections.unmodifiableList(players);
     }
 
     public Map<Player, Integer> calculateProfits(final PlayerResult playerResult) {
