@@ -80,3 +80,29 @@
     - [x] 처음 두 장이 블랙잭이면 1.5배를 받는다
     - [x] 플레이어와 딜러가 동시에 블랙잭이면 베팅한 금액을 돌려받는다
     - [x] 21을 초과할 경우 배팅 금액을 모두 잃는다
+
+
+## 1차 리뷰 개선사안
+
+- controller/GameController : Game 생성 로직에서 예외처리
+
+
+- domain : Map 생성자 인수 개선 
+  - 확장성을 고려하여 각자에게 필요한 인수만으로 리팩터링
+- gameResult/Profit : 최대/최소 수익이 아닌 수익률을 가지고 있도록 수정
+- gameResult/Profit : Batting 객체를 통한 최대/최소 수익 계산
+- gameResult : 승패 판정 책임과 결과에 따른 수익 반환 책임 분리
+  - Result(enum) : 승패 판정
+  - ResultProfit(enum) : 승패에 따른 수익 반환
+- card/Card : 해당 카드 번호를 가졌는지 메시지를 반환하는 메서드 추가
+- hands/HandsScore : BLACK_JACK 점수 객체를 반환하는 정적 팩토리 메서드 추가
+- hands/HandsScore : 자주 사용되는 스코어 인스턴스 캐싱
+- participant : 딜러 이름 관리 책임 이전 (Name > Dealer)
+- 스트림 orElseThrow를 통한 Optional 타입 값 예외처리
+- eq & hc 컨벤션 준수를 통한 코드 가독성 개선
+- 불필요한 TODO 및 주석 삭제
+
+- view: 컨벤션 준수를 통한 코드 가독성 개선
+- test/BattingTest : 성공/실패 각각의 테스트 케이스 추가
+- test/ProfitTest : 성공/실패 각각의 테스트 케이스 추가 
+

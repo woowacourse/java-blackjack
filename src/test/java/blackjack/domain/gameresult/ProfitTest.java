@@ -9,14 +9,14 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ProfitTest {
 
-    @DisplayName("성공 : 배팅 최대금액의 -1배 이상 1.5배 초과의 수익 객체를 생성할 수 있다")
+    @DisplayName("수익 반환 성공 : 배팅 최대금액의 -1배 이상 1.5배 초과의 수익 객체를 생성할 수 있다")
     @ParameterizedTest
     @ValueSource(doubles = {-10_000_000, 15_000_000})
     void should_getProfitObject_When_GiveValidRangedProfit(double validRangedProfit) {
         assertDoesNotThrow(() -> Profit.from(validRangedProfit));
     }
 
-    @DisplayName("실패 : 배팅 최대금액의 -1배 미만 1.5배 초과의 수익 객체는 생성이 불가하다")
+    @DisplayName("수익 반환 실패 : 배팅 최대금액의 -1배 미만 1.5배 초과의 수익 객체는 생성이 불가하다")
     @ParameterizedTest
     @ValueSource(doubles = {-10_000_001, 15_000_001})
     void should_ThrowIllegalArgumentException_When_GiveOutRangedBat(double outRangedProfit) {
