@@ -21,7 +21,7 @@ public abstract class Participant {
     }
 
     public Score getHandScore() {
-        return hand.calculateScore();
+        return hand.calculateHandScore();
     }
 
     public Hand getHand() {

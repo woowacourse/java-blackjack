@@ -20,7 +20,7 @@ public class Hand {
         cards.add(card);
     }
 
-    public Score calculateScore() {
+    public Score calculateHandScore() {
         Score score = sumScore();
         if (hasAce()) {
             return score.adjustAceScore();

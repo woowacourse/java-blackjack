@@ -36,7 +36,7 @@ class HandTest {
         Hand hand = new Hand(cards);
 
         // when
-        Score score = hand.calculateScore();
+        Score score = hand.calculateHandScore();
 
         // then
         assertThat(score).extracting("value").isEqualTo(21);
@@ -53,7 +53,7 @@ class HandTest {
         Hand hand = new Hand(cards);
 
         // when
-        Score score = hand.calculateScore();
+        Score score = hand.calculateHandScore();
 
         // then
         assertThat(score).extracting("value").isEqualTo(12);
@@ -69,7 +69,7 @@ class HandTest {
         Hand hand = new Hand(cards);
 
         // when
-        Score score = hand.calculateScore();
+        Score score = hand.calculateHandScore();
 
         // then
         assertThat(score).extracting("value").isEqualTo(11);
