@@ -59,4 +59,13 @@ class PlayersMoneyTest {
 
         assertThat(playersMoney.getPlayersMoney()).containsExactly(Map.entry(player, betAmount.change(gameResult)));
     }
+
+    @Test
+    @DisplayName("딜러의 금액은 플레이어가 잃은 금액이다.")
+    void calculateDealerMoneyTest() {
+        Player player = new Player(new Name("aa"));
+        PlayersMoney playersMoney = new PlayersMoney(new HashMap<>(Map.of(player, new BetAmount(1000))));
+
+        assertThat(playersMoney.calculateDealerMoney()).isEqualTo(-1000);
+    }
 }

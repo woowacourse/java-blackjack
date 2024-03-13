@@ -29,6 +29,10 @@ public class PlayersMoney {
                 (player, betAmount) -> playersMoney.replace(player, betAmount.change(playerResults.get(player))));
     }
 
+    public int calculateDealerMoney() {
+        return playersMoney.values().stream().mapToInt(BetAmount::value).sum() * DEALER_MULTIPLIER;
+    }
+
     public Map<Player, BetAmount> getPlayersMoney() {
         return Collections.unmodifiableMap(playersMoney);
     }
