@@ -10,6 +10,7 @@ public enum Result {
     PLAYER_WIN(Result::isPlayerWin),
     PUSH(Result::isPush);
 
+
     private final BiPredicate<Dealer, Player> judgeResult;
 
     Result(final BiPredicate<Dealer, Player> judgeResult) {
@@ -23,8 +24,20 @@ public enum Result {
                 .orElseThrow();
     }
 
+    public boolean isDealerWin() {
+        return this == DEALER_WIN;
+    }
+
+    public boolean isPlayerWin() {
+        return this == PLAYER_WIN;
+    }
+
+    public boolean isPush() {
+        return this == PUSH;
+    }
+
     private static boolean isDealerWin(final Dealer dealer, final Player player) {
-        return !dealer.isBust() && player.isBust()
+        return player.isBust()
                 || !dealer.isBust() && dealer.getScore().compareTo(player.getScore()) > 0;
     }
 

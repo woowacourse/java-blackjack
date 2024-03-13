@@ -23,7 +23,7 @@ class ResultTest {
         List<Card> loserCards = List.of(TWO_HEARTS);
 
         assertAll(
-                () -> assertEquals(Result.PLAYER_WIN, Result.of(new Dealer(bustCards), new Player(bustCards))),
+                () -> assertEquals(Result.DEALER_WIN, Result.of(new Dealer(bustCards), new Player(bustCards))),
                 () -> assertEquals(Result.DEALER_WIN, Result.of(new Dealer(loserCards), new Player(bustCards))),
                 () -> assertEquals(Result.DEALER_WIN, Result.of(new Dealer(blackJackCards), new Player(loserCards))),
                 () -> assertEquals(Result.PUSH, Result.of(new Dealer(blackJackCards), new Player(blackJackCards))),
