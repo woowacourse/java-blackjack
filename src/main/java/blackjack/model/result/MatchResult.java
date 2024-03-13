@@ -15,4 +15,13 @@ public enum MatchResult {
         }
         return LOSE;
     }
+
+    public BettingMoney calculateFinalMoney(final BettingMoney bettingMoney) {
+        if (this == LOSE) {
+            return BettingMoney.from(0);
+        } else if (this == WIN) {
+            return bettingMoney.plus(bettingMoney);
+        }
+        return bettingMoney;
+    }
 }

@@ -17,7 +17,7 @@ class BettingBoardTest {
     void determineProfitTest(MatchResult matchResult, double expectedProfit) {
         // given
         String playerName = "mia";
-        Map<String, BettingMoney> bettingMoneys = Map.of(playerName, new BettingMoney(1000));
+        Map<String, BettingMoney> bettingMoneys = Map.of(playerName, BettingMoney.from(1000));
         BettingBoard bettingBoard = new BettingBoard(bettingMoneys);
 
         // when

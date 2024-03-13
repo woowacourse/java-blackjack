@@ -5,25 +5,23 @@ public final class BettingMoney {
 
     private final double amount;
 
-    public BettingMoney(final double amount) {
+    private BettingMoney(final double amount) {
         this.amount = amount;
     }
 
-    public BettingMoney fixByMatchResult(final MatchResult matchResult) {
-        if (matchResult == MatchResult.LOSE) {
+    public static BettingMoney from(final double amount) {
+        if (amount == 0) {
             return ZERO_MONEY;
-        } else if (matchResult == MatchResult.WIN) {
-            return this.plus(this);
         }
-        return this;
+        return new BettingMoney(amount);
     }
 
     public BettingMoney plus(final BettingMoney otherMoney) {
-        return new BettingMoney(amount + otherMoney.amount);
+        return BettingMoney.from(amount + otherMoney.amount);
     }
 
     public BettingMoney minus(final BettingMoney otherMoney) {
-        return new BettingMoney(amount - otherMoney.amount);
+        return BettingMoney.from(amount - otherMoney.amount);
     }
 
     public double getAmount() {
