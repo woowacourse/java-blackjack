@@ -1,6 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.ArrayDeque;
+import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 
@@ -12,6 +13,13 @@ public class Deck {
         validateDuplicated(cards);
 
         this.cards.addAll(cards);
+    }
+
+    public static Deck createShuffledDeck() {
+        List<Card> cards = Card.getCards();
+        Collections.shuffle(cards);
+
+        return new Deck(cards);
     }
 
     private void validateDuplicated(List<Card> cards) {

@@ -1,9 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
-import java.util.ArrayList;
+import blackjack.domain.card.Deck;
 import java.util.List;
 
 public class Participants {
+
+    private static final int INITIAL_DRAW_COUNT = 2;
 
     private final Dealer dealer = new Dealer();
     private final List<Player> players;
@@ -46,13 +48,15 @@ public class Participants {
         }
     }
 
-    public List<Participant> getParticipants() {
-        List<Participant> participants = new ArrayList<>();
+    public void drawInitialCards(Deck deck) {
+        drawInitialCardForParticipant(deck, dealer);
+        players.forEach(player -> drawInitialCardForParticipant(deck, player));
+    }
 
-        participants.add(dealer);
-        participants.addAll(players);
-
-        return participants;
+    private void drawInitialCardForParticipant(Deck deck, Participant participant) {
+        for (int i = 0; i < INITIAL_DRAW_COUNT; i++) {
+            participant.hit(deck.draw());
+        }
     }
 
     public Dealer getDealer() {

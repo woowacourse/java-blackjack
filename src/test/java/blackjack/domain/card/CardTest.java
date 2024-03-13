@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -10,7 +10,7 @@ class CardTest {
     @DisplayName("생성 테스트")
     @Test
     void create() {
-        assertThatCode(() -> new Card(CardRank.EIGHT, CardShape.CLOVER))
+        assertThatCode(() -> Card.of(CardRank.EIGHT, CardShape.CLOVER))
                 .doesNotThrowAnyException();
     }
 }

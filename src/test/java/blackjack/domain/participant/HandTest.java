@@ -1,29 +1,21 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardRank;
+import blackjack.domain.card.CardShape;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class HandTest {
-
-    @DisplayName("생성 테스트")
-    @Test
-    void create() {
-        Hand hand = new Hand();
-
-        List<Card> cards = hand.getCards();
-
-        assertThat(cards).isEmpty();
-    }
-
     @DisplayName("패는 카드를 받을 수 있다.")
     @Test
     void add() {
         Hand hand = new Hand();
 
-        hand.add(new Card(CardRank.EIGHT, CardShape.DIAMOND));
+        hand = hand.add(Card.of(CardRank.EIGHT, CardShape.DIAMOND));
 
         List<Card> cards = hand.getCards();
         assertThat(cards).hasSize(1);
@@ -33,8 +25,8 @@ class HandTest {
     @Test
     void calculateScore() {
         Hand hand = new Hand();
-        hand.add(new Card(CardRank.EIGHT, CardShape.DIAMOND));
-        hand.add(new Card(CardRank.FOUR, CardShape.CLOVER));
+        hand = hand.add(Card.of(CardRank.EIGHT, CardShape.DIAMOND));
+        hand = hand.add(Card.of(CardRank.FOUR, CardShape.CLOVER));
 
         int score = hand.calculateScore();
 
@@ -45,9 +37,9 @@ class HandTest {
     @Test
     void calculateScoreWithMinAce() {
         Hand hand = new Hand();
-        hand.add(new Card(CardRank.ACE, CardShape.DIAMOND));
-        hand.add(new Card(CardRank.KING, CardShape.CLOVER));
-        hand.add(new Card(CardRank.JACK, CardShape.CLOVER));
+        hand = hand.add(Card.of(CardRank.ACE, CardShape.DIAMOND));
+        hand = hand.add(Card.of(CardRank.KING, CardShape.CLOVER));
+        hand = hand.add(Card.of(CardRank.JACK, CardShape.CLOVER));
 
         int score = hand.calculateScore();
 
@@ -58,8 +50,8 @@ class HandTest {
     @Test
     void calculateScoreWithMaxAce() {
         Hand hand = new Hand();
-        hand.add(new Card(CardRank.ACE, CardShape.DIAMOND));
-        hand.add(new Card(CardRank.JACK, CardShape.CLOVER));
+        hand = hand.add(Card.of(CardRank.ACE, CardShape.DIAMOND));
+        hand = hand.add(Card.of(CardRank.JACK, CardShape.CLOVER));
 
         int score = hand.calculateScore();
 
@@ -70,9 +62,9 @@ class HandTest {
     @Test
     void isBust() {
         Hand hand = new Hand();
-        hand.add(new Card(CardRank.JACK, CardShape.DIAMOND));
-        hand.add(new Card(CardRank.KING, CardShape.CLOVER));
-        hand.add(new Card(CardRank.TWO, CardShape.DIAMOND));
+        hand = hand.add(Card.of(CardRank.JACK, CardShape.DIAMOND));
+        hand = hand.add(Card.of(CardRank.KING, CardShape.CLOVER));
+        hand = hand.add(Card.of(CardRank.TWO, CardShape.DIAMOND));
 
         boolean result = hand.isBust();
 
@@ -83,11 +75,24 @@ class HandTest {
     @Test
     void isBlackJack() {
         Hand hand = new Hand();
-        hand.add(new Card(CardRank.ACE, CardShape.DIAMOND));
-        hand.add(new Card(CardRank.KING, CardShape.CLOVER));
+        hand = hand.add(Card.of(CardRank.ACE, CardShape.DIAMOND));
+        hand = hand.add(Card.of(CardRank.KING, CardShape.CLOVER));
 
         boolean result = hand.isBlackJack();
 
         assertThat(result).isTrue();
+    }
+
+    @DisplayName("점수가 21점이라도 카드가 2장 넘으면 블랙잭 상태가 아니다.")
+    @Test
+    void isNotBlackJack() {
+        Hand hand = new Hand();
+        hand = hand.add(Card.of(CardRank.TWO, CardShape.DIAMOND));
+        hand = hand.add(Card.of(CardRank.KING, CardShape.CLOVER));
+        hand = hand.add(Card.of(CardRank.NINE, CardShape.DIAMOND));
+
+        boolean result = hand.isBlackJack();
+
+        assertThat(result).isFalse();
     }
 }

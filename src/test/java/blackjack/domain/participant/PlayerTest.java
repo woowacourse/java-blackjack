@@ -1,9 +1,12 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardRank;
+import blackjack.domain.card.CardShape;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +24,7 @@ class PlayerTest {
     @Test
     void hitOneCard() {
         Player player = new Player("atom");
-        Card card = new Card(CardRank.EIGHT, CardShape.DIAMOND);
+        Card card = Card.of(CardRank.EIGHT, CardShape.DIAMOND);
 
         player.hit(card);
 
@@ -32,9 +35,9 @@ class PlayerTest {
     @Test
     void hitWhenIsNotPlayable() {
         Player player = new Player("atom");
-        Card card1 = new Card(CardRank.KING, CardShape.DIAMOND);
-        Card card2 = new Card(CardRank.ACE, CardShape.DIAMOND);
-        Card card3 = new Card(CardRank.EIGHT, CardShape.DIAMOND);
+        Card card1 = Card.of(CardRank.KING, CardShape.DIAMOND);
+        Card card2 = Card.of(CardRank.ACE, CardShape.DIAMOND);
+        Card card3 = Card.of(CardRank.EIGHT, CardShape.DIAMOND);
 
         player.hit(card1);
         player.hit(card2);
@@ -47,8 +50,8 @@ class PlayerTest {
     @Test
     void isPlayable() {
         Player player = new Player("atom");
-        player.hit(new Card(CardRank.JACK, CardShape.DIAMOND));
-        player.hit(new Card(CardRank.ACE, CardShape.CLOVER));
+        player.hit(Card.of(CardRank.JACK, CardShape.DIAMOND));
+        player.hit(Card.of(CardRank.ACE, CardShape.CLOVER));
 
         boolean result = player.isPlayable();
 

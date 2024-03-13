@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 public class Player extends Participant {
 
@@ -8,6 +8,6 @@ public class Player extends Participant {
 
     @Override
     public boolean isPlayable() {
-        return !(hand.isBust() || hand.isBlackJack());
+        return !isBust() && !isBlackJack();
     }
 }
