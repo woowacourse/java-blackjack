@@ -29,7 +29,7 @@ class PlayerTest {
 
     @DisplayName("카드를 추가로 받을 수 있는지 확인한다")
     @Test
-    void checkDrawCardState() {
+    void checkCanGetMoreCard() {
         List<Card> given = List.of(
                 new Card(CardNumber.SIX, CardShape.HEART),
                 new Card(CardNumber.TEN, CardShape.CLOVER)
@@ -42,7 +42,20 @@ class PlayerTest {
 
     @DisplayName("카드를 추가로 받을 수 있는지 확인한다")
     @Test
-    void checkDrawCardStateOverWinningScore() {
+    void checkCanGetMoreCardBlackJack() {
+        List<Card> given = List.of(
+                new Card(CardNumber.ACE, CardShape.HEART),
+                new Card(CardNumber.JACK, CardShape.CLOVER)
+        );
+        Player player = new Player(new PlayerInfo(new Name("daon"), new Betting(0)));
+        player.addCards(given);
+
+        assertThat(player.checkCanGetMoreCard()).isFalse();
+    }
+
+    @DisplayName("카드를 추가로 받을 수 있는지 확인한다")
+    @Test
+    void checkCanGetMoreCardBust() {
         List<Card> given = List.of(
                 new Card(CardNumber.SIX, CardShape.HEART),
                 new Card(CardNumber.TEN, CardShape.CLOVER),

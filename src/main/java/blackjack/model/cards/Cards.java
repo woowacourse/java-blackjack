@@ -29,8 +29,8 @@ public final class Cards {
         cardsToAdd.forEach(this::add);
     }
 
-    public boolean isBusted() {
-        return score.isBusted();
+    public boolean canAddMore() {
+        return !isBusted() && !isBlackJack();
     }
 
     public Score getCardsScore() {
@@ -53,6 +53,10 @@ public final class Cards {
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    private boolean isBusted() {
+        return score.isBusted();
     }
 
     private boolean isBlackJack() {

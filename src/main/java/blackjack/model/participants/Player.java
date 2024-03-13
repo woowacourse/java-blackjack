@@ -12,7 +12,7 @@ public class Player extends Participant {
 
     @Override
     public boolean checkCanGetMoreCard() {
-        return !cards.isBusted();
+        return cards.canAddMore();
     }
 
     public Profit getProfit(final Participant participant) {
