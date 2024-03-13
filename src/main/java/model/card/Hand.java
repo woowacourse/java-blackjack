@@ -13,7 +13,7 @@ public class Hand {
 
     public int calculateTotalNumbers() {
         return cards.stream()
-            .mapToInt(Card::getNumberScore)
+            .mapToInt(Card::getScore)
             .sum();
     }
 

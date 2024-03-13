@@ -10,20 +10,12 @@ public class Card {
         this.shape = shape;
     }
 
-    public boolean hasAce() {
+    public boolean isAce() {
         return number == CardNumber.ACE;
     }
 
-    public int getNumberScore() {
+    public int getScore() {
         return number.getScore();
-    }
-
-    public CardNumber getNumber() {
-        return number;
-    }
-
-    public CardShape getShape() {
-        return shape;
     }
 
     @Override

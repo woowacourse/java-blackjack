@@ -43,7 +43,7 @@ public class ParticipantScore {
     private static boolean hasAce(Hand hand) {
         return hand.getCards()
             .stream()
-            .anyMatch(Card::hasAce);
+            .anyMatch(Card::isAce);
     }
 
     public boolean isNotBurst() {
