@@ -99,5 +99,4 @@ class BettingCashierTest {
         BettingCashier cashier = new BettingCashier(betting, Result.of(players, dealer));
         assertThat(cashier.findProfitOfDealer()).isEqualTo(-5_000);
     }
-
 }
