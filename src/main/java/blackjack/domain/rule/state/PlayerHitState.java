@@ -7,11 +7,11 @@ import java.util.List;
 
 public final class PlayerHitState extends State {
 
-    public PlayerHitState(final Hands hands) {
+    private PlayerHitState(final Hands hands) {
         super(hands, 0);
     }
 
-    public PlayerHitState(final Hands hands, final int hitCount) {
+    PlayerHitState(final Hands hands, final int hitCount) {
         super(hands, hitCount);
     }
 

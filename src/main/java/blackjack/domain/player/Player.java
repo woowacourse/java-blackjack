@@ -20,12 +20,8 @@ public class Player {
         this.state = state;
     }
 
-    public static Player of(final PlayerName name, final Dealer dealer) {
-        return new Player(new PlayerBetAmount(name), PlayerHitState.start(dealer.drawCard(), dealer.drawCard()));
-    }
-
-    public void setBetAmount(final BetAmount betAmount) {
-        playerBetAmount.setBetAmount(betAmount);
+    public static Player of(final PlayerBetAmount playerBetAmount, final Dealer dealer) {
+        return new Player(playerBetAmount, PlayerHitState.start(dealer.drawCard(), dealer.drawCard()));
     }
 
     public void hit(
@@ -38,13 +34,15 @@ public class Player {
             state = state.draw(card);
             printHands.accept(getName(), getHands());
         }
+
+        stand(printHands);
     }
 
-    public boolean isContinueHit(final Predicate<PlayerName> isHitInput) {
+    private boolean isContinueHit(final Predicate<PlayerName> isHitInput) {
         return state.isHit() && isHitInput.test(getName());
     }
 
-    public void stand(final BiConsumer<PlayerName, Hands> printHands) {
+    private void stand(final BiConsumer<PlayerName, Hands> printHands) {
         state = state.stand();
         if (state.countHit() == 0) {
             printHands.accept(getName(), getHands());
@@ -68,11 +66,11 @@ public class Player {
     }
 
     public PlayerName getName() {
-        return playerBetAmount.getName();
+        return playerBetAmount.name();
     }
 
     public BetAmount getBetAmount() {
-        return playerBetAmount.getBetAmount();
+        return playerBetAmount.betAmount();
     }
 
     public State getState() {

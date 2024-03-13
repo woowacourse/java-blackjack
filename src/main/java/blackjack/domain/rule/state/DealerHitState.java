@@ -14,7 +14,7 @@ public final class DealerHitState extends State {
         super(hands, 0);
     }
 
-    public DealerHitState(final Hands hands, final int hitCount) {
+    DealerHitState(final Hands hands, final int hitCount) {
         super(hands, hitCount);
     }
 
@@ -48,11 +48,9 @@ public final class DealerHitState extends State {
         if (newHands.calculateScore().isBurst()) {
             return new BurstState(newHands, hitCount + 1);
         }
-
         if (needMoreCard(newHands)) {
             return new DealerHitState(newHands, hitCount + 1);
         }
-
         return new StandState(newHands, hitCount + 1);
     }
 

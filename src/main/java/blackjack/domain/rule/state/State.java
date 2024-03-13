@@ -18,11 +18,11 @@ public abstract class State {
         this.hitCount = hitCount;
     }
 
-    abstract State draw(Card card);
+    public abstract State draw(Card card);
 
-    abstract State stand();
+    public abstract State stand();
 
-    abstract BetLeverage calculateBetLeverage(State other);
+    public abstract BetLeverage calculateBetLeverage(State other);
 
     public int countHit() {
         return hitCount;

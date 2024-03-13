@@ -6,21 +6,17 @@ import blackjack.domain.card.Hands;
 
 public final class BlackjackState extends State {
 
-    public BlackjackState(final Hands hands) {
+    BlackjackState(final Hands hands) {
         super(hands, 0);
     }
 
-    public BlackjackState(final Hands hands, final int hitCount) {
+    BlackjackState(final Hands hands, final int hitCount) {
         super(hands, hitCount);
     }
 
     @Override
     public State draw(final Card card) {
         final Hands newHands = hands.addCard(card);
-
-        if (newHands.calculateScore().isBurst()) {
-            return new BurstState(newHands, hitCount + 1);
-        }
 
         return new PlayerHitState(newHands, hitCount + 1);
     }
@@ -33,7 +29,7 @@ public final class BlackjackState extends State {
     @Override
     public BetLeverage calculateBetLeverage(final State other) {
         if (other.isBlackjack()) {
-            return BetLeverage.DRAW;
+            return BetLeverage.TIE;
         }
         return BetLeverage.LUCKY;
     }

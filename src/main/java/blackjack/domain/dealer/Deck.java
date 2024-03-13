@@ -16,7 +16,7 @@ public final class Deck {
 
     private final Deque<Card> cards;
 
-    Deck(List<Card> cards) {
+    public Deck(List<Card> cards) {
         this.cards = new LinkedList<>(cards);
     }
 

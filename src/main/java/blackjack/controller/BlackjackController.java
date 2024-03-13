@@ -1,17 +1,17 @@
 package blackjack.controller;
 
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.player.PlayerName;
-import blackjack.domain.bet.BetAmount;
+import blackjack.domain.player.PlayerNames;
 import blackjack.dto.BetRevenueResultDto;
 import blackjack.dto.FinalHandsScoreDto;
-import blackjack.domain.BlackjackGame;
+import blackjack.dto.PlayerBetAmountDto;
 import blackjack.exception.NeedRetryException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
-import java.util.Map;
 
-public class BlackjackController {
+public final class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -28,27 +28,20 @@ public class BlackjackController {
     }
 
     private BlackjackGame initGame() {
-        final BlackjackGame blackjackGame = createGame();
-        saveAllPlayersBetAmount(blackjackGame);
+        final PlayerNames playerNames = createPlayerNames();
+        final List<PlayerBetAmountDto> playerBetAmounts = inputView.readBetAmounts(playerNames);
 
-        return blackjackGame;
+        return BlackjackGame.from(playerBetAmounts);
     }
 
-    private BlackjackGame createGame() {
+    private PlayerNames createPlayerNames() {
         try {
             final List<PlayerName> playerNames = inputView.readPlayerNames();
-            return new BlackjackGame(playerNames);
-        } catch (NeedRetryException e) {
+            return new PlayerNames(playerNames);
+        } catch (final NeedRetryException e) {
             outputView.printError(e.getMessage());
-            return createGame();
+            return createPlayerNames();
         }
-    }
-
-    private void saveAllPlayersBetAmount(final BlackjackGame blackjackGame) {
-        final List<PlayerName> playersName = blackjackGame.getPlayersName();
-        final Map<PlayerName, BetAmount> playerBetAmounts = inputView.readBetAmounts(playersName);
-
-        blackjackGame.saveBetAmount(playerBetAmounts);
     }
 
     private void playGame(final BlackjackGame blackjackGame) {

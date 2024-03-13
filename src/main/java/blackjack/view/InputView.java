@@ -1,13 +1,13 @@
 package blackjack.view;
 
-import blackjack.domain.player.PlayerName;
 import blackjack.domain.bet.BetAmount;
+import blackjack.domain.player.PlayerName;
+import blackjack.domain.player.PlayerNames;
+import blackjack.dto.PlayerBetAmountDto;
 import blackjack.exception.NeedRetryException;
 import blackjack.view.format.CardRequestFormat;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class InputView {
@@ -32,16 +32,10 @@ public class InputView {
         }
     }
 
-    public Map<PlayerName, BetAmount> readBetAmounts(final List<PlayerName> names) {
-        final Map<PlayerName, BetAmount> playerBetAmount = new HashMap<>();
-
-        for (final PlayerName name : names) {
-            System.out.printf("%n%s의 배팅 금액은?%n", name.getName());
-            final BetAmount betAmount = readBetAmount();
-            playerBetAmount.put(name, betAmount);
-        }
-
-        return playerBetAmount;
+    public List<PlayerBetAmountDto> readBetAmounts(final PlayerNames names) {
+        return names.getNames().stream()
+                .map(name -> new PlayerBetAmountDto(name, readBetAmount()))
+                .toList();
     }
 
     private BetAmount readBetAmount() {

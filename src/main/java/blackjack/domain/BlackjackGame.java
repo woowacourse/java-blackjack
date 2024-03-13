@@ -1,17 +1,17 @@
 package blackjack.domain;
 
+import blackjack.domain.bet.BetRevenue;
 import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
 import blackjack.domain.dealer.Deck;
+import blackjack.domain.player.PlayerBetAmount;
 import blackjack.domain.player.PlayerBetResult;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
-import blackjack.domain.bet.BetAmount;
-import blackjack.domain.bet.BetRevenue;
 import blackjack.dto.BetRevenueResultDto;
 import blackjack.dto.FinalHandsScoreDto;
+import blackjack.dto.PlayerBetAmountDto;
 import blackjack.dto.StartCardsDto;
-import blackjack.exception.NeedRetryException;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -23,26 +23,25 @@ public class BlackjackGame {
     private final Players players;
     private final Dealer dealer;
 
-    public BlackjackGame(final List<PlayerName> playersName) {
-        this.dealer = new Dealer(Deck.create());
-        this.players = Players.of(playersName, dealer);
-
-        validateDateDealerName();
+    private BlackjackGame(final Players players, final Dealer dealer) {
+        this.players = players;
+        this.dealer = dealer;
     }
 
-    private void validateDateDealerName() {
-        if (players.hasName(Dealer.DEALER_NAME)) {
-            throw new NeedRetryException(Dealer.DEALER_NAME + "를 이름으로 사용할 수 없습니다.");
-        }
+    public static BlackjackGame from(final List<PlayerBetAmountDto> playerBetAmountDtos) {
+        final Dealer dealer = new Dealer(Deck.create());
+
+        final List<PlayerBetAmount> playerBetAmounts = playerBetAmountDtos.stream()
+                .map(PlayerBetAmountDto::toDomain)
+                .toList();
+
+        return new BlackjackGame(Players.of(playerBetAmounts, dealer), dealer);
     }
+
 
     public StartCardsDto getStartCards() {
         final Hands dealerOpenedHands = dealer.getOpenedHands();
         return StartCardsDto.of(players.getPlayersHands(), dealerOpenedHands);
-    }
-
-    public void saveBetAmount(final Map<PlayerName, BetAmount> playerBetAmounts) {
-        players.saveBetAmount(playerBetAmounts);
     }
 
     public void playGame(
@@ -78,9 +77,5 @@ public class BlackjackGame {
         final BetRevenue dealerRevenue = playerBetResult.calculateDealerRevenue();
 
         return BetRevenueResultDto.of(playersBetResult, dealerRevenue);
-    }
-
-    public List<PlayerName> getPlayersName() {
-        return players.getNames();
     }
 }

@@ -6,11 +6,11 @@ import blackjack.domain.card.Hands;
 
 public final class BurstState extends State {
 
-    public BurstState(final Hands hands) {
+    BurstState(final Hands hands) {
         super(hands, 0);
     }
 
-    public BurstState(final Hands hands, final int hitCount) {
+    BurstState(final Hands hands, final int hitCount) {
         super(hands, hitCount);
     }
 
@@ -26,7 +26,7 @@ public final class BurstState extends State {
 
     @Override
     public State stand() {
-        throw new UnsupportedOperationException(ERROR_MESSAGE);
+        return new BurstState(hands, hitCount);
     }
 
     @Override

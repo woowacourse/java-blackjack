@@ -2,17 +2,15 @@ package blackjack.domain.player;
 
 import static java.util.stream.Collectors.toMap;
 
+import blackjack.domain.bet.BetAmount;
+import blackjack.domain.bet.BetLeverage;
+import blackjack.domain.bet.BetRevenue;
 import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
-import blackjack.domain.bet.BetAmount;
-import blackjack.domain.bet.BetRevenue;
-import blackjack.domain.bet.BetLeverage;
-import blackjack.exception.NeedRetryException;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
@@ -24,22 +22,10 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(final List<PlayerName> playerNames, final Dealer dealer) {
-        validateDuplicate(playerNames);
-
-        return new Players(playerNames.stream()
-                .map(name -> Player.of(name, dealer))
+    public static Players of(final List<PlayerBetAmount> playerBetAmounts, final Dealer dealer) {
+        return new Players(playerBetAmounts.stream()
+                .map(playerBetAmount -> Player.of(playerBetAmount, dealer))
                 .toList());
-    }
-
-    private static void validateDuplicate(final List<PlayerName> playerNames) {
-        if (Set.copyOf(playerNames).size() != playerNames.size()) {
-            throw new NeedRetryException("중복된 이름의 참여자는 참여할 수 없습니다.");
-        }
-    }
-
-    public void saveBetAmount(final Map<PlayerName, BetAmount> playerBetAmounts) {
-        players.forEach(player -> player.setBetAmount(playerBetAmounts.get(player.getName())));
     }
 
     public void hit(
@@ -49,13 +35,6 @@ public class Players {
     ) {
         for (final Player player : players) {
             player.hit(dealer, isHitInput, printHands);
-            stand(player, printHands);
-        }
-    }
-
-    private void stand(final Player player, final BiConsumer<PlayerName, Hands> printHands) {
-        if (player.isHit()) {
-            player.stand(printHands);
         }
     }
 
@@ -70,12 +49,6 @@ public class Players {
         }
 
         return Collections.unmodifiableMap(playerBetRevenue);
-    }
-
-    public boolean hasName(final String other) {
-        return players.stream()
-                .map(Player::getName)
-                .anyMatch(name -> name.equals(new PlayerName(other)));
     }
 
     public boolean isAllBurst() {
