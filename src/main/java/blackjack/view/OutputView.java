@@ -9,12 +9,15 @@ import java.util.List;
 
 public class OutputView {
 
+    private static final String NAME_SEPARATOR = ", ";
+    private static final String CARD_SEPARATOR = ", ";
+
     public void printNamesRequest() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
     public void printInitializeBlackJack(List<String> names) {
-        System.out.println("딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.");
+        System.out.println("딜러와 " + String.join(NAME_SEPARATOR, names) + "에게 2장을 나누었습니다.");
     }
 
     public void printDealerFirstCard(Card card) {
@@ -68,7 +71,7 @@ public class OutputView {
         List<String> convertedCards = cards.stream()
                 .map(this::convertCard)
                 .toList();
-        return String.join(", ", convertedCards);
+        return String.join(CARD_SEPARATOR, convertedCards);
     }
 
     public void printExceptionMessage(Exception e) {
