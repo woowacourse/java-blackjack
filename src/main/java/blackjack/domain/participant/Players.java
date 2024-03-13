@@ -57,10 +57,4 @@ public class Players {
     public List<Player> getPlayers() {
         return players;
     }
-
-    public void play(PlayerTurn playTurn, Deck deck) {
-        for (Player player : players) {
-            playTurn.play(player, deck);
-        }
-    }
 }

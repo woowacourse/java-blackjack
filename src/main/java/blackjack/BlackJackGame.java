@@ -17,6 +17,7 @@ public class BlackJackGame {
         Deck deck = Deck.createShuffledDeck();
         Dealer dealer = new Dealer();
         Players players = createPlayers();
+
         drawStartCards(dealer, players, deck);
         play(players, dealer, deck);
         printResult(dealer, players);
@@ -34,17 +35,23 @@ public class BlackJackGame {
     }
 
     private void play(Players players, Dealer dealer, Deck deck) {
-        players.play(this::playTurn, deck);
-        while (dealer.isDrawable()) {
-            outputView.printDealerDraw();
-            dealer.add(deck.draw());
+        for (Player player : players.getPlayers()) {
+            playTurn(player, deck);
         }
+        playTurn(dealer, deck);
     }
 
     private void playTurn(Player player, Deck deck) {
         while (player.isDrawable() && inputView.isPlayerWantDraw(player.getName())) {
             player.add(deck.draw());
             outputView.printPlayerCards(player);
+        }
+    }
+
+    private void playTurn(Dealer dealer, Deck deck) {
+        while (dealer.isDrawable()) {
+            outputView.printDealerDraw();
+            dealer.add(deck.draw());
         }
     }
 
