@@ -1,17 +1,12 @@
 package blackjackgame.controller;
 
 import blackjackgame.domain.BlackjackGame;
-import blackjackgame.domain.blackjack.BetMoney;
 import blackjackgame.domain.blackjack.GameResult;
 import blackjackgame.domain.blackjack.GameResultCalculator;
-import blackjackgame.domain.blackjack.HoldingCards;
 import blackjackgame.domain.blackjack.PlayerRandomCardDrawStrategy;
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.Deck;
-import blackjackgame.domain.gamers.BetMaker;
-import blackjackgame.domain.gamers.BetMakers;
 import blackjackgame.domain.gamers.CardHolder;
-import blackjackgame.domain.gamers.CardHolders;
 import blackjackgame.domain.gamers.Gamer;
 import blackjackgame.domain.gamers.Gamers;
 import blackjackgame.dto.CardDTO;
@@ -39,14 +34,11 @@ public class BlackjackController {
     }
 
     private static BlackjackGame initBlackJackGame() {
-        CardHolder cardHolderDealer = makeCardHolderDealer();
-        BetMaker betMakerDealer = makeBetMakerDealer();
         List<String> playerNames = NameInputView.getNames();
-        CardHolders cardHolderPlayers = new CardHolders(makeCardHolderPlayers(playerNames));
-        BetMakers betMakerPlayers = new BetMakers(makeBetMakerPlayers(playerNames));
+        List<Integer> playerBetMoneys = BetMoneyInputView.getPlayerBetMoneys(playerNames);
 
-        Gamer dealer = new Gamer(cardHolderDealer, betMakerDealer);
-        Gamers players = new Gamers(cardHolderPlayers, betMakerPlayers);
+        Gamer dealer = Gamer.createByNameAndBetMoney(DEALER_NAME, INITIAL_MONEY);
+        Gamers players = Gamers.createByNamesAndBetMoneys(playerNames, playerBetMoneys);
 
         return new BlackjackGame(dealer, players);
     }
@@ -60,31 +52,6 @@ public class BlackjackController {
 
         printDealerAndPlayersWithPoint(blackjackGame);
         printDealerAndPlayersGameResult(blackjackGame);
-    }
-
-    private static CardHolder makeCardHolderDealer() {
-        return new CardHolder(DEALER_NAME, HoldingCards.of());
-    }
-
-    private static BetMaker makeBetMakerDealer() {
-        return new BetMaker(DEALER_NAME, new BetMoney(INITIAL_MONEY));
-    }
-
-    private static List<CardHolder> makeCardHolderPlayers(List<String> playerNames) {
-        return playerNames.stream()
-                .map(playerName -> new CardHolder(playerName, HoldingCards.of()))
-                .toList();
-    }
-
-    private static List<BetMaker> makeBetMakerPlayers(List<String> playerNames) {
-        List<BetMaker> betMakerGamers = new ArrayList<>();
-
-        List<Integer> playerBetMoneys = BetMoneyInputView.getPlayerBetMoneys(playerNames);
-        for (int i = 0; i < playerNames.size(); i++) {
-            BetMaker betMakerGamer = new BetMaker(playerNames.get(i), new BetMoney(playerBetMoneys.get(i)));
-            betMakerGamers.add(betMakerGamer);
-        }
-        return betMakerGamers;
     }
 
     private void initDealerAndPlayers(BlackjackGame blackjackGame, Deck deck) {

@@ -32,6 +32,13 @@ public class BlackjackGame {
         }
     }
 
+//    public GameResult getGameResults() {
+//        for (Gamer player : players.getCardHolders()) {
+//
+//        }
+//        GameResultCalculator.calculate()
+//    }
+
     public CardHolder getCardHolderDealer() {
         return dealer.getCardHolder();
     }
