@@ -78,7 +78,8 @@ public class OutputView {
     }
 
     private static String getCardInfo(final Card card) {
-        return CardNumberStrings.mapCardNumberToString(card.getNumber()) + card.getShape();
+        return CardNumberStrings.mapCardNumberToString(card.getNumber()) +
+                CardShapeStrings.mapCardShapeToString(card.getShape());
     }
 
     private static void printLineSeparator() {
