@@ -37,6 +37,6 @@ public class Participants {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
         participants.addAll(players.getPlayers());
-        return participants;
+        return List.copyOf(participants);
     }
 }

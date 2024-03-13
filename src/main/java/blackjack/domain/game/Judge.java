@@ -48,6 +48,6 @@ public class Judge {
     }
 
     public Map<Participant, Result> getResults() {
-        return results;
+        return Map.copyOf(results);
     }
 }
