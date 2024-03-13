@@ -10,7 +10,7 @@ import domain.participant.Name;
 import domain.participant.player.Player;
 import domain.participant.player.Players;
 
-public class InputView implements AutoCloseable, BlackjackViewParser {
+public class InputView implements BlackjackViewParser {
 
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
 
@@ -41,10 +41,5 @@ public class InputView implements AutoCloseable, BlackjackViewParser {
             throw new IllegalArgumentException("입력은 공백으로만 이루어질 수 없습니다.");
         }
         return input;
-    }
-
-    @Override
-    public void close() throws Exception {
-        READER.close();
     }
 }
