@@ -1,4 +1,4 @@
-package domain.game;
+package domain.money;
 
 import domain.user.Player;
 import java.util.Collections;

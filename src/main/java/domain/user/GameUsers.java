@@ -1,10 +1,10 @@
 package domain.user;
 
-import static domain.game.GameResult.LOSE;
-import static domain.game.GameResult.WIN;
+import static domain.money.GameResult.LOSE;
+import static domain.money.GameResult.WIN;
 
 import domain.Deck;
-import domain.game.GameResult;
+import domain.money.GameResult;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

@@ -5,12 +5,12 @@ import static domain.card.Number.FIVE;
 import static domain.card.Number.SEVEN;
 import static domain.card.Number.SIX;
 import static domain.card.Shape.CLUB;
-import static domain.game.GameResult.WIN;
+import static domain.money.GameResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.Deck;
 import domain.card.Card;
-import domain.game.GameResult;
+import domain.money.GameResult;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;

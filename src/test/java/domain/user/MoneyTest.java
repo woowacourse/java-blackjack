@@ -1,11 +1,11 @@
 package domain.user;
 
-import static domain.game.GameResult.DRAW;
-import static domain.game.GameResult.LOSE;
-import static domain.game.GameResult.WIN;
+import static domain.money.GameResult.DRAW;
+import static domain.money.GameResult.LOSE;
+import static domain.money.GameResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.game.Money;
+import domain.money.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

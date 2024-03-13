@@ -1,4 +1,4 @@
-package domain.game;
+package domain.money;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

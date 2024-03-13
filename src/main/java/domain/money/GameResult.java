@@ -1,4 +1,4 @@
-package domain.game;
+package domain.money;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;
@@ -12,14 +12,6 @@ public enum GameResult {
 
     GameResult(BiPredicate<Integer, Integer> condition) {
         this.condition = condition;
-    }
-
-    public GameResult reverse() {
-        return switch (this) {
-            case WIN -> LOSE;
-            case LOSE -> WIN;
-            case DRAW -> DRAW;
-        };
     }
 
     public static GameResult compare(int current, int opponent) {

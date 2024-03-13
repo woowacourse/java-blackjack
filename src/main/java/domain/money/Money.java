@@ -1,4 +1,4 @@
-package domain.game;
+package domain.money;
 
 public record Money(int value) {
     private static final double BLACK_JACK_MULTIPLIER = 1.5;
