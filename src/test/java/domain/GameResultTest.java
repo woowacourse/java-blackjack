@@ -39,7 +39,7 @@ class GameResultTest {
         gameResult.getWinOrLose(true);
         org.junit.jupiter.api.Assertions.assertAll(
                 () -> Assertions.assertThat(gameResult.getWinOrLose(true)).isEqualTo("승"),
-                () -> Assertions.assertThat(gameResult.getWinOrLose(false)).isEqualTo("패"
+                () -> Assertions.assertThat(gameResult.getWinOrLose(false)).isEqualTo("패")
         );
     }
 }
