@@ -10,7 +10,7 @@ public class CardDispenser {
         this.blackJackCards = cardShuffleMachine.shuffleCardDeck();
     }
 
-    public Card dispenseCard(){
+    public Card dispenseCard() {
         if (blackJackCards.isEmpty()) {
             throw new IllegalStateException("Number of attempts exceeded");
         }
