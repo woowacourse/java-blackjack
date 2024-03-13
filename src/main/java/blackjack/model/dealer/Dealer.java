@@ -4,6 +4,8 @@ import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 import blackjack.model.card.Score;
 import blackjack.model.cardgenerator.CardGenerator;
+import blackjack.model.player.Player;
+import blackjack.model.referee.MatchResult;
 
 import java.util.List;
 
@@ -33,6 +35,18 @@ public class Dealer {
 
     public boolean isBlackJack() {
         return cards.isBlackJack();
+    }
+
+    public MatchResult determinePlayerMatchResult(final Player player) {
+        if (player.isBust()) {
+            return MatchResult.LOSE;
+        }
+        if (cards.isBust()) {
+            return MatchResult.WIN;
+        }
+        Score playerTotalScore = player.calculateCardsTotalScore();
+        Score dealerTotalScore = cards.calculateCardsTotalScore();
+        return MatchResult.decideByScore(playerTotalScore, dealerTotalScore);
     }
 
     public int getActionCount() {
