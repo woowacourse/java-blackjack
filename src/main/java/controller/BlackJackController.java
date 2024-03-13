@@ -32,8 +32,8 @@ public class BlackJackController {
         printResult(betAmount, dealer);
     }
 
-    private LinkedHashMap<Player, BetAmount> createBetAmount(Players players) {
-        LinkedHashMap<Player, BetAmount> betAmount = new LinkedHashMap<>();
+    private Map<Player, BetAmount> createBetAmount(Players players) {
+        Map<Player, BetAmount> betAmount = new LinkedHashMap<>();
         for (Player player : players.getValue()) {
             betAmount.put(player, new BetAmount(InputView.inputBetAmount(player.getName())));
         }
