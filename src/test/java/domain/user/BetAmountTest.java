@@ -38,4 +38,14 @@ public class BetAmountTest {
 
         assertThat(newAmount.value()).isEqualTo(-10000);
     }
+
+    @Test
+    @DisplayName("블랙잭 배수만큼 곱한다.")
+    void changeByBlackJackTest() {
+        BetAmount betAmount = new BetAmount(10000);
+
+        BetAmount newAmount = betAmount.changeByBlackJack();
+
+        assertThat(newAmount.value()).isEqualTo(15000);
+    }
 }
