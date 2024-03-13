@@ -1,15 +1,21 @@
 package blackjack.model.participant;
 
+import blackjack.model.deck.Card;
+import blackjack.model.state.Hit;
+import blackjack.model.state.State;
+import java.util.List;
 import java.util.Objects;
 
 public class Player extends Participant {
     private static final int HITTABLE_THRESHOLD = 21;
 
     private final String name;
+    private State state;
 
     public Player(final String name) {
         validateNullAndEmptyName(name);
         this.name = name.trim();
+        this.state = new Hit();
     }
 
     private void validateNullAndEmptyName(final String name) {
@@ -23,8 +29,18 @@ public class Player extends Participant {
         return hand.calculateScore() < HITTABLE_THRESHOLD;
     }
 
+    public void receiveInitialCards(final List<Card> cards) {
+        for (Card card : cards) {
+            state = state.draw(card);
+        }
+    }
+
     public String getName() {
         return name;
+    }
+
+    public State getState() {
+        return state;
     }
 
     @Override

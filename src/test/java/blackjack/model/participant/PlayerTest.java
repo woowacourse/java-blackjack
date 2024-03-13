@@ -6,10 +6,12 @@ import static blackjack.model.deck.Score.THREE;
 import static blackjack.model.deck.Score.TWO;
 import static blackjack.model.deck.Shape.CLOVER;
 import static blackjack.model.deck.Shape.DIA;
+import static blackjack.model.deck.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import blackjack.model.deck.Card;
+import blackjack.model.state.Hit;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -82,5 +84,24 @@ class PlayerTest {
         player.receiveInitialCards(List.of(new Card(DIA, TEN), new Card(CLOVER, TEN)));
 
         assertThat(player.canHit()).isTrue();
+    }
+
+    @Nested
+    @DisplayName("플레이어의 현재 상태")
+    class StateOfPlayer {
+        private Player player;
+
+        @BeforeEach
+        void init() {
+            player = new Player("리브");
+        }
+
+        @Test
+        @DisplayName("카드의 점수가 21 미만이면 Hit 상태이다.")
+        void hit() {
+            player.receiveInitialCards(List.of(new Card(SPADE, TWO), new Card(DIA, THREE)));
+
+            assertThat(player.getState()).isInstanceOf(Hit.class);
+        }
     }
 }
