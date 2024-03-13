@@ -17,6 +17,11 @@ public class InputView {
         return List.of(scanner.nextLine().split(","));
     }
 
+    public static double readPlayerBetAmount(final String name) {
+        System.out.println(System.lineSeparator() + name + "의 배팅 금액은?");
+        return Double.parseDouble(scanner.nextLine());
+    }
+
     public static boolean readDoesWantHit(final Name name) {
         System.out.println(name.value() + "는 한장의 카드를 더 받겠습니까?(예는 " + WANT_HIT_COMMAND
                 + ", 아니오는 " + NOT_WANT_HIT_COMMAND + ")");

@@ -15,6 +15,7 @@ import blackjack.dto.PlayersOutcomeDto;
 import blackjack.dto.PlayersDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.List;
 
 public class Application {
 
@@ -35,9 +36,18 @@ public class Application {
     private static GameBoard createGameBoard() {
         final Deck deck = new Deck(new DeckShuffleFactory());
         final Dealer dealer = new Dealer();
-        final Players players = Players.from(InputView.readPlayerNames());
+
+        List<String> playerNames = InputView.readPlayerNames();
+        final Players players = new Players(preparePlayers(playerNames));
+
         final Gamers gamers = new Gamers(dealer, players);
         return new GameBoard(deck, gamers);
+    }
+
+    private static List<Player> preparePlayers(List<String> playerNames) {
+        return playerNames.stream()
+                .map(name -> Player.of(name, InputView.readPlayerBetAmount(name)))
+                .toList();
     }
 
     private static void drawInitialCard(final GameBoard gameBoard) {
