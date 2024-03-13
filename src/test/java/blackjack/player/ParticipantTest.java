@@ -16,8 +16,8 @@ class ParticipantTest {
     void ableToDrawTest() {
         // given
         List<Card> cards = List.of(
-                new Card(Shape.HEART, Number.JACK),
-                new Card(Shape.DIAMOND, Number.TEN)
+                Card.of(Shape.HEART, Number.JACK),
+                Card.of(Shape.DIAMOND, Number.TEN)
         );
         Hand hand = new Hand(cards);
         Participant Participant = new Participant("aru", hand);
@@ -32,8 +32,8 @@ class ParticipantTest {
     void unableToDrawTest() {
         // given
         List<Card> cards = List.of(
-                new Card(Shape.HEART, Number.JACK),
-                new Card(Shape.DIAMOND, Number.ACE)
+                Card.of(Shape.HEART, Number.JACK),
+                Card.of(Shape.DIAMOND, Number.ACE)
         );
         Hand hand = new Hand(cards);
         Participant Participant = new Participant("atto", hand);

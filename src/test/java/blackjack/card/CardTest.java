@@ -11,10 +11,10 @@ class CardTest {
     @DisplayName("동등성을 정확하게 판단한다.")
     void equalsTest() {
         // given
-        Card card = new Card(Shape.SPADE, Number.ACE);
+        Card card = Card.of(Shape.SPADE, Number.ACE);
         // when, then
         assertThat(card)
-                .isEqualTo(new Card(Shape.SPADE, Number.ACE))
-                .isNotEqualTo(new Card(Shape.HEART, Number.ACE));
+                .isEqualTo(Card.of(Shape.SPADE, Number.ACE))
+                .isNotEqualTo(Card.of(Shape.HEART, Number.ACE));
     }
 }

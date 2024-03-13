@@ -16,8 +16,8 @@ class HandTest {
     void calculateScoreTest() {
         // given
         List<Card> cards = List.of(
-                new Card(Shape.SPADE, Number.KING),
-                new Card(Shape.HEART, Number.EIGHT)
+                Card.of(Shape.SPADE, Number.KING),
+                Card.of(Shape.HEART, Number.EIGHT)
         );
         Hand hand = new Hand(cards);
         // when, then
@@ -29,8 +29,8 @@ class HandTest {
     void calculateAceAsElevenTest() {
         // given
         List<Card> cards = List.of(
-                new Card(Shape.HEART, Number.TEN),
-                new Card(Shape.CLOVER, Number.ACE)
+                Card.of(Shape.HEART, Number.TEN),
+                Card.of(Shape.CLOVER, Number.ACE)
         );
         Hand hand = new Hand(cards);
         // when, then
@@ -42,9 +42,9 @@ class HandTest {
     void calculateAceAsOneTest() {
         // given
         List<Card> cards = List.of(
-                new Card(Shape.HEART, Number.TEN),
-                new Card(Shape.CLOVER, Number.ACE),
-                new Card(Shape.DIAMOND, Number.TEN)
+                Card.of(Shape.HEART, Number.TEN),
+                Card.of(Shape.CLOVER, Number.ACE),
+                Card.of(Shape.DIAMOND, Number.TEN)
         );
         Hand hand = new Hand(cards);
         // when, then
