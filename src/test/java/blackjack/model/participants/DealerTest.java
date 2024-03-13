@@ -7,6 +7,7 @@ import blackjack.model.cards.CardNumber;
 import blackjack.model.cards.CardShape;
 import blackjack.model.results.PlayerResult;
 import blackjack.model.results.Result;
+import blackjack.vo.Money;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,9 +42,9 @@ class DealerTest {
                 createResultsForBet(winByBlackJack, winCount, loseCount, pushCount));
         Dealer dealer = new Dealer();
 
-        double dealerProfit = dealer.calculateDealerProfit(playerResult);
+        Money dealerProfit = dealer.calculateDealerProfit(playerResult);
 
-        assertThat(dealerProfit).isEqualTo(result);
+        assertThat(dealerProfit).isEqualTo(new Money(result));
     }
 
     private Map<Player, Result> createResultsForBet(int winByBlackJack, int win, int lose, int push) {

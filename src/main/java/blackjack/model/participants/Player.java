@@ -2,10 +2,11 @@ package blackjack.model.participants;
 
 import blackjack.model.cards.Cards;
 import blackjack.model.results.Result;
+import blackjack.vo.Money;
 
 public class Player extends Participant {
     private final String name;
-    private int betAmount = 0;
+    private Money betAmount = new Money();
 
     public Player(String name) {
         validateName(name);
@@ -54,10 +55,10 @@ public class Player extends Participant {
     }
 
     public void betMoney(int betMoney) {
-        betAmount += betMoney;
+        betAmount = new Money(betMoney);
     }
 
-    public int getBetAmount() {
+    public Money getBetAmount() {
         return betAmount;
     }
 }

@@ -8,6 +8,7 @@ import blackjack.model.results.PlayerResult;
 import blackjack.view.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import blackjack.vo.Money;
 import java.util.List;
 
 public class BlackJackController {
@@ -67,7 +68,7 @@ public class BlackJackController {
     private void printGameResults(BlackJackGame blackJackGame) {
         PlayerResult playerResult = blackJackGame.calculatePlayerResults();
         PlayerProfit playerProfit = playerResult.getPlayerProfit();
-        int dealerProfit = blackJackGame.calculateDealerProfit(playerResult);
+        Money dealerProfit = blackJackGame.calculateDealerProfit(playerResult);
         outputView.printGameResults(playerProfit, dealerProfit);
     }
 }

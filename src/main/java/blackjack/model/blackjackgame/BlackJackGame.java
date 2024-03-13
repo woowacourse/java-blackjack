@@ -5,6 +5,7 @@ import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
 import blackjack.model.results.PlayerResult;
 import blackjack.model.results.Result;
+import blackjack.vo.Money;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -43,7 +44,7 @@ public class BlackJackGame {
         return new PlayerResult(result);
     }
 
-    public int calculateDealerProfit(PlayerResult playerResult) {
+    public Money calculateDealerProfit(PlayerResult playerResult) {
         return dealer.calculateDealerProfit(playerResult);
     }
 

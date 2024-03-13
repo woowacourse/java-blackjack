@@ -10,6 +10,7 @@ import blackjack.model.participants.Player;
 import blackjack.model.results.PlayerProfit;
 import blackjack.view.symbol.CardNumberSymbol;
 import blackjack.view.symbol.CardShapeSymbol;
+import blackjack.vo.Money;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -50,11 +51,11 @@ public class OutputView {
                         player.getCards().getScore())));
     }
 
-    public void printGameResults(PlayerProfit playerProfit, int dealerResult) {
+    public void printGameResults(PlayerProfit playerProfit, Money dealerResult) {
         System.out.println();
         System.out.println("### 최종 수익");
-        System.out.printf("%s: %d%n", DEALER_NAME, dealerResult);
-        Map<Player, Integer> gameResult = playerProfit.getResult();
+        System.out.printf("%s: %d%n", DEALER_NAME, dealerResult.value());
+        Map<Player, Money> gameResult = playerProfit.getResult();
         printPlayerResultsFormat(gameResult);
     }
 
@@ -74,10 +75,10 @@ public class OutputView {
         return String.format("%s: %s - 결과: %d%n", name, getCardsText(cards), score);
     }
 
-    private void printPlayerResultsFormat(Map<Player, Integer> gameResult) {
+    private void printPlayerResultsFormat(Map<Player, Money> gameResult) {
         gameResult.entrySet()
                 .stream()
-                .map(entry -> getPlayerResultFormat(entry.getKey().getName(), entry.getValue()))
+                .map(entry -> getPlayerResultFormat(entry.getKey().getName(), entry.getValue().value()))
                 .forEach(System.out::print);
     }
 

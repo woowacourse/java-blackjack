@@ -8,6 +8,7 @@ import blackjack.model.cards.CardNumber;
 import blackjack.model.cards.CardShape;
 import blackjack.model.cards.Cards;
 import blackjack.model.results.Result;
+import blackjack.vo.Money;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -139,7 +140,7 @@ class PlayerTest {
         Player player = new Player("ella");
         player.betMoney(3000);
 
-        assertThat(player).extracting("betAmount").isEqualTo(3000);
+        assertThat(player).extracting("betAmount").isEqualTo(new Money(3000));
     }
 
     @DisplayName("플레이어만 블랙잭이면 블랙잭으로 승리한다")

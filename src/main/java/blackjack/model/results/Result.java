@@ -1,5 +1,6 @@
 package blackjack.model.results;
 
+import blackjack.vo.Money;
 import java.util.function.IntUnaryOperator;
 
 public enum Result {
@@ -15,7 +16,7 @@ public enum Result {
         this.operator = operator;
     }
 
-    public int getProfit(int money) {
-        return operator.applyAsInt(money);
+    public Money getProfit(Money money) {
+        return new Money(operator.applyAsInt(money.value()));
     }
 }

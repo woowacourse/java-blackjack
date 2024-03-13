@@ -2,6 +2,7 @@ package blackjack.model.participants;
 
 import blackjack.model.results.PlayerResult;
 import blackjack.model.results.Result;
+import blackjack.vo.Money;
 
 public class Dealer extends Participant {
     private static final int STAND_THRESHOLD = 17;
@@ -11,13 +12,15 @@ public class Dealer extends Participant {
         return cards.getScore() < STAND_THRESHOLD;
     }
 
-    public int calculateDealerProfit(PlayerResult playerResult) {
-        return playerResult.getResults().entrySet().stream()
-                .mapToInt(entry -> convertToDealerBetResult(entry.getValue(), entry.getKey().getBetAmount()))
+    public Money calculateDealerProfit(PlayerResult playerResult) {
+        int dealerProfit = playerResult.getResults().entrySet().stream()
+                .map(entry -> convertToDealerBetResult(entry.getValue(), entry.getKey().getBetAmount()))
+                .mapToInt(Money::value)
                 .sum();
+        return new Money(dealerProfit);
     }
 
-    private int convertToDealerBetResult(Result playerResult, int betAmount) {
+    private Money convertToDealerBetResult(Result playerResult, Money betAmount) {
         if (playerResult == Result.WIN_BY_BLACKJACK) {
             return Result.LOSE_BY_BLACKJACK.getProfit(betAmount);
         }

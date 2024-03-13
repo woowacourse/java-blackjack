@@ -6,6 +6,7 @@ import blackjack.model.participants.Player;
 import blackjack.model.results.PlayerProfit;
 import blackjack.model.results.PlayerResult;
 import blackjack.model.results.Result;
+import blackjack.vo.Money;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +20,8 @@ class PlayerResultTest {
 
         PlayerProfit playerProfit = playerResult.getPlayerProfit();
 
-        assertThat(playerProfit.getResult().values()).containsExactly(4500, 4000, -5000, 0);
+        assertThat(playerProfit.getResult().values())
+                .containsExactly(new Money(4500), new Money(4000), new Money(-5000), new Money(0));
     }
 
     private Map<Player, Result> createResultsForBet() {

@@ -1,6 +1,7 @@
 package blackjack.model.results;
 
 import blackjack.model.participants.Player;
+import blackjack.vo.Money;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ public class PlayerResult {
     }
 
     public PlayerProfit getPlayerProfit() {
-        Map<Player, Integer> profit = new LinkedHashMap<>();
+        Map<Player, Money> profit = new LinkedHashMap<>();
         results.forEach((player, result) -> profit.put(player, result.getProfit(player.getBetAmount())));
         return new PlayerProfit(profit);
     }
