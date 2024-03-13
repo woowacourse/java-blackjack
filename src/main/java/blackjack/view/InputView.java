@@ -32,7 +32,13 @@ public class InputView {
     }
 
     public static int readBetAmount(String playerName) {
-        System.out.println(System.lineSeparator()+playerName + "의 배팅 금액은?");
-        return Integer.parseInt(scanner.nextLine());
+        System.out.println(System.lineSeparator() + playerName + "의 배팅 금액은?");
+        String line = scanner.nextLine();
+        try {
+            Integer.parseInt(line);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("배팅 금액은 숫자를 입력해야합니다.");
+        }
+        return Integer.parseInt(line);
     }
 }
