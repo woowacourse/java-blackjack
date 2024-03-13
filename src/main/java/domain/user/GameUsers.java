@@ -41,7 +41,7 @@ public class GameUsers {
         if (player.busted() || dealerBlackjackOnly(player)) {
             return LOSE;
         }
-        if (dealer.busted()) {
+        if (dealer.busted() || playerBlackjackOnly(player)) {
             return WIN;
         }
         return GameResult.compare(player.sumHand(), dealer.sumHand());
@@ -49,6 +49,10 @@ public class GameUsers {
 
     private boolean dealerBlackjackOnly(Player player) {
         return !player.isBlackJack() && dealer.isBlackJack();
+    }
+
+    private boolean playerBlackjackOnly(Player player) {
+        return player.isBlackJack() && !dealer.isBlackJack();
     }
 
     public List<Player> getPlayers() {
