@@ -46,7 +46,7 @@ public class BlackjackController {
     }
 
     private void askHitAndPrintCards(Players players, BlackjackGame blackjackGame) {
-        players.getGroup()
+        players.getPlayers()
             .forEach(player -> askHitAndPrintCards(blackjackGame, player));
     }
 

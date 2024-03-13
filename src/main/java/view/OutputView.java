@@ -50,7 +50,7 @@ public class OutputView {
     }
 
     private static void printAllPlayerHands(Players players) {
-        players.getGroup()
+        players.getPlayers()
             .forEach(OutputView::printPlayerCard);
         System.out.println();
     }
@@ -87,7 +87,7 @@ public class OutputView {
     }
 
     private static void printAllPlayerFinalScores(Players players, GameResult gameResult) {
-        players.getGroup()
+        players.getPlayers()
             .forEach(player -> printPlayerFinalScore(player, gameResult));
     }
 

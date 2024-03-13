@@ -18,7 +18,7 @@ public class GameResult {
 
     public static GameResult of(Dealer dealer, Players players) {
         ParticipantScore dealerScore = ParticipantScore.from(dealer);
-        List<ParticipantScore> playersScore = players.getGroup()
+        List<ParticipantScore> playersScore = players.getPlayers()
             .stream()
             .map(ParticipantScore::from)
             .toList();
