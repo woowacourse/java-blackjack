@@ -28,8 +28,8 @@ public class GameResult {
     }
 
     private static Profit calculateProfit(Dealer dealer, Player player) {
-        Result result = ResultJudge.makeResult(player, dealer);
-        double profit = Result.calculateProfit(result, player.getBat());
+        Result result = Result.judge(player, dealer);
+        double profit = ResultProfit.calculateProfit(result, player.getBat());
         return Profit.from(profit);
     }
 

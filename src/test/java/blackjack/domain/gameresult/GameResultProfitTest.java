@@ -9,11 +9,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static blackjack.domain.card.Kind.SPADE;
@@ -21,7 +19,7 @@ import static blackjack.domain.card.Value.ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-class GameResultTest {
+class GameResultProfitTest {
     private static Stream<Arguments> makeWinningPlayersAndTestDealer() {
         Map<Name, Batting> playerNamesAndBattings = new LinkedHashMap<>();
         playerNamesAndBattings.put(new Name("pobi"), Batting.from(100.0));
