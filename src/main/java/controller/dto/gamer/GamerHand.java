@@ -1,6 +1,6 @@
 package controller.dto.gamer;
 
-public record GamerHandStatus(
+public record GamerHand(
         String name,
         String hands
 ) {

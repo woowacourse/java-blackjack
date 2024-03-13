@@ -2,8 +2,7 @@ package controller;
 
 import static view.CardName.getHandStatusAsString;
 
-import controller.dto.gamer.GamerHandStatus;
-import domain.BetAmount;
+import controller.dto.gamer.GamerHand;
 import domain.Dealer;
 import domain.GameHost;
 import domain.Gamer;
@@ -18,25 +17,18 @@ public class GameHostController {
 
     private final GameHost gameHost = new GameHost(inputView.enterPlayerNames());
 
-    public BetAmount getBetAmounts() {
-        Gamers gamers = gameHost.findPlayingGamers();
-        BetAmount betAmount = new BetAmount();
-        for (Gamer gamer : gamers.listOf()) {
-            betAmount.saveAmount(gamer, inputView.enterGamerBettingAmounts(gamer.getName()));
-        }
-        return betAmount;
+    public GameHost initGame() {
+        gameHost.readyGame();
+        return gameHost;
     }
 
-    public GameHost startGame() {
-        gameHost.readyGame();
+    public void playGame() {
         Dealer dealer = gameHost.findPlayingDealer();
         Gamers gamers = gameHost.findPlayingGamers();
 
         printInitiateGameResult(dealer, gamers);
-        playGame(gamers);
+        startCardDraw(gamers);
         printDealerDrawMessage(dealer);
-
-        return gameHost;
     }
 
     private void printInitiateGameResult(final Dealer dealer, final Gamers gamers) {
@@ -45,14 +37,14 @@ public class GameHostController {
         outputView.printPlayerStatusAfterStartGame(gamers.getNames(), CardName.getGamerHandStatus(gamers));
     }
 
-    private void playGame(final Gamers gamers) {
+    private void startCardDraw(final Gamers gamers) {
         for (Gamer gamer : gamers.listOf()) {
             giveCardToGamer(gamer);
         }
     }
 
     private void giveCardToGamer(final Gamer gamer) {
-        GamerHandStatus currentHand = new GamerHandStatus(gamer.getName(), getHandStatusAsString(gamer.getHand()));
+        GamerHand currentHand = new GamerHand(gamer.getName(), getHandStatusAsString(gamer.getHand()));
         GameCommand command = inputCommand(gamer.getName());
 
         while (command.isHit()) {
@@ -63,8 +55,8 @@ public class GameHostController {
         outputView.printCardStatus(gamer.getName(), currentHand);
     }
 
-    private GamerHandStatus getStatusAfterDraw(final Gamer gamer) {
-        return new GamerHandStatus(gamer.getName(), getHandStatusAsString(gamer.getHand()));
+    private GamerHand getStatusAfterDraw(final Gamer gamer) {
+        return new GamerHand(gamer.getName(), getHandStatusAsString(gamer.getHand()));
     }
 
     private GameCommand getCommandAfterDraw(final Gamer gamer) {
@@ -72,7 +64,7 @@ public class GameHostController {
             return GameCommand.STAND;
         }
         outputView.printCardStatus(gamer.getName(),
-                new GamerHandStatus(gamer.getName(), getHandStatusAsString(gamer.getHand())));
+                new GamerHand(gamer.getName(), getHandStatusAsString(gamer.getHand())));
         return inputCommand(gamer.getName());
     }
 

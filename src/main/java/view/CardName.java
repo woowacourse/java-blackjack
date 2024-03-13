@@ -1,7 +1,7 @@
 package view;
 
-import controller.dto.dealer.DealerHandStatus;
-import controller.dto.gamer.GamerHandStatus;
+import controller.dto.dealer.DealerHand;
+import controller.dto.gamer.GamerHand;
 import domain.Card;
 import domain.Gamers;
 import domain.Hand;
@@ -41,14 +41,14 @@ public enum CardName {
                 .collect(Collectors.joining(", "));
     }
 
-    public static List<GamerHandStatus> getGamerHandStatus(final Gamers gamers) {
+    public static List<GamerHand> getGamerHandStatus(final Gamers gamers) {
         return gamers.listOf().stream()
-                .map(gamer -> new GamerHandStatus(gamer.getName(), getHandStatusAsString(gamer.getHand())))
+                .map(gamer -> new GamerHand(gamer.getName(), getHandStatusAsString(gamer.getHand())))
                 .toList();
     }
 
-    public static DealerHandStatus getDealerHandWithHiddenCard(final Hand hand) {
-        return new DealerHandStatus(getDealerHandAfterStartGame(hand));
+    public static DealerHand getDealerHandWithHiddenCard(final Hand hand) {
+        return new DealerHand(getDealerHandAfterStartGame(hand));
     }
 
     private static String getDealerHandAfterStartGame(final Hand hand) {
