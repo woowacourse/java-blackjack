@@ -2,8 +2,10 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.Cards;
+import dto.CardResponse;
+import dto.DealerResponse;
+import dto.PlayerResult;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -57,5 +59,11 @@ public class Dealer extends Participant {
         players.stream()
                 .forEach(player -> result.merge(compareHandsWith(player), 1, Integer::sum));
         return Collections.unmodifiableMap(result);
+    }
+
+    public DealerResponse toDealerResponse() {
+        return new DealerResponse(getHands().stream().
+                map(CardResponse::of)
+                .toList(), calculateScore());
     }
 }

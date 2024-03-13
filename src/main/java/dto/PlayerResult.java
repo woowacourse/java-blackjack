@@ -1,4 +1,4 @@
-package domain.player;
+package dto;
 
 public enum PlayerResult {
     WIN,

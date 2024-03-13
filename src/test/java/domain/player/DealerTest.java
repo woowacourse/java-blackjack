@@ -1,10 +1,9 @@
 package domain.player;
 
-import static org.assertj.core.api.FactoryBasedNavigableListAssert.assertThat;
-
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import dto.PlayerResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

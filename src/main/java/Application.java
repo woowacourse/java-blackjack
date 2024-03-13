@@ -7,12 +7,12 @@ public class Application {
     public static void main(final String[] args) {
         final List<String> names = InputView.inputPlayers();
         final Blackjack blackjack = Blackjack.fromPlayerNamesWithInitialization(names);
-        OutputView.printInitialStatus(blackjack.getDealer(), blackjack.getPlayers());
+        OutputView.printInitialStatus(blackjack.toParticipantsResponse());
 
         playGame(blackjack, names);
 
-        OutputView.printResults(blackjack.getDealer(), blackjack.getPlayers());
-        OutputView.printWinOrLose(blackjack.finishGame());
+        OutputView.printAfterStatus(blackjack.toParticipantsResponse());
+        OutputView.printWinOrLose(blackjack.toGameResult());
     }
 
     private static void playGame(final Blackjack blackjack, final List<String> names) {
@@ -27,7 +27,8 @@ public class Application {
     private static void tryHit(final Blackjack blackjack, final String name) {
         while (blackjack.canPlayerHit(name) && InputView.tryHit(name)) {
             blackjack.playerHit(name);
-            OutputView.printStatus(blackjack.getPlayer(name));
+            OutputView.printStatus(name, blackjack.toPlayerResponse(name).cardResponse());
+            System.out.println();
         }
     }
 

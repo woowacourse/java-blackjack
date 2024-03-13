@@ -48,6 +48,6 @@ public class Cards {
     }
 
     public List<Card> getValue() {
-        return value;
+        return Collections.unmodifiableList(value);
     }
 }

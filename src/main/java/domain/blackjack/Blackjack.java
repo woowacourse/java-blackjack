@@ -4,8 +4,11 @@ import domain.card.Card;
 import domain.player.Dealer;
 import domain.player.Participant;
 import domain.player.Player;
-import domain.player.PlayerResult;
 import domain.player.Players;
+import dto.GameResult;
+import dto.ParticipantsResponse;
+import dto.PlayerResponse;
+import dto.PlayerResult;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,13 +64,19 @@ public class Blackjack {
         dealer.hit(card);
     }
 
-    public GameResult finishGame() {
-        final Map<Player, PlayerResult> playerResult = players.getValue()
+    public GameResult toGameResult() {
+        final Map<String, PlayerResult> playerResult = players.getValue()
                 .stream()
-                .collect(Collectors.toMap(player -> player, player -> player.obtainResultBy(dealer), (a, b) -> a,
+                .collect(Collectors.toMap(Player::getName, player -> player.obtainResultBy(dealer),
+                        (a, b) -> a,
                         LinkedHashMap::new));
         final Map<PlayerResult, Integer> dealerResult = dealer.wrapUp(players);
         return new GameResult(dealerResult, playerResult);
+    }
+
+    public ParticipantsResponse toParticipantsResponse() {
+        return new ParticipantsResponse(dealer.toDealerResponse(),
+                players.stream().map(Player::toPlayerResponse).toList());
     }
 
     public Players getPlayers() {
@@ -80,5 +89,9 @@ public class Blackjack {
 
     public Dealer getDealer() {
         return dealer;
+    }
+
+    public PlayerResponse toPlayerResponse(final String name) {
+        return players.findPlayerByName(name).toPlayerResponse();
     }
 }

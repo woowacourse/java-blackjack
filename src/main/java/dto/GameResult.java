@@ -1,11 +1,9 @@
-package domain.blackjack;
+package dto;
 
-import domain.player.Player;
-import domain.player.PlayerResult;
 import java.util.Map;
 
 public record GameResult(Map<PlayerResult, Integer> dealerResult,
-                         Map<Player, PlayerResult> playerResult) {
+                         Map<String, PlayerResult> playerResult) {
 
     public int dealerWin() {
         if (dealerResult.containsKey(PlayerResult.WIN)) {
@@ -28,11 +26,11 @@ public record GameResult(Map<PlayerResult, Integer> dealerResult,
         return 0;
     }
 
-    public PlayerResult playerResult(final Player player) {
-        if(playerResult.containsKey(player)){
-            return playerResult.get(player);
+    public PlayerResult playerResult(final String name) {
+        if(playerResult.containsKey(name)){
+            return playerResult.get(name);
         }
-        throw new IllegalArgumentException("존재하지 않는 플레이어입니다.");
+        throw new IllegalArgumentException("존재하지 않는 이름입니다.");
     }
 
 }

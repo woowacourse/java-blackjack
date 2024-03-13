@@ -1,5 +1,8 @@
 package domain.player;
 
+import dto.CardResponse;
+import dto.PlayerResponse;
+import dto.PlayerResult;
 import java.util.Objects;
 
 public class Player extends Participant {
@@ -14,6 +17,11 @@ public class Player extends Participant {
 
     public PlayerResult obtainResultBy(final Dealer dealer) {
         return PlayerResult.reverse(dealer.compareHandsWith(this));
+    }
+
+    public PlayerResponse toPlayerResponse() {
+        return new PlayerResponse(getName(), getHands().stream().map(CardResponse::of).toList(),
+                calculateScore());
     }
 
     public String getName() {
