@@ -22,12 +22,17 @@ public class BettingResultTest {
         BettingResult bettingResult = new BettingResult();
         Player takan = new Player(new Name("타칸"));
         Profit profit = new Profit(1000);
+        Hands hands = new Hands(List.of(
+                new Card(Shape.HEART, Rank.ACE),
+                new Card(Shape.HEART, Rank.TWO)
+        ));
 
+        takan.receiveHands(hands);
         bettingResult.bet(takan, profit);
         bettingResult.calculateProfit(takan, State.WIN);
         Profit result = bettingResult.getProfit(takan);
 
-        Assertions.assertThat(profit).isEqualTo(result);
+        Assertions.assertThat(profit.getProfit()).isEqualTo(result.getProfit());
     }
 
     @Test
@@ -46,7 +51,7 @@ public class BettingResultTest {
         bettingResult.calculateProfit(takan, State.WIN);
         Profit result = bettingResult.getProfit(takan);
 
-        Assertions.assertThat(result).isEqualTo(profit.multiple(1.5));
+        Assertions.assertThat(result.getProfit()).isEqualTo(profit.multiple(1.5).getProfit());
     }
 
     @Test
@@ -54,12 +59,17 @@ public class BettingResultTest {
     void bettingTieTest() {
         BettingResult bettingResult = new BettingResult();
         Player takan = new Player(new Name("타칸"));
+        Hands hands = new Hands(List.of(
+                new Card(Shape.HEART, Rank.ACE),
+                new Card(Shape.HEART, Rank.TWO)
+        ));
 
+        takan.receiveHands(hands);
         bettingResult.bet(takan, new Profit(1000));
         bettingResult.calculateProfit(takan, State.TIE);
         Profit result = bettingResult.getProfit(takan);
 
-        Assertions.assertThat(result).isEqualTo(new Profit(0));
+        Assertions.assertThat(result.getProfit()).isEqualTo(new Profit(0).getProfit());
     }
 
     @Test
@@ -68,11 +78,16 @@ public class BettingResultTest {
         BettingResult bettingResult = new BettingResult();
         Player takan = new Player(new Name("타칸"));
         Profit profit = new Profit(1000);
+        Hands hands = new Hands(List.of(
+                new Card(Shape.HEART, Rank.ACE),
+                new Card(Shape.HEART, Rank.TWO)
+        ));
 
+        takan.receiveHands(hands);
         bettingResult.bet(takan, profit);
         bettingResult.calculateProfit(takan, State.LOSE);
         Profit result = bettingResult.getProfit(takan);
 
-        Assertions.assertThat(result).isEqualTo(profit.inverse());
+        Assertions.assertThat(result.getProfit()).isEqualTo(profit.inverse().getProfit());
     }
 }
