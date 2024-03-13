@@ -10,7 +10,7 @@ public abstract class Participant {
     protected static final int BLACKJACK_SCORE = 21;
     private static final int START_CARDS_SIZE = 2;
 
-    private final Hand hand;
+    private Hand hand;
 
     protected Participant(List<Card> cards) {
         this.hand = new Hand(cards);
@@ -45,7 +45,7 @@ public abstract class Participant {
         if (!isDrawable()) {
             throw new IllegalStateException("더 이상 카드를 추가할 수 없습니다.");
         }
-        hand.add(card);
+        hand = hand.add(card);
     }
 
     public final List<Card> getStartCards() {

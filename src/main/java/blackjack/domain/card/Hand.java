@@ -12,11 +12,14 @@ public class Hand {
     private final List<Card> cards;
 
     public Hand(List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
+        this.cards = List.copyOf(cards);
     }
 
-    public void add(Card card) {
-        cards.add(card);
+    public Hand add(Card card) {
+        List<Card> newCards = new ArrayList<>(cards);
+        newCards.add(card);
+
+        return new Hand(newCards);
     }
 
     public int calculateScore() {
@@ -58,7 +61,7 @@ public class Hand {
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return cards;
     }
 
     public boolean isEmpty() {

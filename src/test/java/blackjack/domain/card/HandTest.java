@@ -36,9 +36,9 @@ class HandTest {
         Hand hand = new Hand(CardsFixture.CARDS_SCORE_16);
 
         Card additionalCard = new Card(Value.ACE, Shape.HEART);
-        hand.add(additionalCard);
+        Hand actual = hand.add(additionalCard);
 
-        assertThat(hand.getCards())
+        assertThat(actual.getCards())
                 .containsAll(CardsFixture.CARDS_SCORE_16)
                 .contains(additionalCard)
                 .hasSize(CardsFixture.CARDS_SCORE_16.size() + 1);
