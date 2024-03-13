@@ -21,15 +21,15 @@ class DeckCardsTest {
     @DisplayName("성공: 덱에서 카드 한 장 빼기")
     void draw_NoException() {
         DeckCards deckCards = DeckCards.from(new SequentialCardGenerator());
-        assertThat(deckCards.draw()).isEqualTo(new Card(Rank.KING, Symbol.CLUB));
+        assertThat(deckCards.drawCard()).isEqualTo(new Card(Rank.KING, Symbol.CLUB));
     }
 
     @Test
     @DisplayName("실패: 덱에 카드가 없는 상태에서 카드 한 장 빼기")
     void draw_Exception_NoCardsLeft() {
-        DeckCards deckCards = DeckCards.from(new OneCardGenerator());
-        deckCards.draw();
-        assertThatThrownBy(deckCards::draw)
+        DeckCards deckCards = DeckCards.from(new RandomCardGenerator());
+        deckCards.drawCards(52);
+        assertThatThrownBy(deckCards::drawCard)
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("[ERROR] 카드를 모두 사용하였습니다.");
     }

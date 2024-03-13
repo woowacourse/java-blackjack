@@ -22,9 +22,9 @@ public class BlackjackGame {
 
     public void distributeStartingCards() {
         for (Participant participant : getPlayers()) {
-            participant.receive(deckCards.drawStartingCards(STARTING_CARDS_AMOUNT));
+            participant.receive(deckCards.drawCards(STARTING_CARDS_AMOUNT));
         }
-        getDealer().receive(deckCards.drawStartingCards(STARTING_CARDS_AMOUNT));
+        getDealer().receive(deckCards.drawCards(STARTING_CARDS_AMOUNT));
     }
 
     public void giveOneCard(Participant participant) {
@@ -32,7 +32,7 @@ public class BlackjackGame {
             throw new IllegalArgumentException("[ERROR] 해당 게임의 참여자가 아닙니다.");
         }
         if (participant.isReceivable()) {
-            participant.receive(deckCards.draw());
+            participant.receive(deckCards.drawCard());
         }
     }
 
