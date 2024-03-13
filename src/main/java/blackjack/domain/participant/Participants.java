@@ -34,6 +34,6 @@ public class Participants {
         List<Participant> participants = new ArrayList<>(players);
         participants.add(0, dealer);
 
-        return Collections.unmodifiableList(participants);
+        return participants;
     }
 }
