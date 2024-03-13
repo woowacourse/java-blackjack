@@ -1,6 +1,5 @@
 package domain.user;
 
-import domain.BlackjackException;
 import domain.card.Card;
 import domain.deck.TotalDeck;
 import domain.game.Index;
@@ -32,7 +31,7 @@ public class Users {
                 .distinct()
                 .count();
         if (players.size() != count) {
-            throw new BlackjackException("중복된 이름은 허용하지 않습니다.");
+            throw new IllegalArgumentException("중복된 이름은 허용하지 않습니다.");
         }
     }
 
