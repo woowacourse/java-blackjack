@@ -1,14 +1,11 @@
 package blackjack.view;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
-import blackjack.domain.dto.PlayerDto;
-import blackjack.domain.dto.PlayerResultDto;
-import blackjack.view.description.GameResultDescription;
+import blackjack.domain.participant.dto.PlayerDto;
+import blackjack.domain.participant.dto.PlayerResultDto;
 import blackjack.view.description.ShapeDescription;
 import blackjack.view.description.ValueDescription;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
     public void printPlayerInitialCards(List<PlayerDto> playerDtos) {
@@ -75,17 +72,12 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public void printDealerResult(Map<GameResult, Integer> dealerResult) {
-        String result = "## 최종 승패" + System.lineSeparator()
-                + "딜러: "
-                + dealerResult.get(GameResult.WIN) + GameResultDescription.WIN.getDescription()
-                + dealerResult.get(GameResult.DRAW) + GameResultDescription.DRAW.getDescription()
-                + dealerResult.get(GameResult.LOSE) + GameResultDescription.LOSE.getDescription();
-
-        System.out.println(result);
+    public void printDealerProfit(int dealerProfit) {
+        System.out.println("## 최종 수익");
+        printPlayerProfit("딜러", dealerProfit);
     }
 
-    public void printPlayerResult(String playerName, GameResult gameResult) {
-        System.out.println(playerName + ": " + GameResultDescription.getDescription(gameResult));
+    public void printPlayerProfit(String playerName, int profit) {
+        System.out.println(playerName + ": " + profit);
     }
 }

@@ -1,10 +1,12 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static blackjack.domain.card.Shape.*;
 import static blackjack.domain.card.Value.*;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.Score;
+import blackjack.domain.participant.PlayerCards;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +20,7 @@ class PlayerCardsTest {
     @DisplayName("한 장의 카드를 추가할 수 있다.")
     void addCardTest() {
         Card card = new Card(DIAMOND, ACE);
-        PlayerCards playerCards = PlayerCards.createEmptyCards();
+        PlayerCards playerCards = PlayerCards.empty();
 
         playerCards.append(card);
         List<Card> cards = playerCards.getCards();
@@ -36,7 +38,7 @@ class PlayerCardsTest {
         PlayerCards playerCards = new PlayerCards(cards);
 
         Score score = playerCards.calculateScore();
-        Score expected = new Score(9);
+        Score expected = Score.of(9);
 
         assertThat(score).isEqualTo(expected);
     }
@@ -52,7 +54,7 @@ class PlayerCardsTest {
         PlayerCards playerCards = new PlayerCards(cards);
 
         Score score = playerCards.calculateScore();
-        Score expected = new Score(30);
+        Score expected = Score.of(30);
 
         assertThat(score).isEqualTo(expected);
     }
@@ -64,8 +66,7 @@ class PlayerCardsTest {
         PlayerCards playerCards = new PlayerCards(cards);
         Score score = playerCards.calculateScore();
 
-        Score expected = new Score(expectedValue);
-        assertThat(score).isEqualTo(expected);
+        assertThat(score.getValue()).isEqualTo(expectedValue);
     }
 
     static Stream<Arguments> cardsAndScore() {

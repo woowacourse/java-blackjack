@@ -16,6 +16,11 @@ public class InputView {
         return List.of(line.split(","));
     }
 
+    public int inputBetAmount(String playerName) {
+        System.out.println(playerName + "의 배팅 금액은?");
+        return Integer.parseInt(scanner.nextLine());
+    }
+
     public boolean inputDrawChoice(String playerName) {
         System.out.println(playerName + "는 한장의 카드를 더 받겠습니까? (y/n)");
         String choice = scanner.nextLine();

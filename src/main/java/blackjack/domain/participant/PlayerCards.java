@@ -1,17 +1,22 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.game.Score;
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PlayerCards {
+    private static final int BLACKJACK_CARD_COUNT = 2;
+    private static final int BLACKJACK_MAX_SCORE = 21;
+
     private final List<Card> cards;
 
     public PlayerCards(List<Card> cards) {
         this.cards = cards;
     }
 
-    public static PlayerCards createEmptyCards() {
+    public static PlayerCards empty() {
         return new PlayerCards(new ArrayList<>());
     }
 
@@ -24,18 +29,22 @@ public class PlayerCards {
                 .mapToInt(Card::getScore)
                 .sum();
 
-        Score score = new Score(scoreValue);
+        if (isBlackJackStatus(scoreValue)) {
+            return Score.blackJack();
+        }
+        Score score = Score.of(scoreValue);
         int currentAceAmount = getAceCount();
-
         if (currentAceAmount > 0 && score.isBusted()) {
             return score.convertToSmallAce(currentAceAmount);
         }
+
         return score;
     }
 
-    public boolean isBusted() {
-        Score score = calculateScore();
-        return score.isBusted();
+    private boolean isBlackJackStatus(int score) {
+        boolean matchedCardSize = (cards.size() == BLACKJACK_CARD_COUNT);
+        boolean matchedScore = (score == BLACKJACK_MAX_SCORE);
+        return matchedCardSize && matchedScore;
     }
 
     private int getAceCount() {
@@ -44,8 +53,13 @@ public class PlayerCards {
                 .count();
     }
 
+    public boolean isBusted() {
+        Score score = calculateScore();
+        return score.isBusted();
+    }
+
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 
     public int size() {

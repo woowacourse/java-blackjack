@@ -1,8 +1,5 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Shape;
-import blackjack.domain.card.Value;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,7 +12,7 @@ public class Deck {
 
     private final Queue<Card> cards;
 
-    public Deck(List<Card> cards) {
+    protected Deck(List<Card> cards) {
         validateUniqueCard(cards);
         this.cards = new LinkedList<>(cards);
     }

@@ -1,10 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Shape;
 import blackjack.domain.card.Value;
 import java.util.ArrayList;

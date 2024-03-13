@@ -1,8 +1,16 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.card.Deck;
+import blackjack.domain.game.GameResult;
+import blackjack.domain.game.Score;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Players {
+    public static final int INITIAL_CARDS_AMOUNT = 2;
+
     private final List<Player> playerGroup;
 
     public Players(List<Player> playerGroup) {
@@ -25,22 +33,30 @@ public class Players {
         return distinctCount != players.size();
     }
 
-    public static Players from(List<String> names) {
-        List<Player> players = names.stream()
-                .map(Player::fromName)
+    public static Players from(List<PlayerMeta> playerMetas) {
+        List<Player> players = playerMetas.stream()
+                .map(Player::new)
                 .toList();
 
         return new Players(players);
     }
 
-    public void initialDraw(Deck deck, int amount) {
-        for (int i = 0; i < amount; i++) {
-            drawEachPlayer(deck);
+    public void initialDraw(Deck deck) {
+        for (int i = 0; i < INITIAL_CARDS_AMOUNT; i++) {
+            drawEach(deck);
         }
     }
 
-    private void drawEachPlayer(Deck deck) {
+    private void drawEach(Deck deck) {
         playerGroup.forEach(player -> player.draw(deck));
+    }
+
+    public Map<Player, GameResult> compareEach(Score dealerScore) {
+        return playerGroup.stream()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        player -> player.compareScoreWith(dealerScore))
+                );
     }
 
     public List<Player> getPlayers() {
