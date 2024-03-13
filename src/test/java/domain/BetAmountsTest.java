@@ -1,13 +1,19 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Symbol;
+import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Player;
 import exception.BetAmountRangeException;
 import exception.BetAmountUnitException;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -15,13 +21,20 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class BetAmountsTest {
-    Player player;
-    BetAmounts betAmounts;
+    static Player pobi, jason, neo, solar;
+    static BetAmounts betAmounts;
 
-    @BeforeEach
-    void init() {
-        Name name = new Name("kaki");
-        player = new Player(name);
+    @BeforeAll
+    static void init() {
+        Name name1 = new Name("pobi");
+        Name name2 = new Name("jason");
+        Name name3 = new Name("neo");
+        Name name4 = new Name("solar");
+
+        pobi = new Player(name1);
+        jason = new Player(name2);
+        neo = new Player(name3);
+        solar = new Player(name4);
 
         betAmounts = new BetAmounts();
     }
@@ -35,7 +48,7 @@ public class BetAmountsTest {
         @ValueSource(ints = {900, 9999900})
         void createFailWithAmountRange(int amount) {
 
-            assertThatThrownBy(() -> betAmounts.addBet(player, amount))
+            assertThatThrownBy(() -> betAmounts.addBetAmount(pobi, amount))
                     .isInstanceOf(BetAmountRangeException.class)
                     .hasMessage(BetAmountRangeException.INVALID_AMOUNT_RANGE);
         }
@@ -45,7 +58,7 @@ public class BetAmountsTest {
         @ValueSource(ints = {1000, 1000000})
         void createSuccessWithAmountRange(int amount) {
 
-            assertThatCode(() -> betAmounts.addBet(player, amount))
+            assertThatCode(() -> betAmounts.addBetAmount(pobi, amount))
                     .doesNotThrowAnyException();
         }
     }
@@ -58,7 +71,7 @@ public class BetAmountsTest {
         @Test
         void createFailWithAmountUnit() {
 
-            assertThatThrownBy(() -> betAmounts.addBet(player, 1010))
+            assertThatThrownBy(() -> betAmounts.addBetAmount(pobi, 1010))
                     .isInstanceOf(BetAmountUnitException.class)
                     .hasMessage(BetAmountUnitException.INVALID_BET_AMOUNT_UNIT);
         }
@@ -67,8 +80,67 @@ public class BetAmountsTest {
         @Test
         void createSuccessWithAmountUnit() {
 
-            assertThatCode(() -> betAmounts.addBet(player, 1100))
+            assertThatCode(() -> betAmounts.addBetAmount(pobi, 1100))
                     .doesNotThrowAnyException();
+        }
+    }
+
+    @Nested
+    @DisplayName("배팅 결과 수익을 구한다.")
+    class BetProfitTest {
+        static Dealer dealer;
+        @BeforeAll
+        static void set() {
+            dealer = new Dealer();
+
+            betAmounts.addBetAmount(pobi, 10000);
+            betAmounts.addBetAmount(jason, 10000);
+            betAmounts.addBetAmount(neo, 10000);
+            betAmounts.addBetAmount(solar, 10000);
+
+            dealer.hit(new Card(Symbol.HEART, Rank.KING));
+
+            pobi.hit(new Card(Symbol.HEART, Rank.BIG_ACE));
+            jason.hit(new Card(Symbol.HEART, Rank.TWO));
+            neo.hit(new Card(Symbol.HEART, Rank.KING));
+            solar.hit(new Card(Symbol.HEART, Rank.BIG_ACE));
+            solar.hit(new Card(Symbol.HEART, Rank.KING));
+        }
+
+        @DisplayName("플레이어의 결과가 승이면 1배, 지면 -1배, 무승부면 0배, 블랙잭이면 1.5배의 수익을 얻는다.")
+        @Test
+        void calculatePlayerBetProfitTest() {
+            // when
+            int pobiProfit = betAmounts.calculatePlayerBetProfit(pobi, dealer);
+            int jasonProfit = betAmounts.calculatePlayerBetProfit(jason, dealer);
+            int neoProfit = betAmounts.calculatePlayerBetProfit(neo, dealer);
+            int solarProfit = betAmounts.calculatePlayerBetProfit(solar, dealer);
+
+            // then
+            assertAll(
+                    () -> assertThat(pobiProfit).isEqualTo(10000),
+                    () -> assertThat(jasonProfit).isEqualTo(-10000),
+                    () -> assertThat(neoProfit).isEqualTo(0),
+                    () -> assertThat(solarProfit).isEqualTo(15000)
+            );
+        }
+
+        @DisplayName("딜러의 수익을 구한다")
+        @Test
+        void calculateDealerBetProfitTest() {
+            // when
+            int dealerProfitOfPobi = betAmounts.calculateDealerBetProfit(pobi, dealer);
+            int dealerProfitOfJason = betAmounts.calculateDealerBetProfit(jason, dealer);
+            int dealerProfitOfNeo = betAmounts.calculateDealerBetProfit(neo, dealer);
+            int dealerProfitOfSolaer = betAmounts.calculateDealerBetProfit(solar, dealer);
+
+            // then
+            assertAll(
+                    () -> assertThat(dealerProfitOfPobi).isEqualTo(-10000),
+                    () -> assertThat(dealerProfitOfJason).isEqualTo(10000),
+                    () -> assertThat(dealerProfitOfNeo).isEqualTo(0),
+                    () -> assertThat(dealerProfitOfSolaer).isEqualTo(-15000)
+            );
         }
     }
 }

@@ -1,5 +1,6 @@
 package domain;
 
+import domain.gamer.Dealer;
 import domain.gamer.Player;
 import exception.BetAmountRangeException;
 import exception.BetAmountUnitException;
@@ -17,7 +18,7 @@ public class BetAmounts {
         this.amounts = new LinkedHashMap<>();
     }
 
-    public void addBet(final Player player, final int amount) {
+    public void addBetAmount(final Player player, final int amount) {
         validateBetAmountRange(amount);
         validateBetAmountUnit(amount);
         amounts.put(player, amount);
@@ -33,5 +34,14 @@ public class BetAmounts {
         if (amount % BET_AMOUNT_UNIT != 0) {
             throw new BetAmountUnitException(BetAmountUnitException.INVALID_BET_AMOUNT_UNIT);
         }
+    }
+
+    public int calculatePlayerBetProfit(final Player player, final Dealer dealer) {
+        Result playerResult = Result.getPlayerResultWith(player, dealer);
+        return playerResult.calculateProfit(amounts.get(player));
+    }
+
+    public int calculateDealerBetProfit(final Player player, final Dealer dealer) {
+        return calculatePlayerBetProfit(player, dealer) * -1;
     }
 }
