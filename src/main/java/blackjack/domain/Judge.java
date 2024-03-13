@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.DealerResult;
 import blackjack.dto.PlayerResult;
 
 public class Judge {
@@ -10,81 +9,81 @@ public class Judge {
     private Judge() {
     }
 
-    public static DealerResult judge(
-            final DealerResult dealerResult, final Player player, final Dealer dealer,
-            final PlayerResult playerResult) {
+    public static void judge(final Player player, final Dealer dealer, final PlayerResult playerResult) {
         if (dealer.isBust()) {
-            return judgeWhenDealerBust(playerResult, player, dealerResult);
+            judgeWhenDealerBust(playerResult, player);
+            return;
         }
 
         if (dealer.isBlackjack()) {
-            return judgeWhenDealerBlackjack(playerResult, player, dealerResult);
+            judgeWhenDealerBlackjack(playerResult, player);
+            return;
         }
 
-        return judgeWhenDealerNormal(dealer, playerResult, player, dealerResult);
+        judgeWhenDealerNormal(dealer, playerResult, player);
     }
 
-    public static DealerResult judgeWhenDealerBust(
-            final PlayerResult playerResult, final Player player, final DealerResult dealerResult) {
+    public static void judgeWhenDealerBust(final PlayerResult playerResult, final Player player) {
         if (player.isBust()) {
-            return draw(playerResult, player, dealerResult);
+            draw(playerResult, player);
+            return;
         }
 
-        return dealerLose(playerResult, player, dealerResult);
+        playerWin(playerResult, player);
     }
 
-    public static DealerResult judgeWhenDealerBlackjack(
-            final PlayerResult playerResult, final Player player, final DealerResult dealerResult) {
+    public static void judgeWhenDealerBlackjack(
+            final PlayerResult playerResult, final Player player) {
         if (player.isBlackjack()) {
-            return draw(playerResult, player, dealerResult);
+            draw(playerResult, player);
+            return;
         }
 
-        return dealerWins(playerResult, player, dealerResult);
+        playerLose(playerResult, player);
     }
 
-    public static DealerResult judgeWhenDealerNormal(
-            final Dealer dealer, final PlayerResult playerResult, final Player player,
-            final DealerResult dealerResult) {
+    public static void judgeWhenDealerNormal(
+            final Dealer dealer, final PlayerResult playerResult, final Player player) {
         if (player.isBust()) {
-            return dealerWins(playerResult, player, dealerResult);
+            playerLose(playerResult, player);
+            return;
         }
 
         if (player.isBlackjack()) {
-            return dealerLose(playerResult, player, dealerResult);
+            playerWin(playerResult, player);
+            return;
         }
 
-        return judgeWhenNormalTogether(dealer, playerResult, player, dealerResult);
+        judgeWhenNormalTogether(dealer, playerResult, player);
     }
 
-    private static DealerResult judgeWhenNormalTogether(
-            final Dealer dealer, final PlayerResult playerResult, final Player player,
-            final DealerResult dealerResult) {
+    private static void judgeWhenNormalTogether(
+            final Dealer dealer, final PlayerResult playerResult, final Player player) {
         if (dealer.isSameScore(player.getScore())) {
-            return draw(playerResult, player, dealerResult);
+            draw(playerResult, player);
+            return;
         }
 
         if (dealer.getScore() > player.getScore()) {
-            return dealerWins(playerResult, player, dealerResult);
+            playerLose(playerResult, player);
+            return;
         }
 
-        return dealerLose(playerResult, player, dealerResult);
+        playerWin(playerResult, player);
     }
 
-    private static DealerResult dealerWins(
-            final PlayerResult playerResult, final Player player, final DealerResult dealerResult) {
+    private static void playerLose(
+            final PlayerResult playerResult, final Player player) {
         playerResult.addResult(player, GameResult.LOSE);
-        return DealerResult.createByGameResult(GameResult.WIN, dealerResult);
     }
 
-    private static DealerResult dealerLose(
-            final PlayerResult playerResult, final Player player, final DealerResult dealerResult) {
+    private static void playerWin(
+            final PlayerResult playerResult, final Player player) {
         playerResult.addResult(player, GameResult.WIN);
-        return DealerResult.createByGameResult(GameResult.LOSE, dealerResult);
     }
 
-    private static DealerResult draw(
-            final PlayerResult playerResult, final Player player, final DealerResult dealerResult) {
+    private static void draw(
+            final PlayerResult playerResult, final Player player) {
         playerResult.addResult(player, GameResult.DRAW);
-        return DealerResult.createByGameResult(GameResult.DRAW, dealerResult);
     }
 }

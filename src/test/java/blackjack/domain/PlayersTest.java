@@ -3,8 +3,6 @@ package blackjack.domain;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.stategy.NoShuffleStrategy;
-import blackjack.dto.BlackjackResult;
-import blackjack.dto.DealerResult;
 import blackjack.dto.PlayerResult;
 import blackjack.strategy.ShuffleStrategy;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,14 +52,12 @@ public class PlayersTest {
     @Test
     void decideResult() {
         //given
-        BlackjackResult blackjackResult = players.createResult(dealer);
+        PlayerResult playersResult = players.createResult(dealer);
 
         //when & then
         assertAll(
-                () -> assertThat(blackjackResult.findPlayerResultByName(nameA)).isEqualTo(GameResult.LOSE),
-                () -> assertThat(blackjackResult.findPlayerResultByName(nameB)).isEqualTo(GameResult.LOSE),
-                () -> assertThat(blackjackResult.findDealerResultByGameResult(GameResult.WIN)).isEqualTo(2),
-                () -> assertThat(blackjackResult.findDealerResultByGameResult(GameResult.LOSE)).isEqualTo(0)
+                () -> assertThat(playersResult.findByName(nameA)).isEqualTo(GameResult.LOSE),
+                () -> assertThat(playersResult.findByName(nameB)).isEqualTo(GameResult.LOSE)
         );
     }
 
@@ -76,13 +72,11 @@ public class PlayersTest {
         playerResult.addResult(choco, GameResult.WIN);
         playerResult.addResult(clover, GameResult.LOSE);
 
-        BlackjackResult blackjackResult = new BlackjackResult(DealerResult.of(0, 0, 0), playerResult);
-
         Map<Player, Integer> profitResult = new HashMap<>();
-        profitResult.put(choco, 0);
-        profitResult.put(clover, -2000);
+        profitResult.put(choco, 1000);
+        profitResult.put(clover, -1000);
 
         //when & then
-        assertThat(players.calculateProfits(blackjackResult)).isEqualTo(profitResult);
+        assertThat(players.calculateProfits(playerResult)).isEqualTo(profitResult);
     }
 }

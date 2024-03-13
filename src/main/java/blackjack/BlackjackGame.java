@@ -1,16 +1,17 @@
 package blackjack;
 
 import blackjack.domain.Deck;
+import blackjack.domain.Players;
 import blackjack.domain.card.TrumpCard;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.Players;
-import blackjack.dto.BlackjackResult;
+import blackjack.dto.PlayerResult;
 import blackjack.strategy.RandomShuffleStrategy;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.RankView;
 import blackjack.view.SuitView;
+
 import java.util.List;
 
 public class BlackjackGame {
@@ -34,8 +35,8 @@ public class BlackjackGame {
         printCardDistribute(names, players, dealer);
         extraCardRequest(dealer, players);
 
-        BlackjackResult blackjackResult = players.createResult(dealer);
-        outputView.printFinalProfit(dealer.calculateProfit(blackjackResult, players), players.calculateProfits(blackjackResult));
+        PlayerResult playerResult = players.createResult(dealer);
+        outputView.printFinalProfit(dealer.calculateProfit(playerResult, players), players.calculateProfits(playerResult));
     }
 
     private List<String> readPlayersBatting(final List<String> names) {

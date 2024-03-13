@@ -2,8 +2,6 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.BlackjackResult;
-import blackjack.dto.DealerResult;
 import blackjack.dto.PlayerResult;
 
 import java.util.*;
@@ -39,35 +37,33 @@ public class Players {
         return names.size() != Set.copyOf(names).size();
     }
 
-    public BlackjackResult createResult(final Dealer dealer) {
-        DealerResult dealerResult = DealerResult.of(0, 0, 0);
+    public PlayerResult createResult(final Dealer dealer) {
         PlayerResult playerResult = new PlayerResult();
 
         for (Player player : players) {
-            DealerResult resultWithPlayer = Judge.judge(dealerResult, player, dealer, playerResult);
-            dealerResult.updateByDealerResult(resultWithPlayer);
+            Judge.judge(player, dealer, playerResult);
         }
 
-        return new BlackjackResult(dealerResult, playerResult);
+        return playerResult;
     }
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 
-    public Map<Player, Integer> calculateProfits(final BlackjackResult blackjackResult) {
+    public Map<Player, Integer> calculateProfits(final PlayerResult playerResult) {
         Map<Player, Integer> profitResult = new HashMap<>();
 
         for (Player player : players) {
-            GameResult gameResult = blackjackResult.findPlayerResultByName(player.getName());
+            GameResult gameResult = playerResult.findByName(player.getName());
             profitResult.put(player, player.calculateProfit(gameResult));
         }
 
         return profitResult;
     }
 
-    public int sumProfits(final BlackjackResult blackjackResult) {
-        return calculateProfits(blackjackResult).values().stream()
+    public int sumProfits(final PlayerResult playerResult) {
+        return calculateProfits(playerResult).values().stream()
                 .mapToInt(i -> i)
                 .sum();
     }
