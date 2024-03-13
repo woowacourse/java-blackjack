@@ -16,16 +16,16 @@ public class Card {
         return rank == Rank.ACE;
     }
 
+    public int getCardScore() {
+        return rank.getNumber();
+    }
+
     public Rank getCardNumber() {
         return rank;
     }
 
     public Pattern getCardPattern() {
         return pattern;
-    }
-
-    public int getCardScore() {
-        return rank.getNumber();
     }
 
     @Override
