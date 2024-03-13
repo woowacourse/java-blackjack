@@ -6,10 +6,8 @@ import java.util.List;
 
 public class Player {
 
-    private static final int BLACKJACK_MAX_SCORE = 21;
-
     private final Name name;
-    protected final Hand hand;
+    private final Hand hand;
 
     Player(String name, Hand hand) {
         this.name = new Name(name);
@@ -30,14 +28,14 @@ public class Player {
     }
 
     public boolean hasDrawableScore() {
-        return hand.calculateScore() < BLACKJACK_MAX_SCORE;
+        return hand.calculateScore().isNotBust();
     }
 
     public String getName() {
         return name.getName();
     }
 
-    public int getScore() {
+    public Score getScore() {
         return hand.calculateScore();
     }
 

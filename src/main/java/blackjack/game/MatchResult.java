@@ -1,14 +1,14 @@
 package blackjack.game;
 
+import blackjack.player.Score;
+
 public enum MatchResult {
 
     DEALER_WIN,
     PLAYER_WIN,
     TIE;
 
-    private static final int BLACKJACK_MAX_SCORE = 21;
-
-    public static MatchResult chooseWinner(int playerScore, int dealerScore) {
+    public static MatchResult chooseWinner(Score playerScore, Score dealerScore) {
         if (isPlayerWinningCondition(playerScore, dealerScore)) {
             return PLAYER_WIN;
         }
@@ -18,21 +18,17 @@ public enum MatchResult {
         return TIE;
     }
 
-    private static boolean isPlayerWinningCondition(int playerScore, int dealerScore) {
-        if (isBust(playerScore)) {
+    private static boolean isPlayerWinningCondition(Score playerScore, Score dealerScore) {
+        if (playerScore.isBust()) {
             return false;
         }
-        return isBust(dealerScore) || playerScore > dealerScore;
+        return dealerScore.isBust() || playerScore.isLargerThan(dealerScore);
     }
 
-    private static boolean isDealerWinningCondition(int playerScore, int dealerScore) {
-        if (isBust(playerScore)) {
+    private static boolean isDealerWinningCondition(Score playerScore, Score dealerScore) {
+        if (playerScore.isBust()) {
             return true;
         }
-        return !isBust(dealerScore) && dealerScore > playerScore;
-    }
-
-    private static boolean isBust(int score) {
-        return score > BLACKJACK_MAX_SCORE;
+        return dealerScore.isNotBust() && dealerScore.isLargerThan(playerScore);
     }
 }

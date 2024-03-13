@@ -1,5 +1,7 @@
 package blackjack.card;
 
+import blackjack.player.Score;
+
 public enum Rank {
 
     ACE(1),
@@ -16,13 +18,13 @@ public enum Rank {
     QUEEN(10),
     KING(10);
 
-    private final int score;
+    private final Score score;
 
     Rank(int score) {
-        this.score = score;
+        this.score = new Score(score);
     }
 
-    int getScore() {
+    Score getScore() {
         return this.score;
     }
 }

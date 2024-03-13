@@ -28,12 +28,13 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플렝이어는 21점 이상이면 추가 드로우가 불가능하다.")
+    @DisplayName("플렝이어는 21점 초과이면 추가 드로우가 불가능하다.")
     void unableToDrawTest() {
         // given
         List<Card> cards = List.of(
                 new Card(Shape.HEART, Rank.JACK),
-                new Card(Shape.DIAMOND, Rank.ACE)
+                new Card(Shape.DIAMOND, Rank.TEN),
+                new Card(Shape.DIAMOND, Rank.TWO)
         );
         Hand hand = new Hand(cards);
         Player player = new Player("atto", hand);

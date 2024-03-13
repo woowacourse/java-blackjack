@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.card.Card;
 import blackjack.game.MatchResult;
+import blackjack.player.Score;
 import blackjack.view.display.CardRankDisplay;
 import blackjack.view.display.CardShapeDisplay;
 import blackjack.view.display.PlayerResultDisplay;
@@ -36,12 +37,12 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printDealerCardsWithScore(List<Card> cards, int score) {
+    public void printDealerCardsWithScore(List<Card> cards, Score score) {
         printPlayerCardsWithScore("딜러", cards, score);
     }
 
-    public void printPlayerCardsWithScore(String name, List<Card> cards, int score) {
-        System.out.println(name + " 카드: " + convertCards(cards) + " - 결과: " + score + "점");
+    public void printPlayerCardsWithScore(String name, List<Card> cards, Score score) {
+        System.out.println(name + " 카드: " + convertCards(cards) + " - 결과: " + score.getScore() + "점");
     }
 
     public void printResultStart() {

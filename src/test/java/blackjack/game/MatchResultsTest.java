@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import blackjack.player.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,7 @@ class MatchResultsTest {
     @DisplayName("이름으로 결과를 올바르게 가져온다.")
     void getResultByNameTest() {
         MatchResults matchResults = new MatchResults();
-        matchResults.addResult("aru", 20, 21);
+        matchResults.addResult("aru", new Score(20), new Score(21));
         assertThat(matchResults.getResultByName("aru")).isEqualTo(MatchResult.DEALER_WIN);
     }
 
@@ -33,10 +34,10 @@ class MatchResultsTest {
     void getDesiredResultCountTest() {
         // given
         MatchResults matchResults = new MatchResults();
-        matchResults.addResult("aru", 10, 20);
-        matchResults.addResult("pobi", 10, 20);
-        matchResults.addResult("atto", 10, 10);
-        matchResults.addResult("jazz", 20, 10);
+        matchResults.addResult("aru", new Score(10), new Score(20));
+        matchResults.addResult("pobi", new Score(10), new Score(20));
+        matchResults.addResult("atto", new Score(10), new Score(10));
+        matchResults.addResult("jazz", new Score(20), new Score(10));
         // when
         int playerWinCount = matchResults.getResultCount(MatchResult.PLAYER_WIN);
         int tieCount = matchResults.getResultCount(MatchResult.TIE);

@@ -7,9 +7,6 @@ import java.util.List;
 
 public class Hand {
 
-    private static final int BLACKJACK_MAX_SCORE = 21;
-    private static final int ADDITIONAL_ACE_SCORE = 10;
-
     private final List<Card> cards;
 
     Hand(List<Card> cards) {
@@ -20,31 +17,23 @@ public class Hand {
         this(new ArrayList<>());
     }
 
-    public int calculateScore() {
-        int minimumScore = calculateMinimumScore();
+    public Score calculateScore() {
+        Score minimumScore = calculateMinimumScore();
         if (!hasAce()) {
             return minimumScore;
         }
-        return changeToMaximumScore(minimumScore);
+        return minimumScore.changeToLargeAceScore();
     }
 
-    private int calculateMinimumScore() {
+    private Score calculateMinimumScore() {
         return cards.stream()
                 .map(Card::getScore)
-                .reduce(0, Integer::sum);
+                .reduce(new Score(0), Score::add);
     }
 
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
-    }
-
-    private int changeToMaximumScore(int minimumScore) {
-        int maximumScore = minimumScore + ADDITIONAL_ACE_SCORE;
-        if (maximumScore <= BLACKJACK_MAX_SCORE) {
-            return maximumScore;
-        }
-        return minimumScore;
     }
 
     public void addCard(Card card) {

@@ -1,5 +1,6 @@
 package blackjack.card;
 
+import blackjack.player.Score;
 import java.util.Objects;
 
 public class Card {
@@ -16,7 +17,7 @@ public class Card {
         return rank == Rank.ACE;
     }
 
-    public int getScore() {
+    public Score getScore() {
         return rank.getScore();
     }
 

@@ -1,5 +1,6 @@
 package blackjack.game;
 
+import blackjack.player.Score;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +12,7 @@ public class MatchResults {
         this.results = new HashMap<>();
     }
 
-    public void addResult(String playerName, int playerScore, int dealerScore) {
+    public void addResult(String playerName, Score playerScore, Score dealerScore) {
         MatchResult result = MatchResult.chooseWinner(playerScore, dealerScore);
         results.put(playerName, result);
     }
