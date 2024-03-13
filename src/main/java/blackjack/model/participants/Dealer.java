@@ -12,7 +12,7 @@ public class Dealer extends Participant {
     }
 
     public int calculateDealerProfit(PlayerResult playerResult) {
-        return playerResult.getResult().entrySet().stream()
+        return playerResult.getResults().entrySet().stream()
                 .mapToInt(entry -> convertToDealerBetResult(entry.getValue(), entry.getKey().getBetAmount()))
                 .sum();
     }

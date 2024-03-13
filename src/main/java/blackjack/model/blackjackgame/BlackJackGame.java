@@ -3,7 +3,6 @@ package blackjack.model.blackjackgame;
 import blackjack.model.deck.CardDeck;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
-import blackjack.model.results.PlayerProfit;
 import blackjack.model.results.PlayerResult;
 import blackjack.model.results.Result;
 import java.util.ArrayList;
@@ -54,11 +53,5 @@ public class BlackJackGame {
 
     public List<Player> getPlayers() {
         return players;
-    }
-
-    public PlayerProfit calculatePlayerProfit(PlayerResult playerResult) {
-        Map<Player, Integer> data = new LinkedHashMap<>();
-        playerResult.getResult().forEach((player, result) -> data.put(player, result.getProfit(player.getBetAmount())));
-        return new PlayerProfit(data);
     }
 }
