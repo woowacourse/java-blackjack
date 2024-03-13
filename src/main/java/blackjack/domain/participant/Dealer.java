@@ -6,10 +6,11 @@ import blackjack.domain.hands.HandsScore;
 import java.util.List;
 
 public class Dealer extends Participant {
+    private static final Name DEALER_NAME = new Name("딜러");
     private static final HandsScore DEALER_DRAW_THRESHOLD = new HandsScore(16);
 
     public Dealer() {
-        super(Name.dealerName());
+        super(DEALER_NAME);
     }
 
     @Override
