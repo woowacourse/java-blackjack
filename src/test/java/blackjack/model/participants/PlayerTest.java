@@ -67,7 +67,7 @@ class PlayerTest {
         assertThat(player.canHit()).isFalse();
     }
 
-    @DisplayName("플레이어 카드가 기준 점수보다 크면 진다.")
+    @DisplayName("플레이어 카드가 기준 점수보다 크면 진다")
     @Test
     void compareScore() {
         List<Card> given = List.of(
@@ -85,11 +85,11 @@ class PlayerTest {
 
         Player player = new Player("daon");
         player.addCards(given);
-        Result playerResultStatus = player.getResult(comparisonCards);
+        Result playerResultStatus = player.evaluateResult(comparisonCards);
         assertThat(playerResultStatus).isEqualTo(Result.LOSE);
     }
 
-    @DisplayName("플레이어 카드가 기준 점수보다 낮고 비교 카드 점수가 기준 점수보다 크면 이긴다.")
+    @DisplayName("플레이어 카드가 기준 점수보다 낮고 비교 카드 점수가 기준 점수보다 크면 이긴다")
     @Test
     void compareScore2() {
         List<Card> given = List.of(
@@ -107,11 +107,11 @@ class PlayerTest {
 
         Player player = new Player("daon");
         player.addCards(given);
-        Result playerResultStatus = player.getResult(comparisonCards);
+        Result playerResultStatus = player.evaluateResult(comparisonCards);
         assertThat(playerResultStatus).isEqualTo(Result.WIN);
     }
 
-    @DisplayName("플레이어 카드와 비교 카드 점수가 기준 점수보다 낮으면 두 점수의 대소관계로 결과를 낸다.")
+    @DisplayName("플레이어 카드와 비교 카드 점수가 기준 점수보다 낮으면 두 점수의 대소관계로 결과를 낸다")
     @ParameterizedTest
     @CsvSource(value = {"ACE,TWO,LOSE", "THREE,TWO,WIN", "FOUR,FOUR,PUSH"})
     void compareScore3(CardNumber cardNumber, CardNumber otherNumber, Result expected) {
@@ -130,7 +130,7 @@ class PlayerTest {
 
         Player player = new Player("daon");
         player.addCards(given);
-        Result playerResultStatus = player.getResult(comparisonCards);
+        Result playerResultStatus = player.evaluateResult(comparisonCards);
         assertThat(playerResultStatus).isEqualTo(expected);
     }
 
@@ -138,7 +138,7 @@ class PlayerTest {
     @Test
     void betMoney() {
         Player player = new Player("ella");
-        player.betMoney(3000);
+        player.betMoney(new Money(3000));
 
         assertThat(player).extracting("betAmount").isEqualTo(new Money(3000));
     }
@@ -160,7 +160,7 @@ class PlayerTest {
 
         Player player = new Player("ella");
         player.addCards(given);
-        Result playerResult = player.getResult(comparisonCards);
+        Result playerResult = player.evaluateResult(comparisonCards);
         assertThat(playerResult).isEqualTo(Result.WIN_BY_BLACKJACK);
     }
 
@@ -180,7 +180,7 @@ class PlayerTest {
 
         Player player = new Player("ella");
         player.addCards(given);
-        Result playerResult = player.getResult(comparisonCards);
+        Result playerResult = player.evaluateResult(comparisonCards);
         assertThat(playerResult).isEqualTo(Result.PUSH);
     }
 }

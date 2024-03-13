@@ -16,7 +16,7 @@ public enum Result {
         this.operator = operator;
     }
 
-    public Money getProfit(Money money) {
+    public Money calculateProfit(Money money) {
         return new Money(operator.applyAsInt(money.value()));
     }
 }

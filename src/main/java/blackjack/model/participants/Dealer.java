@@ -14,22 +14,22 @@ public class Dealer extends Participant {
 
     public Money calculateDealerProfit(PlayerResult playerResult) {
         int dealerProfit = playerResult.getResults().entrySet().stream()
-                .map(entry -> convertToDealerBetResult(entry.getValue(), entry.getKey().getBetAmount()))
+                .map(entry -> convertToDealerProfit(entry.getValue(), entry.getKey().getBetAmount()))
                 .mapToInt(Money::value)
                 .sum();
         return new Money(dealerProfit);
     }
 
-    private Money convertToDealerBetResult(Result playerResult, Money betAmount) {
+    private Money convertToDealerProfit(Result playerResult, Money betAmount) {
         if (playerResult == Result.WIN_BY_BLACKJACK) {
-            return Result.LOSE_BY_BLACKJACK.getProfit(betAmount);
+            return Result.LOSE_BY_BLACKJACK.calculateProfit(betAmount);
         }
         if (playerResult == Result.WIN) {
-            return Result.LOSE.getProfit(betAmount);
+            return Result.LOSE.calculateProfit(betAmount);
         }
         if (playerResult == Result.LOSE) {
-            return Result.WIN.getProfit(betAmount);
+            return Result.WIN.calculateProfit(betAmount);
         }
-        return Result.PUSH.getProfit(betAmount);
+        return Result.PUSH.calculateProfit(betAmount);
     }
 }

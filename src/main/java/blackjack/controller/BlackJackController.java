@@ -22,10 +22,8 @@ public class BlackJackController {
 
     public void run() {
         Dealer dealer = new Dealer();
-        List<Player> players = inputView.readPlayers();
-        betMoney(players);
-        BlackJackGame blackJackGame = new BlackJackGame(dealer, players);
-        blackJackGame.distributeCards();
+        List<Player> players = preparePlayers();
+        BlackJackGame blackJackGame = prepareBlackJackGame(dealer, players);
         outputView.printDistributedCardsInfo(blackJackGame);
 
         executeMultipleTurns(players, blackJackGame);
@@ -33,11 +31,23 @@ public class BlackJackController {
         printGameResults(blackJackGame);
     }
 
+    private List<Player> preparePlayers() {
+        List<Player> players = inputView.readPlayers();
+        betMoney(players);
+        return players;
+    }
+
     private void betMoney(List<Player> players) {
         for (Player player : players) {
-            int money = inputView.readBetAmount(player);
+            Money money = inputView.readBetAmount(player);
             player.betMoney(money);
         }
+    }
+
+    private BlackJackGame prepareBlackJackGame(Dealer dealer, List<Player> players) {
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, players);
+        blackJackGame.distributeCards();
+        return blackJackGame;
     }
 
     private void executeMultipleTurns(List<Player> players, BlackJackGame blackJackGame) {
@@ -67,7 +77,7 @@ public class BlackJackController {
 
     private void printGameResults(BlackJackGame blackJackGame) {
         PlayerResult playerResult = blackJackGame.calculatePlayerResults();
-        PlayerProfit playerProfit = playerResult.getPlayerProfit();
+        PlayerProfit playerProfit = playerResult.calclatePlayerProfit();
         Money dealerProfit = blackJackGame.calculateDealerProfit(playerResult);
         outputView.printGameResults(playerProfit, dealerProfit);
     }

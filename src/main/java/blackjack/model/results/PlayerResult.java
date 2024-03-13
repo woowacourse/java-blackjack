@@ -12,13 +12,13 @@ public class PlayerResult {
         this.results = results;
     }
 
-    public Map<Player, Result> getResults() {
-        return results;
+    public PlayerProfit calclatePlayerProfit() {
+        Map<Player, Money> profit = new LinkedHashMap<>();
+        results.forEach((player, result) -> profit.put(player, result.calculateProfit(player.getBetAmount())));
+        return new PlayerProfit(profit);
     }
 
-    public PlayerProfit getPlayerProfit() {
-        Map<Player, Money> profit = new LinkedHashMap<>();
-        results.forEach((player, result) -> profit.put(player, result.getProfit(player.getBetAmount())));
-        return new PlayerProfit(profit);
+    public Map<Player, Result> getResults() {
+        return results;
     }
 }

@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 class BlackJackGameTest {
 
-    @DisplayName("카드 두장을 지급한다.")
+    @DisplayName("카드 두장을 지급한다")
     @Test
     void distributeCards() {
         Dealer dealer = new Dealer();

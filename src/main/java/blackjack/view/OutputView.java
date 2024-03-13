@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String DEALER_NAME = "딜러";
     private static final String MULTIPLE_OUTPUTS_DELIMITER = ", ";
+    private static final int FIRST_CARD_INDEX = 0;
 
     public void printDistributedCardsInfo(BlackJackGame blackJackGame) {
         List<Player> players = blackJackGame.getPlayers();
@@ -55,7 +56,7 @@ public class OutputView {
         System.out.println();
         System.out.println("### 최종 수익");
         System.out.printf("%s: %d%n", DEALER_NAME, dealerResult.value());
-        Map<Player, Money> gameResult = playerProfit.getResult();
+        Map<Player, Money> gameResult = playerProfit.getProfits();
         printPlayerResultsFormat(gameResult);
     }
 
@@ -63,8 +64,20 @@ public class OutputView {
         System.out.println("카드 합계가 21을 초과하였습니다. 턴을 종료합니다.");
     }
 
+    private String getPlayersNames(List<Player> players) {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.joining(MULTIPLE_OUTPUTS_DELIMITER));
+    }
+
     private String getDealerCardFormat(String name, Card card) {
         return String.format("%s: %s%n", name, convertCardText(card));
+    }
+
+    private Card getDealerCard(Dealer dealer) {
+        return dealer.getCards()
+                .getCards()
+                .get(FIRST_CARD_INDEX);
     }
 
     private String getParticipantCardsFormat(String name, Cards cards) {
@@ -84,18 +97,6 @@ public class OutputView {
 
     private String getPlayerResultFormat(String name, int resultAmount) {
         return String.format("%s: %d%n", name, resultAmount);
-    }
-
-    private String getPlayersNames(List<Player> players) {
-        return players.stream()
-                .map(Player::getName)
-                .collect(Collectors.joining(MULTIPLE_OUTPUTS_DELIMITER));
-    }
-
-    private Card getDealerCard(Dealer dealer) {
-        return dealer.getCards()
-                .getCards()
-                .get(0);
     }
 
     private String getCardsText(Cards cards) {

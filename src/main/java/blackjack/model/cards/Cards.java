@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Cards {
     public static final int INITIAL_CARD_SIZE = 2;
-    private static final int BOUNDARY_SCORE = 11;
     private static final int EXTRA_SCORE = 10;
     private static final int WINNING_SCORE = 21;
+
     private final List<Card> cards = new ArrayList<>();
     private int score = 0;
 
@@ -30,8 +30,8 @@ public class Cards {
     }
 
     private void updateCardsScore() {
-        score = calculate(cards);
-        if (hasAce() && score <= BOUNDARY_SCORE) {
+        score = calculateScore(cards);
+        if (hasAce() && score + EXTRA_SCORE <= WINNING_SCORE) {
             score += EXTRA_SCORE;
         }
     }
@@ -41,17 +41,17 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
-    private int calculate(List<Card> cardsToAdd) {
-        return cardsToAdd.stream()
+    private int calculateScore(List<Card> cards) {
+        return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
     }
 
-    public int getScore() {
-        return score;
-    }
-
     public List<Card> getCards() {
         return cards;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

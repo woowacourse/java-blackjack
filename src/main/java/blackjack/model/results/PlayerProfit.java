@@ -5,13 +5,13 @@ import blackjack.vo.Money;
 import java.util.Map;
 
 public class PlayerProfit {
-    private final Map<Player, Money> result;
+    private final Map<Player, Money> profits;
 
-    public PlayerProfit(Map<Player, Money> result) {
-        this.result = result;
+    public PlayerProfit(Map<Player, Money> profits) {
+        this.profits = profits;
     }
 
-    public Map<Player, Money> getResult() {
-        return result;
+    public Map<Player, Money> getProfits() {
+        return profits;
     }
 }

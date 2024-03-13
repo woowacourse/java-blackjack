@@ -11,6 +11,7 @@ import blackjack.vo.Money;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -34,6 +35,20 @@ class DealerTest {
         assertThat(dealer.getCards().getCards()).hasSize(3);
     }
 
+    @DisplayName("카드를 추가로 받을 수 있는지 확인한다")
+    @ParameterizedTest
+    @CsvSource(value = {"SIX,true", "SEVEN,false"})
+    void checkDrawCardStateOverThresholdScore(CardNumber cardNumber, boolean expected) {
+        List<Card> given = List.of(
+                new Card(cardNumber, CardShape.HEART),
+                new Card(CardNumber.TEN, CardShape.CLOVER)
+        );
+        Dealer dealer = new Dealer();
+        dealer.addCards(given);
+
+        AssertionsForClassTypes.assertThat(dealer.canHit()).isEqualTo(expected);
+    }
+
     @DisplayName("플레이어 결과와 베팅 금액으로 딜러의 수익을 계산한다")
     @ParameterizedTest
     @CsvSource(value = {"1,1,1,1,-3500", "1,0,0,0,-4500", "0,1,0,0,-4000", "0,0,1,0,5000", "0,0,0,1,0"})
@@ -50,21 +65,21 @@ class DealerTest {
     private Map<Player, Result> createResultsForBet(int winByBlackJack, int win, int lose, int push) {
         Map<Player, Result> map = new HashMap<>();
         for (int i = 0; i < winByBlackJack; i++) {
-            map.put(getPlayer("ella", 3000), Result.WIN_BY_BLACKJACK);
+            map.put(getPlayer("ella", new Money(3000)), Result.WIN_BY_BLACKJACK);
         }
         for (int i = 0; i < win; i++) {
-            map.put(getPlayer("daon", 4000), Result.WIN);
+            map.put(getPlayer("daon", new Money(4000)), Result.WIN);
         }
         for (int i = 0; i < lose; i++) {
-            map.put(getPlayer("lily", 5000), Result.LOSE);
+            map.put(getPlayer("lily", new Money(5000)), Result.LOSE);
         }
         for (int i = 0; i < push; i++) {
-            map.put(getPlayer("pobi", 6000), Result.PUSH);
+            map.put(getPlayer("pobi", new Money(6000)), Result.PUSH);
         }
         return map;
     }
 
-    private Player getPlayer(String name, int betAmount) {
+    private Player getPlayer(String name, Money betAmount) {
         Player player = new Player(name);
         player.betMoney(betAmount);
         return player;

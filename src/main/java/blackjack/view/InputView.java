@@ -1,12 +1,14 @@
 package blackjack.view;
 
 import blackjack.model.participants.Player;
+import blackjack.vo.Money;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.function.Supplier;
 
 public class InputView {
+    private static final int BET_AMOUNT_UNIT = 1000;
     private static final String MESSAGE_HEADER = "[ERROR] ";
     private static final String INPUT_DELIMITER = ",";
 
@@ -36,29 +38,31 @@ public class InputView {
         return Command.generate(input);
     }
 
-    public int readBetAmount(Player player) {
+    public Money readBetAmount(Player player) {
         return repeatUntilSuccess(() -> getBetAmount(player));
     }
 
-    private int getBetAmount(Player player) {
+    private Money getBetAmount(Player player) {
         String message = String.format("%s의 배팅 금액은?", player.getName());
         System.out.println(message);
         String input = scanner.nextLine();
-        return convertToInteger(input);
+        int betAmount = convertToInteger(input);
+        validateBetAmount(betAmount);
+        return new Money(betAmount);
     }
 
     private int convertToInteger(String input) {
         try {
             int value = Integer.parseInt(input);
-            validateBetMoney(value);
+            validateBetAmount(value);
             return value;
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("베팅 금액은 숫자이어야한다");
         }
     }
 
-    private void validateBetMoney(int value) {
-        if (value % 1000 != 0) {
+    private void validateBetAmount(int value) {
+        if (value % BET_AMOUNT_UNIT != 0) {
             throw new IllegalArgumentException("베팅 금액은 1000단위의 숫자이어야한다.");
         }
     }

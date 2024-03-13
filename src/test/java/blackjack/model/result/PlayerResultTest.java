@@ -18,22 +18,22 @@ class PlayerResultTest {
     void getPlayerProfit() {
         PlayerResult playerResult = new PlayerResult(createResultsForBet());
 
-        PlayerProfit playerProfit = playerResult.getPlayerProfit();
+        PlayerProfit playerProfit = playerResult.calclatePlayerProfit();
 
-        assertThat(playerProfit.getResult().values())
+        assertThat(playerProfit.getProfits().values())
                 .containsExactly(new Money(4500), new Money(4000), new Money(-5000), new Money(0));
     }
 
     private Map<Player, Result> createResultsForBet() {
         Map<Player, Result> map = new LinkedHashMap<>();
-        map.put(getPlayer("ella", 3000), Result.WIN_BY_BLACKJACK);
-        map.put(getPlayer("daon", 4000), Result.WIN);
-        map.put(getPlayer("lily", 5000), Result.LOSE);
-        map.put(getPlayer("pobi", 6000), Result.PUSH);
+        map.put(getPlayer("ella", new Money(3000)), Result.WIN_BY_BLACKJACK);
+        map.put(getPlayer("daon", new Money(4000)), Result.WIN);
+        map.put(getPlayer("lily", new Money(5000)), Result.LOSE);
+        map.put(getPlayer("pobi", new Money(6000)), Result.PUSH);
         return map;
     }
 
-    private Player getPlayer(String name, int betAmount) {
+    private Player getPlayer(String name, Money betAmount) {
         Player player = new Player(name);
         player.betMoney(betAmount);
         return player;

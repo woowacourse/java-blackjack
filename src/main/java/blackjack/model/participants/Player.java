@@ -18,7 +18,11 @@ public class Player extends Participant {
         return !cards.isBust();
     }
 
-    public Result getResult(Cards otherCards) {
+    public void betMoney(Money betMoney) {
+        betAmount = betMoney;
+    }
+
+    public Result evaluateResult(Cards otherCards) {
         if (cards.isBust()) {
             return Result.LOSE;
         }
@@ -29,10 +33,6 @@ public class Player extends Participant {
             return Result.WIN;
         }
         return compareScore(otherCards);
-    }
-
-    public void betMoney(int betMoney) {
-        betAmount = new Money(betMoney);
     }
 
     private Result compareScore(Cards otherCards) {
