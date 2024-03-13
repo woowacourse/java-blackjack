@@ -17,11 +17,13 @@ public class Cards {
         this.cards = new ArrayList<>(cards);
     }
 
+    // Todo: [리팩토링] CardGenerator를 인자로 받는것과 Card를 인자로 받는것 둘을 비교해보자
     public static Cards deal(final CardGenerator cardGenerator) {
         List<Card> firstCards = List.of(cardGenerator.pick(), cardGenerator.pick());
         return new Cards(firstCards);
     }
 
+    // Todo: [리팩토링] CardGenerator를 인자로 받는것과 Card를 인자로 받는것 둘을 비교해보자
     public void addCard(final CardGenerator cardGenerator) {
         cards.add(cardGenerator.pick());
     }
@@ -55,6 +57,7 @@ public class Cards {
         return totalScore.plus(ACE_ADJUSTMENT);
     }
 
+    // Todo: [규칙 변경] 처음 받은 두 장의 카드가 21점일 때만
     public boolean isBlackJack() {
         return calculateCardsTotalScore().equalTo(MAX_CARDS_TOTAL);
     }
