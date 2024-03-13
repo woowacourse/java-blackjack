@@ -32,6 +32,10 @@ public class HandsScore {
         return handsScore < score.handsScore;
     }
 
+    public int toInt() {
+        return handsScore;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -43,9 +47,5 @@ public class HandsScore {
     @Override
     public int hashCode() {
         return Objects.hash(handsScore);
-    }
-
-    public int toInt() {
-        return handsScore;
     }
 }

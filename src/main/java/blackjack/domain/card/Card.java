@@ -15,7 +15,18 @@ public class Card {
         return value == targetValue;
     }
 
-    // TODO boilerplate 코드 컨벤션
+    public int getScore() {
+        return value.getScore();
+    }
+
+    public Kind getKind() {
+        return kind;
+    }
+
+    public Value getValue() {
+        return value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -27,17 +38,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(kind, value);
-    }
-
-    public int getScore() {
-        return value.getScore();
-    }
-
-    public Kind getKind() {
-        return kind;
-    }
-
-    public Value getValue() {
-        return value;
     }
 }

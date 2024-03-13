@@ -26,6 +26,10 @@ public class Profit {
         }
     }
 
+    public Double getProfit() {
+        return Profit;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -37,9 +41,5 @@ public class Profit {
     @Override
     public int hashCode() {
         return Objects.hash(Profit);
-    }
-
-    public Double getProfit() {
-        return Profit;
     }
 }

@@ -24,6 +24,10 @@ public class Batting {
         }
     }
 
+    public Double getBat() {
+        return bat;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -35,9 +39,5 @@ public class Batting {
     @Override
     public int hashCode() {
         return Objects.hash(bat);
-    }
-
-    public Double getBat() {
-        return bat;
     }
 }
