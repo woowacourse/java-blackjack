@@ -53,7 +53,7 @@ public class OutputView {
         System.out.println();
 
         for (Player player : bettingResult.getPlayers()) {
-            System.out.println(outputFormat.formatBlackJackResult(player, bettingResult.getPayout(player)));
+            System.out.println(outputFormat.formatPlayerResult(player, bettingResult.getPayout(player)));
         }
     }
 }

@@ -42,7 +42,7 @@ class DealerTest {
         player.receiveCard(new Card(Shape.HEART, Rank.KING));
         player.receiveCard(new Card(Shape.HEART, Rank.TEN));
 
-        WinStatus winStatus = dealer.calculateParticipantWinStatus(player);
+        WinStatus winStatus = dealer.calculatePlayerWinStatus(player);
         assertThat(winStatus).isEqualTo(WinStatus.WIN);
     }
 
@@ -57,7 +57,7 @@ class DealerTest {
         player.receiveCard(new Card(Shape.HEART, Rank.KING));
         player.receiveCard(new Card(Shape.DIA, Rank.ACE));
 
-        WinStatus winStatus = dealer.calculateParticipantWinStatus(player);
+        WinStatus winStatus = dealer.calculatePlayerWinStatus(player);
         assertThat(winStatus).isEqualTo(WinStatus.PUSH);
     }
 }

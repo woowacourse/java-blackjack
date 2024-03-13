@@ -17,7 +17,7 @@ public enum HitOption {
         if (NO.hitOption.equals(option)) {
             return NO;
         }
-        throw new IllegalArgumentException("잘못된 입력입니다.");
+        throw new IllegalArgumentException("y 또는 n 중 하나만 입력 가능합니다.");
     }
 
     public static boolean isHit(HitOption isHit) {

@@ -27,8 +27,9 @@ class BlackJackTest {
         );
     }
 
+    @DisplayName("사용자가 Bust가 아닐 때 Hit을 하길 원하면 카드를 1장 추가한다.")
     @Test
-    void name() {
+    void play() {
         Players players = new Players(List.of("one", "two"));
         Dealer dealer = new Dealer();
         BlackJack blackJack = new BlackJack(players, dealer);
@@ -45,7 +46,7 @@ class BlackJackTest {
             }
         };
 
-        blackJack.play(testFunction, Participant::getName);
+        blackJack.play(testFunction, Player::getName);
 
         assertThat(players.getValue().get(0).getCardCount()).isEqualTo(2);
     }

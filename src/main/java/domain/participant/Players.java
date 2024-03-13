@@ -23,8 +23,8 @@ public class Players {
         if (names.size() < MIN_PARTICIPANT_COUNT || names.size() > MAX_PARTICIPANT_COUNT) {
             throw new IllegalArgumentException(String.format("최소 %d명 최대 %d명까지 입력받을 수 있습니다.", MIN_PARTICIPANT_COUNT, MAX_PARTICIPANT_COUNT));
         }
+        
         Set<String> distinctNames = Set.copyOf(names);
-
         if (distinctNames.size() != names.size()) {
             throw new IllegalArgumentException("이름은 중복될 수 없습니다.");
         }
@@ -33,28 +33,28 @@ public class Players {
     public void beginDealing(Dealer dealer) {
         dealer.receiveCard(dealer.draw());
         dealer.receiveCard(dealer.draw());
-        for (Participant participant : value) {
-            participant.receiveCard(dealer.draw());
-            participant.receiveCard(dealer.draw());
-        }
-    }
-
-    public void playersHit(Function<Name, HitOption> isHitOption, Consumer<Participant> printParticipantHands, Dealer dealer) {
         for (Player player : value) {
-            playerHit(isHitOption, printParticipantHands, player, dealer);
+            player.receiveCard(dealer.draw());
+            player.receiveCard(dealer.draw());
         }
     }
 
-    private void playerHit(Function<Name, HitOption> isHitOption, Consumer<Participant> printParticipantHands, Participant participant, Dealer dealer) {
-        while (participant.canHit() && HitOption.isHit(isHitOption.apply(participant.getName()))) {
-            participant.receiveCard(dealer.draw());
-            printParticipantHands.accept(participant);
+    public void playersHit(Function<Name, HitOption> isHitOption, Consumer<Player> printPlayerHands, Dealer dealer) {
+        for (Player player : value) {
+            playerHit(isHitOption, printPlayerHands, player, dealer);
+        }
+    }
+
+    private void playerHit(Function<Name, HitOption> isHitOption, Consumer<Player> printPlayerHands, Player player, Dealer dealer) {
+        while (player.canHit() && HitOption.isHit(isHitOption.apply(player.getName()))) {
+            player.receiveCard(dealer.draw());
+            printPlayerHands.accept(player);
         }
     }
 
     public List<Name> getNames() {
         return value.stream()
-                .map(Participant::getName)
+                .map(Player::getName)
                 .toList();
     }
 

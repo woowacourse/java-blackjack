@@ -8,43 +8,34 @@ public class Dealer extends Participant {
 
     private static final int DEALER_HIT_COUNT = 16;
 
-    private Deck deck;
+    private final Deck deck;
 
     public Dealer() {
         super(new Name("딜러"));
         this.deck = new Deck();
     }
 
-    public void receiveCard(Card card) {
-        super.receiveCard(card);
-    }
-
     public boolean isNotBlackJack() {
         return !isBlackJack();
     }
 
-    @Override
-    public boolean isDealer() {
-        return true;
-    }
-
-    public WinStatus calculateParticipantWinStatus(Participant participant) {
-        if (participant.isBust()) {
+    public WinStatus calculatePlayerWinStatus(Player player) {
+        if (player.isBust()) {
             return WinStatus.LOSE;
         }
         if (isBust()) {
             return WinStatus.WIN;
         }
-        return calculateParticipantWinStatusWhenNotBust(participant);
+        return calculatePlayerWinStatusWhenNotBust(player);
     }
 
-    private WinStatus calculateParticipantWinStatusWhenNotBust(Participant participant) {
-        int participantScore = participant.getScore();
+    private WinStatus calculatePlayerWinStatusWhenNotBust(Player player) {
+        int playerScore = player.getScore();
         int dealerScore = getScore();
-        if (participantScore == dealerScore) {
+        if (playerScore == dealerScore) {
             return WinStatus.PUSH;
         }
-        if (participantScore > dealerScore) {
+        if (playerScore > dealerScore) {
             return WinStatus.WIN;
         }
         return WinStatus.LOSE;

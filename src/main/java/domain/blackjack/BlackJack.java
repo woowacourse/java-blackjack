@@ -21,8 +21,8 @@ public class BlackJack {
         beginBlackJack.accept(players, dealer);
     }
 
-    public void play(Function<Name, HitOption> isHitOption, Consumer<Participant> printParticipantHands) {
-        players.playersHit(isHitOption, printParticipantHands, dealer);
+    public void play(Function<Name, HitOption> isHitOption, Consumer<Player> printPlayerHands) {
+        players.playersHit(isHitOption, printPlayerHands, dealer);
     }
 
     public int dealerHit() {

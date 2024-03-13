@@ -19,7 +19,7 @@ public class BettingResult {
     }
 
     public double getPayout(Player player) {
-        double payout = bet.get(player).calculateProfit(dealer.calculateParticipantWinStatus(player));
+        double payout = bet.get(player).calculateProfit(dealer.calculatePlayerWinStatus(player));
         if (player.isBlackJack() && dealer.isNotBlackJack()) {
             return payout * BLACKJACK_PROFIT_RATE;
         }

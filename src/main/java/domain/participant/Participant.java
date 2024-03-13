@@ -33,10 +33,6 @@ public abstract class Participant {
         return this.getScore() == BLACK_JACK_COUNT && this.getCardCount() == MIN_CARD_COUNT;
     }
 
-    public boolean isDealer() {
-        return false;
-    }
-
     public int getCardCount() {
         return hands.getCardCount();
     }

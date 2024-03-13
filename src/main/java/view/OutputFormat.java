@@ -45,7 +45,7 @@ public class OutputFormat {
         return String.format("딜러: %d", (int) bettingResult.getDealerPayout());
     }
 
-    public String formatBlackJackResult(Player player, double payout) {
+    public String formatPlayerResult(Player player, double payout) {
         return String.format("%s: %d", player.getName().getValue(), (int) payout);
     }
 }
