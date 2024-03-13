@@ -1,6 +1,7 @@
 package view;
 
 import constants.ErrorCode;
+import exception.InvalidBetAmountException;
 import exception.InvalidInputException;
 import exception.InvalidSeparatorException;
 import java.util.Arrays;
@@ -29,6 +30,16 @@ public class InputView {
         return names;
     }
 
+    public Long readBetAmount(String name) {
+        System.out.printf("%s의 배팅 금액은?%n", name);
+        String rawAmount = scanner.nextLine().trim();
+        validateBlank(rawAmount);
+        validateLong(rawAmount);
+        System.out.println();
+        return Long.parseLong(rawAmount);
+    }
+
+
     public String readAnswer(String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
         String rawAnswer = scanner.nextLine().trim();
@@ -56,5 +67,13 @@ public class InputView {
             return true;
         }
         return rawNames.contains(NAME_SEPARATOR.repeat(2));
+    }
+
+    private void validateLong(final String rawAmount) {
+        try {
+            Long.parseLong(rawAmount);
+        } catch (NumberFormatException exception) {
+            throw new InvalidBetAmountException(ErrorCode.INVALID_BET_AMOUNT);
+        }
     }
 }

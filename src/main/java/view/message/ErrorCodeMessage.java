@@ -16,6 +16,7 @@ public enum ErrorCodeMessage {
     DUPLICATE_NAME(ErrorCode.DUPLICATE_NAME, "중복된 이름은 사용할 수 없습니다."),
     RESERVED_NAME(ErrorCode.RESERVED_NAME, "이름은 딜러일 수 없습니다."),
     BLANK_VALUE(ErrorCode.BLANK_VALUE, "이름은 공백일 수 없습니다."),
+    INVALID_BET_AMOUNT(ErrorCode.INVALID_BET_AMOUNT, "유효하지 않은 배팅 금액입니다."), // TODO 세분화 필요?
     EMPTY_CARD(ErrorCode.EMPTY_CARD, "뽑을 수 있는 카드가 없습니다."),
     INVALID_COMMAND(ErrorCode.INVALID_COMMAND, "y 또는 n을 입력해주세요"),
     ;

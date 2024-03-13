@@ -1,18 +1,21 @@
 package controller;
 
 import domain.Answer;
+import domain.BetAmount;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import dto.DealerHandsDto;
 import dto.ParticipantDto;
 import dto.ParticipantsDto;
+import repository.BetAmountRepository;
 import view.OutputView;
 
 public class BlackJackController {
 
     private final InputController inputController;
     private final OutputView outputView;
+    private final BetAmountRepository repository = new BetAmountRepository(); // TODO 리팩터링 필요
 
 
     public BlackJackController(final InputController inputController, final OutputView outputView) {
@@ -23,6 +26,11 @@ public class BlackJackController {
     public void run() {
         final Players players = inputController.getPlayers();
         final Dealer dealer = new Dealer();
+
+        for (Player player : players.getPlayers()) {
+            BetAmount betAmount = inputController.getBetAmount(player.getName());
+            repository.put(player, betAmount);
+        }
 
         initHands(players, dealer);
         dealWithPlayers(players, dealer);

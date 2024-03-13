@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Answer;
+import domain.BetAmount;
 import domain.participant.Players;
 import exception.CustomException;
 import java.util.List;
@@ -33,6 +34,14 @@ public class InputController {
         return answer;
     }
 
+    public BetAmount getBetAmount(String name) {
+        BetAmount betAmount;
+        do {
+            betAmount = readBetAmount(name);
+        } while (betAmount == null);
+        return betAmount;
+    }
+
     private Players readPlayers() {
         try {
             List<String> rawNames = inputView.readNames();
@@ -47,6 +56,16 @@ public class InputController {
         try {
             String value = inputView.readAnswer(name);
             return Answer.from(value);
+        } catch (CustomException exception) {
+            outputView.printException(exception.getErrorCode());
+            return null;
+        }
+    }
+
+    private BetAmount readBetAmount(final String name) {
+        try {
+            Long value = inputView.readBetAmount(name);
+            return new BetAmount(value);
         } catch (CustomException exception) {
             outputView.printException(exception.getErrorCode());
             return null;
