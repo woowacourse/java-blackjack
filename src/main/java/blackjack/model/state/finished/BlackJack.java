@@ -33,7 +33,12 @@ public class BlackJack implements State {
     }
 
     @Override
-    public double calculateProfit(final Money money) {
-        return 0;
+    public boolean isBlackJack() {
+        return true;
+    }
+
+    @Override
+    public boolean isBust() {
+        return false;
     }
 }

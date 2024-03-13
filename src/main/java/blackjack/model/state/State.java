@@ -13,5 +13,6 @@ public interface State {
 
     int calculateScore();
 
-    double calculateProfit(Money money);
+    boolean isBlackJack();
+    boolean isBust();
 }
