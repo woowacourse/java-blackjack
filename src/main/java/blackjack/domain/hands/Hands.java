@@ -8,7 +8,7 @@ import java.util.List;
 import static blackjack.domain.card.Value.ACE;
 
 public class Hands {
-    private static final HandsScore BLACK_JACK = new HandsScore(21);
+    private static final HandsScore BLACK_JACK = HandsScore.blackJack();
     private final List<Card> hands;
 
     public Hands() {
@@ -24,7 +24,7 @@ public class Hands {
         if (this.hasAce()) {
             return HandsScore.upgradeAceWhenNotBust(score);
         }
-        return new HandsScore(score);
+        return HandsScore.from(score);
     }
 
     public boolean isBurst() {

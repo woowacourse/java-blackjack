@@ -1,16 +1,27 @@
 package blackjack.domain.hands;
 
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.toMap;
 
 public class HandsScore {
-    // TODO Score Black jack 정팩매
-    // TODO 반복값 캐싱
+    private static final int MIN_SCORE = 0;
+    private static final int MAX_SCORE = 31;
+    private static final Map<Integer, HandsScore> CACHE_SCORES = IntStream.rangeClosed(MIN_SCORE, MAX_SCORE)
+            .boxed()
+            .collect(toMap(it -> it, HandsScore::new));
     private static final int BLACK_JACK = 21;
     private static final int ACE_UPGRADE_SCORE = 10;
     private final int handsScore;
 
-    public HandsScore(int score) {
+    private HandsScore(int score) {
         this.handsScore = score;
+    }
+
+    public static HandsScore from(int score) {
+        return CACHE_SCORES.get(score);
     }
 
     public static HandsScore upgradeAceWhenNotBust(int totalScore) {
@@ -18,6 +29,10 @@ public class HandsScore {
             return new HandsScore(totalScore + ACE_UPGRADE_SCORE);
         }
         return new HandsScore(totalScore);
+    }
+
+    public static HandsScore blackJack() {
+        return HandsScore.from(BLACK_JACK);
     }
 
     public boolean isHigherThan(HandsScore score) {

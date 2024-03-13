@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Dealer extends Participant {
     private static final Name DEALER_NAME = new Name("딜러");
-    private static final HandsScore DEALER_DRAW_THRESHOLD = new HandsScore(16);
+    private static final HandsScore DEALER_DRAW_THRESHOLD = HandsScore.from(16);
 
     public Dealer() {
         super(DEALER_NAME);

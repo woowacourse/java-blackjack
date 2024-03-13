@@ -27,7 +27,7 @@ class HandsTest {
         hands.addCard(new Card(Kind.CLOVER, Value.TWO));
         hands.addCard(new Card(Kind.HEART, Value.TWO));
 
-        assertThat(hands.getHandsScore()).isEqualTo(new HandsScore(4));
+        assertThat(hands.getHandsScore()).isEqualTo(HandsScore.from(4));
     }
 
     @DisplayName("에이스는 1 또는 11로 사용할 수 있다")
@@ -37,11 +37,11 @@ class HandsTest {
         assertAll(
                 () -> {
                     hands.addCard(new Card(Kind.CLOVER, Value.ACE));
-                    assertThat(hands.getHandsScore()).isEqualTo(new HandsScore(11));
+                    assertThat(hands.getHandsScore()).isEqualTo(HandsScore.from(11));
                 },
                 () -> {
                     hands.addCard(new Card(Kind.HEART, Value.ACE));
-                    assertThat(hands.getHandsScore()).isEqualTo(new HandsScore(12));
+                    assertThat(hands.getHandsScore()).isEqualTo(HandsScore.from(12));
                 });
     }
 }

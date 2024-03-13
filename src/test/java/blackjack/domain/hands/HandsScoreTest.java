@@ -15,14 +15,14 @@ class HandsScoreTest {
     @ValueSource(ints = {11, 10, 0})
     void should_upgradeAce_When_NotBust(int handsScore) {
         assertThat(HandsScore.upgradeAceWhenNotBust(handsScore))
-                .isEqualTo(new HandsScore(handsScore + 10));
+                .isEqualTo(HandsScore.from(handsScore + 10));
     }
 
     @DisplayName("높은 점수를 판단할 수 있다")
     @Test
     void isHigherThan() {
-        HandsScore highScore = new HandsScore(10);
-        HandsScore lowScore = new HandsScore(0);
+        HandsScore highScore = HandsScore.from(10);
+        HandsScore lowScore = HandsScore.from(0);
 
         assertAll(
                 () -> assertTrue(highScore.isHigherThan(lowScore)),
@@ -33,9 +33,9 @@ class HandsScoreTest {
     @DisplayName("같은 점수를 판단할 수 있다")
     @Test
     void isSame() {
-        HandsScore otherScore = new HandsScore(10);
-        HandsScore sameScore1 = new HandsScore(5);
-        HandsScore sameScore2 = new HandsScore(5);
+        HandsScore otherScore = HandsScore.from(10);
+        HandsScore sameScore1 = HandsScore.from(5);
+        HandsScore sameScore2 = HandsScore.from(5);
 
         assertAll(
                 () -> assertTrue(sameScore1.isSame(sameScore2)),
@@ -46,8 +46,8 @@ class HandsScoreTest {
     @DisplayName("낮은 점수를 판단할 수 있다")
     @Test
     void isLowerThan() {
-        HandsScore highScore = new HandsScore(10);
-        HandsScore lowScore = new HandsScore(0);
+        HandsScore highScore = HandsScore.from(10);
+        HandsScore lowScore = HandsScore.from(0);
 
         assertAll(
                 () -> assertTrue(lowScore.isLowerThan(highScore)),
