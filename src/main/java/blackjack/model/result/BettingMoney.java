@@ -22,6 +22,10 @@ public final class BettingMoney {
         return new BettingMoney(amount + otherMoney.amount);
     }
 
+    public BettingMoney minus(final BettingMoney otherMoney) {
+        return new BettingMoney(amount - otherMoney.amount);
+    }
+
     public double getAmount() {
         return amount;
     }
