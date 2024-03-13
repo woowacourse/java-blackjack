@@ -12,8 +12,22 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
     @Test
+    @DisplayName("카드 딜링을 하면 딜러가 카드를 2장 받는다")
+    void dealTest() {
+        // when
+        Dealer dealer = new Dealer();
+        dealer.dealCards(new SequentialCardGenerator(List.of(
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.HEART, Denomination.TWO)
+        )));
+
+        // then
+        assertThat(dealer.getCards()).hasSize(2);
+    }
+
+    @Test
     @DisplayName("딜러는 카드의 합이 17점 이상이 될 때까지 카드를 받는다")
-    void canDrawTest() {
+    void drawTest() {
         // given
         Dealer dealer = new Dealer();
         dealer.dealCards(new SequentialCardGenerator(List.of(
