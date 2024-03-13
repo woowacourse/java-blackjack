@@ -14,7 +14,7 @@ class HandTest {
     @DisplayName("Blackjack 여부를 판단한다.")
     @ParameterizedTest
     @MethodSource("provideCardsWithIsBlackjack")
-    void isNaturalBlackjackTest(List<Card> cards, boolean isBlackjack) {
+    void isBlackjackTest(List<Card> cards, boolean isBlackjack) {
         Hand hand = new Hand(cards);
         assertThat(hand.isBlackjack()).isEqualTo(isBlackjack);
     }

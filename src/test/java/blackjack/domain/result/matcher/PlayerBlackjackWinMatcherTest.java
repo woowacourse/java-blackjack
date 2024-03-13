@@ -17,9 +17,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PlayerBlackjackWinMatcherTest {
     private final PlayerResultMatcher playerResultMatcher = new PlayerBlackjackWinMatcher();
 
-    @DisplayName("플레이어만 NaturalBlackjack일 경우 참을 반환한다.")
+    @DisplayName("플레이어만 Blackjack일 경우 참을 반환한다.")
     @ParameterizedTest
-    @MethodSource("provideNaturalBlackjackWin")
+    @MethodSource("provideBlackjackWin")
     void playerBlackjackLoseMatchTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
         Player player = ParticipantGenerator.createPlayer(playerNumbers);
         Dealer dealer = ParticipantGenerator.createDealer(dealerNumbers);
@@ -28,7 +28,7 @@ class PlayerBlackjackWinMatcherTest {
                 .isEqualTo(true);
     }
 
-    private static Stream<Arguments> provideNaturalBlackjackWin() {
+    private static Stream<Arguments> provideBlackjackWin() {
         return Stream.of(
                 Arguments.of(List.of(Number.ACE, Number.JACK), List.of(Number.FIVE, Number.SIX)),
                 Arguments.of(List.of(Number.ACE, Number.QUEEN), List.of(Number.ACE, Number.ACE, Number.NINE)),
@@ -37,9 +37,9 @@ class PlayerBlackjackWinMatcherTest {
     }
 
 
-    @DisplayName("플레이어만 NaturalBlackjack이 아닐 경우 거짓을 반환한다.")
+    @DisplayName("플레이어만 Blackjack이 아닐 경우 거짓을 반환한다.")
     @ParameterizedTest
-    @MethodSource("provideNotNaturalBlackjackWin")
+    @MethodSource("provideNotBlackjackWin")
     void playerNotBlackjackLoseMatchTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
         Player player = ParticipantGenerator.createPlayer(playerNumbers);
         Dealer dealer = ParticipantGenerator.createDealer(dealerNumbers);
@@ -48,7 +48,7 @@ class PlayerBlackjackWinMatcherTest {
                 .isEqualTo(false);
     }
 
-    private static Stream<Arguments> provideNotNaturalBlackjackWin() {
+    private static Stream<Arguments> provideNotBlackjackWin() {
         return Stream.of(
                 Arguments.of(List.of(Number.QUEEN, Number.JACK), List.of(Number.JACK, Number.ACE)),
                 Arguments.of(List.of(Number.ACE, Number.QUEEN, Number.FIVE), List.of(Number.JACK, Number.ACE)),

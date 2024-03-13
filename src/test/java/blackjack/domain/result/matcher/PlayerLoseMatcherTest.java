@@ -54,10 +54,10 @@ class PlayerLoseMatcherTest {
         );
     }
 
-    @DisplayName("딜러만 NaturalBlackjack인 경우 참을 반환한다.")
+    @DisplayName("딜러만 Blackjack인 경우 참을 반환한다.")
     @ParameterizedTest
-    @MethodSource("provideOnlyDealerNaturalBlackjack")
-    void onlyDealerNaturalBlackjackTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
+    @MethodSource("provideOnlyDealerBlackjack")
+    void onlyDealerBlackjackTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
         Player player = ParticipantGenerator.createPlayer(playerNumbers);
         Dealer dealer = ParticipantGenerator.createDealer(dealerNumbers);
 
@@ -65,7 +65,7 @@ class PlayerLoseMatcherTest {
                 .isEqualTo(true);
     }
 
-    private static Stream<Arguments> provideOnlyDealerNaturalBlackjack() {
+    private static Stream<Arguments> provideOnlyDealerBlackjack() {
         return Stream.of(
                 Arguments.of(List.of(Number.TWO, Number.FIVE), List.of(Number.ACE, Number.JACK)),
                 Arguments.of(List.of(Number.ACE, Number.FIVE, Number.FIVE), List.of(Number.KING, Number.ACE))

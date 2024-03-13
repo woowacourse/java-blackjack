@@ -1,29 +1,24 @@
 # java-blackjack
 ### 게임 용어 설명
 
-#### Player 관련
 - Bust: 카드의 합이 21을 초과하는 경우
 - Hit: 카드를 한 장 추가로 지급받는다
 - Stand: 더 이상 카드를 받지 않는다
 - Hand: 플레이어 혹은 딜러가 현재 가지고 있는 카드 덱을 지칭하는 용어
-
-#### Blackjack 관련
-- Blackjack: 카드 합의 기준이 되는 값(21)
-- NaturalBlackjack: 카드의 개수가 2장이고 카드 최적 합이 Blackjack인 경우
-- ScoreBlackjack: 가진 카드의 개수와 상관없이 카드 최적 합이 Blackjack인 경우(NaturalBlackjack인 경우를 포함함)
+- Blackjack: Hand가 두 장이고 카드 최적 합이 21인 경우
 
 #### 플레이어의 승패 결과
 - BlackjackWin
-  - 플레이어가 NaturalBlackjack고, 딜러는 NaturalBlackjack가 아닌 경우
+  - 플레이어가 Blackjack고, 딜러는 Blackjack가 아닌 경우
 - Win
   - 딜러가 Bust인 경우
-  - 플레이어와 딜러 모두 Bust가 아니고, 플레이어의 점수가 딜러보다 많은 경우(단, 플레이어는 NaturalBlackjack가 아님) 
+  - 플레이어와 딜러 모두 Bust가 아니고, 플레이어의 점수가 딜러보다 많은 경우(단, 플레이어는 Blackjack가 아님) 
 - Draw
-  - 딜러가 Bust가 아니고 플레이어와 딜러의 isNaturalBlackjack과 점수가 모두 동일
+  - 딜러가 Bust가 아니고 플레이어와 딜러의 isBlackjack과 점수가 모두 동일
 - Lose
   - 딜러는 Bust가 아니고 플레이어만 Bust인 경우
   - 딜러는 Bust가 아니고 플레이어의 점수가 딜러보다 적은 경우
-  - 딜러는 NaturalBlackjack이고 플레이어는 NaturalBlackjack이 아닌 경우
+  - 딜러는 Blackjack이고 플레이어는 Blackjack이 아닌 경우
 
 ### 주요 구현 기능
 - [x] 이름을 가진 N명의 플레이어를 생성한다 

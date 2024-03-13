@@ -17,10 +17,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PlayerDrawMatcherTest {
     private final PlayerResultMatcher playerResultMatcher = new PlayerDrawMatcher();
 
-    @DisplayName("플레이어와 딜러가 모두 NaturalBlackjack일 경우 참을 반환한다.")
+    @DisplayName("플레이어와 딜러가 모두 Blackjack일 경우 참을 반환한다.")
     @ParameterizedTest
-    @MethodSource("provideBothNaturalBlackjack")
-    void bothNaturalBlackjackTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
+    @MethodSource("provideBothBlackjack")
+    void bothBlackjackTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
         Player player = ParticipantGenerator.createPlayer(playerNumbers);
         Dealer dealer = ParticipantGenerator.createDealer(dealerNumbers);
 
@@ -28,17 +28,17 @@ class PlayerDrawMatcherTest {
                 .isEqualTo(true);
     }
 
-    private static Stream<Arguments> provideBothNaturalBlackjack() {
+    private static Stream<Arguments> provideBothBlackjack() {
         return Stream.of(
                 Arguments.of(List.of(Number.ACE, Number.JACK), List.of(Number.QUEEN, Number.ACE)),
                 Arguments.of(List.of(Number.KING, Number.ACE), List.of(Number.JACK, Number.ACE))
         );
     }
 
-    @DisplayName("점수가 같지만, 플레이어와 딜러 중 한쪽만 NaturalBlackjack일 경우 거짓을 반환한다.")
+    @DisplayName("점수가 같지만, 플레이어와 딜러 중 한쪽만 Blackjack일 경우 거짓을 반환한다.")
     @ParameterizedTest
-    @MethodSource("provideNotSameNaturalBlackjack")
-    void notSameNaturalBlackjackTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
+    @MethodSource("provideMismatchedBlackjack")
+    void mismatchedBlackjackTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
         Player player = ParticipantGenerator.createPlayer(playerNumbers);
         Dealer dealer = ParticipantGenerator.createDealer(dealerNumbers);
 
@@ -46,17 +46,17 @@ class PlayerDrawMatcherTest {
                 .isEqualTo(false);
     }
 
-    private static Stream<Arguments> provideNotSameNaturalBlackjack() {
+    private static Stream<Arguments> provideMismatchedBlackjack() {
         return Stream.of(
                 Arguments.of(List.of(Number.ACE, Number.FIVE, Number.FIVE), List.of(Number.QUEEN, Number.ACE)),
                 Arguments.of(List.of(Number.KING, Number.ACE), List.of(Number.FIVE, Number.SIX, Number.KING))
         );
     }
 
-    @DisplayName("점수와 NaturalBlackjack의 상태가 같을 경우 참을 반환한다.")
+    @DisplayName("점수와 Blackjack의 상태가 같을 경우 참을 반환한다.")
     @ParameterizedTest
-    @MethodSource("provideSameNaturalBlackjackAndScore")
-    void sameNaturalBlackjackAndScoreTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
+    @MethodSource("provideSameBlackjackAndScore")
+    void sameBlackjackAndScoreTest(List<Number> playerNumbers, List<Number> dealerNumbers) {
         Player player = ParticipantGenerator.createPlayer(playerNumbers);
         Dealer dealer = ParticipantGenerator.createDealer(dealerNumbers);
 
@@ -64,7 +64,7 @@ class PlayerDrawMatcherTest {
                 .isEqualTo(true);
     }
 
-    private static Stream<Arguments> provideSameNaturalBlackjackAndScore() {
+    private static Stream<Arguments> provideSameBlackjackAndScore() {
         return Stream.of(
                 Arguments.of(List.of(Number.ACE, Number.FIVE, Number.FIVE), List.of(Number.FIVE, Number.SIX, Number.JACK)),
                 Arguments.of(List.of(Number.TWO, Number.TWO, Number.FOUR), List.of(Number.THREE, Number.FIVE))
