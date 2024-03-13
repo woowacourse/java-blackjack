@@ -15,10 +15,6 @@ public class Player extends Gamer {
 		return new Player(name, CardHand.createEmpty());
 	}
 
-	public void receiveCard(Card card) {
-		cardHand.add(card);
-	}
-
 	@Override
 	public String toString() {
 		return "Player{" +

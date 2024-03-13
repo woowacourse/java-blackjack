@@ -2,6 +2,7 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.domain.result.GameResult;
@@ -13,17 +14,20 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class BlackjackGame {
-    private static final BlackjackGame INSTANCE = new BlackjackGame();
+    private static final int INIT_CARD_COUNT = 2;
 
-    private BlackjackGame() {}
+    private final Deck deck;
 
-    public static BlackjackGame getInstance() {
-        return INSTANCE;
+    private BlackjackGame(Deck deck) {
+        this.deck = deck;
+    }
+
+    public static BlackjackGame create() {
+        return new BlackjackGame(Deck.createShuffled());
     }
 
     public Dealer createDealer() {
-        Deck deck = Deck.createUnShuffled();
-        return Dealer.newInstance(deck);
+        return Dealer.newInstance();
     }
 
     public Players createPlayers(List<String> playerNames) {
@@ -32,9 +36,21 @@ public class BlackjackGame {
 
     public void dealInitCards(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
-            player.receiveInitCards(dealer.dealInit());
+            player.receiveInitCards(deck.drawCards(INIT_CARD_COUNT));
         }
-        dealer.receiveInitCards(dealer.dealInit());
+        dealer.receiveInitCards(deck.drawCards(INIT_CARD_COUNT));
+    }
+
+    public boolean isHit(Player player, boolean isHit) {
+        return !player.isBust() && isHit;
+    }
+
+    public boolean isHit(Dealer dealer) {
+        return dealer.hasHitScore();
+    }
+
+    public void hit(Gamer gamer) {
+        gamer.receiveCard(deck.drawCard());
     }
 
     public Map<Player, GameResult> getPlayerResults(Players players, Dealer dealer) {

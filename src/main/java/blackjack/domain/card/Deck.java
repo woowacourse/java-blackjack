@@ -17,8 +17,10 @@ public class Deck {
 		this.cards = copyDeck;
 	}
 
-	public static Deck createUnShuffled() {
-		return new Deck(createCards());
+	public static Deck createShuffled() {
+		Deck deck = new Deck(createCards());
+		deck.shuffle();
+		return deck;
 	}
 
 	private static List<Card> createCards() {

@@ -16,6 +16,10 @@ public class Gamer {
 		cardHand.add(cards);
 	}
 
+	public void receiveCard(Card card) {
+		cardHand.add(card);
+	}
+
 	public int getScore() {
 		return cardHand.calculateScore();
 	}

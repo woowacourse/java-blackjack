@@ -1,13 +1,9 @@
 package blackjack.controller;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.result.GameResult;
-import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
@@ -24,12 +20,12 @@ public class BlackjackController {
 	}
 
 	public void startGame() {
-		BlackjackGame blackjackGame = BlackjackGame.getInstance();
+		BlackjackGame blackjackGame = BlackjackGame.create();
 		Dealer dealer = blackjackGame.createDealer();
 		Players players = blackjackGame.createPlayers(inputView.readPlayerNames());
 
 		dealInitCards(dealer, players, blackjackGame);
-		receiveAdditionalCard(dealer, players);
+		receiveAdditionalCard(dealer, players, blackjackGame);
 		printResult(dealer, players, blackjackGame);
 	}
 
@@ -38,16 +34,16 @@ public class BlackjackController {
 		outputView.printInitCardStatus(dealer, players);
 	}
 
-	private void receiveAdditionalCard(Dealer dealer, Players players) {
+	private void receiveAdditionalCard(Dealer dealer, Players players, BlackjackGame blackjackGame) {
 		for (Player player : players.getPlayers()) {
-			receivePlayerAdditionalCard(dealer, player);
+			receivePlayerAdditionalCard(player, blackjackGame);
 		}
-		receiveDealerAdditionalCard(dealer);
+		receiveDealerAdditionalCard(dealer, blackjackGame);
 	}
 
-	private void receivePlayerAdditionalCard(Dealer dealer, Player player) {
-		while (!player.isBust() && isPlayerInputHit(player)) {
-			player.receiveCard(dealer.dealCard());
+	private void receivePlayerAdditionalCard(Player player, BlackjackGame blackjackGame) {
+		while (blackjackGame.isHit(player, isPlayerInputHit(player))) {
+			blackjackGame.hit(player);
 			outputView.printCardHandStatus(player);
 		}
 	}
@@ -56,8 +52,9 @@ public class BlackjackController {
 		return inputView.readHitOrStand(player);
 	}
 
-	private void receiveDealerAdditionalCard(Dealer dealer) {
-		while (dealer.tryHit()) {
+	private void receiveDealerAdditionalCard(Dealer dealer, BlackjackGame blackjackGame) {
+		while (blackjackGame.isHit(dealer)) {
+			blackjackGame.hit(dealer);
 			outputView.printDealerHitMessage();
 		}
 	}
