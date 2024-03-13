@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import blackjack.model.betting.BettingBoard;
+import blackjack.model.betting.BettingMoney;
 import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.cardgenerator.RandomCardGenerator;
 import blackjack.model.dealer.Dealer;
@@ -13,7 +15,9 @@ import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
 import blackjack.view.dto.PlayerMatchResult;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
 
@@ -29,6 +33,7 @@ public class BlackJackController {
     public void run() {
         CardGenerator cardGenerator = new RandomCardGenerator();
         Players players = retryOnException(() -> preparePlayers(cardGenerator));
+        BettingBoard bettingBoard = prepareBettingBoard(players);
         Dealer dealer = new Dealer(cardGenerator);
         outputView.printDealingResult(players, dealer);
 
@@ -39,6 +44,15 @@ public class BlackJackController {
     private Players preparePlayers(final CardGenerator cardGenerator) {
         List<String> playerNames = inputView.askPlayerNames();
         return new Players(playerNames, cardGenerator);
+    }
+
+    private BettingBoard prepareBettingBoard(final Players players) {
+        Map<Player, BettingMoney> board = new HashMap<>();
+        for (Player player : players.getPlayers()) {
+            int bettingMoney = retryOnException(() -> inputView.askBettingMoney(player.getName()));
+            board.put(player, new BettingMoney(bettingMoney));
+        }
+        return new BettingBoard(board);
     }
 
     private void play(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
