@@ -11,7 +11,7 @@ public class Card {
         this.value = value;
     }
 
-    public boolean hasValue(Value targetValue){
+    public boolean hasValue(Value targetValue) {
         return value == targetValue;
     }
 

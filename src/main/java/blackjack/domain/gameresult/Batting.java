@@ -16,7 +16,8 @@ public class Batting {
         validateBat(bat);
         return new Batting(bat);
     }
-    public static int maxBat(){
+
+    public static int maxBat() {
         return MAX_BAT;
     }
 
