@@ -17,10 +17,6 @@ public class Card {
         return cardNumber.equals(CardNumber.ACE);
     }
 
-    public boolean isNotAce() {
-        return !cardNumber.equals(CardNumber.ACE);
-    }
-
     public int score() {
         return cardNumber.getScore();
     }
