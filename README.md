@@ -74,3 +74,17 @@
 - [x] 딜러의 추가 카드를 받았다면 해당 내용을 출력한다.
 - [x] 카드 계산 결과를 출력한다.
 - [x] 최종 승패를 출력한다.
+
+## 리팩토링
+- [ ] Cards 에서 카드가 비어 있을 경우 메서드 사용 시 예외 발생 테스트
+  - [ ] draw()
+  - [ ] peek()
+  - [ ] shuffle()
+  - [ ] hasAce()
+  - [ ] sum()
+- [ ] BlackjackViewParser의 default 메서드 재고
+- [ ] Participant.isLose() if문과 얼리 리턴을 활용해서 가독성 개선
+- [ ] DealerResult.put() { counts.put() -> counts.merge() }
+- [ ] CardMachine 불필요한 메서드 삭제
+- [ ] InputView.askPlayers() 생성 로직을 Players 로 이동
+- [ ] Cards 정적 팩토리 메서드 삭제
