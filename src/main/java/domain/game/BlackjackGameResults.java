@@ -10,14 +10,18 @@ import java.util.*;
 import static domain.constant.GameResult.*;
 import static java.util.Collections.*;
 
-public record GameResults(List<GameResult> dealerGameResults, Map<PlayerName, GameResult> playerGameResults) {
+public record BlackjackGameResults(List<GameResult> dealerGameResults, Map<PlayerName, GameResult> playerGameResults) {
 
-    public static GameResults of(Dealer dealer, List<Player> players) {
+    public static BlackjackGameResults of(final BlackjackGame blackjackGame) {
+        return BlackjackGameResults.of(blackjackGame.getDealer(), blackjackGame.getPlayers());
+    }
+
+    public static BlackjackGameResults of(final Dealer dealer, final List<Player> players) {
         List<GameResult> dealerGameResults = new ArrayList<>();
         Map<PlayerName, GameResult> playerGameResults = new HashMap<>();
         players.forEach(player -> determineGameResult(dealer, player, dealerGameResults, playerGameResults));
 
-        return new GameResults(unmodifiableList(dealerGameResults), unmodifiableMap(playerGameResults));
+        return new BlackjackGameResults(unmodifiableList(dealerGameResults), unmodifiableMap(playerGameResults));
     }
 
     private static void determineGameResult(
@@ -40,9 +44,9 @@ public record GameResults(List<GameResult> dealerGameResults, Map<PlayerName, Ga
     private static void addGameResult(
             final List<GameResult> dealerGameResults,
             final Map<PlayerName, GameResult> playerGameResults,
-            Player player,
-            GameResult dealerGameResult,
-            GameResult playerGameResult
+            final Player player,
+            final GameResult dealerGameResult,
+            final GameResult playerGameResult
     ) {
         dealerGameResults.add(dealerGameResult);
         playerGameResults.put(player.getPlayerName(), playerGameResult);

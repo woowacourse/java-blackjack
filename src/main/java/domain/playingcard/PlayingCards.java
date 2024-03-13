@@ -4,20 +4,26 @@ import java.util.Arrays;
 import java.util.List;
 
 import static domain.playingcard.PlayingCardValue.values;
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
 
-public record PlayingCards(List<PlayingCard> value) {
+public class PlayingCards {
+    private static final List<PlayingCard> value = PlayingCards.init();
 
-    public static PlayingCards init() {
+    private PlayingCards() {
+    }
+
+    private static List<PlayingCard> init() {
         return Arrays.stream(PlayingCardShape.values())
                 .flatMap(playingCardShape -> generateCardByShape(playingCardShape).stream())
-                .collect(collectingAndThen(toList(), PlayingCards::new));
+                .toList();
     }
 
     private static List<PlayingCard> generateCardByShape(final PlayingCardShape playingCardShape) {
         return Arrays.stream(values())
                 .map(playingCardValue -> new PlayingCard(playingCardShape, playingCardValue))
                 .toList();
+    }
+
+    public static List<PlayingCard> getValue() {
+        return value;
     }
 }

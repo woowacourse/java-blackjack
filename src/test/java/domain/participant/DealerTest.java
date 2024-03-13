@@ -18,7 +18,7 @@ public class DealerTest {
     @Test
     void createDealerTest() {
         // When
-        Dealer dealer = Dealer.init(Deck.init(PlayingCards.init().value()));
+        Dealer dealer = Dealer.init(Deck.init(PlayingCards.getValue()));
 
         // Then
         assertThat(dealer).isNotNull();
@@ -43,7 +43,7 @@ public class DealerTest {
     @Test
     void drawTest() {
         // Given
-        Deck deck = Deck.init(PlayingCards.init().value());
+        Deck deck = Deck.init(PlayingCards.getValue());
         Hand initHand = Hand.init();
         int totalScore = initHand.getTotalScore().value();
         Dealer dealer = new Dealer(initHand);

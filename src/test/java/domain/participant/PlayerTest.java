@@ -21,8 +21,7 @@ public class PlayerTest {
         PlayerName playerName = new PlayerName("kelly");
 
         // When
-        PlayingCards playingCards = PlayingCards.init();
-        Player player = Player.of(playerName, Deck.init(playingCards.value()));
+        Player player = Player.of(playerName, Deck.init(PlayingCards.getValue()));
 
         // Then
         assertThat(player).isNotNull();
@@ -47,7 +46,7 @@ public class PlayerTest {
     @Test
     void drawTest() {
         // Given
-        Deck deck = Deck.init(PlayingCards.init().value());
+        Deck deck = Deck.init(PlayingCards.getValue());
         Hand initHand = Hand.init();
         int totalScore = initHand.getTotalScore().value();
         Player player = new Player(new PlayerName("kelly"), initHand);

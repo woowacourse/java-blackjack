@@ -1,6 +1,8 @@
+import controller.GameController;
+
 public class Application {
     public static void main(String[] args) {
-        BlackJackGame blackJackGame = new BlackJackGame();
-        blackJackGame.run();
+        GameController gameController = new GameController();
+        gameController.run();
     }
 }

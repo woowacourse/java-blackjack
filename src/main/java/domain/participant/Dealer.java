@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.playingcard.Deck;
+import domain.playingcard.PlayingCard;
 
 import java.util.stream.IntStream;
 
@@ -28,5 +29,9 @@ public class Dealer extends Participant {
            return player.isBust()
                 || (this.isBlackJack() && !player.isBlackJack())
                 || (!this.isBust() && this.getTotalScore().isBigger(player.getTotalScore()));
+    }
+
+    public PlayingCard getFirstPlayingCard() {
+        return hand.getPlayingCards().get(0);
     }
 }

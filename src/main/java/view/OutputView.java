@@ -1,7 +1,7 @@
 package view;
 
 import domain.constant.GameResult;
-import domain.game.GameResults;
+import domain.game.BlackjackGameResults;
 import domain.participant.PlayerName;
 import dto.DealerHandStatusDto;
 import dto.PlayerHandStatusDto;
@@ -81,14 +81,14 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printGameResult(final GameResults gameResults) {
+    public static void printGameResult(final BlackjackGameResults blackjackGameResults) {
         System.out.println("## 최종 승패");
-        List<GameResult> dealerGameResults = gameResults.dealerGameResults();
+        List<GameResult> dealerGameResults = blackjackGameResults.dealerGameResults();
         System.out.println("딜러: "
                 + getDealerGameResultCount(dealerGameResults, WIN) + "승 "
                 + getDealerGameResultCount(dealerGameResults, LOSE) + "패 "
                 + getDealerGameResultCount(dealerGameResults, DRAW) + "무");
-        gameResults.playerGameResults()
+        blackjackGameResults.playerGameResults()
                 .forEach((key, value) ->
                         System.out.println(convertPlayerGameResultToPrintMessage(key, value)));
     }

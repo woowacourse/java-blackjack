@@ -1,10 +1,7 @@
 package domain.game;
 
 import domain.constant.GameResult;
-import domain.participant.Dealer;
-import domain.participant.Hand;
-import domain.participant.Player;
-import domain.participant.PlayerName;
+import domain.participant.*;
 import domain.playingcard.PlayingCard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -19,19 +16,20 @@ import static domain.playingcard.PlayingCardValue.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class GameResultsTest {
+class BlackjackGameResultsTest {
     @DisplayName("플레이어가 버스트면 딜러가 승리한다.")
     @Test
     void dealerWinWhenPlayerBust() {
         // Given
         PlayerName playerName = new PlayerName("kelly");
+        BlackjackGame.init(PlayerNames.of(List.of("kelly", "long")));
         Player player = new Player(playerName, initBustHand());
         Dealer dealer = new Dealer(new Hand(List.of(new PlayingCard(DIAMOND, TEN), new PlayingCard(DIAMOND, NINE))));
 
         // When
-        GameResults gameResults = GameResults.of(dealer, List.of(player));
-        GameResult dealerGameResult = gameResults.dealerGameResults().get(0);
-        GameResult playerGameResult = gameResults.playerGameResults().get(playerName);
+        BlackjackGameResults blackjackGameResults = BlackjackGameResults.of(dealer, List.of(player));
+        GameResult dealerGameResult = blackjackGameResults.dealerGameResults().get(0);
+        GameResult playerGameResult = blackjackGameResults.playerGameResults().get(playerName);
 
         // Then
         assertThat(dealerGameResult).isEqualTo(WIN);
@@ -48,9 +46,9 @@ class GameResultsTest {
         Dealer dealer = new Dealer(initBlackJackHand());
 
         // When
-        GameResults gameResults = GameResults.of(dealer, List.of(player));
-        GameResult dealerGameResult = gameResults.dealerGameResults().get(0);
-        GameResult playerGameResult = gameResults.playerGameResults().get(playerName);
+        BlackjackGameResults blackjackGameResults = BlackjackGameResults.of(dealer, List.of(player));
+        GameResult dealerGameResult = blackjackGameResults.dealerGameResults().get(0);
+        GameResult playerGameResult = blackjackGameResults.playerGameResults().get(playerName);
 
         // Then
         assertThat(dealerGameResult).isEqualTo(WIN);
@@ -68,9 +66,9 @@ class GameResultsTest {
         Dealer dealer = new Dealer(dealerHand);
 
         // When
-        GameResults gameResults = GameResults.of(dealer, List.of(player));
-        GameResult dealerGameResult = gameResults.dealerGameResults().get(0);
-        GameResult playerGameResult = gameResults.playerGameResults().get(playerName);
+        BlackjackGameResults blackjackGameResults = BlackjackGameResults.of(dealer, List.of(player));
+        GameResult dealerGameResult = blackjackGameResults.dealerGameResults().get(0);
+        GameResult playerGameResult = blackjackGameResults.playerGameResults().get(playerName);
 
         // Then
         assertThat(dealerGameResult).isEqualTo(WIN);
@@ -87,9 +85,9 @@ class GameResultsTest {
         Dealer dealer = new Dealer(initBustHand());
 
         // When
-        GameResults gameResults = GameResults.of(dealer, List.of(player));
-        GameResult dealerGameResult = gameResults.dealerGameResults().get(0);
-        GameResult playerGameResult = gameResults.playerGameResults().get(playerName);
+        BlackjackGameResults blackjackGameResults = BlackjackGameResults.of(dealer, List.of(player));
+        GameResult dealerGameResult = blackjackGameResults.dealerGameResults().get(0);
+        GameResult playerGameResult = blackjackGameResults.playerGameResults().get(playerName);
 
         // Then
         assertThat(dealerGameResult).isEqualTo(LOSE);
@@ -106,9 +104,9 @@ class GameResultsTest {
         Dealer dealer = new Dealer(dealerHand);
 
         // When
-        GameResults gameResults = GameResults.of(dealer, List.of(player));
-        GameResult dealerGameResult = gameResults.dealerGameResults().get(0);
-        GameResult playerGameResult = gameResults.playerGameResults().get(playerName);
+        BlackjackGameResults blackjackGameResults = BlackjackGameResults.of(dealer, List.of(player));
+        GameResult dealerGameResult = blackjackGameResults.dealerGameResults().get(0);
+        GameResult playerGameResult = blackjackGameResults.playerGameResults().get(playerName);
 
         // Then
         assertThat(dealerGameResult).isEqualTo(LOSE);
@@ -126,9 +124,9 @@ class GameResultsTest {
         Dealer dealer = new Dealer(dealerHand);
 
         // When
-        GameResults gameResults = GameResults.of(dealer, List.of(player));
-        GameResult dealerGameResult = gameResults.dealerGameResults().get(0);
-        GameResult playerGameResult = gameResults.playerGameResults().get(playerName);
+        BlackjackGameResults blackjackGameResults = BlackjackGameResults.of(dealer, List.of(player));
+        GameResult dealerGameResult = blackjackGameResults.dealerGameResults().get(0);
+        GameResult playerGameResult = blackjackGameResults.playerGameResults().get(playerName);
 
         // Then
         assertThat(dealerGameResult).isEqualTo(LOSE);
@@ -144,9 +142,9 @@ class GameResultsTest {
         Dealer dealer = new Dealer(initBlackJackHand());
 
         // When
-        GameResults gameResults = GameResults.of(dealer, List.of(player));
-        GameResult dealerGameResult = gameResults.dealerGameResults().get(0);
-        GameResult playerGameResult = gameResults.playerGameResults().get(playerName);
+        BlackjackGameResults blackjackGameResults = BlackjackGameResults.of(dealer, List.of(player));
+        GameResult dealerGameResult = blackjackGameResults.dealerGameResults().get(0);
+        GameResult playerGameResult = blackjackGameResults.playerGameResults().get(playerName);
 
         // Then
         assertThat(dealerGameResult).isEqualTo(DRAW);
@@ -163,9 +161,9 @@ class GameResultsTest {
         Dealer dealer = new Dealer(dealerHand);
 
         // When
-        GameResults gameResults = GameResults.of(dealer, List.of(player));
-        GameResult dealerGameResult = gameResults.dealerGameResults().get(0);
-        GameResult playerGameResult = gameResults.playerGameResults().get(playerName);
+        BlackjackGameResults blackjackGameResults = BlackjackGameResults.of(dealer, List.of(player));
+        GameResult dealerGameResult = blackjackGameResults.dealerGameResults().get(0);
+        GameResult playerGameResult = blackjackGameResults.playerGameResults().get(playerName);
 
         // Then
         assertThat(dealerGameResult).isEqualTo(DRAW);
