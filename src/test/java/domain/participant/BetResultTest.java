@@ -70,4 +70,28 @@ class BetResultTest {
         BetAmount findProfit = betResult.findByParticipant(participant);
         assertThat(findProfit.getValue()).isEqualTo(-1000);
     }
+
+    @DisplayName("처음 두장의 카드가 블랙잭일 경우, 배팅 금액의 1.5배를 딜러에게 받는다.")
+    @Test
+    void profitWhenBlackJack() {
+        //given
+        Participant participant = new Participant(new Name("rush"));
+        BetAmount betAmount = BetAmount.from(1000);
+
+        Dealer dealer = new Dealer();
+
+        LinkedHashMap<Participant, BetAmount> betAmountByParticipant = new LinkedHashMap<>();
+        betAmountByParticipant.put(participant, betAmount);
+        BetResult betResult = new BetResult(betAmountByParticipant);
+
+        LinkedHashMap<Participant, WinStatus> winStatusByParticipant = new LinkedHashMap<>();
+        winStatusByParticipant.put(participant, WinStatus.BLACKJACK);
+
+        //when
+        betResult.updateToProfit(winStatusByParticipant);
+        //then
+        BetAmount findProfit = betResult.findByParticipant(participant);
+        assertThat(findProfit.getValue()).isEqualTo(1500);
+    }
+
 }

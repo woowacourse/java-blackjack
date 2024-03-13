@@ -3,11 +3,13 @@ package domain.blackjack;
 public enum WinStatus {
 
     WIN(1),
-    LOSE(-1);
+    BLACKJACK(1.5),
+    LOSE(-1)
+    ;
 
-    private final int profitMultiplier;
+    private final double profitMultiplier;
 
-    WinStatus(int profitMultiplier) {
+    WinStatus(double profitMultiplier) {
         this.profitMultiplier = profitMultiplier;
     }
 
@@ -18,7 +20,7 @@ public enum WinStatus {
         return LOSE;
     }
 
-    public int getProfitMultiplier() {
+    public double getProfitMultiplier() {
         return profitMultiplier;
     }
 }

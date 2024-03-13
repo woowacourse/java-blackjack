@@ -25,4 +25,17 @@ class ParticipantTest {
         assertThat(canHit).isFalse();
 
     }
+
+    @DisplayName("사용자가 블랙잭인지 확인한다.")
+    @Test
+    void isBlackJack() {
+        Participant participant = new Participant(new Name("user"));
+        participant.receiveCard(new Card(Shape.HEART, Rank.KING));
+        participant.receiveCard(new Card(Shape.DIA, Rank.ACE));
+
+        boolean canHit = participant.isBlackJack();
+
+        assertThat(canHit).isTrue();
+
+    }
 }

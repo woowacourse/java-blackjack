@@ -5,9 +5,9 @@ import java.util.Objects;
 public final class BetAmount {
 
     public static final int MIN_BET_AMOUNT = 500;
-    private final int value;
+    private final double value;
 
-    private BetAmount(int value) {
+    private BetAmount(double value) {
         this.value = value;
     }
 
@@ -18,11 +18,11 @@ public final class BetAmount {
         return new BetAmount(value);
     }
 
-    public BetAmount multiply(int profitMultiplier) {
+    public BetAmount multiply(double profitMultiplier) {
         return new BetAmount(value * profitMultiplier);
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 
