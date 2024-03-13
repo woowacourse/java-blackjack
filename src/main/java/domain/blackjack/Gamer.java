@@ -9,7 +9,7 @@ import java.util.List;
 abstract class Gamer {
     private static final int INITIAL_CARD_COUNT = 2;
     protected final BlackJackGameMachine blackJackGameMachine;
-    protected final int bettingMoney;
+    private final int bettingMoney;
 
     Gamer(BlackJackGameMachine blackJackGameMachine, int bettingMoney) {
         this.blackJackGameMachine = blackJackGameMachine;
@@ -46,5 +46,9 @@ abstract class Gamer {
         int holdingCardCount = rawHoldingCards.size();
         SummationCardPoint summationCardPoint = calculateSummationCardPoint();
         return holdingCardCount == INITIAL_CARD_COUNT && summationCardPoint.isBlackJackPoint();
+    }
+
+    int getBettingMoney() {
+        return bettingMoney;
     }
 }

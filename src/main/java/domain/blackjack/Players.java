@@ -77,7 +77,7 @@ public class Players {
         return players.stream()
                 .map(player -> {
                     GameResult gameResult = GameResultCalculator.calculate(player, dealer);
-                    return player.calculateBettingMoney(gameResult);
+                    return EarnMoneyCalculator.calculateEarnMoney(player.getBettingMoney(), gameResult);
                 })
                 .toList();
     }

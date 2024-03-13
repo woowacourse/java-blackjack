@@ -102,7 +102,7 @@ class PlayerTest {
         Dealer dealer = Dealer.of(TestHoldingCards.DEAD_CARDS);
         GameResult gameResult = GameResultCalculator.calculate(player, dealer);
 
-        Assertions.assertThat(player.calculateBettingMoney(gameResult))
+        Assertions.assertThat(EarnMoneyCalculator.calculateEarnMoney(bettingMoney, gameResult))
                 .isEqualTo(expected);
     }
 
@@ -114,7 +114,7 @@ class PlayerTest {
         Dealer dealer = Dealer.of(ONLY_SEVEN_HEART);
         GameResult gameResult = GameResultCalculator.calculate(player, dealer);
 
-        Assertions.assertThat(player.calculateBettingMoney(gameResult))
+        Assertions.assertThat(EarnMoneyCalculator.calculateEarnMoney(bettingMoney, gameResult))
                 .isEqualTo(expected);
     }
 
@@ -126,7 +126,7 @@ class PlayerTest {
         Dealer dealer = Dealer.of(BLACK_JACK);
         GameResult gameResult = GameResultCalculator.calculate(player, dealer);
 
-        Assertions.assertThat(player.calculateBettingMoney(gameResult))
+        Assertions.assertThat(EarnMoneyCalculator.calculateEarnMoney(bettingMoney, gameResult))
                 .isEqualTo(expected);
     }
 }

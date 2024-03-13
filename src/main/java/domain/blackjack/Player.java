@@ -24,10 +24,6 @@ public class Player extends Gamer {
         return blackJackGameMachine.draw(deck, cardSelectStrategy, new PlayerCardDrawCondition(blackJackGameMachine));
     }
 
-    int calculateBettingMoney(GameResult gameResult) {
-        return gameResult.calculateMoney(bettingMoney);
-    }
-
     public String getRawName() {
         return name;
     }
