@@ -7,19 +7,19 @@ public enum PlayerState {
     LOSE(-1, "패"),
     TIE(0, "무");
 
-    private final String description;
     private final double multiple;
+    private final String description;
 
     PlayerState(double multiple, String description) {
-        this.description = description;
         this.multiple = multiple;
-    }
-
-    public String getDescription() {
-        return description;
+        this.description = description;
     }
 
     public double getMultiple() {
         return multiple;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
