@@ -1,21 +1,24 @@
 package blackjack;
 
-import blackjack.dto.DealerResultCount;
 import blackjack.dto.NameCards;
 import blackjack.dto.NameCardsScore;
-import blackjack.dto.PlayerNameFinalResult;
+import blackjack.dto.NameProfit;
 import blackjack.model.Bets;
+import blackjack.model.Money;
 import blackjack.model.deck.Deck;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
 import blackjack.model.result.Referee;
+import blackjack.model.result.ResultCommand;
 import blackjack.model.result.Rule;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class BlackJackGame {
@@ -37,7 +40,8 @@ public class BlackJackGame {
         printInitialCards(dealer, players);
 
         playParticipantsTurn(players, dealer);
-        printFinalResult(dealer, players, referee);
+        printFinalCardsAndScores(dealer, players);
+        printResultProfits(referee, players, bets);
     }
 
     private Players registerPlayers() {
@@ -124,11 +128,6 @@ public class BlackJackGame {
         }
     }
 
-    private void printFinalResult(final Dealer dealer, final Players players, final Referee referee) {
-        printFinalCardsAndScores(dealer, players);
-        printFinalResultCommand(referee, players);
-    }
-
     private void printFinalCardsAndScores(final Dealer dealer, final Players players) {
         outputView.println();
         NameCardsScore dealerNameCardsScore = new NameCardsScore(OutputView.DEALER_NAME, dealer.openCards(),
@@ -138,19 +137,15 @@ public class BlackJackGame {
         outputView.printFinalCardsAndScore(playerNameCardsScore);
     }
 
-    private void printFinalResultCommand(final Referee referee, final Players players) {
-        printDealerFinalResultCount(referee, players);
-        List<PlayerNameFinalResult> playerNameFinalResults = players.stream()
-                .map(player -> PlayerNameFinalResult.from(player, referee.judgePlayerResult(player)))
-                .toList();
-        outputView.printFinalResults(playerNameFinalResults);
-    }
-
-    private void printDealerFinalResultCount(final Referee referee, final Players players) {
-        List<DealerResultCount> dealerResults = referee.judgeDealerResult(players)
-                .entrySet().stream()
-                .map(dealerResult -> new DealerResultCount(dealerResult.getKey(), dealerResult.getValue()))
-                .toList();
-        outputView.printDealerFinalResult(dealerResults);
+    private void printResultProfits(final Referee referee, final Players players, final Bets bets) {
+        final Map<Player, ResultCommand> playerResultCommands = new LinkedHashMap<>();
+        for (Player player : players.getPlayers()) {
+            playerResultCommands.put(player, referee.judgePlayerResult(player));
+        }
+        final Map<Player, Money> playerProfits = bets.calculatePlayersProfit(playerResultCommands);
+        final List<NameProfit> nameProfits = NameProfit.createNameProfits(playerProfits);
+        final Money dealerProfit = bets.calculateDealerProfit(playerResultCommands);
+        outputView.printDealerProfit(dealerProfit.getMoney());
+        outputView.printPlayersProfit(nameProfits);
     }
 }

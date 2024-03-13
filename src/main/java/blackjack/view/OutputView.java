@@ -1,13 +1,11 @@
 package blackjack.view;
 
-import blackjack.dto.DealerResultCount;
 import blackjack.dto.NameCards;
 import blackjack.dto.NameCardsScore;
-import blackjack.dto.PlayerNameFinalResult;
+import blackjack.dto.NameProfit;
 import blackjack.model.deck.Card;
 import blackjack.view.display.deck.ScoreDisplay;
 import blackjack.view.display.deck.ShapeDisplay;
-import blackjack.view.display.result.ResultCommandDisplay;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,27 +49,23 @@ public class OutputView {
                 nameCardsScore.name() + ": " + convert(nameCardsScore.cards()) + " - 결과: " + nameCardsScore.score());
     }
 
-    public void printDealerFinalResult(final List<DealerResultCount> dealerResults) {
+    public void printDealerProfit(final int profit) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.println(DEALER_NAME + ": " + formatFinalResult(dealerResults));
+        System.out.println("## 최종 수익");
+        System.out.println(DEALER_NAME + ": " + profit);
     }
 
-    private String formatFinalResult(final List<DealerResultCount> dealerResults) {
-        return dealerResults.stream()
-                .map(dealerResult -> dealerResult.count() + ResultCommandDisplay.getValue(dealerResult.result()))
-                .collect(Collectors.joining(" "));
+    public void printPlayersProfit(final List<NameProfit> nameProfits) {
+        System.out.println(formatPlayersProfit(nameProfits));
     }
 
-    public void printFinalResults(final List<PlayerNameFinalResult> playerNameFinalResults) {
-        playerNameFinalResults.forEach(this::printFinalResult);
+    private String formatPlayersProfit(final List<NameProfit> nameProfits) {
+        return nameProfits.stream()
+                .map(this::formatPlayerProfit)
+                .collect(Collectors.joining(System.lineSeparator()));
     }
 
-    private void printFinalResult(final PlayerNameFinalResult playerNameFinalResult) {
-        System.out.println(formatFinalResult(playerNameFinalResult));
-    }
-
-    private String formatFinalResult(final PlayerNameFinalResult playerNameFinalResult) {
-        return playerNameFinalResult.name() + ": " + ResultCommandDisplay.getValue(playerNameFinalResult.result());
+    private String formatPlayerProfit(NameProfit nameProfit) {
+        return nameProfit.name() + ": " + nameProfit.profit();
     }
 }
