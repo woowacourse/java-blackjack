@@ -40,4 +40,8 @@ public class BlackJackGame {
     public Players getPlayers() {
         return players;
     }
+
+    public List<Integer> calculatePlayersBettingMoney() {
+        return players.calculatePlayersBettingMoney(dealer);
+    }
 }

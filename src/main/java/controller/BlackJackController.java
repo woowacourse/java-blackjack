@@ -7,6 +7,7 @@ import domain.blackjack.Players;
 import domain.card.Card;
 import domain.card.Deck;
 import dto.DealerDTO;
+import dto.GameResultDTO;
 import dto.PlayerDTO;
 import java.util.List;
 import view.NameInputView;
@@ -14,6 +15,7 @@ import view.OutputView;
 import view.YesOrNoInputView;
 import view.gamer.DealerOutputView;
 import view.gamer.PlayerOutputView;
+import view.gameresult.GameResultOutputView;
 
 public class BlackJackController {
     public void start() {
@@ -23,7 +25,8 @@ public class BlackJackController {
 
         Players players = blackJackGame.getPlayers();
         Dealer dealer = blackJackGame.getDealer();
-        OutputView.printInitGameDoneMessage(players.getPlayerNames());
+        List<String> playerNames = players.getPlayerNames();
+        OutputView.printInitGameDoneMessage(playerNames);
 
         printPlayers(players);
         printDealerWithoutFirstCard(dealer);
@@ -33,6 +36,9 @@ public class BlackJackController {
 
         printDealerWithPoint(dealer);
         printPlayersWithPoint(players);
+
+        GameResultDTO gameResultDTO = new GameResultDTO(playerNames, blackJackGame.calculatePlayersBettingMoney());
+        GameResultOutputView.print(gameResultDTO);
     }
 
     private BlackJackGame generateBlackJackGame() {

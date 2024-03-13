@@ -60,4 +60,13 @@ public class Players {
         }
         return drawResult.hasNextChance();
     }
+
+    List<Integer> calculatePlayersBettingMoney(Dealer dealer) {
+        return players.stream()
+                .map(player -> {
+                    GameResult gameResult = GameResultCalculator.calculate(player, dealer);
+                    return player.calculateBettingMoney(gameResult);
+                })
+                .toList();
+    }
 }
