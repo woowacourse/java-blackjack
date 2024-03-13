@@ -23,10 +23,6 @@ public class Player extends Participant {
         return hand.calculateScore() < HITTABLE_THRESHOLD;
     }
 
-    public boolean isBlackJack() {
-        return hand.isBlackJack();
-    }
-
     public String getName() {
         return name;
     }

@@ -35,6 +35,10 @@ public abstract class Participant {
         return hand.isBust();
     }
 
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
+
     public boolean hasManyCardsThan(Participant other) {
         return hand.hasManyThan(other.hand);
     }
