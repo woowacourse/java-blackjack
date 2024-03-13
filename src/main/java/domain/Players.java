@@ -47,28 +47,6 @@ public class Players {
         players.forEach(player -> player.pickCards(deck, count));
     }
 
-    public void hitFromName(Name name, Deck deck) {
-        searchFromName(name).hit(deck);
-    }
-
-    public boolean isBustFromName(Name name) {
-        return searchFromName(name).isBust();
-    }
-
-    public List<Card> getCardsFromName(Name name) {
-        return searchFromName(name).getCards();
-    }
-
-    public int getTotalScore(Name name) {
-        return searchFromName(name).getTotalScore();
-    }
-
-    private Player searchFromName(Name name) {
-        return players.stream().filter(player -> player.hasName(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 참여자 입니다."));
-    }
-    
     public List<Player> getPlayers() {
         return players;
     }
