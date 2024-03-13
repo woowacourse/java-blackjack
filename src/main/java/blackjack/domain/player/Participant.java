@@ -8,7 +8,6 @@ import java.util.Objects;
 
 public abstract class Participant implements CardReceivable {
     private static final int BUST_SIZE = 21;
-    private static final Score CHANGE_A_VALUE = Score.from(10);
 
     protected final Name name;
     protected final Cards cards;
@@ -18,8 +17,8 @@ public abstract class Participant implements CardReceivable {
         this.cards = cards;
     }
 
-    public Score calculateScore() {
-        return Score.from(cards.calculate());
+    public int calculateScore() {
+        return cards.calculate();
     }
 
     public void drawCard(final Card card) {

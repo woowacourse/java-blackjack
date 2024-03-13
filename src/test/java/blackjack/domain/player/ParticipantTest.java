@@ -37,7 +37,7 @@ public class ParticipantTest {
 
         var result = sut.calculateScore();
 
-        assertThat(result.value()).isEqualTo(12);
+        assertThat(result).isEqualTo(12);
     }
 
     @Test
