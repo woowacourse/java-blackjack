@@ -2,22 +2,25 @@ package domain.blackjack;
 
 class GameResultCalculator {
 
-    static GameResult calculate(Gamer baseGamer, Gamer otherGamer) {
-        if (baseGamer.isBust() && otherGamer.isBust()) {
-            return GameResult.TIE;
-        }
-        if (baseGamer.isBust()) {
+    static GameResult calculate(Player player, Dealer dealer) {
+        if (player.isBlackJack() && dealer.isBlackJack()) {
             return GameResult.LOSE;
         }
-        if (otherGamer.isBust()) {
+        if (player.isBlackJack()) {
+            return GameResult.WIN_BLACK_JACK;
+        }
+        if (dealer.isBust()) {
             return GameResult.WIN;
         }
-        return getGameResultWhenNobodyDead(baseGamer, otherGamer);
+        if (player.isBust()) {
+            return GameResult.LOSE;
+        }
+        return calculateWithSummationCardPoint(player, dealer);
     }
 
-    private static GameResult getGameResultWhenNobodyDead(Gamer baseGamer, Gamer otherGamer) {
-        SummationCardPoint baseSummationCardPoint = baseGamer.calculateSummationCardPoint();
-        SummationCardPoint otherSummationCardPoint = otherGamer.calculateSummationCardPoint();
+    private static GameResult calculateWithSummationCardPoint(Player player, Dealer dealer) {
+        SummationCardPoint baseSummationCardPoint = player.calculateSummationCardPoint();
+        SummationCardPoint otherSummationCardPoint = dealer.calculateSummationCardPoint();
         if (baseSummationCardPoint.isBiggerThan(otherSummationCardPoint)) {
             return GameResult.WIN;
         }

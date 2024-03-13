@@ -20,4 +20,8 @@ record SummationCardPoint(int summationCardPoint) {
     boolean isDeadPoint() {
         return this.isBiggerThan(new SummationCardPoint(DEAD_POINT_THRESHOLD));
     }
+
+    boolean isBlackJackPoint() {
+        return this.summationCardPoint == DEAD_POINT_THRESHOLD;
+    }
 }

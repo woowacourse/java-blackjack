@@ -38,7 +38,7 @@ class BlackJackGameTest {
         Dealer dealer = blackJackGame.getDealer();
 
         Player player = Player.from("플레이어", HoldingCards.of(TWO_HEART));
-        GameResult gameResult = dealer.calculateGameResult(player);
+        GameResult gameResult = GameResultCalculator.calculate(player, dealer).changeBase();
         Assertions.assertThat(gameResult)
                 .isEqualTo(GameResult.WIN);
     }

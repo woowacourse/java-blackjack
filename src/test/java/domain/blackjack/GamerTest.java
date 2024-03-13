@@ -69,4 +69,18 @@ class GamerTest {
         Assertions.assertThat(summationCardPoint)
                 .isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("블랙잭인지 잘 판단하는지 검증")
+    void isBlackJack() {
+        Gamer player = Player.from("플레이어", WIN_CARDS_WITH_ACE);
+        Assertions.assertThat(player.isBlackJack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("블랙잭이 아닌지 잘 판단하는지 검증")
+    void isNotBlackJack() {
+        Gamer player = Player.from("플레이어", WIN_CARDS_WITHOUT_ACE);
+        Assertions.assertThat(player.isBlackJack()).isFalse();
+    }
 }

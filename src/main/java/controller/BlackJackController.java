@@ -2,23 +2,18 @@ package controller;
 
 import domain.blackjack.BlackJackGame;
 import domain.blackjack.Dealer;
-import domain.blackjack.GameResult;
 import domain.blackjack.Player;
 import domain.blackjack.Players;
 import domain.card.Card;
 import domain.card.Deck;
 import dto.DealerDTO;
-import dto.DealerGameResultDTO;
 import dto.PlayerDTO;
-import dto.PlayerGameResultDTO;
 import java.util.List;
-import java.util.Map;
 import view.NameInputView;
 import view.OutputView;
 import view.YesOrNoInputView;
 import view.gamer.DealerOutputView;
 import view.gamer.PlayerOutputView;
-import view.gameresult.GameResultOutputView;
 
 public class BlackJackController {
     public void start() {
@@ -38,9 +33,6 @@ public class BlackJackController {
 
         printDealerWithPoint(dealer);
         printPlayersWithPoint(players);
-
-        printDealerGameResult(dealer, players);
-        printPlayersGameResult(dealer, players);
     }
 
     private BlackJackGame generateBlackJackGame() {
@@ -62,20 +54,6 @@ public class BlackJackController {
         List<Card> rawHoldingCards = dealer.getRawHoldingCardsWithoutFirstCard();
         DealerDTO dealerDTO = new DealerDTO(rawHoldingCards, dealer.calculateSummationCardPointAsInt());
         DealerOutputView.printWithoutSummationCardPoint(dealerDTO);
-    }
-
-    private void printDealerGameResult(Dealer dealer, Players players) {
-        Map<GameResult, Integer> dealerGameResultCounts = dealer.calculateGameResultWithPlayers(players);
-        DealerGameResultDTO dealerGameResultDTO = new DealerGameResultDTO(dealerGameResultCounts);
-        GameResultOutputView.print(dealerGameResultDTO);
-    }
-
-    private void printPlayersGameResult(Dealer dealer, Players players) {
-        List<PlayerGameResultDTO> playerGameResultDTOs = players.calculateGameResultsWithAsMap(dealer)
-                .entrySet().stream()
-                .map(entry -> new PlayerGameResultDTO(entry.getKey(), entry.getValue()))
-                .toList();
-        GameResultOutputView.print(playerGameResultDTOs);
     }
 
     private void playersTryDraw(Deck deck, BlackJackGame blackJackGame) {
