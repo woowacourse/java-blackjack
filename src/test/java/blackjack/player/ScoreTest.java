@@ -21,33 +21,33 @@ class ScoreTest {
     @DisplayName("점수 간의 덧셈을 올바르게 계산한다.")
     void additionTest() {
         // given
-        Score score = new Score(1);
+        Score score = Score.of(1);
         // when
-        Score result = score.add(new Score(2));
+        Score result = score.add(Score.of(2));
         // then
-        assertThat(result).isEqualTo(new Score(3));
+        assertThat(result).isEqualTo(Score.of(3));
     }
 
     @Test
     @DisplayName("에이스 추가 점수를 받아도 21점을 넘지 않는다면, 추가 점수를 반영한다.")
     void additionalAceTest() {
         // given
-        Score score = new Score(11);
+        Score score = Score.of(11);
         // when
         Score result = score.addAceScoreOnSoftHand();
         // then
-        assertThat(result).isEqualTo(new Score(21));
+        assertThat(result).isEqualTo(Score.of(21));
     }
 
     @Test
     @DisplayName("에이스 추가 점수를 받아 21점이 초과된다면, 추가 점수를 반영하지 않는다.")
     void additionalAceBustTest() {
         // given
-        Score score = new Score(12);
+        Score score = Score.of(12);
         // when
         Score result = score.addAceScoreOnSoftHand();
         // then
-        assertThat(result).isEqualTo(new Score(12));
+        assertThat(result).isEqualTo(Score.of(12));
     }
 
 }
