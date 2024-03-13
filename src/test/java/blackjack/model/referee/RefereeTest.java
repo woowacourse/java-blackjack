@@ -15,18 +15,43 @@ import org.junit.jupiter.api.Test;
 
 class RefereeTest {
     @Test
-    @DisplayName("딜러와 플레이어의 카드 합을 비교하여 승패를 가린다")
-    void determineOutcomeTest() {
+    @DisplayName("플레이어만 블랙잭이면, 플레이어는 블랙잭 승리 한다")
+    void determineMatchResultWhenPlayerOnlyBlackjackTest() {
         // given
         Players players = new Players(List.of("mia"));
         players.dealCards(new SequentialCardGenerator(List.of(
-                new Card(Suit.HEART, Denomination.TWO), new Card(Suit.HEART, Denomination.TWO)
+                new Card(Suit.HEART, Denomination.ACE),
+                new Card(Suit.HEART, Denomination.KING)
         )));
 
         Dealer dealer = new Dealer();
         dealer.dealCards(new SequentialCardGenerator(List.of(
-                new Card(Suit.HEART, Denomination.TEN),
-                new Card(Suit.HEART, Denomination.TEN)
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.HEART, Denomination.TWO)
+        )));
+
+        // when
+        Referee referee = new Referee(players, dealer);
+        List<PlayerMatchResult> playerMatchResults = referee.determinePlayersMatchResult();
+
+        // then
+        assertThat(playerMatchResults.get(0).matchResult()).isEqualTo(MatchResult.BLACKJACK_WIN);
+    }
+
+    @Test
+    @DisplayName("딜러만 블랙잭이면, 플레이어는 패배한다")
+    void determineMatchResultWhenDealerOnlyBlackjackTest() {
+        // given
+        Players players = new Players(List.of("mia"));
+        players.dealCards(new SequentialCardGenerator(List.of(
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.HEART, Denomination.TWO)
+        )));
+
+        Dealer dealer = new Dealer();
+        dealer.dealCards(new SequentialCardGenerator(List.of(
+                new Card(Suit.HEART, Denomination.ACE),
+                new Card(Suit.HEART, Denomination.KING)
         )));
 
         // when
@@ -35,5 +60,29 @@ class RefereeTest {
 
         // then
         assertThat(playerMatchResults.get(0).matchResult()).isEqualTo(MatchResult.LOSE);
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러가 둘다 블랙잭이면, 플레이어는 푸시한다")
+    void determineMatchResultWhenDealerAndPlayerBlackjackTest() {
+        // given
+        Players players = new Players(List.of("mia"));
+        players.dealCards(new SequentialCardGenerator(List.of(
+                new Card(Suit.HEART, Denomination.ACE),
+                new Card(Suit.HEART, Denomination.KING)
+        )));
+
+        Dealer dealer = new Dealer();
+        dealer.dealCards(new SequentialCardGenerator(List.of(
+                new Card(Suit.HEART, Denomination.ACE),
+                new Card(Suit.HEART, Denomination.KING)
+        )));
+
+        // when
+        Referee referee = new Referee(players, dealer);
+        List<PlayerMatchResult> playerMatchResults = referee.determinePlayersMatchResult();
+
+        // then
+        assertThat(playerMatchResults.get(0).matchResult()).isEqualTo(MatchResult.PUSH);
     }
 }
