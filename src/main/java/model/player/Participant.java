@@ -19,4 +19,15 @@ public class Participant extends User {
         }
         return findPlayerOutcome(dealer.findPlayerDifference());
     }
+
+    private Outcome findPlayerOutcome(int otherDifference) {
+        int difference = findPlayerDifference();
+        if (otherDifference > difference) {
+            return Outcome.WIN;
+        }
+        if (otherDifference < difference) {
+            return Outcome.LOSE;
+        }
+        return Outcome.DRAW;
+    }
 }

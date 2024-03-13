@@ -2,7 +2,7 @@ package model.player;
 
 import java.util.List;
 import java.util.Objects;
-import model.Outcome;
+
 import model.card.Card;
 import model.card.Cards;
 
@@ -23,16 +23,20 @@ public abstract class User {
         }
     }
 
-    public void addCards(List<Card> card) {
-        cards.addCards(card);
+    public void addCard(Card... cards) {
+        this.addCards(List.of(cards));
     }
 
-    public void addCard(Card card) {
-        cards.addCard(card);
+    public void addCards(List<Card> card) {
+       cards.addCards(card);
     }
 
     public int calculateScore() {
         return cards.calculateScore();
+    }
+
+    public int findPlayerDifference() {
+        return cards.findPlayerDifference();
     }
 
     public boolean isNotHit() {
@@ -41,21 +45,6 @@ public abstract class User {
 
     public boolean isHit() {
         return cards.isHit();
-    }
-
-    public int findPlayerDifference() {
-        return cards.findPlayerDifference();
-    }
-
-    protected Outcome findPlayerOutcome(int otherDifference) {
-        int difference = findPlayerDifference();
-        if (otherDifference > difference) {
-            return Outcome.WIN;
-        }
-        if (otherDifference < difference) {
-            return Outcome.LOSE;
-        }
-        return Outcome.DRAW;
     }
 
     public String getName() {
