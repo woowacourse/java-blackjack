@@ -18,7 +18,6 @@ public class GameController {
 
     public static void run() {
         Game game = makeGame();
-        assert game != null;
         Dealer gameDealer = game.getDealer();
         Players gamePlayers = game.getPlayers();
         Deck deck = game.getDeck();
@@ -30,9 +29,7 @@ public class GameController {
         OutputView.printGameResult(gameDealer.getName(), game.makeGameResult());
     }
 
-    // TODO 재귀호출을 하거나 Exception 내기
     private static Game makeGame() {
-        Game game = null;
         try {
             // TODO 생성자 로직 확장성 고민해보기
             OutputView.printAskNameMessage();
@@ -41,7 +38,7 @@ public class GameController {
             System.out.println(e.getMessage());
             makeGame();
         }
-        return game;
+        throw new IllegalStateException("게임 객체가 생성되지 않았습니다.");
     }
 
     private static void confirmParticipantsHands(Players players, Deck deck, Dealer dealer) {
