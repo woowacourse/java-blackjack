@@ -1,5 +1,6 @@
 package domain.card;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,8 +12,16 @@ public class CardDeck {
     private final List<Card> deck;
 
     public CardDeck() {
-        deck = readyCards();
+        deck = readySixDeck();
         Collections.shuffle(deck);
+    }
+
+    private List<Card> readySixDeck() {
+        List<Card> sixDeck = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            sixDeck.addAll(readyCards());
+        }
+        return sixDeck;
     }
 
     private List<Card> readyCards() {
