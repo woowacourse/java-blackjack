@@ -3,19 +3,19 @@ package blackjack.domain.cardgame;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Stack;
+import java.util.List;
 
 public class CardDeck {
-    private final Stack<Card> deck;
+    private final List<Card> deck;
 
     public CardDeck() {
-        final Stack<Card> deck = new Stack<>();
+        final List<Card> deck = new ArrayList<>();
 
         for (final CardNumber cardNumber : CardNumber.values()) {
             for (final CardShape cardShape : CardShape.values()) {
-                deck.push(new Card(cardNumber, cardShape));
+                deck.add(new Card(cardNumber, cardShape));
             }
         }
 
@@ -25,6 +25,9 @@ public class CardDeck {
     }
 
     public Card draw() {
-        return deck.pop();
+        if (deck.isEmpty()) {
+            throw new IllegalStateException("[ERROR] 덱이 비어있어 카드를 뽑을 수 없습니다.");
+        }
+        return deck.remove(deck.size() - 1);
     }
 }
