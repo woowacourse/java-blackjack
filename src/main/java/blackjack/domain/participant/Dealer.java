@@ -2,20 +2,19 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.CardHand;
 import blackjack.domain.strategy.CardShuffleStrategy;
 
-public class Dealer {
+public class Dealer extends Participant {
+    private static final String DEFAULT_NAME_OF_DEALER = "딜러";
     private static final int DEALER_MIN_SCORE_POLICY = 16;
 
     private final CardDeck cardDeck;
     private final CardShuffleStrategy cardShuffleStrategy;
-    private final CardHand cardHand;
 
     public Dealer(final CardDeck cardDeck, final CardShuffleStrategy cardShuffleStrategy) {
+        super(DEFAULT_NAME_OF_DEALER);
         this.cardDeck = cardDeck;
         this.cardShuffleStrategy = cardShuffleStrategy;
-        this.cardHand = new CardHand();
     }
 
     public void shuffleCards() {
@@ -24,14 +23,6 @@ public class Dealer {
 
     public Card pickCard() {
         return cardDeck.draw();
-    }
-
-    public void receiveCard(final Card card) {
-        cardHand.receiveCard(card);
-    }
-
-    public int calculateScore() {
-        return cardHand.sumAllScore();
     }
 
     public boolean canReceiveCard() {
