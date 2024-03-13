@@ -29,6 +29,7 @@ public class Dealer extends Participant {
     }
 
     public List<Card> openFirstCard() {
-        return List.of(hand.getFirstCard());
+        final List<Card> cards = state.getCards();
+        return List.of(cards.get(0));
     }
 }

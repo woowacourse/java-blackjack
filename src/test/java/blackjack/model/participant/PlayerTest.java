@@ -83,11 +83,21 @@ class PlayerTest {
 
     @Test
     @DisplayName("플레이어는 소지한 카드의 총 합이 21을 초과하지 않으면 더 받을 수 있다.")
-    void checkNotBust() {
+    void canHit() {
         Player player = new Player("몰리");
         player.receiveInitialCards(List.of(new Card(DIA, TEN), new Card(CLOVER, TEN)));
 
         assertThat(player.canHit()).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어는 소지한 카드의 총 합이 21을 초과하면 더 받을 수 없다.")
+    void canNotHit() {
+        Player player = new Player("몰리");
+        player.receiveInitialCards(List.of(new Card(DIA, TEN), new Card(CLOVER, TEN)));
+        player.draw(new Card(SPADE, TWO));
+
+        assertThat(player.canHit()).isFalse();
     }
 
     @Nested
