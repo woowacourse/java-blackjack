@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static blackjack.domain.game.BlackjackGame.STARTING_CARDS_AMOUNT;
+
 public class BlackjackHand {
 
     private static final int BLACKJACK_SCORE = 21;
     private static final int ACE_SPECIAL_SCORE = 10;
-    private static final int INITIAL_CARD_AMOUNT = 2;
 
     private final List<Card> cards;
 
@@ -44,7 +45,7 @@ public class BlackjackHand {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == INITIAL_CARD_AMOUNT && calculateScore() == BLACKJACK_SCORE;
+        return cards.size() == STARTING_CARDS_AMOUNT && calculateScore() == BLACKJACK_SCORE;
     }
 
     private int calculateInitialScore() {
