@@ -15,6 +15,7 @@ import blackjack.model.deck.Card;
 import blackjack.model.state.BlackJack;
 import blackjack.model.state.Bust;
 import blackjack.model.state.Hit;
+import blackjack.model.state.Stand;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -122,6 +123,15 @@ class PlayerTest {
             player.draw(new Card(CLOVER, TWO));
 
             assertThat(player.getState()).isInstanceOf(Bust.class);
+        }
+
+        @Test
+        @DisplayName("플레이어가 더 이상 카드를 받지 않는 것을 선택하면 Stand 상태가 된다.")
+        void stand() {
+            player.receiveInitialCards(List.of(new Card(SPADE, QUEEN), new Card(DIA, QUEEN)));
+            player.stand();
+
+            assertThat(player.getState()).isInstanceOf(Stand.class);
         }
     }
 }
