@@ -19,7 +19,7 @@ public class BlackjackGame {
 
     public void deal(Dealer dealer, Players players) {
         dealer.draw(deck.pickCards(DEAL_CARDS_COUNT));
-        players.forEach(player -> player.draw(deck.pickCards(DEAL_CARDS_COUNT)));
+        players.draw(deck.pickCards(DEAL_CARDS_COUNT));
     }
 
     public boolean isPlayerCanHit(Player player, PlayerCommand playerCommand) {

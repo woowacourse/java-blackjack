@@ -37,8 +37,10 @@ public class BlackjackController {
 
         OutputView.printDealAnnounce(players.getNames());
         OutputView.printDealerDealCard(dealer.getCards());
-        players.forEach(player ->
-                OutputView.printDealCards(player.getName(), player.getCards()));
+
+        for (Player player : players.getPlayers()) {
+            OutputView.printDealCards(player.getName(), player.getCards());
+        }
     }
 
     private void askToPlayersHit(Players players, BlackjackGame blackjackGame) {
@@ -79,8 +81,10 @@ public class BlackjackController {
 
     private void printAllPlayersHandResult(Dealer dealer, Players players) {
         OutputView.printDealerCards(dealer.getCards(), dealer.getScore());
-        players.forEach(player ->
-                OutputView.printPlayerCards(player.getName(), player.getCards(), player.getScore()));
+
+        for (Player player : players.getPlayers()) {
+            OutputView.printPlayerCards(player.getName(), player.getCards(), player.getScore());
+        }
     }
 
     private void calculateGameResultAndPrint(Dealer dealer, Players players) {

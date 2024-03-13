@@ -6,7 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -48,19 +47,5 @@ public class PlayersTest {
         assertThatCode(() -> Players.from(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("플레이어 이름은 중복될 수 없습니다.");
-    }
-
-    @Test
-    @DisplayName("반복 테스트를 한다.")
-    void playersForEachTest() {
-        // given
-        Players blackJackGame = Players.from(List.of("seyang", "lemone"));
-        AtomicInteger count = new AtomicInteger();
-
-        // when
-        blackJackGame.forEach(player -> count.getAndIncrement());
-
-        // then
-        assertThat(count.get()).isEqualTo(2);
     }
 }

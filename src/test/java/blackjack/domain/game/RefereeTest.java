@@ -54,7 +54,7 @@ public class RefereeTest {
             }
         };
 
-        players.forEach(player -> player.draw(playerCardPicker.pickCards(2)));
+        players.draw(playerCardPicker.pickCards(2));
         dealer.draw(dealerCardPicker.pickCards(2));
         referee.calculatePlayersResults(players, dealer);
         expectedPlayersResult.put("lemone", PlayerGameResult.WIN);
@@ -86,7 +86,7 @@ public class RefereeTest {
             }
         };
 
-        players.forEach(player -> player.draw(playerCardPicker.pickCards(2)));
+        players.draw(playerCardPicker.pickCards(2));
         dealer.draw(dealerCardPicker.pickCards(2));
         referee.calculatePlayersResults(players, dealer);
         expectedPlayersResult.put("lemone", PlayerGameResult.LOSE);
@@ -118,7 +118,7 @@ public class RefereeTest {
             }
         };
 
-        players.forEach(player -> player.draw(playerCardPicker.pickCards(2)));
+        players.draw(playerCardPicker.pickCards(2));
         dealer.draw(dealerCardPicker.pickCards(2));
         referee.calculatePlayersResults(players, dealer);
         expectedPlayersResult.put("lemone", PlayerGameResult.PUSH);
@@ -150,7 +150,7 @@ public class RefereeTest {
             }
         };
 
-        players.forEach(player -> player.draw(playerCardPicker.pickCards(2)));
+        players.draw(playerCardPicker.pickCards(2));
         dealer.draw(dealerCardPicker.pickCards(2));
         referee.calculatePlayersResults(players, dealer);
         expectedPlayersResult.put("lemone", PlayerGameResult.WIN);
@@ -182,7 +182,7 @@ public class RefereeTest {
             }
         };
 
-        players.forEach(player -> player.draw(playerCardPicker.pickCards(2)));
+        players.draw(playerCardPicker.pickCards(2));
         dealer.draw(dealerCardPicker.pickCards(2));
         referee.calculatePlayersResults(players, dealer);
         expectedPlayersResult.put("lemone", PlayerGameResult.LOSE);
@@ -214,7 +214,7 @@ public class RefereeTest {
             }
         };
 
-        players.forEach(player -> player.draw(playerCardPicker.pickCards(2)));
+        players.draw(playerCardPicker.pickCards(2));
         dealer.draw(dealerCardPicker.pickCards(2));
         referee.calculatePlayersResults(players, dealer);
         expectedPlayersResult.put("lemone", PlayerGameResult.LOSE);
@@ -246,7 +246,7 @@ public class RefereeTest {
             }
         };
 
-        players.forEach(player -> player.draw(playerCardPicker.pickCards(2)));
+        players.draw(playerCardPicker.pickCards(2));
         dealer.draw(dealerCardPicker.pickCards(2));
         referee.calculatePlayersResults(players, dealer);
         expectedPlayersResult.put("lemone", PlayerGameResult.WIN);
@@ -278,7 +278,7 @@ public class RefereeTest {
             }
         };
 
-        players.forEach(player -> player.draw(playerCardPicker.pickCards(2)));
+        players.draw(playerCardPicker.pickCards(2));
         dealer.draw(dealerCardPicker.pickCards(2));
         referee.calculatePlayersResults(players, dealer);
         expectedPlayersResult.put("lemone", PlayerGameResult.LOSE);

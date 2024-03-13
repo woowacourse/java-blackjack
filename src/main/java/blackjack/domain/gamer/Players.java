@@ -1,11 +1,11 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class Players {
     private static final String NAMES_DUPLICATE_ERROR = "플레이어 이름은 중복될 수 없습니다.";
@@ -30,8 +30,9 @@ public class Players {
         }
     }
 
-    public void forEach(Consumer<? super Player> action) {
-        players.forEach(action);
+    public void draw(List<Card> cards) {
+        players.stream()
+                .forEach(player -> player.draw(cards));
     }
 
     public List<String> getNames() {
