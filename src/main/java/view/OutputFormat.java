@@ -4,6 +4,7 @@ import domain.blackjack.BettingResult;
 import domain.card.Card;
 import domain.participant.Name;
 import domain.participant.Participant;
+import domain.participant.Player;
 import domain.participant.Players;
 
 import java.util.ArrayList;
@@ -15,11 +16,11 @@ public class OutputFormat {
 
     public String formatParticipantNames(Players players) {
         List<Name> names = players.getNames();
-        List<String> participantNames = new ArrayList<>();
+        List<String> playerNames = new ArrayList<>();
         for (Name name : names) {
-            participantNames.add(name.getValue());
+            playerNames.add(name.getValue());
         }
-        return String.format("딜러와 %s에게 2장을 나누었습니다.", String.join(DELIMITER, participantNames));
+        return String.format("딜러와 %s에게 2장을 나누었습니다.", String.join(DELIMITER, playerNames));
     }
 
     public String formatHands(Participant participant) {
@@ -44,7 +45,7 @@ public class OutputFormat {
         return String.format("딜러: %d", (int) bettingResult.getDealerPayout());
     }
 
-    public String formatBlackJackResult(Participant participant, double payout) {
-        return String.format("%s: %d", participant.getName().getValue(), (int) payout);
+    public String formatBlackJackResult(Player player, double payout) {
+        return String.format("%s: %d", player.getName().getValue(), (int) payout);
     }
 }
