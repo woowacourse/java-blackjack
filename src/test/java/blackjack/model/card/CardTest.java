@@ -1,10 +1,10 @@
 package blackjack.model.card;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class CardTest {
 
@@ -16,7 +16,7 @@ class CardTest {
 
         //when
         Pattern pattern = card.getCardPattern();
-        int score = card.getCardNumber().getNumber();
+        int score = card.getCardScore();
 
         //then
         assertAll(
