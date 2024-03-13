@@ -33,7 +33,7 @@ class GameResultCalculatorTest {
                 Arguments.of(BLACK_JACK, TWO_SIX_CARDS, WIN_BLACK_JACK),
                 Arguments.of(BLACK_JACK, WIN_CARDS_WITHOUT_ACE, WIN_BLACK_JACK),
                 Arguments.of(BLACK_JACK, WIN_CARDS_WITH_ACE, WIN_BLACK_JACK),
-                Arguments.of(BLACK_JACK, BLACK_JACK, LOSE)
+                Arguments.of(BLACK_JACK, BLACK_JACK, TIE)
         );
     }
 

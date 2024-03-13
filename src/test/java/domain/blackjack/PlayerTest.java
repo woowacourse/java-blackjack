@@ -54,7 +54,7 @@ class PlayerTest {
 
     public static Stream<Arguments> calculateBettingMoneyWhenDealerIsBLackJackParameters() {
         return Stream.of(
-                Arguments.of(BLACK_JACK, 10000, -10000),
+                Arguments.of(BLACK_JACK, 10000, 0),
                 Arguments.of(ONLY_SIX_HEART, 10000, -10000),
                 Arguments.of(DEAD_CARDS, 10000, -10000),
                 Arguments.of(WIN_CARDS_WITHOUT_ACE, 10000, -10000),
