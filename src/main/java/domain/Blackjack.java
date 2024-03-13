@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Blackjack {
     public static final int INITIAL_HAND_SIZE = 2;
+    
     private final Players players;
     private final Dealer dealer;
 
