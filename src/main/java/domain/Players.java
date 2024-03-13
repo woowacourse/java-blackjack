@@ -1,9 +1,6 @@
 package domain;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Players {
     private static final int MAX_PLAYERS_COUNT = 8;
@@ -71,9 +68,8 @@ public class Players {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 참여자 입니다."));
     }
-
-    public Map<Name, Integer> getPlayersTotalScores() {
-        return Collections.unmodifiableMap(players.stream()
-                .collect(Collectors.toMap(Gamer::getName, Gamer::getTotalScore)));
+    
+    public List<Player> getPlayers() {
+        return players;
     }
 }

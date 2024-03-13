@@ -3,7 +3,6 @@ package domain;
 import domain.constant.GamerResult;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class BlackJackResult {
@@ -16,27 +15,19 @@ public class BlackJackResult {
     }
 
     private Map<GamerResult, Integer> calculateDealerResult(Dealer dealer, Players players) {
-        return players.getPlayersTotalScores()
-                .values()
-                .stream()
+        return players.getPlayers().stream()
                 .collect(Collectors.groupingBy(
-                        value -> getJudgePlayerResult(dealer.getTotalScore(), value).getOpponentGameResult(),
+                        dealer::judge,
                         Collectors.summingInt(count -> 1)));
     }
 
     private Map<Name, GamerResult> calculatePlayersResult(Dealer dealer, Players players) {
-        return players.getPlayersTotalScores()
-                .entrySet()
-                .stream()
+        return players.getPlayers().stream()
                 .collect(Collectors.toMap(
-                        Entry::getKey,
-                        entry -> getJudgePlayerResult(dealer.getTotalScore(), entry.getValue())));
+                        Gamer::getName,
+                        player -> dealer.judge(player).getOpponentGameResult()));
     }
-
-    private GamerResult getJudgePlayerResult(int dealerScore, int playerScore) {
-        GamerResult dealerJudgeResult = GamerResult.judge(dealerScore, playerScore);
-        return dealerJudgeResult.getOpponentGameResult();
-    }
+    
 
     public Map<Name, GamerResult> getPlayersResult() {
         return Collections.unmodifiableMap(playersResult);

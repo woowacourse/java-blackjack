@@ -3,7 +3,6 @@ package domain;
 import domain.constant.CardNumber;
 import domain.constant.CardType;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.assertj.core.api.Assertions;
@@ -177,19 +176,5 @@ class PlayersTest {
         Assertions.assertThatThrownBy(() -> players.getTotalScore(new Name("wrong")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("존재하지 않는 참여자 입니다.");
-    }
-
-    @Test
-    @DisplayName("플레이어 별 점수를 반환할 수 있다.")
-    void getPlayersTotalScores() {
-        Name name = new Name("test");
-        Player player = new Player(name);
-        Players players = new Players(List.of(player));
-        Deck deck = Deck.withCustomCards(
-                new Card(CardType.CLOVER, CardNumber.TEN));
-        players.hitFromName(name, deck);
-        Map<Name, Integer> playersTotalScores = players.getPlayersTotalScores();
-        int score = playersTotalScores.get(name);
-        Assertions.assertThat(score).isEqualTo(10);
     }
 }
