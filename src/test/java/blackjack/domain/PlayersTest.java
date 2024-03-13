@@ -1,14 +1,18 @@
 package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.dto.BlackjackResult;
+import blackjack.dto.PlayerResult;
 import blackjack.strategy.ShuffleStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -22,8 +26,8 @@ public class PlayersTest {
     private Deck deck;
     private Dealer dealer;
     private Players players;
-    private final String nameA = "a";
-    private final String nameB = "b";
+    private final String nameA = "choco";
+    private final String nameB = "clover";
     private final String batting = "1000";
 
     @BeforeEach
@@ -58,5 +62,24 @@ public class PlayersTest {
                 () -> assertThat(blackjackResult.findDealerResultByGameResult(GameResult.WIN)).isEqualTo(2),
                 () -> assertThat(blackjackResult.findDealerResultByGameResult(GameResult.LOSE)).isEqualTo(0)
         );
+    }
+
+    @DisplayName("플레이어들의 승패를 토대로 수익률을 계산한다.")
+    @Test
+    void calculateProfits() {
+        //given
+        Player choco = players.getPlayers().get(0);
+        Player clover = players.getPlayers().get(1);
+
+        PlayerResult playerResult = new PlayerResult();
+        playerResult.addResult(choco, GameResult.WIN);
+        playerResult.addResult(clover, GameResult.LOSE);
+
+        Map<Player, Integer> profitResult = new HashMap<>();
+        profitResult.put(choco, 0);
+        profitResult.put(clover, -2000);
+
+        //when & then
+        assertThat(players.calculateProfits(playerResult)).isEqualTo(profitResult);
     }
 }

@@ -6,9 +6,7 @@ import blackjack.dto.BlackjackResult;
 import blackjack.dto.DealerResult;
 import blackjack.dto.PlayerResult;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Players {
 
@@ -55,5 +53,16 @@ public class Players {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public Map<Player, Integer> calculateProfits(final PlayerResult playerResult) {
+        Map<Player, Integer> profitResult = new HashMap<>();
+
+        for (Player player : players) {
+            GameResult gameResult = playerResult.findByName(player.getName());
+            profitResult.put(player, player.calculateProfit(gameResult));
+        }
+
+        return profitResult;
     }
 }
