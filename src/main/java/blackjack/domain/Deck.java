@@ -1,12 +1,13 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Deck {
     private final List<Card> deck;
 
     private Deck(List<Card> deck) {
-        this.deck = deck;
+        this.deck = new ArrayList<>(deck);
     }
 
     public static Deck of(CardFactory cardFactory, Shuffler shuffler) {
