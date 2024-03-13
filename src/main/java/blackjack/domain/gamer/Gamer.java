@@ -30,6 +30,10 @@ public class Gamer {
     public boolean isBust() {
         return hand.isOverLimitScore();
     }
+    
+    public boolean isMaxScore() {
+        return hand.isLimitScore();
+    }
 
     public int getScore() {
         return hand.calculateScore();

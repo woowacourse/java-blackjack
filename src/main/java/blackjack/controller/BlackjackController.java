@@ -54,13 +54,19 @@ public class BlackjackController {
             return;
         }
 
-        boolean isRun = true;
-        while (isRun) {
+        boolean canHit = true;
+        while (canHit) {
             PlayerCommand command = requestUntilValid(() ->
                     PlayerCommand.from(InputView.readPlayerCommand(player.getName())));
-            blackjackGame.hitOrStand(player, command);
-            isRun = blackjackGame.isPlayerCanHit(player, command);
+            if (command == PlayerCommand.HIT) {
+                blackjackGame.hitOrStand(player);
+                continue;
+            }
+            canHit = blackjackGame.isPlayerCanHit(player);
             printDealCards(player, command);
+            if (command == PlayerCommand.STAND) {
+                break;
+            }
         }
     }
 

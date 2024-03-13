@@ -32,6 +32,10 @@ public class Player {
         return gamer.isBlackjack();
     }
 
+    public boolean isMaxScore() {
+        return gamer.isMaxScore();
+    }
+
     public String getName() {
         return name;
     }

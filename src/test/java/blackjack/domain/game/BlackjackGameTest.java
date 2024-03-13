@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("블랙잭 게임")
 public class BlackjackGameTest {
     @Test
-    @DisplayName("플레이어 입력이 HIT여도 카드 합이 버스트이면 hit 할 수 없다.")
+    @DisplayName("카드 합이 버스트이면 hit 할 수 없다.")
     void playerNotHitWhenBust() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
@@ -38,54 +38,53 @@ public class BlackjackGameTest {
                 new Card(TEN, DIAMOND)));
 
         // then
-        assertThat(blackjackGame.isPlayerCanHit(player, hitCommand))
+        assertThat(blackjackGame.isPlayerCanHit(player))
                 .isEqualTo(false);
     }
 
     @Test
-    @DisplayName("플레이어 입력이 HIT여도 카드 합이 블랙잭이면 hit 할 수 없다.")
+    @DisplayName("카드 합이 블랙잭이면 hit 할 수 없다.")
     void playerNotHitWhenBlackjack() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
         Player player = new Player(new Gamer(new Hand(List.of())), "lemone");
-        PlayerCommand hitCommand = PlayerCommand.HIT;
 
         // when
         player.draw(List.of(new Card(TEN, SPADE), new Card(ACE, DIAMOND)));
 
         // then
-        assertThat(blackjackGame.isPlayerCanHit(player, hitCommand))
+        assertThat(blackjackGame.isPlayerCanHit(player))
                 .isEqualTo(false);
     }
 
     @Test
-    @DisplayName("플레이어 입력 커맨드가 HIT이면 카드를 한장 뽑는다.")
-    void playerCommandHitThenDraw() {
+    @DisplayName("플레이어의 카드 합이 21이면 카드를 뽑지 않는다.")
+    void playerNotHitWhenMaxScore() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
         Player player = new Player(new Gamer(new Hand(List.of())), "lemone");
-        PlayerCommand hitCommand = PlayerCommand.HIT;
 
         // when
-        blackjackGame.hitOrStand(player, hitCommand);
+        player.draw(List.of(new Card(TEN, SPADE), new Card(ACE, DIAMOND), new Card(TEN, DIAMOND)));
+        blackjackGame.hitOrStand(player);
 
         // then
-        assertThat(player.getCards().size()).isEqualTo(1);
+        assertThat(blackjackGame.isPlayerCanHit(player)).isEqualTo(false);
     }
 
     @Test
-    @DisplayName("플레이어 입력 커맨드가 STAND 이면 카드를 뽑지 않는다.")
-    void playerCommandStandThenNotDraw() {
+    @DisplayName("플레이어의 카드 합이 버스트가 아니고 블랙잭도 아니고 21도 아니면 카드를 한 장 뽑는다.")
+    void playerHitWhenNoBustNoBlackjackNoMaxScore() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
         Player player = new Player(new Gamer(new Hand(List.of())), "lemone");
-        PlayerCommand hitCommand = PlayerCommand.STAND;
 
         // when
-        blackjackGame.hitOrStand(player, hitCommand);
+        player.draw(List.of(new Card(TEN, SPADE), new Card(TEN, DIAMOND)));
+        blackjackGame.hitOrStand(player);
 
         // then
-        assertThat(player.getCards().size()).isEqualTo(0);
+        assertThat(player.getCards().size()).isEqualTo(3);
     }
 
     @Test
