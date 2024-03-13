@@ -34,4 +34,12 @@ class ScoreTest {
         Score score = new Score(21);
         assertThat(score.isMaxScore()).isTrue();
     }
+
+    @DisplayName("버스트 된 점수인지 확인할 수 있다")
+    @ParameterizedTest
+    @ValueSource(ints = {22, 23, 24, 25})
+    void testIsBust(int scoreValue) {
+        Score score = new Score(scoreValue);
+        assertThat(score.isBustScore()).isTrue();
+    }
 }

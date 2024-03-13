@@ -18,6 +18,10 @@ public class Score {
         return value == MAX_SCORE;
     }
 
+    public boolean isBustScore() {
+        return value > MAX_SCORE;
+    }
+
     public int getValue() {
         return value;
     }
