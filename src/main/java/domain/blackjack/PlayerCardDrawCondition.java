@@ -2,10 +2,10 @@ package domain.blackjack;
 
 import domain.card.CardDrawCondition;
 
-public final class PlayerCardDrawCondition implements CardDrawCondition {
+final class PlayerCardDrawCondition implements CardDrawCondition {
     private final BlackJackGameMachine player;
 
-    public PlayerCardDrawCondition(BlackJackGameMachine player) {
+    PlayerCardDrawCondition(BlackJackGameMachine player) {
         this.player = player;
     }
 

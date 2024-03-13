@@ -1,8 +1,8 @@
 package domain.blackjack;
 
-public class GameResultCalculator {
-    
-    public static GameResult calculate(Gamer baseGamer, Gamer otherGamer) {
+class GameResultCalculator {
+
+    static GameResult calculate(Gamer baseGamer, Gamer otherGamer) {
         if (baseGamer.isBust() && otherGamer.isBust()) {
             return GameResult.TIE;
         }

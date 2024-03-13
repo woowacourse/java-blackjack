@@ -88,11 +88,4 @@ public enum Card {
     public CardType cardType() {
         return cardType;
     }
-
-    @Override
-    public String toString() {
-        return "Card[" +
-                "name=" + cardName + ", " +
-                "cardType=" + cardType + ']';
-    }
 }

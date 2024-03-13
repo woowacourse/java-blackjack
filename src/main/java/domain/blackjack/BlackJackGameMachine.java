@@ -16,7 +16,7 @@ class BlackJackGameMachine {
     }
 
     DrawResult draw(Deck deck, CardSelectStrategy cardSelectStrategy, CardDrawCondition cardDrawCondition) {
-        if (isBust() || !cardDrawCondition.canDraw()) {
+        if (isBust() || !cardDrawCondition.canDraw() || deck.isEmpty()) {
             return DrawResult.fail("카드를 더이상 뽑을 수 없습니다.", false);
         }
         try {

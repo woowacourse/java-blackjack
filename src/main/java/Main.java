@@ -1,9 +1,8 @@
-import controller.BlackjackController;
-import domain.card.Deck;
+import controller.BlackJackController;
 
 public class Main {
     public static void main(String[] args) {
-        BlackjackController blackjackController = new BlackjackController();
-        blackjackController.startBlackjackGame(Deck.fullDeck());
+        BlackJackController blackJackController = new BlackJackController();
+        blackJackController.start();
     }
 }

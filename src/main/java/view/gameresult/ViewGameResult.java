@@ -2,7 +2,7 @@ package view.gameresult;
 
 import domain.blackjack.GameResult;
 
-public enum ViewGameResult {
+enum ViewGameResult {
     WIN("승"),
     LOSE("패"),
     TIE("무");
@@ -16,7 +16,7 @@ public enum ViewGameResult {
         this.output = output;
     }
 
-    public String getOutput() {
+    String getOutput() {
         return output;
     }
 }

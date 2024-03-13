@@ -19,7 +19,7 @@ public class GameResultOutputView {
 
     public static void print(DealerGameResultDTO dealerGameResultDTO) {
         String gameResultOutput = DealerGameResultOutputGenerator.generate(dealerGameResultDTO);
-        System.out.printf("딜러: %s%n", gameResultOutput);
+        System.out.printf("%n딜러: %s%n", gameResultOutput);
     }
 
 }

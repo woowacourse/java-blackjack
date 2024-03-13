@@ -2,7 +2,7 @@ package view.gamer;
 
 import domain.card.CardName;
 
-public enum ViewCardName {
+enum ViewCardName {
     ACE("A"),
     TWO("2"),
     THREE("3"),

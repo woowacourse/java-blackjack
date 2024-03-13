@@ -19,4 +19,12 @@ public class Console {
     public static void print(String output) {
         System.out.print(output);
     }
+
+    public static void printf(String output, Object... objects) {
+        System.out.printf(output, objects);
+    }
+
+    public static void println(String output) {
+        System.out.println(output);
+    }
 }

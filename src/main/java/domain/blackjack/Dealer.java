@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class Dealer extends Gamer {
 
-    public static Dealer of(HoldingCards holdingCards) {
+    static Dealer of(HoldingCards holdingCards) {
         return new Dealer(new BlackJackGameMachine(holdingCards));
     }
 
@@ -19,7 +19,7 @@ public class Dealer extends Gamer {
     }
 
     @Override
-    public DrawResult draw(Deck deck, CardSelectStrategy cardSelectStrategy) {
+    DrawResult draw(Deck deck, CardSelectStrategy cardSelectStrategy) {
         return blackJackGameMachine.draw(deck, cardSelectStrategy, new DealerCardDrawCondition(blackJackGameMachine));
     }
 
