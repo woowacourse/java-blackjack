@@ -55,7 +55,7 @@ public class Hand {
     }
 
     private GamerResult judgeBust(Hand opponent) {
-        if (this.isBust()) {
+        if (this.isBust() && !opponent.isBust()) {
             return GamerResult.LOSE;
         }
         if (opponent.isBust()) {
