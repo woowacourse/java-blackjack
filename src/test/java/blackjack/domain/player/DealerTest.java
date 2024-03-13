@@ -133,4 +133,18 @@ class DealerTest {
 
         assertThat(result.get(player)).isEqualTo(WinningStatus.PUSH);
     }
+
+    @Test
+    void 게임_결과에서_플레이어가_순서를_유지하고_있다() {
+        Player playerA = player(new Card(TWO, HEART));
+        Player playerB = player(new Card(TWO, SPADE));
+        Player playerC = player(new Card(TWO, CLOVER));
+        Player playerD = player(new Card(TWO, DIAMOND));
+        Dealer dealer = dealer(new Card(ACE, HEART));
+
+        var result = dealer.judgeWithPlayers(List.of(playerA, playerB, playerC, playerD))
+                .totalResult();
+
+        assertThat(result.keySet()).containsExactly(playerA, playerB, playerC, playerD);
+    }
 }
