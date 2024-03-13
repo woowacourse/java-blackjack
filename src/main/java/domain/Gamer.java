@@ -24,7 +24,7 @@ public abstract class Gamer {
 
     abstract public int hit(Deck deck);
 
-    public boolean isName(Name comparedName) {
+    public boolean hasName(Name comparedName) {
         return name.equals(comparedName);
     }
 

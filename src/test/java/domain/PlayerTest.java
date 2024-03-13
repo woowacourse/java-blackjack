@@ -45,7 +45,7 @@ class PlayerTest {
     @DisplayName("이름 객체로 플레이어의 이름을 검증할 수 있다.")
     void createName() {
         Player player = new Player(new Name("test"));
-        Assertions.assertThat(player.isName(new Name("test"))).isTrue();
+        Assertions.assertThat(player.hasName(new Name("test"))).isTrue();
     }
 
     @Test

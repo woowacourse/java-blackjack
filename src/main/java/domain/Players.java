@@ -25,7 +25,7 @@ public class Players {
 
     private void validatePlayerName(List<Player> players) {
         boolean isDealerExist = players.stream()
-                .anyMatch(player -> player.isName(DEALER_NAME));
+                .anyMatch(player -> player.hasName(DEALER_NAME));
 
         if (isDealerExist) {
             throw new IllegalArgumentException("플레이어 이름을 \"딜러\"로 생성할 수 없습니다.");
@@ -67,7 +67,7 @@ public class Players {
     }
 
     private Player searchFromName(Name name) {
-        return players.stream().filter(player -> player.isName(name))
+        return players.stream().filter(player -> player.hasName(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 참여자 입니다."));
     }
