@@ -29,18 +29,18 @@ public class Application {
     }
 
     private static GameBoard createGameBoard() {
-        Deck deck = new ShuffledDeckFactory().create();
-        Dealer dealer = Dealer.from(deck);
-        Players players = Players.from(InputView.readPlayerNames());
+        final Deck deck = new ShuffledDeckFactory().create();
+        final Dealer dealer = Dealer.from(deck);
+        final Players players = Players.from(InputView.readPlayerNames());
         return new GameBoard(dealer, players);
     }
 
-    private static void drawInitialHands(GameBoard gameBoard) {
+    private static void drawInitialHands(final GameBoard gameBoard) {
         gameBoard.drawInitialPlayersHand();
         gameBoard.drawInitialDealerHand();
+
         final DealerDto dealerDto = createDealerDto(gameBoard.getDealerFirstCard());
         final List<PlayerDto> playerDtos = createPlayerDtos(gameBoard.getPlayers());
-
         OutputView.printInitialState(dealerDto, playerDtos);
     }
 
@@ -62,7 +62,7 @@ public class Application {
         return new PlayerDto(player.getName(), player.getHand().getCards(), player.calculateScore());
     }
 
-    private static void hitGamers(GameBoard gameBoard) {
+    private static void hitGamers(final GameBoard gameBoard) {
         hitPlayers(gameBoard);
         OutputView.printLineSeparator();
         hitDealer(gameBoard);
