@@ -62,7 +62,7 @@ class CardsTest {
     @DisplayName("카드가 비어 있는 경우 예외를 발생한다.")
     @Test
     void emptyCards() {
-        Cards cards = Cards.create();
+        Cards cards = Cards.emptyCards();
         assertAll(
                 () -> assertThrowsWithMessage(cards::draw, IllegalStateException.class, "카드가 없습니다. 카드를 추가하세요."),
                 () -> assertThrowsWithMessage(cards::peek, IllegalStateException.class, "카드가 없습니다. 카드를 추가하세요."),

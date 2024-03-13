@@ -13,18 +13,15 @@ import static domain.card.CardGenerator.cardsOf22;
 import static domain.card.CardRank.ACE;
 import static domain.card.CardRank.FIVE;
 import static domain.card.CardRank.JACK;
-import static domain.card.CardRank.KING;
 import static domain.card.CardRank.SIX;
 import static domain.card.CardRank.THREE;
 import static domain.card.CardRank.TWO;
-import static domain.card.CardSuit.SPADE;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -34,7 +31,6 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.participant.dealer.Dealer;
 import domain.participant.player.Player;
-import domain.participant.player.Players;
 
 class DealerTest {
 
@@ -43,7 +39,7 @@ class DealerTest {
         static Stream<Arguments> deal() {
             return Stream.of(
                     Arguments.of(cardOf(ACE), Player.from(new Name("Zeus"))),
-                    Arguments.of(cardOf(TWO), Dealer.from(Cards.create()))
+                    Arguments.of(cardOf(TWO), Dealer.from(Cards.emptyCards()))
             );
         }
 
@@ -148,7 +144,7 @@ class DealerTest {
     @MethodSource
     @ParameterizedTest
     void resultStatusOf(Cards dealerCards, Cards playerCards, BlackjackResultStatus expected) {
-        Dealer dealer = Dealer.from(Cards.create());
+        Dealer dealer = Dealer.from(Cards.emptyCards());
         Player player = Player.from(new Name("hotea"));
         receiveCards(dealer, dealerCards);
         receiveCards(player, playerCards);
