@@ -16,6 +16,11 @@ public class HandValue {
         this.handSize = cards.size();
     }
 
+    public HandValue(int score, int handSize) {
+        this.score = score;
+        this.handSize = handSize;
+    }
+
     public int calculateScore(List<Card> cards) {
         int sum = cards.stream()
                 .mapToInt(Card::getNumberValue)
@@ -67,6 +72,4 @@ public class HandValue {
     public int getScore() {
         return score;
     }
-
-
 }

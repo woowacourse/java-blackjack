@@ -12,6 +12,10 @@ public abstract class BlackjackGamer {
         this.hand = new Hand(new ArrayList<>());
     }
 
+    public BlackjackGamer(Hand hand) {
+        this.hand = hand;
+    }
+
     public abstract boolean canReceiveCard();
 
     public void initCard(Deck deck) {
