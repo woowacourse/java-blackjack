@@ -4,6 +4,8 @@ import blackjack.domain.card.Card;
 
 import java.util.List;
 
+import static blackjack.domain.game.BlackjackGame.STARTING_CARDS_AMOUNT;
+
 public class Dealer extends Participant {
 
     public static final int THRESHOLD_SCORE = 16;
@@ -23,7 +25,7 @@ public class Dealer extends Participant {
         if (getCards().isEmpty()) {
             throw new IllegalStateException("[ERROR] 딜러 카드가 비어 있습니다.");
         }
-        if (getCards().size() == 2) {
+        if (getCards().size() == STARTING_CARDS_AMOUNT) {
             return List.of(getCards().get(0));
         }
         return getCards();
