@@ -26,7 +26,7 @@ public abstract class Gamer {
     }
 
     public int calculateTotalScore() {
-        return hand.sum();
+        return hand.score();
     }
 
     public boolean isNormalScore() {
@@ -41,7 +41,7 @@ public abstract class Gamer {
         return hand.isBlackJack();
     }
 
-    public List<Card> getHand() {
+    public List<Card> getCard() {
         return hand.getCards();
     }
 

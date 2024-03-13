@@ -15,7 +15,7 @@ import view.OutputView;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class BlackJackController {
+public class BlackJackGame {
     private static final int INITIAL_CARD_COUNT = 2;
 
     public void play() {

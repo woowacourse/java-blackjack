@@ -21,14 +21,14 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return sum() > BLACK_JACK;
+        return score() > BLACK_JACK;
     }
 
     public boolean isBlackJack() {
-        return sum() == BLACK_JACK && cards.size() == BLACK_JACK_CARD_COUNT;
+        return score() == BLACK_JACK && cards.size() == BLACK_JACK_CARD_COUNT;
     }
 
-    public int sum() {
+    public int score() {
         int totalScore = sumExceptAceCards();
 
         int aceCardsCount = countAceCards();

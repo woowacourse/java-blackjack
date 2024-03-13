@@ -59,7 +59,7 @@ public class HandTest {
         int expectedScore = 13;
 
         // when
-        int result = hand.sum();
+        int result = hand.score();
 
         // then
         assertThat(result).isEqualTo(expectedScore);

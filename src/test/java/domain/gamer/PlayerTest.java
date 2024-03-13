@@ -39,7 +39,7 @@ public class PlayerTest {
         player.hit(cards.pop());
 
         // then
-        assertThat(player.getHand()).hasSize(1);
+        assertThat(player.getCard()).hasSize(1);
     }
 
     @DisplayName("플레이어가 주어진 카드들을 받아서 저장한다.")
@@ -49,7 +49,7 @@ public class PlayerTest {
         player.receive(List.of(cards.pop(), cards.pop()));
 
         //then
-        assertThat(player.getHand()).hasSize(2);
+        assertThat(player.getCard()).hasSize(2);
     }
 
     @DisplayName("플레이어가 가진 카드의 점수를 알 수 있다.")

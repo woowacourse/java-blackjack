@@ -35,7 +35,7 @@ public class DealerTest {
         dealer.hit(cards.pop());
 
         // then
-        assertThat(dealer.getHand()).hasSize(1);
+        assertThat(dealer.getCard()).hasSize(1);
     }
 
     @DisplayName("딜러가 주어진 카드들을 받아서 저장한다.")
@@ -45,7 +45,7 @@ public class DealerTest {
         dealer.receive(List.of(cards.pop(), cards.pop()));
 
         //then
-        assertThat(dealer.getHand()).hasSize(2);
+        assertThat(dealer.getCard()).hasSize(2);
     }
 
     @DisplayName("딜러가 가진 카드의 점수를 알 수 있다.")
