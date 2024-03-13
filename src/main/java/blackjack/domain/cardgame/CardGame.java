@@ -15,15 +15,7 @@ public class CardGame {
     }
 
     public void initializeHand(final Dealer dealer, final List<Player> players) {
-        giveDealerInitialCards(dealer);
-        giveEachPlayerInitialCards(players);
-    }
-
-    private void giveDealerInitialCards(final Dealer dealer) {
         giveInitialCards(dealer);
-    }
-
-    private void giveEachPlayerInitialCards(final List<Player> players) {
         for (final Player player : players) {
             giveInitialCards(player);
         }
