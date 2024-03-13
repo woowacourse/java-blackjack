@@ -32,6 +32,10 @@ public class Deck {
                 .ifPresent(Card::switchAceValue);
     }
 
+    public int size() {
+        return cards.size();
+    }
+
     public List<Card> cards() {
         return new ArrayList<>(cards);
     }
