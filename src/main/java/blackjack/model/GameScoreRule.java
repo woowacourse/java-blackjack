@@ -22,29 +22,29 @@ public class GameScoreRule {
     }
 
     private boolean playerWinRule(Dealer dealer, Player player) {
+        int dealerScore = dealer.calculateTotalScore();
+        int playerScore = player.calculateTotalScore();
+
         if (player.isBlackJack() && dealer.isBlackJack()) {
             return true;
         }
         if (!player.isBusted() && dealer.isBusted()) {
             return true;
         }
-        if (!player.isBusted() && player.calculateTotalScore() > dealer.calculateTotalScore()) {
-            return true;
-        }
-        return false;
+        return (!player.isBusted() && playerScore > dealerScore);
     }
 
     private boolean dealerWinRule(Dealer dealer, Player player) {
+        int dealerScore = dealer.calculateTotalScore();
+        int playerScore = player.calculateTotalScore();
+
         if (player.isBusted() && dealer.isBusted()) {
             return true;
         }
         if (player.isBusted() && !dealer.isBusted()) {
             return true;
         }
-        if (!dealer.isBusted() && player.calculateTotalScore() < dealer.calculateTotalScore()) {
-            return true;
-        }
-        return false;
+        return (!dealer.isBusted() && playerScore < dealerScore);
     }
 
     private void decideDealerWin(Player player, GameResult gameResult) {
