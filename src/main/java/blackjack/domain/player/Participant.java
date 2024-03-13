@@ -29,6 +29,10 @@ public abstract class Participant {
         return hand.countDraw();
     }
 
+    public boolean isBusted() {
+        return hand.calculateScore().isBustScore();
+    }
+
     public boolean hasBlackJackHand() {
         return hand.isBlackJack();
     }
