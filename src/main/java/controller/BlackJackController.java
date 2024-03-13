@@ -49,7 +49,7 @@ public class BlackJackController {
         for (Player player : players.getPlayers()) {
             if (player.isBlackJack()) {
                 System.out.println("플레이어가 블랙잭임");
-                break;
+                continue;
             }
             deal(player, dealer);
         }

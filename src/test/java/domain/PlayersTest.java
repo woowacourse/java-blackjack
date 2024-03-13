@@ -39,6 +39,14 @@ class PlayersTest {
                 .isInstanceOf(DuplicatePlayerNameException.class);
     }
 
+    @ParameterizedTest
+    @DisplayName("참여자 이름에 공백이 있는 경우 제거하여 중복을 판단한다.")
+    @MethodSource("duplicateBlankNameParameterProvider")
+    void duplicateBlankName(final List<String> names) {
+        Assertions.assertThatThrownBy(() -> Players.from(names))
+                .isInstanceOf(DuplicatePlayerNameException.class);
+    }
+
     @DisplayName("총 참여자 수가 2이상 8이하이면 참여자를 생성한다.")
     @ParameterizedTest
     @MethodSource("validPlayersSizeParameterProvider")
@@ -116,6 +124,14 @@ class PlayersTest {
         //then
         Assertions.assertThat(players.getPlayersResult(bustDealer)).isEqualTo(expectedPlayerResult);
         Assertions.assertThat(bustDealer.getDealerResult(players)).isEqualTo(expectedDealerResult);
+    }
+
+    static Stream<Arguments> duplicateBlankNameParameterProvider() {
+        return Stream.of(
+                Arguments.of(List.of("a", "a ", "b")),
+                Arguments.of(List.of(" a ", " a", "b", "c")),
+                Arguments.of(List.of("a", " a"))
+        );
     }
 
     static Stream<Arguments> validPlayersSizeParameterProvider() {

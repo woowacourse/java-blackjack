@@ -22,8 +22,9 @@ public class Players {
     }
 
     public static Players from(final List<String> names) {
-        validate(names);
-        return new Players(mapToPlayers(names));
+        List<Player> players = mapToPlayers(names);
+        validate(players);
+        return new Players(players);
     }
 
     public void forEach(Consumer<? super Player> action) {
@@ -50,18 +51,18 @@ public class Players {
                 .toList();
     }
 
-    private static void validate(final List<String> names) {
+    private static void validate(final List<Player> names) {
         validateSize(names);
         validateDuplicate(names);
     }
 
-    private static void validateSize(final List<String> names) {
+    private static void validateSize(final List<Player> names) {
         if (names.size() < MIN_SIZE || MAX_SIZE < names.size()) {
             throw new InvalidPlayersSizeException(ErrorCode.INVALID_SIZE);
         }
     }
 
-    private static void validateDuplicate(final List<String> names) {
+    private static void validateDuplicate(final List<Player> names) {
         if (names.size() != Set.copyOf(names).size()) {
             throw new DuplicatePlayerNameException(ErrorCode.DUPLICATE_NAME);
         }
