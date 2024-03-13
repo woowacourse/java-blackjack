@@ -6,7 +6,6 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
-import blackjack.view.PlayerCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +29,6 @@ public class BlackjackGameTest {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
         Player player = new Player(new Gamer(new Hand(List.of())), "lemone");
-        PlayerCommand hitCommand = PlayerCommand.HIT;
 
         // when
         player.draw(List.of(new Card(NINE, CLUB),
@@ -69,7 +67,8 @@ public class BlackjackGameTest {
         blackjackGame.hit(player);
 
         // then
-        assertThat(blackjackGame.isPlayerCanHit(player)).isEqualTo(false);
+        assertThat(blackjackGame.isPlayerCanHit(player))
+                .isEqualTo(false);
     }
 
     @Test
@@ -93,13 +92,7 @@ public class BlackjackGameTest {
         // given
         Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
         List<Card> cards = new ArrayList<>(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB)));
-        Deck cardPicker = new Deck(cards) {
-            @Override
-            public List<Card> pickCards(int count) {
-                return cards;
-            }
-        };
-        BlackjackGame blackjackGame = new BlackjackGame(cardPicker);
+        BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
 
         // when
         dealer.draw(cards);

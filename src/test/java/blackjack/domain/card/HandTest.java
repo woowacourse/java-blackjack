@@ -19,7 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("패")
 public class HandTest {
-
     @Test
     @DisplayName("뽑은 카드들의 합을 구한다.")
     void cardsSumTest() {

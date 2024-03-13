@@ -35,6 +35,7 @@ public class PlayerTest {
     void gameDealTest() {
         // given
         Player player = new Player(new Gamer(new Hand(List.of())), "lemone");
+
         // when
         player.draw(List.of(new Card(ACE, CLUB), new Card(NINE, CLUB)));
 

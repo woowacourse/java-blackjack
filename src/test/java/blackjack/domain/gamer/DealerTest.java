@@ -1,12 +1,10 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static blackjack.domain.card.Rank.NINE;
@@ -23,15 +21,13 @@ class DealerTest {
     void getFirstCardTest() {
         // given
         Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
-        List<Card> cards = List.of(new Card(NINE, SPADE), new Card(QUEEN, CLUB));
         List<Card> expectedCard = List.of(new Card(NINE, SPADE));
 
         // when
-        dealer.draw(cards);
+        dealer.draw(List.of(new Card(NINE, SPADE), new Card(QUEEN, CLUB)));
 
         // then
-        assertThat(dealer.getCards())
-                .isEqualTo(expectedCard);
+        assertThat(dealer.getCards()).isEqualTo(expectedCard);
     }
 
     @Test
@@ -39,16 +35,11 @@ class DealerTest {
     void dealerHitUpperBoundTest() {
         // given
         Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
-        List<Card> cards = new ArrayList<>(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB)));
-        Deck cardPicker = new Deck(cards) {
-            @Override
-            public List<Card> pickCards(int count) {
-                return cards;
-            }
-        };
-        dealer.draw(cardPicker.pickCards(2));
 
-        // when & then
+        // when
+        dealer.draw(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB)));
+
+        // then
         assertThat(dealer.isScoreUnderBound()).isEqualTo(true);
     }
 }

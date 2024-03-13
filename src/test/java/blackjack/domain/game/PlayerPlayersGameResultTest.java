@@ -18,15 +18,18 @@ public class PlayerPlayersGameResultTest {
     @DisplayName("플레이어의 승패 결과를 Map으로 반환한다.")
     void createPlayersGameResultsTest() {
         // given
+        Player player = new Player(new Gamer(new Hand(List.of())), "lemone");
         PlayersGameResult playersGameResult = new PlayersGameResult();
+
         Map<String, PlayerGameResult> expectedGameResults = new HashMap<>();
         expectedGameResults.put("lemone", PlayerGameResult.WIN);
 
         // when
-        playersGameResult.put(new Player(new Gamer(new Hand(List.of())), "lemone"), PlayerGameResult.WIN);
+        playersGameResult.put(player, PlayerGameResult.WIN);
 
         // then
-        assertThat(playersGameResult.getPlayersNameAndResults()).isEqualTo(expectedGameResults);
+        assertThat(playersGameResult.getPlayersNameAndResults())
+                .isEqualTo(expectedGameResults);
     }
 
     @Test
@@ -40,12 +43,21 @@ public class PlayerPlayersGameResultTest {
         expectedResult.put(PlayerGameResult.PUSH, 1);
 
         // when
-        playersGameResult.put(new Player(new Gamer(new Hand(List.of())), "lemone"), PlayerGameResult.WIN);
-        playersGameResult.put(new Player(new Gamer(new Hand(List.of())), "seyang"), PlayerGameResult.LOSE);
-        playersGameResult.put(new Player(new Gamer(new Hand(List.of())), "pobi"), PlayerGameResult.PUSH);
-        playersGameResult.put(new Player(new Gamer(new Hand(List.of())), "club"), PlayerGameResult.WIN);
+        playersGameResult.put(
+                new Player(new Gamer(new Hand(List.of())), "lemone"),
+                PlayerGameResult.WIN);
+        playersGameResult.put(
+                new Player(new Gamer(new Hand(List.of())), "seyang"),
+                PlayerGameResult.LOSE);
+        playersGameResult.put(
+                new Player(new Gamer(new Hand(List.of())), "pobi"),
+                PlayerGameResult.PUSH);
+        playersGameResult.put(
+                new Player(new Gamer(new Hand(List.of())), "club"),
+                PlayerGameResult.WIN);
 
         // then
-        assertThat(playersGameResult.getDealerResult()).isEqualTo(expectedResult);
+        assertThat(playersGameResult.getDealerResult())
+                .isEqualTo(expectedResult);
     }
 }
