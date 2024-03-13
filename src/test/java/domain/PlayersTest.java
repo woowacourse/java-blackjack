@@ -5,7 +5,7 @@ import static domain.HandsTestFixture.noBustHands;
 import static domain.HandsTestFixture.sum18Size2;
 import static domain.HandsTestFixture.sum20Size2;
 import static domain.HandsTestFixture.sum20Size3;
-import static domain.HandsTestFixture.sum21Size2;
+import static domain.HandsTestFixture.sum21Size3;
 import static domain.Result.LOSE;
 import static domain.Result.TIE;
 import static domain.Result.WIN;
@@ -87,7 +87,7 @@ class PlayersTest {
     void playerResult() {
         //given
         Player loser = new Player(new Name("레디"), sum18Size2);
-        Player winner = new Player(new Name("제제"), sum21Size2);
+        Player winner = new Player(new Name("제제"), sum21Size3);
         Player tier = new Player(new Name("수달"), sum20Size3);
 
         Players players = new Players(List.of(loser, winner, tier));

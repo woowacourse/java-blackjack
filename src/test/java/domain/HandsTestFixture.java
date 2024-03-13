@@ -39,7 +39,8 @@ class HandsTestFixture {
             List.of(new Card(SEVEN, SPADE), new Card(TWO, SPADE), new Card(ACE, SPADE)));
     static final Hands sum20Size3Ace1 = new Hands(
             List.of(new Card(ACE, DIAMOND), new Card(EIGHT, CLOVER), new Card(FIVE, CLOVER), new Card(SIX, CLOVER)));
-    static final Hands sum21Size2 = new Hands(List.of(new Card(QUEEN, HEART), new Card(ACE, SPADE)));
+    static final Hands sum21Size3 = new Hands(
+            List.of(new Card(QUEEN, HEART), new Card(SIX, SPADE), new Card(FIVE, CLOVER)));
     static final Hands sum21Size3Ace11 = new Hands(
             List.of(new Card(ACE, HEART), new Card(EIGHT, SPADE), new Card(TWO, CLOVER)));
     static final Hands bustHands = new Hands(

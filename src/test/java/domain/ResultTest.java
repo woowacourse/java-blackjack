@@ -6,7 +6,7 @@ import static domain.HandsTestFixture.sum17Size3One;
 import static domain.HandsTestFixture.sum17Size3Two;
 import static domain.HandsTestFixture.sum20Size2;
 import static domain.HandsTestFixture.sum20Size3;
-import static domain.HandsTestFixture.sum21Size2;
+import static domain.HandsTestFixture.sum21Size3;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -29,8 +29,8 @@ class ResultTest {
     @Test
     @DisplayName("카드 합이 21이하이면서 21에 가까운 카드가 승리한다.")
     void isWin() {
-        Assertions.assertThat(sum21Size2.calculateResult(sum20Size2)).isEqualTo(Result.WIN);
-        Assertions.assertThat(sum20Size2.calculateResult(sum21Size2)).isEqualTo(Result.LOSE);
+        Assertions.assertThat(sum21Size3.calculateResult(sum20Size2)).isEqualTo(Result.WIN);
+        Assertions.assertThat(sum20Size2.calculateResult(sum21Size3)).isEqualTo(Result.LOSE);
     }
 
     @Test
