@@ -23,7 +23,7 @@ public class BlackJack {
     }
 
     public void play(Function<Name, HitOption> isHitOption, Consumer<ParticipantDto> printPlayerHands) {
-        players.playersHit(isHitOption, printPlayerHands, dealer);
+        players.allPlayerHit(isHitOption, printPlayerHands, dealer);
     }
 
     public int dealerHit() {

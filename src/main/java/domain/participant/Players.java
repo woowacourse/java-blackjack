@@ -40,7 +40,7 @@ public class Players {
         }
     }
 
-    public void playersHit(Function<Name, HitOption> isHitOption, Consumer<ParticipantDto> printPlayerHands, Dealer dealer) {
+    public void allPlayerHit(Function<Name, HitOption> isHitOption, Consumer<ParticipantDto> printPlayerHands, Dealer dealer) {
         for (Player player : value) {
             playerHit(isHitOption, printPlayerHands, player, dealer);
         }
