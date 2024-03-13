@@ -20,7 +20,7 @@ public class MatchResults {
 
     public int calculateProfitByBet(PlayerBet playerBet) {
         String playerName = playerBet.name();
-        int betAmount = playerBet.betMoney().getAmount();
+        int betAmount = playerBet.betMoneyAmount();
 
         MatchResult result = getResultByName(playerName);
         return result.calculateProfit(betAmount);
