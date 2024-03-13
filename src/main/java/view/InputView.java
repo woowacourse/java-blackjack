@@ -28,7 +28,7 @@ public class InputView {
 
     private void validateDigit(String value) {
         if (!Pattern.matches("\\d+", value)) {
-            throw new IllegalArgumentException("[ERROR] 숫자만 입력해주세요.");
+            throw new IllegalArgumentException("[ERROR] 0 이상 숫자만 입력해주세요.");
         }
     }
 
