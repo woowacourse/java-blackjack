@@ -12,6 +12,7 @@ import static blackjack.model.deck.Shape.CLOVER;
 import static blackjack.model.deck.Shape.DIA;
 import static blackjack.model.deck.Shape.HEART;
 import static blackjack.model.deck.Shape.SPADE;
+import static blackjack.model.result.ResultCommand.BLACK_JACK_WIN;
 import static blackjack.model.result.ResultCommand.DRAW;
 import static blackjack.model.result.ResultCommand.LOSE;
 import static blackjack.model.result.ResultCommand.WIN;
@@ -21,17 +22,11 @@ import blackjack.model.deck.Card;
 import blackjack.model.deck.Deck;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
-import blackjack.model.participant.Players;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 class RefereeTest {
     @Nested
@@ -82,12 +77,12 @@ class RefereeTest {
         }
 
         @Test
-        @DisplayName("플레이어 카드만 블랙잭인 경우 플레이어가 승리한다.")
+        @DisplayName("플레이어 카드만 블랙잭인 경우 플레이어가 블랙잭 승리한다.")
         void playerWinWhenOnlyPlayerBlackJack() {
             player.receiveInitialCards(List.of(new Card(CLOVER, TEN), new Card(SPADE, ACE)));
             dealer.receiveInitialCards(List.of(new Card(SPADE, SEVEN), new Card(DIA, TEN), new Card(DIA, FOUR)));
 
-            assertThat(referee.judgePlayerResult(player)).isEqualTo(WIN);
+            assertThat(referee.judgePlayerResult(player)).isEqualTo(BLACK_JACK_WIN);
         }
 
         @Test
@@ -165,26 +160,5 @@ class RefereeTest {
 
             assertThat(referee.judgePlayerResult(player)).isEqualTo(DRAW);
         }
-    }
-
-    @ParameterizedTest
-    @MethodSource("generateCardsSupplierExpected")
-    @DisplayName("딜러의 결과를 반환한다.")
-    void getDealerResult(List<Card> cards, ResultCommand expected) {
-        Dealer dealer = new Dealer(new Deck());
-        dealer.receiveInitialCards(List.of(new Card(CLOVER, TEN), new Card(SPADE, TEN)));
-        Players players = Players.from(List.of("몰리", "리브", "포비"));
-        players.receiveInitialCards(() -> cards);
-
-        Referee referee = new Referee(new Rule(dealer));
-        assertThat(referee.judgeDealerResult(players)).containsAllEntriesOf(Map.of(expected, 3));
-    }
-
-    static Stream<Arguments> generateCardsSupplierExpected() {
-        return Stream.of(
-                Arguments.of(List.of(new Card(CLOVER, TEN), new Card(SPADE, TEN), new Card(DIA, FOUR)), WIN),
-                Arguments.of(List.of(new Card(CLOVER, TEN), new Card(SPADE, ACE)), LOSE),
-                Arguments.of(List.of(new Card(CLOVER, TEN), new Card(SPADE, TEN)), DRAW)
-        );
     }
 }

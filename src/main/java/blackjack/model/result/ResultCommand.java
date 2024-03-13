@@ -1,18 +1,19 @@
 package blackjack.model.result;
 
 public enum ResultCommand {
-    WIN,
-    LOSE,
-    DRAW,
+    WIN(1),
+    BLACK_JACK_WIN(1.5),
+    LOSE(-1),
+    DRAW(1),
     ;
 
-    public ResultCommand findOpposite() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return DRAW;
+    private final double rate;
+
+    ResultCommand(double rate) {
+        this.rate = rate;
+    }
+
+    public double getRate() {
+        return rate;
     }
 }

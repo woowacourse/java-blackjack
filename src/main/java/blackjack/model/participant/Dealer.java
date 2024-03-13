@@ -18,6 +18,10 @@ public class Dealer extends Participant {
         return state.calculateScore() <= HITTABLE_THRESHOLD;
     }
 
+    public boolean isBlackJack() {
+        return state.isBlackJack();
+    }
+
     public List<Card> distributeInitialCard() {
         return List.of(deck.distribute(), deck.distribute());
     }

@@ -1,5 +1,7 @@
 package blackjack.model.result;
 
+import static blackjack.model.result.ResultCommand.*;
+
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
 
@@ -11,39 +13,52 @@ public class Rule {
     }
 
     public ResultCommand calculateResult(final Player player) {
+        if (dealer.isBlackJack()) {
+            return judgePlayerResultWhenDealerBlackJack(player);
+        }
+        if (player.isBlackJack()) {
+            return BLACK_JACK_WIN;
+        }
         if (dealer.isBust()) {
             return judgePlayerResultWhenDealerBust(player);
         }
         return judgePlayerResultWhenDealerNotBust(player);
     }
 
+    private ResultCommand judgePlayerResultWhenDealerBlackJack(final Player player) {
+        if (player.isBlackJack()) {
+            return DRAW;
+        }
+        return LOSE;
+    }
+
     private ResultCommand judgePlayerResultWhenDealerBust(final Player player) {
         if (player.isBust()) {
-            return ResultCommand.LOSE;
+            return LOSE;
         }
-        return ResultCommand.WIN;
+        return WIN;
     }
 
     private ResultCommand judgePlayerResultWhenDealerNotBust(final Player player) {
         if (player.isBust()) {
-            return ResultCommand.LOSE;
+            return LOSE;
         }
         if (player.notifyScore() > dealer.notifyScore()) {
-            return ResultCommand.WIN;
+            return WIN;
         }
         if (player.notifyScore() < dealer.notifyScore()) {
-            return ResultCommand.LOSE;
+            return LOSE;
         }
         return judgePlayerResultWhenSameScore(player);
     }
 
     private ResultCommand judgePlayerResultWhenSameScore(final Player player) {
         if (player.hasManyCardsThan(dealer)) {
-            return ResultCommand.LOSE;
+            return LOSE;
         }
         if (player.hasSameCardsSizeThan(dealer)) {
-            return ResultCommand.DRAW;
+            return DRAW;
         }
-        return ResultCommand.WIN;
+        return WIN;
     }
 }
