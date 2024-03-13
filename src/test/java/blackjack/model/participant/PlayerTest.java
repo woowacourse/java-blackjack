@@ -1,6 +1,7 @@
 package blackjack.model.participant;
 
 import static blackjack.model.deck.Score.ACE;
+import static blackjack.model.deck.Score.QUEEN;
 import static blackjack.model.deck.Score.TEN;
 import static blackjack.model.deck.Score.THREE;
 import static blackjack.model.deck.Score.TWO;
@@ -11,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import blackjack.model.deck.Card;
+import blackjack.model.state.BlackJack;
 import blackjack.model.state.Hit;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -102,6 +104,14 @@ class PlayerTest {
             player.receiveInitialCards(List.of(new Card(SPADE, TWO), new Card(DIA, THREE)));
 
             assertThat(player.getState()).isInstanceOf(Hit.class);
+        }
+
+        @Test
+        @DisplayName("2장의 카드로 21점이면 BlackJack 상태이다.")
+        void blackJack() {
+            player.receiveInitialCards(List.of(new Card(SPADE, ACE), new Card(DIA, QUEEN)));
+
+            assertThat(player.getState()).isInstanceOf(BlackJack.class);
         }
     }
 }

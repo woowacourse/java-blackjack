@@ -5,32 +5,21 @@ import blackjack.model.deck.Card;
 import blackjack.model.participant.Hand;
 import java.util.List;
 
-public class Hit implements State {
+public class BlackJack implements State {
     private final Hand hand;
 
-    public Hit() {
-        this.hand = new Hand();
-    }
-
-    private Hit(final Hand hand) {
+    public BlackJack(final Hand hand) {
         this.hand = hand;
     }
 
     @Override
     public State draw(final Card card) {
-        hand.add(card);
-        if (hand.isBust()) {
-            return new Stand(hand);
-        }
-        if (hand.isBlackJack()) {
-            return new BlackJack(hand);
-        }
-        return new Hit(hand);
+        throw new UnsupportedOperationException("추가로 카드를 받을 수 없습니다.");
     }
 
     @Override
     public State stand() {
-        return null;
+        throw new UnsupportedOperationException("이미 블랙잭이므로 카드를 받지 않을지 여부를 선택할 수 없습니다.");
     }
 
     @Override
