@@ -84,6 +84,4 @@ public class Hand {
         }
         return GamerResult.DRAW;
     }
-
-
 }

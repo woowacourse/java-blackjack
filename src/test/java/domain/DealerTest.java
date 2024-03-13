@@ -88,5 +88,4 @@ class DealerTest {
         dealer.hit(deck);
         Assertions.assertThat(dealer.isBust()).isFalse();
     }
-
 }

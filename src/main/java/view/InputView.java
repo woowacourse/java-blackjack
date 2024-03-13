@@ -52,5 +52,4 @@ public class InputView {
             throw new IllegalArgumentException("y또는 n만 입력 받을 수 있습니다.");
         }
     }
-
 }

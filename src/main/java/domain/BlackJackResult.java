@@ -28,7 +28,6 @@ public class BlackJackResult {
                         player -> dealer.judge(player).getOpponentGameResult()));
     }
     
-
     public Map<Name, GamerResult> getPlayersResult() {
         return Collections.unmodifiableMap(playersResult);
     }
