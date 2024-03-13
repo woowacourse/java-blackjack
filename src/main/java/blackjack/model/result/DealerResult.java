@@ -1,46 +1,31 @@
 package blackjack.model.result;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class DealerResult {
 
-    private final List<ResultState> dealerResult = new ArrayList<>();
+    private final Map<ResultState, Integer> dealerResult = new LinkedHashMap<>();
 
     public DealerResult() {
+        for (ResultState resultState : ResultState.values()) {
+            dealerResult.put(resultState, 0);
+        }
     }
 
     public void addWin() {
-        dealerResult.add(ResultState.WIN);
+        dealerResult.put(ResultState.WIN, dealerResult.get(ResultState.WIN) + 1);
     }
 
     public void addLose() {
-        dealerResult.add(ResultState.LOSE);
+        dealerResult.put(ResultState.LOSE, dealerResult.get(ResultState.LOSE) + 1);;
     }
 
     public void addTie() {
-        dealerResult.add(ResultState.TIE);
+        dealerResult.put(ResultState.TIE, dealerResult.get(ResultState.WIN) + 1);
     }
 
-    public int countWins() {
-        return (int) dealerResult.stream()
-                .filter(result -> result == ResultState.WIN)
-                .count();
-    }
-
-    public int countLoses() {
-        return (int) dealerResult.stream()
-                .filter(result -> result == ResultState.LOSE)
-                .count();
-    }
-
-    public int countTies() {
-        return (int) dealerResult.stream()
-                .filter(result -> result == ResultState.TIE)
-                .count();
-    }
-
-    public List<ResultState> getDealerResult() {
+    public Map<ResultState, Integer> getDealerResult() {
         return dealerResult;
     }
 }

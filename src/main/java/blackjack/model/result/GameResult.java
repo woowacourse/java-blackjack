@@ -24,15 +24,15 @@ public class GameResult {
     }
 
     public int countDealerWins() {
-        return dealerResult.countWins();
+        return dealerResult.getDealerResult().get(ResultState.WIN);
     }
 
     public int countDealerLoses() {
-        return dealerResult.countLoses();
+        return dealerResult.getDealerResult().get(ResultState.LOSE);
     }
 
     public int countDealerTies() {
-        return dealerResult.countTies();
+        return dealerResult.getDealerResult().get(ResultState.TIE);
     }
 
     public void addPlayerWin(Player player) {

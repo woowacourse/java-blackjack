@@ -1,9 +1,9 @@
 package blackjack.model.result;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerResultTest {
 
@@ -17,7 +17,7 @@ class DealerResultTest {
         dealerResult.addWin();
 
         //then
-        assertThat(dealerResult.getDealerResult()).containsExactly(ResultState.WIN);
+        assertThat(dealerResult.getDealerResult().get(ResultState.WIN)).isEqualTo(1);
     }
 
     @DisplayName("결과값 '패배'를 추가한다.")
@@ -30,7 +30,7 @@ class DealerResultTest {
         dealerResult.addLose();
 
         //then
-        assertThat(dealerResult.getDealerResult()).containsExactly(ResultState.LOSE);
+        assertThat(dealerResult.getDealerResult().get(ResultState.LOSE)).isEqualTo(1);
     }
 
     @DisplayName("결과값 '무승부'를 추가한다.")
@@ -43,48 +43,6 @@ class DealerResultTest {
         dealerResult.addTie();
 
         //then
-        assertThat(dealerResult.getDealerResult()).containsExactly(ResultState.TIE);
-    }
-
-    @DisplayName("결과값에 '승리' 개수를 반환한다.")
-    @Test
-    void countWins() {
-        //given
-        DealerResult dealerResult = new DealerResult();
-
-        //when
-        dealerResult.addWin();
-        dealerResult.addWin();
-
-        //then
-        assertThat(dealerResult.countWins()).isEqualTo(2);
-    }
-
-    @DisplayName("결과값에 '패배' 개수를 반환한다.")
-    @Test
-    void countLoses() {
-        //given
-        DealerResult dealerResult = new DealerResult();
-
-        //when
-        dealerResult.addLose();
-        dealerResult.addLose();
-
-        //then
-        assertThat(dealerResult.countLoses()).isEqualTo(2);
-    }
-
-    @DisplayName("결과값에 '무승부' 개수를 반환한다.")
-    @Test
-    void countTies() {
-        //given
-        DealerResult dealerResult = new DealerResult();
-
-        //when
-        dealerResult.addTie();
-        dealerResult.addTie();
-
-        //then
-        assertThat(dealerResult.countTies()).isEqualTo(2);
+        assertThat(dealerResult.getDealerResult().get(ResultState.TIE)).isEqualTo(1);
     }
 }
