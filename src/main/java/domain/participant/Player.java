@@ -20,6 +20,6 @@ public class Player extends Participant {
 
     @Override
     public boolean canDeal() {
-        return handsSum() <= Hands.BLACK_JACK;
+        return handsSum() < Hands.BLACK_JACK;
     }
 }
