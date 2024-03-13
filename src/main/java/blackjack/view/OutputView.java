@@ -20,6 +20,9 @@ public class OutputView {
     private static final String FINAL_HANDS_AND_SCORE_FORMAT = "%s - 결과: %d";
     private static final String FINAL_RESULT_FORMAT = "%s: %s" + System.lineSeparator();
     private static final String FINAL_RESULT_MESSAGE = System.lineSeparator() + "## 최종 승패";
+    private static final String FINAL_PROFIT_RESULT_MESSAGE = System.lineSeparator() + "## 최종 수익";
+    private static final String FINAL_PROFIT_RESULT_FORMAT = "%s: %s" + System.lineSeparator();
+
     private static final int DEALER_DRAW_THRESHOLD = 16;
 
     private OutputView() {
@@ -70,6 +73,14 @@ public class OutputView {
         System.out.println(FINAL_RESULT_MESSAGE);
         printDealerGameResult(dealer, gameResult);
         printPlayerGameResult(gameResult.getGameResult());
+    }
+
+    public static void printProfitResult(Dealer dealer, Players players, GameResult gameResult) {
+        System.out.println(FINAL_PROFIT_RESULT_MESSAGE);
+        System.out.printf(FINAL_PROFIT_RESULT_FORMAT, dealer.getName(), gameResult.getDealerProfit());
+        for (Player player : players.getPlayers()) {
+            System.out.printf(FINAL_PROFIT_RESULT_FORMAT, player.getName(), gameResult.getPlayerResult(player));
+        }
     }
 
     private static String resolvePlayerNamesMessage(Players players) {

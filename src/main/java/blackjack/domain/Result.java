@@ -25,7 +25,6 @@ public enum Result {
         return DRAW;
     }
 
-    //TODO: TEST 작성하기
     public int getBetProfit(int betMoney) {
         if (this == BLACK_JACK) {
             return (int) (1.5 * betMoney);

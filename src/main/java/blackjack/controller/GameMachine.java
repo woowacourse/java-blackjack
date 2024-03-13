@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.Game;
+import blackjack.domain.GameResult;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -26,7 +27,9 @@ public class GameMachine {
         confirmParticipantsHands(gamePlayers, deck, gameDealer);
 
         OutputView.printFinalHandsAndScoreMessage(gameDealer, gamePlayers);
-        OutputView.printGameResult(gameDealer, game.makeGameResult());
+        GameResult gameResult = game.makeGameResult();
+        OutputView.printGameResult(gameDealer, gameResult);
+        OutputView.printProfitResult(gameDealer, gamePlayers, gameResult);
     }
 
     private static Game makeGame(Deck deck) {
