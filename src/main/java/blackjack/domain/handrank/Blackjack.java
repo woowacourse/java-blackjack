@@ -8,7 +8,7 @@ public final class Blackjack implements HankRank {
 
     @Override
     public boolean isBlackjack() {
-        return false;
+        return true;
     }
 
     @Override
