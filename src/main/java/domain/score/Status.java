@@ -11,13 +11,13 @@ public enum Status {
     LOSE(Bet::lose),
     BLACKJACK(Bet::multiply);
 
-    private final Function<Bet, Bet> function;
+    private final Function<Bet, Revenue> function;
 
-    Status(Function<Bet, Bet> function) {
+    Status(Function<Bet, Revenue> function) {
         this.function = function;
     }
 
-    public Bet calculateRevenue(Bet bet) {
+    public Revenue calculateRevenue(Bet bet) {
         return function.apply(bet);
     }
 }

@@ -6,6 +6,7 @@ import domain.card.PlayerCards;
 import domain.card.Shape;
 import domain.player.Bet;
 import domain.player.Name;
+import domain.score.Revenue;
 import domain.score.ScoreBoard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,17 +23,16 @@ class RefereeTest {
     private DealerCards dealerCards;
     private PlayerCards playerCards;
     private Referee referee;
-    private Bet revenue;
+    private ScoreBoard scoreBoard;
 
     @BeforeEach
     void setUp() {
-        ScoreBoard scoreBoard = new ScoreBoard(Map.of(capy, new Bet(20000)));
+        scoreBoard = new ScoreBoard(Map.of(capy, new Bet(20000)));
         referee = new Referee(scoreBoard);
         dealerCards = new DealerCards(List.of(
                 new Card(9, Shape.CLUB),
                 new Card(10, Shape.SPADE)
         ));
-        revenue = scoreBoard.getPlayerRevenue().get(capy);
     }
 
     @Test
@@ -45,8 +45,8 @@ class RefereeTest {
 
         referee.decideResult(dealerCards, List.of(playerCards));
 
-        // todo 딜러 수익
-        assertThat(revenue.getAmount()).isEqualTo(30000);
+        Revenue capyRevenue = scoreBoard.getPlayersRevenues().get(capy);
+        assertThat(capyRevenue).isEqualTo(new Revenue(30000));
     }
 
     @Test
@@ -65,8 +65,8 @@ class RefereeTest {
 
         referee.decideResult(dealerCards, List.of(playerCards));
 
-        // todo 딜러 수익
-        assertThat(revenue.getAmount()).isEqualTo(20000);
+        Revenue capyRevenue = scoreBoard.getPlayersRevenues().get(capy);
+        assertThat(capyRevenue).isEqualTo(new Revenue(20000));
     }
 
     @Test
@@ -79,7 +79,8 @@ class RefereeTest {
 
         referee.decideResult(dealerCards, List.of(playerCards));
 
-        assertThat(revenue.getAmount()).isEqualTo(20000);
+        Revenue capyRevenue = scoreBoard.getPlayersRevenues().get(capy);
+        assertThat(capyRevenue).isEqualTo(new Revenue(20000));
     }
 
     @Test
@@ -92,7 +93,8 @@ class RefereeTest {
 
         referee.decideResult(dealerCards, List.of(playerCards));
 
-        assertThat(revenue.getAmount()).isEqualTo(0);
+        Revenue capyRevenue = scoreBoard.getPlayersRevenues().get(capy);
+        assertThat(capyRevenue).isEqualTo(new Revenue(0));
     }
 
     @Test
@@ -110,8 +112,8 @@ class RefereeTest {
 
         referee.decideResult(dealerCards, List.of(playerCards));
 
-        // todo 딜러 수익
-        assertThat(revenue.getAmount()).isEqualTo(0);
+        Revenue capyRevenue = scoreBoard.getPlayersRevenues().get(capy);
+        assertThat(capyRevenue).isEqualTo(new Revenue(0));
     }
 
     @Test
@@ -124,8 +126,8 @@ class RefereeTest {
 
         referee.decideResult(dealerCards, List.of(playerCards));
 
-        // todo 딜러 수익
-        assertThat(revenue.getAmount()).isEqualTo(-20000);
+        Revenue capyRevenue = scoreBoard.getPlayersRevenues().get(capy);
+        assertThat(capyRevenue).isEqualTo(new Revenue(-20000));
     }
 
     @Test
@@ -139,7 +141,7 @@ class RefereeTest {
 
         referee.decideResult(dealerCards, List.of(playerCards));
 
-        // todo 딜러 수익
-        assertThat(revenue.getAmount()).isEqualTo(-20000);
+        Revenue capyRevenue = scoreBoard.getPlayersRevenues().get(capy);
+        assertThat(capyRevenue).isEqualTo(new Revenue(-20000));
     }
 }

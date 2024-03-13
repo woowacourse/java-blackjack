@@ -12,35 +12,35 @@ class StatusTest {
     @DisplayName("블랙잭이라면 수익은 베팅의 1.5배다.")
     void calculateRevenue_BlackJack_isOneAndHalfTimesOfBet() {
         Bet bet = new Bet(20000);
-        Bet revenue = Status.BLACKJACK.calculateRevenue(bet);
+        Revenue revenue = Status.BLACKJACK.calculateRevenue(bet);
 
-        assertThat(revenue.getAmount()).isEqualTo(30000);
+        assertThat(revenue).isEqualTo(new Revenue(30000));
     }
 
     @Test
     @DisplayName("이기면 수익은 베팅만큼이다.")
     void calculateRevenue_Win_isSameWithBet() {
         Bet bet = new Bet(20000);
-        Bet revenue = Status.WIN.calculateRevenue(bet);
+        Revenue revenue = Status.WIN.calculateRevenue(bet);
 
-        assertThat(revenue.getAmount()).isEqualTo(20000);
+        assertThat(revenue).isEqualTo(new Revenue(20000));
     }
 
     @Test
     @DisplayName("지면 손실은 베팅만큼이다.")
     void calculateRevenue_Lose_isMinus() {
         Bet bet = new Bet(20000);
-        Bet revenue = Status.LOSE.calculateRevenue(bet);
+        Revenue revenue = Status.LOSE.calculateRevenue(bet);
 
-        assertThat(revenue.getAmount()).isEqualTo(-20000);
+        assertThat(revenue).isEqualTo(new Revenue(-20000));
     }
 
     @Test
     @DisplayName("비기면 수익이 0이다.")
     void calculateRevenue_Tie_isZero() {
         Bet bet = new Bet(20000);
-        Bet revenue = Status.TIE.calculateRevenue(bet);
+        Revenue revenue = Status.TIE.calculateRevenue(bet);
 
-        assertThat(revenue.getAmount()).isEqualTo(0);
+        assertThat(revenue).isEqualTo(new Revenue(0));
     }
 }

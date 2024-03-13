@@ -3,34 +3,33 @@ package domain.score;
 import domain.player.Bet;
 import domain.player.Name;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ScoreBoard {
 
-    private final Revenue dealerRevenue = new Revenue();
-    private final Map<Name, Bet> playerRevenue;
+    private final Map<Name, Bet> playersBets;
+    private final Map<Name, Revenue> playersRevenues;
 
-    public ScoreBoard(Map<Name, Bet> playerRevenue) {
-        this.playerRevenue = new HashMap<>(playerRevenue);
+    public ScoreBoard(Map<Name, Bet> playersBets) {
+        this.playersBets = playersBets;
+        this.playersRevenues = new HashMap<>();
     }
 
     public void updatePlayerScore(Name name, Status status) {
-        Bet bet = playerRevenue.get(name);
-        Bet revenue = status.calculateRevenue(bet);
-        playerRevenue.put(name, revenue);
+        Bet bet = playersBets.get(name);
+        Revenue revenue = status.calculateRevenue(bet);
+        playersRevenues.put(name, revenue);
     }
 
-    public void calculateDealerRevenue() {
-        dealerRevenue.calculate(playerRevenue.values().stream().toList());
+    public Revenue calculateDealerRevenue() {
+        List<Revenue> revenues = new ArrayList<>(playersRevenues.values());
+        int sum = revenues.stream()
+                .mapToInt(Revenue::getAmount)
+                .sum();
+        return new Revenue(sum * -1);
     }
 
-    public Revenue getDealerScore() {
-        return dealerRevenue;
-    }
-
-    public Map<Name, Bet> getPlayerRevenue() {
-        return Collections.unmodifiableMap(playerRevenue);
+    public Map<Name, Revenue> getPlayersRevenues() {
+        return Collections.unmodifiableMap(playersRevenues);
     }
 }

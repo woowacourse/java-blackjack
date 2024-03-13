@@ -1,11 +1,14 @@
 package domain.player;
 
+import domain.score.Revenue;
+
 import java.util.Objects;
 
 public class Bet {
 
     private static final int MIN_AMOUNT = 1;
-    private int amount;
+    
+    private final int amount;
 
     public Bet(int amount) {
         validate(amount);
@@ -18,23 +21,20 @@ public class Bet {
         }
     }
 
-    public Bet lose() {
-        amount *= -1;
-        return this;
+    public Revenue lose() {
+        return new Revenue(amount * -1);
     }
 
-    public Bet win() {
-        return this;
+    public Revenue win() {
+        return new Revenue(amount);
     }
 
-    public Bet stay() {
-        amount = 0;
-        return this;
+    public Revenue stay() {
+        return new Revenue(0);
     }
 
-    public Bet multiply() {
-        amount *= 1.5;
-        return this;
+    public Revenue multiply() {
+        return new Revenue(amount * 1.5);
     }
 
     @Override
@@ -48,9 +48,5 @@ public class Bet {
     @Override
     public int hashCode() {
         return Objects.hash(amount);
-    }
-
-    public int getAmount() {
-        return amount;
     }
 }

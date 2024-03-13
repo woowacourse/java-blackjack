@@ -1,24 +1,33 @@
 package domain.score;
 
-import domain.player.Bet;
-
-import java.util.List;
+import java.util.Objects;
 
 public class Revenue {
 
-    private int value = 0;
+    private final int value;
 
-    public Revenue() {
+    public Revenue(int value) {
+        this.value = value;
     }
 
-    public void calculate(List<Bet> bets) {
-        int sum = bets.stream()
-                .mapToInt(Bet::getAmount)
-                .sum();
-        this.value = sum * -1;
+    public Revenue(double value) {
+        this((int) value);
     }
 
     public int getAmount() {
         return value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Revenue revenue = (Revenue) o;
+        return value == revenue.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }

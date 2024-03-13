@@ -25,7 +25,6 @@ public class Referee {
         checkBlackjackPlayers(players, dealerStatus);
         checkBustPlayers(players);
         checkRemainPlayers(dealer, players, dealerStatus);
-        scoreBoard.calculateDealerRevenue();
     }
 
     private void checkBlackjackPlayers(List<PlayerCards> players, Status dealerStatus) {

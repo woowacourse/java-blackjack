@@ -3,22 +3,14 @@ package view;
 import domain.card.Cards;
 import domain.card.DealerCards;
 import domain.card.PlayerCards;
-import domain.player.Bet;
 import domain.player.Name;
 import domain.score.Revenue;
 import domain.score.ScoreBoard;
-import domain.score.Status;
 
 import java.util.List;
 import java.util.Map;
 
 public class OutputView {
-
-    private static final Map<Status, String> outcome = Map.of(
-            Status.WIN, "승",
-            Status.TIE, "무",
-            Status.LOSE, "패"
-    );
 
     public void printInitialCards(DealerCards dealerCards, List<PlayerCards> playerCards) {
         List<String> names = playerCards.stream()
@@ -72,12 +64,12 @@ public class OutputView {
         System.out.print("딜러: ");
         printDealerScore(scoreBoard);
 
-        Map<Name, Bet> playerScore = scoreBoard.getPlayerRevenue();
-        playerScore.forEach((name, bet) -> System.out.println(name + ": " + bet.getAmount()));
+        Map<Name, Revenue> playerScore = scoreBoard.getPlayersRevenues();
+        playerScore.forEach((name, revenue) -> System.out.println(name + ": " + revenue.getAmount()));
     }
 
     private void printDealerScore(ScoreBoard scoreBoard) {
-        Revenue dealerRevenue = scoreBoard.getDealerScore();
+        Revenue dealerRevenue = scoreBoard.calculateDealerRevenue();
         System.out.println(dealerRevenue.getAmount());
     }
 

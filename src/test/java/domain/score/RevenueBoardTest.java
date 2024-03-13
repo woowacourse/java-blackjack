@@ -2,10 +2,11 @@ package domain.score;
 
 import domain.player.Bet;
 import domain.player.Name;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class RevenueBoardTest {
 
@@ -19,6 +20,6 @@ class RevenueBoardTest {
 
         scoreBoard.calculateDealerRevenue();
 
-        Assertions.assertThat(scoreBoard.getDealerScore().getAmount()).isEqualTo(20000);
+        assertThat(scoreBoard.calculateDealerRevenue()).isEqualTo(new Revenue(20000));
     }
 }
