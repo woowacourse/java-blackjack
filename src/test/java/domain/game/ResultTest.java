@@ -28,7 +28,8 @@ class ResultTest {
                 () -> assertEquals(Result.DEALER_WIN, Result.of(new Dealer(blackJackCards), new Player(loserCards))),
                 () -> assertEquals(Result.PUSH, Result.of(new Dealer(blackJackCards), new Player(blackJackCards))),
                 () -> assertEquals(Result.PLAYER_WIN, Result.of(new Dealer(bustCards), new Player(loserCards))),
-                () -> assertEquals(Result.PLAYER_WIN, Result.of(new Dealer(loserCards), new Player(blackJackCards))),
+                () -> assertEquals(Result.PLAYER_BLACK_JACK,
+                        Result.of(new Dealer(loserCards), new Player(blackJackCards))),
                 () -> assertEquals(Result.PUSH, Result.of(new Dealer(loserCards), new Player(loserCards)))
         );
     }

@@ -8,7 +8,8 @@ import java.util.function.BiPredicate;
 public enum Result {
     DEALER_WIN(Result::isDealerWin),
     PLAYER_WIN(Result::isPlayerWin),
-    PUSH(Result::isPush);
+    PUSH(Result::isPush),
+    PLAYER_BLACK_JACK(Result::isPlayerBlackJack);
 
 
     private final BiPredicate<Dealer, Player> judgeResult;
@@ -42,11 +43,15 @@ public enum Result {
     }
 
     private static boolean isPlayerWin(final Dealer dealer, final Player player) {
-        return dealer.isBust()
-                || !player.isBust() && dealer.getScore().compareTo(player.getScore()) < 0;
+        return (dealer.isBust()
+                || !player.isBust() && dealer.getScore().compareTo(player.getScore()) < 0) && !player.isBlackJack();
     }
 
     private static boolean isPush(final Dealer dealer, final Player player) {
         return dealer.getScore().compareTo(player.getScore()) == 0;
+    }
+
+    private static boolean isPlayerBlackJack(final Dealer dealer, final Player player) {
+        return player.isBlackJack();
     }
 }
