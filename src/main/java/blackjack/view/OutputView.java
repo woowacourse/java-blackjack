@@ -16,7 +16,7 @@ public class OutputView {
     }
 
     public void printMoneyResult(List<BettingMoneyDto> bettingMoneyResult) {
-        System.out.println("\n## 최종 수익");
+        System.out.println("## 최종 수익");
         for (BettingMoneyDto bettingMoneyDto : bettingMoneyResult) {
             System.out.printf("%s: %d\n", bettingMoneyDto.playerName(), bettingMoneyDto.money());
         }
@@ -57,16 +57,6 @@ public class OutputView {
 
     private void printScore(PlayerDto player) {
         System.out.printf(" - 결과: %d\n", player.score());
-    }
-
-    public void printResult(Map<String, Boolean> victoryResult) {
-        System.out.println("## 최종 승패");
-        int dealerWinCount = (int) victoryResult.values().stream()
-                .filter(isWin -> !isWin)
-                .count();
-        int dealerLoseCount = victoryResult.size() - dealerWinCount;
-        System.out.printf("딜러: %d승 %d패\n", dealerWinCount, dealerLoseCount);
-        victoryResult.keySet().forEach(playerName -> printVictory(victoryResult, playerName));
     }
 
     public void printNewLine() {
