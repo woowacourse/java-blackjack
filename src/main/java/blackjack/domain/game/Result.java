@@ -27,8 +27,8 @@ public class Result {
     }
 
     private static PlayerState decidePlayerState(Player player, Dealer dealer) {
-        if (player.isBlackjack()) {
-            return decidePlayerStateByBlackjack(dealer);
+        if (player.isBlackjack() && !dealer.isBlackjack()) {
+            return PlayerState.BLACKJACK;
         }
         if (player.isBusted()) {
             return PlayerState.LOSE;
@@ -37,13 +37,6 @@ public class Result {
             return PlayerState.WIN;
         }
         return decidePlayerStateByScore(player, dealer);
-    }
-
-    private static PlayerState decidePlayerStateByBlackjack(Dealer dealer) {
-        if (dealer.isBlackjack()) {
-            return PlayerState.TIE;
-        }
-        return PlayerState.BLACKJACK;
     }
 
     private static PlayerState decidePlayerStateByScore(Player player, Dealer dealer) {
