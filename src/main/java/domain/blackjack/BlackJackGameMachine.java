@@ -23,7 +23,7 @@ class BlackJackGameMachine {
             Card draw = deck.draw(cardSelectStrategy);
             holdingCards.add(draw);
             return DrawResult.success(!isBust());
-        } catch (IllegalArgumentException | IllegalStateException e) {
+        } catch (IllegalArgumentException e) {
             return DrawResult.fail(e, !isBust());
         }
     }
