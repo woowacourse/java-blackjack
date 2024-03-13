@@ -3,7 +3,10 @@ package model.card;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.NoSuchElementException;
+import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -34,5 +37,17 @@ class CardShufflerTest {
         int previousSize = cardShuffler.cardsSize();
         cardShuffler.drawCard();
         assertThat(cardShuffler.cardsSize()).isEqualTo(previousSize - 1);
+    }
+
+    @DisplayName("뽑을 카드가 없으면 예외 발생")
+    @Test
+    void testDrawCardFromEmptyCards() {
+        CardShuffler cardShuffler = CardShuffler.of(1);
+
+        IntStream.range(0, cardShuffler.cardsSize())
+            .forEach(count -> cardShuffler.drawCard());
+
+        assertThatThrownBy(cardShuffler::drawCard)
+            .isInstanceOf(NoSuchElementException.class);
     }
 }
