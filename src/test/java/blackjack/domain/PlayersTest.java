@@ -19,7 +19,6 @@ public class PlayersTest {
 
     private final ShuffleStrategy shuffleStrategy = new NoShuffleStrategy();
 
-    private Deck deck;
     private Dealer dealer;
     private Players players;
     private final String bettingAmountA = "10000";
@@ -29,13 +28,8 @@ public class PlayersTest {
 
     @BeforeEach
     void setUp() {
-        deck = new Deck(shuffleStrategy);
-        dealer = new Dealer(deck);
-        dealer.draw(2);
+        dealer = Dealer.create(shuffleStrategy);
         players = Players.of(List.of(playerA, playerB));
-        IntStream.range(0, 2)
-                .forEach(i -> players.getPlayers()
-                        .forEach(player -> player.draw(dealer.draw())));
     }
 
     @DisplayName("플레이어 이름이 중복되면 예외가 발생한다.")
@@ -57,6 +51,8 @@ public class PlayersTest {
     @Test
     void decideResult() {
         //given
+        dealer.initialDeal();
+        players.initialDeal(dealer::draw);
         String expectedProfitSum = String.valueOf(Integer.parseInt(bettingAmountA) + Integer.parseInt(bettingAmountB));
 
         //when
@@ -68,15 +64,22 @@ public class PlayersTest {
         assertThat(blackjackResult.dealerProfit()).isEqualTo(expectedProfitSum);
     }
 
-    @DisplayName("딜러가 버스트 된 경우 버스트 안된 참가자는 승리한다.")
+    @DisplayName("딜러가 버스트된 경우 버스트 안된 참가자는 승리한다.")
     @Test
     void dealerBustPlayerWins() {
         //given
-        Dealer bustedDealer = new Dealer(deck);
+        players.initialDeal(dealer::draw);
+        Dealer bustedDealer = Dealer.create(shuffleStrategy);
 
         //when
-        IntStream.range(0, 6)
-                .forEach(i -> bustedDealer.requestExtraCard());
+        IntStream.range(0, 9)
+                .forEach(i -> players.getPlayers().get(1).draw(dealer.draw()));
+        bustedDealer.initialDeal();
+        bustedDealer.draw();
+        System.out.println(bustedDealer.getHandCards().get(0).getRank());
+        System.out.println(bustedDealer.getHandCards().get(0).getSuit());
+        System.out.println(bustedDealer.getHandCards().get(1).getRank());
+        System.out.println(bustedDealer.getHandCards().get(1).getSuit());
 
         //then
         BlackjackResult blackjackResult = Judge.judge(bustedDealer, players);

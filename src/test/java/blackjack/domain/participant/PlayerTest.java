@@ -25,8 +25,7 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        deck = new Deck(shuffleStrategy);
-        dealer = new Dealer(deck);
+        dealer = Dealer.create(shuffleStrategy);
         choco = playerChoco();
         clover = playerClover();
     }

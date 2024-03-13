@@ -1,21 +1,15 @@
 package blackjack;
 
-import blackjack.domain.Deck;
 import blackjack.domain.Judge;
 import blackjack.domain.Players;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.PlayerInfo;
 import blackjack.strategy.RandomShuffleStrategy;
 import blackjack.view.CardView;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.List;
-import java.util.stream.IntStream;
 
 public class BlackjackGame {
-
-    private static final int BLACKJACK_INIT_CARD_AMOUNT = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -26,7 +20,7 @@ public class BlackjackGame {
     }
 
     public void start() {
-        Dealer dealer = new Dealer(new Deck(new RandomShuffleStrategy()));
+        Dealer dealer = Dealer.create(new RandomShuffleStrategy());
         Players players = createPlayers();
 
         initializeGame(dealer, players);
@@ -36,16 +30,12 @@ public class BlackjackGame {
     }
 
     private Players createPlayers() {
-        List<PlayerInfo> playerInfos = inputView.readPlayerInfos();
-        return Players.of(playerInfos);
+        return Players.of(inputView.readPlayerInfos());
     }
 
     private void initializeGame(final Dealer dealer, final Players players) {
-        dealer.draw(BLACKJACK_INIT_CARD_AMOUNT);
-
-        IntStream.range(0, BLACKJACK_INIT_CARD_AMOUNT)
-                .forEach(i -> players.getPlayers()
-                        .forEach(player -> player.draw(dealer.draw())));
+        dealer.initialDeal();
+        players.initialDeal(dealer::draw);
     }
 
     private void printCardDistribute(final Dealer dealer, final Players players) {

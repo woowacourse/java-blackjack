@@ -20,7 +20,6 @@ class JudgeTest {
 
     private final ShuffleStrategy shuffleStrategy = new NoShuffleStrategy();
 
-    private Deck deck;
     private Dealer dealer;
     private final String bettingAmount = "10000";
     private final List<PlayerInfo> playerInfos = List.of(PlayerInfo.of("choco", bettingAmount));
@@ -33,9 +32,8 @@ class JudgeTest {
     class whenDealerBust {
         @BeforeEach
         void setUp() {
-            deck = new Deck(shuffleStrategy);
+            dealer = Dealer.create(shuffleStrategy);
             deckDrawLoop(6);
-            dealer = new Dealer(deck);
             dealer.draw(2);
             bustDealer();
         }
@@ -46,8 +44,7 @@ class JudgeTest {
             //given
             players = Players.of(playerInfos);
             choco = players.getPlayers().get(0);
-            IntStream.range(0, 2)
-                    .forEach(i -> choco.draw(dealer.draw()));
+            players.initialDeal(dealer::draw);
 
             //when
             bustPlayerChoco();
@@ -99,9 +96,8 @@ class JudgeTest {
     class whenDealerBlackjack {
         @BeforeEach
         void setUp() {
-            deck = new Deck(shuffleStrategy);
+            dealer = Dealer.create(shuffleStrategy);
             deckDrawLoop(12);
-            dealer = new Dealer(deck);
             dealer.draw(2);
         }
 
@@ -165,8 +161,7 @@ class JudgeTest {
     class whenDealerNormal {
         @BeforeEach
         void setUp() {
-            deck = new Deck(shuffleStrategy);
-            dealer = new Dealer(deck);
+            dealer = Dealer.create(shuffleStrategy);
             dealer.draw(2);
         }
 
@@ -272,7 +267,7 @@ class JudgeTest {
 
     private void deckDrawLoop(final int count) {
         IntStream.range(0, count)
-                .forEach(i -> deck.draw());
+                .forEach(i -> dealer.draw());
     }
 
     private boolean isDealerWin(final BlackjackResult blackjackResult) {
