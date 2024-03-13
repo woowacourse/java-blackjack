@@ -4,7 +4,6 @@ import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
 import domain.deck.Deck;
-import strategy.SettedShuffleStrategy;
 import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Player;
@@ -12,8 +11,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import strategy.SettedShuffleStrategy;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -27,7 +28,6 @@ class JudgementTest {
     Players players;
     Player pobi;
     Player neo;
-    BlackJackGame blackJackGame;
 
     @BeforeEach
     void init() {
@@ -59,9 +59,8 @@ class JudgementTest {
             List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8, card9);
             shuffleStrategy = new SettedShuffleStrategy(cards);
             deck = new Deck(shuffleStrategy);
-            blackJackGame = new BlackJackGame(deck);
-            blackJackGame.prepareCards(dealer, players);
-            blackJackGame.takeTurn(dealer);
+            prepareCards(dealer, players);
+            dealer.hit(deck.draw());
         }
 
         @DisplayName("플레이어가 버스트가 아니라면 플레이어가 이긴다.")
@@ -84,8 +83,8 @@ class JudgementTest {
         @Test
         void playerIsBust() {
             // given
-            blackJackGame.takeTurn(pobi);
-            blackJackGame.takeTurn(pobi);
+            pobi.hit(deck.draw());
+            pobi.hit(deck.draw());
 
             // when
             Judgement judgement = Judgement.of(dealer, players);
@@ -104,6 +103,7 @@ class JudgementTest {
     @DisplayName("딜러가 블랙잭인 경우")
     @Nested
     class ifDealerBlackJack {
+
         @BeforeEach
         void setDeckAndDealerBlackJack() {
             Card card1 = new Card(Symbol.CLOVER, Rank.KING);
@@ -119,9 +119,7 @@ class JudgementTest {
             List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8, card9);
             shuffleStrategy = new SettedShuffleStrategy(cards);
             deck = new Deck(shuffleStrategy);
-            blackJackGame = new BlackJackGame(deck);
-            blackJackGame.prepareCards(dealer, players);
-            blackJackGame.takeTurn(dealer);
+            prepareCards(dealer, players);
         }
 
         @DisplayName("플레이어(포비)도 블랙잭이라면 무승부이다.")
@@ -144,7 +142,7 @@ class JudgementTest {
         @Test
         void playerIsNotBlackJack() {
             // given
-            blackJackGame.takeTurn(neo);
+            neo.hit(deck.draw());
 
             // when
             Judgement judgement = Judgement.of(dealer, players);
@@ -158,11 +156,13 @@ class JudgementTest {
                     () -> assertThat(judgement.getPlayerResults().getResults().get(neo)).isEqualTo(Result.LOSE)
             );
         }
+
     }
 
     @DisplayName("딜러가 일반 숫자(버스트도 아니고, 블랙잭도 아닌)인 경우")
     @Nested
     class ifDealerNormalNumber {
+
         @BeforeEach
         void setDeckAndDealerBust() {
             Card card1 = new Card(Symbol.CLOVER, Rank.KING);
@@ -178,9 +178,7 @@ class JudgementTest {
             List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8, card9);
             shuffleStrategy = new SettedShuffleStrategy(cards);
             deck = new Deck(shuffleStrategy);
-            blackJackGame = new BlackJackGame(deck);
-            blackJackGame.prepareCards(dealer, players);
-            blackJackGame.takeTurn(dealer);
+            prepareCards(dealer, players);
         }
 
         @DisplayName("플레이어(포비)가 블랙잭이라면 플레이어가 이긴다.")
@@ -203,9 +201,9 @@ class JudgementTest {
         @Test
         void playerIsBust() {
             // given
-            blackJackGame.takeTurn(neo);
-            blackJackGame.takeTurn(neo);
-            blackJackGame.takeTurn(neo);
+            neo.hit(deck.draw());
+            neo.hit(deck.draw());
+            neo.hit(deck.draw());
 
             // when
             Judgement judgement = Judgement.of(dealer, players);
@@ -224,7 +222,7 @@ class JudgementTest {
         @Test
         void playerIsSameNormalScoreAndSame() {
             // when
-            blackJackGame.takeTurn(neo);
+            neo.hit(deck.draw());
             Judgement judgement = Judgement.of(dealer, players);
 
             // then
@@ -241,8 +239,8 @@ class JudgementTest {
         @Test
         void playerIsSameNormalScoreAndSmaller() {
             // when
-            blackJackGame.takeTurn(neo);
-            blackJackGame.takeTurn(neo);
+            neo.hit(deck.draw());
+            neo.hit(deck.draw());
             Judgement judgement = Judgement.of(dealer, players);
 
             // then
@@ -254,6 +252,19 @@ class JudgementTest {
                     () -> assertThat(judgement.getPlayerResults().getResults().get(neo)).isEqualTo(Result.WIN)
             );
         }
+
     }
 
+    private void prepareCards(final Dealer dealer, final Players players) {
+        dealer.receive(drawTwoCards(deck));
+        for (final Player player : players.getPlayers()) {
+            player.receive(drawTwoCards(deck));
+        }
+    }
+
+    private List<Card> drawTwoCards(final Deck deck) {
+        return Stream.generate(deck::draw)
+                .limit(2)
+                .toList();
+    }
 }
