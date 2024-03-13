@@ -3,24 +3,17 @@ package blackjack.domain.card.status;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 
-public class Blackjack implements HandStatus {
+public class Busted implements HandStatus {
 
     private final Hand hand;
 
-    public Blackjack(Hand hand) {
-        validateBlackjack(hand);
+    public Busted(Hand hand) {
         this.hand = hand;
-    }
-
-    private void validateBlackjack(Hand hand) {
-        if (!hand.isBlackjack()) {
-            throw new IllegalArgumentException("해당 카드는 블랙잭이 아닙니다.");
-        }
     }
 
     @Override
     public HandStatus add(Card card) {
-        return new Busted(hand.add(card));
+        return null;
     }
 
     @Override

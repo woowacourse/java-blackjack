@@ -1,9 +1,12 @@
 package blackjack.domain.card.status;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
+import blackjack.domain.card.Shape;
+import blackjack.domain.card.Value;
 import blackjack.domain.fixture.CardsFixture;
 import java.util.List;
 import java.util.stream.Stream;
@@ -31,5 +34,16 @@ public class BlackjackTest {
                 CardsFixture.CARDS_SCORE_21,
                 CardsFixture.CARDS_SCORE_22
         );
+    }
+
+    @DisplayName("블랙잭에서 카드를 추가할 경우, 버스트 된다.")
+    @Test
+    void addTest() {
+        Hand hand = new Hand(CardsFixture.BLACKJACK);
+        HandStatus handStatus = new Blackjack(hand);
+
+        HandStatus actual = handStatus.add(new Card(Value.TWO, Shape.HEART));
+
+        assertThat(actual).isExactlyInstanceOf(Busted.class);
     }
 }
