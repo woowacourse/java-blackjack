@@ -15,10 +15,6 @@ public class Money {
         }
     }
 
-    public int toInt() {
-        return value;
-    }
-
     public Money add(Money money) {
         return new Money(this.value + money.value);
     }
@@ -26,5 +22,9 @@ public class Money {
     public Money multiply(double multiplier) {
         int newValue = (int) Math.ceil(this.value * multiplier);
         return new Money(newValue);
+    }
+
+    public int toInt() {
+        return value;
     }
 }
