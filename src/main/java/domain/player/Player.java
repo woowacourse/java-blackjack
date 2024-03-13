@@ -24,13 +24,13 @@ public class Player extends Participant {
                 calculateScore());
     }
 
-    public String getName() {
-        return name.getValue();
-    }
-
     @Override
     public boolean canHit() {
         return calculateScore() < HIT_UPPER_BOUND;
+    }
+
+    public String getName() {
+        return name.getValue();
     }
 
     @Override

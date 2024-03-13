@@ -79,6 +79,10 @@ public class Blackjack {
                 players.stream().map(Player::toPlayerResponse).toList());
     }
 
+    public PlayerResponse toPlayerResponse(final String name) {
+        return players.findPlayerByName(name).toPlayerResponse();
+    }
+
     public Players getPlayers() {
         return players;
     }
@@ -89,9 +93,5 @@ public class Blackjack {
 
     public Dealer getDealer() {
         return dealer;
-    }
-
-    public PlayerResponse toPlayerResponse(final String name) {
-        return players.findPlayerByName(name).toPlayerResponse();
     }
 }
