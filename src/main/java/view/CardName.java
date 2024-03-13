@@ -47,7 +47,7 @@ public enum CardName {
                 .toList();
     }
 
-    public static DealerHandStatus getDealerHandStatusWithHiddenCard(final Hand hand) {
+    public static DealerHandStatus getDealerHandWithHiddenCard(final Hand hand) {
         return new DealerHandStatus(getDealerHandAfterStartGame(hand));
     }
 
