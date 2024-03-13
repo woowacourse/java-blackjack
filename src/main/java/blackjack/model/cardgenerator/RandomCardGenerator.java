@@ -42,7 +42,7 @@ public class RandomCardGenerator implements CardGenerator {
 
     private Queue<Card> shuffle(final List<Card> decks) {
         Collections.shuffle(decks);
-        return new LinkedList<>(decks);
+        return new ArrayDeque<>(decks);
     }
 
     @Override
