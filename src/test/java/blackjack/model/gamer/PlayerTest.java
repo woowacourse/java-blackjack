@@ -1,21 +1,44 @@
 package blackjack.model.gamer;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.CardPattern;
+import blackjack.model.result.Result;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 class PlayerTest {
+
+    @DisplayName("플레이어 이름과 배팅 금액으로 플레이어를 생성한다.")
+    @Test
+    void createPlayer() {
+        //given
+        Name name = Name.from("ted");
+        int betAmount = 1000;
+
+        //when
+        Player player = Player.of(name, betAmount);
+        String playerName = player.name();
+        int playerBetAmount = player.betAmount();
+
+        //then
+        assertAll(
+                () -> assertThat(playerName).isEqualTo(name.getName()),
+                () -> assertThat(playerBetAmount).isEqualTo(betAmount)
+        );
+    }
 
     @DisplayName("플레이어가 카드를 받는다.")
     @Test
     void receiveCard() {
         //given
-        Player player = Player.from("ted");
+        Player player = Player.of(Name.from("ted"), 100);
         Card card = Card.of(CardPattern.CLOVER, CardNumber.FIVE);
 
         //when
@@ -26,25 +49,28 @@ class PlayerTest {
         assertThat(playerDeck).containsExactly(card);
     }
 
-    @DisplayName("플레이어가 히트할 수 있는지 확인한다.")
+    @DisplayName("플레이어의 카드 개수를 확인한다.")
     @Test
-    void canHit() {
+    void deckSize() {
         //given
-        Player player = Player.from("ted");
-        Card card = Card.of(CardPattern.CLOVER, CardNumber.FIVE);
+        Player player = Player.of(Name.from("ted"), 100);
+        Card card1 = Card.of(CardPattern.CLOVER, CardNumber.FIVE);
+        Card card2 = Card.of(CardPattern.CLOVER, CardNumber.SEVEN);
 
         //when
-        player.receiveCard(card);
+        player.receiveCard(card1);
+        player.receiveCard(card2);
+        int deckSize = player.deckSize();
 
         //then
-        assertThat(player.canHit()).isTrue();
+        assertThat(deckSize).isEqualTo(2);
     }
 
     @DisplayName("플레이어의 카드합을 확인한다.")
     @Test
     void calculateTotalScore() {
         //given
-        Player player = Player.from("ted");
+        Player player = Player.of(Name.from("ted"), 100);
         Card card1 = Card.of(CardPattern.CLOVER, CardNumber.FIVE);
         Card card2 = Card.of(CardPattern.CLOVER, CardNumber.SEVEN);
 
@@ -55,5 +81,40 @@ class PlayerTest {
 
         //then
         assertThat(totalScore).isEqualTo(12);
+    }
+
+    @DisplayName("플레이어에 게임 결과에 따른 수익금을 등록한다.")
+    @ParameterizedTest
+    @EnumSource(Result.class)
+    void applyResult(Result gameResult) {
+        //given
+        int betAmount = 1000;
+        Player player = Player.of(Name.from("ted"), betAmount);
+        int expectedProfitAmount = (int) (betAmount * gameResult.getPayoutRate());
+
+        //when
+        player.applyResult(gameResult);
+        int profitAmount = player.profitAmount();
+
+        //then
+        assertThat(profitAmount).isEqualTo(expectedProfitAmount);
+    }
+
+    @DisplayName("플레이어에 게임 결과에 따른 순수익을 확인한다.")
+    @ParameterizedTest
+    @EnumSource(Result.class)
+    void netProfit(Result gameResult) {
+        //given
+        int betAmount = 1000;
+        Player player = Player.of(Name.from("ted"), betAmount);
+        int profitAmount = (int) (betAmount * gameResult.getPayoutRate());
+        int expectedNetProfit = profitAmount - betAmount;
+
+        //when
+        player.applyResult(gameResult);
+        int netProfit = player.netProfit();
+
+        //then
+        assertThat(netProfit).isEqualTo(expectedNetProfit);
     }
 }
