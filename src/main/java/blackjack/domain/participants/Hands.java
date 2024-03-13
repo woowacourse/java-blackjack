@@ -8,6 +8,8 @@ import java.util.List;
 
 public class Hands {
 
+    public static final int ACE_BONUS_SCORE = 10;
+    public static final int NO_BONUS_SCORE = 0;
     private final List<Card> cards;
 
     public Hands(List<Card> cards) {
@@ -23,12 +25,31 @@ public class Hands {
     }
 
     public int calculateScore() {
-        int totalScore = 0;
-        for (Card card : cards) {
-            Rank rank = card.getRank();
-            totalScore += rank.getScore(totalScore);
+        int middleScore = calculateMiddleScore();
+        return middleScore + addBonusScore(middleScore);
+    }
+
+    private int calculateMiddleScore() {
+        return cards.stream()
+                .map(Card::getRank)
+                .mapToInt(Rank::getScore)
+                .sum();
+    }
+
+    private int addBonusScore(int middleScore) {
+        if (hasAce() && canAddAceBonusScore(middleScore)) {
+            return ACE_BONUS_SCORE;
         }
-        return totalScore;
+        return NO_BONUS_SCORE;
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
+    }
+
+    private boolean canAddAceBonusScore(int middleScore) {
+        return middleScore + ACE_BONUS_SCORE <= Player.MAX_SCORE;
     }
 
     public void receiveHands(Hands newHands) {

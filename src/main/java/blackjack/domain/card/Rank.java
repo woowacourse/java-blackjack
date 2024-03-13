@@ -26,10 +26,7 @@ public enum Rank {
         return this == ACE;
     }
 
-    public int getScore(int totalScore) {
-        if (this == ACE && totalScore + 11 <= 21) {
-            return 11;
-        }
+    public int getScore() {
         return score;
     }
 }
