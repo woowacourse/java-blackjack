@@ -107,7 +107,7 @@ class ResultTest {
         private List<Player> players;
         private Dealer dealer;
 
-        // winPlayer: 21점, losePlayer: 5점, tiePlayer: 17점, dealer: 17점)
+        // winPlayer: 21점, losePlayer: 5점, tiePlayer: 17점, dealer: 17점
         @BeforeEach
         void beforeEach() {
             players = new ArrayList<>(List.of(
