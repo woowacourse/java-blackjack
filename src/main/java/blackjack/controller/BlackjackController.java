@@ -5,6 +5,7 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.Referee;
 import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.view.InputView;
@@ -18,7 +19,7 @@ import java.util.function.Supplier;
 public class BlackjackController {
 
     public void run() {
-        Dealer dealer = new Dealer(new Hand(List.of()));
+        Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
         Players players = requestUntilValid(() -> Players.from(InputView.readPlayersName()));
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
 
@@ -34,8 +35,8 @@ public class BlackjackController {
     private void dealAndPrintResult(BlackjackGame blackjackGame, Dealer dealer, Players players) {
         blackjackGame.deal(dealer, players);
 
-        OutputView.printDealAnnounce(dealer.getName(), players.getNames());
-        OutputView.printDealCards(dealer.getName(), dealer.getCards());
+        OutputView.printDealAnnounce(players.getNames());
+        OutputView.printDealerDealCard(dealer.getCards());
         players.forEach(player ->
                 OutputView.printDealCards(player.getName(), player.getCards()));
     }
@@ -77,9 +78,9 @@ public class BlackjackController {
     }
 
     private void printAllPlayersHandResult(Dealer dealer, Players players) {
-        OutputView.printGamerCards(dealer.getName(), dealer.getCards(), dealer.getScore());
+        OutputView.printDealerCards(dealer.getCards(), dealer.getScore());
         players.forEach(player ->
-                OutputView.printGamerCards(player.getName(), player.getCards(), player.getScore()));
+                OutputView.printPlayerCards(player.getName(), player.getCards(), player.getScore()));
     }
 
     private void calculateGameResultAndPrint(Dealer dealer, Players players) {
@@ -87,8 +88,8 @@ public class BlackjackController {
         referee.calculatePlayersResults(players, dealer);
 
         OutputView.printWinAnnounce();
-        OutputView.printDealerWinStatus(dealer.getName(), referee.getDealerResult());
-        referee.getPlayersResults().forEach((key, value) -> OutputView.printPlayerWinStatus(key.getName(), value));
+        OutputView.printDealerWinStatus(referee.getDealerResult());
+        referee.getPlayersNameAndResults().forEach(OutputView::printPlayerWinStatus);
     }
 
 
