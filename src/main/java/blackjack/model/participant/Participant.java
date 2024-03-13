@@ -7,11 +7,9 @@ import java.util.List;
 
 public abstract class Participant {
 
-    protected final Hand hand;
     protected State state;
 
     public Participant() {
-        this.hand = new Hand();
         this.state = new Hit();
     }
 
@@ -40,10 +38,10 @@ public abstract class Participant {
     }
 
     public boolean hasManyCardsThan(Participant other) {
-        return state.hand().hasManyThan(other.hand);
+        return state.hand().hasManyThan(other.state.hand());
     }
 
     public boolean hasSameCardsSizeThan(Participant other) {
-        return state.hand().hasSameSizeWith(other.hand);
+        return state.hand().hasSameSizeWith(other.state.hand());
     }
 }
