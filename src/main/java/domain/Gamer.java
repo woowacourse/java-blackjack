@@ -1,10 +1,12 @@
 package domain;
 
 import java.util.List;
+import java.util.stream.IntStream;
+
 public abstract class Gamer {
 
-    private final Name name;
     protected final Hand hand;
+    private final Name name;
 
     public Gamer(Name name) {
         this.name = name;
@@ -15,10 +17,11 @@ public abstract class Gamer {
         return hand.getCards();
     }
 
-    public void pickTwoCards(Deck deck) {
-        hand.add(deck.draw());
-        hand.add(deck.draw());
+    public void pickCards(Deck deck, int count) {
+        IntStream.range(0, count)
+                .forEach(it -> hand.add(deck.draw()));
     }
+
     abstract public int hit(Deck deck);
 
     public boolean isName(Name comparedName) {

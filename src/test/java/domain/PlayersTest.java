@@ -51,14 +51,14 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("플레이어 전체에게 카드 두 장을 나눠줄 수 있다.")
-    void pickTwoCards() {
+    @DisplayName("플레이어 전체에게 설정한 개수만큼 카드를 나눠줄 수 있다.")
+    void pickCardsToPlayer() {
         Name name = new Name("test");
         Player player = new Player(name);
         Players players = new Players(List.of(player));
         Deck deck = Deck.withFullCards();
 
-        players.pickTwoCards(deck);
+        players.pickCardsToPlayer(deck, 2);
 
         List<Card> cards = player.getCards();
         Assertions.assertThat(cards.size()).isEqualTo(2);

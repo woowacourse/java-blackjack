@@ -46,8 +46,8 @@ public class Players {
                 .count();
     }
 
-    public void pickTwoCards(Deck deck) {
-        players.forEach(player -> player.pickTwoCards(deck));
+    public void pickCardsToPlayer(Deck deck, int count) {
+        players.forEach(player -> player.pickCards(deck, count));
     }
 
     public void hitFromName(Name name, Deck deck) {

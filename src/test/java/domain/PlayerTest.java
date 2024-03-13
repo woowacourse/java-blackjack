@@ -17,13 +17,13 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어는 처음에 카드 2장을 받을 수 있다.")
-    void pickTwoCard() {
+    @DisplayName("플레이어는 설정한 개수만큼 카드를 받을 수 있다.")
+    void pickCards() {
         Player player = new Player(new Name("test"));
-        Card one = new Card(CardType.CLOVER,CardNumber.ACE);
-        Card two = new Card(CardType.CLOVER,CardNumber.TWO);
-        Deck deck = Deck.withCustomCards(one,two);
-        player.pickTwoCards(deck);
+        Card one = new Card(CardType.CLOVER, CardNumber.ACE);
+        Card two = new Card(CardType.CLOVER, CardNumber.TWO);
+        Deck deck = Deck.withCustomCards(one, two);
+        player.pickCards(deck, 2);
         List<Card> cards = player.getCards();
         Assertions.assertThat(cards)
                 .contains(one)
@@ -81,7 +81,7 @@ class PlayerTest {
         Deck deck = Deck.withCustomCards(
                 new Card(CardType.SPADE, CardNumber.TEN),
                 new Card(CardType.SPADE, CardNumber.TEN));
-        player.pickTwoCards(deck);
+        player.pickCards(deck, 2);
         Assertions.assertThat(player.isBust()).isFalse();
     }
 }

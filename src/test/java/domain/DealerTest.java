@@ -20,15 +20,16 @@ class DealerTest {
     @DisplayName("딜러는 처음에 카드 2장을 받을 수 있다.")
     void pickTwoCard() {
         Dealer dealer = new Dealer();
-        Card one = new Card(CardType.CLOVER,CardNumber.ACE);
-        Card two = new Card(CardType.CLOVER,CardNumber.TWO);
-        Deck deck = Deck.withCustomCards(one,two);
-        dealer.pickTwoCards(deck);
+        Card one = new Card(CardType.CLOVER, CardNumber.ACE);
+        Card two = new Card(CardType.CLOVER, CardNumber.TWO);
+        Deck deck = Deck.withCustomCards(one, two);
+        dealer.pickCards(deck, 2);
         List<Card> cards = dealer.getCards();
         Assertions.assertThat(cards)
                 .contains(one)
                 .contains(two);
     }
+
     @Test
     @DisplayName("딜러가 카드를 뽑을 경우, 점수가 16점 이하일 경우 카드를 계속 뽑고, 뽑은 횟수를 반환한다.")
     void takeCard() {

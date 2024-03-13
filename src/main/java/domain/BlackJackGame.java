@@ -3,6 +3,7 @@ package domain;
 import java.util.List;
 
 public class BlackJackGame {
+    private static final int INITIAL_CARD_COUNT = 2;
     private final Players players;
     private final Dealer dealer;
 
@@ -12,8 +13,8 @@ public class BlackJackGame {
     }
 
     public void initialDealing(Deck deck) {
-        dealer.pickTwoCards(deck);
-        players.pickTwoCards(deck);
+        dealer.pickCards(deck, INITIAL_CARD_COUNT);
+        players.pickCardsToPlayer(deck, INITIAL_CARD_COUNT);
     }
 
     public List<Card> getDealerCards() {
