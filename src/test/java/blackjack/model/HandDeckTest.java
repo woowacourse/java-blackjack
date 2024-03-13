@@ -1,16 +1,16 @@
 package blackjack.model;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
-import blackjack.model.card.Rank;
-import blackjack.model.card.Pattern;
 import blackjack.model.card.Card;
+import blackjack.model.card.Pattern;
+import blackjack.model.card.Rank;
 import blackjack.model.deck.HandDeck;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class HandDeckTest {
 
@@ -55,8 +55,10 @@ class HandDeckTest {
         handDeck.addCard(card1);
         handDeck.addCard(card2);
 
+        int totalScore = handDeck.calculateTotalScore();
+
         //then
-        assertThat(handDeck.calculateTotalScore()).isEqualTo(16);
+        assertThat(totalScore).isEqualTo(16);
     }
 
     @DisplayName("덱에 에이스가 포함되어 있는 경우 모든 카드의 합을 최대한 21을 넘지 않으면서 21에 가까운 수로 계산한다.")
