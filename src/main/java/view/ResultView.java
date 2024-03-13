@@ -2,10 +2,11 @@ package view;
 
 import domain.DealerDto;
 import domain.UserDto;
-import domain.game.DealerResult;
-import domain.game.PlayerResults;
+import domain.game.Result;
+import domain.user.Player;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ResultView {
@@ -59,13 +60,20 @@ public class ResultView {
                         + " - 결과: " + userDto.sumOfCards));
     }
 
-    public static void showResult(PlayerResults playerResults, DealerResult dealerResult) {
+    public static void showResult(Map<Player, Result> playerResults, Map<Result, Integer> dealerResult) {
         System.out.println("\n## 최종 승패");
-        System.out.println("딜러: " + dealerResult.getResultDetail());
+        System.out.println("딜러: " + getDealerResultDetail(dealerResult));
 
-        playerResults.getPlayerResults()
-                .forEach(((player, result) ->
-                        System.out.println(player.getName().value() + ": " + result.getResult())));
+        playerResults.forEach(((player, result) ->
+                System.out.println(player.getName().value() + ": " + result.getResult())));
+    }
+
+    private static String getDealerResultDetail(Map<Result, Integer> dealerResult) {
+        return dealerResult.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue() > 0)
+                .map(entry -> entry.getValue() + entry.getKey().getResult())
+                .collect(Collectors.joining(" "));
     }
 
     public static void printBust(UserDto userDto) {

@@ -2,16 +2,20 @@ package domain.game;
 
 import domain.Command;
 import domain.deck.TotalDeck;
+import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
 import domain.user.Users;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static domain.Command.YES;
+import static domain.game.Result.LOSE;
+import static domain.game.Result.WIN;
 import static domain.game.State.*;
 
 public class Game {
@@ -47,28 +51,36 @@ public class Game {
         users.addDealerCard(totalDeck.getNewCard());
     }
 
-    public PlayerResults generatePlayerResults() {
-        Map<Player, Result> playerResults = users.getPlayers()
+    private Result generatePlayerResult(Player player) {
+        Dealer dealer = users.getDealer();
+        if (player.isBust()) {
+            return LOSE;
+        }
+        if (dealer.isBust()) {
+            return WIN;
+        }
+        return Result.compare(player.sumUserDeck(), dealer.sumUserDeck());
+    }
+
+    public Map<Player, Result> generatePlayerResults() {
+        return Collections.unmodifiableMap(users.getPlayers()
                 .stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        users::generatePlayerResult,
+                        this::generatePlayerResult,
                         (oldValue, newValue) -> newValue,
                         LinkedHashMap::new
-                ));
-        return new PlayerResults(playerResults);
+                )));
     }
 
-    public DealerResult generateDealerResult() {
-        Map<Result, Integer> dealerResult = users.getPlayers()
+    public Map<Result, Integer> generateDealerResult() {
+        return Collections.unmodifiableMap(users.getPlayers()
                 .stream()
                 .collect(Collectors.toMap(
-                        player -> users.generatePlayerResult(player).reverse(),
+                        player -> generatePlayerResult(player).reverse(),
                         value -> 1,
                         (oldValue, newValue) -> oldValue + 1,
                         LinkedHashMap::new
-                ));
-        return new DealerResult(dealerResult);
+                )));
     }
-
 }

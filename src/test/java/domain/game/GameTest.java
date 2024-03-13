@@ -12,9 +12,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static domain.Command.YES;
 import static domain.game.Result.LOSE;
+import static domain.game.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -56,12 +58,12 @@ public class GameTest {
         Users users = new Users(List.of(player));
 
         Game game = new Game(totalDeck, users);
-        PlayerResults playerResults = game.generatePlayerResults();
-        DealerResult dealerResult = game.generateDealerResult();
+        Map<Player, Result> playerResults = game.generatePlayerResults();
+        Map<Result, Integer> dealerResult = game.generateDealerResult();
 
         assertAll(
-                () -> assertThat(playerResults.getPlayerResults().get(player)).isEqualTo(LOSE),
-                () -> assertThat(dealerResult.getResultDetail()).isEqualTo("1승")
+                () -> assertThat(playerResults.get(player)).isEqualTo(LOSE),
+                () -> assertThat(dealerResult.get(WIN)).isEqualTo(1)
         );
     }
 }
