@@ -52,14 +52,14 @@ public class BlackJackLauncher {
     private void showPlayerChoiceResult(Choice playerChoice, FaceUpResult currentPlayerFaceUpInfo) {
         if (playerChoice.isHit() || (!playerChoice.isHit() && currentPlayerFaceUpInfo.cards()
                 .size() == 2)) {
-            OutputView.printSinglePlayerFaceUp(currentPlayerFaceUpInfo);
+            OutputView.printSingleFaceUp(currentPlayerFaceUpInfo);
         }
     }
 
     private void proceedDealerTurn(CasinoService casinoService) {
         while (casinoService.isDealerHitAllowed()) {
             casinoService.hitCardToDealer();
-            OutputView.print("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+            OutputView.printMessage("딜러는 16이하라 한장의 카드를 더 받았습니다.");
         }
     }
 
