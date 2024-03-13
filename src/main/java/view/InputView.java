@@ -3,7 +3,7 @@ package view;
 import camp.nextstep.edu.missionutils.Console;
 import java.util.Arrays;
 import java.util.List;
-import model.player.Player;
+import model.participant.Player;
 
 public class InputView {
 

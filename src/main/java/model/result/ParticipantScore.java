@@ -2,8 +2,8 @@ package model.result;
 
 import model.card.Card;
 import model.card.Cards;
-import model.dealer.Dealer;
-import model.player.Player;
+import model.participant.Dealer;
+import model.participant.Player;
 
 public class ParticipantScore {
 

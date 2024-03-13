@@ -1,4 +1,4 @@
-package model.blackjackgame;
+package model.game;
 
 import static model.card.CardNumber.ACE;
 import static model.card.CardNumber.EIGHT;
@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.stream.Stream;
 import model.card.Card;
 import model.card.Cards;
-import model.dealer.Dealer;
-import model.player.Player;
+import model.participant.Dealer;
+import model.participant.Player;
 import model.result.ParticipantScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

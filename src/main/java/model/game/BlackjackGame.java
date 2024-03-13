@@ -1,11 +1,11 @@
-package model.blackjackgame;
+package model.game;
 
 import java.util.stream.IntStream;
 import model.card.Card;
 import model.card.CardShuffler;
-import model.dealer.Dealer;
-import model.player.Player;
-import model.player.Players;
+import model.participant.Dealer;
+import model.participant.Player;
+import model.participant.Players;
 import model.result.GameResult;
 
 public class BlackjackGame {

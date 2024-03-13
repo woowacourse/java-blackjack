@@ -1,4 +1,4 @@
-package model.blackjackgame;
+package model.game;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

@@ -1,4 +1,4 @@
-package model.blackjackgame;
+package model.game;
 
 import java.util.Arrays;
 

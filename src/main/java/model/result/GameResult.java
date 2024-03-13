@@ -1,8 +1,8 @@
 package model.result;
 
 import java.util.List;
-import model.dealer.Dealer;
-import model.player.Players;
+import model.participant.Dealer;
+import model.participant.Players;
 
 public class GameResult {
 

@@ -1,4 +1,4 @@
-package model.dealer;
+package model.participant;
 
 import static model.card.CardNumber.JACK;
 import static model.card.CardNumber.ACE;

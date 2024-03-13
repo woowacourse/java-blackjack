@@ -1,4 +1,4 @@
-package model.player;
+package model.participant;
 
 import static model.card.CardNumber.ACE;
 import static model.card.CardNumber.JACK;
@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.List;
 import model.card.Card;
 import model.card.Cards;
+import model.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

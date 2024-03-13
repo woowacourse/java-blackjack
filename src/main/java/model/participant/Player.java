@@ -1,4 +1,4 @@
-package model.player;
+package model.participant;
 
 import java.util.List;
 import model.card.Card;

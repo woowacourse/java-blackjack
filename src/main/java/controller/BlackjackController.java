@@ -2,10 +2,10 @@ package controller;
 
 import java.util.List;
 import java.util.function.Supplier;
-import model.blackjackgame.BlackjackGame;
-import model.blackjackgame.HitChoice;
-import model.player.Player;
-import model.player.Players;
+import model.game.BlackjackGame;
+import model.game.HitChoice;
+import model.participant.Player;
+import model.participant.Players;
 import model.result.DealerResult;
 import model.result.GameResult;
 import model.result.PlayersResult;

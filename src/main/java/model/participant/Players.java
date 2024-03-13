@@ -1,4 +1,4 @@
-package model.player;
+package model.participant;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;

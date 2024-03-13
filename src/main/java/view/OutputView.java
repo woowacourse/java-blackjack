@@ -4,13 +4,13 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
-import model.blackjackgame.BlackjackGame;
+import model.game.BlackjackGame;
 import model.result.ResultStatus;
 import model.card.Card;
 import model.card.Cards;
-import model.dealer.Dealer;
-import model.player.Player;
-import model.player.Players;
+import model.participant.Dealer;
+import model.participant.Player;
+import model.participant.Players;
 import model.result.DealerResult;
 import model.result.GameResult;
 import model.result.PlayersResult;
