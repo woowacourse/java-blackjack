@@ -2,7 +2,7 @@ package blackjack.domain.gameresult;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-
+// TODO result로 통합
 public class ResultJudge {
 
     private ResultJudge() {

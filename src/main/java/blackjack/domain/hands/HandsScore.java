@@ -3,6 +3,8 @@ package blackjack.domain.hands;
 import java.util.Objects;
 
 public class HandsScore {
+    // TODO Score Black jack 정팩매
+    // TODO 반복값 캐싱
     private static final int BLACK_JACK = 21;
     private static final int ACE_UPGRADE_SCORE = 10;
     private final int handsScore;

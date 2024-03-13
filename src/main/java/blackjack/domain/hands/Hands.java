@@ -34,6 +34,7 @@ public class Hands {
         return getHandsScore().isSame(BLACK_JACK);
     }
 
+    // TODO 카드에게 값이 있는지 물어보기
     private boolean hasAce() {
         return hands.stream()
                 .map(Card::getValue)

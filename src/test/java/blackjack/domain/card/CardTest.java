@@ -11,6 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class CardTest {
 
+    // TODO dummy를 여러개 만들어 동일한 테스트 진행해보기
+
     @DisplayName("카드의 문양과 값을 가진 카드가 생성된다")
     @Test
     void should_CreateCard_When_GiveCardKindAndValue() {

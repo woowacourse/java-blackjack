@@ -2,7 +2,6 @@ package blackjack.domain.card;
 
 import java.util.Objects;
 
-// TODO 성격에 따라 패키지 나누어보기
 public class Card {
     private final Kind kind;
     private final Value value;
@@ -12,6 +11,7 @@ public class Card {
         this.value = value;
     }
 
+    // TODO boilerplate 코드 컨벤션
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

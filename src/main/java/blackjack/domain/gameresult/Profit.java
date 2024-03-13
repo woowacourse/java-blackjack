@@ -2,6 +2,8 @@ package blackjack.domain.gameresult;
 
 import java.util.Objects;
 
+// TODO 배팅 값에 따른 손실 최대값 신경써주기
+// TODO 의존 값 주입으로 batting 최대값과 일원화 생각하기
 public class Profit {
     private static final int MIN_PROFIT = -10_000_000;
     private static final int MAX_PROFIT = 10_000_000;

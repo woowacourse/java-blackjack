@@ -18,7 +18,7 @@ public enum KindView {
         this.kind = kind;
         this.kindName = kindName;
     }
-
+    // TODO Optional의 orElseThrow
     public static String findKindName(Kind kind) {
         Optional<KindView> targetKindView = Stream.of(values())
                 .filter(view -> view.kind == kind)

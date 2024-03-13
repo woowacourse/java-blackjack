@@ -30,9 +30,11 @@ public class GameController {
         OutputView.printGameResult(gameDealer.getName(), game.makeGameResult());
     }
 
+    // TODO 재귀호출을 하거나 Exception 내기
     private static Game makeGame() {
         Game game = null;
         try {
+            // TODO 생성자 로직 확장성 고민해보기
             OutputView.printAskNameMessage();
             return Game.of(InputView.readPlayerNamesAndBattings());
         } catch (IllegalArgumentException e) {

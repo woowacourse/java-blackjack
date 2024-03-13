@@ -80,13 +80,14 @@ public class OutputView {
                 + dealerFirstCardName);
     }
 
+    // TODO 배열 convention과 유사하게 comma를 line 마지막에 작성
     private static String resolveFinalHandsAndScoreMessage(String participantName
             , List<Card> participantHands, HandsScore handsScore) {
         return String.format(FINAL_HANDS_AND_SCORE_FORMAT
                 , resolveParticipantHandsMessage(participantName, participantHands)
                 , handsScore.toInt());
     }
-
+    // TODO -1을 view에서 해준 이유 생각하기
     private static void printDealerProfitResult(String dealerName, GameResult gameResult) {
         Double dealerProfit = -1 * gameResult.getSumOfProfit();
 
