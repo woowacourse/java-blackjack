@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomShuffleStrategy;
-import blackjack.domain.game.Referee;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
@@ -19,12 +18,10 @@ public class BlackjackController {
         Deck deck = createDeckWithRandomShuffle();
         Dealer dealer = new Dealer(deck);
         Players players = requestPlayers(deck);
-        Referee referee = new Referee();
 
         processDeal(dealer, players);
         processHitOrStand(dealer, players);
-        referee.calculatePlayersResults(dealer, players);
-        printResult(dealer, referee);
+        printResult(dealer, players);
     }
 
     private Deck createDeckWithRandomShuffle() {
@@ -89,11 +86,11 @@ public class BlackjackController {
         }
     }
 
-    private void printResult(Dealer dealer, Referee referee) {
+    private void printResult(Dealer dealer, Players players) {
         OutputView.printResult(
                 dealer.getName(),
-                referee.getDealerResult(),
-                referee.getPlayersResults());
+                dealer.calculateDealerRevenue(players),
+                dealer.calculatePlayerRevenues(players));
     }
 
     private <T> T requestUntilValid(Supplier<T> supplier) {

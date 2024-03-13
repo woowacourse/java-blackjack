@@ -7,6 +7,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("지갑")
 class WalletTest {
 
     @Test
@@ -14,13 +15,15 @@ class WalletTest {
     void put() {
         // given
         Wallet wallet = new Wallet();
-        Money money = Money.from("5000");
+        Money money1 = Money.from("5000");
+        Money money2 = Money.from("7000");
 
         // when
-        wallet.put("seyang", money);
+        wallet.put("seyang", money1);
+        wallet.put("lemone", money2);
 
         // then
         assertThat(wallet.get())
-                .isEqualTo(Map.of("seyang", 5000));
+                .isEqualTo(Map.of("seyang", Money.from("5000"), "lemone", Money.from("7000")));
     }
 }

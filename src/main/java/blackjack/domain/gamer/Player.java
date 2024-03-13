@@ -24,7 +24,7 @@ public class Player extends Gamer {
     }
 
     public boolean canContinue() {
-        return isUnderBound();
+        return !isBlackjack() && isUnderBound();
     }
 
     public String getName() {

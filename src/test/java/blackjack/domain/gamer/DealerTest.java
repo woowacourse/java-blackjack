@@ -2,13 +2,21 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.money.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
-import static blackjack.domain.card.CardScore.*;
+import static blackjack.domain.card.CardScore.ACE;
+import static blackjack.domain.card.CardScore.KING;
+import static blackjack.domain.card.CardScore.NINE;
+import static blackjack.domain.card.CardScore.QUEEN;
+import static blackjack.domain.card.CardScore.SEVEN;
+import static blackjack.domain.card.CardScore.TWO;
 import static blackjack.domain.card.CardSuit.CLUB;
+import static blackjack.domain.card.CardSuit.HEART;
 import static blackjack.domain.card.CardSuit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -58,5 +66,34 @@ class DealerTest {
 
         // then
         assertThat(dealer.getCards().size()).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("는 플레이어들의 게임 결과에 따라 수익률은 계산한다.")
+    void calculateDealerRevenue() {
+        // given
+        List<String> names = List.of("seyang", "lemone");
+        Dealer dealer = new Dealer(new Deck(cards ->
+                List.of(new Card(SPADE, KING), new Card(HEART, QUEEN))));
+        Players players = Players.of(names, new Deck(cards ->
+                List.of(new Card(SPADE, NINE), new Card(HEART, QUEEN),
+                        new Card(SPADE, ACE), new Card(HEART, QUEEN))));
+        List<Money> monies = List.of(
+                Money.from("10000"),
+                Money.from("20000")
+        );
+
+        // when
+        dealer.deal();
+        players.deal();
+        for (int i = 0; i < players.get().size(); i++) {
+            dealer.keepPlayerMoney(players.get().get(i).getName(), monies.get(i));
+        }
+
+        // then
+        assertThat(dealer.calculateDealerRevenue(players))
+                .isEqualTo(5000);
+        assertThat(dealer.calculatePlayerRevenues(players))
+                .isEqualTo(Map.of("seyang", 15000.0, "lemone", -20000.0));
     }
 }
