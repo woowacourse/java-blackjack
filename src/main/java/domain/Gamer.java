@@ -5,7 +5,7 @@ import java.util.stream.IntStream;
 
 public abstract class Gamer {
 
-    protected final Hand hand;
+    private final Hand hand;
     private final Name name;
 
     public Gamer(Name name) {
@@ -22,7 +22,12 @@ public abstract class Gamer {
                 .forEach(it -> hand.add(deck.draw()));
     }
 
-    abstract public int hit(Deck deck);
+    abstract public boolean canHit();
+
+    public int hit(Deck deck) {
+        hand.add(deck.draw());
+        return 1;
+    }
 
     public boolean hasName(Name comparedName) {
         return name.equals(comparedName);

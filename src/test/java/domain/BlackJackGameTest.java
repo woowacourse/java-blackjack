@@ -76,7 +76,7 @@ public class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("딜러가 17 이상이 될 때까지 카드를 뽑는다.")
+    @DisplayName("딜러는 17 이상이 될 때까지 카드를 뽑을 수 있다.")
     void drawDealerCard() {
         BlackJackGame blackJackGame = new BlackJackGame(TEST_PLAYERS);
         Deck deck = Deck.withCustomCards(

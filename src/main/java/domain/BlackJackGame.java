@@ -34,7 +34,12 @@ public class BlackJackGame {
     }
 
     public int hitDealer(Deck deck) {
-        return dealer.hit(deck);
+        int hitCount = 0;
+        while (dealer.canHit()) {
+            dealer.hit(deck);
+            hitCount++;
+        }
+        return hitCount;
     }
 
     public BlackJackResult getGameResult() {

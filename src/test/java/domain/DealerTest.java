@@ -31,7 +31,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러가 카드를 뽑을 경우, 점수가 16점 이하일 경우 카드를 계속 뽑고, 뽑은 횟수를 반환한다.")
+    @DisplayName("딜러는 Hit 당 카드를 한장 뽑을 수 있다.")
     void takeCard() {
         Dealer dealer = new Dealer();
         Deck deck = Deck.withCustomCards(
@@ -40,7 +40,7 @@ class DealerTest {
                 new Card(CardType.SPADE, CardNumber.ACE),
                 new Card(CardType.DIAMOND, CardNumber.ACE));
         int drawCount = dealer.hit(deck);
-        Assertions.assertThat(3).isEqualTo(drawCount);
+        Assertions.assertThat(drawCount).isEqualTo(1);
     }
 
     @Test
@@ -57,8 +57,8 @@ class DealerTest {
         Deck deck = Deck.withCustomCards(
                 new Card(CardType.SPADE, CardNumber.TEN),
                 new Card(CardType.SPADE, CardNumber.ACE));
-        int drawCount = dealer.hit(deck);
-        Assertions.assertThat(2).isEqualTo(drawCount);
+        dealer.hit(deck);
+        dealer.hit(deck);
         Assertions.assertThat(dealer.getTotalScore())
                 .isEqualTo(21);
     }
@@ -72,6 +72,8 @@ class DealerTest {
                 new Card(CardType.SPADE, CardNumber.SIX),
                 new Card(CardType.SPADE, CardNumber.TEN));
 
+        dealer.hit(deck);
+        dealer.hit(deck);
         dealer.hit(deck);
         Assertions.assertThat(dealer.isBust()).isTrue();
     }
