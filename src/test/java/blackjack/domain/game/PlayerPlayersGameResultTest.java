@@ -1,6 +1,7 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Hand;
+import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,10 +23,10 @@ public class PlayerPlayersGameResultTest {
         expectedGameResults.put("lemone", PlayerGameResult.WIN);
 
         // when
-        playersGameResult.put(new Player("lemone", new Hand(List.of())), PlayerGameResult.WIN);
+        playersGameResult.put(new Player(new Gamer(new Hand(List.of())), "lemone"), PlayerGameResult.WIN);
 
         // then
-        assertThat(playersGameResult.getPlayersResults()).isEqualTo(expectedGameResults);
+        assertThat(playersGameResult.getPlayersNameAndResults()).isEqualTo(expectedGameResults);
     }
 
     @Test
@@ -39,10 +40,10 @@ public class PlayerPlayersGameResultTest {
         expectedResult.put(PlayerGameResult.PUSH, 1);
 
         // when
-        playersGameResult.put(new Player("lemone", new Hand(List.of())), PlayerGameResult.WIN);
-        playersGameResult.put(new Player("seyang", new Hand(List.of())), PlayerGameResult.LOSE);
-        playersGameResult.put(new Player("pobi", new Hand(List.of())), PlayerGameResult.PUSH);
-        playersGameResult.put(new Player("club", new Hand(List.of())), PlayerGameResult.WIN);
+        playersGameResult.put(new Player(new Gamer(new Hand(List.of())), "lemone"), PlayerGameResult.WIN);
+        playersGameResult.put(new Player(new Gamer(new Hand(List.of())), "seyang"), PlayerGameResult.LOSE);
+        playersGameResult.put(new Player(new Gamer(new Hand(List.of())), "pobi"), PlayerGameResult.PUSH);
+        playersGameResult.put(new Player(new Gamer(new Hand(List.of())), "club"), PlayerGameResult.WIN);
 
         // then
         assertThat(playersGameResult.getDealerResult()).isEqualTo(expectedResult);

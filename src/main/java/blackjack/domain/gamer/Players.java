@@ -19,7 +19,7 @@ public class Players {
     public static Players from(List<String> names) {
         validateDuplicate(names);
         return new Players(names.stream()
-                .map(name -> new Player(name, new Hand(List.of())))
+                .map(name -> new Player(new Gamer(new Hand(List.of())), name))
                 .toList());
     }
 

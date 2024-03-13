@@ -1,28 +1,48 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Hand;
 
 import java.util.List;
 
-public class Dealer extends Player {
+public class Dealer {
     public static final int HIT_UPPER_BOUND = 16;
     private static final int FIRST_DEAL_CARD_INDEX = 0;
-    private static final String DEALER_NAME = "딜러";
 
-    public Dealer(Hand hand) {
-        super(DEALER_NAME, hand);
+    private final Gamer gamer;
+
+    public Dealer(Gamer gamer) {
+        this.gamer = gamer;
     }
 
     public boolean isScoreUnderBound() {
-        return hand.calculateScore() <= HIT_UPPER_BOUND;
+        return gamer.hand.calculateScore() <= HIT_UPPER_BOUND;
     }
 
-    @Override
+    public void draw(Card card) {
+        gamer.draw(card);
+    }
+
+    public void draw(List<Card> cards) {
+        gamer.draw(cards);
+    }
+
+    public boolean isBust() {
+        return gamer.isBust();
+    }
+
+    public boolean isBlackjack() {
+        return gamer.isBlackjack();
+    }
+
+
     public List<Card> getCards() {
-        if (hand.getMyCards().size() == 2) {
-            return List.of(hand.getMyCardAt(FIRST_DEAL_CARD_INDEX));
+        if (gamer.getCards().size() == 2) {
+            return List.of(gamer.hand.getMyCardAt(FIRST_DEAL_CARD_INDEX));
         }
-        return hand.getMyCards();
+        return gamer.hand.getMyCards();
+    }
+
+    public int getScore() {
+        return gamer.getScore();
     }
 }

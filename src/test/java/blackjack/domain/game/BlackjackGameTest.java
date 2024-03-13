@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.view.PlayerCommand;
 import org.junit.jupiter.api.DisplayName;
@@ -28,7 +29,7 @@ public class BlackjackGameTest {
     void playerNotHitWhenBust() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
-        Player player = new Player("lemone", new Hand(List.of()));
+        Player player = new Player(new Gamer(new Hand(List.of())), "lemone");
         PlayerCommand hitCommand = PlayerCommand.HIT;
 
         // when
@@ -46,7 +47,7 @@ public class BlackjackGameTest {
     void playerNotHitWhenBlackjack() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
-        Player player = new Player("lemone", new Hand(List.of()));
+        Player player = new Player(new Gamer(new Hand(List.of())), "lemone");
         PlayerCommand hitCommand = PlayerCommand.HIT;
 
         // when
@@ -62,7 +63,7 @@ public class BlackjackGameTest {
     void playerCommandHitThenDraw() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
-        Player player = new Player("lemone", new Hand(List.of()));
+        Player player = new Player(new Gamer(new Hand(List.of())), "lemone");
         PlayerCommand hitCommand = PlayerCommand.HIT;
 
         // when
@@ -77,7 +78,7 @@ public class BlackjackGameTest {
     void playerCommandStandThenNotDraw() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
-        Player player = new Player("lemone", new Hand(List.of()));
+        Player player = new Player(new Gamer(new Hand(List.of())), "lemone");
         PlayerCommand hitCommand = PlayerCommand.STAND;
 
         // when
@@ -91,7 +92,7 @@ public class BlackjackGameTest {
     @DisplayName("딜러의 카드의 합이 16 이하이면 카드를 한장 더 뽑늗다.")
     void dealerHitTest() {
         // given
-        Dealer dealer = new Dealer(new Hand(List.of()));
+        Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
         List<Card> cards = new ArrayList<>(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB)));
         Deck cardPicker = new Deck(cards) {
             @Override

@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,7 @@ public class RefereeTest {
     void playerWinTest() {
         List<String> name = List.of("lemone");
         Players players = Players.from(name);
-        Dealer dealer = new Dealer(new Hand(List.of()));
+        Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
         List<Card> playerCards = new ArrayList<>(List.of(new Card(NINE, SPADE), new Card(QUEEN, CLUB)));
@@ -58,7 +59,7 @@ public class RefereeTest {
         referee.calculatePlayersResults(players, dealer);
         expectedPlayersResult.put("lemone", PlayerGameResult.WIN);
 
-        assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
+        assertThat(referee.getPlayersNameAndResults()).isEqualTo(expectedPlayersResult);
     }
 
     @Test
@@ -66,7 +67,7 @@ public class RefereeTest {
     void playerLoseWhenBustTest() {
         List<String> name = List.of("lemone");
         Players players = Players.from(name);
-        Dealer dealer = new Dealer(new Hand(List.of()));
+        Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
         List<Card> playerCards = new ArrayList<>(List.of(new Card(NINE, SPADE), new Card(QUEEN, CLUB), new Card(THREE, CLUB)));
@@ -90,7 +91,7 @@ public class RefereeTest {
         referee.calculatePlayersResults(players, dealer);
         expectedPlayersResult.put("lemone", PlayerGameResult.LOSE);
 
-        assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
+        assertThat(referee.getPlayersNameAndResults()).isEqualTo(expectedPlayersResult);
     }
 
     @Test
@@ -98,7 +99,7 @@ public class RefereeTest {
     void playerDrawWhenSameBlackjackTest() {
         List<String> name = List.of("lemone");
         Players players = Players.from(name);
-        Dealer dealer = new Dealer(new Hand(List.of()));
+        Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
         List<Card> playerCards = new ArrayList<>(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB), new Card(THREE, CLUB)));
@@ -122,7 +123,7 @@ public class RefereeTest {
         referee.calculatePlayersResults(players, dealer);
         expectedPlayersResult.put("lemone", PlayerGameResult.PUSH);
 
-        assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
+        assertThat(referee.getPlayersNameAndResults()).isEqualTo(expectedPlayersResult);
     }
 
     @Test
@@ -130,7 +131,7 @@ public class RefereeTest {
     void playerDealCardsBlackjackTest() {
         List<String> name = List.of("lemone");
         Players players = Players.from(name);
-        Dealer dealer = new Dealer(new Hand(List.of()));
+        Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
         List<Card> playerCards = new ArrayList<>(List.of(new Card(ACE, CLUB), new Card(JACK, CLUB)));
@@ -154,7 +155,7 @@ public class RefereeTest {
         referee.calculatePlayersResults(players, dealer);
         expectedPlayersResult.put("lemone", PlayerGameResult.WIN);
 
-        assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
+        assertThat(referee.getPlayersNameAndResults()).isEqualTo(expectedPlayersResult);
     }
 
     @Test
@@ -162,7 +163,7 @@ public class RefereeTest {
     void playerLoseTest() {
         List<String> name = List.of("lemone");
         Players players = Players.from(name);
-        Dealer dealer = new Dealer(new Hand(List.of()));
+        Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
         List<Card> playerCards = new ArrayList<>(List.of(new Card(TWO, CLUB), new Card(JACK, CLUB)));
@@ -186,7 +187,7 @@ public class RefereeTest {
         referee.calculatePlayersResults(players, dealer);
         expectedPlayersResult.put("lemone", PlayerGameResult.LOSE);
 
-        assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
+        assertThat(referee.getPlayersNameAndResults()).isEqualTo(expectedPlayersResult);
     }
 
     @Test
@@ -194,7 +195,7 @@ public class RefereeTest {
     void playerDealerAllBustPlayerLoseTest() {
         List<String> name = List.of("lemone");
         Players players = Players.from(name);
-        Dealer dealer = new Dealer(new Hand(List.of()));
+        Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
         List<Card> playerCards = new ArrayList<>(List.of(new Card(KING, CLUB), new Card(JACK, CLUB), new Card(THREE, CLUB)));
@@ -218,7 +219,7 @@ public class RefereeTest {
         referee.calculatePlayersResults(players, dealer);
         expectedPlayersResult.put("lemone", PlayerGameResult.LOSE);
 
-        assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
+        assertThat(referee.getPlayersNameAndResults()).isEqualTo(expectedPlayersResult);
     }
 
     @Test
@@ -226,7 +227,7 @@ public class RefereeTest {
     void dealerBustPlayerNonBustWinTest() {
         List<String> name = List.of("lemone");
         Players players = Players.from(name);
-        Dealer dealer = new Dealer(new Hand(List.of()));
+        Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
         List<Card> playerCards = new ArrayList<>(List.of(new Card(KING, CLUB), new Card(JACK, CLUB)));
@@ -250,7 +251,7 @@ public class RefereeTest {
         referee.calculatePlayersResults(players, dealer);
         expectedPlayersResult.put("lemone", PlayerGameResult.WIN);
 
-        assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
+        assertThat(referee.getPlayersNameAndResults()).isEqualTo(expectedPlayersResult);
     }
 
     @Test
@@ -258,7 +259,7 @@ public class RefereeTest {
     void dealerBlackjackAndPlayerMaximumTest() {
         List<String> name = List.of("lemone");
         Players players = Players.from(name);
-        Dealer dealer = new Dealer(new Hand(List.of()));
+        Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
         Referee referee = new Referee();
         Map<String, PlayerGameResult> expectedPlayersResult = new HashMap<>();
         List<Card> playerCards = new ArrayList<>(List.of(new Card(KING, CLUB), new Card(NINE, CLUB), new Card(TWO, CLUB)));
@@ -282,6 +283,6 @@ public class RefereeTest {
         referee.calculatePlayersResults(players, dealer);
         expectedPlayersResult.put("lemone", PlayerGameResult.LOSE);
 
-        assertThat(referee.getPlayersResults()).isEqualTo(expectedPlayersResult);
+        assertThat(referee.getPlayersNameAndResults()).isEqualTo(expectedPlayersResult);
     }
 }

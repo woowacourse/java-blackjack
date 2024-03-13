@@ -22,7 +22,7 @@ class DealerTest {
     @DisplayName("딜러의 첫 카드를 반환한다.")
     void getFirstCardTest() {
         // given
-        Dealer dealer = new Dealer(new Hand(List.of()));
+        Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
         List<Card> cards = List.of(new Card(NINE, SPADE), new Card(QUEEN, CLUB));
         List<Card> expectedCard = List.of(new Card(NINE, SPADE));
 
@@ -38,7 +38,7 @@ class DealerTest {
     @DisplayName("딜러의 카드의 합이 16 이하이면 true를 반환한다.")
     void dealerHitUpperBoundTest() {
         // given
-        Dealer dealer = new Dealer(new Hand(List.of()));
+        Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
         List<Card> cards = new ArrayList<>(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB)));
         Deck cardPicker = new Deck(cards) {
             @Override
