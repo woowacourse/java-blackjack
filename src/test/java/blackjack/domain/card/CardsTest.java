@@ -28,7 +28,7 @@ public class CardsTest {
         List<CardValue> cardValues = List.of(CardValue.EIGHT, CardValue.JACK);
         var sut = CardFixture.카드_목록_생성(cardValues);
 
-        var sum = sut.sum();
+        var sum = sut.calculate();
 
         assertThat(sum).isEqualTo(18);
     }
@@ -39,31 +39,42 @@ public class CardsTest {
         List<CardValue> cardValues = List.of(CardValue.FIVE, CardValue.EIGHT);
         var sut2 = CardFixture.카드_목록_생성(cardValues);
 
-        var sum2 = sut2.sum();
+        var sum2 = sut2.calculate();
 
         assertThat(sum2).isEqualTo(13);
     }
 
     @Test
-    @DisplayName("카드 목록에 에이스가 포함되어 있으면 참을 반환한다.")
-    public void true_if_contain_ACE_card() {
-        List<CardValue> cardValues = List.of(CardValue.ACE, CardValue.FIVE);
-        var sut = CardFixture.카드_목록_생성(cardValues);
+    @DisplayName("A가 포함되어 있고 숫자합이 10이하라면 A는 11로 계산된다.")
+    public void sum_of_cards_with_A_special_value() {
+        final List<CardValue> cardValues = List.of(CardValue.FIVE, CardValue.ACE);
+        var sut2 = CardFixture.카드_목록_생성(cardValues);
 
-        var result = sut.containAce();
+        var sum2 = sut2.calculate();
 
-        assertTrue(result);
+        assertThat(sum2).isEqualTo(16);
     }
 
     @Test
-    @DisplayName("카드 목록에 에이스가 포함되어 없으면 거짓을 반환한다.")
-    public void false_if_not_contain_ACE_card() {
-        List<CardValue> cardValues = List.of(CardValue.TWO, CardValue.FIVE);
-        var sut = CardFixture.카드_목록_생성(cardValues);
+    @DisplayName("A가 포함되어 있고 숫자합이 11이상이면 A는 1로 계산된다.")
+    void sum_of_cards_with_A_not_special_value() {
+        final List<CardValue> cardValues = List.of(CardValue.JACK, CardValue.FOUR, CardValue.ACE);
+        var sut2 = CardFixture.카드_목록_생성(cardValues);
 
-        var result = sut.containAce();
+        var sum2 = sut2.calculate();
 
-        assertFalse(result);
+        assertThat(sum2).isEqualTo(15);
+    }
+
+    @Test
+    @DisplayName("A가 여러개일시 A는 한번만 11로 계산한다.")
+    void ace_consider_special_value_only_once() {
+        final List<CardValue> cardValues = List.of(CardValue.ACE, CardValue.ACE, CardValue.ACE);
+        var sut2 = CardFixture.카드_목록_생성(cardValues);
+
+        var sum2 = sut2.calculate();
+
+        assertThat(sum2).isEqualTo(13);
     }
 
     @Test

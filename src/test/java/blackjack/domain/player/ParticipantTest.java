@@ -41,27 +41,6 @@ public class ParticipantTest {
     }
 
     @Test
-    @DisplayName("숫자 합이 21이 넘지 않으면 플레이어는 에이스를 11로 결정한다.")
-    public void determine_ace_is_11_if_not_exceed_21() {
-        var sut = PlayerFixture.참가자_생성(List.of(CardValue.EIGHT, CardValue.ACE));
-
-        var result = sut.calculateScore();
-
-        assertThat(result.value()).isEqualTo(19);
-    }
-
-    @Test
-    @DisplayName("숫자 합이 21이 넘으면 플레이어는 에이스를 1로 결정한다.")
-    public void GamePlayer_Determine_ace_is_1_if_exceed_21() {
-        var sut = PlayerFixture.참가자_생성(
-                List.of(CardValue.EIGHT, CardValue.ACE, CardValue.SEVEN));
-
-        var result = sut.calculateScore();
-
-        assertThat(result.value()).isEqualTo(16);
-    }
-
-    @Test
     @DisplayName("숫자 합이 21을 넘으면 버스트다.")
     public void GamePlayer_Bust_if_exceed_21() {
         var sut = PlayerFixture.참가자_생성(

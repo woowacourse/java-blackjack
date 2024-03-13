@@ -12,6 +12,6 @@ public class GamePlayer extends Participant {
 
     @Override
     public boolean isReceivable() {
-        return cards.sum() < RECEIVE_SIZE;
+        return cards.calculate() < RECEIVE_SIZE;
     }
 }

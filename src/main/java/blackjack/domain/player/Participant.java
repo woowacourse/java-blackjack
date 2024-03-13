@@ -19,13 +19,7 @@ public abstract class Participant implements CardReceivable {
     }
 
     public Score calculateScore() {
-        final Score score = Score.from(cards.sum());
-        final Score maxScore = score.add(CHANGE_A_VALUE);
-
-        if (cards.containAce() && maxScore.value() <= BUST_SIZE) {
-            return maxScore;
-        }
-        return score;
+        return Score.from(cards.calculate());
     }
 
     public void drawCard(final Card card) {
@@ -33,7 +27,7 @@ public abstract class Participant implements CardReceivable {
     }
 
     public boolean isBust() {
-        return cards.sum() > BUST_SIZE;
+        return cards.calculate() > BUST_SIZE;
     }
 
     public String getNameAsString() {
