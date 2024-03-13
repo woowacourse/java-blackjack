@@ -36,4 +36,15 @@ class BettingPoolTest {
         BettingPool bettingPool = new BettingPool(moneyByPlayer);
         assertThat(bettingPool.giveTieMoneyByBlackJack(player)).isEqualTo(bettingAmount);
     }
+
+    @Test
+    @DisplayName("딜러가 21을 초과하면 그 시점까지 남아 있던 플레이어들은 가지고 있는 패에 상관 없이 승리해 베팅 금액을 받는다.")
+    void giveWinnerMoneyWhenDealerBust() {
+        Player player = Player.of("몰리", new Hand(List.of(new Card(Shape.DIA, Score.TEN), new Card(Shape.DIA, Score.ACE))));
+        BettingAmount bettingAmount = new BettingAmount(1000);
+        Map<Player, BettingAmount> moneyByPlayer = Map.of(player, bettingAmount);
+
+        BettingPool bettingPool = new BettingPool(moneyByPlayer);
+        assertThat(bettingPool.giveWinnerMoneyWhenDealerBust(player)).isEqualTo(bettingAmount);
+    }
 }

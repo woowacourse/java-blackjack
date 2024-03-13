@@ -23,4 +23,9 @@ public class BettingPool {
         // TODO: 딜러 계산을 위해 초기값에서 빼야함
         return bettingAmount;
     }
+
+    public BettingAmount giveWinnerMoneyWhenDealerBust(final Player player) {
+        BettingAmount bettingAmount = moneys.get(player);
+        return bettingAmount;
+    }
 }
