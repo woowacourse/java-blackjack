@@ -6,7 +6,7 @@ import blackjack.model.card.Suit;
 import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.cardgenerator.SequentialCardGenerator;
 import blackjack.model.player.Player;
-import blackjack.model.referee.MatchResult;
+import blackjack.model.result.MatchResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

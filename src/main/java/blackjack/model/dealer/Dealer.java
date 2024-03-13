@@ -5,7 +5,7 @@ import blackjack.model.card.Cards;
 import blackjack.model.card.Score;
 import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.player.Player;
-import blackjack.model.referee.MatchResult;
+import blackjack.model.result.MatchResult;
 
 import java.util.List;
 
