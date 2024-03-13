@@ -3,10 +3,10 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
 
-public class Blackjack implements State {
+public class Stay implements State {
     private final CardHand cardHand;
 
-    public Blackjack(final CardHand cardHand) {
+    public Stay(final CardHand cardHand) {
         this.cardHand = cardHand;
     }
 
@@ -17,6 +17,6 @@ public class Blackjack implements State {
 
     @Override
     public int calculateScore() {
-        return cardHand.sumAllScore();
+        return 0;
     }
 }
