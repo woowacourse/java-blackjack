@@ -57,6 +57,10 @@ public class Hand {
         return cards.get(FIRST_CARD_INDEX);
     }
 
+    public boolean hasSize(int size) {
+        return cards.size() == size;
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

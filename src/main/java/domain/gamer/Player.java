@@ -17,6 +17,10 @@ public class Player {
         this.hand = hand;
     }
 
+    public boolean isBlackJack() {
+        return hand.hasSize(2) && hand.calculateScore() == 21;
+    }
+
     public void receiveCards(CardPack cardPack, int count) {
         for (int i = 0; i < count; i++) {
             hit(cardPack.pickOneCard());

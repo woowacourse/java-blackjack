@@ -29,6 +29,10 @@ public class Judge {
     }
 
     private void decidePlayerResult(Player player, Dealer dealer) {
+        if (player.isBlackJack()) {
+            playersResult.addResult(player, WinState.BLACKJACK);
+            return;
+        }
         if (player.isBust()) {
             playersResult.addResult(player, WinState.LOSE);
             return;
