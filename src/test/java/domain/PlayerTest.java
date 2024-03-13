@@ -7,8 +7,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerTest {
-    @Test
     @DisplayName("플레이어는 자신이 갖는 카드 합계를 계산할 수 있다")
+    @Test
     void sum() {
         final Player player = new Player(new Name("지쳐버린종이"));
 
@@ -19,8 +19,8 @@ class PlayerTest {
         assertThat(player.score()).isEqualTo(21);
     }
 
-    @Test
     @DisplayName("플레이어는 자신이 갖는 카드 합계를 계산할 수 있다")
+    @Test
     void sum2() {
         final Player player = new Player(new Name("지쳐버린종이"));
 
@@ -31,8 +31,8 @@ class PlayerTest {
         assertThat(player.score()).isEqualTo(21);
     }
 
-    @Test
     @DisplayName("합계 점수가 21을 초과하면 버스트")
+    @Test
     void bust() {
         final Player player = new Player(new Name("지쳐버린종이"));
 
@@ -43,8 +43,8 @@ class PlayerTest {
         assertThat(player.isBust()).isEqualTo(true);
     }
 
-    @Test
     @DisplayName("합계 점수가 21을 초과하면 버스트")
+    @Test
     void notBust() {
         final Player player = new Player(new Name("지쳐버린종이"));
 

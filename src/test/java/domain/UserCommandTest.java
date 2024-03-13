@@ -1,8 +1,9 @@
 package domain;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class UserCommandTest {
     @DisplayName("y나 n가 아닌 입력은 예외발생")
@@ -10,7 +11,7 @@ class UserCommandTest {
     void invalidInput() {
         final String input = "no";
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> UserCommand.fromInput(input));
+        assertThrows(IllegalArgumentException.class, () -> UserCommand.fromInput(input));
     }
 
     @DisplayName("y나 n가 아닌 입력은 예외발생")
@@ -18,6 +19,6 @@ class UserCommandTest {
     void invalidInput2() {
         final String input = "yes";
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> UserCommand.fromInput(input));
+        assertThrows(IllegalArgumentException.class, () -> UserCommand.fromInput(input));
     }
 }

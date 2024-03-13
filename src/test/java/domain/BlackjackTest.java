@@ -9,8 +9,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class BlackjackTest {
 
-    @Test
     @DisplayName("딜러에게 2장의 카드가 주어졌는지 확인한다")
+    @Test
     void initializeDealer() {
         final Players players = Players.from(List.of("pobi", "crong", "tebah"));
         final Dealer dealer = new Dealer(new Deck());
@@ -19,8 +19,8 @@ class BlackjackTest {
         assertThat(blackjack.getDealer().hand().size()).isEqualTo(2);
     }
 
-    @Test
     @DisplayName("플레이어에게 2장의 카드가 주어졌는지 확인한다")
+    @Test
     void initializePlayers() {
         final Players players = Players.from(List.of("pobi", "crong", "tebah"));
         final Dealer dealer = new Dealer(new Deck());
@@ -29,8 +29,8 @@ class BlackjackTest {
         assertThat(blackjack.getPlayers().get(0).hand().size()).isEqualTo(2);
     }
 
-    @Test
     @DisplayName("플레이어에게 1장의 카드를 추가로 지급한다")
+    @Test
     void dealCardsToPlayer() {
         final Players players = Players.from(List.of("pobi", "crong", "tebah"));
         final Dealer dealer = new Dealer(new Deck());

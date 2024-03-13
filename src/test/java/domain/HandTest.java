@@ -1,8 +1,9 @@
 package domain;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HandTest {
     @DisplayName("점수를 계산한다(ACE,ACE,ACE -> 13).")
@@ -16,7 +17,7 @@ public class HandTest {
 
         final int score = hand.score().toInt();
 
-        Assertions.assertEquals(13, score);
+        assertEquals(13, score);
     }
 
     @DisplayName("점수를 계산한다(ACE,ACE,KING -> 22).")
@@ -30,7 +31,7 @@ public class HandTest {
 
         final int score = hand.score().toInt();
 
-        Assertions.assertEquals(22, score);
+        assertEquals(22, score);
     }
 
     @DisplayName("점수를 계산한다(KING,JACK,ACE -> 21).")
@@ -44,6 +45,6 @@ public class HandTest {
 
         final int score = hand.score().toInt();
 
-        Assertions.assertEquals(21, score);
+        assertEquals(21, score);
     }
 }

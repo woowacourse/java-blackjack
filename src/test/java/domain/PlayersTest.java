@@ -10,8 +10,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 class PlayersTest {
 
-    @Test
     @DisplayName("플레이어 수가 8명 초과하면 예외를 발생한다")
+    @Test
     void playerSize() {
         final List<Player> players = new ArrayList<>();
 
@@ -22,8 +22,8 @@ class PlayersTest {
         assertThatCode(() -> new Players(players)).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
     @DisplayName("플레이어의 이름이 겹치면 예외가 발생한다")
+    @Test
     void duplicateName() {
         final List<Player> players = new ArrayList<>();
 
