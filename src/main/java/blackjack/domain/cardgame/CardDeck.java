@@ -3,32 +3,33 @@ package blackjack.domain.cardgame;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import blackjack.domain.player.Player;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CardDeck {
-    private final Stack<Card> deck;
+    private static final int INITIAL_CARD_NUMBER = 2;
 
-    private CardDeck(Stack<Card> deck) {
+    private final Deque<Card> deck;
+
+    private CardDeck(Deque<Card> deck) {
         this.deck = deck;
     }
 
-    static CardDeck createShuffledDeck() {
+    public static CardDeck createShuffledDeck() {
         final List<Card> allKindOfCards = Arrays.stream(CardShape.values())
                 .flatMap(CardDeck::createEachNumber)
-                .toList();
+                .collect(Collectors.toList());
 
-        final Stack<Card> deck = new Stack<>();
-        for (final Card card : allKindOfCards) {
-            deck.push(card);
-        }
+        Collections.shuffle(allKindOfCards);
 
-        Collections.shuffle(deck);
-        return new CardDeck(deck);
+        return new CardDeck(new LinkedList<>(allKindOfCards));
     }
 
     private static Stream<Card> createEachNumber(final CardShape cardShape) {
@@ -36,9 +37,19 @@ public class CardDeck {
                 .map(cardNumber -> new Card(cardNumber, cardShape));
     }
 
-    Card draw() {
-        if (deck.empty()) {
-            throw new IllegalArgumentException("카드가 존재하지 않습니다.");
+    public void giveInitialCards(Player player) {
+        for (int i = 0; i < INITIAL_CARD_NUMBER; i++) {
+            giveCard(player);
+        }
+    }
+
+    public void giveCard(final Player player) {
+        player.addCard(this.draw());
+    }
+
+    private Card draw() {
+        if (deck.size() == 0) {
+            throw new IllegalStateException("카드가 존재하지 않습니다.");
         }
 
         return deck.pop();
