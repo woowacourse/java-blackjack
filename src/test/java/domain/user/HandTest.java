@@ -55,6 +55,40 @@ public class HandTest {
     }
 
     @Test
+    @DisplayName("카드가 두장이고, 합이 21이면 블랙잭이다.")
+    void isBlackJackTest() {
+        Hand hand = new Hand();
+
+        hand.addCard(new Card(Shape.CLUB, Number.ACE));
+        hand.addCard(new Card(Shape.CLUB, Number.TEN));
+
+        assertThat(hand.isBlackjack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("합이 21이 아니면 블랙잭이 아니다.")
+    void isNotBlackJackBySumTest() {
+        Hand hand = new Hand();
+
+        hand.addCard(new Card(Shape.CLUB, Number.ACE));
+        hand.addCard(new Card(Shape.CLUB, Number.TWO));
+
+        assertThat(hand.isBlackjack()).isFalse();
+    }
+
+    @Test
+    @DisplayName("카드가 두장이 아니면 블랙잭이 아니다.")
+    void isNotBlackJackByCardsCountTest() {
+        Hand hand = new Hand();
+
+        hand.addCard(new Card(Shape.CLUB, Number.ACE));
+        hand.addCard(new Card(Shape.CLUB, Number.TEN));
+        hand.addCard(new Card(Shape.CLUB, Number.JACK));
+
+        assertThat(hand.isBlackjack()).isFalse();
+    }
+
+    @Test
     @DisplayName("카드의 합이 21 초과이면 busted이다.")
     void bustedTest() {
         Hand hand = new Hand();

@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Hand {
     private static final int BLACK_JACK_CONDITION = 21;
+    private static final int START_CARDS_COUNT = 2;
     public static final int FIRST_INDEX = 0;
     private final List<Card> cards;
 
@@ -36,6 +37,10 @@ public class Hand {
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == START_CARDS_COUNT && sumCard() == BLACK_JACK_CONDITION;
     }
 
     public boolean busted() {
