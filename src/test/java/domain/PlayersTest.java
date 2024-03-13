@@ -1,7 +1,5 @@
 package domain;
 
-import domain.constant.CardNumber;
-import domain.constant.CardType;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -50,131 +48,11 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("플레이어 전체에게 설정한 개수만큼 카드를 나눠줄 수 있다.")
-    void pickCardsToPlayer() {
+    @DisplayName("플레이어들을 반환할 수 있다.")
+    void getPlayers() {
         Name name = new Name("test");
         Player player = new Player(name);
         Players players = new Players(List.of(player));
-        Deck deck = Deck.withFullCards();
-
-        players.pickCardsToPlayer(deck, 2);
-
-        List<Card> cards = player.getCards();
-        Assertions.assertThat(cards.size()).isEqualTo(2);
-    }
-
-    @Test
-    @DisplayName("존재하는 플레이어 이름으로 덱에서 해당 플레이어가 카드를 한 장 뽑는다.")
-    void hitFromName() {
-        Name name = new Name("test");
-        Player player = new Player(name);
-        Players players = new Players(List.of(player));
-        Deck deck = Deck.withFullCards();
-
-        players.hitFromName(name, deck);
-
-        Assertions.assertThat(player.getCards().size()).isEqualTo(1);
-    }
-
-    @Test
-    @DisplayName("입력으로 받은 이름이 존재하지 않을 경우 예외를 발생한다.")
-    void hitFromNameException() {
-        Name name = new Name("test");
-        Player player = new Player(name);
-        Players players = new Players(List.of(player));
-        Deck deck = Deck.withFullCards();
-        Assertions.assertThatThrownBy(() -> players.hitFromName(new Name("wrong"), deck))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("존재하지 않는 참여자 입니다.");
-    }
-
-    @Test
-    @DisplayName("존재하는 플레이어 이름으로 카드를 반환할 수 있다.")
-    void getCardsFromName() {
-        Name name = new Name("test");
-        Player player = new Player(name);
-        Players players = new Players(List.of(player));
-        Card card = new Card(CardType.CLOVER, CardNumber.ACE);
-        Deck deck = Deck.withCustomCards(card);
-
-        players.hitFromName(name, deck);
-        List<Card> cards = players.getCardsFromName(name);
-
-        Assertions.assertThat(cards).isEqualTo(List.of(card));
-    }
-
-    @Test
-    @DisplayName("카드를 반환할 때 입력으로 받은 이름이 존재하지 않을 경우 예외를 발생한다.")
-    void getCardsFromNameException() {
-        Name name = new Name("test");
-        Player player = new Player(name);
-        Players players = new Players(List.of(player));
-        Card card = new Card(CardType.CLOVER, CardNumber.ACE);
-        Deck deck = Deck.withCustomCards(card);
-
-        players.hitFromName(name, deck);
-
-        Assertions.assertThatThrownBy(() -> players.getCardsFromName(new Name("wrong")))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("존재하지 않는 참여자 입니다.");
-    }
-
-    @Test
-    @DisplayName("입력으로 받은 이름이 bust가 아니면 false를 반환한다.")
-    void isBustFromNameFalse() {
-        Name name = new Name("test");
-        Player player = new Player(name);
-        Players players = new Players(List.of(player));
-        Assertions.assertThat(players.isBustFromName(name)).isFalse();
-    }
-
-    @Test
-    @DisplayName("입력으로 받은 이름이 bust이면 true를 반환한다.")
-    void isBustFromNameTrue() {
-        Name name = new Name("test");
-        Player player = new Player(name);
-        Players players = new Players(List.of(player));
-        Deck deck = Deck.withCustomCards(
-                new Card(CardType.CLOVER, CardNumber.TEN),
-                new Card(CardType.HEART, CardNumber.TEN),
-                new Card(CardType.DIAMOND, CardNumber.TEN));
-        IntStream.range(0, 3)
-                .forEach(ignored -> players.hitFromName(name, deck));
-        Assertions.assertThat(players.isBustFromName(name))
-                .isTrue();
-    }
-
-    @Test
-    @DisplayName("Bust인지 확인할 때 입력으로 받은 이름이 존재하지 않을 경우 예외를 발생한다.")
-    void isBustFromNameException() {
-        Name name = new Name("test");
-        Player player = new Player(name);
-        Players players = new Players(List.of(player));
-        Assertions.assertThatThrownBy(() -> players.isBustFromName(new Name("wrong")))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("존재하지 않는 참여자 입니다.");
-    }
-
-    @Test
-    @DisplayName("입력으로 받은 이름으로 점수를 반환할 수 있다.")
-    void getTotalScore() {
-        Name name = new Name("test");
-        Player player = new Player(name);
-        Players players = new Players(List.of(player));
-        Deck deck = Deck.withCustomCards(
-                new Card(CardType.CLOVER, CardNumber.TEN));
-        players.hitFromName(name, deck);
-        Assertions.assertThat(players.getTotalScore(name)).isEqualTo(10);
-    }
-
-    @Test
-    @DisplayName("점수를 반환할 때 입력으로 받은 이름이 존재하지 않을 경우 예외를 발생한다.")
-    void getTotalScoreException() {
-        Name name = new Name("test");
-        Player player = new Player(name);
-        Players players = new Players(List.of(player));
-        Assertions.assertThatThrownBy(() -> players.getTotalScore(new Name("wrong")))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("존재하지 않는 참여자 입니다.");
+        Assertions.assertThat(players.getPlayers()).isEqualTo(List.of(player));
     }
 }
