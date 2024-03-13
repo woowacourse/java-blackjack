@@ -15,13 +15,18 @@ public class CardShuffler {
     }
 
     public static CardShuffler of(int dequeCount) {
+        List<Card> cards = generateCards(dequeCount);
+        Collections.shuffle(cards);
+        return new CardShuffler(new ArrayDeque<>(cards));
+    }
+
+    private static List<Card> generateCards(int dequeCount) {
         List<Card> cards = new ArrayList<>();
         while (dequeCount > 0) {
             cards.addAll(new Deque().getCards());
             dequeCount--;
         }
-        Collections.shuffle(cards);
-        return new CardShuffler(new ArrayDeque<>(cards));
+        return cards;
     }
 
     public int cardsSize() {
