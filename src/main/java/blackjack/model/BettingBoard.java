@@ -4,12 +4,12 @@ import blackjack.model.participant.BettingAmount;
 import blackjack.model.participant.Player;
 import java.util.Map;
 
-public class BettingPool {
+public class BettingBoard {
     private static final double BLACKJACK_PROFIT_RATE = 1.5;
 
     private final Map<Player, BettingAmount> moneys;
 
-    public BettingPool(final Map<Player, BettingAmount> moneys) {
+    public BettingBoard(final Map<Player, BettingAmount> moneys) {
         this.moneys = moneys;
     }
 

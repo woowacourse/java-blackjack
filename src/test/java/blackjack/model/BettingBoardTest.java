@@ -13,7 +13,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BettingPoolTest {
+class BettingBoardTest {
 
     @Test
     @DisplayName("플레이어가 만약 블랙잭으로 승리한 경우, 베팅 금액의 1.5배를 딜러에게 받는다.")
@@ -22,8 +22,8 @@ class BettingPoolTest {
         BettingAmount bettingAmount = new BettingAmount(1000);
         Map<Player, BettingAmount> moneyByPlayer = Map.of(player, bettingAmount);
 
-        BettingPool bettingPool = new BettingPool(moneyByPlayer);
-        assertThat(bettingPool.giveWinnerMoneyByBlackJack(player)).isEqualTo(bettingAmount.multiple(1.5));
+        BettingBoard bettingBoard = new BettingBoard(moneyByPlayer);
+        assertThat(bettingBoard.giveWinnerMoneyByBlackJack(player)).isEqualTo(bettingAmount.multiple(1.5));
     }
 
     @Test
@@ -33,8 +33,8 @@ class BettingPoolTest {
         BettingAmount bettingAmount = new BettingAmount(1000);
         Map<Player, BettingAmount> moneyByPlayer = Map.of(player, bettingAmount);
 
-        BettingPool bettingPool = new BettingPool(moneyByPlayer);
-        assertThat(bettingPool.giveTieMoneyByBlackJack(player)).isEqualTo(bettingAmount);
+        BettingBoard bettingBoard = new BettingBoard(moneyByPlayer);
+        assertThat(bettingBoard.giveTieMoneyByBlackJack(player)).isEqualTo(bettingAmount);
     }
 
     @Test
@@ -44,7 +44,7 @@ class BettingPoolTest {
         BettingAmount bettingAmount = new BettingAmount(1000);
         Map<Player, BettingAmount> moneyByPlayer = Map.of(player, bettingAmount);
 
-        BettingPool bettingPool = new BettingPool(moneyByPlayer);
-        assertThat(bettingPool.giveWinnerMoneyWhenDealerBust(player)).isEqualTo(bettingAmount);
+        BettingBoard bettingBoard = new BettingBoard(moneyByPlayer);
+        assertThat(bettingBoard.giveWinnerMoneyWhenDealerBust(player)).isEqualTo(bettingAmount);
     }
 }
