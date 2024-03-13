@@ -6,8 +6,8 @@ import java.util.List;
 public class Player implements Playable {
     private static final int HITTABLE_THRESHOLD = 21;
 
-    protected final Name name;
-    protected Hand hand;
+    private final Name name;
+    private Hand hand;
 
     Player(final Name name, final Hand hand) {
         this.name = name;
