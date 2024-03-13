@@ -81,4 +81,8 @@ public class Players {
                 .map(Player::getName)
                 .toList();
     }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }

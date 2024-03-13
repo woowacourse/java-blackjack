@@ -28,6 +28,10 @@ public class Player extends Participant {
         state = state.stand();
     }
 
+    public boolean isBlackJack() {
+        return state.isBlackJack();
+    }
+
     public String getName() {
         return name;
     }
