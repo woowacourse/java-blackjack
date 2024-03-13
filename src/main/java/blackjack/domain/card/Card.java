@@ -13,8 +13,8 @@ public class Card {
         return cardNumber == CardNumber.ACE;
     }
 
-    public int getNumber() {
-        return cardNumber.getValue();
+    public CardNumber getNumber() {
+        return cardNumber;
     }
 
     public String getShape() {

@@ -23,7 +23,7 @@ public class Hand {
 
     private int calculateInitialScore() {
         return cards.stream()
-                .mapToInt(Card::getNumber)
+                .mapToInt(card -> card.getNumber().getValue())
                 .sum();
     }
 

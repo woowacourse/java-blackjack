@@ -1,15 +1,14 @@
 package blackjack.view;
 
+import static blackjack.domain.cardgame.WinningStatus.LOSE;
+import static blackjack.domain.cardgame.WinningStatus.WIN;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.cardgame.CardGameResult;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
-
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static blackjack.domain.cardgame.WinningStatus.LOSE;
-import static blackjack.domain.cardgame.WinningStatus.WIN;
 
 public class OutputView {
     public static void printInitialHandOfEachPlayer(final Dealer dealer, final List<Player> players) {
@@ -43,6 +42,7 @@ public class OutputView {
         System.out.println(dealerHitMessage);
         printLineSeparator();
     }
+
     public static void printPlayerCardWithScore(final Player player) {
         String playerCardInfo = getPlayerCardInfo(player);
         System.out.println(playerCardInfo + " - 결과: " + player.getScore());
@@ -78,7 +78,7 @@ public class OutputView {
     }
 
     private static String getCardInfo(final Card card) {
-        return card.getNumber() + card.getShape();
+        return CardNumberStrings.mapCardNumberToString(card.getNumber()) + card.getShape();
     }
 
     private static void printLineSeparator() {
