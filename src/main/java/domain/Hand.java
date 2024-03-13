@@ -55,7 +55,7 @@ public class Hand {
     }
 
     private GamerResult judgeBust(Hand opponent) {
-        if (this.isBust() && !opponent.isBust()) {
+        if (this.isBust()) {
             return GamerResult.LOSE;
         }
         if (opponent.isBust()) {
@@ -65,8 +65,11 @@ public class Hand {
     }
 
     private GamerResult judgeBlackJack(Hand opponent) {
-        if (this.isBlackJack() && opponent.isBlackJack()) {
+        if (this.isBlackJack()) {
             return GamerResult.WIN;
+        }
+        if (opponent.isBlackJack()) {
+            return GamerResult.LOSE;
         }
         return judgeScore(opponent);
     }
