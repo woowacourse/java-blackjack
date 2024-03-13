@@ -13,9 +13,8 @@ import java.util.Map;
 
 public class OutputView {
 
-    private static final String LINE = System.lineSeparator();
-    private static final String FORM = "%s카드: %s%n";
-    private static final String RESULT_FORM = "%s: %s%n";
+    private static final String FORM = "%s카드: %s" + System.lineSeparator();
+    private static final String RESULT_FORM = "%s: %s" + System.lineSeparator();
 
     public void printInitHands(final DealerHandsDto dealerHandsDto, final ParticipantsDto participantsDto) {
         final String dealerCard = dealerHandsDto.getCard();
@@ -27,7 +26,7 @@ public class OutputView {
         for (ParticipantDto participantDto : participantsDto.getParticipants()) {
             System.out.printf(FORM, participantDto.name(), format(participantDto.cards()));
         }
-        System.out.print(LINE);
+        System.out.print(System.lineSeparator());
     }
 
     public void printHands(final ParticipantDto participantDto) {
@@ -43,23 +42,22 @@ public class OutputView {
             System.out.printf("%s 카드: %s - 결과: %d%n", participantDto.name(), format(participantDto.cards()),
                     participantDto.totalSum());
         }
-        System.out.print(LINE);
+        System.out.print(System.lineSeparator());
     }
 
     public void printGameResult(final Map<Result, Integer> dealerResult, final Map<Player, Result> playerResult) {
-        System.out.println("## 최종결과");
-        System.out.printf(RESULT_FORM, "딜러", format(dealerResult));
+        System.out.printf("## 최종결과" + System.lineSeparator() + RESULT_FORM, "딜러", format(dealerResult));
         for (Map.Entry<Player, Result> entry : playerResult.entrySet()) {
             System.out.printf(RESULT_FORM, entry.getKey().getName(), entry.getValue().getValue());
         }
     }
 
     public void printBust() {
-        System.out.printf("BUST%n");
+        System.out.printf("BUST" + System.lineSeparator());
     }
 
     public void printBlackJack() {
-        System.out.printf("BLACK JACK!!!%n");
+        System.out.printf("BLACK JACK!!!" + System.lineSeparator());
     }
 
     public void printDealerEndMessage(boolean isBust) {
