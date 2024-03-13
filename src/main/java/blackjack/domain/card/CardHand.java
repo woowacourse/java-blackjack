@@ -6,6 +6,7 @@ import java.util.List;
 public class CardHand {
     private static final int BONUS_SCORE_OF_ACE = 10;
     private static final int BLACKJACK_SCORE = 21;
+    private static final int BLACKJACK_CARD_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -45,5 +46,13 @@ public class CardHand {
             return sumWithBonusScore;
         }
         return totalScore;
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_CARD_SIZE && sumAllScore() == BLACKJACK_SCORE;
+    }
+
+    public boolean isBust() {
+        return sumAllScore() > BLACKJACK_SCORE;
     }
 }

@@ -13,4 +13,9 @@ public abstract class Started implements State {
     public int calculateScore() {
         return cardHand.sumAllScore();
     }
+
+    @Override
+    public CardHand getCardHand() {
+        return cardHand;
+    }
 }

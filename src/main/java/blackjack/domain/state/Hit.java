@@ -3,21 +3,23 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
 
-public final class Hit implements State {
-    private final CardHand cardHand;
+public final class Hit extends Started {
 
     public Hit(final CardHand cardHand) {
-        this.cardHand = cardHand;
+        super(cardHand);
     }
 
     @Override
     public State draw(final Card card) {
+        final CardHand cardHand = getCardHand();
         cardHand.receiveCard(card);
-        return this;
-    }
 
-    @Override
-    public int calculateScore() {
-        return cardHand.sumAllScore();
+        if (cardHand.isBlackjack()) {
+            return new Blackjack(cardHand);
+        }
+        if (cardHand.isBust()) {
+            return new Bust(cardHand);
+        }
+        return new Hit(cardHand);
     }
 }
