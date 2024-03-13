@@ -3,8 +3,6 @@ package domain.card;
 import java.util.*;
 import java.util.stream.Stream;
 
-import static domain.card.CardNumber.ACE;
-
 public class Cards {
 
     private final Stack<Card> cards;
@@ -18,7 +16,7 @@ public class Cards {
         this.cards.addAll(cards);
     }
 
-    public Cards(final Cards cards){
+    public Cards(final Cards cards) {
         this(cards.cards);
     }
 
@@ -59,7 +57,7 @@ public class Cards {
 
     public boolean hasAce() {
         return cards.stream()
-                    .anyMatch(card -> card.number() == ACE);
+                    .anyMatch(card -> card.isAce());
     }
 
     public List<Card> toList() {
