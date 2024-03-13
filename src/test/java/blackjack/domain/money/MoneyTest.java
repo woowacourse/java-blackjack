@@ -20,6 +20,18 @@ class MoneyTest {
                 .hasMessage("금액은 양수이어야 합니다.");
     }
 
+    @DisplayName("금액은 서로 더할 수 있다")
+    @ParameterizedTest
+    @CsvSource({"1500, 1500, 3000", "1234, 5555, 6789", "10, 1, 11"})
+    void addTest(int value1, int value2, int expected) {
+        Money money1 = new Money(value1);
+        Money money2 = new Money(value2);
+
+        Money actual = money1.add(money2);
+
+        assertThat(actual.toInt()).isEqualTo(expected);
+    }
+
     @DisplayName("금액은 해당 배수만큼 곱할 수 있다")
     @ParameterizedTest
     @CsvSource({"1.5, 1500", "2, 2000", "2.25, 2250"})
@@ -30,5 +42,4 @@ class MoneyTest {
 
         assertThat(actual.toInt()).isEqualTo(expected);
     }
-
 }

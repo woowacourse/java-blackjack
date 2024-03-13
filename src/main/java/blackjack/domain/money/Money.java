@@ -19,6 +19,10 @@ public class Money {
         return value;
     }
 
+    public Money add(Money money) {
+        return new Money(this.value + money.value);
+    }
+
     public Money multiply(double multiplier) {
         int newValue = (int) Math.ceil(this.value * multiplier);
         return new Money(newValue);
