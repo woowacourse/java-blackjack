@@ -3,17 +3,23 @@ package blackjack.domain.card;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Stream;
 
 public class RandomDeck implements Deck {
     private static final RandomDeck INSTANCE = new RandomDeck();
     private static final Random RANDOM = new Random();
 
-    private final List<Number> numbers;
-    private final List<Shape> shapes;
+    private final List<Card> cards;
 
     private RandomDeck() {
-        this.numbers = Arrays.asList(Number.values());
-        this.shapes = Arrays.asList(Shape.values());
+        this.cards = Arrays.stream(Number.values())
+                .flatMap(RandomDeck::createAllShapeCardsForNumber)
+                .toList();
+    }
+
+    private static Stream<Card> createAllShapeCardsForNumber(Number number) {
+        return Arrays.stream(Shape.values())
+                .map(shape -> new Card(number, shape));
     }
 
     public static RandomDeck getInstance() {
@@ -22,12 +28,7 @@ public class RandomDeck implements Deck {
 
     @Override
     public Card drawCard() {
-        int orderOfNumber = RANDOM.nextInt(numbers.size());
-        int orderOfShape = RANDOM.nextInt(shapes.size());
-
-        Number number = numbers.get(orderOfNumber);
-        Shape shape = shapes.get(orderOfShape);
-
-        return new Card(number, shape);
+        int orderOfCard = RANDOM.nextInt(cards.size());
+        return cards.get(orderOfCard);
     }
 }
