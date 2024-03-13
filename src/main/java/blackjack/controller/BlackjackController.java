@@ -26,7 +26,7 @@ public class BlackjackController {
         printCardGameResult(dealer, players);
     }
 
-    private static List<Player> createPlayersByNames(List<String> names) {
+    private static List<Player> createPlayersByNames(final List<String> names) {
         return names.stream()
                 .map(Player::new)
                 .toList();

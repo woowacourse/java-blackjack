@@ -33,7 +33,7 @@ public class OutputView {
     }
 
     public static void printPlayerCard(final Player player) {
-        String playerCardInfo = getPlayerCardInfo(player);
+        final String playerCardInfo = getPlayerCardInfo(player);
         System.out.println(playerCardInfo);
     }
 
@@ -44,7 +44,7 @@ public class OutputView {
     }
 
     public static void printPlayerCardWithScore(final Player player) {
-        String playerCardInfo = getPlayerCardInfo(player);
+        final String playerCardInfo = getPlayerCardInfo(player);
         System.out.println(playerCardInfo + " - 결과: " + player.getScore());
     }
 

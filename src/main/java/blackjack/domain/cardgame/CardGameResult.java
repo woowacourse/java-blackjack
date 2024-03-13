@@ -1,18 +1,16 @@
 package blackjack.domain.cardgame;
 
-import blackjack.domain.player.Player;
-
-import java.util.Collections;
-import java.util.Map;
-
 import static blackjack.domain.cardgame.WinningStatus.LOSE;
 import static blackjack.domain.cardgame.WinningStatus.WIN;
+
+import blackjack.domain.player.Player;
+import java.util.Collections;
+import java.util.Map;
 
 public class CardGameResult {
     private final Map<Player, WinningStatus> totalResult;
 
-    // TODO: final 키워드 추가
-    public CardGameResult(Map<Player, WinningStatus> totalResult) {
+    public CardGameResult(final Map<Player, WinningStatus> totalResult) {
         this.totalResult = totalResult;
     }
 
