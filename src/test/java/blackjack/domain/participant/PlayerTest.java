@@ -7,8 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import static blackjack.domain.card.Kind.SPADE;
@@ -20,11 +18,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class PlayerTest {
     private static Stream<Arguments> makeTestPlayer() {
-        Map<Name, Batting> playerNamesAndBattings = new HashMap<>();
-        playerNamesAndBattings.put(new Name("pobi"), Batting.from(1.0));
-        Player testPlayer = new Players(playerNamesAndBattings)
-                .getPlayers()
-                .get(0);
+        Player testPlayer = new Player(new Name("pobi"), Batting.from(1.0));
         return Stream.of(arguments(testPlayer));
     }
 

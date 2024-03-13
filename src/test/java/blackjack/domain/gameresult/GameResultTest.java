@@ -3,15 +3,15 @@ package blackjack.domain.gameresult;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import static blackjack.domain.card.Kind.SPADE;
@@ -19,16 +19,16 @@ import static blackjack.domain.card.Value.ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-class GameResultProfitTest {
+class GameResultTest {
     private static Stream<Arguments> makeWinningPlayersAndTestDealer() {
-        Map<Name, Batting> playerNamesAndBattings = new LinkedHashMap<>();
-        playerNamesAndBattings.put(new Name("pobi"), Batting.from(100.0));
-        playerNamesAndBattings.put(new Name("pobi"), Batting.from(50.0));
-        Players testPlayers = new Players(playerNamesAndBattings);
-        testPlayers.getPlayers()
+        List<Player> testPlayers = new ArrayList<>();
+        testPlayers.add(new Player(new Name("pobi"), Batting.from(100.0)));
+        testPlayers.add(new Player(new Name("coli"), Batting.from(50.0)));
+        Players players = new Players(testPlayers);
+        players.getPlayers()
                 .forEach(player -> player.addCard(new Card(SPADE, ACE)));
 
-        return Stream.of(arguments(testPlayers, new Dealer()));
+        return Stream.of(arguments(players, new Dealer()));
     }
 
     @DisplayName("GameResult는 게임 베팅의 전체 수익 합산을 반환한다")

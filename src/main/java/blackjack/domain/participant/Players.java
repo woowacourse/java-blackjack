@@ -1,11 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.game.Deck;
-import blackjack.domain.gameresult.Batting;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class Players {
 
@@ -14,12 +11,9 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(Map<Name, Batting> playerNameAndBattings) {
-        validatePlayersNumber(playerNameAndBattings.keySet());
-        this.players = playerNameAndBattings.entrySet()
-                .stream()
-                .map(player -> new Player(player.getKey(), player.getValue()))
-                .toList();
+    public Players(List<Player> players) {
+        validatePlayersNumber(players);
+        this.players = List.copyOf(players);
     }
 
     public void handOutInitialCards(Deck deck) {
@@ -30,7 +24,7 @@ public class Players {
     }
 
 
-    private void validatePlayersNumber(Set<Name> players) {
+    private void validatePlayersNumber(List<Player> players) {
         if (players.size() < MIN_PLAYER_NUMBER || players.size() > MAX_PLAYER_NUMBER) {
             throw new IllegalArgumentException("게임 참여자는 최소 " + MIN_PLAYER_NUMBER
                     + "명에서 최대 " + MAX_PLAYER_NUMBER + "명까지 가능합니다");

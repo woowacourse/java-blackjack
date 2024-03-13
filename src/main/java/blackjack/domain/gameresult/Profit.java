@@ -6,10 +6,10 @@ public class Profit {
     private static final double MIN_PROFIT_RATE = -1;
     private static final double MAX_PROFIT_RATE = 1.5;
 
-    private final double Profit;
+    private final double profit;
 
     private Profit(double bat) {
-        this.Profit = bat;
+        this.profit = bat;
     }
 
     public static Profit from(double profit) {
@@ -37,7 +37,7 @@ public class Profit {
     }
 
     public double getProfit() {
-        return Profit;
+        return profit;
     }
 
     @Override
@@ -45,11 +45,11 @@ public class Profit {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         blackjack.domain.gameresult.Profit that = (blackjack.domain.gameresult.Profit) o;
-        return Objects.equals(Profit, that.Profit);
+        return Objects.equals(profit, that.profit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Profit);
+        return Objects.hash(profit);
     }
 }

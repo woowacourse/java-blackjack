@@ -4,14 +4,11 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import static blackjack.domain.card.Kind.*;
@@ -22,11 +19,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class ResultTest {
     private static Stream<Arguments> makeTestPlayerAndTestDealer() {
-        Map<Name, Batting> playerNamesAndBattings = new HashMap<>();
-        playerNamesAndBattings.put(new Name("pobi"), Batting.from(100.0));
-        Player testPlayer = new Players(playerNamesAndBattings)
-                .getPlayers()
-                .get(0);
+        Player testPlayer = new Player(new Name("pobi"), Batting.from(100.0));
         Dealer testDealer = new Dealer();
 
         return Stream.of(arguments(testPlayer, testDealer));

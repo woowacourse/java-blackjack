@@ -3,12 +3,15 @@ package blackjack.controller;
 import blackjack.domain.card.Card;
 import blackjack.domain.game.Deck;
 import blackjack.domain.game.Game;
+import blackjack.domain.game.GameParticipants;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameController {
@@ -31,14 +34,24 @@ public class GameController {
 
     private static Game makeGame() {
         try {
-            // TODO 생성자 로직 확장성 고민해보기
-            OutputView.printAskNameMessage();
-            return Game.of(InputView.readPlayerNamesAndBattings());
+            return Game.of(GameParticipants.of(makePlayers()));
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             makeGame();
         }
         throw new IllegalStateException("게임 객체가 생성되지 않았습니다.");
+    }
+
+    private static Players makePlayers() {
+        OutputView.printAskNameMessage();
+        List<Name> playerNames = InputView.readNames();
+        List<Player> players = new ArrayList<>();
+
+        for (Name playerName : playerNames) {
+            players.add(new Player(playerName, InputView.readBatting(playerName)));
+        }
+
+        return new Players(players);
     }
 
     private static void confirmParticipantsHands(Players players, Deck deck, Dealer dealer) {
