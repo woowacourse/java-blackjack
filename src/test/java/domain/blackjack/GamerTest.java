@@ -1,5 +1,6 @@
 package domain.blackjack;
 
+import static domain.blackjack.TestHoldingCards.BLACK_JACK;
 import static domain.blackjack.TestHoldingCards.DEAD_CARDS;
 import static domain.blackjack.TestHoldingCards.ONLY_SEVEN_HEART;
 import static domain.blackjack.TestHoldingCards.WIN_CARDS_WITHOUT_ACE;
@@ -73,7 +74,7 @@ class GamerTest {
     @Test
     @DisplayName("블랙잭인지 잘 판단하는지 검증")
     void isBlackJack() {
-        Gamer player = Player.from("플레이어", WIN_CARDS_WITH_ACE);
+        Gamer player = Player.from("플레이어", BLACK_JACK);
         Assertions.assertThat(player.isBlackJack()).isTrue();
     }
 

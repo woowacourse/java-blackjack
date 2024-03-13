@@ -3,7 +3,7 @@ package domain.blackjack;
 class GameResultCalculator {
 
     static GameResult calculate(Player player, Dealer dealer) {
-        if (player.isBlackJack() && dealer.isBlackJack()) {
+        if (dealer.isBlackJack()) {
             return GameResult.LOSE;
         }
         if (player.isBlackJack()) {

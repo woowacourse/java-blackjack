@@ -4,6 +4,7 @@ import static domain.blackjack.GameResult.LOSE;
 import static domain.blackjack.GameResult.TIE;
 import static domain.blackjack.GameResult.WIN;
 import static domain.blackjack.GameResult.WIN_BLACK_JACK;
+import static domain.blackjack.TestHoldingCards.BLACK_JACK;
 import static domain.blackjack.TestHoldingCards.DEAD_CARDS;
 import static domain.blackjack.TestHoldingCards.ONLY_SEVEN_HEART;
 import static domain.blackjack.TestHoldingCards.ONLY_SIX_HEART;
@@ -28,9 +29,11 @@ class GameResultCalculatorTest {
                 Arguments.of(DEAD_CARDS, ONLY_SEVEN_HEART, LOSE),
                 Arguments.of(ONLY_SEVEN_HEART, DEAD_CARDS, WIN),
                 Arguments.of(DEAD_CARDS, DEAD_CARDS, WIN),
-                Arguments.of(WIN_CARDS_WITH_ACE, TWO_SIX_CARDS, WIN_BLACK_JACK),
-                Arguments.of(WIN_CARDS_WITH_ACE, WIN_CARDS_WITHOUT_ACE, WIN_BLACK_JACK),
-                Arguments.of(WIN_CARDS_WITH_ACE, WIN_CARDS_WITH_ACE, LOSE)
+                Arguments.of(WIN_CARDS_WITH_ACE, BLACK_JACK, LOSE),
+                Arguments.of(BLACK_JACK, TWO_SIX_CARDS, WIN_BLACK_JACK),
+                Arguments.of(BLACK_JACK, WIN_CARDS_WITHOUT_ACE, WIN_BLACK_JACK),
+                Arguments.of(BLACK_JACK, WIN_CARDS_WITH_ACE, WIN_BLACK_JACK),
+                Arguments.of(BLACK_JACK, BLACK_JACK, LOSE)
         );
     }
 

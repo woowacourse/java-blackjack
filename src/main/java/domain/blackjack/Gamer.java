@@ -9,9 +9,14 @@ import java.util.List;
 abstract class Gamer {
     private static final int INITIAL_CARD_COUNT = 2;
     protected final BlackJackGameMachine blackJackGameMachine;
+    protected final int bettingMoney;
 
-    Gamer(BlackJackGameMachine blackJackGameMachine) {
+    Gamer(BlackJackGameMachine blackJackGameMachine, int bettingMoney) {
         this.blackJackGameMachine = blackJackGameMachine;
+        if (bettingMoney < 0) {
+            throw new IllegalArgumentException("배팅 금액은 음수일 수 없습니다.");
+        }
+        this.bettingMoney = bettingMoney;
     }
 
     abstract DrawResult draw(Deck deck, CardSelectStrategy cardSelectStrategy);

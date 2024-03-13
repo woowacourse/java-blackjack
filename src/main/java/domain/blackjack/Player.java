@@ -7,17 +7,25 @@ public class Player extends Gamer {
     private final String name;
 
     static Player from(String name, HoldingCards holdingCards) {
-        return new Player(name, new BlackJackGameMachine(holdingCards));
+        return new Player(name, new BlackJackGameMachine(holdingCards), 0);
     }
 
-    private Player(String name, BlackJackGameMachine blackJackGameMachine) {
-        super(blackJackGameMachine);
+    static Player from(String name, HoldingCards holdingCards, int bettingMoney) {
+        return new Player(name, new BlackJackGameMachine(holdingCards), bettingMoney);
+    }
+
+    private Player(String name, BlackJackGameMachine blackJackGameMachine, int bettingMoney) {
+        super(blackJackGameMachine, bettingMoney);
         this.name = name;
     }
 
     @Override
     DrawResult draw(Deck deck, CardSelectStrategy cardSelectStrategy) {
         return blackJackGameMachine.draw(deck, cardSelectStrategy, new PlayerCardDrawCondition(blackJackGameMachine));
+    }
+
+    int calculateBettingMoney(GameResult gameResult) {
+        return gameResult.calculateMoney(bettingMoney);
     }
 
     public String getRawName() {
