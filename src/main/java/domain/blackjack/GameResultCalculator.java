@@ -1,36 +1,27 @@
 package domain.blackjack;
 
 public class GameResultCalculator {
-    /**
-     * baseGamer의 otherGamer 에 대한 승부 결과 반환
-     *
-     * @param baseBlackJackGameMachine  기준 게이머
-     * @param otherBlackJackGameMachine 상대 게이머
-     * @return baseGamer의 otherGamer 에 대한 승부 결과
-     */
-    public static GameResult calculate(BlackJackGameMachine baseBlackJackGameMachine,
-                                       BlackJackGameMachine otherBlackJackGameMachine) {
-        if (baseBlackJackGameMachine.isBust() && otherBlackJackGameMachine.isBust()) {
+    
+    public static GameResult calculate(Gamer baseGamer, Gamer otherGamer) {
+        if (baseGamer.isBust() && otherGamer.isBust()) {
             return GameResult.TIE;
         }
-        if (baseBlackJackGameMachine.isBust()) {
+        if (baseGamer.isBust()) {
             return GameResult.LOSE;
         }
-        if (otherBlackJackGameMachine.isBust()) {
+        if (otherGamer.isBust()) {
             return GameResult.WIN;
         }
-        return getGameResultWhenNobodyDead(baseBlackJackGameMachine, otherBlackJackGameMachine);
+        return getGameResultWhenNobodyDead(baseGamer, otherGamer);
     }
 
-    private static GameResult getGameResultWhenNobodyDead(BlackJackGameMachine baseBlackJackGameMachine,
-                                                          BlackJackGameMachine otherBlackJackGameMachine) {
-        SummationCardPoint baseGamerSummationCardPoint = baseBlackJackGameMachine.calculateSummationCardPoint();
-        SummationCardPoint otherGamerSummationCardPoint = otherBlackJackGameMachine.calculateSummationCardPoint();
-
-        if (baseGamerSummationCardPoint.isBiggerThan(otherGamerSummationCardPoint)) {
+    private static GameResult getGameResultWhenNobodyDead(Gamer baseGamer, Gamer otherGamer) {
+        SummationCardPoint baseSummationCardPoint = baseGamer.calculateSummationCardPoint();
+        SummationCardPoint otherSummationCardPoint = otherGamer.calculateSummationCardPoint();
+        if (baseSummationCardPoint.isBiggerThan(otherSummationCardPoint)) {
             return GameResult.WIN;
         }
-        if (baseGamerSummationCardPoint.equals(otherGamerSummationCardPoint)) {
+        if (baseSummationCardPoint.equals(otherSummationCardPoint)) {
             return GameResult.TIE;
         }
         return GameResult.LOSE;

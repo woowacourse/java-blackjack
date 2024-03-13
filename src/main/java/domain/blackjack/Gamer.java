@@ -18,11 +18,19 @@ abstract class Gamer {
         return blackJackGameMachine.getRawHoldingCards();
     }
 
-    public final int getRawSummationCardPoint() {
+    public final int calculateSummationCardPointAsInt() {
         return blackJackGameMachine.calculateSummationCardPointAsInt();
     }
 
     public final GameResult calculateGameResult(Gamer other) {
-        return GameResultCalculator.calculate(blackJackGameMachine, other.blackJackGameMachine);
+        return GameResultCalculator.calculate(this, other);
+    }
+
+    final SummationCardPoint calculateSummationCardPoint() {
+        return blackJackGameMachine.calculateSummationCardPoint();
+    }
+
+    final boolean isBust() {
+        return blackJackGameMachine.isBust();
     }
 }

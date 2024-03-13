@@ -69,6 +69,6 @@
 
 ## 2단계 구현 전 리팩토링
 
-- [ ] GameResultCalculator가 Gamer를 매개변수로 받도록 리팩토링
+- [x] GameResultCalculator가 Gamer를 매개변수로 받도록 리팩토링
 - [ ] BlackJackGame 추가
 - [ ] 대부분의 도메인 클래스 패키지 프라이빗으로 수정

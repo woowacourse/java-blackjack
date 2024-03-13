@@ -21,31 +21,24 @@ class GameResultCalculatorTest {
 
     public static Stream<Arguments> getGameResultParameters() {
         return Stream.of(
-                Arguments.of(new BlackJackGameMachine(ONLY_SEVEN_HEART),
-                        new BlackJackGameMachine(ONLY_SIX_HEART), WIN),
-                Arguments.of(new BlackJackGameMachine(ONLY_SIX_HEART),
-                        new BlackJackGameMachine(ONLY_SEVEN_HEART), LOSE),
-                Arguments.of(new BlackJackGameMachine(ONLY_SEVEN_HEART),
-                        new BlackJackGameMachine(ONLY_SEVEN_HEART), TIE),
-                Arguments.of(new BlackJackGameMachine(DEAD_CARDS),
-                        new BlackJackGameMachine(ONLY_SEVEN_HEART), LOSE),
-                Arguments.of(new BlackJackGameMachine(ONLY_SEVEN_HEART),
-                        new BlackJackGameMachine(DEAD_CARDS), WIN),
-                Arguments.of(new BlackJackGameMachine(DEAD_CARDS), new BlackJackGameMachine(DEAD_CARDS),
-                        TIE),
-                Arguments.of(new BlackJackGameMachine(WIN_CARDS_WITH_ACE),
-                        new BlackJackGameMachine(TWO_SIX_CARDS), WIN),
-                Arguments.of(new BlackJackGameMachine(WIN_CARDS_WITH_ACE),
-                        new BlackJackGameMachine(WIN_CARDS_WITHOUT_ACE), TIE)
+                Arguments.of(ONLY_SEVEN_HEART, ONLY_SIX_HEART, WIN),
+                Arguments.of(ONLY_SIX_HEART, ONLY_SEVEN_HEART, LOSE),
+                Arguments.of(ONLY_SEVEN_HEART, ONLY_SEVEN_HEART, TIE),
+                Arguments.of(DEAD_CARDS, ONLY_SEVEN_HEART, LOSE),
+                Arguments.of(ONLY_SEVEN_HEART, DEAD_CARDS, WIN),
+                Arguments.of(DEAD_CARDS, DEAD_CARDS, TIE),
+                Arguments.of(WIN_CARDS_WITH_ACE, TWO_SIX_CARDS, WIN),
+                Arguments.of(WIN_CARDS_WITH_ACE, WIN_CARDS_WITHOUT_ACE, TIE)
         );
     }
 
     @ParameterizedTest
     @MethodSource("getGameResultParameters")
     @DisplayName("승부가 잘 결정되는지 검증")
-    void calculate(BlackJackGameMachine blackJackGameMachine1, BlackJackGameMachine blackJackGameMachine2,
-                   GameResult expected) {
-        Assertions.assertThat(GameResultCalculator.calculate(blackJackGameMachine1, blackJackGameMachine2))
+    void calculate(HoldingCards holdingCards1, HoldingCards holdingCards2, GameResult expected) {
+        Player player = Player.from("플레이어", holdingCards1);
+        Dealer dealer = Dealer.of(holdingCards2);
+        Assertions.assertThat(GameResultCalculator.calculate(player, dealer))
                 .isEqualTo(expected);
     }
 }

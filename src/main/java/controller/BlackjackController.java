@@ -76,13 +76,13 @@ public class BlackjackController {
 
     private static void printDealer(Dealer dealer) {
         List<Card> rawHoldingCards = dealer.getRawHoldingCardsWithoutFirstCard();
-        DealerDTO dealerDTO = new DealerDTO(rawHoldingCards, dealer.getRawSummationCardPoint());
+        DealerDTO dealerDTO = new DealerDTO(rawHoldingCards, dealer.calculateSummationCardPointAsInt());
         DealerOutputView.printWithoutSummationCardPoint(dealerDTO);
     }
 
     private static void printPlayer(Player player) {
         PlayerDTO playerDTO = new PlayerDTO(player.getRawName(), player.getRawHoldingCards(),
-                player.getRawSummationCardPoint());
+                player.calculateSummationCardPointAsInt());
         PlayerOutputView.printWithoutSummationCardPoint(playerDTO);
     }
 
@@ -119,14 +119,14 @@ public class BlackjackController {
 
     private void printDealerWithPoint(Dealer dealer) {
         DealerDTO dealerDTO = new DealerDTO(dealer.getRawHoldingCards(),
-                dealer.getRawSummationCardPoint());
+                dealer.calculateSummationCardPointAsInt());
         DealerOutputView.print(dealerDTO);
     }
 
     private void printPlayersWithPoint(Players players) {
         players.forEach(player -> {
             PlayerDTO playerDTO = new PlayerDTO(player.getRawName(), player.getRawHoldingCards(),
-                    player.getRawSummationCardPoint());
+                    player.calculateSummationCardPointAsInt());
             PlayerOutputView.print(playerDTO);
         });
     }
