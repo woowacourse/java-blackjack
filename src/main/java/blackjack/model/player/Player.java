@@ -41,8 +41,8 @@ public class Player {
         return cards.calculateScore();
     }
 
-    public boolean isBlackJack() {
-        return cards.isBlackJack();
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
     }
 
     public boolean isBust() {

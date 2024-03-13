@@ -43,7 +43,7 @@ public class Players {
 
     public boolean isAllBlackJack() {
         return players.stream()
-                .allMatch(Player::isBlackJack);
+                .allMatch(Player::isBlackjack);
     }
 
     public List<PlayerFinalCardsOutcome> captureFinalCardsOutcomes() {

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
-    private static final int BLACKJACK_SCORE = 21;
     private static final int BLACKJACK_CARD_SIZE = 2;
+    private static final int BLACKJACK_SCORE = 21;
     private static final int ACE_ADDITIONAL_SCORE = 10;
 
     private final List<Card> cards;
@@ -50,7 +50,7 @@ public class Cards {
         return total;
     }
 
-    public boolean isBlackJack() {
+    public boolean isBlackjack() {
         return calculateScore() == BLACKJACK_SCORE && cards.size() == BLACKJACK_CARD_SIZE;
     }
 
@@ -58,7 +58,7 @@ public class Cards {
         return calculateScore() > BLACKJACK_SCORE;
     }
 
-    public int size() {
+    public int getSize() {
         return cards.size();
     }
 

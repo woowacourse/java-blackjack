@@ -38,12 +38,12 @@ public class Dealer {
         return cards.isBust();
     }
 
-    public boolean isBlackJack() {
-        return cards.isBlackJack();
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
     }
 
     public int getDrawCount() {
-        return cards.size() - NON_DRAW_COUNT;
+        return cards.getSize() - NON_DRAW_COUNT;
     }
 
     public Card getFirstCard() {

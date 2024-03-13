@@ -10,13 +10,13 @@ public enum MatchResult {
     PUSH;
 
     public static MatchResult determine(final Dealer dealer, final Player player) {
-        if (dealer.isBlackJack() && player.isBlackJack()) {
+        if (dealer.isBlackjack() && player.isBlackjack()) {
             return MatchResult.PUSH;
         }
-        if (dealer.isBlackJack() && !player.isBlackJack()) {
+        if (dealer.isBlackjack() && !player.isBlackjack()) {
             return MatchResult.LOSE;
         }
-        if (!dealer.isBlackJack() && player.isBlackJack()) {
+        if (!dealer.isBlackjack() && player.isBlackjack()) {
             return MatchResult.BLACKJACK_WIN;
         }
         return determineByTotalScore(dealer, player);
