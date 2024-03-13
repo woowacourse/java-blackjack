@@ -10,25 +10,27 @@ public class BlackJackResult {
     private final Map<Name, GamerResult> playersResult;
     private final Map<GamerResult, Integer> dealerResult;
 
-    public BlackJackResult(int dealerScore, Map<Name, Integer> playersScore) {
-        dealerResult = calculateDealerResult(dealerScore, playersScore);
-        this.playersResult = calculatePlayersResult(dealerScore, playersScore);
+    public BlackJackResult(Dealer dealer, Players players) {
+        dealerResult = calculateDealerResult(dealer, players);
+        this.playersResult = calculatePlayersResult(dealer, players);
     }
 
-    private Map<GamerResult, Integer> calculateDealerResult(int dealerScore, Map<Name, Integer> playersScore) {
-        return playersScore.values()
+    private Map<GamerResult, Integer> calculateDealerResult(Dealer dealer, Players players) {
+        return players.getPlayersTotalScores()
+                .values()
                 .stream()
                 .collect(Collectors.groupingBy(
-                        value -> getJudgePlayerResult(dealerScore, value).getOpponentGameResult(),
+                        value -> getJudgePlayerResult(dealer.getTotalScore(), value).getOpponentGameResult(),
                         Collectors.summingInt(count -> 1)));
     }
 
-    private Map<Name, GamerResult> calculatePlayersResult(int dealerScore, Map<Name, Integer> playersScore) {
-        return playersScore.entrySet()
+    private Map<Name, GamerResult> calculatePlayersResult(Dealer dealer, Players players) {
+        return players.getPlayersTotalScores()
+                .entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         Entry::getKey,
-                        entry -> getJudgePlayerResult(dealerScore, entry.getValue())));
+                        entry -> getJudgePlayerResult(dealer.getTotalScore(), entry.getValue())));
     }
 
     private GamerResult getJudgePlayerResult(int dealerScore, int playerScore) {

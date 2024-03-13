@@ -43,9 +43,7 @@ public class BlackJackGame {
     }
 
     public BlackJackResult getGameResult() {
-        return new BlackJackResult(
-                dealer.getTotalScore(),
-                players.getPlayersTotalScores());
+        return new BlackJackResult(dealer, players);
     }
 
     public int getDealerScore() {
