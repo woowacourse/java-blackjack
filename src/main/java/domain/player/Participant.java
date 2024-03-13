@@ -56,14 +56,7 @@ public abstract class Participant {
         return Rank.ACE.getValue();
     }
 
-    public boolean isPlayer() {
-        return false;
-    }
-    public boolean isDealer() {
-        return false;
-    }
     public List<Card> getHands() {
         return Collections.unmodifiableList(hands.getValue());
     }
-
 }

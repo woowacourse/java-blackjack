@@ -28,11 +28,6 @@ public class Dealer extends Participant {
         return calculateScore() < HIT_UPPER_BOUND;
     }
 
-    @Override
-    public boolean isDealer() {
-        return true;
-    }
-
     public PlayerResult compareHandsWith(final Player player) {
         if (player.isBust()) {
             return PlayerResult.WIN;

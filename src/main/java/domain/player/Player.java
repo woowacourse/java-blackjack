@@ -34,11 +34,6 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean isPlayer() {
-        return true;
-    }
-
-    @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
