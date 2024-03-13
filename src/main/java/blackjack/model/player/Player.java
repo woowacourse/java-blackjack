@@ -3,6 +3,8 @@ package blackjack.model.player;
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 import blackjack.model.cardgenerator.CardGenerator;
+import blackjack.model.dealer.Dealer;
+import blackjack.view.dto.PlayerMatchResultOutcome;
 import java.util.List;
 
 public class Player {
@@ -47,6 +49,10 @@ public class Player {
 
     public boolean isBust() {
         return cards.isBust();
+    }
+
+    public PlayerMatchResultOutcome determineMatchResult(final Dealer dealer) {
+        return new PlayerMatchResultOutcome(name, MatchResult.determine(dealer, this));
     }
 
     public List<Card> getCards() {

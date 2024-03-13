@@ -5,12 +5,11 @@ import blackjack.model.cardgenerator.RandomCardGenerator;
 import blackjack.model.dealer.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
-import blackjack.model.referee.Referee;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
-import blackjack.view.dto.PlayerMatchResult;
+import blackjack.view.dto.PlayerMatchResultOutcome;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -93,9 +92,8 @@ public class BlackjackGame {
     }
 
     private void showMatchResult(final Players players, final Dealer dealer) {
-        Referee referee = new Referee(players, dealer);
-        List<PlayerMatchResult> playerMatchResults = referee.determinePlayersMatchResult();
-        outputView.printMatchResult(playerMatchResults);
+        List<PlayerMatchResultOutcome> playerMatchResultOutcomes = players.determineMatchResults(dealer);
+        outputView.printMatchResult(playerMatchResultOutcomes);
     }
 
     public <T> T retryOnException(final Supplier<T> retryOperation) {

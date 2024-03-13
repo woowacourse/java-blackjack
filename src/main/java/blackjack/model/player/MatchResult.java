@@ -1,7 +1,6 @@
-package blackjack.model.referee;
+package blackjack.model.player;
 
 import blackjack.model.dealer.Dealer;
-import blackjack.model.player.Player;
 
 public enum MatchResult {
     BLACKJACK_WIN,

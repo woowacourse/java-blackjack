@@ -2,12 +2,12 @@ package blackjack.view;
 
 import blackjack.model.card.Card;
 import blackjack.model.dealer.Dealer;
+import blackjack.model.player.MatchResult;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
-import blackjack.model.referee.MatchResult;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
-import blackjack.view.dto.PlayerMatchResult;
+import blackjack.view.dto.PlayerMatchResultOutcome;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -78,17 +78,17 @@ public class OutputView {
         }
     }
 
-    public void printMatchResult(final List<PlayerMatchResult> playerMatchResults) {
+    public void printMatchResult(final List<PlayerMatchResultOutcome> playerMatchResultOutcomes) {
         System.out.println(MATCH_RESULT_INTRO);
-        System.out.println(formatDealerMatchResult(playerMatchResults));
-        for (PlayerMatchResult playerMatchResult : playerMatchResults) {
-            System.out.println(formatPlayerMatchResult(playerMatchResult));
+        System.out.println(formatDealerMatchResult(playerMatchResultOutcomes));
+        for (PlayerMatchResultOutcome playerMatchResultOutcome : playerMatchResultOutcomes) {
+            System.out.println(formatPlayerMatchResult(playerMatchResultOutcome));
         }
     }
 
-    private String formatDealerMatchResult(final List<PlayerMatchResult> playerMatchResults) {
-        Map<MatchResult, Long> outcomeCounts = playerMatchResults.stream()
-                .collect(Collectors.groupingBy(PlayerMatchResult::matchResult, Collectors.counting()));
+    private String formatDealerMatchResult(final List<PlayerMatchResultOutcome> playerMatchResultOutcomes) {
+        Map<MatchResult, Long> outcomeCounts = playerMatchResultOutcomes.stream()
+                .collect(Collectors.groupingBy(PlayerMatchResultOutcome::matchResult, Collectors.counting()));
         long winCount = outcomeCounts.getOrDefault(MatchResult.LOSE, 0L);
         long loseCount = outcomeCounts.getOrDefault(MatchResult.WIN, 0L);
         loseCount += outcomeCounts.getOrDefault(MatchResult.BLACKJACK_WIN, 0L);
@@ -96,8 +96,8 @@ public class OutputView {
         return DEALER_MATCH_RESULT_PREFIX + String.format(DEALER_MATCH_RESULT_FORM, winCount, loseCount, pushCount);
     }
 
-    private String formatPlayerMatchResult(final PlayerMatchResult playerMatchResult) {
-        return playerMatchResult.name() + ": " + formatMatchResult(playerMatchResult.matchResult());
+    private String formatPlayerMatchResult(final PlayerMatchResultOutcome playerMatchResultOutcome) {
+        return playerMatchResultOutcome.name() + ": " + formatMatchResult(playerMatchResultOutcome.matchResult());
     }
 
     private String formatMatchResult(final MatchResult matchResult) {
