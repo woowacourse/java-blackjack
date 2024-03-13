@@ -6,6 +6,8 @@ import blackjack.domain.card.CardHand;
 import blackjack.domain.strategy.CardShuffleStrategy;
 
 public class Dealer {
+    private static final int DEALER_MIN_SCORE_POLICY = 16;
+
     private final CardDeck cardDeck;
     private final CardShuffleStrategy cardShuffleStrategy;
     private final CardHand cardHand;
@@ -30,5 +32,9 @@ public class Dealer {
 
     public int calculateScore() {
         return cardHand.sumAllScore();
+    }
+
+    public boolean canReceiveCard() {
+        return calculateScore() <= DEALER_MIN_SCORE_POLICY;
     }
 }
