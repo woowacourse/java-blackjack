@@ -9,17 +9,7 @@ public enum GamerResult {
     GamerResult(String result) {
         this.result = result;
     }
-
-    public GamerResult getOpponentGameResult() {
-        if (this.equals(GamerResult.WIN)) {
-            return GamerResult.LOSE;
-        }
-        if (this.equals(GamerResult.LOSE)) {
-            return GamerResult.WIN;
-        }
-        return GamerResult.DRAW;
-    }
-
+    
     public String getResult() {
         return result;
     }

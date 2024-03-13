@@ -25,9 +25,9 @@ public class BlackJackResult {
         return players.getPlayers().stream()
                 .collect(Collectors.toMap(
                         Gamer::getName,
-                        player -> dealer.judge(player).getOpponentGameResult()));
+                        player -> player.judge(dealer)));
     }
-    
+
     public Map<Name, GamerResult> getPlayersResult() {
         return Collections.unmodifiableMap(playersResult);
     }
