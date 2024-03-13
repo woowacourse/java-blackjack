@@ -10,13 +10,20 @@ public enum HitOption {
         this.hitOption = hitOption;
     }
 
-    public static boolean isHit(String option) {
+    public static HitOption from(String option) {
         if (YES.hitOption.equals(option)) {
-            return true;
+            return YES;
         }
         if (NO.hitOption.equals(option)) {
-            return false;
+            return NO;
         }
         throw new IllegalArgumentException("잘못된 입력입니다.");
+    }
+
+    public static boolean isHit(HitOption isHit) {
+        if (isHit == YES) {
+            return true;
+        }
+        return false;
     }
 }

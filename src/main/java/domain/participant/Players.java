@@ -39,13 +39,13 @@ public class Players {
         }
     }
 
-    public void playersHit(Function<Name, String> isHitOption, Consumer<Participant> printParticipantHands, Dealer dealer) {
+    public void playersHit(Function<Name, HitOption> isHitOption, Consumer<Participant> printParticipantHands, Dealer dealer) {
         for (Player player : value) {
             playerHit(isHitOption, printParticipantHands, player, dealer);
         }
     }
 
-    private void playerHit(Function<Name, String> isHitOption, Consumer<Participant> printParticipantHands, Participant participant, Dealer dealer) {
+    private void playerHit(Function<Name, HitOption> isHitOption, Consumer<Participant> printParticipantHands, Participant participant, Dealer dealer) {
         while (participant.canHit() && HitOption.isHit(isHitOption.apply(participant.getName()))) {
             participant.receiveCard(dealer.draw());
             printParticipantHands.accept(participant);

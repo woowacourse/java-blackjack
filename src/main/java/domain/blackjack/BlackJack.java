@@ -18,11 +18,10 @@ public class BlackJack {
 
     public void beginDealing(BiConsumer<Players, Dealer> beginBlackJack) {
         players.beginDealing(dealer);
-
         beginBlackJack.accept(players, dealer);
     }
 
-    public void play(Function<Name, String> isHitOption, Consumer<Participant> printParticipantHands) {
+    public void play(Function<Name, HitOption> isHitOption, Consumer<Participant> printParticipantHands) {
         players.playersHit(isHitOption, printParticipantHands, dealer);
     }
 

@@ -3,7 +3,9 @@ package controller;
 import domain.blackjack.BetAmount;
 import domain.blackjack.BettingResult;
 import domain.blackjack.BlackJack;
+import domain.blackjack.HitOption;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
 import view.InputView;
@@ -23,7 +25,7 @@ public class BlackJackController {
         BlackJack blackJack = new BlackJack(players, dealer);
 
         blackJack.beginDealing(this::beginBlackJack);
-        blackJack.play(InputView::inputHitOption, OutputView::printParticipantHands);
+        blackJack.play(this::isHitOption, OutputView::printParticipantHands);
         dealerHit(blackJack);
 
         printScore(players, dealer);
@@ -44,6 +46,10 @@ public class BlackJackController {
         for (Player player : players.getValue()) {
             OutputView.printParticipantHands(player);
         }
+    }
+
+    private HitOption isHitOption(Name name) {
+        return HitOption.from(InputView.inputHitOption(name));
     }
 
     private void dealerHit(BlackJack blackJack) {

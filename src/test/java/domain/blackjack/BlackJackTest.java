@@ -33,15 +33,15 @@ class BlackJackTest {
         Dealer dealer = new Dealer();
         BlackJack blackJack = new BlackJack(players, dealer);
 
-        Function<Name, String> testFunction = new Function<Name, String>() {
+        Function<Name, HitOption> testFunction = new Function<Name, HitOption>() {
             int i = 0;
             @Override
-            public String apply(Name name) {
+            public HitOption apply(Name name) {
                 if (i % 3 != 2) {
                     i++;
-                    return "y";
+                    return HitOption.YES;
                 }
-                return "n";
+                return HitOption.NO;
             }
         };
 
