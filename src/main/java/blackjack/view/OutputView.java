@@ -18,7 +18,7 @@ public class OutputView {
     }
 
     public void printDealerFirstCard(List<Card> cards) {
-        System.out.println("딜러: " + convertCard(cards.get(0)));
+        System.out.println("딜러: " + convertCards(cards));
     }
 
     public void printPlayerCards(String name, List<Card> cards) {
