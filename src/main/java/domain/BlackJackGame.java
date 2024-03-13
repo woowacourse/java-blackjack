@@ -5,17 +5,21 @@ import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Player;
 import domain.gamer.Players;
-import domain.result.PlayerResults;
-import domain.result.Result;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BlackJackGame {
     private static final int INITIAL_CARD_COUNT = 2;
     private final Deck deck;
+    private final BetAmounts betAmounts;
 
-    public BlackJackGame(final Deck deck) {
+    public BlackJackGame(final Deck deck, final BetAmounts betAmounts) {
         this.deck = deck;
+        this.betAmounts = betAmounts;
+    }
+
+    public void bet(final Player player, int amount) {
+        betAmounts.addBetAmount(player, amount);
     }
 
     public void prepareCards(final Dealer dealer, final Players players) {
@@ -36,12 +40,20 @@ public class BlackJackGame {
         gamer.hit(deck.draw());
     }
 
-    public PlayerResults createPlayerResults(final Dealer dealer, final Players players) {
-        Map<Player, Result> playerResults = new LinkedHashMap<>();
+    public Map<Player, Integer> createPlayersResult(final Dealer dealer, final Players players) {
+        Map<Player, Integer> playerResults = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            Result playerResult = Result.getPlayerResultWith(player, dealer);
-            playerResults.put(player, playerResult);
+            int playerProfit = betAmounts.calculatePlayerBetProfit(player, dealer);
+            playerResults.put(player, playerProfit);
         }
-        return new PlayerResults(playerResults);
+        return playerResults;
+    }
+
+    public int calculateDealerProfit(final Dealer dealer, final Players players) {
+        int dealerProfit = 0;
+        for (Player player : players.getPlayers()) {
+            dealerProfit += betAmounts.calculateDealerBetProfit(player, dealer);
+        }
+        return dealerProfit;
     }
 }

@@ -12,12 +12,12 @@ import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Player;
 import domain.gamer.Players;
-import domain.result.PlayerResults;
-import domain.result.Result;
 import exception.CardReceiveException;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 public class BlackJackGameTest {
@@ -26,18 +26,19 @@ public class BlackJackGameTest {
 
     @BeforeEach
     void init() {
-        Card card1 = new Card(Symbol.DIAMOND, Rank.EIGHT);
-        Card card2 = new Card(Symbol.CLOVER, Rank.BIG_ACE);
+        Card card1 = new Card(Symbol.CLOVER, Rank.BIG_ACE);
+        Card card2 = new Card(Symbol.DIAMOND, Rank.EIGHT);
         Card card3 = new Card(Symbol.SPADE, Rank.KING);
         Card card4 = new Card(Symbol.CLOVER, Rank.SEVEN);
-        Card card5 = new Card(Symbol.SPADE, Rank.BIG_ACE);
+        Card card5 = new Card(Symbol.DIAMOND, Rank.THREE);
         Card card6 = new Card(Symbol.HEART, Rank.FIVE);
         Card card7 = new Card(Symbol.CLOVER, Rank.NINE);
         Card card8 = new Card(Symbol.DIAMOND, Rank.THREE);
 
         List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8);
         Deck deck = Deck.from(cards);
-        blackJackGame = new BlackJackGame(deck);
+        BetAmounts betAmounts = new BetAmounts();
+        blackJackGame = new BlackJackGame(deck, betAmounts);
         dealer = new Dealer();
     }
 
@@ -92,7 +93,7 @@ public class BlackJackGameTest {
         blackJackGame.giveCard(player); // 5 하트
 
         // when
-        blackJackGame.giveCard(player); // A 스페이드
+        blackJackGame.giveCard(player); // 3 다이아몬드
 
         int expectedPlayerSize = 4;
 
@@ -133,7 +134,7 @@ public class BlackJackGameTest {
         blackJackGame.giveCard(player); // 3 다이아몬드
         blackJackGame.giveCard(player); // 9 클로버
         blackJackGame.giveCard(player); // 5 하트
-        blackJackGame.giveCard(player); // A 스페이드
+        blackJackGame.giveCard(player); // 3 다이아몬드
         blackJackGame.giveCard(player); // 7 클로버
 
         // when
@@ -148,31 +149,65 @@ public class BlackJackGameTest {
         );
     }
 
-    @DisplayName("플레이어의 승패를 결정한다.")
-    @Test
-    void findResultsTest() {
-        // given
-        Name name1 = new Name("pobi");
-        Name name2 = new Name("jason");
-        Player pobi = new Player(name1);
-        Player jason = new Player(name2);
-        Players players = new Players(List.of(pobi, jason));
+    @DisplayName("플레이어와 딜러의 배팅 결과를 반환한다.")
+    @Nested
+    class BetProfitTest {
+        Player pobi, jason;
+        Players players;
 
-        blackJackGame.prepareCards(dealer, players);
+        @BeforeEach
+        void init() {
+            Name name1 = new Name("pobi");
+            Name name2 = new Name("jason");
+            pobi = new Player(name1);
+            jason = new Player(name2);
 
-        blackJackGame.giveCard(pobi);
-        blackJackGame.giveCard(dealer);
-        // 딜러 : 3 다이아몬드, 9클로버, 8 다이아 (합계 : 20)
-        // 포비 : 7 하트, A 스페이드, A 클로버 (합계 : 18)
-        // 제이슨 : 7 클로버, K 스페이드 (합계 : 17)
+            players = new Players(List.of(pobi, jason));
+        }
 
-        // when
-        PlayerResults playerResults = blackJackGame.createPlayerResults(dealer, players);
+        @DisplayName("플레이어의 배팅 결과를 생성한다.")
+        @Test
+        void createPlayersResultTest() {
+            // given
+            blackJackGame.bet(pobi, 10000);
+            blackJackGame.bet(jason, 20000);
 
-        // then
-        assertAll(
-                () -> assertThat(playerResults.getResults().get(pobi)).isEqualTo(Result.LOSE),
-                () -> assertThat(playerResults.getResults().get(jason)).isEqualTo(Result.LOSE)
-        );
+            blackJackGame.giveCard(pobi);
+            blackJackGame.giveCard(jason);
+            blackJackGame.giveCard(dealer);
+            // 포비 : 3 다이아몬드
+            // 제이슨 : 9 클로버
+            // 딜러 : 5 하트
+
+            // when
+            Map<Player, Integer> playersResult = blackJackGame.createPlayersResult(dealer, players);
+
+            // then
+            assertAll(
+                    () -> assertThat(playersResult.get(pobi)).isEqualTo(-10000),
+                    () -> assertThat(playersResult.get(jason)).isEqualTo(20000)
+            );
+        }
+
+        @DisplayName("딜러 배팅 수익을 계산한다.")
+        @Test
+        void calculateDealerProfitTest() {
+            // given
+            blackJackGame.bet(pobi, 10000);
+            blackJackGame.bet(jason, 20000);
+
+            blackJackGame.giveCard(pobi);
+            blackJackGame.giveCard(jason);
+            blackJackGame.giveCard(dealer);
+            // 포비 : 3 다이아몬드
+            // 제이슨 : 9 클로버
+            // 딜러 : 5 하트
+
+            // when
+            int dealerProfit = blackJackGame.calculateDealerProfit(dealer, players);
+
+            // then
+            assertThat(dealerProfit).isEqualTo(-10000);
+        }
     }
 }

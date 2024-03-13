@@ -5,22 +5,16 @@ import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Player;
 import domain.gamer.Players;
-import domain.result.DealerResult;
-import domain.result.PlayerResults;
-import domain.result.Result;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
+import java.util.Map;
 import java.util.StringJoiner;
-import java.util.stream.Collectors;
 
 public class OutputView {
     private static final int INITIAL_CARD_COUNT = 2;
     private static final int DEALER_HIT_CONDITION = 16;
 
     private OutputView() {
-
     }
 
     public static void printInitialCardsMessage(final Dealer dealer, final Players players) {
@@ -96,24 +90,14 @@ public class OutputView {
         return rank + symbol;
     }
 
-    public static void printFinalGameResult(final DealerResult dealerResult, final PlayerResults playerResults) {
+    public static void printFinalGameResult(final int dealerProfit, final Map<Player, Integer> playersResult) {
         System.out.println("## 최종 승패");
-        printDealerResult(dealerResult);
-        printPlayerResults(playerResults);
-    }
-
-    private static void printDealerResult(final DealerResult dealerResult) {
-        String message = String.format("딜러: %d승 %d패 %d무", dealerResult.getWinCount(), dealerResult.getLoseCount(),
-                dealerResult.getTieCount());
-        System.out.println(message);
-    }
-
-    private static void printPlayerResults(final PlayerResults playerResults) {
-        Set<Entry<Player, Result>> resultEntrySet = playerResults.getResults().entrySet();
-        String resultString = resultEntrySet.stream()
-                .map(entry -> String.format("%s: %s", entry.getKey().getName(), entry.getValue().getName()))
-                .collect(Collectors.joining(System.lineSeparator()));
-        System.out.println(resultString);
+        String dealerMessage = String.format("딜러: %d%n", dealerProfit);
+        StringBuilder builder = new StringBuilder(dealerMessage);
+        playersResult.entrySet().stream()
+                .map(result -> String.format("%s: %s%n", result.getKey().getName(), result.getValue()))
+                .forEach(builder::append);
+        System.out.println(builder);
     }
 
     public static void printNewLine() {
