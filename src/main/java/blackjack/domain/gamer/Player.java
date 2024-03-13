@@ -12,19 +12,7 @@ public class Player extends BlackjackGamer {
 
     @Override
     public boolean canReceiveCard() {
-        return getScore() <= BLACKJACK_MAX_SCORE;
-    }
-
-    public GameResult isWin(int dealerScore) {
-        int playerScore = getScore();
-
-        if (playerScore > BLACKJACK_MAX_SCORE) {
-            return GameResult.LOSE;
-        }
-        if (dealerScore > BLACKJACK_MAX_SCORE || playerScore > dealerScore) {
-            return GameResult.WIN;
-        }
-        return GameResult.LOSE;
+        return getScore() < BLACKJACK_MAX_SCORE;
     }
 
     public Name getName() {

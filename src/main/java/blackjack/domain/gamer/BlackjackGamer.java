@@ -23,15 +23,15 @@ public abstract class BlackjackGamer {
         hand.add(card);
     }
 
-    public Card getFirstCard() {
-        return hand.getFirstCard();
+    public Hand getHand() {
+        return hand;
+    }
+
+    public HandValue getHandValue() {
+        return hand.getValue();
     }
 
     public int getScore() {
-        return hand.calculateScore();
-    }
-
-    public Hand getHand() {
-        return hand;
+        return getHandValue().getScore();
     }
 }

@@ -10,6 +10,6 @@ public record HandDto(List<CardDto> cardDtos, int handScore) {
                 .map(CardDto::fromCard)
                 .toList();
 
-        return new HandDto(cardDtos, hand.calculateScore());
+        return new HandDto(cardDtos, hand.getValue().getScore());
     }
 }
