@@ -1,9 +1,13 @@
 package domain;
 
+import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.judge.WinState;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Cashier {
 
@@ -13,29 +17,41 @@ public class Cashier {
         this.playerBets = playerBets;
     }
 
-    public int calculateProfit(Player player, WinState winState) {
-        BetAmount betAmount = playerBets.stream()
+    public Map<Player, BetAmount> calculatePlayersProfits(Map<Player, WinState> resultWithoutProfit, Dealer dealer) {
+        Map<Player, BetAmount> resultWithProfit = applyProfitByWinState(resultWithoutProfit);
+        int totalProfitAmount = calculateProfitAmount(resultWithProfit);
+        resultWithProfit.put(dealer, new BetAmount(-totalProfitAmount));
+        return Collections.unmodifiableMap(resultWithProfit);
+    }
+
+    private Map<Player, BetAmount> applyProfitByWinState(Map<Player, WinState> resultWithoutProfit) {
+        Map<Player, BetAmount> resultWithProfit = new LinkedHashMap<>();
+        for (Map.Entry<Player, WinState> playerWinState : resultWithoutProfit.entrySet()) {
+            Player player = playerWinState.getKey();
+            WinState winState = playerWinState.getValue();
+            BetAmount betAmount = findBetAmountByPlayer(player);
+
+            resultWithProfit.put(player, calculateProfitByWinState(winState, betAmount));
+        }
+        return resultWithProfit;
+    }
+
+    private BetAmount findBetAmountByPlayer(Player player) {
+        return playerBets.stream()
                 .filter(playerBet -> playerBet.getPlayer().equals(player))
                 .map(PlayerBet::getBetAmount)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 일치하는 플레이어가 없습니다."));
-
-        return calculateProfitByWinState(winState, betAmount);
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 플레이어의 베팅금액을 찾을 수 없습니다."));
     }
 
-    private int calculateProfitByWinState(WinState winState, BetAmount betAmount) {
-        if (winState.equals(WinState.WIN)) {
-            return betAmount.winAmount();
-        }
-        if (winState.equals(WinState.LOSE)) {
-            return betAmount.loseAmount();
-        }
-        if (winState.equals(WinState.DRAW)) {
-            return betAmount.drawAmount();
-        }
-        if (winState.equals(WinState.BLACK_JACK)) {
-            return betAmount.blackJackAmount();
-        }
-        return 0;
+    private BetAmount calculateProfitByWinState(WinState winState, BetAmount betAmount) {
+        int finalProfit = (int) (betAmount.getBetAmount() * winState.getProfitRate());
+        return new BetAmount(finalProfit);
+    }
+
+    private int calculateProfitAmount(Map<Player, BetAmount> resultWithProfit) {
+        return resultWithProfit.values().stream()
+                .mapToInt(BetAmount::getBetAmount)
+                .sum();
     }
 }

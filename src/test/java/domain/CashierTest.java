@@ -1,48 +1,75 @@
 package domain;
 
+import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.judge.WinState;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CashierTest {
 
     Player player;
+    Dealer dealer;
     BetAmount betAmount;
     Cashier cashier;
 
     @BeforeEach
     void setup() {
         player = new Player("player");
-        betAmount = new BetAmount("10000");
+        dealer = new Dealer();
+        betAmount = new BetAmount(10000);
         cashier = new Cashier(List.of(new PlayerBet(player, betAmount)));
     }
 
-    @DisplayName("승리하면 베팅액의 1배를 알려준다.")
+    @DisplayName("승리하면 베팅액의 1배를 준다.")
     @Test
-    void testCahsierCalculateWinProfit() {
-        Assertions.assertThat(cashier.calculateProfit(player, WinState.WIN)).isEqualTo(10000);
+    void testCashierCalculateWinProfit() {
+        Map<Player, BetAmount> result = cashier.calculatePlayersProfits(Map.of(player, WinState.WIN), dealer);
+        assertThat(result.get(player).getBetAmount())
+                .isEqualTo(10000);
     }
 
-    @DisplayName("패배하면 베팅액의 -1배를 알려준다.")
+    @DisplayName("패배하면 베팅액의 -1배를 준다.")
     @Test
-    void testCahsierCalculateLoseProfit() {
-        Assertions.assertThat(cashier.calculateProfit(player, WinState.LOSE)).isEqualTo(-10000);
+    void testCashierCalculateLoseProfit() {
+        Map<Player, BetAmount> result = cashier.calculatePlayersProfits(Map.of(player, WinState.LOSE), dealer);
+        assertThat(result.get(player).getBetAmount())
+                .isEqualTo(-10000);
     }
 
-    @DisplayName("무승부하면 0을 알려준다.")
+    @DisplayName("무승부하면 0을 준다.")
     @Test
-    void testCahsierCalculateDrawProfit() {
-        Assertions.assertThat(cashier.calculateProfit(player, WinState.DRAW)).isEqualTo(0);
+    void testCashierCalculateDrawProfit() {
+        Map<Player, BetAmount> result = cashier.calculatePlayersProfits(Map.of(player, WinState.DRAW), dealer);
+        assertThat(result.get(player).getBetAmount())
+                .isEqualTo(0);
     }
 
-    @DisplayName("블랙잭이면 베팅액의 1.5배를 알려준다.")
+    @DisplayName("블랙잭이면 베팅액의 1.5배를 준다.")
     @Test
-    void testCahsierCalculateBlackJackProfit() {
-        Assertions.assertThat(cashier.calculateProfit(player, WinState.BLACK_JACK)).isEqualTo(15000);
+    void testCashierCalculateBlackJackProfit() {
+        Map<Player, BetAmount> result = cashier.calculatePlayersProfits(Map.of(player, WinState.BLACK_JACK), dealer);
+        assertThat(result.get(player).getBetAmount())
+                .isEqualTo(15000);
+    }
+
+    @DisplayName("딜러의 수익을 계산한다.")
+    @Test
+    void testCashierCalculateDealerProfit() {
+        Player player1 = new Player("player1");
+        BetAmount betAmount1 = new BetAmount(10000);
+        Player player2 = new Player("player2");
+        BetAmount betAmount2 = new BetAmount(20000);
+
+        Cashier cashier = new Cashier(List.of(new PlayerBet(player1, betAmount1), new PlayerBet(player2, betAmount2)));
+
+        Map<Player, BetAmount> result1 = cashier.calculatePlayersProfits(Map.of(player1, WinState.LOSE, player2, WinState.BLACK_JACK), dealer);
+        assertThat(result1.get(dealer).getBetAmount()).isEqualTo(-20000);
     }
 }
