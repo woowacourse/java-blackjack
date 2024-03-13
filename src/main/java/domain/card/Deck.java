@@ -1,9 +1,8 @@
 package domain.card;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Deck {
 
@@ -11,16 +10,21 @@ public class Deck {
     private final DrawStrategy strategy;
 
     public Deck(DrawStrategy strategy) {
-        this.deck = createDeck();
+        this.deck = new ArrayList<>();
         this.strategy = strategy;
+        createDeck();
     }
 
-    private List<Card> createDeck() {
-        return IntStream.range(1, 14)
-                .boxed()
-                .flatMap(cardNumber -> IntStream.range(0, 4)
-                        .mapToObj(index -> new Card(cardNumber, Shape.getShapeByIndex(index))))
-                .collect(Collectors.toList());
+    private void createDeck() {
+        for (CardNumber value : CardNumber.values()) {
+            createCardByNumberAndShape(value);
+        }
+    }
+
+    private void createCardByNumberAndShape(CardNumber value) {
+        for (Shape shape : Shape.values()) {
+            deck.add(new Card(value.getValue(), shape));
+        }
     }
 
     public List<Card> drawInitialHands() {

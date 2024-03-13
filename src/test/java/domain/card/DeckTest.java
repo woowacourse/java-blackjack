@@ -13,7 +13,7 @@ public class DeckTest {
         DrawStrategy drawStrategy = (size) -> 0;
         Deck deck = new Deck(drawStrategy);
 
-        assertThat(deck.draw().asString()).isEqualTo("A스페이드");
+        assertThat(deck.draw()).isEqualTo(new Card(1, Shape.SPADE));
     }
 
     @Test
