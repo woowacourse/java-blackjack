@@ -25,9 +25,8 @@ public abstract class Participant {
         return hands.isBust();
     }
 
-    //TODO 시작시에 블랙잭일 때 쓸거에용
     public boolean isBlackJack() {
-        return hands.isBlackJack();
+        return hands.isBlackJack() && hands.size() == 2;
     }
 
     public int handsSum() {

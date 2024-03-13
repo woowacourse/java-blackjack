@@ -1,9 +1,11 @@
 package domain;
 
+import static domain.HandsTestFixture.blackJack;
 import static domain.HandsTestFixture.sum10Size2;
 import static domain.HandsTestFixture.sum18Size2;
+import static domain.HandsTestFixture.sum20Size2;
 import static domain.HandsTestFixture.sum20Size3;
-import static domain.HandsTestFixture.sum21Size2;
+import static domain.HandsTestFixture.sum21Size3;
 import static domain.Result.LOSE;
 import static domain.Result.TIE;
 import static domain.Result.WIN;
@@ -90,7 +92,7 @@ class DealerTest {
         // given
         Player loser1 = new Player(new Name("레디"), sum18Size2);
         Player loser2 = new Player(new Name("피케이"), sum18Size2);
-        Player winner = new Player(new Name("제제"), sum21Size2);
+        Player winner = new Player(new Name("제제"), sum21Size3);
         Player tier = new Player(new Name("브라운"), sum20Size3);
 
         Players players = new Players(List.of(loser1, loser2, winner, tier));
@@ -101,5 +103,23 @@ class DealerTest {
 
         // then
         Assertions.assertThat(dealer.getDealerResult(players)).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("처음 나눠준 카드 두장의 합이 21이라면 블랙잭이다.")
+    void checkingBlackJack() {
+        //given
+        Dealer dealer = new Dealer(sum20Size2);
+        Player blackJackPlayer = new Player(new Name("수달"), blackJack);
+        Player noBlackJackPlayer = new Player(new Name("레디"), sum18Size2);
+
+        //when
+        org.junit.jupiter.api.Assertions.assertAll(
+                () -> Assertions.assertThat(dealer.isBlackJack()).isFalse(),
+                () -> Assertions.assertThat(blackJackPlayer.isBlackJack()).isTrue(),
+                () -> Assertions.assertThat(noBlackJackPlayer.isBlackJack()).isFalse()
+        );
+
+        //then
     }
 }
