@@ -4,6 +4,7 @@ import static blackjack.domain.deck.Kind.DIAMOND;
 import static blackjack.domain.deck.Kind.SPADE;
 import static blackjack.domain.deck.Value.ACE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.DisplayName;
@@ -36,5 +37,13 @@ class CardTest {
                 () -> assertThat(testCard1.getScore()).isEqualTo(10),
                 () -> assertThat(testCard2.getScore()).isEqualTo(4)
         );
+    }
+
+    @DisplayName("범위를 초과하는 카드를 가져올 수 없다")
+    @Test
+    void should_ThrowIllegalArgumentException_When_find_OverOrderCard() {
+        assertThatThrownBy(() -> Card.valueOf(52))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("존재하지 않는 카드번호 입니다.");
     }
 }
