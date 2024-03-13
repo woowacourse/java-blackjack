@@ -1,6 +1,6 @@
 package domain.card;
 
-import java.util.Objects;
+import dto.CardResponse;
 
 public class Card {
     private final Rank rank;
@@ -9,6 +9,10 @@ public class Card {
     public Card(final Rank rank, final Suit suit) {
         this.rank = rank;
         this.suit = suit;
+    }
+
+    public CardResponse toCardResponse() {
+        return new CardResponse(rank.name(), suit.name());
     }
 
     public int getRankValue() {

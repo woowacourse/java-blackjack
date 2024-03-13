@@ -1,20 +1,20 @@
 package domain.blackjack;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
 import domain.player.Dealer;
 import domain.player.Name;
 import domain.player.Player;
-import domain.player.PlayerResult;
 import domain.player.Players;
+import dto.GameResult;
+import dto.PlayerResult;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 class BlackjackTest {
     @Test
@@ -100,11 +100,11 @@ class BlackjackTest {
         jonge.hit(new Card(Rank.ACE, Suit.HEARTS));
         final Blackjack blackjack = new Blackjack(new Players(List.of(teba, jonge)), dealer);
 
-        final GameResult gameResult = blackjack.finishGame();
+        final GameResult gameResult = blackjack.toGameResult();
 
         assertAll(
-                () -> assertThat(gameResult.playerResult(teba)).isSameAs(PlayerResult.WIN),
-                () -> assertThat(gameResult.playerResult(jonge)).isSameAs(PlayerResult.WIN),
+                () -> assertThat(gameResult.playerResult(teba.getName())).isSameAs(PlayerResult.WIN),
+                () -> assertThat(gameResult.playerResult(jonge.getName())).isSameAs(PlayerResult.WIN),
                 () -> assertThat(gameResult.dealerLose()).isEqualTo(2)
         );
     }
@@ -119,9 +119,9 @@ class BlackjackTest {
         teba.hit(new Card(Rank.TWO, Suit.CLUBS));
         final Blackjack blackjack = new Blackjack(new Players(List.of(teba)), dealer);
 
-        final GameResult gameResult = blackjack.finishGame();
+        final GameResult gameResult = blackjack.toGameResult();
 
-        assertThat(gameResult.playerResult(teba)).isSameAs(PlayerResult.LOSE);
+        assertThat(gameResult.playerResult(teba.getName())).isSameAs(PlayerResult.LOSE);
         assertThat(gameResult.dealerWin()).isEqualTo(1);
     }
 
@@ -135,10 +135,10 @@ class BlackjackTest {
         dealer.hit(new Card(Rank.TWO, Suit.CLUBS));
         final Blackjack blackjack = new Blackjack(new Players(List.of(teba)), dealer);
 
-        final GameResult gameResult = blackjack.finishGame();
+        final GameResult gameResult = blackjack.toGameResult();
 
         assertThat(gameResult.dealerLose()).isEqualTo(1);
-        assertThat(gameResult.playerResult(teba)).isSameAs(PlayerResult.WIN);
+        assertThat(gameResult.playerResult(teba.getName())).isSameAs(PlayerResult.WIN);
     }
 
     @Test
@@ -152,9 +152,9 @@ class BlackjackTest {
         teba.hit(new Card(Rank.TEN, Suit.CLUBS));
         final Blackjack blackjack = new Blackjack(new Players(List.of(teba)), dealer);
 
-        final GameResult gameResult = blackjack.finishGame();
+        final GameResult gameResult = blackjack.toGameResult();
 
         assertThat(gameResult.dealerTie()).isEqualTo(1);
-        assertThat(gameResult.playerResult(teba)).isSameAs(PlayerResult.TIE);
+        assertThat(gameResult.playerResult(teba.getName())).isSameAs(PlayerResult.TIE);
     }
 }
