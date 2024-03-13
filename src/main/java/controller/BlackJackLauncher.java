@@ -70,8 +70,8 @@ public class BlackJackLauncher {
     }
 
     private void showFinalMatchResults(CasinoService casinoService) {
-        DealerScoreResult dealerScoreResult = casinoService.calculateDealerResult();
-        List<PlayerScoreResult> playerScoreResults = casinoService.calculatePlayerResults();
+        DealerScoreResult dealerScoreResult = casinoService.calculateDealerMatchResult();
+        List<PlayerScoreResult> playerScoreResults = casinoService.calculatePlayerMatchResults();
         OutputView.printScoreResults(dealerScoreResult, playerScoreResults);
     }
 }

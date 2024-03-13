@@ -71,7 +71,7 @@ public class CasinoService {
         return entrant.getNextAvailablePlayerName();
     }
 
-    public List<PlayerScoreResult> calculatePlayerResults() {
+    public List<PlayerScoreResult> calculatePlayerMatchResults() {
         int dealerHand = entrant.getDealerFaceUpResult()
                 .hand();
         return entrant.getPlayerFaceUpResults()
@@ -80,9 +80,9 @@ public class CasinoService {
                 .toList();
     }
 
-    public DealerScoreResult calculateDealerResult() {
+    public DealerScoreResult calculateDealerMatchResult() {
         EnumMap<MatchResult, Integer> dealerScoreBoard = new EnumMap<>(MatchResult.class);
-        List<MatchResult> playerScores = calculatePlayerResults()
+        List<MatchResult> playerScores = calculatePlayerMatchResults()
                 .stream()
                 .map(PlayerScoreResult::matchResult)
                 .toList();
