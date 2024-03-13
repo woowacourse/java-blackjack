@@ -5,7 +5,7 @@ import java.util.Objects;
 public final class Name {
     private final String value;
 
-    public Name(String value) {
+    public Name(final String value) {
         validateName(value);
         this.value = value;
     }

@@ -3,7 +3,7 @@ package blackjack.model.participants;
 import blackjack.model.blackjackgame.PlayerProfitCalculator;
 import blackjack.model.blackjackgame.Profit;
 
-public class Player extends Participant {
+public final class Player extends Participant {
     private final PlayerInfo playerInfo;
 
     public Player(PlayerInfo playerInfo) {
