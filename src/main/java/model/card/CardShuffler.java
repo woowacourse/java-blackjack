@@ -9,6 +9,8 @@ import java.util.Queue;
 
 public class CardShuffler {
 
+    private static final int MIN_DEQUE_COUNT = 1;
+
     private final Queue<Card> cards;
 
     public CardShuffler(Queue<Card> cards) {
@@ -16,9 +18,16 @@ public class CardShuffler {
     }
 
     public static CardShuffler of(int dequeCount) {
+        validateDequeCount(dequeCount);
         List<Card> cards = generateCards(dequeCount);
         Collections.shuffle(cards);
         return new CardShuffler(new ArrayDeque<>(cards));
+    }
+
+    private static void validateDequeCount(int dequeCount) {
+        if (dequeCount < MIN_DEQUE_COUNT) {
+            throw new IllegalArgumentException("1개 이상의 덱을 사용해야 합니다.");
+        }
     }
 
     private static List<Card> generateCards(int dequeCount) {
