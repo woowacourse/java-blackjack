@@ -42,10 +42,10 @@ class BettingCashierTest {
     void findProfitOf_Winner() {
         Player winner = players.get(0);
         Betting betting = new Betting();
-        betting.bet(winner, 10000);
+        betting.bet(winner, 10_000);
 
         BettingCashier cashier = new BettingCashier(betting, Result.of(players, dealer));
-        assertThat(cashier.findProfitOf(winner)).isEqualTo(10000);
+        assertThat(cashier.findProfitOf(winner)).isEqualTo(10_000);
     }
 
     @Test
@@ -57,10 +57,10 @@ class BettingCashierTest {
                 new Card(Rank.ACE, Symbol.CLUB)));
 
         Betting betting = new Betting();
-        betting.bet(blackjackWinner, 10000);
+        betting.bet(blackjackWinner, 10_000);
 
         BettingCashier cashier = new BettingCashier(betting, Result.of(List.of(blackjackWinner), new Dealer()));
-        assertThat(cashier.findProfitOf(blackjackWinner)).isEqualTo(15000);
+        assertThat(cashier.findProfitOf(blackjackWinner)).isEqualTo(15_000);
     }
 
     @Test
@@ -68,10 +68,10 @@ class BettingCashierTest {
     void findProfitOf_Loser() {
         Player loser = players.get(1);
         Betting betting = new Betting();
-        betting.bet(loser, 10000);
+        betting.bet(loser, 10_000);
 
         BettingCashier cashier = new BettingCashier(betting, Result.of(players, dealer));
-        assertThat(cashier.findProfitOf(loser)).isEqualTo(-10000);
+        assertThat(cashier.findProfitOf(loser)).isEqualTo(-10_000);
     }
 
     @Test
@@ -79,7 +79,7 @@ class BettingCashierTest {
     void findProfitOf_Tier() {
         Player tier = players.get(2);
         Betting betting = new Betting();
-        betting.bet(tier, 10000);
+        betting.bet(tier, 10_000);
 
         BettingCashier cashier = new BettingCashier(betting, Result.of(players, dealer));
         assertThat(cashier.findProfitOf(tier)).isEqualTo(0);
@@ -92,12 +92,12 @@ class BettingCashierTest {
         Player loser = players.get(1);
         Player tier = players.get(2);
         Betting betting = new Betting();
-        betting.bet(winner, 10000);
-        betting.bet(loser, 5000);
+        betting.bet(winner, 10_000);
+        betting.bet(loser, 5_000);
         betting.bet(tier, 100);
 
         BettingCashier cashier = new BettingCashier(betting, Result.of(players, dealer));
-        assertThat(cashier.findProfitOfDealer()).isEqualTo(-5000);
+        assertThat(cashier.findProfitOfDealer()).isEqualTo(-5_000);
     }
 
 }
