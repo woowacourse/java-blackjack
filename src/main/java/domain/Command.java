@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.Arrays;
-
 public enum Command {
     YES("y"), NO("n");
 
@@ -12,9 +10,12 @@ public enum Command {
     }
 
     public static Command get(String input) {
-        return Arrays.stream(values())
-                .filter(command -> command.command.equals(input))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("명령어는 y,n만 가능합니다."));
+        if (input.equals(YES.command)) {
+            return YES;
+        }
+        if (input.equals(NO.command)) {
+            return NO;
+        }
+        throw new IllegalArgumentException("명령어는 y,n만 가능합니다.");
     }
 }
