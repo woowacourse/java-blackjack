@@ -25,15 +25,15 @@ public class Player {
     }
 
     public void drawCard(final CardGenerator cardGenerator) {
-        cards.drawCard(cardGenerator);
+        cards.addCard(cardGenerator.pick());
     }
 
     public boolean canDrawCard() {
-        return cards.canDrawCardWithinScoreLimit(MAX_DRAWABLE_SCORE);
+        return cards.canAddCardWithinScoreLimit(MAX_DRAWABLE_SCORE);
     }
 
     public int calculateCardsTotalScore() {
-        return cards.calculateTotalScore();
+        return cards.calculateScore();
     }
 
     public boolean isBlackJack() {

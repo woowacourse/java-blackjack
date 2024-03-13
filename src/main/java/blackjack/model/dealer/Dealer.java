@@ -17,16 +17,16 @@ public class Dealer {
 
     public void drawCards(final CardGenerator cardGenerator) {
         while (canDrawCard()) {
-            cards.drawCard(cardGenerator);
+            cards.addCard(cardGenerator.pick());
         }
     }
 
     private boolean canDrawCard() {
-        return cards.canDrawCardWithinScoreLimit(MAX_DRAWABLE_SCORE);
+        return cards.canAddCardWithinScoreLimit(MAX_DRAWABLE_SCORE);
     }
 
     public int calculateCardsTotalScore() {
-        return cards.calculateTotalScore();
+        return cards.calculateScore();
     }
 
     public boolean isBust() {
