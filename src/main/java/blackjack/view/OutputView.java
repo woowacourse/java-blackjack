@@ -42,7 +42,7 @@ public class OutputView {
 
     public void printAllCardsWithScore(Dealer dealer, List<Player> players) {
         System.out.println();
-        buildCardsWithScoreMessage(DEALER_NAME, dealer.getCards(), dealer.calculateScore());
+        System.out.println(buildCardsWithScoreMessage(DEALER_NAME, dealer.getCards(), dealer.calculateScore()));
         for (Player player : players) {
             System.out.println(
                     buildCardsWithScoreMessage(player.getName(), player.getCards(), player.calculateScore()));
