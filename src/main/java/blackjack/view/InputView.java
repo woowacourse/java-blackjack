@@ -11,7 +11,6 @@ public class InputView {
     private static final String NEW_LINE = System.lineSeparator();
     private static final String SEPARATOR = ",";
 
-
     private InputView() {
     }
 
