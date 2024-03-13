@@ -26,13 +26,7 @@ public class Cards {
     public void drawCard(final CardGenerator cardGenerator) {
         cards.add(cardGenerator.pick());
     }
-
-    public void drawCardWithinScoreLimit(final CardGenerator cardGenerator, int maxDrawableScore) {
-        while (canDrawCardWithinScoreLimit(maxDrawableScore)) {
-            cards.add(cardGenerator.pick());
-        }
-    }
-
+    
     public boolean canDrawCardWithinScoreLimit(int maxDrawableScore) {
         return calculateTotalScore() <= maxDrawableScore;
     }
