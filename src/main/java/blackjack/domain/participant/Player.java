@@ -20,12 +20,12 @@ public class Player extends Participant {
         return false;
     }
 
+    public int getBetMoney() {
+        return betMoney.getBetMoney();
+    }
+
     @Override
     public boolean canDraw() {
         return !isBust();
-    }
-
-    public int getBetMoney() {
-        return betMoney.getBetMoney();
     }
 }
