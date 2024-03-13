@@ -56,12 +56,12 @@ public class Players {
         }
     }
 
-    public boolean isDealerDraw(Deck deck) {
-        if (dealer.isDrawable()) {
-            dealer.add(deck.draw());
-            return true;
-        }
-        return false;
+    public boolean isDealerDrawable() {
+        return dealer.isDrawable();
+    }
+
+    public void drawDealerCard(Deck deck) {
+        dealer.add(deck.draw());
     }
 
     public List<Player> getPlayers() {

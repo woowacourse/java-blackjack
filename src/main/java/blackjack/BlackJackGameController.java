@@ -35,7 +35,8 @@ public class BlackJackGameController {
     //TODO 아래 두 로직을 합칠 수 있을지 고민해보기 (요구사항)
     private void drawAdditionalCard(BlackJackGame game) {
         game.drawAdditionalCard(this::playTurn);
-        while (game.isDealerDraw()) {
+        while(game.isDealerDrawable()) {
+            game.drawDealerCard();
             outputView.printDealerDraw();
         }
     }

@@ -24,8 +24,12 @@ public class BlackJackGame {
         players.play(playTurn, deck);
     }
 
-    public boolean isDealerDraw() {
-        return players.isDealerDraw(deck);
+    public boolean isDealerDrawable() {
+        return players.isDealerDrawable();
+    }
+
+    public void drawDealerCard() {
+        players.drawDealerCard(deck);
     }
 
     public Players getPlayers() {
