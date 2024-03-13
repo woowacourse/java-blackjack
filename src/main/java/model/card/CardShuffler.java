@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 
 public class CardShuffler {
@@ -27,6 +28,13 @@ public class CardShuffler {
             dequeCount--;
         }
         return cards;
+    }
+
+    public Card drawCard() {
+        if (cards.isEmpty()) {
+            throw new NoSuchElementException("더 이상 뽑을 카드가 없습니다.");
+        }
+        return cards.poll();
     }
 
     public int cardsSize() {
