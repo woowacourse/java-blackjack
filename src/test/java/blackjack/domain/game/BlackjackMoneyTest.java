@@ -24,7 +24,7 @@ class BlackjackMoneyTest {
     @DisplayName("성공: 값이 1.5배인 BlackjackMoney 생성")
     void applyBlackjackMultiple(int amount) {
         BlackjackMoney money = new BlackjackMoney(amount);
-        BlackjackMoney blackjackMoney = money.applyBlackjackMultiple();
+        BlackjackMoney blackjackMoney = money.applyMultiple(PlayerState.BLACKJACK.getMultiple());
 
         assertThat(blackjackMoney.getAmount()).isEqualTo((int) (amount * 1.5));
     }
