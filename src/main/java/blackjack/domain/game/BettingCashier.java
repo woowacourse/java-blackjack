@@ -4,7 +4,8 @@ import blackjack.domain.participant.Player;
 
 public class BettingCashier {
 
-    public static final double BLACKJACK_MULTIPLE = 1.5;
+    private static final double BLACKJACK_MULTIPLE = 1.5;
+
     private final Betting betting;
     private final Result result;
 
