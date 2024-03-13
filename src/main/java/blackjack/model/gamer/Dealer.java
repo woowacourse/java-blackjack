@@ -1,19 +1,28 @@
 package blackjack.model.gamer;
 
-import blackjack.model.GameRule;
+import blackjack.model.wallet.DealerBetWallet;
 
 public class Dealer extends Gamer {
 
-    private Dealer() {
+    private final DealerBetWallet dealerBetWallet;
+
+    private Dealer(int playersBetAmount) {
+        this.dealerBetWallet = DealerBetWallet.from(playersBetAmount);
     }
 
-    public static Dealer create() {
-        return new Dealer();
+    public static Dealer from(int playersBetAmount) {
+        return new Dealer(playersBetAmount);
     }
 
-    @Override
-    public boolean canHit() {
-        int totalScore = handDeck.score();
-        return GameRule.dealerHitRule(totalScore);
+    public void payPlayerProfit(Player player) {
+        dealerBetWallet.registerPayoutAmount(player);
+    }
+
+    public int payoutAmount() {
+        return dealerBetWallet.getPayoutAmount();
+    }
+
+    public int netProfit() {
+        return dealerBetWallet.calculateNetProfit();
     }
 }
