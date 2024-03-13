@@ -2,29 +2,36 @@ package blackjack.domain.card;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import static blackjack.domain.card.Kind.DIAMOND;
-import static blackjack.domain.card.Kind.SPADE;
+import java.util.stream.Stream;
+
+import static blackjack.domain.card.Kind.*;
 import static blackjack.domain.card.Value.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class CardTest {
 
-    // TODO dummy를 여러개 만들어 동일한 테스트 진행해보기
+    private static Stream<Arguments> makeDummyCards() {
+        return Stream.of(
+                arguments(new Card(SPADE, ACE), SPADE, ACE),
+                arguments(new Card(DIAMOND, TEN), DIAMOND, TEN),
+                arguments(new Card(HEART, JACK), HEART, JACK)
+        );
+    }
 
     @DisplayName("카드의 문양과 값을 가진 카드가 생성된다")
-    @Test
-    void should_CreateCard_When_GiveCardKindAndValue() {
-        Card testCard1 = new Card(SPADE, ACE);
-        Card testCard2 = new Card(DIAMOND, ACE);
-
+    @ParameterizedTest
+    @MethodSource("makeDummyCards")
+    void should_CreateCard_When_GiveCardKindAndValue(Card testCard,
+                                                     Kind expectedKind, Value expectedValue) {
         assertAll(
-                () -> assertThat(testCard1.getKind()).isEqualTo(SPADE),
-                () -> assertThat(testCard1.getValue()).isEqualTo(ACE),
-
-                () -> assertThat(testCard2.getKind()).isEqualTo(DIAMOND),
-                () -> assertThat(testCard2.getValue()).isEqualTo(ACE)
+                () -> assertThat(testCard.getKind()).isEqualTo(expectedKind),
+                () -> assertThat(testCard.getValue()).isEqualTo(expectedValue)
         );
     }
 
