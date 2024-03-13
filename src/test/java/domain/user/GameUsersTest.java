@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.Deck;
 import domain.card.Card;
-import domain.game.PlayerResults;
+import domain.game.GameResult;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -28,8 +28,8 @@ class GameUsersTest {
                 new Card(CLUB, EIGHT)
         )));
 
-        PlayerResults playerResults = gameUsers.generatePlayerResults();
+        Map<Player, GameResult> playerResults = gameUsers.generatePlayerResults();
 
-        assertThat(playerResults.getPlayerResults()).containsExactly(Map.entry(player1, WIN));
+        assertThat(playerResults).containsExactly(Map.entry(player1, WIN));
     }
 }
