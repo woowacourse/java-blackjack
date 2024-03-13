@@ -23,13 +23,16 @@ public class BlackjackGame {
         return !player.isBust() && !player.isBlackjack() && !player.isMaxScore();
     }
 
-    public void hitOrStand(Player player) {
+    public void hit(Player player) {
         player.draw(deck.pickCard());
     }
 
-    public void drawIfScoreUnderBound(Dealer dealer) {
-        if (dealer.isScoreUnderBound()) {
+    public int drawUntilOverBoundWithCount(Dealer dealer) {
+        int count = 0;
+        while (dealer.isScoreUnderBound()) {
             dealer.draw(deck.pickCard());
+            count++;
         }
+        return count;
     }
 }

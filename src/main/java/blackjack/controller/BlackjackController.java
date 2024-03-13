@@ -15,6 +15,7 @@ import blackjack.view.PlayerCommand;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
+import java.util.stream.IntStream;
 
 public class BlackjackController {
 
@@ -59,30 +60,30 @@ public class BlackjackController {
             PlayerCommand command = requestUntilValid(() ->
                     PlayerCommand.from(InputView.readPlayerCommand(player.getName())));
             if (command == PlayerCommand.HIT) {
-                blackjackGame.hitOrStand(player);
-                continue;
+                blackjackGame.hit(player);
+                printCardsWhenHit(player);
+                canHit = blackjackGame.isPlayerCanHit(player);
             }
-            canHit = blackjackGame.isPlayerCanHit(player);
-            printDealCards(player, command);
             if (command == PlayerCommand.STAND) {
+                printCardsWhenStand(player);
                 break;
             }
         }
     }
 
-    private void printDealCards(Player player, PlayerCommand command) {
-        if (command == PlayerCommand.STAND && player.getCards().size() == 2) {
-            OutputView.printDealCards(player.getName(), player.getCards());
-            return;
-        }
+    private void printCardsWhenHit(Player player) {
         OutputView.printDealCards(player.getName(), player.getCards());
     }
 
-    private void drawToDealer(Dealer dealer, BlackjackGame blackjackGame) {
-        while (dealer.isScoreUnderBound()) {
-            blackjackGame.drawIfScoreUnderBound(dealer);
-            OutputView.printDealerHitAnnounce();
+    private void printCardsWhenStand(Player player) {
+        if (player.getCards().size() == 2) {
+            OutputView.printDealCards(player.getName(), player.getCards());
         }
+    }
+
+    private void drawToDealer(Dealer dealer, BlackjackGame blackjackGame) {
+        int count = blackjackGame.drawUntilOverBoundWithCount(dealer);
+        IntStream.range(0, count).forEach(i -> OutputView.printDealerHitAnnounce());
     }
 
     private void printAllPlayersHandResult(Dealer dealer, Players players) {

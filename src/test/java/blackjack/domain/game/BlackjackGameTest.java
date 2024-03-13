@@ -66,7 +66,7 @@ public class BlackjackGameTest {
 
         // when
         player.draw(List.of(new Card(TEN, SPADE), new Card(ACE, DIAMOND), new Card(TEN, DIAMOND)));
-        blackjackGame.hitOrStand(player);
+        blackjackGame.hit(player);
 
         // then
         assertThat(blackjackGame.isPlayerCanHit(player)).isEqualTo(false);
@@ -81,7 +81,7 @@ public class BlackjackGameTest {
 
         // when
         player.draw(List.of(new Card(TEN, SPADE), new Card(TEN, DIAMOND)));
-        blackjackGame.hitOrStand(player);
+        blackjackGame.hit(player);
 
         // then
         assertThat(player.getCards().size()).isEqualTo(3);
@@ -103,7 +103,7 @@ public class BlackjackGameTest {
 
         // when
         dealer.draw(cards);
-        blackjackGame.drawIfScoreUnderBound(dealer);
+        blackjackGame.drawUntilOverBoundWithCount(dealer);
 
         // then
         assertThat(dealer.getCards().size()).isEqualTo(3);
