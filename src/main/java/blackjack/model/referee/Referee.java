@@ -22,6 +22,6 @@ public class Referee {
     }
 
     private PlayerMatchResult determinePlayerMatchResult(final Player player) {
-        return new PlayerMatchResult(player.getName(), MatchResult.determineMatchResult(dealer, player));
+        return new PlayerMatchResult(player.getName(), MatchResult.determine(dealer, player));
     }
 }

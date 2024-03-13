@@ -9,7 +9,7 @@ public enum MatchResult {
     LOSE,
     PUSH;
 
-    public static MatchResult determineMatchResult(final Dealer dealer, final Player player) {
+    public static MatchResult determine(final Dealer dealer, final Player player) {
         if (dealer.isBlackJack() && player.isBlackJack()) {
             return MatchResult.PUSH;
         }
@@ -19,10 +19,10 @@ public enum MatchResult {
         if (!dealer.isBlackJack() && player.isBlackJack()) {
             return MatchResult.BLACKJACK_WIN;
         }
-        return determineMatchResultByTotalScore(dealer, player);
+        return determineByTotalScore(dealer, player);
     }
 
-    private static MatchResult determineMatchResultByTotalScore(final Dealer dealer, final Player player) {
+    private static MatchResult determineByTotalScore(final Dealer dealer, final Player player) {
         int playerTotal = player.calculateCardsTotalScore();
         int dealerTotal = dealer.calculateCardsTotalScore();
         if (player.isBust()) {
