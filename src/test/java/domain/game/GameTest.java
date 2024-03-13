@@ -38,7 +38,7 @@ public class GameTest {
         Users users = new Users(List.of(player));
 
         Game game = new Game(totalDeck, users);
-        game.determineState(YES, users.makeIndex());
+        game.determineState(YES, player);
 
         assertThat(player.getUserDeck().getCards()).hasSize(3);
     }

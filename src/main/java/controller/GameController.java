@@ -7,7 +7,6 @@ import domain.UserDto;
 import domain.deck.TotalDeck;
 import domain.deck.TotalDeckGenerator;
 import domain.game.Game;
-import domain.game.Index;
 import domain.game.State;
 import domain.user.Player;
 import domain.user.User;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static domain.game.State.BUST;
-import static domain.game.State.HIT;
+import static domain.game.State.STAY;
 
 public class GameController {
 
@@ -28,24 +27,24 @@ public class GameController {
         Game game = new Game(new TotalDeck(TotalDeckGenerator.generate()), users);
         showStartStatus(users);
 
-        hitOrStay(game);
+        hitOrStay(game, users);
         showGameResult(users, game);
     }
 
     private void showStartStatus(Users users) {
-        List<UserDto> userDtos = new ArrayList<>();
+        List<UserDto> playerDtos = new ArrayList<>();
         List<Player> players = users.getPlayers();
         for (Player player : players) {
-            userDtos.add(UserDto.from(player));
+            playerDtos.add(UserDto.from(player));
         }
         DealerDto dealerDto = DealerDto.from(users.getDealer());
-        ResultView.showStartStatus(userDtos, dealerDto);
+        ResultView.showStartStatus(playerDtos, dealerDto);
     }
 
-    private void hitOrStay(Game game) {
-        Index index = game.giveIndexOfGame();
-        while (index.isEnd()) {
-            index = hitOrStayOnce(game, index);
+    private void hitOrStay(Game game, Users users) {
+        List<Player> players = users.getPlayers();
+        for (Player player : players) {
+            hitOrStayOnce(game, player);
         }
         while (game.isDealerCardAddCondition()) {
             game.addDealerCard();
@@ -53,26 +52,22 @@ public class GameController {
         }
     }
 
-    private Index hitOrStayOnce(Game game, final Index index) {
-        User user = game.getUserByIndex(index);
+    private void hitOrStayOnce(Game game, Player user) {
+        Command command = ExceptionHandler.handle(() -> InputView.inputAddCommand(user.getName().value()));
+        State state = game.determineState(command, user);
         UserDto userDto = UserDto.from(user);
-        Command command = ExceptionHandler.handle(
-                () -> InputView.inputAddCommand(userDto.name)
-        );
-        State state = game.determineState(command, index);
-        return getIndex(state, index, userDto);
+        if (state == BUST || state == STAY) {
+            showMidTermResult(state, userDto);
+            return;
+        }
+        ResultView.printPlayerAndDeck(userDto.name, userDto.cards);
+        hitOrStayOnce(game, user);
     }
 
-    private Index getIndex(State state, Index index, UserDto userDto) {
-        if (state == HIT) {
-            ResultView.printPlayerAndDeck(userDto.name, userDto.cards);
-            return index;
-        }
+    private void showMidTermResult(State state, UserDto userDto) {
         if (state == BUST) {
             ResultView.printBust(userDto.name, userDto.cards);
-            return index.next();
         }
-        return index.next();
     }
 
     private void showGameResult(Users users, Game game) {

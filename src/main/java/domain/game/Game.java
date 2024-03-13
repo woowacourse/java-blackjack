@@ -24,25 +24,16 @@ public class Game {
         users.setStartCards(totalDeck);
     }
 
-    public Index giveIndexOfGame() {
-        return users.makeIndex();
-    }
-
-    public User getUserByIndex(Index index) {
-        return users.getUserByIndex(index);
-    }
-
-    public State determineState(Command command, Index index) {
+    public State determineState(Command command, User user) {
         if (YES == command) {
-            users.addCardOfCurrentUser(totalDeck.getNewCard(), index);
-            return hitOrBust(index);
+            user.addCard(totalDeck.getNewCard());
+            return hitOrBust(user);
         }
         return STAY;
     }
 
-
-    private State hitOrBust(Index index) {
-        if (users.currentUserBusted(index)) {
+    private State hitOrBust(User user) {
+        if (user.isBust()) {
             return BUST;
         }
         return HIT;

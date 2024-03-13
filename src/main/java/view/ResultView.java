@@ -5,7 +5,6 @@ import domain.UserDto;
 import domain.card.Card;
 import domain.game.DealerResult;
 import domain.game.PlayerResults;
-import domain.user.Name;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +20,7 @@ public class ResultView {
     private static void printUserNames(List<UserDto> userDtos) {
         String names = userDtos
                 .stream()
-                .map(userDto -> userDto.name.value())
+                .map(userDto -> userDto.name)
                 .collect(Collectors.joining(", "));
         System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.%n", names);
     }
@@ -36,12 +35,12 @@ public class ResultView {
         );
     }
 
-    public static void printPlayerAndDeck(Name name, List<Card> userDeck) {
+    public static void printPlayerAndDeck(String name, List<Card> userDeck) {
         System.out.println(joinUserNameAndDeck(name, userDeck));
     }
 
-    private static String joinUserNameAndDeck(Name name, List<Card> userDeck) {
-        return name.value()
+    private static String joinUserNameAndDeck(String name, List<Card> userDeck) {
+        return name
                 + "카드: "
                 + joinDeck(userDeck);
     }
@@ -72,7 +71,7 @@ public class ResultView {
                         System.out.println(player.getName().value() + ": " + result.getResult())));
     }
 
-    public static void printBust(Name name, List<Card> userDeck) {
+    public static void printBust(String name, List<Card> userDeck) {
         printPlayerAndDeck(name, userDeck);
         System.out.println("버스트!");
     }
