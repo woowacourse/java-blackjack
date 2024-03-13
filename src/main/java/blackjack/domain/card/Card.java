@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 
 public class Card {
 
@@ -20,6 +21,18 @@ public class Card {
         return value.getMaxScore();
     }
 
+    public boolean isAce() {
+        return value.isAce();
+    }
+
+    public Value getValue() {
+        return value;
+    }
+
+    public Shape getShape() {
+        return shape;
+    }
+
     @Override
     public boolean equals(Object object) {
         if (this == object) {
@@ -37,15 +50,11 @@ public class Card {
         return Objects.hash(value, shape);
     }
 
-    public Value getValue() {
-        return value;
-    }
-
-    public Shape getShape() {
-        return shape;
-    }
-
-    public boolean isAce() {
-        return value.isAce();
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Card.class.getSimpleName() + "[", "]")
+                .add("value=" + value)
+                .add("shape=" + shape)
+                .toString();
     }
 }
