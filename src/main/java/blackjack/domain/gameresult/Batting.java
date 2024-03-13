@@ -16,6 +16,9 @@ public class Batting {
         validateBat(bat);
         return new Batting(bat);
     }
+    public static int maxBat(){
+        return MAX_BAT;
+    }
 
     private static void validateBat(Double bat) {
         if (bat < MIN_BAT || bat > MAX_BAT) {

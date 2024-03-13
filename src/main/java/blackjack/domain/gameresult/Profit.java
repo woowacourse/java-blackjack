@@ -2,11 +2,9 @@ package blackjack.domain.gameresult;
 
 import java.util.Objects;
 
-// TODO 배팅 값에 따른 손실 최대값 신경써주기
-// TODO 의존 값 주입으로 batting 최대값과 일원화 생각하기
 public class Profit {
-    private static final int MIN_PROFIT = -10_000_000;
-    private static final int MAX_PROFIT = 10_000_000;
+    private static final double MIN_PROFIT_RATE = -1;
+    private static final double MAX_PROFIT_RATE = 1.5;
 
     private final double Profit;
 
@@ -20,9 +18,13 @@ public class Profit {
     }
 
     private static void validateProfit(double profit) {
-        if (profit < MIN_PROFIT || profit > MAX_PROFIT) {
-            throw new IllegalArgumentException("수익은 최소 " + MIN_PROFIT + "부터 "
-                    + MAX_PROFIT + "까지 가능합니다.");
+        double minProfit = MIN_PROFIT_RATE * Batting.maxBat();
+        double maxProfit = MAX_PROFIT_RATE * Batting.maxBat();
+
+        if (profit < minProfit || profit > maxProfit) {
+            throw new IllegalArgumentException(
+                    String.format("수익은 최소 %.0f부터 %.0f까지 가능합니다.", minProfit, maxProfit)
+            );
         }
     }
 
