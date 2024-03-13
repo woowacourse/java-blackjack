@@ -34,4 +34,18 @@ class DeckTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] 덱이 비어있습니다.");
     }
+
+    @Test
+    @DisplayName("원하는 모양의 카드 전체가 생성된다.")
+    void createNumberCardsOfShapeTest() {
+        assertThat(Deck.createNumberCardsOf(Shape.CLOVER).size()).isEqualTo(13);
+    }
+
+    @Test
+    @DisplayName("카드 전체가 생성된다.")
+    void createFullDeckTest() {
+        Deck deck = Deck.createShuffledFullDeck();
+
+        assertThat(deck.size()).isEqualTo(52);
+    }
 }

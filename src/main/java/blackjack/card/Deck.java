@@ -23,7 +23,7 @@ public class Deck {
         return new Deck(cards);
     }
 
-    private static List<Card> createNumberCardsOf(Shape shape) {
+    static List<Card> createNumberCardsOf(Shape shape) {
         List<Card> cards = new ArrayList<>();
         for (Rank rank : Rank.values()) {
             cards.add(new Card(shape, rank));
@@ -36,5 +36,9 @@ public class Deck {
             throw new IllegalStateException("[ERROR] 덱이 비어있습니다.");
         }
         return cards.poll();
+    }
+
+    int size() {
+        return cards.size();
     }
 }
