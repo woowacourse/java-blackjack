@@ -38,7 +38,14 @@ public class Players {
     }
 
     private boolean isDuplicated(List<Player> players) {
-        return players.size() != players.stream().distinct().count();
+        return players.stream()
+                .anyMatch(player1 -> isDuplicated(players, player1));
+    }
+
+    private boolean isDuplicated(List<Player> players, Player player) {
+        return players.stream()
+                .filter(another -> player != another)
+                .anyMatch(another -> player.isEqualName(another));
     }
 
     public void drawStartCards(Deck deck) {

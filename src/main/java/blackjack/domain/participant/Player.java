@@ -8,6 +8,7 @@ import java.util.Objects;
 public class Player extends Participant {
 
     private static final int START_CARD_SIZE = 2;
+
     private final Name name;
 
     Player(List<Card> cards, Name name) {
@@ -23,6 +24,10 @@ public class Player extends Participant {
         return !dealer.isWin(this);
     }
 
+    public boolean isEqualName(Player player) {
+        return name.equals(player.name);
+    }
+
     @Override
     protected int getMaxDrawableScore() {
         return BLACKJACK_SCORE;
@@ -35,22 +40,5 @@ public class Player extends Participant {
 
     public String getName() {
         return name.getName();
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (object == null || getClass() != object.getClass()) {
-            return false;
-        }
-        Player player = (Player) object;
-        return Objects.equals(name, player.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
     }
 }
