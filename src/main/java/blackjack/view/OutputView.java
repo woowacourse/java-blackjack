@@ -7,6 +7,7 @@ import blackjack.model.cards.Cards;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Participant;
 import blackjack.model.participants.Player;
+import blackjack.model.participants.Players;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
@@ -17,18 +18,18 @@ public class OutputView {
     private static final String MULTIPLE_OUTPUTS_DELIMITER = ", ";
     private static final DecimalFormat DOUBLE_FORMAT = new DecimalFormat("#,###.#");
 
-    public void printDistributedCardsInfo(final List<Player> players, final Dealer dealer) {
+    public void printDistributedCardsInfo(final Players players, final Dealer dealer) {
+        List<Player> allPlayers = players.getPlayers();
         System.out.println();
-        System.out.printf(DEALER_NAME + "와 %s에게 2장을 나누었습니다.%n", getPlayersNames(players));
+        System.out.printf(DEALER_NAME + "와 %s에게 2장을 나누었습니다.%n", getPlayersNames(allPlayers));
 
         System.out.print(getDealerCardFormat(getDealerCard(dealer)));
-        players.forEach(player ->
-                System.out.print(getParticipantCardsFormat(player.getName(), player.getCards())));
+        allPlayers.forEach(player -> System.out.print(getParticipantCardsFormat(player.getName(), player.getCards())));
         System.out.println();
     }
 
-    public void printPlayerCardsInfo(final List<Player> players, final int index) {
-        Player player = players.get(index);
+    public void printPlayerCardsInfo(final Players players, final int index) {
+        Player player = players.getPlayer(index);
         System.out.print(getParticipantCardsFormat(player.getName(), player.getCards()));
     }
 
@@ -37,22 +38,24 @@ public class OutputView {
         System.out.println(DEALER_NAME + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printFinalScore(final List<Player> players, final Dealer dealer) {
+    public void printFinalScore(final Players players, final Dealer dealer) {
         System.out.println();
         System.out.print(getParticipantScoreFormat(DEALER_NAME, dealer.getCards(), getValue(dealer)));
-        players.forEach(player -> System.out.printf(
-                getParticipantScoreFormat(player.getName(), player.getCards(),
-                        getValue(player))));
+        List<Player> allPlayers = players.getPlayers();
+        allPlayers.forEach(player -> System.out.printf(
+                getParticipantScoreFormat(player.getName(), player.getCards(), getValue(player)))
+        );
     }
 
     private int getValue(final Participant participant) {
         return participant.getCards().getCardsScore().getValue();
     }
 
-    public void printGameResults(final PlayersResults playersResults) {
+    public void printGameResults(final Players players) {
         System.out.println();
         System.out.println("### 최종 수익");
 
+        PlayersResults playersResults = players.getPlayersResults();
         System.out.printf("%s: %s%n", DEALER_NAME, convertFormat(playersResults.getDealerProfit()));
         printPlayerResultsFormat(playersResults.getResults());
     }

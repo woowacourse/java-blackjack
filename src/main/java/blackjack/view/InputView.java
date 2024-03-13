@@ -2,10 +2,11 @@ package blackjack.view;
 
 import blackjack.model.participants.Betting;
 import blackjack.model.participants.Player;
+import blackjack.model.participants.Players;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class InputView {
     private static final String MESSAGE_HEADER = "[ERROR] ";
@@ -13,17 +14,17 @@ public class InputView {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public List<Player> readPlayers() {
+    public Players readPlayers() {
         return repeatUntilSuccess(this::getPlayers);
     }
 
-    private List<Player> getPlayers() {
+    private Players getPlayers() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = scanner.nextLine();
         validateMultipleInputs(input);
         return Arrays.stream(input.split(INPUT_DELIMITER))
                 .map(name -> new Player(name, readMoney(name)))
-                .toList();
+                .collect(Collectors.collectingAndThen(Collectors.toList(), Players::new));
     }
 
     private Betting readMoney(final String name) {

@@ -2,14 +2,14 @@ package blackjack.model.blackjackgame;
 
 import blackjack.model.participants.Player;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class PlayersResults {
-    private final Map<Player, Profit> results;
+    private final Map<Player, Profit> results = new LinkedHashMap<>();
 
-    public PlayersResults(final Map<Player, Profit> results) {
-        this.results = new HashMap<>(results);
+    public void add(final Player player, final Profit profit) {
+        results.put(player, profit);
     }
 
     public Profit getDealerProfit() {
