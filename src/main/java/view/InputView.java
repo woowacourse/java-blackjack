@@ -4,7 +4,6 @@ import domain.money.Money;
 import domain.user.Name;
 import domain.user.Player;
 import domain.user.Players;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -35,8 +34,8 @@ public class InputView {
 
     private static int inputInteger() {
         try {
-            return SCANNER.nextInt();
-        } catch (InputMismatchException e) {
+            return Integer.parseInt(SCANNER.nextLine());
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException("입력은 정수여야 합니다.");
         }
     }
