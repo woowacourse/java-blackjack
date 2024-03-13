@@ -2,6 +2,7 @@ package view;
 
 import domain.blackjack.BettingResult;
 import domain.card.Card;
+import domain.dto.ParticipantDto;
 import domain.participant.*;
 
 import java.util.List;
@@ -14,22 +15,20 @@ public class OutputView {
 
     }
 
-    public static void printBeginDealingInformation(Players players) {
+    public static void printBeginDealingInformation(List<Name> playerNames) {
         System.out.println();
-        System.out.printf(outputFormat.formatParticipantNames(players));
+        System.out.printf(outputFormat.formatParticipantNames(playerNames));
         System.out.println();
         System.out.println();
     }
 
-    public static void printDealerHands(Dealer dealer) {
-        Name name = dealer.getName();
-        List<Card> cards = dealer.getCards();
+    public static void printDealerHands(Name name, List<Card> cards) {
         System.out.printf("%s카드: %s", name.getValue(), outputFormat.formatCard(cards.get(0)));
         System.out.println();
     }
 
-    public static void printParticipantHands(Participant participant) {
-        System.out.printf(outputFormat.formatHands(participant));
+    public static void printParticipantHands(ParticipantDto participantDto) {
+        System.out.printf(outputFormat.formatHands(participantDto));
         System.out.println();
     }
 
@@ -41,8 +40,8 @@ public class OutputView {
         }
     }
 
-    public static void printParticipantResult(Participant participant) {
-        System.out.printf(outputFormat.formatParticipantResult(participant));
+    public static void printParticipantResult(ParticipantDto participantDto) {
+        System.out.printf(outputFormat.formatParticipantResult(participantDto));
         System.out.println();
     }
 

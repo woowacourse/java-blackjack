@@ -41,10 +41,10 @@ public class BlackJackController {
     }
 
     private void beginBlackJack(Players players, Dealer dealer) {
-        OutputView.printBeginDealingInformation(players);
-        OutputView.printDealerHands(dealer);
+        OutputView.printBeginDealingInformation(players.getNames());
+        OutputView.printDealerHands(dealer.getName(), dealer.getCards());
         for (Player player : players.getValue()) {
-            OutputView.printParticipantHands(player);
+            OutputView.printParticipantHands(player.getDto());
         }
     }
 
@@ -57,9 +57,9 @@ public class BlackJackController {
     }
 
     private void printScore(Players players, Dealer dealer) {
-        OutputView.printParticipantResult(dealer);
+        OutputView.printParticipantResult(dealer.getDto());
         for (Player player : players.getValue()) {
-            OutputView.printParticipantResult(player);
+            OutputView.printParticipantResult(player.getDto());
         }
     }
 

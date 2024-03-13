@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Hands;
+import domain.dto.ParticipantDto;
 
 import java.util.Collections;
 import java.util.List;
@@ -47,5 +48,9 @@ public abstract class Participant {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(hands.getValue());
+    }
+
+    public ParticipantDto getDto() {
+        return new ParticipantDto(name, getCards(), getScore());
     }
 }

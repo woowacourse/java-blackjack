@@ -1,5 +1,6 @@
 package domain.blackjack;
 
+import domain.dto.ParticipantDto;
 import domain.participant.*;
 
 import java.util.function.BiConsumer;
@@ -21,7 +22,7 @@ public class BlackJack {
         beginBlackJack.accept(players, dealer);
     }
 
-    public void play(Function<Name, HitOption> isHitOption, Consumer<Player> printPlayerHands) {
+    public void play(Function<Name, HitOption> isHitOption, Consumer<ParticipantDto> printPlayerHands) {
         players.playersHit(isHitOption, printPlayerHands, dealer);
     }
 
