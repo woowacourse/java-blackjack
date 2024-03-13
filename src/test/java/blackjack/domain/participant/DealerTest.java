@@ -1,12 +1,16 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Deck;
+import blackjack.domain.Players;
 import blackjack.domain.card.TrumpCard;
 import blackjack.domain.stategy.NoShuffleStrategy;
+import blackjack.dto.BlackjackResult;
 import blackjack.strategy.ShuffleStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static blackjack.fixture.TrumpCardFixture.aceSpadeTrumpCard;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -56,5 +60,18 @@ public class DealerTest {
     void showFirstCard() {
         //when & then
         assertThat(dealer.showFirstCard()).isEqualTo(trumpCardAceSpade);
+    }
+
+    @DisplayName("딜러는 자신의 수익률을 계산한다.")
+    @Test
+    void calculateProfit() {
+        //given
+        Players players = Players.of(List.of("choco", "clover"), List.of("500000", "100000"), dealer);
+        players.getPlayers().get(1).draw(dealer);
+
+        BlackjackResult blackjackResult = players.createResult(dealer);
+
+        //when & then
+        assertThat(dealer.calculateProfit(blackjackResult, players)).isEqualTo(400000);
     }
 }

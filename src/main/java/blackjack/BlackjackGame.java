@@ -35,7 +35,7 @@ public class BlackjackGame {
         extraCardRequest(dealer, players);
 
         BlackjackResult blackjackResult = players.createResult(dealer);
-        outputView.printFianlProfit(players.calculateProfits(blackjackResult));
+        outputView.printFinalProfit(dealer.calculateProfit(blackjackResult, players), players.calculateProfits(blackjackResult));
     }
 
     private List<String> readPlayersBatting(final List<String> names) {

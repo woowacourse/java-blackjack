@@ -65,4 +65,10 @@ public class Players {
 
         return profitResult;
     }
+
+    public int sumProfits(final BlackjackResult blackjackResult) {
+        return calculateProfits(blackjackResult).values().stream()
+                .mapToInt(i -> i)
+                .sum();
+    }
 }
