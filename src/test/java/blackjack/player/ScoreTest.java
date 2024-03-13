@@ -39,4 +39,26 @@ public class ScoreTest {
                 () -> assertThat(notBustScore.isNotBust()).isTrue()
         );
     }
+
+    @Test
+    @DisplayName("점수의 대소비교가 가능하다.")
+    void isLargerThanTest() {
+        Score score = new Score(15);
+
+        assertAll(
+                () -> assertThat(score.isLargerThan(new Score(14))).isTrue(),
+                () -> assertThat(score.isLargerThan(new Score(16))).isFalse()
+        );
+    }
+
+    @Test
+    @DisplayName("점수의 대소비교가 가능하다.")
+    void isSmallerThanEqualTest() {
+        Score score = new Score(15);
+
+        assertAll(
+                () -> assertThat(score.isSmallerOrEqual(new Score(14))).isFalse(),
+                () -> assertThat(score.isSmallerOrEqual(new Score(16))).isTrue()
+        );
+    }
 }

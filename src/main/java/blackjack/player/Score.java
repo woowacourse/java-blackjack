@@ -25,4 +25,12 @@ public class Score {
     public boolean isNotBust() {
         return !isBust();
     }
+
+    public boolean isLargerThan(Score other) {
+        return this.score > other.score;
+    }
+
+    public boolean isSmallerOrEqual(Score other) {
+        return !isLargerThan(other);
+    }
 }
