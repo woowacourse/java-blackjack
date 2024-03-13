@@ -8,7 +8,7 @@ import java.util.Map;
 public class Betting {
     private static final Betting instance = new Betting();
 
-    private final Map<PlayerName, Amount> betting = new HashMap<>();
+    private final Map<PlayerName, BettingAmount> betting = new HashMap<>();
 
     private Betting() {}
 
@@ -16,11 +16,11 @@ public class Betting {
         return instance;
     }
 
-    public void setBetting(final PlayerName playerName, final Amount amount) {
-        betting.put(playerName, amount);
+    public void setBetting(final PlayerName playerName, final BettingAmount bettingAmount) {
+        betting.put(playerName, bettingAmount);
     }
 
-    public Amount getBetting(final PlayerName playerName) {
+    public BettingAmount getBetting(final PlayerName playerName) {
         return betting.get(playerName);
     }
 }

@@ -1,11 +1,11 @@
 package domain;
 
-public class Amount {
+public class BettingAmount {
     static final int MAX_AMOUNT = 100_000_000;
 
     private final int amount;
 
-    public Amount(final String value) {
+    public BettingAmount(final String value) {
         int parsedValue = validateParse(value);
         validateAmount(parsedValue);
         this.amount = parsedValue;

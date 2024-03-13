@@ -13,10 +13,10 @@ public class BettingTest {
         // Given
         Betting betting = Betting.getInstance();
         PlayerName test = new PlayerName("test");
-        betting.setBetting(test, new Amount("15000"));
+        betting.setBetting(test, new BettingAmount("15000"));
 
         // When
-        Amount bettingAmount = betting.getBetting(test);
+        BettingAmount bettingAmount = betting.getBetting(test);
         int amount = bettingAmount.getAmount();
 
         // Then

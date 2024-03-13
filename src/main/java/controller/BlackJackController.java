@@ -63,14 +63,14 @@ public class BlackJackController {
     }
 
     private void initBettingForPlayer(final Betting betting, final Player player) {
-        Amount amount = initAmount(player);
-        betting.setBetting(player.getPlayerName(), amount);
+        BettingAmount bettingAmount = initAmount(player);
+        betting.setBetting(player.getPlayerName(), bettingAmount);
     }
 
-    private Amount initAmount(final Player player) {
+    private BettingAmount initAmount(final Player player) {
         try {
             String inputAmount = InputView.inputAmount(player.getPlayerName().value());
-            return new Amount(inputAmount);
+            return new BettingAmount(inputAmount);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return initAmount(player);
