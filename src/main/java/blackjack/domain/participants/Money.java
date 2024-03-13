@@ -24,8 +24,8 @@ public class Money {
         return new Money(this.value - otherMoney.value);
     }
 
-    public Money multiply(int number) {
-        return new Money(this.value * number);
+    public Money multiply(float number) {
+        return new Money(Math.round(this.value * number));
     }
 
     public int getValue() {
