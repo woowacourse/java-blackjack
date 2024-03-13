@@ -80,7 +80,7 @@ class DealerTest {
             return Stream.of(
                     Arguments.of(Cards.from(List.of(cardOf(FIVE), cardOf(FIVE), cardOf(ACE))), 21),
                     Arguments.of(Cards.from(List.of(cardOf(FIVE), cardOf(SIX), cardOf(ACE))), 12),
-                    Arguments.of(Cards.from(List.of(cardOf(ACE), cardOf(SIX), cardOf(ACE))), 17)
+                    Arguments.of(Cards.from(List.of(cardOf(ACE), cardOf(SIX), cardOf(ACE))), 18)
             );
         }
 
