@@ -4,7 +4,6 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.HandGenerator;
 import blackjack.domain.result.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Participants {
