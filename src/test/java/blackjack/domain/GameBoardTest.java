@@ -7,10 +7,7 @@ import blackjack.domain.card.Deck;
 import java.util.List;
 import java.util.Map;
 import blackjack.domain.card.TestDeckFactory;
-import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamers;
-import blackjack.domain.gamer.Player;
-import blackjack.domain.gamer.Players;
+import blackjack.domain.gamer.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,41 +20,42 @@ class GameBoardTest {
      * ...
      * KING - HEART, SPADE, CLOVER, DIAMOND
      */
-//    @DisplayName("딜러의 최종 승패를 알려준다.")
-//    @Test
-//    void informDealerOutcome() {
-//        final Deck deck = new Deck(new TestDeckFactory());
-//        final Players players = Players.from(List.of("pobi"));
-//        final Dealer dealer = new Dealer();
-//        final Gamers gamers = new Gamers(dealer, players);
-//        final Referee referee = new Referee(dealer.getHand());
-//        final GameBoard gameBoard = new GameBoard(deck, gamers);
-//        gameBoard.drawInitialCards();
-//
-//        final List<Outcome> dealerOutcome = gameBoard.getDealerOutcome(referee);
-//
-//        assertThat(dealerOutcome).containsExactly(Outcome.PUSH);
-//    }
+    @DisplayName("플레이어의 최종 수익을 반환한다.")
+    @Test
+    void returnPlayersProfit() {
+        final Deck deck = new Deck(new TestDeckFactory());
+        final Players players = new Players(List.of(
+                Player.of("pobi", 10000),
+                Player.of("jason", 20000))
+        );
+        final Dealer dealer = new Dealer();
+        final Gamers gamers = new Gamers(dealer, players);
+        GameBoard gameBoard = new GameBoard(deck, gamers);
+        gameBoard.drawInitialCards();
 
-//    @DisplayName("모든 플레이어의 최종 승패를 알려준다.")
-//    @Test
-//    void informPlayersOutcome() {
-//        final Deck deck = new Deck(new TestDeckFactory());
-//        final Players players = Players.from(List.of("pobi"));
-//        final Dealer dealer = new Dealer();
-//        final Gamers gamers = new Gamers(dealer, players);
-//        final Referee referee = new Referee(dealer.getHand());
-//        final GameBoard gameBoard = new GameBoard(deck, gamers);
-//        gameBoard.drawInitialCards();
-//
-//        final Map<Player, Outcome> playerOutcomeMap = gameBoard.getPlayersOutcome(referee);
-//
-//        final Player firstPlayer = gameBoard.getPlayers().get(0);
-//        final Outcome outcome = playerOutcomeMap.get(firstPlayer);
-//
-//        assertAll(
-//                () -> assertThat(playerOutcomeMap.size()).isEqualTo(players.getPlayers().size()),
-//                () -> assertThat(outcome).isEqualTo(Outcome.PUSH)
-//        );
-//    }
+        Map<Name, BetAmount> playersProfit = gameBoard.getPlayersProfit();
+
+        assertAll(
+                () -> assertThat(playersProfit.get(new Name("pobi"))).isEqualTo(new BetAmount(0)),
+                () -> assertThat(playersProfit.get(new Name("jason"))).isEqualTo(new BetAmount(-20000))
+        );
+    }
+
+    @DisplayName("딜러의 최종 수익을 반환한다.")
+    @Test
+    void returnDealerProfits() {
+        final Deck deck = new Deck(new TestDeckFactory());
+        final Players players = new Players(List.of(
+                Player.of("pobi", 10000),
+                Player.of("jason", 20000))
+        );
+        final Dealer dealer = new Dealer();
+        final Gamers gamers = new Gamers(dealer, players);
+        GameBoard gameBoard = new GameBoard(deck, gamers);
+        gameBoard.drawInitialCards();
+
+        double dealerProfit = gameBoard.getDealerProfit();
+
+        assertThat(dealerProfit).isEqualTo(20000);
+    }
 }

@@ -24,4 +24,8 @@ public class Player extends Gamer {
     public Name getName() {
         return name;
     }
+
+    public BetAmount getBetAmount() {
+        return betAmount;
+    }
 }

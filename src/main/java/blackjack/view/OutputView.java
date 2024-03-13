@@ -1,15 +1,14 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.dto.DealerOutcomeDto;
+import blackjack.domain.gamer.BetAmount;
+import blackjack.domain.gamer.Name;
 import blackjack.dto.DealerDto;
-import blackjack.dto.PlayerOutcomeDto;
 import blackjack.dto.PlayerDto;
-import blackjack.dto.PlayersOutcomeDto;
 import blackjack.dto.PlayersDto;
-import blackjack.view.mapper.OutcomeMapper;
 import blackjack.view.mapper.SuitMapper;
 import java.util.List;
+import java.util.Map;
 import java.util.StringJoiner;
 
 public class OutputView {
@@ -62,30 +61,11 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printFinalOutcomes(
-            final DealerOutcomeDto dealerDealerOutcomeResponseDto,
-            final PlayersOutcomeDto playersOutcomeResponseDto
-    ) {
-        System.out.println("## 최종 승패");
-        printDealerFinalOutcome(dealerDealerOutcomeResponseDto);
-        printPlayersFinalOutcome(playersOutcomeResponseDto);
-    }
-
-    private static void printDealerFinalOutcome(final DealerOutcomeDto dealerDealerOutcomeResponseDto) {
-        System.out.print(
-                DEALER + ": " + dealerDealerOutcomeResponseDto.getWinCount() + "승 "
-                        + dealerDealerOutcomeResponseDto.getLoseCount() + "패 ");
-        if (dealerDealerOutcomeResponseDto.getPushCount() > 0) {
-            System.out.print(dealerDealerOutcomeResponseDto.getPushCount() + "무");
-        }
-        System.out.println();
-    }
-
-    private static void printPlayersFinalOutcome(final PlayersOutcomeDto playersOutcomeResponseDto) {
-        for (PlayerOutcomeDto playerOutcomeResponseDto : playersOutcomeResponseDto.getValues()) {
-            System.out.println(
-                playerOutcomeResponseDto.getName().value()
-                        + ": " + OutcomeMapper.mapToViewName(playerOutcomeResponseDto.getOutcome()));
+    public static void printTotalProfits(final double dealerProfit, final Map<Name, BetAmount> playersProfit) {
+        System.out.println(System.lineSeparator() + "## 최종 수익");
+        System.out.println(DEALER + ": " + (long) dealerProfit);
+        for (Name name : playersProfit.keySet()) {
+            System.out.println(name.value() + ": " + (long) playersProfit.get(name).value());
         }
     }
 }

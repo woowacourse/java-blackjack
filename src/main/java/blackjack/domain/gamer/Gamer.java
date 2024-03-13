@@ -25,6 +25,14 @@ public abstract class Gamer {
         hand.add(card);
     }
 
+    public boolean isBust() {
+        return hand.isBust();
+    }
+
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
+
     public int calculateScore() {
         return hand.sum();
     }

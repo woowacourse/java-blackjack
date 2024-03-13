@@ -1,14 +1,5 @@
 package blackjack.domain.gamer;
 
-public class BetAmount {
+public record BetAmount(double value) {
 
-    private final double value;
-
-    public BetAmount(final double value) {
-        this.value = value;
-    }
-
-    public double getValue() {
-        return value;
-    }
 }

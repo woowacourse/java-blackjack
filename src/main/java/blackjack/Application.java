@@ -1,17 +1,14 @@
 package blackjack;
 
 import blackjack.domain.GameBoard;
-import blackjack.domain.Referee;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckShuffleFactory;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamers;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.dto.DealerOutcomeDto;
 import blackjack.dto.DealerDto;
 import blackjack.dto.PlayerDto;
-import blackjack.dto.PlayersOutcomeDto;
 import blackjack.dto.PlayersDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -27,10 +24,7 @@ public class Application {
         OutputView.printFinalState(DealerDto.allCardToDto(gameBoard.getDealer()),
                 PlayersDto.toDto(gameBoard.getPlayers()));
 
-        final Referee referee = new Referee(gameBoard.getDealerHand());
-        final DealerOutcomeDto dealerOutcome = DealerOutcomeDto.toDto(gameBoard.getDealerOutcome(referee));
-        final PlayersOutcomeDto playersOutcome = PlayersOutcomeDto.toDto(gameBoard.getPlayersOutcome(referee));
-        OutputView.printFinalOutcomes(dealerOutcome, playersOutcome);
+        OutputView.printTotalProfits(gameBoard.getDealerProfit(), gameBoard.getPlayersProfit());
     }
 
     private static GameBoard createGameBoard() {
