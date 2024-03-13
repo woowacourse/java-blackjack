@@ -1,23 +1,20 @@
 package controller;
 
-import domain.BlackJackGame;
-import domain.HitOption;
+import domain.*;
 import domain.cards.Card;
 import domain.cards.CardsGenerator;
 import domain.cards.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.Players;
-import domain.judge.Judge;
 import view.InputView;
 import view.ResultView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackGameController {
-
-    private static final String INIT_HIT_OPTION = "y";
 
     private final InputView inputView;
     private final ResultView resultView;
@@ -29,14 +26,14 @@ public class BlackJackGameController {
 
     public void gameStart() {
         Players players = new Players(generatePlayers(inputView.readPlayersNames()));
+        Cashier cashier = new Cashier(generateCashier(players));
         Dealer dealer = new Dealer();
         Deck deck = new Deck(CardsGenerator.generateRandomCards());
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
 
         configureSetup(blackJackGame, players, dealer, deck);
         progressGame(blackJackGame, players, dealer, deck);
-
-        makeFinalResult(players, dealer);
+        makeFinalResult(blackJackGame, dealer, cashier);
     }
 
     private List<Player> generatePlayers(List<String> playersNames) {
@@ -45,6 +42,15 @@ public class BlackJackGameController {
             players.add(new Player(playerName));
         }
         return players;
+    }
+
+    private List<PlayerBet> generateCashier(Players players) {
+        List<PlayerBet> playerBets = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            BetAmount betAmount = new BetAmount(inputView.readPlayerBet(player));
+            playerBets.add(new PlayerBet(player, betAmount));
+        }
+        return playerBets;
     }
 
     private void configureSetup(BlackJackGame blackJackGame, Players players, Dealer dealer, Deck deck) {
@@ -65,8 +71,8 @@ public class BlackJackGameController {
     }
 
     private void progressPlayerGame(BlackJackGame blackJackGame, Deck deck, Player player) {
-        HitOption hitOption = new HitOption(INIT_HIT_OPTION);
-        while (blackJackGame.canPlayerMoreHit(player) && hitOption.doHit()) {
+        HitOption hitOption = new HitOption();
+        while (blackJackGame.canPlayerMoreHit(player, hitOption)) {
             hitOption = new HitOption(inputView.readHitOrNot(player));
             doHitByOption(blackJackGame, deck, player, hitOption);
         }
@@ -86,9 +92,8 @@ public class BlackJackGameController {
         }
     }
 
-    private void makeFinalResult(Players players, Dealer dealer) {
-        Judge judge = new Judge();
-        judge.decideResult(players, dealer);
-        resultView.printFinalResults(dealer, judge);
+    private void makeFinalResult(BlackJackGame blackJackGame, Dealer dealer, Cashier cashier) {
+        Map<Player, BetAmount> result = blackJackGame.makeResultOfGame(cashier);
+        resultView.printFinalProfit(result, dealer);
     }
 }
