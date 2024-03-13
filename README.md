@@ -6,7 +6,7 @@
 
 ## 📝 기능 요구 사항
 
-### 플레이어
+### 😎 플레이어
 
 - [x] 플레이어는 여러명일 수 있다.
 - [x] 플레이어 이름은 공백일 수 없다.
@@ -14,14 +14,14 @@
 - [x] 플레이어 수는 최소 1명 이상이다.
 - [x] 플레이어 이름은 중복되어선 안된다.
 
-### 카드
+### 🃏 카드
 
 - [x] 숫자 계산은 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K, A로 구성된다.
 - [x] 문양은 스페이드, 다이아몬드, 하트, 클로버로 구성된다.
 - [x] A는 1 또는 11로 계산한다.
 - [x] J, Q, K는 각각 10으로 계산한다.
 
-### 게임
+### 🎲 게임
 
 - [x] 게임 시작 시 인원 당 받는 덱의 수는 2장이다.
 - [x] 덱은 랜덤으로 생성된다.
@@ -41,13 +41,13 @@
     - [x] 딜러와 플레이어 모두 블랙직이 아니고, 플레이어 카드 합이 높을 경우 승리해 배팅 금액을 받는다.
     - [x] 딜러가 21을 초과하면 그 시점까지 남아 있던 플레이어들은 가지고 있는 패에 상관 없이 승리해 베팅 금액을 받는다.
 
-### 지갑
+### 👛 지갑
 
 - [x] 딜러가 소유하고 있으며 플레이어의 이름과 함께 돈을 담아둔다.
 - [x] 플레이어의 승패가 결졍난 후 배팅 금액을 통해 수익을 계산한다.
 - [x] 플레이어의 수익을 통해 딜러의 수익 또한 계산한다.
 
-###         
+---
 
 ## 📋 프로젝트 구조
 
@@ -100,22 +100,6 @@
         <td>랜덤하게 섞는 것에 대한 전략 인터페이스</td>
     </tr>
     <tr>
-        <td rowspan="3">
-            <img src="https://raw.githubusercontent.com/mallowigi/iconGenerator/master/assets/icons/folders/home.svg?sanitize=true"/>
-            <b> domain / game</b>
-        </td>
-        <td><b>GameResult</b></td>
-        <td>승패에 대한 상수</td>
-    </tr>
-    <tr>
-        <td><b>GameResults</b></td>
-        <td>플레이어들의 승패를 모두 가지는 일급컬렉션</td>
-    </tr>
-    <tr>
-        <td><b>Referee</b></td>
-        <td>승패를 결정해주는 심판 클래스</td>
-    </tr>
-    <tr>
         <td rowspan="4">
             <img src="https://raw.githubusercontent.com/mallowigi/iconGenerator/master/assets/icons/folders/home.svg?sanitize=true"/>
             <b> domain / gamer</b>
@@ -136,7 +120,23 @@
         <td>참여하는 모든 플레이어를 가지는 일급컬렉션</td>
     </tr>
     <tr>
-        <td rowspan="6">
+        <td rowspan="3">
+            <img src="https://raw.githubusercontent.com/mallowigi/iconGenerator/master/assets/icons/folders/home.svg?sanitize=true"/>
+            <b> domain / money</b>
+        </td>
+        <td><b>Money</b></td>
+        <td>사용자의 배팅 금액을 저장해두는 클래스</td>
+    </tr>
+    <tr>
+        <td><b>MoneyRate</b></td>
+        <td>게임 결과에 따라 금액에 곱해지는 비율 상수</td>
+    </tr>
+    <tr>
+        <td><b>Wallet</b></td>
+        <td>딜러가 플레이어의 배팅 금액을 가지고 있을 클래스</td>
+    </tr>
+    <tr>
+        <td rowspan="5">
             <img src="https://raw.githubusercontent.com/mallowigi/iconGenerator/master/assets/icons/folders/views.svg?sanitize=true"/>
             <b> view</b>
         </td>
@@ -146,10 +146,6 @@
     <tr>
         <td><b>CardSymbolName</b></td>
         <td>카드 문양을 출력 문구로 변환해주는 상수</td>
-    </tr>
-    <tr>
-        <td><b>GameResultName</b></td>
-        <td>승패 결과를 출력 문구로 변환해주는 상수</td>
     </tr>
     <tr>
         <td><b>InputView</b></td>
