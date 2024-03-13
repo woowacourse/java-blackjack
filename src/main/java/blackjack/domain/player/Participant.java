@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant implements CardReceivable {
-    private static final int BUST_SIZE = 21;
 
     protected final Name name;
     protected final Cards cards;
@@ -26,7 +25,7 @@ public abstract class Participant implements CardReceivable {
     }
 
     public boolean isBust() {
-        return cards.calculate() > BUST_SIZE;
+        return cards.isBust();
     }
 
     public String getNameAsString() {
