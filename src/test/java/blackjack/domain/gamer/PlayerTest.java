@@ -131,14 +131,23 @@ class PlayerTest {
     }
 
     @Nested
-    @DisplayName("플레이어가 딜러 무승부 테스트")
+    @DisplayName("플레이어 딜러 무승부 테스트")
     class PlayerDealerDrawTest {
 
         @Test
         @DisplayName("플레이어가 블랙잭일 때, 딜러가 블랙잭이면 무승부.")
-        void dealerBustTest() {
+        void allBlackjackTest() {
             Player player = new Player(blackjackHand, new Name("jazz"));
             HandValue dealerHandValue = new HandValue(21, 2);
+
+            assertThat(player.compete(dealerHandValue)).isEqualTo(GameResult.DRAW);
+        }
+
+        @Test
+        @DisplayName("플레이어가 블랙잭일 때, 딜러가 블랙잭이면 무승부.")
+        void tieScoreTest() {
+            Player player = new Player(score21Hand, new Name("jazz"));
+            HandValue dealerHandValue = new HandValue(21, 4);
 
             assertThat(player.compete(dealerHandValue)).isEqualTo(GameResult.DRAW);
         }

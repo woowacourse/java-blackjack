@@ -65,8 +65,24 @@ public class HandValue {
         return score == BLACKJACK_MAX_SCORE && handSize == 2;
     }
 
+    public boolean isNotBlackjack() {
+        return !isBlackjack();
+    }
+
     public boolean isBust() {
         return score > BLACKJACK_MAX_SCORE;
+    }
+
+    public boolean isNotBust() {
+        return !isBust();
+    }
+
+    public boolean isHigherThan(HandValue other) {
+        return this.score > other.score;
+    }
+
+    public boolean isLowerThan(HandValue other) {
+        return this.score < other.score;
     }
 
     public int getScore() {

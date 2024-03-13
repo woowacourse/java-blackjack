@@ -22,31 +22,28 @@ public class Player extends BlackjackGamer {
 
     public GameResult compete(HandValue dealerHandValue) {
         HandValue playerHandValue = getHandValue();
-
-        if (playerHandValue.isBlackjack() && !dealerHandValue.isBlackjack()) {
+        if (isOnlyPlayerBlackjack(playerHandValue, dealerHandValue)) {
             return GameResult.BLACKJACK_WIN;
         }
-        // 플레이어 점수가 21보다 클경우 패배
-        if (playerHandValue.getScore() > BLACKJACK_MAX_SCORE) {
+        if (playerHandValue.isBust() || isLowerThanDealerHandValue(playerHandValue, dealerHandValue)) {
             return GameResult.LOSE;
         }
-        // 딜러의 점수가 21보다 클경우 승리
-        if (dealerHandValue.getScore() > BLACKJACK_MAX_SCORE) {
+        if (dealerHandValue.isBust() || isHigherThanDealerHandValue(playerHandValue, dealerHandValue)) {
             return GameResult.WIN;
         }
-        // 플레이어 점수가 딜러 점수보다 작으면 패배
-        if (playerHandValue.getScore() < dealerHandValue.getScore()) {
-            return GameResult.LOSE;
-        }
-        // 플레이어 점수가 딜러보다 클 경우 승리
-        if (playerHandValue.getScore() > dealerHandValue.getScore()) {
-            return GameResult.WIN;
-        }
-        if (dealerHandValue.isBlackjack() && !playerHandValue.isBlackjack()) {
-            return GameResult.LOSE;
-        }
-
         return GameResult.DRAW;
+    }
+
+    private boolean isOnlyPlayerBlackjack(HandValue playerHandValue, HandValue dealerHandValue) {
+        return playerHandValue.isBlackjack() && dealerHandValue.isNotBlackjack();
+    }
+
+    private boolean isLowerThanDealerHandValue(HandValue playerHandValue, HandValue dealerHandValue) {
+        return dealerHandValue.isNotBust() && playerHandValue.isLowerThan(dealerHandValue);
+    }
+
+    private boolean isHigherThanDealerHandValue(HandValue playerHandValue, HandValue dealerHandValue) {
+        return playerHandValue.isNotBust() && playerHandValue.isHigherThan(dealerHandValue);
     }
 
     public Name getName() {
