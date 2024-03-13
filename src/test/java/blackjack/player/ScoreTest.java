@@ -61,4 +61,16 @@ public class ScoreTest {
                 () -> assertThat(score.isSmallerOrEqual(new Score(16))).isTrue()
         );
     }
+
+    @Test
+    @DisplayName("보정된 에이스 점수를 계산한다.")
+    void changeToLargeAceTest() {
+        Score canChangeScore = new Score(11);
+        Score cantChangeScore = new Score(12);
+
+        assertAll(
+                () -> assertThat(canChangeScore.changeToLargeAceScore()).isEqualTo(new Score(21)),
+                () -> assertThat(cantChangeScore.changeToLargeAceScore()).isEqualTo(new Score(12))
+        );
+    }
 }

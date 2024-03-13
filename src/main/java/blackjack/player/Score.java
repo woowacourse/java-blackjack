@@ -3,6 +3,7 @@ package blackjack.player;
 public class Score {
 
     private static final int BLACKJACK = 21;
+    private static final int ADDITIONAL_ACE = 10;
 
     private int score;
 
@@ -32,5 +33,13 @@ public class Score {
 
     public boolean isSmallerOrEqual(Score other) {
         return !isLargerThan(other);
+    }
+
+    public Score changeToLargeAceScore() {
+        Score largeAceScore = add(ADDITIONAL_ACE);
+        if (largeAceScore.isBust()) {
+            return this;
+        }
+        return largeAceScore;
     }
 }
