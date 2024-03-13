@@ -46,8 +46,4 @@ public class Dealer {
     public Hands getHands() {
         return state.getHands();
     }
-
-    public State getState() {
-        return state;
-    }
 }

@@ -72,8 +72,4 @@ public class Player {
     public BetAmount getBetAmount() {
         return playerBetAmount.betAmount();
     }
-
-    public State getState() {
-        return state;
-    }
 }

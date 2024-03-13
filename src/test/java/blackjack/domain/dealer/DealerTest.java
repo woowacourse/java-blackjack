@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import blackjack.domain.rule.state.DealerHitState;
+import blackjack.domain.rule.Score;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ class DealerTest {
         assertThat(hitCount).isEqualTo(7);
     }
 
-    @DisplayName("딜러는 Hit 후 Hit 상태가 아니다.")
+    @DisplayName("딜러는 Hit 후 16점 보다 크다.")
     @Test
     void hit() {
         // given
@@ -37,6 +37,6 @@ class DealerTest {
         dealer.hit();
 
         // then
-        assertThat(dealer.getState()).isNotInstanceOf(DealerHitState.class);
+        assertThat(dealer.getHands().calculateScore().isBiggerThan(new Score(16))).isTrue();
     }
 }
