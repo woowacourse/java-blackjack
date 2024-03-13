@@ -38,6 +38,6 @@ public class Betting {
     }
 
     public Set<Player> getPlayers() {
-        return bettingMap.keySet();
+        return Collections.unmodifiableSet(bettingMap.keySet());
     }
 }
