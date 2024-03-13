@@ -8,8 +8,7 @@ public class Name {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
+    public String asString() {
         return name;
     }
 }

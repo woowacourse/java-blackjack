@@ -16,6 +16,6 @@ public class DealerCards extends Cards implements Drawable {
     }
 
     public String getFirstCard() {
-        return cards.get(0).toString();
+        return cards.get(0).asString();
     }
 }

@@ -13,7 +13,7 @@ public class OutputView {
 
     public static void printInitialCards(DealerCards dealerCards, List<PlayerCards> playerCards) {
         List<String> names = playerCards.stream()
-                .map(playerCard -> playerCard.getPlayerName().toString())
+                .map(playerCard -> playerCard.getPlayerName().asString())
                 .toList();
 
         printCardDivide(names);
@@ -43,7 +43,7 @@ public class OutputView {
 
     public static void printPlayerCards(PlayerCards cards) {
         Name playerName = cards.getPlayerName();
-        System.out.print(playerName + "카드: ");
+        System.out.print(playerName.asString() + "카드: ");
         System.out.print(formatCards(cards));
     }
 
@@ -80,6 +80,6 @@ public class OutputView {
         System.out.println();
         System.out.println("최종 수익");
         System.out.println("딜러: " + dealerIncome);
-        playerIncomes.forEach((key, value) -> System.out.println(key + ": " + value.getIncome()));
+        playerIncomes.forEach((key, value) -> System.out.println(key.asString() + ": " + value.getIncome()));
     }
 }

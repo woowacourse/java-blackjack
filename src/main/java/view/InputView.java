@@ -20,13 +20,13 @@ public class InputView {
 
     public static String readBetAmount(Name name) {
         System.out.println();
-        System.out.println(name + "의 배팅 금액은?");
+        System.out.println(name.asString() + "의 배팅 금액은?");
         return scanner.nextLine();
 
     }
 
     public static boolean readHitOpinion(Name name) {
-        System.out.println(name + "는(은) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        System.out.println(name.asString() + "는(은) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String opinion = scanner.nextLine();
         return POSITIVE.equals(opinion);
     }

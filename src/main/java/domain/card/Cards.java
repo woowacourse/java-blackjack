@@ -67,7 +67,7 @@ public class Cards {
 
     public List<String> getCards() {
         return cards.stream()
-                .map(Card::toString)
+                .map(Card::asString)
                 .toList();
     }
 }

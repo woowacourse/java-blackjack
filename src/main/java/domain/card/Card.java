@@ -18,8 +18,7 @@ public class Card {
         return cardNumber.getValue();
     }
 
-    @Override
-    public String toString() {
+    public String asString() {
         return cardNumber.getSign() + shape.getShape();
     }
 }
