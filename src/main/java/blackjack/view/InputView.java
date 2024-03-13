@@ -18,7 +18,9 @@ public class InputView {
                 .toList();
     }
 
-    public String readCommand() {
-        return scanner.nextLine();
+    public boolean isReadCommandYes() {
+        String input = scanner.nextLine();
+        Command command = Command.from(input);
+        return command.isYes();
     }
 }

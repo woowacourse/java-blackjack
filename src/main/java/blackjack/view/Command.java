@@ -20,7 +20,7 @@ public enum Command {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 명령어입니다."));
     }
 
-    public boolean isNo() {
-        return this == NO;
+    public boolean isYes() {
+        return this == YES;
     }
 }

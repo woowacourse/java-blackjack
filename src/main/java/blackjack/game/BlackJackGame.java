@@ -4,7 +4,6 @@ import blackjack.card.Deck;
 import blackjack.player.Dealer;
 import blackjack.player.Player;
 import blackjack.player.Players;
-import blackjack.view.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -28,8 +27,8 @@ public class BlackJackGame {
         Dealer dealer = new Dealer();
 
         initGame(deck, dealer, players);
-        playersDrawMore(deck, players);
-        dealerDrawMore(deck, dealer);
+        drawMoreForPlayers(deck, players);
+        drawMoreForDealer(deck, dealer);
 
         showCardsWithScore(dealer, players);
         showMatchResult(dealer, players);
@@ -59,33 +58,26 @@ public class BlackJackGame {
         outputView.printNewLine();
     }
 
-    private void playersDrawMore(Deck deck, Players players) {
+    private void drawMoreForPlayers(Deck deck, Players players) {
         for (Player player : players.getPlayers()) {
-            playerDrawMore(deck, player);
+            drawMoreForPlayer(deck, player);
         }
         outputView.printNewLine();
     }
 
-    private void playerDrawMore(Deck deck, Player player) {
-        Command command = askPlayerToDrawMore(player);
-        if (command.isNo()) {
-            return;
-        }
-        player.drawCard(deck.draw());
-        outputView.printPlayerCards(player.getName(), player.getCards());
-
-        if (player.hasDrawableScore()) {
-            playerDrawMore(deck, player);
+    private void drawMoreForPlayer(Deck deck, Player player) {
+        while (player.hasDrawableScore() && isPlayerWantsToDrawMore(player)) {
+            player.drawCard(deck.draw());
+            outputView.printPlayerCards(player.getName(), player.getCards());
         }
     }
 
-    private Command askPlayerToDrawMore(Player player) {
+    private boolean isPlayerWantsToDrawMore(Player player) {
         outputView.printDrawMoreCardRequest(player.getName());
-        String input = inputView.readCommand();
-        return Command.from(input);
+        return inputView.isReadCommandYes();
     }
 
-    private void dealerDrawMore(Deck deck, Dealer dealer) {
+    private void drawMoreForDealer(Deck deck, Dealer dealer) {
         while (dealer.hasDrawableScore()) {
             dealer.drawCard(deck.draw());
             outputView.printDealerDrawCard();
