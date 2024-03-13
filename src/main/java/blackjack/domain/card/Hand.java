@@ -21,14 +21,14 @@ public class Hand {
     }
 
     public Score calculateHandScore() {
-        Score score = sumScore();
+        Score score = sumCardScore();
         if (hasAce()) {
             return score.adjustAceScore();
         }
         return score;
     }
 
-    private Score sumScore() {
+    private Score sumCardScore() {
         return cards.stream()
                 .map(card -> new Score(card.getCardRank().getScore()))
                 .reduce(new Score(0), Score::add);
