@@ -31,11 +31,11 @@ class PlayersTest {
     @DisplayName("적절한 인덱싱의 플레이어를 반환한다.")
     @Test
     void getPlayer() {
-        Player player = new Player("daon1", new Betting(2));
+        Player player = new Player(new PlayerInfo("daon1", new Betting(2)));
         List<Player> given = List.of(
-                new Player("daon1", new Betting(1)),
+                new Player(new PlayerInfo("daon1", new Betting(1))),
                 player,
-                new Player("daon1", new Betting(3))
+                new Player(new PlayerInfo("daon1", new Betting(3)))
         );
 
         Players players = new Players(given);
@@ -48,11 +48,11 @@ class PlayersTest {
     @ParameterizedTest
     @ValueSource(ints = {-2, -1, 5, 1990})
     void getPlayerInvalidIndex(int given) {
-        Player player = new Player("daon1", new Betting(2));
+        Player player = new Player(new PlayerInfo("daon1", new Betting(2)));
         List<Player> givenPlayers = List.of(
-                new Player("daon1", new Betting(1)),
+                new Player(new PlayerInfo("daon1", new Betting(1))),
                 player,
-                new Player("daon1", new Betting(3))
+                new Player(new PlayerInfo("daon1", new Betting(3)))
         );
 
         Players players = new Players(givenPlayers);
@@ -63,21 +63,19 @@ class PlayersTest {
     @DisplayName("해당 인덱스의 플레이어가 카드를 더 뽑을 수 있는지 반환한다.")
     @Test
     void canPlayerGetMoreCard() {
-        Player daon1 = new Player("daon1", new Betting(1));
-        Player player = new Player("daon2", new Betting(2));
+        Player daon1 = new Player(new PlayerInfo("daon1", new Betting(1)));
         daon1.addCards(List.of(
                 new Card(CardNumber.KING, CardShape.SPADE),
                 new Card(CardNumber.KING, CardShape.SPADE),
                 new Card(CardNumber.KING, CardShape.SPADE)
         ));
-
-        List<Player> givenPlayers = List.of(
+        List<Player> given = List.of(
                 daon1,
-                player,
-                new Player("daon1", new Betting(3))
+                new Player(new PlayerInfo("daon2", new Betting(100))),
+                new Player(new PlayerInfo("daon3", new Betting(2000)))
         );
 
-        Players players = new Players(givenPlayers);
+        Players players = new Players(given);
 
         assertAll(
                 () -> assertThat(players.canPlayerGetMoreCard(0)).isEqualTo(false),
@@ -113,9 +111,9 @@ class PlayersTest {
 
     private List<Player> getPlayers() {
         return List.of(
-                new Player("daon1", new Betting(1)),
-                new Player("daon1", new Betting(2)),
-                new Player("daon1", new Betting(3))
+                new Player(new PlayerInfo("daon1", new Betting(1))),
+                new Player(new PlayerInfo("daon1", new Betting(2))),
+                new Player(new PlayerInfo("daon1", new Betting(3)))
         );
     }
 }

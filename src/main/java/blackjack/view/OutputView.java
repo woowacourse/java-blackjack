@@ -7,6 +7,7 @@ import blackjack.model.cards.Cards;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Participant;
 import blackjack.model.participants.Player;
+import blackjack.model.participants.PlayerInfo;
 import blackjack.model.participants.Players;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -24,13 +25,13 @@ public class OutputView {
         System.out.printf(DEALER_NAME + "와 %s에게 2장을 나누었습니다.%n", getPlayersNames(allPlayers));
 
         System.out.print(getDealerCardFormat(getDealerCard(dealer)));
-        allPlayers.forEach(player -> System.out.print(getParticipantCardsFormat(player.getName(), player.getCards())));
+        allPlayers.forEach(player -> System.out.print(getParticipantCardsFormat(getPlayerName(player), player.getCards())));
         System.out.println();
     }
 
     public void printPlayerCardsInfo(final Players players, final int index) {
         Player player = players.getPlayer(index);
-        System.out.print(getParticipantCardsFormat(player.getName(), player.getCards()));
+        System.out.print(getParticipantCardsFormat(getPlayerName(player), player.getCards()));
     }
 
     public void printDealerChange() {
@@ -43,7 +44,7 @@ public class OutputView {
         System.out.print(getParticipantScoreFormat(DEALER_NAME, dealer.getCards(), getValue(dealer)));
         List<Player> allPlayers = players.getPlayers();
         allPlayers.forEach(player -> System.out.printf(
-                getParticipantScoreFormat(player.getName(), player.getCards(), getValue(player)))
+                getParticipantScoreFormat(getPlayerName(player), player.getCards(), getValue(player)))
         );
     }
 
@@ -79,7 +80,7 @@ public class OutputView {
     private void printPlayerResultsFormat(final Map<Player, Profit> gameResult) {
         gameResult.entrySet()
                 .stream()
-                .map(entry -> getPlayerResultFormat(entry.getKey().getName(), convertFormat(entry.getValue())))
+                .map(entry -> getPlayerResultFormat(getPlayerName(entry.getKey()), convertFormat(entry.getValue())))
                 .forEach(System.out::print);
     }
 
@@ -91,9 +92,14 @@ public class OutputView {
         return String.format("%s: %s%n", name, profit);
     }
 
+    private String getPlayerName(final Player player) {
+        return player.getPlayerInfo().getName();
+    }
+
     private String getPlayersNames(final List<Player> players) {
         return players.stream()
-                .map(Player::getName)
+                .map(Player::getPlayerInfo)
+                .map(PlayerInfo::getName)
                 .collect(Collectors.joining(MULTIPLE_OUTPUTS_DELIMITER));
     }
 

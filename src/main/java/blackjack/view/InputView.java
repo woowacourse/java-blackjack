@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.model.participants.Betting;
 import blackjack.model.participants.Player;
+import blackjack.model.participants.PlayerInfo;
 import blackjack.model.participants.Players;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -23,7 +24,8 @@ public class InputView {
         String input = scanner.nextLine();
         validateMultipleInputs(input);
         return Arrays.stream(input.split(INPUT_DELIMITER))
-                .map(name -> new Player(name, readMoney(name)))
+                .map(name -> new PlayerInfo(name, readMoney(name)))
+                .map(Player::new)
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Players::new));
     }
 
@@ -42,7 +44,8 @@ public class InputView {
     }
 
     private Command getCommand(final Player player) {
-        String message = String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getName());
+        String playerName = player.getPlayerInfo().getName();
+        String message = String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", playerName);
         System.out.println(message);
         String input = scanner.nextLine();
         return Command.generate(input);

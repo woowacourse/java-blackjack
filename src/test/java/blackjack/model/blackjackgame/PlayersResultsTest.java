@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.participants.Betting;
 import blackjack.model.participants.Player;
+import blackjack.model.participants.PlayerInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -24,8 +25,8 @@ class PlayersResultsTest {
     }
 
     private void createPlayerResults(int first, int second, int third, PlayersResults playersResults) {
-        playersResults.add(new Player("daon1", new Betting(0)), new Profit(first));
-        playersResults.add(new Player("daon2", new Betting(100)), new Profit(second));
-        playersResults.add(new Player("daon3", new Betting(200)), new Profit(third));
+        playersResults.add(new Player(new PlayerInfo("daon1", new Betting(0))), new Profit(first));
+        playersResults.add(new Player(new PlayerInfo("daon2", new Betting(100))), new Profit(second));
+        playersResults.add(new Player(new PlayerInfo("daon3", new Betting(200))), new Profit(third));
     }
 }
