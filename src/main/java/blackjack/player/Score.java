@@ -7,16 +7,16 @@ public class Score {
 
     private final int value;
 
-    public Score(int value) {
+    private Score(int value) {
         this.value = value;
     }
 
-    public static Score zero() {
-        return new Score(0);
+    public static Score of(int value) {
+        return new Score(value);
     }
 
-    public Score add(int other) {
-        return new Score(value + other);
+    public static Score zero() {
+        return Score.of(0);
     }
 
     public Score add(Score other) {
@@ -25,7 +25,7 @@ public class Score {
 
     public Score addAceScoreOnNotBust() {
         if (value + ADDITIONAL_ACE_SCORE <= BLACKJACK_SCORE) {
-            return this.add(ADDITIONAL_ACE_SCORE);
+            return this.add(Score.of(ADDITIONAL_ACE_SCORE));
         }
         return this;
     }

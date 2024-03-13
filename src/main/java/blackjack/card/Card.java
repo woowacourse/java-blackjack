@@ -18,7 +18,7 @@ public class Card {
     }
 
     public Score getScore() {
-        return new Score(number.getScore());
+        return Score.of(number.getScore());
     }
 
     public Shape getShape() {
