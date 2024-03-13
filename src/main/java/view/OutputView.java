@@ -14,6 +14,9 @@ import view.viewer.HandViewer;
 public class OutputView {
     private static final String DEALER_NAME_VALUE = "딜러";
 
+    private OutputView() {
+    }
+
     public static void printStartStatus(GameUsers gameUsers) {
         printUserNames(gameUsers);
         printUsersStartCards(gameUsers);

@@ -14,6 +14,9 @@ public class GameResultViewer {
                     GameResultViewer::makeShow
             ));
 
+    private GameResultViewer() {
+    }
+
     private static String makeShow(GameResult gameResult) {
         return switch (gameResult) {
             case WIN -> "승";
