@@ -1,9 +1,8 @@
-package blackjack.domain.card.status;
+package blackjack.domain.handrank;
 
 public enum SingleMatchResult {
-
     PLAYER_BLACKJACK,
     PLAYER_WIN,
     DRAW,
-    DEALER_WIN;
+    DEALER_WIN
 }

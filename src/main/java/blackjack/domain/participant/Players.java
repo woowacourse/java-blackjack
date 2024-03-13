@@ -31,6 +31,7 @@ public class Players {
         }
     }
 
+    // TODO 같은 참조값을 가지는 경우 생각
     private void validateDistinct(List<Player> players) {
         if (isDuplicated(players)) {
             throw new IllegalArgumentException("중복된 이름을 사용할 수 없습니다.");
