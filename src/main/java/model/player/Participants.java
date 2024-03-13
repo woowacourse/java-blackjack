@@ -3,9 +3,13 @@ package model.player;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import model.card.CardDeck;
-import model.card.CardSize;
+
+import model.card.Card;
+import model.card.Cards;
 
 public class Participants {
     public static final int MINIMUM_PARTICIPANT_SIZE = 2;
@@ -37,17 +41,19 @@ public class Participants {
         }
     }
 
-    public void offerCardToParticipant(CardDeck cardDeck, Participant receiver, CardSize size) {
-        User foundUser = participants.stream()
-                .filter(player -> player.equals(receiver))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("참가자(" + receiver.getName() + ")가 존재하지 않습니다."));
-        foundUser.addCards(cardDeck.selectRandomCards(size));
-    }
-
     public List<String> findParticipantsName() {
         return participants.stream()
                 .map(participant -> participant.name).toList();
+    }
+
+    public void offerCardToParticipant(Function<String, Boolean> isMoreCard, BiConsumer<String, Cards> callback, Supplier<List<Card>> supplier) {
+        for (Participant participant : participants) {
+            while (participant.isHit() && isMoreCard.apply(participant.getName())) {
+                participant.addCards(supplier.get());
+                callback.accept(participant.getName(), participant.getCards());
+            }
+
+        }
     }
 
     public List<Participant> getParticipants() {

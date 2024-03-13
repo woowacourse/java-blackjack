@@ -43,32 +43,14 @@ public class BlackJack {
     }
 
     public void decideParticipantsPlay(Function<String, Boolean> isMoreCard, BiConsumer<String, Cards> callback) {
-        for (Participant participant : participants.getParticipants()) {
-            decideParticipantPlay(participant, isMoreCard, callback);
-        }
-    }
-
-    private void decideParticipantPlay(Participant participant,
-                                       Function<String, Boolean> isMoreCard, BiConsumer<String, Cards> callback) {
-        while (participant.isHit() && isMoreCard.apply(participant.getName())) {
-            offerCardToParticipant(participant, CardSize.ONE);
-            callback.accept(participant.getName(), participant.getCards());
-        }
+        participants.offerCardToParticipant(isMoreCard, callback, () -> cardDeck.selectRandomCards(CardSize.ONE));
     }
 
     public void decideDealerPlay(Runnable runnable) {
-        while (isDealerUnderThreshold()) {
+        while (dealer.isHit()) {
             runnable.run();
-            offerCardToDealer(CardSize.ONE);
+            dealer.addCards(cardDeck.selectRandomCards(CardSize.ONE));
         }
-    }
-
-    private void offerCardToParticipant(Participant participant, CardSize size) {
-        participants.offerCardToParticipant(cardDeck, participant, size);
-    }
-
-    public void offerCardToDealer(CardSize size) {
-        dealer.addCards(cardDeck.selectRandomCards(size));
     }
 
     public Map<Participant, Outcome> matchParticipantsOutcome() {
@@ -78,10 +60,6 @@ public class BlackJack {
                         participant -> participant,
                         participant -> participant.findOutcome(dealer)
                 ));
-    }
-
-    public boolean isDealerUnderThreshold() {
-        return dealer.isHit();
     }
 
     public Map<Outcome, Long> getDealerOutCome() {
