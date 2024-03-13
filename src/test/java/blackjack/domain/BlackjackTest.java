@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.player.Names;
 import blackjack.domain.player.Participant;
-import blackjack.domain.player.Score;
 import blackjack.domain.result.GamePlayerResult;
 import blackjack.domain.result.ResultStatus;
 import blackjack.fixture.CardFixture;
@@ -33,13 +32,13 @@ class BlackjackTest {
     }
 
     @Test
-    @DisplayName("딜러가 게임 결과를 종합한다.")
+    @DisplayName("게임 결과를 종합한다.")
     void dealer_Count_result() {
         final var names = Names.from(List.of("초롱", "조이썬"));
         final var sut = new Blackjack(CardFixture.카드_덱_생성());
         sut.acceptPlayers(names);
 
-        final var result = sut.checkPlayersResult();
+        final var result = sut.checkResult();
 
         assertGamePlayerResult(result.getGamePlayerResults()
                                      .get(0), ResultStatus.WIN);
@@ -52,7 +51,7 @@ class BlackjackTest {
     }
 
     private void assertPlayer(final Participant participant, final int value) {
-        assertThat(participant.calculateScore()).isEqualTo(Score.from(value));
+        assertThat(participant.calculateScore()).isEqualTo(value);
     }
 
     private void assertGamePlayerResult(final GamePlayerResult gamePlayerResult, ResultStatus resultStatus) {

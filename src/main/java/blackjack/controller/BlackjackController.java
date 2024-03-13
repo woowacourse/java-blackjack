@@ -50,7 +50,7 @@ public class BlackjackController {
     }
 
     private void checkGameResult() {
-        final Result result = blackjack.checkPlayersResult();
+        final Result result = blackjack.checkResult();
         ResultView.printResult(result);
     }
 

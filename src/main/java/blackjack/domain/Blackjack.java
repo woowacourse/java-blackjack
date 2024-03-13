@@ -8,9 +8,7 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.GamePlayer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Players;
-import blackjack.domain.result.DealerResult;
-import blackjack.domain.result.GamePlayerResult;
-import blackjack.domain.result.Result;
+import blackjack.domain.result.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,19 +34,6 @@ public class Blackjack {
         this.players = new Players(dealer, gamePlayers);
     }
 
-    public Result checkPlayersResult() {
-        final List<GamePlayerResult> gamePlayerResults = new ArrayList<>();
-
-        for (final GamePlayer gamePlayer : players.gamePlayers()) {
-            gamePlayerResults.add(
-                    new GamePlayerResult(gamePlayer.getName(), players.dealer()
-                                                                      .checkPlayer(gamePlayer)));
-        }
-
-        return new Result(gamePlayerResults, DealerResult.of(players.dealer()
-                                                                    .getName(), gamePlayerResults));
-    }
-
     private Cards drawTwo() {
         return new Cards(List.of(deck.draw(), deck.draw()));
     }
@@ -59,6 +44,24 @@ public class Blackjack {
 
     private Card draw() {
         return deck.draw();
+    }
+
+    public Result checkResult() {
+        final List<GamePlayerResult> gamePlayerResults = checkPlayersResult();
+        final DealerResult dealerResult = DealerResult.of(players.dealer()
+                                                                 .getName(), gamePlayerResults);
+        return new Result(gamePlayerResults, dealerResult);
+    }
+
+    private List<GamePlayerResult> checkPlayersResult() {
+        return players.gamePlayers()
+                      .stream()
+                      .map(gamePlayer -> checkPlayerResult(players.dealer(), gamePlayer))
+                      .toList();
+    }
+
+    private GamePlayerResult checkPlayerResult(final Dealer dealer, final GamePlayer gamePlayer) {
+        return new GamePlayerResult(gamePlayer.getName(), ResultChecker.calculate(dealer, gamePlayer));
     }
 
     public Dealer getDealer() {
