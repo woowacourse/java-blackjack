@@ -25,7 +25,7 @@ public abstract class Participant {
             blackjackHand.receive(receivedCard);
             return;
         }
-        throw new IllegalStateException("[ERROR] 카드를 받을 수 없는 상태입니다.");
+        throw new IllegalStateException("카드를 받을 수 없는 상태입니다.");
     }
 
     public void receive(List<Card> receivedCards) {
@@ -33,7 +33,7 @@ public abstract class Participant {
             blackjackHand.receive(receivedCards);
             return;
         }
-        throw new IllegalStateException("[ERROR] 카드를 받을 수 없는 상태입니다.");
+        throw new IllegalStateException("카드를 받을 수 없는 상태입니다.");
     }
 
     public int calculateScore() {

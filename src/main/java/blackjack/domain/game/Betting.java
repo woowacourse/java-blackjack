@@ -21,7 +21,7 @@ public class Betting {
 
     public void bet(Player player, int money) {
         if (money <= 0) {
-            throw new IllegalArgumentException("[ERROR] 배팅 액수는 양수여야 합니다.");
+            throw new IllegalArgumentException("배팅 액수는 양수여야 합니다.");
         }
         bettingMap.put(player, money);
     }
@@ -30,7 +30,7 @@ public class Betting {
         if (bettingMap.containsKey(player)) {
             return bettingMap.get(player);
         }
-        throw new IllegalArgumentException("[ERROR] 존재하지 않는 플레이어입니다.");
+        throw new IllegalArgumentException("존재하지 않는 플레이어입니다.");
     }
 
     public Betting unmodifiableBetting() {

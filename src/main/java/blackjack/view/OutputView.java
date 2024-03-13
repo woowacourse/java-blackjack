@@ -108,4 +108,8 @@ public class OutputView {
     public void printProfit(Participant participant, int profit) {
         System.out.printf("%s: %d%n", participant.getName(), profit);
     }
+
+    public void printErrorMessage(String message) {
+        System.out.println("[ERROR] " + message);
+    }
 }

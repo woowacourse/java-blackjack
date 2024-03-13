@@ -28,7 +28,7 @@ public class DeckCards {
 
     public Card drawCard() {
         if (cards.isEmpty()) {
-            throw new IllegalStateException("[ERROR] 카드를 모두 사용하였습니다.");
+            throw new IllegalStateException("카드를 모두 사용하였습니다.");
         }
         return cards.remove(cards.size() - 1);
     }
@@ -36,7 +36,7 @@ public class DeckCards {
     private void validateAmount(int amount) {
         if (cards.size() < amount) {
             throw new IllegalArgumentException(
-                    String.format("[ERROR]덱에 남은 카드 수가 요청한 카드 수보다 적습니다.%n"
+                    String.format("덱에 남은 카드 수가 요청한 카드 수보다 적습니다.%n"
                             + "요청 카드 수: %d, 남은 카드 수: %d", amount, cards.size()));
         }
     }

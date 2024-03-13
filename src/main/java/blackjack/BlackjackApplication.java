@@ -7,11 +7,14 @@ import blackjack.view.OutputView;
 public class BlackjackApplication {
 
     public static void main(String[] args) {
+        InputView inputView = new InputView();
+        OutputView outputView = new OutputView();
+
         try {
-            BlackjackMachine machine = new BlackjackMachine(new InputView(), new OutputView());
+            BlackjackMachine machine = new BlackjackMachine(inputView, outputView);
             machine.run();
         } catch (IllegalArgumentException | IllegalStateException e) {
-            System.out.println(e.getMessage());
+            outputView.printErrorMessage(e.getMessage());
         }
     }
 }

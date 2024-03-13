@@ -23,13 +23,13 @@ public class Name {
 
     private void validateNull(String rawName) {
         if (rawName == null) {
-            throw new IllegalArgumentException("[ERROR] null을 입력할 수 없습니다.");
+            throw new IllegalArgumentException("null을 입력할 수 없습니다.");
         }
     }
 
     private void validateLength(String rawName) {
         if (rawName.isEmpty() || rawName.length() > MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException("[ERROR] 1~5자의 이름만 입력 가능합니다.");
+            throw new IllegalArgumentException("1~5자의 이름만 입력 가능합니다.");
         }
     }
 
@@ -38,7 +38,7 @@ public class Name {
         if (matcher.matches()) {
             return;
         }
-        throw new IllegalArgumentException("[ERROR] 한글, 영어, 숫자만 입력 가능합니다.");
+        throw new IllegalArgumentException("한글, 영어, 숫자만 입력 가능합니다.");
     }
 
     public String getName() {

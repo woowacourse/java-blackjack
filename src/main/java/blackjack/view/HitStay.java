@@ -17,7 +17,7 @@ public enum HitStay {
         return Arrays.stream(values())
                 .filter(value -> value.input.equals(input))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 적절하지 않은 입력입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("적절하지 않은 입력입니다."));
     }
 
     public String getInput() {

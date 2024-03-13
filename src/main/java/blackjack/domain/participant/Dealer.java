@@ -23,7 +23,7 @@ public class Dealer extends Participant {
     @Override
     public List<Card> findShowingCards() {
         if (getCards().isEmpty()) {
-            throw new IllegalStateException("[ERROR] 딜러 카드가 비어 있습니다.");
+            throw new IllegalStateException("딜러 카드가 비어 있습니다.");
         }
         if (getCards().size() == STARTING_CARDS_AMOUNT) {
             return List.of(getCards().get(0));

@@ -36,7 +36,7 @@ public class BlackjackHand {
                 .map(index -> (score + index * ACE_SPECIAL_SCORE))
                 .filter(number -> number <= BLACKJACK_SCORE)
                 .max()
-                .orElseThrow(() -> new IllegalStateException("[ERROR] 점수 계산에 실패했습니다."));
+                .orElseThrow(() -> new IllegalStateException("점수 계산에 실패했습니다."));
     }
 
     public boolean isOverBlackjackScore() {

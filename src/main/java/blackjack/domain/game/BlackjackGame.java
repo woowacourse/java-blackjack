@@ -31,7 +31,7 @@ public class BlackjackGame {
 
     public void giveOneCard(Participant participant) {
         if (participants.doesNotContain(participant)) {
-            throw new IllegalArgumentException("[ERROR] 해당 게임의 참여자가 아닙니다.");
+            throw new IllegalArgumentException("해당 게임의 참여자가 아닙니다.");
         }
         if (participant.isReceivable()) {
             participant.receive(deckCards.drawCard());
