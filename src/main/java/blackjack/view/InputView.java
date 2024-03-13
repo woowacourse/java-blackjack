@@ -26,14 +26,14 @@ public class InputView {
                 .toList();
     }
 
-    public int readBetAmount(final String playerName) {
+    public int readBetMoney(final String playerName) {
         System.out.println(playerName +"의 배팅 금액은?");
-        String betAmount = reader.get();
+        String betMoney = reader.get();
         System.out.println();
-        return parseBetAmount(betAmount);
+        return parseBetMoney(betMoney);
     }
 
-    private int parseBetAmount(final String betAmount) {
+    private int parseBetMoney(final String betAmount) {
         try {
             return Integer.parseInt(betAmount);
         } catch (NumberFormatException e) {

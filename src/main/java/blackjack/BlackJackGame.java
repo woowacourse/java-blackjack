@@ -4,6 +4,7 @@ import blackjack.dto.DealerResultCount;
 import blackjack.dto.NameCards;
 import blackjack.dto.NameCardsScore;
 import blackjack.dto.PlayerNameFinalResult;
+import blackjack.model.Bets;
 import blackjack.model.deck.Deck;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
@@ -30,14 +31,12 @@ public class BlackJackGame {
         final Dealer dealer = new Dealer(new Deck());
         final Players players = registerPlayers();
         final Referee referee = new Referee(new Rule(dealer));
+        final Bets bets = registerBets(players);
 
         registerInitialCards(dealer, players);
-        outputView.printDistributionSubject(players.getNames());
         printInitialCards(dealer, players);
 
-        playPlayersTurn(players, dealer);
-        playDealerTurn(dealer);
-
+        playParticipantsTurn(players, dealer);
         printFinalResult(dealer, players, referee);
     }
 
@@ -51,9 +50,23 @@ public class BlackJackGame {
         }
     }
 
+    private Bets registerBets(final Players players) {
+        return players.createBets(this::readBetMoney);
+    }
+
+    private int readBetMoney(final String name) {
+        try {
+            return inputView.readBetMoney(name);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return readBetMoney(name);
+        }
+    }
+
     private void registerInitialCards(final Dealer dealer, final Players players) {
         dealer.receiveInitialCards(dealer.distributeInitialCard());
         players.receiveInitialCards(dealer::distributeInitialCard);
+        outputView.printDistributionSubject(players.getNames());
     }
 
     private void printInitialCards(final Dealer dealer, final Players players) {
@@ -70,6 +83,11 @@ public class BlackJackGame {
         return Stream.of(dealerNameCards, playersNameCards)
                 .flatMap(Collection::stream)
                 .toList();
+    }
+
+    private void playParticipantsTurn(final Players players, final Dealer dealer) {
+        playPlayersTurn(players, dealer);
+        playDealerTurn(dealer);
     }
 
     private void playPlayersTurn(final Players players, final Dealer dealer) {
