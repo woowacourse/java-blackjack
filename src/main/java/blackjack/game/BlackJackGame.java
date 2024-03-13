@@ -37,12 +37,12 @@ public class BlackJackGame {
         showResults(dealer, players, playerBets);
     }
 
-    private MatchResults createMatchResults(Player dealer, Players players) {
-        MatchResults matchResults = new MatchResults();
-        for (Player player : players.getPlayers()) {
-            matchResults.addResult(player.getName(), player, dealer);
-        }
-        return matchResults;
+    private Players createPlayers() {
+        outputView.printNamesRequest();
+        List<String> names = inputView.readNames();
+        Players players = new Players(names);
+        outputView.printNewLine();
+        return players;
     }
 
     private PlayerBets createPlayerBets(Players players) {
@@ -53,14 +53,6 @@ public class BlackJackGame {
             playerBets.addPlayerBet(name, BetMoney.of(amount));
         }
         return playerBets;
-    }
-
-    private Players createPlayers() {
-        outputView.printNamesRequest();
-        List<String> names = inputView.readNames();
-        Players players = new Players(names);
-        outputView.printNewLine();
-        return players;
     }
 
     private void initGame(Deck deck, Player dealer, Players players) {
@@ -127,6 +119,14 @@ public class BlackJackGame {
         MatchResults matchResults = createMatchResults(dealer, players);
         showCardsWithScore(dealer, players);
         showProfitResult(dealer, playerBets, matchResults);
+    }
+
+    private MatchResults createMatchResults(Player dealer, Players players) {
+        MatchResults matchResults = new MatchResults();
+        for (Player player : players.getPlayers()) {
+            matchResults.addResult(player.getName(), player, dealer);
+        }
+        return matchResults;
     }
 
     private void showCardsWithScore(Player dealer, Players players) {
