@@ -80,6 +80,6 @@ public class PlayersTest {
         //then
         BlackjackResult blackjackResult = Judge.judge(bustedDealer, players);
         assertThat(Double.parseDouble(blackjackResult.playerProfits().get(0).profit()))
-                .isEqualTo(Double.parseDouble(bettingAmountA) * 2);
+                .isEqualTo(Double.parseDouble(bettingAmountA));
     }
 }

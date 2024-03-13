@@ -14,8 +14,16 @@ public class Profit {
         return new Profit(BigDecimal.ZERO);
     }
 
-    public void earn(final BigDecimal amount) {
-        this.amount = this.amount.add(amount);
+    public void earn(final BigDecimal win, final BigDecimal betting) {
+        this.amount = this.amount.add(win.subtract(betting));
+    }
+
+    public void earn(final BigDecimal betting) {
+        this.amount = this.amount.add(betting);
+    }
+
+    public void earnBlackjack(final BigDecimal blackjack, final BigDecimal betting) {
+        this.amount = this.amount.add(blackjack.subtract(betting));
     }
 
     public void lose(final BigDecimal amount) {
