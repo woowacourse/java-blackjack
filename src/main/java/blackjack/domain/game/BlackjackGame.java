@@ -67,8 +67,13 @@ public class BlackjackGame {
     }
 
     public Map<GameResult, Long> getDealerResult(Map<Player, GameResult> playerResults) {
-        return playerResults.values().stream()
+        Map<GameResult, Long> dealerResult = playerResults.values().stream()
                 .map(GameResult::reverse)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        for (GameResult gameResult : GameResult.values()) {
+            dealerResult.merge(gameResult, 0L, Long::sum);
+        }
+
+        return dealerResult;
     }
 }
