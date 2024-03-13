@@ -2,6 +2,7 @@ package domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.Result;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;

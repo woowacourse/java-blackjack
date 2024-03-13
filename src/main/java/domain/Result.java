@@ -1,4 +1,4 @@
-package domain.result;
+package domain;
 
 import domain.gamer.Dealer;
 import domain.gamer.Player;
@@ -53,16 +53,6 @@ public enum Result {
         }
         if (playerScore < dealerScore && !dealer.isBust()) {
             return LOSE;
-        }
-        return TIE;
-    }
-
-    public Result getOppositeResult() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
         }
         return TIE;
     }
