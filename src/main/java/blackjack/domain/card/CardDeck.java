@@ -6,9 +6,20 @@ import java.util.List;
 public class CardDeck {
     private static final List<Card> INITIAL_CARD_DECK = CardFactory.create();
 
-    private final List<Card> cardDeck;
+    private List<Card> cardDeck;
 
     public CardDeck() {
-        this.cardDeck = new ArrayList<>(INITIAL_CARD_DECK);
+        this.cardDeck = initializeCardDeck();
+    }
+
+    private List<Card> initializeCardDeck() {
+        return new ArrayList<>(INITIAL_CARD_DECK);
+    }
+
+    public Card draw() {
+        if (cardDeck.isEmpty()) {
+            this.cardDeck = initializeCardDeck();
+        }
+        return cardDeck.remove(cardDeck.size() - 1);
     }
 }
