@@ -4,8 +4,8 @@ import domain.blackjack.BetAmount;
 import domain.blackjack.BettingResult;
 import domain.blackjack.BlackJack;
 import domain.participant.Dealer;
-import domain.participant.Participant;
-import domain.participant.Participants;
+import domain.participant.Player;
+import domain.participant.Players;
 import view.InputView;
 import view.OutputView;
 
@@ -17,31 +17,32 @@ public class BlackJackController {
 
     public void run() {
         List<String> names = InputView.inputParticipantName();
-        Participants participants = new Participants(names);
-        Map<Participant, BetAmount> betAmount = createBetAmount(participants);
-        BlackJack blackJack = new BlackJack(participants);
+        Dealer dealer = new Dealer();
+        Players players = new Players(names);
+        Map<Player, BetAmount> betAmount = createBetAmount(players);
+        BlackJack blackJack = new BlackJack(players, dealer);
 
         blackJack.beginDealing(this::beginBlackJack);
         blackJack.play(InputView::inputHitOption, OutputView::printParticipantHands);
         dealerHit(blackJack);
 
-        printScore(participants);
-        printResult(betAmount, participants.getDealer());
+        printScore(players, dealer);
+        printResult(betAmount, dealer);
     }
 
-    private LinkedHashMap<Participant, BetAmount> createBetAmount(Participants participants) {
-        LinkedHashMap<Participant, BetAmount> betAmount = new LinkedHashMap<>();
-        for (Participant participant : participants.getNotDealerParticipant()) {
-            betAmount.put(participant, new BetAmount(InputView.inputBetAmount(participant.getName())));
+    private LinkedHashMap<Player, BetAmount> createBetAmount(Players players) {
+        LinkedHashMap<Player, BetAmount> betAmount = new LinkedHashMap<>();
+        for (Player player : players.getValue()) {
+            betAmount.put(player, new BetAmount(InputView.inputBetAmount(player.getName())));
         }
         return betAmount;
     }
 
-    private void beginBlackJack(Participants participants) {
-        OutputView.printBeginDealingInformation(participants);
-        OutputView.printDealerHands(participants.getDealer());
-        for (Participant participant : participants.getNotDealerParticipant()) {
-            OutputView.printParticipantHands(participant);
+    private void beginBlackJack(Players players, Dealer dealer) {
+        OutputView.printBeginDealingInformation(players);
+        OutputView.printDealerHands(dealer);
+        for (Player player : players.getValue()) {
+            OutputView.printParticipantHands(player);
         }
     }
 
@@ -49,14 +50,14 @@ public class BlackJackController {
         OutputView.printDealerHit(blackJack.dealerHit());
     }
 
-    private void printScore(Participants participants) {
-        OutputView.printParticipantResult(participants.getDealer());
-        for (Participant participant : participants.getNotDealerParticipant()) {
-            OutputView.printParticipantResult(participant);
+    private void printScore(Players players, Dealer dealer) {
+        OutputView.printParticipantResult(dealer);
+        for (Player player : players.getValue()) {
+            OutputView.printParticipantResult(player);
         }
     }
 
-    private void printResult(Map<Participant, BetAmount> bet, Dealer dealer) {
+    private void printResult(Map<Player, BetAmount> bet, Dealer dealer) {
         BettingResult bettingResult = new BettingResult(bet, dealer);
         OutputView.printBlackJackResult(bettingResult);
     }

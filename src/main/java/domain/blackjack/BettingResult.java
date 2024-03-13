@@ -1,7 +1,7 @@
 package domain.blackjack;
 
 import domain.participant.Dealer;
-import domain.participant.Participant;
+import domain.participant.Player;
 
 import java.util.Map;
 import java.util.Set;
@@ -10,17 +10,17 @@ public class BettingResult {
 
     private static final double BLACKJACK_PROFIT_RATE = 1.5;
 
-    private final Map<Participant, BetAmount> bet;
+    private final Map<Player, BetAmount> bet;
     private final Dealer dealer;
 
-    public BettingResult(Map<Participant, BetAmount> bet, Dealer dealer) {
+    public BettingResult(Map<Player, BetAmount> bet, Dealer dealer) {
         this.bet = bet;
         this.dealer = dealer;
     }
 
-    public double getPayout(Participant participant) {
-        double payout = bet.get(participant).calculateProfit(dealer.calculateParticipantWinStatus(participant));
-        if (participant.isBlackJack() && dealer.isNotBlackJack()) {
+    public double getPayout(Player player) {
+        double payout = bet.get(player).calculateProfit(dealer.calculateParticipantWinStatus(player));
+        if (player.isBlackJack() && dealer.isNotBlackJack()) {
             return payout * BLACKJACK_PROFIT_RATE;
         }
         return payout;
@@ -28,13 +28,13 @@ public class BettingResult {
 
     public double getDealerPayout() {
         double total = 0;
-        for (Participant participant : bet.keySet()) {
-            total += getPayout(participant);
+        for (Player player : bet.keySet()) {
+            total += getPayout(player);
         }
         return total * -1;
     }
 
-    public Set<Participant> getParticipants() {
+    public Set<Player> getPlayers() {
         return bet.keySet();
     }
 }

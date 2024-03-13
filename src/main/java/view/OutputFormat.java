@@ -4,7 +4,7 @@ import domain.blackjack.BettingResult;
 import domain.card.Card;
 import domain.participant.Name;
 import domain.participant.Participant;
-import domain.participant.Participants;
+import domain.participant.Players;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +13,8 @@ public class OutputFormat {
 
     private static final String DELIMITER = ", ";
 
-    public String formatParticipantNames(Participants participants) {
-        List<Name> names = participants.getNotDealerNames();
+    public String formatParticipantNames(Players players) {
+        List<Name> names = players.getNames();
         List<String> participantNames = new ArrayList<>();
         for (Name name : names) {
             participantNames.add(name.getValue());

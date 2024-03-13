@@ -8,12 +8,11 @@ public class Dealer extends Participant {
 
     private static final int DEALER_HIT_COUNT = 16;
 
+    private Deck deck;
+
     public Dealer() {
         super(new Name("딜러"));
-    }
-
-    public boolean shouldHit() {
-        return hands.calculateScore() <= DEALER_HIT_COUNT;
+        this.deck = new Deck();
     }
 
     public void receiveCard(Card card) {
@@ -49,5 +48,14 @@ public class Dealer extends Participant {
             return WinStatus.WIN;
         }
         return WinStatus.LOSE;
+    }
+
+    @Override
+    public boolean canHit() {
+        return hands.calculateScore() <= DEALER_HIT_COUNT;
+    }
+
+    public Card draw() {
+        return deck.draw();
     }
 }

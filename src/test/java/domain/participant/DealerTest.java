@@ -19,7 +19,7 @@ class DealerTest {
         dealer.receiveCard(new Card(Shape.HEART, Rank.KING));
         dealer.receiveCard(new Card(Shape.HEART, Rank.SIX));
 
-        Assertions.assertThat(dealer.shouldHit()).isTrue();
+        Assertions.assertThat(dealer.canHit()).isTrue();
     }
 
     @DisplayName("딜러의 점수가 17이상이면 카드를 받을 수 없다.")
@@ -29,7 +29,7 @@ class DealerTest {
         dealer.receiveCard(new Card(Shape.HEART, Rank.KING));
         dealer.receiveCard(new Card(Shape.HEART, Rank.SEVEN));
 
-        Assertions.assertThat(dealer.shouldHit()).isFalse();
+        Assertions.assertThat(dealer.canHit()).isFalse();
     }
 
     @DisplayName("참가자와 딜러 중 점수가 높은 사람이 승리한다.")
@@ -38,11 +38,11 @@ class DealerTest {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
 
-        Participant participant = new Participant(new Name("one"));
-        participant.receiveCard(new Card(Shape.HEART, Rank.KING));
-        participant.receiveCard(new Card(Shape.HEART, Rank.TEN));
+        Player player = new Player(new Name("one"));
+        player.receiveCard(new Card(Shape.HEART, Rank.KING));
+        player.receiveCard(new Card(Shape.HEART, Rank.TEN));
 
-        WinStatus winStatus = dealer.calculateParticipantWinStatus(participant);
+        WinStatus winStatus = dealer.calculateParticipantWinStatus(player);
         assertThat(winStatus).isEqualTo(WinStatus.WIN);
     }
 
@@ -53,11 +53,11 @@ class DealerTest {
         dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
         dealer.receiveCard(new Card(Shape.HEART, Rank.ACE));
 
-        Participant participant = new Participant(new Name("one"));
-        participant.receiveCard(new Card(Shape.HEART, Rank.KING));
-        participant.receiveCard(new Card(Shape.DIA, Rank.ACE));
+        Player player = new Player(new Name("one"));
+        player.receiveCard(new Card(Shape.HEART, Rank.KING));
+        player.receiveCard(new Card(Shape.DIA, Rank.ACE));
 
-        WinStatus winStatus = dealer.calculateParticipantWinStatus(participant);
+        WinStatus winStatus = dealer.calculateParticipantWinStatus(player);
         assertThat(winStatus).isEqualTo(WinStatus.PUSH);
     }
 }

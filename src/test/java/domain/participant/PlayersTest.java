@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class ParticipantsTest {
+class PlayersTest {
 
     private static final int MIN_PARTICIPANT_COUNT = 2;
     private static final int MAX_PARTICIPANT_COUNT = 8;
@@ -17,7 +17,7 @@ class ParticipantsTest {
     void validateMaxSize() {
         List<String> names = List.of("one", "two", "three", "four", "five", "six", "seven", "eight", "nine");
 
-        assertThatThrownBy(() -> new Participants(names))
+        assertThatThrownBy(() -> new Players(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(String.format("최소 %d명 최대 %d명까지 입력받을 수 있습니다.", MIN_PARTICIPANT_COUNT, MAX_PARTICIPANT_COUNT));
     }
@@ -27,7 +27,7 @@ class ParticipantsTest {
     void validateMinSize() {
         List<String> names = List.of("one");
 
-        assertThatThrownBy(() -> new Participants(names))
+        assertThatThrownBy(() -> new Players(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(String.format("최소 %d명 최대 %d명까지 입력받을 수 있습니다.", MIN_PARTICIPANT_COUNT, MAX_PARTICIPANT_COUNT));;
     }
@@ -37,7 +37,7 @@ class ParticipantsTest {
     void validateDuplicateNames() {
         List<String> names = List.of("pobi", "pobi");
 
-        assertThatThrownBy(() -> new Participants(names))
+        assertThatThrownBy(() -> new Players(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름은 중복될 수 없습니다.");
     }

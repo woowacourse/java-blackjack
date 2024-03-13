@@ -1,8 +1,6 @@
 package domain.blackjack;
 
-import domain.participant.Name;
-import domain.participant.Participant;
-import domain.participant.Participants;
+import domain.participant.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,21 +15,23 @@ class BlackJackTest {
     @DisplayName("카드를 두장씩 나눠준다.")
     @Test
     void beginDealing() {
-        Participants participants = new Participants(List.of("one", "two"));
-        BlackJack blackJack = new BlackJack(participants);
-        blackJack.beginDealing(testParticipants -> {});
+        Players players = new Players(List.of("one", "two"));
+        Dealer dealer = new Dealer();
+        BlackJack blackJack = new BlackJack(players, dealer);
+        blackJack.beginDealing((testParticipants, testDealer) -> {});
 
         Assertions.assertAll(
-                () -> assertThat(participants.getDealer().getCardCount()).isEqualTo(2),
-                () -> assertThat(participants.getNotDealerParticipant().get(0).getCardCount()).isEqualTo(2),
-                () -> assertThat(participants.getNotDealerParticipant().get(1).getCardCount()).isEqualTo(2)
+                () -> assertThat(dealer.getCardCount()).isEqualTo(2),
+                () -> assertThat(players.getValue().get(0).getCardCount()).isEqualTo(2),
+                () -> assertThat(players.getValue().get(1).getCardCount()).isEqualTo(2)
         );
     }
 
     @Test
     void name() {
-        Participants participants = new Participants(List.of("one", "two"));
-        BlackJack blackJack = new BlackJack(participants);
+        Players players = new Players(List.of("one", "two"));
+        Dealer dealer = new Dealer();
+        BlackJack blackJack = new BlackJack(players, dealer);
 
         Function<Name, String> testFunction = new Function<Name, String>() {
             int i = 0;
@@ -47,8 +47,6 @@ class BlackJackTest {
 
         blackJack.play(testFunction, Participant::getName);
 
-        List<Participant> notDealerParticipants = participants.getNotDealerParticipant();
-
-        assertThat(notDealerParticipants.get(0).getCardCount()).isEqualTo(2);
+        assertThat(players.getValue().get(0).getCardCount()).isEqualTo(2);
     }
 }

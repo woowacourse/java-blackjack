@@ -1,38 +1,35 @@
 package domain.blackjack;
 
-import domain.participant.Dealer;
-import domain.participant.Name;
-import domain.participant.Participant;
-import domain.participant.Participants;
+import domain.participant.*;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class BlackJack {
 
-    private final Participants participants;
-    private final Deck deck;
+    private final Players players;
+    private final Dealer dealer;
 
-    public BlackJack(final Participants participants) {
-        this.participants = participants;
-        this.deck = new Deck();
+    public BlackJack(final Players players, final Dealer dealer) {
+        this.players = players;
+        this.dealer = dealer;
     }
 
-    public void beginDealing(Consumer<Participants> beginBlackJack) {
-        participants.beginDealing(deck);
+    public void beginDealing(BiConsumer<Players, Dealer> beginBlackJack) {
+        players.beginDealing(dealer);
 
-        beginBlackJack.accept(participants);
+        beginBlackJack.accept(players, dealer);
     }
 
     public void play(Function<Name, String> isHitOption, Consumer<Participant> printParticipantHands) {
-        participants.participantsHit(isHitOption, printParticipantHands, deck);
+        players.playersHit(isHitOption, printParticipantHands, dealer);
     }
 
     public int dealerHit() {
         int count = 0;
-        Dealer dealer = participants.getDealer();
-        while (dealer.shouldHit()) {
-            dealer.receiveCard(deck.draw());
+        while (dealer.canHit()) {
+            dealer.receiveCard(dealer.draw());
             count++;
         }
         return count;

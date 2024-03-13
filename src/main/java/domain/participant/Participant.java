@@ -6,7 +6,7 @@ import domain.card.Hands;
 import java.util.Collections;
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
 
     private static final int BLACK_JACK_COUNT = 21;
     private static final int MIN_CARD_COUNT = 2;
@@ -14,17 +14,15 @@ public class Participant {
     protected Hands hands;
     private final Name name;
 
-    public Participant(final Name name) {
+    protected Participant(final Name name) {
         this.name = name;
         this.hands = new Hands();
     }
 
+    abstract boolean canHit();
+
     public void receiveCard(Card card) {
         hands.receive(card);
-    }
-
-    public boolean canHit() {
-        return hands.calculateScore() <= BLACK_JACK_COUNT;
     }
 
     public boolean isBust() {
