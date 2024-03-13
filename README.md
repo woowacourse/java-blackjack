@@ -76,12 +76,12 @@
 - [x] 최종 승패를 출력한다.
 
 ## 리팩토링
-- [ ] Cards 에서 카드가 비어 있을 경우 메서드 사용 시 예외 발생 테스트
-  - [ ] draw()
-  - [ ] peek()
-  - [ ] shuffle()
-  - [ ] hasAce()
-  - [ ] sum()
+- [x] Cards 에서 카드가 비어 있을 경우 메서드 사용 시 예외 발생 테스트
+  - [x] draw()
+  - [x] peek()
+  - [x] shuffle()
+  - [x] hasAce()
+  - [x] sum()
 - [ ] BlackjackViewParser의 default 메서드 재고
 - [ ] Participant.isLose() if문과 얼리 리턴을 활용해서 가독성 개선
 - [ ] DealerResult.put() { counts.put() -> counts.merge() }
