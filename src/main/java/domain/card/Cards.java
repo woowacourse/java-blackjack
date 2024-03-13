@@ -10,12 +10,16 @@ public class Cards {
     private final Stack<Card> cards;
 
     public Cards() {
-        this.cards = new Stack<>();
+        this(new Stack<>());
     }
 
     public Cards(final Collection<Card> cards) {
         this.cards = new Stack<>();
         this.cards.addAll(cards);
+    }
+
+    public Cards(final Cards cards){
+        this(cards.cards);
     }
 
     public static Cards deck() {
