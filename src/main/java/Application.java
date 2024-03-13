@@ -1,8 +1,11 @@
-import controller.GameController;
+import controller.GameHostController;
+import controller.GameRuleController;
 
 public class Application {
     public static void main(String[] args) {
-        GameController gameController = new GameController();
-        gameController.startGame();
+        GameHostController gameHostController = new GameHostController();
+        GameRuleController gameRuleController = new GameRuleController(gameHostController.getBetAmounts(),
+                gameHostController.startGame());
+        gameRuleController.printResult();
     }
 }

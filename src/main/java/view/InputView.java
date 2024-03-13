@@ -101,4 +101,18 @@ public class InputView {
             throw new IllegalArgumentException(INVALID_COMMAND_MESSAGE);
         }
     }
+
+    public int enterGamerBettingAmounts(final String name) {
+        System.out.println();
+        System.out.println(name + "의 배팅 금액은?");
+        int betAmount = Integer.parseInt(scanner.nextLine());
+        validateBetAmount(betAmount);
+        return betAmount;
+    }
+
+    private void validateBetAmount(final int betAmount) {
+        if (betAmount <= 0) {
+            throw new IllegalArgumentException("배팅 금액은 0보다 많아야 합니다.");
+        }
+    }
 }

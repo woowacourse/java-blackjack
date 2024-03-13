@@ -68,26 +68,15 @@ public class OutputView {
 
     public void printGameResult(final GameResult results) {
         System.out.println();
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
         List<PlayerResult> playerResults = results.results();
-        int loseCount = getLoseCount(playerResults);
+        int totalGamerProfit = playerResults.stream()
+                .mapToInt(PlayerResult::profit)
+                .sum();
 
-        System.out.println("딜러: " + (playerResults.size() - loseCount) + "승 " + loseCount + "패");
+        System.out.println("딜러: " + totalGamerProfit * -1);
         for (PlayerResult playerResult : playerResults) {
-            System.out.println(playerResult.name() + ": " + checkIsWin(playerResult.isWin()));
+            System.out.println(playerResult.name() + ": " + playerResult.profit());
         }
-    }
-
-    private int getLoseCount(final List<PlayerResult> playerResults) {
-        return (int) playerResults.stream()
-                .filter(PlayerResult::isWin)
-                .count();
-    }
-
-    private String checkIsWin(final boolean isWin) {
-        if (isWin) {
-            return "승";
-        }
-        return "패";
     }
 }

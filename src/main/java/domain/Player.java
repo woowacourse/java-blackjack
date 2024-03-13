@@ -31,20 +31,28 @@ public class Player {
         return hand.calculateScoreAfterRound(BLACKJACK_SCORE);
     }
 
-    public boolean hasMoreScoreThan(final Dealer dealer) {
-        return calculateResultScore() > dealer.calculateResultScore();
+    public boolean hasMoreScoreThan(final Player player) {
+        return calculateResultScore() > player.calculateResultScore();
     }
 
-    public boolean hasSameScoreAs(final Dealer dealer) {
-        return calculateResultScore() == dealer.calculateResultScore();
+    public boolean hasSameScoreAs(final Player player) {
+        return calculateResultScore() == player.calculateResultScore();
     }
 
-    public boolean hasLessCardThan(final Dealer dealer) {
-        return getHandSize() <= dealer.getHandSize();
+    public boolean hasLessCardThan(final Player player) {
+        return getHandSize() <= player.getHandSize();
+    }
+
+    public boolean hasMoreCardThan(final Player player) {
+        return getHandSize() > player.getHandSize();
     }
 
     public boolean isNotAbleToDrawCard() {
         return hand.calculateScoreWhileRound() >= BLACKJACK_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return calculateResultScore() == BLACKJACK_SCORE;
     }
 
     public boolean isBusted() {

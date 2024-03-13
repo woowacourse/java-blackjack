@@ -72,6 +72,16 @@ class PlayerTest {
         assertThat(ableToDrawCard).isTrue();
     }
 
+    @DisplayName("손패 정보를 제공한다.")
+    @Test
+    void getHand() {
+        Hand twoCards = createNormalWithTwoCards();
+
+        Player player = new Player(twoCards);
+
+        assertThat(player.getHand()).isEqualTo(twoCards);
+    }
+
     private Hand createNormalWithTwoCards() {
         Hand hand = new Hand();
         hand.saveCards(new ArrayList<>(Arrays.asList(
