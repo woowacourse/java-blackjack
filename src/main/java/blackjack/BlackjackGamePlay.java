@@ -1,6 +1,6 @@
 package blackjack;
 
-import blackjack.model.GameRule;
+import blackjack.model.GameScoreRule;
 import blackjack.model.card.Card;
 import blackjack.model.deck.DeckGenerator;
 import blackjack.model.deck.PlayingDeck;
@@ -14,6 +14,7 @@ import java.util.List;
 public class BlackjackGamePlay {
 
     private final PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck());
+    private final GameScoreRule gameScoreRule = new GameScoreRule();
 
     public void run() {
         List<Player> players = registerPlayer();
@@ -91,7 +92,7 @@ public class BlackjackGamePlay {
         GameResult gameResult = new GameResult();
 
         for (Player player : players) {
-            GameRule.decideWinner(dealer, player, gameResult);
+            gameScoreRule.decideWinner(dealer, player, gameResult);
         }
 
         OutputView.printCardScore(dealer, players);

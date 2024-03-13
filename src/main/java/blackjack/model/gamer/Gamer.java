@@ -12,11 +12,19 @@ public abstract class Gamer {
     public Gamer() {
     }
 
+    public abstract boolean canHit();
+
+    public boolean isBusted() {
+        return handDeck.isBusted();
+    }
+
+    public boolean isBlackJack() {
+        return handDeck.isBlackJack();
+    }
+
     public final void receiveCard(Card card) {
         handDeck.addCard(card);
     }
-
-    public abstract boolean canHit();
 
     public final int calculateTotalScore() {
         return handDeck.calculateTotalScore();

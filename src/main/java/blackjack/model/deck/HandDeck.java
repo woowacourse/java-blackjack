@@ -1,6 +1,5 @@
 package blackjack.model.deck;
 
-import blackjack.model.GameRule;
 import blackjack.model.card.Card;
 
 import java.util.ArrayList;
@@ -9,10 +8,20 @@ import java.util.List;
 public class HandDeck {
 
     private static final int ACE_VALUE_ADJUSTING = 10;
+    private static final int BLACKJACK = 21;
+    private static final int BUST_STANDARD = 21;
 
     private final List<Card> cards = new ArrayList<>();
 
     public HandDeck() {
+    }
+
+    public boolean isBusted() {
+        return calculateTotalScore() > BUST_STANDARD;
+    }
+
+    public boolean isBlackJack() {
+        return calculateTotalScore() == BLACKJACK;
     }
 
     public void addCard(Card card) {
@@ -26,16 +35,16 @@ public class HandDeck {
                 .sum();
 
         if (hasAceCard()) {
-            sum = adjustAceValueIfNotBusted(sum + ACE_VALUE_ADJUSTING);
+            sum = adjustAceValueIfNotBusted(sum);
         }
         return sum;
     }
 
-    private int adjustAceValueIfNotBusted(int adjustedSum) {
-        if (!GameRule.isBusted(adjustedSum)) {
-            return adjustedSum;
+    private int adjustAceValueIfNotBusted(int sum) {
+        if (sum + ACE_VALUE_ADJUSTING <= BUST_STANDARD) {
+            return sum + ACE_VALUE_ADJUSTING;
         }
-        return adjustedSum - ACE_VALUE_ADJUSTING;
+        return sum;
     }
 
     private boolean hasAceCard() {

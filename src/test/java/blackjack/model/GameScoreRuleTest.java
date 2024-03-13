@@ -15,7 +15,9 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class GameRuleTest {
+class GameScoreRuleTest {
+
+    GameScoreRule gameScoreRule = new GameScoreRule();
 
     @DisplayName("딜러와 플레이어가 둘 다 버스트면 딜러가 승리한다.")
     @Test
@@ -34,7 +36,7 @@ class GameRuleTest {
 
         //when
         GameResult gameResult = new GameResult();
-        GameRule.decideWinner(dealer, player, gameResult);
+        gameScoreRule.decideWinner(dealer, player, gameResult);
 
         Map<Player, Result> playersResult = gameResult.getPlayersResult();
         Result playerResult = playersResult.get(player);
@@ -63,7 +65,7 @@ class GameRuleTest {
 
         //when
         GameResult gameResult = new GameResult();
-        GameRule.decideWinner(dealer, player, gameResult);
+        gameScoreRule.decideWinner(dealer, player, gameResult);
 
         Map<Player, Result> playersResult = gameResult.getPlayersResult();
         Result playerResult = playersResult.get(player);
@@ -90,7 +92,7 @@ class GameRuleTest {
 
         //when
         GameResult gameResult = new GameResult();
-        GameRule.decideWinner(dealer, player, gameResult);
+        gameScoreRule.decideWinner(dealer, player, gameResult);
 
         Map<Player, Result> playersResult = gameResult.getPlayersResult();
         Result playerResult = playersResult.get(player);
@@ -117,7 +119,7 @@ class GameRuleTest {
 
         //when
         GameResult gameResult = new GameResult();
-        GameRule.decideWinner(dealer, player, gameResult);
+        gameScoreRule.decideWinner(dealer, player, gameResult);
 
         Map<Player, Result> playersResult = gameResult.getPlayersResult();
         Result playerResult = playersResult.get(player);
