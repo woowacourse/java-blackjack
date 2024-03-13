@@ -1,8 +1,8 @@
-import controller.Controller;
+import controller.GameController;
 
 public class Application {
     public static void main(String[] args) {
-        Controller controller = new Controller();
-        controller.play();
+        GameController gameController = new GameController();
+        gameController.play();
     }
 }

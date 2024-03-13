@@ -21,7 +21,7 @@ import java.util.List;
 import static domain.game.State.BUST;
 import static domain.game.State.HIT;
 
-public class Controller {
+public class GameController {
 
     public void play() {
         Users users = ExceptionHandler.handle(InputView::inputNames);
