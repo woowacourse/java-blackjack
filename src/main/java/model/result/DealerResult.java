@@ -1,7 +1,6 @@
 package model.result;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -10,24 +9,19 @@ public class DealerResult {
 
     private static final Integer INITIAL_COUNT = 1;
 
-    private final String name;
-
     private final Map<ResultStatus, Integer> result;
 
-    private DealerResult(String name, Map<ResultStatus, Integer> result) {
-        this.name = name;
-        this.result = Collections.unmodifiableMap(result);
+    public DealerResult(Map<ResultStatus, Integer> result) {
+        this.result = result;
     }
 
-    public static DealerResult from(GameResult gameResult) {
+    public static DealerResult from(PlayerResults playerResults) {
         Map<ResultStatus, Integer> result = new EnumMap<>(ResultStatus.class);
-        ParticipantScore dealerScore = gameResult.getDealerScore();
-
-        for (ParticipantScore playerScore : gameResult.getPlayersScore()) {
-            ResultStatus resultStatus = gameResult.decideResultStatus(dealerScore, playerScore);
-            result.merge(resultStatus, INITIAL_COUNT, Integer::sum);
+        for (ResultStatus playerResult : playerResults.resultStatuses()) {
+            ResultStatus dealerResult = playerResult.oppositeStatus();
+            result.merge(dealerResult, INITIAL_COUNT, Integer::sum);
         }
-        return new DealerResult(gameResult.dealerName(), result);
+        return new DealerResult(result);
     }
 
     public List<ResultStatus> allStatus() {
@@ -38,9 +32,5 @@ public class DealerResult {
 
     public Integer statusCount(ResultStatus resultStatus) {
         return result.getOrDefault(resultStatus, 0);
-    }
-
-    public String getName() {
-        return name;
     }
 }

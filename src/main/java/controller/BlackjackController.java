@@ -8,7 +8,7 @@ import model.participant.Player;
 import model.participant.Players;
 import model.result.DealerResult;
 import model.result.GameResult;
-import model.result.PlayersResult;
+import model.result.PlayerResults;
 import view.InputView;
 import view.OutputView;
 
@@ -22,20 +22,10 @@ public class BlackjackController {
         OutputView.printInitialCards(blackjackGame, players);
 
         askHitAndPrintCards(players, blackjackGame);
-        dealerTurnAndPrint(blackjackGame);
+        dealerTurnAndPrintCard(blackjackGame);
+
         GameResult gameResult = blackjackGame.finish(players);
-
-        DealerResult dealerResult = DealerResult.from(gameResult);
-        PlayersResult playersResult = PlayersResult.from(gameResult);
-        OutputView.printFinalScore(blackjackGame, players, gameResult);
-        OutputView.printGameResult(dealerResult, playersResult);
-    }
-
-    private void dealerTurnAndPrint(BlackjackGame blackjackGame) {
-        boolean isDealerHit = blackjackGame.dealerHitTurn();
-        if (isDealerHit) {
-            OutputView.printAfterDealerHit(blackjackGame.getDealer());
-        }
+        printGameResult(gameResult);
     }
 
     private Players preparePlayers() {
@@ -62,6 +52,19 @@ public class BlackjackController {
             String hitChoice = InputView.askHitChoice(player);
             return HitChoice.findHitChoice(hitChoice);
         });
+    }
+
+    private void dealerTurnAndPrintCard(BlackjackGame blackjackGame) {
+        boolean isDealerHit = blackjackGame.dealerHitTurn();
+        if (isDealerHit) {
+            OutputView.printAfterDealerHit(blackjackGame.getDealer());
+        }
+    }
+
+    private void printGameResult(GameResult gameResult) {
+        PlayerResults playerResults = PlayerResults.from(gameResult);
+        DealerResult dealerResult = DealerResult.from(playerResults);
+        OutputView.printGameResult(gameResult, dealerResult, playerResults);
     }
 
     private static <T> T retryOnException(Supplier<T> retryOperation) {

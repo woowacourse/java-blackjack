@@ -1,40 +1,31 @@
-package model.result;
+package model.game;
 
 import model.card.Card;
 import model.card.Cards;
-import model.participant.Dealer;
-import model.participant.Player;
 
-public class ParticipantScore {
+public class CardsScore {
 
     private static final int ACE_SCORE_HIGH = 11;
     private static final int ACE_SCORE_LOW = 1;
-    private static final int MINIMUM_SCORE_FOR_ACE_HIGH = 12;
+    private static final int MINIMUM_SCORE_FOR_ACE_HIGH = 11;
     private static final int BLACKJACK_SCORE = 21;
 
-    private final String participantName;
+    private final Cards cards;
     private final int score;
 
-    public ParticipantScore(String participantName, int score) {
-        this.participantName = participantName;
+    private CardsScore(Cards cards, int score) {
+        this.cards = cards;
         this.score = score;
     }
 
-    public static ParticipantScore from(Player player) {
-        Cards cards = player.getCards();
+    public static CardsScore from(Cards cards) {
         int totalScore = calculateTotalScore(cards);
-        return new ParticipantScore(player.getName(), totalScore);
-    }
-
-    public static ParticipantScore from(Dealer dealer) {
-        Cards cards = dealer.getCards();
-        int totalScore = calculateTotalScore(cards);
-        return new ParticipantScore(dealer.getName(), totalScore);
+        return new CardsScore(cards, totalScore);
     }
 
     private static int calculateTotalScore(Cards cards) {
         int totalScore = cards.calculateTotalNumbers();
-        while (totalScore < MINIMUM_SCORE_FOR_ACE_HIGH && hasAce(cards)) {
+        while (totalScore <= MINIMUM_SCORE_FOR_ACE_HIGH && hasAce(cards)) {
             totalScore += ACE_SCORE_HIGH - ACE_SCORE_LOW;
         }
         return totalScore;
@@ -54,8 +45,8 @@ public class ParticipantScore {
         return score > BLACKJACK_SCORE;
     }
 
-    public String getParticipantName() {
-        return participantName;
+    public Cards getCards() {
+        return cards;
     }
 
     public int getScore() {

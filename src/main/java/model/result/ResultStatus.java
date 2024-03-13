@@ -11,6 +11,16 @@ public enum ResultStatus {
         this.displayName = displayName;
     }
 
+    public ResultStatus oppositeStatus() {
+        if (this == WIN) {
+            return LOOSE;
+        }
+        if (this == LOOSE) {
+            return WIN;
+        }
+        return PUSH;
+    }
+
     public String getDisplayName() {
         return displayName;
     }

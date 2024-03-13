@@ -1,64 +1,36 @@
 package model.result;
 
-import java.util.List;
+import static java.util.stream.Collectors.toMap;
+
+import java.util.Map;
+import model.game.CardsScore;
 import model.participant.Dealer;
+import model.participant.Player;
 import model.participant.Players;
 
 public class GameResult {
 
-    private static final String NOT_EXIST_PLAYER = "존재하는 플레이어가 없습니다.";
+    private final CardsScore dealerScore;
+    private final Map<String, CardsScore> playerScores;
 
-    private final ParticipantScore dealerScore;
-    private final List<ParticipantScore> playersScore;
-
-    private GameResult(ParticipantScore dealerScore, List<ParticipantScore> playersScore) {
+    public GameResult(CardsScore dealerScore, Map<String, CardsScore> playerScores) {
         this.dealerScore = dealerScore;
-        this.playersScore = playersScore;
+        this.playerScores = playerScores;
     }
 
     public static GameResult of(Dealer dealer, Players players) {
-        ParticipantScore dealerScore = ParticipantScore.from(dealer);
-        List<ParticipantScore> playersScore = players.getPlayers()
+        CardsScore dealerScore = CardsScore.from(dealer.getCards());
+        Map<String, CardsScore> playersScore = players.getPlayers()
             .stream()
-            .map(ParticipantScore::from)
-            .toList();
+            .collect(toMap(Player::getName, player -> CardsScore.from(player.getCards())));
         return new GameResult(dealerScore, playersScore);
     }
 
-    public ResultStatus decideResultStatus(ParticipantScore self, ParticipantScore opponent) {
-        int selfScore = self.getScore();
-        int opponentScore = opponent.getScore();
-
-        if (self.isBurst() && opponent.isBurst() || selfScore == opponentScore) {
-            return ResultStatus.PUSH;
-        }
-        if (self.isBurst() || (opponent.isNotBurst() && opponentScore > selfScore)) {
-            return ResultStatus.LOOSE;
-        }
-        return ResultStatus.WIN;
-    }
-
-    public int findDealerScore() {
-        return dealerScore.getScore();
-    }
-
-    public int findPlayerScore(String playerName) {
-        return playersScore.stream()
-            .filter(playerScore -> playerScore.getParticipantName().equals(playerName))
-            .findFirst()
-            .map(ParticipantScore::getScore)
-            .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_PLAYER));
-    }
-
-    public String dealerName() {
-        return dealerScore.getParticipantName();
-    }
-
-    public ParticipantScore getDealerScore() {
+    public CardsScore getDealerScore() {
         return dealerScore;
     }
 
-    public List<ParticipantScore> getPlayersScore() {
-        return playersScore;
+    public Map<String, CardsScore> getPlayerScores() {
+        return playerScores;
     }
 }
