@@ -9,7 +9,7 @@ import java.util.List;
 public class Hand {
     private static final int BLACK_JACK_CONDITION = 21;
     public static final int FIRST_INDEX = 0;
-    protected final List<Card> cards;
+    private final List<Card> cards;
 
     public Hand() {
         this.cards = new ArrayList<>();

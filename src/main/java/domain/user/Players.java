@@ -32,7 +32,7 @@ public class Players {
         }
     }
 
-    private static void throwExceptionIfContains(List<Player> distinctPlayers, Player player) {
+    private void throwExceptionIfContains(List<Player> distinctPlayers, Player player) {
         if (distinctPlayers.contains(player)) {
             throw new IllegalArgumentException(
                     "중복된 이름은 입력할 수 없습니다: %s".formatted(player.getNameValue()));
