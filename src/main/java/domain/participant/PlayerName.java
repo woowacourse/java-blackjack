@@ -1,7 +1,7 @@
 package domain.participant;
 
 public record PlayerName (String value) {
-    static final int MAX_NAME_LENGTH = 5;
+    public static final int MAX_NAME_LENGTH = 5;
 
     public PlayerName {
         validateLength(value);
