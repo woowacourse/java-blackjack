@@ -14,6 +14,6 @@ public final class Bust implements HankRank {
 
     @Override
     public boolean isBust() {
-        return false;
+        return true;
     }
 }
