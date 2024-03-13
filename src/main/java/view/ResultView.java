@@ -2,7 +2,6 @@ package view;
 
 import domain.DealerDto;
 import domain.UserDto;
-import domain.card.Card;
 import domain.game.DealerResult;
 import domain.game.PlayerResults;
 
@@ -26,7 +25,7 @@ public class ResultView {
     }
 
     private static void printDealerCard(DealerDto dealerDto) {
-        System.out.println(dealerDto.name.value() + ": " + dealerDto.visibleCard.getName());
+        System.out.println(dealerDto.name + ": " + dealerDto.visibleCard);
     }
 
     private static void printUserCards(List<UserDto> userDtos) {
@@ -35,20 +34,18 @@ public class ResultView {
         );
     }
 
-    public static void printPlayerAndDeck(String name, List<Card> userDeck) {
+    public static void printPlayerAndDeck(String name, List<String> userDeck) {
         System.out.println(joinUserNameAndDeck(name, userDeck));
     }
 
-    private static String joinUserNameAndDeck(String name, List<Card> userDeck) {
+    private static String joinUserNameAndDeck(String name, List<String> userDeck) {
         return name
                 + "카드: "
                 + joinDeck(userDeck);
     }
 
-    private static String joinDeck(List<Card> userDeck) {
-        return userDeck.stream()
-                .map(Card::getName)
-                .collect(Collectors.joining(", "));
+    private static String joinDeck(List<String> userDeck) {
+        return String.join(", ", userDeck);
     }
 
     public static void dealerHit() {
@@ -71,8 +68,8 @@ public class ResultView {
                         System.out.println(player.getName().value() + ": " + result.getResult())));
     }
 
-    public static void printBust(String name, List<Card> userDeck) {
-        printPlayerAndDeck(name, userDeck);
+    public static void printBust(UserDto userDto) {
+        printPlayerAndDeck(userDto.name, userDto.cards);
         System.out.println("버스트!");
     }
 }

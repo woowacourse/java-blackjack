@@ -1,19 +1,17 @@
 package domain;
 
-import domain.card.Card;
 import domain.user.Dealer;
-import domain.user.Name;
 
 public class DealerDto {
-    public final Name name;
-    public final Card visibleCard;
+    public final String name;
+    public final String visibleCard;
 
-    private DealerDto(Name name, Card visibleCard) {
+    private DealerDto(String name, String visibleCard) {
         this.name = name;
         this.visibleCard = visibleCard;
     }
 
     public static DealerDto from(Dealer dealer) {
-        return new DealerDto(dealer.getName(), dealer.getVisibleCard());
+        return new DealerDto(dealer.getName().value(), dealer.getVisibleCard().getName());
     }
 }

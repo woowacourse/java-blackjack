@@ -66,7 +66,7 @@ public class GameController {
 
     private void showMidTermResult(State state, UserDto userDto) {
         if (state == BUST) {
-            ResultView.printBust(userDto.name, userDto.cards);
+            ResultView.printBust(userDto);
         }
     }
 
