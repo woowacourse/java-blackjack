@@ -18,7 +18,8 @@ class BlackJackTest {
         Players players = new Players(List.of("one", "two"));
         Dealer dealer = new Dealer();
         BlackJack blackJack = new BlackJack(players, dealer);
-        blackJack.beginDealing((testParticipants, testDealer) -> {});
+        blackJack.beginDealing((testParticipants, testDealer) -> {
+        });
 
         Assertions.assertAll(
                 () -> assertThat(dealer.getCardCount()).isEqualTo(2),
@@ -36,6 +37,7 @@ class BlackJackTest {
 
         Function<Name, HitOption> testFunction = new Function<Name, HitOption>() {
             int i = 0;
+
             @Override
             public HitOption apply(Name name) {
                 if (i % 3 != 2) {
