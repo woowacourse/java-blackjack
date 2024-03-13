@@ -54,4 +54,8 @@ public class PlayersResult {
     public Map<Player, WinState> getResult() {
         return Collections.unmodifiableMap(result);
     }
+
+    public Map<Player, Profit> getProfitResult() {
+        return Collections.unmodifiableMap(profitResult);
+    }
 }

@@ -4,8 +4,8 @@ public class Profit {
 
     private final int value;
 
-    public Profit(int battingAmount) {
-        this.value = battingAmount;
+    public Profit(int value) {
+        this.value = value;
     }
 
     public Profit lose() {
@@ -22,5 +22,9 @@ public class Profit {
 
     public Profit specialWin() {
         return new Profit((int) (value * 1.5));
+    }
+
+    public int getValue() {
+        return value;
     }
 }

@@ -1,5 +1,6 @@
 package domain.result;
 
+import domain.Profit;
 import domain.WinState;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
@@ -67,7 +68,15 @@ public class Judge {
         return playersResult.getResult();
     }
 
+    public Map<Player, Profit> getPlayersProfit() {
+        return playersResult.getProfitResult();
+    }
+
     public Map<WinState, Integer> getDealerResult() {
         return dealerResult.getResult();
+    }
+
+    public Profit getDealerProfit() {
+        return dealerResult.getProfitResult();
     }
 }

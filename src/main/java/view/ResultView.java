@@ -1,5 +1,6 @@
 package view;
 
+import domain.Profit;
 import domain.WinState;
 import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
@@ -8,8 +9,10 @@ import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
 import domain.result.Judge;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import view.mapper.CardNumberMapper;
 import view.mapper.CardShapeMapper;
@@ -114,5 +117,31 @@ public class ResultView {
 
     private String resolvePlayerFinalResult(Player player, WinState playerWinState) {
         return String.format("%s: %s", player.getPlayerName(), WinStateMapper.toExpression(playerWinState));
+    }
+
+    public void printFinalProfit(Dealer dealer, Judge judge) {
+        System.out.println("## 최종 수익");
+        Profit dealerProfit = judge.getDealerProfit();
+        Map<Player, Profit> playersProfit = judge.getPlayersProfit();
+        System.out.println(resolveDealerProfit(dealer, dealerProfit));
+        System.out.println(resolvePlayersProfit(playersProfit));
+    }
+
+    private String resolveDealerProfit(Dealer dealer, Profit profit) {
+        return String.format("%s: %d", dealer.getPlayerName(), profit.getValue());
+    }
+
+    private String resolvePlayersProfit(Map<Player, Profit> profitResult) {
+        List<String> resolvedProfits = new ArrayList<>();
+        for (Entry<Player, Profit> playerWinState : profitResult.entrySet()) {
+            resolvedProfits.add(resolvePlayerProfit(playerWinState));
+        }
+        return String.join(LINE_SEPARATOR, resolvedProfits);
+    }
+
+    private String resolvePlayerProfit(Entry<Player, Profit> playerWinState) {
+        Player player = playerWinState.getKey();
+        Profit profit = playerWinState.getValue();
+        return String.format("%s: %d", player.getPlayerName(), profit.getValue());
     }
 }
