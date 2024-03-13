@@ -30,7 +30,7 @@ public class Player implements HitAction {
 
     @Override
     public boolean isPossibleHit() {
-        int totalNumbers = cards.calculateTotalNumbers();
+        int totalNumbers = cards.calculateTotalScore();
         return totalNumbers < HIT_CONDITION;
     }
 

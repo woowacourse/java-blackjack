@@ -11,7 +11,7 @@ import model.result.GameResult;
 public class BlackjackGame {
 
     private static final int DEQUE_COUNT = 4;
-    private static final int INITIAL_CARDS_COUNT = 2;
+    private static final int INITIAL_CARD_COUNT = 2;
 
     private final CardShuffler cardShuffler;
     private final Dealer dealer;
@@ -22,12 +22,12 @@ public class BlackjackGame {
     }
 
     public void dealInitialCards(Players players) {
-        dealCardsToDealer(dealer);
+        dealCardsToDealer();
         dealCardsToPlayers(players);
     }
 
-    private void dealCardsToDealer(Dealer dealer) {
-        IntStream.range(0, INITIAL_CARDS_COUNT)
+    private void dealCardsToDealer() {
+        IntStream.range(0, INITIAL_CARD_COUNT)
             .forEach(count -> dealer.hitCard(cardShuffler.drawCard()));
     }
 
@@ -37,7 +37,7 @@ public class BlackjackGame {
     }
 
     private void dealCardsToPlayer(Players players, int order) {
-        IntStream.range(0, INITIAL_CARDS_COUNT)
+        IntStream.range(0, INITIAL_CARD_COUNT)
             .forEach(count -> players.hitCard(order, cardShuffler.drawCard()));
     }
 

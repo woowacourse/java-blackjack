@@ -11,7 +11,7 @@ public class Cards {
         this.cards = List.copyOf(cards);
     }
 
-    public int calculateTotalNumbers() {
+    public int calculateTotalScore() {
         return cards.stream()
             .mapToInt(Card::getScore)
             .sum();

@@ -36,29 +36,28 @@ public class OutputView {
 
     public static void printInitialCards(BlackjackGame blackjackGame, Players players) {
         Dealer dealer = blackjackGame.getDealer();
-        printInitCardsIntro(dealer, players);
+        printInitCardsIntro(players);
         printDealerFirstCard(dealer);
         printAllPlayerCards(players);
     }
 
-    private static void printInitCardsIntro(Dealer dealer, Players players) {
+    private static void printInitCardsIntro(Players players) {
         String playerNames = String.join(CARDS_DELIMITER, players.names());
-        System.out.printf(INIT_CARDS_INTRO, dealer.getName(), playerNames);
+        System.out.printf(INIT_CARDS_INTRO, DEALER_NAME, playerNames);
     }
 
     private static void printDealerFirstCard(Dealer dealer) {
-        String name = dealer.getName();
         Card firstCard = dealer.getFirstCard();
-        System.out.printf(CARDS_FORMAT, name, firstCard);
+        System.out.printf(CARDS_FORMAT, DEALER_NAME, firstCard);
     }
 
     private static void printAllPlayerCards(Players players) {
         players.getPlayers()
-            .forEach(OutputView::printPlayerCard);
+            .forEach(OutputView::printPlayerCards);
         System.out.println();
     }
 
-    public static void printPlayerCard(Player player) {
+    public static void printPlayerCards(Player player) {
         String cardsMessage = createCardsMessage(player.getCards());
         System.out.printf(CARDS_FORMAT, player.getName(), cardsMessage);
     }
@@ -70,8 +69,8 @@ public class OutputView {
             .collect(collectingAndThen(toList(), result -> String.join(CARDS_DELIMITER, result)));
     }
 
-    public static void printAfterDealerHit(Dealer dealer) {
-        System.out.printf(DEALER_HIT, dealer.getName());
+    public static void printAfterDealerHit() {
+        System.out.printf(DEALER_HIT, DEALER_NAME);
     }
 
     public static void printGameResult(GameResult gameResult, DealerResult dealerResult, PlayerResults playerResults) {
@@ -98,7 +97,8 @@ public class OutputView {
             .forEach(playerName -> printPlayerFinalScore(playerName, playerScores));
     }
 
-    private static void printPlayerFinalScore(String playerName, Map<String, CardsScore> playerScores) {
+    private static void printPlayerFinalScore(String playerName,
+        Map<String, CardsScore> playerScores) {
         CardsScore playerScore = playerScores.get(playerName);
         String cardsMessage = createCardsMessage(playerScore.getCards());
         System.out.printf(FINAL_SCORE_FORMAT, playerName, cardsMessage, playerScore.getScore());

@@ -7,7 +7,6 @@ import model.game.HitAction;
 
 public class Dealer implements HitAction {
 
-    private static final String NAME = "딜러";
     private static final int HIT_CONDITION = 17;
 
     private Cards cards;
@@ -22,7 +21,7 @@ public class Dealer implements HitAction {
 
     @Override
     public boolean isPossibleHit() {
-        int totalNumbers = cards.calculateTotalNumbers();
+        int totalNumbers = cards.calculateTotalScore();
         return totalNumbers < HIT_CONDITION;
     }
 
@@ -41,9 +40,5 @@ public class Dealer implements HitAction {
 
     public Cards getCards() {
         return cards;
-    }
-
-    public String getName() {
-        return NAME;
     }
 }

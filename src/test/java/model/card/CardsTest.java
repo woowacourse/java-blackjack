@@ -23,7 +23,7 @@ class CardsTest {
     @MethodSource("provideCardsAndExpectedTotal")
     void testCalculateTotalCardNumbers(List<Card> cardValues, int expectedTotal) {
         Cards cards = new Cards(cardValues);
-        assertThat(cards.calculateTotalNumbers()).isEqualTo(expectedTotal);
+        assertThat(cards.calculateTotalScore()).isEqualTo(expectedTotal);
     }
 
     public static Stream<Arguments> provideCardsAndExpectedTotal() {

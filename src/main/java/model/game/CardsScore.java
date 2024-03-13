@@ -7,7 +7,7 @@ public class CardsScore {
 
     private static final int ACE_SCORE_HIGH = 11;
     private static final int ACE_SCORE_LOW = 1;
-    private static final int MINIMUM_SCORE_FOR_ACE_HIGH = 11;
+    private static final int MIN_SCORE_FOR_ACE_HIGH = 11;
     private static final int BLACKJACK_SCORE = 21;
 
     private final Cards cards;
@@ -24,8 +24,8 @@ public class CardsScore {
     }
 
     private static int calculateTotalScore(Cards cards) {
-        int totalScore = cards.calculateTotalNumbers();
-        while (totalScore <= MINIMUM_SCORE_FOR_ACE_HIGH && hasAce(cards)) {
+        int totalScore = cards.calculateTotalScore();
+        while (totalScore <= MIN_SCORE_FOR_ACE_HIGH && hasAce(cards)) {
             totalScore += ACE_SCORE_HIGH - ACE_SCORE_LOW;
         }
         return totalScore;

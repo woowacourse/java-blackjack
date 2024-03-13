@@ -21,7 +21,7 @@ public class BlackjackController {
         blackjackGame.dealInitialCards(players);
         OutputView.printInitialCards(blackjackGame, players);
 
-        askHitAndPrintCards(players, blackjackGame);
+        playersTurnAndPrintCards(players, blackjackGame);
         dealerTurnAndPrintCard(blackjackGame);
 
         GameResult gameResult = blackjackGame.finish(players);
@@ -35,15 +35,15 @@ public class BlackjackController {
         });
     }
 
-    private void askHitAndPrintCards(Players players, BlackjackGame blackjackGame) {
+    private void playersTurnAndPrintCards(Players players, BlackjackGame blackjackGame) {
         players.getPlayers()
-            .forEach(player -> askHitAndPrintCards(blackjackGame, player));
+            .forEach(player -> askHitAndPrintCards(player, blackjackGame));
     }
 
-    private void askHitAndPrintCards(BlackjackGame blackjackGame, Player player) {
+    private void askHitAndPrintCards(Player player, BlackjackGame blackjackGame) {
         while (player.isPossibleHit() && prepareHitChoice(player).isHit()) {
             blackjackGame.dealCard(player);
-            OutputView.printPlayerCard(player);
+            OutputView.printPlayerCards(player);
         }
     }
 
@@ -57,7 +57,7 @@ public class BlackjackController {
     private void dealerTurnAndPrintCard(BlackjackGame blackjackGame) {
         boolean isDealerHit = blackjackGame.dealerHitTurn();
         if (isDealerHit) {
-            OutputView.printAfterDealerHit(blackjackGame.getDealer());
+            OutputView.printAfterDealerHit();
         }
     }
 

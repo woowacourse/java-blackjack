@@ -1,9 +1,7 @@
 package model.result;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toMap;
-
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,15 +19,12 @@ public class PlayerResults {
         CardsScore dealerScore = gameResult.getDealerScore();
         Map<String, CardsScore> playerScores = gameResult.getPlayerScores();
 
-        return playerScores.keySet()
-            .stream()
-            .collect(collectingAndThen(
-                toMap(
-                    playerName -> playerName,
-                    playerName -> decideResultStatus(playerScores.get(playerName), dealerScore)
-                ),
-                PlayerResults::new)
-            );
+        Map<String, ResultStatus> result = new HashMap<>();
+        for (String playerName : playerScores.keySet()) {
+            CardsScore playerScore = playerScores.get(playerName);
+            result.put(playerName, decideResultStatus(playerScore, dealerScore));
+        }
+        return new PlayerResults(result);
     }
 
     public static ResultStatus decideResultStatus(CardsScore player, CardsScore dealer) {
