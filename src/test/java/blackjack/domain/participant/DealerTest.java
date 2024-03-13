@@ -6,6 +6,7 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.strategy.CardShuffleStrategy;
 import blackjack.domain.strategy.ReverseCardShuffleStrategy;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,5 +34,17 @@ class DealerTest {
         final Card card = dealer.pickCard();
 
         assertThat(card).isEqualTo(new Card(Suit.HEART, Denomination.ACE));
+    }
+
+    @Test
+    void 딜러는_카드를_받을_수_있다() {
+        final CardDeck cardDeck = new CardDeck();
+        final CardShuffleStrategy cardShuffleStrategy = new ReverseCardShuffleStrategy();
+        final Dealer dealer = new Dealer(cardDeck, cardShuffleStrategy);
+
+        dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.KING));
+
+        assertThat(dealer).extracting("cards", InstanceOfAssertFactories.list(Card.class))
+                .hasSize(1);
     }
 }
