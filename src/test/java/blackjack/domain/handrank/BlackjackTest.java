@@ -14,7 +14,7 @@ public class BlackjackTest {
 
     @DisplayName("플레이어, 딜러 모두 블랙잭인 경우 비긴다.")
     @Test
-    void matchTest_whenPlayerAndDealerBlackjack() {
+    void matchTest_whenPlayerAndDealerBlackjack_matchDraw() {
         HankRank dealerRank = BLACKJACK;
         HankRank playerRank = BLACKJACK;
 
@@ -24,7 +24,7 @@ public class BlackjackTest {
     @DisplayName("딜러만 블랙잭인 경우, 딜러가 이긴다.")
     @ParameterizedTest
     @MethodSource("notBlackjack")
-    void matchTest_whenOnlyDealerBlackjack(HankRank hankRank) {
+    void matchTest_whenOnlyDealerBlackjack_dealerWin(HankRank hankRank) {
         HankRank dealerRank = BLACKJACK;
         HankRank playerRank = hankRank;
 

@@ -4,7 +4,13 @@ public final class Bust implements HankRank {
 
     @Override
     public SingleMatchResult matchAtDealer(HankRank playerHandRank) {
-        return null;
+        if (playerHandRank.isBust()) {
+            return SingleMatchResult.DEALER_WIN;
+        }
+        if (playerHandRank.isBlackjack()) {
+            return SingleMatchResult.PLAYER_BLACKJACK;
+        }
+        return SingleMatchResult.PLAYER_WIN;
     }
 
     @Override
