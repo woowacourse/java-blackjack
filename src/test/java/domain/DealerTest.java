@@ -1,11 +1,7 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import controller.dto.dealer.DealerHandScore;
-import controller.dto.dealer.DealerHandStatus;
 import domain.constants.Score;
 import domain.constants.Shape;
 import java.util.ArrayList;
@@ -23,21 +19,6 @@ class DealerTest {
 
         boolean isNotUp = dealer.isNotUpToThreshold();
         assertFalse(isNotUp);
-    }
-
-    @DisplayName("딜러가 가지고 있는 카드의 정보와 총 점수 정보를 반환한다.")
-    @Test
-    void getDealerHandScore() {
-        Hand hand = underThresholdHand();
-        Dealer dealer = new Dealer(hand);
-
-        DealerHandScore dealerHandScore = dealer.getCurrentDealerHandScore();
-        DealerHandStatus dealerHandStatus = dealerHandScore.dealerHandStatus();
-
-        assertAll(
-                () -> assertThat(dealerHandStatus.hands()).isEqualTo("10스페이드, 6하트"),
-                () -> assertThat(dealerHandScore.score()).isEqualTo(16)
-        );
     }
 
     private Hand overThresholdHand() {
