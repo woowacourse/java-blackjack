@@ -21,7 +21,7 @@ public class Deck {
                 .collect(Collectors.toList());
     }
 
-    public List<Card> drawInitialHands() {
+    public List<Card> drawTwoCards() {
         return List.of(draw(), draw());
     }
 
