@@ -21,11 +21,11 @@ public class PlayerPlayersGameResultTest {
         Player player = new Player(new Gamer(new Hand(List.of())), "lemone");
         PlayersGameResult playersGameResult = new PlayersGameResult();
 
-        Map<String, PlayerGameResult> expectedGameResults = new HashMap<>();
-        expectedGameResults.put("lemone", PlayerGameResult.WIN);
+        Map<String, PlayerWinStatus> expectedGameResults = new HashMap<>();
+        expectedGameResults.put("lemone", PlayerWinStatus.WIN);
 
         // when
-        playersGameResult.put(player, PlayerGameResult.WIN);
+        playersGameResult.put(player, PlayerWinStatus.WIN);
 
         // then
         assertThat(playersGameResult.getPlayersNameAndResults())
@@ -37,24 +37,24 @@ public class PlayerPlayersGameResultTest {
     void createDealerResulTest() {
         // given
         PlayersGameResult playersGameResult = new PlayersGameResult();
-        Map<PlayerGameResult, Integer> expectedResult = new HashMap<>();
-        expectedResult.put(PlayerGameResult.WIN, 1);
-        expectedResult.put(PlayerGameResult.LOSE, 2);
-        expectedResult.put(PlayerGameResult.PUSH, 1);
+        Map<PlayerWinStatus, Integer> expectedResult = new HashMap<>();
+        expectedResult.put(PlayerWinStatus.WIN, 1);
+        expectedResult.put(PlayerWinStatus.LOSE, 2);
+        expectedResult.put(PlayerWinStatus.PUSH, 1);
 
         // when
         playersGameResult.put(
                 new Player(new Gamer(new Hand(List.of())), "lemone"),
-                PlayerGameResult.WIN);
+                PlayerWinStatus.WIN);
         playersGameResult.put(
                 new Player(new Gamer(new Hand(List.of())), "seyang"),
-                PlayerGameResult.LOSE);
+                PlayerWinStatus.LOSE);
         playersGameResult.put(
                 new Player(new Gamer(new Hand(List.of())), "pobi"),
-                PlayerGameResult.PUSH);
+                PlayerWinStatus.PUSH);
         playersGameResult.put(
                 new Player(new Gamer(new Hand(List.of())), "club"),
-                PlayerGameResult.WIN);
+                PlayerWinStatus.WIN);
 
         // then
         assertThat(playersGameResult.getDealerResult())

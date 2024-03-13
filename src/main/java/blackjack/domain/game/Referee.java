@@ -20,17 +20,17 @@ public class Referee {
         }
     }
 
-    private PlayerGameResult judgeGameResult(Dealer dealer, Player player) {
+    private PlayerWinStatus judgeGameResult(Dealer dealer, Player player) {
         if (player.isBust() || dealer.isBlackjack()) {
-            return PlayerGameResult.LOSE;
+            return PlayerWinStatus.LOSE;
         }
         if (isPlayerWin(dealer, player)) {
-            return PlayerGameResult.WIN;
+            return PlayerWinStatus.WIN;
         }
         if (dealer.getScore() == player.getScore()) {
-            return PlayerGameResult.PUSH;
+            return PlayerWinStatus.PUSH;
         }
-        return PlayerGameResult.LOSE;
+        return PlayerWinStatus.LOSE;
     }
 
     private boolean isPlayerWin(Dealer dealer, Player player) {
@@ -39,11 +39,11 @@ public class Referee {
                 dealer.isBust();
     }
 
-    public Map<String, PlayerGameResult> getPlayersNameAndResults() {
+    public Map<String, PlayerWinStatus> getPlayersNameAndResults() {
         return result.getPlayersNameAndResults();
     }
 
-    public Map<PlayerGameResult, Integer> getDealerResult() {
+    public Map<PlayerWinStatus, Integer> getDealerResult() {
         return result.getDealerResult();
     }
 }

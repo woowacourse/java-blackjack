@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.game.PlayerGameResult;
+import blackjack.domain.game.PlayerWinStatus;
 
 public enum GameResultName {
     WIN("승"),
@@ -13,7 +13,7 @@ public enum GameResultName {
         this.name = name;
     }
 
-    public static String convert(PlayerGameResult playerGameResult) {
-        return valueOf(playerGameResult.name()).name;
+    public static String convert(PlayerWinStatus playerWinStatus) {
+        return valueOf(playerWinStatus.name()).name;
     }
 }

@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.PlayerGameResult;
+import blackjack.domain.game.PlayerWinStatus;
 
 import java.util.List;
 import java.util.Map;
@@ -65,14 +65,14 @@ public class OutputView {
     }
 
     // TODO: 플레이어와 딜러 게임결과 반환타입이 다른 것 수정
-    public static void printDealerWinStatus(Map<PlayerGameResult, Integer> gameResults) {
+    public static void printDealerWinStatus(Map<PlayerWinStatus, Integer> gameResults) {
         String gameResultsFormat = gameResults.keySet().stream()
                 .map(key -> gameResults.get(key) + GameResultName.convert(key))
                 .collect(Collectors.joining(" "));
         System.out.printf(WIN_STATUS_FORMAT + LINE_SEPARATOR, DEALER_NAME, gameResultsFormat);
     }
 
-    public static void printPlayerWinStatus(String name, PlayerGameResult playerGameResult) {
-        System.out.printf(WIN_STATUS_FORMAT + LINE_SEPARATOR, name, GameResultName.convert(playerGameResult));
+    public static void printPlayerWinStatus(String name, PlayerWinStatus playerWinStatus) {
+        System.out.printf(WIN_STATUS_FORMAT + LINE_SEPARATOR, name, GameResultName.convert(playerWinStatus));
     }
 }

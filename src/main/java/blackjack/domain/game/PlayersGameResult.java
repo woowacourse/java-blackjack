@@ -6,18 +6,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PlayersGameResult {
-    private final Map<Player, PlayerGameResult> playersResults;
+    private final Map<Player, PlayerWinStatus> playersResults;
 
     PlayersGameResult() {
         this.playersResults = new HashMap<>();
     }
 
-    public void put(Player player, PlayerGameResult playerGameResult) {
-        playersResults.put(player, playerGameResult);
+    public void put(Player player, PlayerWinStatus playerWinStatus) {
+        playersResults.put(player, playerWinStatus);
     }
 
-    public Map<String, PlayerGameResult> getPlayersNameAndResults() {
-        Map<String, PlayerGameResult> playersNameAndResults = new HashMap<>();
+    public Map<String, PlayerWinStatus> getPlayersNameAndResults() {
+        Map<String, PlayerWinStatus> playersNameAndResults = new HashMap<>();
 
         playersResults.forEach((player, result) ->
                 playersNameAndResults.put(player.getName(), result)
@@ -25,10 +25,10 @@ public class PlayersGameResult {
         return playersNameAndResults;
     }
 
-    public Map<PlayerGameResult, Integer> getDealerResult() {
-        Map<PlayerGameResult, Integer> dealerResults = new HashMap<>();
+    public Map<PlayerWinStatus, Integer> getDealerResult() {
+        Map<PlayerWinStatus, Integer> dealerResults = new HashMap<>();
         playersResults.values().forEach(gameResult -> {
-                    PlayerGameResult reversedResult = gameResult.reverse();
+                    PlayerWinStatus reversedResult = gameResult.reverse();
                     dealerResults.put(reversedResult, dealerResults.getOrDefault(reversedResult, 0) + 1);
                 }
         );
