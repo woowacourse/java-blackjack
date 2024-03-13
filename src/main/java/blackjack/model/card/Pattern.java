@@ -5,5 +5,5 @@ public enum Pattern {
     SPADE,
     HEART,
     DIAMOND,
-    CLOVER;
+    CLOVER,
 }
