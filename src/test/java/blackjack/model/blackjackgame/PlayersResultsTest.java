@@ -3,6 +3,7 @@ package blackjack.model.blackjackgame;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.participants.Betting;
+import blackjack.model.participants.Name;
 import blackjack.model.participants.Player;
 import blackjack.model.participants.PlayerInfo;
 import org.junit.jupiter.api.DisplayName;
@@ -25,8 +26,8 @@ class PlayersResultsTest {
     }
 
     private void createPlayerResults(int first, int second, int third, PlayersResults playersResults) {
-        playersResults.add(new Player(new PlayerInfo("daon1", new Betting(0))), new Profit(first));
-        playersResults.add(new Player(new PlayerInfo("daon2", new Betting(100))), new Profit(second));
-        playersResults.add(new Player(new PlayerInfo("daon3", new Betting(200))), new Profit(third));
+        playersResults.add(new Player(new PlayerInfo(new Name("daon1"), new Betting(0))), new Profit(first));
+        playersResults.add(new Player(new PlayerInfo(new Name("daon2"), new Betting(100))), new Profit(second));
+        playersResults.add(new Player(new PlayerInfo(new Name("daon3"), new Betting(200))), new Profit(third));
     }
 }

@@ -5,6 +5,7 @@ import blackjack.model.blackjackgame.Profit;
 import blackjack.model.cards.Card;
 import blackjack.model.cards.Cards;
 import blackjack.model.participants.Dealer;
+import blackjack.model.participants.Name;
 import blackjack.model.participants.Participant;
 import blackjack.model.participants.Player;
 import blackjack.model.participants.PlayerInfo;
@@ -93,13 +94,14 @@ public class OutputView {
     }
 
     private String getPlayerName(final Player player) {
-        return player.getPlayerInfo().getName();
+        return player.getPlayerInfo().getName().getValue();
     }
 
     private String getPlayersNames(final List<Player> players) {
         return players.stream()
                 .map(Player::getPlayerInfo)
                 .map(PlayerInfo::getName)
+                .map(Name::getValue)
                 .collect(Collectors.joining(MULTIPLE_OUTPUTS_DELIMITER));
     }
 

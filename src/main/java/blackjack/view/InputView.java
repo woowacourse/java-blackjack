@@ -1,10 +1,12 @@
 package blackjack.view;
 
 import blackjack.model.participants.Betting;
+import blackjack.model.participants.Name;
 import blackjack.model.participants.Player;
 import blackjack.model.participants.PlayerInfo;
 import blackjack.model.participants.Players;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -23,18 +25,25 @@ public class InputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = scanner.nextLine();
         validateMultipleInputs(input);
-        return Arrays.stream(input.split(INPUT_DELIMITER))
+        List<Name> names = getNames(input);
+        return names.stream()
                 .map(name -> new PlayerInfo(name, readMoney(name)))
                 .map(Player::new)
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Players::new));
     }
 
-    private Betting readMoney(final String name) {
+    private List<Name> getNames(final String input) {
+        return Arrays.stream(input.split(INPUT_DELIMITER))
+                .map(Name::new)
+                .toList();
+    }
+
+    private Betting readMoney(final Name name) {
         return repeatUntilSuccess(() -> getMoney(name));
     }
 
-    public Betting getMoney(final String name) {
-        System.out.println(name + "의 배팅 금액은?");
+    public Betting getMoney(final Name name) {
+        System.out.println(name.getValue() + "의 배팅 금액은?");
         String input = scanner.nextLine();
         return new Betting(parseInt(input));
     }
@@ -44,7 +53,7 @@ public class InputView {
     }
 
     private Command getCommand(final Player player) {
-        String playerName = player.getPlayerInfo().getName();
+        String playerName = player.getPlayerInfo().getName().getValue();
         String message = String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", playerName);
         System.out.println(message);
         String input = scanner.nextLine();
