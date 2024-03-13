@@ -38,8 +38,8 @@ public class Referee {
                 dealer.isBust();
     }
 
-    public Map<Player, PlayerGameResult> getPlayersResults() {
-        return result.getPlayersResults();
+    public Map<String, PlayerGameResult> getPlayersNameAndResults() {
+        return result.getPlayersNameAndResults();
     }
 
     public Map<PlayerGameResult, Integer> getDealerResult() {

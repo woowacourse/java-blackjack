@@ -16,8 +16,13 @@ public class PlayersGameResult {
         playersResults.put(player, playerGameResult);
     }
 
-    public Map<Player, PlayerGameResult> getPlayersResults() {
-        return playersResults;
+    public Map<String, PlayerGameResult> getPlayersNameAndResults() {
+        Map<String, PlayerGameResult> playersNameAndResults = new HashMap<>();
+
+        playersResults.forEach((player, result) ->
+                playersNameAndResults.put(player.getName(), result)
+        );
+        return playersNameAndResults;
     }
 
     public Map<PlayerGameResult, Integer> getDealerResult() {
