@@ -2,7 +2,7 @@ package view.dto.card;
 
 import domain.card.Card;
 import domain.card.CardNumber;
-import domain.card.CardNumberPhrase;
+import domain.card.CardPhrase;
 
 import java.util.Arrays;
 
@@ -12,9 +12,9 @@ public record CardDto(String cardNumber, String cardShape) {
     }
 
     private static String convertToPhrase(final CardNumber cardNumber) {
-        return Arrays.stream(CardNumberPhrase.values())
-                     .filter(cardNumberPhrase -> cardNumberPhrase.name() == cardNumber.name())
-                     .map(CardNumberPhrase::getPhrase)
+        return Arrays.stream(CardPhrase.values())
+                     .filter(cardPhrase -> cardPhrase == cardNumber.phrase())
+                     .map(CardPhrase::getPhrase)
                      .findFirst()
                      .orElse(String.valueOf(cardNumber.value()));
     }

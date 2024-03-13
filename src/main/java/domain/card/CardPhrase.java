@@ -1,13 +1,14 @@
 package domain.card;
 
-public enum CardNumberPhrase {
+public enum CardPhrase {
     ACE("A"),
     JACK("J"),
     QUEEN("Q"),
-    KING("K");
+    KING("K"),
+    UN_DETERMINE("");
     private final String phrase;
 
-    CardNumberPhrase(final String phrase) {
+    CardPhrase(final String phrase) {
         this.phrase = phrase;
     }
 
