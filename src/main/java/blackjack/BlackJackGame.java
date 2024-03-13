@@ -3,19 +3,18 @@ package blackjack;
 import blackjack.dto.NameCards;
 import blackjack.dto.NameCardsScore;
 import blackjack.dto.NameProfit;
+import blackjack.model.deck.Deck;
 import blackjack.model.money.Bets;
 import blackjack.model.money.Money;
-import blackjack.model.deck.Deck;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
-import blackjack.model.result.ResultCommand;
 import blackjack.model.result.Referee;
+import blackjack.model.result.ResultCommand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -137,14 +136,20 @@ public class BlackJackGame {
     }
 
     private void printResultProfits(final Referee referee, final Players players, final Bets bets) {
-        final Map<Player, ResultCommand> playerResultCommands = new LinkedHashMap<>();
-        for (Player player : players.getPlayers()) {
-            playerResultCommands.put(player, referee.judgePlayerResult(player));
-        }
-        final Map<Player, Money> playerProfits = bets.calculatePlayersProfit(playerResultCommands);
-        final List<NameProfit> nameProfits = NameProfit.createNameProfits(playerProfits);
+        final Map<Player, ResultCommand> playerResultCommands = players.matchPlayerResultCommands(referee, players);
+        printDealerResultProfit(referee, playerResultCommands, bets);
+        printPlayersResultProfit(playerResultCommands, bets);
+    }
+
+    private void printDealerResultProfit(final Referee referee, final Map<Player, ResultCommand> playerResultCommands,
+                                         final Bets bets) {
         final Money dealerProfit = bets.calculateDealerProfit(playerResultCommands);
         outputView.printDealerProfit(dealerProfit.getMoney());
+    }
+
+    private void printPlayersResultProfit(final Map<Player, ResultCommand> playerResultCommands, final Bets bets) {
+        final Map<Player, Money> playerProfits = bets.calculatePlayersProfit(playerResultCommands);
+        final List<NameProfit> nameProfits = NameProfit.createNameProfits(playerProfits);
         outputView.printPlayersProfit(nameProfits);
     }
 }

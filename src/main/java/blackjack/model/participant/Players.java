@@ -1,10 +1,14 @@
 package blackjack.model.participant;
 
 import blackjack.dto.NameCardsScore;
-import blackjack.model.money.Bets;
 import blackjack.model.deck.Card;
+import blackjack.model.money.Bets;
+import blackjack.model.result.Referee;
+import blackjack.model.result.ResultCommand;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -67,6 +71,14 @@ public class Players {
             bets.addBet(player, money);
         }
         return bets;
+    }
+
+    public Map<Player, ResultCommand> matchPlayerResultCommands(final Referee referee, final Players players) {
+        final Map<Player, ResultCommand> playerResultCommands = new LinkedHashMap<>();
+        for (Player player : players.getPlayers()) {
+            playerResultCommands.put(player, referee.judgePlayerResult(player));
+        }
+        return playerResultCommands;
     }
 
     public Stream<Player> stream() {
