@@ -1,15 +1,14 @@
 package domain.game;
 
-import domain.user.BetAmount;
 import domain.user.Player;
 import java.util.Collections;
 import java.util.Map;
 
 public class PlayersMoney {
     public static final int DEALER_MULTIPLIER = -1;
-    private final Map<Player, BetAmount> playersMoney;
+    private final Map<Player, Money> playersMoney;
 
-    public PlayersMoney(Map<Player, BetAmount> playersMoney) {
+    public PlayersMoney(Map<Player, Money> playersMoney) {
         this.playersMoney = playersMoney;
     }
 
@@ -30,10 +29,10 @@ public class PlayersMoney {
     }
 
     public int calculateDealerMoney() {
-        return playersMoney.values().stream().mapToInt(BetAmount::value).sum() * DEALER_MULTIPLIER;
+        return playersMoney.values().stream().mapToInt(Money::value).sum() * DEALER_MULTIPLIER;
     }
 
-    public Map<Player, BetAmount> getPlayersMoney() {
+    public Map<Player, Money> getPlayersMoney() {
         return Collections.unmodifiableMap(playersMoney);
     }
 }
