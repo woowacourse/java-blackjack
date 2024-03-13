@@ -1,6 +1,8 @@
 package domain.blackjack;
 
 import domain.card.Deck;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -8,10 +10,20 @@ import java.util.function.Function;
 public class Players {
     private final List<Player> players;
 
-    public Players(List<String> playerNames) {
+    Players(List<String> playerNames) {
         this.players = playerNames.stream()
                 .map(playerName -> Player.from(playerName, HoldingCards.of()))
                 .toList();
+    }
+
+    public Players(List<String> playersName, List<Integer> battingMoneys) {
+        List<Player> players = new ArrayList<>();
+        for (int index = 0; index < playersName.size(); index++) {
+            String playerName = playersName.get(index);
+            int battingMoney = battingMoneys.get(index);
+            players.add(Player.from(playerName, HoldingCards.of(), battingMoney));
+        }
+        this.players = Collections.unmodifiableList(players);
     }
 
     List<GameResult> calculateGameResultsWith(Dealer dealer) {

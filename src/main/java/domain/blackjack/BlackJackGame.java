@@ -10,9 +10,14 @@ public class BlackJackGame {
     private final Dealer dealer;
     private final Players players;
 
-    public BlackJackGame(List<String> playerNames) {
+    BlackJackGame(List<String> playerNames) {
         this.dealer = Dealer.of(HoldingCards.of());
         this.players = new Players(playerNames);
+    }
+
+    public BlackJackGame(List<String> playerNames, List<Integer> battingMoneys) {
+        this.dealer = Dealer.of(HoldingCards.of());
+        this.players = new Players(playerNames, battingMoneys);
     }
 
     public void initialDraw(Deck deck) {

@@ -10,6 +10,7 @@ import dto.DealerDTO;
 import dto.GameResultDTO;
 import dto.PlayerDTO;
 import java.util.List;
+import view.BattingMoneyInputView;
 import view.NameInputView;
 import view.OutputView;
 import view.YesOrNoInputView;
@@ -24,11 +25,12 @@ public class BlackJackController {
         blackJackGame.initialDraw(deck);
 
         Players players = blackJackGame.getPlayers();
-        Dealer dealer = blackJackGame.getDealer();
         List<String> playerNames = players.getPlayerNames();
         OutputView.printInitGameDoneMessage(playerNames);
 
         printPlayers(players);
+
+        Dealer dealer = blackJackGame.getDealer();
         printDealerWithoutFirstCard(dealer);
 
         playersTryDraw(deck, blackJackGame);
@@ -43,7 +45,8 @@ public class BlackJackController {
 
     private BlackJackGame generateBlackJackGame() {
         List<String> playerNames = NameInputView.getNames();
-        return new BlackJackGame(playerNames);
+        List<Integer> playersBattingMoney = BattingMoneyInputView.getMoney(playerNames);
+        return new BlackJackGame(playerNames, playersBattingMoney);
     }
 
     private void printPlayers(Players players) {
