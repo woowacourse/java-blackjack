@@ -16,10 +16,12 @@ public class BlackJackGame {
 
     private final Gamers gamers;
     private CardPack cardPack;
+    private Judge judge; // TODO: remove
 
     public BlackJackGame(List<String> rawPlayersNames) {
         this.gamers = makeGamers(rawPlayersNames);
         this.cardPack = new CardPack();
+        this.judge = new Judge();
     }
 
     private Gamers makeGamers(List<String> rawPlayersNames) {
@@ -28,6 +30,10 @@ public class BlackJackGame {
                 .toList();
         Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
         return new Gamers(players, dealer);
+    }
+
+    public void initializeProfit(Player player, Profit profit) {
+        judge.initializeProfit(player, profit);
     }
 
     public void setUpGame() {
@@ -49,8 +55,9 @@ public class BlackJackGame {
     }
 
     public Judge makeFinalResult() {
-        Judge judge = new Judge();
+//        Judge judge = new Judge();
         judge.decideResult(gamers);
+        judge.decideProfit();
         return judge;
     }
 

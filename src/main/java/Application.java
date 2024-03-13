@@ -1,5 +1,6 @@
 import domain.BlackJackGame;
 import domain.HitOption;
+import domain.Profit;
 import domain.cards.Card;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
@@ -17,6 +18,8 @@ public class Application {
     public static void main(String[] args) {
         BlackJackGame game = startGame();
 
+        setUpPlayers(game);
+
         setUpGame(game);
 
         progressGame(game);
@@ -27,6 +30,13 @@ public class Application {
     private static BlackJackGame startGame() {
         List<String> rawPlayersNames = inputView.readPlayersNames();
         return new BlackJackGame(rawPlayersNames);
+    }
+
+    private static void setUpPlayers(BlackJackGame game) {
+        for (Player player : game.getGamers().getPlayers()) {
+            int battingAmount = inputView.readBattingAmount(player);
+            game.initializeProfit(player, new Profit(battingAmount));
+        }
     }
 
     private static void setUpGame(BlackJackGame game) {
@@ -73,6 +83,6 @@ public class Application {
     private static void makeResult(BlackJackGame game) {
         Gamers gamers = game.getGamers();
         Judge judge = game.makeFinalResult();
-        resultView.printFinalResult(gamers.getDealer(), judge);
+        resultView.printFinalProfit(gamers.getDealer(), judge);
     }
 }

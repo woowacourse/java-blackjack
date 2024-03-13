@@ -22,12 +22,16 @@ public class PlayersResult {
         result.put(player, winState);
     }
 
+    public void addProfit(Player player, Profit profit) {
+        profitResult.put(player, profit);
+    }
+
     public void calculateProfit() {
         for (Entry<Player, WinState> playerWinState : result.entrySet()) {
             Player player = playerWinState.getKey();
             WinState winState = playerWinState.getValue();
             Profit profit = matchWinStateToProfit(player, winState);
-            profitResult.replace(player, profit);
+            profitResult.put(player, profit);
         }
     }
 

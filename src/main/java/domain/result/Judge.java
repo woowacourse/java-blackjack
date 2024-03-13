@@ -18,6 +18,10 @@ public class Judge {
         this.dealerResult = new DealerResult();
     }
 
+    public void initializeProfit(Player player, Profit profit) {
+        playersResult.addProfit(player, profit);
+    }
+
     public void decideResult(Gamers gamers) {
         decidePlayersResult(gamers.getPlayers(), gamers.getDealer());
         decideDealerResult();
@@ -62,6 +66,11 @@ public class Judge {
         dealerResult.addResult(WinState.WIN, playersResult.countWinState(WinState.LOSE));
         dealerResult.addResult(WinState.DRAW, playersResult.countWinState(WinState.DRAW));
         dealerResult.addResult(WinState.LOSE, playersResult.countWinState(WinState.WIN));
+    }
+
+    public void decideProfit() {
+        playersResult.calculateProfit();
+        dealerResult.calculateProfit(playersResult.getProfitResult());
     }
 
     public Map<Player, WinState> getPlayersResult() {
