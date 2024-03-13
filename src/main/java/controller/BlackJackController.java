@@ -22,31 +22,30 @@ public class BlackJackController {
     public void start() {
         Deck deck = Deck.fullDeck();
         BlackJackGame blackJackGame = generateBlackJackGame();
-        blackJackGame.initialDraw(deck);
-
-        Players players = blackJackGame.getPlayers();
-        List<String> playerNames = players.getPlayerNames();
-        OutputView.printInitGameDoneMessage(playerNames);
-
-        printPlayers(players);
-
-        Dealer dealer = blackJackGame.getDealer();
-        printDealerWithoutFirstCard(dealer);
-
-        playersTryDraw(deck, blackJackGame);
-        dealerTryDraw(deck, blackJackGame);
-
-        printDealerWithPoint(dealer);
-        printPlayersWithPoint(players);
-
-        GameResultDTO gameResultDTO = new GameResultDTO(playerNames, blackJackGame.calculatePlayersBettingMoney());
-        GameResultOutputView.print(gameResultDTO);
+        initBlackJackGame(deck, blackJackGame);
+        printPlayersAndDealerBeforeRunGame(blackJackGame);
+        runGame(deck, blackJackGame);
+        printBlackJackGameResults(blackJackGame);
     }
 
     private BlackJackGame generateBlackJackGame() {
         List<String> playerNames = NameInputView.getNames();
         List<Integer> playersBattingMoney = BattingMoneyInputView.getMoney(playerNames);
         return new BlackJackGame(playerNames, playersBattingMoney);
+    }
+
+    private static void initBlackJackGame(Deck deck, BlackJackGame blackJackGame) {
+        blackJackGame.initialDraw(deck);
+        Players players = blackJackGame.getPlayers();
+        List<String> playerNames = players.getPlayerNames();
+        OutputView.printInitGameDoneMessage(playerNames);
+    }
+
+    private void printPlayersAndDealerBeforeRunGame(BlackJackGame blackJackGame) {
+        Players players = blackJackGame.getPlayers();
+        printPlayers(players);
+        Dealer dealer = blackJackGame.getDealer();
+        printDealerWithoutFirstCard(dealer);
     }
 
     private void printPlayers(Players players) {
@@ -65,6 +64,11 @@ public class BlackJackController {
         DealerOutputView.printWithoutSummationCardPoint(dealerDTO);
     }
 
+    private void runGame(Deck deck, BlackJackGame blackJackGame) {
+        playersTryDraw(deck, blackJackGame);
+        dealerTryDraw(deck, blackJackGame);
+    }
+
     private void playersTryDraw(Deck deck, BlackJackGame blackJackGame) {
         blackJackGame.playersDraw(deck, this::printPlayer, YesOrNoInputView::getYNAsBoolean);
     }
@@ -74,6 +78,17 @@ public class BlackJackController {
         if (isDealerDraw) {
             OutputView.printDealerDrawDone();
         }
+    }
+
+    private void printBlackJackGameResults(BlackJackGame blackJackGame) {
+        Players players = blackJackGame.getPlayers();
+        Dealer dealer = blackJackGame.getDealer();
+        printDealerWithPoint(dealer);
+        printPlayersWithPoint(players);
+
+        List<String> playerNames = players.getPlayerNames();
+        GameResultDTO gameResultDTO = new GameResultDTO(playerNames, blackJackGame.calculatePlayersBettingMoney());
+        GameResultOutputView.print(gameResultDTO);
     }
 
     private void printDealerWithPoint(Dealer dealer) {
