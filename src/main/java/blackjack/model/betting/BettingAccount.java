@@ -15,6 +15,9 @@ public class BettingAccount {
         this.money = money.add(profit);
     }
 
+    public void withdraw(final int expense) {
+        this.money = money.subtract(expense);
+    }
 
     public Money getMoney() {
         return money;
