@@ -61,12 +61,12 @@ public abstract class Participant {
         if (!(target instanceof Participant participant)) {
             return false;
         }
-        return Objects.equals(name, participant.name) && Objects.equals(hands, participant.hands);
+        return Objects.equals(name, participant.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, hands);
+        return Objects.hash(name);
     }
 
     @Override
