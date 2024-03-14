@@ -12,7 +12,7 @@ public class Player extends Gamer {
         this.betAmount = betAmount;
     }
 
-    public static Player of(String name, double betAmount) {
+    public static Player of(String name, long betAmount) {
         return new Player(new Name(name), new BetAmount(betAmount));
     }
 

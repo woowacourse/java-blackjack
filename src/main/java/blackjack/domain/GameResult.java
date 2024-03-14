@@ -37,12 +37,12 @@ public enum GameResult {
                 .orElseThrow(() -> new IllegalStateException("해당하는 게임 결과가 없습니다."));
     }
 
-    public static double calculatePlayerProfit(final Dealer dealer, final Player player) {
+    public static long calculatePlayerProfit(final Dealer dealer, final Player player) {
         GameResult gameResult = findGameResult(dealer, player);
-        return player.getBetAmount().value() * gameResult.getProfitRate();
+        return (long) (player.getBetAmount().value() * gameResult.getProfitRate());
     }
 
-    public static double calculateDealerProfit(final Dealer dealer, final Player player) {
+    public static long calculateDealerProfit(final Dealer dealer, final Player player) {
         return calculatePlayerProfit(dealer, player) * -1;
     }
 

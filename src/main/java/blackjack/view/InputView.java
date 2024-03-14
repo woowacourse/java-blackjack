@@ -16,9 +16,9 @@ public class InputView {
         return List.of(scanner.nextLine().split(","));
     }
 
-    public static double readPlayerBetAmount(final String name) {
+    public static long readPlayerBetAmount(final String name) {
         System.out.println(System.lineSeparator() + name + "의 배팅 금액은?");
-        return Double.parseDouble(scanner.nextLine());
+        return Long.parseLong(scanner.nextLine());
     }
 
     public static boolean readDoesWantHit(final Name name) {

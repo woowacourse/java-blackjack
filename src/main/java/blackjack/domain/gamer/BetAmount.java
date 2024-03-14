@@ -1,5 +1,5 @@
 package blackjack.domain.gamer;
 
-public record BetAmount(double value) {
+public record BetAmount(long value) {
 
 }
