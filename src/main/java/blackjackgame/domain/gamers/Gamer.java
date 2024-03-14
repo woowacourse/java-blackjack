@@ -42,8 +42,4 @@ public class Gamer {
     public CardHolder getCardHolder() {
         return cardHolder;
     }
-
-    public BetMaker getBetMaker() {
-        return betMaker;
-    }
 }
