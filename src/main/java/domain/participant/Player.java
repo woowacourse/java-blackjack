@@ -41,6 +41,18 @@ public class Player {
         return score().isNotBust();
     }
 
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
+    public boolean hasHigherScoreThan(Dealer dealer) {
+        return score().isGreaterThan(dealer.score());
+    }
+
+    public boolean hasLowerScoreThan(Dealer dealer) {
+        return score().isLessThan(dealer.score());
+    }
+
     public Score score() {
         return hand.totalScore();
     }
