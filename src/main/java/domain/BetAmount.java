@@ -19,8 +19,12 @@ public class BetAmount {
         return new BetAmount((int) (amount * value));
     }
 
-    public BetAmount makeZero() {
+    public BetAmount lose() {
         return new BetAmount((-1) * amount);
+    }
+
+    public BetAmount makeZero() {
+        return new BetAmount(0);
     }
 
     public int getAmount() {

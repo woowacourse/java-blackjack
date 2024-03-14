@@ -33,6 +33,12 @@ public class Bettings {
         }
 
         if (result.getValue().equals(Result.LOSE)) {
+            final BetAmount resultBetAmount = findBy(result.getKey()).lose();
+            save(result.getKey(), resultBetAmount);
+            return resultBetAmount;
+        }
+
+        if (result.getValue().equals(Result.TIE)) {
             final BetAmount resultBetAmount = findBy(result.getKey()).makeZero();
             save(result.getKey(), resultBetAmount);
             return resultBetAmount;

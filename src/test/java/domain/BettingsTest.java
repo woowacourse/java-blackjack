@@ -78,4 +78,19 @@ class BettingsTest {
         // then
         Assertions.assertThat(resultBetAmount.getAmount()).isEqualTo((-1) * 10_000);
     }
+
+    @DisplayName("무승부이면 금액을 돌려받는다.")
+    @Test
+    void tie() {
+        final Player player = new Player(new Name("제제"), sum21Size2);
+        final BetAmount betAmount = BetAmount.from(10_000);
+        final Entry<Player, Result> result = new AbstractMap.SimpleEntry<>(player, Result.TIE);
+
+        // when
+        bettings.save(player, betAmount);
+        final BetAmount resultBetAmount = bettings.calculateBy(result);
+
+        // then
+        Assertions.assertThat(resultBetAmount.getAmount()).isEqualTo(0);
+    }
 }
