@@ -1,5 +1,6 @@
-package domain;
+package domain.bet;
 
+import domain.Result;
 import domain.participant.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;

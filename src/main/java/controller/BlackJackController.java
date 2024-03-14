@@ -1,9 +1,9 @@
 package controller;
 
 import domain.Answer;
-import domain.BetAmount;
-import domain.Bettings;
 import domain.Result;
+import domain.bet.BetAmount;
+import domain.bet.Bettings;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Player;

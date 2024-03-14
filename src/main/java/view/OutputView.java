@@ -3,8 +3,8 @@ package view;
 import static domain.participant.Dealer.INIT_HANDS_SIZE;
 import static domain.participant.Dealer.THRESHOLD;
 
-import domain.BetAmount;
 import domain.Result;
+import domain.bet.BetAmount;
 import domain.participant.Player;
 import dto.DealerHandsDto;
 import dto.ParticipantDto;

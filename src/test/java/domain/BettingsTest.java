@@ -5,6 +5,8 @@ import static domain.HandsTestFixture.bustHands;
 import static domain.HandsTestFixture.sum20Size3;
 import static domain.HandsTestFixture.sum21Size2;
 
+import domain.bet.BetAmount;
+import domain.bet.Bettings;
 import domain.participant.Name;
 import domain.participant.Player;
 import java.util.AbstractMap;
