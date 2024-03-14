@@ -1,8 +1,11 @@
 package domain.game;
 
+import domain.betting.Bets;
+import domain.betting.Profit;
+import domain.betting.ProfitRate;
 import domain.player.Dealer;
-import domain.player.Name;
 import domain.player.Player;
+import domain.player.PlayerName;
 import domain.player.PlayerNames;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +24,7 @@ public class BlackJackGame {
 
         List<String> names = playerNames.names();
         for (String name : names) {
-            Name Playername = new Name(name);
+            PlayerName Playername = new PlayerName(name);
             Player player = new Player(Playername, dealer.dealHand());
             this.players.add(player);
         }
@@ -39,6 +42,17 @@ public class BlackJackGame {
             return true;
         }
         return false;
+    }
+
+    public Map<Player, Profit> getProfits(Bets bets) {
+        Map<Player, Profit> playerProfits = new LinkedHashMap<>();
+        Map<Player, Result> playerResults = getGameResults();
+        for (Map.Entry<Player, Result> entry : playerResults.entrySet()) {
+            Player player = entry.getKey();
+            Result result = entry.getValue();
+            playerProfits.put(player, Profit.of(bets.get(player.getName()), ProfitRate.from(result)));
+        }
+        return playerProfits;
     }
 
     public Map<Player, Result> getGameResults() {
