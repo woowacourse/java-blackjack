@@ -15,7 +15,7 @@ public class OutputView {
     private static final String RESULT_CARDS_STATUS = "%s카드: %s - 결과: %d";
     private static final String DEALER_RESULT_CARDS_STATUS = "딜러 카드: %s - 결과: %d";
     private static final String FINAL_RESULT_TITLE = System.lineSeparator() + "## 최종 수익";
-    private static final String DEALER_FINAL_RESULT = "딜러: %d" + System.lineSeparator();
+    private static final String DEALER_FINAL_RESULT = "딜러: %s" + System.lineSeparator();
     private static final String INVALID_CHOICE_EXCEPTION = "%s 또는 %s을 입력해주세요.";
     private static final String YES_CHOICE = "y";
     private static final String NO_CHOICE = "n";
@@ -69,7 +69,7 @@ public class OutputView {
 
     public void printFinalProfit(final BigDecimal dealerProfit, final ProfitResult profitResult) {
         System.out.println(FINAL_RESULT_TITLE);
-        System.out.printf(DEALER_FINAL_RESULT, dealerProfit);
+        System.out.printf(DEALER_FINAL_RESULT, dealerProfit.toString());
         profitResult.getProfitResult().forEach(
                 (key, value) -> System.out.println(key.getName() + ": " + value)
         );
