@@ -13,15 +13,19 @@ import static domain.card.CardFixture.cardsOf22;
 import static domain.card.CardRank.ACE;
 import static domain.card.CardRank.FIVE;
 import static domain.card.CardRank.JACK;
+import static domain.card.CardRank.NINE;
+import static domain.card.CardRank.SEVEN;
 import static domain.card.CardRank.SIX;
 import static domain.card.CardRank.THREE;
 import static domain.card.CardRank.TWO;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -30,8 +34,8 @@ import domain.BlackjackResultStatus;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.participant.Participant;
-import domain.participant.dealer.Dealer;
 import domain.participant.player.Player;
+import domain.participant.player.Players;
 
 class DealerTest {
 
@@ -54,6 +58,24 @@ class DealerTest {
             Cards hand = participant.hand();
 
             assertThat(hand.peek()).isEqualTo(card);
+        }
+
+        @DisplayName("딜러는 게임을 시작할 때 본인과 플레이어에게 카드를 나누어준다.")
+        @Test
+        void dealInitialCards() {
+            Player player1 = new Player("제우스");
+            Player player2 = new Player("조이썬");
+            Cards cards = Cards.from(List.of(
+                    cardOf(ACE), cardOf(THREE), cardOf(FIVE), cardOf(SEVEN), cardOf(NINE), cardOf(ACE)));
+            Dealer dealer = Dealer.from(cards);
+
+            dealer.dealInitialCards(Players.from(new LinkedHashSet<>(List.of(player1,  player2))));
+
+            assertAll(
+                    () -> assertThat(dealer.peek()).isEqualTo(cardOf(ACE)),
+                    () -> assertThat(player1.hand().peek()).isEqualTo(cardOf(FIVE)),
+                    () -> assertThat(player2.hand().peek()).isEqualTo(cardOf(NINE))
+            );
         }
 
         static Stream<Arguments> dealInitialCardsSelf() {
