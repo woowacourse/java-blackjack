@@ -38,7 +38,7 @@ public class Dealer {
     }
 
     public boolean shouldDraw() {
-        return hands.getHandsScore() <= DEALER_DRAW_THRESHOLD;
+        return hands.findHandsScore() <= DEALER_DRAW_THRESHOLD;
     }
 
     public void addCard(Card card) {
@@ -57,7 +57,7 @@ public class Dealer {
         return hands.getHands();
     }
 
-    public int getHandsScore() {
-        return hands.getHandsScore();
+    public int findHandsScore() {
+        return hands.findHandsScore();
     }
 }

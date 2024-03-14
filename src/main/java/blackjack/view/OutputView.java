@@ -98,13 +98,13 @@ public class OutputView {
     private static String resolvePlayerFinalHandsAndScoreMessage(Player player) {
         return String.format(FINAL_HANDS_AND_SCORE_FORMAT
                 , resolvePlayerHandsMessage(player)
-                , player.getHandsScore());
+                , player.findHandsScore());
     }
 
     private static String resolveDealerFinalHandsAndScoreMessage(Dealer dealer) {
         return String.format(FINAL_HANDS_AND_SCORE_FORMAT
                 , resolveDealerHandsMessage(dealer)
-                , dealer.getHandsScore());
+                , dealer.findHandsScore());
     }
 
     private static void printDealerGameResult(Dealer dealer, GameResult gameResult) {

@@ -113,8 +113,8 @@ class GameResultTest {
                 Card.valueOf(0)
         ));
 
-        System.out.println(dealer.getHands().getHandsScore());
-        System.out.println(player.getHands().getHandsScore());
+        System.out.println(dealer.getHands().findHandsScore());
+        System.out.println(player.getHands().findHandsScore());
         GameResult gameResult = GameResult.of(dealer, players);
 
         assertThat(gameResult.getGameResult().get(player)).isEqualTo(Result.DRAW);

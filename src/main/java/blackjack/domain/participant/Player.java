@@ -50,8 +50,8 @@ public class Player {
         return betMoney;
     }
 
-    public int getHandsScore() {
-        return hands.getHandsScore();
+    public int findHandsScore() {
+        return hands.findHandsScore();
     }
 
     public boolean isBust() {
