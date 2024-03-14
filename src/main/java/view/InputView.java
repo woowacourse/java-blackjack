@@ -22,9 +22,9 @@ public class InputView {
     public boolean inputPlayerCommand(Name name) {
         String isDrawCard = name.getValue()
                 + "는 한장의 카드를 더 받겠습니까?(예는 "
-                + GameCommand.GET_CARD.command
+                + GameCommand.HIT.command
                 + ", 아니오는 "
-                + GameCommand.REFUSE_CARD.command
+                + GameCommand.STAY.command
                 + ")";
         System.out.println(isDrawCard);
         String inputCommand = scanner.nextLine();
