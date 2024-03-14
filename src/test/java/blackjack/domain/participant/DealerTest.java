@@ -8,7 +8,10 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.Shape;
 import blackjack.domain.card.Value;
 import blackjack.domain.fixture.CardsFixture;
+import blackjack.domain.money.BetAmount;
+import blackjack.domain.money.Profit;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -194,5 +197,23 @@ class DealerTest {
 
             assertThat(dealer.isWin(player)).isTrue();
         }
+    }
+
+    @DisplayName("플레이어와 승패 판단을 할 수 있다.")
+    @Test
+    void calculatePlayersProfitTest() {
+        Player blackjackPlayer = new Player(CardsFixture.BLACKJACK, new Name("black"), new BetAmount(1_000));
+        Player winPlayer = new Player(CardsFixture.CARDS_SCORE_21, new Name("win"), new BetAmount(2_000));
+        Player losePlayer = new Player(CardsFixture.CARDS_SCORE_16, new Name("lose"), new BetAmount(3_000));
+        Players players = new Players(List.of(blackjackPlayer, winPlayer, losePlayer));
+        Dealer dealer = new Dealer(CardsFixture.CARDS_SCORE_17);
+
+        Map<Player, Profit> matchResult = dealer.calculatePlayersProfit(players);
+
+        assertThat(matchResult).containsExactly(
+                Map.entry(blackjackPlayer, new Profit(1_500)),
+                Map.entry(winPlayer, new Profit(2_000)),
+                Map.entry(losePlayer, new Profit(-3_000))
+        );
     }
 }

@@ -9,7 +9,7 @@ public class Players {
 
     private final List<Player> players;
 
-    private Players(List<Player> players) {
+    Players(List<Player> players) {
         validateSize(players);
         validateDistinct(players);
         this.players = players;

@@ -3,6 +3,8 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
+import blackjack.domain.handrank.HandRankFactory;
+import blackjack.domain.handrank.HankRank;
 import java.util.List;
 
 public abstract class Participant {
@@ -46,6 +48,10 @@ public abstract class Participant {
             throw new IllegalStateException("더 이상 카드를 추가할 수 없습니다.");
         }
         hand = hand.add(card);
+    }
+
+    protected final HankRank getHandRank() {
+        return HandRankFactory.from(hand);
     }
 
     public final List<Card> getStartCards() {

@@ -1,8 +1,11 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.money.Profit;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Dealer extends Participant {
 
@@ -29,6 +32,14 @@ public class Dealer extends Participant {
 
     private boolean isLose(Player player) {
         return !isWin(player);
+    }
+
+    public Map<Player, Profit> calculatePlayersProfit(Players players) {
+        Map<Player, Profit> totalResult = new LinkedHashMap<>();
+        for (Player player : players.getPlayers()) {
+            totalResult.put(player, player.match(this));
+        }
+        return totalResult;
     }
 
     public int calculateWinCount(Players players) {
