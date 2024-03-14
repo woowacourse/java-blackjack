@@ -16,6 +16,13 @@ public class Hand {
         this.cards = new ArrayList<>();
     }
 
+    public void addStartCards(Card... startCards) {
+        if (!cards.isEmpty()) {
+            throw new UnsupportedOperationException("카드가 존재하지 않을 때만 가능합니다.");
+        }
+        cards.addAll(List.of(startCards));
+    }
+
     public void addCard(Card card) {
         cards.add(card);
     }

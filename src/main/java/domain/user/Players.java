@@ -13,10 +13,9 @@ public class Players {
         this.players = players;
     }
 
-    void putStartCards(Deck deck) {
+    void addStartCards(Deck deck) {
         for (Player player : players) {
-            player.addCard(deck.getNewCard());
-            player.addCard(deck.getNewCard());
+            player.addStartCards(deck);
         }
     }
 

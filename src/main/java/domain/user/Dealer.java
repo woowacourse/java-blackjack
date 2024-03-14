@@ -12,9 +12,8 @@ public class Dealer {
         this.hand = new Hand();
     }
 
-    void putStartCards(Deck deck) {
-        hand.addCard(deck.getNewCard());
-        hand.addCard(deck.getNewCard());
+    public void addStartCards(Deck deck) {
+        hand.addStartCards(deck.getNewCard(), deck.getNewCard());
     }
 
     public void addCard(Card card) {

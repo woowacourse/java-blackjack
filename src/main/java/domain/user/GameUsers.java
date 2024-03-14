@@ -18,12 +18,12 @@ public class GameUsers {
     public GameUsers(Players players, Deck deck) {
         this.players = players;
         this.dealer = new Dealer();
-        putStartCards(deck);
+        addStartCards(deck);
     }
 
-    private void putStartCards(Deck deck) {
-        players.putStartCards(deck);
-        dealer.putStartCards(deck);
+    private void addStartCards(Deck deck) {
+        players.addStartCards(deck);
+        dealer.addStartCards(deck);
     }
 
     public Map<Player, GameResult> generatePlayerResults() {

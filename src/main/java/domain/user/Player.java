@@ -1,5 +1,6 @@
 package domain.user;
 
+import domain.Deck;
 import domain.card.Card;
 import java.util.List;
 import java.util.Objects;
@@ -11,6 +12,10 @@ public class Player {
     public Player(Name name) {
         this.name = name;
         this.hand = new Hand();
+    }
+
+    public void addStartCards(Deck deck) {
+        hand.addStartCards(deck.getNewCard(), deck.getNewCard());
     }
 
     public void addCard(Card card) {
