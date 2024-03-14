@@ -19,7 +19,7 @@ public class BlackjackGame {
     public void run() {
         Participants participants = createParticipants();
         PlayerBets playerBets = createPlayerBets(participants.getPlayers());
-        printInitialHandsOf(participants);
+        outputView.printInitialHands(participants);
         participantsHitCard(participants);
         outputView.printParticipantsHandWithScore(participants);
         printBlackjackResult(participants, playerBets);
@@ -54,11 +54,6 @@ public class BlackjackGame {
         Name playerName = player.getName();
         int bettingPrice = inputView.readPlayerBettingPrice(playerName.getValue());
         return new PlayerBet(player, bettingPrice);
-    }
-
-    private void printInitialHandsOf(Participants participants) {
-        InitialHands initialHands = participants.getParticipantsInitialHand();
-        outputView.printInitialHands(initialHands);
     }
 
     private void participantsHitCard(Participants participants) {

@@ -19,12 +19,6 @@ public class Participants {
         return dealer.hitAndCountCards(deck);
     }
 
-    public InitialHands getParticipantsInitialHand() {
-        List<InitialHand> playersHand = players.getInitialHands();
-        InitialHand dealerHand = new InitialHand(dealer);
-        return new InitialHands(dealerHand, playersHand);
-    }
-
     public PlayerTurnSelector createPlayerTurnSelector() {
         return new PlayerTurnSelector(players);
     }
