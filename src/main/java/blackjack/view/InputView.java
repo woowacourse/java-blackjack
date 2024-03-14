@@ -41,24 +41,24 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public int receiveBetAmount(String playerName) {
+    public long receiveBetAmount(String playerName) {
         System.out.println(playerName + "의 베팅 금액은?");
-        int betAmount = convertInputToInteger(scanner.nextLine());
+        long betAmount = convertInputToLong(scanner.nextLine());
         validateBetAmount(betAmount);
 
         return betAmount;
     }
 
-    private int convertInputToInteger(String input) {
+    private long convertInputToLong(String input) {
         try {
-            return Integer.parseInt(input);
+            return Long.parseLong(input);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("숫자만 입력 가능합니다.");
         }
     }
 
-    private void validateBetAmount(int betAmount) {
-        if (betAmount < 0) {
+    private void validateBetAmount(long betAmount) {
+        if (betAmount < 0L) {
             throw new IllegalArgumentException("베팅 금액은 0 이상의 정수여야 합니다.");
         }
     }

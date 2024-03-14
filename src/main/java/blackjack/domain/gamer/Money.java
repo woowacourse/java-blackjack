@@ -1,8 +1,8 @@
 package blackjack.domain.gamer;
 
-public record Money(int amount) {
+public record Money(long amount) {
 
-    private static final Money ZERO_AMOUNT = new Money(0);
+    private static final Money ZERO_AMOUNT = new Money(0L);
 
     public static Money getZeroAmountMoney() {
         return ZERO_AMOUNT;
@@ -13,6 +13,6 @@ public record Money(int amount) {
     }
 
     public Money multiplyByRatio(double ratio) {
-        return new Money((int) (amount * ratio));
+        return new Money((long) (amount * ratio));
     }
 }

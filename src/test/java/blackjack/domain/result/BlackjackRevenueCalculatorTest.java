@@ -53,13 +53,13 @@ class BlackjackRevenueCalculatorTest {
             ));
 
             Players players = new Players(Map.of(
-                    winPlayer, new Money(10000),
-                    drawPlayer, new Money(20000),
-                    losePlayer, new Money(30000)
+                    winPlayer, new Money(10000L),
+                    drawPlayer, new Money(20000L),
+                    losePlayer, new Money(30000L)
             ));
 
             Assertions.assertThat(calculator.calculateDealerRevenue(players))
-                    .isEqualTo(new Money(30000));
+                    .isEqualTo(new Money(30000L));
         }
     }
 
@@ -79,7 +79,7 @@ class BlackjackRevenueCalculatorTest {
             ));
             PlayerResultHandler handler = new PlayerResultHandler(dealer);
             calculator = new BlackjackRevenueCalculator(handler);
-            betAmount = new Money(10000);
+            betAmount = new Money(10000L);
         }
 
         @Test
@@ -90,7 +90,7 @@ class BlackjackRevenueCalculatorTest {
                     new Card(Shape.DIAMOND, Number.QUEEN)
             ));
 
-            assertThat(calculator.calculatePlayerRevenue(player, betAmount)).isEqualTo(new Money(15000));
+            assertThat(calculator.calculatePlayerRevenue(player, betAmount)).isEqualTo(new Money(15000L));
         }
 
         @Test
@@ -102,7 +102,7 @@ class BlackjackRevenueCalculatorTest {
                     new Card(Shape.CLOVER, Number.SIX)
             ));
 
-            assertThat(calculator.calculatePlayerRevenue(player, betAmount)).isEqualTo(new Money(10000));
+            assertThat(calculator.calculatePlayerRevenue(player, betAmount)).isEqualTo(new Money(10000L));
         }
 
         @Test
@@ -124,7 +124,7 @@ class BlackjackRevenueCalculatorTest {
                     new Card(Shape.DIAMOND, Number.NINE)
             ));
 
-            assertThat(calculator.calculatePlayerRevenue(player, betAmount)).isEqualTo(new Money(-10000));
+            assertThat(calculator.calculatePlayerRevenue(player, betAmount)).isEqualTo(new Money(-10000L));
         }
 
         private Player createTestPlayer(List<Card> cards) {
