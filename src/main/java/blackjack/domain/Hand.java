@@ -18,7 +18,7 @@ public class Hand {
     public int calculate() {
         int sum = calculateWithDefaultAceNumber();
 
-        if (hasAce() && isAceAddable(sum)) {
+        if (hasAce() && isAceAdditionalValueAddable(sum)) {
             sum += ACE_ADDITIONAL_VALUE;
         }
 
@@ -44,7 +44,7 @@ public class Hand {
                 .anyMatch(Card::isAce);
     }
 
-    private boolean isAceAddable(int sum) {
-        return sum + ACE_ADDITIONAL_VALUE > BLACKJACK_SCORE;
+    private boolean isAceAdditionalValueAddable(int sum) {
+        return sum + ACE_ADDITIONAL_VALUE <= BLACKJACK_SCORE;
     }
 }
