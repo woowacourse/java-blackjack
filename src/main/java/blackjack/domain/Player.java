@@ -26,7 +26,7 @@ public class Player {
         return new Player(name, newState);
     }
 
-    public Score calculate() {
+    public Score calculateHand() {
         return state.calculateHand();
     }
 

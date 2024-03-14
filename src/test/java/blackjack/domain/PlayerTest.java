@@ -67,6 +67,6 @@ class PlayerTest {
         Deck deck = Deck.of(new CardFactory(), cards -> cards);
         player = player.draw(deck);
 
-        assertThat(player.calculate()).isEqualTo(Score.from(20));
+        assertThat(player.calculateHand()).isEqualTo(Score.from(20));
     }
 }
