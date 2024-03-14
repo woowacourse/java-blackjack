@@ -26,7 +26,7 @@ public class Rule {
                 .collect(Collectors.toMap(
                         playerCards -> playerCards.getPlayerName(),
                         playerCards -> new Income(playerCards.determineIncome(decideStatus(playerCards, dealerCards))),
-                        (x, y) -> y,
+                        (oldValue, newValue) -> newValue,
                         LinkedHashMap::new
                 ));
         return new Rule(new Incomes(incomes));

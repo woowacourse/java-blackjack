@@ -50,7 +50,7 @@ public class BlackjackGameManager {
                 .collect(Collectors.toMap(
                         name -> name,
                         name -> new BetAmount(readBetAmount(name)),
-                        (x, y) -> y,
+                        (oldValue, newValue) -> newValue,
                         LinkedHashMap::new
                 ));
     }
