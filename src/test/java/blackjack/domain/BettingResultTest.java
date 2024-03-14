@@ -7,7 +7,6 @@ import blackjack.domain.participants.BettingResult;
 import blackjack.domain.participants.Hands;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
-import blackjack.domain.participants.Profit;
 import blackjack.domain.participants.State;
 import java.util.List;
 import org.assertj.core.api.Assertions;

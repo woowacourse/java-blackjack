@@ -8,13 +8,11 @@ import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
 import blackjack.domain.participants.BlackJackGameResult;
-import blackjack.domain.participants.Profit;
-import blackjack.domain.participants.State;
+import blackjack.domain.Profit;
 import blackjack.dto.ParticipantDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackGame {
 
