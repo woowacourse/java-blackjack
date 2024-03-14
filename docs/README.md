@@ -76,10 +76,10 @@
 - [x] Hand는 추가로 카드를 받을 수 있다.
 - [x] Hand는 총 스코어를 계산할 수 있다.
 - [x] Hand의 상태에 따라 Ace는 Soft(11) 또는 Hard(1, default) 둘 중 하나로 간주된다.
-- [ ] Hand는 상태를 가진다.
+- [ ] Hand는 상태는 다음과 같다.
   - [ ] 상태는 Bust, BlackJack, NotBlackJackBut21, Under21 일 수 있다.
   - [ ] Bust는 총 스코어가 21 초과인 경우이다.
-  - [ ] BlackJack은 총 스코어가 21이면서 카드의 수가 2장인 경우이다.
+  - [x] BlackJack은 총 스코어가 21이면서 카드의 수가 2장인 경우이다.
   - [ ] NotBlackJackBut21은 총 스코어가 21이지만 카드 수가 3장 이상인 경우이다.
   - [ ] Under21는 총 스코어가 21 미만인 모든 경우이다.
 

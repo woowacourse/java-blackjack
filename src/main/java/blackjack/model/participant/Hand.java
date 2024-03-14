@@ -79,4 +79,8 @@ public class Hand {
     public boolean isBust() {
         return calculateScore() > BLACKJACK_SCORE;
     }
+
+    public HandStatus getHandStatus() {
+        return HandStatus.of(calculateScore(), cards.size());
+    }
 }
