@@ -115,7 +115,7 @@ class BlackjackRevenueCalculatorTest {
 				new Card(Shape.DIAMOND, Number.TEN)
 			));
 
-			assertThat(calculator.calculatePlayerRevenue(player, betAmount)).isEqualTo(new Money(0));
+			assertThat(calculator.calculatePlayerRevenue(player, betAmount)).isEqualTo(Money.getZeroAmountMoney());
 		}
 
 		@Test

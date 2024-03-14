@@ -28,12 +28,12 @@ public class BlackjackRevenueCalculator {
 		List<Player> losePlayers = playerResultHandler.getLosePlayers(players.getPlayers());
 
 		if (losePlayers.isEmpty()) {
-			return new Money(0);
+			return Money.getZeroAmountMoney();
 		}
 
 		return losePlayers.stream()
 			.map(players::getBetAmount)
-			.reduce(new Money(0), Money::add);
+			.reduce(Money.getZeroAmountMoney(), Money::add);
 	}
 
 	public Money calculatePlayerRevenue(Player player, Money betAmount) {
@@ -52,6 +52,6 @@ public class BlackjackRevenueCalculator {
 		if (gameResult == GameResult.LOSE) {
 			return betAmount.multiplyByRatio(LOSE_REVENUE_RATIO);
 		}
-		return new Money(0);
+		return Money.getZeroAmountMoney();
 	}
 }

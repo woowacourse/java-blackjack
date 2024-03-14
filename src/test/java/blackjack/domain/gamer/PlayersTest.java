@@ -41,7 +41,7 @@ class PlayersTest {
 
 		for (String name : names) {
 			Player player = new Player(name);
-			playerBetAmountMap.put(player, new Money(0));
+			playerBetAmountMap.put(player, Money.getZeroAmountMoney());
 		}
 
 		return new Players(playerBetAmountMap);
