@@ -68,7 +68,7 @@ public class MessageResolver {
     }
 
     private String resolveDealToPlayerMessage(Player2 player) {
-        return String.format(HAND_FORMAT, player.getName(), resolveHandMessage(player.revealHand()));
+        return String.format(HAND_FORMAT, player.getName().getValue(), resolveHandMessage(player.revealHand()));
     }
 
     private String resolveDealToOneMessage(Participant participant) {
@@ -88,6 +88,10 @@ public class MessageResolver {
     public String resolveParticipantHandMessage(Participant participant) {
         return String.format(HAND_FORMAT, resolveNameMessage(participant),
                 resolveHandMessage(participant.getHand()));
+    }
+
+    public String resolveDrawToPlayerMessage(Player2 player) {
+        return String.format(HAND_FORMAT, player.getName().getValue(), resolveHandMessage(player.getHand()));
     }
 
     private String resolveNameMessage(Participant participant) {

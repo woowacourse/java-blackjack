@@ -1,12 +1,13 @@
 package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.game.Judge;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Dealer2;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Player2;
 import blackjack.domain.participant.Players;
-import blackjack.domain.game.Judge;
 import blackjack.domain.participant.Players2;
 import blackjack.view.InputView;
 import blackjack.view.MessageResolver;
@@ -38,6 +39,32 @@ public class GameManager {
         players.deal(cardDeck);
         outputView.printDealToAll(dealer, players);
 
+        drawToPlayers(players, cardDeck);
+        drawToDealer(dealer, cardDeck);
+
+    }
+
+    private void drawToPlayers(Players2 players, CardDeck cardDeck) {
+        players.draw(player -> drawToPlayer(player, cardDeck));
+        outputView.printLineSeparator();
+    }
+
+    private void drawToPlayer(Player2 player, CardDeck cardDeck) {
+        while (canPlayerHit(player)) {
+            player.draw(cardDeck);
+            outputView.printDrawToPlayer(player);
+        }
+    }
+
+    private boolean canPlayerHit(Player2 player) {
+        return player.canHit() && inputView.readDrawDecision(player.getName()).isHit();
+    }
+
+    private void drawToDealer(Dealer2 dealer, CardDeck cardDeck) {
+        while (dealer.canHit()) {
+            dealer.draw(cardDeck);
+            outputView.printDrawToDealer();
+        }
     }
 
     private void drawToPlayers(Players players, CardDeck cardDeck) {
