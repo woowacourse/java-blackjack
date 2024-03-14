@@ -5,6 +5,7 @@ import domain.Card;
 import domain.Money;
 import domain.Name;
 import domain.constant.GamerResult;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String DELEMITER = ", ";
+    private static final DecimalFormat MONEY_FORMMAT = new DecimalFormat("###########");
     public static void printInitialStep(List<Name> names) {
         System.out.println("\n딜러와 %s에게 2장을 나누었습니다.".formatted(buildGamerNames(names)));
     }
@@ -75,9 +77,9 @@ public class OutputView {
         Money dealerGameResult = gameResult.getDealerResult();
         Map<Name, Money> playersGameResult = gameResult.getPlayersResult();
 
-        System.out.println("딜러: %s".formatted(dealerGameResult.getAmount()));
-        playersGameResult.forEach(
-                (name, result) -> System.out.println("%s: %s".formatted(name.name(), result.getAmount())));
+        System.out.println("딜러: %s".formatted(MONEY_FORMMAT.format(dealerGameResult.getAmount())));
+        playersGameResult.forEach((name, result) ->
+                System.out.println("%s: %s".formatted(name.name(), MONEY_FORMMAT.format(result.getAmount()))));
     }
 
     private static String buildDealerResult(Map<GamerResult, Integer> dealerGameResult) {

@@ -1,6 +1,7 @@
 import domain.BettingResult;
 import domain.Dealer;
 import domain.Deck;
+import domain.Money;
 import domain.Name;
 import domain.Player;
 import domain.Players;
@@ -19,6 +20,7 @@ public class BlackJackGame {
         List<Name> names = setPlayerNames();
         Players players = setPlayers(names);
         Dealer dealer = new Dealer();
+        OutputView.printInitialStep(names);
         playInitialStep(dealer, players, deck);
         playHitStep(dealer, players, deck);
         playFinalStep(dealer, players);
@@ -33,9 +35,15 @@ public class BlackJackGame {
 
     private static Players setPlayers(List<Name> names) {
         List<Player> players = names.stream()
-                .map(Player::new)
+                .map(BlackJackGame::setBettingMoney)
                 .toList();
         return new Players(players);
+    }
+
+    private static Player setBettingMoney(Name name) {
+        String input = InputView.readBettingMoney(CONSOLE_READER, name.name());
+        OutputView.printNewLine();
+        return new Player(name,new Money(input));
     }
 
     private static void playInitialStep(Dealer dealer, Players players, Deck deck) {

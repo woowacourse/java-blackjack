@@ -68,4 +68,18 @@ class InputViewTest {
                     .hasMessage("y또는 n만 입력 받을 수 있습니다.");
         }
     }
+
+    @Nested
+    @DisplayName("사용자에게 배팅 금액을 받는 테스트")
+    class ReadBettingMoney {
+        @DisplayName("null 혹은 빈 문자열을 받으면 예외를 발생한다.")
+        @ParameterizedTest
+        @NullAndEmptySource
+        @ValueSource(strings = {" ", "\t", "\n"})
+        void emptyInputException(String input) {
+            Assertions.assertThatThrownBy(() -> InputView.readBettingMoney(() -> input, "test"))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("입력값에 공백이나 null을 넣을 수 없습니다.");
+        }
+    }
 }

@@ -52,4 +52,11 @@ public class InputView {
             throw new IllegalArgumentException("y또는 n만 입력 받을 수 있습니다.");
         }
     }
+
+    public static String readBettingMoney(Supplier<String> input, String name) {
+        System.out.printf("%s의 배팅 금액은?%n", name);
+        String result = input.get();
+        validateEmpty(result);
+        return result;
+    }
 }
