@@ -26,6 +26,14 @@ class BetAmountTest {
                 .hasMessage("[ERROR] 배팅 금액은 10의 배수만 입력가능합니다.");
     }
 
+    @DisplayName("금액이 양수이고 10의 배수이면 BetAmount를 생성한다.")
+    @ParameterizedTest
+    @ValueSource(ints = {10, 100, 1_000})
+    void from(int amount) {
+        Assertions.assertThatCode(() -> BetAmount.from(amount))
+                .doesNotThrowAnyException();
+    }
+
     @DisplayName("배팅 금액의 1.5배를 반환한다.")
     @Test
     void multiply() {
