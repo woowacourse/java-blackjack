@@ -125,7 +125,7 @@ public class BlackJackController {
         }
     }
 
-    private static void playOneTurnForDealer(final BlackJackGame blackJackGame, final Dealer dealer) {
+    private void playOneTurnForDealer(final BlackJackGame blackJackGame, final Dealer dealer) {
         try {
             blackJackGame.drawForParticipant(dealer);
         } catch (IllegalStateException e) {
