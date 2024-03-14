@@ -8,8 +8,8 @@ import java.util.List;
 
 public class Hands {
 
-    public static final int ACE_BONUS_SCORE = 10;
-    public static final int NO_BONUS_SCORE = 0;
+    private static final int ACE_BONUS_SCORE = 10;
+    private static final int NO_BONUS_SCORE = 0;
 
     private final List<Card> cards;
 
@@ -48,7 +48,6 @@ public class Hands {
         return cards.stream()
                 .anyMatch(Card::isAce);
     }
-
 
     public void receiveHands(Hands newHands) {
         cards.clear();
