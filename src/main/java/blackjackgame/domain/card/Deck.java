@@ -10,13 +10,9 @@ import java.util.stream.Collectors;
 public class Deck {
     private final List<Card> cards;
 
-    private Deck(List<Card> cards) {
+    public Deck(List<Card> cards) {
         validateDuplicateCard(cards);
         this.cards = new ArrayList<>(cards);
-    }
-
-    public static Deck of(Card... cards) {
-        return new Deck(List.of(cards));
     }
 
     public static Deck fullDeck() {

@@ -1,8 +1,10 @@
 package blackjackgame.domain.card;
 
 import static blackjackgame.domain.card.CardName.ACE;
+import static blackjackgame.domain.card.CardName.TWO;
 import static blackjackgame.domain.card.CardType.HEART;
 
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,9 +12,17 @@ import org.junit.jupiter.api.Test;
 class DeckTest {
 
     @Test
+    @DisplayName("카드 배열로 덱 클래스의 생성자를 만들 수 있다.")
+    void createDeckConstructorWithCardArray() {
+        List<Card> cards = List.of(new Card(ACE, HEART), new Card(TWO, HEART));
+        Assertions.assertThatCode(() -> new Deck(cards))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
     @DisplayName("원하는 방식대로 카드가 뽑히는지 검증")
     void validateDraw() {
-        Deck deck = Deck.of(new Card(ACE, HEART));
+        Deck deck = new Deck(List.of(new Card(ACE, HEART)));
         Card card = deck.draw(cards -> cards.get(0));
         Assertions.assertThat(card)
                 .isEqualTo(new Card(ACE, HEART));
@@ -21,7 +31,7 @@ class DeckTest {
     @Test
     @DisplayName("중복된 카드가 포함된 덱이 생성되지 않는지 검증")
     void validateDuplicateCard() {
-        Assertions.assertThatThrownBy(() -> Deck.of(new Card(ACE, HEART), new Card(ACE, HEART)))
+        Assertions.assertThatThrownBy(() -> new Deck(List.of(new Card(ACE, HEART), new Card(ACE, HEART))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복되는 카드가 있습니다.");
     }
@@ -29,7 +39,7 @@ class DeckTest {
     @Test
     @DisplayName("한 번 뽑힌 카드가 또 뽑히지 않는지 검증")
     void validateDrawedCardIsRemoved() {
-        Deck deck = Deck.of(new Card(ACE, HEART));
+        Deck deck = new Deck(List.of(new Card(ACE, HEART)));
         deck.draw(cards -> cards.get(0));
 
         Assertions.assertThatThrownBy(() -> deck.draw(cards -> cards.get(0)))

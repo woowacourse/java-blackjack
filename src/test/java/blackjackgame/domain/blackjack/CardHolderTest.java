@@ -12,6 +12,7 @@ import static blackjackgame.domain.card.CardType.SPADE;
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.Deck;
 import blackjackgame.domain.gamers.CardHolder;
+import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -40,7 +41,7 @@ class CardHolderTest {
     @DisplayName("게임 참가자가 카드를 뽑았을 때 점수가 올바르게 계산되는지 검증")
     void draw() {
         CardHolder CardHolderGamer = new CardHolder("robin", HoldingCards.of());
-        CardHolderGamer.draw(Deck.of(new Card(JACK, HEART)), new TestPlayerCardDrawStrategy(CardHolderGamer));
+        CardHolderGamer.draw(new Deck(List.of(new Card(JACK, HEART))), new TestPlayerCardDrawStrategy(CardHolderGamer));
 
         SummationCardPoint actual = CardHolderGamer.getSummationCardPoint();
         SummationCardPoint expected = new SummationCardPoint(10);
@@ -54,9 +55,9 @@ class CardHolderTest {
         CardHolder CardHolderGamer = new CardHolder("robin", HoldingCards.of(
                 new Card(JACK, HEART), new Card(EIGHT, HEART), new Card(JACK, SPADE)
         ));
-        Deck deck = Deck.of(
+        Deck deck = new Deck(List.of(
                 new Card(TWO, SPADE)
-        );
+        ));
 
         Assertions.assertThatThrownBy(() -> CardHolderGamer.draw(deck, new TestPlayerCardDrawStrategy(CardHolderGamer)))
                 .isInstanceOf(IllegalStateException.class)
@@ -69,9 +70,9 @@ class CardHolderTest {
         CardHolder cardHolderGamer = new CardHolder("robin", HoldingCards.of(
                 new Card(JACK, HEART), new Card(SEVEN, HEART)
         ));
-        Deck deck = Deck.of(
+        Deck deck = new Deck(List.of(
                 new Card(TWO, SPADE)
-        );
+        ));
 
         Assertions.assertThatThrownBy(() -> cardHolderGamer.draw(deck, new TestDealerCardDrawStrategy(cardHolderGamer)))
                 .isInstanceOf(IllegalStateException.class)
