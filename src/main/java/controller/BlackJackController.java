@@ -104,6 +104,6 @@ public class BlackJackController {
     private void printGameProfits(final BlackJackGame blackJackGame, Bets bets) {
         Map<Player, Profit> playerProfits = blackJackGame.getProfits(bets);
         Entry<Player, Integer> dealerProfit = blackJackGame.getDealerProfit(bets);
-        outputView.printProfits(ProfitDto.from(playerProfits));
+        outputView.printProfits(ProfitDto.from(playerProfits, dealerProfit));
     }
 }

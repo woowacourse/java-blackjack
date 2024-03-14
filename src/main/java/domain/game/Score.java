@@ -60,7 +60,7 @@ public class Score implements Comparable<Score> {
     }
 
     public boolean isBlackJack() {
-        return value > BLACK_JACK_SCORE;
+        return value == BLACK_JACK_SCORE;
     }
 
     public int get() {
