@@ -6,13 +6,13 @@ import domain.card.Symbol;
 import domain.game.Result;
 import domain.game.WinLose;
 import domain.participant.Dealer;
-import domain.participant.Participant;
 import domain.participant.Player;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class MessageResolver {
 
+    private static final String DEALER_NAME = "딜러";
     private static final String DELIMITER = ", ";
     private static final String WIN_TEXT = "승";
     private static final String TIE_TEXT = "무";
@@ -20,16 +20,12 @@ public class MessageResolver {
 
     public String playerNamesText(List<Player> players) {
         return players.stream()
-            .map(Participant::getName)
+            .map(Player::getName)
             .collect(Collectors.joining(DELIMITER));
     }
 
     public String dealerNameAndStartingCardsText(Dealer dealer) {
-        List<Card> dealerCards = dealer.getCards();
-        if (dealerCards.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 딜러 카드가 없습니다.");
-        }
-        return String.format("%s 카드: %s", dealer.getName(), cardText(dealerCards.get(0)));
+        return String.format("%s 카드: %s", DEALER_NAME, cardText(dealer.firstCard()));
     }
 
     public String cardsText(List<Card> cards) {
@@ -58,8 +54,8 @@ public class MessageResolver {
         throw new IllegalArgumentException("[ERROR] 존재하지 않는 Symbol입니다.");
     }
 
-    public String participantNameAndCardsText(Participant participant) {
-        return String.format("%s 카드: %s", participant.getName(), cardsText(participant.getCards()));
+    public String participantNameAndCardsText(String name, List<Card> cards) {
+        return String.format("%s 카드: %s", name, cardsText(cards));
     }
 
     public String scoreText(Score score) {
@@ -68,7 +64,7 @@ public class MessageResolver {
 
     public String dealerResultText(Dealer dealer, Result result) {
         return String.format("%s: %s%s%s",
-            dealer.getName(),
+            DEALER_NAME,
             dealerSingleResultText(result.dealerWinCount(), WIN_TEXT),
             dealerSingleResultText(result.dealerTieCount(), TIE_TEXT),
             dealerSingleResultText(result.dealerLoseCount(), LOSE_TEXT)

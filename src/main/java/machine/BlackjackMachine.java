@@ -3,8 +3,8 @@ package machine;
 import domain.game.BlackjackGame;
 import domain.game.Result;
 import domain.participant.Dealer;
-import domain.participant.Participants;
 import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 import strategy.RandomCardGenerator;
 import view.InputView;
@@ -37,7 +37,7 @@ public class BlackjackMachine {
 
     private BlackjackGame initializeGame() {
         List<String> names = inputView.readNames();
-        return new BlackjackGame(Participants.from(names), new RandomCardGenerator());
+        return BlackjackGame.of(Players.withNames(names), new RandomCardGenerator());
     }
 
     private void playPlayerTurns(BlackjackGame game) {
@@ -47,15 +47,15 @@ public class BlackjackMachine {
     }
 
     private void playPlayerTurn(BlackjackGame game, Player player) {
-        while (player.isReceivable() && isHitRequested(player)) {
-            game.giveOneCard(player);
-            outputView.printNameAndCardsOfParticipant(player);
+        while (player.isNotBust() && isHitRequested(player)) {
+            game.giveOneCardTo(player);
+            outputView.printNameAndCardsOfParticipant(player.getName(), player.getCards());
         }
         if (player.isBust()) {
-            outputView.printBustMessage(player);
+            outputView.printBustMessage(player.getName());
             return;
         }
-        outputView.printNameAndCardsOfParticipant(player);
+        outputView.printNameAndCardsOfParticipant(player.getName(), player.getCards());
     }
 
     private boolean isHitRequested(Player player) {
@@ -65,7 +65,7 @@ public class BlackjackMachine {
     private void playDealerTurn(BlackjackGame game) {
         Dealer dealer = game.getDealer();
         if (dealer.isReceivable()) {
-            game.giveOneCard(dealer);
+            game.giveOneCardTo(dealer);
             outputView.printDealerDrawMessage();
             playDealerTurn(game);
         }

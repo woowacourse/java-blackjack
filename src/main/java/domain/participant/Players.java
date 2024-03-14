@@ -15,10 +15,10 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(List<String> names) {
+    public static Players withNames(List<String> names) {
         validate(names);
         return new Players(names.stream()
-            .map(name -> new Player(new Name(name)))
+            .map(Player::withName)
             .toList());
     }
 
@@ -46,13 +46,6 @@ public class Players {
             throw new IllegalArgumentException(
                 String.format("[ERROR] %d~%d명의 플레이어만 허용합니다.", MINIMUM_PLAYER_COUNT, MAXIMUM_PLAYER_COUNT));
         }
-    }
-
-    public boolean doesNotContain(Participant participant) {
-        if (participant instanceof Player) {
-            return !players.contains(participant);
-        }
-        return true;
     }
 
     public List<Player> getPlayers() {

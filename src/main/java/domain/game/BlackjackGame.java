@@ -2,9 +2,8 @@ package domain.game;
 
 import domain.card.Deck;
 import domain.participant.Dealer;
-import domain.participant.Participant;
-import domain.participant.Participants;
 import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 import strategy.CardGenerator;
 
@@ -12,35 +11,40 @@ public class BlackjackGame {
 
     private static final int STARTING_CARDS_AMOUNT = 2;
 
-    private final Participants participants;
+    private final Dealer dealer;
+    private final Players players;
     private final Deck deck;
 
-    public BlackjackGame(Participants participants, CardGenerator cardGenerator) {
-        this.participants = participants;
-        this.deck = Deck.from(cardGenerator);
+    private BlackjackGame(Dealer dealer, Players players, Deck deck) {
+        this.dealer = dealer;
+        this.players = players;
+        this.deck = deck;
+    }
+
+    public static BlackjackGame of(Players players, CardGenerator cardGenerator) {
+        return new BlackjackGame(Dealer.withNoCards(), players, Deck.from(cardGenerator));
     }
 
     public void distributeStartingCards() {
-        for (Participant participant : getPlayers()) {
-            participant.receive(deck.drawCards(STARTING_CARDS_AMOUNT));
-        }
-        getDealer().receive(deck.drawCards(STARTING_CARDS_AMOUNT));
-    }
-
-    public void giveOneCard(Participant participant) {
-        if (participants.doesNotContain(participant)) {
-            throw new IllegalArgumentException("[ERROR] 해당 게임의 참여자가 아닙니다.");
-        }
-        if (participant.isReceivable()) {
-            participant.receive(deck.drawCard());
+        dealer.tryReceive(deck.drawCards(STARTING_CARDS_AMOUNT));
+        for (Player player : players.getPlayers()) {
+            player.tryReceive(deck.drawCards(STARTING_CARDS_AMOUNT));
         }
     }
 
-    public List<Player> getPlayers() {
-        return participants.getPlayers();
+    public void giveOneCardTo(Player player) {
+        player.tryReceive(deck.drawCard());
+    }
+
+    public void giveOneCardTo(Dealer dealer) {
+        dealer.tryReceive(deck.drawCard());
     }
 
     public Dealer getDealer() {
-        return participants.getDealer();
+        return dealer;
+    }
+
+    public List<Player> getPlayers() {
+        return players.getPlayers();
     }
 }

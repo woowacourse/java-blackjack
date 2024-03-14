@@ -19,15 +19,15 @@ class ResultTest {
 
     @BeforeEach
     void beforeEach() {
-        player = new Player(new Name("name"));
-        dealer = new Dealer();
+        player = Player.withName("name");
+        dealer = Dealer.withNoCards();
     }
 
     @Test
     @DisplayName("무승부: 플레이어 점수 == 딜러 점수")
     void tie_PlayerScoreIsEqualToDealerScore() {
-        player.receive(new Card(Rank.EIGHT, Symbol.DIAMOND));
-        dealer.receive(new Card(Rank.EIGHT, Symbol.HEART));
+        player.tryReceive(new Card(Rank.EIGHT, Symbol.DIAMOND));
+        dealer.tryReceive(new Card(Rank.EIGHT, Symbol.HEART));
 
         Result result = Result.of(List.of(player), dealer);
 
@@ -37,8 +37,8 @@ class ResultTest {
     @Test
     @DisplayName("플레이어 패배: 플레이어 점수 < 딜러 점수")
     void playerLose_PlayerScoreIsLessThanDealerScore() {
-        player.receive(new Card(Rank.EIGHT, Symbol.DIAMOND));
-        dealer.receive(new Card(Rank.NINE, Symbol.HEART));
+        player.tryReceive(new Card(Rank.EIGHT, Symbol.DIAMOND));
+        dealer.tryReceive(new Card(Rank.NINE, Symbol.HEART));
 
         Result result = Result.of(List.of(player), dealer);
 
@@ -48,8 +48,8 @@ class ResultTest {
     @Test
     @DisplayName("플레이어 승리: 플레이어 점수 > 딜러 점수")
     void playerWin_PlayerScoreIsGreaterThanDealerScore() {
-        player.receive(new Card(Rank.NINE, Symbol.DIAMOND));
-        dealer.receive(new Card(Rank.EIGHT, Symbol.HEART));
+        player.tryReceive(new Card(Rank.NINE, Symbol.DIAMOND));
+        dealer.tryReceive(new Card(Rank.EIGHT, Symbol.HEART));
 
         Result result = Result.of(List.of(player), dealer);
 
@@ -59,10 +59,10 @@ class ResultTest {
     @Test
     @DisplayName("플레이어 패배: 플레이어 버스트(경계값 22점)")
     void playerLose_PlayerIsBusted() {
-        player.receive(new Card(Rank.KING, Symbol.DIAMOND));
-        player.receive(new Card(Rank.QUEEN, Symbol.CLUB));
-        player.receive(new Card(Rank.TWO, Symbol.HEART));
-        dealer.receive(new Card(Rank.KING, Symbol.HEART));
+        player.tryReceive(new Card(Rank.KING, Symbol.DIAMOND));
+        player.tryReceive(new Card(Rank.QUEEN, Symbol.CLUB));
+        player.tryReceive(new Card(Rank.TWO, Symbol.HEART));
+        dealer.tryReceive(new Card(Rank.KING, Symbol.HEART));
 
         Result result = Result.of(List.of(player), dealer);
 
@@ -72,10 +72,10 @@ class ResultTest {
     @Test
     @DisplayName("플레이어 승리: 딜러 버스트(경계값 22점), 플레이어 생존")
     void playerWin_DealerIsBustedAndPlayerIsNotBusted() {
-        dealer.receive(new Card(Rank.KING, Symbol.DIAMOND));
-        dealer.receive(new Card(Rank.SIX, Symbol.CLUB));
-        dealer.receive(new Card(Rank.SIX, Symbol.HEART));
-        player.receive(new Card(Rank.KING, Symbol.HEART));
+        dealer.tryReceive(new Card(Rank.KING, Symbol.DIAMOND));
+        dealer.tryReceive(new Card(Rank.SIX, Symbol.CLUB));
+        dealer.tryReceive(new Card(Rank.SIX, Symbol.HEART));
+        player.tryReceive(new Card(Rank.KING, Symbol.HEART));
 
         Result result = Result.of(List.of(player), dealer);
 
@@ -85,13 +85,13 @@ class ResultTest {
     @Test
     @DisplayName("플레이어 패배: 딜러 버스트(22점), 플레이어 버스트(22점)")
     void playerLose_DealerIsBustedAndPlayerIsBusted() {
-        dealer.receive(new Card(Rank.KING, Symbol.DIAMOND));
-        dealer.receive(new Card(Rank.SIX, Symbol.CLUB));
-        dealer.receive(new Card(Rank.SIX, Symbol.HEART));
+        dealer.tryReceive(new Card(Rank.KING, Symbol.DIAMOND));
+        dealer.tryReceive(new Card(Rank.SIX, Symbol.CLUB));
+        dealer.tryReceive(new Card(Rank.SIX, Symbol.HEART));
 
-        player.receive(new Card(Rank.KING, Symbol.HEART));
-        player.receive(new Card(Rank.KING, Symbol.CLUB));
-        player.receive(new Card(Rank.TWO, Symbol.HEART));
+        player.tryReceive(new Card(Rank.KING, Symbol.HEART));
+        player.tryReceive(new Card(Rank.KING, Symbol.CLUB));
+        player.tryReceive(new Card(Rank.TWO, Symbol.HEART));
 
         Result result = Result.of(List.of(player), dealer);
 
@@ -101,13 +101,13 @@ class ResultTest {
     @Test
     @DisplayName("딜러의 승리 횟수를 셀 수 있다.")
     void dealerWinCount() {
-        Player player1 = new Player(new Name("play1"));
-        Player player2 = new Player(new Name("play2"));
-        Dealer dealer = new Dealer();
+        Player player1 = Player.withName("user1");
+        Player player2 = Player.withName("user2");
+        Dealer dealer = Dealer.withNoCards();
 
-        player1.receive(new Card(Rank.TWO, Symbol.DIAMOND));
-        player2.receive(new Card(Rank.TWO, Symbol.SPADE));
-        dealer.receive(new Card(Rank.KING, Symbol.HEART));
+        player1.tryReceive(new Card(Rank.TWO, Symbol.DIAMOND));
+        player2.tryReceive(new Card(Rank.TWO, Symbol.SPADE));
+        dealer.tryReceive(new Card(Rank.KING, Symbol.HEART));
         Result result = Result.of(List.of(player1, player2), dealer);
 
         Assertions.assertThat(result.dealerWinCount()).isEqualTo(2);
@@ -116,13 +116,13 @@ class ResultTest {
     @Test
     @DisplayName("딜러의 패배 횟수를 셀 수 있다.")
     void dealerLoseCount() {
-        Player player1 = new Player(new Name("play1"));
-        Player player2 = new Player(new Name("play2"));
-        Dealer dealer = new Dealer();
+        Player player1 = Player.withName("user1");
+        Player player2 = Player.withName("user2");
+        Dealer dealer = Dealer.withNoCards();
 
-        player1.receive(new Card(Rank.KING, Symbol.DIAMOND));
-        player2.receive(new Card(Rank.KING, Symbol.SPADE));
-        dealer.receive(new Card(Rank.TWO, Symbol.HEART));
+        player1.tryReceive(new Card(Rank.KING, Symbol.DIAMOND));
+        player2.tryReceive(new Card(Rank.KING, Symbol.SPADE));
+        dealer.tryReceive(new Card(Rank.TWO, Symbol.HEART));
         Result result = Result.of(List.of(player1, player2), dealer);
 
         Assertions.assertThat(result.dealerLoseCount()).isEqualTo(2);
@@ -131,13 +131,13 @@ class ResultTest {
     @Test
     @DisplayName("딜러의 무승부 횟수를 셀 수 있다.")
     void dealerTieCount() {
-        Player player1 = new Player(new Name("play1"));
-        Player player2 = new Player(new Name("play2"));
-        Dealer dealer = new Dealer();
+        Player player1 = Player.withName("user1");
+        Player player2 = Player.withName("user2");
+        Dealer dealer = Dealer.withNoCards();
 
-        player1.receive(new Card(Rank.KING, Symbol.DIAMOND));
-        player2.receive(new Card(Rank.KING, Symbol.SPADE));
-        dealer.receive(new Card(Rank.KING, Symbol.HEART));
+        player1.tryReceive(new Card(Rank.KING, Symbol.DIAMOND));
+        player2.tryReceive(new Card(Rank.KING, Symbol.SPADE));
+        dealer.tryReceive(new Card(Rank.KING, Symbol.HEART));
         Result result = Result.of(List.of(player1, player2), dealer);
 
         Assertions.assertThat(result.dealerTieCount()).isEqualTo(2);

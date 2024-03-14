@@ -1,13 +1,16 @@
 package view;
 
+import domain.card.Card;
+import domain.card.Score;
 import domain.game.BlackjackGame;
 import domain.game.Result;
 import domain.participant.Dealer;
-import domain.participant.Participant;
 import domain.participant.Player;
+import java.util.List;
 
 public class OutputView {
 
+    private static final String DEALER_NAME = "딜러";
     private static final int STARTING_CARDS_AMOUNT = 2;
 
     private final MessageResolver resolver;
@@ -25,36 +28,38 @@ public class OutputView {
     public void printStartingCardsOfAllParticipants(BlackjackGame game) {
         System.out.println(resolver.dealerNameAndStartingCardsText(game.getDealer()));
         for (Player player : game.getPlayers()) {
-            printNameAndCardsOfParticipant(player);
+            printNameAndCardsOfParticipant(player.getName(), player.getCards());
         }
         System.out.println();
     }
 
-    public void printNameAndCardsOfParticipant(Participant participant) {
-        System.out.println(resolver.participantNameAndCardsText(participant));
+    public void printNameAndCardsOfParticipant(String name, List<Card> cards) {
+        System.out.printf("%s 카드: %s%n", name, resolver.cardsText(cards));
     }
 
-    public void printBustMessage(Participant participant) {
-        System.out.println(participant.getName() + "님은 버스트되었습니다.");
+    public void printBustMessage(String name) {
+        System.out.printf("%s님은 버스트되었습니다.%n", name);
     }
 
     public void printDealerDrawMessage() {
-        System.out.printf("%n딜러는 %d이하라 한장의 카드를 더 받았습니다.%n", Dealer.THRESHOLD_SCORE);
+        System.out.printf("%n딜러는 %d이하라 한장의 카드를 더 받았습니다.%n", Dealer.MAX_RECEIVABLE_SCORE);
     }
 
     public void printFinalCardsAndScoresOfAllParticipants(BlackjackGame game) {
+        Dealer dealer = game.getDealer();
+
         System.out.println();
-        printFinalCardsAndScoresOfParticipant(game.getDealer());
+        printFinalCardsAndScoresOfParticipant(DEALER_NAME, dealer.getCards(), dealer.score());
         for (Player player : game.getPlayers()) {
-            printFinalCardsAndScoresOfParticipant(player);
+            printFinalCardsAndScoresOfParticipant(player.getName(), player.getCards(), player.score());
         }
         System.out.println();
     }
 
-    public void printFinalCardsAndScoresOfParticipant(Participant participant) {
+    public void printFinalCardsAndScoresOfParticipant(String name, List<Card> cards, Score score) {
         System.out.printf("%s - 결과: %s%n",
-            resolver.participantNameAndCardsText(participant),
-            resolver.scoreText(participant.score()));
+            resolver.participantNameAndCardsText(name, cards),
+            resolver.scoreText(score));
     }
 
     public void printWinLoseOfAllParticipants(BlackjackGame game, Result result) {
