@@ -31,7 +31,7 @@ public class Application {
     private static GameBoard createGameBoard() {
         final Deck deck = new ShuffledDeckFactory().create();
         final Dealer dealer = Dealer.from(deck);
-        final Players players = Players.from(InputView.readPlayerNames());
+        final Players players = Players.from(InputView.readPlayerNameAndBettingMoney());
         return new GameBoard(dealer, players);
     }
 

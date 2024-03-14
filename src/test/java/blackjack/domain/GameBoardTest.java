@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Deck;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +25,10 @@ class GameBoardTest {
     void calculatePlayerProfits() {
         final TestDeckFactory testDeckFactory = new TestDeckFactory();
         final Deck deck = testDeckFactory.create();
-        final Players players = Players.from(List.of("pobi", "jason"));
+        final Map<String, Double> bettings = new LinkedHashMap<>();
+        bettings.put("pobi", (double) 10000);
+        bettings.put("jason", (double) 20000);
+        final Players players = Players.from(bettings);
         final Dealer dealer = Dealer.from(deck);
         final GameBoard gameBoard = new GameBoard(dealer, players);
         gameBoard.drawInitialDealerHand();
@@ -44,7 +48,9 @@ class GameBoardTest {
     void informDealerOutcome() {
         final TestDeckFactory testDeckFactory = new TestDeckFactory();
         final Deck deck = testDeckFactory.create();
-        final Players players = Players.from(List.of("pobi"));
+        final Map<String, Double> bettings = new LinkedHashMap<>();
+        bettings.put("pobi", (double) 10000);
+        final Players players = Players.from(bettings);
         final Dealer dealer = Dealer.from(deck);
         final GameBoard gameBoard = new GameBoard(dealer, players);
         gameBoard.drawInitialPlayersHand();
@@ -60,7 +66,10 @@ class GameBoardTest {
     void informPlayersOutcome() {
         final TestDeckFactory testDeckFactory = new TestDeckFactory();
         final Deck deck = testDeckFactory.create();
-        final Players players = Players.from(List.of("pobi", "jason"));
+        final Map<String, Double> bettings = new LinkedHashMap<>();
+        bettings.put("pobi", (double) 10000);
+        bettings.put("jason", (double) 20000);
+        final Players players = Players.from(bettings);
         final Dealer dealer = Dealer.from(deck);
         final GameBoard gameBoard = new GameBoard(dealer, players);
         gameBoard.drawInitialDealerHand();
