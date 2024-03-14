@@ -11,14 +11,14 @@ public class Hand {
     private final List<Card> cards;
 
     private Hand(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public static Hand of(Card... cards) {
-        return new Hand(new ArrayList<>(Arrays.asList(cards)));
+        return new Hand(Arrays.asList(cards));
     }
 
-    public Score calculate() {
+    public Score sumScores() {
         Score defaultScore = calculateDefaultScore();
         Score addedAceScore = defaultScore.add(ACE_ADDITIONAL_SCORE);
         if (hasAce() && addedAceScore.isNotBurst()) {
@@ -30,11 +30,11 @@ public class Hand {
     private Score calculateDefaultScore() {
         return cards.stream()
                 .map(Card::getScore)
-                .reduce(Score.from(0), Score::add);
+                .reduce(Score.base(), Score::add);
     }
 
     public Hand add(Card card) {
-        ArrayList<Card> newCards = new ArrayList<>(cards);
+        List<Card> newCards = new ArrayList<>(cards);
         newCards.add(card);
         return new Hand(newCards);
     }
@@ -44,7 +44,7 @@ public class Hand {
     }
 
     public boolean isBlackJack() {
-        Score handScore = calculate();
+        Score handScore = sumScores();
         return isInitialHand() && handScore.isBlackJackScore();
     }
 
@@ -53,7 +53,7 @@ public class Hand {
     }
 
     public boolean isNotBust() {
-        Score handScore = calculate();
+        Score handScore = sumScores();
         return handScore.isNotBurst();
     }
 

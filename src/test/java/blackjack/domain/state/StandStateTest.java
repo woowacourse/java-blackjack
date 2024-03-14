@@ -31,7 +31,7 @@ public class StandStateTest {
         StandState standState = new StandState(Hand.of(CardFixture.fromSuitCloverWith(Denomination.TEN),
                 CardFixture.fromSuitCloverWith(Denomination.NINE)));
 
-        assertThatCode(() -> standState.stand())
+        assertThatCode(standState::stand)
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("턴이 종료되어 스탠드할 수 없는 상태입니다.");
     }

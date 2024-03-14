@@ -41,7 +41,7 @@ class InitialStateTest {
     public void standFail() {
         InitialState initialState = new InitialState();
 
-        assertThatCode(() -> initialState.stand())
+        assertThatCode(initialState::stand)
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("초기 상태에서는 할 수 없습니다.");
     }
@@ -51,7 +51,7 @@ class InitialStateTest {
     public void calculateHandFail() {
         InitialState initialState = new InitialState();
 
-        assertThatCode(() -> initialState.calculateHand())
+        assertThatCode(initialState::calculateHand)
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("초기 상태에서는 할 수 없습니다.");
     }
@@ -61,7 +61,7 @@ class InitialStateTest {
     public void getHandFail() {
         InitialState initialState = new InitialState();
 
-        assertThatCode(() -> initialState.getHand())
+        assertThatCode(initialState::getHand)
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("초기 상태에서는 할 수 없습니다.");
     }

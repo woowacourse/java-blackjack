@@ -31,7 +31,7 @@ public class BlackJackStateTest {
         BlackJackState blackJackState = new BlackJackState(Hand.of(CardFixture.fromSuitCloverWith(Denomination.ACE),
                 CardFixture.fromSuitCloverWith(Denomination.JACK)));
 
-        assertThatCode(() -> blackJackState.stand())
+        assertThatCode(blackJackState::stand)
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("턴이 종료되어 스탠드할 수 없는 상태입니다.");
     }

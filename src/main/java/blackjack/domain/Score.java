@@ -24,6 +24,10 @@ public class Score {
         this.value = value;
     }
 
+    public static Score base() {
+        return POOL.get(MIN_CACHE_SCORE);
+    }
+
     public static Score from(int value) {
         if (value <= MAX_CACHE_SCORE) {
             return POOL.get(value);

@@ -3,7 +3,7 @@ package blackjack.domain.state;
 import blackjack.domain.Deck;
 import blackjack.domain.Hand;
 
-public class ClosedState extends State {
+public abstract class ClosedState extends State {
 
     public ClosedState(Hand hand) {
         super(hand);

@@ -18,7 +18,7 @@ public abstract class State {
     public abstract boolean isFinished();
 
     public Score calculateHand() {
-        return hand.calculate();
+        return hand.sumScores();
     }
 
     public Hand getHand() {

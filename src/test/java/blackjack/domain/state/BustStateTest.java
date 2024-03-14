@@ -31,7 +31,7 @@ public class BustStateTest {
         BustState bustState = new BustState(Hand.of(CardFixture.fromSuitCloverWith(Denomination.KING),
                 CardFixture.fromSuitCloverWith(Denomination.KING), CardFixture.fromSuitCloverWith(Denomination.KING)));
 
-        assertThatCode(() -> bustState.stand())
+        assertThatCode(bustState::stand)
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("턴이 종료되어 스탠드할 수 없는 상태입니다.");
     }

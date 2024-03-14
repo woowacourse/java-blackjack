@@ -14,7 +14,7 @@ class HandTest {
         Hand hand = Hand.of(CardFixture.fromSuitCloverWith(Denomination.ACE),
                 CardFixture.fromSuitCloverWith(Denomination.ACE));
 
-        assertThat(hand.calculate()).isEqualTo(Score.from(12));
+        assertThat(hand.sumScores()).isEqualTo(Score.from(12));
     }
 
     @DisplayName("다른 카드와 ACE를 11로 계산했을 때 21이 넘는다면 ACE를 1로 계산한다")
@@ -24,7 +24,7 @@ class HandTest {
                 CardFixture.fromSuitCloverWith(Denomination.JACK),
                 CardFixture.fromSuitCloverWith(Denomination.KING));
 
-        assertThat(hand.calculate()).isEqualTo(Score.from(21));
+        assertThat(hand.sumScores()).isEqualTo(Score.from(21));
     }
 
     @DisplayName("핸드에 카드를 추가하면 해당 카드가 추가된 새로운 핸드가 반환된다")
