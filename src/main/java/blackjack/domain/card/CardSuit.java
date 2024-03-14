@@ -8,7 +8,8 @@ public enum CardSuit {
     HEART,
     DIAMOND,
     CLUB,
-    SPADE;
+    SPADE,
+    ;
 
     public static List<CardSuit> getAllCardSuits() {
         return Arrays.stream(values()).toList();

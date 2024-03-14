@@ -3,7 +3,8 @@ package blackjack.domain.game;
 public enum DrawDecision {
 
     HIT,
-    STAY;
+    STAY,
+    ;
 
     public boolean isHit() {
         return this == HIT;

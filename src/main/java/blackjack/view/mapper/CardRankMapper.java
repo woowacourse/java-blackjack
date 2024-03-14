@@ -17,7 +17,8 @@ public enum CardRankMapper {
     TEN(CardRank.TEN, "10"),
     JACK(CardRank.JACK, "J"),
     QUEEN(CardRank.QUEEN, "Q"),
-    KING(CardRank.KING, "K");
+    KING(CardRank.KING, "K"),
+    ;
 
     private final CardRank cardRank;
     private final String symbol;

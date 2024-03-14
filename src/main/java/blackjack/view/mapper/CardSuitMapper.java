@@ -8,7 +8,8 @@ public enum CardSuitMapper {
     HEART(CardSuit.HEART, "하트"),
     DIAMOND(CardSuit.DIAMOND, "다이아몬드"),
     CLUB(CardSuit.CLUB, "클로버"),
-    SPADE(CardSuit.SPADE, "스페이드");
+    SPADE(CardSuit.SPADE, "스페이드"),
+    ;
 
     private final CardSuit cardSuit;
     private final String symbol;

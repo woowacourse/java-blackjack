@@ -5,7 +5,8 @@ import java.util.Arrays;
 
 public enum DrawDecisionMapper {
     HIT(DrawDecision.HIT, "y"),
-    STAY(DrawDecision.STAY, "n");
+    STAY(DrawDecision.STAY, "n"),
+    ;
 
     private final DrawDecision drawDecision;
     private final String symbol;
