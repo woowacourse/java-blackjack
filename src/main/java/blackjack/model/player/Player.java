@@ -43,16 +43,16 @@ public class Player {
         return cards.calculateScore();
     }
 
+    public PlayerMatchResultOutcome determineMatchResult(final Dealer dealer) {
+        return new PlayerMatchResultOutcome(name, MatchResult.determine(dealer, this));
+    }
+
     public boolean isBlackjack() {
         return cards.isBlackjack();
     }
 
     public boolean isBust() {
         return cards.isBust();
-    }
-
-    public PlayerMatchResultOutcome determineMatchResult(final Dealer dealer) {
-        return new PlayerMatchResultOutcome(name, MatchResult.determine(dealer, this));
     }
 
     public List<Card> getCards() {

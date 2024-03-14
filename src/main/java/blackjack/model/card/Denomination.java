@@ -23,16 +23,16 @@ public enum Denomination {
         this.name = name;
     }
 
+    public boolean isAce() {
+        return this == ACE;
+    }
+
     public static int getSize() {
         return values().length;
     }
 
     public static Denomination findByIndex(final int index) {
         return values()[index];
-    }
-
-    public boolean isAce() {
-        return this == ACE;
     }
 
     public int getScore() {

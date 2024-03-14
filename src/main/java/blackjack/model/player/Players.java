@@ -43,11 +43,6 @@ public class Players {
         players.forEach(player -> player.dealCards(cardGenerator));
     }
 
-    public boolean isAllBlackJack() {
-        return players.stream()
-                .allMatch(Player::isBlackjack);
-    }
-
     public List<PlayerFinalCardsOutcome> captureFinalCardsOutcomes() {
         return players.stream()
                 .map(PlayerFinalCardsOutcome::from)
@@ -58,6 +53,11 @@ public class Players {
         return players.stream()
                 .map(player -> player.determineMatchResult(dealer))
                 .toList();
+    }
+
+    public boolean isAllBlackJack() {
+        return players.stream()
+                .allMatch(Player::isBlackjack);
     }
 
     public List<String> getNames() {
