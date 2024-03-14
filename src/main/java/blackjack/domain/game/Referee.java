@@ -7,7 +7,6 @@ import blackjack.domain.gamer.Players;
 import java.util.Map;
 
 public class Referee {
-    // TODO: 결과를 플레이어와 딜러에서 계산 후 바로 반환하도 좋을듯
     private final PlayersGameResult result;
 
     public Referee() {

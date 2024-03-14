@@ -27,7 +27,7 @@ public class OutputView {
     }
 
     public static void printDealerDealCard(Card card) {
-        System.out.printf(CARD_FORMAT + LINE_SEPARATOR, DEALER_NAME, card);
+        System.out.printf(CARD_FORMAT + LINE_SEPARATOR, DEALER_NAME, formatCard(card));
     }
 
     public static void printDealCards(String name, List<Card> cards) {
@@ -64,7 +64,6 @@ public class OutputView {
         System.out.println(LINE_SEPARATOR + WIN_ANNOUNCE);
     }
 
-    // TODO: 플레이어와 딜러 게임결과 반환타입이 다른 것 수정
     public static void printDealerWinStatus(Map<PlayerWinStatus, Integer> gameResults) {
         String gameResultsFormat = gameResults.keySet().stream()
                 .map(key -> gameResults.get(key) + GameResultName.convert(key))
