@@ -20,39 +20,48 @@ class BettingBoardTest {
     class PlayerMoney {
         private BettingBoard bettingBoard;
         private Player player;
+        private final int originalBettingMoney = 1_000;
 
         @BeforeEach
         void init() {
             player = Player.of("몰리",
                     new Hand(List.of(new Card(Shape.DIA, Score.TEN), new Card(Shape.DIA, Score.ACE))));
-            BettingAmount bettingAmount = new BettingAmount(1000);
+            BettingAmount bettingAmount = new BettingAmount(originalBettingMoney);
             Map<Player, BettingAmount> bettingAmountsPerPlayer = Map.of(player, bettingAmount);
 
             bettingBoard = new BettingBoard(bettingAmountsPerPlayer);
         }
 
         @Test
-        @DisplayName("플레이어가 만약 블랙잭으로 승리한 경우, 베팅 금액의 1.5배를 딜러에게 받는다.")
+        @DisplayName("플레이어가 만약 블랙잭으로 승리한 경우, 베팅 금액의 1.5배만큼을 추가로 딜러에게 받는다.")
         void giveWinnerMoneyByBlackJack() {
-            assertThat(bettingBoard.giveWinnerMoneyByBlackJack(player)).isEqualTo(new BettingAmount(1500));
+            bettingBoard.giveWinnerMoneyByBlackJack(player);
+
+            assertThat(bettingBoard.getAmount(player)).isEqualTo(new BettingAmount((int) (originalBettingMoney + (originalBettingMoney * 1.5))));
         }
 
         @Test
-        @DisplayName("플레이어가 만약 블랙잭으로 무승부인 경우, 베팅 금액을 돌려받는다.")
+        @DisplayName("플레이어가 만약 블랙잭으로 무승부인 경우, 베팅 금액만 돌려받는다.")
         void giveTieMoneyByBlackJack() {
-            assertThat(bettingBoard.giveTieMoneyByBlackJack(player)).isEqualTo(new BettingAmount(1000));
+            bettingBoard.giveTieMoneyByBlackJack(player);
+
+            assertThat(bettingBoard.getAmount(player)).isEqualTo(new BettingAmount(originalBettingMoney));
         }
 
         @Test
-        @DisplayName("딜러가 21을 초과하면 그 시점까지 남아 있던 플레이어들은 가지고 있는 패에 상관 없이 승리해 베팅 금액을 받는다.")
+        @DisplayName("딜러가 21을 초과하면 그 시점까지 남아 있던 플레이어들은 가지고 있는 패에 상관 없이 승리해 베팅 금액을 돌려받는다.")
         void giveWinnerMoneyWhenDealerBust() {
-            assertThat(bettingBoard.giveWinnerMoneyWhenDealerBust(player)).isEqualTo(new BettingAmount(1000));
+            bettingBoard.giveWinnerMoneyWhenDealerBust(player);
+
+            assertThat(bettingBoard.getAmount(player)).isEqualTo(new BettingAmount(originalBettingMoney));
         }
 
         @Test
-        @DisplayName("21을 초과한 경우 플레이어의 배팅 금액은 모두 잃는다.")
+        @DisplayName("21을 초과한 경우 플레이어의 배팅 금액만큼을 모두 잃는다.")
         void payMoneyWhenPlayerBust() {
-            assertThat(bettingBoard.payMoneyWhenPlayerBust(player)).isEqualTo(new BettingAmount(0));
+            bettingBoard.payMoneyWhenPlayerBust(player);
+
+            assertThat(bettingBoard.getAmount(player)).isEqualTo(new BettingAmount(0));
         }
     }
 }

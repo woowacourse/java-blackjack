@@ -32,4 +32,8 @@ public class BettingBoard {
         BettingAmount bettingAmount = moneys.get(player);
         return bettingAmount.payAll();
     }
+
+    public BettingAmount getAmount(final Player player) {
+        return moneys.get(player);
+    }
 }
