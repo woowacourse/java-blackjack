@@ -41,6 +41,6 @@ public class InputView {
 
     public Bet readBet(String playerName) {
         System.out.println(String.format("%s의 배팅 금액은?", playerName));
-        return inputMapper.mapToBet(playerName, scanner.nextInt());
+        return inputMapper.mapToBet(playerName, Integer.parseInt(scanner.nextLine()));
     }
 }

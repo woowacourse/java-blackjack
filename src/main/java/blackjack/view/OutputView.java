@@ -5,6 +5,7 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
+import blackjack.domain.rule.BetResult;
 import blackjack.domain.rule.Score;
 
 public class OutputView {
@@ -41,5 +42,9 @@ public class OutputView {
 
     public void printDealerInitialHand(Dealer dealer) {
         System.out.println(messageResolver.resolveDealerHandMessage(dealer));
+    }
+
+    public void printBetResult(BetResult betResult) {
+        System.out.println(messageResolver.resolveBetResultMessage(betResult));
     }
 }

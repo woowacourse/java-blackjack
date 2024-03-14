@@ -12,6 +12,7 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
+import blackjack.domain.rule.BetResult;
 import blackjack.domain.rule.Score;
 import java.util.stream.Collectors;
 
@@ -82,4 +83,9 @@ public class MessageResolver {
         String message = String.format("딜러: %d승 %d패", dealerGameResult.getWinCount(), dealerGameResult.getLoseCount());
         return String.join("", prefix, LINE_SEPARATOR, message);
     }
+
+    public String resolveBetResultMessage(BetResult betResult) {
+        return String.format("%s: %d", betResult.getName(), betResult.getEarned());
+    }
+    
 }
