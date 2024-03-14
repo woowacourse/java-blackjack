@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import model.blackjackgame.Answer;
+import model.blackjackgame.Betting;
+import model.blackjackgame.Bettings;
 import model.blackjackgame.Blackjack;
 import model.blackjackgame.BlackjackGame;
 import model.blackjackgame.Result;
@@ -37,6 +39,7 @@ public class BlackjackGameController {
         Players players = repeatUntilSuccess(inputView::requestPlayersName);
         Dealer dealer = new Dealer();
         BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
+        Bettings bettings = new Bettings(players.getPlayers().stream().map(this::betting).toList());
 
         cardSettingBeforeGameStart(players, blackjackGame);
         printCardSetting(blackjackGame.getDealer(), blackjackGame.getPlayers());
@@ -49,6 +52,10 @@ public class BlackjackGameController {
         printFinalCardStatus(blackjackGame.getDealer(), blackjackGame.getPlayers());
         Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers(), blackjack);
         outputView.printFinalResult(result.getDealerResult(), result.getPlayerResult());
+    }
+
+    private Betting betting(Player player) {
+        return new Betting(player, repeatUntilSuccess(inputView::requestBettingMoney, player));
     }
 
     private void cardSettingBeforeGameStart(Players players, BlackjackGame blackjackGame) {
