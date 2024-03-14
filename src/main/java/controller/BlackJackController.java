@@ -22,7 +22,14 @@ public class BlackJackController {
     }
 
     public void startGame() {
-        BlackJack blackJack = createBlackJack(inputView.askParticipantNames());
+        List<String> names = inputView.askParticipantNames();
+        BlackJack blackJack = createBlackJack(names);
+
+
+        for (Participant participant : blackJack.getParticipants().getParticipants()) { // todo callback 이용
+            Integer bettingAmount = inputView.askBettingAmount(participant.getName());
+            participant.settingBettingAmount(bettingAmount);
+        }
 
         outputView.printPlayerNames(blackJack.findParticipantsName());
         outputView.printPlayerCards(blackJack.mapToUsersNameAndCards(), blackJack.mapToDealerNameAndCards());
@@ -31,18 +38,19 @@ public class BlackJackController {
 
         outputView.printBlackJackScore(blackJack.mapToUsersNameAndCards(), blackJack.mapToDealerNameAndCards());
         outputView.printResult(blackJack.getDealerProfit(), blackJack.getParticipantProfits());
-//        outputView.printPlayersOutcome(blackJack.getDealerOutCome(), blackJack.matchParticipantProfit());
     }
 
     private BlackJack createBlackJack(List<String> names) {
         CardDeck cardDeck = new CardDeck(CardDeck.createCards());
         Participants participants = createParticipants(names, cardDeck);
         Dealer dealer = new Dealer(cardDeck, () -> cardDeck.selectRandomCards(CardSize.TWO));
+
         return new BlackJack(participants, dealer);
     }
 
-    private Participants createParticipants(List<String> names, CardDeck cardDeck) {
-        return new Participants(new ArrayList<>(names.stream() //todo 베팅 입력
+    private Participants createParticipants(List<String> names, CardDeck cardDeck) { //todo 베팅금액을 바로 넣는 방식
+
+        return new Participants(new ArrayList<>(names.stream()
                 .map(name -> new Participant(name, cardDeck.selectRandomCards(CardSize.TWO),100)).toList()));
     }
 

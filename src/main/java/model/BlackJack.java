@@ -79,12 +79,6 @@ public class BlackJack {
                 ));
     }
 
-//    public Map<Outcome, Long> getDealerOutCome() {
-//        Map<Participant, Double> participantOutcome = matchParticipantProfit();
-//        return participantOutcome.values().stream()
-//                .collect(groupingBy(Outcome::reverse, counting()));
-//    }
-
     public Double getDealerProfit() {
         return participants.calculateDealerProfit(dealer); //todo dealer의 profit인데 participants에서 가져오는 것이 어색함
     }
@@ -107,5 +101,9 @@ public class BlackJack {
 
     public Map<String, Cards> mapToDealerNameAndCards() {
         return Map.of(dealer.getName(), dealer.getCards());
+    }
+
+    public Participants getParticipants() {
+        return participants;
     }
 }

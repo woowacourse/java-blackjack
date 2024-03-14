@@ -6,13 +6,15 @@ import model.card.Card;
 
 public class Participant extends User {
 
-    private final Integer bettingAmount;
-    private Integer currentAmount;
+    private Integer bettingAmount;
 
     public Participant(String name, List<Card> cards, Integer bettingAmount) {
         super(name, cards);
         this.bettingAmount = bettingAmount;
-        this.currentAmount = bettingAmount;
+    }
+
+    public Participant(String name, List<Card> cards) {
+        super(name, cards);
     }
 
     public Double calculateProfit(Dealer dealer) { //todo 조건문을 Outcome 이넘 클래스에 넣는다면?
@@ -32,7 +34,7 @@ public class Participant extends User {
                 .calculateProfit(bettingAmount);
     }
 
-    public void updateCurrentAmount(Integer amount) {
-        currentAmount += amount;
+    public void settingBettingAmount(Integer bettingAmount) {
+        this.bettingAmount = bettingAmount;
     }
 }

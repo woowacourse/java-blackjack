@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class InputView {
     private static final String ASK_PARTICIPANT_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String ASK_ONE_MORE_CARD_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+    private static final String ASK_BETTING_AMOUNT = "%s의 배팅 금액은?";
     private static final Scanner in = new Scanner(System.in);
 
     public List<String> askParticipantNames() {
@@ -26,5 +27,31 @@ public class InputView {
             return false;
         }
         throw new IllegalArgumentException("y/n 만 입력할 수 있습니다.");
+    }
+
+    public Integer askBettingAmount(String name) {
+        System.out.println(System.lineSeparator() + ASK_BETTING_AMOUNT.formatted(name));
+        String bettingAmount = in.nextLine();
+        validateBettingAmount(bettingAmount);
+        return Integer.parseInt(bettingAmount);
+    }
+
+    private void validateBettingAmount(String bettingAmount) {
+        validateIsNumber(bettingAmount);
+        validatePositiveNumber(Integer.parseInt(bettingAmount));
+    }
+
+    private void validateIsNumber(String bettingAmount) {
+        try {
+            Integer.parseInt(bettingAmount);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException("배팅금액은 숫자로만 입력할 수 있습니다.");
+        }
+    }
+
+    private void validatePositiveNumber(int bettingAmount) {
+        if (bettingAmount <= 0) {
+            throw new IllegalArgumentException("배팅금액은 양수가 되어야 합니다.");
+        }
     }
 }
