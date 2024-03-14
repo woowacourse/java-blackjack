@@ -47,7 +47,7 @@ public class Players {
     public List<PlayerProfit> calculateProfit(final Dealer dealer, final BettingBoard bettingBoard) {
         List<PlayerProfit> playerProfits = new ArrayList<>();
         for (Player player : players) {
-            MatchResult matchResult = dealer.determinePlayerMatchResult(player);
+            MatchResult matchResult = MatchResult.of(player, dealer);
             BettingMoney profit = bettingBoard.determineProfit(player.getName(), matchResult);
             playerProfits.add(new PlayerProfit(player.getName(), profit.getAmount()));
         }
