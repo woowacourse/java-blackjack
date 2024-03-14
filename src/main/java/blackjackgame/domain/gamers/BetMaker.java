@@ -11,8 +11,8 @@ public class BetMaker {
     }
 
     private void validateBetMoneyBiggerThanZero(Double betMoney) {
-        if (betMoney <= 0) {
-            throw new IllegalArgumentException("0 이하의 값은 가질 수 없습니다.");
+        if (betMoney < 0) {
+            throw new IllegalArgumentException("0 미만의 값은 가질 수 없습니다.");
         }
     }
 
