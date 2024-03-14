@@ -36,14 +36,14 @@ public final class Score {
     }
 
     public static Score totalScoreOf(ParticipantCards cards) {
-        Score totalScore = initialSum(cards);
+        Score totalScore = totalScoreWithoutAceSpecialScore(cards);
         if (cards.hasAce()) {
             totalScore = totalScore.addAceSpecialScore(totalScore);
         }
         return totalScore;
     }
 
-    private static Score initialSum(ParticipantCards cards) {
+    private static Score totalScoreWithoutAceSpecialScore(ParticipantCards cards) {
         return cards.getCards()
             .stream()
             .map(Card::score)
