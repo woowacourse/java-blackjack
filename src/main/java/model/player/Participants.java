@@ -37,7 +37,7 @@ public class Participants {
 
     public boolean isExistParticipant(Participant receiver) {
         return participants.stream()
-                .anyMatch(player -> player.equals(receiver));
+                .anyMatch(player -> player.getName().equals(receiver.getName())); //todo equals 오버라이딩
     }
 
     public List<String> findParticipantsName() {

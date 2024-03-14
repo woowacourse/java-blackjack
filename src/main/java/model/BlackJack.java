@@ -61,6 +61,7 @@ public class BlackJack {
     private void offerCardToParticipant(Participant participant, CardSize size) {
         if (participants.isExistParticipant(participant)) {
             dealer.offerCardToParticipant(participant, size);
+            return;
         }
         throw new IllegalArgumentException("참가자(" + participant.getName() + ")가 존재하지 않습니다.");
     }
