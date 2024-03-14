@@ -10,10 +10,6 @@ public class Revenue {
         this.value = value;
     }
 
-    public Revenue(double value) {
-        this((int) value);
-    }
-
     public int getAmount() {
         return value;
     }
