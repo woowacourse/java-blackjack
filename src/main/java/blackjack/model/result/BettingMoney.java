@@ -20,8 +20,4 @@ public final class BettingMoney {
     public int applyEarningRate(final double earningRate) {
         return (int) (amount * earningRate);
     }
-
-    public int getAmount() {
-        return amount;
-    }
 }
