@@ -1,4 +1,4 @@
-package domain.participant;
+package domain.participant.dealer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -29,6 +29,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import domain.BlackjackResultStatus;
 import domain.card.Card;
 import domain.card.Cards;
+import domain.participant.Participant;
 import domain.participant.dealer.Dealer;
 import domain.participant.player.Player;
 
@@ -50,7 +51,7 @@ class DealerTest {
             Dealer dealer = Dealer.from(Cards.from(List.of(card)));
 
             dealer.deal(participant);
-            Cards hand = participant.hand;
+            Cards hand = participant.hand();
 
             assertThat(hand.peek()).isEqualTo(card);
         }
