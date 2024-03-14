@@ -19,16 +19,22 @@ public class Hand {
         return new Hand(new ArrayList<>());
     }
 
-    public int getCardsNumberSum() {
-        int result = 0;
-        for (PlayingCard playingCard : playingCards) {
-            result += playingCard.getValue(result);
-        }
-        return result;
+    private int getCardsSum(int intermediate) {
+        return playingCards.stream()
+                .map(playingCard -> playingCard.getValue(intermediate))
+                .reduce(0, Integer::sum);
+    }
+
+    public int getOptimizedSum() {
+        return getCardsSum(getPrimitiveSum());
+    }
+
+    private int getPrimitiveSum() {
+        return getCardsSum(BLACKJACK_CONDITION);
     }
 
     public boolean isNotBust() {
-        return getCardsNumberSum() <= BLACKJACK_CONDITION;
+        return getOptimizedSum() <= BLACKJACK_CONDITION;
     }
 
     public void addCard(final PlayingCard card) {
@@ -40,10 +46,10 @@ public class Hand {
     }
 
     public boolean isNotMaximum() {
-        return getCardsNumberSum() != BLACKJACK_CONDITION;
+        return getOptimizedSum() != BLACKJACK_CONDITION;
     }
 
     public boolean isBlackJack() {
-        return getCardsNumberSum() == BLACKJACK_CONDITION && playingCards.size() == 2;
+        return getOptimizedSum() == BLACKJACK_CONDITION && playingCards.size() == 2;
     }
 }

@@ -19,7 +19,7 @@ public abstract class Participant {
     }
 
     public int getHandSum() {
-        return hand.getCardsNumberSum();
+        return hand.getOptimizedSum();
     }
 
     public List<PlayingCard> getHandCards() {

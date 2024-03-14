@@ -31,7 +31,7 @@ public class HandTest {
         playingCards.forEach(hand::addCard);
 
         // When
-        int result = hand.getCardsNumberSum();
+        int result = hand.getOptimizedSum();
 
         // Then
         assertThat(result).isEqualTo(11);
@@ -57,14 +57,14 @@ public class HandTest {
     void addCardTest() {
         // Given
         Hand hand = Hand.init();
-        int initCardNumberSum = hand.getCardsNumberSum();
+        int initCardNumberSum = hand.getOptimizedSum();
         PlayingCard card = new PlayingCard(DIAMOND, NINE);
 
         // When
         hand.addCard(card);
 
         // Then
-        assertThat(initCardNumberSum).isNotEqualTo(hand.getCardsNumberSum());
+        assertThat(initCardNumberSum).isNotEqualTo(hand.getOptimizedSum());
     }
 
     @DisplayName("손패가 21이면 true를 반환한다.")
