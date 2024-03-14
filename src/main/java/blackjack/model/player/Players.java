@@ -1,7 +1,14 @@
 package blackjack.model.player;
 
 import blackjack.model.cardgenerator.CardGenerator;
+import blackjack.model.dealer.Dealer;
+import blackjack.model.result.BettingBoard;
+import blackjack.model.result.BettingMoney;
+import blackjack.model.result.MatchResult;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
+import blackjack.view.dto.PlayerProfit;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,6 +42,16 @@ public class Players {
         if (uniquePlayerNames.size() != playerNames.size()) {
             throw new IllegalArgumentException(DUPLICATED_NAMES);
         }
+    }
+
+    public List<PlayerProfit> calculateProfit(final Dealer dealer, final BettingBoard bettingBoard) {
+        List<PlayerProfit> playerProfits = new ArrayList<>();
+        for (Player player : players) {
+            MatchResult matchResult = dealer.determinePlayerMatchResult(player);
+            BettingMoney profit = bettingBoard.determineProfit(player.getName(), matchResult);
+            playerProfits.add(new PlayerProfit(player.getName(), profit.getAmount()));
+        }
+        return playerProfits;
     }
 
     public List<PlayerFinalCardsOutcome> captureFinalCardsOutcomes() {

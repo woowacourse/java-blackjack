@@ -8,14 +8,16 @@ import blackjack.model.player.Players;
 import blackjack.model.player.isHit;
 import blackjack.model.result.BettingBoard;
 import blackjack.model.result.BettingMoney;
-import blackjack.model.result.MatchResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
 import blackjack.view.dto.PlayerProfit;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public class BlackJackController {
@@ -94,12 +96,7 @@ public class BlackJackController {
     }
 
     private void showMatchResult(final Players players, final Dealer dealer, final BettingBoard bettingBoard) {
-        List<PlayerProfit> playerProfits = new ArrayList<>();
-        for (Player player : players.getPlayers()) {
-            MatchResult matchResult = dealer.determinePlayerMatchResult(player);
-            BettingMoney profit = bettingBoard.determineProfit(player.getName(), matchResult);
-            playerProfits.add(new PlayerProfit(player.getName(), profit.getAmount()));
-        }
+        List<PlayerProfit> playerProfits = players.calculateProfit(dealer, bettingBoard);
         outputView.printFinalProfits(playerProfits);
     }
 
