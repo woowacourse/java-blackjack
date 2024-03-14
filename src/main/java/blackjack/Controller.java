@@ -1,9 +1,11 @@
 package blackjack;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
+import blackjack.domain.GameResult;
 import blackjack.domain.Money;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
@@ -28,20 +30,24 @@ class Controller {
         initialDeal(participants, deck);
         playersTurn(participants.getPlayers(), deck);
         dealerTurn(participants.getDealer(), deck);
-        printResult(participants);
+        showCard(participants);
+        showProfit(participants);
     }
 
     private Participants createParticipants() {
         List<String> playerNames = inputView.readPlayerNames();
-        List<Money> playersMoney = new ArrayList<>();
-
-        for (String playerName : playerNames) {
-            playersMoney.add(new Money(inputView.readPlayerMoney(playerName)));
-        }
+        List<Money> playersMoney = playerNames.stream()
+                .map(this::createPlayerMoney)
+                .toList();
 
         return new Participants(playerNames, playersMoney);
     }
 
+    private Money createPlayerMoney(String playerName) {
+        double playerMoney = inputView.readPlayerMoney(playerName);
+
+        return new Money(playerMoney);
+    }
 
     private void initialDeal(Participants participants, Deck deck) {
         for (Participant participant : participants.getParticipants()) {
@@ -79,11 +85,25 @@ class Controller {
         }
     }
 
-    private void printResult(Participants participants) {
+    private void showCard(Participants participants) {
         outputView.printAllCardsWithScore(participants.getParticipants());
+    }
 
+    private void showProfit(Participants participants) {
+        Map<String, Double> resultMap = new LinkedHashMap<>();
         Dealer dealer = participants.getDealer();
-        //
+        double dealerProfit = 0;
+        resultMap.put(dealer.getName(), dealerProfit);
 
+        for (Player player : participants.getPlayers()) {
+            GameResult result = dealer.judge(player);
+            double playerProfit = player.calculateProfit(result).getAmount();
+            dealerProfit -= playerProfit;
+            resultMap.put(player.getName(), playerProfit);
+        }
+
+        resultMap.put(dealer.getName(), dealerProfit);
+
+        outputView.printProfit(resultMap);
     }
 }

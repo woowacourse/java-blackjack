@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
@@ -47,5 +48,11 @@ public class OutputView {
         return cards.stream()
                 .map(Card::getName)
                 .collect(Collectors.joining(", "));
+    }
+
+    public void printProfit(Map<String, Double> profitResults) {
+        System.out.println();
+        System.out.println("## 최종 수익");
+        profitResults.forEach((name, profit) -> System.out.printf("%s: %.0f%n", name, profit));
     }
 }
