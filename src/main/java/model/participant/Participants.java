@@ -52,11 +52,11 @@ public class Participants {
         return players;
     }
 
-    public GameCompletionResult getDealerFaceUpResult() {
+    public GameCompletionResult getDealerCompletionResult() {
         return dealer.generateFaceUpResult();
     }
 
-    public List<GameCompletionResult> getPlayerFaceUpResults() {
+    public List<GameCompletionResult> getPlayerCompletionResults() {
         return players.stream()
                 .map(Player::generateFaceUpResult)
                 .toList();
