@@ -20,4 +20,18 @@ public class Dealer2 {
     public Hand revealHand() {
         return hand.revealHand(REVEAL_COUNT);
     }
+
+    public void draw(CardDeck cardDeck) {
+        if (canHit()) {
+            hand.append(cardDeck.popCard());
+        }
+    }
+
+    public boolean canHit() {
+        return hand.calculateHandScore().isDealerHit();
+    }
+
+    public Hand getHand() {
+        return hand;
+    }
 }

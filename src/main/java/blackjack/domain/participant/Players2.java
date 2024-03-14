@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.CardDeck;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Players2 {
 
@@ -13,6 +14,10 @@ public class Players2 {
 
     public void deal(CardDeck cardDeck) {
         players.forEach(player -> player.deal(cardDeck));
+    }
+
+    public void draw(Consumer<Player2> drawToPlayer) {
+        players.forEach(drawToPlayer);
     }
 
     public List<Player2> getPlayers() {
