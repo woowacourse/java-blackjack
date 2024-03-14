@@ -26,7 +26,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackJack() {
-        return hands.isBlackJack() && hands.size() == 2;
+        return hands.isBlackJack();
     }
 
     public int handsSum() {

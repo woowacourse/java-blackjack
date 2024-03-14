@@ -23,6 +23,10 @@ public class BetAmount {
         return new Amount(-amount);
     }
 
+    public Amount blackJackWinAmount() {
+        return new Amount(amount + (amount / 2));
+    }
+
     public Amount winAmount() {
         return new Amount(amount);
     }

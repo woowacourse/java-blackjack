@@ -38,7 +38,7 @@ public class Hands {
     }
 
     public boolean isBlackJack() {
-        return sum() == BLACK_JACK;
+        return sum() == BLACK_JACK && size() == 2;
     }
 
     private boolean hasAce() {

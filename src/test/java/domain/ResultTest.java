@@ -42,7 +42,7 @@ class ResultTest {
     @Test
     @DisplayName("blackjack이 이긴다.")
     void isWinBlackJack() {
-        Assertions.assertThat(blackJack.calculateResult(sum20Size2)).isEqualTo(Result.WIN);
+        Assertions.assertThat(blackJack.calculateResult(sum20Size2)).isEqualTo(Result.BLACK_JACK_WIN);
         Assertions.assertThat(sum20Size2.calculateResult(blackJack)).isEqualTo(Result.LOSE);
     }
 }

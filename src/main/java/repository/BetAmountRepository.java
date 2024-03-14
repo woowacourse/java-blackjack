@@ -30,7 +30,9 @@ public class BetAmountRepository {
     public Map<Player, Amount> calculateResult(final Dealer dealer) {
         final Map<Player, Amount> result = new HashMap<>();
         for (Entry<Player, BetAmount> entry : repository.entrySet()) {
-            if (Result.WIN == entry.getKey().calculateResult(dealer)) {
+            if (Result.BLACK_JACK_WIN == entry.getKey().calculateResult(dealer)) {
+                result.put(entry.getKey(), entry.getValue().blackJackWinAmount());
+            } else if (Result.WIN == entry.getKey().calculateResult(dealer)) {
                 result.put(entry.getKey(), entry.getValue().winAmount());
             } else if (Result.TIE == entry.getKey().calculateResult(dealer)) {
                 result.put(entry.getKey(), entry.getValue().tieAmount());
