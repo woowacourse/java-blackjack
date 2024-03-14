@@ -63,7 +63,7 @@ public class Money {
             return false;
         }
         Money money = (Money) o;
-        return Objects.equals(amount, money.amount);
+        return this.amount.compareTo(money.amount) == 0;
     }
 
     @Override
