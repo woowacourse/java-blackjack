@@ -30,7 +30,9 @@ class BettingBoardTest {
     private static Stream<Arguments> provideMatchResultAndExpectedEarning() {
         return Stream.of(
                 Arguments.of(MatchResult.WIN, 1000),
-                Arguments.of(MatchResult.LOSE, -1000)
+                Arguments.of(MatchResult.LOSE, -1000),
+                Arguments.of(MatchResult.PUSH, 0),
+                Arguments.of(MatchResult.BLACKJACK, 1500)
         );
     }
 }
