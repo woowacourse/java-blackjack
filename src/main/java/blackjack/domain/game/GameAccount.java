@@ -25,4 +25,12 @@ public class GameAccount {
             store.put(player, gameResultMoney);
         }
     }
+
+    public Money calculateDealerIncome() {
+        int dealerIncome = 0;
+        for (Money money : store.values()) {
+            dealerIncome += money.value();
+        }
+        return new Money(-dealerIncome);
+    }
 }

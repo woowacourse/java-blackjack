@@ -43,4 +43,15 @@ class GameAccountTest {
 
         assertThat(gameAccount.findMoney(player)).isEqualTo(new Money(75000));
     }
+
+    @Test
+    @DisplayName("플레이어의 배팅 금액 결과로 딜러의 수익을 계산한다.")
+    void calculateDealerIncome() {
+        gameAccount.betMoney(player, money);
+        gameAccount.betMoney(new Player(new Name("jazz")), new Money(-20000));
+
+        Money dealerIncome = gameAccount.calculateDealerIncome();
+
+        assertThat(dealerIncome).isEqualTo(new Money(-30000));
+    }
 }
