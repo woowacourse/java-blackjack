@@ -20,7 +20,7 @@ public class DealerResult {
     }
 
     public void put(final BlackjackResultStatus resultStatus) {
-        counts.put(resultStatus, counts.getOrDefault(resultStatus, 0) + 1);
+        counts.merge(resultStatus, 1, Integer::sum);
     }
 
     public int countOf(final BlackjackResultStatus resultStatus) {

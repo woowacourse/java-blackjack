@@ -86,7 +86,7 @@
 - [x] Participant 생성 로직 변경
   - Name 객체를 생성자의 인자로 받는 대신, String을 받도록 변경
 - [x] Participant.isLose() if문과 얼리 리턴을 활용해서 가독성 개선
-- [ ] DealerResult.put() { counts.put() -> counts.merge() }
+- [x] DealerResult.put() { counts.put() -> counts.merge() }
 - [ ] CardMachine 불필요한 메서드 삭제
 - [ ] InputView.askPlayers() 생성 로직을 Players 로 이동
 - [ ] Cards 정적 팩토리 메서드 삭제
