@@ -3,7 +3,6 @@ package domain.blackjack;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -40,12 +39,12 @@ public class BlackJack {
     public Map<Participant, WinStatus> makeResult() {
         Map<Participant, WinStatus> result = new LinkedHashMap<>();
         for (Participant participant : participants.getValue()) {
-            result.put(participant, getWinStatusWithParticipant(participant));
+            result.put(participant, getWinStatusByParticipant(participant));
         }
         return result;
     }
 
-    private WinStatus getWinStatusWithParticipant(Participant participant) {
+    private WinStatus getWinStatusByParticipant(Participant participant) {
         if (participant.isBust()) {
             return WinStatus.LOSE;
         }
