@@ -16,6 +16,8 @@ import java.util.List;
 
 public class GameMachine {
 
+    private static final int INITIAL_CARD_COUNT = 2;
+
     private GameMachine() {
     }
 
@@ -27,7 +29,7 @@ public class GameMachine {
 
         printInitialHands(gameDealer, gamePlayers);
 
-        confirmParticipantsHands(gamePlayers, deck, gameDealer);
+        confirmParticipantsHands(gameDealer, gamePlayers, deck);
 
         OutputView.printFinalHandsAndScoreMessage(gameDealer, gamePlayers);
         GameResult gameResult = game.makeGameResult();
@@ -47,8 +49,9 @@ public class GameMachine {
 
     private static List<Card> drawInitialCards(Deck deck) {
         List<Card> cards = new ArrayList<>();
-        cards.add(deck.draw());
-        cards.add(deck.draw());
+        for(int i=0;i<INITIAL_CARD_COUNT;i++){
+            cards.add(deck.draw());
+        }
         return cards;
     }
 
@@ -62,7 +65,7 @@ public class GameMachine {
         return new Players(players);
     }
 
-    private static void confirmParticipantsHands(Players players, Deck deck, Dealer dealer) {
+    private static void confirmParticipantsHands(Dealer dealer, Players players, Deck deck) {
         askDrawUntilConfirmHands(players, deck);
         confirmDealerHands(dealer, deck);
     }
