@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
+import blackjack.domain.game.ResultStatus;
 import blackjack.domain.state.Blackjack;
 import blackjack.domain.state.Bust;
 import blackjack.domain.state.Hit;
@@ -43,6 +44,10 @@ public abstract class Participant {
 
     public boolean isBlackjack() {
         return state instanceof Blackjack;
+    }
+
+    public double calculateEarningRate(final ResultStatus resultStatus) {
+        return state.calculateEarningRate(resultStatus);
     }
 
     public CardHand getCardHand() {

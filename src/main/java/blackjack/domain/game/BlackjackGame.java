@@ -4,13 +4,12 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.utils.Constants;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BlackjackGame {
-    private static final int INITIAL_CARD_COUNT = 2;
-
     private final Dealer dealer;
     private final Players players;
 
@@ -26,7 +25,7 @@ public class BlackjackGame {
     }
 
     private void distributeInitialCards() {
-        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+        for (int i = 0; i < Constants.INITIAL_CARD_COUNT; i++) {
             distributeCardToDealer();
             distributeCardToPlayers();
         }

@@ -48,4 +48,12 @@ public enum ResultStatus {
     private boolean findResultStatus(final Score playerScore, final Score dealerScore) {
         return condition.test(playerScore, dealerScore);
     }
+
+    public boolean isWin() {
+        return this == WIN;
+    }
+
+    public boolean isDraw() {
+        return this == DRAW;
+    }
 }

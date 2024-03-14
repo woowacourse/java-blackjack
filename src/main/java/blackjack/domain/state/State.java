@@ -3,6 +3,7 @@ package blackjack.domain.state;
 import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
+import blackjack.domain.game.ResultStatus;
 
 public interface State {
 
@@ -13,6 +14,8 @@ public interface State {
     Score calculateScore();
 
     boolean isFinished();
+
+    double calculateEarningRate(ResultStatus resultStatus);
 
     CardHand getCardHand();
 }

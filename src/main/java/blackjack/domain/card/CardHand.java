@@ -1,13 +1,12 @@
 package blackjack.domain.card;
 
 import blackjack.domain.Score;
+import blackjack.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CardHand {
-    private static final int BLACKJACK_CARD_SIZE = 2;
-
     private final List<Card> cards;
 
     public CardHand() {
@@ -43,7 +42,7 @@ public class CardHand {
         final int cardSize = cards.size();
         final Score score = sumAllScore();
 
-        return cardSize == BLACKJACK_CARD_SIZE && score.equals(Score.getBlackjackScore());
+        return cardSize == Constants.INITIAL_CARD_COUNT && score.equals(Score.getBlackjackScore());
     }
 
     public boolean isBust() {

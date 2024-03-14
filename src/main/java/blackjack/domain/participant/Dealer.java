@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.game.ResultStatus;
 import blackjack.domain.strategy.CardShuffleStrategy;
 
 public class Dealer extends Participant {
@@ -36,5 +37,10 @@ public class Dealer extends Participant {
         final Score standardScore = Score.valueOf(DEALER_MIN_SCORE_POLICY);
 
         return score.isLessThan(standardScore) || score.equals(standardScore);
+    }
+
+    @Override
+    public double calculateEarningRate(final ResultStatus resultStatus) {
+        throw new UnsupportedOperationException("딜러는 수익률을 계산할 수 없습니다.");
     }
 }
