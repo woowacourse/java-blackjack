@@ -79,4 +79,12 @@ class MoneyTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("금액과 관련된 연산은 숫자만 입력 가능합니다.");
     }
+
+    @Test
+    @DisplayName("금액은 음수로 변환시켜 줄 수 있다.")
+    void negative() {
+        Money money = new Money("100");
+        Assertions.assertThat(money.negative()).isEqualTo(new Money("-100"));
+    }
 }
+

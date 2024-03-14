@@ -4,6 +4,7 @@ import domain.constant.GamerResult;
 import java.math.BigDecimal;
 
 public class Player extends Gamer {
+    private static final String BLACKJACK_BONUS_RATIO = "1.5";
     private final Name name;
     private final Money money;
     public Player(Name name) {
@@ -33,12 +34,12 @@ public class Player extends Gamer {
     }
 
     private Money loseMoney() {
-        return money.multiply("-1.0");
+        return money.negative();
     }
 
     private Money gainMoney() {
         if (isBlackJack()){
-            return money.multiply("1.5");
+            return money.multiply(BLACKJACK_BONUS_RATIO);
         }
         return money;
     }
