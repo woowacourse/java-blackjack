@@ -16,4 +16,8 @@ public class BetResults {
                 .map(BetResult::getEarned)
                 .reduce(0, Integer::sum));
     }
+
+    public List<BetResult> getBetResults() {
+        return betResults;
+    }
 }
