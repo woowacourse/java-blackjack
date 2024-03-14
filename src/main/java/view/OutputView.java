@@ -49,7 +49,7 @@ public class OutputView {
     }
 
     public static void printDealerHit(final Dealer dealer) {
-        System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.%n",  dealer.getName(), DEALER_HIT_CONDITION);
+        System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.%n", dealer.getName(), DEALER_HIT_CONDITION);
     }
 
     public static void printCardsAndResult(final Dealer dealer, final Players players) {
@@ -80,8 +80,8 @@ public class OutputView {
     }
 
     private static String makeCardInfo(final Card card) {
-        String symbol = card.getSymbolValue();
         String rank = card.getRankValue();
+        String symbol = card.getSymbolValue();
         return rank + symbol;
     }
 

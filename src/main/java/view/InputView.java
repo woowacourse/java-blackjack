@@ -37,7 +37,7 @@ public class InputView {
 
     private static void validateEndsWithDelimiter(final String input) {
         if (input.endsWith(DELIMITER)) {
-            throw new IllegalArgumentException(INVALID_AMOUNT_FORMAT);
+            throw new IllegalArgumentException(NOT_ALLOWED_DELIMITER_POSITION);
         }
     }
 
@@ -52,7 +52,7 @@ public class InputView {
         try {
             Integer.parseInt(amount);
         } catch (NumberFormatException exception) {
-            throw new IllegalArgumentException(NOT_ALLOWED_DELIMITER_POSITION);
+            throw new IllegalArgumentException(INVALID_AMOUNT_FORMAT);
         }
     }
 
