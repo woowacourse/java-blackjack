@@ -1,5 +1,6 @@
 package blackjack;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map.Entry;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.GameResult;
+import blackjack.domain.Money;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
@@ -36,8 +38,13 @@ class Controller {
 
     private Participants createParticipants() {
         List<String> playerNames = inputView.readPlayerNames();
+        List<Money> playersMoney = new ArrayList<>();
 
-        return new Participants(playerNames);
+        for (String playerName : playerNames) {
+            playersMoney.add(new Money(inputView.readPlayerMoney(playerName)));
+        }
+
+        return new Participants(playerNames, playersMoney);
     }
 
 
