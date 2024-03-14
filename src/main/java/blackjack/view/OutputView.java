@@ -58,7 +58,6 @@ public class OutputView {
             System.out.println(playerResponseDto.getName().value() + "카드: " + makeCardsState(playerResponseDto.getCards())
                     + " - 결과: " + playerResponseDto.getScore());
         }
-        System.out.println();
     }
 
     public static void printTotalProfits(final double dealerProfit, final Map<Name, BetAmount> playersProfit) {

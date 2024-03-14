@@ -37,10 +37,6 @@ public abstract class Gamer {
         return hand.sum();
     }
 
-    public Hand getHand() {
-        return hand;
-    }
-
     public List<Card> getCards() {
         return hand.getCards();
     }
