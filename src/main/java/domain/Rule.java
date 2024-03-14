@@ -32,29 +32,29 @@ public class Rule {
         return new Rule(new Incomes(incomes));
     }
 
-    public static Status decideStatus(Cards targetCards, Cards otherCards) {
-        if (checkTargetLose(targetCards, otherCards)) {
+    public static Status decideStatus(Cards playerCards, Cards dealerCards) {
+        if (checkPlayerLose(playerCards, dealerCards)) {
             return Status.LOSE;
         }
-        if (checkTargetBlackjack(targetCards, otherCards)) {
+        if (checkPlayerBlackjack(playerCards, dealerCards)) {
             return Status.WIN_BLACKJACK;
         }
-        if (checkTargetWin(targetCards, otherCards)) {
+        if (checkPlayerWin(playerCards, dealerCards)) {
             return Status.WIN;
         }
         return Status.TIE;
     }
 
-    private static boolean checkTargetLose(Cards targetCards, Cards otherCards) {
-        return targetCards.isBurst() || otherCards.isNotBurst() && otherCards.isGreaterThan(targetCards);
+    private static boolean checkPlayerLose(Cards playerCards, Cards dealerCards) {
+        return playerCards.isBurst() || dealerCards.isNotBurst() && dealerCards.isGreaterThan(playerCards);
     }
 
-    private static boolean checkTargetBlackjack(Cards targetCards, Cards otherCards) {
-        return targetCards.isBlackjack() && (otherCards.isBurst() || targetCards.isGreaterThan(otherCards));
+    private static boolean checkPlayerBlackjack(Cards playerCards, Cards dealerCards) {
+        return playerCards.isBlackjack() && (dealerCards.isBurst() || playerCards.isGreaterThan(dealerCards));
     }
 
-    private static boolean checkTargetWin(Cards targetCards, Cards otherCards) {
-        return otherCards.isBurst() || targetCards.isGreaterThan(otherCards);
+    private static boolean checkPlayerWin(Cards playerCards, Cards dealerCards) {
+        return dealerCards.isBurst() || playerCards.isGreaterThan(dealerCards);
     }
 
     public Map<Name, Income> getIncomes() {
