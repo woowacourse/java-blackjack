@@ -1,8 +1,10 @@
 package blackjack.domain.dealer;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Hands;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.result.Score;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -41,7 +43,10 @@ public class Dealer extends Participant {
         return deck.pick(count);
     }
 
-    public Card getFirstCard() {
-        return hands.getFirstCard();
+    public Hands getOpenedCards() {
+        List<Card> openedCards = new ArrayList<>();
+        openedCards.add(hands.getFirstCard());
+
+        return new Hands(openedCards);
     }
 }
