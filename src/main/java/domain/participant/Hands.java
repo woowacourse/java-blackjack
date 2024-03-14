@@ -1,7 +1,7 @@
 package domain.participant;
 
-import domain.card.Card;
 import domain.Result;
+import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -84,5 +84,11 @@ public class Hands {
     @Override
     public int hashCode() {
         return Objects.hash(cards);
+    }
+
+    @Override
+    public String toString() {
+        return "Hands=" +
+                cards;
     }
 }

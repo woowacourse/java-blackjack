@@ -26,4 +26,9 @@ public class Player extends Participant {
     public boolean canDeal() {
         return handsSum() < Hands.BLACK_JACK;
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }
