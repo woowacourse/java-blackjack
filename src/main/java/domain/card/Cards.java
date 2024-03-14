@@ -40,10 +40,6 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
-    public boolean isBlackjack() {
-        return sumAllCards().isBlackjackScore() && cards.size() == INIT_CARD_COUNT;
-    }
-
     public List<Card> getCards() {
         return Collections.unmodifiableList(this.cards);
     }

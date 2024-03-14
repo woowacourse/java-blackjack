@@ -70,13 +70,4 @@ class CardsTest {
 
         assertThat(result).isEqualTo(Score.get(21));
     }
-
-    @Test
-    void 카드가_2장이고_합이_21이면_블랙잭이다() {
-        Cards cards = new Cards();
-        cards.addCard(카드(Denomination.ACE));
-        cards.addCard(카드(Denomination.KING));
-
-        assertThat(cards.isBlackjack()).isTrue();
-    }
 }
