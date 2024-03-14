@@ -1,4 +1,4 @@
-package blackjack.domain.game;
+package blackjack.domain.result;
 
 public enum GameResult {
 

@@ -6,12 +6,12 @@ import java.util.Map;
 
 import blackjack.domain.BlackjackConstants;
 import blackjack.domain.card.Deck;
-import blackjack.domain.game.BlackjackRevenueCalculator;
 import blackjack.domain.gamer.BlackjackGamer;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Money;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import blackjack.domain.result.BlackjackRevenueCalculator;
 import blackjack.dto.DealerInitialHandDto;
 import blackjack.dto.GamerHandDto;
 import blackjack.dto.GamerRevenueDto;
