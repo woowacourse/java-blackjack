@@ -16,8 +16,7 @@ class PlayerBetWalletTest {
         int betAmount = 100;
 
         //when
-        PlayerBetWallet playerBetWallet = PlayerBetWallet.from(betAmount);
-
+        PlayerBetWallet playerBetWallet = new PlayerBetWallet(betAmount);
 
         //then
         assertThat(playerBetWallet.getBetAmount()).isEqualTo(betAmount);
@@ -30,7 +29,7 @@ class PlayerBetWalletTest {
         int betAmount = 10;
 
         //when, then
-        assertThatThrownBy(() -> PlayerBetWallet.from(betAmount))
+        assertThatThrownBy(() -> new PlayerBetWallet(betAmount))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -41,7 +40,7 @@ class PlayerBetWalletTest {
         int betAmount = 15;
 
         //when, then
-        assertThatThrownBy(() -> PlayerBetWallet.from(betAmount))
+        assertThatThrownBy(() -> new PlayerBetWallet(betAmount))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -49,7 +48,7 @@ class PlayerBetWalletTest {
     @Test
     void registerProfitAmountByWin() {
         //given
-        PlayerBetWallet playerBetWallet = PlayerBetWallet.from(100);
+        PlayerBetWallet playerBetWallet = new PlayerBetWallet(100);
         Result winResult = Result.WIN;
 
         //when
@@ -64,7 +63,7 @@ class PlayerBetWalletTest {
     @Test
     void registerProfitAmounttByBlackjack() {
         //given
-        PlayerBetWallet playerBetWallet = PlayerBetWallet.from(100);
+        PlayerBetWallet playerBetWallet = new PlayerBetWallet(100);
         Result winResult = Result.BLACKJACK;
 
         //when
@@ -79,7 +78,7 @@ class PlayerBetWalletTest {
     @Test
     void registerProfitAmountByPush() {
         //given
-        PlayerBetWallet playerBetWallet = PlayerBetWallet.from(100);
+        PlayerBetWallet playerBetWallet = new PlayerBetWallet(100);
         Result winResult = Result.PUSH;
 
         //when
@@ -94,7 +93,7 @@ class PlayerBetWalletTest {
     @Test
     void registerProfitAmountByLose() {
         //given
-        PlayerBetWallet playerBetWallet = PlayerBetWallet.from(100);
+        PlayerBetWallet playerBetWallet = new PlayerBetWallet(100);
         Result winResult = Result.LOSE;
 
         //when
@@ -109,7 +108,7 @@ class PlayerBetWalletTest {
     @Test
     void registerProfitAmountByNone() {
         //given
-        PlayerBetWallet playerBetWallet = PlayerBetWallet.from(100);
+        PlayerBetWallet playerBetWallet = new PlayerBetWallet(100);
         Result winResult = Result.NONE;
 
         //when
@@ -124,7 +123,7 @@ class PlayerBetWalletTest {
     @Test
     void registerProfitAmountByAlreadySet() {
         //given
-        PlayerBetWallet playerBetWallet = PlayerBetWallet.from(100);
+        PlayerBetWallet playerBetWallet = new PlayerBetWallet(100);
         playerBetWallet.registerProfitAmount(Result.WIN);
 
         //when, then
@@ -136,7 +135,7 @@ class PlayerBetWalletTest {
     @Test
     void calculateNetProfit() {
         //given
-        PlayerBetWallet playerBetWallet = PlayerBetWallet.from(100);
+        PlayerBetWallet playerBetWallet = new PlayerBetWallet(100);
         Result winResult = Result.WIN;
 
         //when

@@ -19,11 +19,11 @@ class PlayerTest {
     @Test
     void createPlayer() {
         //given
-        Name name = Name.from("ted");
+        Name name = new Name("ted");
         int betAmount = 1000;
 
         //when
-        Player player = Player.of(name, betAmount);
+        Player player = new Player(name, betAmount);
         String playerName = player.name();
         int playerBetAmount = player.betAmount();
 
@@ -38,8 +38,8 @@ class PlayerTest {
     @Test
     void receiveCard() {
         //given
-        Player player = Player.of(Name.from("ted"), 100);
-        Card card = Card.of(CardPattern.CLOVER, CardNumber.FIVE);
+        Player player = new Player(new Name("ted"), 100);
+        Card card = new Card(CardPattern.CLOVER, CardNumber.FIVE);
 
         //when
         player.receiveCard(card);
@@ -53,9 +53,9 @@ class PlayerTest {
     @Test
     void deckSize() {
         //given
-        Player player = Player.of(Name.from("ted"), 100);
-        Card card1 = Card.of(CardPattern.CLOVER, CardNumber.FIVE);
-        Card card2 = Card.of(CardPattern.CLOVER, CardNumber.SEVEN);
+        Player player = new Player(new Name("ted"), 100);
+        Card card1 = new Card(CardPattern.CLOVER, CardNumber.FIVE);
+        Card card2 = new Card(CardPattern.CLOVER, CardNumber.SEVEN);
 
         //when
         player.receiveCard(card1);
@@ -70,9 +70,9 @@ class PlayerTest {
     @Test
     void calculateTotalScore() {
         //given
-        Player player = Player.of(Name.from("ted"), 100);
-        Card card1 = Card.of(CardPattern.CLOVER, CardNumber.FIVE);
-        Card card2 = Card.of(CardPattern.CLOVER, CardNumber.SEVEN);
+        Player player = new Player(new Name("ted"), 100);
+        Card card1 = new Card(CardPattern.CLOVER, CardNumber.FIVE);
+        Card card2 = new Card(CardPattern.CLOVER, CardNumber.SEVEN);
 
         //when
         player.receiveCard(card1);
@@ -89,7 +89,7 @@ class PlayerTest {
     void applyResult(Result gameResult) {
         //given
         int betAmount = 1000;
-        Player player = Player.of(Name.from("ted"), betAmount);
+        Player player = new Player(new Name("ted"), betAmount);
         int expectedProfitAmount = (int) (betAmount * gameResult.getPayoutRate());
 
         //when
@@ -106,7 +106,7 @@ class PlayerTest {
     void netProfit(Result gameResult) {
         //given
         int betAmount = 1000;
-        Player player = Player.of(Name.from("ted"), betAmount);
+        Player player = new Player(new Name("ted"), betAmount);
         int profitAmount = (int) (betAmount * gameResult.getPayoutRate());
         int expectedNetProfit = profitAmount - betAmount;
 

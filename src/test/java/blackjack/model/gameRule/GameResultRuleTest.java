@@ -24,7 +24,7 @@ class GameResultRuleTest {
     @Test
     void initializePlayerResults() {
         //given
-        Player player = Player.of(Name.from("ted"), 100);
+        Player player = new Player(new Name("ted"), 100);
 
         //when
         gameResultRule.initializePlayerResults(List.of(player));
@@ -39,14 +39,14 @@ class GameResultRuleTest {
     @Test
     void InitialResultRuleByDealerPlayerBlackjack() {
         //given
-        Player player = Player.of(Name.from("ted"), 100);
-        Dealer dealer = Dealer.from(100);
+        Player player = new Player(new Name("ted"), 100);
+        Dealer dealer = new Dealer(100);
 
-        player.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-        player.receiveCard(Card.of(CardPattern.SPADE, CardNumber.ACE));
+        player.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
+        player.receiveCard(new Card(CardPattern.SPADE, CardNumber.ACE));
 
-        dealer.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-        dealer.receiveCard(Card.of(CardPattern.SPADE, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardPattern.SPADE, CardNumber.ACE));
 
         //when
         gameResultRule.InitialResultRule(dealer, List.of(player));
@@ -61,14 +61,14 @@ class GameResultRuleTest {
     @Test
     void InitialResultRuleByPlayerBlackjack() {
         //given
-        Player player = Player.of(Name.from("ted"), 100);
-        Dealer dealer = Dealer.from(100);
+        Player player = new Player(new Name("ted"), 100);
+        Dealer dealer = new Dealer(100);
 
-        player.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-        player.receiveCard(Card.of(CardPattern.SPADE, CardNumber.ACE));
+        player.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
+        player.receiveCard(new Card(CardPattern.SPADE, CardNumber.ACE));
 
-        dealer.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-        dealer.receiveCard(Card.of(CardPattern.SPADE, CardNumber.TWO));
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardPattern.SPADE, CardNumber.TWO));
 
         //when
         gameResultRule.InitialResultRule(dealer, List.of(player));
@@ -83,14 +83,14 @@ class GameResultRuleTest {
     @Test
     void InitialResultRuleByDealerBlackjack() {
         //given
-        Player player = Player.of(Name.from("ted"), 100);
-        Dealer dealer = Dealer.from(100);
+        Player player = new Player(new Name("ted"), 100);
+        Dealer dealer = new Dealer(100);
 
-        player.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-        player.receiveCard(Card.of(CardPattern.HEART, CardNumber.EIGHT));
+        player.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
+        player.receiveCard(new Card(CardPattern.HEART, CardNumber.EIGHT));
 
-        dealer.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-        dealer.receiveCard(Card.of(CardPattern.SPADE, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardPattern.SPADE, CardNumber.ACE));
 
         //when
         gameResultRule.InitialResultRule(dealer, List.of(player));
@@ -105,16 +105,16 @@ class GameResultRuleTest {
     @Test
     void finalResultRuleByPlayerBust() {
         //given
-        Player player = Player.of(Name.from("ted"), 100);
-        Dealer dealer = Dealer.from(100);
+        Player player = new Player(new Name("ted"), 100);
+        Dealer dealer = new Dealer(100);
 
-        player.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-        player.receiveCard(Card.of(CardPattern.HEART, CardNumber.TEN));
-        player.receiveCard(Card.of(CardPattern.SPADE, CardNumber.TEN));
+        player.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
+        player.receiveCard(new Card(CardPattern.HEART, CardNumber.TEN));
+        player.receiveCard(new Card(CardPattern.SPADE, CardNumber.TEN));
 
-        dealer.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-        dealer.receiveCard(Card.of(CardPattern.HEART, CardNumber.TEN));
-        dealer.receiveCard(Card.of(CardPattern.SPADE, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardPattern.HEART, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardPattern.SPADE, CardNumber.TEN));
 
         //when
         gameResultRule.finalResultRule(dealer, List.of(player));
@@ -129,16 +129,16 @@ class GameResultRuleTest {
     @Test
     void finalResultRuleByDealerBust() {
         //given
-        Player player = Player.of(Name.from("ted"), 100);
-        Dealer dealer = Dealer.from(100);
+        Player player = new Player(new Name("ted"), 100);
+        Dealer dealer = new Dealer(100);
 
-        player.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-        player.receiveCard(Card.of(CardPattern.HEART, CardNumber.TWO));
-        player.receiveCard(Card.of(CardPattern.SPADE, CardNumber.THREE));
+        player.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
+        player.receiveCard(new Card(CardPattern.HEART, CardNumber.TWO));
+        player.receiveCard(new Card(CardPattern.SPADE, CardNumber.THREE));
 
-        dealer.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-        dealer.receiveCard(Card.of(CardPattern.HEART, CardNumber.TEN));
-        dealer.receiveCard(Card.of(CardPattern.SPADE, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardPattern.HEART, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardPattern.SPADE, CardNumber.TEN));
 
         //when
         gameResultRule.finalResultRule(dealer, List.of(player));
@@ -153,16 +153,16 @@ class GameResultRuleTest {
     @Test
     void finalResultRuleByLowerThanDealer() {
         //given
-        Player player = Player.of(Name.from("ted"), 100);
-        Dealer dealer = Dealer.from(100);
+        Player player = new Player(new Name("ted"), 100);
+        Dealer dealer = new Dealer(100);
 
-        player.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-        player.receiveCard(Card.of(CardPattern.HEART, CardNumber.EIGHT));
-        player.receiveCard(Card.of(CardPattern.SPADE, CardNumber.TWO));
+        player.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
+        player.receiveCard(new Card(CardPattern.HEART, CardNumber.EIGHT));
+        player.receiveCard(new Card(CardPattern.SPADE, CardNumber.TWO));
 
-        dealer.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-        dealer.receiveCard(Card.of(CardPattern.HEART, CardNumber.TEN));
-        dealer.receiveCard(Card.of(CardPattern.SPADE, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardPattern.HEART, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardPattern.SPADE, CardNumber.ACE));
 
         //when
         gameResultRule.finalResultRule(dealer, List.of(player));
@@ -177,16 +177,16 @@ class GameResultRuleTest {
     @Test
     void finalResultRuleByHigherThanDealer() {
         //given
-        Player player = Player.of(Name.from("ted"), 100);
-        Dealer dealer = Dealer.from(100);
+        Player player = new Player(new Name("ted"), 100);
+        Dealer dealer = new Dealer(100);
 
-        player.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-        player.receiveCard(Card.of(CardPattern.HEART, CardNumber.TEN));
-        player.receiveCard(Card.of(CardPattern.SPADE, CardNumber.ACE));
+        player.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
+        player.receiveCard(new Card(CardPattern.HEART, CardNumber.TEN));
+        player.receiveCard(new Card(CardPattern.SPADE, CardNumber.ACE));
 
-        dealer.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-        dealer.receiveCard(Card.of(CardPattern.HEART, CardNumber.EIGHT));
-        dealer.receiveCard(Card.of(CardPattern.SPADE, CardNumber.TWO));
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardPattern.HEART, CardNumber.EIGHT));
+        dealer.receiveCard(new Card(CardPattern.SPADE, CardNumber.TWO));
 
         //when
         gameResultRule.finalResultRule(dealer, List.of(player));
@@ -201,16 +201,16 @@ class GameResultRuleTest {
     @Test
     void finalResultRuleBySameScore() {
         //given
-        Player player = Player.of(Name.from("ted"), 100);
-        Dealer dealer = Dealer.from(100);
+        Player player = new Player(new Name("ted"), 100);
+        Dealer dealer = new Dealer(100);
 
-        player.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-        player.receiveCard(Card.of(CardPattern.HEART, CardNumber.TEN));
-        player.receiveCard(Card.of(CardPattern.SPADE, CardNumber.ACE));
+        player.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
+        player.receiveCard(new Card(CardPattern.HEART, CardNumber.TEN));
+        player.receiveCard(new Card(CardPattern.SPADE, CardNumber.ACE));
 
-        dealer.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-        dealer.receiveCard(Card.of(CardPattern.HEART, CardNumber.TEN));
-        dealer.receiveCard(Card.of(CardPattern.SPADE, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardPattern.HEART, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardPattern.SPADE, CardNumber.ACE));
 
         //when
         gameResultRule.finalResultRule(dealer, List.of(player));
@@ -225,17 +225,17 @@ class GameResultRuleTest {
     @Test
     void hitStayTargetPlayerDecisionRule() {
         //given
-        Player player1 = Player.of(Name.from("ted"), 100);
-        player1.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-        player1.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.ACE));
+        Player player1 = new Player(new Name("ted"), 100);
+        player1.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
+        player1.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.ACE));
 
-        Player player2 = Player.of(Name.from("ted"), 100);
-        player2.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.FIVE));
-        player2.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
+        Player player2 = new Player(new Name("ted"), 100);
+        player2.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.FIVE));
+        player2.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
 
-        Dealer dealer = Dealer.from(200);
-        dealer.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.FIVE));
-        dealer.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
+        Dealer dealer = new Dealer(200);
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.FIVE));
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
 
         List<Player> players = new ArrayList<>();
         players.add(player1);

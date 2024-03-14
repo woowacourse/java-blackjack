@@ -16,7 +16,7 @@ class CardTest {
         CardNumber cardNumber = CardNumber.FIVE;
 
         //when
-        Card card = Card.of(cardPattern, cardNumber);
+        Card card = new Card(cardPattern, cardNumber);
 
         //then
         assertAll(
@@ -29,7 +29,7 @@ class CardTest {
     @Test
     void isElevenAce() {
         //given
-        Card card = Card.of(CardPattern.CLOVER, CardNumber.ACE);
+        Card card = new Card(CardPattern.CLOVER, CardNumber.ACE);
 
         //when, then
         assertThat(card.isElevenAce()).isTrue();
@@ -39,7 +39,7 @@ class CardTest {
     @Test
     void switchAceValue() {
         //given
-        Card card = Card.of(CardPattern.CLOVER, CardNumber.ACE);
+        Card card = new Card(CardPattern.CLOVER, CardNumber.ACE);
 
         //when
         int unmodifiedScore = card.getScore();

@@ -7,14 +7,10 @@ public class Name {
 
     private final String name;
 
-    private Name(String name) {
+    public Name(String name) {
         validateNameContainBlank(name);
         validateNameLength(name);
         this.name = name;
-    }
-
-    public static Name from(String name) {
-        return new Name(name);
     }
 
     private void validateNameContainBlank(String name) {

@@ -10,15 +10,11 @@ public class PlayerBetWallet {
     private final int betAmount;
     private int profitAmount;
 
-    private PlayerBetWallet(int betAmount) {
+    public PlayerBetWallet(int betAmount) {
         validateMinimumBetAmount(betAmount);
         validateBetAmountUnit(betAmount);
         this.betAmount = betAmount;
         this.profitAmount = 0;
-    }
-
-    public static PlayerBetWallet from(int betAmount) {
-        return new PlayerBetWallet(betAmount);
     }
 
     public void registerProfitAmount(Result result) {

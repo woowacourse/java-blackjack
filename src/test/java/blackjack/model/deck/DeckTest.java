@@ -19,7 +19,7 @@ class DeckTest {
     @Test
     void add() {
         //given
-        Card card = Card.of(CardPattern.CLOVER, CardNumber.EIGHT);
+        Card card = new Card(CardPattern.CLOVER, CardNumber.EIGHT);
 
         //when
         deck.add(card);
@@ -33,8 +33,8 @@ class DeckTest {
     @Test
     void add_duplicateCard() {
         //given
-        Card card1 = Card.of(CardPattern.CLOVER, CardNumber.ACE);
-        Card card2 = Card.of(CardPattern.CLOVER, CardNumber.ACE);
+        Card card1 = new Card(CardPattern.CLOVER, CardNumber.ACE);
+        Card card2 = new Card(CardPattern.CLOVER, CardNumber.ACE);
 
         deck.add(card1);
         //when, then
@@ -46,8 +46,8 @@ class DeckTest {
     @Test
     void calculateTotalScore() {
         //given
-        Card card1 = Card.of(CardPattern.CLOVER, CardNumber.EIGHT);
-        Card card2 = Card.of(CardPattern.SPADE, CardNumber.EIGHT);
+        Card card1 = new Card(CardPattern.CLOVER, CardNumber.EIGHT);
+        Card card2 = new Card(CardPattern.SPADE, CardNumber.EIGHT);
 
         //when
         deck.add(card1);
@@ -61,8 +61,8 @@ class DeckTest {
     @Test
     void countElevenAce() {
         //given
-        Card card1 = Card.of(CardPattern.CLOVER, CardNumber.ACE);
-        Card card2 = Card.of(CardPattern.SPADE, CardNumber.ACE);
+        Card card1 = new Card(CardPattern.CLOVER, CardNumber.ACE);
+        Card card2 = new Card(CardPattern.SPADE, CardNumber.ACE);
 
         //when
         deck.add(card1);
@@ -76,8 +76,8 @@ class DeckTest {
     @Test
     void switchAceValueInRow() {
         //given
-        Card card1 = Card.of(CardPattern.CLOVER, CardNumber.ACE);
-        Card card2 = Card.of(CardPattern.SPADE, CardNumber.ACE);
+        Card card1 = new Card(CardPattern.CLOVER, CardNumber.ACE);
+        Card card2 = new Card(CardPattern.SPADE, CardNumber.ACE);
 
         //when
         deck.add(card1);
