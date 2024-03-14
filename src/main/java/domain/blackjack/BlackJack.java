@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 
 public class BlackJack {
 
+    public static final int BEGIN_DRAW_COUNT = 2;
     private final Dealer dealer;
     private final Participants participants;
 
@@ -18,10 +19,10 @@ public class BlackJack {
     }
 
     public void beginDealing() {
-        dealer.receiveCard(dealer.draw(2));
+        dealer.receiveCard(dealer.draw(BEGIN_DRAW_COUNT));
 
         for (Participant participant : participants.getValue()) {
-            participant.receiveCard(dealer.draw(2));
+            participant.receiveCard(dealer.draw(BEGIN_DRAW_COUNT));
         }
     }
 
@@ -34,14 +35,15 @@ public class BlackJack {
         return count;
     }
 
-    public BlackJackResult saveParticipantResult() {
+    public LinkedHashMap<Participant, WinStatus> makeResult() {
         LinkedHashMap<Participant, WinStatus> result = new LinkedHashMap<>();
         for (Participant participant : participants.getValue()) {
             result.put(participant, isWinner(participant));
         }
-        return new BlackJackResult(result);
+        return result;
     }
 
+    // TODO : 승패무 판단 로직 리팩토링
     private WinStatus isWinner(Participant participant) {
         if (participant.isBust()) {
             return WinStatus.LOSE;

@@ -53,8 +53,7 @@ class BlackJackTest {
          * two 참가자의 점수: 5점
          * 딜러의 점수: 7점인 상황
          */
-        BlackJackResult blackJackResult = blackJack.saveParticipantResult();
-        LinkedHashMap<Participant, WinStatus> resultByParticipant = blackJackResult.getResultByParticipant();
+        LinkedHashMap<Participant, WinStatus> resultByParticipant = blackJack.makeResult();
 
         Assertions.assertAll(
                 () -> assertThat(resultByParticipant).containsEntry(one, WinStatus.WIN),
@@ -87,8 +86,7 @@ class BlackJackTest {
          * two 참가자의 점수: 3점
          * 딜러의 점수: 3점인
          */
-        BlackJackResult blackJackResult = blackJack.saveParticipantResult();
-        LinkedHashMap<Participant, WinStatus> resultByParticipant = blackJackResult.getResultByParticipant();
+        LinkedHashMap<Participant, WinStatus> resultByParticipant = blackJack.makeResult();
 
         Assertions.assertAll(
                 () -> assertThat(resultByParticipant).containsEntry(one, WinStatus.PUSH),
@@ -117,8 +115,7 @@ class BlackJackTest {
          * two 참가자의 점수: 13점
          * 딜러의 점수: 10점인
          */
-        BlackJackResult blackJackResult = blackJack.saveParticipantResult();
-        LinkedHashMap<Participant, WinStatus> resultByParticipant = blackJackResult.getResultByParticipant();
+        LinkedHashMap<Participant, WinStatus> resultByParticipant = blackJack.makeResult();
 
         Assertions.assertAll(
                 () -> assertThat(resultByParticipant).containsEntry(one, WinStatus.BLACKJACK),
@@ -148,8 +145,7 @@ class BlackJackTest {
          * two 참가자의 점수: 13점
          * 딜러의 점수: 블랙잭
          */
-        BlackJackResult blackJackResult = blackJack.saveParticipantResult();
-        LinkedHashMap<Participant, WinStatus> resultByParticipant = blackJackResult.getResultByParticipant();
+        LinkedHashMap<Participant, WinStatus> resultByParticipant = blackJack.makeResult();
 
         Assertions.assertAll(
                 () -> assertThat(resultByParticipant).containsEntry(one, WinStatus.PUSH),
@@ -180,8 +176,7 @@ class BlackJackTest {
          * two 참가자의 점수: 5점
          * 딜러의 점수: 버스트
          */
-        BlackJackResult blackJackResult = blackJack.saveParticipantResult();
-        LinkedHashMap<Participant, WinStatus> resultByParticipant = blackJackResult.getResultByParticipant();
+        LinkedHashMap<Participant, WinStatus> resultByParticipant = blackJack.makeResult();
 
         Assertions.assertAll(
                 () -> assertThat(resultByParticipant).containsEntry(one, WinStatus.WIN),

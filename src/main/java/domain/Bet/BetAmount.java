@@ -1,4 +1,4 @@
-package domain.participant;
+package domain.Bet;
 
 import java.util.Objects;
 

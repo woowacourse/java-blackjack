@@ -1,5 +1,7 @@
 package domain.participant;
 
+import domain.Bet.BetAmount;
+import domain.Bet.BetResult;
 import domain.blackjack.WinStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +31,6 @@ class BetResultTest {
     void profitWhenWin() {
         Participant participant = new Participant(new Name("rush"));
         BetAmount betAmount = BetAmount.from(1000);
-        Dealer dealer = new Dealer();
 
         LinkedHashMap<Participant, BetAmount> betAmountByParticipant = new LinkedHashMap<>();
         betAmountByParticipant.put(participant, betAmount);
@@ -49,8 +50,6 @@ class BetResultTest {
         Participant participant = new Participant(new Name("rush"));
         BetAmount betAmount = BetAmount.from(1000);
 
-        Dealer dealer = new Dealer();
-
         LinkedHashMap<Participant, BetAmount> betAmountByParticipant = new LinkedHashMap<>();
         betAmountByParticipant.put(participant, betAmount);
         BetResult betResult = new BetResult(betAmountByParticipant);
@@ -68,8 +67,6 @@ class BetResultTest {
     void profitWhenBlackJack() {
         Participant participant = new Participant(new Name("rush"));
         BetAmount betAmount = BetAmount.from(1000);
-
-        Dealer dealer = new Dealer();
 
         LinkedHashMap<Participant, BetAmount> betAmountByParticipant = new LinkedHashMap<>();
         betAmountByParticipant.put(participant, betAmount);
@@ -89,8 +86,6 @@ class BetResultTest {
     void profitWhenPush() {
         Participant participant = new Participant(new Name("rush"));
         BetAmount betAmount = BetAmount.from(1000);
-
-        Dealer dealer = new Dealer();
 
         LinkedHashMap<Participant, BetAmount> betAmountByParticipant = new LinkedHashMap<>();
         betAmountByParticipant.put(participant, betAmount);

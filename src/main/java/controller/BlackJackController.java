@@ -1,7 +1,8 @@
 package controller;
 
+import domain.Bet.BetAmount;
+import domain.Bet.BetResult;
 import domain.blackjack.BlackJack;
-import domain.blackjack.BlackJackResult;
 import domain.participant.*;
 import view.HitOption;
 import view.InputView;
@@ -26,8 +27,7 @@ public class BlackJackController {
         startParticipantHit(blackJack);
         dealerHit(blackJack);
 
-        BlackJackResult blackJackResult = blackJack.saveParticipantResult();
-        betResult.updateToProfit(blackJackResult.getResultByParticipant());
+        betResult.updateToProfit(blackJack.makeResult());
 
         printScore(blackJack);
         printResult(betResult);

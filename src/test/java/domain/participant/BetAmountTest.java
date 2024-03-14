@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.Bet.BetAmount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

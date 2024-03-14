@@ -23,7 +23,6 @@ class ParticipantTest {
         boolean canHit = participant.canHit();
 
         assertThat(canHit).isFalse();
-
     }
 
     @DisplayName("사용자가 블랙잭인지 확인한다.")
@@ -36,6 +35,5 @@ class ParticipantTest {
         boolean canHit = participant.isBlackJack();
 
         assertThat(canHit).isTrue();
-
     }
 }

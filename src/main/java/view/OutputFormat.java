@@ -1,5 +1,7 @@
 package view;
 
+import domain.Bet.BetAmount;
+import domain.Bet.BetResult;
 import domain.card.Card;
 import domain.participant.*;
 

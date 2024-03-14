@@ -1,6 +1,7 @@
-package domain.participant;
+package domain.Bet;
 
 import domain.blackjack.WinStatus;
+import domain.participant.Participant;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
