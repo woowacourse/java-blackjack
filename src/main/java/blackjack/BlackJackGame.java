@@ -1,6 +1,5 @@
 package blackjack;
 
-import blackjack.domain.bet.Bet;
 import blackjack.domain.bet.Bets;
 import blackjack.domain.bet.BettingBank;
 import blackjack.domain.card.CardDeck;
@@ -10,8 +9,7 @@ import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
-import blackjack.domain.rule.BetResult;
-import blackjack.domain.rule.GameResult;
+import blackjack.domain.rule.BetResults;
 import blackjack.domain.rule.Judge;
 import blackjack.domain.rule.PlayerResults;
 import blackjack.view.InputView;
@@ -47,15 +45,16 @@ public class BlackJackGame {
         List<String> playerNames = players.getPlayerNames();
         BettingBank bettingBank = new BettingBank();
 
-        for (String playerName : playerNames) {
-            Bet bet = bets.getBetByPlayerName(playerName);
-            GameResult gameResult = playerResults.findResultByName(playerName);
-            BetResult betResult = bettingBank.calculateBetResult(bet, gameResult);
-            outputView.printBetResult(betResult);
-        }
-
+        BetResults betResults = new BetResults(playerNames.stream()
+                .map(playerName -> bettingBank.calculateBetResult(
+                        bets.getBetByPlayerName(playerName),
+                        playerResults.findResultByName(playerName)))
+                .toList());
         printDealerGameResult(dealer, players);
         printPlayersGameResult(players, dealer);
+
+        outputView.printBetResults(betResults.calculateDealerProfit().getAmount(), betResults);
+
     }
 
     private Players initPlayers(CardDeck cardDeck) {
