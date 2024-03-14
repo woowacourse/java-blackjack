@@ -20,6 +20,10 @@ public class Money {
         return new Money(amount + other.amount);
     }
 
+    public Money inverse() {
+        return new Money(-1 * amount);
+    }
+
     public int getAmount() {
         return amount;
     }

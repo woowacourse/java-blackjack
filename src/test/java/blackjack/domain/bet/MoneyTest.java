@@ -44,4 +44,11 @@ class MoneyTest {
         Money added = money.add(new Money(1000));
         assertThat(added.getAmount()).isEqualTo(2000);
     }
+
+    @DisplayName("부호를 반전한 돈을 계산할 수 있다")
+    @Test
+    void testInverseMoney() {
+        Money money = new Money(1000);
+        assertThat(money.inverse().getAmount()).isEqualTo(-1000);
+    }
 }
