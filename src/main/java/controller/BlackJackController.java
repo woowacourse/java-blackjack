@@ -60,17 +60,17 @@ public class BlackJackController {
 
     private Betting initBettingForPlayers(final List<Player> players) {
         Map<PlayerName, BettingAmount> betting = new HashMap<>();
-        players.forEach(player -> betting.put(player.getPlayerName(), initAmount(player)));
+        players.forEach(player -> betting.put(player.getPlayerName(), initBettingAmount(player)));
         return new Betting(betting);
     }
 
-    private BettingAmount initAmount(final Player player) {
+    private BettingAmount initBettingAmount(final Player player) {
         try {
             String inputAmount = InputView.inputAmount(player.getPlayerName().value());
             return new BettingAmount(inputAmount);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
-            return initAmount(player);
+            return initBettingAmount(player);
         }
     }
 
