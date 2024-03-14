@@ -28,16 +28,13 @@ public final class Score implements Comparable<Score> {
         return value > BLACKJACK_VALUE;
     }
 
-    public boolean isBiggerThan(final Score other) {
-        return this.value > other.value;
-    }
-
-    public boolean isSmallerOrEqual(final Score score) {
-        return this.value <= score.value;
-    }
-
     public int toInt() {
         return value;
+    }
+
+    @Override
+    public int compareTo(final Score o) {
+        return Integer.compare(value, o.value);
     }
 
     @Override

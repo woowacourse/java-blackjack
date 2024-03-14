@@ -27,10 +27,6 @@ public abstract class State {
         return hitCount;
     }
 
-    public Score getScore() {
-        return hands.calculateScore();
-    }
-
     public Hands getHands() {
         return hands;
     }

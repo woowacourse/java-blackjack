@@ -33,7 +33,9 @@ public final class DealerHitState extends State {
     }
 
     private static boolean needMoreCard(final Hands hands) {
-        return hands.calculateScore().isSmallerOrEqual(new Score(NEED_CARD_NUMBER_MAX));
+        final Score score = hands.calculateScore();
+
+        return score.compareTo(NEED_CARD_SCORE_MAX) <= 0;
     }
 
     @Override

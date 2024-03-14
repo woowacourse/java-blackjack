@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public final class Hands {
+public final class Hands implements Comparable<Hands> {
 
     private static final int ACE_SCORE_GAP = CardNumber.ACE.getNumber() - CardNumber.ACE_BONUS_NUMBER;
 
@@ -62,6 +62,11 @@ public final class Hands {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    @Override
+    public int compareTo(final Hands o) {
+        return calculateScore().compareTo(o.calculateScore());
     }
 
     @Override
