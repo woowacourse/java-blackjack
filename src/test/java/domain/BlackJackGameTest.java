@@ -8,7 +8,6 @@ import domain.cards.cardinfo.CardNumber;
 import domain.cards.cardinfo.CardShape;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,9 +31,10 @@ public class BlackJackGameTest {
     @Test
     void increaseCardSizeWhenPlayerHit() {
         BlackJackGame game = new BlackJackGame(List.of("dummy")); // 왜 같은 취급되지 않지? 주소는 같다고 출력되는데.
-        Hand hand = new Hand(new ArrayList<>(List.of(new Card(CardNumber.THREE, CardShape.HEART),
-                new Card(CardNumber.FOUR, CardShape.DIAMOND),
-                new Card(CardNumber.FIVE, CardShape.CLOVER))));
+        Hand hand = new Hand();
+        hand.addCard(new Card(CardNumber.THREE, CardShape.HEART));
+        hand.addCard(new Card(CardNumber.FOUR, CardShape.DIAMOND));
+        hand.addCard(new Card(CardNumber.FIVE, CardShape.CLOVER));
         Player player = new Player("p1", hand);
 
         boolean isHit = game.hitByPlayer(HitOption.HIT, player);
@@ -47,9 +47,10 @@ public class BlackJackGameTest {
     @Test
     void increaseCardSizeWhenDealerHit() {
         BlackJackGame game = new BlackJackGame(List.of("dummy"));
-        Hand hand = new Hand(new ArrayList<>(List.of(new Card(CardNumber.THREE, CardShape.HEART),
-                new Card(CardNumber.FOUR, CardShape.DIAMOND),
-                new Card(CardNumber.FIVE, CardShape.CLOVER))));
+        Hand hand = new Hand();
+        hand.addCard(new Card(CardNumber.THREE, CardShape.HEART));
+        hand.addCard(new Card(CardNumber.FOUR, CardShape.DIAMOND));
+        hand.addCard(new Card(CardNumber.FIVE, CardShape.CLOVER));
         Dealer dealer = new Dealer(hand);
 
         game.hitByDealer(dealer);

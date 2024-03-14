@@ -1,5 +1,6 @@
 package domain.cards;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,10 +11,9 @@ public class Hand {
     private final List<Card> cards;
     private final Score score;
 
-    public Hand(List<Card> cards) {
-        this.cards = cards;
+    public Hand() {
+        this.cards = new ArrayList<>();
         this.score = new Score();
-        calculateScore();
     }
 
     public void addCard(Card card) {

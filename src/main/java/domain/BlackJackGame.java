@@ -6,7 +6,6 @@ import domain.cards.Hand;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackGame {
@@ -23,9 +22,9 @@ public class BlackJackGame {
 
     private Gamers makeGamers(List<String> rawPlayersNames) {
         List<Player> players = rawPlayersNames.stream()
-                .map(rawPlayersName -> new Player(rawPlayersName, new Hand(new ArrayList<>())))
+                .map(rawPlayersName -> new Player(rawPlayersName, new Hand()))
                 .toList();
-        Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
+        Dealer dealer = new Dealer(new Hand());
         return new Gamers(players, dealer);
     }
 

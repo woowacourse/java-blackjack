@@ -16,15 +16,15 @@ public class GamersTest {
 
     @BeforeEach
     void setUp() {
-        dealer = new Dealer(new Hand(new ArrayList<>()));
+        dealer = new Dealer(new Hand());
     }
 
     @DisplayName("플레이어들 간 중복된 이름을 가질 경우 예외를 발생시킨다.")
     @Test
     void createDomainByDuplicatedNames() {
-        Player player1 = new Player("p", new Hand(new ArrayList<>()));
-        Player player2 = new Player("p", new Hand(new ArrayList<>()));
-        Player player3 = new Player("p1", new Hand(new ArrayList<>()));
+        Player player1 = new Player("p", new Hand());
+        Player player2 = new Player("p", new Hand());
+        Player player3 = new Player("p1", new Hand());
 
         assertThatThrownBy(() -> new Gamers(List.of(player1, player2, player3), dealer))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -42,15 +42,15 @@ public class GamersTest {
     @DisplayName("플레이어가 8명이 넘어갈 경우 예외를 발생시킨다.")
     @Test
     void createDomainByInvalidMaxSize() {
-        Player player1 = new Player("p1", new Hand(new ArrayList<>()));
-        Player player2 = new Player("p2", new Hand(new ArrayList<>()));
-        Player player3 = new Player("p3", new Hand(new ArrayList<>()));
-        Player player4 = new Player("p4", new Hand(new ArrayList<>()));
-        Player player5 = new Player("p5", new Hand(new ArrayList<>()));
-        Player player6 = new Player("p6", new Hand(new ArrayList<>()));
-        Player player7 = new Player("p7", new Hand(new ArrayList<>()));
-        Player player8 = new Player("p8", new Hand(new ArrayList<>()));
-        Player player9 = new Player("p9", new Hand(new ArrayList<>()));
+        Player player1 = new Player("p1", new Hand());
+        Player player2 = new Player("p2", new Hand());
+        Player player3 = new Player("p3", new Hand());
+        Player player4 = new Player("p4", new Hand());
+        Player player5 = new Player("p5", new Hand());
+        Player player6 = new Player("p6", new Hand());
+        Player player7 = new Player("p7", new Hand());
+        Player player8 = new Player("p8", new Hand());
+        Player player9 = new Player("p9", new Hand());
 
         assertThatThrownBy(() -> new Gamers(
                 List.of(player1, player2, player3, player4, player5, player6, player7, player8, player9), dealer))
@@ -61,8 +61,8 @@ public class GamersTest {
     @DisplayName("올바른 조건의 플레이어가 전달된 경우 성공적으로 도메인을 생성한다.")
     @Test
     void createDomainSuccessfully() {
-        Player player1 = new Player("p1", new Hand(new ArrayList<>()));
-        Player player2 = new Player("p2", new Hand(new ArrayList<>()));
+        Player player1 = new Player("p1", new Hand());
+        Player player2 = new Player("p2", new Hand());
 
         assertThatCode(() -> new Gamers(List.of(player1, player2), dealer))
                 .doesNotThrowAnyException();
@@ -71,7 +71,7 @@ public class GamersTest {
     @DisplayName("플레이어의 이름이 \"딜러\"면 예외를 발생시킨다.")
     @Test
     void createDomainByInvalidName() {
-        Player player = new Player("딜러", new Hand(new ArrayList<>()));
+        Player player = new Player("딜러", new Hand());
 
         assertThatThrownBy(() -> new Gamers(List.of(player), dealer))
                 .isInstanceOf(IllegalArgumentException.class)
