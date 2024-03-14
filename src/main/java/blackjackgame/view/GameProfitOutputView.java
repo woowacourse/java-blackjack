@@ -5,6 +5,9 @@ import java.util.List;
 
 public class GameProfitOutputView {
 
+    private GameProfitOutputView() {
+    }
+
     public static void print(GameProfitDTO gameProfitDTO) {
         System.out.println(gameProfitDTO.getDealerName() + ": " + gameProfitDTO.getDealerProfit());
         List<String> playersName = gameProfitDTO.getPlayersName();
