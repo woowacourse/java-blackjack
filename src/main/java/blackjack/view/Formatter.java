@@ -2,11 +2,10 @@ package blackjack.view;
 
 import blackjack.dto.CardDto;
 import blackjack.dto.DealerDto;
-import blackjack.dto.DealerResultDto;
+import blackjack.dto.DealerNetProfitDto;
 import blackjack.dto.HandDeckDto;
 import blackjack.dto.PlayerDto;
 import java.util.List;
-import java.util.StringJoiner;
 
 public class Formatter {
 
@@ -49,20 +48,12 @@ public class Formatter {
         return playerCardInfoFormat(playerDto) + cardScoreFormat(playerScore);
     }
 
-    public static String dealerResultFormat(DealerResultDto dealerResultDto) {
-        StringBuilder dealerResultFormat = new StringBuilder();
-
-        dealerResultFormat.append("딜러: ");
-        int winCount = dealerResultDto.winCount();
-        int tieCount = dealerResultDto.tieCount();
-        int loseCount = dealerResultDto.loseCount();
-        dealerResultFormat.append(dealerResult(winCount, tieCount, loseCount));
-
-        return dealerResultFormat.toString();
+    public static String dealerNetProfitFormat(DealerNetProfitDto dealerNetProfitDto) {
+        return String.format("딜러 : %d", dealerNetProfitDto.netProfit());
     }
 
-    public static String playerResultFormat(String playerName, String playerResult) {
-        return String.format("%s : %s", playerName, playerResult);
+    public static String playerNetProfitFormat(String playerName, int netProfit) {
+        return String.format("%s : %d", playerName, netProfit);
     }
 
     private static String cardNameFormat(CardDto cardDto) {
@@ -75,19 +66,19 @@ public class Formatter {
         return String.format(" - 결과: %d", score);
     }
 
-    private static String dealerResult(int winCount, int tieCount, int loseCount) {
-        StringJoiner dealerResultInfo = new StringJoiner(SPACE);
-
-        if (winCount > 0) {
-            dealerResultInfo.add(String.format("%d승", winCount));
-        }
-        if (tieCount > 0) {
-            dealerResultInfo.add(String.format("%d무", tieCount));
-        }
-        if (loseCount > 0) {
-            dealerResultInfo.add(String.format("%d패", loseCount));
-        }
-
-        return dealerResultInfo.toString();
-    }
+//    private static String dealerResult(int winCount, int tieCount, int loseCount) {
+//        StringJoiner dealerResultInfo = new StringJoiner(SPACE);
+//
+//        if (winCount > 0) {
+//            dealerResultInfo.add(String.format("%d승", winCount));
+//        }
+//        if (tieCount > 0) {
+//            dealerResultInfo.add(String.format("%d무", tieCount));
+//        }
+//        if (loseCount > 0) {
+//            dealerResultInfo.add(String.format("%d패", loseCount));
+//        }
+//
+//        return dealerResultInfo.toString();
+//    }
 }
