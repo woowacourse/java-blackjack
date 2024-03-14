@@ -18,12 +18,12 @@ public class PlayersCreator {
                 .collect(Collectors.toList()));
     }
 
-    private static void validate(List<String> players) {
+    private void validate(List<String> players) {
         validatePlayerCountRange(players);
         validateHasDuplicateName(players);
     }
 
-    private static void validateHasDuplicateName(List<String> players) {
+    private void validateHasDuplicateName(List<String> players) {
         int uniqueNameCount = countPlayerUniqueName(players);
 
         if (players.size() != uniqueNameCount) {
@@ -31,12 +31,12 @@ public class PlayersCreator {
         }
     }
 
-    private static int countPlayerUniqueName(List<String> players) {
+    private int countPlayerUniqueName(List<String> players) {
         Set<String> names = new HashSet<>(players);
         return names.size();
     }
 
-    private static void validatePlayerCountRange(List<String> players) {
+    private void validatePlayerCountRange(List<String> players) {
         if (players.size() < MINIMUM_PLAYER_RANGE || MAXIMUM_PLAYER_RANGE < players.size()) {
             throw new IllegalArgumentException(
                     "참가자의 인원은 최소 " + MINIMUM_PLAYER_RANGE + "에서 최대 " + MAXIMUM_PLAYER_RANGE + "명 까지 가능합니다.");
