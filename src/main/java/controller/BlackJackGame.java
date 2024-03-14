@@ -97,7 +97,7 @@ public class BlackJackGame {
         PlayerResults playerResults = new PlayerResults();
         DealerResult dealerResult = new DealerResult();
         for (Player player : players.getPlayers()) {
-            Result result = Referee.judge(dealer, player);
+            Result result = Referee.judgeBasedOnDealer(dealer, player);
             dealerResult = dealerResult.addResult(result);
             playerResults.addResult(player, findPlayerResult(result));
         }

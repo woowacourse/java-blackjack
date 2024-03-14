@@ -81,8 +81,8 @@ class RefereeTest {
         @Test
         void playerNotBust() {
             // when
-            Result result1 = Referee.judge(dealer, pobi);
-            Result result2 = Referee.judge(dealer, neo);
+            Result result1 = Referee.judgeBasedOnDealer(dealer, pobi);
+            Result result2 = Referee.judgeBasedOnDealer(dealer, neo);
 
             // then
             assertAll(
@@ -99,8 +99,8 @@ class RefereeTest {
             pobi.hit(deck.draw());
 
             // when
-            Result result1 = Referee.judge(dealer, pobi);
-            Result result2 = Referee.judge(dealer, neo);
+            Result result1 = Referee.judgeBasedOnDealer(dealer, pobi);
+            Result result2 = Referee.judgeBasedOnDealer(dealer, neo);
 
             // then
             assertAll(
@@ -136,8 +136,8 @@ class RefereeTest {
         @Test
         void playerIsBlackJack() {
             // when
-            Result result1 = Referee.judge(dealer, pobi);
-            Result result2 = Referee.judge(dealer, neo);
+            Result result1 = Referee.judgeBasedOnDealer(dealer, pobi);
+            Result result2 = Referee.judgeBasedOnDealer(dealer, neo);
 
             // then
             assertAll(
@@ -153,8 +153,8 @@ class RefereeTest {
             neo.hit(deck.draw());
 
             // when
-            Result result1 = Referee.judge(dealer, pobi);
-            Result result2 = Referee.judge(dealer, neo);
+            Result result1 = Referee.judgeBasedOnDealer(dealer, pobi);
+            Result result2 = Referee.judgeBasedOnDealer(dealer, neo);
 
             // then
             assertAll(
@@ -191,8 +191,8 @@ class RefereeTest {
         @Test
         void playerIsBlackJack() {
             // when
-            Result result1 = Referee.judge(dealer, pobi);
-            Result result2 = Referee.judge(dealer, neo);
+            Result result1 = Referee.judgeBasedOnDealer(dealer, pobi);
+            Result result2 = Referee.judgeBasedOnDealer(dealer, neo);
 
             // then
             assertAll(
@@ -210,8 +210,8 @@ class RefereeTest {
             neo.hit(deck.draw());
 
             // when
-            Result result1 = Referee.judge(dealer, pobi);
-            Result result2 = Referee.judge(dealer, neo);
+            Result result1 = Referee.judgeBasedOnDealer(dealer, pobi);
+            Result result2 = Referee.judgeBasedOnDealer(dealer, neo);
 
             // then
             assertAll(
@@ -227,8 +227,8 @@ class RefereeTest {
             neo.hit(deck.draw());
 
             // when
-            Result result1 = Referee.judge(dealer, pobi);
-            Result result2 = Referee.judge(dealer, neo);
+            Result result1 = Referee.judgeBasedOnDealer(dealer, pobi);
+            Result result2 = Referee.judgeBasedOnDealer(dealer, neo);
 
             // then
             assertAll(
@@ -245,8 +245,8 @@ class RefereeTest {
             neo.hit(deck.draw());
 
             // when
-            Result result1 = Referee.judge(dealer, pobi);
-            Result result2 = Referee.judge(dealer, neo);
+            Result result1 = Referee.judgeBasedOnDealer(dealer, pobi);
+            Result result2 = Referee.judgeBasedOnDealer(dealer, neo);
 
             // then
             assertAll(

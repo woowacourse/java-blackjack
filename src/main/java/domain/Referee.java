@@ -8,7 +8,7 @@ public class Referee {
     private Referee() {
     }
 
-    public static Result judge(final Dealer dealer, final Player player) {
+    public static Result judgeBasedOnDealer(final Dealer dealer, final Player player) {
         if (dealer.isBust()) {
             return isDealerBust(player);
         }
@@ -53,5 +53,4 @@ public class Referee {
         }
         return Result.TIE;
     }
-
 }
