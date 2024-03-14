@@ -29,7 +29,7 @@ public class Dealer extends Participant {
         }
 
         if (player.isBlackJack()) {
-            return GameResult.WIN;
+            return GameResult.BLACKJACK_WIN;
         }
 
         if (isBlackJack() || playerScore < dealerScore) {

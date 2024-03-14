@@ -145,7 +145,7 @@ class DealerTest {
 
         GameResult gameResult = dealer.judge(player);
 
-        assertThat(gameResult).isEqualTo(GameResult.WIN);
+        assertThat(gameResult).isEqualTo(GameResult.BLACKJACK_WIN);
     }
 
     @DisplayName("딜러만 버스트되면, 플레이어가 이긴다.")

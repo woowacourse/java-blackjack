@@ -81,4 +81,48 @@ class PlayerTest {
 
         assertThat(result).isFalse();
     }
+
+    @DisplayName("플레이어가 질 경우, 수익금을 계산한다.")
+    @Test
+    void whenPlayerLose() {
+        Money playerMoney = new Money(1000);
+        Player player = new Player("atom", playerMoney);
+
+        Money result = player.calculateProfit(GameResult.LOSE);
+
+        assertThat(result.getAmount()).isEqualTo(-1000);
+    }
+
+    @DisplayName("플레이어가 이길 경우, 수익금을 계산한다.")
+    @Test
+    void whenPlayerWin() {
+        Money playerMoney = new Money(1000);
+        Player player = new Player("atom", playerMoney);
+
+        Money result = player.calculateProfit(GameResult.WIN);
+
+        assertThat(result.getAmount()).isEqualTo(1000);
+    }
+
+    @DisplayName("플레이어가 블랙잭으로 이길 경우, 수익금을 계산한다.")
+    @Test
+    void whenPlayerWinWithBlackJack() {
+        Money playerMoney = new Money(1000);
+        Player player = new Player("atom", playerMoney);
+
+        Money result = player.calculateProfit(GameResult.BLACKJACK_WIN);
+
+        assertThat(result.getAmount()).isEqualTo(1500);
+    }
+
+    @DisplayName("플레이어가 무승부일 경우, 수익금을 계산한다.")
+    @Test
+    void whenPlayerTie() {
+        Money playerMoney = new Money(1000);
+        Player player = new Player("atom", playerMoney);
+
+        Money result = player.calculateProfit(GameResult.TIE);
+
+        assertThat(result.getAmount()).isEqualTo(0);
+    }
 }

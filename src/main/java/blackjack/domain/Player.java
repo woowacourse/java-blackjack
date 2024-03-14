@@ -14,6 +14,10 @@ public class Player extends Participant {
         this.money = money;
     }
 
+    public Money calculateProfit(GameResult gameResult) {
+        return money.multiply(gameResult.getProfitMultiplier());
+    }
+
     @Override
     public boolean isPlayable() {
         return !(isBust() || isBlackJackScore());

@@ -2,29 +2,18 @@ package blackjack.domain;
 
 public enum GameResult {
 
-    WIN("승"),
-    TIE("무"),
-    LOSE("패");
+    BLACKJACK_WIN(1.5),
+    WIN(1),
+    TIE(0),
+    LOSE(-1);
 
-    private final String value;
+    private final double profitMultiplier;
 
-    GameResult(String value) {
-        this.value = value;
+    GameResult(double profitMultiplier) {
+        this.profitMultiplier = profitMultiplier;
     }
 
-    public GameResult getOpposite() {
-        if (this == WIN) {
-            return LOSE;
-        }
-
-        if (this == LOSE) {
-            return WIN;
-        }
-
-        return TIE;
-    }
-
-    public String getValue() {
-        return value;
+    public double getProfitMultiplier() {
+        return profitMultiplier;
     }
 }
