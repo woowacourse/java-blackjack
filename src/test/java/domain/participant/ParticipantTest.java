@@ -5,6 +5,7 @@ import domain.card.CardNumber;
 import domain.card.CardShape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import vo.BettingMoney;
 
 import static domain.card.CardShape.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,7 +18,7 @@ class ParticipantTest {
         Card cardTwo = new Card(CardShape.SPADE, CardNumber.TWO);
         Card cardKing = new Card(HEART, CardNumber.KING);
         Card cardQueen = new Card(HEART, CardNumber.QUEEN);
-        Player player = new Player(new Name("hotea"));
+        Player player = new Player(new Name("hotea"), new BettingMoney(5000));
         player.receive(cardTwo);
         player.receive(cardKing);
         player.receive(cardQueen);
@@ -30,7 +31,7 @@ class ParticipantTest {
         Card cardAce = new Card(CardShape.SPADE, CardNumber.ACE);
         Card cardKing = new Card(HEART, CardNumber.KING);
         Card cardQueen = new Card(HEART, CardNumber.QUEEN);
-        Player player = new Player(new Name("hotea"));
+        Player player = new Player(new Name("hotea"), new BettingMoney(5000));
         player.receive(cardAce);
         player.receive(cardKing);
         player.receive(cardQueen);

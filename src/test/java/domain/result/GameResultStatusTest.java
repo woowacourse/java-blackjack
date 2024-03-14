@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import vo.BettingMoney;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -25,7 +26,7 @@ class GameResultStatusTest {
     @ParameterizedTest
     void resultStatusOf(Cards dealerCards, Cards playerCards, GameResultStatus expected) {
         Dealer dealer = new Dealer(dealerCards);
-        Player player = new Player(new Name("hotea"));
+        Player player = new Player(new Name("hotea"), new BettingMoney(5000));
         receiveCards(dealer, dealerCards);
         receiveCards(player, playerCards);
         GameResultStatus status = GameResultStatus.comparedTo(player.score(), dealer.score());

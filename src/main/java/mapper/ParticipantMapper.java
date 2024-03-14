@@ -7,6 +7,7 @@ import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import view.dto.participant.ParticipantDto;
+import vo.BettingMoney;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class ParticipantMapper {
 
     public static Players participantsDtoToPlayers(final List<ParticipantDto> players) {
         return new Players(players.stream()
-                                  .map(player -> new Player(new Name(player.name())))
+                                  .map(player -> new Player(new Name(player.name()), new BettingMoney(5000)))
                                   .toList());
     }
 }

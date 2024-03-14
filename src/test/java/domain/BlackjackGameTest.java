@@ -10,6 +10,7 @@ import domain.participant.Player;
 import domain.participant.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import vo.BettingMoney;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class BlackjackGameTest {
     Dealer dealer = new Dealer(getCards());
-    Player player = new Player(new Name("hotea"));
+    Player player = new Player(new Name("hotea"), new BettingMoney(5000));
     Players players = new Players(List.of(player));
 
     @DisplayName("주어진 횟수만큼 딜러와 플레이어에게 카드를 나누어준다.")

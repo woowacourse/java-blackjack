@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.card.Cards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import vo.BettingMoney;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ class DealerTest {
     void deal() {
         Card card = new Card(SPADE, ACE);
         Dealer dealer = new Dealer(new Cards(List.of(card)));
-        Player player = new Player(new Name("Zeus"));
+        Player player = new Player(new Name("Zeus"), new BettingMoney(5000));
         dealer.deal(player);
         Cards cards = player.hand().getCards();
         assertThat(cards.draw()).isEqualTo(card);
