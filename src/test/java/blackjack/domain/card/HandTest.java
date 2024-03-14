@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class HandTest {
 
-    @DisplayName("핸드에 카드를 추가한다")
+    @DisplayName("카드를 지급 받는다.")
     @Test
     void testAppend() {
         // given
@@ -22,6 +24,37 @@ class HandTest {
 
         // then
         assertThat(hand.getCards()).containsExactly(CardFixture.createAHeart());
+    }
+
+    @DisplayName("두 장의 카드를 지급 받는다.")
+    @Test
+    void testAppendInitial() {
+        // given
+        CardDeck cardDeck = CardDeck.createShuffledFullCardDeck();
+        Hand hand = new Hand();
+
+        // when
+        hand.appendInitial(cardDeck);
+
+        // then
+        assertThat(hand.getCards()).hasSize(2);
+    }
+
+    @DisplayName("지정한 개수만큼 지급받은 카드를 공개한다.")
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3})
+    void testRevealHand(int count) {
+        // given
+        Hand hand = new Hand();
+        hand.append(new Card(CardRank.ACE, CardSuit.HEART));
+        hand.append(new Card(CardRank.TWO, CardSuit.HEART));
+        hand.append(new Card(CardRank.THREE, CardSuit.HEART));
+
+        // when
+        List<Card> cards = hand.revealHand(count);
+
+        // then
+        assertThat(cards).hasSize(count);
     }
 
     @DisplayName("핸드에 Ace가 있을 때 합이 21을 초과하지 않으면 Ace는 11로 계산한다.")
