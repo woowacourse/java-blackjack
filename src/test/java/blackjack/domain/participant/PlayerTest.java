@@ -79,7 +79,7 @@ class PlayerTest {
     @DisplayName("게임을 시작할 때는 카드를 두 장 뽑는다.")
     @Test
     void drawStartCardsTest() {
-        Player player = Player.from("name");
+        Player player = Player.from("name", 1000);
         Deck deck = Deck.createShuffledDeck();
 
         player.drawStartCards(deck);

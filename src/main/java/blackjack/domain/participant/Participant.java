@@ -26,14 +26,6 @@ public abstract class Participant {
         return calculateScore() <= getMaxDrawableScore();
     }
 
-    public boolean isBlackjack() {
-        return hand.isBlackjack();
-    }
-
-    public final boolean isBusted() {
-        return hand.isBusted();
-    }
-
     public final void drawStartCards(Deck deck) {
         if (!hand.isEmpty()) {
             throw new IllegalStateException("이미 시작 카드를 뽑았습니다.");

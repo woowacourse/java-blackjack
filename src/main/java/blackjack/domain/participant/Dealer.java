@@ -20,24 +20,10 @@ public class Dealer extends Participant {
         super(cards);
     }
 
-    public boolean isWin(Player player) {
-        if (player.isBusted() || this.isBlackjack()) {
-            return true;
-        }
-        if (this.isBusted() || player.isBlackjack()) {
-            return false;
-        }
-        return this.calculateScore() >= player.calculateScore();
-    }
-
-    private boolean isLose(Player player) {
-        return !isWin(player);
-    }
-
     public Profit calculateDealerProfit(Players players) {
         Profit profit = Profit.ZERO;
         for (Player player : players.getPlayers()) {
-            Profit dealerProfit = player.match(this).reverse();
+            Profit dealerProfit = player.calculateProfit(this).reverse();
             profit = profit.add(dealerProfit);
         }
         return profit;
@@ -46,21 +32,9 @@ public class Dealer extends Participant {
     public Map<Player, Profit> calculatePlayersProfit(Players players) {
         Map<Player, Profit> totalResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            totalResult.put(player, player.match(this));
+            totalResult.put(player, player.calculateProfit(this));
         }
         return totalResult;
-    }
-
-    public int calculateWinCount(Players players) {
-        return (int) players.getPlayers().stream()
-                .filter(this::isWin)
-                .count();
-    }
-
-    public int calculateLoseCount(Players players) {
-        return (int) players.getPlayers().stream()
-                .filter(this::isLose)
-                .count();
     }
 
     @Override

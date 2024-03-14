@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -101,102 +100,6 @@ class DealerTest {
         assertThatThrownBy(() -> dealer.add(card))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("더 이상 카드를 추가할 수 없습니다.");
-    }
-
-    @DisplayName("플레이어와의 승패를 판단할 수 있다.")
-    @Nested
-    class IsWinTest {
-
-        @DisplayName("플레이어가 21을 넘을 경우, 딜러가 이긴다.")
-        @ParameterizedTest
-        @MethodSource("dealerCards")
-        void whenPlayerBusted_dealerWin(List<Card> cards) {
-            Dealer dealer = new Dealer(cards);
-            Player player = new Player(CardsFixture.BUSTED, DEFAULT_NAME);
-
-            assertThat(dealer.isWin(player)).isTrue();
-        }
-
-        static Stream<List<Card>> dealerCards() {
-            return Stream.of(
-                    CardsFixture.BLACKJACK,
-                    CardsFixture.CARDS_SCORE_4,
-                    CardsFixture.CARDS_SCORE_16,
-                    CardsFixture.BUSTED
-            );
-        }
-
-        @DisplayName("딜러만 21을 넘길 경우, 플레이어가 이긴다.")
-        @ParameterizedTest
-        @MethodSource("playerCards")
-        void whenOnlyDealerBusted_playerWin(List<Card> cards) {
-            Dealer dealer = new Dealer(CardsFixture.BUSTED);
-            Player player = new Player(cards, DEFAULT_NAME);
-
-            assertThat(dealer.isWin(player)).isFalse();
-        }
-
-        static Stream<List<Card>> playerCards() {
-            return Stream.of(
-                    CardsFixture.BLACKJACK,
-                    CardsFixture.CARDS_SCORE_4,
-                    CardsFixture.CARDS_SCORE_16
-            );
-        }
-
-        @DisplayName("플레이어만 블랙잭일 경우, 플레이어가 이긴다.")
-        @Test
-        void whenPlayerOnlyBlackjack_playerWin() {
-            Player player = new Player(CardsFixture.BLACKJACK, DEFAULT_NAME);
-            Dealer dealer = new Dealer(CardsFixture.CARDS_SCORE_21);
-
-            assertThat(dealer.isWin(player)).isFalse();
-        }
-
-        @DisplayName("딜러만 블랙잭일 경우, 딜러가 이긴다.")
-        @Test
-        void whenDealerOnlyBlackjack_dealerWin() {
-            Player player = new Player(CardsFixture.CARDS_SCORE_21, DEFAULT_NAME);
-            Dealer dealer = new Dealer(CardsFixture.BLACKJACK);
-
-            assertThat(dealer.isWin(player)).isTrue();
-        }
-
-        @DisplayName("둘 다 21을 넘지 않을 경우, 플레이어가 딜러의 숫자보다 같다면 딜러가 이긴다.")
-        @ParameterizedTest
-        @MethodSource("sameCards")
-        void whenPlayerScoreIsEqualToDealerScore_dealerWin(List<Card> cards) {
-            Player player = new Player(cards, DEFAULT_NAME);
-            Dealer dealer = new Dealer(cards);
-
-            assertThat(dealer.isWin(player)).isTrue();
-        }
-
-        static Stream<List<Card>> sameCards() {
-            return Stream.of(
-                    CardsFixture.BLACKJACK,
-                    CardsFixture.CARDS_SCORE_21,
-                    CardsFixture.CARDS_SCORE_16
-            );
-        }
-
-        @DisplayName("둘 다 21보다 작을 경우, 플레이어가 딜러의 숫자보다 크다면 플레이어가 이긴다.")
-        @Test
-        void whenPlayerScoreIsBiggerThanDealerScore_playerWin() {
-            Player player = new Player(CardsFixture.CARDS_SCORE_17, DEFAULT_NAME);
-            Dealer dealer = new Dealer(CardsFixture.CARDS_SCORE_16);
-
-            assertThat(dealer.isWin(player)).isFalse();
-        }
-
-        @DisplayName("둘 다 21보다 작을 경우, 플레이어가 딜러의 숫자보다 작다면 딜러가 이긴다.")
-        @Test
-        void whenPlayerScoreIsSmallerThanDealerScore_dealerWin() {
-            Player player = new Player(CardsFixture.CARDS_SCORE_16, DEFAULT_NAME);
-            Dealer dealer = new Dealer(CardsFixture.CARDS_SCORE_17);
-
-            assertThat(dealer.isWin(player)).isTrue();
-        }
     }
 
     @DisplayName("플레이어들의 이익을 계산할 수 있다.")

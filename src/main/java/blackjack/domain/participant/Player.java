@@ -25,19 +25,11 @@ public class Player extends Participant {
         this(cards, name, new BetAmount(1));
     }
 
-    public static Player from(String name) {
-        return new Player(Collections.emptyList(), new Name(name));
-    }
-
     public static Player from(String name, int money) {
         return new Player(Collections.emptyList(), new Name(name), new BetAmount(money));
     }
 
-    public boolean isWin(Dealer dealer) {
-        return !dealer.isWin(this);
-    }
-
-    public Profit match(Dealer dealer) {
+    public Profit calculateProfit(Dealer dealer) {
         SingleMatchResult result = dealer.getHandRank().matchAtDealer(this.getHandRank());
         return result.calculatePlayerProfit(betAmount);
     }
