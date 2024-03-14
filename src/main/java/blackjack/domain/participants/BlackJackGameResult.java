@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackJackGameResult {
+
     private final Map<Player, State> gameResult;
 
     public BlackJackGameResult(List<Player> players, Dealer dealer) {
@@ -38,10 +39,6 @@ public class BlackJackGameResult {
             return false;
         }
         return player.isBlackjack() && dealer.isBlackjack();
-    }
-
-    public int size() {
-        return gameResult.size();
     }
 
     public State getState(Player player) {

@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BettingResult {
+
     private static final int INVERSE_VALUE = -1;
 
     private final Map<Player, Profit> bettingResult;
@@ -30,18 +31,18 @@ public class BettingResult {
         bettingResult.put(player, new Profit(0));
     }
 
+    private void validatePlayer(Player player) {
+        if (!bettingResult.containsKey(player)) {
+            throw new IllegalArgumentException("해당 유저는 베팅하지 않았습니다.");
+        }
+    }
+
     private void handleWin(Player player) {
         if (player.isBlackjack()) {
             bettingResult.put(player, bettingResult.get(player).multiple(1.5));
             return;
         }
         bettingResult.put(player, bettingResult.get(player));
-    }
-
-    private void validatePlayer(Player player) {
-        if (!bettingResult.containsKey(player)) {
-            throw new IllegalArgumentException("해당 유저는 베팅하지 않았습니다.");
-        }
     }
 
     public int getDealerProfit() {

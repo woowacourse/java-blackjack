@@ -3,7 +3,9 @@ package blackjack.domain.participants;
 import blackjack.domain.card.Card;
 
 public abstract class GameParticipant {
+
     public static final int MAX_SCORE = 21;
+    private static final int BLACKJACK_SIZE = 2;
 
     protected final Name name;
     protected final Hands hands;
@@ -32,7 +34,7 @@ public abstract class GameParticipant {
     }
 
     public boolean isBlackjack() {
-        return hands.size() == 2 && hands.calculateScore() == MAX_SCORE;
+        return hands.size() == BLACKJACK_SIZE && hands.calculateScore() == MAX_SCORE;
     }
 
     public int getHandsSize() {
