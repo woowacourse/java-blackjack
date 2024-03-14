@@ -2,18 +2,16 @@ package blackjack.domain.deck;
 
 import blackjack.domain.card.Card;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class PlayingDeck {
 
     private final Queue<Card> playingDeck;
 
     public PlayingDeck(List<Card> playingDeck) {
-        Collections.shuffle(playingDeck);
-        this.playingDeck = new LinkedList<>(playingDeck);
+        List<Card> copyOfPlayingDeck = new ArrayList<>(playingDeck);
+        Collections.shuffle(copyOfPlayingDeck);
+        this.playingDeck = new LinkedList<>(copyOfPlayingDeck);
     }
 
     public Card drawCard() {

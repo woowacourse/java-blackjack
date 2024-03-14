@@ -12,18 +12,20 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayingDeckTest {
 
-    @DisplayName("playingDeck은 List<Card>를 shuffle한다.")
+    @DisplayName("playingDeck은 List<Card>를 shuffle한 덱이다.")
     @Test
     void shuffleCard() {
         //given
         List<Card> generatedDeck = DeckGenerator.generateDeck();
         PlayingDeck playingDeck = new PlayingDeck(generatedDeck);
-
-        Card card = playingDeck.drawCard();
-        Card firstCard = new Card(Pattern.SPADE, Rank.ACE);
+        boolean isShuffled = false;
 
         //when
-        boolean isShuffled = !card.equals(firstCard);
+        for (Card card : generatedDeck) {
+            if (!playingDeck.drawCard().equals(card)) {
+                isShuffled = true;
+            }
+        }
 
         //then
         assertThat(isShuffled).isTrue();
