@@ -11,9 +11,9 @@ public final class BetAmount {
         this.value = value;
     }
 
-    public static BetAmount from(int value) {
+    public static BetAmount from(double value) {
         if (value <= MIN_BET_AMOUNT) {
-            throw new IllegalArgumentException("베팅 금액은 0보다 커야합니다.");
+            throw new IllegalArgumentException("베팅 금액은 최소 500원입니다.");
         }
         return new BetAmount(value);
     }

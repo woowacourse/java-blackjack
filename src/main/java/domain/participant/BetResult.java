@@ -13,7 +13,6 @@ public class BetResult {
         betAmountByParticipant = result;
     }
 
-
     public BetAmount findByParticipant(Participant participant) {
         return betAmountByParticipant.get(participant);
     }

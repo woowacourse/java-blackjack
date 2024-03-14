@@ -25,6 +25,10 @@ public class BlackJackResult {
         return resultByParticipant.entrySet();
     }
 
+    public LinkedHashMap<Participant, WinStatus> getResultByParticipant() {
+        return resultByParticipant;
+    }
+
     public int getTotalCount() {
         return resultByParticipant.size();
     }

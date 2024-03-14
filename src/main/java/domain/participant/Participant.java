@@ -31,6 +31,10 @@ public class Participant {
         return hands.calculateScore() <= BLACK_JACK_COUNT;
     }
 
+    public boolean isBust() {
+        return hands.calculateScore() > BLACK_JACK_COUNT;
+    }
+
     public boolean isBlackJack() {
         return hands.getCardCount() == BLACKJACK_HAND_COUNT && hands.calculateScore() == BLACK_JACK_COUNT;
     }

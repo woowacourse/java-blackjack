@@ -43,14 +43,11 @@ public class BlackJack {
     }
 
     private WinStatus isWinner(Participant participant) {
-        if (participant.isBlackJack()) {
-            return WinStatus.BLACKJACK;
-        }
-        if (!participant.canHit()) {
-            return WinStatus.LOSE;
-        }
-        if (!dealer.canHit()) {
+        if (dealer.isBust()) {
             return WinStatus.WIN;
+        }
+        if (participant.isBust()) {
+            return WinStatus.LOSE;
         }
         return isWinnerWhenNotBust(participant);
     }
@@ -58,17 +55,17 @@ public class BlackJack {
     private WinStatus isWinnerWhenNotBust(Participant participant) {
         int participantScore = participant.getScore();
         int dealerScore = dealer.getScore();
+
+        if (dealer.isBlackJack() && participant.isBlackJack()) {
+            return WinStatus.PUSH;
+        }
         if (participantScore == dealerScore) {
-            return isWinnerByCardCount(participant);
+            return WinStatus.PUSH;
+        }
+        if (participant.isBlackJack()) {
+            return WinStatus.BLACKJACK;
         }
         return WinStatus.from(participantScore > dealerScore);
-    }
-
-    private WinStatus isWinnerByCardCount(Participant participant) {
-        int participantCardCount = participant.getCardCount();
-        int dealerCardCount = dealer.getCardCount();
-
-        return WinStatus.from(participantCardCount < dealerCardCount);
     }
 
     public Dealer getDealer() {
