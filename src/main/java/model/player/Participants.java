@@ -11,15 +11,13 @@ import java.util.stream.Collectors;
 import model.card.Card;
 import model.card.Cards;
 
-public class Participants {
+public record Participants(List<Participant> participants) {
     public static final int MINIMUM_PARTICIPANT_SIZE = 2;
     public static final int MAXIMUM_PARTICIPANT_SIZE = 8;
-    private final List<Participant> participants;
 
-    public Participants(List<Participant> participants) {
+    public Participants {
         validateNotDuplicatedParticipant(participants);
         validateParticipantSize(participants);
-        this.participants = participants;
     }
 
     private void validateNotDuplicatedParticipant(List<Participant> participants) {
@@ -56,7 +54,8 @@ public class Participants {
         }
     }
 
-    public List<Participant> getParticipants() {
+    @Override
+    public List<Participant> participants() {
         return Collections.unmodifiableList(participants);
     }
 }

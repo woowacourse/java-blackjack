@@ -54,7 +54,7 @@ public class BlackJack {
     }
 
     public Map<Participant, Outcome> matchParticipantsOutcome() {
-        List<Participant> sumPlayers = participants.getParticipants();
+        List<Participant> sumPlayers = participants.participants();
         return sumPlayers.stream()
                 .collect(toMap(
                         participant -> participant,
@@ -69,7 +69,7 @@ public class BlackJack {
     }
 
     public Map<String, Cards> mapToUsersNameAndCards() {
-        return participants.getParticipants().stream()
+        return participants.participants().stream()
                 .collect(toMap(
                         User::getName,
                         User::getCards

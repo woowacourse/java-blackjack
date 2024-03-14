@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Cards {
+public record Cards(List<Card> cards) {
 
     private final static int MAXIMUM_SUM = 21;
-
-    private final List<Card> cards;
 
     public Cards(List<Card> cards) {
         validateCardSize(cards);
@@ -61,7 +59,8 @@ public class Cards {
         return !isNotHit();
     }
 
-    public List<Card> getCards() {
+    @Override
+    public List<Card> cards() {
         return Collections.unmodifiableList(cards);
     }
 }

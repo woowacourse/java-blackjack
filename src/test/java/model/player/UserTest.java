@@ -55,7 +55,7 @@ class UserTest {
         };
         Card card = Card.of(Suit.CLOVER, Denomination.EIGHT);
         user.addCards(List.of(card));
-        assertThat(user.getCards().getCards()).hasSize(3);
+        assertThat(user.getCards().cards()).hasSize(3);
     }
 
     @DisplayName("카드 여러 개를 추가할 수 있다.")
@@ -67,7 +67,7 @@ class UserTest {
         List<Card> cards = List.of(Card.of(Suit.CLOVER, Denomination.EIGHT),
                 Card.of(Suit.CLOVER, Denomination.FIVE));
         user.addCards(cards);
-        assertThat(user.getCards().getCards()).hasSize(4);
+        assertThat(user.getCards().cards()).hasSize(4);
     }
 
     @DisplayName("카드의 합을 계산한다.")

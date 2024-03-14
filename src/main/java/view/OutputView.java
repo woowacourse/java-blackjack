@@ -38,7 +38,7 @@ public class OutputView {
     }
 
     public void printPlayerCardMessage(String name, Cards cards) {
-        System.out.println(cardsToString(name, cards, cards.getCards().size()));
+        System.out.println(cardsToString(name, cards, cards.cards().size()));
     }
 
     public void printBlackJackScore(Map<String, Cards> usersNameAndCards, Map<String, Cards> dealerNameAndCards) {
@@ -52,12 +52,12 @@ public class OutputView {
     }
 
     private String cardsToString(Entry<String, Cards> userNameAndCards) {
-        int size = userNameAndCards.getValue().getCards().size();
+        int size = userNameAndCards.getValue().cards().size();
         return cardsToString(userNameAndCards.getKey(), userNameAndCards.getValue(), size);
     }
 
     private String cardsToString(String name, Cards userCards, int cardCountToPrint) {
-        List<Card> cards = userCards.getCards();
+        List<Card> cards = userCards.cards();
         int cardCountNotToPrint = cards.size() - cardCountToPrint;
         String cardNames = String.join(", ", cards.stream()
                 .skip(cardCountNotToPrint)
