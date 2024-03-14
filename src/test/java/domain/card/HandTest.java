@@ -50,6 +50,17 @@ class HandTest {
     }
 
     @Test
+    @DisplayName("성공: 패에 2장이 있고 21점이면 블랙잭이다.")
+    void isBlackjack_True() {
+        Hand hand = new Hand();
+        hand.add(List.of(
+            new Card(Rank.KING, Symbol.HEART),
+            new Card(Rank.ACE, Symbol.HEART)
+        ));
+        assertThat(hand.isBlackjack()).isTrue();
+    }
+
+    @Test
     @DisplayName("성공: 카드 점수의 합을 계산(경계값 21점)")
     void calculateScore_NoException_OneKingOneSevenOneFour() {
         Hand hand = new Hand();
@@ -72,8 +83,8 @@ class HandTest {
         ));
         assertThat(hand.totalScore()).isEqualTo(Score.valueOf(22));
     }
-
     // 12, 22로 계산될 수 있으나, 21이하 점수 중 최고점인 12을 반환한다.
+
     @Test
     @DisplayName("성공: 점수 합 계산(ACE 2장 -> 12점)")
     void calculateScore_NoException_TwoAces() {
@@ -84,8 +95,8 @@ class HandTest {
         ));
         assertThat(hand.totalScore()).isEqualTo(Score.valueOf(12));
     }
-
     // 11, 21, 31으로 계산될 수 있으나, 21이하 점수 중 최고점인 21을 반환한다.
+
     @Test
     @DisplayName("성공: 점수 합 계산(ACE 2장, NINE 1장 -> 21점)")
     void calculateScore_NoException_TwoAcesOneNine() {

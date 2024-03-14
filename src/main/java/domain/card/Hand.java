@@ -28,6 +28,10 @@ public class Hand {
             .anyMatch(card -> card.rank() == Rank.ACE);
     }
 
+    public boolean isBlackjack() {
+        return totalScore().isBlackjackScore() && cards.size() == 2;
+    }
+
     public List<Card> getCards() {
         return cards;
     }
