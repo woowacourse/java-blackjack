@@ -23,13 +23,14 @@ public class OutputView {
         final List<CardResponse> dealerCards = dealerResponse.cardsResponse().stream().limit(1).toList();
         printInitialDrawNotification(playerResponses);
 
-        printStatus(DEALER_DISPLAY_NAME, dealerCards);
+        printStatusWithNewLine(DEALER_DISPLAY_NAME, dealerCards);
+        playerResponses.forEach(
+                playerResponse -> printStatusWithNewLine(playerResponse.name(), playerResponse.cardResponse()));
         System.out.println();
-        playerResponses.forEach(playerResponse -> {
-            printStatus(playerResponse.name(), playerResponse.cardResponse());
-            System.out.println();
-        });
+    }
 
+    public static void printStatusWithNewLine(final String dealerDisplayName, final List<CardResponse> dealerCards) {
+        printStatus(dealerDisplayName, dealerCards);
         System.out.println();
     }
 
@@ -69,11 +70,11 @@ public class OutputView {
     }
 
     public static void printWinOrLose(final GameResult blackjackResult) {
-        System.out.println();
         System.out.println("## 최종 승패");
         final Set<Entry<String, PlayerResult>> playerEntries = blackjackResult.playerResult().entrySet();
         printDealerWinOrLose(blackjackResult);
         printPlayerWinOrLose(playerEntries);
+        System.out.println();
     }
 
     private static void printDealerWinOrLose(final GameResult blackjackResult) {
@@ -109,8 +110,8 @@ public class OutputView {
     }
 
     public static void printDealerHitMessage() {
-        System.out.println();
         System.out.println(DEALER_DISPLAY_NAME + "는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println();
     }
 
     private static String determineWinOrLose(final PlayerResult playerResult) {
