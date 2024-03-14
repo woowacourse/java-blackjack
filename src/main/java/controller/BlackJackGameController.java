@@ -1,12 +1,16 @@
 package controller;
 
-import domain.*;
+import domain.BlackJackGame;
+import domain.HitOption;
 import domain.cards.Card;
 import domain.cards.CardsGenerator;
 import domain.cards.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.Players;
+import domain.gamer.bet.BetAmount;
+import domain.gamer.bet.PlayerBet;
+import domain.result.Cashier;
 import view.InputView;
 import view.ResultView;
 

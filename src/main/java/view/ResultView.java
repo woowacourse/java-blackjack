@@ -1,12 +1,12 @@
 package view;
 
-import domain.BetAmount;
 import domain.cards.Card;
 import domain.cards.cardinfo.CardNumber;
 import domain.cards.cardinfo.CardShape;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.Players;
+import domain.gamer.bet.BetAmount;
 import view.notations.CardNumberNotation;
 import view.notations.CardShapeNotation;
 

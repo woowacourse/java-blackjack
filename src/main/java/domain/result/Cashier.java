@@ -1,8 +1,9 @@
-package domain;
+package domain.result;
 
 import domain.gamer.Dealer;
 import domain.gamer.Player;
-import domain.judge.WinState;
+import domain.gamer.bet.BetAmount;
+import domain.gamer.bet.PlayerBet;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;

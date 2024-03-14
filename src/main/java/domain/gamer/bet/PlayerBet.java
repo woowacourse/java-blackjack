@@ -1,4 +1,4 @@
-package domain;
+package domain.gamer.bet;
 
 import domain.gamer.Player;
 

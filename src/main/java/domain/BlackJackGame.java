@@ -5,7 +5,9 @@ import domain.cards.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.Players;
-import domain.judge.Judge;
+import domain.gamer.bet.BetAmount;
+import domain.result.Cashier;
+import domain.result.Judge;
 
 import java.util.ArrayList;
 import java.util.List;

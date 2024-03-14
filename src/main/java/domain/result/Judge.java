@@ -1,4 +1,4 @@
-package domain.judge;
+package domain.result;
 
 import domain.gamer.Dealer;
 import domain.gamer.Player;
