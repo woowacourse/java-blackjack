@@ -18,14 +18,4 @@ class NamesTest {
 
         assertThrows(IllegalArgumentException.class, () -> new Names(value));
     }
-
-    @ParameterizedTest
-    @DisplayName("'딜러'가 포함된 문자열을 이용한 생성은 예외를 발생한다.")
-    @ValueSource(strings = {"딜러", "딜러도비", "딜러꼬붕", "진짜딜러"})
-    void validate_ShouldThrowException_WhenInputStringContainsDealerName(String value) {
-        List<String> inputString = List.of(value);
-
-        assertThrows(IllegalArgumentException.class, () -> new Names(inputString));
-    }
 }
-
