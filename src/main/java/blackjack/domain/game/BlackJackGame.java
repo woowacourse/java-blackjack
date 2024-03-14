@@ -4,7 +4,6 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.PlayerTurn;
 import blackjack.domain.participant.Players;
 import java.util.List;
 
@@ -22,8 +21,8 @@ public class BlackJackGame {
         players.drawStartCards(deck);
     }
 
-    public void drawAdditionalCard(PlayerTurn playTurn) {
-        players.play(playTurn, deck);
+    public void drawAdditionalCard() {
+        players.play(deck);
     }
 
     public boolean isDealerDrawable() {

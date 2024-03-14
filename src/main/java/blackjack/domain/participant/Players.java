@@ -4,6 +4,8 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.game.PlayerResult;
 import blackjack.domain.game.Referee;
 import blackjack.domain.game.result.GameResult;
+import blackjack.domain.participant.rule.DealerRule;
+import blackjack.domain.participant.rule.PlayerRule;
 import java.util.List;
 
 public class Players {
@@ -53,10 +55,11 @@ public class Players {
         }
     }
 
-    public void play(PlayerTurn playTurn, Deck deck) {
+    public void play(Deck deck) {
         for (Player player : players) {
-            playTurn.play(player, deck);
+            player.play(deck);
         }
+        dealer.play(deck);
     }
 
     public boolean isDealerDrawable() {

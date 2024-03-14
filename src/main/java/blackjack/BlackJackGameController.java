@@ -52,17 +52,10 @@ public class BlackJackGameController {
     }
 
     private void drawAdditionalCard(BlackJackGame game) {
-        game.drawAdditionalCard(this::playTurn);
+        game.drawAdditionalCard();
         while (game.isDealerDrawable()) {
             game.drawDealerCard();
             outputView.printDealerDraw();
-        }
-    }
-
-    private void playTurn(Player player, Deck deck) {
-        while (player.isDrawable() && inputView.isPlayerWantDraw(player.getName())) {
-            player.add(deck.draw());
-            outputView.printPlayerCards(player);
         }
     }
 
