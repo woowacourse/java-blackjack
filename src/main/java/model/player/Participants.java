@@ -1,15 +1,15 @@
 package model.player;
 
+import model.card.Card;
+import model.card.Cards;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.function.BiConsumer;
-import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
-import model.card.Card;
-import model.card.Cards;
 
 public record Participants(List<Participant> participants) {
     public static final int MINIMUM_PARTICIPANT_SIZE = 2;
@@ -44,13 +44,12 @@ public record Participants(List<Participant> participants) {
                 .map(participant -> participant.name).toList();
     }
 
-    public void offerCardToParticipant(Function<String, Boolean> isMoreCard, BiConsumer<String, Cards> callback, Supplier<List<Card>> supplier) {
+    public void offerCardToParticipants(Predicate<String> stringForMoreCard, BiConsumer<String, Cards> callback, Supplier<List<Card>> selectCard) {
         for (Participant participant : participants) {
-            while (participant.isHit() && isMoreCard.apply(participant.getName())) {
-                participant.addCards(supplier.get());
+            while (participant.isHit() && stringForMoreCard.test(participant.getName())) {
+                participant.addCards(selectCard.get());
                 callback.accept(participant.getName(), participant.getCards());
             }
-
         }
     }
 

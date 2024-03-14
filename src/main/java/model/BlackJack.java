@@ -1,13 +1,5 @@
 package model;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toMap;
-
-import java.util.List;
-import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 import model.card.CardDeck;
 import model.card.CardSize;
 import model.card.Cards;
@@ -15,6 +7,13 @@ import model.player.Dealer;
 import model.player.Participant;
 import model.player.Participants;
 import model.player.User;
+
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Predicate;
+
+import static java.util.stream.Collectors.*;
 
 public class BlackJack {
 
@@ -42,8 +41,8 @@ public class BlackJack {
         }
     }
 
-    public void decideParticipantsPlay(Function<String, Boolean> isMoreCard, BiConsumer<String, Cards> callback) {
-        participants.offerCardToParticipant(isMoreCard, callback, () -> cardDeck.selectRandomCards(CardSize.ONE));
+    public void decideParticipantsPlay(Predicate<String> stringForMoreCard, BiConsumer<String, Cards> callback) {
+        participants.offerCardToParticipants(stringForMoreCard, callback, () -> cardDeck.selectRandomCards(CardSize.ONE));
     }
 
     public void decideDealerPlay(Runnable runnable) {
@@ -55,25 +54,16 @@ public class BlackJack {
 
     public Map<Participant, Outcome> matchParticipantsOutcome() {
         List<Participant> sumPlayers = participants.participants();
-        return sumPlayers.stream()
-                .collect(toMap(
-                        participant -> participant,
-                        participant -> participant.findOutcome(dealer)
-                ));
+        return sumPlayers.stream().collect(toMap(participant -> participant, participant -> participant.findOutcome(dealer)));
     }
 
     public Map<Outcome, Long> getDealerOutCome() {
         Map<Participant, Outcome> participantOutcome = matchParticipantsOutcome();
-        return participantOutcome.values().stream()
-                .collect(groupingBy(Outcome::reverse, counting()));
+        return participantOutcome.values().stream().collect(groupingBy(Outcome::reverse, counting()));
     }
 
     public Map<String, Cards> mapToUsersNameAndCards() {
-        return participants.participants().stream()
-                .collect(toMap(
-                        User::getName,
-                        User::getCards
-                ));
+        return participants.participants().stream().collect(toMap(User::getName, User::getCards));
     }
 
     public List<String> findParticipantsName() {
