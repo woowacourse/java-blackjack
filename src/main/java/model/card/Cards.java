@@ -61,7 +61,7 @@ public class Cards {
         return !isNotHit();
     }
 
-    public int findPlayerDifference() {
+    public int findPlayerDifference() {//TODO Cards인데 Player?
         return Math.abs(MAXIMUM_SUM - calculateScore());
     }
 

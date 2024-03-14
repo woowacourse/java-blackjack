@@ -18,7 +18,7 @@ public class Dealer extends User {
         this.cardDeck = cardDeck;
     }
 
-    public boolean isHit() {
+    public boolean isHit() {//TODO 21을 넘지 않았나?의 hit와 좀 더 다른 개념
         return calculateScore() <= NUMBER_THRESHOLD;
     }
 

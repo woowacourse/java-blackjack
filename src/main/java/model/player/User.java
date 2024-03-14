@@ -23,7 +23,7 @@ public abstract class User {
         }
     }
 
-    public void addCards(List<Card> card) {
+    public void addCards(List<Card> card) { //TODO Card...를 사용해서 리팩토링 해보기
         cards.addCards(card);
     }
 

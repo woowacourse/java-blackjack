@@ -39,7 +39,6 @@ public class CardDeck {
             cards.add(new Card(cardShape, cardNumber));
         }
     }
-
     private Card selectRandomCard() {
         validateCardDeckNotEmpty();
         int removeIndex = new Random().nextInt(cards.size());
@@ -48,7 +47,7 @@ public class CardDeck {
         return card;
     }
 
-    void validateCardDeckNotEmpty() {
+    private void validateCardDeckNotEmpty() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("더 뽑을 카드가 없습니다.");
         }
