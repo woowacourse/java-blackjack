@@ -99,8 +99,18 @@ public class BlackJackGame {
         for (Player player : players.getPlayers()) {
             Result result = Referee.judge(dealer, player);
             dealerResult = dealerResult.addResult(result);
-            //TODO : player 결과 저장
+            playerResults.addResult(player, findPlayerResult(result));
         }
         return new TotalResult(dealerResult, playerResults);
+    }
+
+    private Result findPlayerResult(final Result result) {
+        if (result.won()) {
+            return Result.LOSE;
+        }
+        if (result.lost()) {
+            return Result.WIN;
+        }
+        return Result.TIE;
     }
 }
