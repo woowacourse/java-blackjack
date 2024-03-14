@@ -1,6 +1,5 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 
 import java.util.Collections;
@@ -19,7 +18,7 @@ public class Players {
     public static Players from(List<String> names, Hand hand) {
         validateDuplicate(names);
         return new Players(names.stream()
-                .map(name -> new Player(new Gamer(hand), name))
+                .map(name -> new Player(new Gamer(hand.copy()), name))
                 .toList());
     }
 
@@ -30,9 +29,12 @@ public class Players {
         }
     }
 
-    public void draw(List<Card> cards) {
-        players.stream()
-                .forEach(player -> player.draw(cards));
+    public void draw(List<Hand> playersCards) {
+        int i = 0;
+        for (Hand playerCards : playersCards) {
+            players.get(i).draw(playerCards.getMyCards());
+            i++;
+        }
     }
 
     public List<String> getNames() {
@@ -41,5 +43,9 @@ public class Players {
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
+    }
+
+    public int getPlayersCount() {
+        return players.size();
     }
 }

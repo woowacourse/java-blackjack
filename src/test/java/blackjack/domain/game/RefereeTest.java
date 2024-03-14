@@ -36,9 +36,10 @@ public class RefereeTest {
         Referee referee = new Referee();
         Map<String, PlayerWinStatus> expectedPlayersResult = new HashMap<>();
         expectedPlayersResult.put("lemone", PlayerWinStatus.WIN);
+        List<Hand> playersCards = List.of(new Hand(List.of(new Card(NINE, SPADE), new Card(QUEEN, CLUB))));
 
-        players.draw(List.of(new Card(NINE, SPADE), new Card(QUEEN, CLUB)));
-        dealer.draw(List.of(new Card(EIGHT, SPADE), new Card(QUEEN, CLUB)));
+        players.draw(playersCards);
+        dealer.draw(List.of(new Card(EIGHT, SPADE), (new Card(QUEEN, CLUB))));
         referee.calculatePlayersResults(players, dealer);
 
         assertThat(referee.getPlayersNameAndResults())
@@ -53,8 +54,9 @@ public class RefereeTest {
         Referee referee = new Referee();
         Map<String, PlayerWinStatus> expectedPlayersResult = new HashMap<>();
         expectedPlayersResult.put("lemone", PlayerWinStatus.LOSE);
+        List<Hand> playersCards = List.of(new Hand(List.of(new Card(NINE, SPADE), new Card(QUEEN, CLUB), new Card(THREE, CLUB))));
 
-        players.draw(List.of(new Card(NINE, SPADE), new Card(QUEEN, CLUB), new Card(THREE, CLUB)));
+        players.draw(playersCards);
         dealer.draw(List.of(new Card(EIGHT, SPADE), new Card(QUEEN, CLUB), new Card(TWO, SPADE)));
         referee.calculatePlayersResults(players, dealer);
 
@@ -70,8 +72,9 @@ public class RefereeTest {
         Referee referee = new Referee();
         Map<String, PlayerWinStatus> expectedPlayersResult = new HashMap<>();
         expectedPlayersResult.put("lemone", PlayerWinStatus.PUSH);
+        List<Hand> playersCards = List.of(new Hand(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB), new Card(THREE, CLUB))));
 
-        players.draw(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB), new Card(THREE, CLUB)));
+        players.draw(playersCards);
         dealer.draw(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB), new Card(THREE, SPADE)));
         referee.calculatePlayersResults(players, dealer);
 
@@ -87,8 +90,9 @@ public class RefereeTest {
         Referee referee = new Referee();
         Map<String, PlayerWinStatus> expectedPlayersResult = new HashMap<>();
         expectedPlayersResult.put("lemone", PlayerWinStatus.WIN);
+        List<Hand> playersCards = List.of(new Hand(List.of(new Card(ACE, CLUB), new Card(JACK, CLUB))));
 
-        players.draw(List.of(new Card(ACE, CLUB), new Card(JACK, CLUB)));
+        players.draw(playersCards);
         dealer.draw(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB), new Card(FIVE, CLUB)));
         referee.calculatePlayersResults(players, dealer);
 
@@ -104,8 +108,9 @@ public class RefereeTest {
         Referee referee = new Referee();
         Map<String, PlayerWinStatus> expectedPlayersResult = new HashMap<>();
         expectedPlayersResult.put("lemone", PlayerWinStatus.LOSE);
+        List<Hand> playersCards = List.of(new Hand(List.of(new Card(TWO, CLUB), new Card(JACK, CLUB))));
 
-        players.draw(List.of(new Card(TWO, CLUB), new Card(JACK, CLUB)));
+        players.draw(playersCards);
         dealer.draw(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB), new Card(FIVE, CLUB)));
         referee.calculatePlayersResults(players, dealer);
 
@@ -121,8 +126,9 @@ public class RefereeTest {
         Referee referee = new Referee();
         Map<String, PlayerWinStatus> expectedPlayersResult = new HashMap<>();
         expectedPlayersResult.put("lemone", PlayerWinStatus.LOSE);
+        List<Hand> playersCards = List.of(new Hand(List.of(new Card(KING, CLUB), new Card(JACK, CLUB), new Card(THREE, CLUB))));
 
-        players.draw(List.of(new Card(KING, CLUB), new Card(JACK, CLUB), new Card(THREE, CLUB)));
+        players.draw(playersCards);
         dealer.draw(List.of(new Card(KING, CLUB), new Card(JACK, CLUB), new Card(THREE, CLUB)));
         referee.calculatePlayersResults(players, dealer);
 
@@ -138,8 +144,9 @@ public class RefereeTest {
         Referee referee = new Referee();
         Map<String, PlayerWinStatus> expectedPlayersResult = new HashMap<>();
         expectedPlayersResult.put("lemone", PlayerWinStatus.WIN);
+        List<Hand> playersCards = List.of(new Hand(List.of(new Card(KING, CLUB), new Card(JACK, CLUB))));
 
-        players.draw(List.of(new Card(KING, CLUB), new Card(JACK, CLUB)));
+        players.draw(playersCards);
         dealer.draw(List.of(new Card(KING, CLUB), new Card(JACK, CLUB), new Card(THREE, CLUB)));
         referee.calculatePlayersResults(players, dealer);
 
@@ -155,8 +162,9 @@ public class RefereeTest {
         Referee referee = new Referee();
         Map<String, PlayerWinStatus> expectedPlayersResult = new HashMap<>();
         expectedPlayersResult.put("lemone", PlayerWinStatus.LOSE);
+        List<Hand> playersCards = List.of(new Hand(List.of(new Card(KING, CLUB), new Card(NINE, CLUB), new Card(TWO, CLUB))));
 
-        players.draw(List.of(new Card(KING, CLUB), new Card(NINE, CLUB), new Card(TWO, CLUB)));
+        players.draw(playersCards);
         dealer.draw(List.of(new Card(ACE, CLUB), new Card(JACK, CLUB)));
         referee.calculatePlayersResults(players, dealer);
 

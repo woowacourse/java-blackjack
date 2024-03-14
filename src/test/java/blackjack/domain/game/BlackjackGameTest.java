@@ -6,6 +6,7 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +24,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("블랙잭 게임")
 public class BlackjackGameTest {
+    @Test
+    @DisplayName("블랙잭 게임에서 deal을 하면 딜러, 모든 플레이어에게 각각 두장의 카드를 부여한다.")
+    void dealTest() {
+        // given
+        BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
+        Dealer dealer = new Dealer(new Gamer(blackjackGame.makeInitialHand()));
+        Players players = Players.from(List.of("lemone", "seyang"), blackjackGame.makeInitialHand());
+
+        // when
+        blackjackGame.deal(dealer, players);
+
+        // then
+        for (Player player : players.getPlayers()) {
+            assertThat(player.getCards().size()).isEqualTo(2);
+        }
+        assertThat(dealer.getCards().size()).isEqualTo(2);
+    }
+
     @Test
     @DisplayName("카드 합이 버스트이면 hit 할 수 없다.")
     void playerNotHitWhenBust() {

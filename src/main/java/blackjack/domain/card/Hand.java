@@ -12,6 +12,10 @@ public class Hand {
         this.myCards = new ArrayList<>(myCards);
     }
 
+    public Hand copy() {
+        return new Hand(myCards);
+    }
+
     public void add(List<Card> cards) {
         myCards.addAll(cards);
     }

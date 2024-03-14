@@ -8,7 +8,7 @@ import java.util.List;
 public class Gamer {
     private static final int BLACKJACK_CARDS_COUNT = 2;
 
-    protected final Hand hand;
+    private final Hand hand;
 
     public Gamer(Hand hand) {
         this.hand = hand;
@@ -30,13 +30,17 @@ public class Gamer {
     public boolean isBust() {
         return hand.isOverLimitScore();
     }
-    
+
     public boolean isMaxScore() {
         return hand.isLimitScore();
     }
 
     public int getScore() {
         return hand.calculateScore();
+    }
+
+    public Card getCardAt(int index) {
+        return hand.getMyCardAt(index);
     }
 
     public List<Card> getCards() {
