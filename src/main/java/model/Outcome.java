@@ -3,29 +3,19 @@ package model;
 import java.util.function.Function;
 
 public enum Outcome {
-    WIN((bettingAmount) -> bettingAmount * 1.0),
-    LOSE((bettingAmount) -> bettingAmount * -1.0),
+    WIN((bettingAmount) -> bettingAmount.toInt() * 1.0),
+    LOSE((bettingAmount) -> bettingAmount.toInt() * -1.0),
     DRAW((bettingAmount) -> 0.0),
-    BLACKJACK((bettingAmount) -> bettingAmount * 1.5),
+    BLACKJACK((bettingAmount) -> bettingAmount.toInt() * 1.5),
     ;
 
-    private final Function<Double, Double> function;
+    private final Function<BettingMoney, Double> function;
 
-    Outcome(Function<Double, Double> function) {
+    Outcome(Function<BettingMoney, Double> function) {
         this.function = function;
     }
 
-    public double calculateProfit(double BettingAmount) {
-        return function.apply(BettingAmount);
-    }
-
-    public Outcome reverse() {
-        if (this == Outcome.WIN) {
-            return Outcome.LOSE;
-        }
-        if (this == Outcome.LOSE) {
-            return Outcome.WIN;
-        }
-        return this;
+    public double calculateProfit(BettingMoney BettingMoney) {
+        return function.apply(BettingMoney);
     }
 }

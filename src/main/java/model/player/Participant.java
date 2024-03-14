@@ -1,40 +1,37 @@
 package model.player;
 
 import java.util.List;
+import model.BettingMoney;
 import model.Outcome;
 import model.card.Card;
 
 public class Participant extends User {
 
-    private Integer bettingAmount;
+    private BettingMoney bettingMoney;
 
-    public Participant(String name, List<Card> cards, Integer bettingAmount) {
+    public Participant(String name, List<Card> cards, BettingMoney bettingMoney) {
         super(name, cards);
-        this.bettingAmount = bettingAmount;
-    }
-
-    public Participant(String name, List<Card> cards) {
-        super(name, cards);
+        this.bettingMoney = bettingMoney;
     }
 
     public Double calculateProfit(Dealer dealer) { //todo 조건문을 Outcome 이넘 클래스에 넣는다면?
         if (dealer.isBust()) {
-            return Outcome.WIN.calculateProfit(bettingAmount);
+            return Outcome.WIN.calculateProfit(bettingMoney);
         }
         if (isBust()) {
-            return Outcome.LOSE.calculateProfit(bettingAmount);
+            return Outcome.LOSE.calculateProfit(bettingMoney);
         }
         if (isBlackJack() && dealer.isNotBlackJack()) {
-            return Outcome.BLACKJACK.calculateProfit(bettingAmount);
+            return Outcome.BLACKJACK.calculateProfit(bettingMoney);
         }
         if (isBlackJack() && dealer.isBlackJack()) {
-            return Outcome.WIN.calculateProfit(bettingAmount);
+            return Outcome.WIN.calculateProfit(bettingMoney);
         }
         return findPlayerOutcome(dealer.findPlayerDifference())
-                .calculateProfit(bettingAmount);
+                .calculateProfit(bettingMoney);
     }
 
-    public void settingBettingAmount(Integer bettingAmount) {
-        this.bettingAmount = bettingAmount;
+    public void settingBettingAmount(BettingMoney bettingMoney) {
+        this.bettingMoney = bettingMoney;
     }
 }

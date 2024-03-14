@@ -2,6 +2,7 @@ package view;
 
 import java.util.List;
 import java.util.Scanner;
+import model.BettingMoney;
 
 public class InputView {
     private static final String ASK_PARTICIPANT_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
@@ -29,16 +30,11 @@ public class InputView {
         throw new IllegalArgumentException("y/n 만 입력할 수 있습니다.");
     }
 
-    public Integer askBettingAmount(String name) {
+    public BettingMoney askBettingAmount(String name) {
         System.out.println(System.lineSeparator() + ASK_BETTING_AMOUNT.formatted(name));
         String bettingAmount = in.nextLine();
-        validateBettingAmount(bettingAmount);
-        return Integer.parseInt(bettingAmount);
-    }
-
-    private void validateBettingAmount(String bettingAmount) {
         validateIsNumber(bettingAmount);
-        validatePositiveNumber(Integer.parseInt(bettingAmount));
+        return new BettingMoney(Integer.parseInt(bettingAmount));
     }
 
     private void validateIsNumber(String bettingAmount) {
@@ -46,12 +42,6 @@ public class InputView {
             Integer.parseInt(bettingAmount);
         } catch (NumberFormatException exception) {
             throw new IllegalArgumentException("배팅금액은 숫자로만 입력할 수 있습니다.");
-        }
-    }
-
-    private void validatePositiveNumber(int bettingAmount) {
-        if (bettingAmount <= 0) {
-            throw new IllegalArgumentException("배팅금액은 양수가 되어야 합니다.");
         }
     }
 }

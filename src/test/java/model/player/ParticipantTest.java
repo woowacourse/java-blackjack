@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import model.BettingMoney;
 import model.card.Card;
 import model.card.CardDeck;
 import model.card.CardNumber;
@@ -28,7 +29,7 @@ class ParticipantTest {
         Participant participant = new Participant("배키",
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE),
                         new Card(CardShape.SPACE, CardNumber.FIVE)),
-                100);
+                new BettingMoney(100));
         assertFalse(participant.isBust());
     }
 
@@ -38,7 +39,7 @@ class ParticipantTest {
         Participant participant = new Participant("배키",
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE),
                         new Card(CardShape.SPACE, CardNumber.FIVE)),
-                100);
+                new BettingMoney(100));
         participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
         participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
         participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
@@ -51,7 +52,7 @@ class ParticipantTest {
         Participant participant = new Participant("배키",
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE),
                         new Card(CardShape.SPACE, CardNumber.FIVE)),
-                100);
+                new BettingMoney(100));
         Dealer dealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
                 List.of(new Card(CardShape.CLOVER, CardNumber.NINE),
                         new Card(CardShape.HEART, CardNumber.FIVE)));
@@ -67,7 +68,7 @@ class ParticipantTest {
         Participant participant = new Participant("켬미",
                 List.of(new Card(CardShape.SPACE, CardNumber.TEN),
                         new Card(CardShape.HEART, CardNumber.TEN)),
-                100);
+                new BettingMoney(100));
         participant.addCard(new Card(CardShape.SPACE, CardNumber.NINE));
         Dealer dealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
                 List.of(new Card(CardShape.CLOVER, CardNumber.TEN),
@@ -85,7 +86,7 @@ class ParticipantTest {
         Participant participant = new Participant("켬미",
                 List.of(new Card(CardShape.SPACE, CardNumber.KING),
                         new Card(CardShape.SPACE, CardNumber.FIVE)),
-                100);
+                new BettingMoney(100));
         Dealer dealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
                 List.of(new Card(CardShape.SPACE, CardNumber.KING),
                         new Card(CardShape.SPACE, CardNumber.JACK)));
@@ -101,7 +102,7 @@ class ParticipantTest {
         Participant participant = new Participant("켬미",
                 List.of(new Card(CardShape.SPACE, CardNumber.KING),
                         new Card(CardShape.SPACE, CardNumber.JACK)),
-                100);
+                new BettingMoney(100));
         Dealer dealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
                 List.of(new Card(CardShape.SPACE, CardNumber.EIGHT),
                         new Card(CardShape.CLOVER, CardNumber.NINE)));
@@ -117,7 +118,7 @@ class ParticipantTest {
         Participant participant = new Participant("켬미",
                 List.of(new Card(CardShape.SPACE, CardNumber.KING),
                         new Card(CardShape.SPACE, CardNumber.JACK)),
-                100);
+                new BettingMoney(100));
         Dealer dealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
                 List.of(new Card(CardShape.SPACE, CardNumber.EIGHT),
                         new Card(CardShape.CLOVER, CardNumber.NINE)));
@@ -134,7 +135,7 @@ class ParticipantTest {
         Participant participant = new Participant("켬미",
                 List.of(new Card(CardShape.SPACE, CardNumber.KING),
                         new Card(CardShape.SPACE, CardNumber.JACK)),
-                100);
+                new BettingMoney(100));
         participant.addCard(new Card(CardShape.CLOVER, CardNumber.FIVE));
         Dealer dealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
                 List.of(new Card(CardShape.SPACE, CardNumber.EIGHT),
@@ -151,7 +152,7 @@ class ParticipantTest {
         Participant participant = new Participant("켬미",
                 List.of(new Card(CardShape.SPACE, CardNumber.ACE),
                         new Card(CardShape.SPACE, CardNumber.JACK)),
-                100);
+                new BettingMoney(100));
         Dealer dealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
                 List.of(new Card(CardShape.CLOVER, CardNumber.ACE),
                         new Card(CardShape.CLOVER, CardNumber.TEN)));
@@ -167,7 +168,7 @@ class ParticipantTest {
         Participant participant = new Participant("켬미",
                 List.of(new Card(CardShape.SPACE, CardNumber.ACE),
                         new Card(CardShape.SPACE, CardNumber.JACK)),
-                100);
+                new BettingMoney(100));
         Dealer dealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
                 List.of(new Card(CardShape.CLOVER, CardNumber.FIVE),
                         new Card(CardShape.CLOVER, CardNumber.TEN)));

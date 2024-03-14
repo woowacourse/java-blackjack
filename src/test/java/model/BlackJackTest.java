@@ -36,7 +36,7 @@ class BlackJackTest {
         Assertions.assertThatThrownBy(
                         () -> new BlackJack(
                                 new Participants(
-                                        List.of(new Participant("배키", participantCards, 100))),
+                                        List.of(new Participant("배키", participantCards, new BettingMoney(100)))),
                                 null))
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -47,12 +47,12 @@ class BlackJackTest {
         Participant participant = new Participant("배키",
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE),
                         new Card(CardShape.DIAMOND, CardNumber.NINE)),
-                100);
+                new BettingMoney(100));
         participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
         Participant participant2 = new Participant("켬미",
                 List.of(new Card(CardShape.CLOVER, CardNumber.EIGHT),
                         new Card(CardShape.HEART, CardNumber.SEVEN)),
-                200);
+                new BettingMoney(200));
         participant2.addCard(new Card(CardShape.SPACE, CardNumber.KING));
 
         Dealer notBustDealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
@@ -73,11 +73,11 @@ class BlackJackTest {
         Participant participant = new Participant("배키",
                 List.of(new Card(CardShape.SPACE, CardNumber.FIVE),
                         new Card(CardShape.DIAMOND, CardNumber.SIX)),
-                100);
+                new BettingMoney(100));
         Participant participant2 = new Participant("켬미",
                 List.of(new Card(CardShape.CLOVER, CardNumber.EIGHT),
                         new Card(CardShape.HEART, CardNumber.SEVEN)),
-                200);
+                new BettingMoney(200));
 
         Dealer notBustDealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
                 List.of(new Card(CardShape.SPACE, CardNumber.KING),
@@ -96,12 +96,12 @@ class BlackJackTest {
         Participant bustParticipant = new Participant("배키",
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE),
                         new Card(CardShape.DIAMOND, CardNumber.NINE)),
-                100);
+                new BettingMoney(100));
         bustParticipant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
         Participant notBustParticipant = new Participant("켬미",
                 List.of(new Card(CardShape.CLOVER, CardNumber.EIGHT),
                         new Card(CardShape.HEART, CardNumber.SEVEN)),
-                200);
+                new BettingMoney(200));
 
         Dealer bustDealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
                 List.of(new Card(CardShape.SPACE, CardNumber.KING),
@@ -122,11 +122,11 @@ class BlackJackTest {
         Participant notBustParticipant1 = new Participant("배키",
                 List.of(new Card(CardShape.SPACE, CardNumber.KING),
                         new Card(CardShape.DIAMOND, CardNumber.JACK)),
-                100);
+                new BettingMoney(100));
         Participant notBustParticipant2 = new Participant("켬미",
                 List.of(new Card(CardShape.CLOVER, CardNumber.KING),
                         new Card(CardShape.HEART, CardNumber.TEN)),
-                200);
+                new BettingMoney(200));
 
         Dealer notBustDealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
                 List.of(new Card(CardShape.SPACE, CardNumber.SEVEN),
@@ -146,11 +146,11 @@ class BlackJackTest {
         Participant notBustParticipant1 = new Participant("켬미",
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE),
                         new Card(CardShape.DIAMOND, CardNumber.NINE)),
-                100);
+                new BettingMoney(100));
         Participant notBustParticipant2 = new Participant("배키",
                 List.of(new Card(CardShape.SPACE, CardNumber.EIGHT),
                         new Card(CardShape.DIAMOND, CardNumber.TEN)),
-                200);
+                new BettingMoney(200));
         Dealer notBustDealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
                 List.of(new Card(CardShape.HEART, CardNumber.NINE),
                         new Card(CardShape.CLOVER, CardNumber.NINE)));

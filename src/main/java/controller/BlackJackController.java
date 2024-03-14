@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import model.BettingMoney;
 import model.BlackJack;
 import model.card.CardDeck;
 import model.card.CardSize;
@@ -27,8 +28,8 @@ public class BlackJackController {
 
 
         for (Participant participant : blackJack.getParticipants().getParticipants()) { // todo callback 이용
-            Integer bettingAmount = inputView.askBettingAmount(participant.getName());
-            participant.settingBettingAmount(bettingAmount);
+            BettingMoney bettingMoney = inputView.askBettingAmount(participant.getName());
+            participant.settingBettingAmount(bettingMoney);
         }
 
         outputView.printPlayerNames(blackJack.findParticipantsName());
@@ -51,7 +52,7 @@ public class BlackJackController {
     private Participants createParticipants(List<String> names, CardDeck cardDeck) { //todo 베팅금액을 바로 넣는 방식
 
         return new Participants(new ArrayList<>(names.stream()
-                .map(name -> new Participant(name, cardDeck.selectRandomCards(CardSize.TWO),100)).toList()));
+                .map(name -> new Participant(name, cardDeck.selectRandomCards(CardSize.TWO),new BettingMoney(100))).toList()));
     }
 
     private void offerMoreCards(BlackJack blackJack) {
