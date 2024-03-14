@@ -31,4 +31,8 @@ public abstract class Participant {
     public void stay() {
         state = state.stay();
     }
+
+    public CardHand getCardHand() {
+        return state.getCardHand();
+    }
 }

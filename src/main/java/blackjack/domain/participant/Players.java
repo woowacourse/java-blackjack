@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
+
 import java.util.HashSet;
 import java.util.List;
 
@@ -38,5 +40,14 @@ public class Players {
         return playerNames.stream()
                 .map(Player::new)
                 .toList();
+    }
+
+    public int count() {
+        return players.size();
+    }
+
+    public void distributeCardTo(final int playerIndex, final Card card) {
+        final Player player = players.get(playerIndex);
+        player.receiveCard(card);
     }
 }
