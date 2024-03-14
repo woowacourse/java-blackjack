@@ -18,6 +18,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayerTest {
+
     @DisplayName("이름으로 참여자를 생성한다.")
     @Test
     void createPlayerWithName() {
