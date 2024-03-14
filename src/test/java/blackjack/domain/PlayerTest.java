@@ -12,7 +12,7 @@ class PlayerTest {
     @DisplayName("플레이어를 생성하면 초기 상태를 가진다")
     @Test
     public void create() {
-        Player player = Player.createInitialStatePlayer("이상");
+        Player player = Player.createInitialStatePlayer(new Name("이상"));
 
         assertThat(player.getState()).isInstanceOf(InitialState.class);
     }
@@ -20,7 +20,7 @@ class PlayerTest {
     @DisplayName("플레이어는 카드를 뽑으면 새로운 상태를 가진 플레이어를 반환한다")
     @Test
     public void draw() {
-        Player player = Player.createInitialStatePlayer("이상");
+        Player player = Player.createInitialStatePlayer(new Name("이상"));
         Deck deck = Deck.of(new CardFactory(), cards -> cards);
 
         Player newPlayer = player.draw(deck);
@@ -31,7 +31,7 @@ class PlayerTest {
     @DisplayName("플레이어의 상태가 종료되지 않았다면 true를 반환한다")
     @Test
     public void canDrawTrue() {
-        Player player = Player.createInitialStatePlayer("이상");
+        Player player = Player.createInitialStatePlayer(new Name("이상"));
 
         assertThat(player.canDraw()).isTrue();
     }
@@ -39,7 +39,7 @@ class PlayerTest {
     @DisplayName("플레이어의 상태가 종료되었다면 false를 반환한다")
     @Test
     public void canDrawFalse() {
-        Player player = Player.createInitialStatePlayer("이상");
+        Player player = Player.createInitialStatePlayer(new Name("이상"));
         Deck deck = Deck.of(new CardFactory(), cards -> cards);
         player = player.draw(deck); // 2장 초기화 KING, QUEEN -> 20
 
@@ -51,7 +51,7 @@ class PlayerTest {
     @DisplayName("플레이어가 스탠드를 하면 새로운 상태를 가진 플레이어를 반환한다")
     @Test
     public void stand() {
-        Player player = Player.createInitialStatePlayer("이상");
+        Player player = Player.createInitialStatePlayer(new Name("이상"));
         Deck deck = Deck.of(new CardFactory(), cards -> cards);
         player = player.draw(deck);
 
@@ -63,7 +63,7 @@ class PlayerTest {
     @DisplayName("플레이어의 스코어를 계산한다")
     @Test
     public void calculate() {
-        Player player = Player.createInitialStatePlayer("이상");
+        Player player = Player.createInitialStatePlayer(new Name("이상"));
         Deck deck = Deck.of(new CardFactory(), cards -> cards);
         player = player.draw(deck);
 

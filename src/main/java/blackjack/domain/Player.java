@@ -7,7 +7,7 @@ public class Player {
     private final Name name;
     private final State state;
 
-    public Player(Name name, State state) {
+    private Player(Name name, State state) {
         this.name = name;
         this.state = state;
     }
