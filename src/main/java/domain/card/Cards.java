@@ -29,7 +29,8 @@ public class Cards {
 
     private Score sumScores() {
         return cards.stream()
-                .map(Card::getScore)
+                .map(Card::getNumber)
+                .map(Score::get)
                 .reduce(Score.ZERO, Score::plus);
     }
 

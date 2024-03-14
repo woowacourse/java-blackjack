@@ -11,20 +11,20 @@ public class Card {
         this.emblem = emblem;
     }
 
-    public Denomination getDenomination() {
-        return this.denomination;
+    public String getDenominationExpression() {
+        return this.denomination.getExpression();
     }
 
-    public Emblem getEmblem() {
-        return this.emblem;
+    public String getEmblemName() {
+        return this.emblem.getName();
     }
 
     boolean isAce() {
         return denomination.isAce();
     }
 
-    Score getScore() {
-        return denomination.getScore();
+    int getNumber() {
+        return denomination.getNumber();
     }
 
     @Override

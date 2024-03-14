@@ -16,28 +16,26 @@ public class OutputView {
         String result = String.join(", ", players.getPlayerNames());
         System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), result);
 
-        System.out.println(generateOneCardMessage(dealer));
+        System.out.println(formatCardsMessage(dealer, generateCardMessage(dealer.getFirstCard())));
         for (int i = 0; i < players.count(); i++) {
             Player player = players.findPlayerByIndex(i);
-            System.out.println(generateCardsMessage(player));
+            System.out.println(generateCardMessage(player));
         }
         System.out.println();
     }
 
-    private String generateOneCardMessage(Dealer dealer) {
-        Card card = dealer.getFirstCard();
-        String cardDisplay = CardDisplay.generateCardMessage(card);
-        return formatCardsMessage(dealer, cardDisplay);
+    private String generateCardMessage(Card card) {
+        return card.getDenominationExpression() + card.getEmblemName();
     }
 
-    private String generateCardsMessage(Participant participant) {
+    private String generateCardMessage(Participant participant) {
         String message = joinCards(participant.getCards());
         return formatCardsMessage(participant, message);
     }
 
     private String joinCards(List<Card> cards) {
         return cards.stream()
-                .map(CardDisplay::generateCardMessage)
+                .map(this::generateCardMessage)
                 .collect(Collectors.joining(", "));
     }
 
@@ -46,7 +44,7 @@ public class OutputView {
     }
 
     public void printCardsAfterHit(Player player) {
-        System.out.println(generateCardsMessage(player));
+        System.out.println(generateCardMessage(player));
     }
 
     public void printDealerReceiveCardMessage() {
@@ -56,12 +54,12 @@ public class OutputView {
     }
 
     public void printCardsWithScore(Dealer dealer, Players players) {
-        String dealerCardsMessage = generateCardsMessage(dealer);
+        String dealerCardsMessage = generateCardMessage(dealer);
         System.out.println(formatScoreMessage(dealerCardsMessage, dealer.calculateScore().getValue()));
 
         for (int i = 0; i < players.count(); i++) {
             Player player = players.findPlayerByIndex(i);
-            String playerCardsMessage = generateCardsMessage(player);
+            String playerCardsMessage = generateCardMessage(player);
             System.out.println(formatScoreMessage(playerCardsMessage, player.calculateScore().getValue()));
         }
         System.out.println();
