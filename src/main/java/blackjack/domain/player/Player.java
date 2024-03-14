@@ -13,7 +13,7 @@ public class Player {
         this.playerCards = new PlayerCards();
     }
 
-    public void draw(Deck deck) {
+    public void hit(Deck deck) {
         Card card = deck.draw();
         playerCards.append(card);
     }
@@ -26,7 +26,7 @@ public class Player {
         return playerCards.getCards();
     }
 
-    public boolean isDrawAble() {
+    public boolean shouldHit() {
         Score score = calculateScore();
         if (score.isBusted() || score.isMaxScore()) {
             return false;

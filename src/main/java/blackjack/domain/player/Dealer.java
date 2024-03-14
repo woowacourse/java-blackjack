@@ -14,7 +14,7 @@ public class Dealer {
     }
 
     public void draw(Deck deck) {
-        player.draw(deck);
+        player.hit(deck);
     }
 
     public void drawUntilExceedMinimum(Deck deck) {

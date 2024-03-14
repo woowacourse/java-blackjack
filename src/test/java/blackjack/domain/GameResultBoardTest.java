@@ -98,7 +98,7 @@ class GameResultBoardTest {
 
     private void giveCardToPlayer(Player player, Deck deck, int drawAmount) {
         for (int i = 0; i < drawAmount; i++) {
-            player.draw(deck);
+            player.hit(deck);
         }
     }
 }

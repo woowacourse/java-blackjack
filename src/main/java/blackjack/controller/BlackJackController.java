@@ -67,7 +67,7 @@ public class BlackJackController {
 
     private void drawInitialCard(Player player, Deck deck) {
         for (int i = 0; i < INITIAL_CARDS_COUNT; i++) {
-            player.draw(deck);
+            player.hit(deck);
         }
     }
 
@@ -83,13 +83,13 @@ public class BlackJackController {
 
     private void doRound(Player player, Deck deck) {
         while (shouldHit(player)) {
-            player.draw(deck);
+            player.hit(deck);
             outputView.printPlayerCard(PlayerDto.from(player));
         }
     }
 
     private boolean shouldHit(Player player) {
-        return player.isDrawAble() && hasAdditionalCardRequest(player);
+        return player.shouldHit() && hasAdditionalCardRequest(player);
     }
 
     private boolean hasAdditionalCardRequest(Player player) {

@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import static blackjack.domain.card.Shape.DIAMOND;
 import static blackjack.domain.card.Shape.SPADE;
-import static blackjack.domain.card.Value.ACE;
 import static blackjack.domain.card.Value.KING;
 import static blackjack.domain.card.Value.NINE;
 import static blackjack.domain.card.Value.QUEEN;
@@ -11,12 +10,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
-import blackjack.domain.result.GameResult;
-import blackjack.domain.result.GameResultBoard;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -73,7 +68,7 @@ class PlayersTest {
 
     private void giveCardToPlayer(Player player, Deck deck, int drawAmount) {
         for (int i = 0; i < drawAmount; i++) {
-            player.draw(deck);
+            player.hit(deck);
         }
     }
 }

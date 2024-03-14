@@ -35,12 +35,12 @@ class PlayerTest {
 
     @Test
     @DisplayName("덱으로 부터 카드 한장을 받아올 수 있다.")
-    void drawCardTest() {
+    void hitTest() {
         List<Card> cards = List.of(new Card(DIAMOND, TWO), new Card(DIAMOND, THREE), new Card(DIAMOND, FOUR));
         Deck deck = new Deck(cards);
 
         Player player = new Player("pedro");
-        player.draw(deck);
+        player.hit(deck);
 
         List<Card> playerCards = player.getCards();
         assertThat(playerCards).hasSize(1);
@@ -54,7 +54,7 @@ class PlayerTest {
 
         Player player = new Player("pedro");
         for (int i = 0; i < cards.size(); i++) {
-            player.draw(deck);
+            player.hit(deck);
         }
 
         assertThat(player.getScore()).isEqualTo(9);
@@ -68,7 +68,7 @@ class PlayerTest {
 
         Player player = new Player("pedro");
         for (int i = 0; i < cards.size(); i++) {
-            player.draw(deck);
+            player.hit(deck);
         }
 
         Score score = player.calculateScore();
@@ -86,20 +86,20 @@ class PlayerTest {
     }
 
     @ParameterizedTest
-    @MethodSource("cardsAndDrawAble")
+    @MethodSource("cardsAndShouldHit")
     @DisplayName("자신의 버스트 여부를 판단할 수 있다.")
-    void Test(List<Card> cards, boolean expected) {
+    void shouldHitTest(List<Card> cards, boolean expected) {
         Deck deck = new Deck(cards);
 
         Player player = new Player("pedro");
         for (int i = 0; i < cards.size(); i++) {
-            player.draw(deck);
+            player.hit(deck);
         }
 
-        assertThat(player.isDrawAble()).isEqualTo(expected);
+        assertThat(player.shouldHit()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> cardsAndDrawAble() {
+    private static Stream<Arguments> cardsAndShouldHit() {
         return Stream.of(
                 Arguments.arguments(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, ACE)),
                         false),
