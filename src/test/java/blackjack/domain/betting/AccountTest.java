@@ -10,7 +10,9 @@ class AccountTest {
         Account account = new Account();
         Cash cash = new Cash(1000);
 
-        assertThat(account.deposit(cash)).isEqualTo(cash);
+        Account accountA = account.deposit(cash);
+
+        assertThat(accountA.getBalance()).isEqualTo(cash);
     }
 
     @Test
@@ -19,9 +21,10 @@ class AccountTest {
         Cash cashA = new Cash(1000);
         Cash cashB = new Cash(2000);
 
-        account.deposit(cashA);
+        Account accountA = account.deposit(cashA);
+        Account accountB = accountA.deposit(cashB);
 
-        assertThat(account.deposit(cashB)).isEqualTo(new Cash(3000));
+        assertThat(accountB.getBalance()).isEqualTo(new Cash(3000));
     }
 
     @Test
@@ -29,7 +32,9 @@ class AccountTest {
         Account account = new Account();
         Cash cash = new Cash(1000);
 
-        assertThat(account.withdraw(cash)).isEqualTo(new Cash(-1000));
+        Account accountA = account.withdraw(cash);
+
+        assertThat(accountA.getBalance()).isEqualTo(new Cash(-1000));
     }
 
     @Test
@@ -38,9 +43,10 @@ class AccountTest {
         Cash cashA = new Cash(1000);
         Cash cashB = new Cash(2000);
 
-        account.withdraw(cashA);
+        Account accountA = account.withdraw(cashA);
+        Account accountB = accountA.withdraw(cashB);
 
-        assertThat(account.withdraw(cashB)).isEqualTo(new Cash(-3000));
+        assertThat(accountB.getBalance()).isEqualTo(new Cash(-3000));
     }
 
     @Test
@@ -51,10 +57,11 @@ class AccountTest {
         Cash cashD = new Cash(4000);
         Account account = new Account();
 
-        account.withdraw(cashA);
-        account.deposit(cashB);
-        account.withdraw(cashC);
+        Account accountA = account.withdraw(cashA);
+        Account accountB = accountA.deposit(cashB);
+        Account accountC = accountB.withdraw(cashC);
+        Account accountD = accountC.deposit(cashD);
 
-        assertThat(account.deposit(cashD)).isEqualTo(new Cash(2000));
+        assertThat(accountD.getBalance()).isEqualTo(new Cash(2000));
     }
 }
