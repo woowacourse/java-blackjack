@@ -3,7 +3,7 @@ package blackjack.domain.bet;
 public class Money {
 
     private static final int MAX = 1_000_000_000;
-    private static final int MIN = 0;
+    private static final int MIN = -1_000_000_000;
 
     private final int amount;
 
