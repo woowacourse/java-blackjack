@@ -1,23 +1,23 @@
 package blackjack.domain.betting;
 
-public class Balance {
+public class Cash {
     private final int value;
 
-    Balance() {
+    Cash() {
         this.value = 0;
     }
 
     // TODO: 생성자 외부에서 사용하는 것을 막는 건 어떨까
-    Balance(final int value) {
+    Cash(final int value) {
         this.value = value;
     }
 
-    Balance add(final Balance balance) {
-        return new Balance(this.value + balance.value);
+    Cash add(final Cash cash) {
+        return new Cash(this.value + cash.value);
     }
 
-    Balance sub(final Balance balance) {
-        return new Balance(this.value - balance.value);
+    Cash sub(final Cash cash) {
+        return new Cash(this.value - cash.value);
     }
 
     @Override
@@ -25,9 +25,9 @@ public class Balance {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        final Balance balance = (Balance) o;
+        final Cash cash = (Cash) o;
 
-        return value == balance.value;
+        return value == cash.value;
     }
 
     @Override

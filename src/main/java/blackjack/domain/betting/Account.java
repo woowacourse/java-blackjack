@@ -1,19 +1,19 @@
 package blackjack.domain.betting;
 
 public class Account {
-    private Balance balance;
+    private Cash balance;
 
     Account() {
-        this.balance = new Balance();
+        this.balance = new Cash();
     }
 
-    Balance deposit(final Balance balance) {
-        this.balance = this.balance.add(balance);
+    Cash deposit(final Cash cash) {
+        this.balance = this.balance.add(cash);
         return this.balance;
     }
 
-    Balance withdraw(final Balance balance) {
-        this.balance = this.balance.sub(balance);
+    Cash withdraw(final Cash cash) {
+        this.balance = this.balance.sub(cash);
         return this.balance;
     }
 }

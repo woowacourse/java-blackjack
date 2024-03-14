@@ -8,53 +8,53 @@ class AccountTest {
     @Test
     void 입금할_수_있다() {
         Account account = new Account();
-        Balance balance = new Balance(1000);
+        Cash cash = new Cash(1000);
 
-        assertThat(account.deposit(balance)).isEqualTo(balance);
+        assertThat(account.deposit(cash)).isEqualTo(cash);
     }
 
     @Test
     void 입금하면_기존_금액에_더해진다() {
         Account account = new Account();
-        Balance balanceA = new Balance(1000);
-        Balance balanceB = new Balance(2000);
+        Cash cashA = new Cash(1000);
+        Cash cashB = new Cash(2000);
 
-        account.deposit(balanceA);
+        account.deposit(cashA);
 
-        assertThat(account.deposit(balanceB)).isEqualTo(new Balance(3000));
+        assertThat(account.deposit(cashB)).isEqualTo(new Cash(3000));
     }
 
     @Test
     void 출금할_수_있다() {
         Account account = new Account();
-        Balance balance = new Balance(1000);
+        Cash cash = new Cash(1000);
 
-        assertThat(account.withdraw(balance)).isEqualTo(new Balance(-1000));
+        assertThat(account.withdraw(cash)).isEqualTo(new Cash(-1000));
     }
 
     @Test
     void 출금하면_기존_금액에_빼진다() {
         Account account = new Account();
-        Balance balanceA = new Balance(1000);
-        Balance balanceB = new Balance(2000);
+        Cash cashA = new Cash(1000);
+        Cash cashB = new Cash(2000);
 
-        account.withdraw(balanceA);
+        account.withdraw(cashA);
 
-        assertThat(account.withdraw(balanceB)).isEqualTo(new Balance(-3000));
+        assertThat(account.withdraw(cashB)).isEqualTo(new Cash(-3000));
     }
 
     @Test
     void 입금과_출금을_반복할_수_있다() {
-        Balance balanceA = new Balance(1000);
-        Balance balanceB = new Balance(2000);
-        Balance balanceC = new Balance(3000);
-        Balance balanceD = new Balance(4000);
+        Cash cashA = new Cash(1000);
+        Cash cashB = new Cash(2000);
+        Cash cashC = new Cash(3000);
+        Cash cashD = new Cash(4000);
         Account account = new Account();
 
-        account.withdraw(balanceA);
-        account.deposit(balanceB);
-        account.withdraw(balanceC);
+        account.withdraw(cashA);
+        account.deposit(cashB);
+        account.withdraw(cashC);
 
-        assertThat(account.deposit(balanceD)).isEqualTo(new Balance(2000));
+        assertThat(account.deposit(cashD)).isEqualTo(new Cash(2000));
     }
 }
