@@ -1,9 +1,12 @@
+import domain.BettingAmount;
+import domain.BettingTable;
 import domain.BlackJackGame;
 import domain.Name;
 import domain.Player;
 import domain.dto.GameStatus;
 import domain.dto.GamerDto;
 import java.util.List;
+import java.util.stream.Collectors;
 import util.ConsoleReader;
 import view.InputView;
 import view.OutputView;
@@ -13,9 +16,10 @@ public class Application {
 
     public static void main(String[] args) {
         BlackJackGame blackJackGame = setGame();
+        BettingTable bettingTable = setBettingTable(blackJackGame);
         List<GamerDto> gamerDtos = showInitialStatus(blackJackGame);
         playMainGame(gamerDtos, blackJackGame);
-        showFinalStatus(blackJackGame);
+        showFinalProfit(blackJackGame, bettingTable);
     }
 
     private static BlackJackGame setGame() {
@@ -25,6 +29,20 @@ public class Application {
                 .map(Player::new)
                 .toList();
         return new BlackJackGame(players);
+    }
+
+    private static BettingTable setBettingTable(BlackJackGame blackJackGame) {
+        List<Player> players = blackJackGame.getPlayers();
+        return new BettingTable(players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toMap(
+                        name -> name,
+                        Application::getAmountFromName
+                )));
+    }
+
+    private static BettingAmount getAmountFromName(String playerName) {
+        return new BettingAmount(InputView.readBetting(CONSOLE_READER, playerName));
     }
 
     private static List<GamerDto> showInitialStatus(BlackJackGame blackJackGame) {
@@ -67,8 +85,11 @@ public class Application {
         }
     }
 
-    private static void showFinalStatus(BlackJackGame blackJackGame) {
+    private static void showFinalProfit(BlackJackGame blackJackGame, BettingTable bettingTable) {
         OutputView.printTotalStatus(new GameStatus(blackJackGame.getDealer(), blackJackGame.getPlayers()));
-        OutputView.printGameResult(blackJackGame.getGameResult());
+        OutputView.printFinalProfit(
+                bettingTable.getTotalProfit(blackJackGame.getGameResult().getPlayersResult()),
+                blackJackGame.getPlayers()
+        );
     }
 }

@@ -1,11 +1,9 @@
 package view;
 
-import domain.BlackJackResult;
 import domain.Card;
-import domain.constant.GamerResult;
+import domain.Player;
 import domain.dto.GameStatus;
 import domain.dto.GamerDto;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -78,23 +76,15 @@ public class OutputView {
         return "결과: %d".formatted(gamer.getTotalScore());
     }
 
-    public static void printGameResult(BlackJackResult gameResult) {
-        System.out.println("\n## 최종 승패");
-        Map<GamerResult, Integer> dealerGameResult = gameResult.getDealerResult();
-        Map<String, GamerResult> playersGameResult = gameResult.getPlayersResult();
-
-        System.out.println(String.join(": ", DEALER_NAME, buildDealerResult(dealerGameResult)));
-        playersGameResult.forEach(
-                (name, result) -> System.out.printf("%s: %s%n", name,
-                        GamerResultView.getViewByType(result).getSymbol()));
-
+    public static void printFinalProfit(Map<String, Integer> totalProfit, List<Player> players) {
+        System.out.println("\n## 최종 수익");
+        printGamerProfit(DEALER_NAME, totalProfit.get("dealer"));
+        players.stream()
+                .map(Player::getName)
+                .forEach(playerName -> printGamerProfit(playerName, totalProfit.get(playerName)));
     }
 
-    private static String buildDealerResult(Map<GamerResult, Integer> dealerGameResult) {
-        return Arrays.stream(GamerResult.values())
-                .filter(dealerGameResult::containsKey)
-                .map(result -> "%d%s".formatted(dealerGameResult.get(result),
-                        GamerResultView.getViewByType(result).getSymbol()))
-                .collect(Collectors.joining(" "));
+    private static void printGamerProfit(String gamerName, int profit) {
+        System.out.printf("%s: %d%n", gamerName, profit);
     }
 }

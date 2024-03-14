@@ -37,8 +37,8 @@ public class InputView {
         }
     }
 
-    private static String readBetting(Supplier<String> input, String playerName) {
-        System.out.printf("%s의 배팅 금액은?%n", playerName);
+    public static String readBetting(Supplier<String> input, String playerName) {
+        System.out.printf("%n%s의 배팅 금액은?%n", playerName);
         String inputBetting = input.get();
         validateEmpty(inputBetting);
         return inputBetting;
