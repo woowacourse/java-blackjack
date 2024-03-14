@@ -29,7 +29,7 @@ public class InputView {
 	}
 
 	private void validatePlayerNamesFormat(final String names) {
-		if (names.startsWith(PLAYER_NAME_DELIMITER) || names.endsWith(PLAYER_NAME_DELIMITER)) {
+		if (names.endsWith(PLAYER_NAME_DELIMITER)) {
 			throw new IllegalArgumentException("플레이어의 이름은 쉼표(,)로 시작하거나 끝날 수 없습니다.");
 		}
 	}
