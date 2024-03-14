@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Players {
@@ -17,6 +18,7 @@ public class Players {
     }
 
     private void validateSize(List<Player> players) {
+        Objects.requireNonNull(players);
         if (players.isEmpty()) {
             throw new IllegalArgumentException("최소 한 명의 플레이어가 있어야 합니다.");
         }
