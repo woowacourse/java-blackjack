@@ -32,7 +32,7 @@ public class BlackjackGame {
         }
     }
 
-    private void distributeCardToDealer() {
+    public void distributeCardToDealer() {
         final Card card = pickCard();
         dealer.receiveCard(card);
     }

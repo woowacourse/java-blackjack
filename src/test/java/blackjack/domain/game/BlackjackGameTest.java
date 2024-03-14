@@ -47,6 +47,19 @@ class BlackjackGameTest {
                 .hasSize(1);
     }
 
+    @Test
+    void 딜러에게_카드를_추가로_지급할_수_있다() {
+        final Dealer dealer = 딜러();
+        final Players players = 플레이어들("pobi");
+        final BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
+
+        blackjackGame.distributeCardToDealer();
+
+        assertThat(dealer.getCardHand())
+                .extracting("cards", InstanceOfAssertFactories.list(Card.class))
+                .hasSize(1);
+    }
+
     @Nested
     @DisplayName("플레이어가 진 경우를 알 수 있다.")
     class PlayerLoseBlackjackGame {
