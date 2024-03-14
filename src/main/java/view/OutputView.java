@@ -83,35 +83,13 @@ public class OutputView {
     }
 
     private void printDealerProfit(Double dealerProfit) {
-        System.out.println(GAME_RESULT_MESSAGE.formatted("딜러", dealerProfit));
+        System.out.println(GAME_RESULT_MESSAGE.formatted("딜러", dealerProfit.intValue()));
     }
 
     private void printParticipantProfit(Map<Participant, Double> participantProfits) {
         for (Entry<Participant, Double> participantProfit : participantProfits.entrySet()) {
             System.out.println(GAME_RESULT_MESSAGE
-                    .formatted(participantProfit.getKey().getName(), participantProfit.getValue()));
-        }
-    }
-
-    public void printPlayersOutcome(Map<Outcome, Long> dealerOutcomes, Map<Participant, Outcome> results) {
-        printDealerOutcome(dealerOutcomes);
-        printParticipantOutcome(results);
-    }
-
-    private void printDealerOutcome(Map<Outcome, Long> dealerOutcomes) {
-        System.out.println(System.lineSeparator() + GAME_RESULT_PROMPT_MESSAGE);
-
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Map.Entry<Outcome, Long> dealerOutcome : dealerOutcomes.entrySet()) {
-            stringBuilder.append(dealerOutcome.getValue()).append(gameResultToString(dealerOutcome.getKey()));
-        }
-        System.out.println(GAME_RESULT_MESSAGE.formatted("딜러", stringBuilder.toString()));
-    }
-
-    private void printParticipantOutcome(Map<Participant, Outcome> results) {
-        for (Map.Entry<Participant, Outcome> result : results.entrySet()) {
-            System.out.println(
-                    GAME_RESULT_MESSAGE.formatted(result.getKey().getName(), gameResultToString(result.getValue())));
+                    .formatted(participantProfit.getKey().getName(), participantProfit.getValue().intValue()));
         }
     }
 
@@ -143,15 +121,4 @@ public class OutputView {
         }
         return "다이아몬드";
     }
-
-    private String gameResultToString(Outcome outcome) {
-        if (outcome == Outcome.WIN) {
-            return "승 ";
-        }
-        if (outcome == Outcome.LOSE) {
-            return "패 ";
-        }
-        return "무 ";
-    }
-
 }
