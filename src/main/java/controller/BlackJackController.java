@@ -51,12 +51,12 @@ public class BlackJackController {
 
     private void dealWithPlayers(final Players players, final Dealer dealer) {
         if (dealer.isBlackJack()) {
-            System.out.println("딜러가 블랙잭임");
+            outputView.printDealerBlackJack();
             return;
         }
         for (Player player : players.getPlayers()) {
             if (player.isBlackJack()) {
-                System.out.println("플레이어가 블랙잭임");
+                outputView.printBlackJack();
                 continue;
             }
             deal(player, dealer);

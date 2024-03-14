@@ -5,7 +5,6 @@ import static domain.participant.Dealer.THRESHOLD;
 
 import constants.ErrorCode;
 import domain.Amount;
-import domain.Result;
 import domain.participant.Player;
 import dto.DealerHandsDto;
 import dto.ParticipantDto;
@@ -62,15 +61,6 @@ public class OutputView {
         }
     }
 
-    private String format(final Map<Result, Integer> dealerResult) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Map.Entry<Result, Integer> entry : dealerResult.entrySet()) {
-            stringBuilder.append(entry.getValue()).append(entry.getKey().getValue()).append(" ");
-        }
-
-        return stringBuilder.toString();
-    }
-
     private String format(final List<String> playerNames) {
         return String.join(", ", playerNames);
     }
@@ -93,5 +83,9 @@ public class OutputView {
             return;
         }
         printBlackJack();
+    }
+
+    public void printDealerBlackJack() {
+        System.out.println("딜러가 블랙잭!!!");
     }
 }
