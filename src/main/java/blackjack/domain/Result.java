@@ -13,11 +13,21 @@ public class Result {
 
     public Map<ResultStatus, Long> calculateDealerResult() {
         return results.values().stream()
-                .collect(Collectors.groupingBy(ResultStatus::swap, Collectors.counting()));
+                .collect(Collectors.groupingBy(this::convertResultDealerSide, Collectors.counting()));
     }
 
     public Map<Player, ResultStatus> getResults() {
         return results;
+    }
+
+    public ResultStatus convertResultDealerSide(ResultStatus result) {
+        if (result == ResultStatus.WIN) {
+            return ResultStatus.LOSE;
+        }
+        if (result == ResultStatus.LOSE) {
+            return ResultStatus.WIN;
+        }
+        return ResultStatus.DRAW;
     }
 
 }

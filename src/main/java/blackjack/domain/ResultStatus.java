@@ -11,16 +11,6 @@ public enum ResultStatus {
         this.name = name;
     }
 
-    public static ResultStatus swap(ResultStatus result) {
-        if (result == WIN) {
-            return LOSE;
-        }
-        if (result == LOSE) {
-            return WIN;
-        }
-        return DRAW;
-    }
-
     public String getName() {
         return name;
     }
