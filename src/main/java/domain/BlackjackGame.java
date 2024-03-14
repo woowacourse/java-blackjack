@@ -34,13 +34,13 @@ public class BlackjackGame {
 
     public GameResult resultsOfPlayerPosition() {
         GameResult gameResult = new GameResult();
-        players.forEach(player -> gameResult.put(player, getResultOf(player, dealer)));
+        players.forEach(player -> gameResult.put(player, getResultOf(dealer, player)));
         return gameResult;
     }
 
     public GameResult resultsOfDealerPosition() {
         GameResult gameResult = new GameResult();
-        players.forEach(player -> gameResult.put(player, getResultOf(dealer, player)));
+        players.forEach(player -> gameResult.put(player, getResultOf(player, dealer)));
         return gameResult;
     }
 
