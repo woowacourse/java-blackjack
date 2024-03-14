@@ -17,7 +17,8 @@ public class ScoreBoard {
 
     public void updatePlayerScore(Name name, Status status) {
         Bet bet = playersBets.get(name);
-        Revenue revenue = status.calculateRevenue(bet);
+        RevenueCalculator revenueCalculator = status.getRevenueCalculator();
+        Revenue revenue = revenueCalculator.calculate(bet);
         playersRevenues.put(name, revenue);
     }
 

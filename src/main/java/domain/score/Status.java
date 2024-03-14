@@ -1,23 +1,19 @@
 package domain.score;
 
-import domain.player.Bet;
-
-import java.util.function.Function;
-
 public enum Status {
 
-    WIN(Bet::win),
-    TIE(Bet::stay),
-    LOSE(Bet::lose),
-    BLACKJACK(Bet::multiply);
+    WIN(RevenueCalculator.EARN),
+    TIE(RevenueCalculator.RETURN),
+    LOSE(RevenueCalculator.LOSE),
+    BLACKJACK(RevenueCalculator.BLACKJACK_EARN);
 
-    private final Function<Bet, Revenue> function;
+    private final RevenueCalculator revenueCalculator;
 
-    Status(Function<Bet, Revenue> function) {
-        this.function = function;
+    Status(RevenueCalculator revenueCalculator) {
+        this.revenueCalculator = revenueCalculator;
     }
 
-    public Revenue calculateRevenue(Bet bet) {
-        return function.apply(bet);
+    public RevenueCalculator getRevenueCalculator() {
+        return revenueCalculator;
     }
 }
