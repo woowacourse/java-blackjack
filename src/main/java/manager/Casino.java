@@ -93,10 +93,13 @@ public class Casino {
             drawPlayerCards(deck, playerCards);
         }
         outputView.printPlayerCards(playerCards);
-        if (!playerCards.canDraw() || !opinionToHit) {
-            return;
+        if (retryToDraw(playerCards, opinionToHit)) {
+            drawByOpinion(deck, playerCards);
         }
-        drawByOpinion(deck, playerCards);
+    }
+
+    private boolean retryToDraw(PlayerCards playerCards, boolean opinionToHit) {
+        return opinionToHit && playerCards.canDraw();
     }
 
     private void drawDealerCards(Deck deck, DealerCards dealerCards) {
