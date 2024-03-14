@@ -1,14 +1,33 @@
 package blackjack.domain.card;
 
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Card {
+
+	private static final Map<String, Card> pool = Arrays.stream(Suit.values())
+		.flatMap(suit -> Arrays.stream(Rank.values())
+			.map(rank -> new Card(suit, rank)))
+		.collect(Collectors.toMap(card ->
+			card.toKey(card.suit, card.rank), Function.identity()));
+
 	private final Suit suit;
 	private final Rank rank;
 
-	public Card(final Suit suit, final Rank rank) {
+	private Card(final Suit suit, final Rank rank) {
 		this.suit = suit;
 		this.rank = rank;
+	}
+
+	public static Card of(final Suit suit, final Rank rank) {
+		return pool.get(toKey(suit, rank));
+	}
+
+	private static String toKey(final Suit suit, final Rank rank) {
+		return suit.getName() + rank.getName();
 	}
 
 	public int getScore() {

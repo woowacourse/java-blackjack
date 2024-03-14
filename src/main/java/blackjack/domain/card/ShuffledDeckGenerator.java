@@ -31,7 +31,7 @@ public class ShuffledDeckGenerator {
 	private List<Card> createCardsOfSuit(final Suit suit) {
 		List<Card> cards = new ArrayList<>();
 		for (Rank rank : Rank.values()) {
-			cards.add(new Card(suit, rank));
+			cards.add(Card.of(suit, rank));
 		}
 
 		return cards;

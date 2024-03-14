@@ -83,7 +83,7 @@ public class DealerTest {
 	void dealerHitTest() {
 		// given
 		Dealer dealer = Dealer.of(deck,
-			new ArrayList<>(List.of(new Card(Suit.HEART, Rank.TEN), new Card(Suit.HEART, Rank.SIX))));
+			new ArrayList<>(List.of(Card.of(Suit.HEART, Rank.TEN), Card.of(Suit.HEART, Rank.SIX))));
 
 		// then
 		Assertions.assertAll(
@@ -97,7 +97,7 @@ public class DealerTest {
 	void dealerStandTest() {
 		// given
 		Dealer dealer = Dealer.of(deck,
-			new ArrayList<>(List.of(new Card(Suit.HEART, Rank.TEN), new Card(Suit.HEART, Rank.SEVEN))));
+			new ArrayList<>(List.of(Card.of(Suit.HEART, Rank.TEN), Card.of(Suit.HEART, Rank.SEVEN))));
 
 		// then
 		Assertions.assertAll(

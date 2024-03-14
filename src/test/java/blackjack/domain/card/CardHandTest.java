@@ -14,7 +14,7 @@ public class CardHandTest {
 	void sumCardTest() {
 		// given
 		CardHand cardHand = CardHand.from(
-			List.of(new Card(Suit.HEART, Rank.JACK), new Card(Suit.HEART, Rank.KING)));
+			List.of(Card.of(Suit.HEART, Rank.JACK), Card.of(Suit.HEART, Rank.KING)));
 
 		// when & then
 		assertThat(cardHand.calculateScore()).isEqualTo(20);
@@ -25,7 +25,7 @@ public class CardHandTest {
 	void sumAceCardAs1Test() {
 		// given
 		CardHand cardHand = CardHand.from(
-			List.of(new Card(Suit.HEART, Rank.ACE), new Card(Suit.HEART, Rank.KING), new Card(Suit.HEART, Rank.JACK)));
+			List.of(Card.of(Suit.HEART, Rank.ACE), Card.of(Suit.HEART, Rank.KING), Card.of(Suit.HEART, Rank.JACK)));
 
 		// when & then
 		assertThat(cardHand.calculateScore()).isEqualTo(21);
@@ -36,7 +36,7 @@ public class CardHandTest {
 	void sumAceCardAs11Test() {
 		// given
 		CardHand cardHand = CardHand.from(
-			List.of(new Card(Suit.HEART, Rank.ACE), new Card(Suit.HEART, Rank.KING)));
+			List.of(Card.of(Suit.HEART, Rank.ACE), Card.of(Suit.HEART, Rank.KING)));
 
 		// when & then
 		assertThat(cardHand.calculateScore()).isEqualTo(21);

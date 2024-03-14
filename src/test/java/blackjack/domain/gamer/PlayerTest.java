@@ -41,7 +41,7 @@ public class PlayerTest {
 		Player player = Player.newInstance("a");
 
 		// when
-		player.receiveInitCards(List.of(new Card(Suit.HEART, Rank.ACE), new Card(Suit.HEART, Rank.JACK)));
+		player.receiveInitCards(List.of(Card.of(Suit.HEART, Rank.ACE), Card.of(Suit.HEART, Rank.JACK)));
 
 		// then
 		assertThat(player.getCardHand()).hasSize(2);
@@ -54,7 +54,7 @@ public class PlayerTest {
 		Player player = Player.newInstance("a");
 
 		// when
-		player.receiveCard(new Card(Suit.HEART, Rank.ACE));
+		player.receiveCard(Card.of(Suit.HEART, Rank.ACE));
 
 		// then
 		assertThat(player.getCardHand()).hasSize(1);
@@ -65,9 +65,9 @@ public class PlayerTest {
 	void cardValueSumTest() {
 		// given
 		Player player = Player.newInstance("a");
-		player.receiveCard(new Card(Suit.HEART, Rank.KING));
-		player.receiveCard(new Card(Suit.HEART, Rank.JACK));
-		player.receiveCard(new Card(Suit.HEART, Rank.QUEEN));
+		player.receiveCard(Card.of(Suit.HEART, Rank.KING));
+		player.receiveCard(Card.of(Suit.HEART, Rank.JACK));
+		player.receiveCard(Card.of(Suit.HEART, Rank.QUEEN));
 
 		// when & then
 		assertThat(player.isBust()).isTrue();

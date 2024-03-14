@@ -18,7 +18,7 @@ class DeckTest {
 	void init() {
 		for (Suit suit : Suit.values()) {
 			for (Rank rank : Rank.values()) {
-				cards.add(new Card(suit, rank));
+				cards.add(Card.of(suit, rank));
 			}
 		}
 	}
