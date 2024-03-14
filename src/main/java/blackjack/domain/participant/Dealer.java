@@ -27,9 +27,7 @@ public class Dealer {
     }
 
     public String getFirstCardName() {
-        return hands.getHands()
-                .get(0)
-                .getCardName();
+        return hands.getFirstCardName();
     }
 
     public void confirmDealerHands(Deck deck, Consumer<String> consumer) {

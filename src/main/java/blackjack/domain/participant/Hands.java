@@ -42,6 +42,11 @@ public class Hands {
         return getHandsScore() == otherHands.getHandsScore();
     }
 
+    public String getFirstCardName() {
+        return hands.get(0)
+                .getCardName();
+    }
+
     public List<Card> getHands() {
         return hands;
     }
