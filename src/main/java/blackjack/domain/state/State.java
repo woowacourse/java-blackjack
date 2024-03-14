@@ -1,5 +1,6 @@
 package blackjack.domain.state;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
 
@@ -9,7 +10,7 @@ public interface State {
 
     State stay();
 
-    int calculateScore();
+    Score calculateScore();
 
     boolean isFinished();
 

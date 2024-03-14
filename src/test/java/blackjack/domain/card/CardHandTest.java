@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import blackjack.domain.Score;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static blackjack.domain.card.Denomination.*;
 import static blackjack.fixture.CardFixture.카드;
+import static blackjack.fixture.ScoreFixture.점수;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CardHandTest {
@@ -32,9 +34,9 @@ class CardHandTest {
         cardHand.receiveCard(카드(KING));
         cardHand.receiveCard(카드(SIX));
 
-        final int result = cardHand.sumAllScore();
+        final Score result = cardHand.sumAllScore();
 
-        assertThat(result).isEqualTo(16);
+        assertThat(result).isEqualTo(점수(16));
     }
 
     @Test
@@ -43,9 +45,9 @@ class CardHandTest {
         cardHand.receiveCard(카드(QUEEN));
         cardHand.receiveCard(카드(KING));
 
-        final int result = cardHand.sumAllScore();
+        final Score result = cardHand.sumAllScore();
 
-        assertThat(result).isEqualTo(30);
+        assertThat(result).isEqualTo(점수(30));
     }
 
     @Nested
@@ -57,9 +59,9 @@ class CardHandTest {
             cardHand.receiveCard(카드(ACE));
             cardHand.receiveCard(카드(SIX));
 
-            final int result = cardHand.sumAllScore();
+            final Score result = cardHand.sumAllScore();
 
-            assertThat(result).isEqualTo(17);
+            assertThat(result).isEqualTo(점수(17));
         }
 
         @Test
@@ -68,9 +70,9 @@ class CardHandTest {
             cardHand.receiveCard(카드(TEN));
             cardHand.receiveCard(카드(ACE));
 
-            final int result = cardHand.sumAllScore();
+            final Score result = cardHand.sumAllScore();
 
-            assertThat(result).isEqualTo(21);
+            assertThat(result).isEqualTo(점수(21));
         }
     }
 }

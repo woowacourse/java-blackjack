@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
 import blackjack.domain.state.Blackjack;
@@ -24,7 +25,7 @@ public abstract class Participant {
         state = state.draw(card);
     }
 
-    public int calculateScore() {
+    public Score calculateScore() {
         return state.calculateScore();
     }
 

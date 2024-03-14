@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.strategy.CardShuffleStrategy;
@@ -31,6 +32,9 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canReceiveCard() {
-        return calculateScore() <= DEALER_MIN_SCORE_POLICY;
+        final Score score = calculateScore();
+        final Score standardScore = Score.valueOf(DEALER_MIN_SCORE_POLICY);
+
+        return score.isLessThan(standardScore) || score.equals(standardScore);
     }
 }

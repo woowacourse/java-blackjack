@@ -1,5 +1,6 @@
 package blackjack.domain.game;
 
+import blackjack.domain.Score;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
@@ -8,13 +9,13 @@ import java.util.Optional;
 import java.util.function.BiPredicate;
 
 public enum ResultStatus {
-    WIN((playerScore, dealerScore) -> playerScore > dealerScore),
-    DRAW((playerScore, dealerScore) -> playerScore == dealerScore),
-    LOSE((playerScore, dealerScore) -> playerScore < dealerScore);
+    WIN(Score::isGreaterThan),
+    DRAW(Score::equals),
+    LOSE(Score::isLessThan);
 
-    private final BiPredicate<Integer, Integer> condition;
+    private final BiPredicate<Score, Score> condition;
 
-    ResultStatus(final BiPredicate<Integer, Integer> condition) {
+    ResultStatus(final BiPredicate<Score, Score> condition) {
         this.condition = condition;
     }
 
@@ -37,14 +38,14 @@ public enum ResultStatus {
         return Optional.empty();
     }
 
-    private static ResultStatus compareScore(final int playerScore, final int dealerScore) {
+    private static ResultStatus compareScore(final Score playerScore, final Score dealerScore) {
         return Arrays.stream(values())
                 .filter(resultStatus -> resultStatus.findResultStatus(playerScore, dealerScore))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("결과를 찾을 수 없습니다."));
     }
 
-    private boolean findResultStatus(final int playerScore, final int dealerScore) {
+    private boolean findResultStatus(final Score playerScore, final Score dealerScore) {
         return condition.test(playerScore, dealerScore);
     }
 }

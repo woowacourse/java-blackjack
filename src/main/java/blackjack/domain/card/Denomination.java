@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import blackjack.domain.Score;
+
 public enum Denomination {
     ACE(1),
     TWO(2),
@@ -15,17 +17,17 @@ public enum Denomination {
     QUEEN(10),
     KING(10);
 
-    private final int score;
+    private final Score score;
 
     Denomination(final int score) {
-        this.score = score;
+        this.score = Score.valueOf(score);
     }
 
     public boolean isAce() {
         return this == ACE;
     }
 
-    public int getScore() {
+    public Score getScore() {
         return score;
     }
 }

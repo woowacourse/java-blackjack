@@ -1,11 +1,11 @@
 package blackjack.domain.card;
 
+import blackjack.domain.Score;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class CardHand {
-    private static final int BONUS_SCORE_OF_ACE = 10;
-    private static final int BLACKJACK_SCORE = 21;
     private static final int BLACKJACK_CARD_SIZE = 2;
 
     private final List<Card> cards;
@@ -18,20 +18,20 @@ public class CardHand {
         cards.add(card);
     }
 
-    public int sumAllScore() {
-        final int totalScore = calculateTotalScore();
+    public Score sumAllScore() {
+        final Score totalScore = calculateTotalScore();
 
         if (hasAce()) {
-            return addBonusScoreIfNotBust(totalScore);
+            return totalScore.addBonusScoreIfNotBust();
         }
         return totalScore;
     }
 
-    private int calculateTotalScore() {
+    private Score calculateTotalScore() {
         return cards.stream()
                 .map(Card::getDenomination)
                 .map(Denomination::getScore)
-                .reduce(0, Integer::sum);
+                .reduce(Score.initialScore(), Score::sum);
     }
 
     private boolean hasAce() {
@@ -39,20 +39,15 @@ public class CardHand {
                 .anyMatch(Card::isAce);
     }
 
-    private int addBonusScoreIfNotBust(final int totalScore) {
-        int sumWithBonusScore = totalScore + BONUS_SCORE_OF_ACE;
-
-        if (sumWithBonusScore <= BLACKJACK_SCORE) {
-            return sumWithBonusScore;
-        }
-        return totalScore;
-    }
-
     public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_CARD_SIZE && sumAllScore() == BLACKJACK_SCORE;
+        final int cardSize = cards.size();
+        final Score score = sumAllScore();
+
+        return cardSize == BLACKJACK_CARD_SIZE && score.equals(Score.getBlackjackScore());
     }
 
     public boolean isBust() {
-        return sumAllScore() > BLACKJACK_SCORE;
+        final Score score = sumAllScore();
+        return score.isGreaterThan(Score.getBlackjackScore());
     }
 }

@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import static blackjack.domain.card.Denomination.*;
 import static blackjack.fixture.CardFixture.카드;
 import static blackjack.fixture.DealerFixture.딜러;
+import static blackjack.fixture.ScoreFixture.점수;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
@@ -49,9 +51,9 @@ class DealerTest {
         dealer.receiveCard(카드(KING));
         dealer.receiveCard(카드(SIX));
 
-        final int result = dealer.calculateScore();
+        final Score result = dealer.calculateScore();
 
-        assertThat(result).isEqualTo(16);
+        assertThat(result).isEqualTo(점수(16));
     }
 
     @Test

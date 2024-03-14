@@ -1,5 +1,6 @@
 package blackjack.domain.state;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.CardHand;
 
 public abstract class Started implements State {
@@ -10,7 +11,7 @@ public abstract class Started implements State {
     }
 
     @Override
-    public int calculateScore() {
+    public Score calculateScore() {
         return cardHand.sumAllScore();
     }
 
