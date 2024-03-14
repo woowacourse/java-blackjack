@@ -14,9 +14,9 @@ public class Incomes {
     }
 
     public int getDealerIncome() {
-        int sumOfPlayerIncome = incomes.entrySet()
+        int sumOfPlayerIncome = incomes.values()
                 .stream()
-                .mapToInt(income -> income.getValue().getIncome())
+                .mapToInt(Income::getIncome)
                 .sum();
         return -sumOfPlayerIncome;
     }
