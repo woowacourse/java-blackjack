@@ -10,6 +10,10 @@ public class Name {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     private void validateNameContainBlank(String name) {
         if (name.contains(" ")) {
             throw new IllegalArgumentException("[ERROR] 이름에는 공백이 포함될 수 없습니다.");
@@ -20,9 +24,5 @@ public class Name {
         if (name.isEmpty() || name.length() > 10) {
             throw new IllegalArgumentException("[ERROR] 이름 길이는 1~10자만 가능합니다.");
         }
-    }
-
-    public String getName() {
-        return name;
     }
 }
