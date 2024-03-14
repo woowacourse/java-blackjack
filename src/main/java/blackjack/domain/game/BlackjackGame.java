@@ -11,7 +11,6 @@ import java.util.List;
 
 public class BlackjackGame {
     public static final int DEAL_CARDS_COUNT = 2;
-    private static final int SHOW_DEALER_DEAL_CARD_COUNT = 1;
 
     private final Deck deck;
 
