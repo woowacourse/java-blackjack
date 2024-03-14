@@ -81,21 +81,11 @@ public class BlackjackController {
     }
 
     private void finishGame(final BlackjackGame blackjackGame) {
-        outputView.printFinalResult(getScoreResult(blackjackGame), getWinningResult(blackjackGame));
-    }
+        final ParticipantScoresDto participantScoresDto = ParticipantScoresDto.of(blackjackGame.getHandResult(), blackjackGame.getScoreResult());
 
-    private static WinningResultDto getWinningResult(final BlackjackGame blackjackGame) {
         final WinningResult winningResult = blackjackGame.getWinningResult();
+        final WinningResultDto winningResultDto = WinningResultDto.of(winningResult.getParticipantsResult(), winningResult.summarizeDealerResult());
 
-        return WinningResultDto.of(winningResult.getParticipantsResult(), winningResult.summarizeDealerResult());
-    }
-
-    private static List<ParticipantScoreDto> getScoreResult(final BlackjackGame blackjackGame) {
-        Map<ParticipantName, Hands> handResult = blackjackGame.getHandResult();
-        Map<ParticipantName, Score> scoreResult = blackjackGame.getScoreResult();
-
-        return handResult.entrySet().stream()
-                .map(entry -> ParticipantScoreDto.of(entry.getKey(), entry.getValue(), scoreResult.get(entry.getKey())))
-                .toList();
+        outputView.printFinalResult(participantScoresDto, winningResultDto);
     }
 }

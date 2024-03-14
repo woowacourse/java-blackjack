@@ -9,7 +9,6 @@ import blackjack.domain.result.Score;
 import blackjack.domain.result.WinningResult;
 import blackjack.dto.CardDto;
 import blackjack.dto.ParticipantCardsDto;
-import blackjack.dto.ParticipantScoreDto;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -73,6 +72,7 @@ public class BlackjackGame {
 
         return participantsHands;
     }
+
     public Map<ParticipantName, Score> getScoreResult() {
         final Map<ParticipantName, Score> participantsScores = players.getPlayerScores();
 
@@ -83,20 +83,7 @@ public class BlackjackGame {
         return participantsScores;
 
     }
-    public List<ParticipantScoreDto> getFinalResults() {
-        final Map<ParticipantName, Hands> participantsHands = players.getPlayerHands();
-        final Map<ParticipantName, Score> participantsScores = players.getPlayerScores();
 
-        final Hands dealerHands = dealer.getHands();
-        final Score dealerScore = dealer.calculate();
-
-        participantsHands.put(dealer.getName(), dealerHands);
-        participantsScores.put(dealer.getName(), dealerScore);
-
-        return participantsHands.entrySet().stream()
-                .map(entry -> ParticipantScoreDto.of(entry.getKey(), entry.getValue(), participantsScores.get(entry.getKey())))
-                .toList();
-    }
     public WinningResult getWinningResult() {
         return WinningResult.of(players, dealer.calculate());
     }

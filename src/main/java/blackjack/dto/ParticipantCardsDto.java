@@ -15,8 +15,4 @@ public record ParticipantCardsDto(String name, List<CardDto> cardDtos) {
                 .map(CardDto::from)
                 .toList();
     }
-
-    public static ParticipantCardsDto of(final ParticipantName name, final Card card) {
-        return new ParticipantCardsDto(name.getName(), List.of(CardDto.from(card)));
-    }
 }
