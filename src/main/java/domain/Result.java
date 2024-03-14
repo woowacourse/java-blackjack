@@ -3,20 +3,21 @@ package domain;
 import domain.participant.Hands;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
+import java.util.function.Function;
 
 public enum Result {
 
-    BLACK_JACK_WIN("블랙잭승", Result::blackJackWinningCondition),
-    WIN("승", Result::winningCondition),
-    TIE("무", Result::tieCondition),
-    LOSE("패", Result::loseCondition);
+    BLACK_JACK_WIN(Result::blackJackWinningCondition, BetAmount::blackJackWinAmount),
+    WIN(Result::winningCondition, BetAmount::winAmount),
+    TIE(Result::tieCondition, BetAmount::tieAmount),
+    LOSE(Result::loseCondition, BetAmount::loseAmount);
 
-    private final String value;
     private final BiPredicate<Hands, Hands> condition;
+    private final Function<BetAmount, Amount> calculate;
 
-    Result(final String value, final BiPredicate<Hands, Hands> condition) {
-        this.value = value;
+    Result(final BiPredicate<Hands, Hands> condition, final Function<BetAmount, Amount> calculate) {
         this.condition = condition;
+        this.calculate = calculate;
     }
 
     public Result reverse() {
@@ -36,6 +37,10 @@ public enum Result {
                 .orElseThrow();
     }
 
+    public Amount apply(BetAmount betAmount) {
+        return calculate.apply(betAmount);
+    }
+
     private static boolean blackJackWinningCondition(Hands hands, Hands target) {
         return hands.isBlackJack() && !target.isBlackJack();
     }
@@ -50,9 +55,5 @@ public enum Result {
 
     private static boolean loseCondition(final Hands hands, final Hands target) {
         return hands.isBust() || hands.sum() < target.sum() || !target.isBust();
-    }
-
-    public String getValue() {
-        return value;
     }
 }
