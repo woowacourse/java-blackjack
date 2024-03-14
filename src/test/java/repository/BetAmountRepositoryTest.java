@@ -100,7 +100,7 @@ class BetAmountRepositoryTest {
         //TODO 이거 한번에 수행하는 게 더 좋을듯
         repository.calculateResult(dealer);
         final Amount amount = repository.calculateDealerAmount();
-        final Amount expected = new Amount(-460_000);
+        final Amount expected = new Amount(460_000);
 
         //then
         Assertions.assertThat(amount).isEqualTo(expected);
