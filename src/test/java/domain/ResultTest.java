@@ -2,6 +2,7 @@ package domain;
 
 import static domain.HandsTestFixture.blackJack;
 import static domain.HandsTestFixture.bustHands;
+import static domain.HandsTestFixture.sum10Size2;
 import static domain.HandsTestFixture.sum17Size3One;
 import static domain.HandsTestFixture.sum17Size3Two;
 import static domain.HandsTestFixture.sum20Size2;
@@ -29,7 +30,7 @@ class ResultTest {
     @Test
     @DisplayName("카드 합이 21이하이면서 21에 가까운 카드가 승리한다.")
     void isWin() {
-        Assertions.assertThat(sum21Size2.calculateResultBy(sum20Size2)).isEqualTo(Result.WIN);
+        Assertions.assertThat(sum20Size2.calculateResultBy(sum10Size2)).isEqualTo(Result.WIN);
         Assertions.assertThat(sum20Size2.calculateResultBy(sum21Size2)).isEqualTo(Result.LOSE);
     }
 
@@ -40,9 +41,9 @@ class ResultTest {
     }
 
     @Test
-    @DisplayName("blackjack이 이긴다.")
+    @DisplayName("blackjack이면 WIN_BLACKJACK이다.")
     void isWinBlackJack() {
-        Assertions.assertThat(blackJack.calculateResultBy(sum20Size2)).isEqualTo(Result.WIN);
+        Assertions.assertThat(blackJack.calculateResultBy(sum20Size2)).isEqualTo(Result.WIN_BLACKJACK);
         Assertions.assertThat(sum20Size2.calculateResultBy(blackJack)).isEqualTo(Result.LOSE);
     }
 }

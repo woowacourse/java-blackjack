@@ -7,6 +7,7 @@ import java.util.function.BiPredicate;
 public enum Result {
 
     WIN("승", Result::winningCondition),
+    WIN_BLACKJACK("승", Result::winningBlackJackCondition),
     TIE("무", Result::tieCondition),
     LOSE("패", Result::loseCondition);
 
@@ -39,8 +40,13 @@ public enum Result {
 
     private static boolean winningCondition(final Hands hands, final Hands target) {
         return (!hands.isBust() && target.isBust())
-                || (hands.sum() > target.sum() && !hands.isBust())
-                || (hands.sum() == target.sum() && hands.size() < target.size() && !hands.isBust());
+                || (!hands.isBust() && hands.sum() > target.sum() && !hands.isBlackJack())
+                || (!hands.isBust() && hands.sum() == target.sum() && !hands.isBlackJack()
+                && hands.size() < target.size());
+    }
+
+    private static boolean winningBlackJackCondition(final Hands hands, final Hands target) {
+        return hands.sum() > target.sum() && hands.isBlackJack();
     }
 
     private static boolean tieCondition(final Hands hands, final Hands target) {
