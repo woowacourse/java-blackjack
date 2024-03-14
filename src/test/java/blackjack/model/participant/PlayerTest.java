@@ -64,6 +64,14 @@ class PlayerTest {
     }
 
     @Test
+    @DisplayName("플레이어가 가진 카드의 합이 21이고 카드의 수가 2장이면 블랙잭이다.")
+    void isBlackJack() {
+        Hand hand = new Hand(List.of(new Card(CLOVER, ACE), new Card(HEART, TEN)));
+        Player player = Player.of("몰리", hand);
+        assertThat(player.isBlackJack()).isTrue();
+    }
+
+    @Test
     @DisplayName("자신이 가지고 있는 카드의 개수를 반환한다.")
     void announceCardCount() {
         Hand hand = new Hand(List.of(new Card(CLOVER, ACE), new Card(CLOVER, TEN)));

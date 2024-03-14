@@ -73,7 +73,11 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return calculateScore() > BLACKJACK_SCORE;
+        return getHandStatus().equals(HandStatus.BUST);
+    }
+
+    public boolean isBlackJack() {
+        return getHandStatus().equals(HandStatus.BLACKJACK);
     }
 
     public HandStatus getHandStatus() {

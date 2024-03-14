@@ -48,6 +48,10 @@ public class Player implements Playable {
         return hand.isBust();
     }
 
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
+
     public Name getName() {
         return name;
     }
