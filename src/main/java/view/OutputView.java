@@ -76,11 +76,17 @@ public class OutputView {
         System.out.println(System.lineSeparator() + DEALER_ADD_CARD_MESSAGE);
     }
 
-    public void printDealerProfit(Double dealerProfit) {
+    public void printResult(Double dealerProfit, Map<Participant, Double> participantProfits) {
+        System.out.println(System.lineSeparator() + GAME_RESULT_PROMPT_MESSAGE);
+        printDealerProfit(dealerProfit);
+        printParticipantProfit(participantProfits);
+    }
+
+    private void printDealerProfit(Double dealerProfit) {
         System.out.println(GAME_RESULT_MESSAGE.formatted("딜러", dealerProfit));
     }
 
-    public void printParticipantProfit(Map<Participant, Double> participantProfits) {
+    private void printParticipantProfit(Map<Participant, Double> participantProfits) {
         for (Entry<Participant, Double> participantProfit : participantProfits.entrySet()) {
             System.out.println(GAME_RESULT_MESSAGE
                     .formatted(participantProfit.getKey().getName(), participantProfit.getValue()));

@@ -30,8 +30,7 @@ public class BlackJackController {
         offerMoreCards(blackJack);
 
         outputView.printBlackJackScore(blackJack.mapToUsersNameAndCards(), blackJack.mapToDealerNameAndCards());
-        outputView.printDealerProfit(blackJack.getDealerProfit());
-        outputView.printParticipantProfit(blackJack.getParticipantProfits());
+        outputView.printResult(blackJack.getDealerProfit(), blackJack.getParticipantProfits());
 //        outputView.printPlayersOutcome(blackJack.getDealerOutCome(), blackJack.matchParticipantProfit());
     }
 

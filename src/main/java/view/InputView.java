@@ -16,7 +16,7 @@ public class InputView {
     }
 
     public boolean isOneMoreCard(String name) {
-        System.out.println(ASK_ONE_MORE_CARD_MESSAGE.formatted(name));
+        System.out.println(System.lineSeparator() + ASK_ONE_MORE_CARD_MESSAGE.formatted(name));
 
         String input = in.nextLine();
         if (Command.YES.compareTo(input)) {
