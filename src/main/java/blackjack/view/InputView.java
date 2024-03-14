@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,8 +14,26 @@ public class InputView {
 
 	public List<String> receivePlayerNames() {
 		System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-		String input = scanner.nextLine();
-		return List.of(input.split(","));
+		String[] playerNames = scanner.nextLine().split(",");
+
+		return convertPlayerNameArrayToList(playerNames);
+	}
+
+	private List<String> convertPlayerNameArrayToList(String[] playerNames) {
+		validateDuplicateName(playerNames);
+		return List.of(playerNames);
+	}
+
+	private void validateDuplicateName(String[] playerNames) {
+		if (hasDuplicateNames(playerNames)) {
+			throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
+		}
+	}
+
+	private boolean hasDuplicateNames(String[] playerNames) {
+		return playerNames.length != Arrays.stream(playerNames)
+			.distinct()
+			.count();
 	}
 
 	public String receiveCommand(String name) {

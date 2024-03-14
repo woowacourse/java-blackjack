@@ -1,10 +1,8 @@
 package blackjack.domain.gamer;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import blackjack.domain.card.Deck;
 
@@ -25,14 +23,6 @@ public class Players {
 			throw new IllegalArgumentException(
 				"플레이어는 최소 " + MIN_PLAYER_COUNT + "명에서 최대 " + MAX_PLAYER_COUNT + "명까지 가능합니다"
 			);
-		}
-	}
-
-	private void validateDuplicate(List<String> names) {
-		Set<String> nonDuplicateNames = new HashSet<>(names);
-
-		if (names.size() != nonDuplicateNames.size()) {
-			throw new IllegalArgumentException("이름은 중복될 수 없습니다.");
 		}
 	}
 
