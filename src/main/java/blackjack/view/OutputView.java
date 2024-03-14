@@ -1,11 +1,9 @@
 package blackjack.view;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
-import blackjack.domain.GameResult;
 import blackjack.domain.Participant;
 import blackjack.domain.Player;
 
@@ -49,20 +47,5 @@ public class OutputView {
         return cards.stream()
                 .map(Card::getName)
                 .collect(Collectors.joining(", "));
-    }
-
-    public void printGameResult(Map<Player, GameResult> playerGameResults, Map<GameResult, Integer> dealerGameResult) {
-        System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.printf("딜러: %s%n", buildDealerResult(dealerGameResult));
-        playerGameResults.forEach((player, gameResult) ->
-                System.out.printf("%s: %s%n", player.getName(), gameResult.getValue()));
-    }
-
-    private String buildDealerResult(Map<GameResult, Integer> dealerGameResult) {
-        return dealerGameResult.entrySet().stream()
-                .filter(entry -> entry.getValue() > 0)
-                .map(entry -> String.format("%d%s", entry.getValue(), entry.getKey().getValue()))
-                .collect(Collectors.joining(" "));
     }
 }

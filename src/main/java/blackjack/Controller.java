@@ -1,14 +1,9 @@
 package blackjack;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
-import blackjack.domain.GameResult;
 import blackjack.domain.Money;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
@@ -85,38 +80,10 @@ class Controller {
     }
 
     private void printResult(Participants participants) {
-        Map<Player, GameResult> playerGameResults = createPlayerGameResults(participants);
-        Map<GameResult, Integer> dealerGameResult = createDealerGameResult(playerGameResults);
-
         outputView.printAllCardsWithScore(participants.getParticipants());
-        outputView.printGameResult(playerGameResults, dealerGameResult);
-    }
 
-    private Map<Player, GameResult> createPlayerGameResults(Participants participants) {
-        Map<Player, GameResult> playerGameResults = new LinkedHashMap<>();
         Dealer dealer = participants.getDealer();
+        //
 
-        for (Player player : participants.getPlayers()) {
-            GameResult gameResult = dealer.judge(player);
-            playerGameResults.put(player, gameResult);
-        }
-
-        return playerGameResults;
-    }
-
-    private Map<GameResult, Integer> createDealerGameResult(Map<Player, GameResult> playerGameResults) {
-        Map<GameResult, Integer> dealerGameResults = new EnumMap<>(GameResult.class);
-
-        for (GameResult gameResult : GameResult.values()) {
-            dealerGameResults.put(gameResult, 0);
-        }
-
-        for (Entry<Player, GameResult> entry : playerGameResults.entrySet()) {
-            GameResult gameResult = entry.getValue().getOpposite();
-            int current = dealerGameResults.get(gameResult);
-            dealerGameResults.put(gameResult, current + 1);
-        }
-
-        return dealerGameResults;
     }
 }
