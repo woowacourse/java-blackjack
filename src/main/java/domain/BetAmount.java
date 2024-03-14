@@ -6,6 +6,9 @@ import java.util.Objects;
 
 public class BetAmount {
 
+    private static final int UNIT = 10;
+    private static final int MIN_RANGE = 0;
+
     private final long amount;
 
     public BetAmount(final long amount) {
@@ -13,11 +16,6 @@ public class BetAmount {
         this.amount = amount;
     }
 
-    private void validate(final long value) { // TODO 블랙잭일 경우 1.5배를 해줘야하기에 10원 단위인지 확인필요
-        if (value <= 0) {
-            throw new InvalidBetAmountException(ErrorCode.INVALID_BET_AMOUNT);
-        }
-    }
 
     public Amount loseAmount() {
         return new Amount(-amount);
@@ -33,6 +31,23 @@ public class BetAmount {
 
     public Amount tieAmount() {
         return new Amount(0);
+    }
+
+    private void validate(final long value) {
+        validateRange(value);
+        validateUnit(value);
+    }
+
+    private void validateUnit(final long value) {
+        if (value % UNIT != 0) {
+            throw new InvalidBetAmountException(ErrorCode.INVALID_BET_AMOUNT);
+        }
+    }
+
+    private void validateRange(final long value) {
+        if (value <= MIN_RANGE) {
+            throw new InvalidBetAmountException(ErrorCode.INVALID_BET_AMOUNT);
+        }
     }
 
     @Override
