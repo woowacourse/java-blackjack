@@ -9,6 +9,7 @@ import java.util.Set;
 public class BettingResult {
 
     private static final double BLACKJACK_PROFIT_RATE = 1.5;
+    private static final int DEALER_MULTIPLIER = -1;
 
     private final Map<Player, BetAmount> bet;
     private final Dealer dealer;
@@ -31,7 +32,7 @@ public class BettingResult {
         for (Player player : bet.keySet()) {
             total += getPayout(player);
         }
-        return total * -1;
+        return total * DEALER_MULTIPLIER;
     }
 
     public Set<Player> getPlayers() {
