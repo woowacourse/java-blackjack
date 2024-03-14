@@ -20,8 +20,4 @@ public enum SingleMatchResult {
     public Profit calculatePlayerProfit(BetAmount betAmount) {
         return playerProfitFunction.apply(betAmount);
     }
-
-    public Profit calculateDealerProfit(BetAmount betAmount) {
-        return calculatePlayerProfit(betAmount).reverse();
-    }
 }

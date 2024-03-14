@@ -15,15 +15,6 @@ public class BetAmount {
         }
     }
 
-    public BetAmount add(BetAmount betAmount) {
-        return new BetAmount(this.value + betAmount.value);
-    }
-
-    public BetAmount multiply(double multiplier) {
-        int newValue = (int) Math.ceil(this.value * multiplier);
-        return new BetAmount(newValue);
-    }
-
     public int toInt() {
         return value;
     }
