@@ -30,15 +30,9 @@ public class Gamer {
         cardHolder.draw(deck, new DealerRandomCardDrawStrategy(cardHolder), execution_count);
     }
 
-    // TODO: 인덴트 줄이기
     public Double getGameProfit(Gamer otherGamer) {
         GameResult gamerGameResult = GameResultCalculator.calculate(cardHolder, otherGamer.getCardHolder());
-        for (GameResult gameResult : GameResult.values()) {
-            if (gameResult == gamerGameResult) {
-                return betMaker.getBetMoney() * gameResult.getTimes();
-            }
-        }
-        return 0.0;
+        return betMaker.getBetMoney() * gamerGameResult.getTimes();
     }
 
     public String getRawGamerName() {
