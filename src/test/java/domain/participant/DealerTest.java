@@ -11,8 +11,7 @@ import static domain.GameResult.TIE;
 import static domain.GameResult.WIN;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import domain.Answer;
-import domain.BetAmount;
+import domain.amount.BetAmount;
 import domain.GameResult;
 import java.util.List;
 import java.util.Map;

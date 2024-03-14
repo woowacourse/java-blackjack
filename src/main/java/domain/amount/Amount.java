@@ -1,4 +1,4 @@
-package domain;
+package domain.amount;
 
 import java.util.Objects;
 

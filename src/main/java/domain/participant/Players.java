@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.Amount;
+import domain.amount.Amount;
 import domain.GameResult;
 import java.util.LinkedHashMap;
 import java.util.List;

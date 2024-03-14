@@ -3,7 +3,7 @@ package domain.participant;
 import static domain.participant.Dealer.DEALER_NAME;
 
 import constants.ErrorCode;
-import domain.BetAmount;
+import domain.amount.BetAmount;
 import exception.ReservedPlayerNameException;
 import java.util.Objects;
 

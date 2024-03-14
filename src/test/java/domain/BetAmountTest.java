@@ -1,5 +1,6 @@
 package domain;
 
+import domain.amount.BetAmount;
 import exception.InvalidBetAmountException;
 import exception.OutOfRangeBetAmount;
 import org.assertj.core.api.Assertions;

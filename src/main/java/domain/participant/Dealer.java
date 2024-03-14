@@ -1,7 +1,6 @@
 package domain.participant;
 
-import domain.Amount;
-import domain.Answer;
+import domain.amount.Amount;
 import domain.GameResult;
 import domain.card.Card;
 import domain.card.CardDeck;

@@ -14,8 +14,8 @@ import static domain.GameResult.LOSE;
 import static domain.GameResult.TIE;
 import static domain.GameResult.WIN;
 
-import domain.Amount;
-import domain.BetAmount;
+import domain.amount.Amount;
+import domain.amount.BetAmount;
 import domain.GameResult;
 import java.util.List;
 import java.util.Map;

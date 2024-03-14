@@ -1,5 +1,7 @@
 package domain;
 
+import domain.amount.Amount;
+import domain.amount.BetAmount;
 import domain.participant.Hands;
 import java.util.Arrays;
 import java.util.function.BiPredicate;

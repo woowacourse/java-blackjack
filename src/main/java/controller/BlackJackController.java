@@ -1,8 +1,8 @@
 package controller;
 
-import domain.Amount;
-import domain.Answer;
-import domain.BetAmount;
+import domain.amount.Amount;
+import domain.participant.Answer;
+import domain.amount.BetAmount;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Names;

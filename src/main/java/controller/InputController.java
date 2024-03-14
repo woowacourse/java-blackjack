@@ -1,7 +1,7 @@
 package controller;
 
-import domain.Answer;
-import domain.BetAmount;
+import domain.participant.Answer;
+import domain.amount.BetAmount;
 import domain.participant.Names;
 import exception.CustomException;
 import java.util.List;
