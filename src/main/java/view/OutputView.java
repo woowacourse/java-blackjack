@@ -76,6 +76,9 @@ public class OutputView {
         System.out.println(System.lineSeparator() + DEALER_ADD_CARD_MESSAGE);
     }
 
+    public void printDealerProfit(Double dealerProfit) {
+        System.out.println(GAME_RESULT_MESSAGE.formatted("딜러", dealerProfit));
+    }
     public void printPlayersOutcome(Map<Outcome, Long> dealerOutcomes, Map<Participant, Outcome> results) {
         printDealerOutcome(dealerOutcomes);
         printParticipantOutcome(results);
