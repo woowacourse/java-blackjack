@@ -74,7 +74,8 @@ public class BlackJackController {
         }
     }
 
-    private void firstDraw(final BlackJackGame blackJackGame, final Dealer dealer, final List<Player> players) {
+    private void firstDraw(final BlackJackGame blackJackGame,
+                           final Dealer dealer, final List<Player> players) {
         try {
             blackJackGame.firstDraw(dealer, players);
         } catch (IllegalStateException e) {
@@ -135,9 +136,10 @@ public class BlackJackController {
 
     private void finish(final BlackJackGame blackJackGame, final Betting betting,
                         final Dealer dealer, final List<Player> players) {
-        GameResults gameResults = blackJackGame.getGameResults(dealer, players);
-        BettingResult bettingResult = new BettingResult(gameResults.calculateBettingOnPlayers(betting));
-        OutputView.printDealerBettingResult(bettingResult.getDealerBettingResult());
+        GameResults gameResults = blackJackGame.getGameResults(dealer, players, betting);
+        BettingResult bettingResult = new BettingResult(
+                gameResults.getResult(), gameResults.getDealerBettingResult());
+        OutputView.printDealerBettingResult(bettingResult.DealerResult());
         OutputView.printPlayerBettingResult(bettingResult);
     }
 }

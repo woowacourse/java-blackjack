@@ -30,12 +30,12 @@ public class BlackJackGame {
         participant.draw(deck);
     }
 
-    public GameResults getGameResults(final Dealer dealer, final List<Player> players) {
+    public GameResults getGameResults(final Dealer dealer, final List<Player> players, final Betting betting) {
         Map<PlayerName, GameResult> playerGameResults = new HashMap<>();
 
         players.forEach(player -> match(dealer, player, playerGameResults));
 
-        return new GameResults(playerGameResults);
+        return GameResults.of(playerGameResults, betting);
     }
 
     private void match(final Dealer dealer, final Player player,
