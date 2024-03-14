@@ -13,6 +13,10 @@ public class Hands {
         this.value = value;
     }
 
+    public void hit(final Card card) {
+        value.add(card);
+    }
+
     public int calculateScore() {
         int score = 0;
         for (final Card card : value) {
@@ -33,5 +37,9 @@ public class Hands {
             return ACE_HIGH;
         }
         return Rank.ACE.getValue();
+    }
+
+    public List<Card> getValue() {
+        return value;
     }
 }

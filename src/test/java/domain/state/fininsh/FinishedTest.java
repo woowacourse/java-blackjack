@@ -17,7 +17,7 @@ class FinishedTest {
     @Test
     @DisplayName("게임이 끝난 상태에서 카드를 뽑으면 예외가 발생한다")
     void draw() {
-        assertThatCode(() -> bust.hit(new Card(Rank.TEN, Suit.CLUBS))).isInstanceOf(
+        assertThatCode(() -> bust.draw(new Card(Rank.TEN, Suit.CLUBS))).isInstanceOf(
                 UnsupportedOperationException.class);
     }
 
