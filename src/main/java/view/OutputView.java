@@ -64,7 +64,7 @@ public class OutputView {
 
     public void printWinLoseOfAllParticipants(BlackjackGame game, PlayerResults playerResults) {
         System.out.println("## 최종 승패");
-        System.out.println(resolver.dealerResultText(game.getDealer(), playerResults));
+        System.out.println(resolver.dealerResultText(playerResults));
         for (Player player : game.getPlayers()) {
             System.out.println(resolver.playerResultText(player, playerResults));
         }

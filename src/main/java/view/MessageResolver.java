@@ -62,7 +62,7 @@ public class MessageResolver {
         return String.valueOf(score.toInt());
     }
 
-    public String dealerResultText(Dealer dealer, PlayerResults playerResults) {
+    public String dealerResultText(PlayerResults playerResults) {
         return String.format("%s: %s%s%s",
             DEALER_NAME,
             dealerSingleResultText(playerResults.dealerWinCount(), WIN_TEXT),
