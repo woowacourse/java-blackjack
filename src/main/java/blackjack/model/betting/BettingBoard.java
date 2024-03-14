@@ -1,39 +1,19 @@
 package blackjack.model.betting;
 
 import blackjack.model.participant.Player;
-import java.util.Map;
+import java.util.List;
 
 public class BettingBoard {
-    private static final double BLACKJACK_PROFIT_RATE = 1.5;
+    private final List<BettingAccount> bettingAccounts;
 
-    private final Map<Player, BettingAmount> moneys;
-
-    public BettingBoard(final Map<Player, BettingAmount> moneys) {
-        this.moneys = moneys;
+    public BettingBoard(final List<BettingAccount> bettingAccounts) {
+        this.bettingAccounts = bettingAccounts;
     }
 
-    public BettingAmount giveWinnerMoneyByBlackJack(final Player player) {
-        BettingAmount bettingAmount = moneys.get(player);
-        return bettingAmount.multiple(BLACKJACK_PROFIT_RATE);
-    }
-
-    public BettingAmount giveTieMoneyByBlackJack(final Player player) {
-        BettingAmount bettingAmount = moneys.get(player);
-        // TODO: 딜러 계산을 위해 초기값에서 빼야함
-        return bettingAmount;
-    }
-
-    public BettingAmount giveWinnerMoneyWhenDealerBust(final Player player) {
-        BettingAmount bettingAmount = moneys.get(player);
-        return bettingAmount;
-    }
-
-    public BettingAmount payMoneyWhenPlayerBust(final Player player) {
-        BettingAmount bettingAmount = moneys.get(player);
-        return bettingAmount.payAll();
-    }
-
-    public BettingAmount getAmount(final Player player) {
-        return moneys.get(player);
+    public BettingAccount findBettingAccountBy(final Player player) {
+        return bettingAccounts.stream()
+                .filter(bettingAccount -> bettingAccount.isOwnedBy(player))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 플레이어에 해당하는 베팅 정보가 존재하지 않습니다."));
     }
 }
