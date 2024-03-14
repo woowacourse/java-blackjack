@@ -11,7 +11,7 @@ public class BettingTest {
     @Test
     void getBettingTest() {
         // Given
-        Betting betting = Betting.getInstance();
+        Betting betting = new Betting();
         PlayerName test = new PlayerName("test");
         betting.setBetting(test, new BettingAmount("15000"));
 

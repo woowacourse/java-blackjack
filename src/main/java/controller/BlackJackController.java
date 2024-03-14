@@ -19,7 +19,7 @@ public class BlackJackController {
         Dealer dealer = Dealer.init();
         List<Player> players = initPlayers();
         BlackJackGame blackJackGame = new BlackJackGame(Deck.init());
-        Betting betting = Betting.getInstance();
+        Betting betting = new Betting();
 
         play(blackJackGame, betting, dealer, players);
 
