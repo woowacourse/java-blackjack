@@ -60,7 +60,7 @@ public class PlayerTest {
 		assertThat(player.getCardHand()).hasSize(1);
 	}
 
-	@DisplayName("가지고 있는 패의 총 합이 21을 초과하면 true를 반환한다.")
+	@DisplayName("가지고 있는 패의 총 합이 21을 초과하면 Bust 된다.")
 	@Test
 	void cardValueSumTest() {
 		// given

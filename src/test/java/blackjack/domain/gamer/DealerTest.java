@@ -78,7 +78,7 @@ public class DealerTest {
 			.isNotIn(card);
 	}
 
-	@DisplayName("딜러 카드 패의 총 합이 16 이하라면 Hit한다.")
+	@DisplayName("딜러 카드 패의 총 합이 16 이하라면 Hit 한다.")
 	@Test
 	void dealerHitTest() {
 		// given
@@ -92,7 +92,7 @@ public class DealerTest {
 		);
 	}
 
-	@DisplayName("딜러 카드 패의 총 합이 16 초과라면 Stand한다.")
+	@DisplayName("딜러 카드 패의 총 합이 16 초과라면 Stand 한다.")
 	@Test
 	void dealerStandTest() {
 		// given
