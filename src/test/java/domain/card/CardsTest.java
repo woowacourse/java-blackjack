@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import static domain.card.CardGenerator.cardOf;
+import static domain.card.CardFixture.cardOf;
 import static domain.card.CardRank.ACE;
 import static domain.card.CardRank.FIVE;
 import static domain.card.CardRank.FOUR;

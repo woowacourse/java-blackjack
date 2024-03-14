@@ -7,7 +7,7 @@ import static domain.card.CardSuit.SPADE;
 
 import java.util.List;
 
-public interface CardGenerator {
+public interface CardFixture {
 
     static Card cardOf(CardRank rank) {
         return new Card(SPADE, rank);

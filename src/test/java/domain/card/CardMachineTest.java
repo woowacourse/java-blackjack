@@ -2,7 +2,7 @@ package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import static domain.card.CardGenerator.cardOf;
+import static domain.card.CardFixture.cardOf;
 
 import java.util.List;
 
