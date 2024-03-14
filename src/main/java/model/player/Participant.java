@@ -36,4 +36,8 @@ public class Participant extends User {
         }
         return Outcome.DRAW;
     }
+
+    public int calculateRevenue(boolean isOtherNotHit, int otherDifference) {
+        return gameMoney.calculateRevenue(findOutcome(isOtherNotHit, otherDifference), cards.findBlackJackState());
+    }
 }
