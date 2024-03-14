@@ -10,7 +10,6 @@ import blackjack.domain.result.GameResult;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BooleanSupplier;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -42,8 +41,8 @@ public class BlackjackGame {
         dealer.receiveInitCards(deck.drawCards(INIT_CARD_COUNT));
     }
 
-    public boolean isHit(Player player, BooleanSupplier isHitSupplier) {
-        return player.isNotBust() && isHitSupplier.getAsBoolean();
+    public boolean isHittable(Player player) {
+        return player.isNotBust();
     }
 
     public boolean isHit(Dealer dealer) {

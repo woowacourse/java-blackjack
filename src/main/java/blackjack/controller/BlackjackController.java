@@ -42,7 +42,7 @@ public class BlackjackController {
     }
 
     private void receivePlayerAdditionalCard(Player player, BlackjackGame blackjackGame) {
-        while (blackjackGame.isHit(player, () -> isPlayerInputHit(player))) {
+        while (blackjackGame.isHittable(player) && isPlayerInputHit(player)) {
             blackjackGame.hit(player);
             outputView.printCardHandStatus(player);
         }
