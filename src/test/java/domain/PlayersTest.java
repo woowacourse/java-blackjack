@@ -9,6 +9,7 @@ import static domain.HandsTestFixture.sum21Size2;
 import static domain.Result.LOSE;
 import static domain.Result.TIE;
 import static domain.Result.WIN;
+import static domain.Result.WIN_BLACKJACK;
 
 import domain.card.CardDeck;
 import domain.participant.Dealer;
@@ -95,7 +96,7 @@ class PlayersTest {
         final Dealer dealer = new Dealer(CardDeck.generate(), sum20Size3);
 
         //when & then
-        final Map<Player, Result> expected = Map.of(loser, LOSE, winner, WIN, tier, TIE);
+        final Map<Player, Result> expected = Map.of(loser, LOSE, winner, WIN_BLACKJACK, tier, TIE);
         Assertions.assertThat(players.calculateResultBy(dealer)).isEqualTo(expected);
     }
 

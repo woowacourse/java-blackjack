@@ -6,20 +6,28 @@ public class BetAmount {
 
     private final int amount;
 
-    public BetAmount(int amount) {
-        validatePositive(amount);
+    private BetAmount(final int amount) {
         this.amount = amount;
     }
 
-    public BetAmount multiply(double value) {
+    public static BetAmount from(int amount) {
+        validatePositive(amount);
+        return new BetAmount(amount);
+    }
+
+    public BetAmount multiply(double value) { //TODO 값 직접 바꾸기
         return new BetAmount((int) (amount * value));
+    }
+
+    public BetAmount makeZero() {
+        return new BetAmount((-1) * amount);
     }
 
     public int getAmount() {
         return amount;
     }
 
-    private void validatePositive(int amount) {
+    private static void validatePositive(int amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("[ERROR] 유효하지 않은 배팅 금액입니다.");
         }

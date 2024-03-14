@@ -12,7 +12,7 @@ class BetAmountTest {
     @ParameterizedTest
     @ValueSource(ints = {0, -1, -100})
     void notPositive(int amount) {
-        Assertions.assertThatThrownBy(() -> new BetAmount(amount))
+        Assertions.assertThatThrownBy(() -> BetAmount.from(amount))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 유효하지 않은 배팅 금액입니다.");
     }
@@ -21,12 +21,12 @@ class BetAmountTest {
     @Test
     void multiply() {
         // given
-        final BetAmount betAmount = new BetAmount(10_000);
+        final BetAmount betAmount = BetAmount.from(10_000);
 
         // when
         final BetAmount newBetAmount = betAmount.multiply(1.5);
 
         // then
-        Assertions.assertThat(newBetAmount).isEqualTo(new BetAmount((int) (10_000 * 1.5)));
+        Assertions.assertThat(newBetAmount.getAmount()).isEqualTo((int) (10_000 * 1.5));
     }
 }

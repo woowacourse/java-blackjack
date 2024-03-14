@@ -20,7 +20,7 @@ public enum Result {
     }
 
     public Result reverse() {
-        if (Result.WIN.equals(this)) {
+        if (Result.WIN.equals(this) || Result.WIN_BLACKJACK.equals(this)) {
             return LOSE;
         }
 

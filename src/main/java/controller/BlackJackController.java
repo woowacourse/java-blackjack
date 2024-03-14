@@ -30,7 +30,7 @@ public class BlackJackController {
         final Bettings bettings = new Bettings();
 
         for (Player player : players.getPlayers()) {
-            final BetAmount betAmount = new BetAmount(inputView.readBetAmount(player.getName()));
+            final BetAmount betAmount = BetAmount.from(inputView.readBetAmount(player.getName()));
             bettings.save(player, betAmount);
         }
 
