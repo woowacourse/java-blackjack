@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CardPack {
 
-    private static final int FIRST_CARD = 0;
+    private static final int FIRST_CARD_INDEX = 0;
 
     private final List<Card> cards;
 
@@ -35,7 +35,7 @@ public class CardPack {
     }
 
     public Card pickOneCard() {
-        return cards.remove(FIRST_CARD);
+        return cards.remove(FIRST_CARD_INDEX);
     }
 
     public boolean isUsedAll() {
