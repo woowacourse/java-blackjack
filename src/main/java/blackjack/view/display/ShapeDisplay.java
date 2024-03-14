@@ -1,4 +1,4 @@
-package blackjack.view.display.deck;
+package blackjack.view.display;
 
 import blackjack.model.deck.Shape;
 import java.util.Arrays;

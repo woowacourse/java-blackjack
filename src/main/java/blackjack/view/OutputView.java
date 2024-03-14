@@ -4,8 +4,8 @@ import blackjack.dto.NameCards;
 import blackjack.dto.NameCardsScore;
 import blackjack.dto.NameProfit;
 import blackjack.model.deck.Card;
-import blackjack.view.display.deck.ScoreDisplay;
-import blackjack.view.display.deck.ShapeDisplay;
+import blackjack.view.display.ScoreDisplay;
+import blackjack.view.display.ShapeDisplay;
 import java.util.List;
 import java.util.stream.Collectors;
 
