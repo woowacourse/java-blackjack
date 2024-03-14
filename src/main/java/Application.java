@@ -17,14 +17,15 @@ public class Application {
 
     public static void main(String[] args) {
         BlackJackGame game = startGame();
+        Judge judge = new Judge();
 
-        setUpPlayers(game);
+        setUpPlayers(game, judge);
 
         setUpGame(game);
 
         progressGame(game);
 
-        makeResult(game);
+        makeResult(game, judge);
     }
 
     private static BlackJackGame startGame() {
@@ -32,10 +33,10 @@ public class Application {
         return new BlackJackGame(rawPlayersNames);
     }
 
-    private static void setUpPlayers(BlackJackGame game) {
+    private static void setUpPlayers(BlackJackGame game, Judge judge) {
         for (Player player : game.getGamers().getPlayers()) {
             int battingAmount = inputView.readBattingAmount(player);
-            game.initializeProfit(player, new Profit(battingAmount));
+            judge.initializeProfit(player, new Profit(battingAmount));
         }
     }
 
@@ -80,9 +81,10 @@ public class Application {
         }
     }
 
-    private static void makeResult(BlackJackGame game) {
+    private static void makeResult(BlackJackGame game, Judge judge) {
         Gamers gamers = game.getGamers();
-        Judge judge = game.makeFinalResult();
+        judge.decideResult(gamers);
+        judge.decideProfit();
         resultView.printFinalProfit(gamers.getDealer(), judge);
     }
 }

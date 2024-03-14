@@ -49,4 +49,8 @@ public class Score {
     public int compareScore(Score score) {
         return value - score.value;
     }
+
+    public int getValue() {
+        return value;
+    }
 }
