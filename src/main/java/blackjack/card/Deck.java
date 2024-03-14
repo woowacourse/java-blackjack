@@ -1,6 +1,5 @@
 package blackjack.card;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,20 +14,9 @@ public class Deck {
     }
 
     public static Deck createShuffledFullDeck() {
-        List<Card> cards = new LinkedList<>();
-        for (Shape shape : Shape.values()) {
-            cards.addAll(createNumberCardsOf(shape));
-        }
-        Collections.shuffle(cards);
-        return new Deck(cards);
-    }
-
-    private static List<Card> createNumberCardsOf(Shape shape) {
-        List<Card> cards = new ArrayList<>();
-        for (Number number : Number.values()) {
-            cards.add(new Card(shape, number));
-        }
-        return cards;
+        List<Card> fullCards = Card.getFullCards();
+        Collections.shuffle(fullCards);
+        return new Deck(fullCards);
     }
 
     public Card draw() {

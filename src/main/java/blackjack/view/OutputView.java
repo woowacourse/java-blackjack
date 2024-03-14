@@ -1,10 +1,8 @@
 package blackjack.view;
 
 import blackjack.card.Card;
-import blackjack.game.MatchResult;
 import blackjack.view.display.CardNumberDisplay;
 import blackjack.view.display.CardShapeDisplay;
-import blackjack.view.display.PlayerResultDisplay;
 import java.util.List;
 
 public class OutputView {
@@ -13,12 +11,16 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
+    public void printBetMoneyRequest(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+    }
+
     public void printInitializeBlackJack(List<String> names) {
         System.out.println("딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.");
     }
 
-    public void printDealerFirstCard(Card card) {
-        System.out.println("딜러: " + convertCard(card));
+    public void printDealerFirstCard(List<Card> cards) {
+        System.out.println("딜러: " + convertCards(cards));
     }
 
     public void printPlayerCards(String name, List<Card> cards) {
@@ -41,17 +43,12 @@ public class OutputView {
         System.out.println(name + " 카드: " + convertCards(cards) + " - 결과: " + score + "점");
     }
 
-    public void printResultStart() {
-        System.out.println("## 최종 승패");
+    public void printProfitMessage() {
+        System.out.println("## 최종 수익");
     }
 
-    public void printDealerResult(int winCount, int tieCount, int loseCount) {
-        System.out.println("딜러: " + winCount + "승 " + tieCount + "무 " + loseCount + "패");
-    }
-
-    public void printPlayerResult(String name, MatchResult result) {
-        String resultDisplay = PlayerResultDisplay.getDisplayByResult(result);
-        System.out.println(name + ": " + resultDisplay);
+    public void printPlayerProfit(String name, int profit) {
+        System.out.println(name + ": " + profit);
     }
 
     public void printNewLine() {
@@ -59,9 +56,9 @@ public class OutputView {
     }
 
     private String convertCard(Card card) {
-        String convertedNumber = CardNumberDisplay.fromNumber(card.getNumber());
-        String convertedShape = CardShapeDisplay.fromShape(card.getShape());
-        return convertedNumber + convertedShape;
+        CardNumberDisplay numberDisplay = CardNumberDisplay.getDisplayByNumber(card.getNumber());
+        CardShapeDisplay shapeDisplay = CardShapeDisplay.getDisplayByShape(card.getShape());
+        return numberDisplay.getNotation() + shapeDisplay.getNotation();
     }
 
     private String convertCards(List<Card> cards) {

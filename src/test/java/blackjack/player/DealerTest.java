@@ -17,8 +17,8 @@ class DealerTest {
     void ableToDrawTest() {
         // given
         List<Card> cards = List.of(
-                new Card(Shape.HEART, Number.JACK),
-                new Card(Shape.DIAMOND, Number.SIX)
+                Card.of(Shape.HEART, Number.JACK),
+                Card.of(Shape.DIAMOND, Number.SIX)
         );
         Hand hand = new Hand(cards);
         Dealer dealer = new Dealer(hand);
@@ -33,8 +33,8 @@ class DealerTest {
     void unableToDrawTest() {
         // given
         List<Card> cards = List.of(
-                new Card(Shape.HEART, Number.JACK),
-                new Card(Shape.DIAMOND, Number.SEVEN)
+                Card.of(Shape.HEART, Number.JACK),
+                Card.of(Shape.DIAMOND, Number.SEVEN)
         );
         Hand hand = new Hand(cards);
         Dealer dealer = new Dealer(hand);
@@ -49,13 +49,16 @@ class DealerTest {
     void getFirstCardTest() {
         // given
         List<Card> cards = List.of(
-                new Card(Shape.HEART, Number.JACK),
-                new Card(Shape.DIAMOND, Number.SEVEN)
+                Card.of(Shape.HEART, Number.JACK),
+                Card.of(Shape.DIAMOND, Number.SEVEN)
         );
         Hand hand = new Hand(cards);
         Dealer dealer = new Dealer(hand);
         // when, then
-        assertThat(dealer.getFirstCard()).isEqualTo(new Card(Shape.HEART, Number.JACK));
+        List<Card> dealerCards = dealer.revealCardsOnFirstPhase();
+        assertThat(dealerCards).containsExactlyElementsOf(
+                List.of(Card.of(Shape.HEART, Number.JACK))
+        );
     }
 
     @Test
@@ -66,8 +69,8 @@ class DealerTest {
         Hand hand = new Hand(cards);
         Dealer dealer = new Dealer(hand);
         // when, then
-        assertThatThrownBy(dealer::getFirstCard)
+        assertThatThrownBy(dealer::revealCardsOnFirstPhase)
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("[ERROR] 딜러가 카드를 가지고 있지 않습니다.");
+                .hasMessage("[ERROR] 카드를 가지고 있지 않습니다.");
     }
 }

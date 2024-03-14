@@ -6,25 +6,23 @@ import java.util.List;
 public class Dealer extends Player {
 
     private static final int MAX_DRAWABLE_SCORE = 16;
+    private static final String DEALER_NAME = "딜러";
 
     public Dealer() {
-        super("딜러");
+        super(DEALER_NAME);
     }
 
-    Dealer(Hand hand) {
-        super("딜러", hand);
-    }
-
-    public Card getFirstCard() {
-        List<Card> cards = super.getCards();
-        if (cards.isEmpty()) {
-            throw new IllegalStateException("[ERROR] 딜러가 카드를 가지고 있지 않습니다.");
-        }
-        return cards.get(0);
+    public Dealer(Hand hand) {
+        super(DEALER_NAME, hand);
     }
 
     @Override
     public boolean hasDrawableScore() {
         return hand.calculateScore() <= MAX_DRAWABLE_SCORE;
+    }
+
+    @Override
+    public List<Card> revealCardsOnFirstPhase() {
+        return List.of(hand.getFirstCard());
     }
 }
