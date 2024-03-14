@@ -82,9 +82,9 @@ class BlackJackTest {
         dealer.receiveCard(new Card(Shape.DIA, Rank.THREE));
 
         /*
-         * one 참가자의 점수: 3점
-         * two 참가자의 점수: 3점
-         * 딜러의 점수: 3점인
+         * one 참가자의 점수: 5점
+         * two 참가자의 점수: 5점
+         * 딜러의 점수: 5점인
          */
         LinkedHashMap<Participant, WinStatus> resultByParticipant = blackJack.makeResult();
 
