@@ -1,21 +1,16 @@
 package controller;
 
-import static java.util.Collections.*;
 import static util.InputRetryHelper.inputRetryHelper;
 import static view.InputView.inputChoiceCommand;
 import static view.InputView.inputNames;
 
-import java.util.EnumMap;
 import java.util.List;
 import model.Choice;
 import model.casino.CardDispenser;
 import model.casino.RandomCardShuffleMachine;
-import model.dto.DealerScoreResult;
 import model.dto.GameCompletionResult;
-import model.dto.PlayerScoreResult;
 import model.participant.Names;
 import view.OutputView;
-import view.Victory;
 import model.participant.Participants;
 
 public class Casino {
@@ -34,14 +29,11 @@ public class Casino {
         proceedPlayersTurn();
         proceedDealerTurn();
         showFinalFaceUpResults();
-        DealerScoreResult dealerScoreResult = calculateDealerResult();
-        List<PlayerScoreResult> playerScoreResults = calculatePlayerResults();
-        OutputView.printScoreResults(dealerScoreResult, playerScoreResults);
     }
 
     private void showInitialFaceUpResults() {
-        GameCompletionResult dealerGameCompletionResult = participants.getDealerFaceUpResult();
-        List<GameCompletionResult> playerGameCompletionResults = participants.getPlayerFaceUpResults();
+        GameCompletionResult dealerGameCompletionResult = participants.getDealerCompletionResult();
+        List<GameCompletionResult> playerGameCompletionResults = participants.getPlayerCompletionResults();
         OutputView.printInitialCardSetting(dealerGameCompletionResult, playerGameCompletionResults);
     }
 
@@ -69,8 +61,8 @@ public class Casino {
     }
 
     private void showFinalFaceUpResults() {
-        List<GameCompletionResult> playerFinalGameCompletionResults = participants.getPlayerFaceUpResults();
-        GameCompletionResult dealerFinalGameCompletionResult = participants.getDealerFaceUpResult();
+        List<GameCompletionResult> playerFinalGameCompletionResults = participants.getPlayerCompletionResults();
+        GameCompletionResult dealerFinalGameCompletionResult = participants.getDealerCompletionResult();
         OutputView.printFinalFaceUpResult(dealerFinalGameCompletionResult, playerFinalGameCompletionResults);
     }
 
@@ -90,28 +82,6 @@ public class Casino {
             return;
         }
         participants.turnOverPlayer();
-    }
-
-    private List<PlayerScoreResult> calculatePlayerResults() {
-        int dealerHand = participants.getDealerFaceUpResult()
-                .hand();
-        return participants.getPlayerFaceUpResults()
-                .stream()
-                .map(result -> new PlayerScoreResult(result.name(), Victory.of(result.hand(), dealerHand)))
-                .toList();
-    }
-
-    private DealerScoreResult calculateDealerResult() {
-        int dealerHand = participants.getDealerFaceUpResult().hand();
-        EnumMap<Victory, Integer> dealerScoreBoard = new EnumMap<>(Victory.class);
-        List<Victory> dealerScores = participants.getPlayerFaceUpResults()
-                .stream()
-                .map(player -> Victory.of(dealerHand, player.hand()))
-                .toList();
-        dealerScoreBoard.put(Victory.WIN, frequency(dealerScores, Victory.WIN));
-        dealerScoreBoard.put(Victory.DRAW, frequency(dealerScores, Victory.DRAW));
-        dealerScoreBoard.put(Victory.LOSE, frequency(dealerScores, Victory.LOSE));
-        return new DealerScoreResult(dealerScoreBoard);
     }
 
 }
