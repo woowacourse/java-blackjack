@@ -37,11 +37,11 @@ public class Dealer extends Gamer {
 		cards.add(deck.drawCard());
 	}
 
-	public int deckSize() {
-		return deck.size();
-	}
-
 	public boolean hasHitScore() {
 		return cards.isScoreLessOrEqual(MAX_HIT_SCORE);
+	}
+
+	public int deckSize() {
+		return deck.size();
 	}
 }

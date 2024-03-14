@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.game;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,31 +15,35 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.command.Command;
 
-public class BlackjackController {
+public class BlackjackGame {
 	private final InputView inputView;
 	private final OutputView outputView;
 
-	public BlackjackController(final InputView inputView, final OutputView outputView) {
+	public BlackjackGame(final InputView inputView, final OutputView outputView) {
 		this.inputView = inputView;
 		this.outputView = outputView;
 	}
 
-	public Players createPlayers() {
+	public void start() {
+		Players players = createPlayers();
+		Dealer dealer = createDealer();
+
+		dealInitCards(dealer, players);
+		receiveAdditionalCard(dealer, players);
+		printResult(dealer, players);
+	}
+
+	private Players createPlayers() {
 		return new Players(inputView.readPlayerNames());
 	}
 
-	public Dealer createDealer() {
+	private Dealer createDealer() {
 		return Dealer.newInstance(createDeck());
 	}
 
-	public Deck createDeck() {
+	private Deck createDeck() {
 		ShuffledDeckGenerator deckGenerator = ShuffledDeckGenerator.getInstance();
 		return deckGenerator.generate();
-	}
-
-	public void startGame(final Dealer dealer, final Players players) {
-		dealInitCards(dealer, players);
-		receiveAdditionalCard(dealer, players);
 	}
 
 	private void dealInitCards(final Dealer dealer, final Players players) {

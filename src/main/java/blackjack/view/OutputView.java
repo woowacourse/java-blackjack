@@ -30,11 +30,11 @@ public class OutputView {
 		return INSTANCE;
 	}
 
-	public void printInitCardStatus(final Dealer dealer, final Players players) {
+	public void printInitCardStatus(final Card dealerFirstCard, final Players players) {
 		List<Player> playerInfos = players.getPlayers();
 		printDealMessage(playerInfos);
 
-		printDealerInitCardsStatusMessage(dealer);
+		printDealerInitCardsStatusMessage(dealerFirstCard);
 		printPlayersInitCardsStatusMessage(playerInfos);
 	}
 
@@ -43,9 +43,8 @@ public class OutputView {
 			createPlayerNamesText(playerInfos), Dealer.INIT_CARD_COUNT));
 	}
 
-	private void printDealerInitCardsStatusMessage(final Dealer dealer) {
-		Card dealerInitCard = dealer.getCards().get(0);
-		System.out.println(String.format("딜러: %s", createCardInfoText(dealerInitCard)));
+	private void printDealerInitCardsStatusMessage(final Card dealerFirstCard) {
+		System.out.println(String.format("딜러: %s", createCardInfoText(dealerFirstCard)));
 	}
 
 	private void printPlayersInitCardsStatusMessage(final List<Player> playerInfos) {
