@@ -16,6 +16,15 @@ class PlayerTest {
 	Player player;
 
 	@Test
+	@DisplayName("이름이 같으면 같은 플레이어로 판단한다.")
+	void equalsTest() {
+		Player player1 = new Player("name");
+		Player player2 = new Player("name");
+
+		assertThat(player1.equals(player2)).isTrue();
+	}
+
+	@Test
 	@DisplayName("카드의 총합이 21 이하이면 카드를 받을 수 있다.")
 	void receiveCardTest() {
 		player = createTestPlayer(List.of(
@@ -38,16 +47,7 @@ class PlayerTest {
 		assertThat(player.canReceiveCard()).isFalse();
 	}
 
-	@Test
-	@DisplayName("이름이 같으면 같은 플레이어로 판단한다.")
-	void equalsTest() {
-		Player player1 = new Player(new Name("name"));
-		Player player2 = new Player(new Name("name"));
-
-		assertThat(player1.equals(player2)).isTrue();
-	}
-
 	private Player createTestPlayer(List<Card> cards) {
-		return new Player(new Name("test"), cards);
+		return new Player("test", cards);
 	}
 }

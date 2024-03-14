@@ -12,12 +12,12 @@ public abstract class BlackjackGamer {
 	private final Name name;
 	private final Hand hand;
 
-	public BlackjackGamer(Name name, List<Card> cards) {
-		this.name = name;
+	public BlackjackGamer(String name, List<Card> cards) {
+		this.name = new Name(name);
 		this.hand = new Hand(cards);
 	}
 
-	public BlackjackGamer(Name name) {
+	public BlackjackGamer(String name) {
 		this(name, new ArrayList<>());
 	}
 

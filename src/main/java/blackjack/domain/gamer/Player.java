@@ -7,11 +7,11 @@ import blackjack.domain.card.Card;
 
 public class Player extends BlackjackGamer {
 
-	public Player(Name name) {
+	public Player(String name) {
 		super(name);
 	}
 
-	public Player(Name name, List<Card> cards) {
+	public Player(String name, List<Card> cards) {
 		super(name, cards);
 	}
 

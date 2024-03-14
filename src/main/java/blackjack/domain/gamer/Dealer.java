@@ -10,11 +10,11 @@ public class Dealer extends BlackjackGamer {
 	private static final String DEFAULT_DEALER_NAME = "딜러";
 
 	public Dealer() {
-		super(new Name(DEFAULT_DEALER_NAME));
+		super(DEFAULT_DEALER_NAME);
 	}
 
 	public Dealer(List<Card> cards) {
-		super(new Name(DEFAULT_DEALER_NAME), cards);
+		super(DEFAULT_DEALER_NAME, cards);
 	}
 
 	@Override
