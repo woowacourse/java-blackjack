@@ -7,6 +7,10 @@ public class Player extends Participant {
     public Player(String name, Money money) {
         super(name);
 
+        if (money.isNegative()) {
+            throw new IllegalArgumentException("사용자의 초기 돈은 음수가 될 수 없습니다.");
+        }
+
         this.money = money;
     }
 

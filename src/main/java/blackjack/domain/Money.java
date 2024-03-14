@@ -20,6 +20,10 @@ public class Money {
         return new Money(amount * multiplier);
     }
 
+    public boolean isNegative() {
+        return amount < 0;
+    }
+
     public double getAmount() {
         return amount;
     }

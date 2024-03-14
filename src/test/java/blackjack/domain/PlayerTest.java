@@ -16,6 +16,15 @@ class PlayerTest {
                 .doesNotThrowAnyException();
     }
 
+    @DisplayName("플레이어의 초기 돈은 음수가 될 수 없다.")
+    @Test
+    void validateNegativeMoney() {
+        Money negativeMoney = new Money(-1000);
+
+        assertThatThrownBy(() -> new Player("atom", negativeMoney))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
     @DisplayName("플레이어는 카드를 한 장 받을 수 있다.")
     @Test
     void hitOneCard() {

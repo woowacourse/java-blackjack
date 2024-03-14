@@ -46,4 +46,14 @@ class MoneyTest {
 
         assertThat(result.getAmount()).isEqualTo(0);
     }
+
+    @DisplayName("음수인지 확인할 수 있다.")
+    @Test
+    void isNegative() {
+        Money money = new Money(-100);
+
+        boolean result = money.isNegative();
+
+        assertThat(result).isTrue();
+    }
 }
