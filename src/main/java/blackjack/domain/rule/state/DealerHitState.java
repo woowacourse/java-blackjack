@@ -45,8 +45,8 @@ public final class DealerHitState extends State {
     public State draw(final Card card) {
         final Hands newHands = hands.addCard(card);
 
-        if (newHands.calculateScore().isBurst()) {
-            return new BurstState(newHands, hitCount + 1);
+        if (newHands.calculateScore().isBust()) {
+            return new BustState(newHands, hitCount + 1);
         }
         if (needMoreCard(newHands)) {
             return new DealerHitState(newHands, hitCount + 1);

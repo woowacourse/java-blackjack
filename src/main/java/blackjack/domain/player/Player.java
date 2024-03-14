@@ -53,8 +53,8 @@ public class Player {
         return dealer.calculateBetLeverage(state);
     }
 
-    public boolean isBurst() {
-        return state.isBurst();
+    public boolean isBust() {
+        return state.isBust();
     }
 
     public boolean isHit() {

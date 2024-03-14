@@ -26,7 +26,7 @@ public final class StandState extends State {
 
     @Override
     public BetLeverage calculateBetLeverage(final State other) {
-        if (other.isBurst()) {
+        if (other.isBust()) {
             return BetLeverage.WIN;
         }
         if (other.isBlackjack() || other.getScore().isBiggerThan(hands.calculateScore())) {

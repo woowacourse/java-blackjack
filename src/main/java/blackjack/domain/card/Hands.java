@@ -45,7 +45,7 @@ public final class Hands {
     }
 
     private boolean isDeadScore(final int sum) {
-        return new Score(sum).isBurst();
+        return new Score(sum).isBust();
     }
 
     public Card getFirstCard() {

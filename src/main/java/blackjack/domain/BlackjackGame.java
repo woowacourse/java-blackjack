@@ -56,7 +56,7 @@ public class BlackjackGame {
     }
 
     private void runDealerTurn(final IntConsumer dealerHitConsumer) {
-        if (players.isAllBurst()) {
+        if (players.isAllBust()) {
             dealerHitConsumer.accept(0);
             return;
         }

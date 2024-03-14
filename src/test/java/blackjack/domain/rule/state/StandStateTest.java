@@ -31,9 +31,9 @@ class StandStateTest {
     static final State score21count2 = new BlackjackState(new Hands(List.of(Card.of(ACE, DIA), Card.of(JACK, DIA))));
     static final State score21count3 = new StandState(
             new Hands(List.of(Card.of(ACE, DIA), Card.of(JACK, DIA), Card.of(QUEEN, DIA))));
-    static final State score22count3 = new BurstState(
+    static final State score22count3 = new BustState(
             new Hands(List.of(Card.of(TEN, DIA), Card.of(JACK, DIA), Card.of(TWO, DIA))));
-    static final State score23count3 = new BurstState(
+    static final State score23count3 = new BustState(
             new Hands(List.of(Card.of(TEN, DIA), Card.of(JACK, DIA), Card.of(THREE, DIA))));
 
     @DisplayName("Stand 상태에서 카드를 뽑을 수 없다.")
@@ -56,7 +56,7 @@ class StandStateTest {
     @Test
     void calculateBetLeverageBurst() {
         // given
-        final State dealerState = new BurstState(new Hands(List.of(
+        final State dealerState = new BustState(new Hands(List.of(
                 Card.of(TEN, DIA),
                 Card.of(CardNumber.QUEEN, DIA),
                 Card.of(CardNumber.TWO, DIA)

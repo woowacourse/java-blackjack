@@ -12,9 +12,9 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BurstStateTest {
+class BustStateTest {
 
-    final State state = new BurstState(new Hands(List.of(
+    final State state = new BustState(new Hands(List.of(
             Card.of(CardNumber.TEN, CardShape.SPADE),
             Card.of(CardNumber.QUEEN, CardShape.SPADE),
             Card.of(CardNumber.TWO, CardShape.SPADE))));
@@ -32,7 +32,7 @@ class BurstStateTest {
     void stand() {
         final State newState = state.stand();
 
-        assertThat(newState).isInstanceOf(BurstState.class);
+        assertThat(newState).isInstanceOf(BustState.class);
     }
 
     @DisplayName("Burst 상태에서 배팅 레버리지 상태는 LOSE이다.")

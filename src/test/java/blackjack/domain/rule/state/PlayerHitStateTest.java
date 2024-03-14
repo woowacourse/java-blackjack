@@ -45,7 +45,7 @@ class PlayerHitStateTest {
         final State newState = playerHitScore20.draw(card);
 
         // then
-        assertThat(newState).isInstanceOf(BurstState.class);
+        assertThat(newState).isInstanceOf(BustState.class);
     }
 
     @DisplayName("카드를 뽑아서 점수가 21이하이면 PlayerHit 상태이다.")

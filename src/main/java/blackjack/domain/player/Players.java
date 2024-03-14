@@ -51,9 +51,9 @@ public class Players {
         return Collections.unmodifiableMap(playerBetRevenue);
     }
 
-    public boolean isAllBurst() {
+    public boolean isAllBust() {
         return players.stream()
-                .allMatch(Player::isBurst);
+                .allMatch(Player::isBust);
     }
 
     public Map<PlayerName, Hands> getPlayersHands() {

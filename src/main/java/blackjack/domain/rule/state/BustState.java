@@ -4,18 +4,18 @@ import blackjack.domain.bet.BetLeverage;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 
-public final class BurstState extends State {
+public final class BustState extends State {
 
-    BurstState(final Hands hands) {
+    BustState(final Hands hands) {
         super(hands, 0);
     }
 
-    BurstState(final Hands hands, final int hitCount) {
+    BustState(final Hands hands, final int hitCount) {
         super(hands, hitCount);
     }
 
     @Override
-    public boolean isBurst() {
+    public boolean isBust() {
         return true;
     }
 
@@ -26,7 +26,7 @@ public final class BurstState extends State {
 
     @Override
     public State stand() {
-        return new BurstState(hands, hitCount);
+        return new BustState(hands, hitCount);
     }
 
     @Override

@@ -44,7 +44,7 @@ public abstract class State {
         return false;
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return false;
     }
 }

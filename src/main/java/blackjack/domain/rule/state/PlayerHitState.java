@@ -34,8 +34,8 @@ public final class PlayerHitState extends State {
     public State draw(final Card card) {
         final Hands newHands = hands.addCard(card);
 
-        if (newHands.calculateScore().isBurst()) {
-            return new BurstState(newHands, hitCount + 1);
+        if (newHands.calculateScore().isBust()) {
+            return new BustState(newHands, hitCount + 1);
         }
 
         return new PlayerHitState(newHands, hitCount + 1);
