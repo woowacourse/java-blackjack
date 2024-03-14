@@ -4,12 +4,12 @@ public class BettingAmount {
     private final int amount;
 
     public BettingAmount(String input) {
-        int amount = parseInt(input);
+        int amount = parseAmount(input);
         validatePositive(amount);
         this.amount = amount;
     }
 
-    private int parseInt(String input) {
+    private int parseAmount(String input) {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
