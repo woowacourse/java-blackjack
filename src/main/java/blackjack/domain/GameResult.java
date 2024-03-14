@@ -5,7 +5,7 @@ import blackjack.strategy.profit.*;
 public enum GameResult {
 
     BLACKJACK(new BlackjackWinStrategy()),
-    WIN(new WinProfitStrategy()),
+    WIN(new WinStrategy()),
     DRAW(new DrawStrategy()),
     LOSE(new LoseStrategy()),
     ;
