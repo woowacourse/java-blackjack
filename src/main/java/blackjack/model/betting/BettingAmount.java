@@ -1,4 +1,4 @@
-package blackjack.model.participant;
+package blackjack.model.betting;
 
 import java.util.Objects;
 
@@ -22,6 +22,10 @@ public class BettingAmount {
 
     public BettingAmount payAll() {
         return new BettingAmount(0);
+    }
+
+    public int getMoney() {
+        return money;
     }
 
     @Override

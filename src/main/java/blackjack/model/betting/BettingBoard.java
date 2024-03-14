@@ -1,6 +1,5 @@
-package blackjack.model;
+package blackjack.model.betting;
 
-import blackjack.model.participant.BettingAmount;
 import blackjack.model.participant.Player;
 import java.util.Map;
 

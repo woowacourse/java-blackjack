@@ -1,11 +1,10 @@
-package blackjack.model;
+package blackjack.model.betting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.deck.Card;
 import blackjack.model.deck.Score;
 import blackjack.model.deck.Shape;
-import blackjack.model.participant.BettingAmount;
 import blackjack.model.participant.Hand;
 import blackjack.model.participant.Player;
 import java.util.List;
