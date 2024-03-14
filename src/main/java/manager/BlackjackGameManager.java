@@ -1,13 +1,12 @@
 package manager;
 
 import domain.BetAmount;
-import domain.result.Income;
 import domain.Name;
+import domain.Rule;
 import domain.card.DealerCards;
 import domain.card.Deck;
 import domain.card.PlayerCards;
-import domain.card.RandomDrawStrategy;
-import domain.Rule;
+import domain.result.Income;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,7 +18,7 @@ import static view.OutputView.*;
 
 public class BlackjackGameManager {
 
-    private final Deck deck = new Deck(new RandomDrawStrategy());
+    private final Deck deck = new Deck();
 
     public void run() {
         List<Name> names = readNames();

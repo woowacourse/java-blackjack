@@ -1,17 +1,17 @@
 package domain.card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class Deck {
 
+    public static final int DECK_TOP = 0;
     private final List<Card> deck;
-    private final DrawStrategy strategy;
 
-    public Deck(DrawStrategy strategy) {
+    public Deck() {
         this.deck = new ArrayList<>();
-        this.strategy = strategy;
         createDeck();
     }
 
@@ -19,6 +19,7 @@ public class Deck {
         for (CardNumber value : CardNumber.values()) {
             createCardByNumberAndShape(value);
         }
+        Collections.shuffle(deck);
     }
 
     private void createCardByNumberAndShape(CardNumber value) {
@@ -32,9 +33,8 @@ public class Deck {
     }
 
     public Card draw() {
-        int randomNumber = strategy.generateNumber(deck.size());
-        Card card = deck.get(randomNumber);
-        deck.remove(randomNumber);
+        Card card = deck.get(DECK_TOP);
+        deck.remove(DECK_TOP);
         return card;
     }
 
@@ -43,19 +43,18 @@ public class Deck {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Deck deck1 = (Deck) o;
-        return Objects.equals(deck, deck1.deck) && Objects.equals(strategy, deck1.strategy);
+        return Objects.equals(deck, deck1.deck);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(deck, strategy);
+        return Objects.hash(deck);
     }
 
     @Override
     public String toString() {
         return "Deck{" +
                 "deck=" + deck +
-                ", strategy=" + strategy +
                 '}';
     }
 }
