@@ -23,7 +23,7 @@ class BlackjackGameTest {
     @Test
     void 블랙잭_게임을_시작하면_참가자들은_카드를_2장씩_받는다() {
         final Dealer dealer = 딜러();
-        final Players players = 플레이어들("pobi", "jason");
+        final Players players = 플레이어들("pobi");
         final BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
 
         blackjackGame.start();
@@ -31,6 +31,20 @@ class BlackjackGameTest {
         assertThat(dealer.getCardHand())
                 .extracting("cards", InstanceOfAssertFactories.list(Card.class))
                 .hasSize(2);
+    }
+
+    @Test
+    void 플레이어에게_카드를_추가로_지급할_수_있다() {
+        final Dealer dealer = 딜러();
+        final Players players = 플레이어들("pobi");
+        final BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
+
+        blackjackGame.distributeCardToPlayer(0);
+        final Player player = players.findPlayerByIndex(0);
+
+        assertThat(player.getCardHand())
+                .extracting("cards", InstanceOfAssertFactories.list(Card.class))
+                .hasSize(1);
     }
 
     @Nested
