@@ -16,6 +16,7 @@ import java.util.List;
 
 public class BlackJackGame {
     public static final int BLACKJACK_SCORE = 21;
+    public static final int BLACKJACK_CARD_SIZE = 2;
     private static final int INITIAL_CARD_SIZE = 2;
     private static final int CARD_PICK_SIZE = 1;
 

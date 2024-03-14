@@ -1,8 +1,7 @@
 package domain.participant;
 
 import controller.dto.PlayerOutcome;
-import domain.constants.Outcome;
-import domain.game.deck.PlayerWinningCondition;
+import domain.game.deck.PlayerOutcomeFunction;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,11 +22,11 @@ public class Participants {
         return new Participants(participants);
     }
 
-    public List<PlayerOutcome> getPlayersOutcomeIf(final PlayerWinningCondition condition) {
+    public List<PlayerOutcome> getPlayersOutcomeIf(final PlayerOutcomeFunction function) {
         return getPlayers().stream()
                 .map(player -> new PlayerOutcome(
                         player.getName(),
-                        Outcome.from(condition.test(player))
+                        function.apply(player)
                 ))
                 .toList();
     }

@@ -1,8 +1,10 @@
 package domain.participant;
 
+import static domain.game.BlackJackGame.BLACKJACK_CARD_SIZE;
+import static domain.game.BlackJackGame.BLACKJACK_SCORE;
+
 import controller.dto.ParticipantHandStatus;
 import domain.card.Card;
-import domain.game.BlackJackGame;
 import domain.game.DecisionToContinue;
 import domain.game.deck.Deck;
 import domain.money.Money;
@@ -10,7 +12,7 @@ import domain.money.Profit;
 import java.util.List;
 
 public abstract class Participant {
-    
+
     protected final String name;
     protected final Hand hand;
     protected final Profit profit;
@@ -40,8 +42,12 @@ public abstract class Participant {
         return profit.getValue();
     }
 
+    public boolean isBlackJack() {
+        return hand.size() == BLACKJACK_CARD_SIZE && hand.calculateResultScore() == BLACKJACK_SCORE;
+    }
+
     public boolean isBusted() {
-        return hand.calculateScore() > BlackJackGame.BLACKJACK_SCORE;
+        return hand.calculateScore() > BLACKJACK_SCORE;
     }
 
     public boolean isNotBusted() {

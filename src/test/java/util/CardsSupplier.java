@@ -6,17 +6,17 @@ import domain.card.Suit;
 import java.util.List;
 
 public final class CardsSupplier {
-    public static List<Card> createBlackJackWithTwoCards() {
+    public static List<Card> createNaturalBlackJackCards() {
         return List.of(
                 new Card(Denomination.TEN, Suit.CLOVER),
                 new Card(Denomination.ACE, Suit.DIAMOND));
     }
 
-    public static List<Card> createBlackJackWithThreeCards() {
+    public static List<Card> createBlackJackCards() {
         return List.of(
-                new Card(Denomination.FIVE, Suit.CLOVER),
-                new Card(Denomination.FIVE, Suit.DIAMOND),
-                new Card(Denomination.ACE, Suit.DIAMOND));
+                new Card(Denomination.TEN, Suit.CLOVER),
+                new Card(Denomination.THREE, Suit.DIAMOND),
+                new Card(Denomination.EIGHT, Suit.SPADE));
     }
 
     public static List<Card> createSevenScoreWithTwoCards() {
