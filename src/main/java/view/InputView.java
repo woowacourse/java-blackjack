@@ -10,6 +10,7 @@ public class InputView {
     private static final String DELIMITER = ",";
     private static final String NOT_ALLOWED_DELIMITER_POSITION = String.format("참가자 이름 입력은 %s로 시작하거나, 끝날 수 없습니다.",
             DELIMITER);
+    private static final String INVALID_AMOUNT_FORMAT = "배팅 금액은 숫자만 입력 가능합니다.";
     private static final String YES = "y";
     private static final String NO = "n";
     private static final String INVALID_SELECTION = String.format("%s 또는 %s만 입력할 수 있습니다.", YES, NO);
@@ -34,6 +35,21 @@ public class InputView {
 
     private static void validateEndsWithDelimiter(final String input) {
         if (input.endsWith(DELIMITER)) {
+            throw new IllegalArgumentException(INVALID_AMOUNT_FORMAT);
+        }
+    }
+
+    public static int readBetAmount(Player player) {
+        System.out.printf("%n%s의 배팅 금액은?%n", player.getName());
+        String amount = scanner.nextLine();
+        validateAmountFormat(amount);
+        return Integer.parseInt(amount);
+    }
+
+    private static void validateAmountFormat(String amount) {
+        try {
+            Integer.parseInt(amount);
+        } catch (NumberFormatException exception) {
             throw new IllegalArgumentException(NOT_ALLOWED_DELIMITER_POSITION);
         }
     }

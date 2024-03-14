@@ -1,5 +1,6 @@
 package controller;
 
+import domain.BetAmounts;
 import domain.BlackJackGame;
 import domain.card.Deck;
 import domain.card.ShuffledCardsGenerator;
@@ -8,10 +9,9 @@ import domain.gamer.Gamer;
 import domain.gamer.Name;
 import domain.gamer.Player;
 import domain.gamer.Players;
-import domain.result.DealerResult;
-import domain.result.PlayerResults;
 import exception.CardReceiveException;
 import java.util.List;
+import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -20,15 +20,12 @@ public class BlackJackController {
     public void start() {
         Dealer dealer = new Dealer();
         Players players = createPlayers();
-        Deck deck = createDeck();
-        BlackJackGame blackJackGame = new BlackJackGame(deck);
+        BlackJackGame blackJackGame = createBlackJackGame();
+        startBet(players, blackJackGame);
         blackJackGame.prepareCards(dealer, players);
         OutputView.printInitialCardsMessage(dealer, players);
         handOutCard(blackJackGame, dealer, players);
-        OutputView.printCardsAndResult(dealer, players);
-        PlayerResults playerResults = blackJackGame.createPlayerResults(dealer, players);
-        DealerResult dealerResult = DealerResult.createOppositeResult(playerResults);
-        OutputView.printFinalGameResult(dealerResult, playerResults);
+        printFinalGameResult(blackJackGame, dealer, players);
     }
 
     private Players createPlayers() {
@@ -39,14 +36,23 @@ public class BlackJackController {
         return new Players(players);
     }
 
-    private Deck createDeck() {
+    private BlackJackGame createBlackJackGame() {
         ShuffledCardsGenerator shuffledCardsGenerator = new ShuffledCardsGenerator();
-        return Deck.from(shuffledCardsGenerator.generate());
+        Deck deck = Deck.from(shuffledCardsGenerator.generate());
+        BetAmounts betAmounts = new BetAmounts();
+        return new BlackJackGame(deck, betAmounts);
+    }
+
+    private void startBet(final Players players, final BlackJackGame blackJackGame) {
+        for (Player player : players.getPlayers()) {
+            blackJackGame.bet(player, InputView.readBetAmount(player));
+        }
     }
 
     private void handOutCard(final BlackJackGame blackJackGame, final Dealer dealer, final Players players) {
         askPlayersHit(blackJackGame, players);
         askDealerHit(blackJackGame, dealer);
+        OutputView.printCardsAndResult(dealer, players);
     }
 
     private void askPlayersHit(final BlackJackGame blackJackGame, final Players players) {
@@ -83,5 +89,11 @@ public class BlackJackController {
         } catch (CardReceiveException exception) {
             return false;
         }
+    }
+
+    private void printFinalGameResult(final BlackJackGame blackJackGame, final Dealer dealer, final Players players) {
+        Map<Player, Integer> playersResult = blackJackGame.createPlayersResult(dealer, players);
+        int dealerProfit = blackJackGame.calculateDealerProfit(dealer, players);
+        OutputView.printFinalGameResult(dealerProfit, playersResult);
     }
 }
