@@ -13,13 +13,12 @@ import blackjack.domain.card.CardShape;
 
 class PlayerTest {
 
-	Name name = new Name("test");
 	Player player;
 
 	@Test
 	@DisplayName("카드의 총합이 21 이하이면 카드를 받을 수 있다.")
 	void receiveCardTest() {
-		player = new Player(name, List.of(
+		player = createTestPlayer(List.of(
 			new Card(CardShape.CLOVER, CardNumber.KING),
 			new Card(CardShape.HEART, CardNumber.FIVE)
 		));
@@ -30,12 +29,25 @@ class PlayerTest {
 	@Test
 	@DisplayName("카드의 총합이 21을 초과하면 카드를 받을 수 없다.")
 	void cantReceiveCardTest() {
-		player = new Player(name, List.of(
+		player = createTestPlayer(List.of(
 			new Card(CardShape.CLOVER, CardNumber.KING),
 			new Card(CardShape.HEART, CardNumber.FIVE),
 			new Card(CardShape.HEART, CardNumber.SEVEN)
 		));
 
 		assertThat(player.canReceiveCard()).isFalse();
+	}
+
+	@Test
+	@DisplayName("이름이 같으면 같은 플레이어로 판단한다.")
+	void equalsTest() {
+		Player player1 = new Player(new Name("name"));
+		Player player2 = new Player(new Name("name"));
+
+		assertThat(player1.equals(player2)).isTrue();
+	}
+
+	private Player createTestPlayer(List<Card> cards) {
+		return new Player(new Name("test"), cards);
 	}
 }
