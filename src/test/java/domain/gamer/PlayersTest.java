@@ -1,7 +1,5 @@
-package domain;
+package domain.gamer;
 
-import domain.gamer.Name;
-import domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

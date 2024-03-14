@@ -5,6 +5,8 @@ import domain.card.Card;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Player;
+import domain.gamer.Players;
+import dto.TotalResult;
 
 import java.util.ArrayList;
 import java.util.List;

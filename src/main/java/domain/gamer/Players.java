@@ -1,7 +1,4 @@
-package domain;
-
-import domain.gamer.Gamer;
-import domain.gamer.Player;
+package domain.gamer;
 
 import java.util.List;
 

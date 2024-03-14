@@ -1,5 +1,6 @@
-package domain;
+package dto;
 
+import domain.Result;
 import domain.gamer.Player;
 
 import java.util.Map;
