@@ -24,4 +24,12 @@ public abstract class Participant {
         return new GameCompletionResult(name, cardDeck.getCards(), cardDeck.calculateHand());
     }
 
+    public int getHand() {
+        return cardDeck.calculateHand();
+    }
+
+    public boolean isBustHand() {
+        return cardDeck.isBust();
+    }
+
 }
