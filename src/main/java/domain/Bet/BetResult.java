@@ -30,10 +30,11 @@ public class BetResult {
     }
 
     public double calculateDealerProfit() {
-        double sum = betAmountByParticipant.values().stream()
+        double participantTotalProfit = betAmountByParticipant.values()
+                .stream()
                 .mapToDouble(BetAmount::getValue)
                 .sum();
-        return -sum;
+        return -participantTotalProfit;
     }
 
     public LinkedHashMap<Participant, BetAmount> getBetAmountByParticipant() {

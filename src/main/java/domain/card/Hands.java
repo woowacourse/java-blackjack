@@ -16,10 +16,9 @@ public class Hands {
     }
 
     public int calculateScore() {
-        int totalScore = 0;
-        for (Card card : value) {
-            totalScore += card.getScore();
-        }
+        int totalScore = value.stream()
+                .mapToInt(Card::getScore)
+                .sum();
 
         if (hasAce()) {
             totalScore = calculateAceScore(totalScore);
@@ -29,7 +28,7 @@ public class Hands {
 
     public boolean hasAce() {
         return value.stream()
-                .anyMatch(card -> Rank.ACE == card.getRank());
+                .anyMatch(card -> card.getRank() == Rank.ACE);
     }
 
     private int calculateAceScore(int totalScore) {

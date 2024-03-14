@@ -39,10 +39,6 @@ public class Participant {
         return hands.getCardCount() == BLACKJACK_HAND_COUNT && hands.calculateScore() == BLACK_JACK_COUNT;
     }
 
-    public int getCardCount() {
-        return hands.getCardCount();
-    }
-
     public Name getName() {
         return name;
     }

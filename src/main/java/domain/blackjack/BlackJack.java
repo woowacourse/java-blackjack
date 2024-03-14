@@ -10,6 +10,7 @@ import java.util.LinkedHashMap;
 public class BlackJack {
 
     public static final int BEGIN_DRAW_COUNT = 2;
+
     private final Dealer dealer;
     private final Participants participants;
 

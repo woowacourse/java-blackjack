@@ -12,7 +12,8 @@ public class Participants {
 
     public Participants(final List<String> names) {
         validate(names);
-        value = names.stream().map(name -> new Participant(new Name(name)))
+        value = names.stream()
+                .map(name -> new Participant(new Name(name)))
                 .toList();
     }
 
