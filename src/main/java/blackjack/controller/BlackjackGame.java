@@ -4,7 +4,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Round;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.PlayerAction;
 import blackjack.domain.participant.Players;
@@ -20,22 +20,21 @@ public class BlackjackGame {
     private final OutputView outputView = new OutputView();
 
     public void run() {
-        Participants participants = createParticipantsWithDeck();
-        outputView.printInitialHand(participants);
-        participantsHitCard(participants);
-        outputView.printParticipantsHandWithScore(participants);
-        printBlackjackResult(participants);
+        Round round = createRoundWithDeck();
+        outputView.printInitialHand(round);
+        participantsHitCard(round);
+        outputView.printParticipantsHandWithScore(round);
+        printBlackjackResult(round);
     }
 
-    private Participants createParticipantsWithDeck() {
+    private Round createRoundWithDeck() {
         Deck deck = RandomDeck.getInstance();
-
-        return retryOnException(() -> createParticipantsWithNames(deck));
+        return retryOnException(() -> createRoundWithNames(deck));
     }
 
-    private Participants createParticipantsWithNames(Deck deck) {
+    private Round createRoundWithNames(Deck deck) {
         List<Name> playersName = readPlayersName();
-        return new Participants(playersName, deck);
+        return new Round(playersName, deck);
     }
 
     private List<Name> readPlayersName() {
@@ -45,9 +44,9 @@ public class BlackjackGame {
                 .toList();
     }
 
-    private void participantsHitCard(Participants participants) {
-        playersHitCard(participants.getPlayers());
-        dealerHitCard(participants.getDealer());
+    private void participantsHitCard(Round round) {
+        playersHitCard(round.getPlayers());
+        dealerHitCard(round.getDealer());
     }
 
     private void playersHitCard(Players players) {
@@ -82,9 +81,9 @@ public class BlackjackGame {
         outputView.printDealerHitCount(hitCount);
     }
 
-    private void printBlackjackResult(Participants participants) {
+    private void printBlackjackResult(Round round) {
         Referee referee = Referee.getInstance();
-        BlackjackResult blackjackResult = participants.generateResult(referee);
+        BlackjackResult blackjackResult = round.generateResult(referee);
         outputView.printBlackjackResult(blackjackResult);
     }
 

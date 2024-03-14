@@ -8,11 +8,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Participants {
+public class Round {
     private final Dealer dealer;
     private final Players players;
 
-    public Participants(List<Name> playersName, Deck deck) {
+    public Round(List<Name> playersName, Deck deck) {
         this.players = new Players(playersName, deck);
         this.dealer = new Dealer(deck);
     }

@@ -3,7 +3,7 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Round;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.BlackjackResult;
@@ -25,9 +25,9 @@ public class OutputView {
     private static final String DEALER_RESULT_FORMAT = "%d%s ";
     private static final String PLAYER_RESULT_FORMAT = "%s: %s";
 
-    public void printInitialHand(Participants participants) {
-        Dealer dealer = participants.getDealer();
-        Players players = participants.getPlayers();
+    public void printInitialHand(Round round) {
+        Dealer dealer = round.getDealer();
+        Players players = round.getPlayers();
         printHandOutMessage(dealer, players);
         printParticipantsHandWithScore(dealer, players);
     }
@@ -47,11 +47,11 @@ public class OutputView {
         System.out.println(dealerHitCountMessage);
     }
 
-    public void printParticipantsHandWithScore(Participants participants) {
+    public void printParticipantsHandWithScore(Round round) {
         printNewLine();
-        Dealer dealer = participants.getDealer();
+        Dealer dealer = round.getDealer();
         printParticipantHandWithScore(dealer);
-        participants.getPlayers()
+        round.getPlayers()
                 .getPlayers()
                 .forEach(this::printParticipantHandWithScore);
     }
