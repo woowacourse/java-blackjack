@@ -82,7 +82,7 @@ class GameUsersTest {
                 new Card(CLUB, ACE),
                 new Card(CLUB, TEN)
         )));
-        gameUsers.getDealer().addCard(new Card(CLUB, JACK));
+        gameUsers.getDealer().receiveCard(new Card(CLUB, JACK));
 
         Map<Player, GameResult> playerResults = gameUsers.generatePlayersResult();
 
@@ -115,7 +115,7 @@ class GameUsersTest {
                 new Card(CLUB, FIVE),
                 new Card(CLUB, SIX)
         )));
-        player.addCard(new Card(CLUB, JACK));
+        player.receiveCard(new Card(CLUB, JACK));
 
         Map<Player, GameResult> playerResults = gameUsers.generatePlayersResult();
 
@@ -132,7 +132,7 @@ class GameUsersTest {
                 new Card(CLUB, QUEEN),
                 new Card(CLUB, TEN)
         )));
-        player.addCard(new Card(CLUB, JACK));
+        player.receiveCard(new Card(CLUB, JACK));
 
         Map<Player, GameResult> playerResults = gameUsers.generatePlayersResult();
 
@@ -149,8 +149,8 @@ class GameUsersTest {
                 new Card(CLUB, QUEEN),
                 new Card(CLUB, TEN)
         )));
-        player.addCard(new Card(CLUB, JACK));
-        gameUsers.getDealer().addCard(new Card(HEART, JACK));
+        player.receiveCard(new Card(CLUB, JACK));
+        gameUsers.getDealer().receiveCard(new Card(HEART, JACK));
 
         Map<Player, GameResult> playerResults = gameUsers.generatePlayersResult();
 
@@ -167,7 +167,7 @@ class GameUsersTest {
                 new Card(CLUB, FIVE),
                 new Card(CLUB, SIX)
         )));
-        gameUsers.getDealer().addCard(new Card(CLUB, JACK));
+        gameUsers.getDealer().receiveCard(new Card(CLUB, JACK));
 
         Map<Player, GameResult> playerResults = gameUsers.generatePlayersResult();
 

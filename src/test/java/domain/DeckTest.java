@@ -17,7 +17,7 @@ public class DeckTest {
         Card card2 = new Card(Shape.CLUB, Number.TEN);
         Deck deck = new Deck(List.of(card1, card2));
 
-        Card actualCard = deck.getNewCard();
+        Card actualCard = deck.drawCard();
 
         assertThat(actualCard).isEqualTo(card2);
     }

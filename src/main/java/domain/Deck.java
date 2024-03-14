@@ -12,7 +12,7 @@ public class Deck {
         totalDeck = new ArrayDeque<>(cards);
     }
 
-    public Card getNewCard() {
+    public Card drawCard() {
         return totalDeck.removeLast();
     }
 }

@@ -15,7 +15,7 @@ public class HandTest {
     void unsupportedAddStartCardTest() {
         Hand hand = new Hand();
 
-        hand.addCard(new Card(Shape.CLUB, Number.ACE));
+        hand.receiveCard(new Card(Shape.CLUB, Number.ACE));
 
         assertThatThrownBy(() -> hand.addStartCards(new Card(Shape.CLUB, Number.TEN)))
                 .isInstanceOf(UnsupportedOperationException.class)
@@ -28,7 +28,7 @@ public class HandTest {
         Card card = new Card(Shape.CLUB, Number.ACE);
         Hand hand = new Hand();
 
-        hand.addCard(card);
+        hand.receiveCard(card);
 
         assertThat(hand.getCards()).contains(card);
     }
@@ -38,8 +38,8 @@ public class HandTest {
     void sumCardPlayerDeck() {
         Hand hand = new Hand();
 
-        hand.addCard(new Card(Shape.CLUB, Number.THREE));
-        hand.addCard(new Card(Shape.CLUB, Number.EIGHT));
+        hand.receiveCard(new Card(Shape.CLUB, Number.THREE));
+        hand.receiveCard(new Card(Shape.CLUB, Number.EIGHT));
 
         assertThat(hand.sumCard()).isEqualTo(11);
     }
@@ -49,8 +49,8 @@ public class HandTest {
     void sumCardContainingAceTest() {
         Hand hand = new Hand();
 
-        hand.addCard(new Card(Shape.CLUB, Number.ACE));
-        hand.addCard(new Card(Shape.CLUB, Number.TWO));
+        hand.receiveCard(new Card(Shape.CLUB, Number.ACE));
+        hand.receiveCard(new Card(Shape.CLUB, Number.TWO));
 
         assertThat(hand.sumCard()).isEqualTo(13);
     }
@@ -60,9 +60,9 @@ public class HandTest {
     void sumCardContainingAceTest2() {
         Hand hand = new Hand();
 
-        hand.addCard(new Card(Shape.CLUB, Number.ACE));
-        hand.addCard(new Card(Shape.CLUB, Number.TWO));
-        hand.addCard(new Card(Shape.CLUB, Number.TEN));
+        hand.receiveCard(new Card(Shape.CLUB, Number.ACE));
+        hand.receiveCard(new Card(Shape.CLUB, Number.TWO));
+        hand.receiveCard(new Card(Shape.CLUB, Number.TEN));
 
         assertThat(hand.sumCard()).isEqualTo(13);
     }
@@ -72,8 +72,8 @@ public class HandTest {
     void isBlackJackTest() {
         Hand hand = new Hand();
 
-        hand.addCard(new Card(Shape.CLUB, Number.ACE));
-        hand.addCard(new Card(Shape.CLUB, Number.TEN));
+        hand.receiveCard(new Card(Shape.CLUB, Number.ACE));
+        hand.receiveCard(new Card(Shape.CLUB, Number.TEN));
 
         assertThat(hand.isBlackjack()).isTrue();
     }
@@ -83,8 +83,8 @@ public class HandTest {
     void isNotBlackJackBySumTest() {
         Hand hand = new Hand();
 
-        hand.addCard(new Card(Shape.CLUB, Number.ACE));
-        hand.addCard(new Card(Shape.CLUB, Number.TWO));
+        hand.receiveCard(new Card(Shape.CLUB, Number.ACE));
+        hand.receiveCard(new Card(Shape.CLUB, Number.TWO));
 
         assertThat(hand.isBlackjack()).isFalse();
     }
@@ -94,9 +94,9 @@ public class HandTest {
     void isNotBlackJackByCardsCountTest() {
         Hand hand = new Hand();
 
-        hand.addCard(new Card(Shape.CLUB, Number.ACE));
-        hand.addCard(new Card(Shape.CLUB, Number.TEN));
-        hand.addCard(new Card(Shape.CLUB, Number.JACK));
+        hand.receiveCard(new Card(Shape.CLUB, Number.ACE));
+        hand.receiveCard(new Card(Shape.CLUB, Number.TEN));
+        hand.receiveCard(new Card(Shape.CLUB, Number.JACK));
 
         assertThat(hand.isBlackjack()).isFalse();
     }
@@ -106,9 +106,9 @@ public class HandTest {
     void bustedTest() {
         Hand hand = new Hand();
 
-        hand.addCard(new Card(Shape.CLUB, Number.JACK));
-        hand.addCard(new Card(Shape.CLUB, Number.QUEEN));
-        hand.addCard(new Card(Shape.CLUB, Number.KING));
+        hand.receiveCard(new Card(Shape.CLUB, Number.JACK));
+        hand.receiveCard(new Card(Shape.CLUB, Number.QUEEN));
+        hand.receiveCard(new Card(Shape.CLUB, Number.KING));
 
         assertThat(hand.busted()).isTrue();
     }
@@ -118,8 +118,8 @@ public class HandTest {
     void notBustedTest() {
         Hand hand = new Hand();
 
-        hand.addCard(new Card(Shape.CLUB, Number.JACK));
-        hand.addCard(new Card(Shape.CLUB, Number.QUEEN));
+        hand.receiveCard(new Card(Shape.CLUB, Number.JACK));
+        hand.receiveCard(new Card(Shape.CLUB, Number.QUEEN));
 
         assertThat(hand.busted()).isFalse();
     }

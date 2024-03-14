@@ -23,7 +23,7 @@ public class Hand {
         cards.addAll(List.of(startCards));
     }
 
-    public void addCard(Card card) {
+    public void receiveCard(Card card) {
         cards.add(card);
     }
 

@@ -32,8 +32,8 @@ class PlayersMoneyTest {
     @DisplayName("플레이어가 블랙잭으로 승리한 경우 금액의 1.5배를 받는다.")
     void earn150PercentMoneyWhenBlackjackAndWin() {
         Player player = new Player(new Name("aa"));
-        player.addCard(new Card(Shape.SPADE, Number.ACE));
-        player.addCard(new Card(Shape.SPADE, Number.TEN));
+        player.receiveCard(new Card(Shape.SPADE, Number.ACE));
+        player.receiveCard(new Card(Shape.SPADE, Number.TEN));
         PlayersMoney playersMoney = new PlayersMoney(new HashMap<>(Map.of(player, new Money(1000))));
         Map<Player, GameResult> playersResult = Map.of(player, WIN);
         PlayersMoney resultPlayersMoney = playersMoney.changeByPlayersResult(playersResult);

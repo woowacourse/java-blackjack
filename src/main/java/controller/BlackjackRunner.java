@@ -50,7 +50,7 @@ public class BlackjackRunner {
 
     private void doDealersTurn(Dealer dealer, Deck deck) {
         while (dealer.isReceivable()) {
-            dealer.addCard(deck.getNewCard());
+            dealer.receiveCard(deck.drawCard());
             OutputView.printDealerHitMessage();
         }
     }
@@ -61,7 +61,7 @@ public class BlackjackRunner {
             return;
         }
         while (player.isReceivable() && YES == inputValidatedCommand(player.getNameValue())) {
-            player.addCard(deck.getNewCard());
+            player.receiveCard(deck.drawCard());
             printByState(player);
         }
     }

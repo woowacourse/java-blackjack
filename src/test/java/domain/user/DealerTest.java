@@ -14,8 +14,8 @@ public class DealerTest {
     void isReceivableTest() {
         Dealer dealer = new Dealer();
 
-        dealer.addCard(new Card(Shape.CLUB, Number.FIVE));
-        dealer.addCard(new Card(Shape.DIAMOND, Number.FIVE));
+        dealer.receiveCard(new Card(Shape.CLUB, Number.FIVE));
+        dealer.receiveCard(new Card(Shape.DIAMOND, Number.FIVE));
 
         assertThat(dealer.isReceivable()).isTrue();
     }
@@ -25,9 +25,9 @@ public class DealerTest {
     void isNotReceivableTest() {
         Dealer dealer = new Dealer();
 
-        dealer.addCard(new Card(Shape.CLUB, Number.FIVE));
-        dealer.addCard(new Card(Shape.DIAMOND, Number.FIVE));
-        dealer.addCard(new Card(Shape.CLUB, Number.TEN));
+        dealer.receiveCard(new Card(Shape.CLUB, Number.FIVE));
+        dealer.receiveCard(new Card(Shape.DIAMOND, Number.FIVE));
+        dealer.receiveCard(new Card(Shape.CLUB, Number.TEN));
 
         assertThat(dealer.isReceivable()).isFalse();
     }
@@ -38,8 +38,8 @@ public class DealerTest {
         Dealer dealer = new Dealer();
         Card card = new Card(Shape.CLUB, Number.FIVE);
 
-        dealer.addCard(card);
-        dealer.addCard(new Card(Shape.DIAMOND, Number.FIVE));
+        dealer.receiveCard(card);
+        dealer.receiveCard(new Card(Shape.DIAMOND, Number.FIVE));
 
         assertThat(dealer.getVisibleCard()).containsExactly(card);
     }

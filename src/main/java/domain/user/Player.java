@@ -16,11 +16,11 @@ public class Player {
     }
 
     public void addStartCards(Deck deck) {
-        hand.addStartCards(deck.getNewCard(), deck.getNewCard());
+        hand.addStartCards(deck.drawCard(), deck.drawCard());
     }
 
-    public void addCard(Card card) {
-        hand.addCard(card);
+    public void receiveCard(Card card) {
+        hand.receiveCard(card);
     }
 
     public int sumHand() {
