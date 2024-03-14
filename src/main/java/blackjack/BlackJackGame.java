@@ -1,5 +1,8 @@
 package blackjack;
 
+import blackjack.domain.bet.Bet;
+import blackjack.domain.bet.Bets;
+import blackjack.domain.bet.BettingBank;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.player.Dealer;
@@ -7,7 +10,10 @@ import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
+import blackjack.domain.rule.BetResult;
+import blackjack.domain.rule.GameResult;
 import blackjack.domain.rule.Judge;
+import blackjack.domain.rule.PlayerResults;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -25,7 +31,9 @@ public class BlackJackGame {
     public void run() {
         CardDeck cardDeck = CardDeck.createShuffledDeck();
         Players players = initPlayers(cardDeck);
+        Bets bets = inputView.readBets(players);
         Dealer dealer = new Dealer(Hand.createHandFrom(cardDeck));
+        Judge judge = new Judge();
         printPlayersInformation(players, dealer);
 
         completePlayersHand(players, cardDeck);
@@ -34,6 +42,18 @@ public class BlackJackGame {
 
         printParticipantScore(dealer);
         printPlayersScore(players);
+
+        PlayerResults playerResults = judge.calculatePlayerResults(dealer, players);
+        List<String> playerNames = players.getPlayerNames();
+        BettingBank bettingBank = new BettingBank();
+
+        for (String playerName : playerNames) {
+            Bet bet = bets.getBetByPlayerName(playerName);
+            GameResult gameResult = playerResults.findResultByName(playerName);
+            BetResult betResult = bettingBank.calculateBetResult(bet, gameResult);
+            outputView.printBetResult(betResult);
+        }
+
         printDealerGameResult(dealer, players);
         printPlayersGameResult(players, dealer);
     }
