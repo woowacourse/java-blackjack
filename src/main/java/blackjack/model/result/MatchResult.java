@@ -26,15 +26,15 @@ public enum MatchResult {
         } else if (dealer.isBust()) {
             return WIN;
         }
-        Score playerTotalScore = player.calculateCardsTotalScore();
-        Score dealerTotalScore = dealer.calculateCardsTotalScore();
-        return decideByScore(playerTotalScore, dealerTotalScore);
+        return decideByScore(player, dealer);
     }
 
-    public static MatchResult decideByScore(final Score target, final Score other) {
-        if (target.equalTo(other)) {
+    private static MatchResult decideByScore(final Player player, final Dealer dealer) {
+        Score playerTotalScore = player.calculateCardsTotalScore();
+        Score dealerTotalScore = dealer.calculateCardsTotalScore();
+        if (playerTotalScore.equalTo(dealerTotalScore)) {
             return PUSH;
-        } else if (target.greaterThan(other)) {
+        } else if (playerTotalScore.greaterThan(dealerTotalScore)) {
             return WIN;
         }
         return LOSE;

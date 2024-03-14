@@ -2,7 +2,6 @@ package blackjack.model.result;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Denomination;
-import blackjack.model.card.Score;
 import blackjack.model.card.Suit;
 import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.cardgenerator.SequentialCardGenerator;
@@ -19,28 +18,6 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class MatchResultTest {
-    @ParameterizedTest
-    @MethodSource("provideScoreAndExpectedMatchResult")
-    @DisplayName("Score(점수)에 따라 승패를 결정한다.")
-    public void decideByScoreTest(Score targetScore, MatchResult expectedResult) {
-        // given
-        Score otherScore = Score.from(9);
-
-        // when
-        MatchResult actualResult = MatchResult.decideByScore(targetScore, otherScore);
-
-        // then
-        assertThat(actualResult).isEqualTo(expectedResult);
-    }
-
-    private static Stream<Arguments> provideScoreAndExpectedMatchResult() {
-        return Stream.of(
-                Arguments.of(Score.from(10), MatchResult.WIN),
-                Arguments.of(Score.from(8), MatchResult.LOSE),
-                Arguments.of(Score.from(9), MatchResult.PUSH)
-        );
-    }
-
     @ParameterizedTest
     @MethodSource("provideCardsAndExpectedResult")
     @DisplayName("딜러와 플레이어의 카드 합을 비교하여 승패를 가린다")
