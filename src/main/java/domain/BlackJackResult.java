@@ -24,7 +24,7 @@ public class BlackJackResult {
     private Map<Name, GamerResult> calculatePlayersResult(Dealer dealer, Players players) {
         return players.getPlayers().stream()
                 .collect(Collectors.toMap(
-                        Gamer::getName,
+                        Player::getName,
                         player -> player.judge(dealer)));
     }
 

@@ -5,12 +5,9 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public abstract class Gamer {
-
     private final Hand hand;
-    private final Name name;
 
-    public Gamer(Name name) {
-        this.name = name;
+    public Gamer() {
         this.hand = new Hand();
     }
 
@@ -28,14 +25,6 @@ public abstract class Gamer {
     public int hit(Deck deck) {
         hand.add(deck.draw());
         return 1;
-    }
-
-    public boolean hasName(Name comparedName) {
-        return name.equals(comparedName);
-    }
-
-    public Name getName() {
-        return name;
     }
 
     public int getTotalScore() {

@@ -38,7 +38,7 @@ public class Players {
 
     private long getUniquePlayerCount(List<Player> players) {
         return players.stream()
-                .map(Gamer::getName)
+                .map(Player::getName)
                 .distinct()
                 .count();
     }
