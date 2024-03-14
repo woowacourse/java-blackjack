@@ -1,6 +1,5 @@
 package blackjack.domain.bet;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 import blackjack.domain.rule.Score;

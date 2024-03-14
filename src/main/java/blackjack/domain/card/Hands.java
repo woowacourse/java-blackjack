@@ -29,7 +29,7 @@ public final class Hands {
         int sum = sum();
         int aceCount = countAce();
 
-        while (isDeadScore(sum) && aceCount-- > 0) {
+        while (isBustScore(sum) && aceCount-- > 0) {
             sum -= ACE_SCORE_GAP;
         }
 
@@ -44,8 +44,16 @@ public final class Hands {
         return (int) cards.stream().filter(Card::isAce).count();
     }
 
-    private boolean isDeadScore(final int sum) {
+    private boolean isBustScore(final int sum) {
         return new Score(sum).isBust();
+    }
+
+    public boolean isBustScore() {
+        return calculateScore().isBust();
+    }
+
+    public boolean isBlackjackScore() {
+        return calculateScore().isBlackjack();
     }
 
     public Card getFirstCard() {

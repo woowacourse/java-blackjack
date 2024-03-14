@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    @DisplayName("딜러는 카드 점수가 16초과일 때까지 카드를 더 받는다.")
+    @DisplayName("딜러는 Hit할때 hit한 횟수를 센다.")
     @Test
     void hitCount() {
         // given

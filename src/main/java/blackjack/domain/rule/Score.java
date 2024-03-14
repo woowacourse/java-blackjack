@@ -2,7 +2,7 @@ package blackjack.domain.rule;
 
 import java.util.Objects;
 
-public final class Score {
+public final class Score implements Comparable<Score> {
 
     private static final int VALUE_MIN = 2;
     private static final int BLACKJACK_VALUE = 21;

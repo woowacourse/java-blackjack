@@ -8,7 +8,7 @@ import java.util.List;
 
 public final class DealerHitState extends State {
 
-    public static final int NEED_CARD_NUMBER_MAX = 16;
+    public static final Score NEED_CARD_SCORE_MAX = new Score(16);
 
     private DealerHitState(final Hands hands) {
         super(hands, 0);
@@ -21,7 +21,7 @@ public final class DealerHitState extends State {
     public static State start(final Card first, final Card second) {
         final Hands hands = new Hands(List.of(first, second));
 
-        if (hands.calculateScore().isBlackjack()) {
+        if (hands.isBlackjackScore()) {
             return new BlackjackState(hands);
         }
 
@@ -38,14 +38,14 @@ public final class DealerHitState extends State {
 
     @Override
     public boolean isHit() {
-        return needMoreCard(hands);
+        return true;
     }
 
     @Override
     public State draw(final Card card) {
         final Hands newHands = hands.addCard(card);
 
-        if (newHands.calculateScore().isBust()) {
+        if (newHands.isBustScore()) {
             return new BustState(newHands, hitCount + 1);
         }
         if (needMoreCard(newHands)) {

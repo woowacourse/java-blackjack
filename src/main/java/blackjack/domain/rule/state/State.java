@@ -3,7 +3,6 @@ package blackjack.domain.rule.state;
 import blackjack.domain.bet.BetLeverage;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
-import blackjack.domain.rule.Score;
 
 public abstract class State {
 

@@ -18,7 +18,7 @@ public final class PlayerHitState extends State {
     public static State start(final Card first, final Card second) {
         final Hands hands = new Hands(List.of(first, second));
 
-        if (hands.calculateScore().isBlackjack()) {
+        if (hands.isBlackjackScore()) {
             return new BlackjackState(hands);
         }
 
@@ -34,7 +34,7 @@ public final class PlayerHitState extends State {
     public State draw(final Card card) {
         final Hands newHands = hands.addCard(card);
 
-        if (newHands.calculateScore().isBust()) {
+        if (newHands.isBustScore()) {
             return new BustState(newHands, hitCount + 1);
         }
 

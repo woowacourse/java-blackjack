@@ -1,10 +1,10 @@
 package blackjack.domain.player;
 
+import blackjack.domain.bet.BetLeverage;
+import blackjack.domain.bet.BetRevenue;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
-import blackjack.domain.bet.BetAmount;
-import blackjack.domain.bet.BetLeverage;
 import blackjack.domain.rule.state.PlayerHitState;
 import blackjack.domain.rule.state.State;
 import java.util.function.BiConsumer;
@@ -49,8 +49,10 @@ public class Player {
         }
     }
 
-    public BetLeverage calculateBetLeverage(final Dealer dealer) {
-        return dealer.calculateBetLeverage(state);
+    public BetRevenue calculateBetRevenue(final Dealer dealer) {
+        final BetLeverage betLeverage = dealer.calculateBetLeverage(state);
+
+        return betLeverage.applyLeverage(playerBetAmount.betAmount());
     }
 
     public boolean isBust() {
@@ -67,9 +69,5 @@ public class Player {
 
     public PlayerName getName() {
         return playerBetAmount.name();
-    }
-
-    public BetAmount getBetAmount() {
-        return playerBetAmount.betAmount();
     }
 }

@@ -89,7 +89,7 @@ public class OutputView {
 
     public void printDealerMoreCard(int count) {
         while (count-- > 0) {
-            System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.%n", Dealer.DEALER_NAME, DealerHitState.NEED_CARD_NUMBER_MAX);
+            System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.%n", Dealer.DEALER_NAME, DealerHitState.NEED_CARD_SCORE_MAX);
         }
     }
 
