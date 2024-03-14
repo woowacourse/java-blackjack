@@ -87,8 +87,8 @@ class StandStateTest {
                 arguments(score21count2, score20count2, BetLeverage.LOSE),  // 블랙잭(2)   , 생존(2)      , -1
                 arguments(score21count2, score21count3, BetLeverage.LOSE),  // 블랙잭(2)   , 블랙잭(3)     , -1
                 arguments(score20count2, score19count2, BetLeverage.LOSE),  // 생존(2)    , 생존(2)       , -1
-                arguments(score21count3, score21count3, BetLeverage.TIE),   // 블랙잭(3)   , 블랙잭(3)     , 0
-                arguments(score20count2, score20count2, BetLeverage.TIE)    // 생존(2)    , 생존(2)       , 0
+                arguments(score21count3, score21count3, BetLeverage.PUSH),   // 블랙잭(3)   , 블랙잭(3)     , 0
+                arguments(score20count2, score20count2, BetLeverage.PUSH)    // 생존(2)    , 생존(2)       , 0
         );
     }
 }

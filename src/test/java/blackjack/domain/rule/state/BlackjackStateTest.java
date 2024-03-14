@@ -59,7 +59,7 @@ class BlackjackStateTest {
         final BetLeverage betLeverage = playerState.calculateBetLeverage(dealerState);
 
         // then
-        assertThat(betLeverage).isEqualTo(BetLeverage.TIE);
+        assertThat(betLeverage).isEqualTo(BetLeverage.PUSH);
     }
 
     @DisplayName("딜러가 Blackjack상태가 아니면 LUCKY 다.")
@@ -77,6 +77,6 @@ class BlackjackStateTest {
         final BetLeverage betLeverage = playerState.calculateBetLeverage(dealerState);
 
         // then
-        assertThat(betLeverage).isEqualTo(BetLeverage.LUCKY);
+        assertThat(betLeverage).isEqualTo(BetLeverage.BLACKJACK);
     }
 }

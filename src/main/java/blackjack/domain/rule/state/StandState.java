@@ -35,6 +35,6 @@ public final class StandState extends State {
         if (hands.calculateScore().isBiggerThan(other.getScore())) {
             return BetLeverage.WIN;
         }
-        return BetLeverage.TIE;
+        return BetLeverage.PUSH;
     }
 }

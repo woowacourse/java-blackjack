@@ -29,9 +29,9 @@ public final class BlackjackState extends State {
     @Override
     public BetLeverage calculateBetLeverage(final State other) {
         if (other.isBlackjack()) {
-            return BetLeverage.TIE;
+            return BetLeverage.PUSH;
         }
-        return BetLeverage.LUCKY;
+        return BetLeverage.BLACKJACK;
     }
 
     @Override

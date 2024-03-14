@@ -10,7 +10,7 @@ class BetLeverageTest {
 
     @DisplayName("배팅 결과로 플레이어 수익을 계산한다.")
     @ParameterizedTest
-    @CsvSource(value = {"LUCKY,1000,1500", "WIN,1000,1000", "LOSE,1000,-1000", "TIE,1000,0"})
+    @CsvSource(value = {"BLACKJACK,1000,1500", "WIN,1000,1000", "LOSE,1000,-1000", "PUSH,1000,0"})
     void applyLeverage(BetLeverage betLeverage, int betAmount, int revenue) {
         // given
         BetAmount batAmount = new BetAmount(betAmount);

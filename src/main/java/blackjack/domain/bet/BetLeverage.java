@@ -1,10 +1,10 @@
 package blackjack.domain.bet;
 
 public enum BetLeverage {
-    LUCKY(1.5),
+    BLACKJACK(1.5),
     WIN(1),
     LOSE(-1),
-    TIE(0);
+    PUSH(0);
 
     private final double leverage;
 
