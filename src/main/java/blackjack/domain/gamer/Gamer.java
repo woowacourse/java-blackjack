@@ -1,5 +1,6 @@
 package blackjack.domain.gamer;
 
+import java.util.Collections;
 import java.util.List;
 
 import blackjack.domain.card.Card;
@@ -21,6 +22,6 @@ public class Gamer {
 	}
 
 	public List<Card> getCards() {
-		return cards.getCards();
+		return Collections.unmodifiableList(cards.getCards());
 	}
 }
