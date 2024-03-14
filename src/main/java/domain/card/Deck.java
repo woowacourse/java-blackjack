@@ -1,9 +1,6 @@
 package domain.card;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Deck {
 
@@ -33,6 +30,9 @@ public class Deck {
     }
 
     public Card draw() {
+        if(deck.isEmpty()){
+            throw new NoSuchElementException("덱에 남아있는 카드가 없습니다.");
+        }
         Card card = deck.get(DECK_TOP);
         deck.remove(DECK_TOP);
         return card;
