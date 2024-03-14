@@ -4,22 +4,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CardHand {
+public class Cards {
 	private static final int ACE_BONUS_SCORE = 10;
 	private static final int BLACKJACK_SCORE = 21;
 
 	private final List<Card> cards;
 
-	private CardHand(final List<Card> cards) {
+	public Cards(final List<Card> cards) {
 		this.cards = new ArrayList<>(cards);
 	}
 
-	public static CardHand createEmpty() {
-		return new CardHand(new ArrayList<>());
+	public static Cards createEmpty() {
+		return new Cards(new ArrayList<>());
 	}
 
-	public static CardHand from(final List<Card> cards) {
-		return new CardHand(cards);
+	public static Cards from(final List<Card> cards) {
+		return new Cards(cards);
 	}
 
 	public void add(final Card card) {

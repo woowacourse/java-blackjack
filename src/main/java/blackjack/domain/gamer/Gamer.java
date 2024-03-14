@@ -3,24 +3,24 @@ package blackjack.domain.gamer;
 import java.util.List;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardHand;
+import blackjack.domain.card.Cards;
 
 public class Gamer {
-	protected final CardHand cardHand;
+	protected final Cards cards;
 
-	protected Gamer(final CardHand cardHand) {
-		this.cardHand = cardHand;
+	protected Gamer(final Cards cards) {
+		this.cards = cards;
 	}
 
 	public void receiveInitCards(final List<Card> cards) {
-		cardHand.addAll(cards);
+		this.cards.addAll(cards);
 	}
 
 	public int getScore() {
-		return cardHand.calculateScore();
+		return cards.calculateScore();
 	}
 
-	public List<Card> getCardHand() {
-		return cardHand.getCards();
+	public List<Card> getCards() {
+		return cards.getCards();
 	}
 }

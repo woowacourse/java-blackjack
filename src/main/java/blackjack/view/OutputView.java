@@ -34,8 +34,8 @@ public class OutputView {
 		List<Player> playerInfos = players.getPlayers();
 		printDealMessage(playerInfos);
 
-		printDealerInitCardHandStatusMessage(dealer);
-		printPlayersInitCardHandStatusMessage(playerInfos);
+		printDealerInitCardsStatusMessage(dealer);
+		printPlayersInitCardsStatusMessage(playerInfos);
 	}
 
 	private void printDealMessage(final List<Player> playerInfos) {
@@ -43,14 +43,14 @@ public class OutputView {
 			createPlayerNamesText(playerInfos), Dealer.INIT_CARD_COUNT));
 	}
 
-	private void printDealerInitCardHandStatusMessage(final Dealer dealer) {
-		Card dealerInitCard = dealer.getCardHand().get(0);
+	private void printDealerInitCardsStatusMessage(final Dealer dealer) {
+		Card dealerInitCard = dealer.getCards().get(0);
 		System.out.println(String.format("딜러: %s", createCardInfoText(dealerInitCard)));
 	}
 
-	private void printPlayersInitCardHandStatusMessage(final List<Player> playerInfos) {
+	private void printPlayersInitCardsStatusMessage(final List<Player> playerInfos) {
 		for (Player playerInfo : playerInfos) {
-			printCardHandStatus(playerInfo);
+			printCardsStatus(playerInfo);
 		}
 		printLine();
 	}
@@ -68,9 +68,9 @@ public class OutputView {
 		return String.format(CARD_INFO_MESSAGE, card.getRankName(), card.getSuitName());
 	}
 
-	public void printCardHandStatus(final Player player) {
+	public void printCardsStatus(final Player player) {
 		System.out.println(
-			String.format(PLAYER_CARD_INFO_MESSAGE, player.getName(), createCardsInfoText(player.getCardHand())));
+			String.format(PLAYER_CARD_INFO_MESSAGE, player.getName(), createCardsInfoText(player.getCards())));
 	}
 
 	private String createCardsInfoText(final List<Card> cards) {
@@ -87,21 +87,21 @@ public class OutputView {
 			String.format("딜러는 %d이하라 한장의 카드를 더 받았습니다.", Dealer.MAX_HIT_SCORE));
 	}
 
-	public void printTotalCardHandStatus(final Dealer dealer, final Players players) {
-		printDealerTotalCardHandStatus(dealer);
-		printPlayersTotalCardHandStatus(players);
+	public void printTotalCardsStatus(final Dealer dealer, final Players players) {
+		printDealerTotalCardsStatus(dealer);
+		printPlayersTotalCardsStatus(players);
 	}
 
-	private void printDealerTotalCardHandStatus(final Dealer dealer) {
+	private void printDealerTotalCardsStatus(final Dealer dealer) {
 		printLine();
 		System.out.println(String.format("딜러 카드: %s - 결과: %d",
-			createCardsInfoText(dealer.getCardHand()), dealer.getScore()));
+			createCardsInfoText(dealer.getCards()), dealer.getScore()));
 	}
 
-	private void printPlayersTotalCardHandStatus(final Players players) {
+	private void printPlayersTotalCardsStatus(final Players players) {
 		for (Player player : players.getPlayers()) {
 			System.out.println(String.format("%s카드: %s - 결과: %d",
-				player.getName(), createCardsInfoText(player.getCardHand()), player.getScore()));
+				player.getName(), createCardsInfoText(player.getCards()), player.getScore()));
 		}
 	}
 

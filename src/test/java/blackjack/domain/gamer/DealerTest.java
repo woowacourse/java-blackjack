@@ -59,7 +59,7 @@ public class DealerTest {
 		dealer.receiveInitCards(dealer.dealInitCards());
 
 		// then
-		assertThat(dealer.getCardHand()).hasSize(2);
+		assertThat(dealer.getCards()).hasSize(2);
 	}
 
 	@DisplayName("딜러는 카드 1장을 분배한다.")

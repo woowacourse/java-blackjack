@@ -7,38 +7,38 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CardHandTest {
+public class CardsTest {
 
 	@DisplayName("카드 패의 합을 구한다.")
 	@Test
 	void sumCardTest() {
 		// given
-		CardHand cardHand = CardHand.from(
+		Cards cards = Cards.from(
 			List.of(Card.of(Suit.HEART, Rank.JACK), Card.of(Suit.HEART, Rank.KING)));
 
 		// when & then
-		assertThat(cardHand.calculateScore()).isEqualTo(20);
+		assertThat(cards.calculateScore()).isEqualTo(20);
 	}
 
 	@DisplayName("Ace가 포함된 카드 패의 합이 11점 초과이면, Ace는 1점이 된다.")
 	@Test
 	void sumAceCardAs1Test() {
 		// given
-		CardHand cardHand = CardHand.from(
+		Cards cards = Cards.from(
 			List.of(Card.of(Suit.HEART, Rank.ACE), Card.of(Suit.HEART, Rank.KING), Card.of(Suit.HEART, Rank.JACK)));
 
 		// when & then
-		assertThat(cardHand.calculateScore()).isEqualTo(21);
+		assertThat(cards.calculateScore()).isEqualTo(21);
 	}
 
 	@DisplayName("Ace가 포함된 카드 패의 합이 11점 이하이면, Ace는 11점이 된다.")
 	@Test
 	void sumAceCardAs11Test() {
 		// given
-		CardHand cardHand = CardHand.from(
+		Cards cards = Cards.from(
 			List.of(Card.of(Suit.HEART, Rank.ACE), Card.of(Suit.HEART, Rank.KING)));
 
 		// when & then
-		assertThat(cardHand.calculateScore()).isEqualTo(21);
+		assertThat(cards.calculateScore()).isEqualTo(21);
 	}
 }

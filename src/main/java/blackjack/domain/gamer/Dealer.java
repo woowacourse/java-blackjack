@@ -3,7 +3,7 @@ package blackjack.domain.gamer;
 import java.util.List;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardHand;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 
 public class Dealer extends Gamer {
@@ -12,17 +12,17 @@ public class Dealer extends Gamer {
 
 	private final Deck deck;
 
-	private Dealer(final Deck deck, final CardHand cardHand) {
-		super(cardHand);
+	private Dealer(final Deck deck, final Cards cards) {
+		super(cards);
 		this.deck = deck;
 	}
 
 	public static Dealer newInstance(final Deck deck) {
-		return new Dealer(deck, CardHand.createEmpty());
+		return new Dealer(deck, Cards.createEmpty());
 	}
 
 	public static Dealer of(final Deck deck, final List<Card> cards) {
-		return new Dealer(deck, CardHand.from(cards));
+		return new Dealer(deck, Cards.from(cards));
 	}
 
 	public List<Card> dealInitCards() {
@@ -34,7 +34,7 @@ public class Dealer extends Gamer {
 	}
 
 	public void drawCard() {
-		cardHand.add(deck.drawCard());
+		cards.add(deck.drawCard());
 	}
 
 	public int deckSize() {
@@ -42,6 +42,6 @@ public class Dealer extends Gamer {
 	}
 
 	public boolean hasHitScore() {
-		return cardHand.isScoreLessOrEqual(MAX_HIT_SCORE);
+		return cards.isScoreLessOrEqual(MAX_HIT_SCORE);
 	}
 }

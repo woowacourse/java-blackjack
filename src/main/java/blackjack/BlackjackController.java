@@ -61,7 +61,7 @@ public class BlackjackController {
 	private void receivePlayerAdditionalCard(final Dealer dealer, final Player player) {
 		while (!player.isBust() && isPlayerInputHit(player)) {
 			player.receiveCard(dealer.dealCard());
-			outputView.printCardHandStatus(player);
+			outputView.printCardsStatus(player);
 		}
 	}
 
@@ -82,7 +82,7 @@ public class BlackjackController {
 	}
 
 	private void printTotalCardStatus(final Dealer dealer, final Players players) {
-		outputView.printTotalCardHandStatus(dealer, players);
+		outputView.printTotalCardsStatus(dealer, players);
 	}
 
 	private void printGameResult(final Dealer dealer, final Players players) {
