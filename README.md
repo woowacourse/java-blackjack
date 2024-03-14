@@ -89,4 +89,4 @@
 - [x] DealerResult.put() { counts.put() -> counts.merge() }
 - [x] CardMachine 불필요한 메서드 삭제
 - [x] InputView.askPlayers()의 Player와 Name생성 로직을 Players 로 이동
-- [ ] Cards 정적 팩토리 메서드 삭제
+- [ ] Cards 정적 팩토리 메서드 개선
