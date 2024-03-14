@@ -19,7 +19,7 @@ public class Hand {
         return new Hand(new ArrayList<>());
     }
 
-    private int getCardsSum(int intermediate) {
+    private int getCardsSum(final int intermediate) {
         return playingCards.stream()
                 .map(playingCard -> playingCard.getValue(intermediate))
                 .reduce(0, Integer::sum);

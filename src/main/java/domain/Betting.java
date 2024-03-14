@@ -8,7 +8,7 @@ public class Betting {
 
     private final Map<PlayerName, BettingAmount> betting;
 
-    public Betting(Map<PlayerName, BettingAmount> betting) {
+    public Betting(final Map<PlayerName, BettingAmount> betting) {
         this.betting = betting;
     }
 
