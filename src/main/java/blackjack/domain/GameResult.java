@@ -8,8 +8,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameResult {
-    private static final int INITIAL_DRAW_CARD_NUMBER = 2;
-    private static final int BLACK_JACK = 21;
 
     private final Map<Player, Result> gameResult;
 
@@ -31,14 +29,14 @@ public class GameResult {
 
     private static Result judgeResult(Hands dealerHands, Hands playerHands) {
         if ((dealerHands.isBust() && playerHands.isBust())
-                || (dealerHands.getHandsScore() == playerHands.getHandsScore())) {
+                || (playerHands.isSameScore(dealerHands))) {
             return Result.DRAW;
         }
-        if (playerHands.size() == INITIAL_DRAW_CARD_NUMBER && playerHands.getHandsScore() == BLACK_JACK) {
+        if (playerHands.isBlackJack()) {
             return Result.BLACK_JACK;
         }
         if (dealerHands.isBust()
-                || ((playerHands.getHandsScore() > dealerHands.getHandsScore()) && !playerHands.isBust())) {
+                || ((playerHands.isHigherScore(dealerHands)) && !playerHands.isBust())) {
             return Result.WIN;
         }
         return Result.LOSE;
@@ -52,13 +50,15 @@ public class GameResult {
     }
 
     public long getPlayerResult(Player player) {
-        return gameResult.get(player).findBetProfit(player.getBetMoney());
+        Result playerResult = gameResult.get(player);
+        return playerResult.findBetProfit(player.getBetMoney());
     }
 
     public long getDealerProfit() {
         int totalPlayerProfit = 0;
         for (Player player : gameResult.keySet()) {
-            totalPlayerProfit += gameResult.get(player).findBetProfit(player.getBetMoney());
+            Result playerResult = gameResult.get(player);
+            totalPlayerProfit += playerResult.findBetProfit(player.getBetMoney());
         }
         return -totalPlayerProfit;
     }

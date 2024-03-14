@@ -49,7 +49,7 @@ public class GameMachine {
 
     private static List<Card> drawInitialCards(Deck deck) {
         List<Card> cards = new ArrayList<>();
-        for(int i=0;i<INITIAL_CARD_COUNT;i++){
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
             cards.add(deck.draw());
         }
         return cards;
