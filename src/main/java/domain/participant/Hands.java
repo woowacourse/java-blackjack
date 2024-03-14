@@ -83,4 +83,9 @@ public class Hands {
     public int hashCode() {
         return Objects.hash(cards);
     }
+
+    @Override
+    public String toString() {
+        return cards.toString();
+    }
 }

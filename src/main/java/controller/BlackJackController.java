@@ -3,6 +3,7 @@ package controller;
 import domain.Answer;
 import domain.BetAmount;
 import domain.Bettings;
+import domain.Result;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -10,6 +11,8 @@ import domain.participant.Players;
 import dto.DealerHandsDto;
 import dto.ParticipantDto;
 import dto.ParticipantsDto;
+import java.util.Map;
+import java.util.Map.Entry;
 import view.InputView;
 import view.OutputView;
 
@@ -38,7 +41,7 @@ public class BlackJackController {
         dealToPlayers(players, dealer);
         dealToDealerIfPossible(players, dealer);
 
-        printFinalResult(players, dealer);
+        printFinalResult(bettings, players, dealer);
     }
 
     private void initHands(final Players players, final Dealer dealer) {
@@ -66,9 +69,16 @@ public class BlackJackController {
         printDealerHandsChangedMessage(dealer.countAddedHands(), dealer.getName());
     }
 
-    private void printFinalResult(final Players players, final Dealer dealer) {
+    private void printFinalResult(final Bettings bettings, final Players players, final Dealer dealer) {
         outputView.printHandsResult(ParticipantsDto.from(dealer, players));
-        outputView.printGameResult(dealer.calculateResultBy(players), players.calculateResultBy(dealer));
+        outputView.printGameResultMessage();
+
+        final Map<Player, Result> playersResult = players.calculateResultBy(dealer);
+
+        for (Entry<Player, Result> entry : playersResult.entrySet()) {
+            BetAmount betAmount = bettings.calculateBy(entry);
+            outputView.printGameResult(entry.getKey(), betAmount);
+        }
     }
 
     private void printDealerHandsChangedMessage(final int turn, final String name) {

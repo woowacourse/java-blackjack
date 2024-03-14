@@ -3,6 +3,7 @@ package view;
 import static domain.participant.Dealer.INIT_HANDS_SIZE;
 import static domain.participant.Dealer.THRESHOLD;
 
+import domain.BetAmount;
 import domain.Result;
 import domain.participant.Player;
 import dto.DealerHandsDto;
@@ -45,11 +46,12 @@ public class OutputView {
         System.out.print(System.lineSeparator());
     }
 
-    public void printGameResult(final Map<Result, Integer> dealerResult, final Map<Player, Result> playerResult) {
-        System.out.printf("## 최종결과" + System.lineSeparator() + RESULT_FORM, "딜러", format(dealerResult));
-        for (Map.Entry<Player, Result> entry : playerResult.entrySet()) {
-            System.out.printf(RESULT_FORM, entry.getKey().getName(), entry.getValue().getValue());
-        }
+    public void printGameResultMessage() {
+        System.out.println("## 최종 수익");
+    }
+
+    public void printGameResult(final Player player, final BetAmount betAmount) {
+        System.out.printf(RESULT_FORM, player.getName(), betAmount.getAmount());
     }
 
     public void printBust() {
