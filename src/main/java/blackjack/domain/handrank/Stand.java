@@ -1,11 +1,20 @@
 package blackjack.domain.handrank;
 
+import blackjack.domain.card.Hand;
+
 public final class Stand implements HankRank {
 
     private final int score;
 
     public Stand(int score) {
+        validate(score);
         this.score = score;
+    }
+
+    private void validate(int score) {
+        if (score > Hand.BLACKJACK_SCORE) {
+            throw new IllegalArgumentException("스탠드 점수는 블랙잭 점수보다 낮거나 같아야 합니다.");
+        }
     }
 
     @Override
