@@ -11,7 +11,7 @@ public class PlayerLose implements GameResult {
     private PlayerLose() {
     }
 
-    //TODO 인덴트 수정
+    //TODO 라인 길이 수정
     @Override
     public boolean isSatisfy(Dealer dealer, Player player) {
         if (player.isBusted()) {

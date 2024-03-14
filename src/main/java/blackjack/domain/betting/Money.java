@@ -1,8 +1,6 @@
 package blackjack.domain.betting;
 
 import java.util.Objects;
-
-//TODO Money 단위? 제약사항?
 public class Money {
 
     public static final Money ZERO = new Money(0);

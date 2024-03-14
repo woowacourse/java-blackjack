@@ -59,18 +59,18 @@ public class Players {
         }
     }
 
-    public List<PlayerResult> getAllResult() {
-        return players.stream()
-                .map(this::getPlayerResult)
-                .toList();
-    }
-
     public boolean isDealerDrawable() {
         return dealer.isDrawable();
     }
 
     public void drawDealerCard(Deck deck) {
         dealer.add(deck.draw());
+    }
+
+    public List<PlayerResult> getAllResult() {
+        return players.stream()
+                .map(this::getPlayerResult)
+                .toList();
     }
 
     private PlayerResult getPlayerResult(Player player) {
