@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.participant.Dealer;
 import blackjack.dto.ProfitResult;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class OutputView {
@@ -66,7 +67,7 @@ public class OutputView {
         return choice.equals(YES_CHOICE);
     }
 
-    public void printFinalProfit(final int dealerProfit, final ProfitResult profitResult) {
+    public void printFinalProfit(final BigDecimal dealerProfit, final ProfitResult profitResult) {
         System.out.println(FINAL_RESULT_TITLE);
         System.out.printf(DEALER_FINAL_RESULT, dealerProfit);
         profitResult.getProfitResult().forEach(

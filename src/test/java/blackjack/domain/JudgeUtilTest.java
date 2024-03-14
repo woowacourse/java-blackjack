@@ -263,14 +263,14 @@ class JudgeUtilTest {
     }
 
     private boolean isPlayerResultLose(final ProfitResult profitResult) {
-        return profitResult.findByPlayer(choco) == choco.calculateProfit(GameResult.LOSE);
+        return profitResult.findByPlayer(choco).equals(choco.calculateProfit(GameResult.LOSE));
     }
 
     private boolean isPlayerResultWin(final ProfitResult profitResult) {
-        return profitResult.findByPlayer(choco) == choco.calculateProfit(GameResult.WIN);
+        return profitResult.findByPlayer(choco).equals(choco.calculateProfit(GameResult.WIN));
     }
 
     private boolean isDraw(final ProfitResult profitResult) {
-        return profitResult.findByPlayer(choco) == choco.calculateProfit(GameResult.DRAW);
+        return profitResult.findByPlayer(choco).equals(choco.calculateProfit(GameResult.DRAW));
     }
 }

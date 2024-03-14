@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -37,7 +39,7 @@ class ProfitResultTest {
         profitResult.addProfitResult(clover, GameResult.WIN);
 
         //when & then
-        assertThat(profitResult.sumAllProfit()).isEqualTo(2000);
+        assertThat(profitResult.sumAllProfit()).isEqualTo(BigDecimal.valueOf(2000));
     }
 
     @DisplayName("존재하지 않는 사용자로 조회하면 예외가 발생한다.")

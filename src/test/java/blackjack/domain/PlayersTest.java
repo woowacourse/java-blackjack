@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -60,8 +61,8 @@ public class PlayersTest {
 
         //when & then
         assertAll(
-                () -> assertThat(players.createProfitResult(dealer).findByPlayer(choco)).isEqualTo(1000),
-                () -> assertThat(players.createProfitResult(dealer).findByPlayer(clover)).isEqualTo(-1000)
+                () -> assertThat(players.createProfitResult(dealer).findByPlayer(choco)).isEqualTo(BigDecimal.valueOf(1000)),
+                () -> assertThat(players.createProfitResult(dealer).findByPlayer(clover)).isEqualTo(BigDecimal.valueOf(-1000))
         );
     }
 }

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static blackjack.fixture.TrumpCardFixture.aceSpadeTrumpCard;
@@ -72,6 +73,6 @@ public class DealerTest {
         ProfitResult profitResult = players.createProfitResult(dealer);
 
         //when & then
-        assertThat(dealer.calculateProfit(profitResult)).isEqualTo(400000);
+        assertThat(dealer.calculateProfit(profitResult)).isEqualTo(BigDecimal.valueOf(400000));
     }
 }

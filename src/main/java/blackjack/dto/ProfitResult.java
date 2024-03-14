@@ -3,13 +3,14 @@ package blackjack.dto;
 import blackjack.domain.GameResult;
 import blackjack.domain.participant.Player;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ProfitResult {
 
-    private final Map<Player, Integer> profitResult;
+    private final Map<Player, BigDecimal> profitResult;
 
     public ProfitResult() {
         this.profitResult = new HashMap<>();
@@ -19,13 +20,12 @@ public class ProfitResult {
         profitResult.put(player, player.calculateProfit(gameResult));
     }
 
-    public int sumAllProfit() {
+    public BigDecimal sumAllProfit() {
         return profitResult.values().stream()
-                .mapToInt(Integer::intValue)
-                .sum();
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public int findByPlayer(final Player player) {
+    public BigDecimal findByPlayer(final Player player) {
         if (!getProfitResult().containsKey(player)) {
            throw new IllegalArgumentException();
         }
@@ -33,7 +33,7 @@ public class ProfitResult {
         return profitResult.get(player);
     }
 
-    public Map<Player, Integer> getProfitResult() {
+    public Map<Player, BigDecimal> getProfitResult() {
         return Collections.unmodifiableMap(profitResult);
     }
 }

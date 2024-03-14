@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 
+import java.math.BigDecimal;
 import java.util.regex.Pattern;
 
 public class Player extends Gamer {
@@ -13,7 +14,7 @@ public class Player extends Gamer {
     private static final String INVALID_BETTING_FORMAT_EXCEPTION = "배팅 형식에 맞지 않습니다. 0 초과의 숫자만 입력해주세요.";
 
     private final String name;
-    private final int betting;
+    private final BigDecimal betting;
 
     public Player(final String name, final Dealer dealer, final String betting) {
         super();
@@ -22,7 +23,7 @@ public class Player extends Gamer {
         this.name = name;
 
         validateBetting(betting);
-        this.betting = Integer.parseInt(betting);
+        this.betting = BigDecimal.valueOf(Integer.parseInt(betting));
 
         initialDraw(dealer);
     }
@@ -57,7 +58,7 @@ public class Player extends Gamer {
         return !hand.isBust() && !hand.isBlackjack();
     }
 
-    public int calculateProfit(final GameResult gameResult) {
+    public BigDecimal calculateProfit(final GameResult gameResult) {
         return gameResult.getProfit(betting, isBlackjack());
     }
 

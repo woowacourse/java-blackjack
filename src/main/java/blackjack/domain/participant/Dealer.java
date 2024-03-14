@@ -4,6 +4,8 @@ import blackjack.domain.Deck;
 import blackjack.domain.card.Card;
 import blackjack.dto.ProfitResult;
 
+import java.math.BigDecimal;
+
 public class Dealer extends Gamer {
 
     public static final int DEALER_BOUND = 16;
@@ -46,7 +48,7 @@ public class Dealer extends Gamer {
         return hand.calculateScore() == score;
     }
 
-    public int calculateProfit(final ProfitResult profitResult) {
-        return profitResult.sumAllProfit() * -1;
+    public BigDecimal calculateProfit(final ProfitResult profitResult) {
+        return profitResult.sumAllProfit().multiply(BigDecimal.valueOf(-1));
     }
 }

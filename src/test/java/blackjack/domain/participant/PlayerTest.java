@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.math.BigDecimal;
+
 import static blackjack.fixture.PlayerFixture.playerChoco;
 import static blackjack.fixture.PlayerFixture.playerClover;
 import static blackjack.fixture.TrumpCardFixture.threeSpadeTrumpCard;
@@ -95,8 +97,8 @@ public class PlayerTest {
     void calculateProfit() {
         //when & then
         assertAll(
-                () -> assertThat(clover.calculateProfit(GameResult.WIN)).isEqualTo(1000),
-                () -> assertThat(choco.calculateProfit(GameResult.LOSE)).isEqualTo(-1000)
+                () -> assertThat(clover.calculateProfit(GameResult.WIN)).isEqualTo(BigDecimal.valueOf(1000)),
+                () -> assertThat(choco.calculateProfit(GameResult.LOSE)).isEqualTo(BigDecimal.valueOf(-1000))
         );
     }
 }
