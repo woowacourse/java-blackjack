@@ -40,7 +40,7 @@ public class OutputView {
 	}
 
 	private void printDealMessage(final PlayerInfos playerInfos) {
-		System.out.println(System.lineSeparator() + String.format("딜러와 %s에게 %d장을 나누었습니다.",
+		System.out.println(String.format("%n딜러와 %s에게 %d장을 나누었습니다.",
 			createPlayerNamesText(playerInfos), Dealer.INIT_CARD_COUNT));
 	}
 
@@ -83,8 +83,7 @@ public class OutputView {
 	}
 
 	public void printDealerHitMessage() {
-		System.out.println(System.lineSeparator() +
-			String.format("딜러는 %d이하라 한장의 카드를 더 받았습니다.", Dealer.MAX_HIT_SCORE));
+		System.out.println(String.format("%n딜러는 %d이하라 한장의 카드를 더 받았습니다.", Dealer.MAX_HIT_SCORE));
 	}
 
 	public void printTotalCardsStatus(final Dealer dealer, final Players players) {
@@ -106,7 +105,7 @@ public class OutputView {
 	}
 
 	public void printGameResult(final Map<GameResult, Long> dealerResult, final Map<Player, GameResult> playerResults) {
-		System.out.println(System.lineSeparator() + "## 최종 승패");
+		System.out.println(String.format("%n## 최종 승패"));
 
 		printDealerGameResult(dealerResult);
 		printPlayersGameResult(playerResults);
