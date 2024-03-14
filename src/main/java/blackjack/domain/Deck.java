@@ -1,22 +1,20 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 public class Deck {
 
-    private final ShuffleStrategy shuffleStrategy;
-
     private final List<Card> cards;
 
-    public Deck(List<Card> cards, ShuffleStrategy shuffleStrategy) {
+    public Deck(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
-        this.shuffleStrategy = shuffleStrategy;
     }
 
     public void shuffle() {
-        shuffleStrategy.shuffle(cards);
+        Collections.shuffle(cards);
     }
 
     public Card draw() {

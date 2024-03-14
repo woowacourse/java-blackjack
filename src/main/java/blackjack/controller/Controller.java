@@ -9,7 +9,6 @@ import blackjack.domain.Result;
 import blackjack.domain.ResultStatus;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +31,7 @@ public class Controller {
 
     private Dealer createDealer() {
         CardFactory cardFactory = new CardFactory();
-        Deck deck = new Deck(cardFactory.createBlackJackCard(), Collections::shuffle);
+        Deck deck = new Deck(cardFactory.createBlackJackCard());
         return new Dealer(deck);
     }
 
