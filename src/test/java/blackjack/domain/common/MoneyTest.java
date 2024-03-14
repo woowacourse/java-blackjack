@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.common;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;

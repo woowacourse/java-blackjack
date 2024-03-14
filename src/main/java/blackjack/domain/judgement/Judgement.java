@@ -1,8 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.judgement;
+
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 
 public class Judgement {
 
-    public JudgementResult judge(Participant dealer, Participant player) {
+    public JudgementResult judge(Dealer dealer, Player player) {
         int playerScore = player.calculateScore();
         int dealerScore = dealer.calculateScore();
 

@@ -1,15 +1,16 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import java.util.List;
+import blackjack.domain.card.Card;
 
 public abstract class Participant {
 
-    private final Hand hand;
-    private final Name name;
+    private final ParticipantHand hand;
+    private final ParticipantName name;
 
     protected Participant(String name) {
-        this.hand = new Hand();
-        this.name = new Name(name);
+        this.hand = new ParticipantHand();
+        this.name = new ParticipantName(name);
     }
 
     public void hit(Card card) {

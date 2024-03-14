@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.judgement;
 
 public enum JudgementResult {
 

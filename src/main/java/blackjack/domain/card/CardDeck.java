@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
@@ -8,23 +8,23 @@ import java.util.List;
 import java.util.Queue;
 import java.util.stream.Collectors;
 
-public class Deck {
+public class CardDeck {
 
     private final Queue<Card> cards = new ArrayDeque<>();
 
-    public Deck(List<Card> cards) {
+    public CardDeck(List<Card> cards) {
         validateDuplicated(cards);
 
         this.cards.addAll(cards);
     }
 
-    public static Deck createShuffledDeck() {
-        return new Deck(createShuffledCards());
+    public static CardDeck createShuffledDeck() {
+        return new CardDeck(createShuffledCards());
     }
 
     private static List<Card> createShuffledCards() {
         List<Card> cards = Arrays.stream(CardShape.values())
-                .map(Deck::createShapeCards)
+                .map(CardDeck::createShapeCards)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 

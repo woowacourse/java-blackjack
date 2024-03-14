@@ -3,14 +3,14 @@ package blackjack;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
-import blackjack.domain.Judgement;
-import blackjack.domain.JudgementResult;
-import blackjack.domain.Money;
-import blackjack.domain.Participant;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.common.Money;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
+import blackjack.domain.judgement.Judgement;
+import blackjack.domain.judgement.JudgementResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -26,11 +26,11 @@ class Controller {
 
     public void run() {
         Participants participants = createParticipants();
-        Deck deck = Deck.createShuffledDeck();
+        CardDeck cardDeck = CardDeck.createShuffledDeck();
 
-        initialDeal(participants, deck);
-        playersTurn(participants.getPlayers(), deck);
-        dealerTurn(participants.getDealer(), deck);
+        initialDeal(participants, cardDeck);
+        playersTurn(participants.getPlayers(), cardDeck);
+        dealerTurn(participants.getDealer(), cardDeck);
         showCard(participants);
         showProfit(participants);
     }
@@ -50,38 +50,38 @@ class Controller {
         return new Money(playerMoney);
     }
 
-    private void initialDeal(Participants participants, Deck deck) {
+    private void initialDeal(Participants participants, CardDeck cardDeck) {
         for (Participant participant : participants.getParticipants()) {
-            participant.hit(deck.draw());
-            participant.hit(deck.draw());
+            participant.hit(cardDeck.draw());
+            participant.hit(cardDeck.draw());
         }
 
         outputView.printInitialDeal(participants.getDealer(), participants.getPlayers());
     }
 
-    private void playersTurn(List<Player> players, Deck deck) {
-        players.forEach(player -> playerTurn(player, deck));
+    private void playersTurn(List<Player> players, CardDeck cardDeck) {
+        players.forEach(player -> playerTurn(player, cardDeck));
     }
 
-    private void playerTurn(Player player, Deck deck) {
+    private void playerTurn(Player player, CardDeck cardDeck) {
         if (!player.isPlayable()) {
             return;
         }
 
         boolean wannaHit = inputView.readCommand(player.getName());
         if (wannaHit) {
-            player.hit(deck.draw());
+            player.hit(cardDeck.draw());
             outputView.printCards(player);
-            playerTurn(player, deck);
+            playerTurn(player, cardDeck);
             return;
         }
 
         outputView.printCards(player);
     }
 
-    private void dealerTurn(Dealer dealer, Deck deck) {
+    private void dealerTurn(Dealer dealer, CardDeck cardDeck) {
         while (dealer.isPlayable()) {
-            dealer.hit(deck.draw());
+            dealer.hit(cardDeck.draw());
             outputView.printDealerHitMessage();
         }
     }

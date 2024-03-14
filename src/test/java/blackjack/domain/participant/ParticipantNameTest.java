@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -8,20 +8,20 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class NameTest {
+class ParticipantNameTest {
 
     @DisplayName("생성 테스트")
     @Test
     void create() {
-        assertThatCode(() -> new Name("구름"))
+        assertThatCode(() -> new ParticipantName("구름"))
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("사용자의 이름은 공백을 제외한 1글자 이상이다.")
+    @DisplayName("참여자의 이름은 공백을 제외한 1글자 이상이다.")
     @ParameterizedTest
     @ValueSource(strings = {" ", "", "\r", "\n"})
     void validateNameSize(String source) {
-        assertThatThrownBy(() -> new Name(source))
+        assertThatThrownBy(() -> new ParticipantName(source))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
