@@ -11,15 +11,15 @@ public class CardFactory {
     }
 
     public static CardDeck createCardDeck() {
-        return Arrays.stream(Emblem.values())
+        return Arrays.stream(Suit.values())
                 .map(CardFactory::createCards)
                 .flatMap(List::stream)
                 .collect(collectingAndThen(toList(), CardDeck::new));
     }
 
-    private static List<Card> createCards(Emblem emblem) {
+    private static List<Card> createCards(Suit suit) {
         return Arrays.stream(Denomination.values())
-                .map(denomination -> new Card(denomination, emblem))
+                .map(denomination -> new Card(denomination, suit))
                 .collect(toList());
     }
 }

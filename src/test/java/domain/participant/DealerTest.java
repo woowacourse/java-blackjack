@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.Denomination;
-import domain.card.Emblem;
+import domain.card.Suit;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
@@ -19,7 +19,7 @@ class DealerTest {
 
         Card card = dealer.pickCard();
 
-        assertThat(card).isEqualTo(new Card(Denomination.KING, Emblem.DIAMOND));
+        assertThat(card).isEqualTo(new Card(Denomination.KING, Suit.DIAMOND));
     }
 
     @Test

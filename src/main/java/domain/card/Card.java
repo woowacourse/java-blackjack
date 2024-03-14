@@ -4,19 +4,19 @@ import java.util.Objects;
 
 public class Card {
     private final Denomination denomination;
-    private final Emblem emblem;
+    private final Suit suit;
 
-    public Card(Denomination denomination, Emblem emblem) {
+    public Card(Denomination denomination, Suit suit) {
         this.denomination = denomination;
-        this.emblem = emblem;
+        this.suit = suit;
     }
 
     public String getDenominationExpression() {
         return this.denomination.getExpression();
     }
 
-    public String getEmblemName() {
-        return this.emblem.getName();
+    public String getSuitName() {
+        return this.suit.getName();
     }
 
     boolean isAce() {
@@ -33,13 +33,13 @@ public class Card {
             return true;
         }
         if (obj instanceof Card other) {
-            return this.denomination == other.denomination && this.emblem == other.emblem;
+            return this.denomination == other.denomination && this.suit == other.suit;
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(denomination, emblem);
+        return Objects.hash(denomination, suit);
     }
 }

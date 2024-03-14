@@ -2,14 +2,14 @@ package fixture;
 
 import domain.card.Card;
 import domain.card.Denomination;
-import domain.card.Emblem;
+import domain.card.Suit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class CardFixture {
     public static Card 카드(Denomination denomination) {
-        return new Card(denomination, Emblem.CLOVER);
+        return new Card(denomination, Suit.CLOVER);
     }
 
     public static Card 카드() {
@@ -31,24 +31,24 @@ public class CardFixture {
     }
 
     public static List<Card> 하트_카드() {
-        return 카드_그룹(Emblem.HEART);
+        return 카드_그룹(Suit.HEART);
     }
 
     public static List<Card> 클로버_카드() {
-        return 카드_그룹(Emblem.CLOVER);
+        return 카드_그룹(Suit.CLOVER);
     }
 
     public static List<Card> 스페이드_카드() {
-        return 카드_그룹(Emblem.SPADE);
+        return 카드_그룹(Suit.SPADE);
     }
 
     public static List<Card> 다이아몬드_카드() {
-        return 카드_그룹(Emblem.DIAMOND);
+        return 카드_그룹(Suit.DIAMOND);
     }
 
-    private static List<Card> 카드_그룹(Emblem emblem) {
+    private static List<Card> 카드_그룹(Suit suit) {
         return Arrays.stream(Denomination.values())
-                .map(denomination -> new Card(denomination, emblem))
+                .map(denomination -> new Card(denomination, suit))
                 .toList();
     }
 }

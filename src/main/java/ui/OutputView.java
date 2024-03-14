@@ -25,7 +25,7 @@ public class OutputView {
     }
 
     private String generateCardMessage(Card card) {
-        return card.getDenominationExpression() + card.getEmblemName();
+        return card.getDenominationExpression() + card.getSuitName();
     }
 
     private String generateCardMessage(Participant participant) {

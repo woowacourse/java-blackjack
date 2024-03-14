@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 class CardTest {
     @Test
     void 카드를_생성한다() {
-        Card card = new Card(Denomination.ACE, Emblem.HEART);
+        Card card = new Card(Denomination.ACE, Suit.HEART);
 
-        assertThat(card).isEqualTo(new Card(Denomination.ACE, Emblem.HEART));
+        assertThat(card).isEqualTo(new Card(Denomination.ACE, Suit.HEART));
     }
 }
