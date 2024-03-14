@@ -30,8 +30,4 @@ public class DealerResult {
     public Profit getProfit() {
         return profit;
     }
-
-//    public int getResultWithResultStatus(ResultStatus resultStatus) {
-//        return profit.getOrDefault(resultStatus, 0);
-//    }
 }
