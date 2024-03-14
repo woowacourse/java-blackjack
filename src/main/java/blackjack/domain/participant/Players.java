@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Hand;
 import blackjack.exception.InvalidPlayerCountException;
 import java.util.List;
 

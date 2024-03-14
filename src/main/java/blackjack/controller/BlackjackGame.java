@@ -1,8 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Hand;
 import blackjack.domain.card.RandomDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
@@ -38,10 +36,6 @@ public class BlackjackGame {
     private Participants createParticipantsWithNames(Deck deck) {
         List<Name> playersName = readPlayersName();
         return new Participants(playersName, deck);
-    }
-
-    private Hand createInitialDeck(Deck deck) {
-        return new Hand(deck.drawInitialCards());
     }
 
     private List<Name> readPlayersName() {
