@@ -67,8 +67,8 @@ public class OutputView {
     }
 
     private String cardToString(Card card) {
-        String cardNumber = cardNumberToString(card.getNumber());
-        String cardShape = cardShapeToString(card.getShape());
+        String cardNumber = cardNumberToString(card.getCardNumber());
+        String cardShape = cardShapeToString(card.getCardShape());
         return cardNumber + cardShape;
     }
 

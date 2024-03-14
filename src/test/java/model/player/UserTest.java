@@ -20,7 +20,7 @@ class UserTest {
     @Test
     void validateBlankName() {
         Assertions.assertThatThrownBy(() -> new User("",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
+                List.of(Card.of(CardShape.SPACE, CardNumber.NINE), Card.of(CardShape.SPACE, CardNumber.FIVE))) {
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -28,15 +28,15 @@ class UserTest {
     @Test
     void validateNullName() {
         Assertions.assertThatThrownBy(() -> new User(null,
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
+                List.of(Card.of(CardShape.SPACE, CardNumber.NINE), Card.of(CardShape.SPACE, CardNumber.FIVE))) {
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
     static Stream<Arguments> createCard() {
         return Stream.of(Arguments.of(
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE)),
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE),
-                        new Card(CardShape.SPACE, CardNumber.ACE))));
+                List.of(Card.of(CardShape.SPACE, CardNumber.NINE)),
+                List.of(Card.of(CardShape.SPACE, CardNumber.NINE), Card.of(CardShape.SPACE, CardNumber.FIVE),
+                        Card.of(CardShape.SPACE, CardNumber.ACE))));
     }
 
     @DisplayName("초기 참가자는 카드를 2장만 받아야 한다.")
@@ -51,9 +51,9 @@ class UserTest {
     @Test
     void addCard() {
         User user = new User("켬미",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
+                List.of(Card.of(CardShape.SPACE, CardNumber.NINE), Card.of(CardShape.SPACE, CardNumber.FIVE))) {
         };
-        Card card = new Card(CardShape.CLOVER, CardNumber.EIGHT);
+        Card card = Card.of(CardShape.CLOVER, CardNumber.EIGHT);
         user.addCards(List.of(card));
         assertThat(user.getCards().getCards()).hasSize(3);
     }
@@ -62,10 +62,10 @@ class UserTest {
     @Test
     void addCards() {
         User user = new User("켬미",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
+                List.of(Card.of(CardShape.SPACE, CardNumber.NINE), Card.of(CardShape.SPACE, CardNumber.FIVE))) {
         };
-        List<Card> cards = List.of(new Card(CardShape.CLOVER, CardNumber.EIGHT),
-                new Card(CardShape.CLOVER, CardNumber.FIVE));
+        List<Card> cards = List.of(Card.of(CardShape.CLOVER, CardNumber.EIGHT),
+                Card.of(CardShape.CLOVER, CardNumber.FIVE));
         user.addCards(cards);
         assertThat(user.getCards().getCards()).hasSize(4);
     }
@@ -74,7 +74,7 @@ class UserTest {
     @Test
     void calculateScore() {
         User user = new User("켬미",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
+                List.of(Card.of(CardShape.SPACE, CardNumber.NINE), Card.of(CardShape.SPACE, CardNumber.FIVE))) {
         };
 
         assertThat(user.calculateScore()).isEqualTo(14);
@@ -84,9 +84,9 @@ class UserTest {
     @Test
     void calculateScoreWithAce() {
         User user = new User("켬미",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
+                List.of(Card.of(CardShape.SPACE, CardNumber.NINE), Card.of(CardShape.SPACE, CardNumber.FIVE))) {
         };
-        user.addCards(List.of(new Card(CardShape.SPACE, CardNumber.ACE)));
+        user.addCards(List.of(Card.of(CardShape.SPACE, CardNumber.ACE)));
 
         assertThat(user.calculateScore()).isEqualTo(15);
     }

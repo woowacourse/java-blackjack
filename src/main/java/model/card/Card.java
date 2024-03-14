@@ -1,30 +1,51 @@
 package model.card;
 
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Card {
-    private final CardShape shape;
-    private final CardNumber number;
+    private static final Set<Card> cardDeck;
 
-    public Card(CardShape shape, CardNumber number) {
-        this.shape = shape;
-        this.number = number;
+    private final CardShape cardShape;
+    private final CardNumber cardNumber;
+
+    static {
+        cardDeck = Arrays.stream(CardShape.values())
+                .flatMap(newSuit -> Arrays.stream(CardNumber.values())
+                        .map(newDenomination -> new Card(newSuit, newDenomination)))
+                .collect(Collectors.toUnmodifiableSet());
+    }
+
+    private Card(CardShape cardShape, CardNumber cardNumber) {
+        this.cardShape = cardShape;
+        this.cardNumber = cardNumber;
+    }
+
+    public static Card of(CardShape cardShape, CardNumber cardNumber) {
+        return cardDeck.stream()
+                .filter(card -> card.cardShape == cardShape && card.cardNumber == cardNumber)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(cardShape.name() + cardNumber.name() + " 카드는 존재하지 않습니다."));
+    }
+
+    public static List<Card> createCardDeck() {
+        return new ArrayList<>(cardDeck);
     }
 
     public int minimumNumber() {
-        return number.minimumNumber();
+        return cardNumber.minimumNumber();
     }
 
     public int subtractMaxMinNumber() {
-        return number.maximumNumber() - number.minimumNumber();
+        return cardNumber.maximumNumber() - cardNumber.minimumNumber();
     }
 
-    public CardShape getShape() {
-        return shape;
+    public CardShape getCardShape() {
+        return cardShape;
     }
 
-    public CardNumber getNumber() {
-        return number;
+    public CardNumber getCardNumber() {
+        return cardNumber;
     }
 
     @Override
@@ -36,11 +57,11 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return shape == card.shape && number == card.number;
+        return cardShape == card.cardShape && cardNumber == card.cardNumber;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(shape, number);
+        return Objects.hash(cardShape, cardNumber);
     }
 }

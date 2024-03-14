@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 import model.BlackJack;
+import model.card.Card;
 import model.card.CardDeck;
 import model.card.CardSize;
 import model.player.Dealer;
@@ -34,7 +35,7 @@ public class BlackJackController {
     }
 
     private BlackJack createBlackJack(List<String> names) {
-        CardDeck cardDeck = new CardDeck(CardDeck.createCards());
+        CardDeck cardDeck = new CardDeck(Card.createCardDeck());
         Participants participants = createParticipants(names, cardDeck);
         Dealer dealer = new Dealer(cardDeck.selectRandomCards(CardSize.TWO));
         return new BlackJack(participants, dealer, cardDeck);

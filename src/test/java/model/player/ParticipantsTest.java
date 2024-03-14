@@ -21,17 +21,17 @@ class ParticipantsTest {
     void validate() {
         Assertions.assertThatThrownBy(() ->
                         new Participants(List.of(
-                                new Participant("켬미", List.of(new Card(CardShape.SPACE, CardNumber.NINE),
-                                        new Card(CardShape.SPACE, CardNumber.FIVE))),
-                                new Participant("켬미", List.of(new Card(CardShape.SPACE, CardNumber.NINE),
-                                        new Card(CardShape.SPACE, CardNumber.FIVE)))
+                                new Participant("켬미", List.of(Card.of(CardShape.SPACE, CardNumber.NINE),
+                                        Card.of(CardShape.SPACE, CardNumber.FIVE))),
+                                new Participant("켬미", List.of(Card.of(CardShape.SPACE, CardNumber.NINE),
+                                        Card.of(CardShape.SPACE, CardNumber.FIVE)))
                         )))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     static Stream<Arguments> createParticipants() {
 
-        CardDeck cardDeck = new CardDeck(CardDeck.createCards());
+        CardDeck cardDeck = new CardDeck(Card.createCardDeck());
 
         return Stream.of(Arguments.of(
                 List.of(new Participant("배키", cardDeck.selectRandomCards(CardSize.TWO))),

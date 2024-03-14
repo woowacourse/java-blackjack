@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 public class CardDeck {
 
-    private Set<Card> cards;
+    private final Set<Card> cards;
 
     public CardDeck(List<Card> cards) {
         this(new HashSet<>(cards));
@@ -20,20 +20,6 @@ public class CardDeck {
             throw new IllegalArgumentException("카드는 총 52개여야 합니다.");
         }
         this.cards = cards;
-    }
-
-    public static List<Card> createCards() {
-        List<Card> cards = new ArrayList<>();
-        for (CardShape cardShape : CardShape.values()) {
-            createSameShapeCards(cardShape, cards);
-        }
-        return cards;
-    }
-
-    private static void createSameShapeCards(CardShape cardShape, List<Card> cards) {
-        for (CardNumber cardNumber : CardNumber.values()) {
-            cards.add(new Card(cardShape, cardNumber));
-        }
     }
 
     public List<Card> selectRandomCards(CardSize size) {

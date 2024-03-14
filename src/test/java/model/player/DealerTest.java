@@ -18,7 +18,7 @@ class DealerTest {
     @BeforeEach
     void setUp() {
         dealer = new Dealer(
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.TWO)));
+                List.of(Card.of(CardShape.SPACE, CardNumber.NINE), Card.of(CardShape.SPACE, CardNumber.TWO)));
     }
 
     @DisplayName("카드의 합이 16이하일 때는 참을 반환한다.")
@@ -30,7 +30,7 @@ class DealerTest {
     @DisplayName("카드의 합이 16초과일 때는 거짓을 반환한다.")
     @Test
     void noticeFalse() {
-        dealer.addCards(List.of(new Card(CardShape.CLOVER, CardNumber.NINE)));
+        dealer.addCards(List.of(Card.of(CardShape.CLOVER, CardNumber.NINE)));
         assertFalse(dealer.isHit());
     }
 }

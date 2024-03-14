@@ -31,7 +31,7 @@ class ParticipantTest {
     @Test
     void noticeTrue() {
         Participant participant = new Participant("배키",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE)));
+                List.of(Card.of(CardShape.SPACE, CardNumber.NINE), Card.of(CardShape.SPACE, CardNumber.FIVE)));
         assertFalse(participant.isNotHit());
     }
 
@@ -39,8 +39,8 @@ class ParticipantTest {
     @Test
     void noticeFalse() {
         Participant participant = new Participant("배키",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE)));
-        participant.addCards(List.of(new Card(CardShape.CLOVER, CardNumber.NINE), new Card(CardShape.CLOVER, CardNumber.NINE), new Card(CardShape.CLOVER, CardNumber.NINE)));
+                List.of(Card.of(CardShape.SPACE, CardNumber.NINE), Card.of(CardShape.SPACE, CardNumber.FIVE)));
+        participant.addCards(List.of(Card.of(CardShape.CLOVER, CardNumber.NINE), Card.of(CardShape.CLOVER, CardNumber.NINE), Card.of(CardShape.CLOVER, CardNumber.NINE)));
         assertTrue(participant.isNotHit());
     }
 
@@ -48,9 +48,9 @@ class ParticipantTest {
     @Test
     void findOutcomeDraw() {
         Participant participant = new Participant("배키",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE)));
+                List.of(Card.of(CardShape.SPACE, CardNumber.NINE), Card.of(CardShape.SPACE, CardNumber.FIVE)));
         Dealer dealer = new Dealer(
-                List.of(new Card(CardShape.CLOVER, CardNumber.NINE), new Card(CardShape.HEART, CardNumber.FIVE)));
+                List.of(Card.of(CardShape.CLOVER, CardNumber.NINE), Card.of(CardShape.HEART, CardNumber.FIVE)));
 
         Outcome playerOutcome = participant.findOutcome(dealer);
 
@@ -59,10 +59,10 @@ class ParticipantTest {
 
     static Stream<Arguments> createParticipant() {
         Participant underThresholdParticipant = new Participant("켬미",
-                List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
+                List.of(Card.of(CardShape.SPACE, CardNumber.EIGHT), Card.of(CardShape.CLOVER, CardNumber.NINE)));
         Participant overThresholdParticipant = new Participant("켬미",
-                List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
-        underThresholdParticipant.addCards(List.of(new Card(CardShape.HEART, CardNumber.NINE)));
+                List.of(Card.of(CardShape.SPACE, CardNumber.EIGHT), Card.of(CardShape.CLOVER, CardNumber.NINE)));
+        underThresholdParticipant.addCards(List.of(Card.of(CardShape.HEART, CardNumber.NINE)));
         return Stream.of(Arguments.of(
                 underThresholdParticipant,
                 overThresholdParticipant
@@ -74,7 +74,7 @@ class ParticipantTest {
     @MethodSource("createParticipant")
     void findOutcomeLose(Participant participant) {
         Dealer dealer = new Dealer(
-                List.of(new Card(CardShape.SPACE, CardNumber.KING), new Card(CardShape.SPACE, CardNumber.JACK)));
+                List.of(Card.of(CardShape.SPACE, CardNumber.KING), Card.of(CardShape.SPACE, CardNumber.JACK)));
         Outcome playerOutcome = participant.findOutcome(dealer);
 
         Assertions.assertThat(playerOutcome).isEqualTo(Outcome.LOSE);
@@ -82,10 +82,10 @@ class ParticipantTest {
 
     static Stream<Arguments> createDealer() {
         Dealer underThresholdDealer = new Dealer(
-                List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
+                List.of(Card.of(CardShape.SPACE, CardNumber.EIGHT), Card.of(CardShape.CLOVER, CardNumber.NINE)));
         Dealer overThresholdDealer = new Dealer(
-                List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
-        overThresholdDealer.addCards(List.of(new Card(CardShape.HEART, CardNumber.NINE)));
+                List.of(Card.of(CardShape.SPACE, CardNumber.EIGHT), Card.of(CardShape.CLOVER, CardNumber.NINE)));
+        overThresholdDealer.addCards(List.of(Card.of(CardShape.HEART, CardNumber.NINE)));
         return Stream.of(Arguments.of(
                 underThresholdDealer,
                 overThresholdDealer
@@ -97,7 +97,7 @@ class ParticipantTest {
     @MethodSource("createDealer")
     void findOutcomeWin(Dealer dealer) {
         Participant participant = new Participant("켬미",
-                List.of(new Card(CardShape.SPACE, CardNumber.KING), new Card(CardShape.SPACE, CardNumber.JACK)));
+                List.of(Card.of(CardShape.SPACE, CardNumber.KING), Card.of(CardShape.SPACE, CardNumber.JACK)));
         Outcome playerOutcome = participant.findOutcome(dealer);
 
         Assertions.assertThat(playerOutcome).isEqualTo(Outcome.WIN);
