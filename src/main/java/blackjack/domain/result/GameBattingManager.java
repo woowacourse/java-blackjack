@@ -29,7 +29,7 @@ public class GameBattingManager {
     }
 
     public double getDealerResult() {
-        Map<Player,Double> playerBatting = playersBatting.getPlayerBatting();
+        Map<Player, Double> playerBatting = playersBatting.getPlayerBatting();
         return playerBatting.values().stream()
                 .mapToDouble(betting -> -betting)
                 .sum();
@@ -65,6 +65,6 @@ public class GameBattingManager {
     }
 
     private void decideTie(Player player) {
-        playersBatting.calculateBattingReward(player,1);
+        playersBatting.calculateBattingReward(player, 1);
     }
 }

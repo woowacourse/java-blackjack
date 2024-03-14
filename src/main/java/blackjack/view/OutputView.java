@@ -77,7 +77,7 @@ public class OutputView {
         NumberFormat formatter = new DecimalFormat("0");
         double dealerResult = gameBattingManager.getDealerResult();
 
-        System.out.printf("딜러 : %s" + NEW_LINE, formatter.format(dealerResult) );
+        System.out.printf("딜러 : %s" + NEW_LINE, formatter.format(dealerResult));
     }
 
     private static void printPlayerResult(GameBattingManager gameBattingManager) {
