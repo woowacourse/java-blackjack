@@ -40,10 +40,10 @@ class CardHolderTest {
     @Test
     @DisplayName("게임 참가자가 카드를 뽑았을 때 점수가 올바르게 계산되는지 검증")
     void draw() {
-        CardHolder CardHolderGamer = new CardHolder("robin", HoldingCards.of());
-        CardHolderGamer.draw(new Deck(List.of(new Card(JACK, HEART))), new TestPlayerCardDrawStrategy(CardHolderGamer));
+        CardHolder cardHolderGamer = new CardHolder("robin", HoldingCards.of());
+        cardHolderGamer.draw(new Deck(List.of(new Card(JACK, HEART))), new TestPlayerCardDrawStrategy(cardHolderGamer));
 
-        SummationCardPoint actual = CardHolderGamer.getSummationCardPoint();
+        SummationCardPoint actual = cardHolderGamer.getSummationCardPoint();
         SummationCardPoint expected = new SummationCardPoint(10);
 
         Assertions.assertThat(actual).isEqualTo(expected);
@@ -52,14 +52,14 @@ class CardHolderTest {
     @Test
     @DisplayName("플레이어는 총합이 21이 넘으면 카드를 뽑을 수 없는지 검증")
     void validateDrawLimit() {
-        CardHolder CardHolderGamer = new CardHolder("robin", HoldingCards.of(
+        CardHolder cardHolderGamer = new CardHolder("robin", HoldingCards.of(
                 new Card(JACK, HEART), new Card(EIGHT, HEART), new Card(JACK, SPADE)
         ));
         Deck deck = new Deck(List.of(
                 new Card(TWO, SPADE)
         ));
 
-        Assertions.assertThatThrownBy(() -> CardHolderGamer.draw(deck, new TestPlayerCardDrawStrategy(CardHolderGamer)))
+        Assertions.assertThatThrownBy(() -> cardHolderGamer.draw(deck, new TestPlayerCardDrawStrategy(cardHolderGamer)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("카드를 더이상 뽑을 수 없습니다.");
     }

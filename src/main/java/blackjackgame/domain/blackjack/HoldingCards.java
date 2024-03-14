@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class HoldingCards {
-    private static final int firstHoldingCardCount = 2;
+    private static final int FIRST_HOLDING_CARD_COUNT = 2;
     private static final int DIFFERENCE_AS_ACE_CHANGE_ONE_TO_ELEVEN = 10;
 
     private final List<Card> holdingCards;
@@ -58,7 +58,7 @@ public class HoldingCards {
     }
 
     public boolean noAdditionalCard() {
-        return holdingCards.size() == firstHoldingCardCount;
+        return holdingCards.size() == FIRST_HOLDING_CARD_COUNT;
     }
 
     public boolean isSummationSameMaximum() {

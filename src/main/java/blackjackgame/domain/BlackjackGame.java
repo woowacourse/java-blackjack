@@ -39,7 +39,7 @@ public class BlackjackGame {
     private GameProfit calculateGameProfit(double dealerProfit, List<Double> playersProfit) {
         List<Double> gameProfits = players.getGameProfits(dealer);
 
-        for(int i = 0; i < gameProfits.size(); i++) {
+        for (int i = 0; i < gameProfits.size(); i++) {
             Double gameProfit = gameProfits.get(i);
             playersProfit.set(i, gameProfit + playersProfit.get(i));
             dealerProfit -= gameProfit;

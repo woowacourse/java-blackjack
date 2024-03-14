@@ -23,8 +23,8 @@ public class CardHolder {
         holdingCards.add(draw);
     }
 
-    public void draw(Deck deck, CardDrawStrategy cardDrawStrategy, int execution_count) {
-        for(int count = 1; count <= execution_count; count++) {
+    public void draw(Deck deck, CardDrawStrategy cardDrawStrategy, int executionCount) {
+        for(int count = 1; count <= executionCount; count++) {
             draw(deck, cardDrawStrategy);
         }
     }
