@@ -13,12 +13,12 @@ public abstract class Finished extends Started {
 
     @Override
     public State stand() {
-        return null;
+        throw new UnsupportedOperationException("게임이 끝난 상태에서 스탠드를 할 수 없습니다");
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override
