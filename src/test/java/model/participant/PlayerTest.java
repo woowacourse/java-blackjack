@@ -38,4 +38,15 @@ class PlayerTest {
         assertFalse(player.canHit());
     }
 
+
+    @Test
+    @DisplayName("플레이어의 초기 2장의 카드가 블랙잭인지 판별한다.")
+    void isInitBlackjack_ShouldReturnTrue_WhenHandValueIs21DeckSizeIs2() {
+        Player player = new Player(new Name("프람"));
+        player.hitCard(Card.from(Number.ACE, Emblem.CLUB));
+        player.hitCard(Card.from(Number.TEN, Emblem.HEART));
+
+        assertTrue(player.isInitBlackjack());
+    }
+
 }

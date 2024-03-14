@@ -8,6 +8,10 @@ public class Player extends Participant {
         isTurnOver = false;
     }
 
+    public boolean isInitBlackjack() {
+        return cardDeck.isBlackJack() && cardDeck.cardSize() == 2;
+    }
+
     @Override
     public boolean canHit() {
         return !cardDeck.isBust() && !isTurnOver;
