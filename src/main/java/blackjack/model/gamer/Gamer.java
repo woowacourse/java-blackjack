@@ -8,19 +8,21 @@ public abstract class Gamer {
 
     protected final HandDeck handDeck = new HandDeck();
 
-    public void receiveCard(Card card) {
+    public abstract boolean canHit();
+
+    public final void receiveCard(Card card) {
         handDeck.add(card);
     }
 
-    public int deckSize() {
+    public final int deckSize() {
         return handDeck.deckSize();
     }
 
-    public List<Card> allCards() {
+    public final List<Card> allCards() {
         return handDeck.cards();
     }
 
-    public int totalScore() {
+    public final int totalScore() {
         return handDeck.score();
     }
 }

@@ -1,4 +1,4 @@
-package blackjack.model.result;
+package blackjack.model.gameRule;
 
 public enum Result {
     WIN(2.0),

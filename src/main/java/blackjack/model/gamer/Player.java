@@ -1,6 +1,7 @@
 package blackjack.model.gamer;
 
-import blackjack.model.result.Result;
+import blackjack.model.gameRule.GameRule;
+import blackjack.model.gameRule.Result;
 
 public class Player extends Gamer {
 
@@ -16,6 +17,11 @@ public class Player extends Gamer {
 
     public void applyResult(Result result) {
         playerStatus.registerProfitAmount(result);
+    }
+
+    @Override
+    public boolean canHit() {
+        return totalScore() <= GameRule.PLAYER_HIT_MAX_SCORE;
     }
 
     public String name() {

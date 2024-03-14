@@ -60,8 +60,8 @@ public class BlackjackController {
         drawCardToDealer(dealer);
         drawCardToPlayer(players);
 
-        Card dealerInitialOpenCard = GameRule.applyDealerInitialCardOpenRule(dealer);
-        DealerDto dealerDto = DtoGenerator.createInitialDealerDto(dealerInitialOpenCard);
+        Card dealerFisrtCard = dealer.fistCard();
+        DealerDto dealerDto = DtoGenerator.createInitialDealerDto(dealerFisrtCard);
         List<PlayerDto> playerDtos = DtoGenerator.createPlayerDtos(players);
 
         OutputView.printInitialDrawResult(dealerDto, playerDtos);
@@ -86,11 +86,11 @@ public class BlackjackController {
     }
 
     private void initialResult(Dealer dealer, List<Player> players) {
-        GameRule.applyInitialResultRule(dealer, players);
+        GameRule.initialResultRule(dealer, players);
     }
 
     private void runHitStay(Dealer dealer, List<Player> players) {
-        List<Player> hitStayTargetPlayer = GameRule.applyHitStayTargetPlayerDecisionRule(players);
+        List<Player> hitStayTargetPlayer = GameRule.hitStayTargetPlayerDecisionRule(players);
         if (hitStayTargetPlayer.isEmpty()) {
             return;
         }
@@ -106,10 +106,10 @@ public class BlackjackController {
     }
 
     private void hitOrStay(Player player) {
-        while (GameRule.applyPlayerHitRule(player) && InputView.askPlayerForCard(player)) {
+        while (player.canHit() && InputView.askPlayerForCard(player)) {
             executeHit(player);
         }
-        if (GameRule.applyPlayerHitRule(player)) {
+        if (player.canHit()) {
             PlayerDto playerDto = DtoGenerator.createPlayerDto(player);
             OutputView.printPlayerCard(playerDto);
         }
@@ -123,7 +123,7 @@ public class BlackjackController {
     }
 
     private void runDealerTurn(Dealer dealer) {
-        if (GameRule.applyDealerHitRule(dealer)) {
+        if (dealer.canHit()) {
             Card card = playingDeck.drawCard();
             dealer.receiveCard(card);
             OutputView.printDealerHit();
@@ -131,7 +131,7 @@ public class BlackjackController {
     }
 
     private void gameResult(Dealer dealer, List<Player> players) {
-        GameRule.applyFinalResultRule(dealer, players);
+        GameRule.finalResultRule(dealer, players);
         for (Player player : players) {
             GameRule.applyGameResultProfit(dealer, player);
         }

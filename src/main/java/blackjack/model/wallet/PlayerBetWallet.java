@@ -1,6 +1,6 @@
 package blackjack.model.wallet;
 
-import blackjack.model.result.Result;
+import blackjack.model.gameRule.Result;
 
 public class PlayerBetWallet {
 

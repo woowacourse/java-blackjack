@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.CardPattern;
-import blackjack.model.result.Result;
+import blackjack.model.gameRule.Result;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -61,6 +61,38 @@ class DealerTest {
 
         //then
         assertThat(totalScore).isEqualTo(12);
+    }
+
+    @DisplayName("딜러의 스코어가 17 미만이라면 히트할 수 있다.")
+    @Test
+    void canHitByExpectedTrue() {
+        //given
+        Dealer dealer = new Dealer(100);
+        Card card = new Card(CardPattern.CLOVER, CardNumber.FIVE);
+
+        //when
+        dealer.receiveCard(card);
+
+        //then
+        assertThat(dealer.canHit()).isTrue();
+    }
+
+    @DisplayName("딜러의 스코어가 17 이상이라면 히트할 수 없다.")
+    @Test
+    void canHitByExpectedFalse() {
+        //given
+        Dealer dealer = new Dealer(100);
+        Card card1 = new Card(CardPattern.CLOVER, CardNumber.TEN);
+        Card card2 = new Card(CardPattern.SPADE, CardNumber.TEN);
+        Card card3 = new Card(CardPattern.CLOVER, CardNumber.ACE);
+
+        //when
+        dealer.receiveCard(card1);
+        dealer.receiveCard(card2);
+        dealer.receiveCard(card3);
+
+        //then
+        assertThat(dealer.canHit()).isFalse();
     }
 
     @DisplayName("플레이어에 게임 수익을 딜러의 지급금에 등록한다.")
