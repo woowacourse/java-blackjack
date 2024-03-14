@@ -78,4 +78,20 @@ class BlackJackGameMachineTest {
         Assertions.assertThat(summationCardPoint)
                 .isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("블랙잭인 경우 블랙잭이라 하는지 검증")
+    void isBlackJack() {
+        BlackJackGameMachine blackJackGameMachine = new BlackJackGameMachine(TestHoldingCards.BLACK_JACK);
+        Assertions.assertThat(blackJackGameMachine.isBlackJack())
+                .isTrue();
+    }
+
+    @Test
+    @DisplayName("블랙잭이 아닌 경우 블랙잭이 아니라 하는지 검증")
+    void isNotBlackJack() {
+        BlackJackGameMachine blackJackGameMachine = new BlackJackGameMachine(WIN_CARDS_WITH_ACE);
+        Assertions.assertThat(blackJackGameMachine.isBlackJack())
+                .isFalse();
+    }
 }
