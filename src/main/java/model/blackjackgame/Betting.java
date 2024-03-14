@@ -20,4 +20,15 @@ public class Betting {
             throw new IllegalArgumentException("0원 이하의 베팅은 하실 수 없습니다");
         }
     }
+
+    public int profit(String result) {
+        if (result.equals("승")) {
+            return money;
+        }
+        return 0;
+    }
+
+    public int getMoney() {
+        return money;
+    }
 }

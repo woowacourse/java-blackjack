@@ -1,6 +1,7 @@
 package model.blackjackgame;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import model.player.Player;
 import org.junit.jupiter.api.DisplayName;
@@ -13,5 +14,12 @@ class BettingTest {
     void testInvalidBettingMoney() {
         assertThatThrownBy(() ->
                 new Betting(new Player("lily"), 0)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("승리 시 배팅 금액을 수익으로 배당")
+    @Test
+    void testProfitWhenWin() {
+        Betting betting = new Betting(new Player("lily"), 10000);
+        assertEquals(betting.getMoney(), betting.profit("승"));
     }
 }
