@@ -2,6 +2,7 @@ package domain.participant.player;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -17,7 +18,13 @@ public class Players {
         this.players = List.copyOf(players);
     }
 
-    public static Players from(final Collection<Player> players) {
+    public static Players from(final List<String> playerNames) {
+        return new Players(playerNames.stream()
+                .map(Player::new)
+                .toList());
+    }
+
+    public static Players from(final Set<Player> players) {
         return new Players(players);
     }
 

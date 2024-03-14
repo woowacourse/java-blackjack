@@ -24,9 +24,8 @@ class PlayersTest {
                 ),
                 Arguments.of(
                         List.of(
-                                new Player("1"), new Player("2"), new Player("3"), new Player("4"),
-                                new Player("5"), new Player("6"), new Player("7"), new Player("8"),
-                                new Player("9")),
+                                "name1", "name2", "name3", "name4", "name5", "name6", "name7", "name8", "name9"
+                        ),
                         "플레이어의 수는 최소 1명 최대 8명입니다 : 현재 9명"
                 )
         );
@@ -35,7 +34,7 @@ class PlayersTest {
     @DisplayName("플레이어의 수가 최소 1명 최대 8명으로 이루어져 있지 않은 경우 예외가 발생한다.")
     @MethodSource
     @ParameterizedTest
-    void validateSize(List<Player> players, String message) {
+    void validateSize(List<String> players, String message) {
         assertThatThrownBy(() -> Players.from(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(message);

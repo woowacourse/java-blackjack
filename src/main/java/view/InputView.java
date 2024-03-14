@@ -16,10 +16,8 @@ public class InputView implements BlackjackViewParser {
     public Players askPlayers() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = requireNotBlank(readLine());
-        List<Player> players = Arrays.stream(input.split(","))
-                .map(name -> new Player(name.trim()))
-                .toList();
-        return Players.from(players);
+        List<String> playerNames = Arrays.stream(input.split(",")).toList();
+        return Players.from(playerNames);
     }
 
     public GameCommand askMoreCard(final Player player) {
