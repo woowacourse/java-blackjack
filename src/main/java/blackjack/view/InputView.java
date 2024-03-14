@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 public class InputView {
 
+    private static final String COMMAND_REQUEST_MESSAGE = "%s는(은) 한장의 카드를 더 받겠습니까?(예: %s, 아니오: %s)";
+
     private final Scanner scanner;
 
     public InputView() {
@@ -36,9 +38,14 @@ public class InputView {
                 .count();
     }
 
-    public String receiveCommand(String name) {
-        System.out.println(name + "는(은) 한장의 카드를 더 받겠습니까?(예는 y, 아니오: n)");
-        return scanner.nextLine();
+    public Command receiveCommand(String playerName) {
+        String message = COMMAND_REQUEST_MESSAGE.formatted(
+                playerName, Command.HIT.getIdentifier(), Command.STAND.getIdentifier()
+        );
+        System.out.println(message);
+
+        String identifier = scanner.nextLine();
+        return Command.from(identifier);
     }
 
     public long receiveBetAmount(String playerName) {

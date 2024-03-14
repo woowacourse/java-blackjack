@@ -11,6 +11,7 @@ import blackjack.domain.result.BlackjackRevenueCalculator;
 import blackjack.dto.DealerInitialHandDto;
 import blackjack.dto.GamerHandDto;
 import blackjack.dto.GamerRevenueDto;
+import blackjack.view.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.LinkedHashMap;
@@ -18,9 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackjackController {
-
-    private static final String HIT_COMMAND = "y";
-    private static final String STAND_COMMAND = "n";
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -93,15 +91,12 @@ public class BlackjackController {
     }
 
     private boolean canDistribute(Player player) {
-        return player.canReceiveCard() && HIT_COMMAND.equals(getCommand(player));
+        return player.canReceiveCard() && isPlayerCommandHit(player);
     }
 
-    private String getCommand(Player player) {
-        String command = inputView.receiveCommand(player.getName().value());
-        if (HIT_COMMAND.equals(command) || STAND_COMMAND.equals(command)) {
-            return command;
-        }
-        throw new IllegalArgumentException(HIT_COMMAND + " 또는 " + STAND_COMMAND + "만 입력 가능합니다.");
+    private boolean isPlayerCommandHit(Player player) {
+        Command command = inputView.receiveCommand(player.getName().value());
+        return command.isHit();
     }
 
     private void distributeCardToDealer(Dealer dealer, Deck deck) {
