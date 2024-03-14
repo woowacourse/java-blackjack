@@ -81,8 +81,8 @@ public class OutputView {
     }
 
     private String formatDealerEarning(final List<PlayerEarning> playerEarnings) {
-        double earning = (-1) * playerEarnings.stream()
-                .mapToDouble(PlayerEarning::earning)
+        int earning = (-1) * playerEarnings.stream()
+                .mapToInt(PlayerEarning::earning)
                 .sum();
         return DEALER_EARNING_PREFIX + earning;
     }

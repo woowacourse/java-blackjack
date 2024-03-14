@@ -105,7 +105,7 @@ class MatchResultTest {
     @ParameterizedTest
     @MethodSource("provideMatchResultAndExpectedEarning")
     @DisplayName("게임 결과로 수익을 구한다")
-    void calculateEarningTest(MatchResult matchResult, double expectedEarning) {
+    void calculateEarningTest(MatchResult matchResult, int expectedEarning) {
         // given
         BettingMoney bettingMoney = new BettingMoney(1000);
 

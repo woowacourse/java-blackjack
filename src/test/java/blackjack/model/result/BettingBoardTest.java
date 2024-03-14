@@ -14,7 +14,7 @@ class BettingBoardTest {
     @ParameterizedTest
     @MethodSource("provideMatchResultAndExpectedEarning")
     @DisplayName("플레이어의 게임 결과로 수익을 구한다")
-    void determineEarningTest(MatchResult matchResult, double expectedEarning) {
+    void determineEarningTest(MatchResult matchResult, int expectedEarning) {
         // given
         String playerName = "mia";
         Map<String, BettingMoney> bettingMoneys = Map.of(playerName, new BettingMoney(1000));

@@ -1,17 +1,17 @@
 package blackjack.model.result;
 
 public final class BettingMoney {
-    private final double amount;
+    private final int amount;
 
-    public BettingMoney(final double amount) {
+    public BettingMoney(final int amount) {
         this.amount = amount;
     }
 
     public BettingMoney applyEarningRate(final double earningRate) {
-        return new BettingMoney(amount * earningRate);
+        return new BettingMoney((int) (amount * earningRate));
     }
 
-    public double getAmount() {
+    public int getAmount() {
         return amount;
     }
 }
