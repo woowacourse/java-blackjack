@@ -3,59 +3,92 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.domain.card.Deck;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.Number;
+import blackjack.domain.card.Suit;
 import blackjack.domain.card.TestDeckFactory;
-import blackjack.domain.gamer.*;
+import blackjack.domain.gamer.BetAmount;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamers;
+import blackjack.domain.gamer.Name;
+import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GameBoardTest {
 
-    /**
-     * 카드 순서 :
-     * Ace - HEART, SPADE, CLOVER, DIAMOND
-     * 2 - HEART, SPADE, CLOVER, DIAMOND
-     * ...
-     * KING - HEART, SPADE, CLOVER, DIAMOND
-     */
     @DisplayName("플레이어의 최종 수익을 반환한다.")
     @Test
     void returnPlayersProfit() {
-        final Deck deck = new Deck(new TestDeckFactory());
+        // given
+        final Stack<Card> cards = new Stack<>();
+        cards.push(new Card(Number.NINE, Suit.SPADE));
+        cards.push(new Card(Number.TEN, Suit.SPADE));
+        cards.push(new Card(Number.TWO, Suit.HEART));
+        cards.push(new Card(Number.THREE, Suit.HEART));
+        cards.push(new Card(Number.NINE, Suit.DIAMOND));
+        cards.push(new Card(Number.EIGHT, Suit.DIAMOND));
+        cards.push(new Card(Number.NINE, Suit.HEART));
+        cards.push(new Card(Number.EIGHT, Suit.SPADE));
+        final Deck deck = new Deck(new TestDeckFactory(cards));
+
         final Players players = new Players(List.of(
                 Player.of("pobi", 10000),
-                Player.of("jason", 20000))
+                Player.of("jason", 20000),
+                Player.of("nyangin", 30000))
         );
         final Dealer dealer = new Dealer();
         final Gamers gamers = new Gamers(dealer, players);
-        GameBoard gameBoard = new GameBoard(deck, gamers);
+
+        final GameBoard gameBoard = new GameBoard(deck, gamers);
         gameBoard.drawInitialCards();
 
+        // when
         Map<Name, BetAmount> playersProfit = gameBoard.getPlayersProfit();
 
+        // then
         assertAll(
                 () -> assertThat(playersProfit.get(new Name("pobi"))).isEqualTo(new BetAmount(0)),
-                () -> assertThat(playersProfit.get(new Name("jason"))).isEqualTo(new BetAmount(-20000))
+                () -> assertThat(playersProfit.get(new Name("jason"))).isEqualTo(new BetAmount(-20000)),
+                () -> assertThat(playersProfit.get(new Name("nyangin"))).isEqualTo(new BetAmount(30000))
         );
     }
 
     @DisplayName("딜러의 최종 수익을 반환한다.")
     @Test
     void returnDealerProfits() {
-        final Deck deck = new Deck(new TestDeckFactory());
+        // given
+        final Stack<Card> cards = new Stack<>();
+        cards.push(new Card(Number.NINE, Suit.SPADE));
+        cards.push(new Card(Number.TEN, Suit.SPADE));
+        cards.push(new Card(Number.TWO, Suit.HEART));
+        cards.push(new Card(Number.THREE, Suit.HEART));
+        cards.push(new Card(Number.NINE, Suit.DIAMOND));
+        cards.push(new Card(Number.EIGHT, Suit.DIAMOND));
+        cards.push(new Card(Number.NINE, Suit.HEART));
+        cards.push(new Card(Number.EIGHT, Suit.SPADE));
+        final Deck deck = new Deck(new TestDeckFactory(cards));
+
         final Players players = new Players(List.of(
                 Player.of("pobi", 10000),
-                Player.of("jason", 20000))
+                Player.of("jason", 20000),
+                Player.of("nyangin", 30000))
         );
         final Dealer dealer = new Dealer();
         final Gamers gamers = new Gamers(dealer, players);
-        GameBoard gameBoard = new GameBoard(deck, gamers);
+
+        final GameBoard gameBoard = new GameBoard(deck, gamers);
         gameBoard.drawInitialCards();
 
+        // when
         double dealerProfit = gameBoard.getDealerProfit();
 
-        assertThat(dealerProfit).isEqualTo(20000);
+        // then
+        assertThat(dealerProfit).isEqualTo(-10000);
     }
 }
