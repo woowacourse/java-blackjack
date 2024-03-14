@@ -2,6 +2,7 @@ package blackjack.domain.gamer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
@@ -54,5 +55,20 @@ public abstract class BlackjackGamer {
 
 	public Hand getHand() {
 		return hand;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		BlackjackGamer that = (BlackjackGamer)o;
+		return Objects.equals(name, that.name);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name);
 	}
 }
