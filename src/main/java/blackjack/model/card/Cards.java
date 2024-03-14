@@ -62,7 +62,7 @@ public class Cards {
         return cards.size();
     }
 
-    public Card get(int index) {
+    public Card findByIndex(final int index) {
         return cards.get(index);
     }
 

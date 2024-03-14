@@ -47,7 +47,7 @@ public class Dealer {
     }
 
     public Card getFirstCard() {
-        return cards.get(0);
+        return cards.findByIndex(0);
     }
 
     public List<Card> getCards() {
