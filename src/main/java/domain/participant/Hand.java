@@ -27,7 +27,7 @@ public class Hand {
         return result;
     }
 
-    public boolean isNotBurst() {
+    public boolean isNotBust() {
         return getCardsNumberSum() <= BLACKJACK_CONDITION;
     }
 

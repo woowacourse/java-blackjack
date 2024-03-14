@@ -14,15 +14,15 @@ public class Player extends Participant {
 
     @Override
     public boolean isDrawable() {
-        return hand.isNotBurst() && hand.isNotMaximum();
+        return hand.isNotBust() && hand.isNotMaximum();
     }
 
     public PlayerName getPlayerName() {
         return playerName;
     }
 
-    public boolean isNotBurst() {
-        return hand.isNotBurst();
+    public boolean isNotBust() {
+        return hand.isNotBust();
     }
 
     public boolean isBlackJack() {
