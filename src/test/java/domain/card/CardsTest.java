@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Test;
 
 class CardsTest {
 
-    private final int DECK_COUNT = 6;
+    private static final int SINGLE_DECK_SIZE = 52;
+    private static final int DECK_COUNT = 6;
 
     @Test
     @DisplayName("모든 카드를 뽑았을 때 서로 다른 카드의 개수는 52개다.")
@@ -16,11 +17,11 @@ class CardsTest {
         final Cards deck = Cards.makeDecks();
         final Set<Card> cards = new HashSet<>();
 
-        for (int i = 0; i < 52 * DECK_COUNT; i++) {
+        for (int i = 0; i < SINGLE_DECK_SIZE * DECK_COUNT; i++) {
             cards.add(deck.draw());
         }
 
-        Assertions.assertThat(cards).size().isEqualTo(52);
+        Assertions.assertThat(cards).size().isEqualTo(SINGLE_DECK_SIZE);
     }
 
     @Test
@@ -28,7 +29,7 @@ class CardsTest {
     void handsSize() {
         final Cards cards = Cards.makeDecks();
 
-        for (int i = 0; i < 52 * DECK_COUNT; i++) {
+        for (int i = 0; i < SINGLE_DECK_SIZE * DECK_COUNT; i++) {
             cards.draw();
         }
 
