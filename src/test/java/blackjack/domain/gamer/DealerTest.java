@@ -27,7 +27,7 @@ class DealerTest {
         dealer.draw(List.of(new Card(NINE, SPADE), new Card(QUEEN, CLUB)));
 
         // then
-        assertThat(dealer.getFirstDealCard()).isEqualTo(expectedCard);
+        assertThat(dealer.findPublicDealCard()).isEqualTo(expectedCard);
     }
 
     @Test

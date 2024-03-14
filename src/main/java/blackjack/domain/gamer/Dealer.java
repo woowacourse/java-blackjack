@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Dealer {
     public static final int HIT_UPPER_BOUND = 16;
-    private static final int FIRST_DEAL_CARD_INDEX = 0;
+    private static final int PUBLIC_DEAL_CARD_INDEX = 0;
 
     private final Gamer gamer;
 
@@ -15,7 +15,7 @@ public class Dealer {
     }
 
     public boolean isScoreUnderBound() {
-        return gamer.hand.calculateScore() <= HIT_UPPER_BOUND;
+        return gamer.getScore() <= HIT_UPPER_BOUND;
     }
 
     public void draw(Card card) {
@@ -34,12 +34,12 @@ public class Dealer {
         return gamer.isBlackjack();
     }
 
-    public Card getFirstDealCard() {
-        return gamer.hand.getMyCardAt(FIRST_DEAL_CARD_INDEX);
+    public Card findPublicDealCard() {
+        return gamer.getCardAt(PUBLIC_DEAL_CARD_INDEX);
     }
 
     public List<Card> getCards() {
-        return gamer.hand.getMyCards();
+        return gamer.getCards();
     }
 
     public int getScore() {

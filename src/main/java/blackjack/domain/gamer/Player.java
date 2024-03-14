@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Player {
     private static final String NAME_EMPTY_ERROR = "공백이 아닌 플레이어를 입력해 주세요.";
+    private static final int ONLY_DEAL_CARD_COUNT = 2;
 
     private final Gamer gamer;
     private final String name;
@@ -34,6 +35,10 @@ public class Player {
 
     public boolean isMaxScore() {
         return gamer.isMaxScore();
+    }
+
+    public boolean isOnlyDeal() {
+        return gamer.getCards().size() == ONLY_DEAL_CARD_COUNT;
     }
 
     public String getName() {

@@ -36,7 +36,7 @@ public class BlackjackController {
         blackjackGame.deal(dealer, players);
 
         OutputView.printDealAnnounce(players.getNames());
-        OutputView.printDealerDealCard(dealer.getFirstDealCard());
+        OutputView.printDealerDealCard(dealer.findPublicDealCard());
 
         for (Player player : players.getPlayers()) {
             OutputView.printDealCards(player.getName(), player.getCards());
@@ -78,7 +78,7 @@ public class BlackjackController {
     }
 
     private void printCardsWhenStand(Player player) {
-        if (player.getCards().size() == 2) {
+        if (player.isOnlyDeal()) {
             OutputView.printDealCards(player.getName(), player.getCards());
         }
     }
