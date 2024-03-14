@@ -1,10 +1,10 @@
 package model.player;
 
-import java.util.List;
-import java.util.Objects;
-
 import model.card.Card;
 import model.card.Cards;
+
+import java.util.List;
+import java.util.Objects;
 
 public abstract class User {
 
@@ -22,9 +22,9 @@ public abstract class User {
             throw new IllegalArgumentException("참가자의 이름은 공백이거나 null일 수 없습니다.");
         }
     }
-    
+
     public void addCards(List<Card> card) {
-       cards.addCards(card);
+        cards.addCards(card);
     }
 
     public int calculateScore() {

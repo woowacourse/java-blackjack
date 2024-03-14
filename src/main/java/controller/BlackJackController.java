@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import model.BlackJack;
 import model.card.Card;
 import model.card.CardDeck;
@@ -11,6 +9,9 @@ import model.player.Participant;
 import model.player.Participants;
 import view.InputView;
 import view.OutputView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlackJackController {
 

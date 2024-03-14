@@ -39,11 +39,6 @@ public record Participants(List<Participant> participants) {
         }
     }
 
-    public List<String> findParticipantsName() {
-        return participants.stream()
-                .map(participant -> participant.name).toList();
-    }
-
     public void offerCardToParticipants(Predicate<String> stringForMoreCard, BiConsumer<String, Cards> callback, Supplier<List<Card>> selectCard) {
         for (Participant participant : participants) {
             while (participant.isHit() && stringForMoreCard.test(participant.getName())) {
@@ -51,6 +46,11 @@ public record Participants(List<Participant> participants) {
                 callback.accept(participant.getName(), participant.getCards());
             }
         }
+    }
+
+    public List<String> findParticipantsName() {
+        return participants.stream()
+                .map(participant -> participant.name).toList();
     }
 
     @Override

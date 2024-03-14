@@ -1,7 +1,8 @@
 package model.player;
 
-import java.util.List;
 import model.card.Card;
+
+import java.util.List;
 
 public class Dealer extends User {
 

@@ -1,14 +1,15 @@
 package view;
 
+import model.Outcome;
+import model.card.Card;
+import model.card.Cards;
+import model.card.Denomination;
+import model.card.Suit;
+import model.player.Participant;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import model.Outcome;
-import model.card.Card;
-import model.card.Denomination;
-import model.card.Suit;
-import model.card.Cards;
-import model.player.Participant;
 
 public class OutputView {
 
