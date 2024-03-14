@@ -2,6 +2,16 @@
 
 블랙잭 미션 저장소
 
-## 우아한테크코스 코드리뷰
+## 우아한테크코스 코드리뷰 매칭 결과
+| Reviwer | Reviewee |
+|---------|----------|
+| 타칸    | 짱수, 커비 |
+| 테바    | 안나, 타칸 |
+| 안나    | 짱수, 제제 |
+| 제제    | 타칸, 러쉬 |
+| 러쉬    | 제제, 안나 |
+| 커비    | 러쉬, 테바 |
+| 짱수    | 테바, 커비 |
 
-- [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
+
+
