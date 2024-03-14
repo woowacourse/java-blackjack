@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import view.InputView;
 import view.OutputView;
 
@@ -102,6 +103,7 @@ public class BlackJackController {
 
     private void printGameProfits(final BlackJackGame blackJackGame, Bets bets) {
         Map<Player, Profit> playerProfits = blackJackGame.getProfits(bets);
+        Entry<Player, Integer> dealerProfit = blackJackGame.getDealerProfit(bets);
         outputView.printProfits(ProfitDto.from(playerProfits));
     }
 }

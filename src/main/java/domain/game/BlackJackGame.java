@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class BlackJackGame {
 
@@ -47,20 +48,29 @@ public class BlackJackGame {
     public Map<Player, Profit> getProfits(final Bets bets) {
         Map<Player, Profit> playerProfits = new LinkedHashMap<>();
         Map<Player, Result> playerResults = getGameResults();
+
         for (Map.Entry<Player, Result> entry : playerResults.entrySet()) {
             Player player = entry.getKey();
             Result result = entry.getValue();
             playerProfits.put(player, Profit.of(bets.get(player.getName()), ProfitRate.from(result)));
         }
+
         return playerProfits;
     }
 
-    public Map<Player, Result> getGameResults() {
+    private Map<Player, Result> getGameResults() {
         Map<Player, Result> results = new LinkedHashMap<>();
         for (Player player : players) {
             results.put(player, Result.of(dealer, player));
         }
         return results;
+    }
+
+    public Entry<Player, Integer> getDealerProfit(final Bets bets) {
+        int playerProfitsSum = getProfits(bets).values().stream().
+                mapToInt(Profit::getMoney)
+                .sum();
+        return Map.entry(dealer, playerProfitsSum * -1);
     }
 
     public Map<Player, Score> getScores() {

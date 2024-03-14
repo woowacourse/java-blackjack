@@ -61,11 +61,10 @@ public class OutputView {
 
     public void printProfits(final ProfitDto profitDto) {
         System.out.println("\n## 최종 수익");
-        System.out.println(profitDto.getDealerProfit().getKey() + ": " + profitDto.getDealerProfit().getValue());
-        for (Map.Entry<String, Integer> entry : profitDto.gameProfits().entrySet()) {
+        System.out.println(profitDto.dealerProfit().getKey() + ": " + profitDto.dealerProfit().getValue());
+        for (Map.Entry<String, Integer> entry : profitDto.playerProfits().entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
-
 
 }
