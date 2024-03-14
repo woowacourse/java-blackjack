@@ -1,13 +1,18 @@
 package blackjack.domain.deck;
 
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Deck {
+
+    private static final List<Card> CACHE_DECK = Arrays.stream(Kind.values())
+            .flatMap(kind -> Arrays.stream(Value.values())
+                    .map(value -> new Card(kind, value)))
+            .collect(Collectors.toList());
 
     private final Deque<Card> cards;
 
@@ -16,19 +21,8 @@ public class Deck {
     }
 
     public static Deck createShuffledDeck() {
-        Deque<Card> cards = new ArrayDeque<>();
-        makeShuffledOrder().stream()
-                .map(Card::valueOf)
-                .forEach(cards::add);
-        return new Deck(cards);
-    }
-
-    private static List<Integer> makeShuffledOrder() {
-        List<Integer> cardOrder = IntStream.range(0, 52)
-                .boxed()
-                .collect(Collectors.toList());
-        Collections.shuffle(cardOrder);
-        return cardOrder;
+        Collections.shuffle(CACHE_DECK);
+        return new Deck(new ArrayDeque<>(CACHE_DECK));
     }
 
     public Card draw() {

@@ -1,5 +1,8 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.deck.Kind.SPADE;
+import static blackjack.domain.deck.Value.ACE;
+import static blackjack.domain.deck.Value.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.deck.Card;
@@ -15,8 +18,8 @@ class PlayerTest {
     void should_AddCard_When_PlayerAcceptDraw() {
         Deck deck = Deck.createShuffledDeck();
         Player testPlayer = Player.createPlayer(new Name("pobi"),
-                List.of(Card.valueOf(0),
-                        Card.valueOf(1)),
+                List.of(new Card(SPADE, ACE),
+                        new Card(SPADE, TWO)),
                 new BetMoney(1));
 
         testPlayer.draw(() -> Boolean.TRUE, deck);
@@ -29,8 +32,8 @@ class PlayerTest {
     void should_NotAddCard_When_PlayerRejectDraw() {
         Deck deck = Deck.createShuffledDeck();
         Player testPlayer = Player.createPlayer(new Name("pobi"),
-                List.of(Card.valueOf(0),
-                        Card.valueOf(1)),
+                List.of(new Card(SPADE, ACE),
+                        new Card(SPADE, TWO)),
                 new BetMoney(1));
 
         testPlayer.draw(() -> Boolean.FALSE, deck);

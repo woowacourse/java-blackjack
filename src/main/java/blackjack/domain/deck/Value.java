@@ -2,7 +2,6 @@ package blackjack.domain.deck;
 
 public enum Value {
 
-    NONE("", 0),
     ACE("A", 1), TWO("2", 2), THREE("3", 3),
     FOUR("4", 4), FIVE("5", 5), SIX("6", 6),
     SEVEN("7", 7), EIGHT("8", 8), NINE("9", 9),
@@ -14,13 +13,6 @@ public enum Value {
     Value(String valueName, int score) {
         this.valueName = valueName;
         this.score = score;
-    }
-
-    public static Value findValue(int cardNumber) {
-        if (cardNumber < 1 || cardNumber >= values().length) {
-            throw new IllegalStateException("존재하지 않는 카드 번호입니다.");
-        }
-        return values()[cardNumber];
     }
 
     public int getScore() {

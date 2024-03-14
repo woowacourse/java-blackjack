@@ -1,5 +1,10 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.deck.Kind.DIAMOND;
+import static blackjack.domain.deck.Kind.SPADE;
+import static blackjack.domain.deck.Value.ACE;
+import static blackjack.domain.deck.Value.KING;
+import static blackjack.domain.deck.Value.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.deck.Card;
@@ -13,10 +18,10 @@ class HandsTest {
     void should_addCard_IntoHands() {
         Hands hands = new Hands();
 
-        hands.addCard(Card.valueOf(1));
+        hands.addCard(new Card(SPADE, TWO));
         assertThat(hands.getHands()).hasSize(1);
 
-        hands.addCard(Card.valueOf(13));
+        hands.addCard(new Card(DIAMOND, ACE));
         assertThat(hands.getHands()).hasSize(2);
     }
 
@@ -25,8 +30,8 @@ class HandsTest {
     void should_HandsScore_Equals_SumOfCardScores() {
         Hands hands = new Hands();
 
-        hands.addCard(Card.valueOf(1));
-        hands.addCard(Card.valueOf(12));
+        hands.addCard(new Card(SPADE, TWO));
+        hands.addCard(new Card(SPADE, KING));
 
         assertThat(hands.findHandsScore()).isEqualTo(12);
     }

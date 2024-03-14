@@ -1,10 +1,12 @@
 package blackjack.domain.deck;
 
+import static blackjack.domain.deck.Kind.CLOVER;
 import static blackjack.domain.deck.Kind.DIAMOND;
 import static blackjack.domain.deck.Kind.SPADE;
 import static blackjack.domain.deck.Value.ACE;
+import static blackjack.domain.deck.Value.FOUR;
+import static blackjack.domain.deck.Value.JACK;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.DisplayName;
@@ -15,8 +17,8 @@ class CardTest {
     @DisplayName("카드 트럼프 순서에 따라 정해진 문양과 값을 가진 카드가 생성된다")
     @Test
     void should_CreateCard_When_GiveCardOrder() {
-        Card testCard1 = Card.valueOf(0);
-        Card testCard2 = Card.valueOf(13);
+        Card testCard1 = new Card(SPADE, ACE);
+        Card testCard2 = new Card(DIAMOND, ACE);
 
         assertAll(
                 () -> assertThat(testCard1.getKind()).isEqualTo(SPADE),
@@ -30,22 +32,12 @@ class CardTest {
     @DisplayName("카드가 가진 점수를 확인할 수 있다")
     @Test
     void should_getCardScore() {
-        Card testCard1 = Card.valueOf(9);
-        Card testCard2 = Card.valueOf(42);
+        Card testCard1 = new Card(SPADE, JACK);
+        Card testCard2 = new Card(CLOVER, FOUR);
 
         assertAll(
                 () -> assertThat(testCard1.getScore()).isEqualTo(10),
                 () -> assertThat(testCard2.getScore()).isEqualTo(4)
         );
-    }
-
-    @DisplayName("범위를 초과하는 카드를 가져올 수 없다")
-    @Test
-    void should_ThrowIllegalArgumentException_When_find_OverOrderCard() {
-        int invalidCardOrder = 52;
-
-        assertThatThrownBy(() -> Card.valueOf(invalidCardOrder))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("입력값: ("+invalidCardOrder+") 는 존재하지 않는 카드번호 입니다.");
     }
 }

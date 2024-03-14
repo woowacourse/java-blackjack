@@ -1,5 +1,11 @@
 package blackjack.domain;
 
+import static blackjack.domain.deck.Kind.SPADE;
+import static blackjack.domain.deck.Value.ACE;
+import static blackjack.domain.deck.Value.EIGHT;
+import static blackjack.domain.deck.Value.NINE;
+import static blackjack.domain.deck.Value.TEN;
+import static blackjack.domain.deck.Value.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.deck.Card;
@@ -18,14 +24,14 @@ class GameResultTest {
     @Test
     void should_returnWin_When_PlayerHands_Higher_Than_DealerHands() {
         Player player = Player.createPlayer(new Name("pobi"),
-                List.of(Card.valueOf(0),
-                        Card.valueOf(8)),
+                List.of(new Card(SPADE, ACE),
+                        new Card(SPADE, NINE)),
                 new BetMoney(1));
         Players players = new Players(List.of(player));
         Dealer dealer = Dealer.createDealerWithCards(List.of(
-                Card.valueOf(0),
-                Card.valueOf(7)));
-        
+                new Card(SPADE, ACE),
+                new Card(SPADE, EIGHT)));
+
         GameResult gameResult = GameResult.of(dealer, players);
 
         assertThat(gameResult.getGameResult().get(player)).isEqualTo(Result.WIN);
@@ -35,14 +41,14 @@ class GameResultTest {
     @Test
     void should_returnWin_When_PlayerNonBurst_DealerBurst() {
         Player player = Player.createPlayer(new Name("pobi"),
-                List.of(Card.valueOf(0),
-                        Card.valueOf(8)),
+                List.of(new Card(SPADE, ACE),
+                        new Card(SPADE, NINE)),
                 new BetMoney(1));
         Players players = new Players(List.of(player));
         Dealer dealer = Dealer.createDealerWithCards(List.of(
-                Card.valueOf(9),
-                Card.valueOf(9),
-                Card.valueOf(9)));
+                new Card(SPADE, TEN),
+                new Card(SPADE, TEN),
+                new Card(SPADE, TEN)));
 
         GameResult gameResult = GameResult.of(dealer, players);
 
@@ -53,13 +59,13 @@ class GameResultTest {
     @Test
     void should_returnBlackJack_When_PlayerBlackJack_DealerNonBlackJACK() {
         Player player = Player.createPlayer(new Name("pobi"),
-                List.of(Card.valueOf(0),
-                        Card.valueOf(9)),
+                List.of(new Card(SPADE, ACE),
+                        new Card(SPADE, TEN)),
                 new BetMoney(1));
         Players players = new Players(List.of(player));
         Dealer dealer = Dealer.createDealerWithCards(List.of(
-                Card.valueOf(9),
-                Card.valueOf(8)));
+                new Card(SPADE, TEN),
+                new Card(SPADE, NINE)));
 
         GameResult gameResult = GameResult.of(dealer, players);
 
@@ -70,13 +76,13 @@ class GameResultTest {
     @Test
     void should_returnLose_When_PlayerHands_Lower_Than_DealerHands() {
         Player player = Player.createPlayer(new Name("pobi"),
-                List.of(Card.valueOf(0),
-                        Card.valueOf(1)),
+                List.of(new Card(SPADE, ACE),
+                        new Card(SPADE, TWO)),
                 new BetMoney(1));
         Players players = new Players(List.of(player));
         Dealer dealer = Dealer.createDealerWithCards(List.of(
-                Card.valueOf(0),
-                Card.valueOf(9)));
+                new Card(SPADE, ACE),
+                new Card(SPADE, TEN)));
 
         GameResult gameResult = GameResult.of(dealer, players);
 
@@ -87,15 +93,14 @@ class GameResultTest {
     @Test
     void should_returnLose_When_PlayerBurst_DealerNonBurst() {
         Player player = Player.createPlayer(new Name("pobi"),
-                List.of(Card.valueOf(9),
-                        Card.valueOf(9),
-                        Card.valueOf(9)),
+                List.of(new Card(SPADE, TEN),
+                        new Card(SPADE, TEN),
+                        new Card(SPADE, TEN)),
                 new BetMoney(1));
         Players players = new Players(List.of(player));
         Dealer dealer = Dealer.createDealerWithCards(List.of(
-                Card.valueOf(9),
-                Card.valueOf(9)));
-
+                new Card(SPADE, TEN),
+                new Card(SPADE, TEN)));
 
         GameResult gameResult = GameResult.of(dealer, players);
 
@@ -106,11 +111,11 @@ class GameResultTest {
     @Test
     void should_returnDraw_When_PlayerHands_Equal_DealerHands() {
         Player player = Player.createPlayer(new Name("pobi"),
-                List.of(Card.valueOf(0)),
+                List.of(new Card(SPADE, ACE)),
                 new BetMoney(1));
         Players players = new Players(List.of(player));
         Dealer dealer = Dealer.createDealerWithCards(List.of(
-                Card.valueOf(0)
+                new Card(SPADE, ACE)
         ));
 
         System.out.println(dealer.getHands().findHandsScore());
@@ -124,15 +129,15 @@ class GameResultTest {
     @Test
     void should_returnDraw_When_Both_Burst() {
         Player player = Player.createPlayer(new Name("pobi"),
-                List.of(Card.valueOf(9),
-                        Card.valueOf(9),
-                        Card.valueOf(9)),
+                List.of(new Card(SPADE, TEN),
+                        new Card(SPADE, TEN),
+                        new Card(SPADE, TEN)),
                 new BetMoney(1));
         Players players = new Players(List.of(player));
         Dealer dealer = Dealer.createDealerWithCards(List.of(
-                Card.valueOf(9),
-                Card.valueOf(9),
-                Card.valueOf(9)));
+                new Card(SPADE, TEN),
+                new Card(SPADE, TEN),
+                new Card(SPADE, TEN)));
 
         GameResult gameResult = GameResult.of(dealer, players);
 
@@ -143,13 +148,13 @@ class GameResultTest {
     @Test
     void should_returnDraw_When_Both_BlackJack() {
         Player player = Player.createPlayer(new Name("pobi"),
-                List.of(Card.valueOf(0),
-                        Card.valueOf(9)),
+                List.of(new Card(SPADE, ACE),
+                        new Card(SPADE, TEN)),
                 new BetMoney(1));
         Players players = new Players(List.of(player));
         Dealer dealer = Dealer.createDealerWithCards(List.of(
-                Card.valueOf(0),
-                Card.valueOf(9)));
+                new Card(SPADE, ACE),
+                new Card(SPADE, TEN)));
 
         GameResult gameResult = GameResult.of(dealer, players);
 
@@ -160,13 +165,13 @@ class GameResultTest {
     @Test
     void should_returnDealerProfit() {
         Player player = Player.createPlayer(new Name("pobi"),
-                List.of(Card.valueOf(0),
-                        Card.valueOf(8)),
+                List.of(new Card(SPADE, ACE),
+                        new Card(SPADE, NINE)),
                 new BetMoney(1_000));
         Players players = new Players(List.of(player));
         Dealer dealer = Dealer.createDealerWithCards(List.of(
-                Card.valueOf(0),
-                Card.valueOf(7)));
+                new Card(SPADE, ACE),
+                new Card(SPADE, EIGHT)));
 
         GameResult gameResult = GameResult.of(dealer, players);
 
