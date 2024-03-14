@@ -5,10 +5,10 @@ import java.util.function.UnaryOperator;
 
 public enum MatchResult {
 
-    PARTICIPANT_WIN(UnaryOperator.identity()),
-    PARTICIPANT_BLACKJACK_WIN(money -> money.multipliedBy(1.5)),
-    DEALER_WIN(Money::negate),
-    TIE(Money::tie),
+    PARTICIPANT_WIN(Money::profitOnWin),
+    PARTICIPANT_BLACKJACK_WIN(Money::profitOnBlackJackWin),
+    DEALER_WIN(Money::profitOnLose),
+    TIE(Money::profitOnTie),
     ;
 
     private final UnaryOperator<Money> profitCalculator;
