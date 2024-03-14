@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Players {
 
@@ -15,13 +16,6 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(List<String> names) {
-        List<Player> players = names.stream()
-                .map(Player::from)
-                .toList();
-        return new Players(players);
-    }
-
     private void validateSize(List<Player> players) {
         if (players.isEmpty()) {
             throw new IllegalArgumentException("최소 한 명의 플레이어가 있어야 합니다.");
@@ -31,7 +25,6 @@ public class Players {
         }
     }
 
-    // TODO 같은 참조값을 가지는 경우 생각
     private void validateDistinct(List<Player> players) {
         if (isDuplicated(players)) {
             throw new IllegalArgumentException("중복된 이름을 사용할 수 없습니다.");
@@ -39,14 +32,14 @@ public class Players {
     }
 
     private boolean isDuplicated(List<Player> players) {
-        return players.stream()
-                .anyMatch(player1 -> isDuplicated(players, player1));
+        return IntStream.range(0, players.size())
+                .anyMatch(index -> isDuplicated(players, index));
     }
 
-    private boolean isDuplicated(List<Player> players, Player player) {
-        return players.stream()
-                .filter(another -> player != another)
-                .anyMatch(another -> player.isEqualName(another));
+    private boolean isDuplicated(List<Player> players, int index) {
+        return IntStream.range(0, players.size())
+                .filter(currentIndex -> currentIndex != index)
+                .anyMatch(currentIndex -> players.get(currentIndex).isEqualName(players.get(index)));
     }
 
     public void drawStartCards(Deck deck) {
