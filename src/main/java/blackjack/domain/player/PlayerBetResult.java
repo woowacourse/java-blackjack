@@ -12,10 +12,10 @@ public final class PlayerBetResult {
     }
 
     public BetRevenue calculateDealerRevenue() {
-        final double sum = playersBetRevenue.values().stream()
-                .mapToDouble(BetRevenue::value)
-                .sum();
+        final BetRevenue sum = playersBetRevenue.values().stream()
+                .reduce(BetRevenue::plus)
+                .orElse(new BetRevenue(0F));
 
-        return new BetRevenue(-sum);
+        return sum.negate();
     }
 }
