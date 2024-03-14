@@ -17,7 +17,7 @@ class BetAmountTest {
     }
 
     @ParameterizedTest
-    @DisplayName("배팅 금액이 10으로 나누어 떨어질 시 예외가 발생한다.")
+    @DisplayName("배팅 금액이 10으로 나누어 떨어지지 않을 시 예외가 발생한다.")
     @ValueSource(longs = {5, 13, 10001})
     void invalidUnitBetAmount(long value) {
         Assertions.assertThatThrownBy(() -> new BetAmount(value))
