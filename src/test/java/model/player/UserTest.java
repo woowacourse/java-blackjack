@@ -54,7 +54,7 @@ class UserTest {
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
         };
         Card card = new Card(CardShape.CLOVER, CardNumber.EIGHT);
-        user.addCard(card);
+        user.addCards(List.of(card));
         assertThat(user.getCards().getCards()).hasSize(3);
     }
 
@@ -86,7 +86,7 @@ class UserTest {
         User user = new User("켬미",
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
         };
-        user.addCard(new Card(CardShape.SPACE, CardNumber.ACE));
+        user.addCards(List.of(new Card(CardShape.SPACE, CardNumber.ACE)));
 
         assertThat(user.calculateScore()).isEqualTo(15);
     }

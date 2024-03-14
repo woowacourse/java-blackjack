@@ -1,11 +1,5 @@
 package model.player;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.List;
-import java.util.stream.Stream;
 import model.Outcome;
 import model.card.Card;
 import model.card.CardNumber;
@@ -16,6 +10,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ParticipantTest {
 
@@ -39,9 +40,7 @@ class ParticipantTest {
     void noticeFalse() {
         Participant participant = new Participant("배키",
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE)));
-        participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
-        participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
-        participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
+        participant.addCards(List.of(new Card(CardShape.CLOVER, CardNumber.NINE), new Card(CardShape.CLOVER, CardNumber.NINE), new Card(CardShape.CLOVER, CardNumber.NINE)));
         assertTrue(participant.isNotHit());
     }
 
@@ -63,7 +62,7 @@ class ParticipantTest {
                 List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
         Participant overThresholdParticipant = new Participant("켬미",
                 List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
-        underThresholdParticipant.addCard(new Card(CardShape.HEART, CardNumber.NINE));
+        underThresholdParticipant.addCards(List.of(new Card(CardShape.HEART, CardNumber.NINE)));
         return Stream.of(Arguments.of(
                 underThresholdParticipant,
                 overThresholdParticipant
@@ -86,7 +85,7 @@ class ParticipantTest {
                 List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
         Dealer overThresholdDealer = new Dealer(
                 List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
-        overThresholdDealer.addCard(new Card(CardShape.HEART, CardNumber.NINE));
+        overThresholdDealer.addCards(List.of(new Card(CardShape.HEART, CardNumber.NINE)));
         return Stream.of(Arguments.of(
                 underThresholdDealer,
                 overThresholdDealer

@@ -57,7 +57,7 @@ class BlackJackTest {
                 List.of(new Card(CardShape.SPACE, CardNumber.KING), new Card(CardShape.CLOVER, CardNumber.KING)));
         Dealer overThresholdDealer = new Dealer(
                 List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
-        overThresholdDealer.addCard(new Card(CardShape.HEART, CardNumber.NINE));
+        overThresholdDealer.addCards(List.of(new Card(CardShape.HEART, CardNumber.NINE)));
         return Stream.of(Arguments.of(
                 overThresholdDealer,
                 underThresholdDealer
@@ -73,8 +73,8 @@ class BlackJackTest {
         Participant participant2 = new Participant("켬미",
                 List.of(new Card(CardShape.CLOVER, CardNumber.EIGHT), new Card(CardShape.HEART, CardNumber.SEVEN)));
 
-        participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
-        participant2.addCard(new Card(CardShape.SPACE, CardNumber.KING));
+        participant.addCards(List.of(new Card(CardShape.CLOVER, CardNumber.NINE)));
+        participant2.addCards(List.of(new Card(CardShape.SPACE, CardNumber.KING)));
 
         Participants participants = new Participants(List.of(participant, participant2));
         BlackJack blackJack = new BlackJack(participants, dealer, cardDeck);
@@ -92,7 +92,7 @@ class BlackJackTest {
                 List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
         Participant overThresholdParticipant = new Participant("배키",
                 List.of(new Card(CardShape.SPACE, CardNumber.EIGHT), new Card(CardShape.CLOVER, CardNumber.NINE)));
-        underThresholdParticipant.addCard(new Card(CardShape.HEART, CardNumber.NINE));
+        underThresholdParticipant.addCards(List.of(new Card(CardShape.HEART, CardNumber.NINE)));
         Dealer dealer = new Dealer(
                 List.of(new Card(CardShape.SPACE, CardNumber.KING), new Card(CardShape.CLOVER, CardNumber.KING)));
 

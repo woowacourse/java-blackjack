@@ -22,11 +22,7 @@ public abstract class User {
             throw new IllegalArgumentException("참가자의 이름은 공백이거나 null일 수 없습니다.");
         }
     }
-
-    public void addCard(Card... cards) {
-        this.addCards(List.of(cards));
-    }
-
+    
     public void addCards(List<Card> card) {
        cards.addCards(card);
     }
