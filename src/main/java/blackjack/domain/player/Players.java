@@ -25,6 +25,12 @@ public class Players {
                 .count();
     }
 
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(Player::getName)
+                .toList();
+    }
+
     private void validate(List<Player> participants) {
         validateEachPlayerNameUnique(participants);
         validateEntryNotEmpty(participants);
