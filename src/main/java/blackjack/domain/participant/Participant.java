@@ -5,6 +5,7 @@ import blackjack.domain.card.Hands;
 import blackjack.domain.result.BlackjackStatus;
 import blackjack.domain.result.Score;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Participant {
     protected final ParticipantName name;
@@ -28,6 +29,9 @@ public class Participant {
 
     public void addCard(final Card card) {
         hands.add(card);
+    }
+    public void addCard(final List<Card> cards) {
+        cards.forEach(hands::add);
     }
 
     protected BlackjackStatus getStatus() {

@@ -3,6 +3,7 @@ package blackjack.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import blackjack.domain.dealer.Deck;
 import blackjack.dto.ParticipantCardsDto;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -15,10 +16,11 @@ class BlackjackGameTest {
     @Test
     void init() {
         // given
-        BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"));
+        BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"), Deck.create());
+        blackjackGame.divideCard();
 
         // when
-        List<ParticipantCardsDto> participantStartCards = blackjackGame.readyCards();
+        List<ParticipantCardsDto> participantStartCards = blackjackGame.getStartCards();
 
         // then
         assertAll(() -> assertThat(participantStartCards.get(0).name()).isEqualTo(kirby),
@@ -35,8 +37,8 @@ class BlackjackGameTest {
     @Test
     void canAddCardToPlayers() {
         // given
-        BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"));
-        blackjackGame.readyCards();
+        BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"), Deck.create());
+        blackjackGame.divideCard();
 
         // when
         boolean addCardAvailable = blackjackGame.addCardToPlayers(kirby);
@@ -50,8 +52,8 @@ class BlackjackGameTest {
     @Test
     void canNotAddCardToPlayers() {
         // given
-        BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"));
-        blackjackGame.readyCards();
+        BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"), Deck.create());
+        blackjackGame.divideCard();
 
         // when
         for (int i = 0; i < 20; i++) {
@@ -61,36 +63,5 @@ class BlackjackGameTest {
 
         // then
         assertThat(addCardAvailable).isFalse();
-    }
-
-    @DisplayName("해당 이름의 플레이어가 살아있는지 확인한다.")
-    @Test
-    void isPlayerAliveByName() {
-        // given
-        BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"));
-        blackjackGame.readyCards();
-
-        // when
-        boolean isPlayerAlive = blackjackGame.isPlayerAliveByName(kirby);
-
-        // then
-        assertThat(isPlayerAlive).isTrue();
-    }
-
-    @DisplayName("해당 이름의 플레이어가 살아있지 않는지 확인한다.")
-    @Test
-    void isPlayerNotAliveByName() {
-        // given
-        BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"));
-        blackjackGame.readyCards();
-        for (int i = 0; i < 20; i++) {
-            blackjackGame.addCardToPlayers(kirby);
-        }
-
-        // when
-        boolean isPlayerAlive = blackjackGame.isPlayerAliveByName(kirby);
-
-        // then
-        assertThat(isPlayerAlive).isFalse();
     }
 }

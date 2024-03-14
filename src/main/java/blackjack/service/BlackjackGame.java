@@ -1,5 +1,6 @@
 package blackjack.service;
 
+import blackjack.domain.Participants;
 import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
 import blackjack.domain.dealer.Deck;
@@ -11,100 +12,57 @@ import blackjack.dto.CardDto;
 import blackjack.dto.ParticipantCardsDto;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackjackGame {
-    private final Players players;
-    private final Dealer dealer;
+    private final Deck deck;
+    private final Participants participants;
 
-    public BlackjackGame(final List<String> playersName) {
-        this.players = Players.from(playersName);
-        this.dealer = new Dealer(Deck.create());
-        divideCard();
+    public BlackjackGame(final List<String> playersName, final Deck deck) {
+        this.participants = new Participants(Players.from(playersName), new Dealer());
+        this.deck = deck;
     }
 
-    private void divideCard() {
-        dealer.shuffleDeck();
-        dealer.addStartCard();
-
-        final int playersCardCount = players.count() * 2;
-        players.divideCard(dealer.drawCards(playersCardCount));
+    public void divideCard() {
+        deck.shuffle();
+        participants.addStartCards(deck);
     }
 
-    public List<ParticipantCardsDto> readyCards() {
-        final Map<ParticipantName, Hands> playersCard = players.getPlayerHands();
-
-        List<ParticipantCardsDto> participantCardsDtos = playersCard.entrySet().stream()
-                .map(entry -> ParticipantCardsDto.of(entry.getKey(), entry.getValue()))
-                .collect(Collectors.toList());
-
-        participantCardsDtos.add(ParticipantCardsDto.of(dealer.getName(), dealer.getOpenedCards()));
-        return participantCardsDtos;
+    // TODO: 네이밍 이해가 애매한데...
+    public List<ParticipantCardsDto> getStartCards() {
+        return participants.getStartCards();
     }
 
     public boolean addCardToPlayers(final String name) {
-        if (!isPlayerAliveByName(name)) {
-            return false;
-        }
-
-        players.addCardTo(name, dealer.drawCard());
-
-        return true;
+        // TODO: 여기서 pick? 아니면 안에서?
+        return participants.addCardToPlayers(name, deck);
     }
 
     public int giveDealerMoreCards() {
-        int count = 0;
-
-        while (dealer.needMoreCard()) {
-            dealer.addCard();
-            count++;
-        }
-
-        return count;
+        return participants.giveDealerMoreCards(deck);
     }
 
     public Map<ParticipantName, Hands> getHandResult() {
-        final Map<ParticipantName, Hands> participantsHands = players.getPlayerHands();
-
-        final Hands dealerHands = dealer.getHands();
-
-        participantsHands.put(dealer.getName(), dealerHands);
-
-        return participantsHands;
+        return participants.getHandResult();
     }
 
     public Map<ParticipantName, Score> getScoreResult() {
-        final Map<ParticipantName, Score> participantsScores = players.getPlayerScores();
-
-        final Score dealerScore = dealer.calculate();
-
-        participantsScores.put(dealer.getName(), dealerScore);
-
-        return participantsScores;
-
+        return participants.getScoreResult();
     }
 
     public WinningResult getWinningResult() {
-        return WinningResult.of(players, dealer.calculate());
-    }
-
-    public boolean isPlayerAliveByName(final String name) {
-        return players.isNotDead(name);
+        return participants.getWinningResult();
     }
 
     public boolean isNotDealerBlackjack() {
-        return dealer.isNotBlackjack();
+        return participants.isDealerNotBlackjack();
+
     }
 
     public List<CardDto> getCardsOf(final String name) {
-        return players.getCardsOf(name).getCards().stream()
-                .map(CardDto::from)
-                .toList();
+        return participants.getCardsOf(name);
     }
 
     public List<String> getPlayersNames() {
-        return players.getNames().stream()
-                .map(ParticipantName::getName)
-                .toList();
+        return participants.getPlayersNames();
     }
 }
