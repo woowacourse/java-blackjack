@@ -16,7 +16,7 @@ class CardTest {
     void getSignatureTest() {
         Number number = Number.EIGHT;
         Shape shape = Shape.CLOVER;
-        Card card = new Card(number, shape);
+        Card card = Card.from(number, shape);
         assertThat(card.getSignature()).isEqualTo("8클로버");
     }
 
@@ -29,10 +29,10 @@ class CardTest {
 
     private static Stream<Arguments> provideCardWithIsAce() {
         return Stream.of(
-                Arguments.of(new Card(Number.ACE, Shape.HEART), true),
-                Arguments.of(new Card(Number.FIVE, Shape.CLOVER), false),
-                Arguments.of(new Card(Number.QUEEN, Shape.DIAMOND), false),
-                Arguments.of(new Card(Number.ACE, Shape.SPADE), true)
+                Arguments.of(Card.from(Number.ACE, Shape.HEART), true),
+                Arguments.of(Card.from(Number.FIVE, Shape.CLOVER), false),
+                Arguments.of(Card.from(Number.QUEEN, Shape.DIAMOND), false),
+                Arguments.of(Card.from(Number.ACE, Shape.SPADE), true)
         );
     }
 }

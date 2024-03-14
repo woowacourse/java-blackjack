@@ -79,7 +79,7 @@ class HandTest {
 
     private static List<Card> createCards(List<Number> numbers) {
         return numbers.stream()
-                .map(number -> new Card(number, Shape.CLOVER))
+                .map(number -> Card.from(number, Shape.CLOVER))
                 .toList();
     }
 }
