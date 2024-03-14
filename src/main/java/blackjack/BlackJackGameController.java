@@ -47,13 +47,12 @@ public class BlackJackGameController {
         return dealerPrize;
     }
 
-    //TODO 여기도 String VS Name
     private Betting bettingAllPlayer(BlackJackGame game) {
         Betting betting = new Betting();
-        List<String> playerNames = game.getPlayerNames();
-        for (String playerName : playerNames) {
+        List<Name> playerNames = game.getPlayerNames();
+        for (Name playerName : playerNames) {
             int bettingAmount = inputView.inputBettingAmount(playerName);
-            betting.bet(new Name(playerName), new Money(bettingAmount));
+            betting.bet(playerName, new Money(bettingAmount));
         }
         return betting;
     }

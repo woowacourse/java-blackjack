@@ -8,16 +8,14 @@ import blackjack.domain.game.result.PlayerLose;
 import blackjack.domain.game.result.PlayerWin;
 import blackjack.domain.game.result.Push;
 import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-//TODO 여기도 Name String 리팩토링
 public class BettingTest {
 
-    private static final String DEFAULT_NAME = "name";
+    private static final Name DEFAULT_NAME = new Name("name");
     private static final Money BETTING_MONEY = new Money(10000);
 
     @DisplayName("베팅 결과 상금 테스트")
@@ -34,8 +32,8 @@ public class BettingTest {
         @Test
         void playerBlackjackTest() {
             //given
-            betting.bet(new Name(DEFAULT_NAME), BETTING_MONEY);
-            PlayerResult result = new PlayerResult(new Name(DEFAULT_NAME),
+            betting.bet(DEFAULT_NAME, BETTING_MONEY);
+            PlayerResult result = new PlayerResult(DEFAULT_NAME,
                     PlayerBlackjack.getInstance());
 
             //when
@@ -49,10 +47,9 @@ public class BettingTest {
         @Test
         void playerWinTest() {
             //given
-            Player player = Player.from(DEFAULT_NAME);
-            PlayerResult result = new PlayerResult(new Name(DEFAULT_NAME),
+            PlayerResult result = new PlayerResult(DEFAULT_NAME,
                     PlayerWin.getInstance());
-            betting.bet(new Name(DEFAULT_NAME), BETTING_MONEY);
+            betting.bet(DEFAULT_NAME, BETTING_MONEY);
 
             //when
             Money prize = betting.getPrize(result);
@@ -65,9 +62,8 @@ public class BettingTest {
         @Test
         void pushTest() {
             //given
-            Player player = Player.from(DEFAULT_NAME);
-            betting.bet(new Name(DEFAULT_NAME), BETTING_MONEY);
-            PlayerResult result = new PlayerResult(new Name(DEFAULT_NAME),
+            betting.bet(DEFAULT_NAME, BETTING_MONEY);
+            PlayerResult result = new PlayerResult(DEFAULT_NAME,
                     Push.getInstance());
 
             //when
@@ -81,9 +77,8 @@ public class BettingTest {
         @Test
         void playerLoseTest() {
             //given
-            Player player = Player.from(DEFAULT_NAME);
-            betting.bet(new Name(DEFAULT_NAME), BETTING_MONEY);
-            PlayerResult result = new PlayerResult(new Name(DEFAULT_NAME),
+            betting.bet(DEFAULT_NAME, BETTING_MONEY);
+            PlayerResult result = new PlayerResult(DEFAULT_NAME,
                     PlayerLose.getInstance());
 
             //when

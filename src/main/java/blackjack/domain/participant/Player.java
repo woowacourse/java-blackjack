@@ -30,8 +30,8 @@ public class Player extends Participant {
         return START_CARD_SIZE;
     }
 
-    public String getName() {
-        return name.getName();
+    public Name getName() {
+        return name;
     }
 
     @Override

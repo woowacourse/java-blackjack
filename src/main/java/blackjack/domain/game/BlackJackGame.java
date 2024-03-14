@@ -2,6 +2,7 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.PlayerTurn;
 import blackjack.domain.participant.Players;
@@ -33,7 +34,7 @@ public class BlackJackGame {
         players.drawDealerCard(deck);
     }
 
-    public List<String> getPlayerNames() {
+    public List<Name> getPlayerNames() {
         return players.getPlayers().stream()
                 .map(Player::getName)
                 .toList();

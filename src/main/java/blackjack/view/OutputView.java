@@ -71,8 +71,8 @@ public class OutputView {
         System.out.println();
     }
 
-    private void printPlayerCards(String name, List<Card> cards) {
-        System.out.print(name + "카드: ");
+    private void printPlayerCards(Name name, List<Card> cards) {
+        System.out.print(name.getName() + "카드: ");
         printCards(cards);
     }
 
@@ -103,6 +103,7 @@ public class OutputView {
     private String toPrintedFormat(Players players) {
         return players.getPlayers().stream()
                 .map(Player::getName)
+                .map(Name::getName)
                 .collect(Collectors.joining(", "));
     }
 

@@ -65,7 +65,6 @@ public class Players {
                 .toList();
     }
 
-    //TODO Player.getName 반환값을 String VS Name
     public boolean isDealerDrawable() {
         return dealer.isDrawable();
     }
@@ -76,8 +75,7 @@ public class Players {
 
     private PlayerResult getPlayerResult(Player player) {
         GameResult gameResult = Referee.getGameResult(dealer, player);
-        String name = player.getName();
-        return new PlayerResult(new Name(name), gameResult);
+        return new PlayerResult(player.getName(), gameResult);
     }
 
     public List<Player> getPlayers() {
