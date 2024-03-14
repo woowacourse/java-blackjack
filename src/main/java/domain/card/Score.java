@@ -50,11 +50,11 @@ public final class Score {
         }
     }
 
-    private Score addAceSpecialScore(Score previousScore) {
-        if (previousScore.add(ACE_SPECIAL_SCORE).isNotBust()) {
-            return previousScore.add(ACE_SPECIAL_SCORE);
+    private Score addAceSpecialScore(Score withoutSpecialScore) {
+        if (withoutSpecialScore.add(ACE_SPECIAL_SCORE).isNotBust()) {
+            return withoutSpecialScore.add(ACE_SPECIAL_SCORE);
         }
-        return previousScore;
+        return withoutSpecialScore;
     }
 
     public Score add(Score previousScore) {

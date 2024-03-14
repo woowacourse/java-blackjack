@@ -22,8 +22,8 @@ class ScoreTest {
     }
 
     @Test
-    @DisplayName("성공: 카드들의 총점 계산 가능")
-    void totalScoreOf() {
+    @DisplayName("성공: K, 7, 4 -> 총점 21")
+    void totalScoreOf_KingSevenFour() {
         ParticipantCards participantCards = new ParticipantCards();
         participantCards.receive(List.of(
             new Card(Rank.KING, Symbol.DIAMOND),
@@ -31,6 +31,44 @@ class ScoreTest {
             new Card(Rank.FOUR, Symbol.CLUB)
         ));
         assertThat(Score.totalScoreOf(participantCards)).isEqualTo(Score.valueOf(21));
+    }
+
+    @Test
+    @DisplayName("성공: K, K, A -> 총점 21")
+    void totalScoreOf_KingKingAce() {
+        ParticipantCards participantCards = new ParticipantCards();
+        participantCards.receive(List.of(
+            new Card(Rank.KING, Symbol.DIAMOND),
+            new Card(Rank.KING, Symbol.HEART),
+            new Card(Rank.ACE, Symbol.CLUB)
+        ));
+        assertThat(Score.totalScoreOf(participantCards)).isEqualTo(Score.valueOf(21));
+    }
+
+    @Test
+    @DisplayName("성공: A, A, A, A -> 총점 14")
+    void totalScoreOf_AceAceAceAce() {
+        ParticipantCards participantCards = new ParticipantCards();
+        participantCards.receive(List.of(
+            new Card(Rank.ACE, Symbol.DIAMOND),
+            new Card(Rank.ACE, Symbol.HEART),
+            new Card(Rank.ACE, Symbol.CLUB),
+            new Card(Rank.ACE, Symbol.SPADE)
+        ));
+        assertThat(Score.totalScoreOf(participantCards)).isEqualTo(Score.valueOf(14));
+    }
+
+    @Test
+    @DisplayName("성공: A, A, K, K -> 총점 22")
+    void totalScoreOf_AceAceKingKing() {
+        ParticipantCards participantCards = new ParticipantCards();
+        participantCards.receive(List.of(
+            new Card(Rank.ACE, Symbol.DIAMOND),
+            new Card(Rank.ACE, Symbol.HEART),
+            new Card(Rank.KING, Symbol.CLUB),
+            new Card(Rank.KING, Symbol.SPADE)
+        ));
+        assertThat(Score.totalScoreOf(participantCards)).isEqualTo(Score.valueOf(22));
     }
 
     @Test
