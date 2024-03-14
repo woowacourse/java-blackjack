@@ -12,7 +12,7 @@ public abstract class Finished extends Started {
     }
 
     @Override
-    public State hit(final Card card) {
+    public State draw(final Card card) {
         throw new UnsupportedOperationException("게임이 끝난 상태에서 카드를 더이상 뽑을 수 없습니다");
     }
 

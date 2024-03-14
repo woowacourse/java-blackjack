@@ -10,8 +10,8 @@ public class Hit extends Running {
     }
 
     @Override
-    public State hit(final Card card) {
-
+    public State draw(final Card card) {
+//        getHands().
         return null;
     }
 

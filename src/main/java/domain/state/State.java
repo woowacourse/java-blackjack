@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.player.Hands;
 
 public interface State {
-    State hit(Card card);
+    State draw(Card card);
 
     State stand();
 
