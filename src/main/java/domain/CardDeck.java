@@ -2,18 +2,13 @@ package domain;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Stack;
 
 public class CardDeck {
 
-    private final Stack<Card> deck = new Stack<>();
+    private final List<Card> deck;
 
     private CardDeck() {
-        List<Card> cards = Suit.getValues().stream()
-                .flatMap(suit -> Rank.getValues().stream()
-                        .map(rank -> new Card(rank, suit)))
-                .toList();
-        deck.addAll(cards);
+        deck = Card.getAllCards();
     }
 
     public static CardDeck createShuffledDeck() {
@@ -31,6 +26,6 @@ public class CardDeck {
     }
 
     public Card draw() {
-        return deck.pop();
+        return deck.remove(0);
     }
 }
