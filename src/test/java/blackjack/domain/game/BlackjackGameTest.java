@@ -106,4 +106,59 @@ class BlackjackGameTest {
             assertThat(resultStatus).isEqualTo(ResultStatus.LOSE);
         }
     }
+
+    @Nested
+    @DisplayName("플레이어가 이긴 경우를 알 수 있다.")
+    class PlayerWinBlackjackGame {
+
+        @Test
+        void 플레이어가_딜러보다_카드의_합이_더_크면_플레이어가_이긴다() {
+            final Dealer dealer = 딜러();
+            final Players players = 플레이어들("pobi");
+            final BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
+
+            dealer.receiveCard(카드(SIX));
+            players.distributeCardToPlayer(0, 카드(TEN));
+
+            final Map<Player, ResultStatus> gameResult = blackjackGame.judgeGameResult();
+            final ResultStatus resultStatus = gameResult.get(플레이어("pobi"));
+
+            assertThat(resultStatus).isEqualTo(ResultStatus.WIN);
+        }
+
+        @Test
+        void 딜러가_버스트이면_플레이어가_이긴다() {
+            final Dealer dealer = 딜러();
+            final Players players = 플레이어들("pobi");
+            final BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
+
+            dealer.receiveCard(카드(JACK));
+            dealer.receiveCard(카드(QUEEN));
+            dealer.receiveCard(카드(KING));
+            players.distributeCardToPlayer(0, 카드(TEN));
+
+            final Map<Player, ResultStatus> gameResult = blackjackGame.judgeGameResult();
+            final ResultStatus resultStatus = gameResult.get(플레이어("pobi"));
+
+            assertThat(resultStatus).isEqualTo(ResultStatus.WIN);
+        }
+
+        @Test
+        void 플레이어가_블랙잭이고_딜러가_블랙잭이_아리면_플레이어가_이긴다() {
+            final Dealer dealer = 딜러();
+            final Players players = 플레이어들("pobi");
+            final BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
+
+            dealer.receiveCard(카드(JACK));
+            dealer.receiveCard(카드(NINE));
+            dealer.receiveCard(카드(TWO));
+            players.distributeCardToPlayer(0, 카드(TEN));
+            players.distributeCardToPlayer(0, 카드(ACE));
+
+            final Map<Player, ResultStatus> gameResult = blackjackGame.judgeGameResult();
+            final ResultStatus resultStatus = gameResult.get(플레이어("pobi"));
+
+            assertThat(resultStatus).isEqualTo(ResultStatus.WIN);
+        }
+    }
 }

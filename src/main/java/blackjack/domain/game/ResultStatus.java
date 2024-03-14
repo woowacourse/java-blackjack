@@ -21,6 +21,9 @@ public enum ResultStatus {
         if (player.isBust() || dealer.isBlackjack()) {
             return LOSE;
         }
+        if (dealer.isBust() || player.isBlackjack()) {
+            return WIN;
+        }
         return compareScore(player.calculateScore(), dealer.calculateScore());
     }
 
