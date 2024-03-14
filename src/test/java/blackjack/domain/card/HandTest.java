@@ -8,6 +8,19 @@ import org.junit.jupiter.api.Test;
 
 class HandTest {
 
+    @DisplayName("첫 번째 카드를 반환한다.")
+    @Test
+    void returnFirstCard() {
+        final Hand hand = new Hand(List.of(
+                new Card(Number.TEN, Suit.DIAMOND),
+                new Card(Number.EIGHT, Suit.CLUB)
+        ));
+
+        final Card firstCard = hand.findFirst();
+
+        assertThat(firstCard).isEqualTo(new Card(Number.TEN, Suit.DIAMOND));
+    }
+
     @DisplayName("에이스가 없을 때, 카드들의 숫자 합을 구한다.")
     @Test
     void calculateCardNumbersSum() {
