@@ -15,7 +15,7 @@ public record Hand(List<Card> cards) {
 
 	public int calculateScore() {
 		int sum = cards.stream()
-			.mapToInt(Card::getNumber)
+			.mapToInt(card -> card.number().getValue())
 			.sum();
 
 		if (hasAce()) {
