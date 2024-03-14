@@ -34,11 +34,6 @@ public class Player {
         return true;
     }
 
-    public int getScore() {
-        Score score = calculateScore();
-        return score.getScore();
-    }
-
     public PlayerName getPlayerName() {
         return playerName;
     }

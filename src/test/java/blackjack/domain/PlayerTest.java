@@ -57,7 +57,7 @@ class PlayerTest {
             player.hit(deck);
         }
 
-        assertThat(player.getScore()).isEqualTo(9);
+        assertThat(player.calculateScore().getScore()).isEqualTo(9);
     }
 
     @ParameterizedTest

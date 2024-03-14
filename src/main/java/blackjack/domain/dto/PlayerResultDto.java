@@ -6,7 +6,7 @@ import java.util.List;
 
 public record PlayerResultDto(PlayerDto playerDto, int score) {
     public static PlayerResultDto from(Player player) {
-        return new PlayerResultDto(PlayerDto.from(player), player.getScore());
+        return new PlayerResultDto(PlayerDto.from(player), player.calculateScore().getScore());
     }
 
     public String getName() {
