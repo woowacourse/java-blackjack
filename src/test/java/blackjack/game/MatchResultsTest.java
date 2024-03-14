@@ -4,40 +4,48 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.money.BetMoney;
-import blackjack.money.PlayerBet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class MatchResultsTest {
 
     @Test
+    @DisplayName("이름으로 결과를 올바르게 가져온다.")
+    void getResultByNameTest() {
+        MatchResults matchResults = new MatchResults();
+        matchResults.addResult("aru", 20, 21);
+        assertThat(matchResults.getResultByName("aru")).isEqualTo(MatchResult.DEALER_WIN);
+    }
+
+    @Test
     @DisplayName("이름이 존재하지 않는 경우 예외를 발생시킨다.")
     void nameNotFoundTest() {
         // given
-        PlayerBet bet = new PlayerBet("aru", BetMoney.of(1_000));
         MatchResults matchResults = new MatchResults();
         // when, then
-        assertThatThrownBy(() -> matchResults.calculateProfitByBet(bet))
+        assertThatThrownBy(() -> matchResults.getResultByName("pobi"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 존재하지 않는 이름입니다.");
     }
 
     @Test
-    @DisplayName("각 승패 상태에 따른 이득을 계산한다.")
-    void calculateProfitTest() {
+    @DisplayName("원하는 결과의 개수를 구한다.")
+    void getDesiredResultCountTest() {
         // given
-        int amount = 10_000;
-        int tieProfit = MatchResult.TIE.calculateProfit(amount);
-        int loseProfit = MatchResult.LOSE.calculateProfit(amount);
-        int normalWinProfit = MatchResult.NORMAL_WIN.calculateProfit(amount);
-        int blackjackWinProfit = MatchResult.BLACKJACK_WIN.calculateProfit(amount);
-        // when, then
+        MatchResults matchResults = new MatchResults();
+        matchResults.addResult("aru", 10, 20);
+        matchResults.addResult("pobi", 10, 20);
+        matchResults.addResult("atto", 10, 10);
+        matchResults.addResult("jazz", 20, 10);
+        // when
+        int playerWinCount = matchResults.getResultCount(MatchResult.PLAYER_WIN);
+        int tieCount = matchResults.getResultCount(MatchResult.TIE);
+        int dealerWinCount = matchResults.getResultCount(MatchResult.DEALER_WIN);
+        // then
         assertAll(
-                () -> assertThat(tieProfit).isEqualTo(0),
-                () -> assertThat(loseProfit).isEqualTo(-10_000),
-                () -> assertThat(normalWinProfit).isEqualTo(10_000),
-                () -> assertThat(blackjackWinProfit).isEqualTo(15_000)
+                () -> assertThat(playerWinCount).isEqualTo(1),
+                () -> assertThat(tieCount).isEqualTo(1),
+                () -> assertThat(dealerWinCount).isEqualTo(2)
         );
     }
 }

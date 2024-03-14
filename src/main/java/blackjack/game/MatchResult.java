@@ -2,19 +2,35 @@ package blackjack.game;
 
 public enum MatchResult {
 
-    LOSE(-1),
-    NORMAL_WIN(1),
-    BLACKJACK_WIN(1.5),
-    TIE(0),
-    ;
+    DEALER_WIN,
+    PLAYER_WIN,
+    TIE;
 
-    private final double profitRate;
-
-    MatchResult(double profitRate) {
-        this.profitRate = profitRate;
+    public static MatchResult chooseWinner(int playerScore, int dealerScore) {
+        if (isPlayerWinningCondition(playerScore, dealerScore)) {
+            return PLAYER_WIN;
+        }
+        if (isDealerWinningCondition(playerScore, dealerScore)) {
+            return DEALER_WIN;
+        }
+        return TIE;
     }
 
-    public int calculateProfit(int betMoney) {
-        return (int) (betMoney * profitRate);
+    private static boolean isPlayerWinningCondition(int playerScore, int dealerScore) {
+        if (isBurst(playerScore)) {
+            return false;
+        }
+        return isBurst(dealerScore) || playerScore > dealerScore;
+    }
+
+    private static boolean isDealerWinningCondition(int playerScore, int dealerScore) {
+        if (isBurst(playerScore)) {
+            return true;
+        }
+        return !isBurst(dealerScore) && dealerScore > playerScore;
+    }
+
+    private static boolean isBurst(int score) {
+        return score > BlackJackGame.BLACKJACK_MAX_SCORE;
     }
 }

@@ -1,51 +1,36 @@
 package blackjack.player;
 
 import blackjack.card.Card;
-import blackjack.game.MatchResult;
-import blackjack.player.state.GameState;
-import blackjack.player.state.playing.DealerState;
-import blackjack.player.state.playing.PlayerState;
+import blackjack.card.Deck;
+import blackjack.game.BlackJackGame;
 import java.util.List;
-import java.util.function.Supplier;
 
 public class Player {
 
     private final Name name;
-    private GameState state;
+    protected final Hand hand;
 
-    public Player(String name) {
-        this(name, new PlayerState());
-    }
-
-    private Player(String name, GameState state) {
+    Player(String name, Hand hand) {
         this.name = new Name(name);
-        this.state = state;
+        this.hand = hand;
     }
 
-    public static Player createAsDealer() {
-        return new Player("딜러", new DealerState());
+    Player(String name) {
+        this(name, new Hand());
     }
 
-    public void drawCard(Card card) {
-        state = state.drawCard(card);
+    public void drawCard(Deck deck) {
+        hand.addCard(deck.draw());
     }
 
-    public void drawCards(Supplier<Card> cardSupplier, int amount) {
+    public void drawCards(Deck deck, int amount) {
         for (int i = 0; i < amount; i++) {
-            drawCard(cardSupplier.get());
+            drawCard(deck);
         }
     }
 
-    public MatchResult matchResultVersus(Player opponent) {
-        return state.createMatchResult(opponent.state);
-    }
-
-    public void stand() {
-        state = state.stand();
-    }
-
-    public boolean isDrawable() {
-        return !state.isTerminated();
+    public boolean hasDrawableScore() {
+        return hand.calculateScore() < BlackJackGame.BLACKJACK_MAX_SCORE;
     }
 
     public String getName() {
@@ -53,19 +38,10 @@ public class Player {
     }
 
     public int getScore() {
-        Score score = state.getScore();
-        return score.toInt();
+        return hand.calculateScore();
     }
 
     public List<Card> getCards() {
-        return state.cards();
-    }
-
-    public Card getFirstCard() {
-        List<Card> cards = getCards();
-        if (cards.isEmpty()) {
-            throw new IllegalStateException("[ERROR] 카드를 가지고있지 않습니다.");
-        }
-        return getCards().get(0);
+        return hand.getCards();
     }
 }

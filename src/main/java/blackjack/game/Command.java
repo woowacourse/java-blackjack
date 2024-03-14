@@ -1,9 +1,8 @@
-package blackjack.view;
+package blackjack.game;
 
 import java.util.Arrays;
 
 public enum Command {
-
     YES("y"),
     NO("n");
 

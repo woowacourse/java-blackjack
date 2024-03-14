@@ -1,66 +1,57 @@
 package blackjack.player;
 
 import blackjack.card.Card;
+import blackjack.game.BlackJackGame;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Hand {
 
-    private static final int INIT_CARD_COUNT = 2;
+    private static final int ADDITIONAL_ACE_SCORE = 10;
 
     private final List<Card> cards;
-    private final Score score;
 
-    public Hand(List<Card> cards) {
+    Hand(List<Card> cards) {
         this.cards = cards;
-        this.score = calculateScore();
     }
 
-    public Hand() {
+    Hand() {
         this(new ArrayList<>());
     }
 
-    public Hand addCard(Card card) {
-        List<Card> newCards = new ArrayList<>(cards);
-        newCards.add(card);
-        return new Hand(newCards);
-    }
+    public int calculateScore() {
+        int minimumScore = calculateMinimumScore();
+        int maximumScore = calculateMaximumScore();
 
-    private Score calculateScore() {
-        Score calculatedScore = calculateBaseScore();
-        boolean hasAceInCards = cards.stream()
-                .anyMatch(Card::isAce);
-
-        if (hasAceInCards) {
-            calculatedScore = calculatedScore.addAceScoreOnNotBust();
+        if (maximumScore > BlackJackGame.BLACKJACK_MAX_SCORE) {
+            return minimumScore;
         }
-        return calculatedScore;
+        return maximumScore;
     }
 
-    private Score calculateBaseScore() {
+    private int calculateMinimumScore() {
         return cards.stream()
                 .map(Card::getScore)
-                .reduce(Score.zero(), Score::add);
+                .reduce(0, Integer::sum);
     }
 
-    public boolean isBlackJack() {
-        return score.isBlackJackScore() && cards.size() == INIT_CARD_COUNT;
+    private int calculateMaximumScore() {
+        int score = calculateMinimumScore();
+        boolean isAce = cards.stream()
+                .anyMatch(Card::isAce);
+
+        if (isAce) {
+            return score + ADDITIONAL_ACE_SCORE;
+        }
+        return score;
     }
 
-    public boolean isBusted() {
-        return score.isBusted();
-    }
-
-    public boolean hasScoreGreaterThan(int other) {
-        return score.isGreaterThan(other);
+    public void addCard(Card card) {
+        cards.add(card);
     }
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
-    }
-
-    public Score getScore() {
-        return score;
     }
 }

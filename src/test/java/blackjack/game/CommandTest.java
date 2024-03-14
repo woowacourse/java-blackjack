@@ -1,4 +1,4 @@
-package blackjack.view;
+package blackjack.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

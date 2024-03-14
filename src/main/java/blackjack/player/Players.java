@@ -45,7 +45,7 @@ public class Players {
     }
 
     public void drawCardsForAll(Deck deck, int amount) {
-        players.forEach(participant -> participant.drawCards(deck::draw, amount));
+        players.forEach(player -> player.drawCards(deck, amount));
     }
 
     public List<String> getNames() {
