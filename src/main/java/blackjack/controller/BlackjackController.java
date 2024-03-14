@@ -1,18 +1,14 @@
 package blackjack.controller;
 
-import blackjack.domain.card.Hands;
-import blackjack.domain.participant.ParticipantName;
-import blackjack.domain.result.Score;
 import blackjack.domain.result.WinningResult;
 import blackjack.dto.CardDto;
-import blackjack.dto.ParticipantScoreDto;
 import blackjack.dto.ParticipantCardsDto;
+import blackjack.dto.ParticipantScoresDto;
 import blackjack.dto.WinningResultDto;
 import blackjack.service.BlackjackGame;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackController {
     private final InputView inputView;
@@ -36,7 +32,7 @@ public class BlackjackController {
     private BlackjackGame readyGame() {
         try {
             final BlackjackGame blackjackGame = new BlackjackGame(inputView.readPlayerNames());
-            final List<ParticipantCardsDto> participantCardsDtos = blackjackGame.getStartCards();
+            final List<ParticipantCardsDto> participantCardsDtos = blackjackGame.readyCards();
 
             outputView.printStartCards(participantCardsDtos);
             return blackjackGame;
@@ -47,9 +43,9 @@ public class BlackjackController {
     }
 
     private void playGame(final BlackjackGame blackjackGame) {
-        final List<String> playersName = blackjackGame.getPlayersName();
+        final List<String> playerNames = blackjackGame.getPlayersNames();
 
-        for (String name : playersName) {
+        for (String name : playerNames) {
             runPlayerTurn(blackjackGame, name);
         }
 

@@ -4,6 +4,7 @@ import blackjack.domain.dealer.Dealer;
 import blackjack.dto.CardDto;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantScoreDto;
+import blackjack.dto.ParticipantScoresDto;
 import blackjack.dto.PlayerWinningResultDto;
 import blackjack.dto.WinningCountDto;
 import blackjack.dto.WinningResultDto;
@@ -54,19 +55,20 @@ public class OutputView {
         }
     }
 
-    public void printFinalResult(final List<ParticipantScoreDto> participantScoreDtos,
+    public void printFinalResult(final ParticipantScoresDto participantScoreDtos,
                                  final WinningResultDto winningResultDto) {
         printCardScore(participantScoreDtos);
         printWinningResult(winningResultDto);
     }
 
-    private void printCardScore(final List<ParticipantScoreDto> participantScoreDtos) {
-        printDealerCardScore(getOnlyDealer(participantScoreDtos,
-                participantCardsDto -> participantCardsDto.participantCards().name()
-                        .equals(Dealer.DEALER_NAME)));
-        printPlayersCardScore(getExceptDealer(participantScoreDtos,
-                playersCardScoreDto -> playersCardScoreDto.participantCards().name()
-                        .equals(Dealer.DEALER_NAME)));
+    private void printCardScore(final ParticipantScoresDto participantScoreDtos) {
+        List<ParticipantScoreDto> participantScores = participantScoreDtos.participantScores();
+
+        printDealerCardScore(getOnlyDealer(participantScores,
+                participantScore -> participantScore.participantCards().name().equals(Dealer.DEALER_NAME)));
+
+        printPlayersCardScore(getExceptDealer(participantScores,
+                participantScore -> participantScore.participantCards().name().equals(Dealer.DEALER_NAME)));
     }
 
     private void printDealerCardScore(final ParticipantScoreDto dealerCardScore) {

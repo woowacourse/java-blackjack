@@ -24,7 +24,7 @@ public class BlackjackGame {
         divideCard();
     }
 
-    public void divideCard() {
+    private void divideCard() {
         dealer.shuffleDeck();
         dealer.addStartCard();
 
@@ -32,14 +32,14 @@ public class BlackjackGame {
         players.divideCard(dealer.drawCards(playersCardCount));
     }
 
-    public List<ParticipantCardsDto> getStartCards() {
+    public List<ParticipantCardsDto> readyCards() {
         final Map<ParticipantName, Hands> playersCard = players.getPlayerHands();
 
         List<ParticipantCardsDto> participantCardsDtos = playersCard.entrySet().stream()
                 .map(entry -> ParticipantCardsDto.of(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
 
-        participantCardsDtos.add(ParticipantCardsDto.of(dealer.getName(), dealer.getFirstCard()));
+        participantCardsDtos.add(ParticipantCardsDto.of(dealer.getName(), dealer.getOpenedCards()));
         return participantCardsDtos;
     }
 
@@ -115,7 +115,7 @@ public class BlackjackGame {
                 .toList();
     }
 
-    public List<String> getPlayersName() {
+    public List<String> getPlayersNames() {
         return players.getNames().stream()
                 .map(ParticipantName::getName)
                 .toList();

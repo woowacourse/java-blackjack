@@ -18,7 +18,7 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"));
 
         // when
-        List<ParticipantCardsDto> participantStartCards = blackjackGame.getStartCards();
+        List<ParticipantCardsDto> participantStartCards = blackjackGame.readyCards();
 
         // then
         assertAll(() -> assertThat(participantStartCards.get(0).name()).isEqualTo(kirby),
@@ -36,7 +36,7 @@ class BlackjackGameTest {
     void canAddCardToPlayers() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"));
-        blackjackGame.getStartCards();
+        blackjackGame.readyCards();
 
         // when
         boolean addCardAvailable = blackjackGame.addCardToPlayers(kirby);
@@ -51,7 +51,7 @@ class BlackjackGameTest {
     void canNotAddCardToPlayers() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"));
-        blackjackGame.getStartCards();
+        blackjackGame.readyCards();
 
         // when
         for (int i = 0; i < 20; i++) {
@@ -68,7 +68,7 @@ class BlackjackGameTest {
     void isPlayerAliveByName() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"));
-        blackjackGame.getStartCards();
+        blackjackGame.readyCards();
 
         // when
         boolean isPlayerAlive = blackjackGame.isPlayerAliveByName(kirby);
@@ -82,7 +82,7 @@ class BlackjackGameTest {
     void isPlayerNotAliveByName() {
         // given
         BlackjackGame blackjackGame = new BlackjackGame(List.of(kirby, "pobi"));
-        blackjackGame.getStartCards();
+        blackjackGame.readyCards();
         for (int i = 0; i < 20; i++) {
             blackjackGame.addCardToPlayers(kirby);
         }
