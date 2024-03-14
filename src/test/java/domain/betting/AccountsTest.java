@@ -13,8 +13,8 @@ class AccountsTest {
         Player player1 = Player.withName("user1");
         Player player2 = Player.withName("user2");
         Accounts accounts = Accounts.withNoAccount();
-        accounts.add(player1);
-        accounts.add(player2);
+        accounts.add(player1, Money.valueOf(0));
+        accounts.add(player2, Money.valueOf(0));
         Assertions.assertThat(accounts.getAccounts()).hasSize(2);
     }
 }

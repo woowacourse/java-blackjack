@@ -16,8 +16,8 @@ public class Accounts {
         return new Accounts(new ArrayList<>());
     }
 
-    public void add(Player player) {
-        accounts.add(Account.from(player));
+    public void add(Player player, Money money) {
+        accounts.add(new Account(player, money));
     }
 
     public List<Account> getAccounts() {

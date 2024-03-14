@@ -12,7 +12,7 @@ class AccountTest {
     @DisplayName("계좌에서 출금할 수 있다.")
     void withdraw() {
         Player player = Player.withName("name");
-        Account account = Account.from(player);
+        Account account = new Account(player, Money.valueOf(0));
 
         account.withdraw(Money.betValueOf(1000));
 
@@ -23,7 +23,7 @@ class AccountTest {
     @DisplayName("계좌에 입금할 수 있다.")
     void deposit() {
         Player player = Player.withName("name");
-        Account account = Account.from(player);
+        Account account = new Account(player, Money.valueOf(0));
 
         account.deposit(Money.betValueOf(1000));
 
