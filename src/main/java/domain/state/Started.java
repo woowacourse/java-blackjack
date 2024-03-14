@@ -1,16 +1,20 @@
 package domain.state;
 
-import domain.card.Deck;
+import domain.player.Hands;
 
 public abstract class Started implements State {
-    private final Deck deck = Deck.makeEmptyDeck();
+    private final Hands hands;
+
+    public Started(final Hands hands) {
+        this.hands = hands;
+    }
 
     @Override
     public boolean isFinished() {
         return false;
     }
 
-    public Deck getCards() {
-        return deck;
+    public Hands getHands() {
+        return hands;
     }
 }

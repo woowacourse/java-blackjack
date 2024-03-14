@@ -51,6 +51,4 @@ public class Deck {
     public List<Card> getValue() {
         return Collections.unmodifiableList(value);
     }
-
-
 }
