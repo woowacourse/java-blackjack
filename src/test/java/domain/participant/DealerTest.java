@@ -6,10 +6,12 @@ import domain.playingcard.PlayingCards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayDeque;
 import java.util.List;
 
 import static domain.playingcard.PlayingCardShape.DIAMOND;
 import static domain.playingcard.PlayingCardValue.EIGHT;
+import static domain.playingcard.PlayingCardValue.TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
@@ -43,15 +45,16 @@ public class DealerTest {
     @Test
     void drawTest() {
         // Given
-        Deck deck = Deck.init(PlayingCards.getValue());
+        PlayingCard playingCard = new PlayingCard(DIAMOND, TEN);
+        Deck deck = new Deck(new ArrayDeque<>(List.of(playingCard)));
         Hand initHand = Hand.init();
-        int totalScore = initHand.getTotalScore().value();
+        List<PlayingCard> playingCards = initHand.getPlayingCards();
         Dealer dealer = new Dealer(initHand);
 
         // When
         dealer.draw(deck);
 
         // Then
-        assertThat(totalScore).isNotEqualTo(initHand.getTotalScore());
+        assertThat(playingCards).contains(playingCard);
     }
 }

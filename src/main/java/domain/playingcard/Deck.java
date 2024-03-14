@@ -5,7 +5,7 @@ import java.util.*;
 public class Deck {
     private final Queue<PlayingCard> playingCards;
 
-    Deck(final Queue<PlayingCard> playingCards) {
+    public Deck(final Queue<PlayingCard> playingCards) {
         this.playingCards = playingCards;
     }
 

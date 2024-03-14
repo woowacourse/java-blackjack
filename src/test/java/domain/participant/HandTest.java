@@ -74,15 +74,15 @@ public class HandTest {
     @Test
     void addCardTest() {
         // Given
-        Hand hand = Hand.init();
-        int totalScore = hand.getTotalScore().value();
         PlayingCard card = new PlayingCard(DIAMOND, NINE);
+        Hand hand = Hand.init();
+        List<PlayingCard> playingCards = hand.getPlayingCards();
 
         // When
         hand.addCard(card);
 
         // Then
-        assertThat(totalScore).isNotEqualTo(hand.getTotalScore());
+        assertThat(playingCards).contains(card);
     }
 
     @DisplayName("손패가 블랙잭이면 true를 반환한다.")
