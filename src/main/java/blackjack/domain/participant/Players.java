@@ -1,6 +1,9 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.game.PlayerResult;
+import blackjack.domain.game.Referee;
+import blackjack.domain.game.result.GameResult;
 import java.util.List;
 
 public class Players {
@@ -56,12 +59,25 @@ public class Players {
         }
     }
 
+    public List<PlayerResult> getAllResult() {
+        return players.stream()
+                .map(this::getPlayerResult)
+                .toList();
+    }
+
+    //TODO Player.getName 반환값을 String VS Name
     public boolean isDealerDrawable() {
         return dealer.isDrawable();
     }
 
     public void drawDealerCard(Deck deck) {
         dealer.add(deck.draw());
+    }
+
+    private PlayerResult getPlayerResult(Player player) {
+        GameResult gameResult = Referee.getGameResult(dealer, player);
+        String name = player.getName();
+        return new PlayerResult(new Name(name), gameResult);
     }
 
     public List<Player> getPlayers() {

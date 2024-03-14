@@ -1,10 +1,12 @@
 package blackjack.view;
 
+import blackjack.domain.betting.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Shape;
 import blackjack.domain.card.Value;
 import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.List;
@@ -113,16 +115,15 @@ public class OutputView {
         System.out.print("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printDealerMatchResult(int winCount, int loseCount) {
-        System.out.println("## 최종 승패");
-        System.out.printf("딜러 : %d승 %d패%n", winCount, loseCount);
+    public void printPlayerPrize(Name name, Money prize) {
+        System.out.println(name.getName() + ": " + prize.getAmount());
     }
 
-    public void printPlayerMatchResult(String name, boolean isWin) {
-        if (isWin) {
-            System.out.println(name + ": 승");
-            return;
-        }
-        System.out.println(name + ": 패");
+    public void printDealerPrize(Money prize) {
+        System.out.println("딜러: " + prize.getAmount());
+    }
+
+    public void printPrizeTitle() {
+        System.out.println("## 최종 수익");
     }
 }

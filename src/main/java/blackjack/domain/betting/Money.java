@@ -2,6 +2,7 @@ package blackjack.domain.betting;
 
 import java.util.Objects;
 
+//TODO Money 단위? 제약사항?
 public class Money {
 
     public static final Money ZERO = new Money(0);
@@ -12,8 +13,16 @@ public class Money {
         this.amount = amount;
     }
 
+    public Money subtract(Money prize) {
+        return new Money(amount - prize.getAmount());
+    }
+
     public Money multiply(double multipleAmount) {
         return new Money((int) (amount * multipleAmount));
+    }
+
+    public int getAmount() {
+        return amount;
     }
 
     @Override

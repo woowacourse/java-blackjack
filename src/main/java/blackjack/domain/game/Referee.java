@@ -1,5 +1,10 @@
-package blackjack.domain.game.result;
+package blackjack.domain.game;
 
+import blackjack.domain.game.result.GameResult;
+import blackjack.domain.game.result.PlayerBlackjack;
+import blackjack.domain.game.result.PlayerLose;
+import blackjack.domain.game.result.PlayerWin;
+import blackjack.domain.game.result.Push;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.List;

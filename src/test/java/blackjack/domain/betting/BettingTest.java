@@ -2,16 +2,19 @@ package blackjack.domain.betting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.game.PlayerResult;
 import blackjack.domain.game.result.PlayerBlackjack;
 import blackjack.domain.game.result.PlayerLose;
 import blackjack.domain.game.result.PlayerWin;
 import blackjack.domain.game.result.Push;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+//TODO 여기도 Name String 리팩토링
 public class BettingTest {
 
     private static final String DEFAULT_NAME = "name";
@@ -31,11 +34,12 @@ public class BettingTest {
         @Test
         void playerBlackjackTest() {
             //given
-            Player player = Player.from(DEFAULT_NAME);
-            betting.bet(player, BETTING_MONEY);
+            betting.bet(new Name(DEFAULT_NAME), BETTING_MONEY);
+            PlayerResult result = new PlayerResult(new Name(DEFAULT_NAME),
+                    PlayerBlackjack.getInstance());
 
             //when
-            Money prize = betting.getPrize(PlayerBlackjack.getInstance(), player);
+            Money prize = betting.getPrize(result);
 
             //then
             assertThat(prize).isEqualTo(BETTING_MONEY.multiply(1.5));
@@ -46,10 +50,12 @@ public class BettingTest {
         void playerWinTest() {
             //given
             Player player = Player.from(DEFAULT_NAME);
-            betting.bet(player, BETTING_MONEY);
+            PlayerResult result = new PlayerResult(new Name(DEFAULT_NAME),
+                    PlayerWin.getInstance());
+            betting.bet(new Name(DEFAULT_NAME), BETTING_MONEY);
 
             //when
-            Money prize = betting.getPrize(PlayerWin.getInstance(), player);
+            Money prize = betting.getPrize(result);
 
             //then
             assertThat(prize).isEqualTo(BETTING_MONEY.multiply(1));
@@ -60,10 +66,12 @@ public class BettingTest {
         void pushTest() {
             //given
             Player player = Player.from(DEFAULT_NAME);
-            betting.bet(player, BETTING_MONEY);
+            betting.bet(new Name(DEFAULT_NAME), BETTING_MONEY);
+            PlayerResult result = new PlayerResult(new Name(DEFAULT_NAME),
+                    Push.getInstance());
 
             //when
-            Money prize = betting.getPrize(Push.getInstance(), player);
+            Money prize = betting.getPrize(result);
 
             //then
             assertThat(prize).isEqualTo(Money.ZERO);
@@ -74,10 +82,12 @@ public class BettingTest {
         void playerLoseTest() {
             //given
             Player player = Player.from(DEFAULT_NAME);
-            betting.bet(player, BETTING_MONEY);
+            betting.bet(new Name(DEFAULT_NAME), BETTING_MONEY);
+            PlayerResult result = new PlayerResult(new Name(DEFAULT_NAME),
+                    PlayerLose.getInstance());
 
             //when
-            Money prize = betting.getPrize(PlayerLose.getInstance(), player);
+            Money prize = betting.getPrize(result);
 
             //then
             assertThat(prize).isEqualTo(BETTING_MONEY.multiply(-1));
