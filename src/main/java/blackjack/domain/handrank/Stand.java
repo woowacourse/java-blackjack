@@ -10,7 +10,23 @@ public final class Stand implements HankRank {
 
     @Override
     public SingleMatchResult matchAtDealer(HankRank playerHandRank) {
-        return null;
+        if (playerHandRank.isBlackjack()) {
+            return SingleMatchResult.PLAYER_BLACKJACK;
+        }
+        if (playerHandRank.isBust()) {
+            return SingleMatchResult.DEALER_WIN;
+        }
+        return matchThroughScore(playerHandRank);
+    }
+
+    private SingleMatchResult matchThroughScore(HankRank playerHandRank) {
+        if (playerHandRank.getScore() > this.getScore()) {
+            return SingleMatchResult.PLAYER_WIN;
+        }
+        if (playerHandRank.getScore() == this.getScore()) {
+            return SingleMatchResult.DRAW;
+        }
+        return SingleMatchResult.DEALER_WIN;
     }
 
     @Override
