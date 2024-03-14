@@ -7,13 +7,13 @@ public enum GameResult {
     PLAYER_LOSE(-1.0),
     PUSH(0.0);
 
-    private final double leverage;
+    private final double profitLeverage;
 
-    GameResult(double leverage) {
-        this.leverage = leverage;
+    GameResult(double profitLeverage) {
+        this.profitLeverage = profitLeverage;
     }
 
-    public double getLeverage() {
-        return leverage;
+    public double getProfitLeverage() {
+        return profitLeverage;
     }
 }

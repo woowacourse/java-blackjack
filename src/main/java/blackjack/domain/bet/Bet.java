@@ -1,6 +1,8 @@
 package blackjack.domain.bet;
 
 import blackjack.domain.player.PlayerName;
+import blackjack.domain.rule.BetResult;
+import blackjack.domain.rule.GameResult;
 
 public class Bet {
 
@@ -10,6 +12,11 @@ public class Bet {
     public Bet(PlayerName playerName, Money betAmount) {
         this.playerName = playerName;
         this.betAmount = betAmount;
+    }
+
+    public BetResult calculateBetResult(GameResult gameResult) {
+        Money earned = betAmount.multiply(gameResult.getProfitLeverage());
+        return new BetResult(playerName.getValue(), earned);
     }
 
     public String getPlayerName() {

@@ -1,7 +1,6 @@
 package blackjack;
 
 import blackjack.domain.bet.Bets;
-import blackjack.domain.bet.BettingBank;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.player.Dealer;
@@ -43,13 +42,12 @@ public class BlackJackGame {
 
         PlayerResults playerResults = judge.calculatePlayerResults(dealer, players);
         List<String> playerNames = players.getPlayerNames();
-        BettingBank bettingBank = new BettingBank();
 
         BetResults betResults = new BetResults(playerNames.stream()
-                .map(playerName -> bettingBank.calculateBetResult(
-                        bets.findBetByPlayerName(playerName),
-                        playerResults.findResultByName(playerName)))
+                .map(bets::findBetByPlayerName)
+                .map(bet -> bet.calculateBetResult(playerResults.findResultByName(bet.getPlayerName())))
                 .toList());
+
         outputView.printBetResults(betResults.calculateDealerProfit().getAmount(), betResults);
     }
 
