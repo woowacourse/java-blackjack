@@ -20,10 +20,13 @@ public class InputView {
     }
 
     public boolean inputPlayerCommand(Name name) {
-        System.out.println(
-                name.getValue() + "는 한장의 카드를 더 받겠습니까?(예는 " + GameCommand.GET_CARD.command + ", 아니오는 "
-                        + GameCommand.REFUSE_CARD.command
-                        + ")");
+        String isDrawCard = name.getValue()
+                + "는 한장의 카드를 더 받겠습니까?(예는 "
+                + GameCommand.GET_CARD.command
+                + ", 아니오는 "
+                + GameCommand.REFUSE_CARD.command
+                + ")";
+        System.out.println(isDrawCard);
         String inputCommand = scanner.nextLine();
 
         return GameCommand.isGetCardCommand(inputCommand);
