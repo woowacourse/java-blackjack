@@ -10,6 +10,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import blackjack.dto.gamer.PlayerInfo;
+import blackjack.dto.gamer.PlayerInfos;
 
 public class OutputView {
 	private static final OutputView INSTANCE = new OutputView();
@@ -30,15 +32,14 @@ public class OutputView {
 		return INSTANCE;
 	}
 
-	public void printInitCardStatus(final Card dealerFirstCard, final Players players) {
-		List<Player> playerInfos = players.getPlayers();
+	public void printInitCardStatus(final Card dealerFirstCard, final PlayerInfos playerInfos) {
 		printDealMessage(playerInfos);
 
 		printDealerInitCardsStatusMessage(dealerFirstCard);
 		printPlayersInitCardsStatusMessage(playerInfos);
 	}
 
-	private void printDealMessage(final List<Player> playerInfos) {
+	private void printDealMessage(final PlayerInfos playerInfos) {
 		System.out.println(System.lineSeparator() + String.format("딜러와 %s에게 %d장을 나누었습니다.",
 			createPlayerNamesText(playerInfos), Dealer.INIT_CARD_COUNT));
 	}
@@ -47,17 +48,17 @@ public class OutputView {
 		System.out.println(String.format("딜러: %s", createCardInfoText(dealerFirstCard)));
 	}
 
-	private void printPlayersInitCardsStatusMessage(final List<Player> playerInfos) {
-		for (Player playerInfo : playerInfos) {
+	private void printPlayersInitCardsStatusMessage(final PlayerInfos playerInfos) {
+		for (PlayerInfo playerInfo : playerInfos.playerInfos()) {
 			printCardsStatus(playerInfo);
 		}
 		printLine();
 	}
 
-	private String createPlayerNamesText(final List<Player> playerInfos) {
+	private String createPlayerNamesText(final PlayerInfos playerInfos) {
 		StringJoiner playerNameJoiner = new StringJoiner(PLAYER_NAME_DELIMITER);
-		for (Player playerInfo : playerInfos) {
-			playerNameJoiner.add(playerInfo.getName());
+		for (PlayerInfo playerInfo : playerInfos.playerInfos()) {
+			playerNameJoiner.add(playerInfo.name());
 		}
 
 		return playerNameJoiner.toString();
@@ -67,9 +68,9 @@ public class OutputView {
 		return String.format(CARD_INFO_MESSAGE, card.getRankName(), card.getSuitName());
 	}
 
-	public void printCardsStatus(final Player player) {
+	public void printCardsStatus(final PlayerInfo playerInfo) {
 		System.out.println(
-			String.format(PLAYER_CARD_INFO_MESSAGE, player.getName(), createCardsInfoText(player.getCards())));
+			String.format(PLAYER_CARD_INFO_MESSAGE, playerInfo.name(), createCardsInfoText(playerInfo.cards())));
 	}
 
 	private String createCardsInfoText(final List<Card> cards) {

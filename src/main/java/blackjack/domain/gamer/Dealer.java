@@ -41,6 +41,10 @@ public class Dealer extends Gamer {
 		return cards.isScoreLessOrEqual(MAX_HIT_SCORE);
 	}
 
+	public Card getFirstCard() {
+		return cards.indexOf(0);
+	}
+
 	public int deckSize() {
 		return deck.size();
 	}

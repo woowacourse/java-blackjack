@@ -56,6 +56,10 @@ public class Cards {
 		return Collections.unmodifiableList(cards);
 	}
 
+	public Card indexOf(int index) {
+		return cards.get(index);
+	}
+
 	public boolean isScoreLessOrEqual(final int value) {
 		int score = calculateScore();
 		return value >= score;

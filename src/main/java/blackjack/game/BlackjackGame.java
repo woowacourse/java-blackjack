@@ -11,6 +11,8 @@ import blackjack.domain.card.ShuffledDeckGenerator;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import blackjack.dto.gamer.PlayerInfo;
+import blackjack.dto.gamer.PlayerInfos;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.command.Command;
@@ -52,7 +54,7 @@ public class BlackjackGame {
 		}
 		dealer.receiveInitCards(dealer.dealInitCards());
 
-		outputView.printInitCardStatus(dealer, players);
+		outputView.printInitCardStatus(dealer.getFirstCard(), PlayerInfos.from(players));
 	}
 
 	private void receiveAdditionalCard(final Dealer dealer, final Players players) {
@@ -65,7 +67,7 @@ public class BlackjackGame {
 	private void receivePlayerAdditionalCard(final Dealer dealer, final Player player) {
 		while (!player.isBust() && isPlayerInputHit(player)) {
 			player.receiveCard(dealer.dealCard());
-			outputView.printCardsStatus(player);
+			outputView.printCardsStatus(PlayerInfo.from(player));
 		}
 	}
 
