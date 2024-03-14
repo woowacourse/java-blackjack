@@ -30,7 +30,7 @@ public class Player {
         return hand.busted();
     }
 
-    public boolean isBlackJack() {
+    public boolean isBlackjack() {
         return hand.isBlackjack();
     }
 

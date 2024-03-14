@@ -3,6 +3,8 @@ package domain.money;
 import domain.user.Player;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class PlayersMoney {
     public static final int DEALER_MULTIPLIER = -1;
@@ -12,24 +14,33 @@ public class PlayersMoney {
         this.playersMoney = playersMoney;
     }
 
-    public void changeIfBlackjack() {
-        playersMoney.keySet()
-                .forEach(this::changeMoneyIfBlackjack);
+    public PlayersMoney changeByPlayerResults(Map<Player, GameResult> playerResults) {
+        return new PlayersMoney(playersMoney.entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        Entry::getKey,
+                        entry -> moneyByGameResult(playerResults, entry)
+                )));
     }
 
-    private void changeMoneyIfBlackjack(Player player) {
-        if (player.isBlackJack()) {
-            playersMoney.replace(player, playersMoney.get(player).changeByBlackJack());
+    private static Money moneyByGameResult(Map<Player, GameResult> playerResults, Entry<Player, Money> entry) {
+        Money money = entry.getValue();
+        money = changeMoneyIfBlackjack(entry, money);
+        return money.change(playerResults.get(entry.getKey()));
+    }
+
+    private static Money changeMoneyIfBlackjack(Entry<Player, Money> entry, Money money) {
+        if (entry.getKey().isBlackjack()) {
+            return money.changeByBlackjack();
         }
-    }
-
-    public void changeByPlayerResults(Map<Player, GameResult> playerResults) {
-        playersMoney.forEach(
-                (player, betAmount) -> playersMoney.replace(player, betAmount.change(playerResults.get(player))));
+        return money;
     }
 
     public int calculateDealerMoney() {
-        return playersMoney.values().stream().mapToInt(Money::value).sum() * DEALER_MULTIPLIER;
+        return playersMoney.values()
+                .stream()
+                .mapToInt(Money::value)
+                .sum() * DEALER_MULTIPLIER;
     }
 
     public Map<Player, Money> getPlayersMoney() {

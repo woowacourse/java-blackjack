@@ -14,7 +14,7 @@ public record Money(int value) {
         };
     }
 
-    public Money changeByBlackJack() {
+    public Money changeByBlackjack() {
         return times(BLACK_JACK_MULTIPLIER);
     }
 

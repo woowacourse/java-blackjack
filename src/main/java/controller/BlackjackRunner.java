@@ -56,7 +56,7 @@ public class BlackjackRunner {
     }
 
     private void hitOrStay(Player player, Deck deck) {
-        if (player.isBlackJack()) {
+        if (player.isBlackjack()) {
             OutputView.printBlackjack(player.getNameValue());
             return;
         }
@@ -78,9 +78,8 @@ public class BlackjackRunner {
     }
 
     private void doResult(PlayersMoney playersMoney, GameUsers gameUsers) {
-        playersMoney.changeIfBlackjack();
-        playersMoney.changeByPlayerResults(gameUsers.generatePlayerResults());
-        printGameResult(gameUsers, playersMoney);
+        PlayersMoney resultPlayersMoney = playersMoney.changeByPlayerResults(gameUsers.generatePlayerResults());
+        printGameResult(gameUsers, resultPlayersMoney);
     }
 
     private void printGameResult(GameUsers gameUsers, PlayersMoney playersMoney) {

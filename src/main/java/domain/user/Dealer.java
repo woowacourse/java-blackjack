@@ -28,7 +28,7 @@ public class Dealer {
         return hand.busted();
     }
 
-    public boolean isBlackJack() {
+    public boolean isBlackjack() {
         return hand.isBlackjack();
     }
 

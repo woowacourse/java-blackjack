@@ -45,7 +45,7 @@ public class MoneyTest {
     void changeByBlackJackTest() {
         Money money = new Money(10000);
 
-        Money newAmount = money.changeByBlackJack();
+        Money newAmount = money.changeByBlackjack();
 
         assertThat(newAmount.value()).isEqualTo(15000);
     }
