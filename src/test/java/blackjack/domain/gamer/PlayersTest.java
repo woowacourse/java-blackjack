@@ -9,6 +9,18 @@ import org.junit.jupiter.api.Test;
 
 class PlayersTest {
 
+    @DisplayName("플레이어의 이름이 중복되면 예외가 발생한다.")
+    @Test
+    void occurExceptionIfPlayerNameIsDuplicated() {
+        assertThatThrownBy(() -> new Players(List.of(
+                    Player.of("pobi", 10000),
+                    Player.of("pobi", 20000),
+                    Player.of("jason", 30000)
+                )))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(Players.ERROR_PLAYER_NAME_DUPLICATED);
+    }
+
     @DisplayName("플레이어 수가 최소 인원 미만이면 예외가 발생한다.")
     @Test
     void occurExceptionIfPlayerCountIsLessThanMinCount() {

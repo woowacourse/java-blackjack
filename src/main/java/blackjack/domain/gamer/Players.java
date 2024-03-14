@@ -6,14 +6,23 @@ import java.util.Objects;
 
 public class Players {
 
+    static final String ERROR_PLAYER_NAME_DUPLICATED = "플레이어의 이름은 중복될 수 없습니다.";
     static final String ERROR_MIN_PLAYER_COUNT = "플레이어 수는 1명 이상이어야 합니다.";
     private static final int MIN_PLAYER_COUNT = 1;
 
     private final List<Player> players;
 
     public Players(final List<Player> players) {
+        validateDuplicatedName(players);
         validateMinPlayerCount(players);
         this.players = players;
+    }
+
+    private static void validateDuplicatedName(List<Player> players) {
+        int distinctSize = (int) players.stream().map(Player::getName).distinct().count();
+        if (players.size() != distinctSize) {
+            throw new IllegalArgumentException(ERROR_PLAYER_NAME_DUPLICATED);
+        }
     }
 
     private static void validateMinPlayerCount(List<Player> players) {
