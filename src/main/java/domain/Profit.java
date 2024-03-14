@@ -2,6 +2,8 @@ package domain;
 
 public class Profit {
 
+    private static final double MULTIPLE_OF_BLACKJACK = 1.5;
+
     private final int value;
 
     public Profit(int value) {
@@ -21,7 +23,7 @@ public class Profit {
     }
 
     public Profit specialWin() {
-        return new Profit((int) (value * 1.5));
+        return new Profit((int) (value * MULTIPLE_OF_BLACKJACK));
     }
 
     public int getValue() {

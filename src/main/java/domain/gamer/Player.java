@@ -9,6 +9,9 @@ import java.util.Objects;
 
 public class Player {
 
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int BLACKJACK_SIZE = 2;
+
     private final GamerName name;
     protected final Hand hand;
 
@@ -18,7 +21,7 @@ public class Player {
     }
 
     public boolean isBlackJack() {
-        return hand.hasSize(2) && hand.hasScore(21);
+        return hand.hasSize(BLACKJACK_SIZE) && hand.hasScore(BLACKJACK_SCORE);
     }
 
     public void receiveCards(CardPack cardPack, int count) {
