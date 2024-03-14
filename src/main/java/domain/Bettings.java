@@ -27,6 +27,11 @@ public class Bettings {
             save(result.getKey(), resultBetAmount);
             return resultBetAmount;
         }
+
+        if (result.getValue().equals(Result.WIN)) {
+            return findBy(result.getKey());
+        }
+
         return null;
     }
 }
