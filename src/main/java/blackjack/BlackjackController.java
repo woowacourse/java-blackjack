@@ -3,6 +3,7 @@ package blackjack;
 import blackjack.domain.cardgame.CardDeck;
 import blackjack.domain.cardgame.CardGameResult;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -19,7 +20,7 @@ public class BlackjackController {
     }
 
     public void run() {
-        final List<String> names = inputView.askPlayerNames();
+        final List<Name> names = inputView.askPlayerNames();
         final Dealer dealer = new Dealer();
         final List<Player> players = names.stream().map(Player::new).toList();
         final CardDeck deck = CardDeck.createShuffledDeck();

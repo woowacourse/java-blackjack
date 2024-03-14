@@ -10,9 +10,13 @@ public class Player {
     protected final Hand hand;
     private final Name name;
 
-    public Player(final String name) {
-        this.hand = new Hand();
-        this.name = new Name(name);
+    private Player(final Hand hand, final Name name) {
+        this.hand = hand;
+        this.name = name;
+    }
+
+    public Player(final Name name) {
+        this(new Hand(), name);
     }
 
     public final void addCard(final Card card) {

@@ -1,17 +1,24 @@
 package blackjack.view;
 
+import blackjack.domain.player.Name;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
-import static blackjack.view.PlayerChoice.*;
+import static blackjack.view.PlayerChoice.HIT;
+import static blackjack.view.PlayerChoice.STAND;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 
-    public List<String> askPlayerNames() {
+    public List<Name> askPlayerNames() {
         printPlayerNamesInputMessage();
         String rawInput = scanner.nextLine();
-        return List.of(rawInput.split(",", -1));
+        return Arrays.stream(rawInput.split(",", -1))
+                .map(Name::new)
+                .collect(Collectors.toList());
     }
 
     public boolean askForMoreCard(final String name) {
