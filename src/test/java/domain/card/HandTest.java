@@ -61,6 +61,18 @@ class HandTest {
     }
 
     @Test
+    @DisplayName("성공: 패에 3장이 있고 21점이면 블랙잭이 아니다.")
+    void isBlackjack_False() {
+        Hand hand = new Hand();
+        hand.add(List.of(
+            new Card(Rank.KING, Symbol.HEART),
+            new Card(Rank.NINE, Symbol.HEART),
+            new Card(Rank.TWO, Symbol.HEART)
+        ));
+        assertThat(hand.isBlackjack()).isFalse();
+    }
+
+    @Test
     @DisplayName("성공: 카드 점수의 합을 계산(경계값 21점)")
     void calculateScore_NoException_OneKingOneSevenOneFour() {
         Hand hand = new Hand();
