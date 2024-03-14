@@ -50,7 +50,7 @@ public class Players {
 
     public List<PlayerFinalCardsOutcome> captureFinalCardsOutcomes() {
         return players.stream()
-                .map(PlayerFinalCardsOutcome::of)
+                .map(PlayerFinalCardsOutcome::from)
                 .toList();
     }
 

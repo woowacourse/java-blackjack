@@ -85,7 +85,7 @@ public class BlackjackGame {
     }
 
     private void showCardsOutcome(final Players players, final Dealer dealer) {
-        DealerFinalCardsOutcome dealerFinalCardsOutcome = DealerFinalCardsOutcome.of(dealer);
+        DealerFinalCardsOutcome dealerFinalCardsOutcome = DealerFinalCardsOutcome.from(dealer);
         List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes = players.captureFinalCardsOutcomes();
         outputView.printDealerFinalCards(dealerFinalCardsOutcome);
         outputView.printPlayersFinalCards(playerFinalCardsOutcomes);
