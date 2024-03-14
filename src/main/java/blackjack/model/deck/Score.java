@@ -1,4 +1,4 @@
-package blackjack.model.gamer;
+package blackjack.model.deck;
 
 public class Score {
 
