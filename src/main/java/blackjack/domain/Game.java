@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Players;
 
@@ -12,7 +11,6 @@ public class Game {
         this.dealer = dealer;
         this.players = players;
     }
-
 
     public GameResult makeGameResult() {
         return GameResult.of(dealer, players);

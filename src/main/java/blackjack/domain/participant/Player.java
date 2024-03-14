@@ -40,7 +40,7 @@ public class Player {
         return name.getName();
     }
 
-    public List<Card> getHandsCards(){
+    public List<Card> getHandsCards() {
         return hands.getHands();
     }
 
@@ -50,5 +50,9 @@ public class Player {
 
     public int getBetMoney() {
         return betMoney.getBetMoney();
+    }
+
+    public int getHandsScore() {
+        return hands.getHandsScore();
     }
 }

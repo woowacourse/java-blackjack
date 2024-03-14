@@ -33,8 +33,8 @@ public class Dealer {
                 .getCardName();
     }
 
-    public void confirmDealerHands(Deck deck, Consumer<String> consumer){
-        while(shouldDraw()){
+    public void confirmDealerHands(Deck deck, Consumer<String> consumer) {
+        while (shouldDraw()) {
             addCard(deck.draw());
             consumer.accept(name.getName());
         }
@@ -58,5 +58,9 @@ public class Dealer {
 
     public List<Card> getHandsCards() {
         return hands.getHands();
+    }
+
+    public int getHandsScore() {
+        return hands.getHandsScore();
     }
 }

@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.deck.Deck;
 import java.util.List;
 
 public class Players {
