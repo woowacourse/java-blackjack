@@ -1,8 +1,6 @@
 package domain.deck;
 
 import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Symbol;
 import strategy.ShuffleStrategy;
 
 import java.util.Collection;
@@ -18,18 +16,11 @@ public class Deck {
     private final Stack<Card> cards;
 
     public Deck(ShuffleStrategy shuffleStrategy) {
-        List<Card> cards = Stream.generate(this::createCardPack)
+        List<Card> cards = Stream.generate(Card::createCardPack)
                 .limit(DECKS_COUNT)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
         this.cards = shuffleStrategy.shuffle(cards);
-    }
-
-    private List<Card> createCardPack() {
-        return Stream.of(Symbol.values())
-                .flatMap(symbol -> Rank.getRanks().stream()
-                        .map(rank -> new Card(symbol, rank)))
-                .toList();
     }
 
     public Card draw() {

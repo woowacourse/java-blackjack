@@ -1,6 +1,8 @@
 package domain.card;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class Card {
     private final Symbol symbol;
@@ -11,9 +13,18 @@ public class Card {
         this.rank = rank;
     }
 
+    //TODO : static 제거
+    public static List<Card> createCardPack() {
+        return Stream.of(Symbol.values())
+                .flatMap(symbol -> Rank.getRanks().stream()
+                        .map(rank -> new Card(symbol, rank)))
+                .toList();
+    }
+
     public int getScore() {
         return rank.getScore();
     }
+
 
     public Symbol getSymbol() {
         return symbol;
