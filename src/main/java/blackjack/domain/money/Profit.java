@@ -12,16 +12,8 @@ public class Profit {
         this.value = value;
     }
 
-    public static Profit win(BetAmount amount) {
-        return new Profit(amount.toInt());
-    }
-
-    public static Profit win(BetAmount amount, double multiplier) {
+    public static Profit of(BetAmount amount, double multiplier) {
         return new Profit((int) (amount.toInt() * multiplier));
-    }
-
-    public static Profit lose(BetAmount amount) {
-        return new Profit(-1 * amount.toInt());
     }
 
     public Profit add(Profit profit) {

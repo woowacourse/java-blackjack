@@ -10,7 +10,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class SingleMatchResultTest {
 
-
     @DisplayName("승패 결과에 따라, 플레이어의 이익을 반환할 수 있다.")
     @ParameterizedTest
     @CsvSource({
