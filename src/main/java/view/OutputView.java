@@ -3,6 +3,7 @@ package view;
 import card.Card;
 import card.Cards;
 import controller.dto.WinningResult;
+import dealer.Dealer;
 import dealer.dto.DealerWinningResult;
 import java.util.Collections;
 import java.util.List;
@@ -10,7 +11,6 @@ import java.util.stream.Collectors;
 import player.Name;
 import player.Player;
 import player.Players;
-import player.dto.CardsStatus;
 
 public class OutputView {
 
@@ -41,19 +41,10 @@ public class OutputView {
         System.out.println(makeCardsStatus(player.getName(), player.getCards()));
     }
 
-    public void printExtraCardInfo(CardsStatus cardsStatus) {
+    public void printExtraCardInfo(Dealer dealer) {
         System.out.println();
-        for (int i = 2; i <= cardsStatus.cards().countCard(); i++) {
-            System.out.println(cardsStatus.name().getValue() + "가 " + MIN_DEALER_SCORE + "이하라 한장의 카드를 더 받았습니다.\n");
-        }
-    }
-
-    public void printPlayStatus(List<CardsStatus> cardsStatuses) {
-        Collections.reverse(cardsStatuses);
-
-        for (CardsStatus cardsStatus : cardsStatuses) {
-            System.out.println(makeCardsStatus(cardsStatus.name(), cardsStatus.cards()) + " - 결과: "
-                    + cardsStatus.getCardsScore());
+        for (int i = 2; i <= dealer.getCards().countCard(); i++) {
+            System.out.println("딜러가 " + MIN_DEALER_SCORE + "이하라 한장의 카드를 더 받았습니다.\n");
         }
     }
 
@@ -91,5 +82,16 @@ public class OutputView {
         return names.stream()
                 .map(Name::getValue)
                 .collect(Collectors.joining(NAME_FORMAT_SYMBOL));
+    }
+
+    public void printDealerHand(Dealer dealer) {
+        System.out.println("딜러 카드:" + dealer.getCards().getCardsFeatures() + " - 결과: " + dealer.getCardScore());
+    }
+
+    public void printPlayerHand(Players players) {
+        for (Player player : players.getPlayers()) {
+            System.out.println(makeCardsStatus(player.getName(), player.getCards()) + " - 결과: "
+                    + player.getCardScore());
+        }
     }
 }

@@ -5,9 +5,7 @@ import card.CardDeck;
 import controller.dto.WinningResult;
 import dealer.Dealer;
 import dealer.dto.DealerWinningResult;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 import player.Name;
 import player.Player;
@@ -36,16 +34,6 @@ public class BlackJackGame {
 
     public Card getDealerFirstCard() {
         return dealer.getCards().getFirstCard();
-    }
-
-    public List<CardsStatus> playGame(BiConsumer<Player, CardDeck> playSingleMatch, Players players) {
-        List<CardsStatus> playerResult = new ArrayList<>();
-
-        for (Player player : players.getPlayers()) {
-            playerResult.add(player.play(playSingleMatch, cardDeck));
-        }
-
-        return playerResult;
     }
 
     public CardsStatus playDealerTurn() {

@@ -3,10 +3,10 @@ package controller;
 import card.CardDeck;
 import cardGame.BlackJackGame;
 import controller.dto.WinningResult;
+import dealer.Dealer;
 import java.util.List;
 import player.Player;
 import player.Players;
-import player.dto.CardsStatus;
 import view.InputView;
 import view.OutputView;
 
@@ -22,29 +22,27 @@ public class BlackJackController {
 
     public void run() {
         CardDeck cardDeck = new CardDeck();
+        Dealer dealer = new Dealer(cardDeck.firstCardSettings());
+
         BlackJackGame blackJackGame = new BlackJackGame(cardDeck, cardDeck.firstCardSettings());
         Players players = blackJackGame.initGamePlayer(inputView.inputPlayerNames());
 
-        runBlackJackGame(blackJackGame, players);
+        runBlackJackGame(blackJackGame, players, cardDeck, dealer);
         showResult(blackJackGame, players);
     }
 
-    private void runBlackJackGame(BlackJackGame blackJackGame, Players players) {
+    private void runBlackJackGame(BlackJackGame blackJackGame, Players players, CardDeck cardDeck, Dealer dealer) {
         outputView.printInitCardStatus(players, blackJackGame.getDealerFirstCard());
 
-        List<CardsStatus> playerResult = blackJackGame.playGame(this::playSingleMatch, players);
+        for (Player player : players.getPlayers()) {
+            playSingleMatch(player, cardDeck);
+        }
 
-        CardsStatus result = blackJackGame.playDealerTurn();
-        playerResult.add(result);
+        dealer.getExtraCard(cardDeck);
 
-        outputView.printExtraCardInfo(result);
-        outputView.printPlayStatus(playerResult);
-    }
-
-    private void showResult(BlackJackGame blackJackGame, Players players) {
-        List<WinningResult> result = blackJackGame.getPlayersResult(players);
-        outputView.printDealerResult(blackJackGame.getDealerResult(players));
-        outputView.printPlayersResult(result);
+        outputView.printExtraCardInfo(dealer);
+        outputView.printDealerHand(dealer);
+        outputView.printPlayerHand(players);
     }
 
     private void playSingleMatch(Player player, CardDeck cardDeck) {
@@ -52,6 +50,13 @@ public class BlackJackController {
             player.receiveCard(cardDeck.pickCard());
             outputView.printPlayerCardStatus(player);
         }
+    }
+
+
+    private void showResult(BlackJackGame blackJackGame, Players players) {
+        List<WinningResult> result = blackJackGame.getPlayersResult(players);
+        outputView.printDealerResult(blackJackGame.getDealerResult(players));
+        outputView.printPlayersResult(result);
     }
 
     private boolean isCanPlayPlayer(Player player) {
