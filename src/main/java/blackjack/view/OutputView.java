@@ -2,14 +2,12 @@ package blackjack.view;
 
 import blackjack.dto.CardDto;
 import blackjack.dto.DealerInitialHandDto;
-import blackjack.dto.DealerResultDto;
 import blackjack.dto.HandDto;
 import blackjack.dto.PlayerGameResultsDto;
 import blackjack.dto.PlayerHandDto;
 import blackjack.dto.PlayersHandDto;
 import blackjack.view.object.CardNumberOutput;
 import blackjack.view.object.CardShapeOutput;
-import blackjack.view.object.GameResultOutput;
 import java.util.List;
 
 public class OutputView {
@@ -92,34 +90,20 @@ public class OutputView {
         System.out.printf("\n%s는 16이하라 한장의 카드를 더 받았습니다.\n", DEALER_DEFAULT_NAME);
     }
 
-    public void printResult(DealerResultDto dealerResultDto, PlayerGameResultsDto playerGameResultsDto) {
-        System.out.println("\n## 최종 승패");
-        printDealerResult(dealerResultDto);
+    public void printResult(int dealerIncome, PlayerGameResultsDto playerGameResultsDto) {
+        System.out.println("\n## 최종 수익");
+        printDealerResult(dealerIncome);
         printPlayerResults(playerGameResultsDto);
     }
 
-    private void printDealerResult(DealerResultDto dealerResultDto) {
-        int winCount = dealerResultDto.winCount();
-        int loseCount = dealerResultDto.loseCount();
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder
-                .append(DEALER_DEFAULT_NAME)
-                .append(": ");
-
-        if (winCount > 0) {
-            stringBuilder.append(winCount)
-                    .append("승 ");
-        }
-        if (loseCount > 0) {
-            stringBuilder.append(loseCount)
-                    .append("패");
-        }
+    private void printDealerResult(int dealerIncome) {
+        String stringBuilder = DEALER_DEFAULT_NAME + ": " + dealerIncome;
         System.out.println(stringBuilder);
     }
 
     private void printPlayerResults(PlayerGameResultsDto playerGameResultsDto) {
-        playerGameResultsDto.resultMap().forEach((name, result) ->
-                System.out.println(name + ": " + GameResultOutput.convertGameResultToOutput(result))
+        playerGameResultsDto.playerIncomeResults().forEach((name, money) ->
+                System.out.println(name + ": " + money)
         );
     }
 

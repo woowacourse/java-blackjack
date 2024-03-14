@@ -1,13 +1,13 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.game.GameAccount;
+import blackjack.domain.game.Money;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.GameResult;
-import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.dto.DealerInitialHandDto;
-import blackjack.dto.DealerResultDto;
 import blackjack.dto.HandDto;
 import blackjack.dto.PlayerGameResultsDto;
 import blackjack.dto.PlayerHandDto;
@@ -15,7 +15,6 @@ import blackjack.dto.PlayersHandDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.object.Command;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,17 +34,26 @@ public class BlackjackController {
         Deck deck = new Deck();
         deck.shuffle();
 
+        GameAccount gameAccount = new GameAccount();
+        betMoney(gameAccount, players);
         setUpInitialHands(players, deck, dealer);
         distributeCardToPlayers(players, deck);
         distributeCardToDealer(dealer, deck);
         printAllGamerScores(dealer, players);
-        printResult(dealer, players);
+        printResult(players, dealer, gameAccount);
     }
 
     private Players getPlayers() {
         List<String> playerNames = inputView.receivePlayerNames();
 
         return new Players(playerNames);
+    }
+
+    private void betMoney(GameAccount gameAccount, Players players) {
+        for (Player player : players.getPlayers()) {
+            int betMoney = inputView.receivePlayerMoney(player.getName().value());
+            gameAccount.betMoney(player, new Money(betMoney));
+        }
     }
 
     private void setUpInitialHands(Players players, Deck deck, Dealer dealer) {
@@ -103,12 +111,12 @@ public class BlackjackController {
         outputView.printPlayersHandScore(PlayersHandDto.fromPlayers(players));
     }
 
-    private void printResult(Dealer dealer, Players players) {
-        Map<Name, GameResult> playerGameResults = players.collectPlayerGameResults(dealer.getHandValue());
-        PlayerGameResultsDto playerGameResultsDto = PlayerGameResultsDto.fromPlayerGameResults(playerGameResults);
-        List<GameResult> playerResults = new ArrayList<>(playerGameResultsDto.resultMap().values());
-        DealerResultDto dealerResultDto = DealerResultDto.fromPlayerResults(playerResults);
+    private void printResult(Players players, Dealer dealer, GameAccount gameAccount) {
+        Map<Player, GameResult> playerGameResults = players.collectPlayerGameResults(dealer.getHandValue());
+        gameAccount.applyGameResults(playerGameResults);
+        Money dealerIncome = gameAccount.calculateDealerIncome();
 
-        outputView.printResult(dealerResultDto, playerGameResultsDto);
+        PlayerGameResultsDto playerGameResultsDto = PlayerGameResultsDto.fromPlayerBetResults(gameAccount.getStore());
+        outputView.printResult(dealerIncome.value(), playerGameResultsDto);
     }
 }

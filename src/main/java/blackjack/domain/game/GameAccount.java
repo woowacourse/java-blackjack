@@ -33,4 +33,8 @@ public class GameAccount {
         }
         return new Money(-dealerIncome);
     }
+
+    public Map<Player, Money> getStore() {
+        return new LinkedHashMap<>(store);
+    }
 }
