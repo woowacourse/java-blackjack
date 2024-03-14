@@ -44,7 +44,6 @@ public class Player extends Gamer {
         return money;
     }
 
-
     public boolean hasName(Name comparedName) {
         return name.equals(comparedName);
     }
