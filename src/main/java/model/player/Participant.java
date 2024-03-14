@@ -11,10 +11,10 @@ public class Participant extends User {
     }
 
     public Outcome findOutcome(Dealer dealer) {
-        if (isNotHit()) {
+        if (isBust()) {
             return Outcome.LOSE;
         }
-        if (dealer.isNotHit()) {
+        if (dealer.isBust()) {
             return Outcome.WIN;
         }
         return findPlayerOutcome(dealer.findPlayerDifference());

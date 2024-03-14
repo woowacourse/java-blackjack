@@ -53,12 +53,12 @@ public class Cards {
         return result;
     }
 
-    public boolean isNotHit() {
+    public boolean isBust() {
         return calculateScore() > MAXIMUM_SUM;
     }
 
-    public boolean isHit() {
-        return !isNotHit();
+    public boolean isNotBust() {
+        return !isBust();
     }
 
     public int findPlayerDifference() {//TODO Cards인데 Player?

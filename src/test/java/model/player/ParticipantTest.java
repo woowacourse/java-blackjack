@@ -32,7 +32,7 @@ class ParticipantTest {
     void noticeTrue() {
         Participant participant = new Participant("배키",
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE)));
-        assertFalse(participant.isNotHit());
+        assertFalse(participant.isBust());
     }
 
     @DisplayName("카드의 합이 21초과일 때는 거짓을 반환한다.")
@@ -43,7 +43,7 @@ class ParticipantTest {
         participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
         participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
         participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
-        assertTrue(participant.isNotHit());
+        assertTrue(participant.isBust());
     }
 
     @DisplayName("참가자와 딜러 카드의 합이 같을 때 무승부이다.")

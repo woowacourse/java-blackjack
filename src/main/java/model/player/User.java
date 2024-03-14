@@ -35,12 +35,12 @@ public abstract class User {
         return cards.calculateScore();
     }
 
-    public boolean isNotHit() {
-        return cards.isNotHit();
+    public boolean isBust() {
+        return cards.isBust();
     }
 
-    public boolean isHit() {
-        return cards.isHit();
+    public boolean isNotBust() {
+        return cards.isNotBust();
     }
 
     public int findPlayerDifference() {

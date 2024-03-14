@@ -47,14 +47,14 @@ public class BlackJack {
 
     private void decideParticipantPlay(Participant participant,
                                        Function<String, Boolean> isMoreCard, BiConsumer<String, Cards> callback) {
-        while (participant.isHit() && isMoreCard.apply(participant.getName())) {
+        while (participant.isNotBust() && isMoreCard.apply(participant.getName())) {
             offerCardToParticipant(participant, CardSize.ONE);
             callback.accept(participant.getName(), participant.getCards());
         }
     }
 
     public void decideDealerPlay(Runnable runnable) {
-        while (dealer.isHit()) {
+        while (dealer.isNotBust()) {
             runnable.run();
             offerCardToDealer(CardSize.ONE);
         }
