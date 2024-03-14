@@ -56,7 +56,8 @@ public class Blackjack {
     }
 
     public boolean canDealerHit() {
-        return dealer.canHit();
+        return false;
+//        return dealer.canHit();
     }
 
     public void dealerHit() {
@@ -75,8 +76,10 @@ public class Blackjack {
     }
 
     public ParticipantsResponse toParticipantsResponse() {
-        return new ParticipantsResponse(dealer.toDealerResponse(),
-                players.stream().map(Player::toPlayerResponse).toList());
+//        return new ParticipantsResponse(dealer.toDealerResponse(),
+//                players.stream().map(Player::toPlayerResponse).toList());
+        return null;
+
     }
 
     public PlayerResponse toPlayerResponse(final String name) {

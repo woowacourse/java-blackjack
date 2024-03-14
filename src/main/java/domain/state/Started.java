@@ -1,16 +1,16 @@
 package domain.state;
 
-import domain.card.Cards;
+import domain.card.Deck;
 
 public abstract class Started implements State {
-    private final Cards cards = Cards.makeEmptyDeck();
+    private final Deck deck = Deck.makeEmptyDeck();
 
     @Override
     public boolean isFinished() {
         return false;
     }
 
-    public Cards getCards() {
-        return cards;
+    public Deck getCards() {
+        return deck;
     }
 }

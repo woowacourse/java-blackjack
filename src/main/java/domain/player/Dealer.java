@@ -1,8 +1,7 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.card.Cards;
-import dto.DealerResponse;
+import domain.card.Deck;
 import dto.PlayerResult;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -11,7 +10,7 @@ import java.util.Map;
 public class Dealer extends Participant {
     private static final int HIT_UPPER_BOUND = 17;
 
-    private final Cards decks = Cards.makeDecks();
+    private final Deck decks = Deck.makeDecks();
 
     public Dealer() {
         super();
@@ -22,10 +21,7 @@ public class Dealer extends Participant {
         return decks.draw();
     }
 
-    @Override
-    public boolean canHit() {
-        return calculateScore() < HIT_UPPER_BOUND;
-    }
+
 
     public PlayerResult compareHandsWith(final Player player) {
         if (player.isBust()) {
@@ -39,13 +35,14 @@ public class Dealer extends Participant {
     }
 
     private PlayerResult compareScore(final Player player) {
-        if (player.calculateScore() == calculateScore()) {
-            return PlayerResult.TIE;
-        }
-        if (player.calculateScore() > calculateScore()) {
-            return PlayerResult.LOSE;
-        }
-        return PlayerResult.WIN;
+//        if (player.calculateScore() == calculateScore()) {
+//            return PlayerResult.TIE;
+//        }
+//        if (player.calculateScore() > calculateScore()) {
+//            return PlayerResult.LOSE;
+//        }
+//        return PlayerResult.WIN;
+        return null;
     }
 
     public Map<PlayerResult, Integer> wrapUp(final Players players) {
@@ -55,9 +52,9 @@ public class Dealer extends Participant {
         return Collections.unmodifiableMap(result);
     }
 
-    public DealerResponse toDealerResponse() {
-        return new DealerResponse(getHands().stream().
-                map(Card::toCardResponse)
-                .toList(), calculateScore());
-    }
+//    public DealerResponse toDealerResponse() {
+//        return new DealerResponse(getHands().stream().
+//                map(Card::toCardResponse)
+//                .toList(), calculateScore());
+//    }
 }
