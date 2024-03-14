@@ -1,11 +1,16 @@
 package domain.constant;
 
 public enum GamerResult {
-    WIN,
-    DRAW,
-    LOSE;
+    WIN(1),
+    DRAW(0),
+    LOSE(-1);
 
     private static final int BUST_THRESHOLD = 21;
+    private final int profitRatio;
+
+    GamerResult(int profitRatio) {
+        this.profitRatio = profitRatio;
+    }
 
     public static GamerResult judgeDealerResult(int dealerScore, int playerScore) {
         if (playerScore > BUST_THRESHOLD || (dealerScore <= BUST_THRESHOLD && dealerScore > playerScore)) {
@@ -25,5 +30,9 @@ public enum GamerResult {
             return GamerResult.WIN;
         }
         return GamerResult.DRAW;
+    }
+
+    public int getProfitRatio() {
+        return profitRatio;
     }
 }
