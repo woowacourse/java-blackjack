@@ -12,6 +12,14 @@ public class Balance {
         this.value = value;
     }
 
+    Balance add(final Balance balance) {
+        return new Balance(this.value + balance.value);
+    }
+
+    Balance sub(final Balance balance) {
+        return new Balance(this.value - balance.value);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -25,9 +33,5 @@ public class Balance {
     @Override
     public int hashCode() {
         return value;
-    }
-
-    public Balance add(final Balance balance) {
-        return new Balance(this.value + balance.value);
     }
 }

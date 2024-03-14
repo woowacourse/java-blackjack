@@ -7,8 +7,13 @@ public class Account {
         this.balance = new Balance();
     }
 
-    public Balance deposit(final Balance balance) {
+    Balance deposit(final Balance balance) {
         this.balance = this.balance.add(balance);
+        return this.balance;
+    }
+
+    Balance withdraw(final Balance balance) {
+        this.balance = this.balance.sub(balance);
         return this.balance;
     }
 }
