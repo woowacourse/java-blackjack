@@ -24,11 +24,19 @@ public class Dealer extends Participant {
             return GameResult.WIN;
         }
 
-        if (playerScore == dealerScore) {
+        if (player.isBlackJack() && isBlackJack()) {
             return GameResult.TIE;
         }
 
-        return GameResult.LOSE;
+        if (player.isBlackJack()) {
+            return GameResult.WIN;
+        }
+
+        if (isBlackJack() || playerScore < dealerScore) {
+            return GameResult.LOSE;
+        }
+
+        return GameResult.TIE;
     }
 
     public List<Card> getOpenCards() {

@@ -30,6 +30,10 @@ public abstract class Participant {
         return hand.isBlackJack();
     }
 
+    public boolean isBlackJackScore() {
+        return hand.isBlackJackScore();
+    }
+
     public boolean isBust() {
         return hand.isBust();
     }

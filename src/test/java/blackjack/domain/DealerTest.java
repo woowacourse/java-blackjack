@@ -13,7 +13,7 @@ class DealerTest {
     @DisplayName("생성 테스트")
     @Test
     void create() {
-        assertThatCode(() -> new Dealer())
+        assertThatCode(Dealer::new)
                 .doesNotThrowAnyException();
     }
 
@@ -103,8 +103,7 @@ class DealerTest {
     void allBlackJack() {
         Dealer dealer = new Dealer();
         dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
-        dealer.hit(new Card(CardRank.FOUR, CardShape.DIAMOND));
-        dealer.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
+        dealer.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
 
         Player player = new Player("pobi");
         player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
@@ -113,6 +112,40 @@ class DealerTest {
         GameResult gameResult = dealer.judge(player);
 
         assertThat(gameResult).isEqualTo(GameResult.TIE);
+    }
+
+    @DisplayName("딜러만 블랙잭인 경우, 플레이어가 진다.")
+    @Test
+    void onlyDealerBlackJack() {
+        Dealer dealer = new Dealer();
+        dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+        dealer.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
+
+        Player player = new Player("pobi");
+        player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+        player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
+        player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
+
+        GameResult gameResult = dealer.judge(player);
+
+        assertThat(gameResult).isEqualTo(GameResult.LOSE);
+    }
+
+    @DisplayName("플레이어만 블랙잭인 경우, 딜러가 진다.")
+    @Test
+    void onlyPlayerBlackJack() {
+        Dealer dealer = new Dealer();
+        dealer.hit(new Card(CardRank.SIX, CardShape.DIAMOND));
+        dealer.hit(new Card(CardRank.FIVE, CardShape.DIAMOND));
+        dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+
+        Player player = new Player("pobi");
+        player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
+        player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
+
+        GameResult gameResult = dealer.judge(player);
+
+        assertThat(gameResult).isEqualTo(GameResult.WIN);
     }
 
     @DisplayName("딜러만 버스트되면, 플레이어가 이긴다.")

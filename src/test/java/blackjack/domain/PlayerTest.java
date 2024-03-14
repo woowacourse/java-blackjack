@@ -44,18 +44,20 @@ class PlayerTest {
                 .isInstanceOf(IllegalStateException.class);
     }
 
-    @DisplayName("플레이어가 블랙잭 상태면 더 이상 카드를 받을 수 없다")
+    @DisplayName("플레이어가 21점에 도달하면 더 이상 카드를 받을 수 없다")
     @Test
-    void hitWhenBlackjack() {
+    void hitWhenBlackJackScore() {
         Player player = new Player("atom");
         Card card1 = new Card(CardRank.KING, CardShape.DIAMOND);
-        Card card2 = new Card(CardRank.ACE, CardShape.DIAMOND);
-        Card card3 = new Card(CardRank.EIGHT, CardShape.DIAMOND);
+        Card card2 = new Card(CardRank.QUEEN, CardShape.DIAMOND);
+        Card card3 = new Card(CardRank.ACE, CardShape.DIAMOND);
+        Card card4 = new Card(CardRank.ACE, CardShape.HEART);
 
         player.hit(card1);
         player.hit(card2);
+        player.hit(card3);
 
-        assertThatThrownBy(() -> player.hit(card3))
+        assertThatThrownBy(() -> player.hit(card4))
                 .isInstanceOf(IllegalStateException.class);
     }
 

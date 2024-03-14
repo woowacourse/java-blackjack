@@ -8,6 +8,6 @@ public class Player extends Participant {
 
     @Override
     public boolean isPlayable() {
-        return !(isBust() || isBlackJack());
+        return !(isBust() || isBlackJackScore());
     }
 }

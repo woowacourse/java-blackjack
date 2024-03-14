@@ -7,6 +7,7 @@ class Hand {
 
     private static final int BONUS_SCORE = 10;
     private static final int BLACKJACK_SCORE = 21;
+    private static final int BLACKJACK_CARD_SIZE = 2;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -21,9 +22,19 @@ class Hand {
     }
 
     public boolean isBlackJack() {
+        return isBlackJackScore() && isBlackJackCardSize();
+    }
+
+    public boolean isBlackJackScore() {
         int score = calculateScore();
 
         return score == BLACKJACK_SCORE;
+    }
+
+    private boolean isBlackJackCardSize() {
+        int size = cards.size();
+
+        return size == BLACKJACK_CARD_SIZE;
     }
 
     public int calculateScore() {
