@@ -21,7 +21,15 @@ public class HandDeck {
     }
 
     public boolean isBlackJack() {
-        return calculateTotalScore() == BLACKJACK;
+        Card firstCard = cards.get(0);
+        Card secondCard = cards.get(1);
+
+        int sum = firstCard.getCardScore() + secondCard.getCardScore();
+
+        if (firstCard.isAce() || secondCard.isAce()) {
+            sum += 10;
+        }
+        return sum == BLACKJACK;
     }
 
     public void addCard(Card card) {
@@ -38,6 +46,10 @@ public class HandDeck {
             return adjustAceValueIfNotBusted(sum);
         }
         return sum;
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 
     private int adjustAceValueIfNotBusted(int sum) {
@@ -58,7 +70,4 @@ public class HandDeck {
         }
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
 }

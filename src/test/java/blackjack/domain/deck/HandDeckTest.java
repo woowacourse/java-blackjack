@@ -42,6 +42,23 @@ class HandDeckTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("덱에 있는 카드가 블랙잭인지 확인한다.")
+    @Test
+    void isBlackJack() {
+        //given
+        HandDeck handDeck = new HandDeck();
+        Card card1 = new Card(Pattern.CLOVER, Rank.KING);
+        Card card2 = new Card(Pattern.SPADE, Rank.ACE);
+
+        //when
+        handDeck.addCard(card1);
+        handDeck.addCard(card2);
+
+        boolean isBlackJack = handDeck.isBlackJack();
+        //then
+        assertThat(isBlackJack).isTrue();
+    }
+
     @DisplayName("덱에 있는 모든 카드의 합을 계산한다.")
     @Test
     void calculateTotalScore() {
