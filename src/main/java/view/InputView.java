@@ -1,5 +1,6 @@
 package view;
 
+import domain.money.BetAmount;
 import domain.money.Money;
 import domain.user.Name;
 import domain.user.Player;

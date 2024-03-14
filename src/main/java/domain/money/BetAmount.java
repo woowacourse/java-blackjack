@@ -1,4 +1,4 @@
-package view;
+package domain.money;
 
 public record BetAmount(int value) {
     public static final int MIN_BET_AMOUNT = 1000;
