@@ -21,12 +21,6 @@ public class Dealer extends Participant {
         return hand.isTotalScoreLessOrEqual(MAXIMUM_ENABLE_TOTAL_SCORE);
     }
 
-    public boolean isWin(final Player player) {
-        return player.isBust()
-                || (this.isBlackJack() && !player.isBlackJack())
-                || (!this.isBust() && this.getTotalScore().isBigger(player.getTotalScore()));
-    }
-
     public PlayingCard getFirstPlayingCard() {
         return hand.getPlayingCards().get(0);
     }

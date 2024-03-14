@@ -1,6 +1,9 @@
 package domain.participant;
 
+import domain.constant.GameResult;
 import domain.playingcard.Deck;
+
+import static domain.constant.GameResult.*;
 
 public class Player extends Participant {
     private static final int MAXIMUM_ENABLE_TOTAL_SCORE = 20;
@@ -23,10 +26,28 @@ public class Player extends Participant {
         return hand.isTotalScoreLessOrEqual(MAXIMUM_ENABLE_TOTAL_SCORE);
     }
 
-    public boolean isWin(final Dealer dealer) {
+    public GameResult determineGameResult(final Dealer dealer) {
+        if (isWin(dealer)) {
+            return WIN;
+        }
+
+        if (isLose(dealer)) {
+            return LOSE;
+        }
+
+        return DRAW;
+    }
+
+    private boolean isWin(final Dealer dealer) {
         return (!this.isBust() && dealer.isBust())
                 || (this.isBlackJack() && !dealer.isBlackJack())
-                || this.getTotalScore().isBigger(dealer.getTotalScore());
+                || !this.isBust() && this.getTotalScore().isBigger(dealer.getTotalScore());
+    }
+
+    private boolean isLose(final Dealer dealer) {
+        return this.isBust()
+                || (dealer.isBlackJack() && !this.isBlackJack())
+                || (!dealer.isBust() && dealer.getTotalScore().isBigger(this.getTotalScore()));
     }
 
     public PlayerName getPlayerName() {

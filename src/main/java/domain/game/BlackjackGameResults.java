@@ -5,10 +5,13 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.PlayerName;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import static domain.constant.GameResult.*;
-import static java.util.Collections.*;
+import static java.util.Collections.unmodifiableList;
+import static java.util.Collections.unmodifiableMap;
 
 public record BlackjackGameResults(List<GameResult> dealerGameResults, Map<PlayerName, GameResult> playerGameResults) {
 
@@ -19,36 +22,19 @@ public record BlackjackGameResults(List<GameResult> dealerGameResults, Map<Playe
     public static BlackjackGameResults of(final Dealer dealer, final List<Player> players) {
         List<GameResult> dealerGameResults = new ArrayList<>();
         Map<PlayerName, GameResult> playerGameResults = new HashMap<>();
-        players.forEach(player -> determineGameResult(dealer, player, dealerGameResults, playerGameResults));
+        players.forEach(player -> addGameResult(dealerGameResults, playerGameResults, player, dealer));
 
         return new BlackjackGameResults(unmodifiableList(dealerGameResults), unmodifiableMap(playerGameResults));
-    }
-
-    private static void determineGameResult(
-            final Dealer dealer,
-            final Player player,
-            final List<GameResult> dealerGameResults,
-            final Map<PlayerName, GameResult> playerGameResults
-    ) {
-        if (dealer.isWin(player)) {
-            addGameResult(dealerGameResults, playerGameResults, player, WIN, LOSE);
-            return;
-        }
-        if (player.isWin(dealer)) {
-            addGameResult(dealerGameResults, playerGameResults, player, LOSE, WIN);
-            return;
-        }
-        addGameResult(dealerGameResults, playerGameResults, player, DRAW, DRAW);
     }
 
     private static void addGameResult(
             final List<GameResult> dealerGameResults,
             final Map<PlayerName, GameResult> playerGameResults,
             final Player player,
-            final GameResult dealerGameResult,
-            final GameResult playerGameResult
+            final Dealer dealer
     ) {
-        dealerGameResults.add(dealerGameResult);
+        GameResult playerGameResult = player.determineGameResult(dealer);
+        dealerGameResults.add(playerGameResult.getReverseResult());
         playerGameResults.put(player.getPlayerName(), playerGameResult);
     }
 }
