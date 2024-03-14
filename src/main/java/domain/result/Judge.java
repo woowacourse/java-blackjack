@@ -2,6 +2,7 @@ package domain.result;
 
 import domain.Profit;
 import domain.WinState;
+import domain.cards.Score;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
@@ -51,12 +52,13 @@ public class Judge {
     }
 
     private WinState decidePlayerWinState(Player player, Dealer dealer) {
-        int playerScore = player.finalizeCardsScore();
-        int dealerScore = dealer.finalizeCardsScore();
-        if (playerScore > dealerScore) {
+        Score playerScore = player.finalizeCardsScore();
+        Score dealerScore = dealer.finalizeCardsScore();
+        int gapOfScore = playerScore.compareScore(dealerScore);
+        if (gapOfScore > 0) {
             return WinState.WIN;
         }
-        if (playerScore < dealerScore) {
+        if (gapOfScore < 0) {
             return WinState.LOSE;
         }
         return WinState.DRAW;

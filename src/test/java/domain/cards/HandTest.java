@@ -18,7 +18,7 @@ public class HandTest {
         hand.addCard(new Card(CardNumber.THREE, CardShape.SPADE));
         hand.addCard(new Card(CardNumber.FOUR, CardShape.SPADE));
 
-        assertThat(hand.calculateScore()).isEqualTo(9);
+        assertThat(hand.hasScore(9)).isTrue();
     }
 
     @DisplayName("지금까지 뽑은 카드 숫자의 합이 21 미만인지 알려준다.")
@@ -29,7 +29,7 @@ public class HandTest {
         hand.addCard(new Card(CardNumber.THREE, CardShape.SPADE));
         hand.addCard(new Card(CardNumber.FOUR, CardShape.SPADE));
 
-        assertThat(hand.hasScoreUnderBustThreshold()).isTrue();
+        assertThat(hand.cannotBust()).isTrue();
     }
 
     @DisplayName("A 카드가 있는 경우 계산한 점수에 10을 더했을 때 bust 되지 않으면 10을 더한다.")
@@ -40,7 +40,7 @@ public class HandTest {
         hand.addCard(new Card(CardNumber.FIVE, CardShape.SPADE));
         hand.addCard(new Card(CardNumber.ACE, CardShape.SPADE));
 
-        assertThat(hand.calculateScore()).isEqualTo(21);
+        assertThat(hand.hasScore(21)).isTrue();
     }
 
     @DisplayName("A 카드가 있는 경우 계산한 점수에 10을 더했을 때 bust 되면 그대로 반환한다.")
@@ -51,7 +51,7 @@ public class HandTest {
         hand.addCard(new Card(CardNumber.KING, CardShape.SPADE));
         hand.addCard(new Card(CardNumber.ACE, CardShape.SPADE));
 
-        assertThat(hand.calculateScore()).isEqualTo(21);
+        assertThat(hand.hasScore(21)).isTrue();
     }
 
     @DisplayName("A 카드가 있는 경우 계산한 점수에 10을 더했을 때 bust 되면 그대로 반환한다. - A A")
@@ -61,7 +61,7 @@ public class HandTest {
         hand.addCard(new Card(CardNumber.ACE, CardShape.HEART));
         hand.addCard(new Card(CardNumber.ACE, CardShape.SPADE));
 
-        assertThat(hand.calculateScore()).isEqualTo(12);
+        assertThat(hand.hasScore(12)).isTrue();
     }
 
     @DisplayName("A 카드가 있는 경우 계산한 점수에 10을 더했을 때 bust 되면 그대로 반환한다. - A A K")
@@ -72,7 +72,7 @@ public class HandTest {
         hand.addCard(new Card(CardNumber.ACE, CardShape.SPADE));
         hand.addCard(new Card(CardNumber.KING, CardShape.SPADE));
 
-        assertThat(hand.calculateScore()).isEqualTo(12);
+        assertThat(hand.hasScore(12)).isTrue();
     }
 
     @DisplayName("A 카드가 있는 경우 계산한 점수에 10을 더했을 때 bust 되면 그대로 반환한다. - A A A")
@@ -83,7 +83,7 @@ public class HandTest {
         hand.addCard(new Card(CardNumber.ACE, CardShape.SPADE));
         hand.addCard(new Card(CardNumber.ACE, CardShape.CLOVER));
 
-        assertThat(hand.calculateScore()).isEqualTo(13);
+        assertThat(hand.hasScore(13)).isTrue();
     }
 
     @DisplayName("A 카드가 없는 경우 계산한 점수를 그대로 반환한다.")
@@ -94,7 +94,7 @@ public class HandTest {
         hand.addCard(new Card(CardNumber.THREE, CardShape.SPADE));
         hand.addCard(new Card(CardNumber.FOUR, CardShape.SPADE));
 
-        assertThat(hand.calculateScore()).isEqualTo(9);
+        assertThat(hand.hasScore(9)).isTrue();
     }
 
     @DisplayName("지금까지 뽑은 카드 숫자의 합이 16 이하인지 알려준다.")
@@ -104,7 +104,7 @@ public class HandTest {
         hand.addCard(new Card(CardNumber.KING, CardShape.HEART));
         hand.addCard(new Card(CardNumber.SIX, CardShape.SPADE));
 
-        assertThat(hand.hasScoreUnderHitThreshold()).isTrue();
+        assertThat(hand.cannotDealerHit()).isTrue();
     }
 
     @DisplayName("지금까지 뽑은 카드 숫자의 합이 17 이상인지 알려준다.")
@@ -114,7 +114,7 @@ public class HandTest {
         hand.addCard(new Card(CardNumber.KING, CardShape.HEART));
         hand.addCard(new Card(CardNumber.SEVEN, CardShape.SPADE));
 
-        assertThat(hand.hasScoreUnderHitThreshold()).isFalse();
+        assertThat(hand.cannotDealerHit()).isFalse();
     }
 
     @DisplayName("갖고 있는 카드의 첫번째 카드를 뽑는다.")

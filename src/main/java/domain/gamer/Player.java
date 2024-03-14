@@ -3,6 +3,7 @@ package domain.gamer;
 import domain.cards.Card;
 import domain.cards.CardPack;
 import domain.cards.Hand;
+import domain.cards.Score;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +19,7 @@ public class Player {
     }
 
     public boolean isBlackJack() {
-        return hand.hasSize(2) && hand.calculateScore() == 21;
+        return hand.hasSize(2) && hand.hasScore(21);
     }
 
     public void receiveCards(CardPack cardPack, int count) {
@@ -32,14 +33,14 @@ public class Player {
     }
 
     public boolean isBust() {
-        return !hand.hasScoreUnderBustThreshold();
+        return !hand.cannotBust();
     }
 
     public boolean isNotBust() {
-        return hand.hasScoreUnderBustThreshold();
+        return hand.cannotBust();
     }
 
-    public int finalizeCardsScore() {
+    public Score finalizeCardsScore() {
         return hand.calculateScore();
     }
 

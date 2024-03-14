@@ -12,7 +12,7 @@ public class Dealer extends Player {
     }
 
     public boolean canHit() {
-        return hand.hasScoreUnderHitThreshold();
+        return hand.cannotDealerHit();
     }
 
     public Card openOneCard() {
