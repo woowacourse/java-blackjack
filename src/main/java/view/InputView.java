@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class InputView {
 
     private static final String POSITIVE = "y";
+    private static final String NEGATIVE = "n";
 
     private static Scanner scanner = new Scanner(System.in);
 
@@ -28,6 +29,12 @@ public class InputView {
     public static boolean readHitOpinion(Name name) {
         System.out.println(name.asString() + "는(은) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String opinion = scanner.nextLine();
-        return POSITIVE.equals(opinion);
+        if(POSITIVE.equals(opinion)){
+            return true;
+        }
+        if(NEGATIVE.equals(opinion)){
+            return false;
+        }
+        throw new IllegalArgumentException("예는 y, 아니오는 n로 입력해주세요.");
     }
 }
