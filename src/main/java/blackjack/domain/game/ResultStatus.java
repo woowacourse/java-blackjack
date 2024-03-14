@@ -4,6 +4,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.function.BiPredicate;
 
 public enum ResultStatus {
@@ -18,13 +19,22 @@ public enum ResultStatus {
     }
 
     public static ResultStatus of(final Player player, final Dealer dealer) {
-        if (player.isBust() || dealer.isBlackjack()) {
-            return LOSE;
+        final Optional<ResultStatus> resultStatusOpt = checkByState(player, dealer);
+        return resultStatusOpt.orElseGet(() ->
+                compareScore(player.calculateScore(), dealer.calculateScore()));
+    }
+
+    private static Optional<ResultStatus> checkByState(final Player player, final Dealer dealer) {
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return Optional.of(DRAW);
+        }
+        if (dealer.isBlackjack() || player.isBust()) {
+            return Optional.of(LOSE);
         }
         if (dealer.isBust() || player.isBlackjack()) {
-            return WIN;
+            return Optional.of(WIN);
         }
-        return compareScore(player.calculateScore(), dealer.calculateScore());
+        return Optional.empty();
     }
 
     private static ResultStatus compareScore(final int playerScore, final int dealerScore) {
