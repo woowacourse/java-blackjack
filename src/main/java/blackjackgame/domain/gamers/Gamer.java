@@ -7,12 +7,20 @@ import blackjackgame.domain.blackjack.HoldingCards;
 import blackjackgame.domain.card.Deck;
 
 public class Gamer {
+    private static final String DEALER_NAME = "딜러";
+    private static final double DEALER_BET_MONEY = 0.0;
+
     private final CardHolder cardHolder;
     private final BetMaker betMaker;
 
     private Gamer(CardHolder cardHolder, BetMaker betMaker) {
         this.cardHolder = cardHolder;
         this.betMaker = betMaker;
+    }
+
+    public static Gamer dealer() {
+        return new Gamer(new CardHolder(DEALER_NAME, HoldingCards.of()),
+                new BetMaker(DEALER_NAME, DEALER_BET_MONEY));
     }
 
     public static Gamer createByNameAndBetMoney(String name, Double betMoney) {

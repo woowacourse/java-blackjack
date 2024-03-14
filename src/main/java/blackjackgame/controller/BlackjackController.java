@@ -33,7 +33,7 @@ public class BlackjackController {
         List<String> playerNames = NameInputView.getNames();
         List<Double> playerBetMoneys = BetMoneyInputView.getPlayerBetMoneys(playerNames);
 
-        Gamer dealer = Gamer.createByNameAndBetMoney(DEALER_NAME, INITIAL_MONEY);
+        Gamer dealer = Gamer.dealer();
         Gamers players = Gamers.createByNamesAndBetMoneys(playerNames, playerBetMoneys);
 
         return new BlackjackGame(dealer, players);
