@@ -110,26 +110,21 @@ public class OutputView {
         System.out.print("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printDealerMatchResult(int winCount, int loseCount) {
-        System.out.println("## 최종 승패");
-        System.out.printf("딜러 : %d승 %d패%n", winCount, loseCount);
-    }
-
-    public void printPlayerMatchResult(String name, boolean isWin) {
-        if (isWin) {
-            System.out.println(name + ": 승");
-            return;
-        }
-        System.out.println(name + ": 패");
-    }
-
     public void printMatchResult(Profit dealerProfit, Map<Player, Profit> playersProfit) {
         System.out.println("## 최종 승패");
-        System.out.println("딜러: " + dealerProfit.toInt());
+        printDealerResult(dealerProfit);
         for (Entry<Player, Profit> profitEntry : playersProfit.entrySet()) {
-            String name = profitEntry.getKey().getName();
-            int profit = profitEntry.getValue().toInt();
-            System.out.println(name + ": " + profit);
+            printPlayerResult(profitEntry.getKey(), profitEntry.getValue());
         }
+    }
+
+    private void printDealerResult(Profit dealerProfit) {
+        System.out.println("딜러: " + dealerProfit.toInt());
+    }
+
+    private void printPlayerResult(Player player, Profit profit) {
+        String name = player.getName();
+        int profitValue = profit.toInt();
+        System.out.println(name + ": " + profitValue);
     }
 }
