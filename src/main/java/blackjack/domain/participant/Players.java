@@ -4,8 +4,6 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.game.PlayerResult;
 import blackjack.domain.game.Referee;
 import blackjack.domain.game.result.GameResult;
-import blackjack.domain.participant.rule.DealerRule;
-import blackjack.domain.participant.rule.PlayerRule;
 import java.util.List;
 
 public class Players {

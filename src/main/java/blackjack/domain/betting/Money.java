@@ -1,6 +1,7 @@
 package blackjack.domain.betting;
 
 import java.util.Objects;
+
 public class Money {
 
     public static final Money ZERO = new Money(0);
