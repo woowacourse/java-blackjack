@@ -84,7 +84,6 @@ public class Application {
     private static void makeResult(BlackJackGame game, Judge judge) {
         Gamers gamers = game.getGamers();
         judge.decideResult(gamers);
-        judge.decideProfit();
         resultView.printFinalProfit(gamers.getDealer(), judge);
     }
 }

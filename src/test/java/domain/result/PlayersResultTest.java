@@ -20,18 +20,17 @@ class PlayersResultTest {
         Player player3 = new Player("p3", new Hand());
         Player player4 = new Player("p4", new Hand());
         PlayersResult playersResult = new PlayersResult();
-        playersResult.addResult(player1, WinState.WIN);
-        playersResult.addResult(player2, WinState.LOSE);
-        playersResult.addResult(player3, WinState.BLACKJACK);
-        playersResult.addResult(player4, WinState.DRAW);
         playersResult.addProfit(player1, new Profit(10));
         playersResult.addProfit(player2, new Profit(10));
         playersResult.addProfit(player3, new Profit(10));
         playersResult.addProfit(player4, new Profit(10));
 
-        playersResult.calculateProfit();
+        playersResult.calculateProfit(player1, WinState.WIN);
+        playersResult.calculateProfit(player2, WinState.LOSE);
+        playersResult.calculateProfit(player3, WinState.BLACKJACK);
+        playersResult.calculateProfit(player4, WinState.DRAW);
 
-        Map<Player, Profit> profitResult = playersResult.getProfitResult();
+        Map<Player, Profit> profitResult = playersResult.getResult();
         assertThat(profitResult.get(player1).getValue()).isEqualTo(10);
         assertThat(profitResult.get(player2).getValue()).isEqualTo(-10);
         assertThat(profitResult.get(player3).getValue()).isEqualTo(15);

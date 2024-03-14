@@ -35,19 +35,19 @@ public class Judge {
 
     private void decidePlayerResult(Player player, Dealer dealer) {
         if (player.isBlackJack()) {
-            playersResult.addResult(player, WinState.BLACKJACK);
+            playersResult.calculateProfit(player, WinState.BLACKJACK);
             return;
         }
         if (player.isBust()) {
-            playersResult.addResult(player, WinState.LOSE);
+            playersResult.calculateProfit(player, WinState.LOSE);
             return;
         }
         if (dealer.isBust()) {
-            playersResult.addResult(player, WinState.WIN);
+            playersResult.calculateProfit(player, WinState.WIN);
             return;
         }
         WinState playerWinState = decidePlayerWinState(player, dealer);
-        playersResult.addResult(player, playerWinState);
+        playersResult.calculateProfit(player, playerWinState);
     }
 
     private WinState decidePlayerWinState(Player player, Dealer dealer) {
@@ -63,26 +63,11 @@ public class Judge {
     }
 
     private void decideDealerResult() {
-        dealerResult.addResult(WinState.WIN, playersResult.countWinState(WinState.LOSE));
-        dealerResult.addResult(WinState.DRAW, playersResult.countWinState(WinState.DRAW));
-        dealerResult.addResult(WinState.LOSE, playersResult.countWinState(WinState.WIN));
-    }
-
-    public void decideProfit() {
-        playersResult.calculateProfit();
-        dealerResult.calculateProfit(playersResult.getProfitResult());
-    }
-
-    public Map<Player, WinState> getPlayersResult() {
-        return playersResult.getResult();
+        dealerResult.calculateProfit(getPlayersProfit());
     }
 
     public Map<Player, Profit> getPlayersProfit() {
-        return playersResult.getProfitResult();
-    }
-
-    public Map<WinState, Integer> getDealerResult() {
-        return dealerResult.getResult();
+        return playersResult.getResult();
     }
 
     public Profit getDealerProfit() {

@@ -1,8 +1,8 @@
 package domain;
 
-public class Profit {
+import java.util.Objects;
 
-    private static final double MULTIPLE_OF_BLACKJACK = 1.5;
+public class Profit {
 
     private final int value;
 
@@ -10,23 +10,28 @@ public class Profit {
         this.value = value;
     }
 
-    public Profit lose() {
-        return new Profit(-value);
-    }
-
-    public Profit keep() {
-        return new Profit(0);
-    }
-
-    public Profit win() {
-        return new Profit(value);
-    }
-
-    public Profit specialWin() {
-        return new Profit((int) (value * MULTIPLE_OF_BLACKJACK));
+    public Profit update(double multiplier) {
+        return new Profit((int) (value * multiplier));
     }
 
     public int getValue() {
         return value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Profit profit = (Profit) o;
+        return value == profit.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }
