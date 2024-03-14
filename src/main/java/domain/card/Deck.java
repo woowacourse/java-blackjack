@@ -6,20 +6,20 @@ import java.util.Queue;
 import java.util.stream.IntStream;
 import strategy.CardGenerator;
 
-public class DeckCards {
+public class Deck {
 
     private static final int CARD_AMOUNT = 52;
 
     private final Queue<Card> cards;
 
-    private DeckCards(Queue<Card> cards) {
+    private Deck(Queue<Card> cards) {
         validate(cards);
         this.cards = cards;
     }
 
-    public static DeckCards from(CardGenerator cardGenerator) {
+    public static Deck from(CardGenerator cardGenerator) {
         Queue<Card> generatedCards = new LinkedList<>(cardGenerator.generate());
-        return new DeckCards(generatedCards);
+        return new Deck(generatedCards);
     }
 
     private void validate(Queue<Card> cards) {

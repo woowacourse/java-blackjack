@@ -1,6 +1,6 @@
 package domain.game;
 
-import domain.card.DeckCards;
+import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
@@ -13,18 +13,18 @@ public class BlackjackGame {
     private static final int STARTING_CARDS_AMOUNT = 2;
 
     private final Participants participants;
-    private final DeckCards deckCards;
+    private final Deck deck;
 
     public BlackjackGame(Participants participants, CardGenerator cardGenerator) {
         this.participants = participants;
-        this.deckCards = DeckCards.from(cardGenerator);
+        this.deck = Deck.from(cardGenerator);
     }
 
     public void distributeStartingCards() {
         for (Participant participant : getPlayers()) {
-            participant.receive(deckCards.drawCards(STARTING_CARDS_AMOUNT));
+            participant.receive(deck.drawCards(STARTING_CARDS_AMOUNT));
         }
-        getDealer().receive(deckCards.drawCards(STARTING_CARDS_AMOUNT));
+        getDealer().receive(deck.drawCards(STARTING_CARDS_AMOUNT));
     }
 
     public void giveOneCard(Participant participant) {
@@ -32,7 +32,7 @@ public class BlackjackGame {
             throw new IllegalArgumentException("[ERROR] 해당 게임의 참여자가 아닙니다.");
         }
         if (participant.isReceivable()) {
-            participant.receive(deckCards.drawCard());
+            participant.receive(deck.drawCard());
         }
     }
 
