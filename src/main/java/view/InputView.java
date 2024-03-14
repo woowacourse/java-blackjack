@@ -40,8 +40,13 @@ public class InputView {
     public int readBettingAmount(Player player) {
         System.out.println(player.getPlayerName() + "의 배팅 금액은?");
         String rawBettingAmount = scanner.nextLine();
+        validateBetInputType(rawBettingAmount);
+        return Integer.parseInt(rawBettingAmount);
+    }
+
+    private void validateBetInputType(String rawBettingAmount) {
         try {
-            return Integer.parseInt(rawBettingAmount);
+            Integer.parseInt(rawBettingAmount);
         } catch (NumberFormatException ex) {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 숫자로 입력해주세요.");
         }
