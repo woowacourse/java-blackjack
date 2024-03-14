@@ -1,5 +1,6 @@
 package blackjack.card;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -14,6 +15,7 @@ public class Deck {
 
     public static Deck createShuffledFullDeck() {
         List<Card> fullCards = Card.getFullCards();
+        Collections.shuffle(fullCards);
         return new Deck(fullCards);
     }
 
