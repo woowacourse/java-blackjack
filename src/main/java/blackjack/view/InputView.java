@@ -3,12 +3,15 @@ package blackjack.view;
 import blackjack.domain.bet.BetAmount;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.PlayerNames;
-import blackjack.dto.PlayerBetAmountDto;
 import blackjack.exception.NeedRetryException;
 import blackjack.view.format.CardRequestFormat;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class InputView {
 
@@ -32,10 +35,12 @@ public class InputView {
         }
     }
 
-    public List<PlayerBetAmountDto> readBetAmounts(final PlayerNames names) {
+    public Map<PlayerName, BetAmount> readBetAmounts(final PlayerNames names) {
         return names.getNames().stream()
-                .map(name -> new PlayerBetAmountDto(name, readBetAmount(name)))
-                .toList();
+                .collect(Collectors.toMap(Function.identity(),
+                        this::readBetAmount,
+                        (v1, v2) -> v1,
+                        LinkedHashMap::new));
     }
 
     private BetAmount readBetAmount(final PlayerName name) {

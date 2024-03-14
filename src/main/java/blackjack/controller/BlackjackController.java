@@ -1,16 +1,17 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
+import blackjack.domain.bet.BetAmount;
 import blackjack.domain.card.Hands;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.PlayerNames;
 import blackjack.dto.BetRevenueResultDto;
 import blackjack.dto.FinalHandsScoreDto;
-import blackjack.dto.PlayerBetAmountDto;
 import blackjack.exception.NeedRetryException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
+import java.util.Map;
 
 public final class BlackjackController {
 
@@ -30,7 +31,7 @@ public final class BlackjackController {
 
     private BlackjackGame initGame() {
         final PlayerNames playerNames = createPlayerNames();
-        final List<PlayerBetAmountDto> playerBetAmounts = inputView.readBetAmounts(playerNames);
+        final Map<PlayerName, BetAmount> playerBetAmounts = inputView.readBetAmounts(playerNames);
 
         return BlackjackGame.from(playerBetAmounts);
     }

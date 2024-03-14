@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.bet.BetAmount;
 import blackjack.domain.bet.BetLeverage;
 import blackjack.domain.bet.BetRevenue;
 import blackjack.domain.card.Card;
@@ -12,16 +13,18 @@ import java.util.function.Predicate;
 
 public class Player {
 
-    private final PlayerBetAmount playerBetAmount;
+    private final PlayerName playerName;
+    private final BetAmount betAmount;
     private State state;
 
-    private Player(final PlayerBetAmount playerBetAmount, final State state) {
-        this.playerBetAmount = playerBetAmount;
+    private Player(final PlayerName playerName, final BetAmount betAmount, final State state) {
+        this.playerName = playerName;
+        this.betAmount = betAmount;
         this.state = state;
     }
 
-    public static Player of(final PlayerBetAmount playerBetAmount, final Dealer dealer) {
-        return new Player(playerBetAmount, PlayerHitState.start(dealer.drawCard(), dealer.drawCard()));
+    public static Player of(final PlayerName name, final BetAmount amount, final Dealer dealer) {
+        return new Player(name, amount, PlayerHitState.start(dealer.drawCard(), dealer.drawCard()));
     }
 
     public void hit(
@@ -31,7 +34,7 @@ public class Player {
     ) {
         while (state.isHit()) {
             runHitOrStandByUser(dealer, userWantToHit);
-            callAfter.accept(getName(), getHands());
+            callAfter.accept(getPlayerName(), getHands());
         }
     }
 
@@ -39,7 +42,7 @@ public class Player {
             final Dealer dealer,
             final Predicate<PlayerName> userWantToHit
     ) {
-        if (userWantToHit.test(getName())) {
+        if (userWantToHit.test(getPlayerName())) {
             final Card card = dealer.drawCard();
             state = state.draw(card);
             return;
@@ -50,7 +53,7 @@ public class Player {
     public BetRevenue calculateBetRevenue(final Dealer dealer) {
         final BetLeverage betLeverage = dealer.calculateBetLeverage(state);
 
-        return betLeverage.applyLeverage(playerBetAmount.betAmount());
+        return betLeverage.applyLeverage(betAmount);
     }
 
     public boolean isBust() {
@@ -65,8 +68,8 @@ public class Player {
         return state.getHands();
     }
 
-    public PlayerName getName() {
-        return playerBetAmount.name();
+    public PlayerName getPlayerName() {
+        return playerName;
     }
 
 }

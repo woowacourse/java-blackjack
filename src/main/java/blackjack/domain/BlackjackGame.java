@@ -1,18 +1,16 @@
 package blackjack.domain;
 
+import blackjack.domain.bet.BetAmount;
 import blackjack.domain.bet.BetRevenue;
 import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
 import blackjack.domain.dealer.Deck;
-import blackjack.domain.player.PlayerBetAmount;
 import blackjack.domain.player.PlayerBetResult;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
 import blackjack.dto.BetRevenueResultDto;
 import blackjack.dto.FinalHandsScoreDto;
-import blackjack.dto.PlayerBetAmountDto;
 import blackjack.dto.StartCardsDto;
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.IntConsumer;
@@ -28,14 +26,10 @@ public class BlackjackGame {
         this.dealer = dealer;
     }
 
-    public static BlackjackGame from(final List<PlayerBetAmountDto> playerBetAmountDtos) {
+    public static BlackjackGame from(final Map<PlayerName, BetAmount> playerBetAmount) {
         final Dealer dealer = new Dealer(Deck.create());
 
-        final List<PlayerBetAmount> playerBetAmounts = playerBetAmountDtos.stream()
-                .map(PlayerBetAmountDto::toDomain)
-                .toList();
-
-        return new BlackjackGame(Players.of(playerBetAmounts, dealer), dealer);
+        return new BlackjackGame(Players.of(playerBetAmount, dealer), dealer);
     }
 
     public StartCardsDto getStartCards() {

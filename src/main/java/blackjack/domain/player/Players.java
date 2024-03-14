@@ -2,6 +2,7 @@ package blackjack.domain.player;
 
 import static java.util.stream.Collectors.toMap;
 
+import blackjack.domain.bet.BetAmount;
 import blackjack.domain.bet.BetRevenue;
 import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
@@ -19,9 +20,9 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(final List<PlayerBetAmount> playerBetAmounts, final Dealer dealer) {
-        return new Players(playerBetAmounts.stream()
-                .map(playerBetAmount -> Player.of(playerBetAmount, dealer))
+    public static Players of(final Map<PlayerName, BetAmount> playerBetAmounts, final Dealer dealer) {
+        return new Players(playerBetAmounts.entrySet().stream()
+                .map(playerBetAmount -> Player.of(playerBetAmount.getKey(), playerBetAmount.getValue(), dealer))
                 .toList());
     }
 
@@ -37,7 +38,7 @@ public class Players {
 
     public Map<PlayerName, BetRevenue> determineBetRevenue(final Dealer dealer) {
         return players.stream()
-                .collect(toMap(Player::getName,
+                .collect(toMap(Player::getPlayerName,
                         player -> player.calculateBetRevenue(dealer),
                         (v1, v2) -> v1,
                         LinkedHashMap::new));
@@ -50,7 +51,7 @@ public class Players {
 
     public Map<PlayerName, Hands> getPlayersHands() {
         return players.stream()
-                .collect(toMap(Player::getName,
+                .collect(toMap(Player::getPlayerName,
                         Player::getHands,
                         (v1, v2) -> v1,
                         LinkedHashMap::new));

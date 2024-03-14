@@ -2,6 +2,7 @@ package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.bet.BetAmount;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
@@ -18,7 +19,7 @@ class PlayerTest {
     void hit() {
         final Card card = Card.of(CardNumber.SEVEN, CardShape.DIA);
         final Dealer dealer = new Dealer(new Deck(List.of(card, card, card, card, card, card)));
-        final Player player = Player.of(new PlayerBetAmount(new PlayerName("pobi")), dealer);
+        final Player player = Player.of(new PlayerName("pobi"), new BetAmount(0), dealer);
 
         player.hit(dealer, i -> true, (a, b) -> {});
 
