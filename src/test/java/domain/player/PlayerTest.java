@@ -20,11 +20,11 @@ class PlayerTest {
     @DisplayName("이름과, 손 패를 가지고 있다.")
     @Test
     void createSuccess() {
-        Name name = new Name("wiib");
+        PlayerName playerName = new PlayerName("wiib");
         List<Card> cards = List.of(TEN_HEARTS, TWO_HEARTS);
         Hand hand = new Hand(cards);
 
-        assertThatCode(() -> new Player(name, hand))
+        assertThatCode(() -> new Player(playerName, hand))
                 .doesNotThrowAnyException();
     }
 
@@ -33,10 +33,10 @@ class PlayerTest {
     void hit() {
         List<Card> cards = new ArrayList<>(List.of(SEVEN_HEARTS, TEN_HEARTS));
         Hand hand = new Hand(cards);
-        Name name = new Name("wiib");
+        PlayerName playerName = new PlayerName("wiib");
         Card newCard = TWO_HEARTS;
 
-        Player player = new Player(name, hand);
+        Player player = new Player(playerName, hand);
         player.hit(newCard);
 
         assertThat(player.getHand().getCards()).contains(newCard);
@@ -51,8 +51,8 @@ class PlayerTest {
         void isBust_false() {
             List<Card> cards = new ArrayList<>(List.of(SEVEN_HEARTS, TEN_HEARTS));
             Hand hand = new Hand(cards);
-            Name name = new Name("wiib");
-            Player player = new Player(name, hand);
+            PlayerName playerName = new PlayerName("wiib");
+            Player player = new Player(playerName, hand);
 
             boolean isBurst = player.isBust();
 
@@ -64,8 +64,8 @@ class PlayerTest {
         void isBust_true() {
             List<Card> cards = new ArrayList<>(List.of(TEN_HEARTS, TEN_HEARTS, TWO_HEARTS));
             Hand hand = new Hand(cards);
-            Name name = new Name("wiib");
-            Player player = new Player(name, hand);
+            PlayerName playerName = new PlayerName("wiib");
+            Player player = new Player(playerName, hand);
 
             boolean isBurst = player.isBust();
 
@@ -82,8 +82,8 @@ class PlayerTest {
         void isHittable_false() {
             List<Card> cards = new ArrayList<>(List.of(ACE_HEARTS, TEN_HEARTS));
             Hand hand = new Hand(cards);
-            Name name = new Name("wiib");
-            Player player = new Player(name, hand);
+            PlayerName playerName = new PlayerName("wiib");
+            Player player = new Player(playerName, hand);
 
             boolean isHittable = player.isHittable();
 
@@ -95,8 +95,8 @@ class PlayerTest {
         void isHittable_true() {
             List<Card> cards = new ArrayList<>(List.of(TEN_HEARTS, TEN_HEARTS));
             Hand hand = new Hand(cards);
-            Name name = new Name("wiib");
-            Player player = new Player(name, hand);
+            PlayerName playerName = new PlayerName("wiib");
+            Player player = new Player(playerName, hand);
 
             boolean isHittable = player.isHittable();
 
@@ -109,8 +109,8 @@ class PlayerTest {
     void isBlackJack() {
         List<Card> cards = new ArrayList<>(List.of(TEN_HEARTS, ACE_HEARTS));
         Hand hand = new Hand(cards);
-        Name name = new Name("wiib");
-        Player player = new Player(name, hand);
+        PlayerName playerName = new PlayerName("wiib");
+        Player player = new Player(playerName, hand);
 
         boolean isBlackJack = player.isBlackJack();
 

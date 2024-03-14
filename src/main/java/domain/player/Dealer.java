@@ -15,12 +15,12 @@ public class Dealer extends Player {
     private final CardDeck cardDeck;
 
     public Dealer(CardDeck cardDeck) {
-        super(new Name(DEALER_NAME), cardDeck.initHand());
+        super(new PlayerName(DEALER_NAME), cardDeck.initHand());
         this.cardDeck = cardDeck;
     }
 
     public Dealer(List<Card> cards) {
-        super(new Name(DEALER_NAME), new Hand(cards));
+        super(new PlayerName(DEALER_NAME), new Hand(cards));
         this.cardDeck = null;
     }
 

@@ -9,7 +9,7 @@ public record ScoreDto(Map<String, Integer> scores) {
     public static ScoreDto from(Map<Player, Score> gameScores) {
         Map<String, Integer> scores = new LinkedHashMap<>();
         for (Map.Entry<Player, Score> entry : gameScores.entrySet()) {
-            String playerName = entry.getKey().getName();
+            String playerName = entry.getKey().getName().name();
             int score = entry.getValue().get();
             scores.put(playerName, score);
         }

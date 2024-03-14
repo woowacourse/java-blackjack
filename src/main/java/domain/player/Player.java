@@ -8,16 +8,16 @@ import domain.game.Score;
 import java.util.List;
 
 public class Player {
-    private final Name name;
+    private final PlayerName playerName;
     private final Hand hand;
 
-    public Player(Name name, Hand hand) {
-        this.name = name;
+    public Player(PlayerName playerName, Hand hand) {
+        this.playerName = playerName;
         this.hand = hand;
     }
 
     public Player(List<Card> cards) {
-        this.name = new Name("Test");
+        this.playerName = new PlayerName("Test");
         this.hand = new Hand(cards);
     }
 
@@ -45,8 +45,8 @@ public class Player {
         return hand;
     }
 
-    public String getName() {
-        return name.name();
+    public PlayerName getName() {
+        return playerName;
     }
 
 }

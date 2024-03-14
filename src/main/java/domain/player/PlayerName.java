@@ -1,12 +1,12 @@
 package domain.player;
 
-public record Name(String name) {
+public record PlayerName(String name) {
     private static final int MIN_NAME_LENGTH = 1;
     private static final int MAX_NAME_LENGTH = 5;
     static final String NAME_LENGTH_MESSAGE
             = String.format("이름은 %d에서 %d글자 사이여야 합니다", MIN_NAME_LENGTH, MAX_NAME_LENGTH);
 
-    public Name {
+    public PlayerName {
         validateLength(name);
     }
 

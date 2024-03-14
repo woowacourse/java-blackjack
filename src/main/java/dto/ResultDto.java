@@ -8,10 +8,10 @@ import java.util.Map;
 
 public record ResultDto(Map<String, String> gameResults) {
 
-    public static ResultDto from(Map<Player, Result> gameResult) {
+    public static ResultDto from(final Map<Player, Result> gameResult) {
         Map<String, String> results = new LinkedHashMap<>();
         for (Map.Entry<Player, Result> entry : gameResult.entrySet()) {
-            String playerName = entry.getKey().getName();
+            String playerName = entry.getKey().getName().name();
             String result = entry.getValue().name();
             results.put(playerName, result);
         }
