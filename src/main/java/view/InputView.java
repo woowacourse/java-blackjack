@@ -39,6 +39,8 @@ public class InputView {
 
     public static String inputAmount(final String playerName) {
         System.out.printf("%s의 배팅 금액은?%n", playerName);
-        return scanner.nextLine();
+        String inputBettingAmount = scanner.nextLine();
+        System.out.println();
+        return inputBettingAmount;
     }
 }
