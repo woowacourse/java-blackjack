@@ -11,7 +11,7 @@ public class BetAmount {
 
     private void validatePositive(int value) {
         if (value <= 0) {
-            throw new IllegalArgumentException("금액은 양수이어야 합니다.");
+            throw new IllegalArgumentException("배팅 금액은 양수이어야 합니다.");
         }
     }
 
