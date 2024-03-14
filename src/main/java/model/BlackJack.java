@@ -42,13 +42,13 @@ public class BlackJack {
     }
 
     public void decideParticipantsPlay(Predicate<String> stringForMoreCard, BiConsumer<String, Cards> callback) {
-        participants.offerCardToParticipants(stringForMoreCard, callback, () -> cardDeck.selectRandomCards(CardSize.ONE));
+        participants.offerCardToParticipants(stringForMoreCard, callback, cardDeck::selectRandomCard);
     }
 
     public void decideDealerPlay(Runnable runnable) {
         while (dealer.isHit()) {
             runnable.run();
-            dealer.addCards(cardDeck.selectRandomCards(CardSize.ONE));
+            dealer.addCard(cardDeck.selectRandomCard());
         }
     }
 

@@ -12,9 +12,9 @@ class CardDeckTest {
     void validateNotEmpty() {
         CardDeck cardDeck = new CardDeck(Card.createCardDeck());
         for (int i = 0; i < 52; i++) {
-            cardDeck.selectRandomCards(CardSize.ONE);
+            cardDeck.selectRandomCard();
         }
-        assertThatThrownBy(() -> cardDeck.selectRandomCards(CardSize.ONE))
+        assertThatThrownBy(cardDeck::selectRandomCard)
                 .isInstanceOf(IllegalStateException.class);
 
     }

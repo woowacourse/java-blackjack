@@ -7,10 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
-import model.card.Card;
-import model.card.CardDeck;
-import model.card.Denomination;
-import model.card.Suit;
+
+import model.card.*;
 import model.player.Dealer;
 import model.player.Participant;
 import model.player.Participants;
@@ -29,8 +27,9 @@ class BlackJackTest {
 
     @BeforeEach
     void setUp() {
-        dealer = new Dealer(
-                List.of(Card.of(Suit.SPACE, Denomination.NINE), Card.of(Suit.SPACE, Denomination.TWO)));
+        dealer = new Dealer(new Cards(List.of(
+                Card.of(Suit.SPACE, Denomination.NINE),
+                Card.of(Suit.SPACE, Denomination.TWO))));
         cardDeck = new CardDeck(Card.createCardDeck());
     }
 
@@ -44,20 +43,26 @@ class BlackJackTest {
     @DisplayName("딜러가 null일 시 예외가 발생한다.")
     @Test
     void validateDealerIsNotNull() {
-        List<Card> participantCards = List.of(Card.of(Suit.SPACE, Denomination.NINE),
-                Card.of(Suit.SPACE, Denomination.FIVE));
+        Cards participantCards = new Cards(List.of(
+                Card.of(Suit.SPACE, Denomination.NINE),
+                Card.of(Suit.SPACE, Denomination.FIVE)));
         Assertions.assertThatThrownBy(
-                        () -> new BlackJack(new Participants(List.of(new Participant("배키", participantCards))), null,
-                                cardDeck))
+                        () -> new BlackJack(new Participants(List.of(new Participant("배키", participantCards, new GameMoney(1000))))
+                                , null
+                                , cardDeck))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     static Stream<Arguments> createDealer() {
-        Dealer underThresholdDealer = new Dealer(
-                List.of(Card.of(Suit.SPACE, Denomination.KING), Card.of(Suit.CLOVER, Denomination.KING)));
-        Dealer overThresholdDealer = new Dealer(
-                List.of(Card.of(Suit.SPACE, Denomination.EIGHT), Card.of(Suit.CLOVER, Denomination.NINE)));
-        overThresholdDealer.addCards(List.of(Card.of(Suit.HEART, Denomination.NINE)));
+        Dealer underThresholdDealer = new Dealer(new Cards(List.of(
+                Card.of(Suit.SPACE, Denomination.KING),
+                Card.of(Suit.CLOVER, Denomination.KING))));
+
+        Dealer overThresholdDealer = new Dealer(new Cards(List.of(
+                Card.of(Suit.SPACE, Denomination.EIGHT),
+                Card.of(Suit.CLOVER, Denomination.NINE))));
+        overThresholdDealer.addCard(Card.of(Suit.HEART, Denomination.NINE));
+
         return Stream.of(Arguments.of(
                 overThresholdDealer,
                 underThresholdDealer
@@ -69,12 +74,19 @@ class BlackJackTest {
     @MethodSource("createDealer")
     void findLoseOutcomeParticipantOverThreshold(Dealer dealer) {
         Participant participant = new Participant("배키",
-                List.of(Card.of(Suit.SPACE, Denomination.NINE), Card.of(Suit.DIAMOND, Denomination.NINE)));
-        Participant participant2 = new Participant("켬미",
-                List.of(Card.of(Suit.CLOVER, Denomination.EIGHT), Card.of(Suit.HEART, Denomination.SEVEN)));
+                new Cards(List.of(
+                Card.of(Suit.SPACE, Denomination.NINE),
+                Card.of(Suit.DIAMOND, Denomination.NINE)))
+        , new GameMoney(1000));
 
-        participant.addCards(List.of(Card.of(Suit.CLOVER, Denomination.NINE)));
-        participant2.addCards(List.of(Card.of(Suit.SPACE, Denomination.KING)));
+        Participant participant2 = new Participant("켬미",
+                new Cards(List.of(
+                        Card.of(Suit.CLOVER, Denomination.EIGHT),
+                        Card.of(Suit.HEART, Denomination.SEVEN)))
+        , new GameMoney(1000));
+
+        participant.addCard(Card.of(Suit.CLOVER, Denomination.NINE));
+        participant2.addCard(Card.of(Suit.SPACE, Denomination.KING));
 
         Participants participants = new Participants(List.of(participant, participant2));
         BlackJack blackJack = new BlackJack(participants, dealer, cardDeck);
@@ -88,13 +100,20 @@ class BlackJackTest {
     @DisplayName("참가자 카드이 합이 21을 넘거나, 둘 다 21을 넘지 않았을 때 21과의 차이가 먼 참가자가 패한다.")
     @Test
     void findWinOutcomeDealerOverThreshold() {
-        Participant underThresholdParticipant = new Participant("켬미",
-                List.of(Card.of(Suit.SPACE, Denomination.EIGHT), Card.of(Suit.CLOVER, Denomination.NINE)));
-        Participant overThresholdParticipant = new Participant("배키",
-                List.of(Card.of(Suit.SPACE, Denomination.EIGHT), Card.of(Suit.CLOVER, Denomination.NINE)));
-        underThresholdParticipant.addCards(List.of(Card.of(Suit.HEART, Denomination.NINE)));
-        Dealer dealer = new Dealer(
-                List.of(Card.of(Suit.SPACE, Denomination.KING), Card.of(Suit.CLOVER, Denomination.KING)));
+        Participant overThresholdParticipant = new Participant("켬미",
+                new Cards(List.of(
+                        Card.of(Suit.SPACE, Denomination.EIGHT),
+                        Card.of(Suit.CLOVER, Denomination.NINE))), new GameMoney(1000));
+
+        Participant underThresholdParticipant = new Participant("배키",
+                new Cards(List.of(
+                        Card.of(Suit.SPACE, Denomination.EIGHT),
+                        Card.of(Suit.CLOVER, Denomination.NINE))), new GameMoney(1000));
+        underThresholdParticipant.addCard(Card.of(Suit.HEART, Denomination.NINE));
+
+        Dealer dealer = new Dealer(new Cards(List.of(
+                Card.of(Suit.SPACE, Denomination.KING),
+                Card.of(Suit.CLOVER, Denomination.KING))));
 
         Participants participants = new Participants(List.of(underThresholdParticipant, overThresholdParticipant));
         BlackJack blackJack = new BlackJack(participants, dealer, cardDeck);
@@ -110,9 +129,13 @@ class BlackJackTest {
     @MethodSource("createDealer")
     void findWinOutComeCloseToThreshold(Dealer dealer) {
         Participant participant = new Participant("배키",
-                List.of(Card.of(Suit.SPACE, Denomination.NINE), Card.of(Suit.DIAMOND, Denomination.NINE)));
+                new Cards(List.of(
+                        Card.of(Suit.SPACE, Denomination.NINE),
+                        Card.of(Suit.DIAMOND, Denomination.NINE))), new GameMoney(1000));
         Participant participant2 = new Participant("켬미",
-                List.of(Card.of(Suit.CLOVER, Denomination.EIGHT), Card.of(Suit.HEART, Denomination.NINE)));
+                new Cards(List.of(
+                        Card.of(Suit.CLOVER, Denomination.EIGHT),
+                        Card.of(Suit.HEART, Denomination.NINE))), new GameMoney(1000));
 
         Participants participants = new Participants(List.of(participant, participant2));
         BlackJack blackJack = new BlackJack(participants, dealer, cardDeck);
@@ -125,11 +148,17 @@ class BlackJackTest {
     @Test
     void findDrawOutcome() {
         Participant participant = new Participant("켬미",
-                List.of(Card.of(Suit.SPACE, Denomination.NINE), Card.of(Suit.DIAMOND, Denomination.NINE)));
+                new Cards(List.of(
+                        Card.of(Suit.SPACE, Denomination.NINE),
+                        Card.of(Suit.DIAMOND, Denomination.NINE))), new GameMoney(1000));
         Participant participant2 = new Participant("배키",
-                List.of(Card.of(Suit.SPACE, Denomination.EIGHT), Card.of(Suit.DIAMOND, Denomination.TEN)));
+                new Cards(List.of(
+                        Card.of(Suit.SPACE, Denomination.EIGHT),
+                        Card.of(Suit.DIAMOND, Denomination.TEN))), new GameMoney(1000));
         Dealer dealer = new Dealer(
-                List.of(Card.of(Suit.HEART, Denomination.NINE), Card.of(Suit.CLOVER, Denomination.NINE)));
+                new Cards(List.of(
+                        Card.of(Suit.HEART, Denomination.NINE),
+                        Card.of(Suit.CLOVER, Denomination.NINE))));
 
         Participants participants = new Participants(List.of(participant, participant2));
         BlackJack blackJack = new BlackJack(participants, dealer, cardDeck);

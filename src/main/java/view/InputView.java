@@ -9,7 +9,7 @@ public class InputView {
     private static final String REQUEST_ONE_MORE_CARD_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final Scanner in = new Scanner(System.in);
 
-    public List<String> askParticipantNames() {
+    public List<String> requestParticipantNames() {
         System.out.println(REQUEST_PARTICIPANT_NAMES_MESSAGE);
 
         String input = in.nextLine();

@@ -39,10 +39,10 @@ public record Participants(List<Participant> participants) {
         }
     }
 
-    public void offerCardToParticipants(Predicate<String> stringForMoreCard, BiConsumer<String, Cards> callback, Supplier<List<Card>> selectCard) {
+    public void offerCardToParticipants(Predicate<String> stringForMoreCard, BiConsumer<String, Cards> callback, Supplier<Card> selectCard) {
         for (Participant participant : participants) {
             while (participant.isHit() && stringForMoreCard.test(participant.getName())) {
-                participant.addCards(selectCard.get());
+                participant.addCard(selectCard.get());
                 callback.accept(participant.getName(), participant.getCards());
             }
         }

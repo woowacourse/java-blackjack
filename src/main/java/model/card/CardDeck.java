@@ -18,11 +18,15 @@ public class CardDeck {
         this.cards = cards;
     }
 
-    public List<Card> selectRandomCards(CardSize size) {
-        return Stream.generate(this::selectRandomCard).limit(size.getSize()).toList();
+    public Cards selectRandomCards(CardSize size) {
+        List<Card> cards = Stream.generate(this::selectRandomCard)
+                .limit(size.getSize())
+                .toList();
+
+        return new Cards(cards);
     }
 
-    private Card selectRandomCard() {
+    public Card selectRandomCard() {
         validateCardDeckNotEmpty();
         int removeIndex = new Random().nextInt(cards.size());
         Card card = new ArrayList<>(cards).remove(removeIndex);

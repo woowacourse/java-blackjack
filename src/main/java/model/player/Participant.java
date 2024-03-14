@@ -1,14 +1,19 @@
 package model.player;
 
+import model.GameMoney;
 import model.Outcome;
 import model.card.Card;
+import model.card.Cards;
 
 import java.util.List;
 
 public class Participant extends User {
 
-    public Participant(String name, List<Card> cards) {
+    private final GameMoney gameMoney;
+
+    public Participant(String name, Cards cards, GameMoney gameMoney) {
         super(name, cards);
+        this.gameMoney = gameMoney;
     }
 
     public Outcome findOutcome(boolean isOtherNotHit, int otherDifference) {

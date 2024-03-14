@@ -19,8 +19,8 @@ public record Cards(List<Card> cards) {
         }
     }
 
-    public void addCards(List<Card> addCards) {
-        cards.addAll(addCards);
+    public void addCard(Card card) {
+        cards.add(card);
     }
 
     public int calculateScore() {

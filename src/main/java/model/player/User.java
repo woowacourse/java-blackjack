@@ -3,18 +3,17 @@ package model.player;
 import model.card.Card;
 import model.card.Cards;
 
-import java.util.List;
 import java.util.Objects;
 
 public abstract class User {
 
     protected final String name;
-    protected Cards cards;
+    protected final Cards cards;
 
-    public User(String name, List<Card> cards) {
+    public User(String name, Cards cards) {
         validateName(name);
         this.name = name;
-        this.cards = new Cards(cards);
+        this.cards = cards;
     }
 
     private void validateName(String name) {
@@ -23,8 +22,8 @@ public abstract class User {
         }
     }
 
-    public void addCards(List<Card> card) {
-        cards.addCards(card);
+    public void addCard(Card card) {
+        this.cards.addCard(card);
     }
 
     public int calculateScore() {
