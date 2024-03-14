@@ -57,9 +57,9 @@ public class Cards {
     public boolean isBlackJack() {
         Score sum = sumFrontTwoCards();
         if (hasAceInFrontTwoCards()) {
-            return adjustScoreForAce(sum).equalTo(MAX_CARDS_TOTAL);
+            return adjustScoreForAce(sum).equals(MAX_CARDS_TOTAL);
         }
-        return sum.equalTo(MAX_CARDS_TOTAL);
+        return sum.equals(MAX_CARDS_TOTAL);
     }
 
     private Score sumFrontTwoCards() {

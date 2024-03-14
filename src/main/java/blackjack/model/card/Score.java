@@ -1,6 +1,7 @@
 package blackjack.model.card;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 import static java.util.function.UnaryOperator.identity;
@@ -24,10 +25,6 @@ public class Score {
         return Score.from(value + score.value);
     }
 
-    public boolean equalTo(final Score criterion) {
-        return value == criterion.value;
-    }
-
     public boolean equalToOrLessThan(final Score criterion) {
         return value <= criterion.value;
     }
@@ -38,6 +35,19 @@ public class Score {
 
     public boolean greaterThan(final Score criterion) {
         return value > criterion.value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score = (Score) o;
+        return value == score.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 
     public int getValue() {

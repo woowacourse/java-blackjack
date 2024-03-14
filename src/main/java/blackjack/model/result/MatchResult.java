@@ -32,7 +32,7 @@ public enum MatchResult {
     private static MatchResult decideByScore(final Player player, final Dealer dealer) {
         Score playerTotalScore = player.calculateCardsTotalScore();
         Score dealerTotalScore = dealer.calculateCardsTotalScore();
-        if (playerTotalScore.equalTo(dealerTotalScore)) {
+        if (playerTotalScore.equals(dealerTotalScore)) {
             return PUSH;
         } else if (playerTotalScore.greaterThan(dealerTotalScore)) {
             return WIN;
