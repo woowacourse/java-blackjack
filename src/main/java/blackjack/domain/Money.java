@@ -8,14 +8,6 @@ public class Money {
         this.amount = amount;
     }
 
-    public Money add(Money other) {
-        return new Money(amount + other.amount);
-    }
-
-    public Money minus(Money other) {
-        return new Money(amount - other.amount);
-    }
-
     public Money multiply(double multiplier) {
         return new Money(amount * multiplier);
     }
