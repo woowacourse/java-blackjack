@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -17,13 +18,13 @@ public class CustomDeck implements Deck {
         }
         cards = IntStream.range(0, shapes.size())
                 .mapToObj((index) ->
-                        new Card(numbers.get(index), shapes.get(index)))
+                        Card.from(numbers.get(index), shapes.get(index)))
                 .iterator();
     }
 
     public CustomDeck(List<Number> numbers) {
         cards = numbers.stream()
-                .map(number -> new Card(number, Shape.HEART))
+                .map(number -> Card.from(number, Shape.HEART))
                 .iterator();
     }
 

@@ -17,10 +17,6 @@ public class Name {
         this.value = value;
     }
 
-    public String getValue() {
-        return value;
-    }
-
     private void validateNameLength(String name) {
         if (name.isEmpty() || name.length() > MAX_NAME_LENGTH) {
             throw new InvalidNameLengthException(name);
@@ -31,5 +27,9 @@ public class Name {
         if (!NAME_PATTERN.matcher(name).matches()) {
             throw new NonAlphabeticNameException(name);
         }
+    }
+
+    public String getValue() {
+        return value;
     }
 }

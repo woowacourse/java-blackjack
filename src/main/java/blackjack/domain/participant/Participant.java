@@ -20,6 +20,10 @@ public abstract class Participant {
         return hand.isBust();
     }
 
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
     public void addCard(Deck deck) {
         Card card = deck.drawCard();
         hand.addCard(card);
@@ -27,14 +31,6 @@ public abstract class Participant {
 
     public int getScore() {
         return hand.getOptimizedScore();
-    }
-
-    public String getName() {
-        return name.getValue();
-    }
-
-    public List<Card> getCards() {
-        return hand.getCards();
     }
 
     public abstract List<Card> getInitialOpenedCards();
@@ -46,11 +42,15 @@ public abstract class Participant {
         return cards.subList(0, count);
     }
 
-    protected boolean isBlackjack() {
-        return hand.isBlackjack();
-    }
-
     protected boolean isTotalScoreGreaterThan(int score) {
         return hand.isTotalScoreGreaterThan(score);
+    }
+
+    public Name getName() {
+        return name;
+    }
+
+    public List<Card> getCards() {
+        return hand.getCards();
     }
 }

@@ -1,24 +1,16 @@
 package blackjack.domain.participant;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.HandGenerator;
 import blackjack.domain.card.Number;
-import blackjack.domain.card.Shape;
+import blackjack.domain.card.*;
 import blackjack.testutil.CustomDeck;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ParticipantTest {
-    private static TestParticipant createParticipant(List<Number> numbers, List<Shape> shapes, String name) {
-        Deck deck = new CustomDeck(numbers, shapes);
-        HandGenerator handGenerator = new HandGenerator(deck);
-        return new TestParticipant(new Name(name), handGenerator);
-    }
+import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+class ParticipantTest {
     @DisplayName("입력된 숫자만큼 카드를 반환한다.")
     @Test
     void getCardsByCountTest() {
@@ -32,6 +24,12 @@ class ParticipantTest {
                 .toList();
 
         assertThat(cardSignatures).containsExactly("A스페이드");
+    }
+
+    private static TestParticipant createParticipant(List<Number> numbers, List<Shape> shapes, String name) {
+        Deck deck = new CustomDeck(numbers, shapes);
+        HandGenerator handGenerator = new HandGenerator(deck);
+        return new TestParticipant(new Name(name), handGenerator);
     }
 
     private static class TestParticipant extends Participant {

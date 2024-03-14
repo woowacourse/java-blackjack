@@ -1,11 +1,12 @@
 package blackjack.domain.card;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import blackjack.testutil.CustomDeck;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class HandGeneratorTest {
     @DisplayName("카드를 2장 가진 Hand를 생성한다.")

@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.HandGenerator;
 
 import java.util.List;
@@ -21,6 +22,15 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canHit() {
-        return !isBlackjack() && !isTotalScoreGreaterThan(HIT_THRESHOLD);
+        return !isTotalScoreGreaterThan(HIT_THRESHOLD);
+    }
+
+    public int hitAndCountCards(Deck deck) {
+        int hitCardCount = 0;
+        while (canHit()) {
+            hitCardCount++;
+            addCard(deck);
+        }
+        return hitCardCount;
     }
 }

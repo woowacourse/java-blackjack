@@ -4,13 +4,13 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.HandGenerator;
 import blackjack.domain.card.RandomDeck;
 import blackjack.domain.participant.*;
-import blackjack.domain.result.BlackjackResult;
-import blackjack.domain.result.Referee;
+import blackjack.domain.result.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class BlackjackGame {
     private final InputView inputView = new InputView();
@@ -18,10 +18,11 @@ public class BlackjackGame {
 
     public void run() {
         Participants participants = createParticipants();
-        outputView.printInitialHand(participants);
+        PlayerBets playerBets = createPlayerBets(participants.getPlayers());
+        outputView.printInitialHands(participants);
         participantsHitCard(participants);
         outputView.printParticipantsHandWithScore(participants);
-        printBlackjackResult(participants);
+        printBlackjackResult(participants, playerBets);
     }
 
     private Participants createParticipants() {
@@ -42,47 +43,48 @@ public class BlackjackGame {
                 .toList();
     }
 
+    private PlayerBets createPlayerBets(Players players) {
+        return players.getValues()
+                .stream()
+                .map(player -> retryOnException(() -> createPlayerBet(player)))
+                .collect(Collectors.collectingAndThen(Collectors.toList(), PlayerBets::new));
+    }
+
+    private PlayerBet createPlayerBet(Player player) {
+        Name playerName = player.getName();
+        int bettingPrice = inputView.readPlayerBettingPrice(playerName.getValue());
+        return new PlayerBet(player, bettingPrice);
+    }
+
     private void participantsHitCard(Participants participants) {
-        playersHitCard(participants.getPlayers());
-        dealerHitCard(participants.getDealer());
-    }
-
-    private void playersHitCard(Players players) {
-        PlayerIterator playerIterator = new PlayerIterator(players);
-        while (playerIterator.hasNext()) {
-            hitIfCurrentPlayerWants(playerIterator);
+        PlayerTurnSelector playerTurnSelector = participants.createPlayerTurnSelector();
+        while (playerTurnSelector.hasNext()) {
+            hitIfCurrentPlayerWants(playerTurnSelector);
         }
+
+        int dealerHitCount = participants.executeAndCountDealerHit(RandomDeck.getInstance());
+        outputView.printDealerHitCount(dealerHitCount);
     }
 
-    private void hitIfCurrentPlayerWants(PlayerIterator playerIterator) {
-        Player player = playerIterator.getPlayer();
+    private void hitIfCurrentPlayerWants(PlayerTurnSelector playerTurnSelector) {
+        Player player = playerTurnSelector.getPlayer();
         PlayerAction playerAction = retryOnException(() -> getPlayerAction(player));
         if (playerAction.equals(PlayerAction.HIT)) {
             player.addCard(RandomDeck.getInstance());
         }
         outputView.printPlayerHand(player);
-        playerIterator.increaseOrderByActionAndHand(playerAction);
+        playerTurnSelector.updateTurnByActionAndHand(playerAction);
     }
 
     private PlayerAction getPlayerAction(Player player) {
-        String playerName = player.getName();
-        boolean dosePlayerWantHit = inputView.dosePlayerWantHit(playerName);
+        Name playerName = player.getName();
+        boolean dosePlayerWantHit = inputView.dosePlayerWantHit(playerName.getValue());
         return PlayerAction.getAction(dosePlayerWantHit);
     }
 
-    private void dealerHitCard(Dealer dealer) {
-        Deck deck = RandomDeck.getInstance();
-        int hitCount = 0;
-        while (dealer.canHit()) {
-            dealer.addCard(deck);
-            hitCount++;
-        }
-        outputView.printDealerHitCount(hitCount);
-    }
-
-    private void printBlackjackResult(Participants participants) {
-        Referee referee = Referee.getInstance();
-        BlackjackResult blackjackResult = participants.generateResult(referee);
+    private void printBlackjackResult(Participants participants, PlayerBets playerBets) {
+        BetResultGenerator betResultGenerator = participants.createBetResultGenerator();
+        BlackjackResult blackjackResult = betResultGenerator.generateBetResultOf(playerBets);
         outputView.printBlackjackResult(blackjackResult);
     }
 

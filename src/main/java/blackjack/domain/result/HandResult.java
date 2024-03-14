@@ -1,27 +1,28 @@
 package blackjack.domain.result;
 
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.result.matcher.*;
+
 public enum HandResult {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    BLACKJACK_WIN(1.5, new PlayerBlackjackWinMatcher()),
+    WIN(1, new PlayerWinMatcher()),
+    LOSE(-1, new PlayerLoseMatcher()),
+    DRAW(0, new PlayerDrawMatcher());
 
-    private final String name;
+    private final double profitRate;
+    private final PlayerResultMatcher playerResultMatcher;
 
-    HandResult(String name) {
-        this.name = name;
+    HandResult(double profitRate, PlayerResultMatcher playerResultMatcher) {
+        this.profitRate = profitRate;
+        this.playerResultMatcher = playerResultMatcher;
     }
 
-    public HandResult getOpposite() {
-        if (WIN.equals(this)) {
-            return LOSE;
-        }
-        if (LOSE.equals(this)) {
-            return WIN;
-        }
-        return DRAW;
+    public boolean match(Player player, Dealer dealer) {
+        return playerResultMatcher.isResultMatched(player, dealer);
     }
 
-    public String getName() {
-        return name;
+    public double getProfitRate() {
+        return profitRate;
     }
 }

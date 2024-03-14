@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.exception.DelimiterFormatException;
+import blackjack.exception.InvalidBettingPriceFormatException;
 import blackjack.exception.InvalidHitCommandException;
 
 import java.util.Arrays;
@@ -14,6 +15,7 @@ public class InputView {
     private static final String PLAYER_HIT_REQUEST = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final Pattern HIT_REQUEST_PATTERN = Pattern.compile("^[yn]$");
     private static final String REQUEST_HIT = "y";
+    private static final String PLAYER_BETTING_PRICE_REQUEST = "의 배팅 금액은?";
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -25,6 +27,12 @@ public class InputView {
                 .toList();
     }
 
+    private void validateDelimiter(String input) {
+        if (input.startsWith(DELIMITER) || input.endsWith(DELIMITER)) {
+            throw new DelimiterFormatException();
+        }
+    }
+
     public boolean dosePlayerWantHit(String playerName) {
         System.out.println(playerName + PLAYER_HIT_REQUEST);
         String input = scanner.nextLine();
@@ -32,15 +40,25 @@ public class InputView {
         return REQUEST_HIT.equals(input);
     }
 
-    private void validateDelimiter(String input) {
-        if (input.startsWith(DELIMITER) || input.endsWith(DELIMITER)) {
-            throw new DelimiterFormatException();
-        }
-    }
-
     private void validateHitRequest(String input) {
         if (!HIT_REQUEST_PATTERN.matcher(input).matches()) {
             throw new InvalidHitCommandException(input);
+        }
+    }
+
+    public int readPlayerBettingPrice(String playerName) {
+        System.out.println();
+        System.out.println(playerName + PLAYER_BETTING_PRICE_REQUEST);
+        String input = scanner.nextLine();
+        validateBettingPrice(input);
+        return Integer.parseInt(input);
+    }
+
+    private void validateBettingPrice(String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new InvalidBettingPriceFormatException(input);
         }
     }
 }
