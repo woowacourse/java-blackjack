@@ -10,7 +10,6 @@ import blackjack.dto.FinalHandsScoreDto;
 import blackjack.exception.NeedRetryException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.List;
 import java.util.Map;
 
 public final class BlackjackController {
@@ -38,8 +37,7 @@ public final class BlackjackController {
 
     private PlayerNames createPlayerNames() {
         try {
-            final List<PlayerName> playerNames = inputView.readPlayerNames();
-            return new PlayerNames(playerNames);
+            return inputView.readPlayerNames();
         } catch (final NeedRetryException e) {
             outputView.printError(e.getMessage());
             return createPlayerNames();
