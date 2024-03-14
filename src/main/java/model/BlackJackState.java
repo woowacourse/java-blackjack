@@ -6,11 +6,11 @@ public enum BlackJackState {
     BLACKJACK,
     ;
 
-    public static BlackJackState createBlackJackState(int cardsSum, int cardsCount) {
-        if(cardsSum == 21 && cardsCount == 2) {
+    public static BlackJackState createBlackJackState(int score, int cardsCount) {
+        if(score == 21 && cardsCount == 2) {
             return BLACKJACK;
         }
-        if(cardsSum > 21) {
+        if(score > 21) {
             return BUST;
         }
         return STAND;

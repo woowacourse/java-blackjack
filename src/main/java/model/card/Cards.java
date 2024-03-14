@@ -1,5 +1,7 @@
 package model.card;
 
+import model.BlackJackState;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -49,6 +51,10 @@ public record Cards(List<Card> cards) {
 
     public int findPlayerDifference() {
         return Math.abs(MAXIMUM_SUM - calculateScore());
+    }
+
+    public BlackJackState findBlackJackState() {
+        return BlackJackState.createBlackJackState(calculateScore(), cards.size());
     }
 
     public boolean isNotHit() {
