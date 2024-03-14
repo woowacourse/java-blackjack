@@ -25,7 +25,7 @@ public enum CardName {
         return cardNumber;
     }
 
-    public boolean equals(int cardNumber) {
+    public boolean isCardNumberSame(int cardNumber) {
         return this.cardNumber == cardNumber;
     }
 }
