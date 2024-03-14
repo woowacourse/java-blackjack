@@ -10,13 +10,13 @@ public class BetAmount {
         this.amount = amount;
     }
 
-    public static BetAmount from(int amount) {
+    public static BetAmount from(final int amount) {
         validatePositive(amount);
         validateMultiplesOfTen(amount);
         return new BetAmount(amount);
     }
 
-    public BetAmount multiply(double value) { //TODO 값 직접 바꾸기
+    public BetAmount multiply(final double value) { //TODO 값 직접 바꾸기, 네이밍 변경
         return new BetAmount((int) (amount * value));
     }
 
@@ -32,13 +32,13 @@ public class BetAmount {
         return amount;
     }
 
-    private static void validatePositive(int amount) {
+    private static void validatePositive(final int amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 양수만 입력가능합니다.");
         }
     }
 
-    private static void validateMultiplesOfTen(int amount) {
+    private static void validateMultiplesOfTen(final int amount) {
         if (amount % 10 != 0) {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 10의 배수만 입력가능합니다.");
         }

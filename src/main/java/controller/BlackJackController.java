@@ -1,7 +1,6 @@
 package controller;
 
 import domain.Answer;
-import domain.Result;
 import domain.bet.BetAmount;
 import domain.bet.Bettings;
 import domain.card.CardDeck;
@@ -11,8 +10,6 @@ import domain.participant.Players;
 import dto.DealerHandsDto;
 import dto.ParticipantDto;
 import dto.ParticipantsDto;
-import java.util.Map;
-import java.util.Map.Entry;
 import view.InputView;
 import view.OutputView;
 
@@ -79,11 +76,9 @@ public class BlackJackController {
     }
 
     private void printFinalProfit(final Bettings bettings, final Players players, final Dealer dealer) {
-        final Map<Player, Result> playersResult = players.calculateResultBy(dealer);
-
-        for (Entry<Player, Result> entry : playersResult.entrySet()) {
-            final BetAmount betAmount = bettings.calculateBy(entry);
-            outputView.printGameResult(entry.getKey(), betAmount);
+        for (Player player : players.getPlayers()) {
+            final BetAmount betAmount = bettings.calculatePlayerProfitBy(player, dealer);
+            outputView.printGameResult(player, betAmount);
         }
     }
 

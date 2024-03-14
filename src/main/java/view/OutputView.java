@@ -3,14 +3,12 @@ package view;
 import static domain.participant.Dealer.INIT_HANDS_SIZE;
 import static domain.participant.Dealer.THRESHOLD;
 
-import domain.Result;
 import domain.bet.BetAmount;
 import domain.participant.Player;
 import dto.DealerHandsDto;
 import dto.ParticipantDto;
 import dto.ParticipantsDto;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
 
@@ -66,15 +64,6 @@ public class OutputView {
         if (isBust) {
             printBust();
         }
-    }
-
-    private String format(final Map<Result, Integer> dealerResult) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Map.Entry<Result, Integer> entry : dealerResult.entrySet()) {
-            stringBuilder.append(entry.getValue()).append(entry.getKey().getValue()).append(" ");
-        }
-
-        return stringBuilder.toString();
     }
 
     private String format(final List<String> playerNames) {

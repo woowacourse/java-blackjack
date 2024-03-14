@@ -2,15 +2,17 @@ package domain;
 
 import static domain.HandsTestFixture.blackJack;
 import static domain.HandsTestFixture.bustHands;
+import static domain.HandsTestFixture.sum18Size2;
+import static domain.HandsTestFixture.sum20Size2;
 import static domain.HandsTestFixture.sum20Size3;
 import static domain.HandsTestFixture.sum21Size2;
 
 import domain.bet.BetAmount;
 import domain.bet.Bettings;
+import domain.card.CardDeck;
+import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
-import java.util.AbstractMap;
-import java.util.Map.Entry;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,13 +39,13 @@ class BettingsTest {
     @Test
     void winBlackJack() {
         // given
+        final Dealer dealer = new Dealer(CardDeck.generate(), sum20Size2);
         final Player player = new Player(new Name("제제"), blackJack);
         final BetAmount betAmount = BetAmount.from(10_000);
-        final Entry<Player, Result> result = new AbstractMap.SimpleEntry<>(player, Result.WIN_BLACKJACK);
 
         // when
         bettings.save(player, betAmount);
-        final BetAmount resultBetAmount = bettings.calculateBy(result);
+        final BetAmount resultBetAmount = bettings.calculatePlayerProfitBy(player, dealer);
 
         // then
         Assertions.assertThat(resultBetAmount.getAmount()).isEqualTo((int) (10_000 * 1.5)); //TODO int 괜찮은지 확인하기 ??
@@ -53,13 +55,13 @@ class BettingsTest {
     @Test
     void win() {
         // given
+        final Dealer dealer = new Dealer(CardDeck.generate(), sum18Size2);
         final Player player = new Player(new Name("제제"), sum20Size3);
         final BetAmount betAmount = BetAmount.from(10_000);
-        final Entry<Player, Result> result = new AbstractMap.SimpleEntry<>(player, Result.WIN);
 
         // when
         bettings.save(player, betAmount);
-        final BetAmount resultBetAmount = bettings.calculateBy(result);
+        final BetAmount resultBetAmount = bettings.calculatePlayerProfitBy(player, dealer);
 
         // then
         Assertions.assertThat(resultBetAmount.getAmount()).isEqualTo(10_000);
@@ -69,13 +71,13 @@ class BettingsTest {
     @Test
     void lose() {
         // given
+        final Dealer dealer = new Dealer(CardDeck.generate(), sum20Size2);
         final Player player = new Player(new Name("제제"), bustHands);
         final BetAmount betAmount = BetAmount.from(10_000);
-        final Entry<Player, Result> result = new AbstractMap.SimpleEntry<>(player, Result.LOSE);
 
         // when
         bettings.save(player, betAmount);
-        final BetAmount resultBetAmount = bettings.calculateBy(result);
+        final BetAmount resultBetAmount = bettings.calculatePlayerProfitBy(player, dealer);
 
         // then
         Assertions.assertThat(resultBetAmount.getAmount()).isEqualTo((-1) * 10_000);
@@ -84,13 +86,13 @@ class BettingsTest {
     @DisplayName("무승부이면 금액을 돌려받는다.")
     @Test
     void tie() {
+        final Dealer dealer = new Dealer(CardDeck.generate(), sum21Size2);
         final Player player = new Player(new Name("제제"), sum21Size2);
         final BetAmount betAmount = BetAmount.from(10_000);
-        final Entry<Player, Result> result = new AbstractMap.SimpleEntry<>(player, Result.TIE);
 
         // when
         bettings.save(player, betAmount);
-        final BetAmount resultBetAmount = bettings.calculateBy(result);
+        final BetAmount resultBetAmount = bettings.calculatePlayerProfitBy(player, dealer);
 
         // then
         Assertions.assertThat(resultBetAmount.getAmount()).isEqualTo(0);

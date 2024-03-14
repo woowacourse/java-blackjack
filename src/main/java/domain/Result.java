@@ -1,22 +1,24 @@
 package domain;
 
+import domain.bet.BetAmount;
 import domain.participant.Hands;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
+import java.util.function.Function;
 
 public enum Result {
 
-    WIN("승", Result::winningCondition),
-    WIN_BLACKJACK("승", Result::winningBlackJackCondition),
-    TIE("무", Result::tieCondition),
-    LOSE("패", Result::loseCondition);
+    WIN(Result::winningCondition, betAmount -> betAmount),
+    WIN_BLACKJACK(Result::winningBlackJackCondition, betAmount -> betAmount.multiply(1.5)),
+    TIE(Result::tieCondition, BetAmount::makeZero),
+    LOSE(Result::loseCondition, BetAmount::lose);
 
-    private final String value;
     private final BiPredicate<Hands, Hands> condition;
+    private final Function<BetAmount, BetAmount> betAmountFunction;
 
-    Result(final String value, final BiPredicate<Hands, Hands> condition) {
-        this.value = value;
+    Result(BiPredicate<Hands, Hands> condition, Function<BetAmount, BetAmount> betAmountFunction) {
         this.condition = condition;
+        this.betAmountFunction = betAmountFunction;
     }
 
     public Result reverse() {
@@ -31,11 +33,23 @@ public enum Result {
         return TIE;
     }
 
-    public static Result calculate(final Hands hands, final Hands target) {
+    public static Result calculate(Hands hands, Hands target) {
         return Arrays.stream(Result.values())
                 .filter(result -> result.condition.test(hands, target))
                 .findFirst()
-                .orElseThrow();
+                .get();
+    }
+
+    public static BetAmount calculate(final Hands hands, final Hands target, final BetAmount betAmount) {
+        return Arrays.stream(Result.values())
+                .filter(result -> result.condition.test(hands, target))
+                .map(result -> result.betAmountFunction.apply(betAmount))
+                .findFirst()
+                .get();
+    }
+
+    public BetAmount calculate(final BetAmount betAmount) {
+        return this.betAmountFunction.apply(betAmount);
     }
 
     private static boolean winningCondition(final Hands hands, final Hands target) {
@@ -55,9 +69,5 @@ public enum Result {
 
     private static boolean loseCondition(final Hands hands, final Hands target) {
         return hands.isBust() || hands.sum() < target.sum() || !target.isBust();
-    }
-
-    public String getValue() {
-        return value;
     }
 }
