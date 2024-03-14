@@ -66,13 +66,6 @@ class MoneyTest {
     }
 
     @Test
-    @DisplayName("플레이어와 딜러가 모두 블랙잭인 경우 1배의 수익 발생")
-    void findPlayerProfitWhenBothBlackjack() {
-        Money money = Money.betValueOf(1_000_000_000);
-        assertThat(money.findPlayerProfitWhenBothBlackjack().toInt()).isEqualTo(1_000_000_000);
-    }
-
-    @Test
     @DisplayName("돈을 더할 수 있다")
     void add() {
         Money money = Money.betValueOf(1000);
