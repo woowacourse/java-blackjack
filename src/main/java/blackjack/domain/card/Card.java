@@ -1,7 +1,9 @@
 package blackjack.domain.card;
 
-import java.util.LinkedHashMap;
+import static java.util.stream.Collectors.toMap;
+
 import java.util.Map;
+import java.util.function.Function;
 
 public record Card(CardNumber number, CardShape shape) {
 
@@ -10,10 +12,9 @@ public record Card(CardNumber number, CardShape shape) {
         static final Map<String, Card> cache;
 
         static {
-            cache = new LinkedHashMap<>();
-
-            CardShape.stream().forEach(shape -> CardNumber.stream()
-                    .forEach(number -> cache.put(toKey(number, shape), new Card(number, shape))));
+            cache = CardShape.stream()
+                    .flatMap(shape -> CardNumber.stream().map(number -> new Card(number, shape)))
+                    .collect(toMap(card -> toKey(card.number(), card.shape()), Function.identity()));
         }
 
         private static String toKey(final CardNumber number, final CardShape shape) {
