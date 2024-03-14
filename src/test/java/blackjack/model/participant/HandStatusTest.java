@@ -31,5 +31,11 @@ class HandStatusTest {
         assertThat(HandStatus.of(blackJackScore, notBlackJackCardSize)).isEqualTo(HandStatus.NOT_BLACKJACK_BUT_21);
     }
 
-
+    @Test
+    @DisplayName("카드 목록이 Under21인 경우는 총 스코어가 21 미만인 경우이다.")
+    void getHandStatusWhenUnder21() {
+        int under21Score = 20;
+        int cardSize = 3;
+        assertThat(HandStatus.of(under21Score, cardSize)).isEqualTo(HandStatus.UNDER_21);
+    }
 }

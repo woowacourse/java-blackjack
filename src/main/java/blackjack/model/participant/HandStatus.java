@@ -7,7 +7,7 @@ public enum HandStatus {
     BUST((score -> score > 21), (cardSize -> cardSize >= 2)),
     BLACKJACK((score -> score == 21), (cardSize -> cardSize == 2)),
     NOT_BLACKJACK_BUT_21((score -> score == 21), (cardSize -> cardSize > 2)),
-    UNDER_21((score -> score > 21), (cardSize -> cardSize >= 2));
+    UNDER_21((score -> score < 21), (cardSize -> cardSize >= 2));
 
     private final Predicate<Integer> scoreCondition;
     private final Predicate<Integer> cardSizeCondition;
