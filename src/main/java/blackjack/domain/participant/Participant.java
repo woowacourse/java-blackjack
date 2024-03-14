@@ -2,8 +2,12 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
+import blackjack.domain.state.Blackjack;
+import blackjack.domain.state.Bust;
 import blackjack.domain.state.Hit;
 import blackjack.domain.state.State;
+
+import java.util.Objects;
 
 public abstract class Participant {
     private final Name name;
@@ -32,7 +36,28 @@ public abstract class Participant {
         state = state.stay();
     }
 
+    public boolean isBust() {
+        return state instanceof Bust;
+    }
+
+    public boolean isBlackjack() {
+        return state instanceof Blackjack;
+    }
+
     public CardHand getCardHand() {
         return state.getCardHand();
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Participant other = (Participant) o;
+        return Objects.equals(name, other.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

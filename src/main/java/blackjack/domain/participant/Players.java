@@ -46,8 +46,12 @@ public class Players {
         return players.size();
     }
 
-    public void distributeCardTo(final int playerIndex, final Card card) {
-        final Player player = players.get(playerIndex);
+    public void distributeCardToPlayer(final int playerIndex, final Card card) {
+        final Player player = findPlayerByIndex(playerIndex);
         player.receiveCard(card);
+    }
+
+    public Player findPlayerByIndex(final int playerIndex) {
+        return players.get(playerIndex);
     }
 }
