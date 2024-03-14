@@ -8,7 +8,6 @@ public class InputView {
 
     private static final String WANT_HIT_COMMAND = "y";
     private static final String NOT_WANT_HIT_COMMAND = "n";
-    private static final List<String> commands = List.of(WANT_HIT_COMMAND, NOT_WANT_HIT_COMMAND);
     private static final String ERROR_INVALID_COMMAND = WANT_HIT_COMMAND + " 또는 " + NOT_WANT_HIT_COMMAND + "만 입력할 수 있습니다.";
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -31,7 +30,7 @@ public class InputView {
     }
 
     private static void validateHitInput(final String input) {
-        if (!commands.contains(input)) {
+        if (!input.equals(WANT_HIT_COMMAND) && !input.equals(NOT_WANT_HIT_COMMAND)) {
             throw new IllegalArgumentException(ERROR_INVALID_COMMAND);
         }
     }
