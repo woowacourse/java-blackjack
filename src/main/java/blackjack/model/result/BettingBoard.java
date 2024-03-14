@@ -12,7 +12,7 @@ public class BettingBoard {
         this.bettings = Map.copyOf(bettings);
     }
 
-    public BettingMoney determineProfit(final String playerName, final MatchResult matchResult) {
+    public BettingMoney determineEarning(final String playerName, final MatchResult matchResult) {
         BettingMoney bettingMoney = getBettingMoney(playerName);
         BettingMoney finalBettingMoney = matchResult.calculateFinalMoney(bettingMoney);
         return finalBettingMoney.minus(bettingMoney);

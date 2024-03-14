@@ -12,22 +12,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BettingBoardTest {
     @ParameterizedTest
-    @MethodSource("provideMatchResultAndExpectedProfit")
+    @MethodSource("provideMatchResultAndExpectedEarning")
     @DisplayName("플레이어의 게임 결과로 수익을 구한다")
-    void determineProfitTest(MatchResult matchResult, double expectedProfit) {
+    void determineEarningTest(MatchResult matchResult, double expectedEarning) {
         // given
         String playerName = "mia";
         Map<String, BettingMoney> bettingMoneys = Map.of(playerName, new BettingMoney(1000));
         BettingBoard bettingBoard = new BettingBoard(bettingMoneys);
 
         // when
-        BettingMoney bettingMoney = bettingBoard.determineProfit(playerName, matchResult);
+        BettingMoney bettingMoney = bettingBoard.determineEarning(playerName, matchResult);
 
         // then
-        assertThat(bettingMoney.getAmount()).isEqualTo(expectedProfit);
+        assertThat(bettingMoney.getAmount()).isEqualTo(expectedEarning);
     }
 
-    private static Stream<Arguments> provideMatchResultAndExpectedProfit() {
+    private static Stream<Arguments> provideMatchResultAndExpectedEarning() {
         return Stream.of(
                 Arguments.of(MatchResult.WIN, 1000),
                 Arguments.of(MatchResult.LOSE, -1000)

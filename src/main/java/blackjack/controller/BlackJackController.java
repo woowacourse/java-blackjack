@@ -8,16 +8,14 @@ import blackjack.model.player.Players;
 import blackjack.model.player.isHit;
 import blackjack.model.result.BettingBoard;
 import blackjack.model.result.BettingMoney;
+import blackjack.model.result.MatchResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.DealerFinalCardsOutcome;
+import blackjack.view.dto.PlayerEarning;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
-import blackjack.view.dto.PlayerProfit;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Supplier;
 
 public class BlackJackController {
@@ -85,9 +83,7 @@ public class BlackJackController {
 
     private void end(final Players players, final Dealer dealer, final BettingBoard bettingBoard) {
         showCardOutcome(players, dealer);
-
-        List<PlayerProfit> playerProfits = players.calculateProfit(dealer, bettingBoard);
-        outputView.printFinalProfits(playerProfits);
+        showEarnings(players, dealer, bettingBoard);
     }
 
     private void showCardOutcome(final Players players, final Dealer dealer) {
@@ -95,6 +91,22 @@ public class BlackJackController {
         List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes = players.captureFinalCardsOutcomes();
         outputView.printDealerFinalCards(dealerFinalCardsOutcome);
         outputView.printPlayersFinalCards(playerFinalCardsOutcomes);
+    }
+
+    private void showEarnings(final Players players, final Dealer dealer, final BettingBoard bettingBoard) {
+        List<PlayerEarning> playerEarnings = determinePlayersEarning(players, dealer, bettingBoard);
+        outputView.printEarnings(playerEarnings);
+    }
+
+    private List<PlayerEarning> determinePlayersEarning(
+            final Players players, final Dealer dealer, final BettingBoard bettingBoard) {
+        List<PlayerEarning> playerEarnings = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            MatchResult matchResult = MatchResult.of(player, dealer);
+            BettingMoney earning = bettingBoard.determineEarning(player.getName(), matchResult);
+            playerEarnings.add(new PlayerEarning(player.getName(), earning.getAmount()));
+        }
+        return playerEarnings;
     }
 
     public <T> T retryOnException(final Supplier<T> retryOperation) {

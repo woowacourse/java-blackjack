@@ -5,8 +5,8 @@ import blackjack.model.dealer.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
 import blackjack.view.dto.DealerFinalCardsOutcome;
+import blackjack.view.dto.PlayerEarning;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
-import blackjack.view.dto.PlayerProfit;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,8 +17,8 @@ public class OutputView {
     private static final String DEALER_ACTION_FORM = "\n딜러는 16이하라 %d장의 카드를 더 받았습니다.\n";
     private static final String DEALER_CARDS_FORM = "\n딜러 카드: %s";
     private static final String TOTAL_SCORE_FORM = " - 결과: %s\n";
-    private static final String FINAL_PROFIT_INTRO = "\n## 최종 수익";
-    public static final String DEALER_PROFIT_PREFIX = "딜러: ";
+    private static final String FINAL_EARNING_INTRO = "\n## 최종 수익";
+    public static final String DEALER_EARNING_PREFIX = "딜러: ";
     public static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
 
     public void printDealingResult(final Players players, final Dealer dealer) {
@@ -72,23 +72,23 @@ public class OutputView {
         }
     }
 
-    public void printFinalProfits(final List<PlayerProfit> playerProfits) {
-        System.out.println(FINAL_PROFIT_INTRO);
-        System.out.println(formatDealerProfit(playerProfits));
-        for (PlayerProfit playerProfit : playerProfits) {
-            System.out.println(formatPlayerProfit(playerProfit));
+    public void printEarnings(final List<PlayerEarning> playerEarnings) {
+        System.out.println(FINAL_EARNING_INTRO);
+        System.out.println(formatDealerEarning(playerEarnings));
+        for (PlayerEarning playerEarning : playerEarnings) {
+            System.out.println(formatPlayerEarning(playerEarning));
         }
     }
 
-    private String formatDealerProfit(final List<PlayerProfit> playerProfits) {
-        double profit = (-1) * playerProfits.stream()
-                .mapToDouble(PlayerProfit::profit)
+    private String formatDealerEarning(final List<PlayerEarning> playerEarnings) {
+        double earning = (-1) * playerEarnings.stream()
+                .mapToDouble(PlayerEarning::earning)
                 .sum();
-        return DEALER_PROFIT_PREFIX + profit;
+        return DEALER_EARNING_PREFIX + earning;
     }
 
-    private String formatPlayerProfit(final PlayerProfit playerProfit) {
-        return playerProfit.name() + ": " + playerProfit.profit();
+    private String formatPlayerEarning(final PlayerEarning playerEarning) {
+        return playerEarning.name() + ": " + playerEarning.earning();
     }
 
     public void printException(final String errorMessage) {
