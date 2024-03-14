@@ -1,8 +1,10 @@
 package domain.blackjack;
 
-import static domain.card.Card.TWO_HEART;
 
-import domain.card.Card;
+import static domain.card.TestCards.FIVE_HEART;
+import static domain.card.TestCards.SIX_HEART;
+import static domain.card.TestCards.TWO_HEART;
+
 import domain.card.Deck;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,7 @@ class BlackJackGameTest {
     void playersDraw() {
         BlackJackGame blackJackGame = new BlackJackGame(List.of("player", "robin"));
         List<Boolean> fixedYesOrNo = new ArrayList<>(List.of(true, false, true, false));
-        blackJackGame.playersDraw(Deck.of(Card.FIVE_HEART, Card.SIX_HEART), BlackJackGameTest::doNothing,
+        blackJackGame.playersDraw(Deck.of(FIVE_HEART, SIX_HEART), BlackJackGameTest::doNothing,
                 playerName -> fixedYesOrNo.remove(0));
 
         Players players = blackJackGame.getPlayers();
@@ -34,7 +36,7 @@ class BlackJackGameTest {
     @DisplayName("딜러가 드로우를 했을 때 제대로 드로우 되는지 검증")
     void dealerDraw() {
         BlackJackGame blackJackGame = new BlackJackGame(List.of("player", "robin"));
-        blackJackGame.dealerTryDraw(Deck.of(Card.FIVE_HEART));
+        blackJackGame.dealerTryDraw(Deck.of(FIVE_HEART));
         Dealer dealer = blackJackGame.getDealer();
 
         Player player = Player.from("플레이어", HoldingCards.of(TWO_HEART));

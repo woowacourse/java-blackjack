@@ -1,14 +1,15 @@
 package domain.blackjack;
 
-import static domain.card.Card.ACE_HEART;
-import static domain.card.Card.JACK_HEART;
-import static domain.card.Card.JACK_SPADE;
-import static domain.card.Card.NINE_HEART;
-import static domain.card.Card.QUEEN_HEART;
-import static domain.card.Card.SEVEN_HEART;
-import static domain.card.Card.SIX_DIAMOND;
-import static domain.card.Card.SIX_HEART;
-import static domain.card.Card.TWO_HEART;
+
+import static domain.card.TestCards.ACE_HEART;
+import static domain.card.TestCards.JACK_HEART;
+import static domain.card.TestCards.JACK_SPADE;
+import static domain.card.TestCards.NINE_HEART;
+import static domain.card.TestCards.QUEEN_HEART;
+import static domain.card.TestCards.SEVEN_HEART;
+import static domain.card.TestCards.SIX_DIAMOND;
+import static domain.card.TestCards.SIX_HEART;
+import static domain.card.TestCards.TWO_HEART;
 
 public class TestHoldingCards {
     static final HoldingCards ONLY_SIX_HEART = HoldingCards.of(SIX_HEART);

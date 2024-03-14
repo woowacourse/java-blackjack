@@ -1,7 +1,6 @@
 package domain.card;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,8 +18,7 @@ public class Deck {
     }
 
     public static Deck fullDeck() {
-        List<Card> cards = Arrays.stream(Card.values())
-                .toList();
+        List<Card> cards = Card.allCards();
         return new Deck(cards);
     }
 

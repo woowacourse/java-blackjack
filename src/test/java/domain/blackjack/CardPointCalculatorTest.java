@@ -4,7 +4,10 @@ import static domain.card.CardName.TEN;
 
 import domain.card.Card;
 import domain.card.CardName;
-import java.util.Arrays;
+import domain.card.CardType;
+import domain.card.Deck;
+import domain.card.FirstCardSelectStrategy;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -14,9 +17,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class CardPointCalculatorTest {
     static Stream<Arguments> calculateParameter() {
-        return Stream.of(Arrays.stream(Card.values())
-                .map(card -> Arguments.of(card, makeCardPoint(card.cardName())))
-                .toArray(Arguments[]::new));
+        Deck deck = Deck.fullDeck();
+        int totalCardCount = CardType.values().length * CardName.values().length;
+        return IntStream.range(0, totalCardCount)
+                .mapToObj(value -> deck.draw(new FirstCardSelectStrategy()))
+                .map(card -> Arguments.of(card, makeCardPoint(card.cardName())));
     }
 
     private static CardPoint makeCardPoint(CardName cardName) {

@@ -1,10 +1,11 @@
 package domain.blackjack;
 
-import static domain.card.Card.ACE_HEART;
-import static domain.card.Card.FIVE_HEART;
-import static domain.card.Card.JACK_HEART;
-import static domain.card.Card.SEVEN_HEART;
-import static domain.card.Card.SIX_HEART;
+
+import static domain.card.TestCards.ACE_HEART;
+import static domain.card.TestCards.FIVE_HEART;
+import static domain.card.TestCards.JACK_HEART;
+import static domain.card.TestCards.SEVEN_HEART;
+import static domain.card.TestCards.SIX_HEART;
 
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;

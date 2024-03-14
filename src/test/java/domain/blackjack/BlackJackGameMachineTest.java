@@ -4,12 +4,12 @@ import static domain.blackjack.TestHoldingCards.DEAD_CARDS;
 import static domain.blackjack.TestHoldingCards.ONLY_SEVEN_HEART;
 import static domain.blackjack.TestHoldingCards.WIN_CARDS_WITHOUT_ACE;
 import static domain.blackjack.TestHoldingCards.WIN_CARDS_WITH_ACE;
-import static domain.card.Card.ACE_HEART;
-import static domain.card.Card.EIGHT_HEART;
-import static domain.card.Card.JACK_HEART;
-import static domain.card.Card.QUEEN_HEART;
-import static domain.card.Card.TWO_HEART;
 import static domain.card.FirstCardSelectStrategy.FIRST_CARD_SELECT_STRATEGY;
+import static domain.card.TestCards.ACE_HEART;
+import static domain.card.TestCards.EIGHT_HEART;
+import static domain.card.TestCards.JACK_HEART;
+import static domain.card.TestCards.QUEEN_HEART;
+import static domain.card.TestCards.TWO_HEART;
 
 import domain.card.Card;
 import domain.card.Deck;
