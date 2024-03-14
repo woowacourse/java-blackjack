@@ -33,19 +33,15 @@ public class Dealer extends Gamer {
 		return deck.drawCard();
 	}
 
-	public void drawCard() {
-		cards.add(deck.drawCard());
-	}
-
 	public boolean hasHitScore() {
 		return cards.isScoreLessOrEqual(MAX_HIT_SCORE);
 	}
 
-	public Card getFirstCard() {
-		return cards.indexOf(0);
-	}
-
 	public int deckSize() {
 		return deck.size();
+	}
+
+	public Card getFirstCard() {
+		return cards.indexOf(0);
 	}
 }

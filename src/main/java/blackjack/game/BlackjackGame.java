@@ -69,7 +69,7 @@ public class BlackjackGame {
 
 	private void receiveDealerAdditionalCard(final Dealer dealer) {
 		while (dealer.hasHitScore()) {
-			dealer.drawCard();
+			dealer.receiveCard(dealer.dealCard());
 			outputView.printDealerHitMessage();
 		}
 	}
@@ -84,13 +84,19 @@ public class BlackjackGame {
 	}
 
 	private void printGameResult(final Dealer dealer, final Players players) {
+		Map<Player, GameResult> playersResult = getPlayersResult(dealer,
+			players);
+		Map<GameResult, Long> dealerResult = getDealerResult(playersResult);
+
+		outputView.printGameResult(dealerResult, playersResult);
+	}
+
+	private Map<Player, GameResult> getPlayersResult(Dealer dealer, Players players) {
 		Map<Player, GameResult> playerResults = new HashMap<>();
 		for (Player player : players.getPlayers()) {
 			playerResults.put(player, compareScore(dealer, player));
 		}
-
-		Map<GameResult, Long> dealerResult = getDealerResult(playerResults);
-		outputView.printGameResult(dealerResult, playerResults);
+		return playerResults;
 	}
 
 	private GameResult compareScore(final Dealer dealer, final Player player) {

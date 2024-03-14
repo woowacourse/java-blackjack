@@ -17,6 +17,10 @@ public class Gamer {
 		this.cards.addAll(cards);
 	}
 
+	public void receiveCard(final Card card) {
+		cards.add(card);
+	}
+
 	public int getScore() {
 		return cards.calculateScore();
 	}

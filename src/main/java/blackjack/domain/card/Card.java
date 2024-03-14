@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 public class Card {
 
+	// 52장의 Card를 미리 Pool에 생성
 	private static final Map<String, Card> pool = Arrays.stream(Suit.values())
 		.flatMap(suit -> Arrays.stream(Rank.values())
 			.map(rank -> new Card(suit, rank)))
@@ -30,6 +31,14 @@ public class Card {
 		return suit.getName() + rank.getName();
 	}
 
+	public boolean isAce() {
+		return isRank(Rank.ACE);
+	}
+
+	private boolean isRank(final Rank rank) {
+		return this.rank == rank;
+	}
+
 	public int getScore() {
 		return rank.getScore();
 	}
@@ -40,14 +49,6 @@ public class Card {
 
 	public String getRankName() {
 		return rank.getName();
-	}
-
-	public boolean isAce() {
-		return isRank(Rank.ACE);
-	}
-
-	private boolean isRank(final Rank rank) {
-		return this.rank == rank;
 	}
 
 	@Override

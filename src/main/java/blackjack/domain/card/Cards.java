@@ -52,10 +52,6 @@ public class Cards {
 		return calculateScore() > BLACKJACK_SCORE;
 	}
 
-	public List<Card> getCards() {
-		return Collections.unmodifiableList(cards);
-	}
-
 	public Card indexOf(int index) {
 		return cards.get(index);
 	}
@@ -63,5 +59,9 @@ public class Cards {
 	public boolean isScoreLessOrEqual(final int value) {
 		int score = calculateScore();
 		return value >= score;
+	}
+
+	public List<Card> getCards() {
+		return Collections.unmodifiableList(cards);
 	}
 }
