@@ -46,10 +46,15 @@ public class BlackJackController {
     private BettingBoard prepareBettingBoard(final Players players) {
         Map<String, BettingMoney> board = new HashMap<>();
         for (String playerName : players.getNames()) {
-            int bettingMoney = retryOnException(() -> inputView.askBettingMoney(playerName));
-            board.put(playerName, new BettingMoney(bettingMoney));
+            BettingMoney bettingMoney = retryOnException(() -> askBettingMoney(playerName));
+            board.put(playerName, bettingMoney);
         }
         return new BettingBoard(board);
+    }
+
+    private BettingMoney askBettingMoney(final String playerName) {
+        int bettingMoney = inputView.askBettingMoney(playerName);
+        return new BettingMoney(bettingMoney);
     }
 
     private void play(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
