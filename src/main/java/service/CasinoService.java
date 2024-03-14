@@ -13,7 +13,7 @@ import model.casino.CardShuffleMachine;
 import model.casino.MatchResult;
 import model.participant.Entrant;
 import model.participant.Names;
-import service.dto.DealerScoreResult;
+import service.dto.DealerMatchResult;
 import service.dto.FaceUpResult;
 import service.dto.PlayerMatchResult;
 
@@ -81,7 +81,7 @@ public class CasinoService {
                 .toList();
     }
 
-    public DealerScoreResult calculateDealerMatchResult() {
+    public DealerMatchResult calculateDealerMatchResult() {
         EnumMap<MatchResult, Integer> dealerScoreBoard = new EnumMap<>(MatchResult.class);
         List<MatchResult> playerScores = calculatePlayerMatchResults()
                 .stream()
@@ -90,7 +90,7 @@ public class CasinoService {
         dealerScoreBoard.put(WIN, frequency(playerScores, LOSE));
         dealerScoreBoard.put(DRAW, frequency(playerScores, DRAW));
         dealerScoreBoard.put(LOSE, frequency(playerScores, WIN));
-        return new DealerScoreResult(dealerScoreBoard);
+        return new DealerMatchResult(dealerScoreBoard);
     }
 
 }

@@ -1,7 +1,7 @@
 package view;
 
 import java.util.List;
-import service.dto.DealerScoreResult;
+import service.dto.DealerMatchResult;
 import service.dto.FaceUpResult;
 import service.dto.PlayerMatchResult;
 import model.casino.MatchResult;
@@ -56,9 +56,9 @@ public class OutputView {
                 result.getCardsAsStrings()) + " - 결과: " + result.hand());
     }
 
-    public static void printScoreResults(DealerScoreResult dealerScoreResult,
+    public static void printScoreResults(DealerMatchResult dealerMatchResult,
                                          List<PlayerMatchResult> playerMatchResults) {
-        StringBuilder dealerScoresText = genernateDealerScoreTexts(dealerScoreResult);
+        StringBuilder dealerScoresText = genernateDealerScoreTexts(dealerMatchResult);
 
         System.out.print(System.lineSeparator());
         printMessage("## 최종 승패");
@@ -70,10 +70,10 @@ public class OutputView {
         return result.getNameAsString() + ": " + result.getVictoryAsString();
     }
 
-    private static StringBuilder genernateDealerScoreTexts(DealerScoreResult dealerScoreResult) {
+    private static StringBuilder genernateDealerScoreTexts(DealerMatchResult dealerMatchResult) {
         StringBuilder dealerScoresText = new StringBuilder("딜러: ");
         for (MatchResult matchResult : MatchResult.values()) {
-            dealerScoresText.append(dealerScoreResult.getVictoryScoreAsString(matchResult) + " ");
+            dealerScoresText.append(dealerMatchResult.getVictoryScoreAsString(matchResult) + " ");
         }
         return dealerScoresText;
     }

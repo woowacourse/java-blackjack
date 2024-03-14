@@ -9,7 +9,7 @@ import model.Choice;
 import model.casino.RandomCardShuffleMachine;
 import model.participant.Names;
 import service.CasinoService;
-import service.dto.DealerScoreResult;
+import service.dto.DealerMatchResult;
 import service.dto.FaceUpResult;
 import service.dto.PlayerMatchResult;
 import view.OutputView;
@@ -68,8 +68,8 @@ public class BlackJackLauncher {
     }
 
     private void showFinalMatchResults(CasinoService casinoService) {
-        DealerScoreResult dealerScoreResult = casinoService.calculateDealerMatchResult();
+        DealerMatchResult dealerMatchResult = casinoService.calculateDealerMatchResult();
         List<PlayerMatchResult> playerMatchResults = casinoService.calculatePlayerMatchResults();
-        OutputView.printScoreResults(dealerScoreResult, playerMatchResults);
+        OutputView.printScoreResults(dealerMatchResult, playerMatchResults);
     }
 }
