@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import view.OutputView;
 
+//TODO 컨트롤러가 하는 일이 좀 많은듯...?
+// GAME이라는 객체를 만들어 보는 것은 어떨까?
 public class BlackJackController {
 
     private final InputController inputController;
@@ -27,16 +29,16 @@ public class BlackJackController {
     }
 
     public void run() {
-        final Names names = inputController.getPlayers();
+        final Names names = inputController.getNames();
         final Dealer dealer = new Dealer();
 
-        final List<Player> temp = new ArrayList<>();
+        final List<Player> playerList = new ArrayList<>();
         for (final Name name : names.getPlayerNames()) {
-            BetAmount betAmount = inputController.getBetAmount(name.getValue());
-            temp.add(new Player(name, betAmount));
+            final BetAmount betAmount = inputController.getBetAmount(name.getValue());
+            playerList.add(new Player(name, betAmount));
         }
 
-        final Players players = new Players(temp);
+        final Players players = new Players(playerList);
 
         initHands(players, dealer);
         dealWithPlayers(players, dealer);
@@ -60,13 +62,8 @@ public class BlackJackController {
             outputView.printDealerBlackJack();
             return;
         }
-        for (Player player : players.getPlayers()) {
-            if (player.isBlackJack()) {
-                outputView.printBlackJack();
-                continue;
-            }
-            deal(player, dealer);
-        }
+        players.getPlayers()
+                .forEach(player -> deal(player, dealer));
     }
 
     private void initHands(final Players players, final Dealer dealer) {
@@ -76,12 +73,15 @@ public class BlackJackController {
 
     private void printFinalResult(final Players players, final Dealer dealer) {
         outputView.printHandsResult(ParticipantsDto.of(dealer, players));
-        Map<Player, Amount> finalResult = players.calculateResult(dealer);
-        Amount dealerAmount = dealer.calculateRevenue(finalResult);
+        final Map<Player, Amount> finalResult = players.calculateResult(dealer);
+        final Amount dealerAmount = dealer.calculateRevenue(finalResult);
         outputView.printGameResult(finalResult, dealerAmount);
     }
 
     private void deal(final Player player, final Dealer dealer) {
+        if (isBlackJack(player)) {
+            return;
+        }
         boolean handsChanged = false;
         boolean turnEnded = false;
 
@@ -94,6 +94,14 @@ public class BlackJackController {
             handsChanged = true;
             turnEnded = isTurnEnded(player, answer);
         }
+    }
+
+    private boolean isBlackJack(final Player player) {
+        if (player.isBlackJack()) {
+            outputView.printBlackJack();
+            return true;
+        }
+        return false;
     }
 
     private void printHandsIfRequired(final Player player, final boolean handsChanged, final Answer answer) {

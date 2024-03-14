@@ -18,12 +18,12 @@ public class InputController {
         this.outputView = outputView;
     }
 
-    public Names getPlayers() {
-        Names playerNames;
+    public Names getNames() {
+        Names names;
         do {
-            playerNames = readPlayerNames();
-        } while (playerNames == null);
-        return playerNames;
+            names = readNames();
+        } while (names == null);
+        return names;
     }
 
     public Answer getAnswer(String name) {
@@ -42,7 +42,7 @@ public class InputController {
         return betAmount;
     }
 
-    private Names readPlayerNames() {
+    private Names readNames() {
         try {
             List<String> rawNames = inputView.readNames();
             return Names.from(rawNames);
