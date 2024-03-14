@@ -12,16 +12,18 @@ import domain.participant.PlayerNames;
 import view.InputView;
 import view.OutputView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackController {
     public void run() {
         Dealer dealer = Dealer.init();
         List<Player> players = initPlayers();
         BlackJackGame blackJackGame = new BlackJackGame(Deck.init());
-        Betting betting = new Betting();
+        Betting betting = initBettingForPlayers(players);
 
-        play(blackJackGame, betting, dealer, players);
+        play(blackJackGame, dealer, players);
 
         finish(blackJackGame, betting, dealer, players);
     }
@@ -43,10 +45,8 @@ public class BlackJackController {
         }
     }
 
-    private void play(final BlackJackGame blackJackGame, final Betting betting,
+    private void play(final BlackJackGame blackJackGame,
                       final Dealer dealer, final List<Player> players) {
-        initBettingForPlayers(betting, players);
-
         firstDraw(blackJackGame, dealer, players);
         players.forEach(player -> playForPlayer(blackJackGame, player));
         playForDealer(blackJackGame, dealer);
@@ -58,13 +58,10 @@ public class BlackJackController {
         OutputView.printFinalHandStatus(dealerHandStatusDto, playerHandStatusDtos);
     }
 
-    private void initBettingForPlayers(final Betting betting, final List<Player> players) {
-        players.forEach(player -> initBettingForPlayer(betting, player));
-    }
-
-    private void initBettingForPlayer(final Betting betting, final Player player) {
-        BettingAmount bettingAmount = initAmount(player);
-        betting.setBetting(player.getPlayerName(), bettingAmount);
+    private Betting initBettingForPlayers(final List<Player> players) {
+        Map<PlayerName, BettingAmount> betting = new HashMap<>();
+        players.forEach(player -> betting.put(player.getPlayerName(), initAmount(player)));
+        return new Betting(betting);
     }
 
     private BettingAmount initAmount(final Player player) {

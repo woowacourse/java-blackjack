@@ -2,17 +2,14 @@ package domain;
 
 import domain.participant.PlayerName;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Betting {
 
-    private final Map<PlayerName, BettingAmount> betting = new HashMap<>();
+    private final Map<PlayerName, BettingAmount> betting;
 
-    public Betting() {}
-
-    public void setBetting(final PlayerName playerName, final BettingAmount bettingAmount) {
-        betting.put(playerName, bettingAmount);
+    public Betting(Map<PlayerName, BettingAmount> betting) {
+        this.betting = betting;
     }
 
     public BettingAmount getBetting(final PlayerName playerName) {

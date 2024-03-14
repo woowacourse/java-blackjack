@@ -4,6 +4,9 @@ import domain.participant.PlayerName;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BettingTest {
@@ -11,9 +14,10 @@ public class BettingTest {
     @Test
     void getBettingTest() {
         // Given
-        Betting betting = new Betting();
         PlayerName test = new PlayerName("test");
-        betting.setBetting(test, new BettingAmount("15000"));
+        Map<PlayerName, BettingAmount> initialBetting = new HashMap<>();
+        initialBetting.put(test, new BettingAmount("15000"));
+        Betting betting = new Betting(initialBetting);
 
         // When
         BettingAmount bettingAmount = betting.getBetting(test);
