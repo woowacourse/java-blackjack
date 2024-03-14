@@ -22,6 +22,10 @@ public class Dealer extends Participant {
     }
 
     public Card pickCard() {
+        if (cardDeck.isEmpty()) {
+            cardDeck.reset();
+            shuffleCards();
+        }
         return cardDeck.draw();
     }
 

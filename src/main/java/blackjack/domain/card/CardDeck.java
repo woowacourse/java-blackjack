@@ -19,13 +19,18 @@ public class CardDeck {
     }
 
     public Card draw() {
-        if (cardDeck.isEmpty()) {
-            this.cardDeck = initializeCardDeck();
-        }
         return cardDeck.remove(cardDeck.size() - 1);
     }
 
     public void shuffle(final CardShuffleStrategy cardShuffleStrategy) {
         cardShuffleStrategy.shuffle(cardDeck);
+    }
+
+    public boolean isEmpty() {
+        return cardDeck.isEmpty();
+    }
+
+    public void reset() {
+        cardDeck = initializeCardDeck();
     }
 }

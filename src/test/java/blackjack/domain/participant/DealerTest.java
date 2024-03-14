@@ -26,6 +26,17 @@ class DealerTest {
     }
 
     @Test
+    void 기존_카드_덱의_카드를_모두_사용하였을_경우_새로운_카드_덱에서_카드를_뽑는다() {
+        for (int i = 0; i < 52; i++) {
+            dealer.pickCard();
+        }
+
+        final Card card = dealer.pickCard();
+
+        assertThat(card).isNotNull();
+    }
+
+    @Test
     void 딜러는_카드를_셔플할_수_있다() {
         dealer.shuffleCards();
         final Card card = dealer.pickCard();
