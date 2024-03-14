@@ -11,17 +11,17 @@ public abstract class State {
         this.hand = hand;
     }
 
-    abstract State draw(Deck deck);
+    public abstract State draw(Deck deck);
 
-    abstract State stand();
+    public abstract State stand();
 
-    abstract boolean isFinished();
+    public abstract boolean isFinished();
 
-    Score calculateHand() {
+    public Score calculateHand() {
         return hand.calculate();
     }
 
-    Hand getHand() {
+    public Hand getHand() {
         return hand;
     }
 }
