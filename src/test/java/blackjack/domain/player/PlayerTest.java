@@ -2,6 +2,7 @@ package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import blackjack.domain.BattingAmount;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardValue;
@@ -17,8 +18,9 @@ public class PlayerTest {
         Name name = new Name("초롱");
         Cards cards = new Cards(List.of(new Card(CardValue.EIGHT, CardSymbol.CLOVER),
                 new Card(CardValue.ACE, CardSymbol.DIAMOND)));
+        BattingAmount battingAmount = new BattingAmount("10000");
 
-        assertThatCode(() -> new GamePlayer(name, cards))
+        assertThatCode(() -> new GamePlayer(name, cards, battingAmount))
                 .doesNotThrowAnyException();
     }
 

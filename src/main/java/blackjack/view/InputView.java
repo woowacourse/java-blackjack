@@ -1,6 +1,8 @@
 package blackjack.view;
 
 import blackjack.domain.player.Name;
+import blackjack.domain.player.Names;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -20,6 +22,15 @@ public class InputView {
         return Arrays.stream(initialInput.split(SPLIT_DELIMITER))
                      .map(String::trim)
                      .toList();
+    }
+
+    public static List<String> inputPlayerBattingAmounts(Names names) {
+        List<String> battingAmounts = new ArrayList<>();
+        for(Name name : names.getNames()) {
+            System.out.println(String.format("%s의 배팅 금액은?", name.asString()));
+            battingAmounts.add(input());
+        }
+        return battingAmounts;
     }
 
     public static BlackjackCommand inputBlackjackCommand(Name playerName) {

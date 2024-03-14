@@ -1,6 +1,8 @@
 package blackjack.domain.player;
 
 
+import blackjack.domain.BattingAmount;
+import blackjack.domain.BattingAmounts;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.result.ResultStatus;
@@ -9,8 +11,11 @@ import java.util.List;
 public class GamePlayer extends Player {
     private static final Integer RECEIVE_SIZE = 21;
 
-    public GamePlayer(Name name, Cards cards) {
+    private final BattingAmount battingAmount;
+
+    public GamePlayer(Name name, Cards cards, BattingAmount battingAmount) {
         super(name, cards);
+        this.battingAmount = battingAmount;
     }
 
     public ResultStatus confirmResult(Dealer dealer) {
