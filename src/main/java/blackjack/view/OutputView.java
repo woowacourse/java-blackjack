@@ -3,11 +3,13 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Shape;
 import blackjack.domain.card.Value;
+import blackjack.domain.money.Profit;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -119,5 +121,15 @@ public class OutputView {
             return;
         }
         System.out.println(name + ": 패");
+    }
+
+    public void printMatchResult(Profit dealerProfit, Map<Player, Profit> playersProfit) {
+        System.out.println("## 최종 승패");
+        System.out.println("딜러: " + dealerProfit.toInt());
+        for (Entry<Player, Profit> profitEntry : playersProfit.entrySet()) {
+            String name = profitEntry.getKey().getName();
+            int profit = profitEntry.getValue().toInt();
+            System.out.println(name + ": " + profit);
+        }
     }
 }
