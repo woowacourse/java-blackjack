@@ -29,12 +29,15 @@ public class BetAmountRepository {
 
     public Map<Player, Amount> calculateResult(final Dealer dealer) {
         final Map<Player, Amount> result = new HashMap<>();
+
+        //TODO 리팩터링 대상
         for (Entry<Player, BetAmount> entry : repository.entrySet()) {
             if (Result.BLACK_JACK_WIN == entry.getKey().calculateResult(dealer)) {
                 result.put(entry.getKey(), entry.getValue().blackJackWinAmount());
             } else if (Result.WIN == entry.getKey().calculateResult(dealer)) {
                 result.put(entry.getKey(), entry.getValue().winAmount());
-            } else if (Result.TIE == entry.getKey().calculateResult(dealer)) {
+            } else if (Result.TIE == entry.getKey().calculateResult(dealer)
+                    || Result.BLACK_JACK_TIE == entry.getKey().calculateResult(dealer)) {
                 result.put(entry.getKey(), entry.getValue().tieAmount());
             } else {
                 result.put(entry.getKey(), entry.getValue().loseAmount());

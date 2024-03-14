@@ -3,6 +3,7 @@ package repository;
 import static domain.HandsTestFixture.blackJack;
 import static domain.HandsTestFixture.sum10Size2;
 import static domain.HandsTestFixture.sum17Size3One;
+import static domain.HandsTestFixture.sum18Size2;
 import static domain.HandsTestFixture.sum20Size3;
 import static domain.HandsTestFixture.sum21Size3;
 
@@ -52,6 +53,26 @@ class BetAmountRepositoryTest {
         repository.put(loser, new BetAmount(2000));
 
         Map<Player, Amount> expected = Map.of(blackJackPlayer, new Amount(15000), loser, new Amount(-2000));
+
+        //when
+        Map<Player, Amount> result = repository.calculateResult(dealer);
+
+        //then
+        Assertions.assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("참가자와 딜러 모두 블랙잭인 경우 배팅 금액을 돌려받는다.")
+    void playerAndDealerBlackJack() {
+        final Dealer dealer = new Dealer(blackJack);
+        final Player blackJackPlayer = new Player(new Name("수달"), blackJack);
+        final Player loser = new Player(new Name("레디"), sum18Size2);
+
+        BetAmountRepository repository = new BetAmountRepository(new HashMap<>());
+        repository.put(blackJackPlayer, new BetAmount(10000));
+        repository.put(loser, new BetAmount(2000));
+
+        Map<Player, Amount> expected = Map.of(blackJackPlayer, new Amount(0), loser, new Amount(-2000));
 
         //when
         Map<Player, Amount> result = repository.calculateResult(dealer);
