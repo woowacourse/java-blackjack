@@ -40,7 +40,7 @@ public enum MatchResult {
         return LOSE;
     }
 
-    public BettingMoney calculateFinalMoney(final BettingMoney bettingMoney) {
+    public BettingMoney calculateEarning(final BettingMoney bettingMoney) {
         return bettingMoney.applyEarningRate(earningRate);
     }
 }

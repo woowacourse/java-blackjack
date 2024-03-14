@@ -103,25 +103,25 @@ class MatchResultTest {
     }
 
     @ParameterizedTest
-    @MethodSource("provideMatchResultAndExpectedFinalMoney")
-    @DisplayName("게임 결과에 따라 수익률을 적용해 최종 베팅 금액을 얻는다")
-    void determineFinalMoneyTest(MatchResult matchResult, double expectedFinalMoney) {
+    @MethodSource("provideMatchResultAndExpectedEarning")
+    @DisplayName("게임 결과로 수익을 구한다")
+    void calculateEarningTest(MatchResult matchResult, double expectedEarning) {
         // given
         BettingMoney bettingMoney = new BettingMoney(1000);
 
         // when
-        BettingMoney actualFinalMoney = matchResult.calculateFinalMoney(bettingMoney);
+        BettingMoney actualEarning = matchResult.calculateEarning(bettingMoney);
 
         // then
-        assertThat(actualFinalMoney.getAmount()).isEqualTo(expectedFinalMoney);
+        assertThat(actualEarning.getAmount()).isEqualTo(expectedEarning);
     }
 
-    private static Stream<Arguments> provideMatchResultAndExpectedFinalMoney() {
+    private static Stream<Arguments> provideMatchResultAndExpectedEarning() {
         return Stream.of(
-                Arguments.of(MatchResult.WIN, 2000),
-                Arguments.of(MatchResult.LOSE, 0),
-                Arguments.of(MatchResult.PUSH, 1000),
-                Arguments.of(MatchResult.BLACKJACK, 2500)
+                Arguments.of(MatchResult.WIN, 1000),
+                Arguments.of(MatchResult.LOSE, -1000),
+                Arguments.of(MatchResult.PUSH, 0),
+                Arguments.of(MatchResult.BLACKJACK, 1500)
         );
     }
 }
