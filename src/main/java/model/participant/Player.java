@@ -1,25 +1,22 @@
 package model.participant;
 
 import java.util.List;
-import model.card.Card;
 import model.card.Cards;
-import model.game.HitAction;
 
-public class Player implements HitAction {
+public class Player extends Participant {
 
     private static final int HIT_CONDITION = 22;
 
     private final String name;
-    private Cards cards;
 
     public Player(String name) {
         this(name, new Cards(List.of()));
     }
 
     public Player(String name, Cards cards) {
+        super(cards);
         validateEmptyName(name);
         this.name = name;
-        this.cards = cards;
     }
 
     private void validateEmptyName(String name) {
@@ -32,19 +29,6 @@ public class Player implements HitAction {
     public boolean isPossibleHit() {
         int totalNumbers = cards.calculateTotalScore();
         return totalNumbers < HIT_CONDITION;
-    }
-
-    @Override
-    public void hitCard(Card card) {
-        cards = cards.add(card);
-    }
-
-    public int cardsSize() {
-        return cards.size();
-    }
-
-    public Cards getCards() {
-        return cards;
     }
 
     public String getName() {
