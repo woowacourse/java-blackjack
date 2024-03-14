@@ -112,5 +112,5 @@ What, Who 사이클을 적용하자.
   - 플레이어가 승리했는가? (내부 메시지로서 Outcome 스스로 수행)
     - 플레이어가 블랙잭인가? (Outcome -> Player)
   - 플레이어가 패배했는가? (내부 메시지로서 Outcome 스스로 수행)
-- [ ] 딜러가 돌려 받을 금액을 계산해라 (내부 메시지로서 Outcome 스스로 수행)
+- [x] 딜러의 수익을 계산해라 (Application -> GameBoard -> Outcome)
 

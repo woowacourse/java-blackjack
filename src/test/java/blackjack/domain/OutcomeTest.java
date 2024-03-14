@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +31,7 @@ class OutcomeTest {
         dealer.draw();
         dealer.draw();
 
-        final Money playerProfit = Outcome.calculateProfit(dealer, player);
+        final Money playerProfit = Outcome.calculatePlayerProfit(dealer, player);
 
         assertThat(playerProfit).isEqualTo(new Money(-10000));
     }
@@ -45,7 +46,7 @@ class OutcomeTest {
         dealer.draw();
         dealer.draw();
 
-        final Money playerProfit = Outcome.calculateProfit(dealer, player);
+        final Money playerProfit = Outcome.calculatePlayerProfit(dealer, player);
 
         assertThat(playerProfit).isEqualTo(new Money(10000));
     }
@@ -63,7 +64,7 @@ class OutcomeTest {
         player.draw(dealer.drawPlayerCard());
         dealer.draw();
 
-        final Money playerProfit = Outcome.calculateProfit(dealer, player);
+        final Money playerProfit = Outcome.calculatePlayerProfit(dealer, player);
 
         assertThat(playerProfit).isEqualTo(new Money(0));
     }
@@ -80,7 +81,7 @@ class OutcomeTest {
         }
         player.draw(dealer.drawPlayerCard());
 
-        final Money playerProfit = Outcome.calculateProfit(dealer, player);
+        final Money playerProfit = Outcome.calculatePlayerProfit(dealer, player);
 
         assertThat(playerProfit).isEqualTo(new Money(15000));
     }
@@ -97,7 +98,7 @@ class OutcomeTest {
         }
         dealer.draw();
 
-        final Money playerProfit = Outcome.calculateProfit(dealer, player);
+        final Money playerProfit = Outcome.calculatePlayerProfit(dealer, player);
 
         assertThat(playerProfit).isEqualTo(new Money(-10000));
     }
@@ -111,7 +112,7 @@ class OutcomeTest {
         player.draw(dealer.drawPlayerCard());
         dealer.draw();
 
-        final Money playerProfit = Outcome.calculateProfit(dealer, player);
+        final Money playerProfit = Outcome.calculatePlayerProfit(dealer, player);
 
         assertThat(playerProfit).isEqualTo(new Money(10000));
     }
@@ -125,7 +126,7 @@ class OutcomeTest {
         dealer.draw();
         dealer.draw();
 
-        final Money playerProfit = Outcome.calculateProfit(dealer, player);
+        final Money playerProfit = Outcome.calculatePlayerProfit(dealer, player);
 
         assertThat(playerProfit).isEqualTo(new Money(-10000));
     }
@@ -140,9 +141,19 @@ class OutcomeTest {
         dealer.draw();
         dealer.draw();
 
-        final Money playerProfit = Outcome.calculateProfit(dealer, player);
+        final Money playerProfit = Outcome.calculatePlayerProfit(dealer, player);
 
         assertThat(playerProfit).isEqualTo(new Money(0));
+    }
+
+    @DisplayName("플레이어의 수익 총합에 -를 붙이면 딜러의 수익이다.")
+    @Test
+    void calculateDealerProfit() {
+        final List<Money> playerProfits = List.of(new Money(10000), new Money(-20000));
+
+        final Money dealerProfit = Outcome.calculateDealerProfit(playerProfits);
+
+        assertThat(dealerProfit.value()).isEqualTo(10000);
     }
 
     @DisplayName("승을 패로 반전한다.")
