@@ -51,10 +51,10 @@ class HandTest {
         hand.append(new Card(CardRank.THREE, CardSuit.HEART));
 
         // when
-        List<Card> cards = hand.revealHand(count);
+        Hand revealedCards = hand.revealHand(count);
 
         // then
-        assertThat(cards).hasSize(count);
+        assertThat(revealedCards.getCards()).hasSize(count);
     }
 
     @DisplayName("핸드에 Ace가 있을 때 합이 21을 초과하지 않으면 Ace는 11로 계산한다.")

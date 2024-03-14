@@ -19,9 +19,9 @@ class Player2Test {
         player.deal(cardDeck);
 
         // when
-        Hand hand = player.revealHand();
+        Hand revealedCards = player.revealHand();
 
         // then
-        assertThat(hand.getCards()).hasSize(2);
+        assertThat(revealedCards.getCards()).hasSize(2);
     }
 }
