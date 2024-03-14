@@ -10,11 +10,17 @@ public class Player extends Participant {
 
     private final BetAmount betAmount;
 
+    protected Player(final Name name, final Hands hands, final BetAmount betAmount) {
+        super(name, hands);
+        this.betAmount = betAmount;
+    }
+
     public Player(final Name name, final Hands hands) { // TODO 이전 테스트를 위한 생성자
         super(name, hands);
         validate(name);
         this.betAmount = new BetAmount(10);
     }
+
 
     public Player(final Name name, final BetAmount betAmount) {
         super(name, Hands.createEmptyHands());

@@ -1,13 +1,10 @@
-package domain;
+package domain.participant;
 
 import static domain.HandsTestFixture.bustHands;
 import static domain.HandsTestFixture.sum18Size2;
 import static domain.HandsTestFixture.sum20Size2;
 import static domain.HandsTestFixture.sum21Size3Ace11;
 
-import domain.participant.Hands;
-import domain.participant.Name;
-import domain.participant.Player;
 import exception.ReservedPlayerNameException;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;

@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static domain.HandsTestFixture.blackJack;
 import static domain.HandsTestFixture.sum10Size2;
@@ -9,12 +9,11 @@ import static domain.HandsTestFixture.sum21Size3;
 import static domain.Result.LOSE;
 import static domain.Result.TIE;
 import static domain.Result.WIN;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
-import domain.participant.Dealer;
-import domain.participant.Hands;
-import domain.participant.Name;
-import domain.participant.Player;
-import domain.participant.Players;
+import domain.Answer;
+import domain.BetAmount;
+import domain.Result;
 import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -27,7 +26,9 @@ class DealerTest {
     @DisplayName("참여자에게 카드 2장을 나눠준다.")
     void dealCards() {
         //given
-        final Players players = Players.from(List.of("레디", "제제"));
+        final Player player1 = new Player(new Name("레디"), new BetAmount(100));
+        final Player player2 = new Player(new Name("제제"), new BetAmount(1000));
+        final Players players = new Players(List.of(player1, player2));
         final Dealer dealer = new Dealer();
 
         //when
@@ -113,13 +114,10 @@ class DealerTest {
         Player blackJackPlayer = new Player(new Name("수달"), blackJack);
         Player noBlackJackPlayer = new Player(new Name("레디"), sum18Size2);
 
-        //when
-        org.junit.jupiter.api.Assertions.assertAll(
-                () -> Assertions.assertThat(dealer.isBlackJack()).isFalse(),
+        //when && then
+        assertAll(() -> Assertions.assertThat(dealer.isBlackJack()).isFalse(),
                 () -> Assertions.assertThat(blackJackPlayer.isBlackJack()).isTrue(),
-                () -> Assertions.assertThat(noBlackJackPlayer.isBlackJack()).isFalse()
-        );
+                () -> Assertions.assertThat(noBlackJackPlayer.isBlackJack()).isFalse());
 
-        //then
     }
 }
