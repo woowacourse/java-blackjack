@@ -17,7 +17,7 @@ class PlayerTest {
     @DisplayName("참가자는 카드의 합을 구할 수 있다.")
     @Test
     void cardSum() {
-        Player player = Player.from(new Name("zeus"));
+        Player player = new Player("zeus");
         player.receive(new Card(CardSuit.SPADE, CardRank.JACK));
         assertThat(player.score())
                 .isEqualTo(10);
@@ -29,7 +29,7 @@ class PlayerTest {
         Card cardTwo = new Card(CardSuit.SPADE, CardRank.TWO);
         Card cardKing = new Card(HEART, CardRank.KING);
         Card cardQueen = new Card(HEART, CardRank.QUEEN);
-        Player player = Player.from(new Name("hotea"));
+        Player player = new Player("hotea");
         player.receive(cardTwo);
         player.receive(cardKing);
         player.receive(cardQueen);
@@ -42,7 +42,7 @@ class PlayerTest {
         Card cardAce = new Card(CardSuit.SPADE, CardRank.ACE);
         Card cardKing = new Card(HEART, CardRank.KING);
         Card cardQueen = new Card(HEART, CardRank.QUEEN);
-        Player player = Player.from(new Name("hotea"));
+        Player player = new Player("hotea");
         player.receive(cardAce);
         player.receive(cardKing);
         player.receive(cardQueen);

@@ -38,7 +38,7 @@ class DealerTest {
     class DealTest {
         static Stream<Arguments> deal() {
             return Stream.of(
-                    Arguments.of(cardOf(ACE), Player.from(new Name("Zeus"))),
+                    Arguments.of(cardOf(ACE), new Player("Zeus")),
                     Arguments.of(cardOf(TWO), Dealer.from(Cards.emptyCards()))
             );
         }
@@ -145,7 +145,7 @@ class DealerTest {
     @ParameterizedTest
     void resultStatusOf(Cards dealerCards, Cards playerCards, BlackjackResultStatus expected) {
         Dealer dealer = Dealer.from(Cards.emptyCards());
-        Player player = Player.from(new Name("hotea"));
+        Player player = new Player("hotea");
         receiveCards(dealer, dealerCards);
         receiveCards(player, playerCards);
         BlackjackResultStatus status = dealer.resultStatusAgainst(player);

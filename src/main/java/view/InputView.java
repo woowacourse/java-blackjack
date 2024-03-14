@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
-import domain.participant.Name;
 import domain.participant.player.Player;
 import domain.participant.player.Players;
 
@@ -18,7 +17,7 @@ public class InputView implements BlackjackViewParser {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = requireNotBlank(readLine());
         List<Player> players = Arrays.stream(input.split(","))
-                .map(name -> Player.from(new Name(name.trim())))
+                .map(name -> new Player(name.trim()))
                 .toList();
         return Players.from(players);
     }
