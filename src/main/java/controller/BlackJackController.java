@@ -1,16 +1,22 @@
 package controller;
 
+import domain.betting.Bet;
+import domain.betting.Bets;
+import domain.betting.Profit;
 import domain.card.CardDeck;
 import domain.game.BlackJackGame;
 import domain.game.Command;
 import domain.player.Dealer;
 import domain.player.Player;
+import domain.player.PlayerName;
 import domain.player.PlayerNames;
 import dto.PlayerDto;
-import dto.ResultDto;
+import dto.ProfitDto;
 import dto.ScoreDto;
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -24,20 +30,34 @@ public class BlackJackController {
     }
 
     public void run() throws IOException {
-        PlayerNames playerNames = readPlayerNames();
+        PlayerNames playerNames = initPlayerNames();
+        Bets bets = initBets(playerNames);
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer(cardDeck);
         BlackJackGame blackJackGame = new BlackJackGame(playerNames, dealer);
 
         printInitialDealAndHand(blackJackGame);
         repeatHitUntilStand(blackJackGame);
-        printGameResult(blackJackGame);
+        printResultHandAndScore(blackJackGame);
+        printGameProfits(blackJackGame, bets);
     }
 
-    private PlayerNames readPlayerNames() throws IOException {
+    private PlayerNames initPlayerNames() throws IOException {
         List<String> inputNames = inputView.readPlayerNames();
 
         return new PlayerNames(inputNames);
+    }
+
+    private Bets initBets(PlayerNames playerNames) throws IOException {
+        Map<PlayerName, Bet> playerBets = new LinkedHashMap<>();
+        List<String> names = playerNames.names();
+        List<Integer> bets = inputView.readBettingMoney(names);
+
+        for (int i = 0; i < names.size(); i++) {
+            playerBets.put(new PlayerName(names.get(i)), new Bet(bets.get(i)));
+        }
+
+        return new Bets(playerBets);
     }
 
     private void printInitialDealAndHand(BlackJackGame blackJackGame) {
@@ -59,7 +79,7 @@ public class BlackJackController {
 
     private void repeatHitUntilPlayerStand(BlackJackGame blackJackGame, Player player) throws IOException {
         boolean hitting = false;
-        while (player.isHittable() && Command.from(inputView.readCommand(player.getName())).isProceed()) {
+        while (player.isHittable() && Command.from(inputView.readCommand(player.getName().name())).isProceed()) {
             blackJackGame.hitPlayer(player);
             outputView.printHandAfterHit(PlayerDto.from(player));
             hitting = true;
@@ -75,12 +95,13 @@ public class BlackJackController {
         }
     }
 
-    private void printGameResult(BlackJackGame blackJackGame) {
-        List<PlayerDto> playerDtos = PlayerDto.from(blackJackGame.getEveryParticipants());
-        ResultDto resultDto = ResultDto.from(blackJackGame.getGameResults());
-        ScoreDto scoreDto = ScoreDto.from(blackJackGame.getScores());
+    private void printResultHandAndScore(BlackJackGame blackJackGame) {
+        outputView.printFinalHandAndScore(PlayerDto.from(blackJackGame.getEveryParticipants())
+                , ScoreDto.from(blackJackGame.getScores()));
+    }
 
-        outputView.printFinalHandAndScore(playerDtos, scoreDto);
-        outputView.printWinLoss(resultDto);
+    private void printGameProfits(BlackJackGame blackJackGame, Bets bets) {
+        Map<Player, Profit> playerProfits = blackJackGame.getProfits(bets);
+        outputView.printProfits(ProfitDto.from(playerProfits));
     }
 }
