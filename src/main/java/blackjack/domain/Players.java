@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.dto.Profits;
+import blackjack.util.JudgeUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,7 +45,7 @@ public class Players {
         Profits profits = new Profits();
 
         for (Player player : players) {
-            new Judge(dealer, player).judge(profits);
+            JudgeUtil.judge(profits, dealer, player);
         }
 
         return profits;

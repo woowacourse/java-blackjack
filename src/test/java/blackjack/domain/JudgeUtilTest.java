@@ -5,6 +5,7 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.dto.Profits;
 import blackjack.strategy.ShuffleStrategy;
+import blackjack.util.JudgeUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -15,7 +16,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("결과 판단")
-class JudgeTest {
+class JudgeUtilTest {
 
     private final ShuffleStrategy shuffleStrategy = new NoShuffleStrategy();
 
@@ -51,7 +52,7 @@ class JudgeTest {
 
             //when
             bustPlayerChoco(dealer);
-            new Judge(dealer, choco).judge(profits);
+            JudgeUtil.judge(profits, dealer, choco);
 
             //then
             assertThat(isDraw(profits))
@@ -68,7 +69,7 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             //when
-            new Judge(dealer, choco).judge(profits);
+            JudgeUtil.judge(profits, dealer, choco);
 
             //then
             assertThat(isPlayerResultWin(profits))
@@ -83,7 +84,7 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             //when
-            new Judge(dealer, choco).judge(profits);
+            JudgeUtil.judge(profits, dealer, choco);
 
             //then
             assertThat(isPlayerResultWin(profits))
@@ -114,7 +115,7 @@ class JudgeTest {
             //when
 
             bustPlayerChoco(dealer);
-            new Judge(dealer, choco).judge(profits);
+            JudgeUtil.judge(profits, dealer, choco);
 
             //then
             assertThat(isPlayerResultLose(profits))
@@ -131,7 +132,7 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             //when
-            new Judge(dealer, choco).judge(profits);
+            JudgeUtil.judge(profits, dealer, choco);
 
             //then
             assertThat(isDraw(profits))
@@ -146,7 +147,7 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             //when
-            new Judge(dealer, choco).judge(profits);
+            JudgeUtil.judge(profits, dealer, choco);
 
             //then
             assertThat(isPlayerResultLose(profits))
@@ -173,7 +174,7 @@ class JudgeTest {
 
             //when
             bustPlayerChoco(dealer);
-            new Judge(dealer, choco).judge(profits);
+            JudgeUtil.judge(profits, dealer, choco);
 
             //then
             assertThat(isPlayerResultLose(profits))
@@ -190,7 +191,7 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             //when
-            new Judge(dealer, choco).judge(profits);
+            JudgeUtil.judge(profits, dealer, choco);
 
             //then
             assertThat(isPlayerResultWin(profits))
@@ -205,7 +206,7 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             //when
-            new Judge(dealer, choco).judge(profits);
+            JudgeUtil.judge(profits, dealer, choco);
 
             //then
             assertThat(isPlayerResultLose(profits))
@@ -221,7 +222,7 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             //when
-            new Judge(dealer, choco).judge(profits);
+            JudgeUtil.judge(profits, dealer, choco);
 
             //then
             assertThat(isPlayerResultWin(profits))
@@ -237,7 +238,7 @@ class JudgeTest {
             choco = players.getPlayers().get(0);
 
             //when
-            new Judge(dealer, choco).judge(profits);
+            JudgeUtil.judge(profits, dealer, choco);
 
             //then
             assertThat(isDraw(profits))
@@ -263,18 +264,13 @@ class JudgeTest {
 
     private boolean isPlayerResultLose(final Profits profits) {
         return profits.findByPlayer(choco) == choco.calculateProfit(GameResult.LOSE);
-//        return GameResult.LOSE.equals(profits.findByName(choco.getName()));
     }
 
     private boolean isPlayerResultWin(final Profits profits) {
         return profits.findByPlayer(choco) == choco.calculateProfit(GameResult.WIN);
-
-//        return GameResult.WIN.equals(playerResult.findByName(choco.getName()));
     }
 
     private boolean isDraw(final Profits profits) {
         return profits.findByPlayer(choco) == choco.calculateProfit(GameResult.DRAW);
-
-//        return GameResult.DRAW.equals(playerResult.findByName(choco.getName()));
     }
 }
