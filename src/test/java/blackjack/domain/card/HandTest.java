@@ -13,7 +13,7 @@ class HandTest {
     void calculateCardNumbersSum() {
         final Hand hand = new Hand(List.of(
                 new Card(Number.TEN, Suit.DIAMOND),
-                new Card(Number.EIGHT, Suit.CLOVER)
+                new Card(Number.EIGHT, Suit.CLUB)
         ));
 
         final int actual = hand.sum();
@@ -26,7 +26,7 @@ class HandTest {
     void calculateAceToEleven() {
         final Hand hand = new Hand(List.of(
                 new Card(Number.ACE, Suit.DIAMOND),
-                new Card(Number.EIGHT, Suit.CLOVER)
+                new Card(Number.EIGHT, Suit.CLUB)
         ));
 
         final int actual = hand.sum();
@@ -39,8 +39,8 @@ class HandTest {
     void calculateAceToOne() {
         final Hand hand = new Hand(List.of(
                 new Card(Number.ACE, Suit.DIAMOND),
-                new Card(Number.EIGHT, Suit.CLOVER),
-                new Card(Number.TEN, Suit.CLOVER)
+                new Card(Number.EIGHT, Suit.CLUB),
+                new Card(Number.TEN, Suit.CLUB)
         ));
 
         final int actual = hand.sum();
@@ -53,7 +53,7 @@ class HandTest {
     void calculateAceToSoftHand() {
         final Hand hand = new Hand(List.of(
                 new Card(Number.ACE, Suit.DIAMOND),
-                new Card(Number.EIGHT, Suit.CLOVER)
+                new Card(Number.EIGHT, Suit.CLUB)
         ));
 
         final int actual = hand.sum();
@@ -66,7 +66,7 @@ class HandTest {
     void calculateOnlyOneAceToSoftHand() {
         final Hand hand = new Hand(List.of(
                 new Card(Number.ACE, Suit.DIAMOND),
-                new Card(Number.ACE, Suit.CLOVER)
+                new Card(Number.ACE, Suit.CLUB)
         ));
 
         final int actual = hand.sum();
@@ -79,8 +79,8 @@ class HandTest {
     void calculateAllAceToOne() {
         final Hand hand = new Hand(List.of(
                 new Card(Number.ACE, Suit.DIAMOND),
-                new Card(Number.ACE, Suit.CLOVER),
-                new Card(Number.TEN, Suit.CLOVER)
+                new Card(Number.ACE, Suit.CLUB),
+                new Card(Number.TEN, Suit.CLUB)
         ));
 
         final int actual = hand.sum();

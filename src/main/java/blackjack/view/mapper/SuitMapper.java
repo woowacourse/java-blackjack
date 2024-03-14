@@ -6,7 +6,7 @@ import java.util.Arrays;
 public enum SuitMapper {
     HEART(Suit.HEART, "하트"),
     SPADE(Suit.SPADE, "스페이드"),
-    CLOVER(Suit.CLOVER, "클로버"),
+    CLUB(Suit.CLUB, "클로버"),
     DIAMOND(Suit.DIAMOND, "다이아몬드");
 
     private final Suit suit;

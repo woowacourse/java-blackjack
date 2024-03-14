@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Hand {
 
-    private static final int BLACKJACK_CANDIDATE = 21;
+    private static final int BLACKJACK_SCORE = 21;
     private static final int INITIAL_CARD_SIZE = 2;
 
     private final List<Card> cards;
@@ -36,18 +36,18 @@ public class Hand {
     private int calculateOptimalSum(final List<Number> numbers) {
         int softHandSum = Number.sumOneAceToSoftHand(numbers);
 
-        if (softHandSum <= BLACKJACK_CANDIDATE) {
+        if (softHandSum <= BLACKJACK_SCORE) {
             return softHandSum;
         }
         return Number.sum(numbers);
     }
 
     public boolean isBust() {
-        return sum() > BLACKJACK_CANDIDATE;
+        return sum() > BLACKJACK_SCORE;
     }
 
     public boolean isBlackJack() {
-        return sum() == BLACKJACK_CANDIDATE && hasOnlyInitialCard();
+        return sum() == BLACKJACK_SCORE && hasOnlyInitialCard();
     }
 
     private boolean hasOnlyInitialCard() {
