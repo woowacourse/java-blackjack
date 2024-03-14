@@ -11,6 +11,7 @@ import view.OutputView;
 
 public class BlackJackGame {
     private static final ConsoleReader CONSOLE_READER = new ConsoleReader();
+    private static final String COMMAND_YES = "y";
     private static final int INITIAL_CARD_COUNT = 2;
 
     public static void main(String[] args) {
@@ -73,17 +74,17 @@ public class BlackJackGame {
     }
 
     private static boolean isHittable(Player player, String answer) {
-        return player.canHit() && answer.equals("y");
+        return player.canHit() && COMMAND_YES.equals(answer);
     }
 
     private static void hitByAnswer(Player player, Deck deck, String answer) {
-        if (answer.equals("y")) {
+        if (COMMAND_YES.equals(answer)) {
             player.hit(deck);
         }
     }
 
     private static void printPlayerHitResult(String answer, Player player, boolean isFirstTurn) {
-        if (isFirstTurn || answer.equals("y")) {
+        if (isFirstTurn || COMMAND_YES.equals(answer)) {
             OutputView.printPlayerCards(player.getName(), player.getCards());
         }
     }

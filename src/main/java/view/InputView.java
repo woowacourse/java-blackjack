@@ -6,8 +6,8 @@ import java.util.function.Supplier;
 
 public class InputView {
     private static final String DELIMITER = ",";
-    private static final String YES = "y";
-    private static final String NO = "n";
+    private static final String COMMAND_YES = "y";
+    private static final String COMMAND_NO = "n";
 
     public static List<String> readNames(Supplier<String> input) {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
@@ -48,7 +48,7 @@ public class InputView {
     }
 
     private static void validateAnswer(String input) {
-        if (!input.equals(YES) && !input.equals(NO)) {
+        if (!COMMAND_YES.equals(input) && !COMMAND_NO.equals(input)) {
             throw new IllegalArgumentException("y또는 n만 입력 받을 수 있습니다.");
         }
     }
