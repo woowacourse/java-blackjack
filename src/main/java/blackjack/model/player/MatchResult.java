@@ -12,10 +12,10 @@ public enum MatchResult {
         if (dealer.isBlackjack() && player.isBlackjack()) {
             return MatchResult.PUSH;
         }
-        if (dealer.isBlackjack() && !player.isBlackjack()) {
+        if (dealer.isBlackjack()) {
             return MatchResult.LOSE;
         }
-        if (!dealer.isBlackjack() && player.isBlackjack()) {
+        if (player.isBlackjack()) {
             return MatchResult.BLACKJACK_WIN;
         }
         return determineByTotalScore(dealer, player);
@@ -27,7 +27,7 @@ public enum MatchResult {
         if (player.isBust()) {
             return MatchResult.LOSE;
         }
-        if ((dealer.isBust() || playerTotal > dealerTotal)) {
+        if (dealer.isBust() || (playerTotal > dealerTotal)) {
             return MatchResult.WIN;
         }
         if (playerTotal == dealerTotal) {
