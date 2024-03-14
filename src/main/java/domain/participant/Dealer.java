@@ -35,6 +35,10 @@ public class Dealer {
         return hand.totalScore().isBust();
     }
 
+    public boolean isNotBlackjack() {
+        return !hand.isBlackjack();
+    }
+
     public Score score() {
         return hand.totalScore();
     }

@@ -19,25 +19,32 @@ public class PlayerResults {
             players.stream()
                 .collect(Collectors.toMap(
                     player -> player,
-                    player -> decideWinLose(player, dealer)))
+                    player -> decideResult(player, dealer)))
         );
     }
 
-    private static PlayerResult decideWinLose(Player player, Dealer dealer) {
+    private static PlayerResult decideResult(Player player, Dealer dealer) {
         if (player.isBust()) {
             return PlayerResult.LOSE;
         }
+        return decideResultByBlackjack(player, dealer);
+    }
+
+    private static PlayerResult decideResultByBlackjack(Player player, Dealer dealer) {
+        if (player.isBlackjack() && dealer.isNotBlackjack()) {
+            return PlayerResult.PLAYER_BLACKJACK;
+        }
+        return decideResultByScore(player, dealer);
+    }
+
+    private static PlayerResult decideResultByScore(Player player, Dealer dealer) {
         if (dealer.isBust()) {
             return PlayerResult.WIN;
         }
-        return decideWinLoseByScore(player, dealer);
-    }
-
-    private static PlayerResult decideWinLoseByScore(Player player, Dealer dealer) {
-        if (dealer.score().isLessThan(player.score())) {
+        if (player.hasHigherScoreThan(dealer)) {
             return PlayerResult.WIN;
         }
-        if (dealer.score().isGreaterThan(player.score())) {
+        if (player.hasLowerScoreThan(dealer)) {
             return PlayerResult.LOSE;
         }
         return PlayerResult.TIE;

@@ -23,7 +23,7 @@ class PlayerResultsTest {
     }
 
     @Test
-    @DisplayName("무승부: 플레이어 점수 == 딜러 점수")
+    @DisplayName("무승부: 플레이어 점수(8점) == 딜러 점수(8점)")
     void tie_PlayerScoreIsEqualToDealerScore() {
         player.tryReceive(new Card(Rank.EIGHT, Symbol.DIAMOND));
         dealer.tryReceive(new Card(Rank.EIGHT, Symbol.HEART));
@@ -31,6 +31,41 @@ class PlayerResultsTest {
         PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
 
         Assertions.assertThat(playerResults.playerWinLose(player)).isEqualTo(PlayerResult.TIE);
+    }
+
+    @Test
+    @DisplayName("무승부: 플레이어 점수(블랙잭) == 딜러 점수(블랙잭)")
+    void tie_PlayerBlackjack_DealerBlackjack() {
+        player.tryReceive(List.of(
+            new Card(Rank.TEN, Symbol.HEART),
+            new Card(Rank.ACE, Symbol.HEART)
+        ));
+        dealer.tryReceive(List.of(
+            new Card(Rank.TEN, Symbol.CLUB),
+            new Card(Rank.ACE, Symbol.CLUB)
+        ));
+
+        PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
+
+        Assertions.assertThat(playerResults.playerWinLose(player)).isEqualTo(PlayerResult.TIE);
+    }
+
+    @Test
+    @DisplayName("플레이어 BLACKJACK: 플레이어 블랙잭, 딜러 블랙잭 아닌 21점")
+    void tie_PlayerBlackjack_DealerTwentyOne() {
+        player.tryReceive(List.of(
+            new Card(Rank.TEN, Symbol.HEART),
+            new Card(Rank.ACE, Symbol.HEART)
+        ));
+        dealer.tryReceive(List.of(
+            new Card(Rank.TEN, Symbol.CLUB),
+            new Card(Rank.NINE, Symbol.CLUB),
+            new Card(Rank.THREE, Symbol.CLUB)
+        ));
+
+        PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
+
+        Assertions.assertThat(playerResults.playerWinLose(player)).isEqualTo(PlayerResult.PLAYER_BLACKJACK);
     }
 
     @Test
