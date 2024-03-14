@@ -1,4 +1,4 @@
-package blackjack.view.mapper;
+package blackjack.view;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

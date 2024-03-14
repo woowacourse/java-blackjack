@@ -1,4 +1,4 @@
-package blackjack.view.mapper;
+package blackjack.view;
 
 import blackjack.domain.card.Suit;
 import java.util.Arrays;
