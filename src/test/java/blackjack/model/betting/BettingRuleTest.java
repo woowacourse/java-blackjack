@@ -30,4 +30,11 @@ class BettingRuleTest {
         BettingRule bettingRule = new BettingRule(new Dealer(new Hand(List.of(new Card(Shape.SPADE, Score.TEN), new Card(Shape.HEART, Score.TEN), new Card(Shape.DIA, Score.TEN)))));
         assertThat(bettingRule.calculateProfitRate(NOT_BLACKJACK_21_PLAYER.getPlayer(), WIN)).isEqualTo(0);
     }
+
+    @Test
+    @DisplayName("딜러가 버스트가 아닌데도 플레이어가 승리한 경우, 배팅 금액의 1배를 준다.")
+    void findProfitAmountWhenPlayerWinByDealerNotBust() {
+        BettingRule bettingRule = new BettingRule(new Dealer(new Hand(List.of(new Card(Shape.SPADE, Score.TWO), new Card(Shape.HEART, Score.TWO)))));
+        assertThat(bettingRule.calculateProfitRate(NOT_BLACKJACK_21_PLAYER.getPlayer(), WIN)).isEqualTo(1);
+    }
 }
