@@ -85,14 +85,14 @@ public class OutputView {
 		System.out.println(builder);
 	}
 
-	public void printEmptyLine() {
+	public void printBlankLine() {
 		System.out.println();
 	}
 
 	public void printRevenues(GamerRevenueDto gamerRevenueDto) {
 		System.out.println("## 최종 수익");
-		gamerRevenueDto.nameRevenueMap().forEach((name, revenue) -> {
-			System.out.println(name + COLON_WITH_SPACE + revenue);
-		});
+		gamerRevenueDto.nameRevenueMap().forEach((name, revenue) ->
+			System.out.println(name + COLON_WITH_SPACE + revenue)
+		);
 	}
 }

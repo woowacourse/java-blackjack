@@ -46,7 +46,7 @@ public class BlackjackController {
 
 	private Players getPlayers() {
 		List<String> playerNames = inputView.receivePlayerNames();
-		outputView.printEmptyLine();
+		outputView.printBlankLine();
 
 		return new Players(createPlayerBetAmounts(playerNames));
 	}
@@ -58,7 +58,7 @@ public class BlackjackController {
 			Money betAmount = new Money(inputView.receiveBetAmount(playerName));
 			playerBetAmountMap.put(new Player(playerName), betAmount);
 		}
-		outputView.printEmptyLine();
+		outputView.printBlankLine();
 
 		return playerBetAmountMap;
 	}
@@ -76,7 +76,7 @@ public class BlackjackController {
 			.toList();
 
 		outputView.printInitialHands(dealerInitialHandDto, playerInitialHandDto);
-		outputView.printEmptyLine();
+		outputView.printBlankLine();
 	}
 
 	private void distributeCardToPlayers(Players players, Deck deck) {
@@ -90,7 +90,7 @@ public class BlackjackController {
 			player.addCard(deck.draw());
 			outputView.printGamerNameAndHand(GamerHandDto.fromGamer(player));
 		}
-		outputView.printEmptyLine();
+		outputView.printBlankLine();
 	}
 
 	private boolean canDistribute(Player player) {
@@ -110,13 +110,13 @@ public class BlackjackController {
 			dealer.addCard(deck.draw());
 			outputView.printDealerMessage(dealer.getName().value());
 		}
-		outputView.printEmptyLine();
+		outputView.printBlankLine();
 	}
 
 	private void printAllGamerScores(Dealer dealer, Players players) {
 		outputView.printScore(GamerHandDto.fromGamer(dealer), dealer.getScore());
 		printPlayersScores(players);
-		outputView.printEmptyLine();
+		outputView.printBlankLine();
 	}
 
 	private void printPlayersScores(Players players) {
