@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Profit {
 
     private final int profit;
-    private boolean isPositive;
+    private final boolean isPositive;
 
     public Profit(int profit) {
         this(profit, true);
