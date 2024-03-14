@@ -15,7 +15,7 @@ import model.participant.Entrant;
 import model.participant.Names;
 import service.dto.DealerScoreResult;
 import service.dto.FaceUpResult;
-import service.dto.PlayerScoreResult;
+import service.dto.PlayerMatchResult;
 
 public class CasinoService {
     private final Entrant entrant;
@@ -72,12 +72,12 @@ public class CasinoService {
         return entrant.getNextAvailablePlayerName();
     }
 
-    public List<PlayerScoreResult> calculatePlayerMatchResults() {
+    public List<PlayerMatchResult> calculatePlayerMatchResults() {
         int dealerHand = entrant.getDealerFaceUpResult()
                 .hand();
         return entrant.getPlayerFaceUpResults()
                 .stream()
-                .map(result -> new PlayerScoreResult(result.name(), MatchResult.of(dealerHand, result.hand())))
+                .map(result -> new PlayerMatchResult(result.name(), MatchResult.of(dealerHand, result.hand())))
                 .toList();
     }
 
@@ -85,7 +85,7 @@ public class CasinoService {
         EnumMap<MatchResult, Integer> dealerScoreBoard = new EnumMap<>(MatchResult.class);
         List<MatchResult> playerScores = calculatePlayerMatchResults()
                 .stream()
-                .map(PlayerScoreResult::matchResult)
+                .map(PlayerMatchResult::matchResult)
                 .toList();
         dealerScoreBoard.put(WIN, frequency(playerScores, LOSE));
         dealerScoreBoard.put(DRAW, frequency(playerScores, DRAW));

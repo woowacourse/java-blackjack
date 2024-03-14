@@ -11,7 +11,7 @@ import model.participant.Names;
 import service.CasinoService;
 import service.dto.DealerScoreResult;
 import service.dto.FaceUpResult;
-import service.dto.PlayerScoreResult;
+import service.dto.PlayerMatchResult;
 import view.OutputView;
 
 public class BlackJackLauncher {
@@ -69,7 +69,7 @@ public class BlackJackLauncher {
 
     private void showFinalMatchResults(CasinoService casinoService) {
         DealerScoreResult dealerScoreResult = casinoService.calculateDealerMatchResult();
-        List<PlayerScoreResult> playerScoreResults = casinoService.calculatePlayerMatchResults();
-        OutputView.printScoreResults(dealerScoreResult, playerScoreResults);
+        List<PlayerMatchResult> playerMatchResults = casinoService.calculatePlayerMatchResults();
+        OutputView.printScoreResults(dealerScoreResult, playerMatchResults);
     }
 }

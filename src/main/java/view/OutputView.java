@@ -3,7 +3,7 @@ package view;
 import java.util.List;
 import service.dto.DealerScoreResult;
 import service.dto.FaceUpResult;
-import service.dto.PlayerScoreResult;
+import service.dto.PlayerMatchResult;
 import model.casino.MatchResult;
 
 public class OutputView {
@@ -57,16 +57,16 @@ public class OutputView {
     }
 
     public static void printScoreResults(DealerScoreResult dealerScoreResult,
-                                         List<PlayerScoreResult> playerScoreResults) {
+                                         List<PlayerMatchResult> playerMatchResults) {
         StringBuilder dealerScoresText = genernateDealerScoreTexts(dealerScoreResult);
 
         System.out.print(System.lineSeparator());
         printMessage("## 최종 승패");
         printMessage(dealerScoresText.toString());
-        playerScoreResults.forEach(result -> printMessage(playerScoreText(result)));
+        playerMatchResults.forEach(result -> printMessage(playerScoreText(result)));
     }
 
-    private static String playerScoreText(PlayerScoreResult result) {
+    private static String playerScoreText(PlayerMatchResult result) {
         return result.getNameAsString() + ": " + result.getVictoryAsString();
     }
 

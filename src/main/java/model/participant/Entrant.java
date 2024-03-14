@@ -6,7 +6,9 @@ import java.util.Objects;
 import java.util.Queue;
 import java.util.stream.Collectors;
 import model.card.Card;
+import model.casino.MatchResult;
 import service.dto.FaceUpResult;
+import service.dto.PlayerMatchResult;
 
 public class Entrant {
     private final Dealer dealer;
