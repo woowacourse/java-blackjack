@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.Profits;
+import blackjack.dto.ProfitResult;
 import blackjack.util.JudgeUtil;
 
 import java.util.ArrayList;
@@ -41,14 +41,14 @@ public class Players {
         return names.size() != Set.copyOf(names).size();
     }
 
-    public Profits createResult(final Dealer dealer) {
-        Profits profits = new Profits();
+    public ProfitResult createProfitResult(final Dealer dealer) {
+        ProfitResult profitResult = new ProfitResult();
 
         for (Player player : players) {
-            JudgeUtil.judge(profits, dealer, player);
+            JudgeUtil.judge(profitResult, dealer, player);
         }
 
-        return profits;
+        return profitResult;
     }
 
     public List<Player> getPlayers() {

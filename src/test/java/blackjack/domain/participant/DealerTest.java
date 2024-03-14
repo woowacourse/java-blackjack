@@ -4,7 +4,7 @@ import blackjack.domain.Deck;
 import blackjack.domain.Players;
 import blackjack.domain.card.Card;
 import blackjack.domain.stategy.NoShuffleStrategy;
-import blackjack.dto.Profits;
+import blackjack.dto.ProfitResult;
 import blackjack.strategy.ShuffleStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -69,9 +69,9 @@ public class DealerTest {
         Players players = Players.of(List.of("choco", "clover"), List.of("500000", "100000"), dealer);
         players.getPlayers().get(1).draw(dealer);
 
-        Profits profits = players.createResult(dealer);
+        ProfitResult profitResult = players.createProfitResult(dealer);
 
         //when & then
-        assertThat(dealer.calculateProfit(profits)).isEqualTo(400000);
+        assertThat(dealer.calculateProfit(profitResult)).isEqualTo(400000);
     }
 }

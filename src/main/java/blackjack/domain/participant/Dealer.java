@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Deck;
 import blackjack.domain.card.Card;
-import blackjack.dto.Profits;
+import blackjack.dto.ProfitResult;
 
 public class Dealer extends Gamer {
 
@@ -46,7 +46,7 @@ public class Dealer extends Gamer {
         return hand.calculateScore() == score;
     }
 
-    public int calculateProfit(final Profits profits) {
-        return profits.sumProfits() * -1;
+    public int calculateProfit(final ProfitResult profitResult) {
+        return profitResult.sumAllProfit() * -1;
     }
 }

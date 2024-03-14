@@ -3,7 +3,7 @@ package blackjack.domain;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.stategy.NoShuffleStrategy;
-import blackjack.dto.Profits;
+import blackjack.dto.ProfitResult;
 import blackjack.strategy.ShuffleStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -54,14 +54,14 @@ public class PlayersTest {
         choco.draw(dealer);
         Player clover = players.getPlayers().get(1);
 
-        Profits profits = new Profits();
-        profits.addProfit(choco, GameResult.WIN);
-        profits.addProfit(clover, GameResult.LOSE);
+        ProfitResult profitResult = new ProfitResult();
+        profitResult.addProfitResult(choco, GameResult.WIN);
+        profitResult.addProfitResult(clover, GameResult.LOSE);
 
         //when & then
         assertAll(
-                () -> assertThat(players.createResult(dealer).findByPlayer(choco)).isEqualTo(1000),
-                () -> assertThat(players.createResult(dealer).findByPlayer(clover)).isEqualTo(-1000)
+                () -> assertThat(players.createProfitResult(dealer).findByPlayer(choco)).isEqualTo(1000),
+                () -> assertThat(players.createProfitResult(dealer).findByPlayer(clover)).isEqualTo(-1000)
         );
     }
 }

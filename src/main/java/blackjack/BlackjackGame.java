@@ -5,7 +5,7 @@ import blackjack.domain.Players;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.Profits;
+import blackjack.dto.ProfitResult;
 import blackjack.strategy.RandomShuffleStrategy;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -35,8 +35,8 @@ public class BlackjackGame {
         printCardDistribute(names, players, dealer);
         extraCardRequest(dealer, players);
 
-        Profits profits = players.createResult(dealer);
-        outputView.printFinalProfit(dealer.calculateProfit(profits), profits);
+        ProfitResult profitResult = players.createProfitResult(dealer);
+        outputView.printFinalProfit(dealer.calculateProfit(profitResult), profitResult);
     }
 
     private List<String> readPlayersBetting(final List<String> names) {
