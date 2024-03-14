@@ -1,11 +1,14 @@
 package domain.participant;
 
+import domain.blackjack.BetAmount;
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Shape;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayersTest {
 
@@ -18,7 +21,7 @@ class PlayersTest {
         List<String> names = List.of("one", "two", "three", "four", "five", "six", "seven", "eight", "nine");
         List<Player> players = names.stream().map(name -> new Player(new Name(name))).toList();
 
-        assertThatThrownBy(() -> new Players(players))
+        Assertions.assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(String.format("최소 %d명 최대 %d명까지 입력받을 수 있습니다.", MIN_PARTICIPANT_COUNT, MAX_PARTICIPANT_COUNT));
     }
@@ -28,7 +31,7 @@ class PlayersTest {
     void validateMinSize() {
         List<Player> names = List.of(new Player(new Name("one")));
 
-        assertThatThrownBy(() -> new Players(names))
+        Assertions.assertThatThrownBy(() -> new Players(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(String.format("최소 %d명 최대 %d명까지 입력받을 수 있습니다.", MIN_PARTICIPANT_COUNT, MAX_PARTICIPANT_COUNT));
         ;
@@ -39,8 +42,33 @@ class PlayersTest {
     void validateDuplicateNames() {
         List<Player> names = List.of(new Player(new Name("pobi")), new Player(new Name("pobi")));
 
-        assertThatThrownBy(() -> new Players(names))
+        Assertions.assertThatThrownBy(() -> new Players(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름은 중복될 수 없습니다.");
+    }
+
+    @DisplayName("딜러의 수익을 계산한다.")
+    @Test
+    void getDealerPayout() {
+        Player one = new Player(new Name("one"), new BetAmount(10_000));
+        one.receiveCard(new Card(Shape.CLOVER, Rank.TEN));
+        one.receiveCard(new Card(Shape.DIA, Rank.JACK));
+
+        Player two = new Player(new Name("two"), new BetAmount(15_000));
+        two.receiveCard(new Card(Shape.DIA, Rank.KING));
+
+        Player three = new Player(new Name("three"), new BetAmount(10_000));
+        three.receiveCard(new Card(Shape.SPADE, Rank.KING));
+        three.receiveCard(new Card(Shape.SPADE, Rank.ACE));
+
+        Players players = new Players(List.of(one, two, three));
+
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Shape.CLOVER, Rank.JACK));
+        dealer.receiveCard(new Card(Shape.CLOVER, Rank.NINE));
+
+        double payout = players.getDealerPayout(dealer);
+
+        Assertions.assertThat(payout).isEqualTo(-10_000);
     }
 }
