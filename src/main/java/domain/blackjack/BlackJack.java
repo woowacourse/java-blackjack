@@ -57,9 +57,6 @@ public class BlackJack {
         int participantScore = participant.getScore();
         int dealerScore = dealer.getScore();
 
-        if (dealer.isBlackJack() && participant.isBlackJack()) {
-            return WinStatus.PUSH;
-        }
         if (participantScore == dealerScore) {
             return WinStatus.PUSH;
         }
