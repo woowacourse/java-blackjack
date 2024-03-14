@@ -2,6 +2,8 @@ package blackjack.domain;
 
 public class Dealer extends Player {
 
+    private static final int DEALER_HIT_MAGINOT_VALUE = 16;
+
     private final Deck deck;
 
     public Dealer(Deck deck) {
@@ -19,6 +21,6 @@ public class Dealer extends Player {
 
     @Override
     public boolean canHit() {
-        return calculate() <= 16;
+        return calculate() <= DEALER_HIT_MAGINOT_VALUE;
     }
 }

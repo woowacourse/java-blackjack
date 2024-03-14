@@ -6,11 +6,11 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PlayersTest {
+class PlayersTest {
 
     @DisplayName("Players를 생성한다")
     @Test
-    public void create() {
+    void create() {
         assertThatCode(() -> new Players(List.of(new Player("mark"), new Player("sang"))))
                 .doesNotThrowAnyException();
     }

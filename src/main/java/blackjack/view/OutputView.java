@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
+    private static final String JOIN_DELIMITER = ", ";
 
     public static void printInitialHands(Dealer dealer, List<Player> players) {
         System.out.println(initialHandsMessageBuilder(dealer, players));
@@ -61,7 +62,7 @@ public class OutputView {
     private static String dealOutMessage(Dealer dealer, List<Player> players) {
         String commaSeparatePlayerNames = players.stream()
                 .map(Player::getName)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(JOIN_DELIMITER));
 
         return String.format("%n%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), commaSeparatePlayerNames);
     }
@@ -96,7 +97,7 @@ public class OutputView {
         List<Card> cards = player.getHand().getCards();
         String hand = cards.stream()
                 .map(OutputView::extractCardName)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(JOIN_DELIMITER));
 
         return String.format("%s: %s", player.getName(), hand);
     }

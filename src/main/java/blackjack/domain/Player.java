@@ -2,6 +2,8 @@ package blackjack.domain;
 
 public class Player {
 
+    private static final int BLACKJACK_SCORE = 21;
+
     private final String name;
     private final Hand hand;
 
@@ -20,7 +22,7 @@ public class Player {
     }
 
     public boolean canHit() {
-        return calculate() <= 21;
+        return calculate() <= BLACKJACK_SCORE;
     }
 
     public void putCard(Card card) {
