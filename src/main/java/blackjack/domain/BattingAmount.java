@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.result.ResultStatus;
 import java.util.regex.Pattern;
 
 public class BattingAmount {
@@ -16,5 +17,9 @@ public class BattingAmount {
         if (!NUMERIC_PATTERN.matcher(value).matches() || Integer.parseInt(value) <= 0) {
             throw new IllegalArgumentException("양수만 입력 가능합니다.");
         }
+    }
+
+    public Profit calculateProfit(ResultStatus resultStatus) {
+        return new Profit(resultStatus.calculateProfit(value));
     }
 }
