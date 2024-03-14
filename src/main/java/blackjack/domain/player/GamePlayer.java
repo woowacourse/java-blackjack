@@ -3,6 +3,7 @@ package blackjack.domain.player;
 
 import blackjack.domain.BattingAmount;
 import blackjack.domain.BattingAmounts;
+import blackjack.domain.Profit;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.result.ResultStatus;
@@ -18,6 +19,11 @@ public class GamePlayer extends Player {
         this.battingAmount = battingAmount;
     }
 
+    public Profit confirmProfit(Dealer dealer) {
+        ResultStatus resultStatus = confirmResult(dealer);
+        return battingAmount.calculateProfit(resultStatus);
+    }
+
     public ResultStatus confirmResult(Dealer dealer) {
         int playerScore = calculateScore();
         int dealerScore = dealer.calculateScore();
@@ -29,7 +35,7 @@ public class GamePlayer extends Player {
             return ResultStatus.WIN;
         }
         if (isBlackjack() && !dealer.isBlackjack()) {
-            return ResultStatus.WIN;
+            return ResultStatus.BLACKJACK;
         }
         if (!isBlackjack() && dealer.isBlackjack()) {
             return ResultStatus.LOSE;
@@ -52,4 +58,5 @@ public class GamePlayer extends Player {
     public boolean isReceivable() {
         return cards.sum() < RECEIVE_SIZE && !isBlackjack();
     }
+
 }

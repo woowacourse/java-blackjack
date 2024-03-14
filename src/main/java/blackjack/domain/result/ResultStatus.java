@@ -20,4 +20,8 @@ public enum ResultStatus {
             case BLACKJACK -> WIN;
         };
     }
+
+    public double calculateProfit(int battingAmount) {
+        return rate * battingAmount;
+    }
 }
