@@ -11,12 +11,12 @@ public abstract class User {
     protected final Cards cards;
 
     public User(String name, Cards cards) {
-        validateName(name);
+        validateNotBlankName(name);
         this.name = name;
         this.cards = cards;
     }
 
-    private void validateName(String name) {
+    private void validateNotBlankName(String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("참가자의 이름은 공백이거나 null일 수 없습니다.");
         }
