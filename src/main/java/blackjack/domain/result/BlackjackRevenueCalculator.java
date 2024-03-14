@@ -1,57 +1,56 @@
 package blackjack.domain.result;
 
-import java.util.List;
-
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Money;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import java.util.List;
 
 public class BlackjackRevenueCalculator {
 
-	private static final double BLACKJACK_REVENUE_RATIO = 1.5D;
-	private static final double LOSE_REVENUE_RATIO = -1.0D;
+    private static final double BLACKJACK_REVENUE_RATIO = 1.5D;
+    private static final double LOSE_REVENUE_RATIO = -1.0D;
 
-	private final PlayerResultHandler playerResultHandler;
+    private final PlayerResultHandler playerResultHandler;
 
-	public BlackjackRevenueCalculator(PlayerResultHandler playerResultHandler) {
-		this.playerResultHandler = playerResultHandler;
-	}
+    public BlackjackRevenueCalculator(PlayerResultHandler playerResultHandler) {
+        this.playerResultHandler = playerResultHandler;
+    }
 
-	public static BlackjackRevenueCalculator fromDealer(Dealer dealer) {
-		PlayerResultHandler resultHandler = new PlayerResultHandler(dealer);
+    public static BlackjackRevenueCalculator fromDealer(Dealer dealer) {
+        PlayerResultHandler resultHandler = new PlayerResultHandler(dealer);
 
-		return new BlackjackRevenueCalculator(resultHandler);
-	}
+        return new BlackjackRevenueCalculator(resultHandler);
+    }
 
-	public Money calculateDealerRevenue(Players players) {
-		List<Player> losePlayers = playerResultHandler.getLosePlayers(players.getPlayers());
+    public Money calculateDealerRevenue(Players players) {
+        List<Player> losePlayers = playerResultHandler.getLosePlayers(players.getPlayers());
 
-		if (losePlayers.isEmpty()) {
-			return Money.getZeroAmountMoney();
-		}
+        if (losePlayers.isEmpty()) {
+            return Money.getZeroAmountMoney();
+        }
 
-		return losePlayers.stream()
-			.map(players::getBetAmount)
-			.reduce(Money.getZeroAmountMoney(), Money::add);
-	}
+        return losePlayers.stream()
+                .map(players::getBetAmount)
+                .reduce(Money.getZeroAmountMoney(), Money::add);
+    }
 
-	public Money calculatePlayerRevenue(Player player, Money betAmount) {
-		GameResult gameResult = playerResultHandler.getPlayerResult(player);
+    public Money calculatePlayerRevenue(Player player, Money betAmount) {
+        GameResult gameResult = playerResultHandler.getPlayerResult(player);
 
-		return getRevenue(gameResult, betAmount);
-	}
+        return getRevenue(gameResult, betAmount);
+    }
 
-	private Money getRevenue(GameResult gameResult, Money betAmount) {
-		if (gameResult == GameResult.BLACKJACK_WIN) {
-			return betAmount.multiplyByRatio(BLACKJACK_REVENUE_RATIO);
-		}
-		if (gameResult == GameResult.WIN) {
-			return betAmount;
-		}
-		if (gameResult == GameResult.LOSE) {
-			return betAmount.multiplyByRatio(LOSE_REVENUE_RATIO);
-		}
-		return Money.getZeroAmountMoney();
-	}
+    private Money getRevenue(GameResult gameResult, Money betAmount) {
+        if (gameResult == GameResult.BLACKJACK_WIN) {
+            return betAmount.multiplyByRatio(BLACKJACK_REVENUE_RATIO);
+        }
+        if (gameResult == GameResult.WIN) {
+            return betAmount;
+        }
+        if (gameResult == GameResult.LOSE) {
+            return betAmount.multiplyByRatio(LOSE_REVENUE_RATIO);
+        }
+        return Money.getZeroAmountMoney();
+    }
 }

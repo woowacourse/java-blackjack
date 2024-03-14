@@ -5,10 +5,10 @@ import blackjack.domain.gamer.Dealer;
 
 public record DealerInitialHandDto(String name, CardDto firstCard) {
 
-	public static DealerInitialHandDto fromDealer(Dealer dealer) {
-		String dealerName = dealer.getName().value();
-		Card dealerFirstCard = dealer.getFirstCard();
+    public static DealerInitialHandDto fromDealer(Dealer dealer) {
+        String dealerName = dealer.getName().value();
+        Card dealerFirstCard = dealer.getFirstCard();
 
-		return new DealerInitialHandDto(dealerName, CardDto.fromCard(dealerFirstCard));
-	}
+        return new DealerInitialHandDto(dealerName, CardDto.fromCard(dealerFirstCard));
+    }
 }
