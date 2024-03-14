@@ -1,7 +1,6 @@
 package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 
 import domain.card.Card;
 import domain.card.Rank;

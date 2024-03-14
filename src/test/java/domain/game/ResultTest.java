@@ -4,7 +4,6 @@ import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Symbol;
 import domain.participant.Dealer;
-import domain.participant.Name;
 import domain.participant.Player;
 import java.util.List;
 import org.assertj.core.api.Assertions;
