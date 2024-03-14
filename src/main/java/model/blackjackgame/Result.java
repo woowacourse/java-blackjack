@@ -54,7 +54,7 @@ public class Result {
     }
 
     private boolean calculatePlayerWin(Dealer dealer, Player player) {
-        return dealer.totalNumber() < player.totalNumber() && player.isNotBust();
+        return dealer.totalNumber() < player.totalNumber() && player.isNotBust() || dealer.isBust();
     }
 
     private boolean calculatePlayerFail(Dealer dealer, Player player) {

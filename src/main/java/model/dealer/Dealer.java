@@ -31,6 +31,10 @@ public class Dealer {
         return cards.calculateTotalNumbers() == BLACKJACK_NUMBER;
     }
 
+    public boolean isBust() {
+        return cards.calculateTotalNumbers() > BLACKJACK_NUMBER;
+    }
+
     public Dealer addCard(Card card) {
         Cards addedCards = cards.add(card);
         return new Dealer(addedCards);
