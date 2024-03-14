@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Deck {
     private final List<Card> cards;
@@ -19,7 +18,7 @@ public class Deck {
         List<Card> cards = Arrays.stream(CardType.values())
                 .flatMap(cardType -> Arrays.stream(CardName.values())
                         .map(cardName -> new Card(cardName, cardType)))
-                .collect(Collectors.toList());
+                .toList();
         return new Deck(cards);
     }
 

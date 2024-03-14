@@ -3,7 +3,6 @@ package blackjackgame.domain.gamers;
 import blackjackgame.domain.card.Deck;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Gamers {
     private final List<Gamer> gamers;
@@ -28,19 +27,19 @@ public class Gamers {
     public List<String> getRawGamerNames() {
         return gamers.stream()
                 .map(Gamer::getRawGamerName)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<CardHolder> getCardHolders() {
         return gamers.stream()
                 .map(Gamer::getCardHolder)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<Double> getGameProfits(Gamer dealer) {
         return gamers.stream()
                 .map(gamer -> gamer.getGameProfit(dealer))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public int getSize() {

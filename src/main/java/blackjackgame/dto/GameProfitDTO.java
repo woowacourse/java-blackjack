@@ -1,7 +1,6 @@
 package blackjackgame.dto;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GameProfitDTO {
     private final String dealerName;
@@ -15,7 +14,7 @@ public class GameProfitDTO {
         this.dealerProfit = (int) dealerProfit;
         this.playersProfit = playersProfit.stream()
                 .map(Double::intValue)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public String getDealerName() {
