@@ -24,7 +24,9 @@ public class InputView {
         validateStartsWithDelimiter(input);
         validateEndsWithDelimiter(input);
         String[] playerNames = input.split(DELIMITER);
-        return Arrays.stream(playerNames).map(String::trim).toList();
+        return Arrays.stream(playerNames)
+                .map(String::trim)
+                .toList();
     }
 
     private static void validateStartsWithDelimiter(final String input) {
@@ -55,8 +57,7 @@ public class InputView {
     }
 
     public static boolean readSelectionOf(final Player player) {
-        String message = String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getName());
-        System.out.println(message);
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", player.getName());
         String input = scanner.nextLine().trim();
         validateInvalidSelection(input);
         return input.equalsIgnoreCase(YES);

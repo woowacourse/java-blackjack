@@ -30,9 +30,7 @@ public class OutputView {
         for (Player player : players.getPlayers()) {
             playerNames.add(player.getName());
         }
-        String message = String.format(System.lineSeparator() + "%s와 %s에게 %d장을 나누었습니다.", dealerName, playerNames,
-                INITIAL_CARD_COUNT);
-        System.out.println(message);
+        System.out.printf("%n%s와 %s에게 %d장을 나누었습니다.%n", dealerName, playerNames, INITIAL_CARD_COUNT);
     }
 
     private static void printDealerCard(final Dealer dealer) {
@@ -47,14 +45,11 @@ public class OutputView {
 
     public static void printAllCards(final Player player) {
         String cardInfos = String.join(", ", makeCardInfos(player.getCardsInHand()));
-        String message = String.format("%s카드: %s", player.getName(), cardInfos);
-        System.out.println(message);
+        System.out.printf("%s카드: %s%n", player.getName(), cardInfos);
     }
 
     public static void printDealerHit(final Dealer dealer) {
-        String dealerName = dealer.getName();
-        String message = String.format("%s는 %d이하라 한장의 카드를 더 받았습니다.", dealerName, DEALER_HIT_CONDITION);
-        System.out.println(message);
+        System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.%n",  dealer.getName(), DEALER_HIT_CONDITION);
     }
 
     public static void printCardsAndResult(final Dealer dealer, final Players players) {
@@ -92,8 +87,7 @@ public class OutputView {
 
     public static void printFinalGameResult(final int dealerProfit, final Map<Player, Integer> playersResult) {
         System.out.println("## 최종 승패");
-        String dealerMessage = String.format("딜러: %d%n", dealerProfit);
-        StringBuilder builder = new StringBuilder(dealerMessage);
+        StringBuilder builder = new StringBuilder(String.format("딜러: %d%n", dealerProfit));
         playersResult.entrySet().stream()
                 .map(result -> String.format("%s: %s%n", result.getKey().getName(), result.getValue()))
                 .forEach(builder::append);
