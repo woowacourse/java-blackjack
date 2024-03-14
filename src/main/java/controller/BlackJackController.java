@@ -26,12 +26,6 @@ public class BlackJackController {
         List<String> names = inputView.askParticipantNames();
         BlackJack blackJack = createBlackJack(names);
 
-
-        for (Participant participant : blackJack.getParticipants().getParticipants()) { // todo callback 이용
-            BettingMoney bettingMoney = inputView.askBettingAmount(participant.getName());
-            participant.settingBettingAmount(bettingMoney);
-        }
-
         outputView.printPlayerNames(blackJack.findParticipantsName());
         outputView.printPlayerCards(blackJack.mapToUsersNameAndCards(), blackJack.mapToDealerNameAndCards());
 
@@ -50,9 +44,9 @@ public class BlackJackController {
     }
 
     private Participants createParticipants(List<String> names, CardDeck cardDeck) { //todo 베팅금액을 바로 넣는 방식
-
         return new Participants(new ArrayList<>(names.stream()
-                .map(name -> new Participant(name, cardDeck.selectRandomCards(CardSize.TWO),new BettingMoney(100))).toList()));
+                .map(name -> new Participant(name, cardDeck.selectRandomCards(CardSize.TWO),
+                        inputView.askBettingAmount(name))).toList()));
     }
 
     private void offerMoreCards(BlackJack blackJack) {

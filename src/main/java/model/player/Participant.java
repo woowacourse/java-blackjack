@@ -30,8 +30,4 @@ public class Participant extends User {
         return findPlayerOutcome(dealer.findPlayerDifference())
                 .calculateProfit(bettingMoney);
     }
-
-    public void settingBettingAmount(BettingMoney bettingMoney) {
-        this.bettingMoney = bettingMoney;
-    }
 }
