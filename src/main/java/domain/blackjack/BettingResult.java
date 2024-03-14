@@ -12,14 +12,12 @@ public class BettingResult {
     private static final int DEALER_MULTIPLIER = -1;
 
     private final Map<Player, BetAmount> bet;
-    private final Dealer dealer;
 
-    public BettingResult(Map<Player, BetAmount> bet, Dealer dealer) {
+    public BettingResult(Map<Player, BetAmount> bet) {
         this.bet = bet;
-        this.dealer = dealer;
     }
 
-    public double getPayout(Player player) {
+    public double getPayout(Player player, Dealer dealer) {
         double payout = bet.get(player).calculateProfit(dealer.calculatePlayerWinStatus(player));
         if (player.isBlackJack() && dealer.isNotBlackJack()) {
             return payout * BLACKJACK_PROFIT_RATE;
@@ -27,10 +25,10 @@ public class BettingResult {
         return payout;
     }
 
-    public double getDealerPayout() {
+    public double getDealerPayout(Dealer dealer) {
         double total = 0;
         for (Player player : bet.keySet()) {
-            total += getPayout(player);
+            total += getPayout(player, dealer);
         }
         return total * DEALER_MULTIPLIER;
     }

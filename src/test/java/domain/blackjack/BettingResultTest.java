@@ -25,9 +25,9 @@ class BettingResultTest {
 
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Shape.DIA, Rank.SIX));
-        BettingResult bettingResult = new BettingResult(bet, dealer);
+        BettingResult bettingResult = new BettingResult(bet);
 
-        double payout = bettingResult.getPayout(player);
+        double payout = bettingResult.getPayout(player, dealer);
 
         Assertions.assertThat(payout).isEqualTo(10_000);
     }
@@ -43,9 +43,9 @@ class BettingResultTest {
 
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Shape.DIA, Rank.JACK));
-        BettingResult bettingResult = new BettingResult(bet, dealer);
+        BettingResult bettingResult = new BettingResult(bet);
 
-        double payout = bettingResult.getPayout(player);
+        double payout = bettingResult.getPayout(player, dealer);
 
         Assertions.assertThat(payout).isEqualTo(-10_000);
     }
@@ -62,9 +62,9 @@ class BettingResultTest {
 
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Shape.DIA, Rank.SIX));
-        BettingResult bettingResult = new BettingResult(bet, dealer);
+        BettingResult bettingResult = new BettingResult(bet);
 
-        double payout = bettingResult.getPayout(player);
+        double payout = bettingResult.getPayout(player, dealer);
 
         Assertions.assertThat(payout).isEqualTo(15_000);
     }
@@ -82,9 +82,9 @@ class BettingResultTest {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Shape.CLOVER, Rank.ACE));
         dealer.receiveCard(new Card(Shape.CLOVER, Rank.QUEEN));
-        BettingResult bettingResult = new BettingResult(bet, dealer);
+        BettingResult bettingResult = new BettingResult(bet);
 
-        double payout = bettingResult.getPayout(player);
+        double payout = bettingResult.getPayout(player, dealer);
 
         Assertions.assertThat(payout).isZero();
     }
@@ -111,9 +111,9 @@ class BettingResultTest {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Shape.CLOVER, Rank.JACK));
         dealer.receiveCard(new Card(Shape.CLOVER, Rank.NINE));
-        BettingResult bettingResult = new BettingResult(bet, dealer);
+        BettingResult bettingResult = new BettingResult(bet);
 
-        double payout = bettingResult.getDealerPayout();
+        double payout = bettingResult.getDealerPayout(dealer);
 
         Assertions.assertThat(payout).isEqualTo(-10_000);
     }

@@ -65,7 +65,7 @@ public class BlackJackController {
     }
 
     private void printResult(Map<Player, BetAmount> bet, Dealer dealer) {
-        BettingResult bettingResult = new BettingResult(bet, dealer);
-        OutputView.printBlackJackResult(bettingResult);
+        BettingResult bettingResult = new BettingResult(bet);
+        OutputView.printBlackJackResult(bettingResult, dealer);
     }
 }

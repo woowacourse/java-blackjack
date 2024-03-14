@@ -45,14 +45,14 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printBlackJackResult(BettingResult bettingResult) {
+    public static void printBlackJackResult(BettingResult bettingResult, Dealer dealer) {
         System.out.println();
         System.out.println("## 최종 수익");
-        System.out.printf(outputFormat.formatDealerResult(bettingResult));
+        System.out.printf(outputFormat.formatDealerResult(bettingResult, dealer));
         System.out.println();
 
         for (Player player : bettingResult.getPlayers()) {
-            System.out.println(outputFormat.formatPlayerResult(player, bettingResult.getPayout(player)));
+            System.out.println(outputFormat.formatPlayerResult(player, bettingResult.getPayout(player, dealer)));
         }
     }
 }
