@@ -1,11 +1,7 @@
 package view;
 
-import domain.blackjack.BlackJackResult;
-import domain.blackjack.WinStatus;
 import domain.card.Card;
-import domain.participant.Name;
-import domain.participant.Participant;
-import domain.participant.Participants;
+import domain.participant.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,21 +33,16 @@ public class OutputFormat {
         return card.getRank().getName() + card.getShape().getName();
     }
 
-    public String formatDealerResult(BlackJackResult blackJackResult) {
-        int totalResult = blackJackResult.getTotalCount();
-        int dealerWinCount = blackJackResult.getDealerWinCount();
-
-        return String.format("딜러: %d승 %d패", dealerWinCount, totalResult - dealerWinCount);
+    public String formatDealerResult(BetResult betResult) {
+        double dealerProfit = betResult.calculateDealerProfit();
+        return String.format("딜러: %d", (int)dealerProfit);
     }
 
     public String formatParticipantResult(Participant participant) {
         return String.format("%s - 결과: %d", formatHands(participant), participant.getScore());
     }
 
-    public String formatBlackJackResult(Map.Entry<Participant, WinStatus> winStatusEntry) {
-        if (WinStatus.WIN.equals(winStatusEntry.getValue())) {
-            return String.format("%s: 승", winStatusEntry.getKey().getName().getValue());
-        }
-        return String.format("%s: 패", winStatusEntry.getKey().getName().getValue());
+    public String formatBetResult(Map.Entry<Participant, BetAmount> winStatusEntry) {
+        return String.format("%s: %d", winStatusEntry.getKey().getName().getValue(), (int)winStatusEntry.getValue().getValue());
     }
 }

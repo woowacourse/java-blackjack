@@ -27,4 +27,15 @@ public class BetResult {
             betAmountByParticipant.replace(participant, profit);
         }
     }
+
+    public double calculateDealerProfit() {
+        double sum = betAmountByParticipant.values().stream()
+                .mapToDouble(BetAmount::getValue)
+                .sum();
+        return -sum;
+    }
+
+    public LinkedHashMap<Participant, BetAmount> getBetAmountByParticipant() {
+        return betAmountByParticipant;
+    }
 }

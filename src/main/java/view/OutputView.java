@@ -1,13 +1,9 @@
 package view;
 
-import domain.blackjack.BlackJackResult;
-import domain.blackjack.WinStatus;
 import domain.card.Card;
-import domain.participant.Dealer;
-import domain.participant.Name;
-import domain.participant.Participant;
-import domain.participant.Participants;
+import domain.participant.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +18,6 @@ public class OutputView {
     public static void printBeginDealingInformation(Participants participants) {
         System.out.println();
         System.out.printf(outputFormat.formatParticipantNames(participants));
-        System.out.println();
         System.out.println();
     }
 
@@ -51,14 +46,16 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printBlackJackResult(BlackJackResult blackJackResult) {
+    public static void printBetResult(BetResult betResult) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.printf(outputFormat.formatDealerResult(blackJackResult));
+        System.out.println("## 최종 수익");
+        System.out.printf(outputFormat.formatDealerResult(betResult));
         System.out.println();
 
-        for (Map.Entry<Participant, WinStatus> winStatusEntry : blackJackResult.getEntry()) {
-            System.out.println(outputFormat.formatBlackJackResult(winStatusEntry));
+        LinkedHashMap<Participant, BetAmount> betAmountByParticipant = betResult.getBetAmountByParticipant();
+
+        for (Map.Entry<Participant, BetAmount> entry : betAmountByParticipant.entrySet()) {
+            System.out.println(outputFormat.formatBetResult(entry));
         }
     }
 }

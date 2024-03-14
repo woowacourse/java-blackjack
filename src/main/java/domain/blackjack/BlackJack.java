@@ -43,11 +43,11 @@ public class BlackJack {
     }
 
     private WinStatus isWinner(Participant participant) {
-        if (dealer.isBust()) {
-            return WinStatus.WIN;
-        }
         if (participant.isBust()) {
             return WinStatus.LOSE;
+        }
+        if (dealer.isBust()) {
+            return WinStatus.WIN;
         }
         return isWinnerWhenNotBust(participant);
     }
