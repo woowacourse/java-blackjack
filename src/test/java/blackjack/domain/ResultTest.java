@@ -21,7 +21,8 @@ class ResultTest {
     @Test
     void dealerResult() {
         Result result = new Result(
-                Map.of(new Player("mark"), ResultStatus.DRAW, new Player("isang"), ResultStatus.WIN,
+                Map.of(new Player("mark"), ResultStatus.DRAW,
+                        new Player("isang"), ResultStatus.WIN,
                         new Player("isang"), ResultStatus.WIN));
 
         Map<ResultStatus, Long> results = result.calculateDealerResult();
