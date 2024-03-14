@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.Amount;
-import domain.Result;
+import domain.GameResult;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +24,8 @@ public class Players {
                 .allMatch(Player::isBust);
     }
 
-    public Map<Player, Result> getPlayersResult(final Dealer dealer) {
-        final Map<Player, Result> result = new LinkedHashMap<>();
+    public Map<Player, GameResult> getPlayersResult(final Dealer dealer) {
+        final Map<Player, GameResult> result = new LinkedHashMap<>();
         for (Player name : names) {
             result.put(name, name.calculateResult(dealer));
         }
@@ -36,7 +36,7 @@ public class Players {
         final Map<Player, Amount> playerAmountMap = new LinkedHashMap<>();
 
         for (Player player : names) {
-            Result gameResult = player.calculateResult(dealer);
+            GameResult gameResult = player.calculateResult(dealer);
             playerAmountMap.put(player, gameResult.apply(player.getBetAmount()));
         }
         return playerAmountMap;

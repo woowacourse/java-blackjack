@@ -6,14 +6,14 @@ import static domain.HandsTestFixture.sum18Size2;
 import static domain.HandsTestFixture.sum20Size2;
 import static domain.HandsTestFixture.sum20Size3;
 import static domain.HandsTestFixture.sum21Size3;
-import static domain.Result.LOSE;
-import static domain.Result.TIE;
-import static domain.Result.WIN;
+import static domain.GameResult.LOSE;
+import static domain.GameResult.TIE;
+import static domain.GameResult.WIN;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.Answer;
 import domain.BetAmount;
-import domain.Result;
+import domain.GameResult;
 import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -100,7 +100,7 @@ class DealerTest {
         Dealer dealer = new Dealer(sum20Size3);
 
         // when
-        Map<Result, Integer> expected = Map.of(WIN, 2, LOSE, 1, TIE, 1);
+        Map<GameResult, Integer> expected = Map.of(WIN, 2, LOSE, 1, TIE, 1);
 
         // then
         Assertions.assertThat(dealer.getDealerResult(players)).isEqualTo(expected);

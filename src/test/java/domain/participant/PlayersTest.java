@@ -10,13 +10,13 @@ import static domain.HandsTestFixture.sum19Size3Ace1;
 import static domain.HandsTestFixture.sum20Size2;
 import static domain.HandsTestFixture.sum20Size3;
 import static domain.HandsTestFixture.sum21Size3;
-import static domain.Result.LOSE;
-import static domain.Result.TIE;
-import static domain.Result.WIN;
+import static domain.GameResult.LOSE;
+import static domain.GameResult.TIE;
+import static domain.GameResult.WIN;
 
 import domain.Amount;
 import domain.BetAmount;
-import domain.Result;
+import domain.GameResult;
 import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -64,7 +64,7 @@ class PlayersTest {
         Dealer dealer = new Dealer(sum20Size3);
 
         //when & then
-        Map<Player, Result> expected = Map.of(loser, LOSE, winner, WIN, tier, TIE);
+        Map<Player, GameResult> expected = Map.of(loser, LOSE, winner, WIN, tier, TIE);
         Assertions.assertThat(players.getPlayersResult(dealer)).isEqualTo(expected);
     }
 
@@ -80,8 +80,8 @@ class PlayersTest {
         Players players = new Players(List.of(winner1, winner2, loser));
 
         //when
-        Map<Player, Result> expectedPlayerResult = Map.of(winner1, WIN, winner2, WIN, loser, LOSE);
-        Map<Result, Integer> expectedDealerResult = Map.of(WIN, 1, LOSE, 2);
+        Map<Player, GameResult> expectedPlayerResult = Map.of(winner1, WIN, winner2, WIN, loser, LOSE);
+        Map<GameResult, Integer> expectedDealerResult = Map.of(WIN, 1, LOSE, 2);
 
         //then
         Assertions.assertThat(players.getPlayersResult(bustDealer)).isEqualTo(expectedPlayerResult);

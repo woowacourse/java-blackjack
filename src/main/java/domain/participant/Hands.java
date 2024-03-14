@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.Result;
+import domain.GameResult;
 import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,8 +56,8 @@ public class Hands {
                 .toList();
     }
 
-    public Result calculateResult(final Hands target) {
-        return Result.calculateOf(this, target);
+    public GameResult calculateResult(final Hands target) {
+        return GameResult.calculateOf(this, target);
     }
 
     private int calculateTotalByAce(final int total) {

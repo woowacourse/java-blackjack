@@ -5,33 +5,33 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 
-public enum Result {
+public enum GameResult {
 
-    BLACK_JACK_WIN(Result::blackJackWinningCondition, BetAmount::blackJackWinAmount),
-    WIN(Result::winningCondition, BetAmount::winAmount),
-    TIE(Result::tieCondition, BetAmount::tieAmount),
-    LOSE(Result::loseCondition, BetAmount::loseAmount);
+    BLACK_JACK_WIN(GameResult::blackJackWinningCondition, BetAmount::blackJackWinAmount),
+    WIN(GameResult::winningCondition, BetAmount::winAmount),
+    TIE(GameResult::tieCondition, BetAmount::tieAmount),
+    LOSE(GameResult::loseCondition, BetAmount::loseAmount);
 
     private final BiPredicate<Hands, Hands> condition;
     private final Function<BetAmount, Amount> calculate;
 
-    Result(final BiPredicate<Hands, Hands> condition, final Function<BetAmount, Amount> calculate) {
+    GameResult(final BiPredicate<Hands, Hands> condition, final Function<BetAmount, Amount> calculate) {
         this.condition = condition;
         this.calculate = calculate;
     }
 
-    public Result reverse() {
-        if (Result.WIN.equals(this) || Result.BLACK_JACK_WIN.equals(this)) {
+    public GameResult reverse() {
+        if (GameResult.WIN.equals(this) || GameResult.BLACK_JACK_WIN.equals(this)) {
             return LOSE;
         }
-        if (Result.LOSE.equals(this)) {
+        if (GameResult.LOSE.equals(this)) {
             return WIN;
         }
         return TIE;
     }
 
-    public static Result calculateOf(final Hands hands, final Hands target) {
-        return Arrays.stream(Result.values())
+    public static GameResult calculateOf(final Hands hands, final Hands target) {
+        return Arrays.stream(GameResult.values())
                 .filter(result -> result.condition.test(hands, target))
                 .findFirst()
                 .orElseThrow();

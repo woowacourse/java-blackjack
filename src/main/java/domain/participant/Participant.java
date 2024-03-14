@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.Result;
+import domain.GameResult;
 import domain.card.Card;
 import java.util.List;
 import java.util.Objects;
@@ -37,7 +37,7 @@ public abstract class Participant {
         return hands.size();
     }
 
-    public Result calculateResult(final Participant participant) {
+    public GameResult calculateResult(final Participant participant) {
         return hands.calculateResult(participant.getHands());
     }
 

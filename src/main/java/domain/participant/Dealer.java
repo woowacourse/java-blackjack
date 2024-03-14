@@ -2,7 +2,7 @@ package domain.participant;
 
 import domain.Amount;
 import domain.Answer;
-import domain.Result;
+import domain.GameResult;
 import domain.card.Card;
 import domain.card.CardDeck;
 import java.util.ArrayDeque;
@@ -63,11 +63,11 @@ public class Dealer extends Participant {
         return handsSize() - INIT_HANDS_SIZE;
     }
 
-    public Map<Result, Integer> getDealerResult(final Players players) {
-        Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
+    public Map<GameResult, Integer> getDealerResult(final Players players) {
+        Map<GameResult, Integer> dealerResult = new EnumMap<>(GameResult.class);
 
-        for (Result value : players.getPlayersResult(this).values()) {
-            Result reversed = value.reverse();
+        for (GameResult value : players.getPlayersResult(this).values()) {
+            GameResult reversed = value.reverse();
             dealerResult.put(reversed, dealerResult.getOrDefault(reversed, 0) + 1);
         }
         return dealerResult;
