@@ -47,14 +47,10 @@ public class BlackJackGame {
 
         BetResults betResults = new BetResults(playerNames.stream()
                 .map(playerName -> bettingBank.calculateBetResult(
-                        bets.getBetByPlayerName(playerName),
+                        bets.findBetByPlayerName(playerName),
                         playerResults.findResultByName(playerName)))
                 .toList());
-        printDealerGameResult(dealer, players);
-        printPlayersGameResult(players, dealer);
-
         outputView.printBetResults(betResults.calculateDealerProfit().getAmount(), betResults);
-
     }
 
     private Players initPlayers(CardDeck cardDeck) {
@@ -87,16 +83,5 @@ public class BlackJackGame {
 
     private void printParticipantScore(Participant participant) {
         outputView.printParticipantScore(participant, participant.calculateHandScore());
-    }
-
-    private void printDealerGameResult(Dealer dealer, Players players) {
-        Judge judge = new Judge();
-        outputView.printDealerGameResult(judge.calculateDealerGameResult(dealer, players));
-    }
-
-    private void printPlayersGameResult(Players players, Dealer dealer) {
-        Judge judge = new Judge();
-        players.getPlayers()
-                .forEach(player -> outputView.printPlayerGameResult(player, judge.isPlayerWin(dealer, player)));
     }
 }

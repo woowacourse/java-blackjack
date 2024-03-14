@@ -18,7 +18,7 @@ class BetsTest {
         Bet bet2 = new Bet(new PlayerName("썬"), new Money(1_000_000));
         Bets bets = new Bets(List.of(bet1, bet2));
 
-        Bet found = bets.getBetByPlayerName("리비");
+        Bet found = bets.findBetByPlayerName("리비");
         assertThat(found.getBetAmount().getAmount()).isEqualTo(1_000);
     }
 
@@ -29,7 +29,7 @@ class BetsTest {
         Bet bet2 = new Bet(new PlayerName("썬"), new Money(1_000_000));
         Bets bets = new Bets(List.of(bet1, bet2));
 
-        assertThatThrownBy(() -> bets.getBetByPlayerName("제리"))
+        assertThatThrownBy(() -> bets.findBetByPlayerName("제리"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[INTERNAL_ERROR] 해당 이름으로 등록된 베팅 정보를 찾을 수 없습니다");
     }

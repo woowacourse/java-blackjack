@@ -17,8 +17,4 @@ public class PlayerResults {
                 .map(PlayerResult::getGameResult)
                 .orElseThrow(() -> new IllegalArgumentException("[INTERNAL ERROR] 이름으로 결과를 조회하는데에 실패했습니다"));
     }
-
-    public List<PlayerResult> getResults() {
-        return results;
-    }
 }

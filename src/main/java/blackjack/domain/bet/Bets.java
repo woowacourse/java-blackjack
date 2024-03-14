@@ -10,7 +10,7 @@ public class Bets {
         this.bets = bets;
     }
 
-    public Bet getBetByPlayerName(String playerName) {
+    public Bet findBetByPlayerName(String playerName) {
         return bets.stream()
                 .filter(bet -> bet.getPlayerName().equals(playerName))
                 .findFirst()

@@ -5,18 +5,18 @@ import blackjack.domain.bet.Money;
 public class BetResult {
 
     private final String name;
-    private final Money earned;
+    private final Money profit;
 
-    public BetResult(String name, Money earned) {
+    public BetResult(String name, Money profit) {
         this.name = name;
-        this.earned = earned;
+        this.profit = profit;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getEarned() {
-        return earned.getAmount();
+    public int getProfit() {
+        return profit.getAmount();
     }
 }

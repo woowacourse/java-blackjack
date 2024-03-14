@@ -13,7 +13,7 @@ public class BetResults {
 
     public Money calculateDealerProfit() {
         return new Money(betResults.stream()
-                .map(BetResult::getEarned)
+                .map(BetResult::getProfit)
                 .reduce(0, Integer::sum))
                 .inverse();
     }

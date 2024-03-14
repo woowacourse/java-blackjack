@@ -3,7 +3,6 @@ package blackjack.view;
 import static blackjack.view.CardDescription.NUMBER_NAME;
 import static blackjack.view.CardDescription.SHAPE_NAME;
 
-import blackjack.domain.DealerGameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
@@ -68,35 +67,19 @@ public class MessageResolver {
         return String.format("%s - 결과: %d", handMessage, score.getValue());
     }
 
-    public String resolvePlayerGameResult(Player participant, boolean win) {
-        return String.format("%s: %s", participant.getName(), resolveGameResultMessage(win));
-    }
-
-    private String resolveGameResultMessage(boolean win) {
-        if (win) {
-            return "승";
-        }
-        return "패";
-    }
-
-    public String resolveDealerGameResult(DealerGameResult dealerGameResult) {
-        String prefix = String.join("", LINE_SEPARATOR, "## 최종 승패");
-        String message = String.format("딜러: %d승 %d패", dealerGameResult.getWinCount(), dealerGameResult.getLoseCount());
-        return String.join("", prefix, LINE_SEPARATOR, message);
-    }
-
     public String resolveBetResultMessage(BetResult betResult) {
-        return String.format("%s: %d", betResult.getName(), betResult.getEarned());
+        return String.format("%s: %d", betResult.getName(), betResult.getProfit());
     }
 
     public String resolveBetResultsMessage(int dealerEarned, BetResults betResults) {
-        return new StringBuilder(resolveDealerProfitMessage(dealerEarned))
+        return new StringBuilder("##최종 수익")
+                .append(resolveDealerProfitMessage(dealerEarned))
                 .append(LINE_SEPARATOR)
                 .append(betResults.getBetResults().stream()
                         .map(this::resolveBetResultMessage)
                         .collect(Collectors.joining(LINE_SEPARATOR))).toString();
     }
-    
+
     public String resolveDealerProfitMessage(int dealerEarned) {
         return String.format("딜러: %d", dealerEarned);
     }
