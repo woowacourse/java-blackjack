@@ -2,12 +2,14 @@ package domain;
 
 import constants.ErrorCode;
 import exception.InvalidBetAmountException;
+import exception.OutOfRangeBetAmount;
 import java.util.Objects;
 
 public class BetAmount {
 
     private static final int UNIT = 10;
-    private static final int MIN_RANGE = 0;
+    private static final int MIN_RANGE = 10;
+    private static final int MAX_RANGE = 100_000_000;
 
     private final long amount;
 
@@ -45,8 +47,8 @@ public class BetAmount {
     }
 
     private void validateRange(final long value) {
-        if (value <= MIN_RANGE) {
-            throw new InvalidBetAmountException(ErrorCode.INVALID_BET_AMOUNT);
+        if (value < MIN_RANGE || MAX_RANGE < value) {
+            throw new OutOfRangeBetAmount(ErrorCode.INVALID_BET_AMOUNT);
         }
     }
 
