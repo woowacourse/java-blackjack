@@ -4,6 +4,7 @@ import static domain.participant.Dealer.INIT_HANDS_SIZE;
 import static domain.participant.Dealer.THRESHOLD;
 
 import constants.ErrorCode;
+import domain.Amount;
 import domain.Result;
 import domain.participant.Player;
 import dto.DealerHandsDto;
@@ -11,6 +12,7 @@ import dto.ParticipantDto;
 import dto.ParticipantsDto;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import view.message.ErrorCodeMessage;
 
 public class OutputView {
@@ -51,10 +53,11 @@ public class OutputView {
         System.out.print(LINE);
     }
 
-    public void printGameResult(final Map<Result, Integer> dealerResult, final Map<Player, Result> playerResult) {
-        System.out.println("## 최종결과");
-        System.out.printf(RESULT_FORM, "딜러", format(dealerResult));
-        for (Map.Entry<Player, Result> entry : playerResult.entrySet()) {
+    public void printGameResult(final Map<Player, Amount> playerAmountMap, final Amount amount) {
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %d%n", amount.getValue()); // TODO 숫자 세자리마다 쉼표
+
+        for (Entry<Player, Amount> entry : playerAmountMap.entrySet()) {
             System.out.printf(RESULT_FORM, entry.getKey().getName(), entry.getValue().getValue());
         }
     }

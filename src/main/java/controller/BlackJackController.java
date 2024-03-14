@@ -70,7 +70,7 @@ public class BlackJackController {
 
     private void printFinalResult(final Players players, final Dealer dealer) {
         outputView.printHandsResult(ParticipantsDto.of(dealer, players));
-        outputView.printGameResult(dealer.getDealerResult(players), players.getPlayersResult(dealer));
+        outputView.printGameResult(repository.calculateResult(dealer), repository.calculateDealerAmount());
     }
 
     private void deal(final Player player, final Dealer dealer) {

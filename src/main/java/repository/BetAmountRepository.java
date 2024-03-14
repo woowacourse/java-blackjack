@@ -6,6 +6,7 @@ import domain.Result;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -17,7 +18,7 @@ public class BetAmountRepository {
     private Map<Player, Amount> result; // TODO 리팩터링 대상
 
     public BetAmountRepository() {
-        this(new HashMap<>());
+        this(new LinkedHashMap<>());
     }
 
     protected BetAmountRepository(final Map<Player, BetAmount> repository) {
@@ -29,7 +30,7 @@ public class BetAmountRepository {
     }
 
     public Map<Player, Amount> calculateResult(final Dealer dealer) {
-        final Map<Player, Amount> result = new HashMap<>();
+        final Map<Player, Amount> result = new LinkedHashMap<>();
 
         //TODO 리팩터링 대상
         for (Entry<Player, BetAmount> entry : repository.entrySet()) {
@@ -53,6 +54,6 @@ public class BetAmountRepository {
                 .map(Amount::getValue)
                 .mapToLong(Long::longValue)
                 .sum();
-        return new Amount(dealerAmount);
+        return new Amount(-dealerAmount);
     }
 }
