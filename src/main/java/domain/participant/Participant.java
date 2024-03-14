@@ -46,8 +46,10 @@ public abstract class Participant {
     }
 
     private boolean isLose(final Participant opponent) {
-        return !opponent.isBust()
-                && (isBust() || (score() < opponent.score()));
+        if (opponent.isBust()) {
+            return false;
+        }
+        return isBust() || (score() < opponent.score());
     }
 
     private boolean isBothBust(final Participant opponent) {
