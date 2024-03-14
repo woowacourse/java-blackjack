@@ -22,7 +22,6 @@ import java.util.List;
 
 public class BlackjackController {
     private static final String DEALER_NAME = "딜러";
-    private static final double INITIAL_MONEY = 0.0;
 
     public void startBlackjackGame(Deck deck) {
         BlackjackGame blackjackGame = initBlackJackGame();
@@ -89,7 +88,7 @@ public class BlackjackController {
     }
 
     private void playerTryDraw(Deck deck, CardHolder cardHolder) {
-        while(!cardHolder.isDead() && inputYesOrNo(cardHolder.getRawName())) {
+        while (!cardHolder.isDead() && inputYesOrNo(cardHolder.getRawName())) {
             cardHolder.draw(deck, new PlayerRandomCardDrawStrategy(cardHolder));
             printPlayer(cardHolder);
         }
