@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class MoneyTest {
 
-    @DisplayName("양수가 아닌 배팅금액을 생성하면 에러가 발생한다")
+    @DisplayName("1,000원 이상의 양수가 아닌 배팅금액을 생성하면 에러가 발생한다")
     @ParameterizedTest
     @ValueSource(ints = {-1, 999})
     public void createFail(int value) {
@@ -20,16 +20,7 @@ public class MoneyTest {
                 .hasMessage(String.format("배팅금액은 1,000원 이상의 양수만 가능합니다. 입력값: %d", value));
     }
 
-    @DisplayName("배팅 금액이 1,000으로 나누어 떨어지지 않으면 에러가 발생한다")
-    @Test
-    public void createFailByUnitValue() {
-        int value = 1001;
-        assertThatCode(() -> new Money(value))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(String.format("배팅 금액은 1,000원 단위만 입력 가능합니다. 입력값: %d", value));
-    }
-
-    @DisplayName("배팅 금액이 양수이고, 1,000으로 나누어 떨어지면 에러가 발생하지 않는다")
+    @DisplayName("배팅 금액이 1,000원 이상이면 에러가 발생하지 않는다")
     @Test
     public void createSuccess() {
         assertThatCode(() -> new Money(1000))

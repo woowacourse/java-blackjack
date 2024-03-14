@@ -3,9 +3,7 @@ package blackjack.domain;
 import java.util.Objects;
 
 public class Money {
-    private static final int ZERO = 0;
     private static final int MIN_VALUE = 1000;
-    private static final int MIN_UNIT_VALUE = 100;
 
     private final int value;
 
@@ -17,9 +15,6 @@ public class Money {
     private void validateMoney(int value) {
         if (value < MIN_VALUE) {
             throw new IllegalArgumentException(String.format("배팅금액은 1,000원 이상의 양수만 가능합니다. 입력값: %d", value));
-        }
-        if (value % MIN_UNIT_VALUE != ZERO) {
-            throw new IllegalArgumentException(String.format("배팅 금액은 1,000원 단위만 입력 가능합니다. 입력값: %d", value));
         }
     }
 
