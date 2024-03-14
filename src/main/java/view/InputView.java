@@ -23,6 +23,16 @@ public class InputView {
         return Arrays.asList(scanner.nextLine().split(DELIMITER, -1));
     }
 
+    public int readBetAmount(String name) {
+        System.out.printf("%s의 베팅 금액은?%n", name);
+        String input = scanner.nextLine();
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 숫자만 입력해 주세요.");
+        }
+    }
+
     public HitStay readHitOrStay(Player player) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", player.getName(), YES, NO);
         String rawHitStay = scanner.nextLine();

@@ -1,5 +1,6 @@
 package machine;
 
+import domain.betting.Money;
 import domain.game.BlackjackGame;
 import domain.game.Result;
 import domain.participant.Dealer;
@@ -22,11 +23,21 @@ public class BlackjackMachine {
 
     public void run() {
         BlackjackGame game = initializeGame();
+        readBetAmount(game);
         distributeStartingCards(game);
         playPlayerTurns(game);
         playDealerTurn(game);
         printCardsAndScores(game);
         printResult(game);
+    }
+
+    private void readBetAmount(BlackjackGame game) {
+        for (Player player : game.getPlayers()) {
+            int rawBetMoney = inputView.readBetAmount(player.getName());
+            Money betMoney = Money.betValueOf(rawBetMoney);
+            game.getAccounts()
+                .add(player, betMoney);
+        }
     }
 
     private void distributeStartingCards(BlackjackGame game) {
