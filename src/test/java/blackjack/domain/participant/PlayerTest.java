@@ -19,7 +19,7 @@ class PlayerTest {
                         Card.valueOf(1)),
                 new BetMoney(1));
 
-        testPlayer.attemptDraw(() -> Boolean.TRUE, deck);
+        testPlayer.draw(() -> Boolean.TRUE, deck);
 
         assertThat(testPlayer.getHandsCards()).hasSize(3);
     }
@@ -33,7 +33,7 @@ class PlayerTest {
                         Card.valueOf(1)),
                 new BetMoney(1));
 
-        testPlayer.attemptDraw(() -> Boolean.FALSE, deck);
+        testPlayer.draw(() -> Boolean.FALSE, deck);
 
         assertThat(testPlayer.getHandsCards()).hasSize(2);
     }

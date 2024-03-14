@@ -24,12 +24,10 @@ public class Player {
         return new Player(name, initialHands, betMoney);
     }
 
-    public boolean attemptDraw(BooleanSupplier supplier, Deck deck) {
+    public void draw(BooleanSupplier supplier, Deck deck) {
         if (supplier.getAsBoolean()) {
             hands.addCard(deck.draw());
-            return true;
         }
-        return false;
     }
 
     public boolean canDraw() {
@@ -54,5 +52,9 @@ public class Player {
 
     public int getHandsScore() {
         return hands.getHandsScore();
+    }
+
+    public boolean isBust() {
+        return hands.isBust();
     }
 }

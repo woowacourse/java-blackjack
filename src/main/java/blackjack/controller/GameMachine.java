@@ -86,10 +86,11 @@ public class GameMachine {
     }
 
     private static void askDrawToPlayer(Player player, Deck deck) {
-        boolean isDraw = true;
-        while (player.canDraw() && isDraw) {
+        boolean isBust = false;
+        while (player.canDraw() && !isBust) {
             OutputView.printAskDrawMessage(player.getName());
-            isDraw = player.attemptDraw(InputView::askDraw, deck);
+            player.draw(InputView::askDraw, deck);
+            isBust = !player.isBust();
             OutputView.printPlayerHands(player);
         }
     }
