@@ -8,29 +8,29 @@ import view.OutputView;
 
 public class Application {
     public static void main(final String[] args) {
-        final Blackjack blackjack = createBlackjack();
-        final PlayerInfos initPlayerInfos = PlayerInfos.from(blackjack.getPlayers());
-        final DealerInfo initDealerInfo = DealerInfo.from(blackjack.getDealer());
+        final BlackjackGame blackjackGame = createBlackjackGame();
+        final PlayerInfos initPlayerInfos = PlayerInfos.from(blackjackGame.getPlayers());
+        final DealerInfo initDealerInfo = DealerInfo.from(blackjackGame.getDealer());
         OutputView.printInitInfosOfPlayersAndDealer(initPlayerInfos, initDealerInfo);
 
-        playGame(blackjack);
-        final PlayerInfos playerInfos = PlayerInfos.from(blackjack.getPlayers());
-        final DealerInfo dealerInfo = DealerInfo.from(blackjack.getDealer());
+        playGame(blackjackGame);
+        final PlayerInfos playerInfos = PlayerInfos.from(blackjackGame.getPlayers());
+        final DealerInfo dealerInfo = DealerInfo.from(blackjackGame.getDealer());
         OutputView.printInfosOfPlayersAndDealer(playerInfos, dealerInfo);
 
-        final GameResult gameResult = blackjack.finishGame();
+        final GameResult gameResult = blackjackGame.finishGame();
         OutputView.printBlackjackGameResults(gameResult);
     }
 
-    private static Blackjack createBlackjack() {
-        return new Blackjack(createPlayers(), new Dealer(new Deck()));
+    private static BlackjackGame createBlackjackGame() {
+        return new BlackjackGame(createPlayers(), new Dealer(new Deck()));
     }
 
     private static Players createPlayers() {
         return Players.from(InputView.inputNames());
     }
 
-    private static void playGame(final Blackjack blackjack) {
+    private static void playGame(final BlackjackGame blackjack) {
         for (final var player : blackjack.getPlayers()) {
             drawCardDuringPlayerTurn(player, blackjack);
         }
@@ -43,7 +43,7 @@ public class Application {
         }
     }
 
-    private static void drawCardDuringPlayerTurn(final Player player, final Blackjack blackjack) {
+    private static void drawCardDuringPlayerTurn(final Player player, final BlackjackGame blackjack) {
         while (player.canHit() && wantToHit(player)) {
             blackjack.dealCard(player);
         }

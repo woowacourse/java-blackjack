@@ -4,13 +4,13 @@ import dto.GameResult;
 
 import java.util.List;
 
-public class Blackjack {
+public class BlackjackGame {
     public static final int INITIAL_HAND_SIZE = 2;
-    
+
     private final Players players;
     private final Dealer dealer;
 
-    public Blackjack(final Players players, final Dealer dealer) {
+    public BlackjackGame(final Players players, final Dealer dealer) {
         this.players = players;
         this.dealer = dealer;
         initGame();

@@ -14,7 +14,7 @@ class BlackjackTest {
     void initializeDealer() {
         final Players players = Players.from(List.of("pobi", "crong", "tebah"));
         final Dealer dealer = new Dealer(new Deck());
-        final Blackjack blackjack = new Blackjack(players, dealer);
+        final BlackjackGame blackjack = new BlackjackGame(players, dealer);
 
         assertThat(blackjack.getDealer().hand().size()).isEqualTo(2);
     }
@@ -24,7 +24,7 @@ class BlackjackTest {
     void initializePlayers() {
         final Players players = Players.from(List.of("pobi", "crong", "tebah"));
         final Dealer dealer = new Dealer(new Deck());
-        final Blackjack blackjack = new Blackjack(players, dealer);
+        final BlackjackGame blackjack = new BlackjackGame(players, dealer);
 
         assertThat(blackjack.getPlayers().get(0).hand().size()).isEqualTo(2);
     }
@@ -34,7 +34,7 @@ class BlackjackTest {
     void dealCardsToPlayer() {
         final Players players = Players.from(List.of("pobi", "crong", "tebah"));
         final Dealer dealer = new Dealer(new Deck());
-        final Blackjack blackjack = new Blackjack(players, dealer);
+        final BlackjackGame blackjack = new BlackjackGame(players, dealer);
         final Player player = blackjack.getPlayers().get(0);
         blackjack.dealCard(player);
 
