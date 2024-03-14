@@ -24,7 +24,7 @@ public class GameTest {
     @Test
     @DisplayName("게임이 생성될 때 각 유저에게 카드를 두 장씩 나눠준다.")
     void gameConstructTest() {
-        TotalDeck totalDeck = new TotalDeck(TotalDeckGenerator.generate());
+        TotalDeck totalDeck = TotalDeckGenerator.generate();
         Users users = new Users(List.of(new Player(new Name("a"))));
 
         new Game(totalDeck, users);
@@ -35,7 +35,7 @@ public class GameTest {
     @Test
     @DisplayName("입력이 y이면 현재 유저가 카드를 추가로 받는다.")
     void hitTest() {
-        TotalDeck totalDeck = new TotalDeck(TotalDeckGenerator.generate());
+        TotalDeck totalDeck = TotalDeckGenerator.generate();
         Player player = new Player(new Name("a"));
         Users users = new Users(List.of(player));
 

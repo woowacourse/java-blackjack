@@ -1,7 +1,6 @@
 package domain.user;
 
 import domain.card.Card;
-import domain.deck.TotalDeck;
 import domain.deck.TotalDeckGenerator;
 import domain.game.Index;
 import org.junit.jupiter.api.DisplayName;
@@ -67,7 +66,7 @@ class UsersTest {
     void setStartCardsTest() {
         Users users = new Users(List.of(new Player(new Name("a"))));
 
-        users.setStartCards(new TotalDeck(TotalDeckGenerator.generate()));
+        users.setStartCards(TotalDeckGenerator.generate());
 
         Dealer dealer = users.getDealer();
         assertThat(dealer.userDeck.getCards()).hasSize(2);

@@ -4,7 +4,6 @@ import domain.Command;
 import domain.DealerDto;
 import domain.ExceptionHandler;
 import domain.UserDto;
-import domain.deck.TotalDeck;
 import domain.deck.TotalDeckGenerator;
 import domain.game.Game;
 import domain.game.State;
@@ -24,7 +23,7 @@ public class GameController {
 
     public void play() {
         Users users = ExceptionHandler.handle(InputView::inputNames);
-        Game game = new Game(new TotalDeck(TotalDeckGenerator.generate()), users);
+        Game game = new Game(TotalDeckGenerator.generate(), users);
         showStartStatus(users);
 
         hitOrStay(game, users);
