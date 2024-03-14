@@ -21,7 +21,7 @@ public class BlackjackGame {
     }
 
     public void start() {
-        dealer.shuffleCards(new RandomCardShuffleStrategy());
+        dealer.shuffleCards();
 
         distributeInitialCards();
     }
