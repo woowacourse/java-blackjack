@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.participant.Dealer;
 import domain.card.Rank;
 import domain.card.Shape;
 import org.assertj.core.api.Assertions;
@@ -14,7 +13,7 @@ class DealerTest {
     @Test
     void shouldHit() {
         Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(Shape.HEART, Rank.KING));
+        dealer.receiveCard(new Card(Shape.HEARTS, Rank.KING));
 
         Assertions.assertThat(dealer.shouldHit()).isTrue();
     }

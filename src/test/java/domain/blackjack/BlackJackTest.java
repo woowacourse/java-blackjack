@@ -1,19 +1,18 @@
 package domain.blackjack;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Shape;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
+import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackJackTest {
 
@@ -25,14 +24,14 @@ class BlackJackTest {
         BlackJack blackJack = new BlackJack(dealer, participants);
 
         Participant one = participants.getValue().get(0);
-        one.receiveCard(new Card(Shape.HEART, Rank.KING));
+        one.receiveCard(new Card(Shape.HEARTS, Rank.KING));
 
         Participant two = participants.getValue().get(1);
-        two.receiveCard(new Card(Shape.DIA, Rank.TWO));
-        two.receiveCard(new Card(Shape.DIA, Rank.THREE));
+        two.receiveCard(new Card(Shape.DIAMONDS, Rank.TWO));
+        two.receiveCard(new Card(Shape.DIAMONDS, Rank.THREE));
 
-        dealer.receiveCard(new Card(Shape.DIA, Rank.THREE));
-        dealer.receiveCard(new Card(Shape.DIA, Rank.FOUR));
+        dealer.receiveCard(new Card(Shape.DIAMONDS, Rank.THREE));
+        dealer.receiveCard(new Card(Shape.DIAMONDS, Rank.FOUR));
         /*
          * one 참가자의 점수: 10점
          * two 참가자의 점수: 5점
@@ -55,15 +54,15 @@ class BlackJackTest {
         BlackJack blackJack = new BlackJack(dealer, participants);
 
         Participant one = participants.getValue().get(0);
-        one.receiveCard(new Card(Shape.HEART, Rank.TWO));
-        one.receiveCard(new Card(Shape.HEART, Rank.THREE));
+        one.receiveCard(new Card(Shape.HEARTS, Rank.TWO));
+        one.receiveCard(new Card(Shape.HEARTS, Rank.THREE));
 
         Participant two = participants.getValue().get(1);
-        two.receiveCard(new Card(Shape.CLOVER, Rank.TWO));
-        two.receiveCard(new Card(Shape.CLOVER, Rank.THREE));
+        two.receiveCard(new Card(Shape.CLUBS, Rank.TWO));
+        two.receiveCard(new Card(Shape.CLUBS, Rank.THREE));
 
-        dealer.receiveCard(new Card(Shape.DIA, Rank.TWO));
-        dealer.receiveCard(new Card(Shape.DIA, Rank.THREE));
+        dealer.receiveCard(new Card(Shape.DIAMONDS, Rank.TWO));
+        dealer.receiveCard(new Card(Shape.DIAMONDS, Rank.THREE));
 
         /*
          * one 참가자의 점수: 5점
@@ -86,14 +85,14 @@ class BlackJackTest {
         BlackJack blackJack = new BlackJack(dealer, participants);
 
         Participant one = participants.getValue().get(0);
-        one.receiveCard(new Card(Shape.HEART, Rank.KING));
-        one.receiveCard(new Card(Shape.HEART, Rank.ACE));
+        one.receiveCard(new Card(Shape.HEARTS, Rank.KING));
+        one.receiveCard(new Card(Shape.HEARTS, Rank.ACE));
 
         Participant two = participants.getValue().get(1);
-        two.receiveCard(new Card(Shape.CLOVER, Rank.ACE));
-        two.receiveCard(new Card(Shape.CLOVER, Rank.TWO));
+        two.receiveCard(new Card(Shape.CLUBS, Rank.ACE));
+        two.receiveCard(new Card(Shape.CLUBS, Rank.TWO));
 
-        dealer.receiveCard(new Card(Shape.DIA, Rank.QUEEN));
+        dealer.receiveCard(new Card(Shape.DIAMONDS, Rank.QUEEN));
         /*
          * one 참가자의 점수: 블랙잭
          * two 참가자의 점수: 13점
@@ -115,15 +114,15 @@ class BlackJackTest {
         BlackJack blackJack = new BlackJack(dealer, participants);
 
         Participant one = participants.getValue().get(0);
-        one.receiveCard(new Card(Shape.HEART, Rank.KING));
-        one.receiveCard(new Card(Shape.HEART, Rank.ACE));
+        one.receiveCard(new Card(Shape.HEARTS, Rank.KING));
+        one.receiveCard(new Card(Shape.HEARTS, Rank.ACE));
 
         Participant two = participants.getValue().get(1);
-        two.receiveCard(new Card(Shape.CLOVER, Rank.ACE));
-        two.receiveCard(new Card(Shape.CLOVER, Rank.TWO));
+        two.receiveCard(new Card(Shape.CLUBS, Rank.ACE));
+        two.receiveCard(new Card(Shape.CLUBS, Rank.TWO));
 
-        dealer.receiveCard(new Card(Shape.CLOVER, Rank.KING));
-        dealer.receiveCard(new Card(Shape.CLOVER, Rank.ACE));
+        dealer.receiveCard(new Card(Shape.CLUBS, Rank.KING));
+        dealer.receiveCard(new Card(Shape.CLUBS, Rank.ACE));
         /*
          * one 참가자의 점수: 블랙잭
          * two 참가자의 점수: 13점
@@ -145,16 +144,16 @@ class BlackJackTest {
         BlackJack blackJack = new BlackJack(dealer, participants);
 
         Participant one = participants.getValue().get(0);
-        one.receiveCard(new Card(Shape.HEART, Rank.TWO));
-        one.receiveCard(new Card(Shape.HEART, Rank.THREE));
+        one.receiveCard(new Card(Shape.HEARTS, Rank.TWO));
+        one.receiveCard(new Card(Shape.HEARTS, Rank.THREE));
 
         Participant two = participants.getValue().get(1);
-        two.receiveCard(new Card(Shape.CLOVER, Rank.TWO));
-        two.receiveCard(new Card(Shape.CLOVER, Rank.THREE));
+        two.receiveCard(new Card(Shape.CLUBS, Rank.TWO));
+        two.receiveCard(new Card(Shape.CLUBS, Rank.THREE));
 
-        dealer.receiveCard(new Card(Shape.CLOVER, Rank.KING));
-        dealer.receiveCard(new Card(Shape.CLOVER, Rank.QUEEN));
-        dealer.receiveCard(new Card(Shape.CLOVER, Rank.JACK));
+        dealer.receiveCard(new Card(Shape.CLUBS, Rank.KING));
+        dealer.receiveCard(new Card(Shape.CLUBS, Rank.QUEEN));
+        dealer.receiveCard(new Card(Shape.CLUBS, Rank.JACK));
         /*
          * one 참가자의 점수: 5점
          * two 참가자의 점수: 5점
