@@ -25,15 +25,15 @@ class PlayersTest {
 	void minimumPlayerCountTest() {
 		assertThatThrownBy(() -> createTestPlayersFromNames(List.of("a")))
 			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessage("플레이어는 최소 2명에서 최대 8명까지 가능합니다");
+			.hasMessage("플레이어는 최소 2명에서 최대 8명까지 가능합니다.");
 	}
 
 	@Test
 	@DisplayName("플레이어는 최대 8명까지만 가능하다.")
 	void maximumPlayerCountTest() {
-		assertThatThrownBy(() -> createTestPlayersFromNames(List.of("a", "b", "c", "d", "e", "f", "g", "h", "g")))
+		assertThatThrownBy(() -> createTestPlayersFromNames(List.of("a", "b", "c", "d", "e", "f", "g", "h", "i")))
 			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessage("이름은 중복될 수 없습니다.");
+			.hasMessage("플레이어는 최소 2명에서 최대 8명까지 가능합니다.");
 	}
 
 	private Players createTestPlayersFromNames(List<String> names) {
