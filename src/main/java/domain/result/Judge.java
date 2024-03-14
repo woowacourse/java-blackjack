@@ -67,10 +67,10 @@ public class Judge {
     }
 
     public Map<Player, Profit> getPlayersProfit() {
-        return playersResult.getResult();
+        return playersResult.getPlayersProfit();
     }
 
     public Profit getDealerProfit() {
-        return dealerResult.getProfitResult();
+        return dealerResult.getProfit();
     }
 }

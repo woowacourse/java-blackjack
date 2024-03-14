@@ -24,6 +24,6 @@ class DealerResultTest {
         DealerResult dealerResult = new DealerResult();
         dealerResult.calculateProfit(playersProfit);
 
-        assertThat(dealerResult.getProfitResult().getValue()).isEqualTo(-20);
+        assertThat(dealerResult.getProfit().getValue()).isEqualTo(-20);
     }
 }

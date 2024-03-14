@@ -30,7 +30,7 @@ class PlayersResultTest {
         playersResult.calculateProfit(player3, WinState.BLACKJACK);
         playersResult.calculateProfit(player4, WinState.DRAW);
 
-        Map<Player, Profit> profitResult = playersResult.getResult();
+        Map<Player, Profit> profitResult = playersResult.getPlayersProfit();
         assertThat(profitResult.get(player1).getValue()).isEqualTo(10);
         assertThat(profitResult.get(player2).getValue()).isEqualTo(-10);
         assertThat(profitResult.get(player3).getValue()).isEqualTo(15);

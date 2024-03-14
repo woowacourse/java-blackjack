@@ -9,22 +9,22 @@ import java.util.Map;
 
 public class PlayersResult {
 
-    private final Map<Player, Profit> result;
+    private final Map<Player, Profit> playersProfit;
 
     public PlayersResult() {
-        this.result = new LinkedHashMap<>();
+        this.playersProfit = new LinkedHashMap<>();
     }
 
     public void addProfit(Player player, Profit profit) {
-        result.put(player, profit);
+        playersProfit.put(player, profit);
     }
 
     public void calculateProfit(Player player, WinState winState) {
-        Profit profit = winState.calculateProfit(result.get(player));
-        result.replace(player, profit);
+        Profit profit = winState.calculateProfit(playersProfit.get(player));
+        playersProfit.replace(player, profit);
     }
 
-    public Map<Player, Profit> getResult() {
-        return Collections.unmodifiableMap(result);
+    public Map<Player, Profit> getPlayersProfit() {
+        return Collections.unmodifiableMap(playersProfit);
     }
 }

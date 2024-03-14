@@ -6,19 +6,19 @@ import java.util.Map;
 
 public class DealerResult {
 
-    private Profit profitResult;
+    private Profit profit;
 
     public DealerResult() {
-        this.profitResult = new Profit(0);
+        this.profit = new Profit(0);
     }
 
     public void calculateProfit(Map<Player, Profit> playersProfit) {
-        profitResult = new Profit(-playersProfit.values().stream()
+        profit = new Profit(-playersProfit.values().stream()
                 .mapToInt(Profit::getValue)
                 .sum());
     }
 
-    public Profit getProfitResult() {
-        return profitResult;
+    public Profit getProfit() {
+        return profit;
     }
 }
