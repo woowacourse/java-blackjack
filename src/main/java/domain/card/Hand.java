@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Hand {
 
+    public static final int INITIAL_SIZE = 2;
     private final List<Card> cards;
 
     public Hand(final List<Card> cards) {
@@ -27,6 +28,10 @@ public class Hand {
         return (int) this.cards.stream()
                 .filter(Card::isAceCard)
                 .count();
+    }
+
+    public boolean isInitialSize() {
+        return size() == INITIAL_SIZE;
     }
 
     public Score calculateScore() {

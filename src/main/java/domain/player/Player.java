@@ -34,7 +34,7 @@ public class Player {
     }
 
     public boolean isBlackJack() {
-        return getScore().compareTo(Score.from(BLACK_JACK_SCORE)) == 0 && hand.size() == 2;
+        return getScore().compareTo(Score.from(BLACK_JACK_SCORE)) == 0 && hand.isInitialSize();
     }
 
     public Score getScore() {
