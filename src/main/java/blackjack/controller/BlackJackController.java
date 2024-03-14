@@ -82,10 +82,14 @@ public class BlackJackController {
     }
 
     private void doRound(Player player, Deck deck) {
-        while (player.isDrawAble() && hasAdditionalCardRequest(player)) {
+        while (shouldHit(player)) {
             player.draw(deck);
             outputView.printPlayerCard(PlayerDto.from(player));
         }
+    }
+
+    private boolean shouldHit(Player player) {
+        return player.isDrawAble() && hasAdditionalCardRequest(player);
     }
 
     private boolean hasAdditionalCardRequest(Player player) {
