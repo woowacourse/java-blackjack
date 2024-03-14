@@ -1,7 +1,6 @@
 package blackjack.resultstate;
 
-import blackjack.player.Dealer;
-import blackjack.player.Participant;
+import blackjack.player.Player;
 import java.util.List;
 
 public class Referee {
@@ -15,10 +14,11 @@ public class Referee {
             new DealerWinByScore()
     );
 
-    public ResultState judge(Participant participant, Dealer dealer) {
+    public MatchResult judge(Player participant, Player dealer) {
         return states.stream()
                 .filter(state -> state.isCapableWith(participant, dealer))
                 .findFirst()
-                .orElse(new Tie());
+                .orElse(new Tie())
+                .getMatchResult();
     }
 }

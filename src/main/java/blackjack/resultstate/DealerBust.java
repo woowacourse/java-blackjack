@@ -1,12 +1,11 @@
 package blackjack.resultstate;
 
-import blackjack.player.Dealer;
-import blackjack.player.Participant;
+import blackjack.player.Player;
 
 public class DealerBust implements ResultState {
 
     @Override
-    public boolean isCapableWith(Participant participant, Dealer dealer) {
+    public boolean isCapableWith(Player participant, Player dealer) {
         return participant.isNotBust() && dealer.isBust();
     }
 
