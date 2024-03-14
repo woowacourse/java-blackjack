@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -33,5 +34,16 @@ public class CustomDeck implements Deck {
             throw new IllegalArgumentException("더 이상 뽑을 수 있는 카드가 없습니다.");
         }
         return cards.next();
+    }
+
+    @Override
+    public List<Card> drawInitialCards() {
+        if (!cards.hasNext()) {
+            throw new IllegalArgumentException("더 이상 뽑을 수 있는 카드가 없습니다.");
+        }
+        List<Card> initialCards = new ArrayList<>();
+        initialCards.add(cards.next());
+        initialCards.add(cards.next());
+        return initialCards;
     }
 }

@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.HandGenerator;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
 import blackjack.testutil.CustomDeck;
@@ -15,8 +14,7 @@ import org.junit.jupiter.api.Test;
 class ParticipantTest {
     private static TestParticipant createParticipant(List<Number> numbers, List<Shape> shapes, String name) {
         Deck deck = new CustomDeck(numbers, shapes);
-        HandGenerator handGenerator = new HandGenerator(deck);
-        return new TestParticipant(new Name(name), handGenerator);
+        return new TestParticipant(new Name(name), deck);
     }
 
     @DisplayName("입력된 숫자만큼 카드를 반환한다.")
@@ -38,8 +36,8 @@ class ParticipantTest {
     }
 
     private static class TestParticipant extends Participant {
-        public TestParticipant(Name name, HandGenerator handGenerator) {
-            super(name, handGenerator);
+        public TestParticipant(Name name, Deck deck) {
+            super(name, deck);
         }
 
         @Override

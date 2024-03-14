@@ -1,14 +1,15 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.HandGenerator;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.Hand;
 import java.util.List;
 
 public class Player extends Participant {
     private static final int INITIAL_OPENED_CARD_COUNT = 2;
 
-    public Player(Name name, HandGenerator handGenerator) {
-        super(name, handGenerator);
+    public Player(Name name, Deck deck) {
+        super(name, deck);
     }
 
     @Override

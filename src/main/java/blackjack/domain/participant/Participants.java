@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.HandGenerator;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.Hand;
 import blackjack.domain.result.BlackjackResult;
 import blackjack.domain.result.HandResult;
 import blackjack.domain.result.Referee;
@@ -12,9 +13,9 @@ public class Participants {
     private final Dealer dealer;
     private final Players players;
 
-    public Participants(List<Name> playersName, HandGenerator handGenerator) {
-        this.players = new Players(playersName, handGenerator);
-        this.dealer = new Dealer(handGenerator);
+    public Participants(List<Name> playersName, Deck deck) {
+        this.players = new Players(playersName, deck);
+        this.dealer = new Dealer(deck);
     }
 
     public BlackjackResult generateResult(Referee referee) {

@@ -3,7 +3,6 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.HandGenerator;
 import blackjack.domain.card.RandomDeck;
 import blackjack.exception.InvalidPlayerCountException;
 import java.util.ArrayList;
@@ -16,10 +15,9 @@ class PlayersTest {
     void invalidPlayerCount() {
         //given
         Deck deck = RandomDeck.getInstance();
-        HandGenerator handGenerator = new HandGenerator(deck);
 
         //when & then
-        assertThatThrownBy(() -> new Players(new ArrayList<>(), handGenerator))
+        assertThatThrownBy(() -> new Players(new ArrayList<>(), deck))
                 .isInstanceOf(InvalidPlayerCountException.class);
     }
 }

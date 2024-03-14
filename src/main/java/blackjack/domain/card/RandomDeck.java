@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -20,6 +21,13 @@ public class RandomDeck implements Deck {
 
     public static RandomDeck getInstance() {
         return INSTANCE;
+    }
+
+    public List<Card> drawInitialCards() {
+        List<Card> initialCards = new ArrayList<>();
+        initialCards.add(drawCard());
+        initialCards.add(drawCard());
+        return initialCards;
     }
 
     @Override

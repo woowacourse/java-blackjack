@@ -3,7 +3,6 @@ package blackjack.domain.result;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.HandGenerator;
 import blackjack.domain.card.Number;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
@@ -34,7 +33,6 @@ class BlackjackResultTest {
 
     private Player generatePlayer() {
         Deck deck = new CustomDeck(List.of(Number.ACE, Number.EIGHT));
-        HandGenerator handGenerator = new HandGenerator(deck);
-        return new Player(new Name("gamza"), handGenerator);
+        return new Player(new Name("gamza"), deck);
     }
 }

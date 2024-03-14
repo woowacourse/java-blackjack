@@ -3,7 +3,6 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.HandGenerator;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Shape;
 import blackjack.testutil.CustomDeck;
@@ -14,8 +13,7 @@ import org.junit.jupiter.api.Test;
 class DealerTest {
     private static Dealer createDealer(List<Number> numbers, List<Shape> shapes) {
         Deck deck = new CustomDeck(numbers, shapes);
-        HandGenerator handGenerator = new HandGenerator(deck);
-        return new Dealer(handGenerator);
+        return new Dealer(deck);
     }
 
     @DisplayName("딜러는 처음에 한 장의 카드를 오픈한다.")
@@ -42,8 +40,7 @@ class DealerTest {
         //given
         List<Number> numbers = List.of(Number.ACE, Number.JACK);
         Deck deck = new CustomDeck(numbers);
-        HandGenerator handGenerator = new HandGenerator(deck);
-        Dealer dealer = new Dealer(handGenerator);
+        Dealer dealer = new Dealer(deck);
 
         //when & then
         assertThat(dealer.canHit()).isEqualTo(false);
@@ -55,8 +52,7 @@ class DealerTest {
         //given
         List<Number> numbers = List.of(Number.FIVE, Number.NINE, Number.KING);
         Deck deck = new CustomDeck(numbers);
-        HandGenerator handGenerator = new HandGenerator(deck);
-        Dealer dealer = new Dealer(handGenerator);
+        Dealer dealer = new Dealer(deck);
         dealer.addCard(deck);
 
         //when & then
@@ -69,8 +65,7 @@ class DealerTest {
         //given
         List<Number> numbers = List.of(Number.SEVEN, Number.NINE);
         Deck deck = new CustomDeck(numbers);
-        HandGenerator handGenerator = new HandGenerator(deck);
-        Dealer dealer = new Dealer(handGenerator);
+        Dealer dealer = new Dealer(deck);
 
         //when & then
         assertThat(dealer.canHit()).isEqualTo(true);
