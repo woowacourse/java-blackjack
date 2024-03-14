@@ -31,7 +31,7 @@ public class BlackJackController {
         printScoreAndResult(blackJack, betResult);
     }
 
-    private static Participants makeParticipants() {
+    private Participants makeParticipants() {
         List<String> names = InputView.inputParticipantName();
         return new Participants(names);
     }
