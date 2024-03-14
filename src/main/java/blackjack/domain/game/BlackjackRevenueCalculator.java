@@ -1,7 +1,11 @@
 package blackjack.domain.game;
 
+import java.util.List;
+
+import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Money;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
 
 public class BlackjackRevenueCalculator {
 
@@ -12,6 +16,24 @@ public class BlackjackRevenueCalculator {
 
 	public BlackjackRevenueCalculator(PlayerResultHandler playerResultHandler) {
 		this.playerResultHandler = playerResultHandler;
+	}
+
+	public static BlackjackRevenueCalculator fromDealer(Dealer dealer) {
+		PlayerResultHandler resultHandler = new PlayerResultHandler(dealer);
+
+		return new BlackjackRevenueCalculator(resultHandler);
+	}
+
+	public Money calculateDealerRevenue(Players players) {
+		List<Player> losePlayers = playerResultHandler.getLosePlayers(players.getPlayers());
+
+		if (losePlayers.isEmpty()) {
+			return new Money(0);
+		}
+
+		return losePlayers.stream()
+			.map(players::getBetAmount)
+			.reduce(new Money(0), Money::add);
 	}
 
 	public Money calculatePlayerRevenue(Player player, Money betAmount) {
