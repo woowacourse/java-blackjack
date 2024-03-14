@@ -2,10 +2,12 @@ package model.participant;
 
 import model.card.Card;
 import model.card.CardDeck;
+import model.casino.MatchResult;
 import service.dto.FaceUpResult;
 
 public abstract class Participant {
 
+    protected static final int BUST_THRESHOLD = 22;
     private final Name name;
     protected final CardDeck cardDeck;
 
@@ -16,6 +18,8 @@ public abstract class Participant {
 
     public abstract boolean canHit();
 
+    public abstract MatchResult calculateMatchResult(int opponentHand);
+
     public void hitCard(Card card) {
         cardDeck.addCard(card);
     }
@@ -24,7 +28,7 @@ public abstract class Participant {
         return new FaceUpResult(name, cardDeck.getCards(), cardDeck.calculateHand());
     }
 
-    public Name getName(){
+    public Name getName() {
         return name;
     }
 }
