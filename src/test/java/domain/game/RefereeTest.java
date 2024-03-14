@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static util.CardsSupplier.createBlackJackWithThreeCards;
@@ -12,7 +12,6 @@ import static util.ParticipantSupplier.createPlayer;
 
 import controller.dto.PlayerOutcome;
 import domain.constants.Outcome;
-import domain.game.Referee;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;

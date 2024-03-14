@@ -3,7 +3,12 @@ package domain.money;
 import java.util.Objects;
 
 public class Money {
+    private static final int INITIAL_MONEY = 0;
     private final int value;
+
+    public Money() {
+        this.value = INITIAL_MONEY;
+    }
 
     public Money(final int value) {
         this.value = value;
@@ -32,5 +37,9 @@ public class Money {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    public int getValue() {
+        return value;
     }
 }
