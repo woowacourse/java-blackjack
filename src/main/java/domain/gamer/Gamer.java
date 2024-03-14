@@ -4,8 +4,8 @@ import domain.card.Cards;
 import java.util.List;
 
 public class Gamer {
-    
-    final Cards cards;
+
+    protected final Cards cards;
 
     public Gamer() {
         this.cards = new Cards();
