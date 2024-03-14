@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 
 import static blackjack.fixture.PlayerFixture.playerChoco;
 import static blackjack.fixture.PlayerFixture.playerClover;
-import static blackjack.fixture.TrumpCardFixture.threeSpadeTrumpCard;
+import static blackjack.fixture.CardFixture.threeSpadeCard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -83,7 +83,7 @@ public class PlayerTest {
     @Test
     void draw() {
         //given
-        Card card = threeSpadeTrumpCard();
+        Card card = threeSpadeCard();
 
         //when
         choco.draw(dealer);

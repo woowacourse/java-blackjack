@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static blackjack.fixture.TrumpCardFixture.aceSpadeTrumpCard;
+import static blackjack.fixture.CardFixture.aceSpadeCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("딜러")
@@ -23,7 +23,7 @@ public class DealerTest {
 
     private Deck deck;
     private Dealer dealer;
-    private final Card cardAceSpade = aceSpadeTrumpCard();
+    private final Card cardAceSpade = aceSpadeCard();
 
     @BeforeEach
     void setUp() {

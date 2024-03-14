@@ -7,15 +7,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static blackjack.fixture.TrumpCardFixture.*;
+import static blackjack.fixture.CardFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("카드 손패")
 public class HandTest {
 
-    private final Card cardFourSpade = fourSpadeTrumpCard();
-    private final Card cardFiveSpade = fiveSpadeTrumpCard();
+    private final Card cardFourSpade = fourSpadeCard();
+    private final Card cardFiveSpade = fiveSpadeCard();
 
     private Hand hand;
 
@@ -67,10 +67,10 @@ public class HandTest {
     @Test
     void calculateScoreWithAce() {
         //given
-        Card cardAceClover = aceCloverTrumpCard();
-        Card cardAceDiamond = aceDiamondTrumpCard();
-        Card cardAceSpade = aceSpadeTrumpCard();
-        Card cardKingSpade = kingSpadeTrumpCard();
+        Card cardAceClover = aceCloverCard();
+        Card cardAceDiamond = aceDiamondCard();
+        Card cardAceSpade = aceSpadeCard();
+        Card cardKingSpade = kingSpadeCard();
 
         //when
         Hand hand1 = new Hand();
@@ -92,7 +92,7 @@ public class HandTest {
     @Test
     void isBust() {
         //given
-        hand.add(threeSpadeTrumpCard(), kingSpadeTrumpCard(), cardFourSpade, fiveSpadeTrumpCard());
+        hand.add(threeSpadeCard(), kingSpadeCard(), cardFourSpade, fiveSpadeCard());
 
         //when & then
         assertThat(hand.isBust()).isTrue();
@@ -102,7 +102,7 @@ public class HandTest {
     @Test
     void isBlackjack() {
         //given
-        hand.add(kingSpadeTrumpCard(), aceCloverTrumpCard());
+        hand.add(kingSpadeCard(), aceCloverCard());
 
         //when & then
         assertThat(hand.isBlackjack()).isTrue();

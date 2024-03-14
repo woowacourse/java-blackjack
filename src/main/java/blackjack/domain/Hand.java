@@ -43,7 +43,7 @@ public class Hand {
 
     private int calculateScoreWithoutAce() {
         return cards.stream()
-                .filter(trumpCard -> !trumpCard.isAce())
+                .filter(card -> !card.isAce())
                 .mapToInt(Card::getScore)
                 .sum();
     }

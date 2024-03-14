@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static blackjack.fixture.TrumpCardFixture.aceSpadeTrumpCard;
+import static blackjack.fixture.CardFixture.aceSpadeCard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -28,7 +28,7 @@ public class DeckTest {
     @Test
     void draw() {
         //given
-        Card cardAceSpade = aceSpadeTrumpCard();
+        Card cardAceSpade = aceSpadeCard();
 
         //when & then
         assertThat(deck.draw()).isEqualTo(cardAceSpade);
