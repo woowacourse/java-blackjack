@@ -15,7 +15,7 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackJackController {
-    public static final int INITIAL_CARDS_COUNT = 2;
+    private static final int INITIAL_CARDS_COUNT = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -57,16 +57,16 @@ public class BlackJackController {
 
     private void doInitialDraw(Dealer dealer, Players players, Deck deck) {
         players.getPlayers().forEach(
-                player -> drawCard(player, deck, INITIAL_CARDS_COUNT)
+                player -> drawInitialCard(player, deck)
         );
-        drawCard(dealer.getPlayer(), deck, INITIAL_CARDS_COUNT);
+        drawInitialCard(dealer.getPlayer(), deck);
 
         outputView.printInitialMessage(players.getPlayerNames());
         printInitialCards(dealer, players);
     }
 
-    private void drawCard(Player player, Deck deck, int amount) {
-        for (int i = 0; i < amount; i++) {
+    private void drawInitialCard(Player player, Deck deck) {
+        for (int i = 0; i < INITIAL_CARDS_COUNT; i++) {
             player.draw(deck);
         }
     }
