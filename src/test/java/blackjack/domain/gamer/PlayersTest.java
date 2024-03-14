@@ -17,8 +17,8 @@ public class PlayersTest {
 	@DisplayName("플레이어의 수가 1 이상 또는 8 이하이면 정상적으로 생성된다.")
 	@ParameterizedTest
 	@MethodSource("playersSizeSuccessTestArguments")
-	void playersSizeSuccessTest(List<String> players) {
-		assertThatCode(() -> new Players(players))
+	void playersSizeSuccessTest(List<String> playerNames) {
+		assertThatCode(() -> Players.fromNames(playerNames))
 			.doesNotThrowAnyException();
 	}
 
@@ -32,8 +32,8 @@ public class PlayersTest {
 	@DisplayName("플레이어의 수가 1 미만 또는 8 초과이면 예외를 발생시킨다.")
 	@ParameterizedTest
 	@MethodSource("playersSizeErrorTestArguments")
-	void playersSizeErrorTest(List<String> players) {
-		assertThatThrownBy(() -> new Players(players))
+	void playersSizeErrorTest(List<String> playerNames) {
+		assertThatThrownBy(() -> Players.fromNames(playerNames))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("플레이어의 수는 1 이상 또는 8 이하이어야 합니다.");
 	}
@@ -48,7 +48,7 @@ public class PlayersTest {
 	@DisplayName("플레이어의 이름이 중복되면 예외가 발생한다.")
 	@Test
 	void playersNameDuplicateErrorTest() {
-		assertThatThrownBy(() -> new Players(List.of("p1", "p1", "p3")))
+		assertThatThrownBy(() -> Players.fromNames(List.of("p1", "p1", "p3")))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage(Players.DUPLICATION_ERROR_MESSAGE);
 	}

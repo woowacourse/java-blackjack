@@ -27,7 +27,7 @@ public class BlackjackGame {
 	}
 
 	public void start() {
-		Players players = new Players(inputView.readPlayerNames());
+		Players players = Players.fromNames(inputView.readPlayerNames());
 		Dealer dealer = Dealer.newInstance(createDeck());
 
 		dealInitCards(dealer, players);

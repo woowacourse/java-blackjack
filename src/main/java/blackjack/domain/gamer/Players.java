@@ -13,31 +13,36 @@ public class Players {
 
 	private final List<Player> players;
 
-	public Players(final List<String> players) {
-		List<String> copyPlayers = new ArrayList<>(players);
-		validate(copyPlayers);
+	public Players(final List<Player> players) {
+		this.players = players;
+	}
 
-		this.players = copyPlayers.stream()
+	public static Players fromNames(final List<String> playerNames) {
+		ArrayList<String> copyPlayerNames = new ArrayList<>(playerNames);
+		validate(copyPlayerNames);
+
+		List<Player> players = copyPlayerNames.stream()
 			.map(Player::newInstance)
 			.toList();
+		return new Players(players);
 	}
 
-	private void validate(final List<String> players) {
-		validateSize(players);
-		validateDuplication(players);
+	private static void validate(final List<String> playerNames) {
+		validateSize(playerNames);
+		validateDuplication(playerNames);
 	}
 
-	private void validateDuplication(final List<String> players) {
+	private static void validateSize(final List<String> players) {
+		if (players.size() < MIN_SIZE || players.size() > MAX_SIZE) {
+			throw new IllegalArgumentException(SIZE_ERROR_MESSAGE);
+		}
+	}
+
+	private static void validateDuplication(final List<String> players) {
 		int distinctSize = new HashSet<>(players).size();
 
 		if (players.size() != distinctSize) {
 			throw new IllegalArgumentException(DUPLICATION_ERROR_MESSAGE);
-		}
-	}
-
-	private void validateSize(final List<String> players) {
-		if (players.size() < MIN_SIZE || players.size() > MAX_SIZE) {
-			throw new IllegalArgumentException(SIZE_ERROR_MESSAGE);
 		}
 	}
 
