@@ -49,7 +49,7 @@ public class Players {
     private void playerHit(Function<Name, HitOption> isHitOption, Consumer<ParticipantDto> printPlayerHands, Player player, Dealer dealer) {
         while (player.canHit() && HitOption.isHit(isHitOption.apply(player.getName()))) {
             player.receiveCard(dealer.draw());
-            printPlayerHands.accept(player.getDto());
+            printPlayerHands.accept(ParticipantDto.from(player));
         }
     }
 

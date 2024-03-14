@@ -4,6 +4,7 @@ import domain.blackjack.BetAmount;
 import domain.blackjack.BettingResult;
 import domain.blackjack.BlackJack;
 import domain.blackjack.HitOption;
+import domain.dto.ParticipantDto;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
@@ -44,7 +45,7 @@ public class BlackJackController {
         OutputView.printBeginDealingInformation(players.getNames());
         OutputView.printDealerHands(dealer.getName(), dealer.getCards());
         for (Player player : players.getValue()) {
-            OutputView.printParticipantHands(player.getDto());
+            OutputView.printParticipantHands(ParticipantDto.from(player));
         }
     }
 
@@ -57,9 +58,9 @@ public class BlackJackController {
     }
 
     private void printScore(Players players, Dealer dealer) {
-        OutputView.printParticipantResult(dealer.getDto());
+        OutputView.printParticipantResult(ParticipantDto.from(dealer));
         for (Player player : players.getValue()) {
-            OutputView.printParticipantResult(player.getDto());
+            OutputView.printParticipantResult(ParticipantDto.from(player));
         }
     }
 

@@ -2,7 +2,6 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Hands;
-import domain.dto.ParticipantDto;
 
 import java.util.Collections;
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.List;
 public abstract class Participant {
 
     private static final int BLACK_JACK_COUNT = 21;
-    private static final int MIN_CARD_COUNT = 2;
 
     protected Hands hands;
     private final Name name;
@@ -48,9 +46,5 @@ public abstract class Participant {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(hands.getValue());
-    }
-
-    public ParticipantDto getDto() {
-        return new ParticipantDto(name, getCards(), getScore());
     }
 }
