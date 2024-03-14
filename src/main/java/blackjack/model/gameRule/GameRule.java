@@ -10,6 +10,7 @@ public class GameRule {
 
     private static final GamePlayRule GAME_PLAY_RULE = new GamePlayRule();
     private static final GameResultRule GAME_RESULT_RULE = new GameResultRule();
+
     public static final int BUST_STANDARD_SCORE = 22;
     public static final int BLACKJACK_STANDARD_SCORE = 21;
     public static final int BLACKJACK_STANDARD_DECK_SIZE = 2;

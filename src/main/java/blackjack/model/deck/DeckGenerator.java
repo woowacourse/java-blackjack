@@ -12,6 +12,9 @@ public class DeckGenerator {
 
     private static final List<Card> deck = createDeck();
 
+    private DeckGenerator() {
+    }
+
     public static List<Card> generateDeck() {
         return new ArrayList<>(deck);
     }
