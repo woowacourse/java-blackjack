@@ -14,6 +14,7 @@ import java.util.Map.Entry;
 public class BetAmountRepository {
 
     private final Map<Player, BetAmount> repository;
+    private Map<Player, Amount> result; // TODO 리팩터링 대상
 
     public BetAmountRepository() {
         this(new HashMap<>());
@@ -43,6 +44,15 @@ public class BetAmountRepository {
                 result.put(entry.getKey(), entry.getValue().loseAmount());
             }
         }
+        this.result = result;
         return result;
+    }
+
+    public Amount calculateDealerAmount() {
+        long dealerAmount = result.values().stream()
+                .map(Amount::getValue)
+                .mapToLong(Long::longValue)
+                .sum();
+        return new Amount(dealerAmount);
     }
 }

@@ -10,6 +10,10 @@ public class Amount {
         this.value = value;
     }
 
+    public long getValue() {
+        return value;
+    }
+
     @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
