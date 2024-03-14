@@ -1,4 +1,4 @@
-package domain.participant;
+package domain.participant.attributes;
 
 public record Name(String value) {
     public Name {

@@ -5,7 +5,7 @@ import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
 import domain.card.Cards;
-import domain.participant.Name;
+import domain.participant.attributes.Name;
 import domain.participant.player.Players;
 
 public interface BlackjackViewParser {

@@ -8,6 +8,7 @@ import static game.BlackjackGame.BLACKJACK_SCORE;
 import domain.BlackjackResultStatus;
 import domain.card.Card;
 import domain.card.Cards;
+import domain.participant.attributes.Name;
 
 public abstract class Participant {
 
