@@ -14,8 +14,8 @@ public class Player extends Participant {
         this.money = money;
     }
 
-    public Money calculateProfit(GameResult gameResult) {
-        return money.multiply(gameResult.getProfitMultiplier());
+    public Money calculateProfit(JudgementResult judgementResult) {
+        return money.multiply(judgementResult.getProfitMultiplier());
     }
 
     @Override

@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Map;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
-import blackjack.domain.GameResult;
+import blackjack.domain.Judgement;
+import blackjack.domain.JudgementResult;
 import blackjack.domain.Money;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
@@ -91,12 +92,13 @@ class Controller {
 
     private void showProfit(Participants participants) {
         Map<String, Double> resultMap = new LinkedHashMap<>();
+        Judgement judgement = new Judgement();
         Dealer dealer = participants.getDealer();
         double dealerProfit = 0;
         resultMap.put(dealer.getName(), dealerProfit);
 
         for (Player player : participants.getPlayers()) {
-            GameResult result = dealer.judge(player);
+            JudgementResult result = judgement.judge(dealer, player);
             double playerProfit = player.calculateProfit(result).getAmount();
             dealerProfit -= playerProfit;
             resultMap.put(player.getName(), playerProfit);

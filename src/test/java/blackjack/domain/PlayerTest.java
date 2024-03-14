@@ -88,7 +88,7 @@ class PlayerTest {
         Money playerMoney = new Money(1000);
         Player player = new Player("atom", playerMoney);
 
-        Money result = player.calculateProfit(GameResult.LOSE);
+        Money result = player.calculateProfit(JudgementResult.LOSE);
 
         assertThat(result.getAmount()).isEqualTo(-1000);
     }
@@ -99,7 +99,7 @@ class PlayerTest {
         Money playerMoney = new Money(1000);
         Player player = new Player("atom", playerMoney);
 
-        Money result = player.calculateProfit(GameResult.WIN);
+        Money result = player.calculateProfit(JudgementResult.WIN);
 
         assertThat(result.getAmount()).isEqualTo(1000);
     }
@@ -110,7 +110,7 @@ class PlayerTest {
         Money playerMoney = new Money(1000);
         Player player = new Player("atom", playerMoney);
 
-        Money result = player.calculateProfit(GameResult.BLACKJACK_WIN);
+        Money result = player.calculateProfit(JudgementResult.BLACKJACK_WIN);
 
         assertThat(result.getAmount()).isEqualTo(1500);
     }
@@ -121,7 +121,7 @@ class PlayerTest {
         Money playerMoney = new Money(1000);
         Player player = new Player("atom", playerMoney);
 
-        Money result = player.calculateProfit(GameResult.TIE);
+        Money result = player.calculateProfit(JudgementResult.TIE);
 
         assertThat(result.getAmount()).isEqualTo(0);
     }

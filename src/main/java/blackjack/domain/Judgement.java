@@ -1,0 +1,31 @@
+package blackjack.domain;
+
+public class Judgement {
+
+    public JudgementResult judge(Participant dealer, Participant player) {
+        int playerScore = player.calculateScore();
+        int dealerScore = dealer.calculateScore();
+
+        if (player.isBust()) {
+            return JudgementResult.LOSE;
+        }
+
+        if (dealer.isBust() || playerScore > dealerScore) {
+            return JudgementResult.WIN;
+        }
+
+        if (player.isBlackJack() && dealer.isBlackJack()) {
+            return JudgementResult.TIE;
+        }
+
+        if (player.isBlackJack()) {
+            return JudgementResult.BLACKJACK_WIN;
+        }
+
+        if (dealer.isBlackJack() || playerScore < dealerScore) {
+            return JudgementResult.LOSE;
+        }
+
+        return JudgementResult.TIE;
+    }
+}

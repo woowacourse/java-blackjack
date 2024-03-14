@@ -12,33 +12,6 @@ public class Dealer extends Participant {
         super(DEALER_NAME);
     }
 
-    public GameResult judge(Player player) {
-        int playerScore = player.calculateScore();
-        int dealerScore = calculateScore();
-
-        if (player.isBust()) {
-            return GameResult.LOSE;
-        }
-
-        if (isBust() || playerScore > dealerScore) {
-            return GameResult.WIN;
-        }
-
-        if (player.isBlackJack() && isBlackJack()) {
-            return GameResult.TIE;
-        }
-
-        if (player.isBlackJack()) {
-            return GameResult.BLACKJACK_WIN;
-        }
-
-        if (isBlackJack() || playerScore < dealerScore) {
-            return GameResult.LOSE;
-        }
-
-        return GameResult.TIE;
-    }
-
     public List<Card> getOpenCards() {
         List<Card> allCards = getCards();
 
