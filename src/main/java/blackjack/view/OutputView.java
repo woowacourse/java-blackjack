@@ -5,6 +5,7 @@ import java.util.List;
 import blackjack.dto.CardDto;
 import blackjack.dto.DealerInitialHandDto;
 import blackjack.dto.GamerHandDto;
+import blackjack.dto.GamerRevenueDto;
 
 public class OutputView {
 
@@ -86,5 +87,12 @@ public class OutputView {
 
 	public void printEmptyLine() {
 		System.out.println();
+	}
+
+	public void printRevenues(GamerRevenueDto gamerRevenueDto) {
+		System.out.println("## 최종 수익");
+		gamerRevenueDto.nameRevenueMap().forEach((name, revenue) -> {
+			System.out.println(name + COLON_WITH_SPACE + revenue);
+		});
 	}
 }
