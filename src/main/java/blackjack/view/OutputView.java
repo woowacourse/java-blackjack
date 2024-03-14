@@ -11,6 +11,9 @@ public class OutputView {
 
     private static final String NEW_LINE = System.lineSeparator();
 
+    private OutputView() {
+    }
+
     public static void printInitialDrawResult(DealerDto dealerDto, List<PlayerDto> playerDtos) {
         String playerNames = Formatter.playerNamesFormat(playerDtos);
         printMessage(String.format(NEW_LINE + "딜러와 %s에게 2장을 나누었습니다.", playerNames));

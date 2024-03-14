@@ -10,7 +10,9 @@ import java.util.List;
 public class Formatter {
 
     private static final String SEPARATOR = ", ";
-    private static final String SPACE = " ";
+
+    private Formatter() {
+    }
 
     public static String playerNamesFormat(List<PlayerDto> playerDtos) {
         List<String> playerNames = playerDtos.stream()
@@ -65,20 +67,4 @@ public class Formatter {
     private static String cardScoreFormat(int score) {
         return String.format(" - 결과: %d", score);
     }
-
-//    private static String dealerResult(int winCount, int tieCount, int loseCount) {
-//        StringJoiner dealerResultInfo = new StringJoiner(SPACE);
-//
-//        if (winCount > 0) {
-//            dealerResultInfo.add(String.format("%d승", winCount));
-//        }
-//        if (tieCount > 0) {
-//            dealerResultInfo.add(String.format("%d무", tieCount));
-//        }
-//        if (loseCount > 0) {
-//            dealerResultInfo.add(String.format("%d패", loseCount));
-//        }
-//
-//        return dealerResultInfo.toString();
-//    }
 }
