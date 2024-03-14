@@ -11,16 +11,9 @@ public class GamerOutputView {
     private static final String JOIN_DELIMITER = ", ";
     private static final String CARD_POSTFIX = "카드";
     private static final String DEALER_NAME = "딜러";
+    private static final Integer DEALER_FIRST_SHOW_CARD_COUNT = 1;
 
     private GamerOutputView() {
-    }
-
-    private static String generateGamerOutputOnlyOneCard(GamerDTO gamerDTO) {
-        List<CardDTO> cardDTOS = gamerDTO.getHoldingCardsDto();
-        return cardDTOS.stream()
-                .map(cardDTO -> getCardType(cardDTO.getCardType()) + getCardName(cardDTO.getCardName()))
-                .limit(1)
-                .collect(Collectors.joining(JOIN_DELIMITER));
     }
 
     private static String generateGamerOutput(GamerDTO dealerDTO) {
@@ -30,12 +23,20 @@ public class GamerOutputView {
                 .collect(Collectors.joining(JOIN_DELIMITER));
     }
 
+    private static String generateGamerOutputWithShowingCardCount(GamerDTO dealerDTO, int showingCardCount) {
+        List<CardDTO> cardDTOS = dealerDTO.getHoldingCardsDto();
+        return cardDTOS.stream()
+                .map(cardDTO -> getCardType(cardDTO.getCardType()) + getCardName(cardDTO.getCardName()))
+                .limit(showingCardCount)
+                .collect(Collectors.joining(JOIN_DELIMITER));
+    }
+
     public static void printOutputWithoutSummationCardPoint(GamerDTO gamerDTO) {
         String name = gamerDTO.getName();
         String nameOutput = name + CARD_POSTFIX;
         String cardsOutput = generateGamerOutput(gamerDTO);
         if (name.equals(DEALER_NAME)) {
-            cardsOutput = generateGamerOutputOnlyOneCard(gamerDTO);
+            cardsOutput = generateGamerOutputWithShowingCardCount(gamerDTO, DEALER_FIRST_SHOW_CARD_COUNT);
         }
         System.out.printf("%s: %s%n", nameOutput, cardsOutput);
     }
