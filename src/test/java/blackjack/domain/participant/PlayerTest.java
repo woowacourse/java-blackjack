@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Score;
+import blackjack.domain.card.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

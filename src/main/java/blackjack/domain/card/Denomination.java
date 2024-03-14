@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.Score;
-
 public enum Denomination {
     ACE(1),
     TWO(2),

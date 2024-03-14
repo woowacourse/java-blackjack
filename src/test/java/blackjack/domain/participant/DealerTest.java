@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Score;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Score;
 import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

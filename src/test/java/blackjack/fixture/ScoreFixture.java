@@ -1,6 +1,6 @@
 package blackjack.fixture;
 
-import blackjack.domain.Score;
+import blackjack.domain.card.Score;
 
 public class ScoreFixture {
 
