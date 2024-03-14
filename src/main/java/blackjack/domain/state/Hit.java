@@ -22,4 +22,14 @@ public final class Hit extends Started {
         }
         return new Hit(cardHand);
     }
+
+    @Override
+    public State stay() {
+        return new Stay(getCardHand());
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

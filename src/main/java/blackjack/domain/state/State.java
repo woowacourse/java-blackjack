@@ -7,7 +7,11 @@ public interface State {
 
     State draw(Card card);
 
+    State stay();
+
     int calculateScore();
+
+    boolean isFinished();
 
     CardHand getCardHand();
 }

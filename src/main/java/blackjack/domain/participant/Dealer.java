@@ -23,6 +23,7 @@ public class Dealer extends Participant {
         return cardDeck.draw();
     }
 
+    @Override
     public boolean canReceiveCard() {
         return calculateScore() <= DEALER_MIN_SCORE_POLICY;
     }

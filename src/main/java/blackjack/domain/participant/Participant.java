@@ -5,7 +5,7 @@ import blackjack.domain.card.CardHand;
 import blackjack.domain.state.Hit;
 import blackjack.domain.state.State;
 
-public class Participant {
+public abstract class Participant {
     private final Name name;
     private State state;
 
@@ -14,11 +14,21 @@ public class Participant {
         this.state = new Hit(new CardHand());
     }
 
+    public abstract boolean canReceiveCard();
+
     public void receiveCard(final Card card) {
         state = state.draw(card);
     }
 
     public int calculateScore() {
         return state.calculateScore();
+    }
+
+    public boolean isFinished() {
+        return state.isFinished();
+    }
+
+    public void stay() {
+        state = state.stay();
     }
 }

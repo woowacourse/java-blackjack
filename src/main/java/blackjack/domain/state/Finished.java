@@ -11,6 +11,16 @@ public class Finished extends Started {
 
     @Override
     public State draw(final Card card) {
-        throw new UnsupportedOperationException("해당 플레이어의 이미 턴이 종료되었습니다.");
+        throw new UnsupportedOperationException("해당 플레이어의 턴이 이미 종료되었습니다.");
+    }
+
+    @Override
+    public State stay() {
+        throw new UnsupportedOperationException("해당 플레이어의 턴이 이미 종료되었습니다.");
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 }
