@@ -31,17 +31,21 @@ public class BlackJackController {
         final Dealer dealer = Dealer.from(CardDeck.generate());
 
         final Bettings bettings = new Bettings();
-
-        for (Player player : players.getPlayers()) {
-            final BetAmount betAmount = BetAmount.from(inputView.readBetAmount(player.getName()));
-            bettings.save(player, betAmount);
-        }
+        initBettings(bettings, players);
 
         initHands(players, dealer);
         dealToPlayers(players, dealer);
         dealToDealerIfPossible(players, dealer);
 
-        printFinalResult(bettings, players, dealer);
+        printHandsResult(players, dealer);
+        printFinalProfit(bettings, players, dealer);
+    }
+
+    private void initBettings(final Bettings bettings, final Players players) {
+        for (Player player : players.getPlayers()) {
+            final BetAmount betAmount = BetAmount.from(inputView.readBetAmount(player.getName()));
+            bettings.save(player, betAmount);
+        }
     }
 
     private void initHands(final Players players, final Dealer dealer) {
@@ -69,14 +73,16 @@ public class BlackJackController {
         printDealerHandsChangedMessage(dealer.countAddedHands(), dealer.getName());
     }
 
-    private void printFinalResult(final Bettings bettings, final Players players, final Dealer dealer) {
+    private void printHandsResult(final Players players, final Dealer dealer) {
         outputView.printHandsResult(ParticipantsDto.from(dealer, players));
         outputView.printGameResultMessage();
+    }
 
+    private void printFinalProfit(final Bettings bettings, final Players players, final Dealer dealer) {
         final Map<Player, Result> playersResult = players.calculateResultBy(dealer);
 
         for (Entry<Player, Result> entry : playersResult.entrySet()) {
-            BetAmount betAmount = bettings.calculateBy(entry);
+            final BetAmount betAmount = bettings.calculateBy(entry);
             outputView.printGameResult(entry.getKey(), betAmount);
         }
     }
