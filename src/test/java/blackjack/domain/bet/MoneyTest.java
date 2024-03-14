@@ -36,4 +36,12 @@ class MoneyTest {
         Money money = new Money(1000);
         assertThat(money.multiply(1.5).getAmount()).isEqualTo(1500);
     }
+
+    @DisplayName("돈에 돈을 더할 수 있다")
+    @Test
+    void testAddMoney() {
+        Money money = new Money(1000);
+        Money added = money.add(new Money(1000));
+        assertThat(added.getAmount()).isEqualTo(2000);
+    }
 }

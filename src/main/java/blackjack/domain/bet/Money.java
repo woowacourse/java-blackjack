@@ -16,6 +16,10 @@ public class Money {
         return new Money((int) (amount * scope));
     }
 
+    public Money add(Money other) {
+        return new Money(amount + other.amount);
+    }
+
     public int getAmount() {
         return amount;
     }
