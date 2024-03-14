@@ -29,9 +29,9 @@ public class BlackJackGameController {
 
     public void gameStart() {
         Players players = new Players(generatePlayers(inputView.readPlayersNames()));
-        Cashier cashier = new Cashier(generateCashier(players));
         Dealer dealer = new Dealer();
-        Deck deck = new Deck(Card.makeCardDeck());
+        Cashier cashier = new Cashier(generateCashier(players));
+        Deck deck = Deck.createShuffledDeck();
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
 
         configureSetup(blackJackGame, players, dealer, deck);

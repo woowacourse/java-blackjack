@@ -16,12 +16,6 @@ public class Card {
         }
     }
 
-    private static void addCardToCacheWithShape(CardShape cardShape) {
-        for (CardNumber cardNumber : CardNumber.values()) {
-            cache.add(new Card(cardNumber, cardShape));
-        }
-    }
-
     private final CardNumber cardNumber;
     private final CardShape cardShape;
 
@@ -30,8 +24,18 @@ public class Card {
         this.cardShape = cardShape;
     }
 
-    public static List<Card> makeCardDeck() {
-        return new ArrayList<>(cache);
+    private static void addCardToCacheWithShape(CardShape cardShape) {
+        for (CardNumber cardNumber : CardNumber.values()) {
+            cache.add(new Card(cardNumber, cardShape));
+        }
+    }
+
+    public static Card valueOf(CardNumber cardNumber, CardShape cardShape) {
+        return cache.stream()
+                .filter(card -> card.getCardNumber() == cardNumber)
+                .filter(card -> card.getCardShape() == cardShape)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("[INTERNAL ERROR] 카드 정보에 해당하는 카드를 찾을 수 없었습니다"));
     }
 
     public boolean isAce() {
