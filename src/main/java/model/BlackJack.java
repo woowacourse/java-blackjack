@@ -63,11 +63,24 @@ public class BlackJack {
 
     public Map<Outcome, Long> getDealerOutCome() {
         Map<Participant, Outcome> participantOutcome = matchParticipantsOutcome();
-        return participantOutcome.values().stream().collect(groupingBy(Outcome::reverse, counting()));
+        return participantOutcome.values()
+                .stream()
+                .collect(groupingBy(Outcome::reverse, counting()));
     }
 
     public Map<String, Cards> mapToUsersNameAndCards() {
-        return participants.participants().stream().collect(toMap(User::getName, User::getCards));
+        return participants.participants()
+                .stream()
+                .collect(toMap(User::getName, User::getCards));
+    }
+
+    public Map<String, Integer> mapToNameAndRevenues() {
+        return participants.participants()
+                .stream()
+                .collect(toMap(
+                        User::getName,
+                        participant -> participant.calculateRevenue(dealer.isNotHit(), dealer.calculateScore())
+                ));
     }
 
     public List<String> findParticipantsName() {

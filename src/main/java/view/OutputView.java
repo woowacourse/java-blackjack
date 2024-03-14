@@ -18,7 +18,8 @@ public class OutputView {
     private static final String GAME_RESULT_MESSAGE = "%s : %s";
     private static final String PLAYER_CARD_SUM_MESSAGE = " - 결과: %d";
     private static final String DEALER_ADD_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String GAME_RESULT_PROMPT_MESSAGE = "## 최종 승패";
+    private static final String GAME_RESULT_PROMPT_MESSAGE = "## 최종 수익";
+    private static final String GAME_RESULT_REVENUE_MESSAGE = "%s : %d";
 
     public void printPlayerNames(List<String> names) {
         System.out.println(System.lineSeparator() + DIVIDE_CARD_MESSAGE.formatted(String.join(", ", names)));
@@ -52,6 +53,13 @@ public class OutputView {
         }
     }
 
+    public void printParticipantsRevenue(Map<String, Integer> revenue) {
+        System.out.println(System.lineSeparator() + GAME_RESULT_PROMPT_MESSAGE);
+        for (Entry<String, Integer> participant : revenue.entrySet()) {
+            System.out.println(GAME_RESULT_REVENUE_MESSAGE.formatted(participant.getKey(), participant.getValue()));
+        }
+    }
+
     private String cardsToString(Entry<String, Cards> userNameAndCards) {
         int size = userNameAndCards.getValue().cards().size();
         return cardsToString(userNameAndCards.getKey(), userNameAndCards.getValue(), size);
@@ -75,28 +83,6 @@ public class OutputView {
 
     public void printDealerAddCard() {
         System.out.println(System.lineSeparator() + DEALER_ADD_CARD_MESSAGE);
-    }
-
-    public void printPlayersOutcome(Map<Outcome, Long> dealerOutcomes, Map<Participant, Outcome> results) {
-        printDealerOutcome(dealerOutcomes);
-        printParticipantOutcome(results);
-    }
-
-    private void printDealerOutcome(Map<Outcome, Long> dealerOutcomes) {
-        System.out.println(System.lineSeparator() + GAME_RESULT_PROMPT_MESSAGE);
-
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Map.Entry<Outcome, Long> dealerOutcome : dealerOutcomes.entrySet()) {
-            stringBuilder.append(dealerOutcome.getValue()).append(gameResultToString(dealerOutcome.getKey()));
-        }
-        System.out.println(GAME_RESULT_MESSAGE.formatted("딜러", stringBuilder.toString()));
-    }
-
-    private void printParticipantOutcome(Map<Participant, Outcome> results) {
-        for (Map.Entry<Participant, Outcome> result : results.entrySet()) {
-            System.out.println(
-                    GAME_RESULT_MESSAGE.formatted(result.getKey().getName(), gameResultToString(result.getValue())));
-        }
     }
 
     private String denominationToString(Denomination denomination) {
