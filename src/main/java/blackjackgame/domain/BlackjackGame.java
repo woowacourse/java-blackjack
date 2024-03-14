@@ -1,10 +1,13 @@
 package blackjackgame.domain;
 
+import blackjackgame.domain.blackjack.GameProfit;
 import blackjackgame.domain.card.Deck;
 import blackjackgame.domain.gamers.CardHolder;
 import blackjackgame.domain.gamers.Gamer;
 import blackjackgame.domain.gamers.Gamers;
 import blackjackgame.view.OutputView;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class BlackjackGame {
@@ -32,12 +35,24 @@ public class BlackjackGame {
         }
     }
 
-//    public GameResult getGameResults() {
-//        for (Gamer player : players.getCardHolders()) {
-//
-//        }
-//        GameResultCalculator.calculate()
-//    }
+    public GameProfit getGameProfit() {
+        double dealerProfit = 0.0;
+        List<Double> playersProfit = new ArrayList<>(Collections.nCopies(players.getSize(), 0.0));
+
+        return calculateGameProfit(dealerProfit, playersProfit);
+    }
+
+    private GameProfit calculateGameProfit(double dealerProfit, List<Double> playersProfit) {
+        List<Double> gameProfits = players.getGameProfits(dealer);
+
+        for(int i = 0; i < gameProfits.size(); i++) {
+            Double gameProfit = gameProfits.get(i);
+            playersProfit.set(i, gameProfit + playersProfit.get(i));
+            dealerProfit -= gameProfit;
+        }
+
+        return new GameProfit(dealerProfit, playersProfit);
+    }
 
     public CardHolder getCardHolderDealer() {
         return dealer.getCardHolder();

@@ -1,7 +1,8 @@
 package blackjackgame.domain.gamers;
 
-import blackjackgame.domain.blackjack.BetMoney;
 import blackjackgame.domain.blackjack.DealerRandomCardDrawStrategy;
+import blackjackgame.domain.blackjack.GameResult;
+import blackjackgame.domain.blackjack.GameResultCalculator;
 import blackjackgame.domain.blackjack.HoldingCards;
 import blackjackgame.domain.card.Deck;
 
@@ -14,9 +15,9 @@ public class Gamer {
         this.betMaker = betMaker;
     }
 
-    public static Gamer createByNameAndBetMoney(String name, Integer betMoney) {
+    public static Gamer createByNameAndBetMoney(String name, Double betMoney) {
         CardHolder cardHolder = new CardHolder(name, HoldingCards.of());
-        BetMaker betMaker = new BetMaker(name, new BetMoney(betMoney));
+        BetMaker betMaker = new BetMaker(name, betMoney);
 
         return new Gamer(cardHolder, betMaker);
     }
@@ -27,6 +28,17 @@ public class Gamer {
 
     public void cardHolderDraw(Deck deck, int execution_count) {
         cardHolder.draw(deck, new DealerRandomCardDrawStrategy(cardHolder), execution_count);
+    }
+
+    // TODO: 인덴트 줄이기
+    public Double getGameProfit(Gamer otherGamer) {
+        GameResult gamerGameResult = GameResultCalculator.calculate(cardHolder, otherGamer.getCardHolder());
+        for (GameResult gameResult : GameResult.values()) {
+            if (gameResult == gamerGameResult) {
+                return betMaker.getBetMoney() * gameResult.getTimes();
+            }
+        }
+        return 0.0;
     }
 
     public String getRawGamerName() {

@@ -12,7 +12,7 @@ public class Gamers {
         this.gamers = gamers;
     }
 
-    public static Gamers createByNamesAndBetMoneys(List<String> names, List<Integer> betMoneys) {
+    public static Gamers createByNamesAndBetMoneys(List<String> names, List<Double> betMoneys) {
         List<Gamer> gamers = new ArrayList<>();
         for (int i = 0; i < names.size(); i++) {
             gamers.add(Gamer.createByNameAndBetMoney(names.get(i), betMoneys.get(i)));
@@ -41,5 +41,15 @@ public class Gamers {
         return gamers.stream()
                 .map(Gamer::getBetMaker)
                 .collect(Collectors.toList());
+    }
+
+    public List<Double> getGameProfits(Gamer dealer) {
+        return gamers.stream()
+                .map(gamer -> gamer.getGameProfit(dealer))
+                .collect(Collectors.toList());
+    }
+
+    public int getSize() {
+        return gamers.size();
     }
 }

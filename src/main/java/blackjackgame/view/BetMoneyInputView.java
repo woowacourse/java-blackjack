@@ -8,8 +8,8 @@ public class BetMoneyInputView {
     private BetMoneyInputView() {
     }
 
-    public static List<Integer> getPlayerBetMoneys(List<String> playerNames) {
-        List<Integer> playerBetMoneys = new ArrayList<>();
+    public static List<Double> getPlayerBetMoneys(List<String> playerNames) {
+        List<Double> playerBetMoneys = new ArrayList<>();
         for (String playerName : playerNames) {
             OutputView.printInputBetMoneyMessage(playerName);
             playerBetMoneys.add(getPlayerBetMoney());
@@ -17,7 +17,7 @@ public class BetMoneyInputView {
         return playerBetMoneys;
     }
 
-    private static int getPlayerBetMoney() {
+    private static double getPlayerBetMoney() {
         String input = Console.getInputFromConsole();
         try {
             return Integer.parseInt(input);

@@ -1,15 +1,15 @@
 package blackjackgame.domain.gamers;
 
-import blackjackgame.domain.blackjack.BetMoney;
-
 public class BetMaker {
     private final String name;
-    private final BetMoney betMoney;
+    private final Double betMoney;
 
-    public BetMaker(String name, BetMoney betMoney) {
+    public BetMaker(String name, Double betMoney) {
         this.name = name;
         this.betMoney = betMoney;
     }
 
-
+    public Double getBetMoney() {
+        return betMoney;
+    }
 }

@@ -1,6 +1,7 @@
 package blackjackgame.controller;
 
 import blackjackgame.domain.BlackjackGame;
+import blackjackgame.domain.blackjack.GameProfit;
 import blackjackgame.domain.blackjack.GameResult;
 import blackjackgame.domain.blackjack.GameResultCalculator;
 import blackjackgame.domain.blackjack.PlayerRandomCardDrawStrategy;
@@ -11,10 +12,11 @@ import blackjackgame.domain.gamers.Gamer;
 import blackjackgame.domain.gamers.Gamers;
 import blackjackgame.dto.CardDTO;
 import blackjackgame.dto.DealerGameResultDTO;
+import blackjackgame.dto.GameProfitDTO;
 import blackjackgame.dto.GamerDTO;
 import blackjackgame.dto.PlayerGameResultDTO;
 import blackjackgame.view.BetMoneyInputView;
-import blackjackgame.view.GameResultOutputView;
+import blackjackgame.view.GameProfitOutputView;
 import blackjackgame.view.GamerOutputView;
 import blackjackgame.view.NameInputView;
 import blackjackgame.view.OutputView;
@@ -26,7 +28,7 @@ import java.util.stream.Collectors;
 
 public class BlackjackController {
     private static final String DEALER_NAME = "딜러";
-    private static final int INITIAL_MONEY = 0;
+    private static final double INITIAL_MONEY = 0.0;
 
     public void startBlackjackGame(Deck deck) {
         BlackjackGame blackjackGame = initBlackJackGame();
@@ -35,7 +37,7 @@ public class BlackjackController {
 
     private static BlackjackGame initBlackJackGame() {
         List<String> playerNames = NameInputView.getNames();
-        List<Integer> playerBetMoneys = BetMoneyInputView.getPlayerBetMoneys(playerNames);
+        List<Double> playerBetMoneys = BetMoneyInputView.getPlayerBetMoneys(playerNames);
 
         Gamer dealer = Gamer.createByNameAndBetMoney(DEALER_NAME, INITIAL_MONEY);
         Gamers players = Gamers.createByNamesAndBetMoneys(playerNames, playerBetMoneys);
@@ -120,15 +122,21 @@ public class BlackjackController {
 
     private void printDealerAndPlayersGameResult(BlackjackGame blackjackGame) {
         OutputView.printGameResultMessage();
-        GameResultOutputView.print(makeDealerGameResultDTO(blackjackGame));
+        GameProfitDTO gameProfitDTO = makeGameProfitDTO(blackjackGame);
+        GameProfitOutputView.print(gameProfitDTO);
+    }
 
-        List<PlayerGameResultDTO> playerGameResultDTOS = makePlayerGameResultDTO(blackjackGame);
-        playerGameResultDTOS.forEach(GameResultOutputView::print);
+    private GameProfitDTO makeGameProfitDTO(BlackjackGame blackjackGame) {
+        List<String> playersName = blackjackGame.getRawPlayerNames();
+        GameProfit gameProfit = blackjackGame.getGameProfit();
+
+        return new GameProfitDTO(DEALER_NAME, playersName, gameProfit.getDealerProfit(), gameProfit.getPlayersProfit());
     }
 
     private DealerGameResultDTO makeDealerGameResultDTO(BlackjackGame blackjackGame) {
         Map<GameResult, Integer> dealerGameResultCounts = blackjackGame.getRawPlayers().stream()
-                .collect(Collectors.groupingBy(player -> GameResultCalculator.calculate(blackjackGame.getCardHolderDealer(), player),
+                .collect(Collectors.groupingBy(player ->
+                                GameResultCalculator.calculate(blackjackGame.getCardHolderDealer(), player),
                         Collectors.summingInt(value -> 1)));
         return new DealerGameResultDTO(dealerGameResultCounts);
     }

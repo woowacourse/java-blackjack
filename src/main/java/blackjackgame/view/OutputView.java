@@ -29,7 +29,7 @@ public class OutputView {
     }
 
     public static void printGameResultMessage() {
-        System.out.println("\n## 최종 승패");
+        System.out.println("\n## 최종 수익");
     }
 
     public static void printPlayerSummationOverDeadPoint() {
