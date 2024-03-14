@@ -98,7 +98,7 @@ class Controller {
         resultMap.put(dealer.getName(), dealerProfit);
 
         for (Player player : participants.getPlayers()) {
-            JudgementResult result = judgement.judge(dealer, player);
+            JudgementResult result = judgement.judgePlayer(dealer, player);
             double playerProfit = result.calculateProfit(player.getMoney()).getAmount();
             dealerProfit -= playerProfit;
             resultMap.put(player.getName(), playerProfit);

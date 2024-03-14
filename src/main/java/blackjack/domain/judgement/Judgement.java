@@ -5,7 +5,7 @@ import blackjack.domain.participant.Player;
 
 public class Judgement {
 
-    public JudgementResult judge(Dealer dealer, Player player) {
+    public JudgementResult judgePlayer(Dealer dealer, Player player) {
         int playerScore = player.calculateScore();
         int dealerScore = dealer.calculateScore();
 
