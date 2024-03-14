@@ -1,6 +1,7 @@
 package blackjack.model.betting;
 
 import blackjack.model.participant.Player;
+import java.util.Objects;
 
 public class BettingAccount {
     private final Player player;
@@ -21,5 +22,9 @@ public class BettingAccount {
 
     public Money getMoney() {
         return money;
+    }
+
+    public boolean isOwnedBy(final Player player) {
+        return Objects.equals(this.player, player);
     }
 }
