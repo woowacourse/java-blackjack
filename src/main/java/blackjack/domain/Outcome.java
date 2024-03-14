@@ -10,6 +10,46 @@ public enum Outcome {
 
     WIN, LOSE, PUSH;
 
+    public static Money calculateProfit(final Dealer dealer, final Player player) {
+        if (player.isBust() || dealer.isBust()) {
+            return calculateBustCaseProfit(player);
+        }
+        if (player.isBlackjack() || dealer.isBlackjack()) {
+            return calculateBlackjackCaseProfit(dealer, player);
+        }
+        return calculateNormalCaseProfit(dealer, player);
+    }
+
+    private static Money calculateBustCaseProfit(final Player player) {
+        if (player.isBust()) {
+            return player.calculateLoseProfit();
+        }
+        return player.calculateWinProfit();
+    }
+
+    public static Money calculateBlackjackCaseProfit(final Dealer dealer, final Player player) {
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return player.calculatePushProfit();
+        }
+        if (player.isBlackjack()) {
+            return player.calculateBlackjackWinProfit();
+        }
+        return player.calculateLoseProfit();
+    }
+
+    private static Money calculateNormalCaseProfit(final Dealer dealer, final Player player) {
+        final int dealerScore = dealer.calculateScore();
+        final int playerScore = player.calculateScore();
+
+        if (dealerScore < playerScore) {
+            return player.calculateWinProfit();
+        }
+        if (dealerScore > playerScore) {
+            return player.calculateLoseProfit();
+        }
+        return player.calculatePushProfit();
+    }
+
     public static Outcome doesPlayerWin(final Dealer dealer, final Player player) {
         if (dealer.isBust() || player.isBust()) {
             return calculateBustCase(dealer, player);

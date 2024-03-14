@@ -106,8 +106,9 @@ What, Who 사이클을 적용하자.
 - 딜러가 돌려 받을 금액을 계산해라
 
 2. Who(메시지 송수신자 결정)
-- [ ] 플레이어의 배팅 금액을 읽어라 (Application -> InputView)
-- [ ] 플레이어가 돌려 받을 금액을 계산해라 (Application -> GameBoard -> Outcome)
+- [ ] 플레이어의 이름과 배팅 금액을 읽어라 (Application -> InputView)
+- [ ] 플레이어의 이름과 배팅 금액으로 플레이어들을 생성하라 (Application -> GameBoard -> Players -> Player)
+- [x] 게임 결과에 따라 플레이어의 수익을 계산해라 (Application -> GameBoard -> Outcome)
   - 플레이어가 승리했는가? (내부 메시지로서 Outcome 스스로 수행)
     - 플레이어가 블랙잭인가? (Outcome -> Player)
   - 플레이어가 패배했는가? (내부 메시지로서 Outcome 스스로 수행)

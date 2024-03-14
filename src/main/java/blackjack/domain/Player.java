@@ -2,20 +2,27 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import java.util.ArrayList;
 
 public class Player extends Gamer {
 
-    private final Name name;
+    private static final int PUSH_PROFIT = 0;
+    private static final double BLACKJACK_MULTIPLIER = 1.5;
 
-    private Player(final Name name, final Hand hand) {
+    private final Name name;
+    private final Money bettingMoney;
+
+    private Player(final Name name, final Hand hand, final Money bettingMoney) {
         super(hand);
         this.name = name;
+        this.bettingMoney = bettingMoney;
     }
 
     public static Player from(final String name) {
-        final Hand hand = new Hand(new ArrayList<>());
-        return new Player(new Name(name), hand);
+        return new Player(new Name(name), new Hand(), new Money(0));
+    }
+
+    public static Player of(final String name, final double bettingMoney) {
+        return new Player(new Name(name), new Hand(), new Money(bettingMoney));
     }
 
     public void draw(final Card card) {
@@ -25,6 +32,22 @@ public class Player extends Gamer {
     @Override
     public boolean canDraw() {
         return hand.calculateOptimalSum() <= BLACKJACK;
+    }
+
+    public Money calculateLoseProfit() {
+        return bettingMoney.toNegative();
+    }
+
+    public Money calculateWinProfit() {
+        return bettingMoney;
+    }
+
+    public Money calculatePushProfit() {
+        return new Money(PUSH_PROFIT);
+    }
+
+    public Money calculateBlackjackWinProfit() {
+        return bettingMoney.multiply(BLACKJACK_MULTIPLIER);
     }
 
     public Name getName() {

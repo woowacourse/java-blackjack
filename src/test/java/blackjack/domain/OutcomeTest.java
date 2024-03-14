@@ -18,10 +18,10 @@ class OutcomeTest {
      * 카드 pop 순서는 카드 저장 순서의 역순이다.
      */
     //@formatter:on
-    @DisplayName("플레이어와 딜러가 모두 버스트된 경우 무승부이다.")
+    @DisplayName("플레이어가 버스트한 경우 딜러의 패와 관계없이 플레이어의 수익은 (-배팅금액)이다.")
     @Test
-    void pushWhenBothBust() {
-        final Player player = Player.from("pobi");
+    void loseBettingMoneyWhenPlayerBust() {
+        final Player player = Player.of("pobi", 10000);
         final Dealer dealer = Dealer.from(new TestDeckFactory().create());
         player.draw(dealer.drawPlayerCard());
         player.draw(dealer.drawPlayerCard());
@@ -30,45 +30,30 @@ class OutcomeTest {
         dealer.draw();
         dealer.draw();
 
-        final Outcome outcome = Outcome.doesPlayerWin(dealer, player);
+        final Money playerProfit = Outcome.calculateProfit(dealer, player);
 
-        assertThat(outcome).isEqualTo(Outcome.PUSH);
+        assertThat(playerProfit).isEqualTo(new Money(-10000));
     }
 
-    @DisplayName("플레이어만 버스트했다면 플레이어의 패배이다.")
+    @DisplayName("딜러만 버스트했다면 플레이어는 배팅금액만큼 수익을 얻는다.")
     @Test
-    void playerLoseWhenOnlyBust() {
-        final Player player = Player.from("pobi");
-        final Dealer dealer = Dealer.from(new TestDeckFactory().create());
-        player.draw(dealer.drawPlayerCard());
-        player.draw(dealer.drawPlayerCard());
-        player.draw(dealer.drawPlayerCard());
-        dealer.draw();
-
-        final Outcome outcome = Outcome.doesPlayerWin(dealer, player);
-
-        assertThat(outcome).isEqualTo(Outcome.LOSE);
-    }
-
-    @DisplayName("딜러만 버스트했다면 딜러의 패배이다.")
-    @Test
-    void dealerLoseWhenOnlyBust() {
-        final Player player = Player.from("pobi");
+    void earnProfitWhenDealerOnlyBust() {
+        final Player player = Player.of("pobi", 10000);
         final Dealer dealer = Dealer.from(new TestDeckFactory().create());
         player.draw(dealer.drawPlayerCard());
         dealer.draw();
         dealer.draw();
         dealer.draw();
 
-        final Outcome outcome = Outcome.doesPlayerWin(dealer, player);
+        final Money playerProfit = Outcome.calculateProfit(dealer, player);
 
-        assertThat(outcome).isEqualTo(Outcome.WIN);
+        assertThat(playerProfit).isEqualTo(new Money(10000));
     }
 
-    @DisplayName("플레이어와 딜러가 모두 블랙잭인 경우 무승부이다.")
+    @DisplayName("플레이어와 딜러가 모두 블랙잭인 경우, 플레이어의 수익은 0원이다.")
     @Test
-    void pushWhenBothBlackJack() {
-        final Player player = Player.from("pobi");
+    void NoProfitWhenBlackjackPush() {
+        final Player player = Player.of("pobi", 10000);
         final Dealer dealer = Dealer.from(new TestDeckFactory().create());
         player.draw(dealer.drawPlayerCard());
         dealer.draw();
@@ -78,15 +63,15 @@ class OutcomeTest {
         player.draw(dealer.drawPlayerCard());
         dealer.draw();
 
-        final Outcome outcome = Outcome.doesPlayerWin(dealer, player);
+        final Money playerProfit = Outcome.calculateProfit(dealer, player);
 
-        assertThat(outcome).isEqualTo(Outcome.PUSH);
+        assertThat(playerProfit).isEqualTo(new Money(0));
     }
 
-    @DisplayName("플레이어만 블랙잭이라면 플레이어의 승리이다.")
+    @DisplayName("플레이어만 블랙잭이라면 배팅금액의 1.5배만큼의 수익을 얻는다.")
     @Test
-    void playerWinWhenOnlyBlackJack() {
-        final Player player = Player.from("pobi");
+    void earnProfitWhenPlayerOnlyBlackJack() {
+        final Player player = Player.of("pobi", 10000);
         final Dealer dealer = Dealer.from(new TestDeckFactory().create());
         player.draw(dealer.drawPlayerCard());
         dealer.draw();
@@ -95,15 +80,15 @@ class OutcomeTest {
         }
         player.draw(dealer.drawPlayerCard());
 
-        final Outcome outcome = Outcome.doesPlayerWin(dealer, player);
+        final Money playerProfit = Outcome.calculateProfit(dealer, player);
 
-        assertThat(outcome).isEqualTo(Outcome.WIN);
+        assertThat(playerProfit).isEqualTo(new Money(15000));
     }
 
-    @DisplayName("딜러만 블랙잭이라면 딜러의 승리이다.")
+    @DisplayName("딜러만 블랙잭이라면 플레이어의 수익은 (-배팅금액)이다.")
     @Test
-    void dealerWinWhenOnlyBlackJack() {
-        final Player player = Player.from("pobi");
+    void loseWhenDealerOnlyBlackjack() {
+        final Player player = Player.of("pobi", 10000);
         final Dealer dealer = Dealer.from(new TestDeckFactory().create());
         player.draw(dealer.drawPlayerCard());
         dealer.draw();
@@ -112,52 +97,52 @@ class OutcomeTest {
         }
         dealer.draw();
 
-        final Outcome outcome = Outcome.doesPlayerWin(dealer, player);
+        final Money playerProfit = Outcome.calculateProfit(dealer, player);
 
-        assertThat(outcome).isEqualTo(Outcome.LOSE);
+        assertThat(playerProfit).isEqualTo(new Money(-10000));
     }
 
-    @DisplayName("플레이어 또는 딜러 패에 에이스가 포함되지 않은 경우, 플레이어 점수가 딜러보다 높으면 승리한다.")
+    @DisplayName("플레이어가 버스트 되지 않고 점수가 딜러보다 높으면 플레이어는 배팅금액만큼 수익을 얻는다.")
     @Test
-    void playerWinWhenBiggerThanDealer() {
-        final Player player = Player.from("pobi");
+    void earnProfitWhenPlayerWin() {
+        final Player player = Player.of("pobi", 10000);
         final Dealer dealer = Dealer.from(new TestDeckFactory().create());
         player.draw(dealer.drawPlayerCard());
         player.draw(dealer.drawPlayerCard());
         dealer.draw();
 
-        final Outcome outcome = Outcome.doesPlayerWin(dealer, player);
+        final Money playerProfit = Outcome.calculateProfit(dealer, player);
 
-        assertThat(outcome).isEqualTo(Outcome.WIN);
+        assertThat(playerProfit).isEqualTo(new Money(10000));
     }
 
-    @DisplayName("플레이어 또는 딜러 패에 에이스가 포함되지 않은 경우, 플레이어 점수가 딜러보다 낮으면 패배한다.")
+    @DisplayName("딜러가 버스트 되지 않고 플레이어 점수가 딜러보다 낮으면 플레이어의 수익은 (-배팅금액)이다.")
     @Test
-    void playerLoseWhenLessThanDealer() {
-        final Player player = Player.from("pobi");
+    void loseBettingMoneyWhenDealerWin() {
+        final Player player = Player.of("pobi", 10000);
         final Dealer dealer = Dealer.from(new TestDeckFactory().create());
         player.draw(dealer.drawPlayerCard());
         dealer.draw();
         dealer.draw();
 
-        final Outcome outcome = Outcome.doesPlayerWin(dealer, player);
+        final Money playerProfit = Outcome.calculateProfit(dealer, player);
 
-        assertThat(outcome).isEqualTo(Outcome.LOSE);
+        assertThat(playerProfit).isEqualTo(new Money(-10000));
     }
 
-    @DisplayName("플레이어 또는 딜러 패에 에이스가 포함되지 않은 경우, 플레이어 점수와 딜러의 점수가 같으면 무승부이다.")
+    @DisplayName("아무도 버스트가 아닐 때, 플레이어 점수와 딜러의 점수가 같으면 플레이어의 수익은 0원이다.")
     @Test
     void pushWhenSame() {
-        final Player player = Player.from("pobi");
+        final Player player = Player.of("pobi", 10000);
         final Dealer dealer = Dealer.from(new TestDeckFactory().create());
         player.draw(dealer.drawPlayerCard());
         player.draw(dealer.drawPlayerCard());
         dealer.draw();
         dealer.draw();
 
-        final Outcome outcome = Outcome.doesPlayerWin(dealer, player);
+        final Money playerProfit = Outcome.calculateProfit(dealer, player);
 
-        assertThat(outcome).isEqualTo(Outcome.PUSH);
+        assertThat(playerProfit).isEqualTo(new Money(0));
     }
 
     @DisplayName("승을 패로 반전한다.")

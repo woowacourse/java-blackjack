@@ -9,6 +9,8 @@ import java.util.Map;
 
 public class GameBoard {
 
+    public static final int INITIAL_CARD_COUNT = 2;
+
     private final Dealer dealer;
     private final Players players;
 
@@ -18,8 +20,9 @@ public class GameBoard {
     }
 
     public void drawInitialDealerHand() {
-        dealer.draw();
-        dealer.draw();
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+            dealer.draw();
+        }
     }
 
     public void drawInitialPlayersHand() {
