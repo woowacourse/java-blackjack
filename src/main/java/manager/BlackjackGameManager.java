@@ -25,7 +25,6 @@ public class BlackjackGameManager {
         Map<Name, BetAmount> betAmounts = readBetAmounts(names);
 
         DealerCards dealerCards = new DealerCards(deck.drawInitialHands());
-        System.out.println(dealerCards);
         List<PlayerCards> playerCardsBundle = makePlayerCards(betAmounts);
         printInitialCards(dealerCards, playerCardsBundle);
 
