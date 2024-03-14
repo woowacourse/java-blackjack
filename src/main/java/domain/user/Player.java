@@ -36,7 +36,7 @@ public class Player {
     }
 
     public boolean isReceivable() {
-        return hand.sumCard() <= RECEIVABLE_THRESHOLD;
+        return hand.sumCard() < RECEIVABLE_THRESHOLD;
     }
 
     public List<Card> getAllCards() {
