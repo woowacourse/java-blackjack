@@ -97,7 +97,7 @@ public class ResultView {
     }
 
     private String resolveDealerProfit(Dealer dealer, Profit profit) {
-        return String.format("%s: %d", dealer.getPlayerName(), profit.getValue());
+        return String.format("%s: %.1f", dealer.getPlayerName(), profit.getValue());
     }
 
     private String resolvePlayersProfit(Map<Player, Profit> profitResult) {
@@ -111,6 +111,6 @@ public class ResultView {
     private String resolvePlayerProfit(Entry<Player, Profit> playerWinState) {
         Player player = playerWinState.getKey();
         Profit profit = playerWinState.getValue();
-        return String.format("%s: %d", player.getPlayerName(), profit.getValue());
+        return String.format("%s: %.1f", player.getPlayerName(), profit.getValue());
     }
 }
