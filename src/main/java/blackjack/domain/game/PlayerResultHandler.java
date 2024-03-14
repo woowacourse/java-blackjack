@@ -1,5 +1,8 @@
 package blackjack.domain.game;
 
+import java.util.Collection;
+import java.util.List;
+
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 
@@ -9,6 +12,12 @@ public class PlayerResultHandler {
 
 	public PlayerResultHandler(Dealer dealer) {
 		this.dealer = dealer;
+	}
+
+	public List<Player> getLosePlayers(Collection<Player> players) {
+		return players.stream()
+			.filter(player -> getPlayerResult(player) == GameResult.LOSE)
+			.toList();
 	}
 
 	public GameResult getPlayerResult(Player player) {

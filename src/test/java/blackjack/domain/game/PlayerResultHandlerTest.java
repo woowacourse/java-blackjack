@@ -21,6 +21,36 @@ class PlayerResultHandlerTest {
 	Player player;
 	Dealer dealer;
 
+	@Test
+	@DisplayName("패배한 플레이어 리스트를 얻는다.")
+	void getLosePlayerTest() {
+		dealer = new Dealer(List.of(
+			new Card(CardShape.SPADE, CardNumber.QUEEN),
+			new Card(CardShape.CLOVER, CardNumber.NINE),
+			new Card(CardShape.HEART, CardNumber.TWO)
+		));
+		PlayerResultHandler resultHandler = new PlayerResultHandler(dealer);
+
+		Player winPlayer = createTestPlayer(List.of(
+			new Card(CardShape.DIAMOND, CardNumber.ACE),
+			new Card(CardShape.SPADE, CardNumber.KING)
+		));
+		Player drawPlayer = createTestPlayer(List.of(
+			new Card(CardShape.SPADE, CardNumber.EIGHT),
+			new Card(CardShape.DIAMOND, CardNumber.SEVEN),
+			new Card(CardShape.HEART, CardNumber.SIX)
+		));
+		Player losePlayer = createTestPlayer(List.of(
+			new Card(CardShape.HEART, CardNumber.QUEEN),
+			new Card(CardShape.HEART, CardNumber.KING)
+		));
+
+		List<Player> players = List.of(winPlayer, drawPlayer, losePlayer);
+
+		assertThat(resultHandler.getLosePlayers(players))
+			.containsExactly(losePlayer);
+	}
+
 	@Nested
 	@DisplayName("플레이어가 블랙잭으로 승리한다.")
 	class PlayerBlackjackWinTest {
