@@ -67,6 +67,10 @@ public final class Score {
         return new Score(value + previousScore.value);
     }
 
+    public boolean isBlackjackScore() {
+        return this.isSameAs(BLACKJACK_SCORE);
+    }
+
     public boolean isBust() {
         return this.isGreaterThan(BLACKJACK_SCORE);
     }
@@ -81,6 +85,10 @@ public final class Score {
 
     public boolean isLessThan(Score other) {
         return value < other.value;
+    }
+
+    public boolean isSameAs(Score other) {
+        return value == other.value;
     }
 
     public int toInt() {

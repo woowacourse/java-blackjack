@@ -101,7 +101,21 @@ class ScoreTest {
     }
 
     @Test
-    @DisplayName("성공: 점수끼리 비교가 가능하다.")
+    @DisplayName("성공: 22점은 블랙잭 점수가 아니다.")
+    void isBlackjackScore_TwentyTwo() {
+        Score blackjackScore = Score.valueOf(22);
+        assertThat(blackjackScore.isBlackjackScore()).isFalse();
+    }
+
+    @Test
+    @DisplayName("성공: 21점은 블랙잭 점수이다.")
+    void isBlackjackScore_TwentyOne() {
+        Score blackjackScore = Score.valueOf(21);
+        assertThat(blackjackScore.isBlackjackScore()).isTrue();
+    }
+
+    @Test
+    @DisplayName("성공: 점수끼리 대소 비교 가능")
     void isGreaterThan_isLessThan() {
         Score greater = Score.valueOf(10);
         Score less = Score.valueOf(9);
@@ -112,5 +126,14 @@ class ScoreTest {
             () -> assertThat(less.isLessThan(greater)).isTrue(),
             () -> assertThat(greater.isLessThan(less)).isFalse()
         );
+    }
+
+    @Test
+    @DisplayName("성공: 점수끼리 같다 비교 가능")
+    void isSameAs() {
+        Score score1 = Score.valueOf(10);
+        Score score2 = Score.valueOf(10);
+
+        assertThat(score1.isSameAs(score2)).isTrue();
     }
 }
