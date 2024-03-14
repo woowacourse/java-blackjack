@@ -9,20 +9,20 @@ public class Player extends Gamer {
 
     private static final Pattern NAME_VALID_PATTERN = Pattern.compile("^[a-zA-Z가-힣]+(?:\\s+[a-zA-Z가-힣]+)*$");
     private static final String INVALID_NAME_FORMAT_EXCEPTION = "이름 형식에 맞지 않습니다. 이름은 영어 또는 한글로 입력해주세요.";
-    private static final Pattern BATTING_VALID_PATTERN = Pattern.compile("^[1-9][0-9]*$");
-    private static final String INVALID_BATTING_FORMAT_EXCEPTION = "배팅 형식에 맞지 않습니다. 0 초과의 숫자만 입력해주세요.";
+    private static final Pattern BETTING_VALID_PATTERN = Pattern.compile("^[1-9][0-9]*$");
+    private static final String INVALID_BETTING_FORMAT_EXCEPTION = "배팅 형식에 맞지 않습니다. 0 초과의 숫자만 입력해주세요.";
 
     private final String name;
-    private final int batting;
+    private final int betting;
 
-    public Player(final String name, final Dealer dealer, final String batting) {
+    public Player(final String name, final Dealer dealer, final String betting) {
         super();
 
         validateName(name);
         this.name = name;
 
-        validateBatting(batting);
-        this.batting = Integer.parseInt(batting);
+        validateBetting(betting);
+        this.betting = Integer.parseInt(betting);
 
         initialDraw(dealer);
     }
@@ -33,9 +33,9 @@ public class Player extends Gamer {
         }
     }
 
-    private void validateBatting(final String batting) {
-        if (!BATTING_VALID_PATTERN.matcher(batting).matches()) {
-            throw new IllegalArgumentException(INVALID_BATTING_FORMAT_EXCEPTION);
+    private void validateBetting(final String betting) {
+        if (!BETTING_VALID_PATTERN.matcher(betting).matches()) {
+            throw new IllegalArgumentException(INVALID_BETTING_FORMAT_EXCEPTION);
         }
     }
 
@@ -58,7 +58,7 @@ public class Player extends Gamer {
     }
 
     public int calculateProfit(final GameResult gameResult) {
-        return gameResult.getProfit(batting, isBlackjack());
+        return gameResult.getProfit(betting, isBlackjack());
     }
 
     public String getName() {

@@ -49,9 +49,9 @@ public class PlayerTest {
     @DisplayName("배팅 금액이 형식에 맞지 않으면 예외가 발생한다.")
     @ParameterizedTest
     @ValueSource(strings = {"-1", "0", "1000a"})
-    void validateBatting(String batting) {
+    void validateBetting(String betting) {
         //when & then
-        assertThatThrownBy(() -> new Player("name", dealer, batting))
+        assertThatThrownBy(() -> new Player("name", dealer, betting))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

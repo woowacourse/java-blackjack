@@ -19,12 +19,12 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(final List<String> names, final List<String> battings, final Dealer dealer) {
+    public static Players of(final List<String> names, final List<String> bettings, final Dealer dealer) {
         validate(names);
 
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < names.size(); i++) {
-            players.add(new Player(names.get(i), dealer, battings.get(i)));
+            players.add(new Player(names.get(i), dealer, bettings.get(i)));
         }
 
         return new Players(players);

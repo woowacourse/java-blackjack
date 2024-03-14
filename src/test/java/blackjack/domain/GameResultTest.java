@@ -12,13 +12,13 @@ class GameResultTest {
     @DisplayName("게임 결과에 따라 받을 금액을 반환한다.")
     @Test
     void getProfit() {
-        int batting = 1000;
+        int betting = 1000;
 
         assertAll(
-                () -> assertThat(GameResult.WIN.getProfit(batting, true)).isEqualTo(1500),
-                () -> assertThat(GameResult.WIN.getProfit(batting, false)).isEqualTo(1000),
-                () -> assertThat(GameResult.DRAW.getProfit(batting, true)).isEqualTo(0),
-                () -> assertThat(GameResult.LOSE.getProfit(batting, true)).isEqualTo(-1000)
+                () -> assertThat(GameResult.WIN.getProfit(betting, true)).isEqualTo(1500),
+                () -> assertThat(GameResult.WIN.getProfit(betting, false)).isEqualTo(1000),
+                () -> assertThat(GameResult.DRAW.getProfit(betting, true)).isEqualTo(0),
+                () -> assertThat(GameResult.LOSE.getProfit(betting, true)).isEqualTo(-1000)
         );
     }
 }

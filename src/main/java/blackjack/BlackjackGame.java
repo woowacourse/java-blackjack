@@ -29,8 +29,8 @@ public class BlackjackGame {
         Dealer dealer = new Dealer(deck);
 
         List<String> names = inputView.readPlayersName();
-        List<String> battings = readPlayersBatting(names);
-        Players players = Players.of(names, battings, dealer);
+        List<String> bettings = readPlayersBetting(names);
+        Players players = Players.of(names, bettings, dealer);
 
         printCardDistribute(names, players, dealer);
         extraCardRequest(dealer, players);
@@ -39,9 +39,9 @@ public class BlackjackGame {
         outputView.printFinalProfit(dealer.calculateProfit(profits), profits);
     }
 
-    private List<String> readPlayersBatting(final List<String> names) {
+    private List<String> readPlayersBetting(final List<String> names) {
         return names.stream()
-                .map(inputView::readPlayerBatting)
+                .map(inputView::readPlayerBetting)
                 .toList();
     }
 

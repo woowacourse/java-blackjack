@@ -22,7 +22,7 @@ class JudgeTest {
     private Deck deck;
     private Dealer dealer;
     private final List<String> playerNames = List.of("choco");
-    private final List<String> battings = List.of("1000");
+    private final List<String> bettings = List.of("1000");
     private Players players;
     private Player choco;
     private Profits profits;
@@ -46,7 +46,7 @@ class JudgeTest {
         @Test
         void drawWhenBustTogether() {
             //given
-            players = Players.of(playerNames, battings, dealer);
+            players = Players.of(playerNames, bettings, dealer);
             choco = players.getPlayers().get(0);
 
             //when
@@ -64,7 +64,7 @@ class JudgeTest {
             //given
             deckDrawLoop(3);
 
-            players = Players.of(playerNames, battings, dealer);
+            players = Players.of(playerNames, bettings, dealer);
             choco = players.getPlayers().get(0);
 
             //when
@@ -79,7 +79,7 @@ class JudgeTest {
         @Test
         void loseWhenPlayerNormal() {
             //given
-            players = Players.of(playerNames, battings, dealer);
+            players = Players.of(playerNames, bettings, dealer);
             choco = players.getPlayers().get(0);
 
             //when
@@ -108,7 +108,7 @@ class JudgeTest {
         @Test
         void winWhenPlayerBust() {
             //given
-            players = Players.of(playerNames, battings, dealer);
+            players = Players.of(playerNames, bettings, dealer);
             choco = players.getPlayers().get(0);
 
             //when
@@ -127,7 +127,7 @@ class JudgeTest {
             //given
             deckDrawLoop(11);
 
-            players = Players.of(playerNames, battings, dealer);
+            players = Players.of(playerNames, bettings, dealer);
             choco = players.getPlayers().get(0);
 
             //when
@@ -142,7 +142,7 @@ class JudgeTest {
         @Test
         void winWhenPlayerNormal() {
             //given
-            players = Players.of(playerNames, battings, dealer);
+            players = Players.of(playerNames, bettings, dealer);
             choco = players.getPlayers().get(0);
 
             //when
@@ -168,7 +168,7 @@ class JudgeTest {
         @Test
         void winWhenPlayerBust() {
             //given
-            players = Players.of(playerNames, battings, dealer);
+            players = Players.of(playerNames, bettings, dealer);
             choco = players.getPlayers().get(0);
 
             //when
@@ -186,7 +186,7 @@ class JudgeTest {
             //given
             deckDrawLoop(10);
 
-            players = Players.of(playerNames, battings, dealer);
+            players = Players.of(playerNames, bettings, dealer);
             choco = players.getPlayers().get(0);
 
             //when
@@ -201,7 +201,7 @@ class JudgeTest {
         @Test
         void winWhenPlayerNormalWithSmallerScore() {
             //given
-            players = Players.of(playerNames, battings, dealer);
+            players = Players.of(playerNames, bettings, dealer);
             choco = players.getPlayers().get(0);
 
             //when
@@ -217,7 +217,7 @@ class JudgeTest {
         void loseWhenPlayerNormalWithBiggerScore() {
             //given
             deckDrawLoop(5);
-            players = Players.of(playerNames, battings, dealer);
+            players = Players.of(playerNames, bettings, dealer);
             choco = players.getPlayers().get(0);
 
             //when
@@ -233,7 +233,7 @@ class JudgeTest {
         void drawWhenPlayerNormalWithSameScore() {
             //given
             deckDrawLoop(3);
-            players = Players.of(playerNames, battings, dealer);
+            players = Players.of(playerNames, bettings, dealer);
             choco = players.getPlayers().get(0);
 
             //when

@@ -25,13 +25,13 @@ public class PlayersTest {
     private Players players;
     private final String nameA = "choco";
     private final String nameB = "clover";
-    private final String batting = "1000";
+    private final String betting = "1000";
 
     @BeforeEach
     void setUp() {
         deck = new Deck(shuffleStrategy);
         dealer = new Dealer(deck);
-        players = Players.of(List.of(nameA, nameB), List.of(batting, batting), dealer);
+        players = Players.of(List.of(nameA, nameB), List.of(betting, betting), dealer);
     }
 
     @DisplayName("플레이어 이름이 중복되면 예외가 발생한다.")
@@ -39,25 +39,12 @@ public class PlayersTest {
     void validateDuplicatedNames() {
         //given
         List<String> names = List.of("choco", "choco", "chip");
-        List<String> battings = List.of("1000", "1000", "1000");
+        List<String> bettings = List.of("1000", "1000", "1000");
 
         //when & then
-        assertThatThrownBy(() -> Players.of(names, battings, dealer))
+        assertThatThrownBy(() -> Players.of(names, bettings, dealer))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
-//    @DisplayName("참가자간의 승패를 계산한다.")
-//    @Test
-//    void decideResult() {
-//        //given
-//        Profits profits = players.createResult(dealer);
-//
-//        //when & then
-//        assertAll(
-//                () -> assertThat(profits.findByPlayer(players.getPlayers().get(0))).isEqualTo(GameResult.LOSE),
-//                () -> assertThat(profits.findByPlayer(players.getPlayers().get(1))).isEqualTo(GameResult.LOSE)
-//        );
-//    }
 
     @DisplayName("플레이어들의 승패를 토대로 수익률을 계산한다.")
     @Test

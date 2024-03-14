@@ -4,15 +4,15 @@ import java.util.function.BiFunction;
 
 public enum GameResult {
 
-    WIN((batting, isBlackjack) -> {
+    WIN((betting, isBlackjack) -> {
         if (isBlackjack) {
-            return (int) (batting * 1.5);
+            return (int) (betting * 1.5);
         }
 
-        return batting;
+        return betting;
     }),
-    DRAW((batting, isBlackjack) -> 0),
-    LOSE((batting, isBlackjack) -> batting * -1),
+    DRAW((betting, isBlackjack) -> 0),
+    LOSE((betting, isBlackjack) -> betting * -1),
     ;
 
     private final BiFunction<Integer, Boolean, Integer> profit;
@@ -21,7 +21,7 @@ public enum GameResult {
         this.profit = profit;
     }
 
-    public int getProfit(final int batting, final boolean isBlackjack) {
-        return profit.apply(batting, isBlackjack);
+    public int getProfit(final int betting, final boolean isBlackjack) {
+        return profit.apply(betting, isBlackjack);
     }
 }
