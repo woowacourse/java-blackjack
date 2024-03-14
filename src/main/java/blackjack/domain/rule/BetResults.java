@@ -11,10 +11,11 @@ public class BetResults {
         this.betResults = betResults;
     }
 
-    public Money calculatePlayersEarned() {
+    public Money calculateDealerProfit() {
         return new Money(betResults.stream()
                 .map(BetResult::getEarned)
-                .reduce(0, Integer::sum));
+                .reduce(0, Integer::sum))
+                .inverse();
     }
 
     public List<BetResult> getBetResults() {
