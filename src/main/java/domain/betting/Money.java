@@ -22,6 +22,10 @@ public final class Money {
     }
 
     public static Money valueOf(int value) {
+        return new Money(value);
+    }
+
+    public static Money betValueOf(int value) {
         validateRange(value);
         validateMultiple(value);
         return new Money(value);
