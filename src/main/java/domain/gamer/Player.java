@@ -1,7 +1,5 @@
 package domain.gamer;
 
-import domain.card.Card;
-
 public class Player extends Gamer {
 
     private static final int MAX_BLACK_JACK_SCORE = 21;
@@ -10,10 +8,6 @@ public class Player extends Gamer {
 
     public Player(Name name) {
         this.name = name;
-    }
-
-    public void receiveCard(Card card) {
-        cards.addCard(card);
     }
 
     public boolean isDrawable() {

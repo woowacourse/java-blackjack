@@ -15,8 +15,8 @@ public class Players {
 
     public void initCard(Dealer dealer) {
         for (Player player : players) {
-            player.receiveCard(dealer.dealCard());
-            player.receiveCard(dealer.dealCard());
+            player.initCard();
+            player.initCard();
         }
     }
 

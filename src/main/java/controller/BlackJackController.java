@@ -38,7 +38,7 @@ public class BlackJackController {
     private void playGame(Players players, Dealer dealer) {
         players.play(this::playTurn, dealer);
         while (dealer.shouldDraw()) {
-            dealer.receiveCard();
+            dealer.receiveCard(dealer.dealCard());
             outputView.printDealerAddCard();
         }
     }
