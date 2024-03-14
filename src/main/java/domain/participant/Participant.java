@@ -4,8 +4,11 @@ import domain.playingcard.Deck;
 import domain.playingcard.PlayingCard;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 public abstract class Participant {
+    private static final int INIT_DRAW_COUNT = 2;
+
     protected final Hand hand;
 
     protected Participant(final Hand hand) {
@@ -13,6 +16,11 @@ public abstract class Participant {
     }
 
     public abstract boolean isDrawable();
+
+    protected static void initDraw(final Deck deck, final Hand hand) {
+        IntStream.range(0, INIT_DRAW_COUNT)
+                .forEach(i -> hand.addCard(deck.drawn()));
+    }
 
     public void draw(final Deck deck) {
         hand.addCard(deck.drawn());

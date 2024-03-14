@@ -3,8 +3,6 @@ package domain.participant;
 import domain.playingcard.Deck;
 import domain.playingcard.PlayingCard;
 
-import java.util.stream.IntStream;
-
 public class Dealer extends Participant {
     private static final int MAXIMUM_ENABLE_TOTAL_SCORE = 16;
 
@@ -14,8 +12,7 @@ public class Dealer extends Participant {
 
     public static Dealer init(final Deck deck) {
         Hand hand = Hand.init();
-        IntStream.range(0, 2)
-                .forEach(i -> hand.addCard(deck.drawn()));
+        initDraw(deck, hand);
         return new Dealer(hand);
     }
 
@@ -25,7 +22,7 @@ public class Dealer extends Participant {
     }
 
     public boolean isWin(final Player player) {
-           return player.isBust()
+        return player.isBust()
                 || (this.isBlackJack() && !player.isBlackJack())
                 || (!this.isBust() && this.getTotalScore().isBigger(player.getTotalScore()));
     }
