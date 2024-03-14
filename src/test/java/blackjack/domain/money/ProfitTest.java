@@ -53,4 +53,15 @@ public class ProfitTest {
 
         assertThat(actual.toInt()).isEqualTo(value + addedValue);
     }
+
+    @DisplayName("얻은 만큼 잃은 이익을, 잃은 만큼 얻은 이익을 구할 수 있다.")
+    @ParameterizedTest
+    @CsvSource({"20, -20", "-10, 10", "-1, 1", "0, 0"})
+    void reverseTest(int value, int expected) {
+        Profit profit = new Profit(value);
+
+        Profit actual = profit.reverse();
+
+        assertThat(actual.toInt()).isEqualTo(expected);
+    }
 }

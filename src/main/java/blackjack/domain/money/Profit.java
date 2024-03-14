@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class Profit {
 
+    public static final Profit ZERO = new Profit(0);
+
     private final int value;
 
     public Profit(int value) {
@@ -24,6 +26,10 @@ public class Profit {
 
     public Profit add(Profit profit) {
         return new Profit(this.value + profit.value);
+    }
+
+    public Profit reverse() {
+        return new Profit(-1 * value);
     }
 
     public int toInt() {
