@@ -15,8 +15,6 @@ import org.junit.jupiter.api.Test;
 
 class RefereeTest {
 
-    Referee referee = new Referee();
-
     private Participant createParticipant(List<Card> cards) {
         return new Participant("aru", new Hand(cards));
     }
@@ -66,10 +64,9 @@ class RefereeTest {
             // given
             Dealer dealer = createDealer(blackJackCards());
             // when
-            ResultState resultState = referee.judge(participant, dealer);
+            MatchResult result = Referee.judge(participant, dealer);
             // then
-            assertThat(resultState).isInstanceOf(Tie.class);
-            assertThat(resultState.getMatchResult()).isEqualTo(MatchResult.TIE);
+            assertThat(result).isEqualTo(MatchResult.TIE);
         }
 
         @Test
@@ -78,10 +75,9 @@ class RefereeTest {
             // given
             Dealer dealer = createDealer(bustCards());
             // when
-            ResultState resultState = referee.judge(participant, dealer);
+            MatchResult result = Referee.judge(participant, dealer);
             // then
-            assertThat(resultState).isInstanceOf(ParticipantBlackJack.class);
-            assertThat(resultState.getMatchResult()).isEqualTo(MatchResult.PARTICIPANT_BLACKJACK_WIN);
+            assertThat(result).isEqualTo(MatchResult.PARTICIPANT_BLACKJACK_WIN);
         }
 
         @Test
@@ -90,10 +86,9 @@ class RefereeTest {
             // given
             Dealer dealer = createDealer(standLowerCards());
             // when
-            ResultState resultState = referee.judge(participant, dealer);
+            MatchResult result = Referee.judge(participant, dealer);
             // then
-            assertThat(resultState).isInstanceOf(ParticipantBlackJack.class);
-            assertThat(resultState.getMatchResult()).isEqualTo(MatchResult.PARTICIPANT_BLACKJACK_WIN);
+            assertThat(result).isEqualTo(MatchResult.PARTICIPANT_BLACKJACK_WIN);
         }
     }
 
@@ -109,10 +104,9 @@ class RefereeTest {
             // given
             Dealer dealer = createDealer(blackJackCards());
             // when
-            ResultState resultState = referee.judge(participant, dealer);
+            MatchResult result = Referee.judge(participant, dealer);
             // then
-            assertThat(resultState).isInstanceOf(DealerBlackJack.class);
-            assertThat(resultState.getMatchResult()).isEqualTo(MatchResult.DEALER_WIN);
+            assertThat(result).isEqualTo(MatchResult.DEALER_WIN);
         }
 
         @Test
@@ -121,10 +115,9 @@ class RefereeTest {
             // given
             Dealer dealer = createDealer(bustCards());
             // when
-            ResultState resultState = referee.judge(participant, dealer);
+            MatchResult result = Referee.judge(participant, dealer);
             // then
-            assertThat(resultState).isInstanceOf(ParticipantBust.class);
-            assertThat(resultState.getMatchResult()).isEqualTo(MatchResult.DEALER_WIN);
+            assertThat(result).isEqualTo(MatchResult.DEALER_WIN);
         }
 
         @Test
@@ -133,10 +126,9 @@ class RefereeTest {
             // given
             Dealer dealer = createDealer(standLowerCards());
             // when
-            ResultState resultState = referee.judge(participant, dealer);
+            MatchResult result = Referee.judge(participant, dealer);
             // then
-            assertThat(resultState).isInstanceOf(ParticipantBust.class);
-            assertThat(resultState.getMatchResult()).isEqualTo(MatchResult.DEALER_WIN);
+            assertThat(result).isEqualTo(MatchResult.DEALER_WIN);
         }
     }
 
@@ -153,10 +145,9 @@ class RefereeTest {
             // given
             Dealer dealer = createDealer(blackJackCards());
             // when
-            ResultState resultState = referee.judge(lowerScoreParticipant, dealer);
+            MatchResult result = Referee.judge(lowerScoreParticipant, dealer);
             // then
-            assertThat(resultState).isInstanceOf(DealerBlackJack.class);
-            assertThat(resultState.getMatchResult()).isEqualTo(MatchResult.DEALER_WIN);
+            assertThat(result).isEqualTo(MatchResult.DEALER_WIN);
         }
 
         @Test
@@ -165,10 +156,9 @@ class RefereeTest {
             // given
             Dealer dealer = createDealer(bustCards());
             // when
-            ResultState resultState = referee.judge(lowerScoreParticipant, dealer);
+            MatchResult result = Referee.judge(lowerScoreParticipant, dealer);
             // then
-            assertThat(resultState).isInstanceOf(DealerBust.class);
-            assertThat(resultState.getMatchResult()).isEqualTo(MatchResult.PARTICIPANT_WIN);
+            assertThat(result).isEqualTo(MatchResult.PARTICIPANT_WIN);
         }
 
         @Nested
@@ -182,30 +172,27 @@ class RefereeTest {
             @DisplayName("플레이어의 점수가 더 높다면 플레이어의 승리이다.")
             void winOnComparingScore() {
                 // when
-                ResultState resultState = referee.judge(higherScoreParticipant, lowerScoreDealer);
+                MatchResult result = Referee.judge(higherScoreParticipant, lowerScoreDealer);
                 // then
-                assertThat(resultState).isInstanceOf(ParticipantWinByScore.class);
-                assertThat(resultState.getMatchResult()).isEqualTo(MatchResult.PARTICIPANT_WIN);
+                assertThat(result).isEqualTo(MatchResult.PARTICIPANT_WIN);
             }
 
             @Test
             @DisplayName("딜러의 점수가 더 높다면 플레이어의 패배이다.")
             void loseOnComparingScore() {
                 // when
-                ResultState resultState = referee.judge(lowerScoreParticipant, higherScoreDealer);
+                MatchResult result = Referee.judge(lowerScoreParticipant, higherScoreDealer);
                 // then
-                assertThat(resultState).isInstanceOf(DealerWinByScore.class);
-                assertThat(resultState.getMatchResult()).isEqualTo(MatchResult.DEALER_WIN);
+                assertThat(result).isEqualTo(MatchResult.DEALER_WIN);
             }
 
             @Test
             @DisplayName("점수가 같다면 무승부이다.")
             void tieOnSameScore() {
                 // when
-                ResultState resultState = referee.judge(lowerScoreParticipant, lowerScoreDealer);
+                MatchResult result = Referee.judge(lowerScoreParticipant, lowerScoreDealer);
                 // then
-                assertThat(resultState).isInstanceOf(Tie.class);
-                assertThat(resultState.getMatchResult()).isEqualTo(MatchResult.TIE);
+                assertThat(result).isEqualTo(MatchResult.TIE);
             }
         }
     }

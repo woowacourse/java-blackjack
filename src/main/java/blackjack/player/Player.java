@@ -56,7 +56,6 @@ public abstract class Player {
 
     public abstract List<Card> revealCardsOnFirstPhase();
 
-
     public String getName() {
         return name.getName();
     }

@@ -4,11 +4,11 @@ import blackjack.resultstate.MatchResult;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PlayerBets {
+public class BetTable {
 
     private final Map<String, Money> betMoney;
 
-    public PlayerBets() {
+    public BetTable() {
         this.betMoney = new HashMap<>();
     }
 

@@ -18,6 +18,10 @@ public class Money {
         return new Money(0);
     }
 
+    public Money add(Money money) {
+        return Money.of(amount + money.amount);
+    }
+
     public Money profitOnTie() {
         return zero();
     }

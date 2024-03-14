@@ -23,4 +23,17 @@ public class InputView {
         Command command = Command.from(input);
         return command.isYes();
     }
+
+    public int readBetMoney() {
+        String input = scanner.nextLine();
+        return parseBetMoney(input);
+    }
+
+    private int parseBetMoney(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 금액은 숫자로 이루어져야 합니다.");
+        }
+    }
 }

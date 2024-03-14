@@ -5,25 +5,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class Players {
+public class Participants {
 
     private static final int MIN_PLAYER_COUNT = 1;
     private static final int MAX_PLAYER_COUNT = 10;
 
     private final List<Player> players;
 
-    private Players(List<Player> players) {
+    private Participants(List<Player> players) {
         this.players = players;
     }
 
-    public static Players create(List<String> playerNames) {
+    public static Participants create(List<String> playerNames) {
         validatePlayers(playerNames);
 
         ArrayList<Player> players = new ArrayList<>();
         playerNames.stream()
                 .map(Participant::new)
                 .forEach(players::add);
-        return new Players(players);
+        return new Participants(players);
     }
 
     private static void validatePlayers(List<String> playerNames) {

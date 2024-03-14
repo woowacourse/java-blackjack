@@ -7,7 +7,7 @@ import blackjack.resultstate.MatchResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PlayerBetsTest {
+class BetTableTest {
 
     @Test
     @DisplayName("배팅 정보를 바탕으로 수익을 올바르게 계산한다.")
@@ -25,9 +25,9 @@ class PlayerBetsTest {
     @DisplayName("배팅 정보가 존재하지 않을 경우 예외를 발생시킨다.")
     void betNotFoundTest() {
         // given
-        PlayerBets playerBets = new PlayerBets();
+        BetTable betTable = new BetTable();
         // when, then
-        assertThatThrownBy(() -> playerBets.calculateProfitByName("aru", MatchResult.TIE))
+        assertThatThrownBy(() -> betTable.calculateProfitByName("aru", MatchResult.TIE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 배팅 정보가 존재하지 않습니다.");
     }
