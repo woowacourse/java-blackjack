@@ -1,11 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Pattern;
 import blackjack.domain.card.Rank;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.result.GameBattingManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
