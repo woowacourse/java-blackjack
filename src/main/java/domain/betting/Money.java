@@ -21,7 +21,7 @@ public final class Money {
         this.value = value;
     }
 
-    public static Money bet(int value) {
+    public static Money valueOf(int value) {
         validateRange(value);
         validateMultiple(value);
         return new Money(value);
@@ -38,6 +38,14 @@ public final class Money {
         if (value % MONEY_MULTIPLE != 0) {
             throw new IllegalArgumentException(String.format("[ERROR] %,d원 단위로 베팅해 주세요.", MONEY_MULTIPLE));
         }
+    }
+
+    public Money add(Money amount) {
+        return new Money(value + amount.value);
+    }
+
+    public Money subtract(Money amount) {
+        return new Money(value - amount.value);
     }
 
     public Money findPlayerProfitWhenPlayerWin() {
@@ -86,5 +94,4 @@ public final class Money {
         return "Money[" +
             "value=" + value + ']';
     }
-
 }
