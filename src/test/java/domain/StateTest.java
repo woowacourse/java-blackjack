@@ -3,19 +3,18 @@ package domain;
 import domain.state.Bust;
 import domain.state.Hit;
 import domain.state.Stand;
-import domain.state.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class BlackjackTest2 {
+class StateTest {
     @DisplayName("21이 넘지 않으면 hit을 유지한다.")
     @Test
     void hitToHit() {
         // given
-        State state = new Hit(new Hand(
+        domain.state.State state = new Hit(new Hand(
                 new Card(Denomination.FOUR, Suit.CLUBS),
                 new Card(Denomination.FOUR, Suit.DIAMOND)));
         // when
@@ -28,7 +27,7 @@ class BlackjackTest2 {
     @Test
     void hitToBust() {
         // given
-        State state = new Hit(new Hand(
+        domain.state.State state = new Hit(new Hand(
                 new Card(Denomination.KING, Suit.CLUBS),
                 new Card(Denomination.FOUR, Suit.CLUBS)
         ));
@@ -42,7 +41,7 @@ class BlackjackTest2 {
     @Test
     void bustHit() {
         // given
-        final State state = new Bust(new Hand(
+        final domain.state.State state = new Bust(new Hand(
                 new Card(Denomination.KING, Suit.CLUBS),
                 new Card(Denomination.FOUR, Suit.CLUBS)
         ));
@@ -56,7 +55,7 @@ class BlackjackTest2 {
     @Test
     void hitToStand() {
         // given
-        State state = new Hit(new Hand(
+        domain.state.State state = new Hit(new Hand(
                 new Card(Denomination.KING, Suit.CLUBS),
                 new Card(Denomination.FOUR, Suit.CLUBS)
         ));
