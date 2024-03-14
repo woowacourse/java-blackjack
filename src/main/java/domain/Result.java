@@ -8,7 +8,6 @@ public enum Result {
 
     BLACK_JACK_WIN("블랙잭승", Result::blackJackWinningCondition),
     WIN("승", Result::winningCondition),
-    BLACK_JACK_TIE("블랙잭비김", Result::blackJackTieCondition),
     TIE("무", Result::tieCondition),
     LOSE("패", Result::loseCondition);
 
@@ -42,17 +41,11 @@ public enum Result {
     }
 
     private static boolean winningCondition(final Hands hands, final Hands target) {
-        return (!hands.isBust() && target.isBust())
-                || (hands.sum() > target.sum() && !hands.isBust())
-                || (hands.sum() == target.sum() && hands.size() < target.size() && !hands.isBust());
-    }
-
-    private static boolean blackJackTieCondition(final Hands hands, final Hands target) {
-        return hands.isBlackJack() && target.isBlackJack();
+        return (!hands.isBust() && target.isBust()) || (hands.sum() > target.sum() && !hands.isBust());
     }
 
     private static boolean tieCondition(final Hands hands, final Hands target) {
-        return hands.sum() == target.sum() && hands.size() == target.size() && !hands.isBust();
+        return hands.sum() == target.sum() && !hands.isBust();
     }
 
     private static boolean loseCondition(final Hands hands, final Hands target) {

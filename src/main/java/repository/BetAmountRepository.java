@@ -5,7 +5,6 @@ import domain.BetAmount;
 import domain.Result;
 import domain.participant.Dealer;
 import domain.participant.Player;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -38,8 +37,7 @@ public class BetAmountRepository {
                 result.put(entry.getKey(), entry.getValue().blackJackWinAmount());
             } else if (Result.WIN == entry.getKey().calculateResult(dealer)) {
                 result.put(entry.getKey(), entry.getValue().winAmount());
-            } else if (Result.TIE == entry.getKey().calculateResult(dealer)
-                    || Result.BLACK_JACK_TIE == entry.getKey().calculateResult(dealer)) {
+            } else if (Result.TIE == entry.getKey().calculateResult(dealer)) {
                 result.put(entry.getKey(), entry.getValue().tieAmount());
             } else {
                 result.put(entry.getKey(), entry.getValue().loseAmount());

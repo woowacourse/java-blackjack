@@ -14,16 +14,11 @@ import org.junit.jupiter.api.Test;
 
 class ResultTest {
 
-    @DisplayName("카드 합이 같고 카드 갯수가 같으면 무승부이다.")
+    @DisplayName("카드 합이 같다면 무승부이다.")
     @Test
     void isTie() {
         Assertions.assertThat(sum17Size3One.calculateResult(sum17Size3Two)).isEqualTo(Result.TIE);
-    }
-
-    @DisplayName("카드 합이 같은데 카드 갯수가 더 적으면 승리이다.")
-    @Test
-    void isWinBySize() {
-        Assertions.assertThat(sum20Size2.calculateResult(sum20Size3)).isEqualTo(Result.WIN);
+        Assertions.assertThat(sum20Size2.calculateResult(sum20Size3)).isEqualTo(Result.TIE);
     }
 
     @Test
