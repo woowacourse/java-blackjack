@@ -1,7 +1,6 @@
 package domain;
 
 import domain.constant.GamerResult;
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,7 +17,7 @@ public class BettingResult {
     private Money calculateDealerResult(Dealer dealer, Players players) {
         return players.getPlayers().stream()
                 .filter(player -> !GamerResult.DRAW.equals(dealer.judge(player)))
-                .map(player -> player.betting(dealer))
+                .map(player -> player.bet(dealer))
                 .map(Money::negative)
                 .reduce(Money.ZERO,Money::add);
     }
@@ -27,7 +26,7 @@ public class BettingResult {
         return players.getPlayers().stream()
                 .collect(Collectors.toMap(
                         Player::getName,
-                        player -> player.betting(dealer)));
+                        player -> player.bet(dealer)));
     }
 
     public Map<Name, Money> getPlayersResult() {

@@ -1,7 +1,6 @@
 package domain;
 
 import domain.constant.GamerResult;
-import java.math.BigDecimal;
 
 public class Player extends Gamer {
     private static final String BLACKJACK_BONUS_RATIO = "1.5";
@@ -22,7 +21,7 @@ public class Player extends Gamer {
         return !this.isBust();
     }
 
-    public Money betting(Dealer dealer) {
+    public Money bet(Dealer dealer) {
         GamerResult result = judge(dealer);
         if (GamerResult.WIN.equals(result)) {
             return gainMoney();
