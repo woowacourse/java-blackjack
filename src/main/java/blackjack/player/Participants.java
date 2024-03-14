@@ -10,23 +10,23 @@ public class Participants {
     private static final int MIN_PLAYER_COUNT = 1;
     private static final int MAX_PLAYER_COUNT = 10;
 
-    private final List<Player> players;
+    private final List<Participant> participants;
 
-    private Participants(List<Player> players) {
-        this.players = players;
+    private Participants(List<Participant> participants) {
+        this.participants = participants;
     }
 
-    public static Participants create(List<String> playerNames) {
-        validatePlayers(playerNames);
+    public static Participants create(List<String> participantNames) {
+        validateParticipants(participantNames);
 
-        ArrayList<Player> players = new ArrayList<>();
-        playerNames.stream()
+        ArrayList<Participant> players = new ArrayList<>();
+        participantNames.stream()
                 .map(Participant::new)
                 .forEach(players::add);
         return new Participants(players);
     }
 
-    private static void validatePlayers(List<String> playerNames) {
+    private static void validateParticipants(List<String> playerNames) {
         validateNotNull(playerNames);
         validateSize(playerNames);
         validateUniqueNames(playerNames);
@@ -54,16 +54,16 @@ public class Participants {
     }
 
     public void drawCardsForAll(Supplier<Card> cardSupplier, int amount) {
-        players.forEach(player -> player.drawCards(cardSupplier, amount));
+        participants.forEach(participant -> participant.drawCards(cardSupplier, amount));
     }
 
     public List<String> getNames() {
-        return players.stream()
-                .map(Player::getName)
+        return participants.stream()
+                .map(Participant::getName)
                 .toList();
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    public List<Participant> getParticipants() {
+        return participants;
     }
 }
