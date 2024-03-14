@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.blackjack.BetAmount;
 import domain.blackjack.WinStatus;
 import domain.card.Card;
 import domain.card.Rank;
@@ -38,7 +39,7 @@ class DealerTest {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
 
-        Player player = new Player(new Name("one"));
+        Player player = new Player(new Name("one"), new BetAmount(1000));
         player.receiveCard(new Card(Shape.HEART, Rank.KING));
         player.receiveCard(new Card(Shape.HEART, Rank.TEN));
 
@@ -53,7 +54,7 @@ class DealerTest {
         dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
         dealer.receiveCard(new Card(Shape.HEART, Rank.ACE));
 
-        Player player = new Player(new Name("one"));
+        Player player = new Player(new Name("one"), new BetAmount(1000));
         player.receiveCard(new Card(Shape.HEART, Rank.KING));
         player.receiveCard(new Card(Shape.DIA, Rank.ACE));
 

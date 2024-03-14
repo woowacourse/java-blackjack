@@ -9,11 +9,6 @@ public class Player extends Participant {
 
     private final BetAmount betAmount;
 
-    public Player(Name name) {
-        super(name);
-        this.betAmount = new BetAmount(1000);
-    }
-
     public Player(Name name, BetAmount betAmount) {
         super(name);
         this.betAmount = betAmount;
