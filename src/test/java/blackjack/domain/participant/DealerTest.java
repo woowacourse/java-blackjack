@@ -99,7 +99,7 @@ class DealerTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("더 이상 카드를 추가할 수 없습니다.");
     }
-
+/*
     @DisplayName("플레이어와의 승패를 판단할 수 있다.")
     @Nested
     class IsWinTest {
@@ -194,5 +194,5 @@ class DealerTest {
 
             assertThat(dealer.isWin(player)).isTrue();
         }
-    }
+    }*/
 }

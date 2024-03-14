@@ -20,10 +20,6 @@ public class Player extends Participant {
         return new Player(Collections.emptyList(), new Name(name));
     }
 
-    public boolean isWin(Dealer dealer) {
-        return !dealer.isWin(this);
-    }
-
     @Override
     protected int getMaxDrawableScore() {
         return BLACKJACK_SCORE;
