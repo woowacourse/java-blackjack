@@ -88,7 +88,7 @@ class DealerTest {
         dealer.hit(new Card(CardRank.FOUR, CardShape.DIAMOND));
         dealer.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", new Money(1000));
         player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         player.hit(new Card(CardRank.JACK, CardShape.DIAMOND));
         player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
@@ -105,7 +105,7 @@ class DealerTest {
         dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         dealer.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", new Money(1000));
         player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
 
@@ -121,7 +121,7 @@ class DealerTest {
         dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         dealer.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", new Money(1000));
         player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
         player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
@@ -139,7 +139,7 @@ class DealerTest {
         dealer.hit(new Card(CardRank.FIVE, CardShape.DIAMOND));
         dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", new Money(1000));
         player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
 
@@ -156,7 +156,7 @@ class DealerTest {
         dealer.hit(new Card(CardRank.FOUR, CardShape.DIAMOND));
         dealer.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", new Money(1000));
         player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
 
         GameResult gameResult = dealer.judge(player);
@@ -171,7 +171,7 @@ class DealerTest {
         dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         dealer.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", new Money(1000));
         player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         player.hit(new Card(CardRank.FOUR, CardShape.DIAMOND));
         player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
@@ -188,7 +188,7 @@ class DealerTest {
         dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         dealer.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", new Money(1000));
         player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         player.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
 
@@ -204,7 +204,7 @@ class DealerTest {
         dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         dealer.hit(new Card(CardRank.ACE, CardShape.DIAMOND));
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", new Money(1000));
         player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         player.hit(new Card(CardRank.SEVEN, CardShape.DIAMOND));
 
@@ -220,7 +220,7 @@ class DealerTest {
         dealer.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         dealer.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", new Money(1000));
         player.hit(new Card(CardRank.KING, CardShape.DIAMOND));
         player.hit(new Card(CardRank.QUEEN, CardShape.DIAMOND));
 

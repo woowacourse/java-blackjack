@@ -8,15 +8,13 @@ public class Participants {
     private final Dealer dealer = new Dealer();
     private final List<Player> players;
 
-    public Participants(List<String> playerNames) {
-        validate(playerNames);
+    public Participants(List<String> playerNames, List<Money> playersMoney) {
+        validate(playerNames, playersMoney);
 
-        this.players = playerNames.stream()
-                .map(Player::new)
-                .toList();
+        this.players = createPlayers(playerNames, playersMoney);
     }
 
-    private void validate(List<String> playerNames) {
+    private void validate(List<String> playerNames, List<Money> playersMoney) {
         validatePlayerSize(playerNames);
         validateDuplicatedPlayerNames(playerNames);
         validateInvalidPlayerName(playerNames, dealer.getName());
@@ -44,6 +42,18 @@ public class Participants {
         if (playerNames.contains(dealerName)) {
             throw new IllegalArgumentException(String.format("플레이어 이름은 '%s'가 될 수 없습니다.", dealerName));
         }
+    }
+
+    private List<Player> createPlayers(List<String> playerNames, List<Money> playersMoney) {
+        List<Player> players = new ArrayList<>();
+        int totalPlayerSize = playerNames.size();
+
+        for (int index = 0; index < totalPlayerSize; index++) {
+            Player player = new Player(playerNames.get(index), playersMoney.get(index));
+            players.add(player);
+        }
+
+        return players;
     }
 
     public List<Participant> getParticipants() {

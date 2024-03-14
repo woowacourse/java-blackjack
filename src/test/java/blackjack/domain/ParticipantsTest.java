@@ -14,8 +14,9 @@ class ParticipantsTest {
     @Test
     void create() {
         List<String> playerNames = List.of("아톰", "구름");
+        List<Money> playersMoney = List.of(new Money(1000), new Money(2000));
 
-        assertThatCode(() -> new Participants(playerNames))
+        assertThatCode(() -> new Participants(playerNames, playersMoney))
                 .doesNotThrowAnyException();
     }
 
@@ -23,8 +24,9 @@ class ParticipantsTest {
     @Test
     void validatePlayerSize() {
         List<String> emptyPlayerNames = Collections.emptyList();
+        List<Money> playersMoney = List.of(new Money(1000));
 
-        assertThatThrownBy(() -> new Participants(emptyPlayerNames))
+        assertThatThrownBy(() -> new Participants(emptyPlayerNames, playersMoney))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -32,8 +34,9 @@ class ParticipantsTest {
     @Test
     void validateDuplicatedPlayerName() {
         List<String> duplicatedPlayerNames = List.of("atom", "atom");
+        List<Money> playersMoney = List.of(new Money(1000));
 
-        assertThatThrownBy(() -> new Participants(duplicatedPlayerNames))
+        assertThatThrownBy(() -> new Participants(duplicatedPlayerNames, playersMoney))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -41,8 +44,9 @@ class ParticipantsTest {
     @Test
     void validateIncludeDealerName() {
         List<String> dealerNameIncludedPlayerNames = List.of("딜러");
+        List<Money> playersMoney = List.of(new Money(1000));
 
-        assertThatThrownBy(() -> new Participants(dealerNameIncludedPlayerNames))
+        assertThatThrownBy(() -> new Participants(dealerNameIncludedPlayerNames, playersMoney))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
