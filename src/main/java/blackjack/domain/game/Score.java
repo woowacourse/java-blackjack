@@ -5,6 +5,7 @@ import blackjack.domain.card.CardRank;
 public class Score {
 
     private static final int BLACKJACK = 21;
+    private static final int DEALER_HIT_THRESHOLD = 16;
     private static final int ACE_SCORE_DIFFERENCE = CardRank.ACE.getSpecialScore() - CardRank.ACE.getScore();
 
     private final int value;
@@ -17,16 +18,28 @@ public class Score {
         return new Score(this.value + other.value);
     }
 
-    public boolean canHit(Score threshold) {
-        return value <= threshold.value;
+    public boolean isBlackjack() {
+        return this.value == BLACKJACK;
     }
 
     public boolean isBust() {
         return value > BLACKJACK;
     }
 
-    private boolean isNotBust() {
+    public boolean isNotBust() {
         return !isBust();
+    }
+
+    public boolean isPlayerHit() {
+        return isNotBust();
+    }
+
+    public boolean isDealerHit() {
+        return this.value <= DEALER_HIT_THRESHOLD;
+    }
+
+    public boolean canHit(Score threshold) {
+        return value <= threshold.value;
     }
 
     public boolean isBiggerThan(Score other) {
