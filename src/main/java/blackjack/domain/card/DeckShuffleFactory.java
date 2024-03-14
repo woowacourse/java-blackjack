@@ -1,23 +1,23 @@
 package blackjack.domain.card;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DeckShuffleFactory implements DeckFactory {
 
     @Override
     public Stack<Card> generate() {
-        Stack<Card> deck = new Stack<>();
-        for (final Number number : Number.values()) {
-            generateCardsForNumber(number, deck);
-        }
-        Collections.shuffle(deck);
-        return deck;
-    }
+        final List<Card> cards = Stream.of(Number.values())
+                .               flatMap(number -> Stream.of(Suit.values())
+                                                .map(suit -> new Card(number, suit)))
+                                .collect(Collectors.toList());
+        Collections.shuffle(cards);
 
-    private static void generateCardsForNumber(final Number number, final Stack<Card> deck) {
-        for (final Suit suit : Suit.values()) {
-            deck.push(new Card(number, suit));
-        }
+        final Stack<Card> deck = new Stack<>();
+        deck.addAll(cards);
+        return deck;
     }
 }
