@@ -1,8 +1,9 @@
 package model.player;
 
-import java.util.List;
 import model.Outcome;
 import model.card.Card;
+
+import java.util.List;
 
 public class Participant extends User {
 
@@ -10,14 +11,14 @@ public class Participant extends User {
         super(name, cards);
     }
 
-    public Outcome findOutcome(Dealer dealer) {
+    public Outcome findOutcome(boolean isOtherNotHit, int otherDifference) {
         if (isNotHit()) {
             return Outcome.LOSE;
         }
-        if (dealer.isNotHit()) {
+        if (isOtherNotHit) {
             return Outcome.WIN;
         }
-        return findPlayerOutcome(dealer.findPlayerDifference());
+        return findPlayerOutcome(otherDifference);
     }
 
     private Outcome findPlayerOutcome(int otherDifference) {

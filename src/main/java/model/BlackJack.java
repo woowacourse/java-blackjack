@@ -54,7 +54,11 @@ public class BlackJack {
 
     public Map<Participant, Outcome> matchParticipantsOutcome() {
         List<Participant> sumPlayers = participants.participants();
-        return sumPlayers.stream().collect(toMap(participant -> participant, participant -> participant.findOutcome(dealer)));
+        return sumPlayers.stream().collect(
+                toMap(
+                        participant -> participant,
+                        participant -> participant.findOutcome(dealer.isNotHit(), dealer.findPlayerDifference())
+                ));
     }
 
     public Map<Outcome, Long> getDealerOutCome() {

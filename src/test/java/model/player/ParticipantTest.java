@@ -52,7 +52,7 @@ class ParticipantTest {
         Dealer dealer = new Dealer(
                 List.of(Card.of(Suit.CLOVER, Denomination.NINE), Card.of(Suit.HEART, Denomination.FIVE)));
 
-        Outcome playerOutcome = participant.findOutcome(dealer);
+        Outcome playerOutcome = participant.findOutcome(dealer.isNotHit(), dealer.findPlayerDifference());
 
         Assertions.assertThat(playerOutcome).isEqualTo(Outcome.DRAW);
     }
@@ -75,7 +75,8 @@ class ParticipantTest {
     void findOutcomeLose(Participant participant) {
         Dealer dealer = new Dealer(
                 List.of(Card.of(Suit.SPACE, Denomination.KING), Card.of(Suit.SPACE, Denomination.JACK)));
-        Outcome playerOutcome = participant.findOutcome(dealer);
+        Outcome playerOutcome = participant.findOutcome(dealer.isNotHit(), dealer.findPlayerDifference());
+
 
         Assertions.assertThat(playerOutcome).isEqualTo(Outcome.LOSE);
     }
@@ -98,7 +99,8 @@ class ParticipantTest {
     void findOutcomeWin(Dealer dealer) {
         Participant participant = new Participant("켬미",
                 List.of(Card.of(Suit.SPACE, Denomination.KING), Card.of(Suit.SPACE, Denomination.JACK)));
-        Outcome playerOutcome = participant.findOutcome(dealer);
+        Outcome playerOutcome = participant.findOutcome(dealer.isNotHit(), dealer.findPlayerDifference());
+
 
         Assertions.assertThat(playerOutcome).isEqualTo(Outcome.WIN);
     }
