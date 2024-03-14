@@ -1,8 +1,8 @@
 package controller;
 
 import static util.InputRetryHelper.inputRetryHelper;
-import static view.InputView.input;
 import static view.InputView.inputNames;
+import static view.InputView.inputPlayerHitChoice;
 
 import java.util.List;
 import model.Choice;
@@ -41,7 +41,7 @@ public class BlackJackLauncher {
         while (casinoService.hasAvailablePlayer()) {
             FaceUpResult currentPlayerFaceUpInfo = casinoService.getNextPlayerFaceUpInfo();
             Choice playerChoice = inputRetryHelper(() -> Choice.from(
-                    input(currentPlayerFaceUpInfo.getPartipantNameAsString() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")));
+                    inputPlayerHitChoice(currentPlayerFaceUpInfo.getPartipantNameAsString())));
             casinoService.distinctPlayerChoice(playerChoice);
             showPlayerChoiceResult(playerChoice, currentPlayerFaceUpInfo);
         }

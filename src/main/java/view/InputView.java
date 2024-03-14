@@ -7,6 +7,8 @@ import java.util.Scanner;
 public class InputView {
     private static final String INPUT_PARSE_DELIMITER = ",";
     private static final Scanner scanner = new Scanner(System.in);
+    public static final String POSITIVE_USER_INPUT = "Y";
+    public static final String NEGATIVE_USER_INPUT = "N";
 
     private InputView() {
     }
@@ -16,8 +18,23 @@ public class InputView {
         return scanner.nextLine();
     }
 
+    public static boolean inputPlayerHitChoice(String inputRequestMessage) {
+        String initialInput = input(inputRequestMessage + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        return validateChoiceInputReturnDecision(initialInput);
+    }
+
+    private static boolean validateChoiceInputReturnDecision(String initialInput) {
+        if (initialInput.equalsIgnoreCase(POSITIVE_USER_INPUT)) {
+            return true;
+        }
+        if (initialInput.equalsIgnoreCase(NEGATIVE_USER_INPUT)) {
+            return false;
+        }
+        throw new IllegalArgumentException("[ERROR] y 혹은 n만 입력 가능합니다.");
+    }
+
     public static List<String> inputNames(String inputRequestMessage) {
-        String initialInput = validateContainsDealerName(scanner.nextLine());
+        String initialInput = validateContainsDealerName(input(inputRequestMessage));
         return Arrays.stream(initialInput.split(INPUT_PARSE_DELIMITER))
                 .map(String::trim)
                 .toList();
