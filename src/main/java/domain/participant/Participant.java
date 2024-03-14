@@ -3,6 +3,8 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.Hand;
 
+import java.util.Objects;
+
 import static domain.BlackjackGame.BLACKJACK_SCORE;
 
 public abstract class Participant {
@@ -43,5 +45,18 @@ public abstract class Participant {
 
     public Hand hand() {
         return new Hand(hand);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Participant that = (Participant) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

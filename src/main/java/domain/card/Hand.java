@@ -13,7 +13,7 @@ public class Hand {
         this.cards = cards;
     }
 
-    public Hand(Hand hand){
+    public Hand(Hand hand) {
         this(hand.cards);
     }
 
