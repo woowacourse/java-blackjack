@@ -12,6 +12,7 @@ public class Players {
 
     private static final int MIN_PARTICIPANT_COUNT = 2;
     private static final int MAX_PARTICIPANT_COUNT = 8;
+    private static final int DEALER_MULTIPLIER = -1;
 
     private final List<Player> value;
 
@@ -51,6 +52,14 @@ public class Players {
             player.receiveCard(dealer.draw());
             printPlayerHands.accept(ParticipantDto.from(player));
         }
+    }
+
+    public double getDealerPayout(Dealer dealer) {
+        double total = 0;
+        for (Player player : value) {
+            total += player.getPayout(dealer);
+        }
+        return total * DEALER_MULTIPLIER;
     }
 
     public List<Name> getNames() {

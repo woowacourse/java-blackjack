@@ -1,9 +1,11 @@
 package view;
 
-import domain.blackjack.BettingResult;
 import domain.card.Card;
 import domain.dto.ParticipantDto;
-import domain.participant.*;
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Player;
+import domain.participant.Players;
 
 import java.util.List;
 
@@ -45,14 +47,14 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printBlackJackResult(BettingResult bettingResult, Dealer dealer) {
+    public static void printBlackJackResult(Players players, Dealer dealer) {
         System.out.println();
         System.out.println("## 최종 수익");
-        System.out.printf(outputFormat.formatDealerResult(bettingResult, dealer));
+        System.out.printf(outputFormat.formatDealerResult(players, dealer));
         System.out.println();
 
-        for (Player player : bettingResult.getPlayers()) {
-            System.out.println(outputFormat.formatPlayerResult(player, bettingResult.getPayout(player, dealer)));
+        for (Player player : players.getValue()) {
+            System.out.println(outputFormat.formatPlayerResult(player, player.getPayout(dealer)));
         }
     }
 }

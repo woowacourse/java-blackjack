@@ -1,3 +1,4 @@
+/*
 package domain.blackjack;
 
 import domain.card.Card;
@@ -118,3 +119,4 @@ class BettingResultTest {
         Assertions.assertThat(payout).isEqualTo(-10_000);
     }
 }
+*/

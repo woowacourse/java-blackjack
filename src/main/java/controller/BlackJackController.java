@@ -1,7 +1,6 @@
 package controller;
 
 import domain.blackjack.BetAmount;
-import domain.blackjack.BettingResult;
 import domain.blackjack.BlackJack;
 import domain.blackjack.HitOption;
 import domain.dto.ParticipantDto;
@@ -12,9 +11,7 @@ import domain.participant.Players;
 import view.InputView;
 import view.OutputView;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BlackJackController {
 
@@ -24,7 +21,7 @@ public class BlackJackController {
                 .toList();
         Dealer dealer = new Dealer();
         Players players = new Players(inputPlayers);
-        Map<Player, BetAmount> betAmount = createBetAmount(players);
+        //Map<Player, BetAmount> betAmount = createBetAmount(players);
         BlackJack blackJack = new BlackJack(players, dealer);
 
         blackJack.beginDealing(this::beginBlackJack);
@@ -32,16 +29,16 @@ public class BlackJackController {
         dealerHit(blackJack);
 
         printScore(players, dealer);
-        printResult(betAmount, dealer);
+        printResult(players, dealer);
     }
 
-    private Map<Player, BetAmount> createBetAmount(Players players) {
+    /*private Map<Player, BetAmount> createBetAmount(Players players) {
         Map<Player, BetAmount> betAmount = new LinkedHashMap<>();
         for (Player player : players.getValue()) {
             betAmount.put(player, new BetAmount(InputView.inputBetAmount(player.getName())));
         }
         return betAmount;
-    }
+    }*/
 
     private void beginBlackJack(Players players, Dealer dealer) {
         OutputView.printBeginDealingInformation(players.getNames());
@@ -66,8 +63,7 @@ public class BlackJackController {
         }
     }
 
-    private void printResult(Map<Player, BetAmount> bet, Dealer dealer) {
-        BettingResult bettingResult = new BettingResult(bet);
-        OutputView.printBlackJackResult(bettingResult, dealer);
+    private void printResult(Players players, Dealer dealer) {
+        OutputView.printBlackJackResult(players, dealer);
     }
 }

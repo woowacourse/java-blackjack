@@ -1,11 +1,11 @@
 package view;
 
-import domain.blackjack.BettingResult;
 import domain.card.Card;
 import domain.dto.ParticipantDto;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
+import domain.participant.Players;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +40,8 @@ public class OutputFormat {
         return String.format("%s - 결과: %d", formatHands(participantDto), participantDto.score());
     }
 
-    public String formatDealerResult(BettingResult bettingResult, Dealer dealer) {
-        return String.format("딜러: %d", (int) bettingResult.getDealerPayout(dealer));
+    public String formatDealerResult(Players players, Dealer dealer) {
+        return String.format("딜러: %d", (int) players.getDealerPayout(dealer));
     }
 
     public String formatPlayerResult(Player player, double payout) {
