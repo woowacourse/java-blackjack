@@ -12,7 +12,7 @@ public class Dealer {
     private final Hand hand;
 
     private Dealer(Hand hand) {
-        this.hand = new Hand();
+        this.hand = hand;
     }
 
     public static Dealer withNoCards() {
