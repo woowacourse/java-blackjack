@@ -19,12 +19,12 @@ public class OutputView {
     private static final String DEALER_CARDS_FORM = "\n딜러카드: %s";
     private static final String TOTAL_SCORE_FORM = " - 결과: %s\n";
     private static final String MATCH_RESULT_INTRO = "\n## 최종 승패";
-    public static final String DEALER_MATCH_RESULT_PREFIX = "딜러: ";
-    public static final String WIN_MESSAGE = "승";
-    public static final String LOSE_MESSAGE = "패";
-    public static final String PUSH_MESSAGE = "무";
-    public static final String DEALER_MATCH_RESULT_FORM = "%s승 %s패 %s무";
-    public static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
+    private static final String DEALER_MATCH_RESULT_PREFIX = "딜러: ";
+    private static final String WIN_MESSAGE = "승";
+    private static final String LOSE_MESSAGE = "패";
+    private static final String PUSH_MESSAGE = "무";
+    private static final String DEALER_MATCH_RESULT_FORM = "%s승 %s패 %s무";
+    private static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
 
     public void printDealingCards(final Players players, final Dealer dealer) {
         String names = String.join(", ", players.getNames());
