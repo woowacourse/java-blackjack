@@ -29,7 +29,7 @@ public record PlayerNames(List<PlayerName> values) {
 
     private void validateSize(final List<PlayerName> playerNames) {
         if (playerNames.size() > MAXIMUM_ENABLE_PLAYER_SIZE) {
-            throw new IllegalArgumentException("게임에 참여할 사람은 10명 이하여야 합니다.");
+            throw new IllegalArgumentException("게임에 참여할 사람은 " + MAXIMUM_ENABLE_PLAYER_SIZE + "명 이하여야 합니다.");
         }
     }
 }
