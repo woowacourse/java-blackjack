@@ -21,7 +21,6 @@ public class BlackJackController {
                 .toList();
         Dealer dealer = new Dealer();
         Players players = new Players(inputPlayers);
-        //Map<Player, BetAmount> betAmount = createBetAmount(players);
         BlackJack blackJack = new BlackJack(players, dealer);
 
         blackJack.beginDealing(this::beginBlackJack);
@@ -31,14 +30,6 @@ public class BlackJackController {
         printScore(players, dealer);
         printResult(players, dealer);
     }
-
-    /*private Map<Player, BetAmount> createBetAmount(Players players) {
-        Map<Player, BetAmount> betAmount = new LinkedHashMap<>();
-        for (Player player : players.getValue()) {
-            betAmount.put(player, new BetAmount(InputView.inputBetAmount(player.getName())));
-        }
-        return betAmount;
-    }*/
 
     private void beginBlackJack(Players players, Dealer dealer) {
         OutputView.printBeginDealingInformation(players.getNames());
