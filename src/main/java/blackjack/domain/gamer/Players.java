@@ -1,6 +1,7 @@
 package blackjack.domain.gamer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -47,6 +48,6 @@ public class Players {
 	}
 
 	public List<Player> getPlayers() {
-		return players;
+		return Collections.unmodifiableList(players);
 	}
 }
