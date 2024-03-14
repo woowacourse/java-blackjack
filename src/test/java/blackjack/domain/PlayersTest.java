@@ -14,9 +14,9 @@ import org.junit.jupiter.api.Test;
 
 class PlayersTest {
 
-    private Player siso = new Player(new Name("시소"));
-    private Player takan = new Player(new Name("타칸"));;
-    private Players players = new Players(List.of(siso, takan));
+    private final Player siso = new Player(new Name("시소"));
+    private final Player takan = new Player(new Name("타칸"));;
+    private final Players players = new Players(List.of(siso, takan));
 
 
     @Test
