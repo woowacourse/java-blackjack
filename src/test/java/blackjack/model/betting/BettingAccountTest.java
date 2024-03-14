@@ -14,12 +14,6 @@ class BettingAccountTest {
         BettingAccount bettingAccount = new BettingAccount(BLACKJACK_PLAYER.getPlayer(), new Money(1_000));
 
         bettingAccount.receive(2_000);
-        assertThat(bettingAccount.getMoney()).isEqualTo(3_000);
-    }
-
-    @Test
-    @DisplayName("돈을 지불해야 한다.")
-    void payMoney() {
-
+        assertThat(bettingAccount.getMoney()).isEqualTo(new Money(3_000));
     }
 }
