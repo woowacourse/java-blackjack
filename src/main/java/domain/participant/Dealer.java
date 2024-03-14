@@ -1,15 +1,22 @@
-package domain.card;
+package domain.participant;
+
+import domain.card.Card;
+import domain.card.Cards;
 
 import java.util.List;
 
-public class DealerCards extends Cards {
+public class Dealer extends Cards {
 
     private static final int MIN_SCORE = 16;
 
-    public DealerCards(List<Card> cards) {
+    public Dealer(List<Card> cards) {
         super(cards);
     }
 
+    @Override
+    public boolean canDraw() {
+        return bestSumOfCardScore() <= MIN_SCORE;
+    }
 
     public String getFirstCard() {
         return cards.get(0).asString();
@@ -17,13 +24,8 @@ public class DealerCards extends Cards {
 
     @Override
     public String toString() {
-        return "DealerCards{" +
+        return "Dealer{" +
                 "cards=" + cards +
                 '}';
-    }
-
-    @Override
-    public boolean canDraw() {
-        return bestSumOfCardScore() <= MIN_SCORE;
     }
 }

@@ -3,36 +3,36 @@ package view;
 import domain.result.Income;
 import domain.Name;
 import domain.card.Cards;
-import domain.card.DealerCards;
-import domain.card.PlayerCards;
+import domain.participant.Dealer;
+import domain.participant.Player;
 
 import java.util.List;
 import java.util.Map;
 
 public class OutputView {
 
-    public static void printInitialCards(DealerCards dealerCards, List<PlayerCards> playerCards) {
+    public static void printInitialCards(Dealer dealer, List<Player> playerCards) {
         List<String> names = playerCards.stream()
                 .map(playerCard -> playerCard.getPlayerName().asString())
                 .toList();
 
         printCardDivide(names);
 
-        printDealerFirstCard(dealerCards);
+        printDealerFirstCard(dealer);
 
         printPlayersCards(playerCards);
         System.out.println();
     }
 
-    private static void printPlayersCards(List<PlayerCards> playerCards) {
-        for (PlayerCards playerCard : playerCards) {
+    private static void printPlayersCards(List<Player> playerCards) {
+        for (Player playerCard : playerCards) {
             printPlayerCards(playerCard);
             System.out.println();
         }
     }
 
-    private static void printDealerFirstCard(DealerCards dealerCards) {
-        String firstCard = dealerCards.getFirstCard();
+    private static void printDealerFirstCard(Dealer dealer) {
+        String firstCard = dealer.getFirstCard();
         System.out.println("딜러: " + firstCard);
     }
 
@@ -41,7 +41,7 @@ public class OutputView {
         System.out.println("딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.");
     }
 
-    public static void printPlayerCards(PlayerCards cards) {
+    public static void printPlayerCards(Player cards) {
         Name playerName = cards.getPlayerName();
         System.out.print(playerName.asString() + "카드: ");
         System.out.print(formatCards(cards));
@@ -52,17 +52,17 @@ public class OutputView {
         return String.join(", ", cards);
     }
 
-    public static void printResults(DealerCards dealerCards, List<PlayerCards> playerCards) {
+    public static void printResults(Dealer dealer, List<Player> playerCards) {
         System.out.println();
-        printDealerCards(dealerCards);
-        printSumOfCards(dealerCards);
-        for (PlayerCards playerCard : playerCards) {
+        printDealerCards(dealer);
+        printSumOfCards(dealer);
+        for (Player playerCard : playerCards) {
             printPlayerCards(playerCard);
             printSumOfCards(playerCard);
         }
     }
 
-    private static void printDealerCards(DealerCards cards) {
+    private static void printDealerCards(Dealer cards) {
         System.out.print("딜러 카드: ");
         System.out.print(formatCards(cards));
     }

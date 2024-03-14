@@ -1,19 +1,21 @@
-package domain.card;
+package domain.participant;
 
 import domain.BetAmount;
 import domain.Name;
+import domain.card.Card;
+import domain.card.Cards;
 import domain.result.Income;
 import domain.result.Status;
 
 import java.util.List;
 import java.util.Objects;
 
-public class PlayerCards extends Cards {
+public class Player extends Cards {
 
     private final Name name;
     private final BetAmount betAmount;
 
-    public PlayerCards(Name name, BetAmount betAmount, List<Card> cards) {
+    public Player(Name name, BetAmount betAmount, List<Card> cards) {
         super(cards);
         this.name = name;
         this.betAmount = betAmount;
@@ -37,7 +39,7 @@ public class PlayerCards extends Cards {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        PlayerCards that = (PlayerCards) o;
+        Player that = (Player) o;
         return Objects.equals(name, that.name) && Objects.equals(betAmount, that.betAmount);
     }
 
@@ -48,9 +50,10 @@ public class PlayerCards extends Cards {
 
     @Override
     public String toString() {
-        return "PlayerCards{" +
+        return "Player{" +
                 "name=" + name +
                 ", betAmount=" + betAmount +
+                ", cards=" + cards +
                 '}';
     }
 }

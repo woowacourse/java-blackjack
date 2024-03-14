@@ -1,8 +1,8 @@
 package domain;
 
 import domain.card.Cards;
-import domain.card.DealerCards;
-import domain.card.PlayerCards;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import domain.result.Income;
 import domain.result.Incomes;
 import domain.result.Status;
@@ -21,11 +21,11 @@ public class Rule {
         this.incomes = incomes;
     }
 
-    public static Rule of(DealerCards dealerCards, List<PlayerCards> playerCardsBundle) {
-        Map<Name, Income> incomes = playerCardsBundle.stream()
+    public static Rule of(Dealer dealer, List<Player> playerBundle) {
+        Map<Name, Income> incomes = playerBundle.stream()
                 .collect(Collectors.toMap(
-                        PlayerCards::getPlayerName,
-                        playerCards -> playerCards.determineIncome(decideStatus(playerCards, dealerCards)),
+                        Player::getPlayerName,
+                        playerCards -> playerCards.determineIncome(decideStatus(playerCards, dealer)),
                         (oldValue, newValue) -> newValue,
                         LinkedHashMap::new
                 ));

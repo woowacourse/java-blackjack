@@ -24,7 +24,7 @@ public abstract class Cards {
         }
     }
 
-    abstract boolean canDraw();
+    protected abstract boolean canDraw();
 
     public boolean isBurst() {
         return bestSumOfCardScore() > MAX_SCORE;
