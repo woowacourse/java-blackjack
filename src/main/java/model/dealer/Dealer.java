@@ -8,6 +8,7 @@ public class Dealer {
 
     private static final int ADD_CARD_CONDITION = 17;
     private static final String TITLE_FOR_DEALER = "딜러";
+    private static final int BLACKJACK_NUMBER = 21;
 
     private final String name;
     private final Cards cards;
@@ -24,6 +25,10 @@ public class Dealer {
     public boolean isPossibleAddCard() {
         int totalNumbers = cards.calculateTotalNumbers();
         return totalNumbers < ADD_CARD_CONDITION;
+    }
+
+    public boolean isBlackjack() {
+        return cards.calculateTotalNumbers() == BLACKJACK_NUMBER;
     }
 
     public Dealer addCard(Card card) {
