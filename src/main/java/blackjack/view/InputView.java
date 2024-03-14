@@ -40,4 +40,26 @@ public class InputView {
 		System.out.println(name + "는(은) 한장의 카드를 더 받겠습니까?(예는 y, 아니오: n)");
 		return scanner.nextLine();
 	}
+
+	public int receiveBetAmount(String playerName) {
+		System.out.println(playerName + "의 베팅 금액은?");
+		int betAmount = convertInputToInteger(scanner.nextLine());
+		validateBetAmount(betAmount);
+
+		return betAmount;
+	}
+
+	private int convertInputToInteger(String input) {
+		try {
+			return Integer.parseInt(input);
+		} catch (NumberFormatException e) {
+			throw new IllegalArgumentException("숫자만 입력 가능합니다.");
+		}
+	}
+
+	private void validateBetAmount(int betAmount) {
+		if (betAmount < 0) {
+			throw new IllegalArgumentException("베팅 금액은 0 이상의 정수여야 합니다.");
+		}
+	}
 }
