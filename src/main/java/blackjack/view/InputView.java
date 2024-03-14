@@ -8,7 +8,7 @@ public class InputView {
     private static final String ASK_PLAYER_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String INVALID_PLAYER_NAME = "딜러는 플레이어 이름에 포함될 수 없습니다.";
     private static final String ASK_BETTING_MONEY = "의 배팅 금액은?";
-    private static final String INVALID_BETTING_MONEY = "배팅 금액은 음이 아닌 정수입니다.";
+    private static final String INVALID_BETTING_MONEY = "배팅 금액은 양의 정수입니다.";
     private static final String ASK_HIT_OR_STAND = "\n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n";
     private static final String INVALID_HIT_OR_STAND_COMMAND = "y 또는 n을 입력하세요.";
 
@@ -53,7 +53,7 @@ public class InputView {
     }
 
     private void validateBettingMoney(final int bettingMoney) {
-        if (bettingMoney < 0) {
+        if (bettingMoney <= 0) {
             throw new IllegalArgumentException(INVALID_BETTING_MONEY);
         }
     }
