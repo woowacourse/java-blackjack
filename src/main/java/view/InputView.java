@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class InputView {
 
-    private static final String DELIMITER = ",";
+    private static final String NAME_DELIMITER = ",";
     private static final Scanner SCANNER = new Scanner(System.in);
 
     private InputView() {
@@ -39,7 +39,7 @@ public class InputView {
 
     private static List<String> parseName(final String userNames) {
         validateInputDelimiter(userNames);
-        return Arrays.stream(userNames.split(DELIMITER))
+        return Arrays.stream(userNames.split(NAME_DELIMITER))
                 .map(String::trim)
                 .toList();
     }
@@ -51,7 +51,7 @@ public class InputView {
     }
 
     private static void validateInputDelimiter(String input) {
-        if (input.startsWith(DELIMITER) || input.endsWith(DELIMITER)) {
+        if (input.startsWith(NAME_DELIMITER) || input.endsWith(NAME_DELIMITER)) {
             throw new IllegalArgumentException("입력은 구분자로 시작하거나 끝날 수 없습니다.");
         }
     }

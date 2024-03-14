@@ -14,8 +14,7 @@ import java.util.List;
 public class BlackJackController {
 
     public void run() {
-        List<String> names = InputView.inputParticipantName();
-        Participants participants = new Participants(names);
+        Participants participants = makeParticipants();
         Dealer dealer = new Dealer();
         BlackJack blackJack = new BlackJack(dealer, participants);
 
@@ -29,8 +28,12 @@ public class BlackJackController {
 
         betResult.updateToProfit(blackJack.makeResult());
 
-        printScore(blackJack);
-        printResult(betResult);
+        printScoreAndResult(blackJack, betResult);
+    }
+
+    private static Participants makeParticipants() {
+        List<String> names = InputView.inputParticipantName();
+        return new Participants(names);
     }
 
     private BetResult startBet(Participants participants) {
@@ -75,15 +78,12 @@ public class BlackJackController {
         OutputView.printDealerHit(blackJack.dealerHit());
     }
 
-    private void printScore(BlackJack blackJack) {
+    private void printScoreAndResult(BlackJack blackJack, BetResult betResult) {
         OutputView.printParticipantResult(blackJack.getDealer());
         Participants participants = blackJack.getParticipants();
         for (Participant participant : participants.getValue()) {
             OutputView.printParticipantResult(participant);
         }
-    }
-
-    private void printResult(BetResult betResult) {
         OutputView.printBetResult(betResult);
     }
 }

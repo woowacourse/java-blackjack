@@ -3,14 +3,13 @@ package domain.Bet;
 import domain.blackjack.WinStatus;
 import domain.participant.Participant;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BetResult {
 
-    private final LinkedHashMap<Participant, BetAmount> betAmountByParticipant;
+    private final Map<Participant, BetAmount> betAmountByParticipant;
 
-    public BetResult(final LinkedHashMap<Participant, BetAmount> result) {
+    public BetResult(final Map<Participant, BetAmount> result) {
         betAmountByParticipant = result;
     }
 
@@ -18,7 +17,7 @@ public class BetResult {
         return betAmountByParticipant.get(participant);
     }
 
-    public void updateToProfit(LinkedHashMap<Participant, WinStatus> winStatusByParticipant) {
+    public void updateToProfit(Map<Participant, WinStatus> winStatusByParticipant) {
         for (Map.Entry<Participant, WinStatus> winStatusEntry : winStatusByParticipant.entrySet()) {
             Participant participant = winStatusEntry.getKey();
             WinStatus winStatus = winStatusEntry.getValue();
@@ -37,7 +36,7 @@ public class BetResult {
         return -participantTotalProfit;
     }
 
-    public LinkedHashMap<Participant, BetAmount> getBetAmountByParticipant() {
+    public Map<Participant, BetAmount> getBetAmountByParticipant() {
         return betAmountByParticipant;
     }
 }

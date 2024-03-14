@@ -1,7 +1,6 @@
 package domain.participant;
 
 import java.util.List;
-import java.util.Set;
 
 public class Participants {
 
@@ -23,9 +22,11 @@ public class Participants {
     }
 
     private void checkDuplicateParticipant(List<String> names) {
-        Set<String> distinctNames = Set.copyOf(names);
+        long distinctNamesCount = names.stream()
+                .distinct()
+                .count();
 
-        if (distinctNames.size() != names.size()) {
+        if (distinctNamesCount != names.size()) {
             throw new IllegalArgumentException("이름은 중복될 수 없습니다.");
         }
     }

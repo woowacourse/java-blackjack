@@ -5,7 +5,6 @@ import domain.Bet.BetResult;
 import domain.card.Card;
 import domain.participant.*;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,8 +53,7 @@ public class OutputView {
         System.out.printf(outputFormat.formatDealerResult(betResult));
         System.out.println();
 
-        LinkedHashMap<Participant, BetAmount> betAmountByParticipant = betResult.getBetAmountByParticipant();
-
+        Map<Participant, BetAmount> betAmountByParticipant = betResult.getBetAmountByParticipant();
         for (Map.Entry<Participant, BetAmount> entry : betAmountByParticipant.entrySet()) {
             System.out.println(outputFormat.formatBetResult(entry));
         }

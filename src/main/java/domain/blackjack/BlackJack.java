@@ -5,6 +5,7 @@ import domain.participant.Participant;
 import domain.participant.Participants;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 public class BlackJack {
@@ -36,25 +37,25 @@ public class BlackJack {
         return count;
     }
 
-    public LinkedHashMap<Participant, WinStatus> makeResult() {
-        LinkedHashMap<Participant, WinStatus> result = new LinkedHashMap<>();
+    public Map<Participant, WinStatus> makeResult() {
+        Map<Participant, WinStatus> result = new LinkedHashMap<>();
         for (Participant participant : participants.getValue()) {
-            result.put(participant, isWinner(participant));
+            result.put(participant, getWinStatusWithParticipant(participant));
         }
         return result;
     }
 
-    private WinStatus isWinner(Participant participant) {
+    private WinStatus getWinStatusWithParticipant(Participant participant) {
         if (participant.isBust()) {
             return WinStatus.LOSE;
         }
         if (dealer.isBust()) {
             return WinStatus.WIN;
         }
-        return isWinnerWhenNotBust(participant);
+        return getWinStatusWhenNotBust(participant);
     }
 
-    private WinStatus isWinnerWhenNotBust(Participant participant) {
+    private WinStatus getWinStatusWhenNotBust(Participant participant) {
         int participantScore = participant.getScore();
         int dealerScore = dealer.getScore();
 
