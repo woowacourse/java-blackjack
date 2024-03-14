@@ -1,9 +1,8 @@
 package domain.card;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public final class Score {
 
@@ -11,9 +10,7 @@ public final class Score {
     private static final Score ACE_SPECIAL_SCORE = new Score(10);
     private static final int MINIMUM_SCORE = 0;
     private static final int MAXIMUM_SCORE = 31;
-    private static final Map<Integer, Score> CACHE = IntStream.rangeClosed(MINIMUM_SCORE, MAXIMUM_SCORE)
-        .boxed()
-        .collect(Collectors.toMap(i -> i, Score::new));
+    private static final Map<Integer, Score> CACHE = new HashMap<>();
 
     private final int value;
 
@@ -23,10 +20,19 @@ public final class Score {
     }
 
     public static Score valueOf(int rawScore) {
-        if (rawScore < MINIMUM_SCORE || MAXIMUM_SCORE < rawScore) {
-            return new Score(rawScore);
+        if (CACHE.isEmpty()) {
+            cache();
         }
-        return CACHE.get(rawScore);
+        if (CACHE.containsKey(rawScore)) {
+            return CACHE.get(rawScore);
+        }
+        return new Score(rawScore);
+    }
+
+    private static void cache() {
+        for (int i = MINIMUM_SCORE; i <= MAXIMUM_SCORE; i++) {
+            CACHE.put(i, new Score(i));
+        }
     }
 
     public static Score totalScoreOf(ParticipantCards cards) {
