@@ -72,7 +72,9 @@ public class MessageResolver {
     }
 
     public String resolveBetResultsMessage(int dealerEarned, BetResults betResults) {
-        return new StringBuilder("##최종 수익")
+        return new StringBuilder(LINE_SEPARATOR)
+                .append("##최종 수익")
+                .append(LINE_SEPARATOR)
                 .append(resolveDealerProfitMessage(dealerEarned))
                 .append(LINE_SEPARATOR)
                 .append(betResults.getBetResults().stream()
