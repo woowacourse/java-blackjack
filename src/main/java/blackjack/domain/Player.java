@@ -4,15 +4,15 @@ import blackjack.domain.state.InitialState;
 import blackjack.domain.state.State;
 
 public class Player {
-    private final String name;
+    private final Name name;
     private final State state;
 
-    public Player(String name, State state) {
+    public Player(Name name, State state) {
         this.name = name;
         this.state = state;
     }
 
-    public static Player createInitialStatePlayer(String name) {
+    public static Player createInitialStatePlayer(Name name) {
         return new Player(name, new InitialState());
     }
 
@@ -34,7 +34,7 @@ public class Player {
         return !state.isFinished();
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 
