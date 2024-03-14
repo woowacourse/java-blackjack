@@ -16,10 +16,6 @@ public class Result {
                 .collect(Collectors.groupingBy(this::convertResultDealerSide, Collectors.counting()));
     }
 
-    public Map<Player, ResultStatus> getResults() {
-        return results;
-    }
-
     public ResultStatus convertResultDealerSide(ResultStatus result) {
         if (result == ResultStatus.WIN) {
             return ResultStatus.LOSE;
@@ -28,6 +24,10 @@ public class Result {
             return ResultStatus.WIN;
         }
         return ResultStatus.DRAW;
+    }
+
+    public Map<Player, ResultStatus> getResults() {
+        return results;
     }
 
 }
