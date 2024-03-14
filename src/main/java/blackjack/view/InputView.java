@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.model.gamer.Name;
 import blackjack.model.gamer.Player;
 import java.util.Arrays;
 import java.util.List;
@@ -17,8 +18,14 @@ public class InputView {
         return Arrays.asList(input.split(SEPARATOR));
     }
 
+    public static int readPlayerBetAmount(Name playerName) {
+        System.out.printf(NEW_LINE + "%s의 배팅 금액은?" + NEW_LINE, playerName.getName());
+        String input = SCANNER.nextLine();
+        return parseInt(input);
+    }
+
     public static boolean askPlayerForCard(Player player) {
-        System.out.printf(NEW_LINE + "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEW_LINE, player.getPlayerName());
+        System.out.printf(NEW_LINE + "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEW_LINE, player.name());
         String input = SCANNER.nextLine();
 
         return isHit(input);
@@ -36,6 +43,14 @@ public class InputView {
     private static void validateHitAnswer(boolean isYes, boolean isNo) {
         if (!isYes && !isNo) {
             throw new IllegalArgumentException("[ERROR] 입력값은 y 또는 n 으로만 가능핣니다.");
+        }
+    }
+
+    private static int parseInt(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 숫자만 입력 가능합니다.");
         }
     }
 }

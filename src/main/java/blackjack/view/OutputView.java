@@ -1,9 +1,9 @@
 package blackjack.view;
 
 import blackjack.dto.DealerDto;
-import blackjack.dto.DealerResultDto;
+import blackjack.dto.DealerNetProfitDto;
 import blackjack.dto.PlayerDto;
-import blackjack.dto.PlayersResultDto;
+import blackjack.dto.PlayersNetProfitDto;
 import java.util.List;
 import java.util.Map;
 
@@ -37,10 +37,10 @@ public class OutputView {
         printMessage(gamerCardAndScore.toString());
     }
 
-    public static void printResult(DealerResultDto dealerResultDto, PlayersResultDto playersResultDto) {
-        printMessage(NEW_LINE + "## 최종 승패");
-        printDealerResult(dealerResultDto);
-        printPlayerResult(playersResultDto);
+    public static void printNetProfit(DealerNetProfitDto dealerNetProfitDto, PlayersNetProfitDto playersNetProfitDto) {
+        printMessage(NEW_LINE + "## 최종 수익");
+        printDealerNetProfit(dealerNetProfitDto);
+        printPlayerNetProfit(playersNetProfitDto);
     }
 
     private static void printGamerCardInfo(DealerDto dealerDto, List<PlayerDto> playerDtos) {
@@ -54,20 +54,20 @@ public class OutputView {
         printMessage(gamerCardInfo.toString());
     }
 
-    private static void printDealerResult(DealerResultDto dealerResultDto) {
-        printMessage(Formatter.dealerResultFormat(dealerResultDto));
+    private static void printDealerNetProfit(DealerNetProfitDto dealerNetProfitDto) {
+        printMessage(Formatter.dealerNetProfitFormat(dealerNetProfitDto));
     }
 
-    private static void printPlayerResult(PlayersResultDto playersResultDto) {
-        Map<String, String> playersResult = playersResultDto.playerResult();
-        StringBuilder playersResultInfo = new StringBuilder();
+    private static void printPlayerNetProfit(PlayersNetProfitDto playersNetProfitDto) {
+        Map<String, Integer> playersNetProfit = playersNetProfitDto.playersNetProfit();
+        StringBuilder playersNetProfitInfo = new StringBuilder();
 
-        for (String playerName : playersResult.keySet()) {
-            String playerResult = playersResult.get(playerName);
-            playersResultInfo.append(Formatter.playerResultFormat(playerName, playerResult)).append(NEW_LINE);
+        for (String playerName : playersNetProfit.keySet()) {
+            int netProfit = playersNetProfit.get(playerName);
+            playersNetProfitInfo.append(Formatter.playerNetProfitFormat(playerName, netProfit)).append(NEW_LINE);
         }
 
-        printMessage(playersResultInfo.toString());
+        printMessage(playersNetProfitInfo.toString());
     }
 
     private static void printMessage(String message) {
