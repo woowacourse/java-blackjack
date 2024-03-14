@@ -53,7 +53,7 @@ public final class BlackjackController {
     private boolean needMoreCard(final PlayerName name) {
         try {
             return inputView.readNeedMoreCard(name);
-        } catch (NeedRetryException e) {
+        } catch (final NeedRetryException e) {
             outputView.printError(e.getMessage());
             return needMoreCard(name);
         }

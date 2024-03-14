@@ -38,22 +38,21 @@ public class BlackjackGame {
         return new BlackjackGame(Players.of(playerBetAmounts, dealer), dealer);
     }
 
-
     public StartCardsDto getStartCards() {
         final Hands dealerOpenedHands = dealer.getOpenedHands();
         return StartCardsDto.of(players.getPlayersHands(), dealerOpenedHands);
     }
 
     public void playGame(
-            final Predicate<PlayerName> isHitInput,
-            final BiConsumer<PlayerName, Hands> playerHitConsumer,
-            final IntConsumer dealerHitConsumer
+            final Predicate<PlayerName> playerCallBefore,
+            final BiConsumer<PlayerName, Hands> playerCallAfter,
+            final IntConsumer dealerCallAfter
     ) {
         if (dealer.isNotBlackjack()) {
-            players.hit(dealer, isHitInput, playerHitConsumer);
+            players.hit(dealer, playerCallBefore, playerCallAfter);
         }
 
-        runDealerTurn(dealerHitConsumer);
+        runDealerTurn(dealerCallAfter);
     }
 
     private void runDealerTurn(final IntConsumer dealerHitConsumer) {

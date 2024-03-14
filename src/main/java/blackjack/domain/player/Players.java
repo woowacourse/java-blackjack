@@ -30,11 +30,11 @@ public class Players {
 
     public void hit(
             final Dealer dealer,
-            final Predicate<PlayerName> isHitInput,
-            final BiConsumer<PlayerName, Hands> printHands
+            final Predicate<PlayerName> callBefore,
+            final BiConsumer<PlayerName, Hands> callAfter
     ) {
         for (final Player player : players) {
-            player.hit(dealer, isHitInput, printHands);
+            player.hit(dealer, callBefore, callAfter);
         }
     }
 
