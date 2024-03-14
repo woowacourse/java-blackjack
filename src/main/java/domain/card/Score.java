@@ -35,16 +35,16 @@ public final class Score {
         }
     }
 
-    public static Score totalScoreOf(ParticipantCards cards) {
-        Score totalScore = totalScoreWithoutAceSpecialScore(cards);
-        if (cards.hasAce()) {
+    public static Score totalScoreOf(Hand hand) {
+        Score totalScore = totalScoreWithoutAceSpecialScore(hand);
+        if (hand.hasAce()) {
             totalScore = totalScore.addAceSpecialScore(totalScore);
         }
         return totalScore;
     }
 
-    private static Score totalScoreWithoutAceSpecialScore(ParticipantCards cards) {
-        return cards.getCards()
+    private static Score totalScoreWithoutAceSpecialScore(Hand hand) {
+        return hand.getCards()
             .stream()
             .map(Card::score)
             .reduce(new Score(MINIMUM_SCORE), Score::add);

@@ -3,11 +3,11 @@ package domain.card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParticipantCards {
+public class Hand {
 
     private final List<Card> cards;
 
-    public ParticipantCards() {
+    public Hand() {
         this.cards = new ArrayList<>();
     }
 
