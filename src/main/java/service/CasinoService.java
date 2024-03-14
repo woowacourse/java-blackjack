@@ -1,18 +1,12 @@
 package service;
 
-import static java.util.Collections.frequency;
-import static model.casino.MatchResult.DRAW;
-import static model.casino.MatchResult.LOSE;
-import static model.casino.MatchResult.WIN;
-
-import java.util.EnumMap;
 import java.util.List;
 import model.Choice;
 import model.casino.CardDispenser;
 import model.casino.CardShuffleMachine;
-import model.casino.MatchResult;
 import model.participant.Entrant;
 import model.participant.Names;
+import service.dto.DealerFaceUpResult;
 import service.dto.DealerMatchResult;
 import service.dto.FaceUpResult;
 import service.dto.PlayerMatchResult;
@@ -60,7 +54,7 @@ public class CasinoService {
         return entrant.canHitDealer();
     }
 
-    public FaceUpResult getDealerFaceUpResult() {
+    public DealerFaceUpResult getDealerFaceUpResult() {
         return entrant.getDealerFaceUpResult();
     }
 

@@ -7,6 +7,7 @@ import java.util.List;
 import model.card.Card;
 import model.card.Emblem;
 import model.card.Number;
+import service.dto.DealerFaceUpResult;
 import service.dto.FaceUpResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -43,7 +44,7 @@ class EntrantTest {
     void getDealerFaceUpResult_ShouldReturnDealerCardInfo_WhenCalled() {
 
         // Then
-        FaceUpResult result = entrant.getDealerFaceUpResult();
+        DealerFaceUpResult result = entrant.getDealerFaceUpResult();
         assertAll(() -> {
             assertEquals("딜러", result.getPartipantNameAsString());
             assertEquals(List.of("A스페이드", "2스페이드", "3스페이드"), result.getCardsAsStrings());

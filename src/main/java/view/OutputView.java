@@ -1,6 +1,8 @@
 package view;
 
 import java.util.List;
+import model.participant.Dealer;
+import service.dto.DealerFaceUpResult;
 import service.dto.DealerMatchResult;
 import service.dto.FaceUpResult;
 import service.dto.PlayerMatchResult;
@@ -18,7 +20,7 @@ public class OutputView {
         System.out.println(toBePrint);
     }
 
-    public static void printInitialCardSetting(FaceUpResult dealerResult, List<FaceUpResult> playersResult) {
+    public static void printInitialCardSetting(DealerFaceUpResult dealerResult, List<FaceUpResult> playersResult) {
         System.out.print(System.lineSeparator());
         List<String> playerNameTexts = playersResult.stream()
                 .map(FaceUpResult::getPartipantNameAsString)
@@ -31,7 +33,7 @@ public class OutputView {
         System.out.print(System.lineSeparator());
     }
 
-    private static void printDealerHoleCard(FaceUpResult faceUpResult) {
+    private static void printDealerHoleCard(DealerFaceUpResult faceUpResult) {
         printMessage("딜러" + NAME_CARD_DELIMITER + faceUpResult.getCardsAsStrings()
                 .get(HOLE_CARD_INDEX));
     }
@@ -40,7 +42,7 @@ public class OutputView {
         faceUpResults.forEach(OutputView::printSingleFaceUp);
     }
 
-    public static void printFinalFaceUpResult(FaceUpResult dealerFaceUpResult, List<FaceUpResult> playerFaceUpResults) {
+    public static void printFinalFaceUpResult(DealerFaceUpResult dealerFaceUpResult, List<FaceUpResult> playerFaceUpResults) {
         System.out.print(System.lineSeparator());
         printSinglePlayerFinalFaceUp(dealerFaceUpResult);
         playerFaceUpResults.forEach(OutputView::printSinglePlayerFinalFaceUp);
@@ -49,6 +51,11 @@ public class OutputView {
     public static void printSingleFaceUp(FaceUpResult result) {
         printMessage(result.getPartipantNameAsString() + NAME_CARD_DELIMITER + String.join(CARD_DELIMITER,
                 result.getCardsAsStrings()));
+    }
+
+    private static void printSinglePlayerFinalFaceUp(DealerFaceUpResult result) {
+        printMessage(result.getPartipantNameAsString() + NAME_CARD_DELIMITER + String.join(CARD_DELIMITER,
+                result.getCardsAsStrings()) + " - 결과: " + result.hand());
     }
 
     private static void printSinglePlayerFinalFaceUp(FaceUpResult result) {

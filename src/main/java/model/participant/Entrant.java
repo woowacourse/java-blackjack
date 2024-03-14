@@ -13,6 +13,7 @@ import java.util.Queue;
 import java.util.stream.Collectors;
 import model.card.Card;
 import model.casino.MatchResult;
+import service.dto.DealerFaceUpResult;
 import service.dto.FaceUpResult;
 import service.dto.PlayerMatchResult;
 
@@ -76,8 +77,8 @@ public class Entrant {
         return Objects.requireNonNull(players.peek());
     }
 
-    public FaceUpResult getDealerFaceUpResult() {
-        return dealer.generateFaceUpResult();
+    public DealerFaceUpResult getDealerFaceUpResult() {
+        return new DealerFaceUpResult(dealer.cardDeck.getCards(), dealer.cardDeck.calculateHand());
     }
 
     public List<FaceUpResult> getPlayerFaceUpResults() {

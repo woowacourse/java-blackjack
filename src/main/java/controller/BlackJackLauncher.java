@@ -9,6 +9,7 @@ import model.Choice;
 import model.casino.RandomCardShuffleMachine;
 import model.participant.Names;
 import service.CasinoService;
+import service.dto.DealerFaceUpResult;
 import service.dto.DealerMatchResult;
 import service.dto.FaceUpResult;
 import service.dto.PlayerMatchResult;
@@ -32,7 +33,7 @@ public class BlackJackLauncher {
     }
 
     private void showInitialFaceUpResults(CasinoService casinoService) {
-        FaceUpResult dealerFaceUpResult = casinoService.getDealerFaceUpResult();
+        DealerFaceUpResult dealerFaceUpResult = casinoService.getDealerFaceUpResult();
         List<FaceUpResult> playerFaceUpResults = casinoService.getPlayerFaceUpResult();
         OutputView.printInitialCardSetting(dealerFaceUpResult, playerFaceUpResults);
     }
@@ -63,7 +64,7 @@ public class BlackJackLauncher {
 
     private void showFinalFaceUpResults(CasinoService casinoService) {
         List<FaceUpResult> playerFinalFaceUpResults = casinoService.getPlayerFaceUpResult();
-        FaceUpResult dealerFinalFaceUpResult = casinoService.getDealerFaceUpResult();
+        DealerFaceUpResult dealerFinalFaceUpResult = casinoService.getDealerFaceUpResult();
         OutputView.printFinalFaceUpResult(dealerFinalFaceUpResult, playerFinalFaceUpResults);
     }
 

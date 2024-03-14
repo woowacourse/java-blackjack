@@ -5,13 +5,16 @@ import static model.casino.MatchResult.LOSE;
 import static model.casino.MatchResult.WIN;
 
 import model.casino.MatchResult;
+import service.dto.FaceUpResult;
 
 public class Player extends Participant {
+    private final Name name;
     private boolean isTurnOver;
 
     public Player(Name name) {
-        super(name);
-        isTurnOver = false;
+        super();
+        this.name = name;
+        this.isTurnOver = false;
     }
 
     @Override
@@ -33,5 +36,14 @@ public class Player extends Participant {
 
     public void turnOver() {
         isTurnOver = true;
+    }
+
+
+    public FaceUpResult generateFaceUpResult() {
+        return new FaceUpResult(name, cardDeck.getCards(), cardDeck.calculateHand());
+    }
+
+    public Name getName() {
+        return name;
     }
 }
