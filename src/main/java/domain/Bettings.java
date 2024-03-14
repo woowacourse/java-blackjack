@@ -1,10 +1,9 @@
 package domain;
 
-import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Map.Entry;
 
 public class Bettings {
 
@@ -22,13 +21,12 @@ public class Bettings {
         return playersBetting.get(player);
     }
 
-    public Optional<BetAmount> saveIfBlackJack(final Player player, final Dealer dealer) {
-        if (player.isBlackJack() && !dealer.isBlackJack()) {
-            final BetAmount betAmount = findBy(player).multiply(1.5);// TODO 배팅 금액 고려
-            save(player, betAmount);
-            return Optional.of(betAmount);
+    public BetAmount calculateBy(final Entry<Player, Result> result) {
+        if (result.getValue().equals(Result.WIN_BLACKJACK)) {
+            final BetAmount resultBetAmount = findBy(result.getKey()).multiply(1.5);// TODO 배팅 금액 고려
+            save(result.getKey(), resultBetAmount);
+            return resultBetAmount;
         }
-
-        return Optional.empty();
+        return null;
     }
 }
