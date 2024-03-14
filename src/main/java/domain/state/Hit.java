@@ -1,4 +1,7 @@
-package domain;
+package domain.state;
+
+import domain.Card;
+import domain.Hand;
 
 public class Hit implements State {
     private final Hand hand;
