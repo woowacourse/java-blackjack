@@ -1,5 +1,6 @@
 package view;
 
+import mapper.ParticipantMapper;
 import view.dto.participant.ParticipantDto;
 
 import java.io.BufferedReader;
@@ -17,7 +18,7 @@ public class InputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = requireNotBlank(readLine());
         return Arrays.stream(input.split(DELIMITER))
-                     .map(name -> new ParticipantDto(name.trim()))
+                     .map(name -> ParticipantMapper.nameToParticipantDto(name.trim()))
                      .toList();
     }
 
