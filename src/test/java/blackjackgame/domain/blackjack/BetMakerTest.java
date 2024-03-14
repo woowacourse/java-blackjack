@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BetMakerTest {
+class BetMakerTest {
     private static final Double INITIAL_MONEY = 0.0;
 
     @Test

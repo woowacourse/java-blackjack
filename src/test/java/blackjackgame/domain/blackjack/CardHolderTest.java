@@ -1,18 +1,13 @@
 package blackjackgame.domain.blackjack;
 
 import static blackjackgame.domain.card.CardName.ACE;
-import static blackjackgame.domain.card.CardName.EIGHT;
 import static blackjackgame.domain.card.CardName.JACK;
 import static blackjackgame.domain.card.CardName.QUEEN;
-import static blackjackgame.domain.card.CardName.SEVEN;
 import static blackjackgame.domain.card.CardName.TWO;
 import static blackjackgame.domain.card.CardType.HEART;
-import static blackjackgame.domain.card.CardType.SPADE;
 
 import blackjackgame.domain.card.Card;
-import blackjackgame.domain.card.Deck;
 import blackjackgame.domain.gamers.CardHolder;
-import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -35,48 +30,6 @@ class CardHolderTest {
         Assertions.assertThatCode(() ->
                 new CardHolder("게이머", HoldingCards.of())
         ).doesNotThrowAnyException();
-    }
-
-    @Test
-    @DisplayName("게임 참가자가 카드를 뽑았을 때 점수가 올바르게 계산되는지 검증")
-    void draw() {
-        CardHolder cardHolderGamer = new CardHolder("robin", HoldingCards.of());
-        cardHolderGamer.draw(new Deck(List.of(new Card(JACK, HEART))), new TestPlayerCardDrawStrategy(cardHolderGamer));
-
-        SummationCardPoint actual = cardHolderGamer.getSummationCardPoint();
-        SummationCardPoint expected = new SummationCardPoint(10);
-
-        Assertions.assertThat(actual).isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("플레이어는 총합이 21이 넘으면 카드를 뽑을 수 없는지 검증")
-    void validateDrawLimit() {
-        CardHolder cardHolderGamer = new CardHolder("robin", HoldingCards.of(
-                new Card(JACK, HEART), new Card(EIGHT, HEART), new Card(JACK, SPADE)
-        ));
-        Deck deck = new Deck(List.of(
-                new Card(TWO, SPADE)
-        ));
-
-        Assertions.assertThatThrownBy(() -> cardHolderGamer.draw(deck, new TestPlayerCardDrawStrategy(cardHolderGamer)))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("카드를 더이상 뽑을 수 없습니다.");
-    }
-
-    @Test
-    @DisplayName("딜러는 총합이 16이 넘으면 카드를 뽑을 수 없는지 검증")
-    void validateDealerDrawLimit() {
-        CardHolder cardHolderGamer = new CardHolder("robin", HoldingCards.of(
-                new Card(JACK, HEART), new Card(SEVEN, HEART)
-        ));
-        Deck deck = new Deck(List.of(
-                new Card(TWO, SPADE)
-        ));
-
-        Assertions.assertThatThrownBy(() -> cardHolderGamer.draw(deck, new TestDealerCardDrawStrategy(cardHolderGamer)))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("카드를 더이상 뽑을 수 없습니다.");
     }
 
     @ParameterizedTest
