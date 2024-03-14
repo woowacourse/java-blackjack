@@ -5,12 +5,12 @@ import blackjack.domain.card.Card;
 
 public abstract class Participant {
 
-    private final ParticipantHand hand;
-    private final ParticipantName name;
+    private final Hand hand;
+    private final Name name;
 
     protected Participant(String name) {
-        this.hand = new ParticipantHand();
-        this.name = new ParticipantName(name);
+        this.hand = new Hand();
+        this.name = new Name(name);
     }
 
     public void hit(Card card) {

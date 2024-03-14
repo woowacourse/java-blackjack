@@ -1,10 +1,10 @@
 package blackjack.domain.participant;
 
-class ParticipantName {
+class Name {
 
     private final String name;
 
-    public ParticipantName(String name) {
+    public Name(String name) {
         validateNameSize(name);
 
         this.name = name;

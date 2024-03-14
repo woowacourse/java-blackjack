@@ -5,7 +5,7 @@ import java.util.List;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 
-class ParticipantHand {
+class Hand {
 
     private static final int BONUS_SCORE = 10;
     private static final int BLACKJACK_SCORE = 21;

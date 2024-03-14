@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class ParticipantNameTest {
+class NameTest {
 
     @DisplayName("생성 테스트")
     @Test
     void create() {
-        assertThatCode(() -> new ParticipantName("구름"))
+        assertThatCode(() -> new Name("구름"))
                 .doesNotThrowAnyException();
     }
 
@@ -21,7 +21,7 @@ class ParticipantNameTest {
     @ParameterizedTest
     @ValueSource(strings = {" ", "", "\r", "\n"})
     void validateNameSize(String source) {
-        assertThatThrownBy(() -> new ParticipantName(source))
+        assertThatThrownBy(() -> new Name(source))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
