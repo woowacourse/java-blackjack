@@ -40,10 +40,10 @@ class GameHostTest {
     @DisplayName("딜러가 카드를 추가로 드로우한 횟수를 반환한다.")
     @Test
     void cardDrawCountOfDealer() {
-        GameHost gameHost = new GameHost(List.of("pobi", "jason"));
         Dealer dealer = new Dealer(underThresholdHand());
+        GameHost gameHost = new GameHost(List.of("pobi", "jason"), dealer);
 
-        int count = gameHost.cardDrawCountOfDealer(dealer);
+        int count = gameHost.cardDrawCountOfDealer();
 
         assertThat(count).isEqualTo(1);
     }

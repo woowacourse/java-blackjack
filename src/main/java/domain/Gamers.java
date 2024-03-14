@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Gamers {
@@ -10,12 +11,18 @@ public class Gamers {
     }
 
     public List<Gamer> listOf() {
-        return gamers;
+        return Collections.unmodifiableList(gamers);
     }
-    
+
     public List<String> getNames() {
         return gamers.stream()
                 .map(Gamer::getName)
+                .toList();
+    }
+
+    public List<Hand> getHands() {
+        return gamers.stream()
+                .map(Gamer::getHand)
                 .toList();
     }
 }

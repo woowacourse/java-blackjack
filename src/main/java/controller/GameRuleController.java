@@ -1,5 +1,7 @@
 package controller;
 
+import static view.CardName.getHandStatusAsString;
+
 import controller.dto.GameResult;
 import controller.dto.PlayerResult;
 import controller.dto.dealer.DealerHand;
@@ -7,7 +9,6 @@ import controller.dto.dealer.DealerScore;
 import controller.dto.gamer.GamerHand;
 import controller.dto.gamer.GamerScore;
 import domain.BetAmount;
-import domain.Dealer;
 import domain.GameHost;
 import domain.GameRule;
 import domain.Gamer;
@@ -15,7 +16,6 @@ import domain.Gamers;
 import domain.constants.ProfitRate;
 import java.util.ArrayList;
 import java.util.List;
-import view.CardName;
 import view.InputView;
 import view.OutputView;
 
@@ -38,24 +38,23 @@ public class GameRuleController {
     }
 
     public void printResult() {
-        Dealer dealer = gameHost.findPlayingDealer();
         Gamers gamers = gameHost.findPlayingGamers();
 
-        printCardStatusAndScores(dealer, gamers);
-        outputView.printGameResult(getResultsOfGame(dealer, gamers));
+        printCardStatusAndScores(gamers);
+        outputView.printGameResult(getResultsOfGame(gamers));
     }
 
-    private void printCardStatusAndScores(final Dealer dealer, final Gamers gamers) {
+    private void printCardStatusAndScores(final Gamers gamers) {
         outputView.printHandStatusWithScore(
-                getCurrentDealerHandScore(dealer),
+                getCurrentDealerHandScore(),
                 getCurrentGamerHandScore(gamers),
                 gamers.getNames()
         );
     }
 
-    private DealerScore getCurrentDealerHandScore(final Dealer dealer) {
-        DealerHand dealerHand = new DealerHand(CardName.getHandStatusAsString(dealer.getHand()));
-        return new DealerScore(dealerHand, dealer.calculateResultScore());
+    private DealerScore getCurrentDealerHandScore() {
+        DealerHand dealerHand = new DealerHand(getHandStatusAsString(gameHost.getDealerHand()));
+        return new DealerScore(dealerHand, gameHost.getDealerScore());
     }
 
     private List<GamerScore> getCurrentGamerHandScore(final Gamers gamers) {
@@ -83,14 +82,14 @@ public class GameRuleController {
 
         for (Gamer gamer : gamers.listOf()) {
             gamerHandStatuses.add(
-                    new GamerHand(gamer.getName(), CardName.getHandStatusAsString(gamer.getHand()))
+                    new GamerHand(gamer.getName(), getHandStatusAsString(gamer.getHand()))
             );
         }
         return gamerHandStatuses;
     }
 
-    private GameResult getResultsOfGame(final Dealer dealer, final Gamers gamers) {
-        GameRule gameRule = new GameRule(dealer, gamers);
+    private GameResult getResultsOfGame(final Gamers gamers) {
+        GameRule gameRule = new GameRule(gameHost.findPlayingDealer(), gamers);
         List<ProfitRate> results = gameRule.judge();
 
         return new GameResult(createPlayerResults(gamers, results));

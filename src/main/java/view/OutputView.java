@@ -17,11 +17,11 @@ public class OutputView {
         System.out.println(builder);
     }
 
-    public void printDealerStatusAfterStartGame(final DealerHand dealerHand) {
+    public void printDealerStatus(final DealerHand dealerHand) {
         System.out.println("딜러카드: " + dealerHand.hands());
     }
 
-    public void printPlayerStatusAfterStartGame(final List<String> names, final List<GamerHand> statuses) {
+    public void printPlayerStatus(final List<String> names, final List<GamerHand> statuses) {
         for (int i = 0; i < names.size(); i++) {
             GamerHand status = statuses.get(i);
             System.out.println(names.get(i) + "카드: " + status.hands());

@@ -2,16 +2,16 @@ package domain;
 
 import java.util.List;
 
-public class Player {
+public abstract class Player {
     private static final int BLACKJACK_SCORE = 21;
 
     private final Hand hand;
 
-    public Player() {
+    protected Player() {
         hand = new Hand();
     }
 
-    public Player(final Hand hand) {
+    protected Player(final Hand hand) {
         this.hand = hand;
     }
 
