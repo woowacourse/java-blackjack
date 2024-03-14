@@ -15,7 +15,10 @@ class BlackJackTest {
     @DisplayName("카드를 두장씩 나눠준다.")
     @Test
     void beginDealing() {
-        Players players = new Players(List.of(new Player(new Name("one"), new BetAmount(1000)), new Player(new Name("two"), new BetAmount(1000))));
+        Players players = new Players(List.of(
+                new Player(new Name("one"), new BetAmount(1000)),
+                new Player(new Name("two"), new BetAmount(1000))
+        ));
         Dealer dealer = new Dealer();
         BlackJack blackJack = new BlackJack(players, dealer);
         blackJack.beginDealing((testParticipants, testDealer) -> {
@@ -31,7 +34,10 @@ class BlackJackTest {
     @DisplayName("사용자가 Bust가 아닐 때 Hit을 하길 원하면 카드를 1장 추가한다.")
     @Test
     void play() {
-        Players players = new Players(List.of(new Player(new Name("one"), new BetAmount(1000)), new Player(new Name("two"), new BetAmount(1000))));
+        Players players = new Players(List.of(
+                new Player(new Name("one"), new BetAmount(1000)),
+                new Player(new Name("two"), new BetAmount(1000))
+        ));
         Dealer dealer = new Dealer();
         BlackJack blackJack = new BlackJack(players, dealer);
 

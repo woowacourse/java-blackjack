@@ -40,7 +40,10 @@ class PlayersTest {
     @DisplayName("중복된 이름이 있을 경우 예외를 발생시킨다.")
     @Test
     void validateDuplicateNames() {
-        List<Player> names = List.of(new Player(new Name("pobi"), new BetAmount(1000)), new Player(new Name("pobi"), new BetAmount(1000)));
+        List<Player> names = List.of(
+                new Player(new Name("pobi"), new BetAmount(1000)),
+                new Player(new Name("pobi"), new BetAmount(1000))
+        );
 
         Assertions.assertThatThrownBy(() -> new Players(names))
                 .isInstanceOf(IllegalArgumentException.class)
