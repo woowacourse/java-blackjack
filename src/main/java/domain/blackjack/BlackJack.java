@@ -43,7 +43,6 @@ public class BlackJack {
         return result;
     }
 
-    // TODO : 승패무 판단 로직 리팩토링
     private WinStatus isWinner(Participant participant) {
         if (participant.isBust()) {
             return WinStatus.LOSE;
