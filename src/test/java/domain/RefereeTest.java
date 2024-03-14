@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("승패")
-class JudgementTest {
+class RefereeTest {
 
     SettedShuffleStrategy shuffleStrategy;
     Deck deck;
@@ -76,19 +76,17 @@ class JudgementTest {
             dealer.hit(deck.draw());
         }
 
-        @DisplayName("플레이어가 버스트가 아니라면 플레이어가 이긴다.")
+        @DisplayName("플레이어가 버스트가 아니라면 딜러가 진다.")
         @Test
         void playerNotBust() {
             // when
-            Judgement judgement = Judgement.of(dealer, players);
+            Result result1 = Referee.judge(dealer, pobi);
+            Result result2 = Referee.judge(dealer, neo);
 
             // then
             assertAll(
-                    () -> assertThat(judgement.getDealerResult().getWinCount()).isEqualTo(0),
-                    () -> assertThat(judgement.getDealerResult().getLoseCount()).isEqualTo(2),
-                    () -> assertThat(judgement.getDealerResult().getTieCount()).isEqualTo(0),
-                    () -> assertThat(judgement.getPlayerResults().getResults().get(pobi)).isEqualTo(Result.WIN),
-                    () -> assertThat(judgement.getPlayerResults().getResults().get(neo)).isEqualTo(Result.WIN)
+                    () -> assertThat(result1).isEqualTo(Result.LOSE),
+                    () -> assertThat(result2).isEqualTo(Result.LOSE)
             );
         }
 
@@ -100,15 +98,13 @@ class JudgementTest {
             pobi.hit(deck.draw());
 
             // when
-            Judgement judgement = Judgement.of(dealer, players);
+            Result result1 = Referee.judge(dealer, pobi);
+            Result result2 = Referee.judge(dealer, neo);
 
             // then
             assertAll(
-                    () -> assertThat(judgement.getDealerResult().getWinCount()).isEqualTo(1),
-                    () -> assertThat(judgement.getDealerResult().getLoseCount()).isEqualTo(1),
-                    () -> assertThat(judgement.getDealerResult().getTieCount()).isEqualTo(0),
-                    () -> assertThat(judgement.getPlayerResults().getResults().get(pobi)).isEqualTo(Result.LOSE),
-                    () -> assertThat(judgement.getPlayerResults().getResults().get(neo)).isEqualTo(Result.WIN)
+                    () -> assertThat(result1).isEqualTo(Result.WIN),
+                    () -> assertThat(result2).isEqualTo(Result.LOSE)
             );
         }
     }
@@ -139,15 +135,13 @@ class JudgementTest {
         @Test
         void playerIsBlackJack() {
             // when
-            Judgement judgement = Judgement.of(dealer, players);
+            Result result1 = Referee.judge(dealer, pobi);
+            Result result2 = Referee.judge(dealer, neo);
 
             // then
             assertAll(
-                    () -> assertThat(judgement.getDealerResult().getWinCount()).isEqualTo(1),
-                    () -> assertThat(judgement.getDealerResult().getLoseCount()).isEqualTo(0),
-                    () -> assertThat(judgement.getDealerResult().getTieCount()).isEqualTo(1),
-                    () -> assertThat(judgement.getPlayerResults().getResults().get(pobi)).isEqualTo(Result.TIE),
-                    () -> assertThat(judgement.getPlayerResults().getResults().get(neo)).isEqualTo(Result.LOSE)
+                    () -> assertThat(result1).isEqualTo(Result.TIE),
+                    () -> assertThat(result2).isEqualTo(Result.WIN)
             );
         }
 
@@ -158,15 +152,13 @@ class JudgementTest {
             neo.hit(deck.draw());
 
             // when
-            Judgement judgement = Judgement.of(dealer, players);
+            Result result1 = Referee.judge(dealer, pobi);
+            Result result2 = Referee.judge(dealer, neo);
 
             // then
             assertAll(
-                    () -> assertThat(judgement.getDealerResult().getWinCount()).isEqualTo(1),
-                    () -> assertThat(judgement.getDealerResult().getLoseCount()).isEqualTo(0),
-                    () -> assertThat(judgement.getDealerResult().getTieCount()).isEqualTo(1),
-                    () -> assertThat(judgement.getPlayerResults().getResults().get(pobi)).isEqualTo(Result.TIE),
-                    () -> assertThat(judgement.getPlayerResults().getResults().get(neo)).isEqualTo(Result.LOSE)
+                    () -> assertThat(result1).isEqualTo(Result.TIE),
+                    () -> assertThat(result2).isEqualTo(Result.WIN)
             );
         }
 
@@ -194,19 +186,17 @@ class JudgementTest {
             prepareCards(dealer, players);
         }
 
-        @DisplayName("플레이어(포비)가 블랙잭이라면 플레이어가 이긴다.")
+        @DisplayName("플레이어(포비)가 블랙잭이라면 딜러가 진다.")
         @Test
         void playerIsBlackJack() {
             // when
-            Judgement judgement = Judgement.of(dealer, players);
+            Result result1 = Referee.judge(dealer, pobi);
+            Result result2 = Referee.judge(dealer, neo);
 
             // then
             assertAll(
-                    () -> assertThat(judgement.getDealerResult().getWinCount()).isEqualTo(1),
-                    () -> assertThat(judgement.getDealerResult().getLoseCount()).isEqualTo(1),
-                    () -> assertThat(judgement.getDealerResult().getTieCount()).isEqualTo(0),
-                    () -> assertThat(judgement.getPlayerResults().getResults().get(pobi)).isEqualTo(Result.WIN),
-                    () -> assertThat(judgement.getPlayerResults().getResults().get(neo)).isEqualTo(Result.LOSE)
+                    () -> assertThat(result1).isEqualTo(Result.LOSE),
+                    () -> assertThat(result2).isEqualTo(Result.WIN)
             );
         }
 
@@ -219,50 +209,48 @@ class JudgementTest {
             neo.hit(deck.draw());
 
             // when
-            Judgement judgement = Judgement.of(dealer, players);
+            Result result1 = Referee.judge(dealer, pobi);
+            Result result2 = Referee.judge(dealer, neo);
 
             // then
             assertAll(
-                    () -> assertThat(judgement.getDealerResult().getWinCount()).isEqualTo(1),
-                    () -> assertThat(judgement.getDealerResult().getLoseCount()).isEqualTo(1),
-                    () -> assertThat(judgement.getDealerResult().getTieCount()).isEqualTo(0),
-                    () -> assertThat(judgement.getPlayerResults().getResults().get(pobi)).isEqualTo(Result.WIN),
-                    () -> assertThat(judgement.getPlayerResults().getResults().get(neo)).isEqualTo(Result.LOSE)
+                    () -> assertThat(result1).isEqualTo(Result.LOSE),
+                    () -> assertThat(result2).isEqualTo(Result.WIN)
             );
         }
 
         @DisplayName("플레이어(네오)와 딜러 모두 일반 점수인 경우, 점수가 같다면 무승부이다.")
         @Test
         void playerIsSameNormalScoreAndSame() {
-            // when
+            // given
             neo.hit(deck.draw());
-            Judgement judgement = Judgement.of(dealer, players);
+
+            // when
+            Result result1 = Referee.judge(dealer, pobi);
+            Result result2 = Referee.judge(dealer, neo);
 
             // then
             assertAll(
-                    () -> assertThat(judgement.getDealerResult().getWinCount()).isEqualTo(0),
-                    () -> assertThat(judgement.getDealerResult().getLoseCount()).isEqualTo(1),
-                    () -> assertThat(judgement.getDealerResult().getTieCount()).isEqualTo(1),
-                    () -> assertThat(judgement.getPlayerResults().getResults().get(pobi)).isEqualTo(Result.WIN),
-                    () -> assertThat(judgement.getPlayerResults().getResults().get(neo)).isEqualTo(Result.TIE)
+                    () -> assertThat(result1).isEqualTo(Result.LOSE),
+                    () -> assertThat(result2).isEqualTo(Result.TIE)
             );
         }
 
-        @DisplayName("플레이어(네오)와 딜러 모두 일반 점수인 경우, 플레이어의 점수가 더 높으면 플레이어가 이긴다.")
+        @DisplayName("플레이어(네오)와 딜러 모두 일반 점수인 경우, 딜러의 점수가 더 낮으면 딜러가 진다.")
         @Test
         void playerIsSameNormalScoreAndSmaller() {
+            // given
+            neo.hit(deck.draw());
+            neo.hit(deck.draw());
+
             // when
-            neo.hit(deck.draw());
-            neo.hit(deck.draw());
-            Judgement judgement = Judgement.of(dealer, players);
+            Result result1 = Referee.judge(dealer, pobi);
+            Result result2 = Referee.judge(dealer, neo);
 
             // then
             assertAll(
-                    () -> assertThat(judgement.getDealerResult().getWinCount()).isEqualTo(0),
-                    () -> assertThat(judgement.getDealerResult().getLoseCount()).isEqualTo(2),
-                    () -> assertThat(judgement.getDealerResult().getTieCount()).isEqualTo(0),
-                    () -> assertThat(judgement.getPlayerResults().getResults().get(pobi)).isEqualTo(Result.WIN),
-                    () -> assertThat(judgement.getPlayerResults().getResults().get(neo)).isEqualTo(Result.WIN)
+                    () -> assertThat(result1).isEqualTo(Result.LOSE),
+                    () -> assertThat(result2).isEqualTo(Result.LOSE)
             );
         }
 

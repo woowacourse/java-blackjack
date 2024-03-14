@@ -1,7 +1,6 @@
 package controller;
 
-import domain.Judgement;
-import domain.Players;
+import domain.*;
 import domain.card.Card;
 import domain.deck.Deck;
 import domain.gamer.Dealer;
@@ -26,8 +25,8 @@ public class BlackJackGame {
         OutputView.printInitialCardsMessage(dealer, players);
         handOutCard(deck, dealer, players);
         OutputView.printCardsAndResult(dealer, players);
-        Judgement judgement = Judgement.of(dealer, players);
-        OutputView.printFinalGameResult(judgement);
+        TotalResult totalResult = findTotalResult(dealer, players);
+        OutputView.printFinalGameResult(totalResult);
     }
 
     private Players readPlayers() {
@@ -92,5 +91,16 @@ public class BlackJackGame {
             return true;
         }
         return false;
+    }
+
+    private TotalResult findTotalResult(final Dealer dealer, final Players players) {
+        PlayerResults playerResults = new PlayerResults();
+        DealerResult dealerResult = new DealerResult();
+        for (Player player : players.getPlayers()) {
+            Result result = Referee.judge(dealer, player);
+            dealerResult = dealerResult.addResult(result);
+            //TODO : player 결과 저장
+        }
+        return new TotalResult(dealerResult, playerResults);
     }
 }

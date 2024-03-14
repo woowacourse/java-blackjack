@@ -8,6 +8,7 @@ import domain.gamer.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringJoiner;
 
@@ -93,17 +94,16 @@ public class OutputView {
         return rank + symbol;
     }
 
-    public static void printFinalGameResult(final Judgement judgement) {
+    public static void printFinalGameResult(final TotalResult totalResult) {
         System.out.println(System.lineSeparator() + "## 최종 승패");
-        DealerResult dealerResult = judgement.getDealerResult();
-        String message = String.format("딜러: %d승 %d패 %d무", dealerResult.getWinCount(), dealerResult.getLoseCount(), dealerResult.getTieCount());
+        String message = String.format("딜러: %d승 %d패 %d무", totalResult.getDealerWinCount(), totalResult.getDealerLoseCount(), totalResult.getDealerTieCount());
         System.out.println(message);
-        printPlayerResults(judgement.getPlayerResults());
+        printPlayerResults(totalResult.getPlayerResult());
     }
 
-    private static void printPlayerResults(final PlayerResults playerResults) {
+    private static void printPlayerResults(final Map<Player,Result> playerResults) {
         StringBuilder builder = new StringBuilder();
-        for (Entry<Player, Result> player : playerResults.getResults().entrySet()) {
+        for (Entry<Player, Result> player : playerResults.entrySet()) {
             String playerName = player.getKey().getName().getValue();
             String result = ResultView.findName(player.getValue());
             String message = String.format("%s: %s", playerName, result);
