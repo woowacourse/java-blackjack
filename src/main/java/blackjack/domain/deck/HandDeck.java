@@ -1,6 +1,6 @@
-package blackjack.model.deck;
+package blackjack.domain.deck;
 
-import blackjack.model.card.Card;
+import blackjack.domain.card.Card;
 
 import java.util.ArrayList;
 import java.util.List;

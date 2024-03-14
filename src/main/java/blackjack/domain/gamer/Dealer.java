@@ -1,6 +1,6 @@
-package blackjack.model.gamer;
+package blackjack.domain.gamer;
 
-import blackjack.model.card.Card;
+import blackjack.domain.card.Card;
 
 public class Dealer extends Gamer {
 

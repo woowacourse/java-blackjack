@@ -1,4 +1,4 @@
-package blackjack.model.gamer;
+package blackjack.domain.gamer;
 
 public class Player extends Gamer {
 

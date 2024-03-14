@@ -1,14 +1,14 @@
-package blackjack.model;
+package blackjack.domain.deck;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import blackjack.domain.card.Card;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
-import blackjack.model.card.Card;
-import blackjack.model.deck.DeckGenerator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DeckGeneratorTest {
 

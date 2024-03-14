@@ -1,10 +1,12 @@
 package blackjack.view;
 
-import blackjack.model.card.Card;
-import blackjack.model.gamer.Dealer;
-import blackjack.model.gamer.Player;
-import blackjack.model.result.GameResult;
-import blackjack.model.result.ResultState;
+import blackjack.domain.result.GameBattingManager;
+import blackjack.domain.card.Card;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Player;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.Map;
 

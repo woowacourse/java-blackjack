@@ -1,10 +1,6 @@
-package blackjack.model;
+package blackjack.domain.deck;
 
-import blackjack.model.card.Card;
-import blackjack.model.card.Pattern;
-import blackjack.model.card.Rank;
-import blackjack.model.deck.DeckGenerator;
-import blackjack.model.deck.PlayingDeck;
+import blackjack.domain.card.Card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

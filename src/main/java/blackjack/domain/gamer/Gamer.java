@@ -1,7 +1,7 @@
-package blackjack.model.gamer;
+package blackjack.domain.gamer;
 
-import blackjack.model.card.Card;
-import blackjack.model.deck.HandDeck;
+import blackjack.domain.card.Card;
+import blackjack.domain.deck.HandDeck;
 
 import java.util.List;
 

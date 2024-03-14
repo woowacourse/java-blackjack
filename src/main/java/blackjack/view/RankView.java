@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.model.card.Rank;
+import blackjack.domain.card.Rank;
 
 import java.util.Arrays;
 
