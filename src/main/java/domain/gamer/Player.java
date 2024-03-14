@@ -3,7 +3,6 @@ package domain.gamer;
 import domain.cards.Card;
 import domain.cards.CardPack;
 import domain.cards.Hand;
-import domain.cards.Score;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -40,7 +39,7 @@ public class Player {
         return hand.cannotBust();
     }
 
-    public Score finalizeCardsScore() {
+    public int finalizeCardsScore() {
         return hand.calculateScore();
     }
 

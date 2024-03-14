@@ -4,7 +4,7 @@ import domain.cards.cardinfo.CardNumber;
 import domain.cards.cardinfo.CardShape;
 import java.util.Objects;
 
-public class Card { // TODO: cache -> 중복은?
+public class Card {
 
     private final CardNumber cardNumber;
     private final CardShape cardShape;

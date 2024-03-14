@@ -83,7 +83,7 @@ public class ResultView {
         stringBuilder.append(LINE_SEPARATOR);
         for (Player gamer : gamers.getGamers()) {
             stringBuilder.append(String.format("%s - 결과: %d\n",
-                    resolvePlayerCards(gamer), gamer.finalizeCardsScore().getValue()));
+                    resolvePlayerCards(gamer), gamer.finalizeCardsScore()));
         }
         System.out.println(stringBuilder);
     }
