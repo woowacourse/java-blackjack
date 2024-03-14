@@ -17,7 +17,6 @@ public class Players {
 
     private void validatePlayerCount(final List<Player> players) {
         if (players.size() < MINIMUM_PLAYER_COUNT || players.size() > MAXIMUM_PLAYER_COUNT) {
-
             throw new PlayerCountException(PlayerCountException.INVALID_PLAYER_COUNT);
         }
     }

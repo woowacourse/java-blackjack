@@ -85,8 +85,8 @@ public class BetAmountsTest {
         }
     }
 
-    @Nested
     @DisplayName("배팅 결과 수익을 구한다.")
+    @Nested
     class BetProfitTest {
         static Dealer dealer;
         @BeforeAll
