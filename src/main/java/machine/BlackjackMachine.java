@@ -2,7 +2,7 @@ package machine;
 
 import domain.betting.Money;
 import domain.game.BlackjackGame;
-import domain.game.Result;
+import domain.game.PlayerResults;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -87,7 +87,7 @@ public class BlackjackMachine {
     }
 
     private void printResult(BlackjackGame game) {
-        Result result = Result.of(game.getPlayers(), game.getDealer());
-        outputView.printWinLoseOfAllParticipants(game, result);
+        PlayerResults playerResults = PlayerResults.of(game.getPlayers(), game.getDealer());
+        outputView.printWinLoseOfAllParticipants(game, playerResults);
     }
 }

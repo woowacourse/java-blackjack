@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ResultTest {
+class PlayerResultsTest {
 
     private Player player;
     private Dealer dealer;
@@ -28,9 +28,9 @@ class ResultTest {
         player.tryReceive(new Card(Rank.EIGHT, Symbol.DIAMOND));
         dealer.tryReceive(new Card(Rank.EIGHT, Symbol.HEART));
 
-        Result result = Result.of(List.of(player), dealer);
+        PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
 
-        Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.TIE);
+        Assertions.assertThat(playerResults.playerWinLose(player)).isEqualTo(PlayerResult.TIE);
     }
 
     @Test
@@ -39,9 +39,9 @@ class ResultTest {
         player.tryReceive(new Card(Rank.EIGHT, Symbol.DIAMOND));
         dealer.tryReceive(new Card(Rank.NINE, Symbol.HEART));
 
-        Result result = Result.of(List.of(player), dealer);
+        PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
 
-        Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.LOSE);
+        Assertions.assertThat(playerResults.playerWinLose(player)).isEqualTo(PlayerResult.LOSE);
     }
 
     @Test
@@ -50,9 +50,9 @@ class ResultTest {
         player.tryReceive(new Card(Rank.NINE, Symbol.DIAMOND));
         dealer.tryReceive(new Card(Rank.EIGHT, Symbol.HEART));
 
-        Result result = Result.of(List.of(player), dealer);
+        PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
 
-        Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.WIN);
+        Assertions.assertThat(playerResults.playerWinLose(player)).isEqualTo(PlayerResult.WIN);
     }
 
     @Test
@@ -63,9 +63,9 @@ class ResultTest {
         player.tryReceive(new Card(Rank.TWO, Symbol.HEART));
         dealer.tryReceive(new Card(Rank.KING, Symbol.HEART));
 
-        Result result = Result.of(List.of(player), dealer);
+        PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
 
-        Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.LOSE);
+        Assertions.assertThat(playerResults.playerWinLose(player)).isEqualTo(PlayerResult.LOSE);
     }
 
     @Test
@@ -76,9 +76,9 @@ class ResultTest {
         dealer.tryReceive(new Card(Rank.SIX, Symbol.HEART));
         player.tryReceive(new Card(Rank.KING, Symbol.HEART));
 
-        Result result = Result.of(List.of(player), dealer);
+        PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
 
-        Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.WIN);
+        Assertions.assertThat(playerResults.playerWinLose(player)).isEqualTo(PlayerResult.WIN);
     }
 
     @Test
@@ -92,9 +92,9 @@ class ResultTest {
         player.tryReceive(new Card(Rank.KING, Symbol.CLUB));
         player.tryReceive(new Card(Rank.TWO, Symbol.HEART));
 
-        Result result = Result.of(List.of(player), dealer);
+        PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
 
-        Assertions.assertThat(result.playerWinLose(player)).isEqualTo(WinLose.LOSE);
+        Assertions.assertThat(playerResults.playerWinLose(player)).isEqualTo(PlayerResult.LOSE);
     }
 
     @Test
@@ -107,9 +107,9 @@ class ResultTest {
         player1.tryReceive(new Card(Rank.TWO, Symbol.DIAMOND));
         player2.tryReceive(new Card(Rank.TWO, Symbol.SPADE));
         dealer.tryReceive(new Card(Rank.KING, Symbol.HEART));
-        Result result = Result.of(List.of(player1, player2), dealer);
+        PlayerResults playerResults = PlayerResults.of(List.of(player1, player2), dealer);
 
-        Assertions.assertThat(result.dealerWinCount()).isEqualTo(2);
+        Assertions.assertThat(playerResults.dealerWinCount()).isEqualTo(2);
     }
 
     @Test
@@ -122,9 +122,9 @@ class ResultTest {
         player1.tryReceive(new Card(Rank.KING, Symbol.DIAMOND));
         player2.tryReceive(new Card(Rank.KING, Symbol.SPADE));
         dealer.tryReceive(new Card(Rank.TWO, Symbol.HEART));
-        Result result = Result.of(List.of(player1, player2), dealer);
+        PlayerResults playerResults = PlayerResults.of(List.of(player1, player2), dealer);
 
-        Assertions.assertThat(result.dealerLoseCount()).isEqualTo(2);
+        Assertions.assertThat(playerResults.dealerLoseCount()).isEqualTo(2);
     }
 
     @Test
@@ -137,8 +137,8 @@ class ResultTest {
         player1.tryReceive(new Card(Rank.KING, Symbol.DIAMOND));
         player2.tryReceive(new Card(Rank.KING, Symbol.SPADE));
         dealer.tryReceive(new Card(Rank.KING, Symbol.HEART));
-        Result result = Result.of(List.of(player1, player2), dealer);
+        PlayerResults playerResults = PlayerResults.of(List.of(player1, player2), dealer);
 
-        Assertions.assertThat(result.dealerTieCount()).isEqualTo(2);
+        Assertions.assertThat(playerResults.dealerTieCount()).isEqualTo(2);
     }
 }

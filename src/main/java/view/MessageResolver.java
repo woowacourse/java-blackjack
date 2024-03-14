@@ -3,8 +3,8 @@ package view;
 import domain.card.Card;
 import domain.card.Score;
 import domain.card.Symbol;
-import domain.game.Result;
-import domain.game.WinLose;
+import domain.game.PlayerResult;
+import domain.game.PlayerResults;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.List;
@@ -62,12 +62,12 @@ public class MessageResolver {
         return String.valueOf(score.toInt());
     }
 
-    public String dealerResultText(Dealer dealer, Result result) {
+    public String dealerResultText(Dealer dealer, PlayerResults playerResults) {
         return String.format("%s: %s%s%s",
             DEALER_NAME,
-            dealerSingleResultText(result.dealerWinCount(), WIN_TEXT),
-            dealerSingleResultText(result.dealerTieCount(), TIE_TEXT),
-            dealerSingleResultText(result.dealerLoseCount(), LOSE_TEXT)
+            dealerSingleResultText(playerResults.dealerWinCount(), WIN_TEXT),
+            dealerSingleResultText(playerResults.dealerTieCount(), TIE_TEXT),
+            dealerSingleResultText(playerResults.dealerLoseCount(), LOSE_TEXT)
         );
     }
 
@@ -78,18 +78,18 @@ public class MessageResolver {
         return count + suffix;
     }
 
-    public String playerResultText(Player player, Result result) {
-        return String.format("%s: %s", player.getName(), winLoseText(result.playerWinLose(player)));
+    public String playerResultText(Player player, PlayerResults playerResults) {
+        return String.format("%s: %s", player.getName(), winLoseText(playerResults.playerWinLose(player)));
     }
 
-    private String winLoseText(WinLose winLose) {
-        if (winLose == WinLose.WIN) {
+    private String winLoseText(PlayerResult playerResult) {
+        if (playerResult == PlayerResult.WIN) {
             return WIN_TEXT;
         }
-        if (winLose == WinLose.TIE) {
+        if (playerResult == PlayerResult.TIE) {
             return TIE_TEXT;
         }
-        if (winLose == WinLose.LOSE) {
+        if (playerResult == PlayerResult.LOSE) {
             return LOSE_TEXT;
         }
         throw new IllegalArgumentException("[ERROR] 존재하지 않는 WinLose입니다.");

@@ -3,7 +3,7 @@ package view;
 import domain.card.Card;
 import domain.card.Score;
 import domain.game.BlackjackGame;
-import domain.game.Result;
+import domain.game.PlayerResults;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.List;
@@ -62,11 +62,11 @@ public class OutputView {
             resolver.scoreText(score));
     }
 
-    public void printWinLoseOfAllParticipants(BlackjackGame game, Result result) {
+    public void printWinLoseOfAllParticipants(BlackjackGame game, PlayerResults playerResults) {
         System.out.println("## 최종 승패");
-        System.out.println(resolver.dealerResultText(game.getDealer(), result));
+        System.out.println(resolver.dealerResultText(game.getDealer(), playerResults));
         for (Player player : game.getPlayers()) {
-            System.out.println(resolver.playerResultText(player, result));
+            System.out.println(resolver.playerResultText(player, playerResults));
         }
     }
 }

@@ -6,16 +6,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Result {
+public class PlayerResults {
 
-    private final Map<Player, WinLose> resultMap;
+    private final Map<Player, PlayerResult> resultMap;
 
-    private Result(Map<Player, WinLose> resultMap) {
+    private PlayerResults(Map<Player, PlayerResult> resultMap) {
         this.resultMap = resultMap;
     }
 
-    public static Result of(List<Player> players, Dealer dealer) {
-        return new Result(
+    public static PlayerResults of(List<Player> players, Dealer dealer) {
+        return new PlayerResults(
             players.stream()
                 .collect(Collectors.toMap(
                     player -> player,
@@ -23,45 +23,45 @@ public class Result {
         );
     }
 
-    private static WinLose decideWinLose(Player player, Dealer dealer) {
+    private static PlayerResult decideWinLose(Player player, Dealer dealer) {
         if (player.isBust()) {
-            return WinLose.LOSE;
+            return PlayerResult.LOSE;
         }
         if (dealer.isBust()) {
-            return WinLose.WIN;
+            return PlayerResult.WIN;
         }
         return decideWinLoseByScore(player, dealer);
     }
 
-    private static WinLose decideWinLoseByScore(Player player, Dealer dealer) {
+    private static PlayerResult decideWinLoseByScore(Player player, Dealer dealer) {
         if (dealer.score().isLessThan(player.score())) {
-            return WinLose.WIN;
+            return PlayerResult.WIN;
         }
         if (dealer.score().isGreaterThan(player.score())) {
-            return WinLose.LOSE;
+            return PlayerResult.LOSE;
         }
-        return WinLose.TIE;
+        return PlayerResult.TIE;
     }
 
     public long dealerWinCount() {
         return resultMap.values().stream()
-            .filter(value -> value == WinLose.LOSE)
+            .filter(value -> value == PlayerResult.LOSE)
             .count();
     }
 
     public long dealerLoseCount() {
         return resultMap.values().stream()
-            .filter(value -> value == WinLose.WIN)
+            .filter(value -> value == PlayerResult.WIN)
             .count();
     }
 
     public long dealerTieCount() {
         return resultMap.values().stream()
-            .filter(value -> value == WinLose.TIE)
+            .filter(value -> value == PlayerResult.TIE)
             .count();
     }
 
-    public WinLose playerWinLose(Player player) {
+    public PlayerResult playerWinLose(Player player) {
         return resultMap.get(player);
     }
 }
