@@ -1,5 +1,6 @@
 package domain;
 
+import domain.constant.GamerIdentifier;
 import domain.constant.GamerResult;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +19,7 @@ public class BettingTable {
                         key,
                         bettingAmounts.get(key).getAmount() * value.getProfitRatio()
                 ));
-        totalProfit.put("dealer", getDealerProfit(totalProfit));
+        totalProfit.put(GamerIdentifier.DEALER_IDENTIFIER, getDealerProfit(totalProfit));
         return totalProfit;
     }
 

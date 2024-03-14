@@ -3,6 +3,7 @@ package domain.dto;
 import domain.Card;
 import domain.Dealer;
 import domain.Player;
+import domain.constant.GamerIdentifier;
 import java.util.List;
 
 public class GamerDto {
@@ -27,7 +28,7 @@ public class GamerDto {
 
     public static GamerDto fromDealer(Dealer dealer) {
         return new GamerDto(
-                "dealer",
+                GamerIdentifier.DEALER_IDENTIFIER,
                 dealer.getCards(),
                 dealer.getTotalScore()
         );

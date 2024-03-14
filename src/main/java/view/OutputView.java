@@ -2,6 +2,7 @@ package view;
 
 import domain.Card;
 import domain.Player;
+import domain.constant.GamerIdentifier;
 import domain.dto.GameStatus;
 import domain.dto.GamerDto;
 import java.util.List;
@@ -78,7 +79,7 @@ public class OutputView {
 
     public static void printFinalProfit(Map<String, Integer> totalProfit, List<Player> players) {
         System.out.println("\n## 최종 수익");
-        printGamerProfit(DEALER_NAME, totalProfit.get("dealer"));
+        printGamerProfit(DEALER_NAME, totalProfit.get(GamerIdentifier.DEALER_IDENTIFIER));
         players.stream()
                 .map(Player::getName)
                 .forEach(playerName -> printGamerProfit(playerName, totalProfit.get(playerName)));

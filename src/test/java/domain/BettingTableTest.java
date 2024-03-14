@@ -1,5 +1,6 @@
 package domain;
 
+import domain.constant.GamerIdentifier;
 import domain.constant.GamerResult;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -13,7 +14,7 @@ public class BettingTableTest {
         BettingTable bettingTable = new BettingTable(Map.of("test", new BettingAmount("1000")));
         Assertions.assertThat(bettingTable.getTotalProfit(Map.of("test", GamerResult.WIN)))
                 .isEqualTo(Map.of(
-                        "dealer", -1000,
+                        GamerIdentifier.DEALER_IDENTIFIER, -1000,
                         "test", 1000
                 ));
     }
