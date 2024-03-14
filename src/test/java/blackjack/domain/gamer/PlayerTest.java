@@ -1,6 +1,8 @@
 package blackjack.domain.gamer;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
@@ -19,7 +21,7 @@ class PlayerTest {
         Player player1 = new Player("name");
         Player player2 = new Player("name");
 
-        assertThat(player1.equals(player2)).isTrue();
+        assertThat(player1).isEqualTo(player2);
     }
 
     @Test
@@ -30,7 +32,7 @@ class PlayerTest {
                 new Card(Shape.HEART, Number.FIVE)
         ));
 
-        assertThat(player.canReceiveCard()).isTrue();
+        assertTrue(player.canReceiveCard());
     }
 
     @Test
@@ -42,7 +44,7 @@ class PlayerTest {
                 new Card(Shape.HEART, Number.SEVEN)
         ));
 
-        assertThat(player.canReceiveCard()).isFalse();
+        assertFalse(player.canReceiveCard());
     }
 
     private Player createTestPlayer(List<Card> cards) {

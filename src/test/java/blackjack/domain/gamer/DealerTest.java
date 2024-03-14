@@ -1,6 +1,7 @@
 package blackjack.domain.gamer;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
@@ -20,7 +21,7 @@ class DealerTest {
                 new Card(Shape.HEART, Number.SIX)
         ));
 
-        assertThat(dealer.canReceiveCard()).isTrue();
+        assertTrue(dealer.canReceiveCard());
     }
 
     @Test
@@ -31,6 +32,6 @@ class DealerTest {
                 new Card(Shape.HEART, Number.SEVEN)
         ));
 
-        assertThat(dealer.canReceiveCard()).isFalse();
+        assertFalse(dealer.canReceiveCard());
     }
 }

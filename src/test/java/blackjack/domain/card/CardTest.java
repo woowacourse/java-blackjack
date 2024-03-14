@@ -13,6 +13,6 @@ class CardTest {
         Card card1 = new Card(Shape.DIAMOND, Number.ACE);
         Card card2 = new Card(Shape.DIAMOND, Number.ACE);
 
-        assertThat(card1.equals(card2)).isTrue();
+        assertThat(card1).isEqualTo(card2);
     }
 }
