@@ -6,7 +6,7 @@ public class Dealer extends Player {
     private static final int HIT_CONDITION = 16;
 
     public Dealer() {
-        super("딜러");
+        super(new Name("딜러"));
     }
 
     public boolean isMoreCardNeeded() {

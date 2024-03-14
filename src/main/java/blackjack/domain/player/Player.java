@@ -35,7 +35,7 @@ public class Player {
         return hand.getAllCards();
     }
 
-    public final String getName() {
-        return name.getValue();
+    public final Name getName() {
+        return name;
     }
 }
