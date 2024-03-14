@@ -7,6 +7,7 @@ import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,11 @@ class GameAccountTest {
         gameAccount = new GameAccount();
         player = new Player(new Name("loki"));
         money = new Money(50000);
+    }
+
+    @AfterEach
+    void afterEach() {
+        gameAccount.clearStore();
     }
 
     @Test

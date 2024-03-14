@@ -37,4 +37,8 @@ public class GameAccount {
     public Map<Player, Money> getStore() {
         return new LinkedHashMap<>(store);
     }
+
+    public void clearStore() {
+        store.clear();
+    }
 }
