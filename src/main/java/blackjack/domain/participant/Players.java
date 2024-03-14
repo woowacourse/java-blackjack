@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import static java.util.stream.Collectors.toMap;
 
+import blackjack.domain.ParticipantScoreStatus;
 import blackjack.domain.result.Score;
 import blackjack.domain.result.WinStatus;
 import blackjack.domain.card.Card;
@@ -45,11 +46,20 @@ public class Players {
         findedPlayer.addCard(card);
     }
 
-    public Map<ParticipantName, WinStatus> determineWinStatus(final Score dealerScore) {
+//    public Map<ParticipantName, WinStatus> determineWinStatus(final Score dealerScore) {
+//        final Map<ParticipantName, WinStatus> playersWinStatus = new LinkedHashMap<>();
+//
+//        for (Player player : players) {
+//            playersWinStatus.put(player.getName(), WinStatus.of(dealerScore, player.calculate(), player.getStatus()));
+//        }
+//
+//        return playersWinStatus;
+//    }
+    public Map<ParticipantName, WinStatus> determineWinStatus(final ParticipantScoreStatus dealerScoreStatus) {
         final Map<ParticipantName, WinStatus> playersWinStatus = new LinkedHashMap<>();
 
         for (Player player : players) {
-            playersWinStatus.put(player.getName(), WinStatus.of(dealerScore, player.calculate()));
+            playersWinStatus.put(player.getName(), WinStatus.of(dealerScoreStatus, new ParticipantScoreStatus( player.isBlackjack(), player.calculate())));
         }
 
         return playersWinStatus;

@@ -35,7 +35,11 @@ public class Participant {
     }
 
     protected BlackjackStatus getStatus() {
-        return BlackjackStatus.from(calculate());
+        return BlackjackStatus.of(calculate(), hands.count());
+    }
+
+    public boolean isBlackjack() {
+        return getStatus() == BlackjackStatus.BLACKJACK;
     }
 
     public boolean isNotBlackjack() {

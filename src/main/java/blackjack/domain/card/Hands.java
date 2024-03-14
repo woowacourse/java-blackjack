@@ -35,6 +35,10 @@ public class Hands {
                 .count();
     }
 
+    public int count() {
+        return cards.size();
+    }
+
     public Card getFirstCard() {
         return cards.get(0);
     }

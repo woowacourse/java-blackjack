@@ -84,7 +84,8 @@ public class Participants {
     }
 
     public WinningResult getWinningResult() {
-        return WinningResult.of(players, dealer.calculate());
+//        return WinningResult.of(players, dealer.calculate());
+        return WinningResult.of(players, dealer);
     }
 
     public boolean isDealerNotBlackjack() {
