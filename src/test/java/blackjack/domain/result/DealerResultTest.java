@@ -3,6 +3,7 @@ package blackjack.domain.result;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import blackjack.domain.Profit;
 import blackjack.domain.player.Name;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -14,11 +15,12 @@ public class DealerResultTest {
     void DealerResult_Instance_create_with_gamePlayerResultList() {
         Name name = new Name("초롱");
         ResultStatus resultStatus = ResultStatus.DRAW;
-        GamePlayerResult gamePlayerResult = new GamePlayerResult(name, resultStatus);
+        Profit profit = new Profit(0);
+        GamePlayerResult gamePlayerResult = new GamePlayerResult(name, profit);
         
         assertThatCode(() -> {
             var sut = DealerResult.of(new Name("딜러"), List.of(gamePlayerResult));
-            assertThat(sut.getResultWithResultStatus(ResultStatus.DRAW)).isEqualTo(1);
+            assertThat(sut.getProfit()).isEqualTo(new Profit(0));
         }).doesNotThrowAnyException();
     }
 }

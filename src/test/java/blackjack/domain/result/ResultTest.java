@@ -2,6 +2,7 @@ package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import blackjack.domain.Profit;
 import blackjack.domain.player.Name;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -12,8 +13,8 @@ class ResultTest {
     @DisplayName("게임 플레이어 결과 리스트와 딜러 결과를 통해 전체 결과를 생성한다.")
     public void Result_Instance_create_with_gamePlayerResultList_and_dealerResult() {
         Name name = new Name("초롱");
-        ResultStatus resultStatus = ResultStatus.DRAW;
-        List<GamePlayerResult> gamePlayerResults = List.of(new GamePlayerResult(name, resultStatus));
+        Profit profit = new Profit(0);
+        List<GamePlayerResult> gamePlayerResults = List.of(new GamePlayerResult(name, profit));
         DealerResult dealerResult = DealerResult.of(new Name("딜러"), gamePlayerResults);
 
         assertThatCode(() -> {

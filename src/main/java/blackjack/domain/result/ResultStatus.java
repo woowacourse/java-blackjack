@@ -12,14 +12,6 @@ public enum ResultStatus {
         this.rate = rate;
     }
 
-    public ResultStatus reverse() {
-        return switch (this) {
-            case LOSE -> WIN;
-            case DRAW -> DRAW;
-            case WIN -> LOSE;
-            case BLACKJACK -> WIN;
-        };
-    }
 
     public double calculateProfit(int battingAmount) {
         return rate * battingAmount;

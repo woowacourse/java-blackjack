@@ -27,7 +27,7 @@ public class InputView {
     public static List<String> inputPlayerBattingAmounts(Names names) {
         List<String> battingAmounts = new ArrayList<>();
         for(Name name : names.getNames()) {
-            System.out.println(String.format("%s의 배팅 금액은?", name.asString()));
+            System.out.println(System.lineSeparator() + String.format("%s의 배팅 금액은?", name.asString()));
             battingAmounts.add(input());
         }
         return battingAmounts;

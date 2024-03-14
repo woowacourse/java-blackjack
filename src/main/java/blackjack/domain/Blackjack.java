@@ -38,7 +38,7 @@ public class Blackjack {
 
         for (GamePlayer gamePlayer : gamePlayers) {
             gamePlayerResults.add(
-                    new GamePlayerResult(gamePlayer.getName(), gamePlayer.confirmResult(dealer)));
+                    new GamePlayerResult(gamePlayer.getName(), gamePlayer.confirmProfit(dealer)));
         }
 
         return new Result(gamePlayerResults, DealerResult.of(dealer.getName(), gamePlayerResults));

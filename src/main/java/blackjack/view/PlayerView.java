@@ -16,11 +16,11 @@ public class PlayerView {
     }
 
     public static void printDealerDrawMessage() {
-        System.out.println(String.format("딜러는 %d이하라 한장의 카드를 더 받았습니다.", Dealer.RECEIVE_SIZE));
+        System.out.println(System.lineSeparator() + String.format("딜러는 %d이하라 한장의 카드를 더 받았습니다.", Dealer.RECEIVE_SIZE));
     }
 
     public static void printDealerNotDrawMessage() {
-        System.out.println(String.format("딜러는 %d를 초과하므로 카드를 받지 않았습니다.", Dealer.RECEIVE_SIZE));
+        System.out.println(System.lineSeparator() + String.format("딜러는 %d를 초과하므로 카드를 받지 않았습니다.", Dealer.RECEIVE_SIZE));
     }
 
     private static void printPlayersPreview(Dealer dealer, List<GamePlayer> gamePlayers) {
@@ -29,7 +29,8 @@ public class PlayerView {
                                    .map(Name::asString)
                                    .collect(Collectors.joining(","));
         System.out.println(
-                String.format("%s와 %s에게 2장을 나누었습니다.", dealer.getName().asString(), result));
+                System.lineSeparator() +
+                        String.format("%s와 %s에게 2장을 나누었습니다.", dealer.getName().asString(), result));
     }
 
     private static void printPlayersFirstOpenCard(List<Player> players) {
@@ -42,6 +43,7 @@ public class PlayerView {
     }
 
     public static void printPlayersWithScore(Players players) {
+        System.out.println();
         printPlayerWithScore(players.getDealer());
         players.getGamePlayers()
                .forEach(PlayerView::printPlayerWithScore);

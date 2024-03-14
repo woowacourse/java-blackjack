@@ -49,9 +49,9 @@ class BlackjackTest {
 
         assertThat(result.getGamePlayerResults()
                          .get(0)
-                         .getResultStatus()).isEqualTo(ResultStatus.LOSE);
+                         .getProfit()).isEqualTo(new Profit(-10000));
         assertThat(result.getDealerResult()
-                         .getResultWithResultStatus(ResultStatus.WIN)).isEqualTo(1);
+                .getProfit()).isEqualTo(new Profit(10000));
     }
 
     private void assertPlayer(Player player, int value) {

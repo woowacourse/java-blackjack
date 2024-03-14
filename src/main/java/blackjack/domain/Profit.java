@@ -25,4 +25,8 @@ public class Profit {
     public double getValue() {
         return value;
     }
+
+    public Profit sum(Profit playerProfit) {
+        return new Profit(value - playerProfit.value);
+    }
 }

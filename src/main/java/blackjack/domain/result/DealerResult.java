@@ -1,40 +1,37 @@
 package blackjack.domain.result;
 
+import blackjack.domain.Profit;
 import blackjack.domain.player.Name;
 import java.util.EnumMap;
 import java.util.List;
 
 public class DealerResult {
     private final Name name;
-    private final EnumMap<ResultStatus, Integer> resultStatusBoard;
+    private final Profit profit;
 
-    private DealerResult(Name name, EnumMap<ResultStatus, Integer> resultStatusBoard) {
+    private DealerResult(Name name, Profit profit) {
         this.name = name;
-        this.resultStatusBoard = resultStatusBoard;
+        this.profit = profit;
     }
 
     public static DealerResult of(Name name, List<GamePlayerResult> gamePlayerResults) {
-        EnumMap<ResultStatus, Integer> resultStatusBoard = new EnumMap<ResultStatus, Integer>(
-                ResultStatus.class);
-
+        Profit dealerProfit = new Profit(0);
         for (GamePlayerResult gamePlayerResult : gamePlayerResults) {
-            increment(resultStatusBoard, gamePlayerResult.getResultStatus()
-                                                         .reverse());
+            dealerProfit = dealerProfit.sum(gamePlayerResult.getProfit());
         }
 
-        return new DealerResult(name, resultStatusBoard);
-    }
-
-    private static void increment(EnumMap<ResultStatus, Integer> resultStatusBoard,
-                                  ResultStatus resultStatus) {
-        resultStatusBoard.put(resultStatus, resultStatusBoard.getOrDefault(resultStatus, 0) + 1);
+        return new DealerResult(name, dealerProfit);
     }
 
     public String getName() {
         return name.asString();
     }
 
-    public int getResultWithResultStatus(ResultStatus resultStatus) {
-        return resultStatusBoard.getOrDefault(resultStatus, 0);
+    public Profit getProfit() {
+        return profit;
     }
+
+//    public int getResultWithResultStatus(ResultStatus resultStatus) {
+//        return profit.getOrDefault(resultStatus, 0);
+//    }
 }
