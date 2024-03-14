@@ -6,7 +6,7 @@ import blackjack.domain.cards.Card;
 import blackjack.domain.cards.Rank;
 import blackjack.domain.cards.Shape;
 import blackjack.domain.participants.Dealer;
-import blackjack.domain.participants.Money;
+import blackjack.domain.participants.GamblingMoney;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
@@ -123,7 +123,7 @@ public class GameBoardTest {
     @Test
     @DisplayName("플레이어가 블랙잭으로 이겼을 때 배팅 이익을 잘 계산한다.")
     void calculateBettingMoneyWhenBlackjackWinTest() {
-        takan.betMoney(new Money(1000));
+        takan.betMoney(new GamblingMoney(1000));
         Dealer dealer = gameBoard.getDealer();
         dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
         dealer.receiveCard(new Card(Shape.HEART, Rank.EIGHT));
@@ -137,7 +137,7 @@ public class GameBoardTest {
     @Test
     @DisplayName("플레이어가 이겼을 때 배팅 이익을 잘 계산한다.")
     void calculateBettingMoneyWhenWinTest() {
-        siso.betMoney(new Money(1000));
+        siso.betMoney(new GamblingMoney(1000));
         Dealer dealer = gameBoard.getDealer();
         dealer.receiveCard(new Card(Shape.HEART, Rank.QUEEN));
         dealer.receiveCard(new Card(Shape.HEART, Rank.FIVE));
@@ -151,7 +151,7 @@ public class GameBoardTest {
     @Test
     @DisplayName("플레이어가 비겼을 때 배팅 이익을 잘 계산한다.")
     void calculateBettingMoneyWhenTieTest() {
-        siso.betMoney(new Money(1000));
+        siso.betMoney(new GamblingMoney(1000));
         Dealer dealer = gameBoard.getDealer();
         dealer.receiveCard(new Card(Shape.HEART, Rank.JACK));
         dealer.receiveCard(new Card(Shape.HEART, Rank.SIX));
@@ -165,7 +165,7 @@ public class GameBoardTest {
     @Test
     @DisplayName("플레이어가 졌을 때 배팅 이익을 잘 계산한다.")
     void calculateBettingMoneyWhenLoseTest() {
-        siso.betMoney(new Money(1000));
+        siso.betMoney(new GamblingMoney(1000));
         Dealer dealer = gameBoard.getDealer();
         dealer.receiveCard(new Card(Shape.HEART, Rank.JACK));
         dealer.receiveCard(new Card(Shape.HEART, Rank.EIGHT));

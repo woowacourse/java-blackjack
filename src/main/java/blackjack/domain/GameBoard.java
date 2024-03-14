@@ -64,15 +64,9 @@ public class GameBoard {
 
     private void calculateOnePlayerBettingMoney(Player onePlayer, Victory victory) {
         float benefit = calculateBenefit(victory);
-        if (victory.equals(Victory.LOSE)) {
-            dealer.gainMoney(onePlayer.getMoney());
-
-        }
+        calculateDealerGainMoney(onePlayer, victory);
         onePlayer.checkBettingMoney(benefit);
-        if (victory.equals(Victory.BLACKJACK_WIN) || victory.equals(Victory.WIN)) {
-            dealer.loseMoney(onePlayer.getMoney());
-
-        }
+        calculateDealerLoseMoney(onePlayer, victory);
     }
 
     private float calculateBenefit(Victory victory) {
@@ -81,6 +75,18 @@ public class GameBoard {
                 .findFirst()
                 .map(Victory::getBenefit)
                 .orElse(Victory.LOSE.getBenefit());
+    }
+
+    private void calculateDealerGainMoney(Player onePlayer, Victory victory) {
+        if (victory.equals(Victory.LOSE)) {
+            dealer.gainMoney(onePlayer.getMoney());
+        }
+    }
+
+    private void calculateDealerLoseMoney(Player onePlayer, Victory victory) {
+        if (victory.equals(Victory.BLACKJACK_WIN) || victory.equals(Victory.WIN)) {
+            dealer.loseMoney(onePlayer.getMoney());
+        }
     }
 
     public Name getPlayerName(int playerIndex) {

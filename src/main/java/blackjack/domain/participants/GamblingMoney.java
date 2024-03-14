@@ -2,29 +2,29 @@ package blackjack.domain.participants;
 
 import java.util.Objects;
 
-public class Money {
+public class GamblingMoney {
     public static final int INITIAL_MONEY = 0;
 
     private final int value;
 
-    public Money(int value) {
+    public GamblingMoney(int value) {
         this.value = value;
     }
 
-    public Money() {
+    public GamblingMoney() {
         this.value = INITIAL_MONEY;
     }
 
-    public Money add(Money otherMoney) {
-        return new Money(this.value + otherMoney.value);
+    public GamblingMoney add(GamblingMoney otherGamblingMoney) {
+        return new GamblingMoney(this.value + otherGamblingMoney.value);
     }
 
-    public Money subtract(Money otherMoney) {
-        return new Money(this.value - otherMoney.value);
+    public GamblingMoney subtract(GamblingMoney otherGamblingMoney) {
+        return new GamblingMoney(this.value - otherGamblingMoney.value);
     }
 
-    public Money multiply(float number) {
-        return new Money(Math.round(this.value * number));
+    public GamblingMoney multiply(float number) {
+        return new GamblingMoney(Math.round(this.value * number));
     }
 
     public int getValue() {
@@ -39,8 +39,8 @@ public class Money {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Money money = (Money) o;
-        return value == money.value;
+        GamblingMoney gamblingMoney = (GamblingMoney) o;
+        return value == gamblingMoney.value;
     }
 
     @Override

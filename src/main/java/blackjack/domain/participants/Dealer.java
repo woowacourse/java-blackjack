@@ -26,8 +26,8 @@ public class Dealer extends Player {
         }
     }
 
-    public void gainMoney(Money money) {
-        betMoney(money);
+    public void gainMoney(GamblingMoney gamblingMoney) {
+        betMoney(gamblingMoney);
     }
 
 

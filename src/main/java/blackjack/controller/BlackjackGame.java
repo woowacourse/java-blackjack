@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.GameBoard;
 import blackjack.domain.participants.Dealer;
-import blackjack.domain.participants.Money;
+import blackjack.domain.participants.GamblingMoney;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
@@ -44,14 +44,13 @@ public class BlackjackGame {
         Players players = gameBoard.getPlayers();
         for (int i = 0; i < players.size(); i++) {
             int money = inputView.readMoney(players.getOnePlayerName(i).getValue());
-            players.betOnePlayerMoney(new Money(money), i);
+            players.betOnePlayerMoney(new GamblingMoney(money), i);
         }
     }
 
     private void startSetting(GameBoard gameBoard) {
         gameBoard.distributeInitialHand();
-        Player dealer = gameBoard.getDealer();
-        PlayerDto dealerDto = PlayerDto.from(dealer);
+        PlayerDto dealerDto = PlayerDto.from(gameBoard.getDealer());
         List<PlayerDto> playersDto = gameBoard.getPlayers()
                 .getPlayersValue()
                 .stream()

@@ -21,8 +21,8 @@ public class Players {
         return result;
     }
 
-    public void betOnePlayerMoney(Money money, int playerIndex) {
-        players.get(playerIndex).betMoney(money);
+    public void betOnePlayerMoney(GamblingMoney gamblingMoney, int playerIndex) {
+        players.get(playerIndex).betMoney(gamblingMoney);
     }
 
     public void receiveOnePlayerCard(Card card, int playerIndex) {

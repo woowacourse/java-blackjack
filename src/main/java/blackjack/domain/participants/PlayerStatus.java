@@ -5,11 +5,11 @@ import blackjack.domain.cards.Hand;
 
 public class PlayerStatus {
     private final Hand hand;
-    private Money money;
+    private GamblingMoney gamblingMoney;
 
     public PlayerStatus() {
         hand = new Hand();
-        this.money = new Money();
+        this.gamblingMoney = new GamblingMoney();
     }
 
     public void addCard(Card card) {
@@ -20,24 +20,24 @@ public class PlayerStatus {
         return hand.calculateTotalScore();
     }
 
-    public void addMoney(Money money) {
-        this.money = this.money.add(money);
+    public void addMoney(GamblingMoney gamblingMoney) {
+        this.gamblingMoney = this.gamblingMoney.add(gamblingMoney);
     }
 
-    public void subtractMoney(Money money) {
-        this.money = this.money.subtract(money);
+    public void subtractMoney(GamblingMoney gamblingMoney) {
+        this.gamblingMoney = this.gamblingMoney.subtract(gamblingMoney);
     }
 
     public void calculateBettingMoney(float benefit) {
-        this.money = this.money.multiply(benefit);
+        this.gamblingMoney = this.gamblingMoney.multiply(benefit);
     }
 
     public int checkHandSize() {
         return hand.size();
     }
 
-    public Money getMoney() {
-        return money;
+    public GamblingMoney getMoney() {
+        return gamblingMoney;
     }
 
     public Hand getHand() {

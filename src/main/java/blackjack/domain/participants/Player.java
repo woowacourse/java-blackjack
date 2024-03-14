@@ -25,35 +25,27 @@ public class Player {
     }
 
     public Victory checkVictory(int dealerScore, boolean isDealerBlackjack) {
-        Victory bustVictory = checkVictoryWhenBust(dealerScore);
-        if (bustVictory != null) {
-            return bustVictory;
-        }
-        Victory blackjackVictory = checkVictoryWhenBlackjack(isDealerBlackjack);
-        if (blackjackVictory != null) {
-            return blackjackVictory;
-        }
-        return checkVictoryWhenNormal(dealerScore);
+        return checkVictoryWhenBust(dealerScore, isDealerBlackjack);
     }
 
-    private Victory checkVictoryWhenBust(int dealerScore) {
+    private Victory checkVictoryWhenBust(int dealerScore, boolean isDealerBlackjack) {
         if (calculateScore() > BLACKJACK_SCORE) {
             return Victory.LOSE;
         }
         if (dealerScore > BLACKJACK_SCORE) {
             return Victory.WIN;
         }
-        return null;
+        return checkVictoryWhenBlackjack(dealerScore, isDealerBlackjack);
     }
 
-    private Victory checkVictoryWhenBlackjack(boolean isDealerBlackjack) {
+    private Victory checkVictoryWhenBlackjack(int dealerScore, boolean isDealerBlackjack) {
         if (isBlackjack() && isDealerBlackjack) {
             return Victory.TIE;
         }
         if (isBlackjack()) {
             return Victory.BLACKJACK_WIN;
         }
-        return null;
+        return checkVictoryWhenNormal(dealerScore);
     }
 
     private Victory checkVictoryWhenNormal(int dealerScore) {
@@ -74,12 +66,12 @@ public class Player {
         return playerStatus.calculateScore() < boundaryScore;
     }
 
-    public void betMoney(Money money) {
-        playerStatus.addMoney(money);
+    public void betMoney(GamblingMoney gamblingMoney) {
+        playerStatus.addMoney(gamblingMoney);
     }
 
-    public void loseMoney(Money money) {
-        playerStatus.subtractMoney(money);
+    public void loseMoney(GamblingMoney gamblingMoney) {
+        playerStatus.subtractMoney(gamblingMoney);
     }
 
     public void checkBettingMoney(float benefit) {
@@ -98,7 +90,7 @@ public class Player {
         return playerStatus.getHand();
     }
 
-    public Money getMoney() {
+    public GamblingMoney getMoney() {
         return playerStatus.getMoney();
     }
 }

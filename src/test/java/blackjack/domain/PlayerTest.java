@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 import blackjack.domain.cards.Card;
 import blackjack.domain.cards.Rank;
 import blackjack.domain.cards.Shape;
-import blackjack.domain.participants.Money;
+import blackjack.domain.participants.GamblingMoney;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Victory;
@@ -149,9 +149,9 @@ public class PlayerTest {
     void betMoneyTest() {
         Player player = new Player(new Name("이름"));
 
-        player.betMoney(new Money(3000));
+        player.betMoney(new GamblingMoney(3000));
 
-        assertThat(player.getMoney()).isEqualTo(new Money(3000));
+        assertThat(player.getMoney()).isEqualTo(new GamblingMoney(3000));
     }
 
     @Test
@@ -159,10 +159,10 @@ public class PlayerTest {
     void loseMoneyTest() {
         Player player = new Player(new Name("이름"));
 
-        player.betMoney(new Money(3000));
-        player.loseMoney(new Money(2000));
+        player.betMoney(new GamblingMoney(3000));
+        player.loseMoney(new GamblingMoney(2000));
 
-        assertThat(player.getMoney()).isEqualTo(new Money(1000));
+        assertThat(player.getMoney()).isEqualTo(new GamblingMoney(1000));
     }
 
     @Test
@@ -170,10 +170,10 @@ public class PlayerTest {
     void earnBetSuccessMoneyTest() {
         Player player = new Player(new Name("이름"));
 
-        player.betMoney(new Money(3000));
+        player.betMoney(new GamblingMoney(3000));
         player.checkBettingMoney(1);
 
-        assertThat(player.getMoney()).isEqualTo(new Money(3000));
+        assertThat(player.getMoney()).isEqualTo(new GamblingMoney(3000));
     }
 
     @Test
@@ -181,9 +181,9 @@ public class PlayerTest {
     void payBetFailMoneyTest() {
         Player player = new Player(new Name("이름"));
 
-        player.betMoney(new Money(3000));
+        player.betMoney(new GamblingMoney(3000));
         player.checkBettingMoney(-1);
 
-        assertThat(player.getMoney().equals(new Money(-3000))).isTrue();
+        assertThat(player.getMoney().equals(new GamblingMoney(-3000))).isTrue();
     }
 }

@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.cards.Card;
 import blackjack.domain.cards.Rank;
 import blackjack.domain.cards.Shape;
-import blackjack.domain.participants.Money;
+import blackjack.domain.participants.GamblingMoney;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
@@ -57,8 +57,8 @@ class PlayersTest {
     @Test
     @DisplayName("한 플레이어는 돈을 배팅한다.")
     void betOnePlayerMoneyTest() {
-        players.betOnePlayerMoney(new Money(3000), 0);
-        assertThat(siso.getMoney().equals(new Money(3000))).isTrue();
+        players.betOnePlayerMoney(new GamblingMoney(3000), 0);
+        assertThat(siso.getMoney().equals(new GamblingMoney(3000))).isTrue();
     }
 
 
