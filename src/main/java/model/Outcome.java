@@ -9,13 +9,13 @@ public enum Outcome {
     BLACKJACK((bettingAmount) -> bettingAmount * 1.5),
     ;
 
-    public final Function<Integer, Double> function;
+    private final Function<Double, Double> function;
 
-    Outcome(Function<Integer, Double> function) {
+    Outcome(Function<Double, Double> function) {
         this.function = function;
     }
 
-    public double calculateProfit(int BettingAmount) {
+    public double calculateProfit(double BettingAmount) {
         return function.apply(BettingAmount);
     }
 

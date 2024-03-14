@@ -21,10 +21,14 @@ class ParticipantsTest {
     void validate() {
         Assertions.assertThatThrownBy(() ->
                         new Participants(List.of(
-                                new Participant("켬미", List.of(new Card(CardShape.SPACE, CardNumber.NINE),
-                                        new Card(CardShape.SPACE, CardNumber.FIVE))),
-                                new Participant("켬미", List.of(new Card(CardShape.SPACE, CardNumber.NINE),
-                                        new Card(CardShape.SPACE, CardNumber.FIVE)))
+                                new Participant("켬미",
+                                        List.of(new Card(CardShape.SPACE, CardNumber.NINE),
+                                                new Card(CardShape.SPACE, CardNumber.FIVE)),
+                                        100),
+                                new Participant("켬미",
+                                        List.of(new Card(CardShape.SPACE, CardNumber.NINE),
+                                                new Card(CardShape.SPACE, CardNumber.FIVE)),
+                                        200)
                         )))
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -34,17 +38,17 @@ class ParticipantsTest {
         CardDeck cardDeck = new CardDeck(CardDeck.createCards());
 
         return Stream.of(Arguments.of(
-                List.of(new Participant("배키", cardDeck.selectRandomCards(CardSize.TWO))),
+                List.of(new Participant("배키", cardDeck.selectRandomCards(CardSize.TWO), 100)),
                 List.of(
-                        new Participant("도비", cardDeck.selectRandomCards(CardSize.TWO)),
-                        new Participant("리사", cardDeck.selectRandomCards(CardSize.TWO)),
-                        new Participant("명오", cardDeck.selectRandomCards(CardSize.TWO)),
-                        new Participant("제우스", cardDeck.selectRandomCards(CardSize.TWO)),
-                        new Participant("호티", cardDeck.selectRandomCards(CardSize.TWO)),
-                        new Participant("초롱", cardDeck.selectRandomCards(CardSize.TWO)),
-                        new Participant("조이썬", cardDeck.selectRandomCards(CardSize.TWO)),
-                        new Participant("프람", cardDeck.selectRandomCards(CardSize.TWO)),
-                        new Participant("폰드", cardDeck.selectRandomCards(CardSize.TWO)))));
+                        new Participant("도비", cardDeck.selectRandomCards(CardSize.TWO), 200),
+                        new Participant("리사", cardDeck.selectRandomCards(CardSize.TWO), 300),
+                        new Participant("명오", cardDeck.selectRandomCards(CardSize.TWO), 400),
+                        new Participant("제우스", cardDeck.selectRandomCards(CardSize.TWO), 500),
+                        new Participant("호티", cardDeck.selectRandomCards(CardSize.TWO), 600),
+                        new Participant("초롱", cardDeck.selectRandomCards(CardSize.TWO), 700),
+                        new Participant("조이썬", cardDeck.selectRandomCards(CardSize.TWO), 800),
+                        new Participant("프람", cardDeck.selectRandomCards(CardSize.TWO), 900),
+                        new Participant("폰드", cardDeck.selectRandomCards(CardSize.TWO), 1000))));
     }
 
     @DisplayName("참가자가 2명보다 작거나 8명보다 크면 예외가 발생한다.")

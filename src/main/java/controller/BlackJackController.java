@@ -30,7 +30,7 @@ public class BlackJackController {
         offerMoreCards(blackJack);
 
         outputView.printBlackJackScore(blackJack.mapToUsersNameAndCards(), blackJack.mapToDealerNameAndCards());
-        outputView.printPlayersOutcome(blackJack.getDealerOutCome(), blackJack.matchParticipantsOutcome());
+//        outputView.printPlayersOutcome(blackJack.getDealerOutCome(), blackJack.matchParticipantProfit());
     }
 
     private BlackJack createBlackJack(List<String> names) {
@@ -41,8 +41,8 @@ public class BlackJackController {
     }
 
     private Participants createParticipants(List<String> names, CardDeck cardDeck) {
-        return new Participants(new ArrayList<>(names.stream()
-                .map(name -> new Participant(name, cardDeck.selectRandomCards(CardSize.TWO))).toList()));
+        return new Participants(new ArrayList<>(names.stream() //todo 베팅 입력
+                .map(name -> new Participant(name, cardDeck.selectRandomCards(CardSize.TWO),100)).toList()));
     }
 
     private void offerMoreCards(BlackJack blackJack) {

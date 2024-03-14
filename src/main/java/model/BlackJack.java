@@ -71,7 +71,7 @@ public class BlackJack {
         dealer.addCards(dealer.takeCardFromDeck(size));
     }
 
-    public Map<Participant, Outcome> matchParticipantsOutcome() {
+    public Map<Participant, Double> matchParticipantProfit() {
         List<Participant> sumPlayers = participants.getParticipants();
         return sumPlayers.stream()
                 .collect(toMap(
@@ -80,11 +80,11 @@ public class BlackJack {
                 ));
     }
 
-    public Map<Outcome, Long> getDealerOutCome() {
-        Map<Participant, Outcome> participantOutcome = matchParticipantsOutcome();
-        return participantOutcome.values().stream()
-                .collect(groupingBy(Outcome::reverse, counting()));
-    }
+//    public Map<Outcome, Long> getDealerOutCome() {
+//        Map<Participant, Double> participantOutcome = matchParticipantProfit();
+//        return participantOutcome.values().stream()
+//                .collect(groupingBy(Outcome::reverse, counting()));
+//    }
 
     public Map<String, Cards> mapToUsersNameAndCards() {
         return participants.getParticipants().stream()

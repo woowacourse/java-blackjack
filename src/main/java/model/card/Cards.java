@@ -7,6 +7,7 @@ import java.util.List;
 public class Cards {
 
     private final static int MAXIMUM_SUM = 21;
+    private final static int INITIAL_CARD_COUNT = 2;
 
     private List<Card> cards;
 
@@ -51,6 +52,13 @@ public class Cards {
             return result + number;
         }
         return result;
+    }
+
+    public boolean isBlackJack() {
+        if (calculateScore() == MAXIMUM_SUM && cards.size() == INITIAL_CARD_COUNT) {
+            return true;
+        }
+        return false;
     }
 
     public boolean isBust() {

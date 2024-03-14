@@ -35,6 +35,14 @@ public abstract class User {
         return cards.calculateScore();
     }
 
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
+    public boolean isNotBlackJack() {
+        return !cards.isBlackJack();
+    }
+
     public boolean isBust() {
         return cards.isBust();
     }
@@ -47,6 +55,7 @@ public abstract class User {
         return cards.findPlayerDifference();
     }
 
+    // todo 21과 어떤 것이 더 가까운지 확인하는 부분은 User에 두고 버스트 여부로 파악하는 건 Participant에 둔 것이 이상함
     protected Outcome findPlayerOutcome(int otherDifference) {
         int difference = findPlayerDifference();
         if (otherDifference > difference) {

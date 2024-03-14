@@ -6,17 +6,28 @@ import model.card.Card;
 
 public class Participant extends User {
 
-    public Participant(String name, List<Card> cards) {
+    private Integer bettingAmount;
+
+    public Participant(String name, List<Card> cards, Integer bettingAmount) {
         super(name, cards);
+        this.bettingAmount = bettingAmount;
     }
 
-    public Outcome findOutcome(Dealer dealer) {
-        if (isBust()) {
-            return Outcome.LOSE;
-        }
+    public Double findOutcome(Dealer dealer) { //todo 조건문을 Outcome 이넘 클래스에 넣는다면?
         if (dealer.isBust()) {
-            return Outcome.WIN;
+            return Outcome.WIN.calculateProfit(bettingAmount);
         }
-        return findPlayerOutcome(dealer.findPlayerDifference());
+        if (isBust()) {
+            return Outcome.LOSE.calculateProfit(bettingAmount);
+        }
+        if (isBlackJack() && dealer.isNotBlackJack()) {
+            return Outcome.BLACKJACK.calculateProfit(bettingAmount);
+        }
+        if (isBlackJack() && dealer.isBlackJack()) {
+            return Outcome.WIN.calculateProfit(bettingAmount);
+        }
+        return findPlayerOutcome(dealer.findPlayerDifference())
+                .calculateProfit(bettingAmount);
     }
+
 }
