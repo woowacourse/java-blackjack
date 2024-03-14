@@ -9,23 +9,30 @@ import org.junit.jupiter.api.Test;
 
 class ParticipantTest {
     @Test
-    void 전달받은_카드를_패에_추가한다() {
-        Participant participant = new Participant("pobi");
+    void 초기_카드를_2장_받는다() {
+        Participant participant = new Participant("prin");
 
-        participant.add(카드());
+        participant.receiveInitialCards(카드(), 카드());
 
-        assertThat(participant.getCards()).hasSize(1);
+        assertThat(participant.getCardList()).hasSize(2);
+    }
+
+    @Test
+    void 추가_카드를_받는다() {
+        Participant player = new Player("prin");
+
+        player.receiveAdditionalCard(카드());
+
+        assertThat(player.getCardList()).hasSize(1);
     }
 
     @Test
     void 카드의_합을_계산한다() {
-        Participant participant = new Participant("pobi");
+        Participant participant = new Participant("prin");
 
-        participant.add(카드(Denomination.KING));
-        participant.add(카드(Denomination.SIX));
+        participant.receiveInitialCards(카드(Denomination.KING), 카드(Denomination.SIX));
 
         Score result = participant.calculateScore();
-
         assertThat(result).isEqualTo(Score.get(16));
     }
 }

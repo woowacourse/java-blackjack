@@ -28,8 +28,8 @@ class DealerTest {
         Dealer dealer = new Dealer(cardDeck, cards -> {
         });
 
-        dealer.add(카드(Denomination.TEN));
-        dealer.add(카드(Denomination.SIX));
+        dealer.receiveAdditionalCard(카드(Denomination.TEN));
+        dealer.receiveAdditionalCard(카드(Denomination.SIX));
 
         boolean result = dealer.isNecessaryMoreCard();
         assertThat(result).isTrue();
@@ -41,8 +41,8 @@ class DealerTest {
         Dealer dealer = new Dealer(cardDeck, cards -> {
         });
 
-        dealer.add(카드(Denomination.NINE));
-        dealer.add(카드(Denomination.EIGHT));
+        dealer.receiveAdditionalCard(카드(Denomination.NINE));
+        dealer.receiveAdditionalCard(카드(Denomination.EIGHT));
 
         boolean result = dealer.isNecessaryMoreCard();
         assertThat(result).isFalse();

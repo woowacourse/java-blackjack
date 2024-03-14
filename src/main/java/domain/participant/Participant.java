@@ -15,7 +15,12 @@ public class Participant {
         this.cards = new Cards();
     }
 
-    public void add(Card card) {
+    public void receiveInitialCards(Card first, Card second) {
+        receiveAdditionalCard(first);
+        receiveAdditionalCard(second);
+    }
+
+    public void receiveAdditionalCard(Card card) {
         cards.addCard(card);
     }
 
@@ -27,7 +32,7 @@ public class Participant {
         return this.name.getValue();
     }
 
-    public List<Card> getCards() {
+    public List<Card> getCardList() {
         return cards.getCards();
     }
 

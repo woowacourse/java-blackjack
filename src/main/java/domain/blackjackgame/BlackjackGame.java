@@ -35,7 +35,7 @@ public class BlackjackGame {
 
     public void dealToDealer() {
         Card dealerCard = dealer.pickCard();
-        dealer.add(dealerCard);
+        dealer.receiveAdditionalCard(dealerCard);
     }
 
     public void dealToPlayer(int playerIndex) {

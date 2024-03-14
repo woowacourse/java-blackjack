@@ -62,7 +62,7 @@ public class Players {
 
     public void giveCardToPlayer(int playerIndex, Card card) {
         Player player = findPlayerByIndex(playerIndex);
-        player.add(card);
+        player.receiveAdditionalCard(card);
     }
 
     public Player findPlayerByIndex(int index) {
