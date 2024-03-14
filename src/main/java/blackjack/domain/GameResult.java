@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Hands;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.LinkedHashMap;
@@ -23,21 +24,21 @@ public class GameResult {
     private static Map<Player, Result> makeGameResult(Dealer dealer, Players players) {
         Map<Player, Result> gameResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            gameResult.put(player, judgeResult(dealer, player));
+            gameResult.put(player, judgeResult(dealer.getHands(), player.getHands()));
         }
         return gameResult;
     }
 
-    private static Result judgeResult(Dealer dealer, Player player) {
-        if ((dealer.isBust() && player.isBust())
-                || dealer.getHandsScore() == player.getHandsScore()) {
+    private static Result judgeResult(Hands dealerHands, Hands playerHands) {
+        if ((dealerHands.isBust() && playerHands.isBust())
+                || (dealerHands.getHandsScore() == playerHands.getHandsScore())) {
             return Result.DRAW;
         }
-        if (player.getHandsSize() == INITIAL_DRAW_CARD_NUMBER && player.getHandsScore() == BLACK_JACK) {
+        if (playerHands.size() == INITIAL_DRAW_CARD_NUMBER && playerHands.getHandsScore() == BLACK_JACK) {
             return Result.BLACK_JACK;
         }
-        if (dealer.isBust()
-                || ((player.getHandsScore() > dealer.getHandsScore()) && !player.isBust())) {
+        if (dealerHands.isBust()
+                || ((playerHands.getHandsScore() > dealerHands.getHandsScore()) && !playerHands.isBust())) {
             return Result.WIN;
         }
         return Result.LOSE;

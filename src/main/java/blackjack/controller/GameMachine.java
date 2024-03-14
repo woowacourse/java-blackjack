@@ -2,9 +2,11 @@ package blackjack.controller;
 
 import blackjack.domain.Game;
 import blackjack.domain.GameResult;
+import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.BetMoney;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
@@ -37,17 +39,24 @@ public class GameMachine {
         OutputView.printAskNameMessage();
 
         List<String> playerNames = InputView.readNames();
-        Players players = createPlayers(playerNames);
+        Players players = createPlayers(playerNames, deck);
 
-        Dealer dealer = new Dealer();
-        return Game.of(deck, dealer, players);
+        Dealer dealer = Dealer.createDealerWithCards(drawInitialCards(deck));
+        return new Game(dealer, players);
     }
 
-    private static Players createPlayers(List<String> playerNames) {
+    private static List<Card> drawInitialCards(Deck deck) {
+        List<Card> cards = new ArrayList<>();
+        cards.add(deck.draw());
+        cards.add(deck.draw());
+        return cards;
+    }
+
+    private static Players createPlayers(List<String> playerNames, Deck deck) {
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
             BetMoney betMoney = new BetMoney(InputView.readBetAmount(playerName));
-            Player player = new Player(playerName, betMoney);
+            Player player = Player.createPlayer(new Name(playerName), drawInitialCards(deck), betMoney);
             players.add(player);
         }
         return new Players(players);
@@ -64,10 +73,7 @@ public class GameMachine {
     }
 
     private static void confirmDealerHands(Dealer dealer, Deck deck) {
-        while (dealer.canDraw()) {
-            dealer.draw(deck);
-            OutputView.printDealerDrawMessage(dealer.getName());
-        }
+        dealer.confirmDealerHands(deck, OutputView::printDealerDrawMessage);
     }
 
     private static void askDrawUntilConfirmHands(Players players, Deck deck) {
@@ -81,7 +87,7 @@ public class GameMachine {
         while (player.canDraw() && isDraw) {
             OutputView.printAskDrawMessage(player.getName());
             isDraw = player.attemptDraw(InputView::askDraw, deck);
-            OutputView.printParticipantHands(player);
+            OutputView.printPlayerHands(player);
         }
     }
 }

@@ -1,38 +1,62 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Deck;
+import java.util.List;
+import java.util.function.Consumer;
 
-public class Dealer extends Participant {
+public class Dealer {
 
     private static final String DEALER_NAME = "딜러";
     private static final int DEALER_DRAW_THRESHOLD = 16;
     private static final int INITIAL_DRAW_CARD_NUMBER = 2;
 
-    public Dealer() {
-        super(DEALER_NAME);
+    private final Name name;
+    private final Hands hands;
+
+    private Dealer(Name name, Hands hands) {
+        this.name = name;
+        this.hands = hands;
     }
 
-    public void draw(Deck deck) {
-        if (shouldDraw()) {
-            addCard(deck.draw());
+    public static Dealer createDealerWithCards(List<Card> initialCards) {
+        Hands initialHands = new Hands();
+        for (Card card : initialCards) {
+            initialHands.addCard(card);
         }
+        return new Dealer(new Name(DEALER_NAME), initialHands);
     }
 
     public String getFirstCardName() {
-        if (hands.size() < INITIAL_DRAW_CARD_NUMBER) {
-            throw new UnsupportedOperationException("초기 카드 분배 후에 사용할 수 있습니다.");
-        }
         return hands.getHands()
                 .get(0)
                 .getCardName();
     }
 
-    private boolean shouldDraw() {
-        return hands.getHandsScore().getScore() <= DEALER_DRAW_THRESHOLD;
+    public void confirmDealerHands(Deck deck, Consumer<String> consumer){
+        while(shouldDraw()){
+            addCard(deck.draw());
+            consumer.accept(name.getName());
+        }
     }
 
-    @Override
-    public boolean canDraw() {
-        return shouldDraw();
+    public boolean shouldDraw() {
+        return hands.getHandsScore() <= DEALER_DRAW_THRESHOLD;
+    }
+
+    public void addCard(Card card) {
+        hands.addCard(card);
+    }
+
+    public String getName() {
+        return name.getName();
+    }
+
+    public Hands getHands() {
+        return hands;
+    }
+
+    public List<Card> getHandsCards() {
+        return hands.getHands();
     }
 }

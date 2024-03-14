@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.in;
 
+import blackjack.domain.deck.Card;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -25,8 +25,10 @@ class PlayersTest {
 
         List<Player> players = Stream.iterate(1, (i) -> i + 1).
                 limit(9)
-                .map((input) -> new Player(input.toString(), new BetMoney(input)))
-                .toList();
+                .map((input) -> Player.createPlayer(new Name(input.toString()),
+                        List.of(Card.valueOf(0),
+                                Card.valueOf(9)),
+                        new BetMoney(input))).toList();
         assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임 참여자는 최소 1명에서 최대 8명까지 가능합니다");

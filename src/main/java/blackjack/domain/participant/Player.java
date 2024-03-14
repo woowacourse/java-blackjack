@@ -1,31 +1,54 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Deck;
+import java.util.List;
 import java.util.function.BooleanSupplier;
 
-public class Player extends Participant {
-
+public class Player {
+    private final Name name;
+    private final Hands hands;
     private final BetMoney betMoney;
 
-    public Player(String name, BetMoney betMoney) {
-        super(name);
+    private Player(Name name, Hands hands, BetMoney betMoney) {
+        this.name = name;
+        this.hands = hands;
         this.betMoney = betMoney;
+    }
+
+    public static Player createPlayer(Name name, List<Card> initialCards, BetMoney betMoney) {
+        Hands initialHands = new Hands();
+        for (Card card : initialCards) {
+            initialHands.addCard(card);
+        }
+        return new Player(name, initialHands, betMoney);
     }
 
     public boolean attemptDraw(BooleanSupplier supplier, Deck deck) {
         if (supplier.getAsBoolean()) {
-            addCard(deck.draw());
+            hands.addCard(deck.draw());
             return true;
         }
         return false;
     }
 
-    public int getBetMoney() {
-        return betMoney.getBetMoney();
+    public boolean canDraw() {
+        return !hands.isBust();
     }
 
-    @Override
-    public boolean canDraw() {
-        return !isBust();
+    public String getName() {
+        return name.getName();
+    }
+
+    public List<Card> getHandsCards(){
+        return hands.getHands();
+    }
+
+    public Hands getHands() {
+        return hands;
+    }
+
+    public int getBetMoney() {
+        return betMoney.getBetMoney();
     }
 }

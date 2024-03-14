@@ -16,13 +16,12 @@ public class Hands {
         hands.add(card);
     }
 
-    public HandsScore getHandsScore() {
-        return HandsScore.of(hands);
+    public int getHandsScore() {
+        return HandsScore.of(hands).getScore();
     }
 
-
     public boolean isBust() {
-        return getHandsScore().isBust();
+        return HandsScore.of(hands).isBust();
     }
 
     public List<Card> getHands() {

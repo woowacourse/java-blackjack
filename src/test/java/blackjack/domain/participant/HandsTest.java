@@ -28,7 +28,7 @@ class HandsTest {
         hands.addCard(Card.valueOf(1));
         hands.addCard(Card.valueOf(12));
 
-        assertThat(hands.getHandsScore().getScore()).isEqualTo(12);
+        assertThat(hands.getHandsScore()).isEqualTo(12);
     }
 
 

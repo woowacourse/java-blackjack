@@ -4,7 +4,6 @@ import blackjack.domain.GameResult;
 import blackjack.domain.Result;
 import blackjack.domain.deck.Card;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.List;
@@ -43,13 +42,13 @@ public class OutputView {
     public static void printParticipantsInitialHands(Dealer dealer, Players players) {
         printDealerFirstCard(dealer);
         for (Player player : players.getPlayers()) {
-            printParticipantHands(player);
+            printPlayerHands(player);
         }
         System.out.println();
     }
 
-    public static void printParticipantHands(Participant participant) {
-        System.out.println(resolveParticipantHandsMessage(participant));
+    public static void printPlayerHands(Player player) {
+        System.out.println(resolvePlayerHandsMessage(player));
     }
 
     public static void printAskDrawMessage(String playerName) {
@@ -63,9 +62,9 @@ public class OutputView {
 
     public static void printFinalHandsAndScoreMessage(Dealer dealer, Players players) {
         System.out.println();
-        System.out.println(resolveFinalHandsAndScoreMessage(dealer));
+        System.out.println(resolveDealerFinalHandsAndScoreMessage(dealer));
         for (Player player : players.getPlayers()) {
-            System.out.println(resolveFinalHandsAndScoreMessage(player));
+            System.out.println(resolvePlayerFinalHandsAndScoreMessage(player));
         }
     }
 
@@ -86,7 +85,7 @@ public class OutputView {
     private static String resolvePlayerNamesMessage(Players players) {
         return players.getPlayers()
                 .stream()
-                .map(Participant::getName)
+                .map(Player::getName)
                 .collect(Collectors.joining(","));
     }
 
@@ -96,10 +95,16 @@ public class OutputView {
                 + dealer.getFirstCardName());
     }
 
-    private static String resolveFinalHandsAndScoreMessage(Participant participant) {
+    private static String resolvePlayerFinalHandsAndScoreMessage(Player player) {
         return String.format(FINAL_HANDS_AND_SCORE_FORMAT
-                , resolveParticipantHandsMessage(participant)
-                , participant.getHandsScore());
+                , resolvePlayerHandsMessage(player)
+                , player.getHands().getHandsScore());
+    }
+
+    private static String resolveDealerFinalHandsAndScoreMessage(Dealer dealer) {
+        return String.format(FINAL_HANDS_AND_SCORE_FORMAT
+                , resolveDealerHandsMessage(dealer)
+                , dealer.getHands().getHandsScore());
     }
 
     private static void printDealerGameResult(Dealer dealer, GameResult gameResult) {
@@ -125,10 +130,16 @@ public class OutputView {
         return cnt + result.getResult() + " ";
     }
 
-    private static String resolveParticipantHandsMessage(Participant participant) {
-        return participant.getName()
+    private static String resolvePlayerHandsMessage(Player player) {
+        return player.getName()
                 + "카드: "
-                + resolveHandsMessage(participant.getHandsCards());
+                + resolveHandsMessage(player.getHandsCards());
+    }
+
+    private static String resolveDealerHandsMessage(Dealer dealer) {
+        return dealer.getName()
+                + "카드: "
+                + resolveHandsMessage(dealer.getHandsCards());
     }
 
     private static String resolveHandsMessage(List<Card> hands) {
