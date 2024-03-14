@@ -4,6 +4,7 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class Bettings {
 
@@ -21,13 +22,13 @@ public class Bettings {
         return playersBetting.get(player);
     }
 
-    public BetAmount calculate(final Player player, final Dealer dealer) {
+    public Optional<BetAmount> saveIfBlackJack(final Player player, final Dealer dealer) {
         if (player.isBlackJack() && !dealer.isBlackJack()) {
             final BetAmount betAmount = findBy(player).multiply(1.5);// TODO 배팅 금액 고려
             save(player, betAmount);
-            return betAmount;
+            return Optional.of(betAmount);
         }
 
-        return findBy(player);
+        return Optional.empty();
     }
 }

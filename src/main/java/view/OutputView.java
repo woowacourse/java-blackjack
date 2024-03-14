@@ -63,10 +63,7 @@ public class OutputView {
     public void printDealerEndMessage(boolean isBust) {
         if (isBust) {
             printBust();
-            return;
         }
-
-        printBlackJack();
     }
 
     private String format(final Map<Result, Integer> dealerResult) {
