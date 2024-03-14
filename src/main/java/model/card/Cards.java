@@ -8,7 +8,7 @@ public class Cards {
 
     private final static int MAXIMUM_SUM = 21;
 
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public Cards(List<Card> cards) {
         validateCardSize(cards);
