@@ -19,8 +19,8 @@ public class PlayerCards {
         cards.add(card);
     }
 
-    public Outcome calculateOutcome() {
-        return new Outcome(cards);
+    public Score calculateScore() {
+        return new Score(cards);
     }
 
     public List<Card> getCards() {

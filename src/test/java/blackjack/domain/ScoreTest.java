@@ -15,7 +15,7 @@ import static blackjack.domain.card.Value.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.player.Outcome;
+import blackjack.domain.player.Score;
 import blackjack.domain.result.GameResult;
 import java.util.List;
 import java.util.stream.Stream;
@@ -24,14 +24,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class OutcomeTest {
+class ScoreTest {
     @ParameterizedTest
     @MethodSource("cardsAndBustStatusWhenBusted")
     @DisplayName("점수가 21점을 초과하면 버스트")
-    void bustOutcomeTest(List<Card> cards, boolean expected) {
-        Outcome outcome = new Outcome(cards);
+    void bustScoreTest(List<Card> cards, boolean expected) {
+        Score score = new Score(cards);
 
-        assertThat(outcome.isBusted()).isEqualTo(expected);
+        assertThat(score.isBusted()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> cardsAndBustStatusWhenBusted() {
@@ -48,10 +48,10 @@ class OutcomeTest {
     @ParameterizedTest
     @MethodSource("cardsAndBustStatusWhenBlackJack")
     @DisplayName("두장의 카드로 점수가 21점이면 블랙잭")
-    void blackJackOutcomeTest(List<Card> cards, boolean expected) {
-        Outcome outcome = new Outcome(cards);
+    void blackJackScoreTest(List<Card> cards, boolean expected) {
+        Score score = new Score(cards);
 
-        assertThat(outcome.isBlackJack()).isEqualTo(expected);
+        assertThat(score.isBlackJack()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> cardsAndBustStatusWhenBlackJack() {
@@ -68,10 +68,10 @@ class OutcomeTest {
     @ParameterizedTest
     @MethodSource("cardsAndBustStatusWhenMaxScore")
     @DisplayName("점수가 21점이면 최고점수")
-    void maxScoreOutcomeTest(List<Card> cards, boolean expected) {
-        Outcome outcome = new Outcome(cards);
+    void maxScoreScoreTest(List<Card> cards, boolean expected) {
+        Score score = new Score(cards);
 
-        assertThat(outcome.isMaxScore()).isEqualTo(expected);
+        assertThat(score.isMaxScore()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> cardsAndBustStatusWhenMaxScore() {
@@ -88,10 +88,10 @@ class OutcomeTest {
     @ParameterizedTest
     @MethodSource("cardsAndBustStatusWhenGraterThanDealerMinimumScore")
     @DisplayName("17 이상의 카드인지 검사한다.")
-    void graterThanDealerMinimumScoreOutcomeTest(List<Card> cards, boolean expected) {
-        Outcome outcome = new Outcome(cards);
+    void graterThanDealerMinimumScoreScoreTest(List<Card> cards, boolean expected) {
+        Score score = new Score(cards);
 
-        assertThat(outcome.isLessThanDealerMinimumScore()).isEqualTo(expected);
+        assertThat(score.isLessThanDealerMinimumScore()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> cardsAndBustStatusWhenGraterThanDealerMinimumScore() {
@@ -107,10 +107,10 @@ class OutcomeTest {
     @MethodSource("twoCardsAndResult")
     @DisplayName("다른 핸드결과와 비교할 수 있다.")
     void competeTest(List<Card> cards, List<Card> otherCards, GameResult expected) {
-        Outcome outcome = new Outcome(cards);
-        Outcome otherOutcome = new Outcome(otherCards);
+        Score score = new Score(cards);
+        Score otherScore = new Score(otherCards);
 
-        GameResult gameResult = outcome.compete(otherOutcome);
+        GameResult gameResult = score.compete(otherScore);
 
         assertThat(gameResult).isEqualTo(expected);
     }

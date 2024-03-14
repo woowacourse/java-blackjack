@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Outcome;
+import blackjack.domain.player.Score;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -42,8 +42,8 @@ class DealerTest {
         Dealer dealer = new Dealer();
 
         dealer.drawUntilExceedMinimum(deck);
-        Outcome outcome = dealer.calculateOutcome();
-        assertThat(outcome.isLessThanDealerMinimumScore()).isFalse();
+        Score score = dealer.calculateScore();
+        assertThat(score.isLessThanDealerMinimumScore()).isFalse();
     }
 
     private static Stream<Arguments> cardsAndScore() {

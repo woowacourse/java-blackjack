@@ -5,7 +5,7 @@ import static blackjack.domain.card.Shape.*;
 import static blackjack.domain.card.Value.*;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.player.Outcome;
+import blackjack.domain.player.Score;
 import blackjack.domain.player.PlayerCards;
 import java.util.List;
 import java.util.stream.Stream;
@@ -36,8 +36,8 @@ class PlayerCardsTest {
                 new Card(DIAMOND, FOUR)
         );
         PlayerCards playerCards = new PlayerCards(cards);
-        Outcome outcome = playerCards.calculateOutcome();
-        assertThat(outcome.getScore()).isEqualTo(9);
+        Score score = playerCards.calculateScore();
+        assertThat(score.getScore()).isEqualTo(9);
     }
 
     @Test
@@ -49,8 +49,8 @@ class PlayerCardsTest {
                 new Card(DIAMOND, KING)
         );
         PlayerCards playerCards = new PlayerCards(cards);
-        Outcome outcome = playerCards.calculateOutcome();
-        assertThat(outcome.getScore()).isEqualTo(30);
+        Score score = playerCards.calculateScore();
+        assertThat(score.getScore()).isEqualTo(30);
     }
 
     @ParameterizedTest
@@ -58,8 +58,8 @@ class PlayerCardsTest {
     @DisplayName("ACE 는 1점 혹은 11점으로 계산된다.")
     void calculateScoreWithAce(List<Card> cards, int expected) {
         PlayerCards playerCards = new PlayerCards(cards);
-        Outcome outcome = playerCards.calculateOutcome();
-        assertThat(outcome.getScore()).isEqualTo(expected);
+        Score score = playerCards.calculateScore();
+        assertThat(score.getScore()).isEqualTo(expected);
     }
 
     static Stream<Arguments> cardsAndScore() {

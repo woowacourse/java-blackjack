@@ -18,8 +18,8 @@ public class Player {
         playerCards.append(card);
     }
 
-    public Outcome calculateOutcome() {
-        return playerCards.calculateOutcome();
+    public Score calculateScore() {
+        return playerCards.calculateScore();
     }
 
     public List<Card> getCards() {
@@ -27,16 +27,16 @@ public class Player {
     }
 
     public boolean isDrawAble() {
-        Outcome outcome = calculateOutcome();
-        if (outcome.isBusted() || outcome.isMaxScore()) {
+        Score score = calculateScore();
+        if (score.isBusted() || score.isMaxScore()) {
             return false;
         }
         return true;
     }
 
     public int getScore() {
-        Outcome outcome = calculateOutcome();
-        return outcome.getScore();
+        Score score = calculateScore();
+        return score.getScore();
     }
 
     public PlayerName getPlayerName() {

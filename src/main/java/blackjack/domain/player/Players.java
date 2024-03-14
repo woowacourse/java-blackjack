@@ -38,7 +38,7 @@ public class Players {
 
     public boolean isAllBusted() {
         return playerGroup.stream().
-                map(Player::calculateOutcome)
-                .allMatch(Outcome::isBusted);
+                map(Player::calculateScore)
+                .allMatch(Score::isBusted);
     }
 }

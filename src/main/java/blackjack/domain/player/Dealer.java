@@ -18,13 +18,13 @@ public class Dealer {
     }
 
     public void drawUntilExceedMinimum(Deck deck) {
-        while (calculateOutcome().isLessThanDealerMinimumScore()) {
+        while (calculateScore().isLessThanDealerMinimumScore()) {
             draw(deck);
         }
     }
 
-    public Outcome calculateOutcome() {
-        return player.calculateOutcome();
+    public Score calculateScore() {
+        return player.calculateScore();
     }
 
     public List<Card> getCards() {
@@ -36,7 +36,7 @@ public class Dealer {
     }
 
     public int getCardsCount() {
-        Outcome outcome = calculateOutcome();
-        return outcome.getCardsSize();
+        Score score = calculateScore();
+        return score.getCardsSize();
     }
 }

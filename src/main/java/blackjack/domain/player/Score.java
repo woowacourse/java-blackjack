@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.result.GameResult;
 import java.util.List;
 
-public class Outcome {
+public class Score {
     private static final int MAXIMUM_SCORE = 21;
     private static final int DEALER_MINIMUM_SCORE = 17;
     public static final int CONVERTED_ACE_DIFFERENCE = 10;
@@ -13,7 +13,7 @@ public class Outcome {
     private final int cardsSize;
     private final int score;
 
-    public Outcome(List<Card> cards) {
+    public Score(List<Card> cards) {
         this.score = calculateScore(cards);
         this.cardsSize = cards.size();
     }
@@ -34,7 +34,7 @@ public class Outcome {
         return score < DEALER_MINIMUM_SCORE;
     }
 
-    public GameResult compete(Outcome other) {
+    public GameResult compete(Score other) {
         if (isAllBlackJack(other) || isAllBusted(other)) {
             return GameResult.DRAW;
         }
@@ -83,29 +83,29 @@ public class Outcome {
         return score > MAXIMUM_SCORE;
     }
 
-    private boolean isAllBlackJack(Outcome other) {
+    private boolean isAllBlackJack(Score other) {
         return this.isBlackJack() && other.isBlackJack();
     }
 
-    private boolean isAllBusted(Outcome other) {
+    private boolean isAllBusted(Score other) {
         return this.isBusted() && other.isBusted();
     }
 
-    private boolean isWin(Outcome other) {
+    private boolean isWin(Score other) {
         if (this.isBlackJack()) {
             return true;
         }
         return other.isBusted();
     }
 
-    private boolean isLose(Outcome other) {
+    private boolean isLose(Score other) {
         if (other.isBlackJack()) {
             return true;
         }
         return this.isBusted();
     }
 
-    private GameResult competeScore(Outcome other) {
+    private GameResult competeScore(Score other) {
         if (this.score > other.score) {
             return GameResult.WIN;
         }

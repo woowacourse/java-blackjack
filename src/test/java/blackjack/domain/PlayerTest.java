@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.player.Outcome;
+import blackjack.domain.player.Score;
 import blackjack.domain.player.Player;
 import java.util.List;
 import java.util.stream.Stream;
@@ -71,9 +71,9 @@ class PlayerTest {
             player.draw(deck);
         }
 
-        Outcome outcome = player.calculateOutcome();
+        Score score = player.calculateScore();
 
-        assertThat(outcome.isBusted()).isEqualTo(expected);
+        assertThat(score.isBusted()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> cardsAndBustStatus() {
