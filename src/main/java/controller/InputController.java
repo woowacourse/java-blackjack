@@ -2,7 +2,7 @@ package controller;
 
 import domain.Answer;
 import domain.BetAmount;
-import domain.participant.Players;
+import domain.participant.Names;
 import exception.CustomException;
 import java.util.List;
 import view.InputView;
@@ -18,12 +18,12 @@ public class InputController {
         this.outputView = outputView;
     }
 
-    public Players getPlayers() {
-        Players players;
+    public Names getPlayers() {
+        Names playerNames;
         do {
-            players = readPlayers();
-        } while (players == null);
-        return players;
+            playerNames = readPlayerNames();
+        } while (playerNames == null);
+        return playerNames;
     }
 
     public Answer getAnswer(String name) {
@@ -42,10 +42,10 @@ public class InputController {
         return betAmount;
     }
 
-    private Players readPlayers() {
+    private Names readPlayerNames() {
         try {
             List<String> rawNames = inputView.readNames();
-            return Players.from(rawNames);
+            return Names.from(rawNames);
         } catch (CustomException exception) {
             outputView.printException(exception.getErrorCode());
             return null;

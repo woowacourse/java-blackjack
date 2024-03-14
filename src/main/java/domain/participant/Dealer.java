@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.Amount;
 import domain.Answer;
 import domain.Result;
 import domain.card.Card;
@@ -70,6 +71,15 @@ public class Dealer extends Participant {
             dealerResult.put(reversed, dealerResult.getOrDefault(reversed, 0) + 1);
         }
         return dealerResult;
+    }
+
+    public Amount calculateRevenue(final Map<Player, Amount> finalResult) {
+        long dealerAmount = finalResult.values()
+                .stream()
+                .map(Amount::getValue)
+                .mapToLong(Long::longValue)
+                .sum();
+        return new Amount(-dealerAmount);
     }
 
     @Override

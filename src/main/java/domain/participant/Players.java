@@ -1,6 +1,7 @@
 package domain.participant;
 
 import constants.ErrorCode;
+import domain.Amount;
 import domain.Result;
 import exception.DuplicatePlayerNameException;
 import exception.InvalidPlayersSizeException;
@@ -21,7 +22,7 @@ public class Players {
         this.names = names;
     }
 
-    public static Players from(final List<String> names) {
+    protected static Players from(final List<String> names) {
         List<Player> players = mapToPlayers(names);
         validate(players);
         return new Players(players);
@@ -42,6 +43,16 @@ public class Players {
             result.put(name, name.calculateResult(dealer));
         }
         return result;
+    }
+
+    public Map<Player, Amount> calculateResult(final Dealer dealer) {
+        final Map<Player, Amount> playerAmountMap = new LinkedHashMap<>();
+
+        for (Player player : names) {
+            Result gameResult = player.calculateResult(dealer);
+            playerAmountMap.put(player, gameResult.apply(player.getBetAmount()));
+        }
+        return playerAmountMap;
     }
 
     private static List<Player> mapToPlayers(final List<String> names) {
