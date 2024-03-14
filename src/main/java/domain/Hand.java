@@ -65,6 +65,10 @@ public class Hand {
     }
 
     private GamerResult judgeBlackJack(Hand opponent) {
+        if (this.isBlackJack() && opponent.isBlackJack()) {
+            return GamerResult.DRAW;
+        }
+
         if (this.isBlackJack()) {
             return GamerResult.WIN;
         }
@@ -74,7 +78,7 @@ public class Hand {
         return judgeScore(opponent);
     }
 
-    private boolean isBlackJack() {
+    public boolean isBlackJack() {
         return this.getResultScore() == BUST_THRESHOLD && cards.size() == INITIAL_CARD_COUNT;
     }
 
