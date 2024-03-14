@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
-    protected final Name name;
     protected final Hand hand;
+    private final Name name;
 
     Participant(final Name name, final Hand hand) {
         this.name = name;
