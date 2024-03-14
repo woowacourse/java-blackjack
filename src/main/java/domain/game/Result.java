@@ -18,7 +18,7 @@ public enum Result {
         this.judgeResult = judgeResult;
     }
 
-    public static Result of(Dealer dealer, Player player) {
+    public static Result of(final Dealer dealer, final Player player) {
         return Arrays.stream(values())
                 .filter(value -> value.judgeResult.test(dealer, player))
                 .findAny()

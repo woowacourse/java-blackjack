@@ -18,7 +18,7 @@ public record PlayerNames(List<String> names) {
         validatePlayerNamesSize(names);
     }
 
-    private void validateNotDealerName(List<String> names) {
+    private void validateNotDealerName(final List<String> names) {
         if (names.contains(DEALER_NAME)) {
             throw new IllegalArgumentException(DEALER_NAME_MESSAGE);
         }

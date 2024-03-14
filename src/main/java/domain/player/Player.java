@@ -11,17 +11,17 @@ public class Player {
     private final PlayerName playerName;
     private final Hand hand;
 
-    public Player(PlayerName playerName, Hand hand) {
+    public Player(final PlayerName playerName, final Hand hand) {
         this.playerName = playerName;
         this.hand = hand;
     }
 
-    public Player(List<Card> cards) {
+    public Player(final List<Card> cards) {
         this.playerName = new PlayerName("Test");
         this.hand = new Hand(cards);
     }
 
-    public void hit(Card card) {
+    public void hit(final Card card) {
         this.hand.add(card);
     }
 

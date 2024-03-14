@@ -9,7 +9,7 @@ public class Hand {
 
     private final List<Card> cards;
 
-    public Hand(List<Card> cards) {
+    public Hand(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
 
@@ -19,7 +19,7 @@ public class Hand {
                 .sum();
     }
 
-    public void add(Card card) {
+    public void add(final Card card) {
         cards.add(card);
     }
 

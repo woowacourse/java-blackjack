@@ -19,7 +19,7 @@ public class BlackJackGame {
     private final List<Player> players = new ArrayList<>();
     private final Dealer dealer;
 
-    public BlackJackGame(PlayerNames playerNames, Dealer dealer) {
+    public BlackJackGame(final PlayerNames playerNames, final Dealer dealer) {
         this.dealer = dealer;
 
         List<String> names = playerNames.names();
@@ -30,7 +30,7 @@ public class BlackJackGame {
         }
     }
 
-    public void hitPlayer(Player targetPlayer) {
+    public void hitPlayer(final Player targetPlayer) {
         if (targetPlayer.isHittable()) {
             targetPlayer.hit(dealer.dealCard());
         }
@@ -44,7 +44,7 @@ public class BlackJackGame {
         return false;
     }
 
-    public Map<Player, Profit> getProfits(Bets bets) {
+    public Map<Player, Profit> getProfits(final Bets bets) {
         Map<Player, Profit> playerProfits = new LinkedHashMap<>();
         Map<Player, Result> playerResults = getGameResults();
         for (Map.Entry<Player, Result> entry : playerResults.entrySet()) {

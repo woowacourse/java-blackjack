@@ -2,6 +2,7 @@ package domain.betting;
 
 import java.util.Objects;
 
+
 public class Profit {
     private final int money;
 
@@ -9,7 +10,7 @@ public class Profit {
         this.money = money;
     }
 
-    public static Profit of(Bet bet, ProfitRate profitRate) {
+    public static Profit of(final Bet bet, final ProfitRate profitRate) {
         return new Profit((int) (bet.getMoney() * profitRate.get()));
     }
 

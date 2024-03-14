@@ -23,16 +23,16 @@ public class Card {
     private final Rank rank;
     private final Suit suit;
 
-    private Card(Rank rank, Suit suit) {
+    private Card(final Rank rank, final Suit suit) {
         this.rank = rank;
         this.suit = suit;
     }
 
-    public static Card of(Rank rank, Suit suit) {
+    public static Card of(final Rank rank, final Suit suit) {
         return CARD_POOL.get(toKey(rank, suit));
     }
 
-    private static String toKey(Rank rank, Suit suit) {
+    private static String toKey(final Rank rank, final Suit suit) {
         return rank.name() + "-" + suit.name();
     }
 
@@ -53,7 +53,7 @@ public class Card {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == this) {
             return true;
         }

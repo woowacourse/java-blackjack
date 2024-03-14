@@ -19,7 +19,7 @@ public class InputView {
         return Arrays.stream(input.split(",")).toList();
     }
 
-    public List<Integer> readBettingMoney(List<String> playerNames) throws IOException {
+    public List<Integer> readBettingMoney(final List<String> playerNames) throws IOException {
         List<Integer> inputs = new LinkedList<>();
         for (String playerName : playerNames) {
             System.out.println(playerName + "의 배팅 금액은?");
@@ -30,7 +30,7 @@ public class InputView {
         return inputs;
     }
 
-    public String readCommand(String playerName) throws IOException {
+    public String readCommand(final String playerName) throws IOException {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerName);
         String command = bufferedReader.readLine();
         validateNotBlank(command);
@@ -39,18 +39,17 @@ public class InputView {
         return command;
     }
 
-    private void validateNotBlank(String input) {
+    private void validateNotBlank(final String input) {
         if (input.isBlank()) {
             throw new IllegalArgumentException("빈 값을 입력할 수 없습니다.");
         }
     }
 
-    private String removeBlank(String input) {
-        input = input.replace(" ", "");
-        return input;
+    private String removeBlank(final String input) {
+        return input.replace(" ", "");
     }
 
-    private int parseInt(String input) {
+    private int parseInt(final String input) {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {

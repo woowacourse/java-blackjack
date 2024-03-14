@@ -10,7 +10,7 @@ public record PlayerName(String name) {
         validateLength(name);
     }
 
-    private void validateLength(String name) {
+    private void validateLength(final String name) {
         if (name.length() < MIN_NAME_LENGTH || MAX_NAME_LENGTH < name.length()) {
             throw new IllegalArgumentException(NAME_LENGTH_MESSAGE);
         }
