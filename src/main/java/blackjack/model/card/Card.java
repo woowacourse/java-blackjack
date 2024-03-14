@@ -13,6 +13,10 @@ public final class Card {
         return denomination.isAce();
     }
 
+    public Score getScore() {
+        return denomination.getScore();
+    }
+
     public Suit getSuit() {
         return suit;
     }

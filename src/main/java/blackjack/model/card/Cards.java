@@ -31,15 +31,14 @@ public class Cards {
     public Score calculateCardsTotalScore() {
         Score totalScore = sumAllScores();
         if (hasAce() && canBeAdjusted(totalScore)) {
-            return adjustTotalForAce(totalScore);
+            return adjustScoreForAce(totalScore);
         }
         return totalScore;
     }
 
     private Score sumAllScores() {
         return cards.stream()
-                .map(Card::getDenomination)
-                .map(Denomination::getScore)
+                .map(Card::getScore)
                 .reduce(Score.from(0), Score::plus);
     }
 
@@ -53,13 +52,26 @@ public class Cards {
                 .equalToOrLessThan(MAX_CARDS_TOTAL);
     }
 
-    private Score adjustTotalForAce(final Score totalScore) {
-        return totalScore.plus(ACE_ADJUSTMENT);
+    private Score adjustScoreForAce(final Score score) {
+        return score.plus(ACE_ADJUSTMENT);
     }
 
-    // Todo: [규칙 변경] 처음 받은 두 장의 카드가 21점일 때만
     public boolean isBlackJack() {
-        return calculateCardsTotalScore().equalTo(MAX_CARDS_TOTAL);
+        Score sum = sumFrontTwoCards();
+        if (hasAceInFrontTwoCards()) {
+            return adjustScoreForAce(sum).equalTo(MAX_CARDS_TOTAL);
+        }
+        return sum.equalTo(MAX_CARDS_TOTAL);
+    }
+
+    private Score sumFrontTwoCards() {
+        Score firstCardScore = get(0).getScore();
+        Score secondCardScore = get(1).getScore();
+        return firstCardScore.plus(secondCardScore);
+    }
+
+    private boolean hasAceInFrontTwoCards() {
+        return get(0).isAce() || get(1).isAce();
     }
 
     public boolean isBust() {
