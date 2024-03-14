@@ -36,6 +36,17 @@ class PlayerTest {
     }
 
     @Test
+    @DisplayName("블랙잭이면 카드를 받지 않는다.")
+    void cantReceiveCardTest_WhenBlackjack() {
+        player = createTestPlayer(List.of(
+                new Card(Shape.CLOVER, Number.KING),
+                new Card(Shape.HEART, Number.ACE)
+        ));
+
+        assertFalse(player.canReceiveCard());
+    }
+
+    @Test
     @DisplayName("카드의 총합이 21을 초과하면 카드를 받을 수 없다.")
     void cantReceiveCardTest() {
         player = createTestPlayer(List.of(

@@ -18,6 +18,7 @@ public class Dealer extends BlackjackGamer {
 
     @Override
     public boolean canReceiveCard() {
-        return getScore() < BlackjackConstants.DEALER_MINIMUM_VALUE.getValue();
+        return !isBlackjack()
+                && getScore() < BlackjackConstants.DEALER_MINIMUM_VALUE.getValue();
     }
 }

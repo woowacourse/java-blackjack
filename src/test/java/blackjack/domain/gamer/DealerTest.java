@@ -25,6 +25,17 @@ class DealerTest {
     }
 
     @Test
+    @DisplayName("블랙잭이면 카드를 받지 않는다.")
+    void cantReceiveCardTest_WhenBlackjack() {
+        dealer = new Dealer(List.of(
+                new Card(Shape.CLOVER, Number.KING),
+                new Card(Shape.HEART, Number.ACE)
+        ));
+
+        assertFalse(dealer.canReceiveCard());
+    }
+
+    @Test
     @DisplayName("카드의 총합이 16을 초과하면 카드를 받을 수 없다.")
     void cantReceiveCardTest() {
         dealer = new Dealer(List.of(
