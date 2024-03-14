@@ -32,4 +32,12 @@ class InputValidatorTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("배팅 금액에 대한 입력은 숫자여야 합니다.");
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"Y", "N", "yy", "nn", "1", "a"})
+    void 카드_추가_지급_여부에_대한_입력이_y_또는_n이_아니라면_예외가_발생한다(String input) {
+        assertThatThrownBy(() -> inputValidator.validateReceiveMoreCardOrNot(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("카드 추가 지급 여부에 대한 입력은 y 또는 n으로만 가능합니다.");
+    }
 }

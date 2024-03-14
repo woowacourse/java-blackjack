@@ -4,6 +4,9 @@ import blackjack.view.validator.InputValidator;
 
 import java.util.Scanner;
 
+import static blackjack.utils.Constants.EXPRESSION_OF_NO;
+import static blackjack.utils.Constants.EXPRESSION_OF_YES;
+
 public class InputView {
     private static final String NEWLINE = System.lineSeparator();
     private static Scanner scanner = new Scanner(System.in);
@@ -26,6 +29,16 @@ public class InputView {
         final String input = scanner.nextLine();
 
         inputValidator.validateBattingAmount(input);
+        return input;
+    }
+
+    public String readReceiveMoreCardOrNot(String name) {
+        final String message = String.format(
+                "%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)", name, EXPRESSION_OF_YES, EXPRESSION_OF_NO);
+        System.out.println(message);
+        final String input = scanner.nextLine();
+
+        inputValidator.validateReceiveMoreCardOrNot(input);
         return input;
     }
 }

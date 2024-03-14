@@ -1,17 +1,23 @@
 package blackjack.view.validator;
 
-import blackjack.utils.Constants;
 import blackjack.utils.Converter;
 
 import java.util.List;
 import java.util.regex.Pattern;
 
+import static blackjack.utils.Constants.*;
+
 public class InputValidator {
     private static final List<String> INVALID_PLAYER_NAMES = List.of(
-            Constants.DEFAULT_NAME_OF_DEALER,
-            Constants.EXPRESSION_OF_YES,
-            Constants.EXPRESSION_OF_NO);
+            DEFAULT_NAME_OF_DEALER,
+            EXPRESSION_OF_YES,
+            EXPRESSION_OF_NO);
     private static final Pattern ONLY_DIGIT_PATTERN = Pattern.compile("-?[0-9]+");
+    private static final Pattern VALID_EXPRESSION_PATTERN = Pattern.compile(generateValidExpressionPattern());
+
+    private static String generateValidExpressionPattern() {
+        return "[" + EXPRESSION_OF_YES + "|" + EXPRESSION_OF_NO + "]";
+    }
 
     public void validatePlayerNames(final String input) {
         validateInput(input);
@@ -38,6 +44,20 @@ public class InputValidator {
 
     private boolean isNotDigit(final String input) {
         return !ONLY_DIGIT_PATTERN.matcher(input)
+                .matches();
+    }
+
+    public void validateReceiveMoreCardOrNot(final String input) {
+        validateInput(input);
+
+        if (isInvalidExpression(input)) {
+            throw new IllegalArgumentException(
+                    String.format("카드 추가 지급 여부에 대한 입력은 %s 또는 %s으로만 가능합니다.", EXPRESSION_OF_YES, EXPRESSION_OF_NO));
+        }
+    }
+
+    private boolean isInvalidExpression(final String input) {
+        return !VALID_EXPRESSION_PATTERN.matcher(input)
                 .matches();
     }
 
