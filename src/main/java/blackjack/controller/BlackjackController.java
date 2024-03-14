@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
+import blackjack.domain.card.Hands;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.PlayerNames;
 import blackjack.dto.BetRevenueResultDto;
@@ -47,7 +48,7 @@ public final class BlackjackController {
     private void playGame(final BlackjackGame blackjackGame) {
         outputView.printStartCards(blackjackGame.getStartCards());
 
-        blackjackGame.playGame(this::needMoreCard, outputView::printPlayerCard, outputView::printDealerMoreCard);
+        blackjackGame.playGame(this::needMoreCard, this::printPlayerCard, this::printDealerMoreCard);
     }
 
     private boolean needMoreCard(final PlayerName name) {
@@ -57,6 +58,14 @@ public final class BlackjackController {
             outputView.printError(e.getMessage());
             return needMoreCard(name);
         }
+    }
+
+    private void printPlayerCard(final PlayerName name, final Hands hands) {
+        outputView.printPlayerCard(name, hands);
+    }
+
+    private void printDealerMoreCard(final int count) {
+        outputView.printDealerMoreCard(count);
     }
 
     private void finishGame(final BlackjackGame blackjackGame) {

@@ -7,16 +7,7 @@ import blackjack.domain.card.Hands;
 public final class BustState extends State {
 
     BustState(final Hands hands) {
-        super(hands, 0);
-    }
-
-    BustState(final Hands hands, final int hitCount) {
-        super(hands, hitCount);
-    }
-
-    @Override
-    public boolean isBust() {
-        return true;
+        super(hands);
     }
 
     @Override
@@ -26,11 +17,16 @@ public final class BustState extends State {
 
     @Override
     public State stand() {
-        return new BustState(hands, hitCount);
+        return new BustState(hands);
     }
 
     @Override
     public BetLeverage calculateBetLeverage(final State other) {
         return BetLeverage.LOSE;
+    }
+
+    @Override
+    public boolean isBust() {
+        return true;
     }
 }

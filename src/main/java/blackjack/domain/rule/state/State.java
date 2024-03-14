@@ -10,11 +10,9 @@ public abstract class State {
     protected static final String ERROR_MESSAGE = "사용할 수 없는 기능입니다.";
 
     protected final Hands hands;
-    protected final int hitCount;
 
-    protected State(final Hands hands, final int hitCount) {
+    protected State(final Hands hands) {
         this.hands = hands;
-        this.hitCount = hitCount;
     }
 
     public abstract State draw(Card card);
@@ -22,10 +20,6 @@ public abstract class State {
     public abstract State stand();
 
     public abstract BetLeverage calculateBetLeverage(State other);
-
-    public int countHit() {
-        return hitCount;
-    }
 
     public boolean isHit() {
         return false;

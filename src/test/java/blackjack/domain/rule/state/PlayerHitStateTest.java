@@ -15,7 +15,7 @@ class PlayerHitStateTest {
 
     final State playerHitScore20 = new PlayerHitState(new Hands(List.of(
             Card.of(CardNumber.QUEEN, CardShape.DIA),
-            Card.of(CardNumber.TEN, CardShape.DIA))), 0);
+            Card.of(CardNumber.TEN, CardShape.DIA))));
 
     @DisplayName("카드 2장으로 시작하고 Blackjack이면 Blackjack 상태이다.")
     @Test

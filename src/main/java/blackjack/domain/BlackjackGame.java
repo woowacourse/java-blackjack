@@ -44,12 +44,12 @@ public class BlackjackGame {
     }
 
     public void playGame(
-            final Predicate<PlayerName> playerCallBefore,
+            final Predicate<PlayerName> userWantToHit,
             final BiConsumer<PlayerName, Hands> playerCallAfter,
             final IntConsumer dealerCallAfter
     ) {
         if (dealer.isNotBlackjack()) {
-            players.hit(dealer, playerCallBefore, playerCallAfter);
+            players.hit(dealer, userWantToHit, playerCallAfter);
         }
 
         runDealerTurn(dealerCallAfter);

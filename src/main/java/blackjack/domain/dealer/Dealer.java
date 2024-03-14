@@ -20,11 +20,13 @@ public class Dealer {
     }
 
     public int hit() {
+        int count = 0;
         while (state.isHit()) {
             state = state.draw(drawCard());
+            count++;
         }
 
-        return state.countHit();
+        return count;
     }
 
     public Card drawCard() {

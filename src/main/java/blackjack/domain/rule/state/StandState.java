@@ -7,11 +7,7 @@ import blackjack.domain.card.Hands;
 public final class StandState extends State {
 
     StandState(final Hands hands) {
-        super(hands, 0);
-    }
-
-    StandState(final Hands hands, final int hitCount) {
-        super(hands, hitCount);
+        super(hands);
     }
 
     @Override

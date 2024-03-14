@@ -26,27 +26,25 @@ public class Player {
 
     public void hit(
             final Dealer dealer,
-            final Predicate<PlayerName> callBefore,
+            final Predicate<PlayerName> userWantToHit,
             final BiConsumer<PlayerName, Hands> callAfter
     ) {
-        while (isContinueHit(callBefore)) {
+        while (state.isHit()) {
+            runHitOrStandByUser(dealer, userWantToHit);
+            callAfter.accept(getName(), getHands());
+        }
+    }
+
+    private void runHitOrStandByUser(
+            final Dealer dealer,
+            final Predicate<PlayerName> userWantToHit
+    ) {
+        if (userWantToHit.test(getName())) {
             final Card card = dealer.drawCard();
             state = state.draw(card);
-            callAfter.accept(getName(), getHands());
+            return;
         }
-
-        stand(callAfter);
-    }
-
-    private boolean isContinueHit(final Predicate<PlayerName> callBefore) {
-        return state.isHit() && callBefore.test(getName());
-    }
-
-    private void stand(final BiConsumer<PlayerName, Hands> callAfter) {
         state = state.stand();
-        if (state.countHit() == 0) {
-            callAfter.accept(getName(), getHands());
-        }
     }
 
     public BetRevenue calculateBetRevenue(final Dealer dealer) {
@@ -70,4 +68,5 @@ public class Player {
     public PlayerName getName() {
         return playerBetAmount.name();
     }
+
 }

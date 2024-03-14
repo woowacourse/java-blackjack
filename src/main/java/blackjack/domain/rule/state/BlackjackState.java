@@ -7,23 +7,19 @@ import blackjack.domain.card.Hands;
 public final class BlackjackState extends State {
 
     BlackjackState(final Hands hands) {
-        super(hands, 0);
-    }
-
-    BlackjackState(final Hands hands, final int hitCount) {
-        super(hands, hitCount);
+        super(hands);
     }
 
     @Override
     public State draw(final Card card) {
         final Hands newHands = hands.addCard(card);
 
-        return new PlayerHitState(newHands, hitCount + 1);
+        return new PlayerHitState(newHands);
     }
 
     @Override
     public State stand() {
-        return new BlackjackState(hands, hitCount);
+        return new BlackjackState(hands);
     }
 
     @Override

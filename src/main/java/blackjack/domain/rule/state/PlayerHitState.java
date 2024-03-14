@@ -7,12 +7,8 @@ import java.util.List;
 
 public final class PlayerHitState extends State {
 
-    private PlayerHitState(final Hands hands) {
-        super(hands, 0);
-    }
-
-    PlayerHitState(final Hands hands, final int hitCount) {
-        super(hands, hitCount);
+    PlayerHitState(final Hands hands) {
+        super(hands);
     }
 
     public static State start(final Card first, final Card second) {
@@ -26,28 +22,28 @@ public final class PlayerHitState extends State {
     }
 
     @Override
-    public boolean isHit() {
-        return true;
-    }
-
-    @Override
     public State draw(final Card card) {
         final Hands newHands = hands.addCard(card);
 
         if (newHands.isBustScore()) {
-            return new BustState(newHands, hitCount + 1);
+            return new BustState(newHands);
         }
 
-        return new PlayerHitState(newHands, hitCount + 1);
+        return new PlayerHitState(newHands);
     }
 
     @Override
     public StandState stand() {
-        return new StandState(hands, hitCount);
+        return new StandState(hands);
     }
 
     @Override
     public BetLeverage calculateBetLeverage(final State other) {
         throw new UnsupportedOperationException(ERROR_MESSAGE);
+    }
+
+    @Override
+    public boolean isHit() {
+        return true;
     }
 }

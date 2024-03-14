@@ -10,12 +10,8 @@ public final class DealerHitState extends State {
 
     public static final Score NEED_CARD_SCORE_MAX = new Score(16);
 
-    private DealerHitState(final Hands hands) {
-        super(hands, 0);
-    }
-
-    DealerHitState(final Hands hands, final int hitCount) {
-        super(hands, hitCount);
+    DealerHitState(final Hands hands) {
+        super(hands);
     }
 
     public static State start(final Card first, final Card second) {
@@ -39,21 +35,16 @@ public final class DealerHitState extends State {
     }
 
     @Override
-    public boolean isHit() {
-        return true;
-    }
-
-    @Override
     public State draw(final Card card) {
         final Hands newHands = hands.addCard(card);
 
         if (newHands.isBustScore()) {
-            return new BustState(newHands, hitCount + 1);
+            return new BustState(newHands);
         }
         if (needMoreCard(newHands)) {
-            return new DealerHitState(newHands, hitCount + 1);
+            return new DealerHitState(newHands);
         }
-        return new StandState(newHands, hitCount + 1);
+        return new StandState(newHands);
     }
 
     @Override
@@ -64,5 +55,10 @@ public final class DealerHitState extends State {
     @Override
     public BetLeverage calculateBetLeverage(final State other) {
         throw new UnsupportedOperationException(ERROR_MESSAGE);
+    }
+
+    @Override
+    public boolean isHit() {
+        return true;
     }
 }
