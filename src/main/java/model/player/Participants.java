@@ -1,8 +1,12 @@
 package model.player;
 
+import static java.util.stream.Collectors.toMap;
+
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -45,10 +49,17 @@ public class Participants {
                 .map(participant -> participant.name).toList();
     }
 
-    public Double findDealerProfit(Dealer dealer) {
+    public Double calculateDealerProfit(Dealer dealer) {
         return participants.stream()
                 .mapToDouble(participant -> participant.calculateProfit(dealer) * -1.0)
                 .sum();
+    }
+
+    public Map<Participant, Double> calculateParticipantProfit(Dealer dealer) {
+        return participants.stream()
+                .collect(toMap(
+                        Function.identity(),
+                        participant -> participant.calculateProfit(dealer)));
     }
 
     public List<Participant> getParticipants() {

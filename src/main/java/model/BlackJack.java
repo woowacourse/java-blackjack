@@ -86,7 +86,11 @@ public class BlackJack {
 //    }
 
     public Double getDealerProfit() {
-        return participants.findDealerProfit(dealer); //todo dealer의 profit인데 participants에서 가져오는 것이 어색함
+        return participants.calculateDealerProfit(dealer); //todo dealer의 profit인데 participants에서 가져오는 것이 어색함
+    }
+
+    public Map<Participant, Double> getParticipantProfits() {
+        return participants.calculateParticipantProfit(dealer);
     }
 
     public Map<String, Cards> mapToUsersNameAndCards() {

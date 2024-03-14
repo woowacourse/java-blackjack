@@ -1,8 +1,10 @@
 package model.player;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
-import model.BlackJack;
 import model.card.Card;
 import model.card.CardDeck;
 import model.card.CardNumber;
@@ -80,9 +82,9 @@ class ParticipantsTest {
                 List.of(new Card(CardShape.CLOVER, CardNumber.TEN),
                         new Card(CardShape.DIAMOND, CardNumber.TEN)));
 
-        Double dealerProfit = participants.findDealerProfit(dealerScore20);
+        Double dealerProfit = participants.calculateDealerProfit(dealerScore20);
 
-        Assertions.assertThat(dealerProfit).isEqualTo(-100.0);
+        assertThat(dealerProfit).isEqualTo(-100.0);
     }
 
     @DisplayName("참가자들의 결과로 딜러의 수익을 구한다. - 1승 1무")
@@ -104,8 +106,31 @@ class ParticipantsTest {
                 List.of(new Card(CardShape.CLOVER, CardNumber.TEN),
                         new Card(CardShape.DIAMOND, CardNumber.TEN)));
 
-        Double dealerProfit = participants.findDealerProfit(dealerScore20);
+        Double dealerProfit = participants.calculateDealerProfit(dealerScore20);
 
-        Assertions.assertThat(dealerProfit).isEqualTo(100.0);
+        assertThat(dealerProfit).isEqualTo(100.0);
+    }
+
+    @DisplayName("참가자들의 계산 결과를 반환한다.")
+    @Test
+    void calculateParticipantProfit() {
+        Participant bustParticipant = new Participant("배키",
+                List.of(new Card(CardShape.SPACE, CardNumber.TEN),
+                        new Card(CardShape.SPACE, CardNumber.KING)),
+                100);
+        bustParticipant.addCard(new Card(CardShape.SPACE, CardNumber.NINE));
+        Participant participantScore21 = new Participant("켬미",
+                List.of(new Card(CardShape.CLOVER, CardNumber.KING),
+                        new Card(CardShape.CLOVER, CardNumber.TEN)),
+                200);
+
+        Participants participants = new Participants(List.of(bustParticipant, participantScore21));
+        Dealer dealerScore20 = new Dealer(new CardDeck(CardDeck.createCards()), () ->
+                List.of(new Card(CardShape.CLOVER, CardNumber.TEN),
+                        new Card(CardShape.DIAMOND, CardNumber.TEN)));
+
+        Map<Participant, Double> participantProfits = participants.calculateParticipantProfit(dealerScore20);
+
+        assertThat(participantProfits).isEqualTo(Map.of(bustParticipant, -100.0, participantScore21, 0.0));
     }
 }
