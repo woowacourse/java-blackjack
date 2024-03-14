@@ -199,7 +199,7 @@ class DealerTest {
         }
     }
 
-    @DisplayName("플레이어와 승패 판단을 할 수 있다.")
+    @DisplayName("플레이어들의 이익을 계산할 수 있다.")
     @Test
     void calculatePlayersProfitTest() {
         Player blackjackPlayer = new Player(CardsFixture.BLACKJACK, new Name("black"), new BetAmount(1_000));
@@ -215,5 +215,20 @@ class DealerTest {
                 Map.entry(winPlayer, new Profit(2_000)),
                 Map.entry(losePlayer, new Profit(-3_000))
         );
+    }
+
+    @DisplayName("딜러의 이익을 계산할 수 있다.")
+    @Test
+    void calculateDealerProfitTest() {
+        Player blackjackPlayer = new Player(CardsFixture.BLACKJACK, new Name("black"), new BetAmount(1_000));
+        Player winPlayer = new Player(CardsFixture.CARDS_SCORE_21, new Name("win"), new BetAmount(2_000));
+        Player losePlayer = new Player(CardsFixture.CARDS_SCORE_16, new Name("lose"), new BetAmount(3_000));
+        Players players = new Players(List.of(blackjackPlayer, winPlayer, losePlayer));
+        Dealer dealer = new Dealer(CardsFixture.CARDS_SCORE_17);
+        int expected = -1_500 - 2_000 + 3_000;
+
+        Profit dealerProfit = dealer.calculateDealerProfit(players);
+
+        assertThat(dealerProfit.toInt()).isEqualTo(expected);
     }
 }

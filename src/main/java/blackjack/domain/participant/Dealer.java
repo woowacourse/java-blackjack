@@ -34,6 +34,15 @@ public class Dealer extends Participant {
         return !isWin(player);
     }
 
+    public Profit calculateDealerProfit(Players players) {
+        Profit profit = Profit.ZERO;
+        for (Player player : players.getPlayers()) {
+            Profit dealerProfit = player.match(this).reverse();
+            profit = profit.add(dealerProfit);
+        }
+        return profit;
+    }
+
     public Map<Player, Profit> calculatePlayersProfit(Players players) {
         Map<Player, Profit> totalResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
