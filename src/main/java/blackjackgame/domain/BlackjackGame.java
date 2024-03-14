@@ -5,7 +5,6 @@ import blackjackgame.domain.card.Deck;
 import blackjackgame.domain.gamers.CardHolder;
 import blackjackgame.domain.gamers.Gamer;
 import blackjackgame.domain.gamers.Gamers;
-import blackjackgame.view.OutputView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,12 +26,7 @@ public class BlackjackGame {
     }
 
     public void dealerTryDraw(Deck deck) {
-        try {
-            dealer.cardHolderDraw(deck);
-            OutputView.printDealerAdditionalCardMessage();
-        } catch (IllegalStateException e) {
-            OutputView.printDealerNoAdditionalCardMessage();
-        }
+        dealer.cardHolderDraw(deck);
     }
 
     public GameProfit getGameProfit() {

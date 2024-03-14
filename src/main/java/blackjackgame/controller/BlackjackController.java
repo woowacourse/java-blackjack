@@ -96,7 +96,12 @@ public class BlackjackController {
     }
 
     private void dealerTryDraw(BlackjackGame blackjackGame, Deck deck) {
-        blackjackGame.dealerTryDraw(deck);
+        try {
+            blackjackGame.dealerTryDraw(deck);
+            OutputView.printDealerAdditionalCardMessage();
+        } catch (IllegalStateException e) {
+            OutputView.printDealerNoAdditionalCardMessage();
+        }
     }
 
     private static boolean inputYesOrNo(String playerName) {
