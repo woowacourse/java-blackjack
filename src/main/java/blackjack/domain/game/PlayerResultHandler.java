@@ -11,7 +11,7 @@ public class PlayerResultHandler {
 		this.dealer = dealer;
 	}
 
-	public GameResult notifyResultToPlayer(Player player) {
+	public GameResult getPlayerResult(Player player) {
 		if (player.isBusted()) {
 			return GameResult.LOSE;
 		}

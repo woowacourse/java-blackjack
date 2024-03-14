@@ -13,7 +13,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Player;
 
 class PlayerResultHandlerTest {
@@ -43,7 +42,7 @@ class PlayerResultHandlerTest {
 			));
 			handler = new PlayerResultHandler(dealer);
 
-			assertThat(handler.notifyResultToPlayer(player)).isEqualTo(GameResult.BLACKJACK_WIN);
+			assertThat(handler.getPlayerResult(player)).isEqualTo(GameResult.BLACKJACK_WIN);
 		}
 
 		@Test
@@ -56,7 +55,7 @@ class PlayerResultHandlerTest {
 			));
 			handler = new PlayerResultHandler(dealer);
 
-			assertThat(handler.notifyResultToPlayer(player)).isEqualTo(GameResult.BLACKJACK_WIN);
+			assertThat(handler.getPlayerResult(player)).isEqualTo(GameResult.BLACKJACK_WIN);
 		}
 	}
 
@@ -81,7 +80,7 @@ class PlayerResultHandlerTest {
 			));
 			handler = new PlayerResultHandler(dealer);
 
-			assertThat(handler.notifyResultToPlayer(player)).isEqualTo(GameResult.WIN);
+			assertThat(handler.getPlayerResult(player)).isEqualTo(GameResult.WIN);
 		}
 
 		@Test
@@ -93,7 +92,7 @@ class PlayerResultHandlerTest {
 			));
 			handler = new PlayerResultHandler(dealer);
 
-			assertThat(handler.notifyResultToPlayer(player)).isEqualTo(GameResult.WIN);
+			assertThat(handler.getPlayerResult(player)).isEqualTo(GameResult.WIN);
 		}
 	}
 
@@ -117,7 +116,7 @@ class PlayerResultHandlerTest {
 
 			handler = new PlayerResultHandler(dealer);
 
-			assertThat(handler.notifyResultToPlayer(player)).isEqualTo(GameResult.LOSE);
+			assertThat(handler.getPlayerResult(player)).isEqualTo(GameResult.LOSE);
 		}
 
 		@Test
@@ -136,7 +135,7 @@ class PlayerResultHandlerTest {
 
 			handler = new PlayerResultHandler(dealer);
 
-			assertThat(handler.notifyResultToPlayer(player)).isEqualTo(GameResult.LOSE);
+			assertThat(handler.getPlayerResult(player)).isEqualTo(GameResult.LOSE);
 		}
 
 		@Test
@@ -155,7 +154,7 @@ class PlayerResultHandlerTest {
 
 			handler = new PlayerResultHandler(dealer);
 
-			assertThat(handler.notifyResultToPlayer(player)).isEqualTo(GameResult.LOSE);
+			assertThat(handler.getPlayerResult(player)).isEqualTo(GameResult.LOSE);
 		}
 
 		@Test
@@ -173,7 +172,7 @@ class PlayerResultHandlerTest {
 
 			handler = new PlayerResultHandler(dealer);
 
-			assertThat(handler.notifyResultToPlayer(player)).isEqualTo(GameResult.LOSE);
+			assertThat(handler.getPlayerResult(player)).isEqualTo(GameResult.LOSE);
 		}
 	}
 
@@ -195,7 +194,7 @@ class PlayerResultHandlerTest {
 
 			handler = new PlayerResultHandler(dealer);
 
-			assertThat(handler.notifyResultToPlayer(player)).isEqualTo(GameResult.DRAW);
+			assertThat(handler.getPlayerResult(player)).isEqualTo(GameResult.DRAW);
 		}
 
 		@Test
@@ -213,11 +212,11 @@ class PlayerResultHandlerTest {
 
 			handler = new PlayerResultHandler(dealer);
 
-			assertThat(handler.notifyResultToPlayer(player)).isEqualTo(GameResult.DRAW);
+			assertThat(handler.getPlayerResult(player)).isEqualTo(GameResult.DRAW);
 		}
 	}
 
 	private Player createTestPlayer(List<Card> cards) {
-		return new Player(new Name("test"), cards);
+		return new Player("test", cards);
 	}
 }
