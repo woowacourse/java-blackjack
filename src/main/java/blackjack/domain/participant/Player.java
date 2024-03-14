@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.common.Money;
-import blackjack.domain.judgement.JudgementResult;
 
 public class Player extends Participant {
 
@@ -17,8 +16,8 @@ public class Player extends Participant {
         this.money = money;
     }
 
-    public Money calculateProfit(JudgementResult judgementResult) {
-        return money.multiply(judgementResult.getProfitMultiplier());
+    public Money getMoney() {
+        return money;
     }
 
     @Override

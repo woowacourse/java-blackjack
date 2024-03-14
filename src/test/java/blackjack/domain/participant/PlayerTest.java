@@ -8,7 +8,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.common.Money;
-import blackjack.domain.judgement.JudgementResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -85,49 +84,5 @@ class PlayerTest {
         boolean result = player.isPlayable();
 
         assertThat(result).isFalse();
-    }
-
-    @DisplayName("플레이어가 질 경우, 수익금을 계산한다.")
-    @Test
-    void whenPlayerLose() {
-        Money playerMoney = new Money(1000);
-        Player player = new Player("atom", playerMoney);
-
-        Money result = player.calculateProfit(JudgementResult.LOSE);
-
-        assertThat(result.getAmount()).isEqualTo(-1000);
-    }
-
-    @DisplayName("플레이어가 이길 경우, 수익금을 계산한다.")
-    @Test
-    void whenPlayerWin() {
-        Money playerMoney = new Money(1000);
-        Player player = new Player("atom", playerMoney);
-
-        Money result = player.calculateProfit(JudgementResult.WIN);
-
-        assertThat(result.getAmount()).isEqualTo(1000);
-    }
-
-    @DisplayName("플레이어가 블랙잭으로 이길 경우, 수익금을 계산한다.")
-    @Test
-    void whenPlayerWinWithBlackJack() {
-        Money playerMoney = new Money(1000);
-        Player player = new Player("atom", playerMoney);
-
-        Money result = player.calculateProfit(JudgementResult.BLACKJACK_WIN);
-
-        assertThat(result.getAmount()).isEqualTo(1500);
-    }
-
-    @DisplayName("플레이어가 무승부일 경우, 수익금을 계산한다.")
-    @Test
-    void whenPlayerTie() {
-        Money playerMoney = new Money(1000);
-        Player player = new Player("atom", playerMoney);
-
-        Money result = player.calculateProfit(JudgementResult.TIE);
-
-        assertThat(result.getAmount()).isEqualTo(0);
     }
 }

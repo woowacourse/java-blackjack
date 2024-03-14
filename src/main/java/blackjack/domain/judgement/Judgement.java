@@ -21,10 +21,6 @@ public class Judgement {
             return JudgementResult.TIE;
         }
 
-        if (player.isBlackJack()) {
-            return JudgementResult.BLACKJACK_WIN;
-        }
-
         if (dealer.isBlackJack() || playerScore < dealerScore) {
             return JudgementResult.LOSE;
         }

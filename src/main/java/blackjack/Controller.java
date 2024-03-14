@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Map;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.common.Money;
+import blackjack.domain.judgement.Judgement;
+import blackjack.domain.judgement.JudgementResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.domain.judgement.Judgement;
-import blackjack.domain.judgement.JudgementResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -99,7 +99,7 @@ class Controller {
 
         for (Player player : participants.getPlayers()) {
             JudgementResult result = judgement.judge(dealer, player);
-            double playerProfit = player.calculateProfit(result).getAmount();
+            double playerProfit = result.calculateProfit(player.getMoney()).getAmount();
             dealerProfit -= playerProfit;
             resultMap.put(player.getName(), playerProfit);
         }
