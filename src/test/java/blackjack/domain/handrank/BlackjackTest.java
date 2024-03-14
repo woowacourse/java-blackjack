@@ -32,7 +32,7 @@ public class BlackjackTest {
     }
 
     static Stream<HankRank> notBlackjack() {
-        return Stream.of(new NormalRank(12), new NormalRank(20), new Bust(22));
+        return Stream.of(new Stand(12), new Stand(20), new Bust(22));
     }
 
     @DisplayName("해당 핸드 랭크는 블랙잭이다.")

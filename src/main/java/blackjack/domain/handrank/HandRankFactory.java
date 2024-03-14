@@ -13,6 +13,6 @@ public final class HandRankFactory {
         if (hand.isBusted()) {
             return new Bust(hand.calculateScore());
         }
-        return new NormalRank(hand.calculateScore());
+        return new Stand(hand.calculateScore());
     }
 }

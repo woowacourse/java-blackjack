@@ -1,10 +1,10 @@
 package blackjack.domain.handrank;
 
-public final class NormalRank implements HankRank {
+public final class Stand implements HankRank {
 
     private final int score;
 
-    public NormalRank(int score) {
+    public Stand(int score) {
         this.score = score;
     }
 

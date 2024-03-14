@@ -47,7 +47,7 @@ class HandRankFactoryTest {
 
         HankRank actual = HandRankFactory.from(blackjack);
 
-        assertThat(actual).isExactlyInstanceOf(NormalRank.class);
+        assertThat(actual).isExactlyInstanceOf(Stand.class);
     }
 
     static Stream<List<Card>> normalCards() {

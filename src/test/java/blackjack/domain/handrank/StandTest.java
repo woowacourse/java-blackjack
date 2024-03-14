@@ -5,9 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class NormalRankTest {
+class StandTest {
 
-    private final HankRank NORMAL_RANK = new NormalRank(20);
+    private final HankRank NORMAL_RANK = new Stand(20);
 
     @DisplayName("해당 핸드 랭크는 블랙잭이 아니다.")
     @Test
