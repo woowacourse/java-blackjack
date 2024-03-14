@@ -29,12 +29,20 @@ public final class StandState extends State {
         if (other.isBust()) {
             return BetLeverage.WIN;
         }
-        if (other.isBlackjack() || other.getHands().compareTo(hands) > 0) {
+        if (other.isBlackjack() || isLessThan(other)) {
             return BetLeverage.LOSE;
         }
-        if (hands.compareTo(other.getHands()) > 0) {
+        if (isGreaterThan(other)) {
             return BetLeverage.WIN;
         }
         return BetLeverage.PUSH;
+    }
+
+    private boolean isLessThan(final State other) {
+        return hands.compareTo(other.getHands()) < 0;
+    }
+
+    private boolean isGreaterThan(final State other) {
+        return hands.compareTo(other.getHands()) > 0;
     }
 }

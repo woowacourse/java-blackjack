@@ -27,10 +27,6 @@ public abstract class State {
         return hitCount;
     }
 
-    public Hands getHands() {
-        return hands;
-    }
-
     public boolean isHit() {
         return false;
     }
@@ -41,5 +37,9 @@ public abstract class State {
 
     public boolean isBust() {
         return false;
+    }
+
+    public Hands getHands() {
+        return hands;
     }
 }

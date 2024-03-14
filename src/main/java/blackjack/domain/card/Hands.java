@@ -22,6 +22,7 @@ public final class Hands implements Comparable<Hands> {
     public Hands addCard(final Card card) {
         final List<Card> newCards = new ArrayList<>(cards);
         newCards.add(card);
+
         return new Hands(newCards);
     }
 
