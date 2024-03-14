@@ -11,17 +11,17 @@ public enum ProfitRate {
     PUSH_PROFIT(Result::isPush, 0),
     BLACK_JACK_PROFIT(Result::isPlayerBlackJack, 1.5);
 
-    private final Predicate<Result> judgeProfit;
+    private final Predicate<Result> judgeRate;
     private final double rate;
 
-    ProfitRate(final Predicate<Result> judgeProfit, final double rate) {
-        this.judgeProfit = judgeProfit;
+    ProfitRate(final Predicate<Result> judgeRate, final double rate) {
+        this.judgeRate = judgeRate;
         this.rate = rate;
     }
 
     public static ProfitRate from(final Result result) {
         return Arrays.stream(ProfitRate.values())
-                .filter(value -> value.judgeProfit.test(result))
+                .filter(value -> value.judgeRate.test(result))
                 .findAny()
                 .orElseThrow();
 
