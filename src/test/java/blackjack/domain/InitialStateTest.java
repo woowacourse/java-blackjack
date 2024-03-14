@@ -2,6 +2,7 @@ package blackjack.domain;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,5 +31,43 @@ class InitialStateTest {
         State newState = initialState.draw(deck);
 
         assertThat(newState).isInstanceOf(BlackJackState.class);
+    }
+
+    @DisplayName("초기 상태에서 스탠드를 하면 에러가 발생한다")
+    @Test
+    public void standFail() {
+        InitialState initialState = new InitialState();
+
+        assertThatCode(() -> initialState.stand())
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("현재 상태에서 지원하지 않는 동작입니다.");
+    }
+
+    @DisplayName("초기 상태에서 핸드를 계산하면 에러가 발생한다")
+    @Test
+    public void calculateHandFail() {
+        InitialState initialState = new InitialState();
+
+        assertThatCode(() -> initialState.calculateHand())
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("현재 상태에서 지원하지 않는 동작입니다.");
+    }
+
+    @DisplayName("초기 상태에서 핸드 반환하면 에러가 발생한다")
+    @Test
+    public void getHandFail() {
+        InitialState initialState = new InitialState();
+
+        assertThatCode(() -> initialState.getHand())
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("현재 상태에서 지원하지 않는 동작입니다.");
+    }
+
+    @DisplayName("초기 상태에서 끝났는지 판단하면 false를 반환한다")
+    @Test
+    public void isFinishedFalse() {
+        InitialState initialState = new InitialState();
+
+        assertThat(initialState.isFinished()).isFalse();
     }
 }

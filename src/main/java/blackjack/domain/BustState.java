@@ -1,20 +1,20 @@
 package blackjack.domain;
 
-public class BlackJackState implements State {
+public class BustState implements State {
     private final Hand hand;
 
-    public BlackJackState(Hand hand) {
+    public BustState(Hand hand) {
         this.hand = hand;
     }
 
     @Override
     public State draw(Deck deck) {
-        return null;
+        throw new UnsupportedOperationException("현재 상태에서 지원하지 않는 동작입니다.");
     }
 
     @Override
     public State stand() {
-        return null;
+        throw new UnsupportedOperationException("현재 상태에서 지원하지 않는 동작입니다.");
     }
 
     @Override
