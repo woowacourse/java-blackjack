@@ -52,6 +52,6 @@ public class PlayerCardsTest {
     void bestSum() {
         PlayerCards playerCards = new PlayerCards(new Name("capy"), new BetAmount(1000), new ArrayList<>(List.of(new Card(1, Shape.CLUB), new Card(1, Shape.CLUB))));
 
-        assertThat(playerCards.bestSum()).isEqualTo(12);
+        assertThat(playerCards.bestSumOfCardScore()).isEqualTo(12);
     }
 }

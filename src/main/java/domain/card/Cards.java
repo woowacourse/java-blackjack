@@ -27,7 +27,7 @@ public abstract class Cards {
     abstract boolean canDraw();
 
     public boolean isBurst() {
-        return bestSum() > MAX_SCORE;
+        return bestSumOfCardScore() > MAX_SCORE;
     }
 
     public boolean isNotBurst() {
@@ -35,20 +35,20 @@ public abstract class Cards {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == INIT_SIZE && bestSum() == MAX_SCORE;
+        return cards.size() == INIT_SIZE && bestSumOfCardScore() == MAX_SCORE;
     }
 
     public boolean isGreaterThan(Cards other) {
-        return this.bestSum() > other.bestSum();
+        return this.bestSumOfCardScore() > other.bestSumOfCardScore();
     }
 
     public void receive(Card card) {
         cards.add(card);
     }
 
-    public int bestSum() {
+    public int bestSumOfCardScore() {
         long countAce = countAce();
-        int sum = sum();
+        int sum = sumOfCardScore();
         while (sum + ACE_SCORE <= MAX_SCORE && countAce > 0) {
             sum += ACE_SCORE;
             countAce--;
@@ -56,7 +56,7 @@ public abstract class Cards {
         return sum;
     }
 
-    public int sum() {
+    public int sumOfCardScore() {
         return cards.stream()
                 .mapToInt(Card::getCardNumber)
                 .sum();

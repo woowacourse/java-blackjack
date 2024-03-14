@@ -68,7 +68,7 @@ public class OutputView {
     }
 
     private static void printSumOfCards(Cards cards) {
-        System.out.println(" - 결과: " + cards.bestSum());
+        System.out.println(" - 결과: " + cards.bestSumOfCardScore());
     }
 
     public static void printDealerGivenCard() {

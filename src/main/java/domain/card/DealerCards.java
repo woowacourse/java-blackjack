@@ -24,6 +24,6 @@ public class DealerCards extends Cards {
 
     @Override
     public boolean canDraw() {
-        return bestSum() <= MIN_SCORE;
+        return bestSumOfCardScore() <= MIN_SCORE;
     }
 }

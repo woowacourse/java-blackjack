@@ -25,7 +25,7 @@ public class PlayerCards extends Cards {
 
     @Override
     public boolean canDraw() {
-        return bestSum() <= MAX_SCORE;
+        return bestSumOfCardScore() <= MAX_SCORE;
     }
 
     public Name getPlayerName() {
