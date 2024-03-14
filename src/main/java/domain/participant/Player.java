@@ -5,6 +5,7 @@ import static domain.participant.Dealer.DEALER_NAME;
 import constants.ErrorCode;
 import domain.BetAmount;
 import exception.ReservedPlayerNameException;
+import java.util.Objects;
 
 public class Player extends Participant {
 
@@ -15,7 +16,7 @@ public class Player extends Participant {
         this.betAmount = betAmount;
     }
 
-    public Player(final Name name, final Hands hands) { // TODO 이전 테스트를 위한 생성자
+    protected Player(final Name name, final Hands hands) {
         super(name, hands);
         validate(name);
         this.betAmount = new BetAmount(10);
@@ -40,6 +41,22 @@ public class Player extends Participant {
     @Override
     public boolean canDeal() {
         return handsSum() < Hands.BLACK_JACK;
+    }
+
+    @Override
+    public boolean equals(final Object target) {
+        if (this == target) {
+            return true;
+        }
+        if (!(target instanceof Player player)) {
+            return false;
+        }
+        return Objects.equals(getName(), player.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getName());
     }
 
     @Override
