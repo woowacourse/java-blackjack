@@ -4,7 +4,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.dto.ProfitResult;
-import blackjack.strategy.ShuffleStrategy;
+import blackjack.strategy.shuffle.ShuffleStrategy;
 import blackjack.util.JudgeUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -72,7 +72,7 @@ class JudgeUtilTest {
             JudgeUtil.judge(profitResult, dealer, choco);
 
             //then
-            assertThat(isPlayerResultWin(profitResult))
+            assertThat(isPlayerResultBlackjackWin(profitResult))
                     .isTrue();
         }
 
@@ -194,7 +194,7 @@ class JudgeUtilTest {
             JudgeUtil.judge(profitResult, dealer, choco);
 
             //then
-            assertThat(isPlayerResultWin(profitResult))
+            assertThat(isPlayerResultBlackjackWin(profitResult))
                     .isTrue();
         }
 
@@ -264,6 +264,10 @@ class JudgeUtilTest {
 
     private boolean isPlayerResultLose(final ProfitResult profitResult) {
         return profitResult.findByPlayer(choco).equals(choco.calculateProfit(GameResult.LOSE));
+    }
+
+    private boolean isPlayerResultBlackjackWin(final ProfitResult profitResult) {
+        return profitResult.findByPlayer(choco).equals(choco.calculateProfit(GameResult.BLACKJACK));
     }
 
     private boolean isPlayerResultWin(final ProfitResult profitResult) {

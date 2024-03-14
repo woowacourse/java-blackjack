@@ -1,6 +1,6 @@
 package blackjack.domain.stategy;
 
-import blackjack.strategy.ShuffleStrategy;
+import blackjack.strategy.shuffle.ShuffleStrategy;
 import java.util.List;
 
 public class NoShuffleStrategy implements ShuffleStrategy {

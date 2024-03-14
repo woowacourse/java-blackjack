@@ -30,6 +30,11 @@ public class JudgeUtil {
             return;
         }
 
+        if (player.isBlackjack()) {
+            playerBlackjackWin(profitResult, player);
+            return;
+        }
+
         playerWin(profitResult, player);
     }
 
@@ -49,7 +54,7 @@ public class JudgeUtil {
         }
 
         if (player.isBlackjack()) {
-            playerWin(profitResult, player);
+            playerBlackjackWin(profitResult, player);
             return;
         }
 
@@ -72,6 +77,10 @@ public class JudgeUtil {
 
     private static void playerLose(final ProfitResult profitResult, final Player player) {
         profitResult.addProfitResult(player, GameResult.LOSE);
+    }
+
+    private static void playerBlackjackWin(final ProfitResult profitResult, final Player player) {
+        profitResult.addProfitResult(player, GameResult.BLACKJACK);
     }
 
     private static void playerWin(final ProfitResult profitResult, final Player player) {

@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
+import blackjack.strategy.profit.ProfitStrategy;
 
 import java.math.BigDecimal;
 import java.util.regex.Pattern;
@@ -59,7 +60,8 @@ public class Player extends Gamer {
     }
 
     public BigDecimal calculateProfit(final GameResult gameResult) {
-        return gameResult.getProfit(betting, isBlackjack());
+        ProfitStrategy calculateStrategy = gameResult.getProfitStrategy();
+        return calculateStrategy.calculate(betting);
     }
 
     public String getName() {

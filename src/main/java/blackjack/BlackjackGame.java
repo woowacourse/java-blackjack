@@ -6,7 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.dto.ProfitResult;
-import blackjack.strategy.RandomShuffleStrategy;
+import blackjack.strategy.shuffle.RandomShuffleStrategy;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.RankView;

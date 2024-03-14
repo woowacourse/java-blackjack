@@ -1,28 +1,22 @@
 package blackjack.domain;
 
-import java.math.BigDecimal;
-import java.util.function.BiFunction;
+import blackjack.strategy.profit.*;
 
 public enum GameResult {
 
-    WIN((betting, isBlackjack) -> {
-        if (isBlackjack) {
-            return betting.multiply(BigDecimal.valueOf(1.5));
-        }
-
-        return betting;
-    }),
-    DRAW((betting, isBlackjack) -> BigDecimal.ZERO),
-    LOSE((betting, isBlackjack) -> betting.multiply(BigDecimal.valueOf(-1))),
+    BLACKJACK(new BlackjackWinStrategy()),
+    WIN(new WinProfitStrategy()),
+    DRAW(new DrawStrategy()),
+    LOSE(new LoseStrategy()),
     ;
 
-    private final BiFunction<BigDecimal, Boolean, BigDecimal> profit;
+    private final ProfitStrategy profitStrategy;
 
-    GameResult(BiFunction<BigDecimal, Boolean, BigDecimal> profit) {
-        this.profit = profit;
+    GameResult(ProfitStrategy profitStrategy) {
+        this.profitStrategy = profitStrategy;
     }
 
-    public BigDecimal getProfit(final BigDecimal betting, final boolean isBlackjack) {
-        return profit.apply(betting, isBlackjack);
+    public ProfitStrategy getProfitStrategy() {
+        return profitStrategy;
     }
 }

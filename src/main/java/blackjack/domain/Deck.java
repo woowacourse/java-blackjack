@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
-import blackjack.strategy.ShuffleStrategy;
+import blackjack.strategy.shuffle.ShuffleStrategy;
 
 import java.util.LinkedList;
 import java.util.List;
