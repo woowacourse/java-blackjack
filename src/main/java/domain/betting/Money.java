@@ -13,7 +13,6 @@ public final class Money {
     private static final double TIE_EARNING_RATE = 0.0;
     private static final double LOSE_EARNING_RATE = -1.0;
     private static final double BLACKJACK_EARNING_RATE = 1.5;
-    private static final double BOTH_BLACKJACK_EARNING_RATE = 1.0;
 
     private final int value;
 
@@ -66,10 +65,6 @@ public final class Money {
 
     public Money findPlayerProfitWhenPlayerBlackjack() {
         return new Money((int) (value * BLACKJACK_EARNING_RATE));
-    }
-
-    public Money findPlayerProfitWhenBothBlackjack() {
-        return new Money((int) (value * BOTH_BLACKJACK_EARNING_RATE));
     }
 
     public int toInt() {

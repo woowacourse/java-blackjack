@@ -6,5 +6,5 @@ public enum PlayerResult {
     TIE,
     LOSE,
     PLAYER_BLACKJACK,
-    BOTH_BLACKJACK
+    ;
 }
