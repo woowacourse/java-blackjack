@@ -27,20 +27,12 @@ public class BlackjackGame {
 	}
 
 	public void start() {
-		Players players = createPlayers();
-		Dealer dealer = createDealer();
+		Players players = new Players(inputView.readPlayerNames());
+		Dealer dealer = Dealer.newInstance(createDeck());
 
 		dealInitCards(dealer, players);
 		receiveAdditionalCard(dealer, players);
 		printResult(dealer, players);
-	}
-
-	private Players createPlayers() {
-		return new Players(inputView.readPlayerNames());
-	}
-
-	private Dealer createDealer() {
-		return Dealer.newInstance(createDeck());
 	}
 
 	private Deck createDeck() {
