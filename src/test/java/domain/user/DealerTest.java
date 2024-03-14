@@ -10,26 +10,26 @@ import org.junit.jupiter.api.Test;
 
 public class DealerTest {
     @Test
-    @DisplayName("덱의 합이 16 이하면 addable이다.")
-    void isAddableTest() {
+    @DisplayName("덱의 합이 16 이하면 Receivable이다.")
+    void isReceivableTest() {
         Dealer dealer = new Dealer();
 
         dealer.addCard(new Card(Shape.CLUB, Number.FIVE));
         dealer.addCard(new Card(Shape.DIAMOND, Number.FIVE));
 
-        assertThat(dealer.isAddable()).isTrue();
+        assertThat(dealer.isReceivable()).isTrue();
     }
 
     @Test
-    @DisplayName("덱의 합이 16 초과면 addable이지 않다.")
-    void isNotAddableTest() {
+    @DisplayName("덱의 합이 16 초과면 Receivable이지 않다.")
+    void isNotReceivableTest() {
         Dealer dealer = new Dealer();
 
         dealer.addCard(new Card(Shape.CLUB, Number.FIVE));
         dealer.addCard(new Card(Shape.DIAMOND, Number.FIVE));
         dealer.addCard(new Card(Shape.CLUB, Number.TEN));
 
-        assertThat(dealer.isAddable()).isFalse();
+        assertThat(dealer.isReceivable()).isFalse();
     }
 
     @Test

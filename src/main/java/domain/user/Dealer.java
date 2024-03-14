@@ -5,7 +5,7 @@ import domain.card.Card;
 import java.util.List;
 
 public class Dealer {
-    private static final int MAX_ADDABLE = 16;
+    private static final int RECEIVABLE_THRESHOLD = 16;
     private final Hand hand;
 
     public Dealer() {
@@ -32,8 +32,8 @@ public class Dealer {
         return hand.isBlackjack();
     }
 
-    public boolean isAddable() {
-        return hand.sumCard() <= MAX_ADDABLE;
+    public boolean isReceivable() {
+        return hand.sumCard() <= RECEIVABLE_THRESHOLD;
     }
 
     public List<Card> getVisibleCard() {

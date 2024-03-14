@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Player {
+    public static final int RECEIVABLE_THRESHOLD = 21;
     private final Name name;
     private final Hand hand;
 
@@ -32,6 +33,10 @@ public class Player {
 
     public boolean isBlackjack() {
         return hand.isBlackjack();
+    }
+
+    public boolean isReceivable() {
+        return hand.sumCard() <= RECEIVABLE_THRESHOLD;
     }
 
     public List<Card> getAllCards() {
