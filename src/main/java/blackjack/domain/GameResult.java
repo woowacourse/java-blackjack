@@ -52,13 +52,13 @@ public class GameResult {
     }
 
     public long getPlayerResult(Player player) {
-        return gameResult.get(player).getBetProfit(player.getBetMoney());
+        return gameResult.get(player).findBetProfit(player.getBetMoney());
     }
 
     public long getDealerProfit() {
         int totalPlayerProfit = 0;
         for (Player player : gameResult.keySet()) {
-            totalPlayerProfit += gameResult.get(player).getBetProfit(player.getBetMoney());
+            totalPlayerProfit += gameResult.get(player).findBetProfit(player.getBetMoney());
         }
         return -totalPlayerProfit;
     }

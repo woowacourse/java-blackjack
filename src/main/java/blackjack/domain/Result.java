@@ -1,18 +1,23 @@
 package blackjack.domain;
 
+import blackjack.domain.participant.BetMoney;
+import java.util.function.Function;
+
 public enum Result {
 
-    BLACK_JACK("승"),
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+    BLACK_JACK("승", (betMoney) -> (int) (1.5 * betMoney.getBetMoney())),
+    WIN("승", BetMoney::getBetMoney),
+    LOSE("패", (betMoney) -> -betMoney.getBetMoney()),
+    DRAW("무", (betMoney) -> 0);
 
     private static final int DRAW_PROFIT = 0;
 
     private final String result;
+    private final Function<BetMoney, Integer> profitFormula;
 
-    Result(String result) {
+    Result(String result, Function<BetMoney, Integer> profitFormula) {
         this.result = result;
+        this.profitFormula = profitFormula;
     }
 
     public static Result reverseResult(Result result) {
@@ -25,20 +30,8 @@ public enum Result {
         return DRAW;
     }
 
-    public int getBetProfit(int betMoney) {
-        if (this == BLACK_JACK) {
-            return (int) (1.5 * betMoney);
-        }
-        if (this == WIN) {
-            return betMoney;
-        }
-        if (this == LOSE) {
-            return -betMoney;
-        }
-        if (this == DRAW) {
-            return DRAW_PROFIT;
-        }
-        throw new IllegalStateException("존재하지 않는 결과입니다.");
+    public int findBetProfit(BetMoney betMoney) {
+        return profitFormula.apply(betMoney);
     }
 
     public String getResult() {

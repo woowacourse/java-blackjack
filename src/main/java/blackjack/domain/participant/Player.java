@@ -48,8 +48,8 @@ public class Player {
         return hands;
     }
 
-    public int getBetMoney() {
-        return betMoney.getBetMoney();
+    public BetMoney getBetMoney() {
+        return betMoney;
     }
 
     public int getHandsScore() {

@@ -9,7 +9,6 @@ public class Dealer {
 
     private static final String DEALER_NAME = "딜러";
     private static final int DEALER_DRAW_THRESHOLD = 16;
-    private static final int INITIAL_DRAW_CARD_NUMBER = 2;
 
     private final Name name;
     private final Hands hands;
