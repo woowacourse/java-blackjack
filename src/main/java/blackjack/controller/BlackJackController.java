@@ -85,7 +85,9 @@ public class BlackJackController {
 
     private void end(final Players players, final Dealer dealer, final BettingBoard bettingBoard) {
         showCardOutcome(players, dealer);
-        showMatchResult(players, dealer, bettingBoard);
+
+        List<PlayerProfit> playerProfits = players.calculateProfit(dealer, bettingBoard);
+        outputView.printFinalProfits(playerProfits);
     }
 
     private void showCardOutcome(final Players players, final Dealer dealer) {
@@ -93,11 +95,6 @@ public class BlackJackController {
         List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes = players.captureFinalCardsOutcomes();
         outputView.printDealerFinalCards(dealerFinalCardsOutcome);
         outputView.printPlayersFinalCards(playerFinalCardsOutcomes);
-    }
-
-    private void showMatchResult(final Players players, final Dealer dealer, final BettingBoard bettingBoard) {
-        List<PlayerProfit> playerProfits = players.calculateProfit(dealer, bettingBoard);
-        outputView.printFinalProfits(playerProfits);
     }
 
     public <T> T retryOnException(final Supplier<T> retryOperation) {
