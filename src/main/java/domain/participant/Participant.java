@@ -31,7 +31,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackJack() {
-        return this.getScore() == BLACK_JACK_COUNT && this.getCardCount() == MIN_CARD_COUNT;
+        return hands.isBlackJack();
     }
 
     public int getCardCount() {

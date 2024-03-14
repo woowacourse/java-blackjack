@@ -3,7 +3,7 @@ package domain.blackjack;
 public class BetAmount {
 
     private static final int MIN_BET_AMOUNT = 1000;
-    
+
     private final int betAmount;
 
     public BetAmount(int betAmount) {
