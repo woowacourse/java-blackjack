@@ -8,14 +8,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class MoneyTest {
+class BetAmountTest {
 
     @DisplayName("금액은 0 또는 음수가 될 수 없다")
     @ParameterizedTest
     @ValueSource(ints = {0, -1, -1000})
     void validateTest_whenValueIsNotPositive_throwException(int value) {
 
-        assertThatThrownBy(() -> new Money(value))
+        assertThatThrownBy(() -> new BetAmount(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("금액은 양수이어야 합니다.");
     }
@@ -24,10 +24,10 @@ class MoneyTest {
     @ParameterizedTest
     @CsvSource({"1500, 1500, 3000", "1234, 5555, 6789", "10, 1, 11"})
     void addTest(int value1, int value2, int expected) {
-        Money money1 = new Money(value1);
-        Money money2 = new Money(value2);
+        BetAmount betAmount1 = new BetAmount(value1);
+        BetAmount betAmount2 = new BetAmount(value2);
 
-        Money actual = money1.add(money2);
+        BetAmount actual = betAmount1.add(betAmount2);
 
         assertThat(actual.toInt()).isEqualTo(expected);
     }
@@ -36,9 +36,9 @@ class MoneyTest {
     @ParameterizedTest
     @CsvSource({"1.5, 1500", "2, 2000", "2.25, 2250"})
     void multiplyTest(double multiplier, int expected) {
-        Money money = new Money(1000);
+        BetAmount betAmount = new BetAmount(1000);
 
-        Money actual = money.multiply(multiplier);
+        BetAmount actual = betAmount.multiply(multiplier);
 
         assertThat(actual.toInt()).isEqualTo(expected);
     }

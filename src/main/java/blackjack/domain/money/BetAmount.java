@@ -1,10 +1,10 @@
 package blackjack.domain.money;
 
-public class Money {
+public class BetAmount {
 
     private final int value;
 
-    public Money(int value) {
+    public BetAmount(int value) {
         validatePositive(value);
         this.value = value;
     }
@@ -15,13 +15,13 @@ public class Money {
         }
     }
 
-    public Money add(Money money) {
-        return new Money(this.value + money.value);
+    public BetAmount add(BetAmount betAmount) {
+        return new BetAmount(this.value + betAmount.value);
     }
 
-    public Money multiply(double multiplier) {
+    public BetAmount multiply(double multiplier) {
         int newValue = (int) Math.ceil(this.value * multiplier);
-        return new Money(newValue);
+        return new BetAmount(newValue);
     }
 
     public int toInt() {
