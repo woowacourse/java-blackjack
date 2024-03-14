@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 
 public class Score implements Comparable<Score> {
 
-    public static final int BLACK_JACK_SCORE = 21;
+    private static final int BLACK_JACK_SCORE = 21;
     private static final int MINIMUM_SCORE = 2;
     private static final int MAXIMUM_SCORE = 30;
     private static final int ACE_CARD_GAP = 10;

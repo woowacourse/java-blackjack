@@ -10,7 +10,7 @@ public class Dealer extends Player {
 
     static final String DEALER_NAME = "딜러";
 
-    private static final int MAX_SCORE_TO_HIT = 16;
+    private static final int HITTABLE_MAX_SCORE = 16;
 
     private final CardDeck cardDeck;
 
@@ -34,6 +34,6 @@ public class Dealer extends Player {
 
     @Override
     public boolean isHittable() {
-        return this.getScore().compareTo(Score.from(MAX_SCORE_TO_HIT)) <= 0;
+        return this.getScore().compareTo(Score.from(HITTABLE_MAX_SCORE)) <= 0;
     }
 }
