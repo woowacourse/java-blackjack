@@ -31,7 +31,8 @@ class ResultTest {
                         new Card(JACK, CLOVER), new Card(SIX, DIAMOND), new Card(ACE, SPADE))
         );
         blackjackGame.distributeCardsForSetting(cards);
-        Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers());
+        Blackjack blackjack = new Blackjack(blackjackGame.getDealer());
+        Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers(), blackjack);
         assertTrue(result.getPlayerResult().containsKey(blackjackGame.getPlayers().getPlayers().get(0).getName()));
         assertTrue(result.getPlayerResult().containsValue("승"));
     }
@@ -45,8 +46,25 @@ class ResultTest {
                         new Card(JACK, CLOVER), new Card(SIX, DIAMOND), new Card(SEVEN, SPADE))
         );
         blackjackGame.distributeCardsForSetting(cards);
-        Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers());
+        Blackjack blackjack = new Blackjack(blackjackGame.getDealer());
+        Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers(), blackjack);
         assertEquals("1승 1패", result.getDealerResult());
+    }
+
+    @DisplayName("플레이어가 블랙잭인 경우")
+    @Test
+    void testPlayerBlackjack() {
+        BlackjackGame blackjackGame = prepareBlackjackGame();
+        Cards cards = new Cards(
+                List.of(new Card(JACK, DIAMOND), new Card(FIVE, CLOVER), new Card(ACE, HEART),
+                        new Card(JACK, CLOVER), new Card(SIX, DIAMOND), new Card(ACE, SPADE))
+        );
+        blackjackGame.distributeCardsForSetting(cards);
+        Blackjack blackjack = new Blackjack(blackjackGame.getDealer());
+        blackjack.playerBlackjackStatus(blackjackGame.getPlayers());
+        Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers(), blackjack);
+        assertTrue(result.getPlayerResult().containsKey(blackjackGame.getPlayers().getPlayers().get(0).getName()));
+        assertTrue(result.getPlayerResult().containsValue("블랙잭"));
     }
 
     private BlackjackGame prepareBlackjackGame() {

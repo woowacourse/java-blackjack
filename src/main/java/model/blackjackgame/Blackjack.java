@@ -1,19 +1,32 @@
 package model.blackjackgame;
 
+import java.util.HashMap;
+import java.util.Map;
 import model.dealer.Dealer;
 import model.player.Player;
+import model.player.Players;
 
 public class Blackjack {
 
     private final boolean dealer;
-    private final boolean player;
+    private final Map<Player, Boolean> playersStatus;
 
-    public Blackjack(Dealer dealer, Player player) {
-        this.dealer = dealerIsBlackjack(dealer);
-        this.player = false;
+    public Blackjack(Dealer dealer) {
+        this.dealer = dealer.isBlackjack();
+        this.playersStatus = new HashMap<>();
     }
 
-    public boolean dealerIsBlackjack(Dealer dealer) {
-        return dealer.isBlackjack();
+    public void playerBlackjackStatus(Players players) {
+        for (Player player : players.getPlayers()) {
+            playersStatus.put(player, player.isBlackjack());
+        }
+    }
+
+    public boolean getDealer() {
+        return dealer;
+    }
+
+    public Map<Player, Boolean> getPlayersStatus() {
+        return playersStatus;
     }
 }

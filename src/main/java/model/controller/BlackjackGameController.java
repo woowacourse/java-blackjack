@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import model.blackjackgame.Answer;
+import model.blackjackgame.Blackjack;
 import model.blackjackgame.BlackjackGame;
 import model.blackjackgame.Result;
 import model.card.Card;
@@ -39,12 +40,14 @@ public class BlackjackGameController {
 
         cardSettingBeforeGameStart(players, blackjackGame);
         printCardSetting(blackjackGame.getDealer(), blackjackGame.getPlayers());
+        Blackjack blackjack = new Blackjack(blackjackGame.getDealer());
+        blackjack.playerBlackjackStatus(blackjackGame.getPlayers());
 
         turnHitPlayers(blackjackGame.getPlayers(), blackjackGame);
         turnHitDealer(blackjackGame);
 
         printFinalCardStatus(blackjackGame.getDealer(), blackjackGame.getPlayers());
-        Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers());
+        Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers(), blackjack);
         outputView.printFinalResult(result.getDealerResult(), result.getPlayerResult());
     }
 

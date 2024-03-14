@@ -8,6 +8,7 @@ import model.card.Cards;
 public class Player {
 
     private static final int ADD_CARD_CONDITION = 22;
+    private static final int BLACKJACK_NUMBER = 21;
 
     private final String name;
     private final Cards cards;
@@ -28,6 +29,10 @@ public class Player {
 
     public boolean isBust() {
         return !isNotBust();
+    }
+
+    public boolean isBlackjack() {
+        return cards.calculateTotalNumbers() == BLACKJACK_NUMBER;
     }
 
     public Player addCard(Card card) {
