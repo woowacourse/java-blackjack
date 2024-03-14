@@ -20,8 +20,8 @@ public class PlayersResult {
     }
 
     public void calculateProfit(Player player, WinState winState) {
-        Profit profit = winState.calculateProfit(playersProfit.get(player));
-        playersProfit.replace(player, profit);
+        winState.calculateProfit(playersProfit.get(player));
+        playersProfit.replace(player, playersProfit.get(player));
     }
 
     public Map<Player, Profit> getPlayersProfit() {

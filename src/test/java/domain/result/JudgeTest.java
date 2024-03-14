@@ -39,7 +39,7 @@ class JudgeTest {
 
         judge.decideResult(gamers);
 
-        assertThat(judge.getPlayersProfit().get(player)).isEqualTo(new Profit(-10));
+        assertThat(judge.getPlayersProfit().get(player).getValue()).isEqualTo(-10);
     }
 
     @DisplayName("딜러가 bust 일 경우 플레이어의 승리로 판단한다.")
@@ -56,7 +56,7 @@ class JudgeTest {
 
         judge.decideResult(gamers);
 
-        assertThat(judge.getPlayersProfit().get(player)).isEqualTo(new Profit(10));
+        assertThat(judge.getPlayersProfit().get(player).getValue()).isEqualTo(10);
     }
 
     @DisplayName("플레이어와 딜러 모두 bust 가 아닌 경우 플레이어가 높은 점수를 가지면 플레이어의 승리로 판단한다.")
@@ -71,7 +71,7 @@ class JudgeTest {
 
         judge.decideResult(gamers);
 
-        assertThat(judge.getPlayersProfit().get(player)).isEqualTo(new Profit(10));
+        assertThat(judge.getPlayersProfit().get(player).getValue()).isEqualTo(10);
     }
 
     @DisplayName("플레이어와 딜러 모두 bust 가 아닌 경우 점수가 같다면 무승부로 판단한다.")
@@ -86,7 +86,7 @@ class JudgeTest {
 
         judge.decideResult(gamers);
 
-        assertThat(judge.getPlayersProfit().get(player)).isEqualTo(new Profit(0));
+        assertThat(judge.getPlayersProfit().get(player).getValue()).isEqualTo(0);
     }
 
     @DisplayName("플레이어와 딜러 모두 bust 가 아닌 경우 딜러가 높은 점수를 가지면 플레이어의 패배로 판단한다.")
@@ -101,7 +101,7 @@ class JudgeTest {
 
         judge.decideResult(gamers);
 
-        assertThat(judge.getPlayersProfit().get(player)).isEqualTo(new Profit(-10));
+        assertThat(judge.getPlayersProfit().get(player).getValue()).isEqualTo(-10);
     }
 
     @DisplayName("N명의 플레이어가 패배한 경우 딜러는 N번의 승리를 얻는다.")
@@ -122,7 +122,7 @@ class JudgeTest {
 
         judge.decideResult(gamers);
 
-        assertThat(judge.getDealerProfit()).isEqualTo(new Profit(30));
+        assertThat(judge.getDealerProfit().getValue()).isEqualTo(30);
     }
 
     @DisplayName("N명의 플레이어가 승리한 경우 딜러는 N번의 패배를 얻는다.")
@@ -143,7 +143,7 @@ class JudgeTest {
 
         judge.decideResult(gamers);
 
-        assertThat(judge.getDealerProfit()).isEqualTo(new Profit(-30));
+        assertThat(judge.getDealerProfit().getValue()).isEqualTo(-30);
     }
 
     @DisplayName("N명의 플레이어가 무승부인 경우 딜러는 N번의 무승부를 얻는다.")
@@ -164,6 +164,6 @@ class JudgeTest {
 
         judge.decideResult(gamers);
 
-        assertThat(judge.getDealerProfit()).isEqualTo(new Profit(0));
+        assertThat(judge.getDealerProfit().getValue()).isEqualTo(0);
     }
 }

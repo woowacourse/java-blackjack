@@ -63,7 +63,7 @@ public class Judge {
     }
 
     private void decideDealerResult() {
-        dealerResult.calculateProfit(getPlayersProfit());
+        dealerResult.calculateProfit(playersResult);
     }
 
     public Map<Player, Profit> getPlayersProfit() {

@@ -6,15 +6,16 @@ import java.util.Map;
 
 public class DealerResult {
 
-    private Profit profit;
+    private final Profit profit;
 
     public DealerResult() {
         this.profit = new Profit(0);
     }
 
-    public void calculateProfit(Map<Player, Profit> playersProfit) {
-        profit = new Profit(-playersProfit.values().stream()
-                .mapToInt(Profit::getValue)
+    public void calculateProfit(PlayersResult playersResult) {
+        Map<Player, Profit> playersProfit = playersResult.getPlayersProfit();
+        profit.update(-playersProfit.values().stream()
+                .mapToDouble(Profit::getValue)
                 .sum());
     }
 
