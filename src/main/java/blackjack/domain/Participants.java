@@ -17,6 +17,7 @@ public class Participants {
     private void validate(List<String> playerNames, List<Money> playersMoney) {
         validatePlayerSize(playerNames);
         validateDuplicatedPlayerNames(playerNames);
+        validateSameSize(playerNames, playersMoney);
         validateInvalidPlayerName(playerNames, dealer.getName());
     }
 
@@ -36,6 +37,12 @@ public class Participants {
         return playerNames.stream()
                 .distinct()
                 .count();
+    }
+
+    private void validateSameSize(List<String> playerNames, List<Money> playersMoney) {
+        if (playerNames.size() != playersMoney.size()) {
+            throw new IllegalArgumentException("사용자의 이름의 수와 돈의 수가 일치하지 않습니다.");
+        }
     }
 
     private void validateInvalidPlayerName(List<String> playerNames, String dealerName) {

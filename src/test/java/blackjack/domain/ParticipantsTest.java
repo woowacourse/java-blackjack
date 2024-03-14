@@ -49,4 +49,14 @@ class ParticipantsTest {
         assertThatThrownBy(() -> new Participants(dealerNameIncludedPlayerNames, playersMoney))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("주어진 사용자 이름의 수와 사용자 돈의 수는 일치해야 한다.")
+    @Test
+    void validateSameSize() {
+        List<String> playerNames = List.of("pobi", "tomi");
+        List<Money> invalidSizePlayersMoney = List.of(new Money(1000));
+
+        assertThatThrownBy(() -> new Participants(playerNames, invalidSizePlayersMoney))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
