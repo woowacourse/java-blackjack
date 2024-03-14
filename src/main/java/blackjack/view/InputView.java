@@ -5,6 +5,7 @@ import blackjack.view.validator.InputValidator;
 import java.util.Scanner;
 
 public class InputView {
+    private static final String NEWLINE = System.lineSeparator();
     private static Scanner scanner = new Scanner(System.in);
     private final InputValidator inputValidator;
 
@@ -17,6 +18,14 @@ public class InputView {
         final String input = scanner.nextLine();
 
         inputValidator.validatePlayerNames(input);
+        return input;
+    }
+
+    public String readBattingAmount(String name) {
+        System.out.printf(NEWLINE + "%s의 배팅 금액은?" + NEWLINE, name);
+        final String input = scanner.nextLine();
+
+        inputValidator.validateBattingAmount(input);
         return input;
     }
 }

@@ -24,4 +24,12 @@ class InputValidatorTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("딜러와 연관된 이름 또는 게임 명령어와 연관된 이름이 존재할 수 없습니다.");
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"10000!", "10000a", "10000원"})
+    void 배팅_금액에_대한_입력이_숫자가_아니라면_예외가_발생한다(String input) {
+        assertThatThrownBy(() -> inputValidator.validateBattingAmount(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("배팅 금액에 대한 입력은 숫자여야 합니다.");
+    }
 }
