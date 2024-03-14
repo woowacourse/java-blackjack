@@ -10,7 +10,8 @@ class CardDeckTest {
     @DisplayName("카드 덱에서 한 장 뽑는다.")
     @Test
     void draw() {
-        CardDeck cardDeck = CardDeck.createShuffledDeck();
+        CardShuffleStrategy cardShuffleStrategy = new RandomCardShuffleStrategy();
+        CardDeck cardDeck = CardDeck.of(cardShuffleStrategy);
 
         assertThat(cardDeck.draw())
                 .isInstanceOf(Card.class);

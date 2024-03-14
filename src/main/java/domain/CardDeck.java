@@ -1,28 +1,20 @@
 package domain;
 
-import java.util.Collections;
 import java.util.List;
 
 public class CardDeck {
 
     private final List<Card> deck;
 
-    private CardDeck() {
-        deck = Card.getAllCards();
+    private CardDeck(List<Card> deck) {
+        this.deck = deck;
     }
 
-    public static CardDeck createShuffledDeck() {
-        CardDeck cardDeck = new CardDeck();
-        cardDeck.shuffle();
-        return cardDeck;
-    }
+    public static CardDeck of(CardShuffleStrategy cardShuffleStrategy) {
+        List<Card> allCards = Card.getAllCards();
+        List<Card> shuffledCards = cardShuffleStrategy.shuffle(allCards);
 
-    public static CardDeck createNotShuffledDeck() {
-        return new CardDeck();
-    }
-
-    private void shuffle() {
-        Collections.shuffle(this.deck);
+        return new CardDeck(shuffledCards);
     }
 
     public Card draw() {
