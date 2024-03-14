@@ -14,6 +14,6 @@ public record GameResults(Map<PlayerName, GameResult> playerGameResults) {
     }
 
     private int getBettingResult(final PlayerName playerName, final GameResult gameResult, final Betting betting) {
-        return (int) (betting.getBetting(playerName).getAmount() * gameResult.getProfit());
+        return (int) (betting.getBetting(playerName).getAmount() * gameResult.getProfitRatio());
     }
 }

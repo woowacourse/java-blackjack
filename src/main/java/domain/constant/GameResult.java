@@ -5,13 +5,13 @@ public enum GameResult {
     LOSE(-1),
     WIN_BY_BLACKJACK(1.5);
 
-    private final double profit;
+    private final double profitRatio;
 
-    GameResult(final double profit) {
-        this.profit = profit;
+    GameResult(final double profitRatio) {
+        this.profitRatio = profitRatio;
     }
 
-    public double getProfit() {
-        return profit;
+    public double getProfitRatio() {
+        return profitRatio;
     }
 }
