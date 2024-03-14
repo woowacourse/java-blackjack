@@ -22,6 +22,10 @@ public class Profit {
         return new Profit(-1 * amount.toInt());
     }
 
+    public Profit add(Profit profit) {
+        return new Profit(this.value + profit.value);
+    }
+
     public int toInt() {
         return value;
     }

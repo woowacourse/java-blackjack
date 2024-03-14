@@ -41,4 +41,16 @@ public class ProfitTest {
 
         assertThat(profit.toInt()).isEqualTo(-1 * amount);
     }
+
+    @DisplayName("두 이익을 더하여 계산할 수 있다.")
+    @ParameterizedTest
+    @CsvSource({"20, -10", "10, -20", "-20, -10", "20, 10"})
+    void addTest(int value, int addedValue) {
+        Profit profit = new Profit(value);
+        Profit addedProfit = new Profit(addedValue);
+
+        Profit actual = profit.add(addedProfit);
+
+        assertThat(actual.toInt()).isEqualTo(value + addedValue);
+    }
 }
