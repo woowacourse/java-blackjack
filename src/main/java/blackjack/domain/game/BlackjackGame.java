@@ -43,7 +43,7 @@ public class BlackjackGame {
     }
 
     public boolean isHit(Player player, BooleanSupplier isHitSupplier) {
-        return !player.isBust() && isHitSupplier.getAsBoolean();
+        return player.isNotBust() && isHitSupplier.getAsBoolean();
     }
 
     public boolean isHit(Dealer dealer) {
@@ -57,14 +57,10 @@ public class BlackjackGame {
     public Map<Player, GameResult> getPlayerResults(Players players, Dealer dealer) {
         Map<Player, GameResult> playerResults = new HashMap<>();
         for (Player player : players.getPlayers()) {
-            playerResults.put(player, compareScore(dealer, player));
+            playerResults.put(player, GameResult.createPlayerResult(dealer, player));
         }
 
         return playerResults;
-    }
-
-    private GameResult compareScore(Dealer dealer, Player player) {
-        return GameResult.of(dealer, player);
     }
 
     public Map<GameResult, Long> getDealerResult(Map<Player, GameResult> playerResults) {
