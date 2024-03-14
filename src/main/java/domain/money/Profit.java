@@ -12,6 +12,10 @@ public class Profit {
         money = money.add(receivedMoney);
     }
 
+    public void decrease(final Money receivedMoney) {
+        money = money.subtract(receivedMoney);
+    }
+
     public int getValue() {
         return money.getValue();
     }

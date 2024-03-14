@@ -10,6 +10,7 @@ import domain.money.Profit;
 import java.util.List;
 
 public abstract class Participant {
+    
     protected final String name;
     protected final Hand hand;
     protected final Profit profit;
@@ -29,6 +30,10 @@ public abstract class Participant {
 
     public void earn(final Money money) {
         profit.increase(money);
+    }
+
+    public void lose(final Money money) {
+        profit.decrease(money);
     }
 
     public int totalProfit() {
