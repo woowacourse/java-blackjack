@@ -1,7 +1,6 @@
 package domain.betting;
 
-import domain.participant.Players;
-import java.util.List;
+import domain.participant.Player;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,8 +10,11 @@ class AccountsTest {
     @Test
     @DisplayName("플레이어 수에 맞게 계좌를 생성한다")
     void initialize() {
-        Players players = Players.withNames(List.of("a", "b", "c"));
-        Accounts accounts = Accounts.from(players);
-        Assertions.assertThat(accounts.getAccounts()).hasSize(3);
+        Player player1 = Player.withName("user1");
+        Player player2 = Player.withName("user2");
+        Accounts accounts = Accounts.withNoAccount();
+        accounts.add(player1);
+        accounts.add(player2);
+        Assertions.assertThat(accounts.getAccounts()).hasSize(2);
     }
 }

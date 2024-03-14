@@ -1,6 +1,7 @@
 package domain.betting;
 
-import domain.participant.Players;
+import domain.participant.Player;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Accounts {
@@ -11,11 +12,12 @@ public class Accounts {
         this.accounts = accounts;
     }
 
-    public static Accounts from(Players players) {
-        return new Accounts(players.getPlayers()
-            .stream()
-            .map(Account::from)
-            .toList());
+    public static Accounts withNoAccount() {
+        return new Accounts(new ArrayList<>());
+    }
+
+    public void add(Player player) {
+        accounts.add(Account.from(player));
     }
 
     public List<Account> getAccounts() {
