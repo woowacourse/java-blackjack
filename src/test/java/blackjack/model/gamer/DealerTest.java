@@ -18,8 +18,8 @@ class DealerTest {
     @Test
     void receiveCard() {
         //given
-        Dealer dealer = Dealer.from(100);
-        Card card = Card.of(CardPattern.CLOVER, CardNumber.FIVE);
+        Dealer dealer = new Dealer(100);
+        Card card = new Card(CardPattern.CLOVER, CardNumber.FIVE);
 
         //when
         dealer.receiveCard(card);
@@ -33,9 +33,9 @@ class DealerTest {
     @Test
     void deckSize() {
         //given
-        Dealer dealer = Dealer.from(100);
-        Card card1 = Card.of(CardPattern.CLOVER, CardNumber.FIVE);
-        Card card2 = Card.of(CardPattern.CLOVER, CardNumber.SEVEN);
+        Dealer dealer = new Dealer(100);
+        Card card1 = new Card(CardPattern.CLOVER, CardNumber.FIVE);
+        Card card2 = new Card(CardPattern.CLOVER, CardNumber.SEVEN);
 
         //when
         dealer.receiveCard(card1);
@@ -50,9 +50,9 @@ class DealerTest {
     @Test
     void calculateTotalScore() {
         //given
-        Dealer dealer = Dealer.from(100);
-        Card card1 = Card.of(CardPattern.CLOVER, CardNumber.FIVE);
-        Card card2 = Card.of(CardPattern.CLOVER, CardNumber.SEVEN);
+        Dealer dealer = new Dealer(100);
+        Card card1 = new Card(CardPattern.CLOVER, CardNumber.FIVE);
+        Card card2 = new Card(CardPattern.CLOVER, CardNumber.SEVEN);
 
         //when
         dealer.receiveCard(card1);
@@ -69,8 +69,8 @@ class DealerTest {
     void payPlayerProfit(Result gameResult) {
         //given
         int betAmount = 1000;
-        Player player = Player.of(Name.from("ted"), betAmount);
-        Dealer dealer = Dealer.from(betAmount);
+        Player player = new Player(new Name("ted"), betAmount);
+        Dealer dealer = new Dealer(betAmount);
 
         player.applyResult(gameResult);
         int expectedProfitAmount = (int) (betAmount * gameResult.getPayoutRate());
@@ -89,8 +89,8 @@ class DealerTest {
     void netProfit(Result gameResult) {
         //given
         int betAmount = 1000;
-        Player player = Player.of(Name.from("ted"), betAmount);
-        Dealer dealer = Dealer.from(betAmount);
+        Player player = new Player(new Name("ted"), betAmount);
+        Dealer dealer = new Dealer(betAmount);
 
         player.applyResult(gameResult);
         int profitAmount = (int) (betAmount * gameResult.getPayoutRate());

@@ -7,14 +7,10 @@ public class DealerBetWallet {
     private final int playersBetAmount;
     private int payoutAmount;
 
-    private DealerBetWallet(int playersBetAmount) {
+    public DealerBetWallet(int playersBetAmount) {
         validateNotNegative(playersBetAmount);
         this.playersBetAmount = playersBetAmount;
         this.payoutAmount = 0;
-    }
-
-    public static DealerBetWallet from(int playersBetAmount) {
-        return new DealerBetWallet(playersBetAmount);
     }
 
     public void registerPayoutAmount(Player player) {

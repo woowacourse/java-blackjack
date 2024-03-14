@@ -22,9 +22,9 @@ class GamePlayRuleTest {
     void cardScoringRule() {
         //given
         Deck deck = new Deck();
-        deck.add(Card.of(CardPattern.DIAMOND, CardNumber.ACE));
-        deck.add(Card.of(CardPattern.DIAMOND, CardNumber.NINE));
-        deck.add(Card.of(CardPattern.DIAMOND, CardNumber.TWO));
+        deck.add(new Card(CardPattern.DIAMOND, CardNumber.ACE));
+        deck.add(new Card(CardPattern.DIAMOND, CardNumber.NINE));
+        deck.add(new Card(CardPattern.DIAMOND, CardNumber.TWO));
 
         Card aceCard = findAceCard(deck);
         int aceCardScore = aceCard.getScore();
@@ -47,10 +47,10 @@ class GamePlayRuleTest {
     void cardScoringRuleByNoneBust() {
         //given
         Deck deck = new Deck();
-        deck.add(Card.of(CardPattern.DIAMOND, CardNumber.ACE));
-        deck.add(Card.of(CardPattern.CLOVER, CardNumber.ACE));
-        deck.add(Card.of(CardPattern.DIAMOND, CardNumber.SEVEN));
-        deck.add(Card.of(CardPattern.DIAMOND, CardNumber.TWO));
+        deck.add(new Card(CardPattern.DIAMOND, CardNumber.ACE));
+        deck.add(new Card(CardPattern.CLOVER, CardNumber.ACE));
+        deck.add(new Card(CardPattern.DIAMOND, CardNumber.SEVEN));
+        deck.add(new Card(CardPattern.DIAMOND, CardNumber.TWO));
 
         int countElevenAce = deck.countElevenAce();
 
@@ -71,11 +71,11 @@ class GamePlayRuleTest {
     void cardScoringRuleByBust() {
         //given
         Deck deck = new Deck();
-        deck.add(Card.of(CardPattern.DIAMOND, CardNumber.ACE));
-        deck.add(Card.of(CardPattern.CLOVER, CardNumber.ACE));
-        deck.add(Card.of(CardPattern.HEART, CardNumber.ACE));
-        deck.add(Card.of(CardPattern.SPADE, CardNumber.TEN));
-        deck.add(Card.of(CardPattern.SPADE, CardNumber.SEVEN));
+        deck.add(new Card(CardPattern.DIAMOND, CardNumber.ACE));
+        deck.add(new Card(CardPattern.CLOVER, CardNumber.ACE));
+        deck.add(new Card(CardPattern.HEART, CardNumber.ACE));
+        deck.add(new Card(CardPattern.SPADE, CardNumber.TEN));
+        deck.add(new Card(CardPattern.SPADE, CardNumber.SEVEN));
 
         int countElevenAce = deck.countElevenAce();
 
@@ -94,25 +94,25 @@ class GamePlayRuleTest {
     @Test
     void dealerInitialCardOpenRule() {
         //given
-        Dealer dealer = Dealer.from(1000);
+        Dealer dealer = new Dealer(1000);
 
-        dealer.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.FIVE));
-        dealer.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.THREE));
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.FIVE));
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.THREE));
 
         //when
         Card firstCard = gamePlayRule.dealerInitialCardOpenRule(dealer);
 
         //then
-        assertThat(firstCard).isEqualTo(Card.of(CardPattern.DIAMOND, CardNumber.FIVE));
+        assertThat(firstCard).isEqualTo(new Card(CardPattern.DIAMOND, CardNumber.FIVE));
     }
 
     @DisplayName("플레이어 히트 규칙 : 플레이어의 스코어가 21 미만이라면 히트할 수 있다.")
     @Test
     void playerHitRuleExpectedTrue() {
         //given
-        Player player = Player.of(Name.from("ted"), 100);
-        player.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-        player.receiveCard(Card.of(CardPattern.HEART, CardNumber.TEN));
+        Player player = new Player(new Name("ted"), 100);
+        player.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
+        player.receiveCard(new Card(CardPattern.HEART, CardNumber.TEN));
 
         //when
         boolean canPlayerHit = gamePlayRule.playerHitRule(player);
@@ -125,10 +125,10 @@ class GamePlayRuleTest {
     @Test
     void playerHitRuleExpectedFalse() {
         //given
-        Player player = Player.of(Name.from("ted"), 100);
-        player.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-        player.receiveCard(Card.of(CardPattern.HEART, CardNumber.NINE));
-        player.receiveCard(Card.of(CardPattern.HEART, CardNumber.TWO));
+        Player player = new Player(new Name("ted"), 100);
+        player.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
+        player.receiveCard(new Card(CardPattern.HEART, CardNumber.NINE));
+        player.receiveCard(new Card(CardPattern.HEART, CardNumber.TWO));
 
         //when
         boolean canPlayerHit = gamePlayRule.playerHitRule(player);
@@ -141,9 +141,9 @@ class GamePlayRuleTest {
     @Test
     void dealerHitRuleExpectedTrue() {
         //given
-        Dealer dealer = Dealer.from(100);
-        dealer.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.FIVE));
-        dealer.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.THREE));
+        Dealer dealer = new Dealer(100);
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.FIVE));
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.THREE));
 
         //when
         boolean canDealerHit = gamePlayRule.dealerHitRule(dealer);
@@ -156,9 +156,9 @@ class GamePlayRuleTest {
     @Test
     void dealerHitRuleExpectedFalse() {
         //given
-        Dealer dealer = Dealer.from(100);
-        dealer.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-        dealer.receiveCard(Card.of(CardPattern.DIAMOND, CardNumber.SEVEN));
+        Dealer dealer = new Dealer(100);
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.SEVEN));
 
         //when
         boolean canDealerHit = gamePlayRule.dealerHitRule(dealer);

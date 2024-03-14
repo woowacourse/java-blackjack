@@ -17,7 +17,7 @@ class HandDeckTest {
     @Test
     void add() {
         //given
-        Card card = Card.of(CardPattern.CLOVER, CardNumber.EIGHT);
+        Card card = new Card(CardPattern.CLOVER, CardNumber.EIGHT);
 
         //when
         handDeck.add(card);
@@ -31,7 +31,7 @@ class HandDeckTest {
     @Test
     void calculateDeckScore() {
         //given
-        Card card = Card.of(CardPattern.CLOVER, CardNumber.EIGHT);
+        Card card = new Card(CardPattern.CLOVER, CardNumber.EIGHT);
 
         //when
         handDeck.add(card);

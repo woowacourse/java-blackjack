@@ -19,7 +19,7 @@ class DealerBetWalletTest {
         int totalBetAmount = -1;
 
         //when, then
-        assertThatThrownBy(() -> DealerBetWallet.from(totalBetAmount))
+        assertThatThrownBy(() -> new DealerBetWallet(totalBetAmount))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -28,8 +28,8 @@ class DealerBetWalletTest {
     void registerPayoutAmount() {
         //given
         int playerBetAmount = 1000;
-        Player player = Player.of(Name.from("ted"), playerBetAmount);
-        DealerBetWallet dealerBetWallet = DealerBetWallet.from(playerBetAmount);
+        Player player = new Player(new Name("ted"), playerBetAmount);
+        DealerBetWallet dealerBetWallet = new DealerBetWallet(playerBetAmount);
         player.applyResult(Result.WIN);
 
         //when
@@ -45,12 +45,12 @@ class DealerBetWalletTest {
     void calculateNetProfit() {
         //given
         int player1BetAmount = 1000;
-        Player player1 = Player.of(Name.from("ted1"), player1BetAmount);
+        Player player1 = new Player(new Name("ted1"), player1BetAmount);
 
         int player2BetAmount = 2000;
-        Player player2 = Player.of(Name.from("ted2"), player2BetAmount);
+        Player player2 = new Player(new Name("ted2"), player2BetAmount);
 
-        DealerBetWallet dealerBetWallet = DealerBetWallet.from(player1BetAmount + player2BetAmount);
+        DealerBetWallet dealerBetWallet = new DealerBetWallet(player1BetAmount + player2BetAmount);
         player1.applyResult(Result.WIN);
         player2.applyResult(Result.LOSE);
 

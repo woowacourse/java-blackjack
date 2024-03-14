@@ -8,9 +8,13 @@ public class PlayerStatus {
     private final Name name;
     private final PlayerBetWallet playerBetWallet;
 
-    public PlayerStatus(Name name, int betAmount) {
+    private PlayerStatus(Name name, PlayerBetWallet playerBetWallet) {
         this.name = name;
-        this.playerBetWallet = PlayerBetWallet.from(betAmount);
+        this.playerBetWallet = playerBetWallet;
+    }
+
+    public PlayerStatus(Name name, int betAmount) {
+        this(name, new PlayerBetWallet(betAmount));
     }
 
     public String name() {

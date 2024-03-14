@@ -32,9 +32,9 @@ public class BlackjackController {
 
         List<Player> players = new ArrayList<>();
         for (String name : playersName) {
-            Name playerName = Name.from(name);
+            Name playerName = new Name(name);
             int betAmount = InputView.readPlayerBetAmount(playerName);
-            players.add(Player.of(playerName, betAmount));
+            players.add(new Player(playerName, betAmount));
         }
 
         return players;
@@ -45,7 +45,7 @@ public class BlackjackController {
                 .mapToInt(Player::betAmount)
                 .sum();
 
-        return Dealer.from(playersBetAmount);
+        return new Dealer(playersBetAmount);
     }
 
     private void playBlackJack(Dealer dealer, List<Player> players) {

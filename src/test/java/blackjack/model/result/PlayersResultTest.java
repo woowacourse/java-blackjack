@@ -19,7 +19,7 @@ class PlayersResultTest {
     @EnumSource(Result.class)
     void addWin(Result result) {
         //given
-        Player player = Player.of(Name.from("test"), 100);
+        Player player = new Player(new Name("test"), 100);
 
         //when
         playersResult.add(player, result);
@@ -33,7 +33,7 @@ class PlayersResultTest {
     @Test
     void findPlayerResultByNoneResult() {
         //given
-        Player player = Player.of(Name.from("test"), 100);
+        Player player = new Player(new Name("test"), 100);
 
         //when, then
         assertThatThrownBy(() -> playersResult.findPlayerResult(player))

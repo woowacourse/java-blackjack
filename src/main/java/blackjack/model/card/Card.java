@@ -12,9 +12,8 @@ public class Card {
         this.score = cardProperties.getCardNumber().getNumber();
     }
 
-    public static Card of(CardPattern cardPattern, CardNumber cardNumber) {
-        CardProperties cardProperties = new CardProperties(cardPattern, cardNumber);
-        return new Card(cardProperties);
+    public Card(CardPattern cardPattern, CardNumber cardNumber) {
+        this(new CardProperties(cardPattern, cardNumber));
     }
 
     public CardPattern pattern() {

@@ -16,7 +16,7 @@ class NameTest {
         String name = "test ";
 
         //when, then
-        assertThatThrownBy(() -> Name.from(name))
+        assertThatThrownBy(() -> new Name(name))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -25,7 +25,7 @@ class NameTest {
     @ValueSource(strings = {"", "12345678901"})
     void createName(String name) {
         //given, when, then
-        assertThatThrownBy(() -> Name.from(name))
+        assertThatThrownBy(() -> new Name(name))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -27,7 +27,7 @@ public class DeckGenerator {
 
     private static List<Card> createCard(CardPattern cardPattern) {
         return Arrays.stream(CardNumber.values())
-                .map(cardNumber -> Card.of(cardPattern, cardNumber))
+                .map(cardNumber -> new Card(cardPattern, cardNumber))
                 .collect(Collectors.toList());
     }
 }
