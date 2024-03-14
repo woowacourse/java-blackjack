@@ -68,11 +68,4 @@ class HandTest {
         Hand hand = new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, TEN), new Card(HEART, TEN)));
         assertThat(hand.countSize()).isEqualTo(3);
     }
-
-    @Test
-    @DisplayName("2장의 카드로 21인 경우 블랙잭이다.")
-    void isBlackJack() {
-        Hand hand = new Hand(List.of(new Card(CLOVER, TEN), new Card(SPADE, ACE)));
-        assertThat(hand.isBlackJack()).isTrue();
-    }
 }

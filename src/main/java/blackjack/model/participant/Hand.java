@@ -64,10 +64,6 @@ public class Hand {
         return cards.size();
     }
 
-    public boolean isBlackJack() {
-        return cards.size() == BLACKJACK_CARD_SIZE && calculateScore() == BLACKJACK_SCORE;
-    }
-
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
