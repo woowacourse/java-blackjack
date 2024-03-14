@@ -1,15 +1,15 @@
 package blackjack.model.gameRule;
 
-import blackjack.model.card.Card;
 import blackjack.model.deck.Deck;
 import blackjack.model.gamer.Dealer;
+import blackjack.model.gamer.Gamer;
 import blackjack.model.gamer.Player;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameRule {
 
-    private static final GamePlayRule GAME_PLAY_RULE = new GamePlayRule();
-    private static final GameResultRule GAME_RESULT_RULE = new GameResultRule();
+    private static final PlayersResult playersResult = new PlayersResult();
 
     public static final int BUST_STANDARD_SCORE = 22;
     public static final int BLACKJACK_STANDARD_SCORE = 21;
@@ -21,38 +21,102 @@ public class GameRule {
     }
 
     public static void initialSetting(List<Player> players) {
-        GAME_RESULT_RULE.initializePlayerResults(players);
+        for (Player player : players) {
+            playersResult.add(player, Result.NONE);
+        }
     }
 
-    public static void applyCardScoringRule(Deck deck) {
-        GAME_PLAY_RULE.cardScoringRule(deck);
+    public static void cardScoringRule(Deck deck) {
+        int aceCount = deck.countElevenAce();
+
+        while (aceCount > 0 && deck.calculateCardScore() >= BUST_STANDARD_SCORE) {
+            deck.switchAceValueInRow();
+            aceCount--;
+        }
     }
 
-    public static Card applyDealerInitialCardOpenRule(Dealer dealer) {
-        return GAME_PLAY_RULE.dealerInitialCardOpenRule(dealer);
+    public static void initialResultRule(Dealer dealer, List<Player> players) {
+        for (Player player : players) {
+            playerBlackjackRule(dealer, player);
+        }
     }
 
-    public static Boolean applyPlayerHitRule(Player player) {
-        return GAME_PLAY_RULE.playerHitRule(player);
+    public static void finalResultRule(Dealer dealer, List<Player> players) {
+        for (Player player : players) {
+            playerBustRule(dealer, player);
+            gamerNotBustRule(dealer, player);
+        }
     }
 
-    public static Boolean applyDealerHitRule(Dealer dealer) {
-        return GAME_PLAY_RULE.dealerHitRule(dealer);
-    }
+    public static List<Player> hitStayTargetPlayerDecisionRule(List<Player> players) {
+        List<Player> hitStayTargetPlayer = new ArrayList<>();
+        for (Player player : players) {
+            addTargetPlayer(player, hitStayTargetPlayer);
+        }
 
-    public static List<Player> applyHitStayTargetPlayerDecisionRule(List<Player> players) {
-        return GAME_RESULT_RULE.hitStayTargetPlayerDecisionRule(players);
-    }
-
-    public static void applyInitialResultRule(Dealer dealer, List<Player> players) {
-        GAME_RESULT_RULE.InitialResultRule(dealer, players);
-    }
-
-    public static void applyFinalResultRule(Dealer dealer, List<Player> players) {
-        GAME_RESULT_RULE.finalResultRule(dealer, players);
+        return hitStayTargetPlayer;
     }
 
     public static void applyGameResultProfit(Dealer dealer, Player player) {
-        GAME_RESULT_RULE.applyGameResultProfit(dealer, player);
+        Result playerResult = playersResult.findPlayerResult(player);
+        player.applyResult(playerResult);
+        dealer.payPlayerProfit(player);
+    }
+
+    private static void addTargetPlayer(Player player, List<Player> hitStayTargetPlayer) {
+        Result playerResult = playersResult.findPlayerResult(player);
+        if (playerResult == Result.NONE) {
+            hitStayTargetPlayer.add(player);
+        }
+    }
+
+    private static void playerBlackjackRule(Dealer dealer, Player player) {
+        if (isBlackjack(player) && isBlackjack(dealer)) {
+            playersResult.add(player, Result.PUSH);
+        }
+        if (isBlackjack(player) && !isBlackjack(dealer)) {
+            playersResult.add(player, Result.BLACKJACK);
+        }
+        if (!isBlackjack(player) && isBlackjack(dealer)) {
+            playersResult.add(player, Result.LOSE);
+        }
+    }
+
+    private static void playerBustRule(Dealer dealer, Player player) {
+        if (isBust(player)) {
+            playersResult.add(player, Result.LOSE);
+        }
+        if (!isBust(player) && isBust(dealer)) {
+            playersResult.add(player, Result.WIN);
+        }
+    }
+
+    private static void gamerNotBustRule(Dealer dealer, Player player) {
+        int dealerScore = dealer.totalScore();
+        int playerScore = player.totalScore();
+        if (!isBust(dealer) && dealerScore > playerScore) {
+            playersResult.add(player, Result.LOSE);
+        }
+        if (!isBust(player) && dealerScore < playerScore) {
+            playersResult.add(player, Result.WIN);
+        }
+        if (!isBust(player) && dealerScore == playerScore) {
+            playersResult.add(player, Result.PUSH);
+        }
+    }
+
+    private static boolean isBust(Gamer gamer) {
+        int totalScore = gamer.totalScore();
+        return totalScore >= BUST_STANDARD_SCORE;
+    }
+
+    private static boolean isBlackjack(Gamer gamer) {
+        int deckSize = gamer.deckSize();
+        int totalScore = gamer.totalScore();
+        return deckSize == BLACKJACK_STANDARD_DECK_SIZE && totalScore == BLACKJACK_STANDARD_SCORE;
+    }
+
+    public static PlayersResult getPlayersResult() {
+        return playersResult;
     }
 }

@@ -1,6 +1,6 @@
 package blackjack.model.gamer;
 
-import blackjack.model.result.Result;
+import blackjack.model.gameRule.Result;
 import blackjack.model.wallet.PlayerBetWallet;
 
 public class PlayerStatus {
@@ -17,16 +17,16 @@ public class PlayerStatus {
         this(name, new PlayerBetWallet(betAmount));
     }
 
-    public String name() {
-        return name.getName();
-    }
-
     public void registerProfitAmount(Result result) {
         playerBetWallet.registerProfitAmount(result);
     }
 
     public int calculateNetProfit() {
         return playerBetWallet.calculateNetProfit();
+    }
+
+    public String name() {
+        return name.getName();
     }
 
     public int betAmount() {

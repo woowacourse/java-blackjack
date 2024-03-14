@@ -27,7 +27,7 @@ public class HandDeck {
     }
 
     private void calculateDeckScore() {
-        GameRule.applyCardScoringRule(deck);
+        GameRule.cardScoringRule(deck);
         score = new Score(deck.calculateCardScore());
     }
 }

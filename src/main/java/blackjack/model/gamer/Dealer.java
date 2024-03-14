@@ -1,5 +1,7 @@
 package blackjack.model.gamer;
 
+import blackjack.model.card.Card;
+import blackjack.model.gameRule.GameRule;
 import blackjack.model.wallet.DealerBetWallet;
 
 public class Dealer extends Gamer {
@@ -12,6 +14,15 @@ public class Dealer extends Gamer {
 
     public Dealer(int playersBetAmount) {
         this(new DealerBetWallet(playersBetAmount));
+    }
+
+    public Card fistCard() {
+        return allCards().get(0);
+    }
+
+    @Override
+    public boolean canHit() {
+        return totalScore() <= GameRule.DEALER_HIT_MAX_SCORE;
     }
 
     public void payPlayerProfit(Player player) {

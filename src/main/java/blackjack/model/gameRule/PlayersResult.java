@@ -1,4 +1,4 @@
-package blackjack.model.result;
+package blackjack.model.gameRule;
 
 import blackjack.model.gamer.Player;
 import java.util.HashMap;
@@ -7,6 +7,9 @@ import java.util.Map;
 public class PlayersResult {
 
     private final Map<Player, Result> playerResult = new HashMap<>();
+
+    protected PlayersResult() {
+    }
 
     public void add(Player player, Result result) {
         playerResult.put(player, result);
