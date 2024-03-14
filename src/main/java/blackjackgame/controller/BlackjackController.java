@@ -124,6 +124,6 @@ public class BlackjackController {
         List<String> playersName = blackjackGame.getRawPlayerNames();
         GameProfit gameProfit = blackjackGame.getGameProfit();
 
-        return new GameProfitDTO(DEALER_NAME, playersName, gameProfit.getDealerProfit(), gameProfit.getPlayersProfit());
+        return new GameProfitDTO(DEALER_NAME, playersName, gameProfit.dealerProfit(), gameProfit.playersProfit());
     }
 }
