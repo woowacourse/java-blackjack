@@ -2,7 +2,7 @@ package model.card;
 
 import java.util.List;
 
-public enum CardNumber {
+public enum Denomination {
     ACE(List.of(1, 11)),
     TWO(List.of(2)),
     THREE(List.of(3)),
@@ -20,7 +20,7 @@ public enum CardNumber {
 
     private final List<Integer> numbers;
 
-    CardNumber(List<Integer> numbers) {
+    Denomination(List<Integer> numbers) {
         this.numbers = numbers;
     }
 

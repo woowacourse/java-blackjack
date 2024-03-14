@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.stream.Stream;
 import model.card.Card;
 import model.card.CardDeck;
-import model.card.CardNumber;
-import model.card.CardShape;
+import model.card.Denomination;
+import model.card.Suit;
 import model.card.CardSize;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -21,10 +21,10 @@ class ParticipantsTest {
     void validate() {
         Assertions.assertThatThrownBy(() ->
                         new Participants(List.of(
-                                new Participant("켬미", List.of(Card.of(CardShape.SPACE, CardNumber.NINE),
-                                        Card.of(CardShape.SPACE, CardNumber.FIVE))),
-                                new Participant("켬미", List.of(Card.of(CardShape.SPACE, CardNumber.NINE),
-                                        Card.of(CardShape.SPACE, CardNumber.FIVE)))
+                                new Participant("켬미", List.of(Card.of(Suit.SPACE, Denomination.NINE),
+                                        Card.of(Suit.SPACE, Denomination.FIVE))),
+                                new Participant("켬미", List.of(Card.of(Suit.SPACE, Denomination.NINE),
+                                        Card.of(Suit.SPACE, Denomination.FIVE)))
                         )))
                 .isInstanceOf(IllegalArgumentException.class);
     }

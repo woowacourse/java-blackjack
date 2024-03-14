@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.stream.Stream;
 import model.card.Card;
-import model.card.CardNumber;
-import model.card.CardShape;
+import model.card.Denomination;
+import model.card.Suit;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ class UserTest {
     @Test
     void validateBlankName() {
         Assertions.assertThatThrownBy(() -> new User("",
-                List.of(Card.of(CardShape.SPACE, CardNumber.NINE), Card.of(CardShape.SPACE, CardNumber.FIVE))) {
+                List.of(Card.of(Suit.SPACE, Denomination.NINE), Card.of(Suit.SPACE, Denomination.FIVE))) {
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -28,15 +28,15 @@ class UserTest {
     @Test
     void validateNullName() {
         Assertions.assertThatThrownBy(() -> new User(null,
-                List.of(Card.of(CardShape.SPACE, CardNumber.NINE), Card.of(CardShape.SPACE, CardNumber.FIVE))) {
+                List.of(Card.of(Suit.SPACE, Denomination.NINE), Card.of(Suit.SPACE, Denomination.FIVE))) {
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
     static Stream<Arguments> createCard() {
         return Stream.of(Arguments.of(
-                List.of(Card.of(CardShape.SPACE, CardNumber.NINE)),
-                List.of(Card.of(CardShape.SPACE, CardNumber.NINE), Card.of(CardShape.SPACE, CardNumber.FIVE),
-                        Card.of(CardShape.SPACE, CardNumber.ACE))));
+                List.of(Card.of(Suit.SPACE, Denomination.NINE)),
+                List.of(Card.of(Suit.SPACE, Denomination.NINE), Card.of(Suit.SPACE, Denomination.FIVE),
+                        Card.of(Suit.SPACE, Denomination.ACE))));
     }
 
     @DisplayName("초기 참가자는 카드를 2장만 받아야 한다.")
@@ -51,9 +51,9 @@ class UserTest {
     @Test
     void addCard() {
         User user = new User("켬미",
-                List.of(Card.of(CardShape.SPACE, CardNumber.NINE), Card.of(CardShape.SPACE, CardNumber.FIVE))) {
+                List.of(Card.of(Suit.SPACE, Denomination.NINE), Card.of(Suit.SPACE, Denomination.FIVE))) {
         };
-        Card card = Card.of(CardShape.CLOVER, CardNumber.EIGHT);
+        Card card = Card.of(Suit.CLOVER, Denomination.EIGHT);
         user.addCards(List.of(card));
         assertThat(user.getCards().getCards()).hasSize(3);
     }
@@ -62,10 +62,10 @@ class UserTest {
     @Test
     void addCards() {
         User user = new User("켬미",
-                List.of(Card.of(CardShape.SPACE, CardNumber.NINE), Card.of(CardShape.SPACE, CardNumber.FIVE))) {
+                List.of(Card.of(Suit.SPACE, Denomination.NINE), Card.of(Suit.SPACE, Denomination.FIVE))) {
         };
-        List<Card> cards = List.of(Card.of(CardShape.CLOVER, CardNumber.EIGHT),
-                Card.of(CardShape.CLOVER, CardNumber.FIVE));
+        List<Card> cards = List.of(Card.of(Suit.CLOVER, Denomination.EIGHT),
+                Card.of(Suit.CLOVER, Denomination.FIVE));
         user.addCards(cards);
         assertThat(user.getCards().getCards()).hasSize(4);
     }
@@ -74,7 +74,7 @@ class UserTest {
     @Test
     void calculateScore() {
         User user = new User("켬미",
-                List.of(Card.of(CardShape.SPACE, CardNumber.NINE), Card.of(CardShape.SPACE, CardNumber.FIVE))) {
+                List.of(Card.of(Suit.SPACE, Denomination.NINE), Card.of(Suit.SPACE, Denomination.FIVE))) {
         };
 
         assertThat(user.calculateScore()).isEqualTo(14);
@@ -84,9 +84,9 @@ class UserTest {
     @Test
     void calculateScoreWithAce() {
         User user = new User("켬미",
-                List.of(Card.of(CardShape.SPACE, CardNumber.NINE), Card.of(CardShape.SPACE, CardNumber.FIVE))) {
+                List.of(Card.of(Suit.SPACE, Denomination.NINE), Card.of(Suit.SPACE, Denomination.FIVE))) {
         };
-        user.addCards(List.of(Card.of(CardShape.SPACE, CardNumber.ACE)));
+        user.addCards(List.of(Card.of(Suit.SPACE, Denomination.ACE)));
 
         assertThat(user.calculateScore()).isEqualTo(15);
     }

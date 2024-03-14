@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import model.card.Card;
-import model.card.CardNumber;
-import model.card.CardShape;
+import model.card.Denomination;
+import model.card.Suit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ class DealerTest {
     @BeforeEach
     void setUp() {
         dealer = new Dealer(
-                List.of(Card.of(CardShape.SPACE, CardNumber.NINE), Card.of(CardShape.SPACE, CardNumber.TWO)));
+                List.of(Card.of(Suit.SPACE, Denomination.NINE), Card.of(Suit.SPACE, Denomination.TWO)));
     }
 
     @DisplayName("카드의 합이 16이하일 때는 참을 반환한다.")
@@ -30,7 +30,7 @@ class DealerTest {
     @DisplayName("카드의 합이 16초과일 때는 거짓을 반환한다.")
     @Test
     void noticeFalse() {
-        dealer.addCards(List.of(Card.of(CardShape.CLOVER, CardNumber.NINE)));
+        dealer.addCards(List.of(Card.of(Suit.CLOVER, Denomination.NINE)));
         assertFalse(dealer.isHit());
     }
 }

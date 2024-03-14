@@ -6,46 +6,46 @@ import java.util.stream.Collectors;
 public class Card {
     private static final Set<Card> cardDeck;
 
-    private final CardShape cardShape;
-    private final CardNumber cardNumber;
+    private final Suit suit;
+    private final Denomination denomination;
 
     static {
-        cardDeck = Arrays.stream(CardShape.values())
-                .flatMap(newSuit -> Arrays.stream(CardNumber.values())
+        cardDeck = Arrays.stream(Suit.values())
+                .flatMap(newSuit -> Arrays.stream(Denomination.values())
                         .map(newDenomination -> new Card(newSuit, newDenomination)))
                 .collect(Collectors.toUnmodifiableSet());
     }
 
-    private Card(CardShape cardShape, CardNumber cardNumber) {
-        this.cardShape = cardShape;
-        this.cardNumber = cardNumber;
-    }
-
-    public static Card of(CardShape cardShape, CardNumber cardNumber) {
-        return cardDeck.stream()
-                .filter(card -> card.cardShape == cardShape && card.cardNumber == cardNumber)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(cardShape.name() + cardNumber.name() + " 카드는 존재하지 않습니다."));
+    private Card(Suit suit, Denomination denomination) {
+        this.suit = suit;
+        this.denomination = denomination;
     }
 
     public static List<Card> createCardDeck() {
         return new ArrayList<>(cardDeck);
     }
 
+    public static Card of(Suit suit, Denomination denomination) {
+        return cardDeck.stream()
+                .filter(card -> card.suit == suit && card.denomination == denomination)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(suit.name() + denomination.name() + " 카드는 존재하지 않습니다."));
+    }
+
     public int minimumNumber() {
-        return cardNumber.minimumNumber();
+        return denomination.minimumNumber();
     }
 
     public int subtractMaxMinNumber() {
-        return cardNumber.maximumNumber() - cardNumber.minimumNumber();
+        return denomination.maximumNumber() - denomination.minimumNumber();
     }
 
-    public CardShape getCardShape() {
-        return cardShape;
+    public Suit getSuit() {
+        return suit;
     }
 
-    public CardNumber getCardNumber() {
-        return cardNumber;
+    public Denomination getDenomination() {
+        return denomination;
     }
 
     @Override
@@ -57,11 +57,11 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return cardShape == card.cardShape && cardNumber == card.cardNumber;
+        return suit == card.suit && denomination == card.denomination;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardShape, cardNumber);
+        return Objects.hash(suit, denomination);
     }
 }

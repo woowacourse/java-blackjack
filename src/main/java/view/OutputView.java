@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import model.Outcome;
 import model.card.Card;
-import model.card.CardNumber;
-import model.card.CardShape;
+import model.card.Denomination;
+import model.card.Suit;
 import model.card.Cards;
 import model.player.Participant;
 
@@ -67,9 +67,9 @@ public class OutputView {
     }
 
     private String cardToString(Card card) {
-        String cardNumber = cardNumberToString(card.getCardNumber());
-        String cardShape = cardShapeToString(card.getCardShape());
-        return cardNumber + cardShape;
+        String denomination = denominationToString(card.getDenomination());
+        String suit = suitToString(card.getSuit());
+        return denomination + suit;
     }
 
     public void printDealerAddCard() {
@@ -98,30 +98,30 @@ public class OutputView {
         }
     }
 
-    private String cardNumberToString(CardNumber cardNumber) {
-        if (cardNumber == CardNumber.ACE) {
+    private String denominationToString(Denomination denomination) {
+        if (denomination == Denomination.ACE) {
             return "A";
         }
-        if (cardNumber == CardNumber.QUEEN) {
+        if (denomination == Denomination.QUEEN) {
             return "Q";
         }
-        if (cardNumber == CardNumber.KING) {
+        if (denomination == Denomination.KING) {
             return "K";
         }
-        if (cardNumber == CardNumber.JACK) {
+        if (denomination == Denomination.JACK) {
             return "J";
         }
-        return String.valueOf(cardNumber.minimumNumber());
+        return String.valueOf(denomination.minimumNumber());
     }
 
-    private String cardShapeToString(CardShape cardShape) {
-        if (cardShape == CardShape.SPACE) {
+    private String suitToString(Suit suit) {
+        if (suit == Suit.SPACE) {
             return "스페이드";
         }
-        if (cardShape == CardShape.CLOVER) {
+        if (suit == Suit.CLOVER) {
             return "클로버";
         }
-        if (cardShape == CardShape.HEART) {
+        if (suit == Suit.HEART) {
             return "하트";
         }
         return "다이아몬드";
