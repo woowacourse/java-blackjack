@@ -81,6 +81,7 @@ public class OutputView {
     }
 
     public void printDealerHandScore(HandDto dealerHandDto) {
+        System.out.println();
         System.out.println(getDealerNameOutputFormat(dealerHandDto)
                 .append(" - 결과: ")
                 .append(dealerHandDto.handScore()));
