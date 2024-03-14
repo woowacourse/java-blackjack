@@ -35,7 +35,7 @@ class GameUsersTest {
                 new Card(CLUB, EIGHT)
         )));
 
-        Map<Player, GameResult> playerResults = gameUsers.generatePlayerResults();
+        Map<Player, GameResult> playerResults = gameUsers.generatePlayersResult();
 
         assertThat(playerResults).containsExactly(Map.entry(player, WIN));
     }
@@ -51,7 +51,7 @@ class GameUsersTest {
                 new Card(HEART, SIX)
         )));
 
-        Map<Player, GameResult> playerResults = gameUsers.generatePlayerResults();
+        Map<Player, GameResult> playerResults = gameUsers.generatePlayersResult();
 
         assertThat(playerResults).containsExactly(Map.entry(player, DRAW));
     }
@@ -67,7 +67,7 @@ class GameUsersTest {
                 new Card(CLUB, SIX)
         )));
 
-        Map<Player, GameResult> playerResults = gameUsers.generatePlayerResults();
+        Map<Player, GameResult> playerResults = gameUsers.generatePlayersResult();
 
         assertThat(playerResults).containsExactly(Map.entry(player, LOSE));
     }
@@ -84,7 +84,7 @@ class GameUsersTest {
         )));
         gameUsers.getDealer().addCard(new Card(CLUB, JACK));
 
-        Map<Player, GameResult> playerResults = gameUsers.generatePlayerResults();
+        Map<Player, GameResult> playerResults = gameUsers.generatePlayersResult();
 
         assertThat(playerResults).containsExactly(Map.entry(player, WIN));
     }
@@ -100,7 +100,7 @@ class GameUsersTest {
                 new Card(CLUB, TEN)
         )));
 
-        Map<Player, GameResult> playerResults = gameUsers.generatePlayerResults();
+        Map<Player, GameResult> playerResults = gameUsers.generatePlayersResult();
 
         assertThat(playerResults).containsExactly(Map.entry(player, DRAW));
     }
@@ -117,7 +117,7 @@ class GameUsersTest {
         )));
         player.addCard(new Card(CLUB, JACK));
 
-        Map<Player, GameResult> playerResults = gameUsers.generatePlayerResults();
+        Map<Player, GameResult> playerResults = gameUsers.generatePlayersResult();
 
         assertThat(playerResults).containsExactly(Map.entry(player, LOSE));
     }
@@ -134,7 +134,7 @@ class GameUsersTest {
         )));
         player.addCard(new Card(CLUB, JACK));
 
-        Map<Player, GameResult> playerResults = gameUsers.generatePlayerResults();
+        Map<Player, GameResult> playerResults = gameUsers.generatePlayersResult();
 
         assertThat(playerResults).containsExactly(Map.entry(player, LOSE));
     }
@@ -152,7 +152,7 @@ class GameUsersTest {
         player.addCard(new Card(CLUB, JACK));
         gameUsers.getDealer().addCard(new Card(HEART, JACK));
 
-        Map<Player, GameResult> playerResults = gameUsers.generatePlayerResults();
+        Map<Player, GameResult> playerResults = gameUsers.generatePlayersResult();
 
         assertThat(playerResults).containsExactly(Map.entry(player, LOSE));
     }
@@ -169,7 +169,7 @@ class GameUsersTest {
         )));
         gameUsers.getDealer().addCard(new Card(CLUB, JACK));
 
-        Map<Player, GameResult> playerResults = gameUsers.generatePlayerResults();
+        Map<Player, GameResult> playerResults = gameUsers.generatePlayersResult();
 
         assertThat(playerResults).containsExactly(Map.entry(player, WIN));
     }

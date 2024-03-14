@@ -12,18 +12,16 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class PlayersMoneyTest {
-    @ParameterizedTest(name = "{1}")
-    @CsvSource(value = {"WIN,이긴 경우", "DRAW,비긴 경우", "LOSE,진 경우"})
+    @ParameterizedTest(name = "{0}")
+    @CsvSource(value = {"WIN,1000", "DRAW,0", "LOSE,-1000"})
     @DisplayName("플레이 결과에 따라 플레이어의 돈을 바꾼다.")
-    void changeByPlayerResultsWinTest(GameResult gameResult, String whichCase) {
+    void changeByPlayerResultsWinTest(GameResult gameResult, int moneyValue) {
         Player player = new Player(new Name("aa"));
-        Money money = new Money(1000);
-        PlayersMoney playersMoney = new PlayersMoney(new HashMap<>(Map.of(player, money)));
+        PlayersMoney playersMoney = new PlayersMoney(new HashMap<>(Map.of(player, new Money(1000))));
+        Map<Player, GameResult> playersResult = Map.of(player, gameResult);
+        PlayersMoney resultPlayersMoney = playersMoney.changeByPlayersResult(playersResult);
 
-        Map<Player, GameResult> playerResults = Map.of(player, gameResult);
-        PlayersMoney resultPlayersMoney = playersMoney.changeByPlayerResults(playerResults);
-
-        assertThat(resultPlayersMoney.getPlayersMoney()).containsExactly(Map.entry(player, money.change(gameResult)));
+        assertThat(resultPlayersMoney.getPlayersMoney()).containsExactly(Map.entry(player, new Money(moneyValue)));
     }
 
     @Test

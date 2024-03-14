@@ -14,7 +14,7 @@ public class PlayersMoney {
         this.playersMoney = playersMoney;
     }
 
-    public PlayersMoney changeByPlayerResults(Map<Player, GameResult> playerResults) {
+    public PlayersMoney changeByPlayersResult(Map<Player, GameResult> playerResults) {
         return new PlayersMoney(playersMoney.entrySet()
                 .stream()
                 .collect(Collectors.toMap(

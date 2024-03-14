@@ -78,7 +78,7 @@ public class BlackjackRunner {
     }
 
     private void doResult(PlayersMoney playersMoney, GameUsers gameUsers) {
-        PlayersMoney resultPlayersMoney = playersMoney.changeByPlayerResults(gameUsers.generatePlayerResults());
+        PlayersMoney resultPlayersMoney = playersMoney.changeByPlayersResult(gameUsers.generatePlayersResult());
         printGameResult(gameUsers, resultPlayersMoney);
     }
 

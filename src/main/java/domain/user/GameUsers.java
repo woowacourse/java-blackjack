@@ -26,7 +26,7 @@ public class GameUsers {
         dealer.addStartCards(deck);
     }
 
-    public Map<Player, GameResult> generatePlayerResults() {
+    public Map<Player, GameResult> generatePlayersResult() {
         return players.getPlayers()
                 .stream()
                 .collect(Collectors.toMap(
