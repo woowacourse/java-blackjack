@@ -8,7 +8,6 @@ import blackjack.domain.ResultStatus;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -16,6 +15,7 @@ import java.util.stream.Collectors;
 public class Game {
 
     private static final int BLACKJACK_SCORE = 21;
+
     private final Dealer dealer;
     private final Players players;
 
@@ -27,27 +27,37 @@ public class Game {
 
     public void play() {
         initializeHands();
-
-        List<Player> players = this.players.getPlayers();
-        OutputView.printInitialHands(dealer, players);
-
-        playerTurn(players, dealer);
-        dealerTurn(dealer);
-
-        OutputView.printHandsWithScore(dealer, players);
-        OutputView.printResult(calculateResult(), dealer);
+        playerTurn();
+        dealerTurn();
+        printScoreAndResult();
     }
 
     private void initializeHands() {
         dealer.shuffleDeck();
-        initializeHand(dealer);
+        dealer.initializeHand(dealer.draw(), dealer.draw());
         for (Player player : players.getPlayers()) {
-            initializeHand(player);
+            player.initializeHand(dealer.draw(), dealer.draw());
+        }
+
+        OutputView.printInitialHands(dealer, players.getPlayers());
+    }
+
+    private void playerTurn() {
+        for (Player player : players.getPlayers()) {
+            hitOrStand(player);
         }
     }
 
-    private void initializeHand(Player player) {
-        player.initializeHand(dealer.draw(), dealer.draw());
+    private void dealerTurn() {
+        while (dealer.canHit()) {
+            dealer.putCard(dealer.draw());
+            OutputView.printDealerDraw(dealer);
+        }
+    }
+
+    private void printScoreAndResult() {
+        OutputView.printHandsWithScore(dealer, players.getPlayers());
+        OutputView.printResult(calculateResult(), dealer);
     }
 
     private Result calculateResult() {
@@ -78,7 +88,7 @@ public class Game {
         return matchWhenDealerAlive(gap);
     }
 
-    private static ResultStatus matchWhenDealerAlive(int gap) {
+    private ResultStatus matchWhenDealerAlive(int gap) {
         if (gap > 0) {
             return ResultStatus.LOSE;
         }
@@ -88,20 +98,7 @@ public class Game {
         return ResultStatus.WIN;
     }
 
-    private void dealerTurn(Dealer dealer) {
-        while (dealer.canHit()) {
-            dealer.putCard(dealer.draw());
-            OutputView.printDealerDraw(dealer);
-        }
-    }
-
-    private void playerTurn(List<Player> players, Dealer dealer) {
-        for (Player player : players) {
-            hitOrStand(dealer, player);
-        }
-    }
-
-    private void hitOrStand(Dealer dealer, Player player) {
+    private void hitOrStand(Player player) {
         while (player.canHit() && InputView.readHitOrStand(player)) {
             player.putCard(dealer.draw());
             OutputView.printTotalHand(player);
