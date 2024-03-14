@@ -10,16 +10,22 @@ import domain.gamer.Name;
 import domain.gamer.Player;
 import domain.gamer.Players;
 import exception.CardReceiveException;
+import handler.RetryHandler;
 import java.util.List;
 import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
+    private final RetryHandler retryHandler;
+
+    public BlackJackController(final RetryHandler retryHandler) {
+        this.retryHandler = retryHandler;
+    }
 
     public void start() {
         Dealer dealer = new Dealer();
-        Players players = createPlayers();
+        Players players =  retryHandler.retry(this::createPlayers);
         BlackJackGame blackJackGame = createBlackJackGame();
         startBet(players, blackJackGame);
         blackJackGame.prepareCards(dealer, players);
@@ -45,7 +51,7 @@ public class BlackJackController {
 
     private void startBet(final Players players, final BlackJackGame blackJackGame) {
         for (Player player : players.getPlayers()) {
-            blackJackGame.bet(player, InputView.readBetAmount(player));
+            retryHandler.retry(() -> blackJackGame.bet(player, InputView.readBetAmount(player)));
         }
     }
 
@@ -68,7 +74,7 @@ public class BlackJackController {
     }
 
     private boolean isRetry(final BlackJackGame blackJackGame, final Player player) {
-        if (!InputView.readSelectionOf(player)) {
+        if (!retryHandler.retry(() -> InputView.readSelectionOf(player))) {
             return false;
         }
         return tryGiveCard(blackJackGame, player);
