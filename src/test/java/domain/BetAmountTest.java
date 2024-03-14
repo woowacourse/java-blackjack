@@ -14,7 +14,16 @@ class BetAmountTest {
     void notPositive(int amount) {
         Assertions.assertThatThrownBy(() -> BetAmount.from(amount))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 유효하지 않은 배팅 금액입니다.");
+                .hasMessage("[ERROR] 배팅 금액은 양수만 입력가능합니다.");
+    }
+
+    @DisplayName("금액이 10의 배수가 아니면 예외를 발생시킨다.")
+    @ParameterizedTest
+    @ValueSource(ints = {1_001, 10_001, 9})
+    void notMultiplesOfTen(int amount) {
+        Assertions.assertThatThrownBy(() -> BetAmount.from(amount))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 배팅 금액은 10의 배수만 입력가능합니다.");
     }
 
     @DisplayName("배팅 금액의 1.5배를 반환한다.")

@@ -12,6 +12,7 @@ public class BetAmount {
 
     public static BetAmount from(int amount) {
         validatePositive(amount);
+        validateMultiplesOfTen(amount);
         return new BetAmount(amount);
     }
 
@@ -33,7 +34,13 @@ public class BetAmount {
 
     private static void validatePositive(int amount) {
         if (amount <= 0) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 배팅 금액입니다.");
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 양수만 입력가능합니다.");
+        }
+    }
+
+    private static void validateMultiplesOfTen(int amount) {
+        if (amount % 10 != 0) {
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 10의 배수만 입력가능합니다.");
         }
     }
 
