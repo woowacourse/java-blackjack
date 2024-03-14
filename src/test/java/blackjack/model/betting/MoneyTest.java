@@ -13,20 +13,20 @@ class MoneyTest {
     void createBettingAmountByNotPositiveNumber() {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> new Money(-1))
-                .withMessage("배팅 금액은 양수만 가능합니다.");
+                .withMessage("금액은 양수만 가능합니다.");
     }
 
     @Test
-    @DisplayName("배팅 금액의 곱을 구한다.")
-    void multiple() {
+    @DisplayName("돈을 받는다.")
+    void add() {
         Money money = new Money(1_000);
-        assertThat(money.multiple(1.5)).isEqualTo(new Money(1_500));
+        assertThat(money.add(1_000)).isEqualTo(new Money(2_000));
     }
 
     @Test
-    @DisplayName("배팅 금액의 전체를 잃는다.")
-    void payAll() {
+    @DisplayName("돈을 잃는다.")
+    void subtract() {
         Money money = new Money(1_000);
-        assertThat(money.payAll()).isEqualTo(new Money(0));
+        assertThat(money.subtract(1_000)).isEqualTo(new Money(0));
     }
 }

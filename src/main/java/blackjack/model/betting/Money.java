@@ -24,8 +24,8 @@ public class Money {
         return new Money(money + profit);
     }
 
-    public Money payAll() {
-        return new Money(0);
+    public Money subtract(final int expense) {
+        return new Money(money - expense);
     }
 
     public int getMoney() {
