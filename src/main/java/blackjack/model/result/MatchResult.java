@@ -5,10 +5,16 @@ import blackjack.model.dealer.Dealer;
 import blackjack.model.player.Player;
 
 public enum MatchResult {
-    BLACKJACK,
-    WIN,
-    LOSE,
-    PUSH;
+    BLACKJACK(1.5),
+    WIN(1),
+    LOSE(-1),
+    PUSH(0);
+
+    private final double earningRate;
+
+    MatchResult(final double earningRate) {
+        this.earningRate = earningRate;
+    }
 
     public static MatchResult of(final Player player, final Dealer dealer) {
         if (player.isBlackJack() && !dealer.isBlackJack()) {
@@ -35,11 +41,6 @@ public enum MatchResult {
     }
 
     public BettingMoney calculateFinalMoney(final BettingMoney bettingMoney) {
-        if (this == LOSE) {
-            return BettingMoney.from(0);
-        } else if (this == WIN) {
-            return bettingMoney.plus(bettingMoney);
-        }
-        return bettingMoney;
+        return bettingMoney.applyEarningRate(earningRate);
     }
 }

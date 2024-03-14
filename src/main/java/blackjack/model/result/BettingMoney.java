@@ -16,8 +16,8 @@ public final class BettingMoney {
         return new BettingMoney(amount);
     }
 
-    public BettingMoney plus(final BettingMoney otherMoney) {
-        return BettingMoney.from(amount + otherMoney.amount);
+    public BettingMoney applyEarningRate(final double earningRate) {
+        return BettingMoney.from(amount + amount * earningRate);
     }
 
     public BettingMoney minus(final BettingMoney otherMoney) {
