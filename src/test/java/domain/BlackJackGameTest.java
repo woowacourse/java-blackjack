@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 
+import static domain.FixtureCardDeck.NOT_SHUFFLED_CARD_DECK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -16,8 +17,7 @@ class BlackJackGameTest {
     void create() {
         List<String> names = List.of("위브", "산초");
         Players players = new Players(names);
-        CardDeck cardDeck = CardDeck.createShuffledDeck();
-        Dealer dealer = new Dealer(cardDeck);
+        Dealer dealer = new Dealer(NOT_SHUFFLED_CARD_DECK);
 
         assertThatCode(() -> new BlackJackGame(players, dealer))
                 .doesNotThrowAnyException();
@@ -28,8 +28,7 @@ class BlackJackGameTest {
     void judgeResult() {
         String name = "산초";
         Players players = new Players(List.of(name));
-        CardDeck cardDeck = CardDeck.createNotShuffledDeck();
-        Dealer dealer = new Dealer(cardDeck);
+        Dealer dealer = new Dealer(NOT_SHUFFLED_CARD_DECK);
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
 
         blackJackGame.initHand(); // 딜러 : 2하트, 3하트 / 산초 : 4하트, 5하트
