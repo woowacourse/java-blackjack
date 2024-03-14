@@ -11,7 +11,7 @@ public class DeckShuffleFactory implements DeckFactory {
     @Override
     public Stack<Card> generate() {
         final List<Card> cards = Stream.of(Number.values())
-                .               flatMap(number -> Stream.of(Suit.values())
+                                .flatMap(number -> Stream.of(Suit.values())
                                                 .map(suit -> new Card(number, suit)))
                                 .collect(Collectors.toList());
         Collections.shuffle(cards);

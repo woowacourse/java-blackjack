@@ -1,29 +1,26 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.DeckFactory;
-import blackjack.domain.card.Number;
-import blackjack.domain.card.Suit;
+import java.util.List;
 import java.util.Stack;
+import java.util.stream.Stream;
 
 public class TestDeckFactory implements DeckFactory {
 
     /**
-     * 카드 순서 : Ace - HEART, SPADE, CLOVER, DIAMOND 2 - HEART, SPADE, CLOVER, DIAMOND ... KING - HEART, SPADE, CLOVER,
-     * DIAMOND
+     * 카드 순서 : Ace - HEART, SPADE, CLUB, DIAMOND
+     * 2 - HEART, SPADE, CLUB, DIAMOND
+     * ...
+     * KING - HEART, SPADE, CLUB, DIAMOND
      */
     @Override
     public Stack<Card> generate() {
-        Stack<Card> deck = new Stack<>();
-        for (Suit suit : Suit.values()) {
-            pushNumbersOfSuit(deck, suit);
-        }
-        return deck;
-    }
+        final List<Card> cards = Stream.of(Number.values())
+                .flatMap(number -> Stream.of(Suit.values())
+                        .map(suit -> new Card(number, suit)))
+                .toList();
 
-    private void pushNumbersOfSuit(Stack<Card> deck, Suit suit) {
-        for (Number number : Number.values()) {
-            deck.push(new Card(number, suit));
-        }
+        final Stack<Card> deck = new Stack<>();
+        deck.addAll(cards);
+        return deck;
     }
 }
