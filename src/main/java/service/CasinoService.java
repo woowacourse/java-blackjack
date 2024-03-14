@@ -73,24 +73,10 @@ public class CasinoService {
     }
 
     public List<PlayerMatchResult> calculatePlayerMatchResults() {
-        int dealerHand = entrant.getDealerFaceUpResult()
-                .hand();
-        return entrant.getPlayerFaceUpResults()
-                .stream()
-                .map(result -> new PlayerMatchResult(result.name(), MatchResult.of(dealerHand, result.hand())))
-                .toList();
+        return entrant.calculatePlayerMatchResults();
     }
 
     public DealerMatchResult calculateDealerMatchResult() {
-        EnumMap<MatchResult, Integer> dealerScoreBoard = new EnumMap<>(MatchResult.class);
-        List<MatchResult> playerScores = calculatePlayerMatchResults()
-                .stream()
-                .map(PlayerMatchResult::matchResult)
-                .toList();
-        dealerScoreBoard.put(WIN, frequency(playerScores, LOSE));
-        dealerScoreBoard.put(DRAW, frequency(playerScores, DRAW));
-        dealerScoreBoard.put(LOSE, frequency(playerScores, WIN));
-        return new DealerMatchResult(dealerScoreBoard);
+        return new DealerMatchResult(entrant.calculateDealerMatchResult());
     }
-
 }

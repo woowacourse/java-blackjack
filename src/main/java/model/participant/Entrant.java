@@ -1,5 +1,11 @@
 package model.participant;
 
+import static java.util.Collections.frequency;
+import static model.casino.MatchResult.DRAW;
+import static model.casino.MatchResult.LOSE;
+import static model.casino.MatchResult.WIN;
+
+import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -77,6 +83,29 @@ public class Entrant {
     public List<FaceUpResult> getPlayerFaceUpResults() {
         return players.stream()
                 .map(Player::generateFaceUpResult)
+                .toList();
+    }
+
+    public EnumMap<MatchResult, Integer> calculateDealerMatchResult() {
+        EnumMap<MatchResult, Integer> dealerScoreBoard = new EnumMap<>(MatchResult.class);
+        List<MatchResult> playerScores = calculateMatchResults();
+        dealerScoreBoard.put(WIN, frequency(playerScores, LOSE));
+        dealerScoreBoard.put(DRAW, frequency(playerScores, DRAW));
+        dealerScoreBoard.put(LOSE, frequency(playerScores, WIN));
+        return dealerScoreBoard;
+    }
+
+    private List<MatchResult> calculateMatchResults() {
+        int dealerHand = dealer.cardDeck.calculateHand();
+        return players.stream()
+                .map(player -> player.calculateMatchResult(dealerHand))
+                .toList();
+    }
+
+    public List<PlayerMatchResult> calculatePlayerMatchResults() {
+        int dealerHand = dealer.cardDeck.calculateHand();
+        return players.stream()
+                .map(player -> new PlayerMatchResult(player.getName(), player.calculateMatchResult(dealerHand)))
                 .toList();
     }
 
