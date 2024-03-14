@@ -36,7 +36,7 @@ class HandsTest {
         Score sum = hands.calculateScore();
 
         // then
-        assertThat(sum).isEqualTo(new Score(expected));
+        assertThat(sum).isEqualTo(Score.from(expected));
     }
 
 

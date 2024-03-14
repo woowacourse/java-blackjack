@@ -38,6 +38,6 @@ class DealerTest {
 
         // then
         final Score dealerScore = dealer.getHands().calculateScore();
-        assertThat(dealerScore).isGreaterThan(new Score(16));
+        assertThat(dealerScore).isGreaterThan(Score.from(16));
     }
 }

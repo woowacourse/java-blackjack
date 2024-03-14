@@ -48,15 +48,15 @@ public final class BlackjackController {
     private void playGame(final BlackjackGame blackjackGame) {
         outputView.printStartCards(blackjackGame.getStartCards());
 
-        blackjackGame.playGame(this::needMoreCard, this::printPlayerCard, this::printDealerMoreCard);
+        blackjackGame.playGame(this::wantToHit, this::printPlayerCard, this::printDealerMoreCard);
     }
 
-    private boolean needMoreCard(final PlayerName name) {
+    private boolean wantToHit(final PlayerName name) {
         try {
             return inputView.readNeedMoreCard(name);
         } catch (final NeedRetryException e) {
             outputView.printError(e.getMessage());
-            return needMoreCard(name);
+            return wantToHit(name);
         }
     }
 

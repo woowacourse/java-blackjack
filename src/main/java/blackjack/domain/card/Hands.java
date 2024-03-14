@@ -7,7 +7,7 @@ import java.util.List;
 
 public final class Hands implements Comparable<Hands> {
 
-    private static final int ACE_SCORE_GAP = CardNumber.ACE.getNumber() - CardNumber.ACE_BONUS_NUMBER;
+    private static final Score ACE_SCORE_GAP = CardNumber.ACE.getScore().minus(CardNumber.ACE_BONUS_NUMBER);
 
     private final List<Card> cards;
 
@@ -27,26 +27,25 @@ public final class Hands implements Comparable<Hands> {
     }
 
     public Score calculateScore() {
-        int sum = sum();
+        Score sum = sum();
         int aceCount = countAce();
 
-        while (isBustScore(sum) && aceCount-- > 0) {
-            sum -= ACE_SCORE_GAP;
+        while (sum.isBust() && aceCount-- > 0) {
+            sum = sum.minus(ACE_SCORE_GAP);
         }
 
-        return new Score(sum);
+        return sum;
     }
 
-    private int sum() {
-        return cards.stream().mapToInt(Card::getNumber).sum();
+    private Score sum() {
+        return cards.stream()
+                .map(Card::getScore)
+                .reduce(Score::plus)
+                .orElseThrow(() -> new IllegalStateException("카드가 없습니다."));
     }
 
     private int countAce() {
         return (int) cards.stream().filter(Card::isAce).count();
-    }
-
-    private boolean isBustScore(final int sum) {
-        return new Score(sum).isBust();
     }
 
     public boolean isBustScore() {

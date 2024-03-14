@@ -8,7 +8,7 @@ import java.util.List;
 
 public final class DealerHitState extends State {
 
-    public static final Score NEED_CARD_SCORE_MAX = new Score(16);
+    public static final Score NEED_CARD_SCORE_MAX = Score.from(16);
 
     DealerHitState(final Hands hands) {
         super(hands);

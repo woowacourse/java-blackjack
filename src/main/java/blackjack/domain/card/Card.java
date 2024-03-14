@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import static java.util.stream.Collectors.toMap;
 
+import blackjack.domain.rule.Score;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -33,8 +34,8 @@ public record Card(CardNumber number, CardShape shape) {
         return number == CardNumber.ACE;
     }
 
-    public int getNumber() {
-        return number.getNumber();
+    public Score getScore() {
+        return number.getScore();
     }
 
     @Override
