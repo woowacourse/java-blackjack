@@ -12,6 +12,7 @@ import model.casino.CardDispenser;
 import model.casino.CardShuffleMachine;
 import model.casino.MatchResult;
 import model.participant.Entrant;
+import model.participant.Names;
 import service.dto.DealerScoreResult;
 import service.dto.FaceUpResult;
 import service.dto.PlayerScoreResult;
@@ -20,8 +21,8 @@ public class CasinoService {
     private final Entrant entrant;
     private final CardDispenser cardDispenser;
 
-    public CasinoService(Entrant entrant, CardShuffleMachine cardShuffleMachine) {
-        this.entrant = entrant;
+    public CasinoService(Names names, CardShuffleMachine cardShuffleMachine) {
+        this.entrant = new Entrant(names);
         this.cardDispenser = new CardDispenser(cardShuffleMachine);
     }
 

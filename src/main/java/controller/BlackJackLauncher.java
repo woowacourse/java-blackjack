@@ -6,13 +6,12 @@ import static view.InputView.inputNames;
 
 import java.util.List;
 import model.Choice;
-import service.CasinoService;
 import model.casino.RandomCardShuffleMachine;
+import model.participant.Names;
+import service.CasinoService;
 import service.dto.DealerScoreResult;
 import service.dto.FaceUpResult;
 import service.dto.PlayerScoreResult;
-import model.participant.Entrant;
-import model.participant.Names;
 import view.OutputView;
 
 public class BlackJackLauncher {
@@ -29,8 +28,7 @@ public class BlackJackLauncher {
 
     private CasinoService initCasino() {
         Names names = inputRetryHelper(() -> new Names(inputNames("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")));
-        Entrant entrant = new Entrant(names);
-        return new CasinoService(entrant, new RandomCardShuffleMachine());
+        return new CasinoService(names, new RandomCardShuffleMachine());
     }
 
     private void showInitialFaceUpResults(CasinoService casinoService) {
