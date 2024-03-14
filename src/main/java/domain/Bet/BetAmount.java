@@ -28,8 +28,12 @@ public final class BetAmount {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         BetAmount betAmount1 = (BetAmount) o;
         return value == betAmount1.value;
     }

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 
 class BetAmountTest {
-    
+
     @DisplayName("배팅 금액은 0보다 커야한다.")
     @Test
     void minBetAmount() {

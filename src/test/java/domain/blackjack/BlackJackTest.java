@@ -58,7 +58,6 @@ class BlackJackTest {
         one.receiveCard(new Card(Shape.HEART, Rank.TWO));
         one.receiveCard(new Card(Shape.HEART, Rank.THREE));
 
-
         Participant two = participants.getValue().get(1);
         two.receiveCard(new Card(Shape.CLOVER, Rank.TWO));
         two.receiveCard(new Card(Shape.CLOVER, Rank.THREE));

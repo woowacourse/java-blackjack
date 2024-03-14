@@ -37,7 +37,7 @@ public class OutputFormat {
 
     public String formatDealerResult(BetResult betResult) {
         double dealerProfit = betResult.calculateDealerProfit();
-        return String.format("딜러: %d", (int)dealerProfit);
+        return String.format("딜러: %d", (int) dealerProfit);
     }
 
     public String formatParticipantResult(Participant participant) {
@@ -45,6 +45,7 @@ public class OutputFormat {
     }
 
     public String formatBetResult(Map.Entry<Participant, BetAmount> winStatusEntry) {
-        return String.format("%s: %d", winStatusEntry.getKey().getName().getValue(), (int)winStatusEntry.getValue().getValue());
+        return String.format("%s: %d", winStatusEntry.getKey().getName().getValue(),
+                (int) winStatusEntry.getValue().getValue());
     }
 }

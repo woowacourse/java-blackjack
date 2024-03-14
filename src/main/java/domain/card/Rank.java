@@ -3,7 +3,7 @@ package domain.card;
 public enum Rank {
 
     ACE(1, "A"),
-    TWO(2 , "2"),
+    TWO(2, "2"),
     THREE(3, "3"),
     FOUR(4, "4"),
     FIVE(5, "5"),
@@ -18,6 +18,7 @@ public enum Rank {
 
     private final int score;
     private final String name;
+
     Rank(int score, String name) {
         this.score = score;
         this.name = name;

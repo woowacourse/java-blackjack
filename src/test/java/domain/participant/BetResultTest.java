@@ -75,7 +75,6 @@ class BetResultTest {
         LinkedHashMap<Participant, WinStatus> winStatusByParticipant = new LinkedHashMap<>();
         winStatusByParticipant.put(participant, WinStatus.BLACKJACK);
 
-
         betResult.updateToProfit(winStatusByParticipant);
         BetAmount findProfit = betResult.findByParticipant(participant);
         assertThat(findProfit.getValue()).isEqualTo(1500);
