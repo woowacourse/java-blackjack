@@ -10,7 +10,7 @@ public class BettingTableTest {
     @Test
     @DisplayName("입력받은 Gamer들의 결과에 따라 최종 수익을 반환한다")
     void initWithMap() {
-        BettingTable bettingTable = new BettingTable(Map.of("test", 1000));
+        BettingTable bettingTable = new BettingTable(Map.of("test", new BettingAmount("1000")));
         Assertions.assertThat(bettingTable.getTotalProfit(Map.of("test", GamerResult.WIN)))
                 .isEqualTo(Map.of(
                         "dealer", -1000,

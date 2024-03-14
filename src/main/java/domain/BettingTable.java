@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BettingTable {
-    private final Map<String, Integer> bettingAmount;
+    private final Map<String, BettingAmount> bettingAmounts;
 
-    public BettingTable(Map<String, Integer> bettingAmount) {
-        this.bettingAmount = new HashMap<>(bettingAmount);
+    public BettingTable(Map<String, BettingAmount> bettingAmounts) {
+        this.bettingAmounts = new HashMap<>(bettingAmounts);
     }
 
     public Map<String, Integer> getTotalProfit(Map<String, GamerResult> totalResult) {
@@ -16,7 +16,7 @@ public class BettingTable {
         totalResult.forEach((key, value) ->
                 totalProfit.put(
                         key,
-                        bettingAmount.get(key) * value.getProfitRatio()
+                        bettingAmounts.get(key).getAmount() * value.getProfitRatio()
                 ));
         totalProfit.put("dealer", getDealerProfit(totalProfit));
         return totalProfit;
