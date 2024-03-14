@@ -1,7 +1,8 @@
 package blackjack;
 
-import blackjack.domain.betting.Betting;
+import blackjack.domain.betting.Bets;
 import blackjack.domain.betting.Money;
+import blackjack.domain.betting.OwnedMoney;
 import blackjack.domain.card.Deck;
 import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.game.PlayerResult;
@@ -20,41 +21,11 @@ public class BlackJackGameController {
 
     public void run() {
         BlackJackGame game = createBlackjackGame();
-        Betting betting = bettingAllPlayer(game);
+        Bets bets = createBets(game);
         drawStartCards(game);
         drawAdditionalCard(game);
         printResult(game.getDealer(), game.getPlayers());
-        printPrize(betting, game);
-    }
-
-    private void printPrize(Betting betting, BlackJackGame game) {
-        List<PlayerResult> allGameResults = game.getAllGameResults();
-        outputView.printPrizeTitle();
-        Money dealerPrize = calculateDealerPrize(allGameResults, betting);
-        outputView.printDealerPrize(dealerPrize);
-        for (PlayerResult gameResult : allGameResults) {
-            Money prize = betting.getPrize(gameResult);
-            outputView.printPlayerPrize(gameResult.getName(), prize);
-        }
-    }
-
-    private Money calculateDealerPrize(List<PlayerResult> playerResults, Betting betting) {
-        Money dealerPrize = Money.ZERO;
-        for (PlayerResult gameResult : playerResults) {
-            Money prize = betting.getPrize(gameResult);
-            dealerPrize = dealerPrize.subtract(prize);
-        }
-        return dealerPrize;
-    }
-
-    private Betting bettingAllPlayer(BlackJackGame game) {
-        Betting betting = new Betting();
-        List<Name> playerNames = game.getPlayerNames();
-        for (Name playerName : playerNames) {
-            int bettingAmount = inputView.inputBettingAmount(playerName);
-            betting.bet(playerName, new Money(bettingAmount));
-        }
-        return betting;
+        printPrize(bets, game);
     }
 
     private BlackJackGame createBlackjackGame() {
@@ -63,12 +34,24 @@ public class BlackJackGameController {
         return game;
     }
 
+    private Bets createBets(BlackJackGame game) {
+        List<Name> playerNames = game.getPlayerNames();
+        List<OwnedMoney> bets = playerNames.stream()
+                .map(this::betEachPlayer)
+                .toList();
+        return new Bets(bets);
+    }
+
+    private OwnedMoney betEachPlayer(Name name) {
+        int bettingAmount = inputView.inputBettingAmount(name);
+        return new OwnedMoney(name, bettingAmount);
+    }
+
     private void drawStartCards(BlackJackGame game) {
         game.drawStartCards();
         outputView.printStartStatus(game);
     }
 
-    //TODO 아래 두 로직을 합칠 수 있을지 고민해보기 (요구사항)
     private void drawAdditionalCard(BlackJackGame game) {
         game.drawAdditionalCard(this::playTurn);
         while (game.isDealerDrawable()) {
@@ -87,5 +70,26 @@ public class BlackJackGameController {
     //TODO 사용 파라미터 수정
     private void printResult(Dealer dealer, Players players) {
         outputView.printEndingStatus(dealer, players);
+    }
+
+    private void printPrize(Bets bets, BlackJackGame game) {
+        outputView.printPrizeTitle();
+        List<PlayerResult> allGameResults = game.getAllGameResults();
+        List<OwnedMoney> prizes = allGameResults.stream()
+                .map(bets::getPrize)
+                .toList();
+        Money dealerPrize = calculateDealerPrize(prizes);
+        outputView.printDealerPrize(dealerPrize);
+        for (OwnedMoney prize : prizes) {
+            outputView.printPlayerPrize(prize.getOwnerName(), prize.getMoney());
+        }
+    }
+
+    private Money calculateDealerPrize(List<OwnedMoney> prizes) {
+        Money dealerPrize = Money.ZERO;
+        for (OwnedMoney prize : prizes) {
+            dealerPrize = dealerPrize.subtract(prize.getMoney());
+        }
+        return dealerPrize;
     }
 }

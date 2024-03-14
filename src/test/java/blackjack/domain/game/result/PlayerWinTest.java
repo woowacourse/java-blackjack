@@ -55,6 +55,16 @@ class PlayerWinTest {
             assertThat(playerWin.isSatisfy(dealer, player)).isTrue();
         }
 
+        @DisplayName("둘 다 버스트, 블랙잭이 없을 때 플레이어가 점수가 낮다면 조건을 만족하지 않는다.")
+        @Test
+        void lowScoreTest() {
+
+            Player player = new Player(CardsFixture.CARDS_SCORE_16, DEFAULT_NAME);
+            Dealer dealer = new Dealer(CardsFixture.CARDS_SCORE_21);
+
+            assertThat(playerWin.isSatisfy(dealer, player)).isFalse();
+        }
+
         @DisplayName("플레이어가 버스트 된다면 조건을 만족하지 않는다.")
         @ParameterizedTest
         @MethodSource("allCardCase")
