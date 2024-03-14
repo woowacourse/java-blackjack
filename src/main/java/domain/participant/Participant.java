@@ -5,6 +5,7 @@ import domain.card.Hands;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Participant {
 
@@ -46,5 +47,18 @@ public abstract class Participant {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(hands.getValue());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Participant that = (Participant) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

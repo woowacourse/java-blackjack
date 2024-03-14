@@ -16,8 +16,9 @@ class PlayersTest {
     @Test
     void validateMaxSize() {
         List<String> names = List.of("one", "two", "three", "four", "five", "six", "seven", "eight", "nine");
+        List<Player> players = names.stream().map(name -> new Player(new Name(name))).toList();
 
-        assertThatThrownBy(() -> new Players(names))
+        assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(String.format("최소 %d명 최대 %d명까지 입력받을 수 있습니다.", MIN_PARTICIPANT_COUNT, MAX_PARTICIPANT_COUNT));
     }
@@ -25,7 +26,7 @@ class PlayersTest {
     @DisplayName("1명 이하 입력할 경우 예외를 발생시킨다.")
     @Test
     void validateMinSize() {
-        List<String> names = List.of("one");
+        List<Player> names = List.of(new Player(new Name("one")));
 
         assertThatThrownBy(() -> new Players(names))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -36,7 +37,7 @@ class PlayersTest {
     @DisplayName("중복된 이름이 있을 경우 예외를 발생시킨다.")
     @Test
     void validateDuplicateNames() {
-        List<String> names = List.of("pobi", "pobi");
+        List<Player> names = List.of(new Player(new Name("pobi")), new Player(new Name("pobi")));
 
         assertThatThrownBy(() -> new Players(names))
                 .isInstanceOf(IllegalArgumentException.class)

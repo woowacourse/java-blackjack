@@ -19,9 +19,11 @@ import java.util.Map;
 public class BlackJackController {
 
     public void run() {
-        List<String> names = InputView.inputParticipantName();
+        List<Player> inputPlayers = InputView.inputParticipantName().stream()
+                .map(name -> new Player(new Name(name), new BetAmount(InputView.inputBetAmount(new Name(name)))))
+                .toList();
         Dealer dealer = new Dealer();
-        Players players = new Players(names);
+        Players players = new Players(inputPlayers);
         Map<Player, BetAmount> betAmount = createBetAmount(players);
         BlackJack blackJack = new BlackJack(players, dealer);
 
