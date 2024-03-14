@@ -1,5 +1,6 @@
 package domain;
 
+import domain.result.Income;
 import domain.result.Status;
 
 import java.util.Objects;
@@ -16,14 +17,14 @@ public class BetAmount {
         this.betAmount = Integer.parseInt(betAmount);
     }
 
-    public int determineIncome(Status status) {
+    public Income determineIncome(Status status) {
         if (status == Status.WIN) {
-            return betAmount;
+            return new Income(betAmount);
         }
         if (status == Status.LOSE) {
-            return -betAmount;
+            return new Income(-betAmount);
         }
-        return 0;
+        return new Income(0);
     }
 
     @Override

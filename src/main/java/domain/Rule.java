@@ -24,8 +24,8 @@ public class Rule {
     public static Rule of(DealerCards dealerCards, List<PlayerCards> playerCardsBundle) {
         Map<Name, Income> incomes = playerCardsBundle.stream()
                 .collect(Collectors.toMap(
-                        playerCards -> playerCards.getPlayerName(),
-                        playerCards -> new Income(playerCards.determineIncome(decideStatus(playerCards, dealerCards))),
+                        PlayerCards::getPlayerName,
+                        playerCards -> playerCards.determineIncome(decideStatus(playerCards, dealerCards)),
                         (oldValue, newValue) -> newValue,
                         LinkedHashMap::new
                 ));
