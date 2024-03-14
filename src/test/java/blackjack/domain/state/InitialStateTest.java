@@ -1,9 +1,12 @@
-package blackjack.domain;
+package blackjack.domain.state;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import blackjack.domain.CardFactory;
+import blackjack.domain.Deck;
+import blackjack.domain.Denomination;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +43,7 @@ class InitialStateTest {
 
         assertThatCode(() -> initialState.stand())
                 .isInstanceOf(UnsupportedOperationException.class)
-                .hasMessage("현재 상태에서 지원하지 않는 동작입니다.");
+                .hasMessage("초기 상태에서는 할 수 없습니다.");
     }
 
     @DisplayName("초기 상태에서 핸드를 계산하면 에러가 발생한다")
@@ -50,7 +53,7 @@ class InitialStateTest {
 
         assertThatCode(() -> initialState.calculateHand())
                 .isInstanceOf(UnsupportedOperationException.class)
-                .hasMessage("현재 상태에서 지원하지 않는 동작입니다.");
+                .hasMessage("초기 상태에서는 할 수 없습니다.");
     }
 
     @DisplayName("초기 상태에서 핸드 반환하면 에러가 발생한다")
@@ -60,7 +63,7 @@ class InitialStateTest {
 
         assertThatCode(() -> initialState.getHand())
                 .isInstanceOf(UnsupportedOperationException.class)
-                .hasMessage("현재 상태에서 지원하지 않는 동작입니다.");
+                .hasMessage("초기 상태에서는 할 수 없습니다.");
     }
 
     @DisplayName("초기 상태에서 끝났는지 판단하면 false를 반환한다")

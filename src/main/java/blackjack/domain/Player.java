@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import blackjack.domain.state.InitialState;
+import blackjack.domain.state.State;
+
 public class Player {
     private final String name;
     private final State state;

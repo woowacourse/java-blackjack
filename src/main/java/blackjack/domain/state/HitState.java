@@ -1,10 +1,13 @@
-package blackjack.domain;
+package blackjack.domain.state;
 
-public class HitState implements State {
-    private final Hand hand;
+import blackjack.domain.Card;
+import blackjack.domain.Deck;
+import blackjack.domain.Hand;
+
+public class HitState extends State {
 
     public HitState(Hand hand) {
-        this.hand = hand;
+        super(hand);
     }
 
     @Override
@@ -23,15 +26,7 @@ public class HitState implements State {
     }
 
     @Override
-    public Score calculateHand() {
-        return null;
-    }
-
     public boolean isFinished() {
         return false;
-    }
-
-    public Hand getHand() {
-        return hand;
     }
 }
