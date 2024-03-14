@@ -1,6 +1,5 @@
 package domain.player;
 
-import domain.card.Card;
 import dto.PlayerResponse;
 import dto.PlayerResult;
 import java.util.Objects;
@@ -20,13 +19,15 @@ public class Player extends Participant {
     }
 
     public PlayerResponse toPlayerResponse() {
-        return new PlayerResponse(getName(), getHands().stream().map(Card::toCardResponse).toList(),
-                calculateScore());
+//        return new PlayerResponse(getName(), getHands().stream().map(Card::toCardResponse).toList(),
+//                calculateScore());
+        return null;
     }
 
-    @Override
+//    @Override
     public boolean canHit() {
-        return calculateScore() < HIT_UPPER_BOUND;
+//        return calculateScore() < HIT_UPPER_BOUND;
+        return false;
     }
 
     public String getName() {

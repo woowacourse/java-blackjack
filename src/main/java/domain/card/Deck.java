@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class Cards {
+public class Deck {
     private static final List<Card> DEFAULT_PACK;
     private static final int DECK_SIZE = 6;
 
@@ -20,20 +20,20 @@ public class Cards {
                         .forEach(DEFAULT_PACK::add));
     }
 
-    public Cards(final List<Card> value) {
+    public Deck(final List<Card> value) {
         this.value = value;
     }
 
-    public static Cards makeEmptyDeck() {
-        return new Cards(new ArrayList<>());
+    public static Deck makeEmptyDeck() {
+        return new Deck(new ArrayList<>());
     }
 
 
-    public static Cards makeDecks() {
+    public static Deck makeDecks() {
         final List<Card> cards = new ArrayList<>();
         IntStream.range(0, DECK_SIZE).forEach(round -> cards.addAll(DEFAULT_PACK));
         Collections.shuffle(cards);
-        return new Cards(cards);
+        return new Deck(cards);
     }
 
     public Card draw() {
@@ -47,7 +47,10 @@ public class Cards {
         value.add(card);
     }
 
+
     public List<Card> getValue() {
         return Collections.unmodifiableList(value);
     }
+
+
 }

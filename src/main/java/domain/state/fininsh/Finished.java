@@ -1,13 +1,14 @@
 package domain.state.fininsh;
 
+import domain.card.Card;
 import domain.state.Started;
 import domain.state.State;
 
 public abstract class Finished extends Started {
 
     @Override
-    public State draw() {
-        return null;
+    public State draw(final Card card) {
+        throw new UnsupportedOperationException("게임이 끝난 상태에서 카드를 더이상 뽑을 수 없습니다");
     }
 
     @Override
@@ -17,7 +18,7 @@ public abstract class Finished extends Started {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 
     @Override

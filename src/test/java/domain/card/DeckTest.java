@@ -6,7 +6,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class CardsTest {
+class DeckTest {
 
     private static final int SINGLE_DECK_SIZE = 52;
     private static final int DECK_COUNT = 6;
@@ -14,7 +14,7 @@ class CardsTest {
     @Test
     @DisplayName("모든 카드를 뽑았을 때 서로 다른 카드의 개수는 52개다.")
     void draw() {
-        final Cards deck = Cards.makeDecks();
+        final Deck deck = Deck.makeDecks();
         final Set<Card> cards = new HashSet<>();
 
         for (int i = 0; i < SINGLE_DECK_SIZE * DECK_COUNT; i++) {
@@ -27,12 +27,12 @@ class CardsTest {
     @Test
     @DisplayName("정해진 수 이상의 카드를 뽑을 경우 예외를 발생한다.")
     void handsSize() {
-        final Cards cards = Cards.makeDecks();
+        final Deck deck = Deck.makeDecks();
 
         for (int i = 0; i < SINGLE_DECK_SIZE * DECK_COUNT; i++) {
-            cards.draw();
+            deck.draw();
         }
 
-        Assertions.assertThatCode(cards::draw).isInstanceOf(IllegalStateException.class);
+        Assertions.assertThatCode(deck::draw).isInstanceOf(IllegalStateException.class);
     }
 }
