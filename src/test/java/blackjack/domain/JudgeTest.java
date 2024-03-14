@@ -1,9 +1,9 @@
-package blackjack.domain.rule;
+package blackjack.domain;
 
-import static blackjack.domain.rule.GameResult.BLACKJACK_WIN;
-import static blackjack.domain.rule.GameResult.PLAYER_LOSE;
-import static blackjack.domain.rule.GameResult.PLAYER_WIN;
-import static blackjack.domain.rule.GameResult.PUSH;
+import static blackjack.domain.result.GameResult.BLACKJACK_WIN;
+import static blackjack.domain.result.GameResult.PLAYER_LOSE;
+import static blackjack.domain.result.GameResult.PLAYER_WIN;
+import static blackjack.domain.result.GameResult.PUSH;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.TestHandCreator;

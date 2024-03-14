@@ -3,6 +3,7 @@ package blackjack.view;
 import static blackjack.view.CardDescription.NUMBER_NAME;
 import static blackjack.view.CardDescription.SHAPE_NAME;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
@@ -11,9 +12,8 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.rule.BetResult;
-import blackjack.domain.rule.BetResults;
-import blackjack.domain.rule.Score;
+import blackjack.domain.result.BetResult;
+import blackjack.domain.result.BetResults;
 import java.util.stream.Collectors;
 
 public class MessageResolver {

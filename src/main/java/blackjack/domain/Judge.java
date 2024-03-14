@@ -1,13 +1,16 @@
-package blackjack.domain.rule;
+package blackjack.domain;
 
-import static blackjack.domain.rule.GameResult.BLACKJACK_WIN;
-import static blackjack.domain.rule.GameResult.PLAYER_LOSE;
-import static blackjack.domain.rule.GameResult.PLAYER_WIN;
-import static blackjack.domain.rule.GameResult.PUSH;
+import static blackjack.domain.result.GameResult.BLACKJACK_WIN;
+import static blackjack.domain.result.GameResult.PLAYER_LOSE;
+import static blackjack.domain.result.GameResult.PLAYER_WIN;
+import static blackjack.domain.result.GameResult.PUSH;
 
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
+import blackjack.domain.result.GameResult;
+import blackjack.domain.result.PlayerResult;
+import blackjack.domain.result.PlayerResults;
 
 public class Judge {
 

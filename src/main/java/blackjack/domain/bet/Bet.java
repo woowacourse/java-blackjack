@@ -1,8 +1,8 @@
 package blackjack.domain.bet;
 
 import blackjack.domain.player.PlayerName;
-import blackjack.domain.rule.BetResult;
-import blackjack.domain.rule.GameResult;
+import blackjack.domain.result.BetResult;
+import blackjack.domain.result.GameResult;
 
 public class Bet {
 

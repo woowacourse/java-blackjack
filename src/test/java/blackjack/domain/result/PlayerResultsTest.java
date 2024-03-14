@@ -1,7 +1,7 @@
-package blackjack.domain.rule;
+package blackjack.domain.result;
 
-import static blackjack.domain.rule.GameResult.PLAYER_LOSE;
-import static blackjack.domain.rule.GameResult.PLAYER_WIN;
+import static blackjack.domain.result.GameResult.PLAYER_LOSE;
+import static blackjack.domain.result.GameResult.PLAYER_WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;

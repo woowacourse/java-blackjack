@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.domain.Judge;
 import blackjack.domain.bet.Bets;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Hand;
@@ -8,9 +9,8 @@ import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
-import blackjack.domain.rule.BetResults;
-import blackjack.domain.rule.Judge;
-import blackjack.domain.rule.PlayerResults;
+import blackjack.domain.result.BetResults;
+import blackjack.domain.result.PlayerResults;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;

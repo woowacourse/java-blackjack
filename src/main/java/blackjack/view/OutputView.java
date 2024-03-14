@@ -1,12 +1,12 @@
 package blackjack.view;
 
+import blackjack.domain.Score;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.rule.BetResult;
-import blackjack.domain.rule.BetResults;
-import blackjack.domain.rule.Score;
+import blackjack.domain.result.BetResult;
+import blackjack.domain.result.BetResults;
 
 public class OutputView {
 

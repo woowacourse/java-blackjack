@@ -1,4 +1,4 @@
-package blackjack.domain.rule;
+package blackjack.domain;
 
 import java.util.Objects;
 
