@@ -12,7 +12,7 @@ class BattingAmountRepositoryTest {
     void 플레이어_별_배팅_금액을_기록하고_찾을_수_있다() {
         final BattingAmountRepository repository = new BattingAmountRepository();
         final Player player = 플레이어("pobi");
-        final BattingAmount battingAmount = new BattingAmount(1000);
+        final BattingAmount battingAmount = new BattingAmount(10000);
 
         repository.save(player, battingAmount);
         final BattingAmount findBattingAmount = repository.findByPlayer(player);
