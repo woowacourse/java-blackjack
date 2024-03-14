@@ -10,8 +10,8 @@ class CardTest {
 	@Test
 	@DisplayName("카드의 모양과 숫자가 같으면 같은 카드로 판단한다.")
 	void equalsTest() {
-		Card card1 = new Card(CardShape.DIAMOND, CardNumber.ACE);
-		Card card2 = new Card(CardShape.DIAMOND, CardNumber.ACE);
+		Card card1 = new Card(Shape.DIAMOND, Number.ACE);
+		Card card2 = new Card(Shape.DIAMOND, Number.ACE);
 
 		assertThat(card1.equals(card2)).isTrue();
 	}

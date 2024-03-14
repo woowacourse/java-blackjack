@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Number;
+import blackjack.domain.card.Shape;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Money;
 import blackjack.domain.gamer.Player;
@@ -30,9 +30,9 @@ class BlackjackRevenueCalculatorTest {
 		@BeforeEach
 		void setUp() {
 			Dealer dealer = new Dealer(List.of(
-				new Card(CardShape.SPADE, CardNumber.NINE),
-				new Card(CardShape.HEART, CardNumber.SIX),
-				new Card(CardShape.DIAMOND, CardNumber.SIX)
+				new Card(Shape.SPADE, Number.NINE),
+				new Card(Shape.HEART, Number.SIX),
+				new Card(Shape.DIAMOND, Number.SIX)
 			));
 			calculator = BlackjackRevenueCalculator.fromDealer(dealer);
 		}
@@ -41,17 +41,17 @@ class BlackjackRevenueCalculatorTest {
 		@DisplayName("딜러는 패배한 플레이어의 베팅 금액만큼 수익을 얻는다.")
 		void calculateDealerRevenue_WhenPlayerWin() {
 			Player winPlayer = new Player("win", List.of(
-				new Card(CardShape.DIAMOND, CardNumber.ACE),
-				new Card(CardShape.SPADE, CardNumber.KING)
+				new Card(Shape.DIAMOND, Number.ACE),
+				new Card(Shape.SPADE, Number.KING)
 			));
 			Player drawPlayer = new Player("draw", List.of(
-				new Card(CardShape.SPADE, CardNumber.EIGHT),
-				new Card(CardShape.DIAMOND, CardNumber.SEVEN),
-				new Card(CardShape.HEART, CardNumber.SIX)
+				new Card(Shape.SPADE, Number.EIGHT),
+				new Card(Shape.DIAMOND, Number.SEVEN),
+				new Card(Shape.HEART, Number.SIX)
 			));
 			Player losePlayer = new Player("lose", List.of(
-				new Card(CardShape.HEART, CardNumber.QUEEN),
-				new Card(CardShape.HEART, CardNumber.KING)
+				new Card(Shape.HEART, Number.QUEEN),
+				new Card(Shape.HEART, Number.KING)
 			));
 
 			Players players = new Players(Map.of(
@@ -76,8 +76,8 @@ class BlackjackRevenueCalculatorTest {
 		@BeforeEach
 		void setUp() {
 			Dealer dealer = new Dealer(List.of(
-				new Card(CardShape.HEART, CardNumber.QUEEN),
-				new Card(CardShape.DIAMOND, CardNumber.QUEEN)
+				new Card(Shape.HEART, Number.QUEEN),
+				new Card(Shape.DIAMOND, Number.QUEEN)
 			));
 			PlayerResultHandler handler = new PlayerResultHandler(dealer);
 			calculator = new BlackjackRevenueCalculator(handler);
@@ -88,8 +88,8 @@ class BlackjackRevenueCalculatorTest {
 		@DisplayName("블랙잭 승리인 경우의 수익금은 베팅 금액의 1.5배이다.")
 		void getReward_WhenBlackjackWin() {
 			player = createTestPlayer(List.of(
-				new Card(CardShape.SPADE, CardNumber.ACE),
-				new Card(CardShape.DIAMOND, CardNumber.QUEEN)
+				new Card(Shape.SPADE, Number.ACE),
+				new Card(Shape.DIAMOND, Number.QUEEN)
 			));
 
 			assertThat(calculator.calculatePlayerRevenue(player, betAmount)).isEqualTo(new Money(15000));
@@ -99,9 +99,9 @@ class BlackjackRevenueCalculatorTest {
 		@DisplayName("블랙잭이 아닌 승리인 경우의 수익금은 베팅 금액만큼이다.")
 		void getReward_WhenNotBlackjackWin() {
 			player = createTestPlayer(List.of(
-				new Card(CardShape.SPADE, CardNumber.EIGHT),
-				new Card(CardShape.DIAMOND, CardNumber.SEVEN),
-				new Card(CardShape.CLOVER, CardNumber.SIX)
+				new Card(Shape.SPADE, Number.EIGHT),
+				new Card(Shape.DIAMOND, Number.SEVEN),
+				new Card(Shape.CLOVER, Number.SIX)
 			));
 
 			assertThat(calculator.calculatePlayerRevenue(player, betAmount)).isEqualTo(new Money(10000));
@@ -111,8 +111,8 @@ class BlackjackRevenueCalculatorTest {
 		@DisplayName("무승부인 경우의 수익금은 0원이다.")
 		void getReward_WhenDraw() {
 			player = createTestPlayer(List.of(
-				new Card(CardShape.SPADE, CardNumber.JACK),
-				new Card(CardShape.DIAMOND, CardNumber.TEN)
+				new Card(Shape.SPADE, Number.JACK),
+				new Card(Shape.DIAMOND, Number.TEN)
 			));
 
 			assertThat(calculator.calculatePlayerRevenue(player, betAmount)).isEqualTo(new Money(0));
@@ -122,8 +122,8 @@ class BlackjackRevenueCalculatorTest {
 		@DisplayName("패배한 경우 베팅 금액만큼의 손실이 발생한다.")
 		void getReward_WhenLose() {
 			player = createTestPlayer(List.of(
-				new Card(CardShape.SPADE, CardNumber.JACK),
-				new Card(CardShape.DIAMOND, CardNumber.NINE)
+				new Card(Shape.SPADE, Number.JACK),
+				new Card(Shape.DIAMOND, Number.NINE)
 			));
 
 			assertThat(calculator.calculatePlayerRevenue(player, betAmount)).isEqualTo(new Money(-10000));

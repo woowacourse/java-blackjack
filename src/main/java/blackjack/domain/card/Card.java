@@ -1,12 +1,12 @@
 package blackjack.domain.card;
 
-public record Card(CardShape cardShape, CardNumber cardNumber) {
+public record Card(Shape shape, Number number) {
 
 	public boolean isAce() {
-		return cardNumber == CardNumber.ACE;
+		return number == Number.ACE;
 	}
 
 	public int getNumber() {
-		return cardNumber.getValue();
+		return number.getValue();
 	}
 }

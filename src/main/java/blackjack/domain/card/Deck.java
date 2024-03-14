@@ -15,9 +15,9 @@ public class Deck {
 	}
 
 	private List<Card> initAllCards() {
-		return Arrays.stream(CardShape.values())
-			.flatMap(cardShape -> Arrays.stream(CardNumber.values())
-				.map(number -> new Card(cardShape, number)))
+		return Arrays.stream(Shape.values())
+			.flatMap(shape -> Arrays.stream(Number.values())
+				.map(number -> new Card(shape, number)))
 			.collect(Collectors.toCollection(ArrayList::new));
 	}
 

@@ -24,7 +24,7 @@ public class DeckTest {
 	@Test
 	@DisplayName("맨 위의 카드를 한 장 뽑는다.")
 	void drawTest() {
-		assertThat(deck.draw()).isEqualTo(new Card(CardShape.HEART, CardNumber.ACE));
+		assertThat(deck.draw()).isEqualTo(new Card(Shape.HEART, Number.ACE));
 	}
 
 	@Test
@@ -37,7 +37,7 @@ public class DeckTest {
 
 		// 52장을 다 뽑고, 한 장을 더 뽑으면 뽑기 전에 패를 초기화한다.
 		deck.draw();
-		
+
 		assertThat(deck.getCards().size()).isEqualTo(51);
 	}
 }
