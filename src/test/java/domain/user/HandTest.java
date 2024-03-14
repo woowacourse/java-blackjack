@@ -1,6 +1,7 @@
 package domain.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Card;
 import domain.card.Number;
@@ -9,6 +10,18 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class HandTest {
+    @Test
+    @DisplayName("카드 덱에 카드가 존재하면 addStartCard를 호출할 때 에러가 발생한다.")
+    void unsupportedAddStartCardTest() {
+        Hand hand = new Hand();
+
+        hand.addCard(new Card(Shape.CLUB, Number.ACE));
+
+        assertThatThrownBy(() -> hand.addStartCards(new Card(Shape.CLUB, Number.TEN)))
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("카드가 존재하지 않을 때만 가능합니다.");
+    }
+
     @Test
     @DisplayName("유저 카드 덱에 카드를 추가할 수 있다.")
     void pushCardTest() {

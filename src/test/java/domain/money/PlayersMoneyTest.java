@@ -1,7 +1,11 @@
 package domain.money;
 
+import static domain.money.GameResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.Number;
+import domain.card.Shape;
 import domain.user.Name;
 import domain.user.Player;
 import java.util.HashMap;
@@ -22,6 +26,20 @@ class PlayersMoneyTest {
         PlayersMoney resultPlayersMoney = playersMoney.changeByPlayersResult(playersResult);
 
         assertThat(resultPlayersMoney.getPlayersMoney()).containsExactly(Map.entry(player, new Money(moneyValue)));
+    }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭으로 승리한 경우 금액의 1.5배를 받는다.")
+    void earn150PercentMoneyWhenBlackjackAndWin() {
+        Player player = new Player(new Name("aa"));
+        player.addCard(new Card(Shape.SPADE, Number.ACE));
+        player.addCard(new Card(Shape.SPADE, Number.TEN));
+        PlayersMoney playersMoney = new PlayersMoney(new HashMap<>(Map.of(player, new Money(1000))));
+        Map<Player, GameResult> playersResult = Map.of(player, WIN);
+        PlayersMoney resultPlayersMoney = playersMoney.changeByPlayersResult(playersResult);
+
+        assertThat(resultPlayersMoney.getPlayersMoney()).containsExactly(Map.entry(player, new Money(1500)));
+
     }
 
     @Test
