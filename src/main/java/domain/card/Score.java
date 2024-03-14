@@ -4,20 +4,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Score {
-    public static final Score ZERO = new Score(0);
-
-    private static final Map<Integer, Score> CACHE = new HashMap<>();
+    private static final Map<Integer, Score> SCORE_POOL = new HashMap<>();
     private static final Score BLACKJACK_SCORE;
     private static final Score BONUS_SCORE;
     private static final int MIN_SCORE_VALUE = 1;
-    private static final int MAX_SCORE_VALUE = 31;
+    private static final int MAX_SCORE_VALUE = 41;
 
     static {
         for (int i = MIN_SCORE_VALUE; i <= MAX_SCORE_VALUE; i++) {
-            CACHE.put(i, new Score(i));
+            SCORE_POOL.put(i, new Score(i));
         }
-        BLACKJACK_SCORE = CACHE.get(21);
-        BONUS_SCORE = CACHE.get(10);
+        BLACKJACK_SCORE = SCORE_POOL.get(21);
+        BONUS_SCORE = SCORE_POOL.get(10);
     }
 
     private final int value;
@@ -28,7 +26,7 @@ public class Score {
 
     public static Score get(int value) {
         validateRange(value);
-        return CACHE.get(value);
+        return SCORE_POOL.get(value);
     }
 
     private static void validateRange(int value) {
