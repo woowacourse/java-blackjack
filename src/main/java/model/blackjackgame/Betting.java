@@ -25,6 +25,9 @@ public class Betting {
         if (result.equals("승")) {
             return money;
         }
+        if (result.equals("패")) {
+            return -money;
+        }
         return 0;
     }
 

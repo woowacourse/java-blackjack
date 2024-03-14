@@ -22,4 +22,11 @@ class BettingTest {
         Betting betting = new Betting(new Player("lily"), 10000);
         assertEquals(betting.getMoney(), betting.profit("승"));
     }
+
+    @DisplayName("패배 or 버스트 시 배팅 금액은 소멸")
+    @Test
+    void testProfitWhenFail() {
+        Betting betting = new Betting(new Player("lily"), 10000);
+        assertEquals(-10000, betting.profit("패"));
+    }
 }
