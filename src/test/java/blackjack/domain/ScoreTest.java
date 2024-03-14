@@ -15,8 +15,8 @@ import static blackjack.domain.card.Value.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.player.Score;
-import blackjack.domain.result.GameResult;
+import blackjack.domain.score.Score;
+import blackjack.domain.score.GameResult;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;

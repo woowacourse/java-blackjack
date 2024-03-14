@@ -1,7 +1,6 @@
-package blackjack.domain.player;
+package blackjack.domain.score;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.result.GameResult;
 import java.util.List;
 
 public class Score {

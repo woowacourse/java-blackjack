@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.player.Score;
+import blackjack.domain.score.Score;
 import blackjack.domain.player.Player;
 import java.util.List;
 import java.util.stream.Stream;

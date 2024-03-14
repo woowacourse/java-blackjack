@@ -1,4 +1,4 @@
-package blackjack.domain.result;
+package blackjack.domain.score;
 
 public enum GameResult {
     WIN_BY_BLACK_JACK(1.5),

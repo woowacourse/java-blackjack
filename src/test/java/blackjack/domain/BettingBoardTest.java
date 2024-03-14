@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.result.BettingBoard;
-import blackjack.domain.result.GameResult;
+import blackjack.domain.score.GameResult;
 import blackjack.domain.result.Money;
 import java.util.Map;
 import java.util.stream.Stream;

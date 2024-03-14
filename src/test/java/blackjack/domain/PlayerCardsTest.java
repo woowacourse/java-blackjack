@@ -5,7 +5,7 @@ import static blackjack.domain.card.Shape.*;
 import static blackjack.domain.card.Value.*;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.player.Score;
+import blackjack.domain.score.Score;
 import blackjack.domain.player.PlayerCards;
 import java.util.List;
 import java.util.stream.Stream;
