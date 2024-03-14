@@ -22,8 +22,4 @@ public enum Command {
     public boolean isDraw() {
         return this == DRAW;
     }
-
-    public boolean isStand() {
-        return this == STAND;
-    }
 }
