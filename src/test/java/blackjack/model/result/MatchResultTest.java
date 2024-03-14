@@ -9,7 +9,6 @@ import blackjack.model.cardgenerator.SequentialCardGenerator;
 import blackjack.model.dealer.Dealer;
 import blackjack.model.player.Player;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -126,29 +125,26 @@ class MatchResultTest {
         return dealer;
     }
 
-    @Test
-    @DisplayName("플레이어가 승리하면 베팅 금액만큼 금액을 더 받는다")
-    void determineWinnerFinalBettingMoneyTest() {
+    @ParameterizedTest
+    @MethodSource("provideMatchResultAndExpectedFinalMoney")
+    @DisplayName("게임 결과에 따라 수익률을 적용해 최종 베팅 금액을 얻는다")
+    void determineFinalMoneyTest(MatchResult matchResult, double expectedFinalMoney) {
         // given
         BettingMoney bettingMoney = BettingMoney.from(1000);
 
         // when
-        BettingMoney finalBettingMoney = MatchResult.WIN.calculateFinalMoney(bettingMoney);
+        BettingMoney actualFinalMoney = matchResult.calculateFinalMoney(bettingMoney);
 
         // then
-        assertThat(finalBettingMoney.getAmount()).isEqualTo(2000);
+        assertThat(actualFinalMoney.getAmount()).isEqualTo(expectedFinalMoney);
     }
 
-    @Test
-    @DisplayName("플레이어가 지면 베팅 금액을 잃는다")
-    void determineLoserFinalBettingMoneyTest() {
-        // given
-        BettingMoney bettingMoney = BettingMoney.from(1000);
-
-        // when
-        BettingMoney finalBettingMoney = MatchResult.LOSE.calculateFinalMoney(bettingMoney);
-
-        // then
-        assertThat(finalBettingMoney.getAmount()).isEqualTo(0);
+    private static Stream<Arguments> provideMatchResultAndExpectedFinalMoney() {
+        return Stream.of(
+                Arguments.of(MatchResult.WIN, 2000),
+                Arguments.of(MatchResult.LOSE, 0),
+                Arguments.of(MatchResult.PUSH, 1000),
+                Arguments.of(MatchResult.BLACKJACK, 2500)
+        );
     }
 }
