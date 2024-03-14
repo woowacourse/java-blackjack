@@ -1,9 +1,6 @@
 package domain.playingcard;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class Deck {
     private final Queue<PlayingCard> playingCards;
@@ -13,12 +10,8 @@ public class Deck {
     }
 
     public static Deck init(final List<PlayingCard> playingCards) {
-        Queue<PlayingCard> queue = new LinkedList<>();
-        playingCards.forEach(queue::offer);
-
-        Collections.shuffle((List<?>) queue);
-
-        return new Deck(queue);
+        Collections.shuffle(playingCards);
+        return new Deck(new ArrayDeque<>(playingCards));
     }
 
     public PlayingCard drawn() {
