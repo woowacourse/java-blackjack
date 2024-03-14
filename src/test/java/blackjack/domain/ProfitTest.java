@@ -1,4 +1,4 @@
-package blackjack.domain.participants;
+package blackjack.domain;
 
 import blackjack.domain.Profit;
 import org.assertj.core.api.Assertions;
