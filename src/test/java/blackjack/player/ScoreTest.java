@@ -57,8 +57,8 @@ public class ScoreTest {
         Score score = new Score(15);
 
         assertAll(
-                () -> assertThat(score.isSmallerOrEqual(new Score(14))).isFalse(),
-                () -> assertThat(score.isSmallerOrEqual(new Score(16))).isTrue()
+                () -> assertThat(score.isSmallerThanOrEqualTo(new Score(14))).isFalse(),
+                () -> assertThat(score.isSmallerThanOrEqualTo(new Score(16))).isTrue()
         );
     }
 

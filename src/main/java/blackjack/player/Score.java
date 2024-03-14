@@ -33,7 +33,7 @@ public class Score {
         return this.score > other.score;
     }
 
-    public boolean isSmallerOrEqual(Score other) {
+    public boolean isSmallerThanOrEqualTo(Score other) {
         return !isLargerThan(other);
     }
 

@@ -25,6 +25,6 @@ public class Dealer extends Player {
 
     @Override
     public boolean hasDrawableScore() {
-        return getScore().isSmallerOrEqual(new Score(MAX_DRAWABLE_SCORE));
+        return getScore().isSmallerThanOrEqualTo(new Score(MAX_DRAWABLE_SCORE));
     }
 }
