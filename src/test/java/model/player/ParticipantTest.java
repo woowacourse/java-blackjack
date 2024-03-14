@@ -56,7 +56,7 @@ class ParticipantTest {
                 List.of(new Card(CardShape.CLOVER, CardNumber.NINE),
                         new Card(CardShape.HEART, CardNumber.FIVE)));
 
-        Double playerProfit = participant.findOutcome(dealer);
+        Double playerProfit = participant.calculateProfit(dealer);
 
         Assertions.assertThat(playerProfit).isEqualTo(0);
     }
@@ -74,7 +74,7 @@ class ParticipantTest {
                         new Card(CardShape.DIAMOND, CardNumber.TEN)));
         dealer.addCard(new Card(CardShape.SPACE, CardNumber.EIGHT));
 
-        Double playerProfit = participant.findOutcome(dealer);
+        Double playerProfit = participant.calculateProfit(dealer);
 
         Assertions.assertThat(playerProfit).isEqualTo(100);
     }
@@ -90,7 +90,7 @@ class ParticipantTest {
                 List.of(new Card(CardShape.SPACE, CardNumber.KING),
                         new Card(CardShape.SPACE, CardNumber.JACK)));
 
-        Double playerProfit = participant.findOutcome(dealer);
+        Double playerProfit = participant.calculateProfit(dealer);
 
         Assertions.assertThat(playerProfit).isEqualTo(-100);
     }
@@ -106,7 +106,7 @@ class ParticipantTest {
                 List.of(new Card(CardShape.SPACE, CardNumber.EIGHT),
                         new Card(CardShape.CLOVER, CardNumber.NINE)));
 
-        Double playerProfit = participant.findOutcome(dealer);
+        Double playerProfit = participant.calculateProfit(dealer);
 
         Assertions.assertThat(playerProfit).isEqualTo(100);
     }
@@ -123,7 +123,7 @@ class ParticipantTest {
                         new Card(CardShape.CLOVER, CardNumber.NINE)));
         dealer.addCard(new Card(CardShape.CLOVER, CardNumber.TEN));
 
-        double playerProfit = participant.findOutcome(dealer);
+        double playerProfit = participant.calculateProfit(dealer);
 
         Assertions.assertThat(playerProfit).isEqualTo(100);
     }
@@ -140,7 +140,7 @@ class ParticipantTest {
                 List.of(new Card(CardShape.SPACE, CardNumber.EIGHT),
                         new Card(CardShape.CLOVER, CardNumber.NINE)));
 
-        double playerProfit = participant.findOutcome(dealer);
+        double playerProfit = participant.calculateProfit(dealer);
 
         Assertions.assertThat(playerProfit).isEqualTo(-100);
     }
@@ -156,7 +156,7 @@ class ParticipantTest {
                 List.of(new Card(CardShape.CLOVER, CardNumber.ACE),
                         new Card(CardShape.CLOVER, CardNumber.TEN)));
 
-        double playerProfit = participant.findOutcome(dealer);
+        double playerProfit = participant.calculateProfit(dealer);
 
         Assertions.assertThat(playerProfit).isEqualTo(100);
     }
@@ -173,7 +173,7 @@ class ParticipantTest {
                         new Card(CardShape.CLOVER, CardNumber.TEN)));
         dealer.addCard(new Card(CardShape.HEART, CardNumber.SIX));
 
-        double playerProfit = participant.findOutcome(dealer);
+        double playerProfit = participant.calculateProfit(dealer);
 
         Assertions.assertThat(playerProfit).isEqualTo(150);
     }

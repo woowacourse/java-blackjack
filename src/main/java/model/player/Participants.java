@@ -45,6 +45,12 @@ public class Participants {
                 .map(participant -> participant.name).toList();
     }
 
+    public Double findDealerProfit(Dealer dealer) {
+        return participants.stream()
+                .mapToDouble(participant -> participant.calculateProfit(dealer) * -1.0)
+                .sum();
+    }
+
     public List<Participant> getParticipants() {
         return Collections.unmodifiableList(participants);
     }

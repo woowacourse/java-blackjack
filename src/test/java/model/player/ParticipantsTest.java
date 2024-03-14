@@ -2,6 +2,7 @@ package model.player;
 
 import java.util.List;
 import java.util.stream.Stream;
+import model.BlackJack;
 import model.card.Card;
 import model.card.CardDeck;
 import model.card.CardNumber;
@@ -57,5 +58,54 @@ class ParticipantsTest {
     void offerCardToParticipant(List<Participant> participants) {
         Assertions.assertThatThrownBy(() -> new Participants(participants))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("참가자들의 결과로 딜러의 수익을 구한다 - 1승 1패")
+    @Test
+    void calculateDealerProfit() {
+        Participant bustParticipant = new Participant("배키",
+                List.of(new Card(CardShape.SPACE, CardNumber.TEN),
+                        new Card(CardShape.SPACE, CardNumber.KING)),
+                100);
+        bustParticipant.addCard(new Card(CardShape.SPACE, CardNumber.NINE));
+        Participant participantScore21 = new Participant("켬미",
+                List.of(new Card(CardShape.CLOVER, CardNumber.KING),
+                        new Card(CardShape.CLOVER, CardNumber.TEN)),
+                200);
+        participantScore21.addCard(new Card(CardShape.SPACE, CardNumber.ACE));
+
+        Participants participants = new Participants(List.of(bustParticipant, participantScore21));
+
+        Dealer dealerScore20 = new Dealer(new CardDeck(CardDeck.createCards()), () ->
+                List.of(new Card(CardShape.CLOVER, CardNumber.TEN),
+                        new Card(CardShape.DIAMOND, CardNumber.TEN)));
+
+        Double dealerProfit = participants.findDealerProfit(dealerScore20);
+
+        Assertions.assertThat(dealerProfit).isEqualTo(-100.0);
+    }
+
+    @DisplayName("참가자들의 결과로 딜러의 수익을 구한다. - 1승 1무")
+    @Test
+    void calculateDealerProfit2() {
+        Participant bustParticipant = new Participant("배키",
+                List.of(new Card(CardShape.SPACE, CardNumber.TEN),
+                        new Card(CardShape.SPACE, CardNumber.KING)),
+                100);
+        bustParticipant.addCard(new Card(CardShape.SPACE, CardNumber.NINE));
+        Participant participantScore21 = new Participant("켬미",
+                List.of(new Card(CardShape.CLOVER, CardNumber.KING),
+                        new Card(CardShape.CLOVER, CardNumber.TEN)),
+                200);
+
+        Participants participants = new Participants(List.of(bustParticipant, participantScore21));
+
+        Dealer dealerScore20 = new Dealer(new CardDeck(CardDeck.createCards()), () ->
+                List.of(new Card(CardShape.CLOVER, CardNumber.TEN),
+                        new Card(CardShape.DIAMOND, CardNumber.TEN)));
+
+        Double dealerProfit = participants.findDealerProfit(dealerScore20);
+
+        Assertions.assertThat(dealerProfit).isEqualTo(100.0);
     }
 }

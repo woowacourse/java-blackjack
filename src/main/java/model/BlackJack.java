@@ -1,7 +1,5 @@
 package model;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
 
 import java.util.List;
@@ -76,7 +74,7 @@ public class BlackJack {
         return sumPlayers.stream()
                 .collect(toMap(
                         participant -> participant,
-                        participant -> participant.findOutcome(dealer)
+                        participant -> participant.calculateProfit(dealer)
                 ));
     }
 
@@ -85,6 +83,10 @@ public class BlackJack {
 //        return participantOutcome.values().stream()
 //                .collect(groupingBy(Outcome::reverse, counting()));
 //    }
+
+    public Double getDealerProfit() {
+        return participants.findDealerProfit(dealer); //todo dealer의 profit인데 participants에서 가져오는 것이 어색함
+    }
 
     public Map<String, Cards> mapToUsersNameAndCards() {
         return participants.getParticipants().stream()
