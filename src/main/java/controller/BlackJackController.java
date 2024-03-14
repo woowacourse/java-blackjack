@@ -35,7 +35,7 @@ public class BlackJackController {
         }
 
         initHands(players, dealer);
-        dealToPlayers(bettings, players, dealer);
+        dealToPlayers(players, dealer);
         dealToDealerIfPossible(players, dealer);
 
         printFinalResult(players, dealer);
@@ -46,13 +46,14 @@ public class BlackJackController {
         outputView.printInitHands(DealerHandsDto.from(dealer), ParticipantsDto.from(players));
     }
 
-    private void dealToPlayers(final Bettings bettings, final Players players, final Dealer dealer) {
+    private void dealToPlayers(final Players players, final Dealer dealer) {
         for (Player player : players.getPlayers()) {
-            if (bettings.saveIfBlackJack(player, dealer).isEmpty()) {
-                deal(player, dealer);
+            if (player.isBlackJack()) {
+                outputView.printBlackJack();
+                return;
             }
 
-            outputView.printBlackJack();
+            deal(player, dealer);
         }
     }
 

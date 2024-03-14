@@ -64,4 +64,5 @@ class BettingsTest {
         // then
         Assertions.assertThat(newBetAmount.isEmpty());
     }
+
 }
