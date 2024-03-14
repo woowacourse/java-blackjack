@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class InputView {
@@ -16,6 +17,17 @@ public class InputView {
         input = removeBlank(input);
 
         return Arrays.stream(input.split(",")).toList();
+    }
+
+    public List<Integer> readBettingMoney(List<String> playerNames) throws IOException {
+        List<Integer> inputs = new LinkedList<>();
+        for (String playerName : playerNames) {
+            System.out.println(playerName + "의 배팅 금액은?");
+            String input = bufferedReader.readLine();
+            validateNotBlank(input);
+            inputs.add(parseInt(input));
+        }
+        return inputs;
     }
 
     public String readCommand(String playerName) throws IOException {
@@ -36,5 +48,13 @@ public class InputView {
     private String removeBlank(String input) {
         input = input.replace(" ", "");
         return input;
+    }
+
+    private int parseInt(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자를 입력하세요.");
+        }
     }
 }
