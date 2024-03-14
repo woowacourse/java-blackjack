@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.dealer.Dealer;
 import blackjack.view.format.CardRequestFormat;
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +15,6 @@ public class InputView {
 
         validateDelimiter(input);
         final List<String> names = Arrays.asList(input.split(DELIMITER));
-        validateDealerSignal(names);
         return names;
     }
 
@@ -24,17 +22,6 @@ public class InputView {
         if (input.endsWith(DELIMITER)) {
             throw new IllegalArgumentException(DELIMITER + " 로 끝날 수 없습니다.");
         }
-    }
-
-    private void validateDealerSignal(final List<String> names) {
-        if (hasDealerSignal(names)) {
-            throw new IllegalArgumentException(Dealer.DEALER_NAME + " 라는 이름을 사용할 수 없습니다.");
-        }
-    }
-
-    private boolean hasDealerSignal(final List<String> names) {
-        return names.stream()
-                .anyMatch(Dealer.DEALER_NAME::equals);
     }
 
     public boolean readNeedMoreCard(final String name) {
