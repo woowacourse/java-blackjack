@@ -7,8 +7,12 @@ public final class BettingMoney {
         this.amount = amount;
     }
 
-    public BettingMoney applyEarningRate(final double earningRate) {
-        return new BettingMoney((int) (amount * earningRate));
+    public int applyEarningRate(final double earningRate) {
+        return (int) (amount * earningRate);
+    }
+
+    public boolean isMultipleOfTen() {
+        return amount % 10 == 0;
     }
 
     public int getAmount() {

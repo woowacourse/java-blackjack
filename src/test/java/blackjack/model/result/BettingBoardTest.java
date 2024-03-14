@@ -1,5 +1,6 @@
 package blackjack.model.result;
 
+import blackjack.view.dto.PlayerEarning;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -21,10 +22,10 @@ class BettingBoardTest {
         BettingBoard bettingBoard = new BettingBoard(bettingMoneys);
 
         // when
-        BettingMoney bettingMoney = bettingBoard.determineEarning(playerName, matchResult);
+        PlayerEarning playerEarning = bettingBoard.determineEarning(playerName, matchResult);
 
         // then
-        assertThat(bettingMoney.getAmount()).isEqualTo(expectedEarning);
+        assertThat(playerEarning.earning()).isEqualTo(expectedEarning);
     }
 
     private static Stream<Arguments> provideMatchResultAndExpectedEarning() {

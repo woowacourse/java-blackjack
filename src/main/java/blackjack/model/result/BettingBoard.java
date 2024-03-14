@@ -1,5 +1,7 @@
 package blackjack.model.result;
 
+import blackjack.view.dto.PlayerEarning;
+
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -12,9 +14,10 @@ public class BettingBoard {
         this.bettings = Map.copyOf(bettings);
     }
 
-    public BettingMoney determineEarning(final String playerName, final MatchResult matchResult) {
+    public PlayerEarning determineEarning(final String playerName, final MatchResult matchResult) {
         BettingMoney bettingMoney = getBettingMoney(playerName);
-        return matchResult.calculateEarning(bettingMoney);
+        int earning = matchResult.calculateEarning(bettingMoney);
+        return new PlayerEarning(playerName, earning);
     }
 
     private BettingMoney getBettingMoney(final String playerName) {

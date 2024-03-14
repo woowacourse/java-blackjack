@@ -103,8 +103,8 @@ public class BlackJackController {
         List<PlayerEarning> playerEarnings = new ArrayList<>();
         for (Player player : players.getPlayers()) {
             MatchResult matchResult = MatchResult.of(player, dealer);
-            BettingMoney earning = bettingBoard.determineEarning(player.getName(), matchResult);
-            playerEarnings.add(new PlayerEarning(player.getName(), earning.getAmount()));
+            PlayerEarning earning = bettingBoard.determineEarning(player.getName(), matchResult);
+            playerEarnings.add(earning);
         }
         return playerEarnings;
     }

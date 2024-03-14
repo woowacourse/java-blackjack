@@ -110,10 +110,10 @@ class MatchResultTest {
         BettingMoney bettingMoney = new BettingMoney(1000);
 
         // when
-        BettingMoney actualEarning = matchResult.calculateEarning(bettingMoney);
+        int actualEarning = matchResult.calculateEarning(bettingMoney);
 
         // then
-        assertThat(actualEarning.getAmount()).isEqualTo(expectedEarning);
+        assertThat(actualEarning).isEqualTo(expectedEarning);
     }
 
     private static Stream<Arguments> provideMatchResultAndExpectedEarning() {
