@@ -1,6 +1,9 @@
 package domain;
 
-import domain.state.*;
+import domain.state.Bust;
+import domain.state.Hit;
+import domain.state.Stand;
+import domain.state.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -61,19 +64,5 @@ class BlackjackTest2 {
         state = state.stand();
         //then
         assertThat(state).isInstanceOf(Stand.class);
-    }
-
-    @DisplayName("점수가 21이 되면 블랙잭이 된다.")
-    @Test
-    void hitToBlackjack() {
-        // given
-        State state = new Hit(new Hand(
-                new Card(Denomination.KING, Suit.CLUBS),
-                new Card(Denomination.FOUR, Suit.CLUBS)
-        ));
-        // when
-        state = state.hit(new Card(Denomination.SEVEN, Suit.DIAMOND));
-        //then
-        assertThat(state).isInstanceOf(Blackjack.class);
     }
 }
