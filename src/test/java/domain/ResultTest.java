@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static domain.FixtureCard.*;
+import static domain.FixtureCardDeck.NOT_SHUFFLED_CARD_DECK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -17,12 +18,11 @@ class ResultTest {
         List<Card> maxScoreCards = List.of(ACE_HEART, TEN_HEART);
         List<Card> minScoreCards = List.of(TWO_HEART);
 
-        CardDeck cardDeck = CardDeck.createShuffledDeck();
-        Dealer dealerWithBust = new Dealer(cardDeck);
+        Dealer dealerWithBust = new Dealer(NOT_SHUFFLED_CARD_DECK);
         dealerWithBust.initHand(bustCards);
-        Dealer dealerWithMaxScore = new Dealer(cardDeck);
+        Dealer dealerWithMaxScore = new Dealer(NOT_SHUFFLED_CARD_DECK);
         dealerWithMaxScore.initHand(maxScoreCards);
-        Dealer dealerWithMinScore = new Dealer(cardDeck);
+        Dealer dealerWithMinScore = new Dealer(NOT_SHUFFLED_CARD_DECK);
         dealerWithMinScore.initHand(minScoreCards);
 
         Player playerWithBust = new Player("버스트");
