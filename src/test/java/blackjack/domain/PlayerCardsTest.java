@@ -20,7 +20,7 @@ class PlayerCardsTest {
     @DisplayName("한 장의 카드를 추가할 수 있다.")
     void addCardTest() {
         Card card = new Card(DIAMOND, ACE);
-        PlayerCards playerCards = PlayerCards.createEmptyCards();
+        PlayerCards playerCards = new PlayerCards();
 
         playerCards.append(card);
         List<Card> cards = playerCards.getCards();
@@ -75,7 +75,7 @@ class PlayerCardsTest {
     @Test
     @DisplayName("시작 손패는 비어있다.")
     void createEmptyCardsTest() {
-        PlayerCards emptyCards = PlayerCards.createEmptyCards();
+        PlayerCards emptyCards = new PlayerCards();
         assertThat(emptyCards.size()).isZero();
     }
 }

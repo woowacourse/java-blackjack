@@ -10,7 +10,7 @@ public class Player {
 
     public Player(String name) {
         this.playerName = new PlayerName(name);
-        this.playerCards = PlayerCards.createEmptyCards();
+        this.playerCards = new PlayerCards();
     }
 
     public void draw(Deck deck) {

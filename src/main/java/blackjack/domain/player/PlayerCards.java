@@ -7,12 +7,12 @@ import java.util.List;
 public class PlayerCards {
     private final List<Card> cards;
 
-    public PlayerCards(List<Card> cards) {
-        this.cards = cards;
+    public PlayerCards() {
+        this(new ArrayList<>());
     }
 
-    public static PlayerCards createEmptyCards() {
-        return new PlayerCards(new ArrayList<>());
+    public PlayerCards(List<Card> cards) {
+        this.cards = cards;
     }
 
     public void append(Card card) {
