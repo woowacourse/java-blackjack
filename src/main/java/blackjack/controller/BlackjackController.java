@@ -125,16 +125,21 @@ public class BlackjackController {
     }
 
     private void printAllGamerRevenues(Dealer dealer, Players players) {
-        BlackjackRevenueCalculator revenueCalculator = BlackjackRevenueCalculator.fromDealer(dealer);
+        Map<BlackjackGamer, Money> gamerRevenueMap = getGamerRevenueMap(dealer, players);
+        outputView.printRevenues(GamerRevenueDto.from(gamerRevenueMap));
+    }
 
+    private Map<BlackjackGamer, Money> getGamerRevenueMap(Dealer dealer, Players players) {
+        BlackjackRevenueCalculator revenueCalculator = BlackjackRevenueCalculator.fromDealer(dealer);
         Map<BlackjackGamer, Money> gamerRevenueMap = new LinkedHashMap<>();
+
         gamerRevenueMap.put(dealer, revenueCalculator.calculateDealerRevenue(players));
-        for (Player player : players.getPlayers()) {
+        players.getPlayers().forEach(player -> {
             Money betAmount = players.getBetAmount(player);
             Money revenue = revenueCalculator.calculatePlayerRevenue(player, betAmount);
             gamerRevenueMap.put(player, revenue);
-        }
+        });
 
-        outputView.printRevenues(GamerRevenueDto.from(gamerRevenueMap));
+        return gamerRevenueMap;
     }
 }
