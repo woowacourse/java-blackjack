@@ -9,18 +9,18 @@ import org.junit.jupiter.api.Test;
 class HandTest {
 
     @Test
-    @DisplayName("성공: 카드를 한 장 받을 수 있다")
-    void receive_NoException() {
+    @DisplayName("성공: 패에 카드를 한 장 추가")
+    void add_NoException() {
         Hand hand = new Hand();
-        hand.receive(new Card(Rank.KING, Symbol.DIAMOND));
+        hand.add(new Card(Rank.KING, Symbol.DIAMOND));
         assertThat(hand.getCards()).hasSize(1);
     }
 
     @Test
-    @DisplayName("성공: 카드를 여러장 받을 수 있다")
-    void receive_NoException_SeveralCards() {
+    @DisplayName("성공: 패에 카드를 여러 장 추가")
+    void add_NoException_SeveralCards() {
         Hand hand = new Hand();
-        hand.receive(List.of(
+        hand.add(List.of(
             new Card(Rank.KING, Symbol.DIAMOND),
             new Card(Rank.KING, Symbol.HEART)
         ));
@@ -31,7 +31,7 @@ class HandTest {
     @DisplayName("성공: Ace 여부 반환(Ace 있음)")
     void hasAce_True() {
         Hand hand = new Hand();
-        hand.receive(List.of(
+        hand.add(List.of(
             new Card(Rank.ACE, Symbol.HEART),
             new Card(Rank.KING, Symbol.CLUB)
         ));
@@ -39,10 +39,10 @@ class HandTest {
     }
 
     @Test
-    @DisplayName("실패: Ace 여부 반환(Ace 없음)")
+    @DisplayName("성공: Ace 여부 반환(Ace 없음)")
     void hasAce_False() {
         Hand hand = new Hand();
-        hand.receive(List.of(
+        hand.add(List.of(
             new Card(Rank.TWO, Symbol.HEART),
             new Card(Rank.KING, Symbol.CLUB)
         ));
@@ -53,7 +53,7 @@ class HandTest {
     @DisplayName("성공: 카드 점수의 합을 계산(경계값 21점)")
     void calculateScore_NoException_OneKingOneSevenOneFour() {
         Hand hand = new Hand();
-        hand.receive(List.of(
+        hand.add(List.of(
             new Card(Rank.KING, Symbol.DIAMOND),
             new Card(Rank.SEVEN, Symbol.HEART),
             new Card(Rank.FOUR, Symbol.CLUB)
@@ -65,7 +65,7 @@ class HandTest {
     @DisplayName("성공: 카드 점수의 합을 계산(경계값 22점)")
     void calculateScore_NoException_OneKingOneSevenOneFive() {
         Hand hand = new Hand();
-        hand.receive(List.of(
+        hand.add(List.of(
             new Card(Rank.KING, Symbol.DIAMOND),
             new Card(Rank.SEVEN, Symbol.HEART),
             new Card(Rank.FIVE, Symbol.CLUB)
@@ -78,7 +78,7 @@ class HandTest {
     @DisplayName("성공: 점수 합 계산(ACE 2장 -> 12점)")
     void calculateScore_NoException_TwoAces() {
         Hand hand = new Hand();
-        hand.receive(List.of(
+        hand.add(List.of(
             new Card(Rank.ACE, Symbol.DIAMOND),
             new Card(Rank.ACE, Symbol.HEART)
         ));
@@ -90,7 +90,7 @@ class HandTest {
     @DisplayName("성공: 점수 합 계산(ACE 2장, NINE 1장 -> 21점)")
     void calculateScore_NoException_TwoAcesOneNine() {
         Hand hand = new Hand();
-        hand.receive(List.of(
+        hand.add(List.of(
             new Card(Rank.ACE, Symbol.DIAMOND),
             new Card(Rank.ACE, Symbol.HEART),
             new Card(Rank.NINE, Symbol.CLUB)

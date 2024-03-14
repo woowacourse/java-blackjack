@@ -11,12 +11,12 @@ public class Hand {
         this.cards = new ArrayList<>();
     }
 
-    public void receive(Card receivedCard) {
-        cards.add(receivedCard);
+    public void add(Card addedCard) {
+        cards.add(addedCard);
     }
 
-    public void receive(List<Card> receivedCards) {
-        cards.addAll(receivedCards);
+    public void add(List<Card> addedCards) {
+        cards.addAll(addedCards);
     }
 
     public Score totalScore() {

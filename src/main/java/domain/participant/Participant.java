@@ -20,7 +20,7 @@ public abstract class Participant {
 
     public void receive(Card receivedCard) {
         if (isReceivable()) {
-            cards.receive(receivedCard);
+            cards.add(receivedCard);
             return;
         }
         throw new IllegalStateException("[ERROR] 카드를 받을 수 없는 상태입니다.");
@@ -28,7 +28,7 @@ public abstract class Participant {
 
     public void receive(List<Card> receivedCards) {
         if (isReceivable()) {
-            cards.receive(receivedCards);
+            cards.add(receivedCards);
             return;
         }
         throw new IllegalStateException("[ERROR] 카드를 받을 수 없는 상태입니다.");

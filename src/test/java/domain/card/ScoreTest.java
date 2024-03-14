@@ -25,7 +25,7 @@ class ScoreTest {
     @DisplayName("성공: K, 7, 4 -> 총점 21")
     void totalScoreOf_KingSevenFour() {
         Hand hand = new Hand();
-        hand.receive(List.of(
+        hand.add(List.of(
             new Card(Rank.KING, Symbol.DIAMOND),
             new Card(Rank.SEVEN, Symbol.HEART),
             new Card(Rank.FOUR, Symbol.CLUB)
@@ -37,7 +37,7 @@ class ScoreTest {
     @DisplayName("성공: K, K, A -> 총점 21")
     void totalScoreOf_KingKingAce() {
         Hand hand = new Hand();
-        hand.receive(List.of(
+        hand.add(List.of(
             new Card(Rank.KING, Symbol.DIAMOND),
             new Card(Rank.KING, Symbol.HEART),
             new Card(Rank.ACE, Symbol.CLUB)
@@ -49,7 +49,7 @@ class ScoreTest {
     @DisplayName("성공: A, A, A, A -> 총점 14")
     void totalScoreOf_AceAceAceAce() {
         Hand hand = new Hand();
-        hand.receive(List.of(
+        hand.add(List.of(
             new Card(Rank.ACE, Symbol.DIAMOND),
             new Card(Rank.ACE, Symbol.HEART),
             new Card(Rank.ACE, Symbol.CLUB),
@@ -62,7 +62,7 @@ class ScoreTest {
     @DisplayName("성공: A, A, K, K -> 총점 22")
     void totalScoreOf_AceAceKingKing() {
         Hand hand = new Hand();
-        hand.receive(List.of(
+        hand.add(List.of(
             new Card(Rank.ACE, Symbol.DIAMOND),
             new Card(Rank.ACE, Symbol.HEART),
             new Card(Rank.KING, Symbol.CLUB),
