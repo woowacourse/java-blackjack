@@ -4,13 +4,17 @@ import blackjack.domain.game.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Dealer2;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Player2;
 import blackjack.domain.participant.PlayerName;
 import blackjack.domain.participant.Players;
 
 import blackjack.domain.game.Judge;
+import blackjack.domain.participant.Players2;
 import blackjack.view.mapper.CardRankMapper;
 import blackjack.view.mapper.CardSuitMapper;
 import java.util.Map.Entry;
@@ -21,9 +25,14 @@ public class MessageResolver {
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String SEPARATOR = ", ";
     private static final String DEALER_NAME = "딜러";
-    private static final String PARTICIPANT_HAND_FORMAT = "%s 카드: %s";
+    private static final String HAND_FORMAT = "%s 카드: %s";
 
     public String resolveDealDescriptionMessage(Players players) {
+        String message = String.format("%s와 %s에게 2장을 나누었습니다.", DEALER_NAME, resolveNamesMessage(players));
+        return String.join("", LINE_SEPARATOR, message);
+    }
+
+    public String resolveDealDescriptionMessage(Players2 players) {
         String message = String.format("%s와 %s에게 2장을 나누었습니다.", DEALER_NAME, resolveNamesMessage(players));
         return String.join("", LINE_SEPARATOR, message);
     }
@@ -35,10 +44,31 @@ public class MessageResolver {
                 .collect(Collectors.joining(SEPARATOR));
     }
 
+    private String resolveNamesMessage(Players2 players) {
+        return players.getPlayers().stream()
+                .map(Player2::getName)
+                .map(Name::getValue)
+                .collect(Collectors.joining(SEPARATOR));
+    }
+
     public String resolveDealToAllMessage(Participants participants) {
         return participants.getParticipants().stream()
                 .map(this::resolveDealToOneMessage)
                 .collect(Collectors.joining(LINE_SEPARATOR));
+    }
+
+    public String resolveDealToDealerMessage(Dealer2 dealer) {
+        return String.format(HAND_FORMAT, DEALER_NAME, resolveHandMessage(dealer.revealHand()));
+    }
+
+    public String resolveDealToPlayersMessage(Players2 players) {
+        return players.getPlayers().stream()
+                .map(this::resolveDealToPlayerMessage)
+                .collect(Collectors.joining(LINE_SEPARATOR));
+    }
+
+    private String resolveDealToPlayerMessage(Player2 player) {
+        return String.format(HAND_FORMAT, player.getName(), resolveHandMessage(player.revealHand()));
     }
 
     private String resolveDealToOneMessage(Participant participant) {
@@ -52,11 +82,11 @@ public class MessageResolver {
     }
 
     private String resolveDealerFirstCardMessage(Hand hand) {
-        return String.format(PARTICIPANT_HAND_FORMAT, DEALER_NAME, resolveCardMessage(hand.getCards().get(0)));
+        return String.format(HAND_FORMAT, DEALER_NAME, resolveCardMessage(hand.getCards().get(0)));
     }
 
     public String resolveParticipantHandMessage(Participant participant) {
-        return String.format(PARTICIPANT_HAND_FORMAT, resolveNameMessage(participant),
+        return String.format(HAND_FORMAT, resolveNameMessage(participant),
                 resolveHandMessage(participant.getHand()));
     }
 

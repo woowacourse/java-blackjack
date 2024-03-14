@@ -14,4 +14,8 @@ public class Players2 {
     public void deal(CardDeck cardDeck) {
         players.forEach(player -> player.deal(cardDeck));
     }
+
+    public List<Player2> getPlayers() {
+        return List.copyOf(players);
+    }
 }

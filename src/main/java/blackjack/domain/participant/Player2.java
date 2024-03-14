@@ -1,9 +1,7 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Hand;
-import java.util.List;
 
 public class Player2 {
 
@@ -21,7 +19,11 @@ public class Player2 {
         hand.appendInitial(cardDeck);
     }
 
-    public List<Card> revealHand() {
+    public Hand revealHand() {
         return hand.revealHand(REVEAL_COUNT);
+    }
+
+    public Name getName() {
+        return name;
     }
 }

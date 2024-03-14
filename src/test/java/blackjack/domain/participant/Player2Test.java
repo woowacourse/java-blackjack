@@ -2,10 +2,8 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Hand;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,9 +19,9 @@ class Player2Test {
         player.deal(cardDeck);
 
         // when
-        List<Card> cards = player.revealHand();
+        Hand hand = player.revealHand();
 
         // then
-        assertThat(cards).hasSize(2);
+        assertThat(hand.getCards()).hasSize(2);
     }
 }

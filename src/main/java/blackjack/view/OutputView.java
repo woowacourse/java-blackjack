@@ -1,8 +1,10 @@
 package blackjack.view;
 
+import blackjack.domain.participant.Dealer2;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.game.Judge;
+import blackjack.domain.participant.Players2;
 
 public class OutputView {
 
@@ -15,6 +17,12 @@ public class OutputView {
     public void printDealToAll(Participants participants) {
         System.out.println(messageResolver.resolveDealDescriptionMessage(participants.getPlayers()));
         System.out.println(messageResolver.resolveDealToAllMessage(participants));
+    }
+
+    public void printDealToAll(Dealer2 dealer, Players2 players) {
+        System.out.println(messageResolver.resolveDealDescriptionMessage(players));
+        System.out.println(messageResolver.resolveDealToDealerMessage(dealer));
+        System.out.println(messageResolver.resolveDealToPlayersMessage(players));
     }
 
     public void printDrawToPlayer(Player player) {

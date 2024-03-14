@@ -7,4 +7,8 @@ public class Name {
     public Name(String value) {
         this.value = value;
     }
+
+    public String getValue() {
+        return value;
+    }
 }

@@ -2,10 +2,12 @@ package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Dealer2;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.game.Judge;
+import blackjack.domain.participant.Players2;
 import blackjack.view.InputView;
 import blackjack.view.MessageResolver;
 import blackjack.view.OutputView;
@@ -29,6 +31,13 @@ public class GameManager {
         drawToDealer(participants.getDealer(), cardDeck);
         outputView.printParticipantsHandScore(participants);
         outputView.printParticipantsResult(new Judge(participants));
+    }
+
+    public void start2(CardDeck cardDeck, Dealer2 dealer, Players2 players) {
+        dealer.deal(cardDeck);
+        players.deal(cardDeck);
+        outputView.printDealToAll(dealer, players);
+
     }
 
     private void drawToPlayers(Players players, CardDeck cardDeck) {

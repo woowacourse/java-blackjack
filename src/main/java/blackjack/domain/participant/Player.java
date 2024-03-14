@@ -25,6 +25,10 @@ public class Player extends Participant {
         return getHandScore().canHit(HIT_THRESHOLD);
     }
 
+    public PlayerName getPlayerName() {
+        return playerName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -40,9 +44,5 @@ public class Player extends Participant {
     @Override
     public int hashCode() {
         return Objects.hash(playerName);
-    }
-
-    public PlayerName getPlayerName() {
-        return playerName;
     }
 }
