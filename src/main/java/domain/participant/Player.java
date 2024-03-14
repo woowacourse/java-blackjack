@@ -23,8 +23,7 @@ public class Player extends Participant {
 
     @Override
     public boolean isDrawable() {
-        return hand.getTotalScore()
-                .isEqualOrLess(MAXIMUM_ENABLE_TOTAL_SCORE);
+        return hand.isTotalScoreLessOrEqual(MAXIMUM_ENABLE_TOTAL_SCORE);
     }
 
     public boolean isWin(final Dealer dealer) {
