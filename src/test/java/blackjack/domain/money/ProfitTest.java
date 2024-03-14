@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class ProfitTest {
+class ProfitTest {
 
     @DisplayName("주어진 배팅 금액에 특정 배수만큼 얻는 이익을 계산할 수 있다.")
     @ParameterizedTest

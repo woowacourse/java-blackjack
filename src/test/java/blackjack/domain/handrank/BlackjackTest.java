@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class BlackjackTest {
+class BlackjackTest {
 
     private final HankRank BLACKJACK = new Blackjack();
 
