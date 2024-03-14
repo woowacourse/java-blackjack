@@ -6,9 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import model.card.Card;
 import model.card.Emblem;
 import model.card.Number;
-import model.participant.Name;
-import model.participant.Participant;
-import model.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
