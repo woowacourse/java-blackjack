@@ -20,6 +20,13 @@ public class InputView {
         return Arrays.asList(input.split(SEPARATOR));
     }
 
+    public static Double askPlayerForBatting(Player player) {
+        System.out.printf(NEW_LINE + "%s의 배팅 금액은?" + NEW_LINE, player.getPlayerName());
+        String input = SCANNER.nextLine();
+
+        return Double.parseDouble(input);
+    }
+
     public static boolean askPlayerForCard(Player player) {
         System.out.printf(NEW_LINE + "%s는(은) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEW_LINE, player.getPlayerName());
         String input = SCANNER.nextLine();

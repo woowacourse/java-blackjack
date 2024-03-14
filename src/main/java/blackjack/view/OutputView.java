@@ -14,7 +14,6 @@ public class OutputView {
 
     private static final String NEW_LINE = System.lineSeparator();
     private static final String SEPARATOR = ", ";
-    private static final String NONE = "";
 
     private OutputView() {
     }
@@ -57,10 +56,10 @@ public class OutputView {
         }
     }
 
-    public static void printResult(GameResult gameResult) {
-        System.out.println(NEW_LINE + "## 최종 승패");
-        printDealerResult(gameResult);
-        printPlayerResult(gameResult);
+    public static void printResult(GameBattingManager gameBattingManager) {
+        System.out.println(NEW_LINE + "## 최종 수익");
+        printDealerResult(gameBattingManager);
+        printPlayerResult(gameBattingManager);
     }
 
     private static String dealerCardMessage(List<Card> cards) {
@@ -74,26 +73,21 @@ public class OutputView {
     }
 
 
-    private static void printDealerResult(GameResult gameResult) {
-        int dealerWins = gameResult.countDealerWins();
-        int dealerLoses = gameResult.countDealerLoses();
-        int dealerTies = gameResult.countDealerTies();
+    private static void printDealerResult(GameBattingManager gameBattingManager) {
+        NumberFormat formatter = new DecimalFormat("0");
+        double dealerResult = gameBattingManager.getDealerResult();
 
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(dealerWinFormat(dealerWins));
-        stringBuilder.append(dealerLoseFormat(dealerLoses));
-        stringBuilder.append(dealerTiesFormat(dealerTies));
-
-        System.out.printf("딜러 : %s" + NEW_LINE, stringBuilder);
+        System.out.printf("딜러 : %s" + NEW_LINE, formatter.format(dealerResult) );
     }
 
-    private static void printPlayerResult(GameResult gameResult) {
-        Map<Player, ResultState> playersResult = gameResult.getPlayersResult();
+    private static void printPlayerResult(GameBattingManager gameBattingManager) {
+        NumberFormat formatter = new DecimalFormat("0");
+        Map<Player, Double> playersResult = gameBattingManager.getPlayersResult();
 
         for (Player player : playersResult.keySet()) {
             String playerName = player.getPlayerName();
-            String playerResult = ResultView.convertResultName(playersResult.get(player));
-            System.out.printf("%s : %s" + NEW_LINE, playerName, playerResult);
+            Double playerBattingResult = playersResult.get(player);
+            System.out.printf("%s : %s" + NEW_LINE, playerName, formatter.format(playerBattingResult));
         }
     }
 
@@ -114,29 +108,5 @@ public class OutputView {
 
     private static String convertCardNameFormat(Card card) {
         return RankView.convertRankName(card.getCardNumber()) + PatternView.convertPatternName(card.getCardPattern());
-    }
-
-    private static String dealerWinFormat(int dealerWins) {
-        if (dealerWins > 0) {
-            return String.format("%d승 ", dealerWins);
-        }
-
-        return NONE;
-    }
-
-    private static String dealerLoseFormat(int dealerLoses) {
-        if (dealerLoses > 0) {
-            return String.format("%d패 ", dealerLoses);
-        }
-
-        return NONE;
-    }
-
-    private static String dealerTiesFormat(int dealerTies) {
-        if (dealerTies > 0) {
-            return String.format("%d무", dealerTies);
-        }
-
-        return NONE;
     }
 }

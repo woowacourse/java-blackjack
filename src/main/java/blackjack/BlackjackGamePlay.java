@@ -1,12 +1,6 @@
 package blackjack;
 
-import blackjack.model.GameScoreRule;
-import blackjack.model.card.Card;
-import blackjack.model.deck.DeckGenerator;
-import blackjack.model.deck.PlayingDeck;
-import blackjack.model.gamer.Dealer;
-import blackjack.model.gamer.Player;
-import blackjack.model.result.GameResult;
+import blackjack.domain.result.GameBattingManager;
 import blackjack.domain.card.Card;
 import blackjack.domain.deck.DeckGenerator;
 import blackjack.domain.deck.PlayingDeck;
@@ -19,10 +13,11 @@ import java.util.List;
 public class BlackjackGamePlay {
 
     private final PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck());
-    private final GameScoreRule gameScoreRule = new GameScoreRule();
+    private final GameBattingManager gameBattingManager = new GameBattingManager();
 
     public void run() {
         List<Player> players = registerPlayer();
+        registerPlayersBatting(players);
         playBlackJack(new Dealer(), players);
     }
 
@@ -31,6 +26,12 @@ public class BlackjackGamePlay {
         return playersName.stream()
                 .map(Player::new)
                 .toList();
+    }
+
+    private void registerPlayersBatting(List<Player> players) {
+        for (Player player : players) {
+            gameBattingManager.registerPlayerBatting(player, InputView.askPlayerForBatting(player));
+        }
     }
 
     private void playBlackJack(Dealer dealer, List<Player> players) {
@@ -94,13 +95,11 @@ public class BlackjackGamePlay {
     }
 
     private void calculateResult(Dealer dealer, List<Player> players) {
-        GameResult gameResult = new GameResult();
-
         for (Player player : players) {
-            gameScoreRule.decideWinner(dealer, player, gameResult);
+            gameBattingManager.decideWinner(dealer, player);
         }
 
         OutputView.printCardScore(dealer, players);
-        OutputView.printResult(gameResult);
+        OutputView.printResult(gameBattingManager);
     }
 }
