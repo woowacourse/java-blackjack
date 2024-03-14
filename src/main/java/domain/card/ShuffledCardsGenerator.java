@@ -9,13 +9,6 @@ public class ShuffledCardsGenerator {
     private static final int DUPLICATES_COUNT = 6;
     private static final List<Card> cachedCards = generateCardsOfOnePack();
 
-    private static List<Card> generateCardsOfOnePack() {
-        return Stream.of(Symbol.values())
-                .flatMap(symbol -> Rank.getRanks().stream()
-                        .map(rank -> new Card(symbol, rank)))
-                .toList();
-    }
-
     public List<Card> generate() {
         List<Card> cards = generateBlackJackCards();
         Collections.shuffle(cards);
@@ -28,5 +21,12 @@ public class ShuffledCardsGenerator {
             blackJackCards.addAll(new ArrayList<>(cachedCards));
         }
         return blackJackCards;
+    }
+
+    private static List<Card> generateCardsOfOnePack() {
+        return Stream.of(Symbol.values())
+                .flatMap(symbol -> Rank.getRanks().stream()
+                        .map(rank -> new Card(symbol, rank)))
+                .toList();
     }
 }
