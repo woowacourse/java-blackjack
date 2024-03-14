@@ -1,7 +1,7 @@
 package view;
 
 import dto.PlayerDto;
-import dto.ResultDto;
+import dto.ProfitDto;
 import dto.ScoreDto;
 import java.util.List;
 import java.util.Map;
@@ -59,54 +59,13 @@ public class OutputView {
         return playerDto.name() + "카드: " + String.join(", ", playerDto.hands());
     }
 
-    public void printWinLoss(ResultDto resultDto) {
-        System.out.println("\n## 최종 승패");
-        printDealerWinLoss(resultDto.getDealerResult());
-        printPlayerWinLoss(resultDto);
+    public void printProfits(ProfitDto profitDto) {
+        System.out.println("\n## 최종 수익");
+        System.out.println(profitDto.getDealerProfit().getKey() + ": " + profitDto.getDealerProfit().getValue());
+        for (Map.Entry<String, Integer> entry : profitDto.gameProfits().entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
     }
 
-    private void printDealerWinLoss(Map<String, Integer> result) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("딜러: ");
-        stringBuilder.append(result.get("DEALER_WIN"))
-                .append(convertDealerWinLoss("DEALER_WIN"));
-        stringBuilder.append(result.get("PLAYER_WIN"))
-                .append(convertDealerWinLoss("PLAYER_WIN"));
-        if (result.get("PUSH") != 0) {
-            stringBuilder.append(result.get("PUSH"))
-                    .append(convertDealerWinLoss("PUSH"));
-        }
-        System.out.println(stringBuilder);
-    }
 
-    private void printPlayerWinLoss(ResultDto resultDto) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Map.Entry<String, String> playerResult : resultDto.getPlayerResult().entrySet()) {
-            stringBuilder.append(playerResult.getKey())
-                    .append(": ")
-                    .append(convertPlayerWinLoss(playerResult.getValue()))
-                    .append("\n");
-        }
-        System.out.println(stringBuilder);
-    }
-
-    private String convertPlayerWinLoss(String resultText) {
-        if (resultText.equals("PLAYER_WIN")) {
-            return "승";
-        }
-        if (resultText.equals("DEALER_WIN")) {
-            return "패";
-        }
-        return "무";
-    }
-
-    private String convertDealerWinLoss(String resultText) {
-        if (resultText.equals("PLAYER_WIN")) {
-            return "패";
-        }
-        if (resultText.equals("DEALER_WIN")) {
-            return "승";
-        }
-        return "무";
-    }
 }
