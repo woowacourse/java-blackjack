@@ -36,17 +36,17 @@ public class PlayersResult {
     }
 
     private Profit matchWinStateToProfit(Player player, WinState winState) {
-        Profit battingAmount = profitResult.get(player);
+        Profit bettingAmount = profitResult.get(player);
         if (winState == WinState.WIN) {
-            return battingAmount.win();
+            return bettingAmount.win();
         }
         if (winState == WinState.LOSE) {
-            return battingAmount.lose();
+            return bettingAmount.lose();
         }
         if (winState == WinState.BLACKJACK) {
-            return battingAmount.specialWin();
+            return bettingAmount.specialWin();
         }
-        return battingAmount.keep();
+        return bettingAmount.keep();
     }
 
     public int countWinState(WinState winState) {

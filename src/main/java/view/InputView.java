@@ -37,11 +37,11 @@ public class InputView {
         }
     }
 
-    public int readBattingAmount(Player player) {
+    public int readBettingAmount(Player player) {
         System.out.println(player.getPlayerName() + "의 배팅 금액은?");
-        String rawBattingAmount = scanner.nextLine();
+        String rawBettingAmount = scanner.nextLine();
         try {
-            return Integer.parseInt(rawBattingAmount);
+            return Integer.parseInt(rawBettingAmount);
         } catch (NumberFormatException ex) {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 숫자로 입력해주세요.");
         }

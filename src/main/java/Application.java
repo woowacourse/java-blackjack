@@ -35,8 +35,8 @@ public class Application {
 
     private static void setUpPlayers(BlackJackGame game, Judge judge) {
         for (Player player : game.getGamers().getPlayers()) {
-            int battingAmount = inputView.readBattingAmount(player);
-            judge.initializeProfit(player, new Profit(battingAmount));
+            int bettingAmount = inputView.readBettingAmount(player);
+            judge.initializeProfit(player, new Profit(bettingAmount));
         }
     }
 
