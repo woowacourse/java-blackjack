@@ -1,7 +1,8 @@
-package domain;
+package domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.WinState;
 import domain.cards.Card;
 import domain.cards.Hand;
 import domain.cards.cardinfo.CardNumber;
@@ -9,7 +10,6 @@ import domain.cards.cardinfo.CardShape;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
-import domain.result.Judge;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
