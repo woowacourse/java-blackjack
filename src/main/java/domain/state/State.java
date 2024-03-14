@@ -1,16 +1,16 @@
 package domain.state;
 
 import domain.card.Card;
-import domain.card.Deck;
+import domain.player.Hands;
 
 public interface State {
-    State draw(Card card);
+    State hit(Card card);
 
     State stand();
 
     boolean isFinished();
 
-    Deck getCards();
-
     double profit();
+
+    Hands getHands();
 }

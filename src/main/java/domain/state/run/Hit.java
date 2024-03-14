@@ -1,17 +1,22 @@
 package domain.state.run;
 
 import domain.card.Card;
+import domain.player.Hands;
 import domain.state.State;
-import domain.state.fininsh.Stand;
 
 public class Hit extends Running {
+    public Hit(final Hands hands) {
+        super(hands);
+    }
+
     @Override
-    public State draw(final Card card) {
+    public State hit(final Card card) {
+
         return null;
     }
 
     @Override
     public State stand() {
-        return new Stand();
+        return null;
     }
 }
