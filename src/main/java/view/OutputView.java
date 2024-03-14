@@ -1,7 +1,8 @@
 package view;
 
-import domain.BlackJackResult;
+import domain.BettingResult;
 import domain.Card;
+import domain.Money;
 import domain.Name;
 import domain.constant.GamerResult;
 import java.util.Arrays;
@@ -69,14 +70,14 @@ public class OutputView {
         return "결과: %d".formatted(totalScore);
     }
 
-    public static void printGameResult(BlackJackResult gameResult) {
-        System.out.println("\n## 최종 승패");
-        Map<GamerResult, Integer> dealerGameResult = gameResult.getDealerResult();
-        Map<Name, GamerResult> playersGameResult = gameResult.getPlayersResult();
+    public static void printBettingResult(BettingResult gameResult) {
+        System.out.println("\n## 최종 수익");
+        Money dealerGameResult = gameResult.getDealerResult();
+        Map<Name, Money> playersGameResult = gameResult.getPlayersResult();
 
-        System.out.println("딜러: " + buildDealerResult(dealerGameResult));
+        System.out.println("딜러: %s".formatted(dealerGameResult.getAmount()));
         playersGameResult.forEach(
-                (name, result) -> System.out.println("%s: %s".formatted(name.name(), result.getResult())));
+                (name, result) -> System.out.println("%s: %s".formatted(name.name(), result.getAmount())));
     }
 
     private static String buildDealerResult(Map<GamerResult, Integer> dealerGameResult) {

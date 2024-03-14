@@ -2,7 +2,7 @@ package domain;
 
 import domain.constant.CardNumber;
 import domain.constant.CardType;
-import domain.constant.GamerResult;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BlackJackResultTest {
+class BettingResultTest {
     private Dealer dealer;
     private Players players;
 
@@ -47,36 +47,34 @@ class BlackJackResultTest {
 
     private Players setPlayers() {
         return new Players(List.of(
-                new Player(new Name("win")),
-                new Player(new Name("lose")),
-                new Player(new Name("lose2"))));
+                new Player(new Name("win"), new Money(BigDecimal.valueOf(100))),
+                new Player(new Name("lose"), new Money(BigDecimal.valueOf(100))),
+                new Player(new Name("lose2"), new Money(BigDecimal.valueOf(100))))
+        );
     }
 
 
     @Test
-    @DisplayName("Player들의 승리 결과를 반환한다.")
+    @DisplayName("Player들의 배팅 결과를 반환한다.")
     void getPlayersResult() {
         Name win = new Name("win");
         Name lose = new Name("lose");
         Name lose2 = new Name("lose2");
-        BlackJackResult blackJackResult = new BlackJackResult(dealer, players);
-        Map<Name, GamerResult> playersResult = blackJackResult.getPlayersResult();
+        BettingResult bettingResult = new BettingResult(dealer, players);
+        Map<Name, Money> playersResult = bettingResult.getPlayersResult();
         Assertions.assertThat(playersResult)
                 .isEqualTo(Map.of(
-                        win, GamerResult.WIN,
-                        lose, GamerResult.LOSE,
-                        lose2, GamerResult.LOSE
+                        win, new Money(BigDecimal.valueOf(150.0)),
+                        lose, new Money(BigDecimal.valueOf(-100.0)),
+                        lose2, new Money(BigDecimal.valueOf(-100.0))
                 ));
     }
 
     @Test
-    @DisplayName("Dealer의 승리 결과를 반환한다.")
+    @DisplayName("Dealer의 배팅 결과를 반환한다.")
     void getDealerResult() {
-        BlackJackResult blackJackResult = new BlackJackResult(dealer, players);
-        Map<GamerResult, Integer> dealerResult = blackJackResult.getDealerResult();
-        Assertions.assertThat(dealerResult)
-                .isEqualTo(Map.of(
-                        GamerResult.WIN, 2,
-                        GamerResult.LOSE, 1));
+        BettingResult bettingResult = new BettingResult(dealer, players);
+        Money dealerResult = bettingResult.getDealerResult();
+        Assertions.assertThat(dealerResult).isEqualTo(new Money(BigDecimal.valueOf(50.0)));
     }
 }

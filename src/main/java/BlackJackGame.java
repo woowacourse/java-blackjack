@@ -1,4 +1,4 @@
-import domain.BlackJackResult;
+import domain.BettingResult;
 import domain.Dealer;
 import domain.Deck;
 import domain.Name;
@@ -100,7 +100,7 @@ public class BlackJackGame {
     private static void playFinalStep(Dealer dealer, Players players) {
         printDealerStatus(dealer);
         printPlayersStatus(players);
-        OutputView.printGameResult(new BlackJackResult(dealer, players));
+        OutputView.printBettingResult(new BettingResult(dealer, players));
     }
 
     private static void printDealerStatus(Dealer dealer) {
