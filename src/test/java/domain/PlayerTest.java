@@ -89,7 +89,7 @@ class PlayerTest {
     @Test
     @DisplayName("Player가 배팅할 때 승리일 경우 걸었던 돈 그대로 받는다.")
     void bettingWinNormalCase() {
-        Player player = new Player(new Name("test"),new Money(new BigDecimal(100.0)));
+        Player player = new Player(new Name("test"),new Money("100.0"));
         Dealer dealer = new Dealer();
         Deck deck = Deck.withCustomCards(
                 new Card(CardType.SPADE, CardNumber.THREE),
@@ -98,13 +98,13 @@ class PlayerTest {
                 new Card(CardType.DIAMOND, CardNumber.TEN));
         player.pickCards(deck, 2);
         dealer.pickCards(deck,2);
-        Assertions.assertThat(player.betting(dealer)).isEqualTo(new Money(new BigDecimal(100.0)));
+        Assertions.assertThat(player.betting(dealer)).isEqualTo(new Money("100.0"));
     }
 
     @Test
     @DisplayName("Player가 배팅할 때 패배일 경우 걸었던 돈이 마이너스로 변환다.")
     void bettingLoseNormalCase() {
-        Player player = new Player(new Name("test"),new Money(new BigDecimal(100.0)));
+        Player player = new Player(new Name("test"),new Money("100.0"));
         Dealer dealer = new Dealer();
         Deck deck = Deck.withCustomCards(
                 new Card(CardType.DIAMOND, CardNumber.TEN),
@@ -114,13 +114,13 @@ class PlayerTest {
         );
         player.pickCards(deck, 2);
         dealer.pickCards(deck,2);
-        Assertions.assertThat(player.betting(dealer)).isEqualTo(new Money(new BigDecimal("-100.0")));
+        Assertions.assertThat(player.betting(dealer)).isEqualTo(new Money("-100.0"));
     }
 
     @Test
     @DisplayName("Player가 배팅할 때 승리이고 블랙잭 일 경우 걸었던 돈의 1.5배를 반환한다.")
     void bettingWinBlackJackCase() {
-        Player player = new Player(new Name("test"),new Money(new BigDecimal(100)));
+        Player player = new Player(new Name("test"),new Money("100"));
         Dealer dealer = new Dealer();
         Deck deck = Deck.withCustomCards(
                 new Card(CardType.DIAMOND, CardNumber.TEN),
@@ -130,13 +130,13 @@ class PlayerTest {
         );
         player.pickCards(deck, 2);
         dealer.pickCards(deck,2);
-        Assertions.assertThat(player.betting(dealer)).isEqualTo(new Money(new BigDecimal("150.0")));
+        Assertions.assertThat(player.betting(dealer)).isEqualTo(new Money("150.0"));
     }
 
     @Test
     @DisplayName("Player가 배팅할 때 패배이고 딜러가 블랙잭일 경우 걸었던 돈이 마이너스로 변한다.")
     void bettingLoseBlackJackCase() {
-        Player player = new Player(new Name("test"),new Money(new BigDecimal(100.0)));
+        Player player = new Player(new Name("test"),new Money("100.0"));
         Dealer dealer = new Dealer();
         Deck deck = Deck.withCustomCards(
                 new Card(CardType.DIAMOND, CardNumber.ACE),
@@ -146,13 +146,13 @@ class PlayerTest {
         );
         player.pickCards(deck, 2);
         dealer.pickCards(deck,2);
-        Assertions.assertThat(player.betting(dealer)).isEqualTo(new Money(BigDecimal.valueOf(-100.0)));
+        Assertions.assertThat(player.betting(dealer)).isEqualTo(new Money("-100.0"));
     }
 
     @Test
     @DisplayName("Player가 배팅할 때 둘 다 블랙잭일 경우 걸었던 걸었던 돈 그대로 반환한다.")
     void bettingBothBlackJackCase() {
-        Player player = new Player(new Name("test"),new Money(new BigDecimal(100)));
+        Player player = new Player(new Name("test"),new Money("100"));
         Dealer dealer = new Dealer();
         Deck deck = Deck.withCustomCards(
                 new Card(CardType.DIAMOND, CardNumber.ACE),
@@ -162,13 +162,13 @@ class PlayerTest {
         );
         player.pickCards(deck, 2);
         dealer.pickCards(deck,2);
-        Assertions.assertThat(player.betting(dealer)).isEqualTo(new Money(BigDecimal.valueOf(100)));
+        Assertions.assertThat(player.betting(dealer)).isEqualTo(new Money("100"));
     }
 
     @Test
     @DisplayName("Player가 배팅할 때 점수가 동일 할 경우 걸었던 걸었던 돈 그대로 반환한다.")
     void bettingSameScoreCase() {
-        Player player = new Player(new Name("test"),new Money(new BigDecimal(100)));
+        Player player = new Player(new Name("test"),new Money("100"));
         Dealer dealer = new Dealer();
         Deck deck = Deck.withCustomCards(
                 new Card(CardType.DIAMOND, CardNumber.KING),
@@ -178,6 +178,6 @@ class PlayerTest {
         );
         player.pickCards(deck, 2);
         dealer.pickCards(deck,2);
-        Assertions.assertThat(player.betting(dealer)).isEqualTo(new Money(new BigDecimal("100")));
+        Assertions.assertThat(player.betting(dealer)).isEqualTo(new Money("100"));
     }
 }

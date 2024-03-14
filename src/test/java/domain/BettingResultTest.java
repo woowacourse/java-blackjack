@@ -47,9 +47,9 @@ class BettingResultTest {
 
     private Players setPlayers() {
         return new Players(List.of(
-                new Player(new Name("win"), new Money(BigDecimal.valueOf(100))),
-                new Player(new Name("lose"), new Money(BigDecimal.valueOf(100))),
-                new Player(new Name("lose2"), new Money(BigDecimal.valueOf(100))))
+                new Player(new Name("win"), new Money("100")),
+                new Player(new Name("lose"), new Money("100")),
+                new Player(new Name("lose2"), new Money("100")))
         );
     }
 
@@ -64,9 +64,9 @@ class BettingResultTest {
         Map<Name, Money> playersResult = bettingResult.getPlayersResult();
         Assertions.assertThat(playersResult)
                 .isEqualTo(Map.of(
-                        win, new Money(BigDecimal.valueOf(150.0)),
-                        lose, new Money(BigDecimal.valueOf(-100.0)),
-                        lose2, new Money(BigDecimal.valueOf(-100.0))
+                        win, new Money("150.0"),
+                        lose, new Money("-100.0"),
+                        lose2, new Money("-100.0")
                 ));
     }
 
@@ -75,6 +75,6 @@ class BettingResultTest {
     void getDealerResult() {
         BettingResult bettingResult = new BettingResult(dealer, players);
         Money dealerResult = bettingResult.getDealerResult();
-        Assertions.assertThat(dealerResult).isEqualTo(new Money(BigDecimal.valueOf(50.0)));
+        Assertions.assertThat(dealerResult).isEqualTo(new Money("50"));
     }
 }

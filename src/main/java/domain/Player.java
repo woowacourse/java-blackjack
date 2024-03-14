@@ -7,7 +7,7 @@ public class Player extends Gamer {
     private final Name name;
     private final Money money;
     public Player(Name name) {
-        this.money = new Money(BigDecimal.valueOf(0));
+        this.money = new Money("0");
         this.name = name;
     }
 
@@ -33,12 +33,12 @@ public class Player extends Gamer {
     }
 
     private Money loseMoney() {
-        return money.multiply(BigDecimal.valueOf(-1.0));
+        return money.multiply("-1.0");
     }
 
     private Money gainMoney() {
         if (isBlackJack()){
-            return money.multiply(BigDecimal.valueOf(1.5));
+            return money.multiply("1.5");
         }
         return money;
     }
