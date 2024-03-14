@@ -1,20 +1,28 @@
 package domain.gamer;
 
 import domain.cards.Card;
-import domain.cards.cardinfo.CardNumber;
-import domain.cards.cardinfo.CardShape;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerTest {
 
+    List<Card> unShuffledDeck;
+
+    @BeforeEach
+    void setUp() {
+        unShuffledDeck = Card.makeCardDeck();
+    }
+
     @DisplayName("카드를 한 장 받는다.")
     @Test
     void hitOneCard() {
         Player player = new Player("name");
-        Card newCard = new Card(CardNumber.FIVE, CardShape.CLOVER);
+        Card newCard = unShuffledDeck.get(0);
         player.hit(newCard);
 
         assertThat(player.getHand()).contains(newCard);
@@ -24,8 +32,8 @@ public class PlayerTest {
     @Test
     void checkUnderThreshold() {
         Player player = new Player("name");
-        player.hit(new Card(CardNumber.TWO, CardShape.CLOVER));
-        player.hit(new Card(CardNumber.THREE, CardShape.HEART));
+        player.hit(unShuffledDeck.get(1));
+        player.hit(unShuffledDeck.get(2));
         assertThat(player.canHit()).isTrue();
     }
 
@@ -33,9 +41,9 @@ public class PlayerTest {
     @Test
     void checkOverThreshold() {
         Player player = new Player("name");
-        player.hit(new Card(CardNumber.TWO, CardShape.CLOVER));
-        player.hit(new Card(CardNumber.KING, CardShape.CLOVER));
-        player.hit(new Card(CardNumber.KING, CardShape.SPADE));
+        player.hit(unShuffledDeck.get(1));
+        player.hit(unShuffledDeck.get(9));
+        player.hit(unShuffledDeck.get(9));
 
         assertThat(player.canHit()).isFalse();
     }

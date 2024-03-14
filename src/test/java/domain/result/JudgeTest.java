@@ -1,8 +1,6 @@
 package domain;
 
 import domain.cards.Card;
-import domain.cards.cardinfo.CardNumber;
-import domain.cards.cardinfo.CardShape;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.Players;
@@ -21,19 +19,21 @@ class JudgeTest {
 
     private Judge judge;
     private Dealer dealer;
+    List<Card> unShuffledDeck;
 
     @BeforeEach
     void setUp() {
+        unShuffledDeck = Card.makeCardDeck();
         judge = new Judge();
         dealer = new Dealer();
-        dealer.hit(new Card(CardNumber.FIVE, CardShape.HEART));
+        dealer.hit(unShuffledDeck.get(4));
     }
 
     @DisplayName("플레이어가 딜러를 상대로 승리를 판단한다.")
     @Test
     void decidePlayerWinByDealer() {
         Player player = new Player("player");
-        player.hit(new Card(CardNumber.KING, CardShape.HEART));
+        player.hit(unShuffledDeck.get(9));
         Players players = new Players(List.of(player));
         judge.decideResult(players, dealer);
         assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.WIN);
@@ -43,7 +43,7 @@ class JudgeTest {
     @Test
     void decidePlayerLoseByDealer() {
         Player player = new Player("player");
-        player.hit(new Card(CardNumber.TWO, CardShape.HEART));
+        player.hit(unShuffledDeck.get(1));
         Players players = new Players(List.of(player));
         judge.decideResult(players, dealer);
         assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.LOSE);
@@ -53,7 +53,7 @@ class JudgeTest {
     @Test
     void decidePlayerDrawByDealer() {
         Player player = new Player("player");
-        player.hit(new Card(CardNumber.FIVE, CardShape.HEART));
+        player.hit(unShuffledDeck.get(4));
         Players players = new Players(List.of(player));
         judge.decideResult(players, dealer);
         assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.DRAW);
@@ -63,8 +63,8 @@ class JudgeTest {
     @Test
     void decidePlayerBlackJackByDealer() {
         Player player = new Player("player");
-        player.hit(new Card(CardNumber.ACE, CardShape.HEART));
-        player.hit(new Card(CardNumber.KING, CardShape.HEART));
+        player.hit(unShuffledDeck.get(0));
+        player.hit(unShuffledDeck.get(9));
         Players players = new Players(List.of(player));
         judge.decideResult(players, dealer);
         assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.BLACK_JACK);
@@ -74,11 +74,11 @@ class JudgeTest {
     @Test
     void decideDealerResult() {
         Player player1 = new Player("player1");
-        player1.hit(new Card(CardNumber.KING, CardShape.HEART));
+        player1.hit(unShuffledDeck.get(9));
         Player player2 = new Player("player2");
-        player2.hit(new Card(CardNumber.THREE, CardShape.CLOVER));
+        player2.hit(unShuffledDeck.get(2));
         Player player3 = new Player("player3");
-        player3.hit(new Card(CardNumber.FIVE, CardShape.HEART));
+        player3.hit(unShuffledDeck.get(4));
         Players players = new Players(List.of(player1, player2, player3));
 
         judge.decideResult(players, dealer);

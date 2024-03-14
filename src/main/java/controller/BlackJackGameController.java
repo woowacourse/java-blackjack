@@ -3,7 +3,6 @@ package controller;
 import domain.BlackJackGame;
 import domain.HitOption;
 import domain.cards.Card;
-import domain.cards.CardsGenerator;
 import domain.cards.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
@@ -32,7 +31,7 @@ public class BlackJackGameController {
         Players players = new Players(generatePlayers(inputView.readPlayersNames()));
         Cashier cashier = new Cashier(generateCashier(players));
         Dealer dealer = new Dealer();
-        Deck deck = new Deck(CardsGenerator.generateRandomCards());
+        Deck deck = new Deck(Card.makeCardDeck());
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
 
         configureSetup(blackJackGame, players, dealer, deck);

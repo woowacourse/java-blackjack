@@ -1,5 +1,6 @@
 package domain.cards;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Deck {
@@ -9,6 +10,7 @@ public class Deck {
     private final List<Card> cards;
 
     public Deck(List<Card> cards) {
+        Collections.shuffle(cards);
         this.cards = cards;
     }
 
