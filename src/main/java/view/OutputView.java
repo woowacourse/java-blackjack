@@ -1,6 +1,6 @@
 package view;
 
-import domain.*;
+import domain.Result;
 import domain.card.Card;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
@@ -103,7 +103,7 @@ public class OutputView {
         printPlayerResults(totalResult.getPlayerResult());
     }
 
-    private static void printPlayerResults(final Map<Player,Result> playerResults) {
+    private static void printPlayerResults(final Map<Player, Result> playerResults) {
         StringBuilder builder = new StringBuilder();
         for (Entry<Player, Result> player : playerResults.entrySet()) {
             String playerName = player.getKey().getName().getValue();

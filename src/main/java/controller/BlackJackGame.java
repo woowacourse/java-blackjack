@@ -1,6 +1,7 @@
 package controller;
 
-import domain.*;
+import domain.Referee;
+import domain.Result;
 import domain.card.Card;
 import domain.deck.Deck;
 import domain.gamer.*;
