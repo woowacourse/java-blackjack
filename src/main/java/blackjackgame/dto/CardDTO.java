@@ -12,7 +12,7 @@ public class CardDTO {
         this.cardType = cardType;
     }
 
-    public CardName getName() {
+    public CardName getCardName() {
         return name;
     }
 
