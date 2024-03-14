@@ -1,10 +1,12 @@
 package blackjack.domain.game;
 
+import blackjack.utils.Constants;
+
 import java.util.Arrays;
 
 public enum GameCommand {
-    YES("y"),
-    NO("n");
+    YES(Constants.EXPRESSION_OF_YES),
+    NO(Constants.EXPRESSION_OF_NO);
 
     private final String expression;
 
