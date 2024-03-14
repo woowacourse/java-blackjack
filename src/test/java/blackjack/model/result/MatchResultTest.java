@@ -107,7 +107,7 @@ class MatchResultTest {
     @DisplayName("게임 결과에 따라 수익률을 적용해 최종 베팅 금액을 얻는다")
     void determineFinalMoneyTest(MatchResult matchResult, double expectedFinalMoney) {
         // given
-        BettingMoney bettingMoney = BettingMoney.from(1000);
+        BettingMoney bettingMoney = new BettingMoney(1000);
 
         // when
         BettingMoney actualFinalMoney = matchResult.calculateFinalMoney(bettingMoney);
