@@ -37,12 +37,6 @@ public class Gamers {
                 .collect(Collectors.toList());
     }
 
-    public List<BetMaker> getBetMakers() {
-        return gamers.stream()
-                .map(Gamer::getBetMaker)
-                .collect(Collectors.toList());
-    }
-
     public List<Double> getGameProfits(Gamer dealer) {
         return gamers.stream()
                 .map(gamer -> gamer.getGameProfit(dealer))

@@ -2,8 +2,6 @@ package blackjackgame.controller;
 
 import blackjackgame.domain.BlackjackGame;
 import blackjackgame.domain.blackjack.GameProfit;
-import blackjackgame.domain.blackjack.GameResult;
-import blackjackgame.domain.blackjack.GameResultCalculator;
 import blackjackgame.domain.blackjack.PlayerRandomCardDrawStrategy;
 import blackjackgame.domain.card.Card;
 import blackjackgame.domain.card.Deck;
@@ -11,10 +9,8 @@ import blackjackgame.domain.gamers.CardHolder;
 import blackjackgame.domain.gamers.Gamer;
 import blackjackgame.domain.gamers.Gamers;
 import blackjackgame.dto.CardDTO;
-import blackjackgame.dto.DealerGameResultDTO;
 import blackjackgame.dto.GameProfitDTO;
 import blackjackgame.dto.GamerDTO;
-import blackjackgame.dto.PlayerGameResultDTO;
 import blackjackgame.view.BetMoneyInputView;
 import blackjackgame.view.GameProfitOutputView;
 import blackjackgame.view.GamerOutputView;
@@ -23,8 +19,6 @@ import blackjackgame.view.OutputView;
 import blackjackgame.view.YesOrNoInputView;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackjackController {
     private static final String DEALER_NAME = "딜러";
@@ -131,20 +125,5 @@ public class BlackjackController {
         GameProfit gameProfit = blackjackGame.getGameProfit();
 
         return new GameProfitDTO(DEALER_NAME, playersName, gameProfit.getDealerProfit(), gameProfit.getPlayersProfit());
-    }
-
-    private DealerGameResultDTO makeDealerGameResultDTO(BlackjackGame blackjackGame) {
-        Map<GameResult, Integer> dealerGameResultCounts = blackjackGame.getRawPlayers().stream()
-                .collect(Collectors.groupingBy(player ->
-                                GameResultCalculator.calculate(blackjackGame.getCardHolderDealer(), player),
-                        Collectors.summingInt(value -> 1)));
-        return new DealerGameResultDTO(dealerGameResultCounts);
-    }
-
-    private List<PlayerGameResultDTO> makePlayerGameResultDTO(BlackjackGame blackjackGame) {
-        return blackjackGame.getRawPlayers().stream()
-                .map(player -> new PlayerGameResultDTO(player.getRawName(),
-                        GameResultCalculator.calculate(player, blackjackGame.getCardHolderDealer())))
-                .toList();
     }
 }
