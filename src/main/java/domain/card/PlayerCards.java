@@ -8,7 +8,7 @@ import domain.result.Status;
 import java.util.List;
 import java.util.Objects;
 
-public class PlayerCards extends Cards implements Drawable {
+public class PlayerCards extends Cards {
 
     private final Name name;
     private final BetAmount betAmount;

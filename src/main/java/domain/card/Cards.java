@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Cards {
+public abstract class Cards {
 
     private static final int INIT_CARD_SIZE = 2;
     private static final int ACE_SCORE = 10;
@@ -23,6 +23,8 @@ public class Cards {
             throw new IllegalArgumentException("처음 지급받는 카드는 두 장이어야 합니다.");
         }
     }
+
+    abstract boolean canDraw();
 
     public boolean isBurst() {
         return bestSum() > MAX_SCORE;
@@ -91,4 +93,5 @@ public class Cards {
                 "cards=" + cards +
                 '}';
     }
+
 }

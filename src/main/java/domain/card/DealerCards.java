@@ -2,7 +2,7 @@ package domain.card;
 
 import java.util.List;
 
-public class DealerCards extends Cards implements Drawable {
+public class DealerCards extends Cards {
 
     private static final int MIN_SCORE = 16;
 
@@ -10,10 +10,6 @@ public class DealerCards extends Cards implements Drawable {
         super(cards);
     }
 
-    @Override
-    public boolean canDraw() {
-        return bestSum() <= MIN_SCORE;
-    }
 
     public String getFirstCard() {
         return cards.get(0).asString();
@@ -24,5 +20,10 @@ public class DealerCards extends Cards implements Drawable {
         return "DealerCards{" +
                 "cards=" + cards +
                 '}';
+    }
+
+    @Override
+    public boolean canDraw() {
+        return bestSum() <= MIN_SCORE;
     }
 }
