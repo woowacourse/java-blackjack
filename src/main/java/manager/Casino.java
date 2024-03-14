@@ -88,12 +88,12 @@ public class Casino {
     }
 
     private void drawByOpinion(Deck deck, PlayerCards playerCards) {
-        boolean opinion = inputView.readHitOpinion(playerCards.getPlayerName());
-        if (opinion) {
+        boolean opinionToHit = inputView.readHitOpinion(playerCards.getPlayerName());
+        if (opinionToHit) {
             drawPlayerCards(deck, playerCards);
         }
         outputView.printPlayerCards(playerCards);
-        if (!playerCards.canDraw() || !opinion) {
+        if (!playerCards.canDraw() || !opinionToHit) {
             return;
         }
         drawByOpinion(deck, playerCards);
