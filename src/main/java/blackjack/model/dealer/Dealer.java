@@ -34,12 +34,12 @@ public class Dealer {
         return cards.calculateScore();
     }
 
-    public boolean isBust() {
-        return cards.isBust();
-    }
-
     public boolean isBlackjack() {
         return cards.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return cards.isBust();
     }
 
     public int getDrawCount() {
