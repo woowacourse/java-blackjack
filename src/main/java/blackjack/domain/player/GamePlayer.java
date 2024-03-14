@@ -24,7 +24,7 @@ public class GamePlayer extends Player {
         return battingAmount.calculateProfit(resultStatus);
     }
 
-    public ResultStatus confirmResult(Dealer dealer) {
+    private ResultStatus confirmResult(Dealer dealer) {
         int playerScore = calculateScore();
         int dealerScore = dealer.calculateScore();
 

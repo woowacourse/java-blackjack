@@ -48,9 +48,9 @@ public class GamePlayerTest {
         dealer.drawCard(new Card(CardValue.JACK, CardSymbol.HEART));
         var sut = PlayerFixture.게임_플레이어_생성(List.of(CardValue.EIGHT, CardValue.THREE));
 
-        var result = sut.confirmResult(dealer);
+        var result = sut.confirmProfit(dealer);
 
-        assertThat(result).isEqualTo(ResultStatus.WIN);
+        assertThat(result).isEqualTo(new Profit(10000));
     }
 
     @Test
@@ -62,9 +62,9 @@ public class GamePlayerTest {
         var sut = PlayerFixture.게임_플레이어_생성(List.of(CardValue.EIGHT, CardValue.FIVE));
         sut.drawCard(new Card(CardValue.JACK, CardSymbol.CLOVER));
 
-        var result = sut.confirmResult(dealer);
+        var result = sut.confirmProfit(dealer);
 
-        assertThat(result).isEqualTo(ResultStatus.LOSE);
+        assertThat(result).isEqualTo(new Profit(-10000));
     }
 
     @ParameterizedTest
