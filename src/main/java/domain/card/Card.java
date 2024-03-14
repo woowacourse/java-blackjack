@@ -1,6 +1,6 @@
 package domain.card;
 
-import java.util.*;
+import java.util.Objects;
 
 public class Card {
 
@@ -10,6 +10,10 @@ public class Card {
     public Card(final Shape shape, final Rank rank) {
         this.shape = shape;
         this.rank = rank;
+    }
+
+    public boolean isAce() {
+        return rank == Rank.ACE;
     }
 
     public int getScore() {
