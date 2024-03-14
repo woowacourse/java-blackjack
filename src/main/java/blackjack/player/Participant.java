@@ -10,7 +10,7 @@ public class Participant extends Player {
         super(name);
     }
 
-    Participant(String name, Hand hand) {
+    public Participant(String name, Hand hand) {
         super(name, hand);
     }
 

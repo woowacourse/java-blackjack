@@ -28,6 +28,30 @@ public abstract class Player {
         }
     }
 
+    public boolean isBust() {
+        return hand.isBust();
+    }
+
+    public boolean isNotBust() {
+        return !isBust();
+    }
+
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
+
+    public boolean isNotBlackJack() {
+        return !isBlackJack();
+    }
+
+    public boolean hasSameScoreWith(Player opponent) {
+        return hand.hasSameScoreWith(opponent.hand);
+    }
+
+    public boolean hasHigherScoreThan(Player opponent) {
+        return hand.hasHigherScoreThan(opponent.hand);
+    }
+
     public abstract boolean hasDrawableScore();
 
     public abstract List<Card> revealCardsOnFirstPhase();

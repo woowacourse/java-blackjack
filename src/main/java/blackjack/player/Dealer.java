@@ -12,7 +12,7 @@ public class Dealer extends Player {
         super(DEALER_NAME);
     }
 
-    Dealer(Hand hand) {
+    public Dealer(Hand hand) {
         super(DEALER_NAME, hand);
     }
 

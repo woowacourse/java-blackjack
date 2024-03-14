@@ -1,15 +1,17 @@
 package blackjack.player;
 
 import blackjack.card.Card;
+import blackjack.game.BlackJackGame;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Hand {
 
+    private static final int INIT_CARD_COUNT = 2;
     private final List<Card> cards;
 
-    Hand(List<Card> cards) {
+    public Hand(List<Card> cards) {
         this.cards = cards;
     }
 
@@ -27,7 +29,7 @@ public class Hand {
                 .anyMatch(Card::isAce);
 
         if (hasAceInCards) {
-            return score.addAceScoreOnNotBust().toInt();
+            return score.addAceScoreOnSoftHand().toInt();
         }
         return score.toInt();
     }
@@ -36,6 +38,22 @@ public class Hand {
         return cards.stream()
                 .map(Card::getScore)
                 .reduce(Score.zero(), Score::add);
+    }
+
+    public boolean isBust() {
+        return calculateScore() > BlackJackGame.BLACKJACK_MAX_SCORE;
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == INIT_CARD_COUNT && calculateScore() == BlackJackGame.BLACKJACK_MAX_SCORE;
+    }
+
+    public boolean hasSameScoreWith(Hand hand) {
+        return calculateScore() == hand.calculateScore();
+    }
+
+    public boolean hasHigherScoreThan(Hand hand) {
+        return calculateScore() > hand.calculateScore();
     }
 
     public Card getFirstCard() {
