@@ -18,7 +18,7 @@ class ProfitTest {
     @DisplayName("참가자는 10000만큼 수익을 잃는다.")
     @Test
     void loseProfit() {
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", bettingMoney);
         player.lose(new Money(10000));
         Assertions.assertThat(player.totalProfit()).isEqualTo(-10000);
     }

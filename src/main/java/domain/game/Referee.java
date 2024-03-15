@@ -1,6 +1,6 @@
 package domain.game;
 
-import controller.dto.PlayerOutcome;
+import controller.dto.response.PlayerOutcome;
 import domain.constants.Outcome;
 import domain.participant.Dealer;
 import domain.participant.Participants;

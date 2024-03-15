@@ -1,8 +1,8 @@
 package view;
 
-import controller.dto.InitialCardStatus;
-import controller.dto.ParticipantHandStatus;
-import controller.dto.ParticipantProfitResponse;
+import controller.dto.response.InitialCardStatus;
+import controller.dto.response.ParticipantHandStatus;
+import controller.dto.response.ParticipantProfitResponse;
 import domain.card.Card;
 import domain.participant.Hand;
 import java.util.List;

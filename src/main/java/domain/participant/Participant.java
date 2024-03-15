@@ -3,7 +3,7 @@ package domain.participant;
 import static domain.game.BlackJackGame.BLACKJACK_CARD_SIZE;
 import static domain.game.BlackJackGame.BLACKJACK_SCORE;
 
-import controller.dto.ParticipantHandStatus;
+import controller.dto.response.ParticipantHandStatus;
 import domain.card.Card;
 import domain.game.DecisionToContinue;
 import domain.game.deck.Deck;

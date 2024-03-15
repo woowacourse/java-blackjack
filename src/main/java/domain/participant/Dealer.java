@@ -1,6 +1,6 @@
 package domain.participant;
 
-import controller.dto.ParticipantHandStatus;
+import controller.dto.response.ParticipantHandStatus;
 import domain.card.Card;
 import domain.game.DecisionToContinue;
 import java.util.ArrayList;
