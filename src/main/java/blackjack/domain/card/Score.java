@@ -56,6 +56,10 @@ public class Score {
         return score < other.score;
     }
 
+    public int getScore() {
+        return score;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
