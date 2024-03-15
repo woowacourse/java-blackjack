@@ -1,9 +1,9 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
+import static blackjack.domain.card.CardScore.ACE_ADD_SCORE;
 
 public class Hand {
     public static final int DEFAULT_DRAW_COUNT = 1;
@@ -49,35 +49,30 @@ public class Hand {
     }
 
     public int totalScore() {
-        Set<Integer> scoreCases = generateScoreCases();
-
-        return scoreCases.stream()
-                .filter(score -> score <= MAX_SCORE)
-                .max(Integer::compare)
-                .orElse(minScore(scoreCases));
+        if (containAce()) {
+            return calculateBiggestNotOverMax(sumScores(), sumScores() + ACE_ADD_SCORE);
+        }
+        return sumScores();
     }
 
-    private Set<Integer> generateScoreCases() {
-        return new HashSet<>(getCardsScores().stream()
-                .reduce(List.of(0), this::combinationSumOfScores));
-    }
-
-    private List<List<Integer>> getCardsScores() {
+    private boolean containAce() {
         return cards.stream()
-                .map(Card::getScore)
-                .toList();
+                .anyMatch(Card::isAce);
     }
 
-    private List<Integer> combinationSumOfScores(List<Integer> scores1, List<Integer> scores2) {
-        return scores1.stream()
-                .flatMap(score1 -> scores2.stream()
-                        .map(score2 -> score1 + score2))
-                .toList();
+    private int calculateBiggestNotOverMax(int score1, int score2) {
+        if (score1 > MAX_SCORE) {
+            return score2;
+        }
+        if (score2 > MAX_SCORE) {
+            return score1;
+        }
+        return Math.max(score1, score2);
     }
 
-    private Integer minScore(Set<Integer> scores) {
-        return scores.stream()
-                .min(Integer::compare)
-                .orElse(0);
+    private int sumScores() {
+        return cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
     }
 }

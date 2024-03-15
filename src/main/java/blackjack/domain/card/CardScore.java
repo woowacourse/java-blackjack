@@ -1,29 +1,28 @@
 package blackjack.domain.card;
 
-import java.util.List;
-
 public enum CardScore {
-    TWO(List.of(2)),
-    THREE(List.of(3)),
-    FOUR(List.of(4)),
-    FIVE(List.of(5)),
-    SIX(List.of(6)),
-    SEVEN(List.of(7)),
-    EIGHT(List.of(8)),
-    NINE(List.of(9)),
-    TEN(List.of(10)),
-    JACK(List.of(10)),
-    QUEEN(List.of(10)),
-    KING(List.of(10)),
-    ACE(List.of(1, 11));
+    ACE(1),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+    EIGHT(8),
+    NINE(9),
+    TEN(10),
+    JACK(10),
+    QUEEN(10),
+    KING(10);
 
-    private final List<Integer> scores;
+    public static final int ACE_ADD_SCORE = 10;
+    private final int score;
 
-    CardScore(List<Integer> scores) {
-        this.scores = scores;
+    CardScore(int score) {
+        this.score = score;
     }
 
-    public List<Integer> get() {
-        return scores;
+    public int get() {
+        return score;
     }
 }

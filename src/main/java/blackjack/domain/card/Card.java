@@ -1,10 +1,12 @@
 package blackjack.domain.card;
 
-import java.util.List;
-
 public record Card(CardSuit suit, CardScore score) {
 
-    List<Integer> getScore() {
+    public int getScore() {
         return score.get();
+    }
+
+    public boolean isAce() {
+        return score == CardScore.ACE;
     }
 }
