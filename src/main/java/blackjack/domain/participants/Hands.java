@@ -10,6 +10,7 @@ public class Hands {
 
     private static final int ACE_BONUS_SCORE = 10;
     private static final int NO_BONUS_SCORE = 0;
+    private static final int BLACKJACK_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -58,6 +59,9 @@ public class Hands {
         return middleScore + ACE_BONUS_SCORE <= Player.MAX_SCORE;
     }
 
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_SIZE && calculateScore() == Player.MAX_SCORE;
+    }
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
