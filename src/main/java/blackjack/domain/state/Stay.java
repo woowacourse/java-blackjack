@@ -6,7 +6,7 @@ import blackjack.utils.Constants;
 
 public final class Stay extends Finished {
 
-    public Stay(final CardHand cardHand) {
+    Stay(final CardHand cardHand) {
         super(cardHand);
     }
 

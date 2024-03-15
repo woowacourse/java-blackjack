@@ -5,7 +5,7 @@ import blackjack.domain.game.ResultStatus;
 
 public abstract class Running extends Started {
 
-    public Running(final CardHand cardHand) {
+    Running(final CardHand cardHand) {
         super(cardHand);
     }
 

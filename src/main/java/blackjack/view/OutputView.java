@@ -12,43 +12,43 @@ import static blackjack.utils.Constants.*;
 
 public class OutputView {
     private static final String NEWLINE = System.lineSeparator();
-    private static final String DELIMITER = ", ";
+    private static final String COMMA_DELIMITER = ", ";
     private static final String ERROR_SUFFIX = "[ERROR]";
 
     public void printInitialSettingMessage(ParticipantDto dealer, ParticipantsDto players) {
         String dealerName = dealer.name();
-        List<String> playerNames = getParticipantNames(players.participants());
+        List<String> playerNames = getPlayerNames(players.participants());
         String playerNamesMessage = joinWithComma(playerNames);
 
         System.out.printf("%n%s와 %s에게 %d장을 나누었습니다.%n", dealerName, playerNamesMessage, INITIAL_CARD_COUNT);
     }
 
-    private List<String> getParticipantNames(List<ParticipantDto> participants) {
+    private List<String> getPlayerNames(List<ParticipantDto> participants) {
         return participants.stream()
                 .map(ParticipantDto::name)
                 .toList();
     }
 
     private String joinWithComma(List<String> source) {
-        return String.join(DELIMITER, source);
+        return String.join(COMMA_DELIMITER, source);
     }
 
-    public void printFirstCardOfDealer(ParticipantDto participant) {
-        String dealerName = participant.name();
-        List<CardDto> cardDtos = participant.cards();
-        List<CardDto> firstCardOfDealer = List.of(cardDtos.get(0));
+    public void printFirstCardOfDealer(ParticipantDto dealer) {
+        String dealerName = dealer.name();
+        List<CardDto> cards = dealer.cards();
+        List<CardDto> firstCardOfDealer = List.of(cards.get(0));
         String cardsInfoMessage = generateCardsInfoMessage(firstCardOfDealer);
 
         System.out.printf("%s: %s%n", dealerName, cardsInfoMessage);
     }
 
     private String generateCardsInfoMessage(List<CardDto> cards) {
-        List<String> cardsInformation = getCardsInformation(cards);
+        List<String> cardInfoMessages = generateCardInfoMessages(cards);
 
-        return joinWithComma(cardsInformation);
+        return joinWithComma(cardInfoMessages);
     }
 
-    private List<String> getCardsInformation(List<CardDto> cards) {
+    private List<String> generateCardInfoMessages(List<CardDto> cards) {
         return cards.stream()
                 .map(cardDto -> cardDto.denomination() + cardDto.suit())
                 .toList();
@@ -56,17 +56,16 @@ public class OutputView {
 
     public void printParticipantsCards(ParticipantsDto participants) {
         List<ParticipantDto> participantDtos = participants.participants();
-        List<String> participantsCardsMessage = generateParticipantsCardsMessage(participantDtos);
+        List<String> participantsCardsMessage = generateParticipantCardsMessages(participantDtos);
 
-        String message = joinWithBlankLine(participantsCardsMessage);
-        System.out.println(message + NEWLINE);
+        System.out.println(joinWithBlankLine(participantsCardsMessage) + NEWLINE);
     }
 
     private String joinWithBlankLine(List<String> source) {
         return String.join(NEWLINE, source);
     }
 
-    private List<String> generateParticipantsCardsMessage(List<ParticipantDto> participantDtos) {
+    private List<String> generateParticipantCardsMessages(List<ParticipantDto> participantDtos) {
         return participantDtos.stream()
                 .map(this::generateParticipantCardsMessage)
                 .toList();
@@ -112,11 +111,17 @@ public class OutputView {
     public void printProfits(ProfitResultDto profitResult) {
         System.out.println(NEWLINE + "## 최종 수익");
 
+        List<String> profitsMessages = generateProfitMessages(profitResult);
+        System.out.println(joinWithBlankLine(profitsMessages));
+    }
+
+    private List<String> generateProfitMessages(final ProfitResultDto profitResult) {
         Map<String, Integer> result = profitResult.result();
-        result.forEach((name, profit) -> {
-            String profitMessage = String.format("%s: %d", name, profit);
-            System.out.println(profitMessage);
-        });
+
+        return result.keySet()
+                .stream()
+                .map(name -> String.format("%s: %d", name, result.get(name)))
+                .toList();
     }
 
     public void printErrorMessage(String errorMessage) {

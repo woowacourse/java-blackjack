@@ -5,7 +5,7 @@ import blackjack.domain.card.CardHand;
 
 public final class Hit extends Running {
 
-    public Hit(final CardHand cardHand) {
+    Hit(final CardHand cardHand) {
         super(cardHand);
     }
 

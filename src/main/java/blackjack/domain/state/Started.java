@@ -7,7 +7,7 @@ import blackjack.domain.card.Score;
 public abstract class Started implements State {
     private final CardHand cardHand;
 
-    public Started(final CardHand cardHand) {
+    Started(final CardHand cardHand) {
         this.cardHand = cardHand;
     }
 

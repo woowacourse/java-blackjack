@@ -6,7 +6,7 @@ import blackjack.utils.Constants;
 
 public final class Bust extends Finished {
 
-    public Bust(final CardHand cardHand) {
+    Bust(final CardHand cardHand) {
         super(cardHand);
     }
 
