@@ -15,12 +15,12 @@ public class InputView {
 
     public List<String> readNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        return splitAndFilterEmpty(scanner.nextLine());
+        return splitAndTrim(scanner.nextLine());
     }
 
-    public List<String> splitAndFilterEmpty(String input) {
+    public List<String> splitAndTrim(String input) {
         return Arrays.stream(input.split(DELIMITER))
-                .filter(it -> !it.isBlank())
+                .map(String::trim)
                 .toList();
     }
 
