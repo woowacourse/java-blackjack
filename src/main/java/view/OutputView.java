@@ -62,7 +62,7 @@ public class OutputView {
     }
 
     public static void printFinalGameResult(FinalOddsResult dealerResult, List<FinalOddsResult> playerResults) {
-        System.out.println("##최종수익");
+        System.out.printf("%n##최종수익%n");
         printEachFinalGameResult(dealerResult);
         playerResults.forEach(OutputView::printEachFinalGameResult);
 
