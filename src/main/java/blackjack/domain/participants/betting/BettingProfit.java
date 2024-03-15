@@ -39,12 +39,11 @@ public class BettingProfit {
         if (profitResult.isEmpty()) {
             throw new IllegalArgumentException("베팅을 하지 않았습니다.");
         }
-        return new Profit(profitResult.values().stream()
+        return profitResult.values().stream()
+                .map(Profit::inverse)
                 .mapToInt(Profit::getProfit)
                 .reduce(Integer::sum)
-                .getAsInt())
-                .inverse()
-                .getProfit();
+                .getAsInt();
     }
 
     public Profit getProfit(Player player) {
