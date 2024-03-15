@@ -3,10 +3,10 @@ package blackjack.model.result;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
 
-public class Rule {
+public class ResultRule {
     private final Dealer dealer;
 
-    public Rule(final Dealer dealer) {
+    public ResultRule(final Dealer dealer) {
         this.dealer = dealer;
     }
 

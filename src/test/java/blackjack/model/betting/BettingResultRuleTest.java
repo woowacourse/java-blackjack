@@ -18,7 +18,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class BettingRuleTest {
+class BettingResultRuleTest {
 
     @Nested
     class whenPlayerWin {

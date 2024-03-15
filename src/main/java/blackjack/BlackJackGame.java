@@ -11,7 +11,7 @@ import blackjack.model.participant.Playable;
 import blackjack.model.participant.Player;
 import blackjack.model.result.Referee;
 import blackjack.model.result.ResultCommand;
-import blackjack.model.result.Rule;
+import blackjack.model.result.ResultRule;
 import blackjack.util.ConsoleReader;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -26,7 +26,7 @@ public class BlackJackGame {
         final Deck deck = Deck.createByRandomOrder();
         final Dealer dealer = new Dealer(deck.distributeInitialCard());
         final Participants participants = initPlayers(InputView.readPlayerNames(consoleReader), deck);
-        final Referee referee = new Referee(new Rule(dealer), participants);
+        final Referee referee = new Referee(new ResultRule(dealer), participants);
         final MoneyStaff moneyStaff = initMoneyStaff(new BettingRule(dealer), participants);
 
         announceInitialCards(dealer, participants);

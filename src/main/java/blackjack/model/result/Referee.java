@@ -7,18 +7,18 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Referee {
-    private final Rule rule;
+    private final ResultRule resultRule;
     private final Participants participants;
 
-    public Referee(final Rule rule, final Participants participants) {
-        this.rule = rule;
+    public Referee(final ResultRule resultRule, final Participants participants) {
+        this.resultRule = resultRule;
         this.participants = participants;
     }
 
     public Map<Player, ResultCommand> judgePlayerResult() {
         Map<Player, ResultCommand> result = new LinkedHashMap<>();
         for (Player player : participants.getPlayers()) {
-            result.put(player, rule.calculateResult(player));
+            result.put(player, resultRule.calculateResult(player));
         }
         return result;
     }

@@ -12,16 +12,16 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class RuleTest {
+class ResultRuleTest {
 
     @Test
     @DisplayName("딜러와 비교하여 결과를 계산한다.")
     void calculateResult() {
-        Rule rule = new Rule(
+        ResultRule resultRule = new ResultRule(
                 new Dealer(new Hand(List.of(new Card(Shape.DIA, Score.TEN), new Card(Shape.SPADE, Score.TEN)))));
         Player player = Player.of("리브",
                 new Hand(List.of(new Card(Shape.DIA, Score.ACE), new Card(Shape.SPADE, Score.TEN))));
-        assertThat(rule.calculateResult(player)).isEqualTo(ResultCommand.WIN);
+        assertThat(resultRule.calculateResult(player)).isEqualTo(ResultCommand.WIN);
     }
 
 }
