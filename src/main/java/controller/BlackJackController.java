@@ -1,11 +1,15 @@
 package controller;
 
 import domain.*;
-import dto.*;
+import dto.ParticipantHandDto;
+import dto.ParticipantSettlementDto;
+import dto.ParticipantsHandDto;
+import dto.PlayersNameDto;
 import view.InputView;
 import view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackController {
     private final InputView inputView;
@@ -20,21 +24,44 @@ public class BlackJackController {
 
     public void run() {
         Players players = readPlayers();
-        CardDeck cardDeck = CardDeck.of(cardShuffleStrategy);
-        Dealer dealer = new Dealer(cardDeck);
-        BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
-        blackJackGame.initHand();
+        BettingPot bettingPot = initBettingPot(players);
+        BlackJackGame blackJackGame = initBlackJackGame(players);
 
         printInitialDealMessage(blackJackGame);
         printInitialHand(blackJackGame);
         repeatHitUntilStand(blackJackGame);
+
         printGameResult(blackJackGame);
+        printSettlement(blackJackGame, bettingPot);
     }
 
     private Players readPlayers() {
         List<String> inputNames = inputView.readPlayerNames();
 
         return new Players(inputNames);
+    }
+
+    private BettingPot initBettingPot(Players players) {
+        BettingPot bettingPot = new BettingPot();
+        List<Player> everyPlayers = players.getPlayers();
+
+        for (Player player : everyPlayers) {
+            int betAmount = inputView.readBetAmount(player.getName());
+            Bet bet = new Bet(betAmount);
+            bettingPot.collect(player, bet);
+        }
+
+        return bettingPot;
+    }
+
+    private BlackJackGame initBlackJackGame(Players players) {
+        CardDeck cardDeck = CardDeck.of(cardShuffleStrategy);
+        Dealer dealer = new Dealer(cardDeck);
+
+        BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
+        blackJackGame.initHand();
+
+        return blackJackGame;
     }
 
     private void printInitialDealMessage(BlackJackGame blackJackGame) {
@@ -73,10 +100,16 @@ public class BlackJackController {
 
     private void printGameResult(BlackJackGame blackJackGame) {
         ParticipantsHandDto participantHandDtos = ParticipantsHandDto.from(blackJackGame.getEveryParticipants());
-        DealerWinLossDto dealerWinLossDto = DealerWinLossDto.from(blackJackGame.getGameResults());
-        PlayersWinLossDto playersWinLossDto = PlayersWinLossDto.from(blackJackGame.getGameResults());
-
         outputView.printFinalHandAndScore(participantHandDtos);
-        outputView.printWinLoss(dealerWinLossDto, playersWinLossDto);
+    }
+
+    private void printSettlement(BlackJackGame blackJackGame, BettingPot bettingPot) {
+        Map<Player, Result> gameResults = blackJackGame.getGameResults();
+        Map<Player, Integer> playerSettlement = bettingPot.settlePlayer(gameResults);
+        int dealerSettlement = bettingPot.settleDealer(gameResults);
+
+        ParticipantSettlementDto participantSettlementDto
+                = ParticipantSettlementDto.of(Dealer.DEALER_NAME, dealerSettlement, playerSettlement);
+        outputView.printSettlement(participantSettlementDto);
     }
 }
