@@ -24,11 +24,11 @@ class PotTest {
         Pot roundPot = generatePot(player);
 
         //when
-        roundPot = roundPot.calculatePot(roundResult);
+        roundPot = roundPot.calculatePlayerPot(roundResult);
         BetAmount calculatedAmount = roundPot.getBetAmount(player);
 
         //then
-        assertThat(calculatedAmount.getAmount()).isEqualTo(15000);
+        assertThat(calculatedAmount.amount()).isEqualTo(15000);
     }
 
     private Player generatePlayer() {
@@ -44,7 +44,7 @@ class PotTest {
 
     private Pot generatePot(Player player) {
         Map<Player, BetAmount> pot = new LinkedHashMap<>();
-        pot.put(player, new BetAmount("10000"));
+        pot.put(player, new BetAmount(10000));
         return new Pot(pot);
     }
 }
