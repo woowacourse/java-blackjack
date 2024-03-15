@@ -12,5 +12,4 @@ public enum ErrorCode {
     BLANK_VALUE,
     EMPTY_CARD,
     INVALID_COMMAND,
-    ;
 }
