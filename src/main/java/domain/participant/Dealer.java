@@ -3,6 +3,7 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.name.Name;
+import vo.Profit;
 
 import static domain.BlackjackGame.DEALER_HIT_THRESHOLD;
 
@@ -27,6 +28,14 @@ public class Dealer extends Participant {
 
     public void deal(final Participant participant) {
         participant.receive(deck.draw());
+    }
+
+    public Profit calculateProfit(Players players) {
+        int playersProfit = players.getPlayers()
+                                   .stream()
+                                   .map(player -> player.profit().value())
+                                   .reduce(0, Integer::sum);
+        return new Profit(-playersProfit);
     }
 
     @Override
