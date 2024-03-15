@@ -73,7 +73,7 @@ public class Players {
         return drawResult.hasNextChance();
     }
 
-    List<Integer> calculatePlayersBettingMoney(Dealer dealer) {
+    List<Integer> calculatePlayersEarnMoney(Dealer dealer) {
         return players.stream()
                 .map(player -> {
                     GameResult gameResult = GameResultCalculator.calculate(player, dealer);

@@ -47,6 +47,6 @@ public class BlackJackGame {
     }
 
     public List<Integer> calculatePlayersBettingMoney() {
-        return players.calculatePlayersBettingMoney(dealer);
+        return players.calculatePlayersEarnMoney(dealer);
     }
 }
