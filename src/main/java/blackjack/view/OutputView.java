@@ -4,9 +4,9 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.BetAmount;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Round;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.domain.participant.Round;
 import blackjack.domain.result.Pot;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +22,6 @@ public class OutputView {
     private static final String HAND_WITH_SCORE_FORMAT = "%s - 결과: %d";
     private static final String GAME_RESULT_PREFIX = "## 최종 수익";
     private static final String DEALER_RESULTS_FORMAT = "딜러: %,d";
-    private static final String DEALER_RESULT_FORMAT = "%d%,d ";
     private static final String PLAYER_RESULT_FORMAT = "%s: %,d";
 
     public void printInitialHand(Round round) {

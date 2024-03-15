@@ -24,6 +24,12 @@ public class InputView {
                 .toList();
     }
 
+    private void validateDelimiter(String input) {
+        if (input.startsWith(DELIMITER) || input.endsWith(DELIMITER)) {
+            throw new DelimiterFormatException();
+        }
+    }
+
     public int readPlayerBetAmount(String playerName) {
         System.out.println(System.lineSeparator() + playerName + BET_AMOUNT_REQUEST);
         int betAmount = parseInteger(scanner.nextLine());
@@ -34,7 +40,7 @@ public class InputView {
     private int parseInteger(String amount) {
         try {
             return Integer.parseInt(amount);
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             throw new BettingAmountFormatException();
         }
     }
@@ -48,11 +54,5 @@ public class InputView {
     public String readPlayerActionCommand(String playerName) {
         System.out.println(playerName + PLAYER_HIT_REQUEST);
         return scanner.nextLine();
-    }
-
-    private void validateDelimiter(String input) {
-        if (input.startsWith(DELIMITER) || input.endsWith(DELIMITER)) {
-            throw new DelimiterFormatException();
-        }
     }
 }

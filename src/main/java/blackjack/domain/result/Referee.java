@@ -1,6 +1,5 @@
 package blackjack.domain.result;
 
-import blackjack.domain.card.Hand;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
