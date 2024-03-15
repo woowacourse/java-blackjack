@@ -15,7 +15,7 @@ class PlayerTest {
     @Test
     void testRevealHand() {
         // given
-        Player player = new Player(new Name("pobi"), new Hand());
+        Player player = new Player(new PlayerName("pobi"), new Hand());
 
         CardDeck cardDeck = CardDeck.createShuffledFullCardDeck();
         player.deal(cardDeck);
@@ -34,7 +34,7 @@ class PlayerTest {
         Hand hand = HandFixture.createHandWithScoreTotal21();
         int beforeHandSize = hand.getCards().size();
 
-        Player player = new Player(new Name("pobi"), hand);
+        Player player = new Player(new PlayerName("pobi"), hand);
 
         CardDeck cardDeck = CardDeck.createShuffledFullCardDeck();
 
@@ -53,7 +53,7 @@ class PlayerTest {
         hand.append(CardFixture.createAHeart());
         int beforeHandSize = hand.getCards().size();
 
-        Player player = new Player(new Name("pobi"), hand);
+        Player player = new Player(new PlayerName("pobi"), hand);
 
         CardDeck cardDeck = CardDeck.createShuffledFullCardDeck();
 

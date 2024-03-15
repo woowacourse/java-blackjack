@@ -5,7 +5,7 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.game.PlayersResult;
 import blackjack.domain.game.Result;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
+import blackjack.domain.participant.PlayerName;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.mapper.CardRankMapper;
@@ -28,7 +28,7 @@ public class MessageResolver {
     private String resolveNamesMessage(Players players) {
         return players.getPlayers().stream()
                 .map(Player::getName)
-                .map(Name::value)
+                .map(PlayerName::value)
                 .collect(Collectors.joining(SEPARATOR));
     }
 

@@ -2,24 +2,7 @@ package blackjack.domain.participant;
 
 import java.util.Objects;
 
-public class PlayerName {
-
-    private final String value;
-
-    public PlayerName(String value) {
-        validate(value);
-        this.value = value;
-    }
-
-    private void validate(String value) {
-        validateNotEmpty(value);
-    }
-
-    private void validateNotEmpty(String value) {
-        if (value.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 이름이 빈 문자열입니다.");
-        }
-    }
+public record PlayerName(String value) {
 
     @Override
     public boolean equals(Object o) {
@@ -29,16 +12,12 @@ public class PlayerName {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        PlayerName that = (PlayerName) o;
-        return Objects.equals(value, that.value);
+        PlayerName playerName = (PlayerName) o;
+        return Objects.equals(value, playerName.value);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(value);
-    }
-
-    public String getValue() {
-        return value;
     }
 }

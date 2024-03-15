@@ -42,7 +42,7 @@ public class Players {
 
     public static Players create(List<String> rawNames) {
         List<Player> players = rawNames.stream()
-                .map(Name::new)
+                .map(PlayerName::new)
                 .map(Player::new)
                 .toList();
 

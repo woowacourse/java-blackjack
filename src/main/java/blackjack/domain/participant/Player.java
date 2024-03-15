@@ -9,15 +9,15 @@ public class Player {
 
     private static final int REVEAL_COUNT = 2;
 
-    private final Name name;
+    private final PlayerName playerName;
     private final Hand hand;
 
-    public Player(Name name) {
-        this(name, new Hand());
+    public Player(PlayerName playerName) {
+        this(playerName, new Hand());
     }
 
-    public Player(Name name, Hand hand) {
-        this.name = name;
+    public Player(PlayerName playerName, Hand hand) {
+        this.playerName = playerName;
         this.hand = hand;
     }
 
@@ -51,8 +51,8 @@ public class Player {
         return hand.calculateHandScore();
     }
 
-    public Name getName() {
-        return name;
+    public PlayerName getName() {
+        return playerName;
     }
 
     public Hand getHand() {
@@ -68,16 +68,16 @@ public class Player {
             return false;
         }
         Player player = (Player) o;
-        return Objects.equals(name, player.name);
+        return Objects.equals(playerName, player.playerName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(playerName);
     }
 
     @Override
     public String toString() {
-        return name.value();
+        return playerName.value();
     }
 }

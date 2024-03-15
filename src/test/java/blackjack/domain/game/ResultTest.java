@@ -7,7 +7,7 @@ import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
 import blackjack.domain.card.Hand;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
+import blackjack.domain.participant.PlayerName;
 import blackjack.domain.participant.Player;
 import fixture.HandFixture;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +21,7 @@ class ResultTest {
         // given
         Hand playerHand = HandFixture.createHandWithScoreTotal21();
         playerHand.append(new Card(CardRank.ACE, CardSuit.HEART));
-        Player player = new Player(new Name("pobi"), playerHand);
+        Player player = new Player(new PlayerName("pobi"), playerHand);
 
         Dealer dealer = new Dealer(new Hand());
 
@@ -39,7 +39,7 @@ class ResultTest {
         Hand playerHand = new Hand();
         playerHand.append(new Card(CardRank.ACE, CardSuit.HEART));
         playerHand.append(new Card(CardRank.KING, CardSuit.HEART));
-        Player player = new Player(new Name("pobi"), playerHand);
+        Player player = new Player(new PlayerName("pobi"), playerHand);
 
         Dealer dealer = new Dealer(new Hand());
 
@@ -58,7 +58,7 @@ class ResultTest {
         hand.append(new Card(CardRank.ACE, CardSuit.HEART));
         hand.append(new Card(CardRank.KING, CardSuit.HEART));
 
-        Player player = new Player(new Name("pobi"), hand);
+        Player player = new Player(new PlayerName("pobi"), hand);
         Dealer dealer = new Dealer(hand);
 
         // when
@@ -72,7 +72,7 @@ class ResultTest {
     @Test
     void testDealerBust() {
         // given
-        Player player = new Player(new Name("pobi"), new Hand());
+        Player player = new Player(new PlayerName("pobi"), new Hand());
 
         Hand dealerHand = HandFixture.createHandWithScoreTotal21();
         dealerHand.append(new Card(CardRank.ACE, CardSuit.HEART));
@@ -91,7 +91,7 @@ class ResultTest {
         // given
         Hand playerHand = new Hand();
         playerHand.append(new Card(CardRank.THREE, CardSuit.HEART));
-        Player player = new Player(new Name("pobi"), playerHand);
+        Player player = new Player(new PlayerName("pobi"), playerHand);
 
         Hand dealerHand = new Hand();
         dealerHand.append(new Card(CardRank.TWO, CardSuit.HEART));
@@ -110,7 +110,7 @@ class ResultTest {
         // given
         Hand playerHand = new Hand();
         playerHand.append(new Card(CardRank.TWO, CardSuit.HEART));
-        Player player = new Player(new Name("pobi"), playerHand);
+        Player player = new Player(new PlayerName("pobi"), playerHand);
 
         Hand dealerHand = new Hand();
         dealerHand.append(new Card(CardRank.THREE, CardSuit.HEART));
@@ -129,7 +129,7 @@ class ResultTest {
         // given
         Hand playerHand = new Hand();
         playerHand.append(new Card(CardRank.TWO, CardSuit.HEART));
-        Player player = new Player(new Name("pobi"), playerHand);
+        Player player = new Player(new PlayerName("pobi"), playerHand);
 
         Hand dealerHand = new Hand();
         dealerHand.append(new Card(CardRank.TWO, CardSuit.HEART));

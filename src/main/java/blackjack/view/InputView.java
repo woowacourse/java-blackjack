@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.game.DrawDecision;
-import blackjack.domain.participant.Name;
+import blackjack.domain.participant.PlayerName;
 import blackjack.view.mapper.DrawDecisionMapper;
 import java.util.Arrays;
 import java.util.List;
@@ -24,8 +24,8 @@ public class InputView {
                 .toList();
     }
 
-    public DrawDecision readDrawDecision(Name name) {
-        String message = String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name.value());
+    public DrawDecision readDrawDecision(PlayerName playerName) {
+        String message = String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", playerName.value());
         System.out.println(String.join("", LINE_SEPARATOR, message));
         return DrawDecisionMapper.toDrawDecision(scanner.nextLine());
     }
