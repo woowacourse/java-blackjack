@@ -1,16 +1,23 @@
 package domain.participant.attributes;
 
-public record Bet(int amount) {
+public record Bet(int amount) implements Money {
 
-    public Bet add(final Bet bet) {
-        return new Bet(amount + bet.amount);
+    private static final int MIN_BET_AMOUNT = 1000;
+
+    public Bet {
+        validateMinAmount(amount);
+        validateDivisionByMinAmount(amount);
     }
 
-    public Bet subtract(final Bet bet) {
-        return new Bet(amount - bet.amount);
+    private void validateMinAmount(final int amount) {
+        if (amount < MIN_BET_AMOUNT) {
+            throw new IllegalArgumentException("베팅 금액은 최소 %d입니다: %d".formatted(MIN_BET_AMOUNT, amount));
+        }
     }
 
-    public Bet multiply(final double multiplier) {
-        return new Bet((int) (amount * multiplier));
+    private void validateDivisionByMinAmount(final int amount) {
+        if ((amount % MIN_BET_AMOUNT) != 0) {
+            throw new IllegalArgumentException("%d원 단위로 입력해주세요: %d".formatted(MIN_BET_AMOUNT, amount));
+        }
     }
 }
