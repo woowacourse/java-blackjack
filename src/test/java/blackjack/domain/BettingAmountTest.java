@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 class BettingAmountTest {
 
     @Test
-    @DisplayName("문자열을 통해서 배팅 금액을 생성한다.")
+    @DisplayName("숫자를 통해서 배팅 금액을 생성한다.")
     void BattingAmount_Instance_create_with_Integer() {
         assertThatCode(() -> {
             new BettingAmount("1000");
@@ -54,7 +54,6 @@ class BettingAmountTest {
     @DisplayName("블랙잭으로 승리시 배팅 금액의 1.5배로 수익을 생성한다.")
     public void BattingAmount_Create_profit_one_and_half_profit_battingAmount_when_blackjack_win() {
         BettingAmount battingAmount = new BettingAmount("10000");
-        System.out.println(battingAmount.calculateProfit(ResultStatus.BLACKJACK).getValue());
         assertThat(battingAmount.calculateProfit(ResultStatus.BLACKJACK)).isEqualTo(new Profit(15000));
     }
 }

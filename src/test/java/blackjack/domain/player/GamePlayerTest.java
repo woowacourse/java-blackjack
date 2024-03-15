@@ -8,7 +8,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Cards;
-import blackjack.domain.result.ResultStatus;
 import blackjack.fixture.CardFixture;
 import blackjack.fixture.PlayerFixture;
 import java.util.List;
@@ -74,8 +73,8 @@ public class GamePlayerTest {
             "EIGHT, TEN, EIGHT, TEN, 0",
             "EIGHT, TEN, ACE, TEN, 15000"
     })
-    @DisplayName("플레이어의 점수가 딜러의 점수보다 높으면 배팅금액의 1배만큼 수익을 얻는다.(블랙잭X)")
-    public void GamePlayer_Player_get_once_profit_when_score_is_bigger(CardValue dealerCard1,
+    @DisplayName("승패에 따라 수익이 결정된다.(승:1배, 무:0배, 패:-1배, 블랙잭승:1.5배")
+    public void GamePlayer_Player_get_profit_from_resultStatus(CardValue dealerCard1,
                                                                        CardValue dealerCard2,
                                                                        CardValue playerCard1,
                                                                        CardValue playerCard2,
@@ -91,8 +90,8 @@ public class GamePlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어가 블랙잭이 아닌 21점이고 딜러는 블랙잭인 경우 배팅금액의 -1배만큼 수익을 얻는다.")
-    public void GamePlayer_Player_get_minus_once_profit_when_not_blackjack_dealer_blackjack() {
+    @DisplayName("플레이어가 블랙잭이 아닌 21점이고 딜러는 블랙잭인 경우 패배한다.")
+    public void GamePlayer_Player_lose_when_not_blackjack_dealer_blackjack() {
         Name name = new Name("딜러");
         Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.ACE, CardValue.TEN));
         Dealer dealer = new Dealer(name, cards);
@@ -104,8 +103,8 @@ public class GamePlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어와 딜러가 모두 블랙잭이면 배팅금액의 0배만큼 수익을 얻는다.")
-    public void GamePlayer_Player_get_zero_profit_when_blackjack_both() {
+    @DisplayName("플레이어와 딜러가 모두 블랙잭이면 무승부다.")
+    public void GamePlayer_Player_draw_when_blackjack_both() {
         Name name = new Name("딜러");
         Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.ACE, CardValue.TEN));
         Dealer dealer = new Dealer(name, cards);
