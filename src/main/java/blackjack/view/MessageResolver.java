@@ -3,7 +3,6 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import blackjack.domain.game.PlayersResult;
-import blackjack.domain.game.Result;
 import blackjack.domain.game.Result2;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Dealer2;
@@ -153,13 +152,6 @@ public class MessageResolver {
 
     private String resolvePlayerResultMessage(Player2 player, Result2 result2) {
         return String.format("%s: %s", player.getName().value(), ResultStateMapper.toSymbol(result2));
-    }
-
-    private String resolvePlayerResult(Player player, Result result) {
-        if (result.getWinCount() == 1) {
-            return String.format("%s: 승", player.getPlayerName().getValue());
-        }
-        return String.format("%s: 패", player.getPlayerName().getValue());
     }
 
     public String resolveDealerHandScoreMessage(Dealer2 dealer) {
