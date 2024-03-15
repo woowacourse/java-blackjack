@@ -131,6 +131,24 @@ class BlackJackTest {
                 Map.of(notBustParticipant1, 0.0, notBustParticipant2, 0.0));
     }
 
+    @DisplayName("참가자들의 결과로 딜러의 수익을 구한다")
+    @Test
+    void calculateDealerProfit() {
+        Participant bustParticipant = createNotBustParticipant(new Name("켬미"), new BettingMoney(100));
+        Participant notBustParticipant = createNotBustParticipant(new Name("배키"), new BettingMoney(200));
+
+        Dealer bustDealer = createBustDealer();
+
+        Participants participants = new Participants(List.of(bustParticipant, notBustParticipant));
+        BlackJack blackJack = new BlackJack(participants, bustDealer);
+
+        Double dealerProfit = blackJack.getDealerProfit();
+
+
+        assertThat(dealerProfit).isEqualTo(-300.0);
+    }
+
+
     public Participant createBustParticipant(Name name, BettingMoney bettingMoney) {
         Participant bustParticipant = new Participant(name,
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE),

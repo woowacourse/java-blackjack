@@ -63,55 +63,6 @@ class ParticipantsTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("참가자들의 결과로 딜러의 수익을 구한다 - 1승 1패")
-    @Test
-    void calculateDealerProfit() {
-        Participant bustParticipant = new Participant(new Name("배키"),
-                List.of(new Card(CardShape.SPACE, CardNumber.TEN),
-                        new Card(CardShape.SPACE, CardNumber.KING)),
-                new BettingMoney(100));
-        bustParticipant.addCard(new Card(CardShape.SPACE, CardNumber.NINE));
-        Participant participantScore21 = new Participant(new Name("켬미"),
-                List.of(new Card(CardShape.CLOVER, CardNumber.KING),
-                        new Card(CardShape.CLOVER, CardNumber.TEN)),
-                new BettingMoney(200));
-        participantScore21.addCard(new Card(CardShape.SPACE, CardNumber.ACE));
-
-        Participants participants = new Participants(List.of(bustParticipant, participantScore21));
-
-        Dealer dealerScore20 = new Dealer(new CardDeck(CardDeck.createCards()), () ->
-                List.of(new Card(CardShape.CLOVER, CardNumber.TEN),
-                        new Card(CardShape.DIAMOND, CardNumber.TEN)));
-
-        Double dealerProfit = participants.sumAllParticipantProfit(dealerScore20);
-
-        assertThat(dealerProfit).isEqualTo(-100.0);
-    }
-
-    @DisplayName("참가자들의 결과로 딜러의 수익을 구한다. - 1승 1무")
-    @Test
-    void calculateDealerProfit2() {
-        Participant bustParticipant = new Participant(new Name("배키"),
-                List.of(new Card(CardShape.SPACE, CardNumber.TEN),
-                        new Card(CardShape.SPACE, CardNumber.KING)),
-                new BettingMoney(100));
-        bustParticipant.addCard(new Card(CardShape.SPACE, CardNumber.NINE));
-        Participant participantScore21 = new Participant(new Name("켬미"),
-                List.of(new Card(CardShape.CLOVER, CardNumber.KING),
-                        new Card(CardShape.CLOVER, CardNumber.TEN)),
-                new BettingMoney(200));
-
-        Participants participants = new Participants(List.of(bustParticipant, participantScore21));
-
-        Dealer dealerScore20 = new Dealer(new CardDeck(CardDeck.createCards()), () ->
-                List.of(new Card(CardShape.CLOVER, CardNumber.TEN),
-                        new Card(CardShape.DIAMOND, CardNumber.TEN)));
-
-        Double dealerProfit = participants.sumAllParticipantProfit(dealerScore20);
-
-        assertThat(dealerProfit).isEqualTo(100.0);
-    }
-
     @DisplayName("참가자들의 계산 결과를 반환한다.")
     @Test
     void calculateParticipantProfit() {
