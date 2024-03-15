@@ -4,14 +4,16 @@ import blackjack.domain.Profit;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class BettingResult {
+public class Betting {
 
     private static final int INVERSE_VALUE = -1;
 
     private final Map<Player, Profit> bettingResult;
+    private final Map<Player, Profit> profitResult;
 
-    public BettingResult() {
+    public Betting() {
         this.bettingResult = new LinkedHashMap<>();
+        this.profitResult = new LinkedHashMap<>();
     }
 
     public void bet(Player player, Profit profit) {
@@ -25,10 +27,10 @@ public class BettingResult {
             return;
         }
         if (state == State.LOSE) {
-            bettingResult.put(player, bettingResult.get(player).inverse());
+            profitResult.put(player, bettingResult.get(player).inverse());
             return;
         }
-        bettingResult.put(player, new Profit(0));
+        profitResult.put(player, new Profit(0));
     }
 
     private void validatePlayer(Player player) {
@@ -39,27 +41,27 @@ public class BettingResult {
 
     private void handleWin(Player player) {
         if (player.isBlackjack()) {
-            bettingResult.put(player, bettingResult.get(player).multiple(1.5));
+            profitResult.put(player, bettingResult.get(player).multiple(1.5));
             return;
         }
-        bettingResult.put(player, bettingResult.get(player));
+        profitResult.put(player, bettingResult.get(player));
     }
 
     public int getDealerProfit() {
-        if (bettingResult.isEmpty()) {
+        if (profitResult.isEmpty()) {
             throw new IllegalArgumentException("베팅을 하지 않았습니다.");
         }
-        return INVERSE_VALUE * bettingResult.values().stream()
+        return INVERSE_VALUE * profitResult.values().stream()
                 .map(Profit::getProfit)
                 .reduce(Integer::sum)
                 .get();
     }
 
     public Profit getProfit(Player player) {
-        return bettingResult.get(player);
+        return profitResult.get(player);
     }
 
-    public Map<Player, Profit> getBettingResult() {
-        return new LinkedHashMap<>(bettingResult);
+    public Map<Player, Profit> getProfitResult() {
+        return new LinkedHashMap<>(profitResult);
     }
 }

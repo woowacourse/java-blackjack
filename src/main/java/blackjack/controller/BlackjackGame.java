@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.participants.BettingResult;
+import blackjack.domain.participants.Betting;
 import blackjack.domain.participants.GameBoard;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.GameParticipant;
@@ -21,10 +21,10 @@ public class BlackjackGame {
 
     public void run() {
         Players players = createPlayers();
-        BettingResult bettingResult = bet(players);
+        Betting betting = bet(players);
         Dealer dealer = new Dealer();
         GameBoard gameBoard = new GameBoard(dealer, players);
-        play(gameBoard, bettingResult);
+        play(gameBoard, betting);
     }
 
     private Players createPlayers() {
@@ -35,21 +35,21 @@ public class BlackjackGame {
         return new Players(playerList);
     }
 
-    private BettingResult bet(Players players) {
-        BettingResult bettingResult = new BettingResult();
+    private Betting bet(Players players) {
+        Betting betting = new Betting();
         for (Player player : players.getPlayers()) {
-            bettingResult.bet(player, new Profit(inputView.readBettingPrice(player.getName())));
+            betting.bet(player, new Profit(inputView.readBettingPrice(player.getName())));
             System.out.println();
         }
-        return bettingResult;
+        return betting;
     }
 
-    private void play(GameBoard gameBoard, BettingResult bettingResult) {
+    private void play(GameBoard gameBoard, Betting betting) {
         startSetting(gameBoard);
         proceedPlayerTurn(gameBoard);
         proceedDealerTurn(gameBoard);
         handleScoreResult(gameBoard);
-        handleGameResult(gameBoard, bettingResult);
+        handleGameResult(gameBoard, betting);
     }
 
     private void startSetting(GameBoard gameBoard) {
@@ -101,11 +101,11 @@ public class BlackjackGame {
         outputView.printScoreResult(dealerDto, playersDto);
     }
 
-    private void handleGameResult(GameBoard gameBoard, BettingResult bettingResult) {
+    private void handleGameResult(GameBoard gameBoard, Betting betting) {
         BlackJackGameResult blackJackGameResult = gameBoard.calculateGameResult();
         blackJackGameResult.getGameResult()
                 .keySet()
-                .forEach((player) -> bettingResult.calculateProfit(player, blackJackGameResult.getState(player)));
-        outputView.printGameResult(bettingResult);
+                .forEach((player) -> betting.calculateProfit(player, blackJackGameResult.getState(player)));
+        outputView.printGameResult(betting);
     }
 }

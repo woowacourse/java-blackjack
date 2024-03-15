@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.participants.BettingResult;
+import blackjack.domain.participants.Betting;
 import blackjack.domain.participants.GameParticipant;
 import blackjack.domain.Profit;
 import blackjack.dto.ParticipantDto;
@@ -55,10 +55,10 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printGameResult(BettingResult bettingResult) {
+    public void printGameResult(Betting betting) {
         System.out.println("## 최종 수익");
-        System.out.printf("딜러: %d\n", bettingResult.getDealerProfit());
-        bettingResult.getBettingResult()
+        System.out.printf("딜러: %d\n", betting.getDealerProfit());
+        betting.getProfitResult()
                 .forEach(this::printProfit);
     }
 
