@@ -32,7 +32,7 @@ public class ParticipantMapper {
                       .toList();
     }
 
-    public static Players namesAndBettingMoneyToPlayer(final Names names, final List<BettingMoney> bettingMoneys){
+    public static Players namesAndBettingMoneyToPlayers(final Names names, final List<BettingMoney> bettingMoneys){
         List<Name> nameList = names.playerNames();
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < nameList.size(); i++) {

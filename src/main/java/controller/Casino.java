@@ -29,11 +29,11 @@ public class Casino {
 
     public void open() {
         Names names = NameMapper.namesDtoToNames(inputView.askPlayerNames());
-        List<BettingMoney> bettingMoneyList = askBettingMoney(names);
+        List<BettingMoney> bettingMoneys = askBettingMoney(names);
         Dealer dealer = new Dealer(Cards.deck());
         dealer.shuffleCards();
-        BlackjackGame game = new BlackjackGame(dealer, ParticipantMapper.namesAndBettingMoneyToPlayer(names, bettingMoneyList));
-        game.setUp();
+        BlackjackGame game = new BlackjackGame(dealer, ParticipantMapper.namesAndBettingMoneyToPlayers(names, bettingMoneys));
+        game.prepare();
         playOf(game);
         resultOf(game);
     }

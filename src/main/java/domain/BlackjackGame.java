@@ -22,7 +22,7 @@ public class BlackjackGame {
         this.players = players;
     }
 
-    public void setUp() {
+    public void prepare() {
         handOutCards(dealer, INITIAL_CARD_COUNT);
         players.forEach(player -> handOutCards(player, INITIAL_CARD_COUNT));
         checkBlackjack();
