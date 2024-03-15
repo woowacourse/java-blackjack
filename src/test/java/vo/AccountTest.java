@@ -7,15 +7,15 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ProfitTest {
+class AccountTest {
 
     @DisplayName("비율을 통해 수익을 판단한다.")
     @ParameterizedTest
     @CsvSource(value = {"1, 5000", "0, 0", "-1, -5000", "1.5, 7500"})
-    void apply(double ratio, int expected) {
-        Profit profit = new Profit(new BettingMoney(5000));
-        profit.apply(ResultProfitRatio.match(ratio));
-        assertThat(profit.getProfit()).isEqualTo(expected);
+    void applyProfit(double ratio, int expected) {
+        Account account = new Account(new BettingMoney(5000));
+        account.applyProfit(ResultProfitRatio.match(ratio));
+        assertThat(account.getProfit()).isEqualTo(expected);
     }
 
 }

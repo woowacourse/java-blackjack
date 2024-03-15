@@ -3,24 +3,33 @@ package domain.participant;
 import domain.name.Name;
 import domain.result.ResultProfitRatio;
 import vo.BettingMoney;
+import vo.Account;
 import vo.Profit;
 
 public class Player extends Participant {
-    private final Profit profit;
+    private final Account account;
 
-    public Player(final Name name, final BettingMoney bettingMoney) {
+    public Player(Name name, Account account) {
         super(name);
-        this.profit = new Profit(bettingMoney);
+        this.account = account;
+    }
+
+    public static Player register(final Name name, final BettingMoney bettingMoney){
+        return new Player(name, new Account(bettingMoney));
     }
 
     public void revenue(ResultProfitRatio ratio){
-        profit.apply(ratio);
+        account.applyProfit(ratio);
+    }
+
+    public Profit profit() {
+        return new Profit(account.getProfit());
     }
 
     @Override
     public boolean isBust() {
         if (super.isBust()) {
-            profit.apply(ResultProfitRatio.LOSE);
+            account.applyProfit(ResultProfitRatio.LOSE);
             return true;
         }
         return false;
