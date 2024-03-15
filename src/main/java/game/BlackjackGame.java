@@ -4,6 +4,7 @@ import java.util.List;
 
 import domain.BlackjackResult;
 import domain.card.CardMachine;
+import domain.participant.attributes.Names;
 import domain.participant.dealer.Dealer;
 import domain.participant.player.Player;
 import domain.participant.player.Players;
@@ -33,11 +34,13 @@ public class BlackjackGame {
     }
 
     private Players createPlayers() {
-        List<String> playerNames = inputView.askPlayerNames();
-        List<Player> players = playerNames.stream()
-                .map(name -> new Player(name, inputView.askPlayerBet(name)))
-                .toList();
-        return new Players(players);
+        Names names = inputView.askPlayerNames();
+        return new Players(
+                names.toList()
+                        .stream()
+                        .map(name -> new Player(name, inputView.askPlayerBet(name)))
+                        .toList()
+        );
     }
 
     private void initialize(final Dealer dealer, final Players players) {

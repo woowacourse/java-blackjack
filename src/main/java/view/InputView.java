@@ -4,24 +4,26 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.List;
 
+import domain.participant.attributes.Bet;
+import domain.participant.attributes.Name;
+import domain.participant.attributes.Names;
 import domain.participant.player.Player;
 
 public class InputView implements BlackjackViewParser {
 
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
 
-    public List<String> askPlayerNames() {
+    public Names askPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = requireNotBlank(readLine());
-        return Arrays.stream(input.split(",")).toList();
+        return new Names(Arrays.stream(input.split(",")).toList());
     }
 
-    public int askPlayerBet(String name) {
-        System.out.printf("%s의 의 배팅 금액은?", name);
+    public Bet askPlayerBet(Name name) {
+        System.out.printf("%s의 의 배팅 금액은?", name.value());
         String input = requireNotBlank(readLine());
-        return Integer.parseInt(input);
+        return new Bet(Integer.parseInt(input));
     }
 
     public GameCommand askMoreCard(final Player player) {
