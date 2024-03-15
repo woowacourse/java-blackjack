@@ -23,10 +23,9 @@ public class BlackjackController {
         this.outputView = outputView;
     }
 
-    public void runBlackjack() { // TODO: 메서드 분리, 재입력 받기
-        Players players = Players.from(inputView.readPlayerNames());
-        PlayerBettings playerBettings = PlayerBettings.from(inputView.readBettings(players.getNames()));
-//            Map<String, Integer> playerBettings = PlayerBetting.from(inputView.readBettings(players.getNames()));
+    public void runBlackjack() {
+        Players players = createPlayers();
+        PlayerBettings playerBettings = createBettings(players);
 
         final BlackjackGame blackjackGame = readyGame(players);
 
@@ -37,9 +36,26 @@ public class BlackjackController {
         finishGame(blackjackGame, playerBettings);
     }
 
+    private PlayerBettings createBettings(final Players players) {
+        try {
+            return PlayerBettings.from(inputView.readBettings(players.getNames()));
+        } catch (final IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return createBettings(players);
+        }
+    }
+
+    private Players createPlayers() {
+        try {
+            return Players.from(inputView.readPlayerNames());
+        } catch (final IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return createPlayers();
+        }
+    }
+
     private BlackjackGame readyGame(final Players players) {
         try {
-
             final BlackjackGame blackjackGame = new BlackjackGame(players);
             blackjackGame.divideCard();
             final List<ParticipantCardsDto> participantCardsDtos = blackjackGame.getStartCards();
@@ -91,7 +107,8 @@ public class BlackjackController {
     }
 
     private void finishGame(final BlackjackGame blackjackGame, final PlayerBettings playerBettings) {
-        final ParticipantScoresDto participantScoresDto = ParticipantScoresDto.of(blackjackGame.getHandResult(), blackjackGame.getScoreResult());
+        final ParticipantScoresDto participantScoresDto = ParticipantScoresDto.of(blackjackGame.getHandResult(),
+                blackjackGame.getScoreResult());
 
         final WinningResult winningResult = blackjackGame.getWinningResult(); // 딜러 처리 빼든지
 

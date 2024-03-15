@@ -7,8 +7,15 @@ public class PlayerBetting {
     private final int betting;
 
     public PlayerBetting(final String name, final int betting) {
+        validateBetting(betting);
         this.name = new ParticipantName(name);
         this.betting = betting;
+    }
+
+    private void validateBetting(final int betting) {
+        if (betting <=0 ) {
+            throw new IllegalArgumentException("배팅 금액은 0원보다 커야합니다.");
+        }
     }
 
     public boolean isName(final ParticipantName otherName) {
