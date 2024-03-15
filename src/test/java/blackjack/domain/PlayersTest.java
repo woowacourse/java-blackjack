@@ -10,10 +10,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("플레이어들")
@@ -32,7 +33,12 @@ public class PlayersTest {
     void setUp() {
         deck = new Deck(shuffleStrategy);
         dealer = new Dealer(deck);
-        players = Players.of(List.of(nameA, nameB), List.of(betting, betting), dealer);
+
+        Map<String, String> playersBetting = new HashMap<>();
+        playersBetting.put(nameA, betting);
+        playersBetting.put(nameB, betting);
+
+        players = Players.of(playersBetting, dealer);
     }
 
     @DisplayName("플레이어 이름이 중복되면 예외가 발생한다.")
@@ -40,10 +46,9 @@ public class PlayersTest {
     void validateDuplicatedNames() {
         //given
         List<String> names = List.of("choco", "choco", "chip");
-        List<String> bettings = List.of("1000", "1000", "1000");
 
         //when & then
-        assertThatThrownBy(() -> Players.of(names, bettings, dealer))
+        assertThatThrownBy(() -> Players.validate(names))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

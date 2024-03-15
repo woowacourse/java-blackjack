@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CardFactory {
 
@@ -8,7 +9,7 @@ public class CardFactory {
         return Arrays.stream(Suit.values())
                 .map(this::createCardsBySuit)
                 .flatMap(Collection::stream)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     private List<Card> createCardsBySuit(Suit suit) {

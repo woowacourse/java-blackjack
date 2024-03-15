@@ -11,7 +11,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import static blackjack.fixture.CardFixture.aceSpadeCard;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -67,7 +68,11 @@ public class DealerTest {
     @Test
     void calculateProfit() {
         //given
-        Players players = Players.of(List.of("choco", "clover"), List.of("500000", "100000"), dealer);
+        Map<String, String> playersBetting = new HashMap<>();
+        playersBetting.put("choco", "500000");
+        playersBetting.put("clover", "100000");
+
+        Players players = Players.of(playersBetting, dealer);
         players.getPlayers().get(1).draw(dealer);
 
         ProfitResult profitResult = players.createProfitResult(dealer);

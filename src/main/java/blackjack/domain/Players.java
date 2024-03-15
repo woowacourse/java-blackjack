@@ -5,10 +5,7 @@ import blackjack.domain.participant.Player;
 import blackjack.dto.ProfitResult;
 import blackjack.util.JudgeUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Players {
 
@@ -20,18 +17,17 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(final List<String> names, final List<String> bettings, final Dealer dealer) {
-        validate(names);
-
+    public static Players of(final Map<String, String> playersName, final Dealer dealer) {
         List<Player> players = new ArrayList<>();
-        for (int i = 0; i < names.size(); i++) {
-            players.add(new Player(names.get(i), dealer, bettings.get(i)));
+
+        for (String name : playersName.keySet()) {
+            players.add(new Player(name, dealer, playersName.get(name)));
         }
 
         return new Players(players);
     }
 
-    private static void validate(final List<String> names) {
+    public static void validate(final List<String> names) {
         if (isDuplicated(names)) {
             throw new IllegalArgumentException(NAME_DUPLICATED_EXCEPTION);
         }

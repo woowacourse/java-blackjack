@@ -13,6 +13,8 @@ import blackjack.view.RankView;
 import blackjack.view.SuitView;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
@@ -28,9 +30,8 @@ public class BlackjackGame {
         Deck deck = new Deck(new RandomShuffleStrategy());
         Dealer dealer = new Dealer(deck);
 
-        List<String> names = inputView.readPlayersName();
-        List<String> bettings = readPlayersBetting(names);
-        Players players = Players.of(names, bettings, dealer);
+        List<String> names = readPlayersName();
+        Players players = preparePlayers(names, dealer);
 
         printCardDistribute(names, players, dealer);
         extraCardRequest(dealer, players);
@@ -39,10 +40,23 @@ public class BlackjackGame {
         outputView.printFinalProfit(dealer.calculateProfit(profitResult), profitResult);
     }
 
-    private List<String> readPlayersBetting(final List<String> names) {
+    private Players preparePlayers(final List<String> names, final Dealer dealer) {
+        Map<String, String> playersBetting = readPlayersBetting(names);
+
+        return Players.of(playersBetting, dealer);
+    }
+
+    private List<String> readPlayersName() {
+        List<String> playersName =  inputView.readPlayersName();
+
+        Players.validate(playersName);
+
+        return playersName;
+    }
+
+    private Map<String, String> readPlayersBetting(final List<String> names) {
         return names.stream()
-                .map(inputView::readPlayerBetting)
-                .toList();
+                .collect(Collectors.toMap(name -> name, inputView::readPlayerBetting));
     }
 
     private void printCardDistribute(final List<String> names, final Players players, final Dealer dealer) {

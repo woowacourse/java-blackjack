@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,10 +25,10 @@ class JudgeUtilTest {
     private Deck deck;
     private Dealer dealer;
     private final List<String> playerNames = List.of("choco");
-    private final List<String> bettings = List.of("1000");
     private Players players;
     private Player choco;
     private ProfitResult profitResult;
+    private Map<String, String> playersBetting = playerNames.stream().collect(Collectors.toMap(name -> name, name -> "1000"));
 
     @DisplayName("딜러가 버스트된 경우")
     @Nested
@@ -47,7 +49,7 @@ class JudgeUtilTest {
         @Test
         void drawWhenBustTogether() {
             //given
-            players = Players.of(playerNames, bettings, dealer);
+            players = Players.of(playersBetting, dealer);
             choco = players.getPlayers().get(0);
 
             //when
@@ -65,7 +67,7 @@ class JudgeUtilTest {
             //given
             deckDrawLoop(3);
 
-            players = Players.of(playerNames, bettings, dealer);
+            players = Players.of(playersBetting, dealer);
             choco = players.getPlayers().get(0);
 
             //when
@@ -80,7 +82,7 @@ class JudgeUtilTest {
         @Test
         void loseWhenPlayerNormal() {
             //given
-            players = Players.of(playerNames, bettings, dealer);
+            players = Players.of(playersBetting, dealer);
             choco = players.getPlayers().get(0);
 
             //when
@@ -109,7 +111,7 @@ class JudgeUtilTest {
         @Test
         void winWhenPlayerBust() {
             //given
-            players = Players.of(playerNames, bettings, dealer);
+            players = Players.of(playersBetting, dealer);
             choco = players.getPlayers().get(0);
 
             //when
@@ -128,7 +130,7 @@ class JudgeUtilTest {
             //given
             deckDrawLoop(11);
 
-            players = Players.of(playerNames, bettings, dealer);
+            players = Players.of(playersBetting, dealer);
             choco = players.getPlayers().get(0);
 
             //when
@@ -143,7 +145,7 @@ class JudgeUtilTest {
         @Test
         void winWhenPlayerNormal() {
             //given
-            players = Players.of(playerNames, bettings, dealer);
+            players = Players.of(playersBetting, dealer);
             choco = players.getPlayers().get(0);
 
             //when
@@ -169,7 +171,7 @@ class JudgeUtilTest {
         @Test
         void winWhenPlayerBust() {
             //given
-            players = Players.of(playerNames, bettings, dealer);
+            players = Players.of(playersBetting, dealer);
             choco = players.getPlayers().get(0);
 
             //when
@@ -187,7 +189,7 @@ class JudgeUtilTest {
             //given
             deckDrawLoop(10);
 
-            players = Players.of(playerNames, bettings, dealer);
+            players = Players.of(playersBetting, dealer);
             choco = players.getPlayers().get(0);
 
             //when
@@ -202,7 +204,7 @@ class JudgeUtilTest {
         @Test
         void winWhenPlayerNormalWithSmallerScore() {
             //given
-            players = Players.of(playerNames, bettings, dealer);
+            players = Players.of(playersBetting, dealer);
             choco = players.getPlayers().get(0);
 
             //when
@@ -218,7 +220,7 @@ class JudgeUtilTest {
         void loseWhenPlayerNormalWithBiggerScore() {
             //given
             deckDrawLoop(5);
-            players = Players.of(playerNames, bettings, dealer);
+            players = Players.of(playersBetting, dealer);
             choco = players.getPlayers().get(0);
 
             //when
@@ -234,7 +236,7 @@ class JudgeUtilTest {
         void drawWhenPlayerNormalWithSameScore() {
             //given
             deckDrawLoop(3);
-            players = Players.of(playerNames, bettings, dealer);
+            players = Players.of(playersBetting, dealer);
             choco = players.getPlayers().get(0);
 
             //when
