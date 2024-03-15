@@ -132,7 +132,7 @@ public class BlackJackGame {
     }
 
     private void playDealerTurn(final Dealer dealer) {
-        while (dealer.canHit()) {
+        while (dealer.shouldHit()) {
             outputView.printDealerHit();
             dealer.draw(dealer.distributeCard());
         }

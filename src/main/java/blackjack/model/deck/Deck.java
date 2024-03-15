@@ -46,7 +46,7 @@ public class Deck {
         return new ArrayDeque<>(originDeck);
     }
 
-    public Card distribute() {
+    public Card drawn() {
         try {
             return deck.removeFirst();
         } catch (NoSuchElementException e) {
