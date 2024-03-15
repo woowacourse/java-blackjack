@@ -77,7 +77,7 @@ public class BlackJackController {
     }
 
     private BetAmount readBetAmountBy(final Name name) {
-        return BetAmount.from(inputView.readBetAmount(name.getValue()));
+        return new BetAmount(inputView.readBetAmount(name.getValue()));
     }
 
     private void dealToDealer(Players players, Dealer dealer) {

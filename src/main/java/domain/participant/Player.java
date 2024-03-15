@@ -12,7 +12,7 @@ public class Player extends Participant {
     public Player(final Name name, final Hands hands) {
         super(name, hands);
         validateName(name);
-        this.betAmount = BetAmount.from(100);
+        this.betAmount = new BetAmount(100);
     }
 
     public Player(final Name name, final Hands hands, final BetAmount betAmount) {
@@ -22,7 +22,7 @@ public class Player extends Participant {
     }
 
     public Profit calculateProfitBy(final Dealer dealer) {
-        return Result.calculate(super.getHands(), dealer.getHands(), betAmount);
+        return Result.calculateProfit(super.getHands(), dealer.getHands(), betAmount);
     }
 
     @Override

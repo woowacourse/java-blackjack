@@ -50,7 +50,7 @@ public class Hands {
     }
 
     public Result calculateResultBy(final Hands target) {
-        return Result.calculate(this, target);
+        return Result.calculateProfit(this, target);
     }
 
     private int calculateTotalByAce(final int total) {

@@ -8,48 +8,32 @@ import java.util.function.Function;
 
 public enum Result {
 
-    WIN(Result::winningCondition, betAmount -> new Profit(betAmount.getAmount())),
-    WIN_BLACKJACK(Result::winningBlackJackCondition, betAmount -> betAmount.multiply(1.5)),
-    TIE(Result::tieCondition, BetAmount::makeZero),
+    WIN(Result::winningCondition, BetAmount::keep),
+    WIN_BLACKJACK(Result::winningBlackJackCondition, BetAmount::multiply),
+    TIE(Result::tieCondition, BetAmount::zero),
     LOSE(Result::loseCondition, BetAmount::lose);
 
     private final BiPredicate<Hands, Hands> condition;
-    private final Function<BetAmount, Profit> betAmountFunction;
+    private final Function<BetAmount, Profit> profitFunction;
 
-    Result(BiPredicate<Hands, Hands> condition, Function<BetAmount, Profit> betAmountFunction) {
+    Result(BiPredicate<Hands, Hands> condition, Function<BetAmount, Profit> profitFunction) {
         this.condition = condition;
-        this.betAmountFunction = betAmountFunction;
+        this.profitFunction = profitFunction;
     }
 
-    public Result reverse() {
-        if (Result.WIN.equals(this) || Result.WIN_BLACKJACK.equals(this)) {
-            return LOSE;
-        }
-
-        if (Result.LOSE.equals(this)) {
-            return WIN;
-        }
-
-        return TIE;
-    }
-
-    public static Result calculate(Hands hands, Hands target) {
+    public static Result calculateProfit(Hands hands, Hands target) {
         return Arrays.stream(Result.values())
                 .filter(result -> result.condition.test(hands, target))
                 .findFirst()
-                .get();
+                .orElseThrow(() -> new IllegalStateException("[ERROR] 처리할 수 없는 값입니다."));
     }
 
-    public static Profit calculate(final Hands hands, final Hands target, final BetAmount betAmount) {
+    public static Profit calculateProfit(final Hands hands, final Hands target, final BetAmount betAmount) {
         return Arrays.stream(Result.values())
                 .filter(result -> result.condition.test(hands, target))
-                .map(result -> result.betAmountFunction.apply(betAmount))
+                .map(result -> result.profitFunction.apply(betAmount))
                 .findFirst()
-                .get();
-    }
-
-    public Profit calculate(final BetAmount betAmount) {
-        return this.betAmountFunction.apply(betAmount);
+                .orElseThrow(() -> new IllegalStateException("[ERROR] 처리할 수 없는 값입니다."));
     }
 
     private static boolean winningCondition(final Hands hands, final Hands target) {

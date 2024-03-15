@@ -7,30 +7,26 @@ public class BetAmount {
 
     private final int amount;
 
-    private BetAmount(final int amount) {
+    public BetAmount(final int amount) {
+        validatePositive(amount);
+        validateMultiplesOfTen(amount);
         this.amount = amount;
     }
 
-    public static BetAmount from(final int amount) {
-        validatePositive(amount);
-        validateMultiplesOfTen(amount);
-        return new BetAmount(amount);
+    public Profit keep() {
+        return new Profit(amount);
     }
 
-    public Profit multiply(final double value) { //TODO 값 직접 바꾸기, 네이밍 변경
-        return new Profit((int) (amount * value));
+    public Profit multiply() {
+        return new Profit((int) (1.5 * amount));
     }
 
     public Profit lose() {
         return new Profit((-1) * amount);
     }
 
-    public Profit makeZero() {
+    public Profit zero() {
         return new Profit(0);
-    }
-
-    public int getAmount() {
-        return amount;
     }
 
     private static void validatePositive(final int amount) {

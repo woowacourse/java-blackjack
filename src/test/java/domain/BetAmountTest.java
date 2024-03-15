@@ -13,7 +13,7 @@ class BetAmountTest {
     @ParameterizedTest
     @ValueSource(ints = {0, -1, -100})
     void notPositive(int amount) {
-        Assertions.assertThatThrownBy(() -> BetAmount.from(amount))
+        Assertions.assertThatThrownBy(() -> new BetAmount(amount))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 배팅 금액은 양수만 입력가능합니다.");
     }
@@ -22,7 +22,7 @@ class BetAmountTest {
     @ParameterizedTest
     @ValueSource(ints = {1_001, 10_001, 9})
     void notMultiplesOfTen(int amount) {
-        Assertions.assertThatThrownBy(() -> BetAmount.from(amount))
+        Assertions.assertThatThrownBy(() -> new BetAmount(amount))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 배팅 금액은 10의 배수만 입력가능합니다.");
     }
@@ -31,7 +31,7 @@ class BetAmountTest {
     @ParameterizedTest
     @ValueSource(ints = {10, 100, 1_000})
     void from(int amount) {
-        Assertions.assertThatCode(() -> BetAmount.from(amount))
+        Assertions.assertThatCode(() -> new BetAmount(amount))
                 .doesNotThrowAnyException();
     }
 
@@ -39,10 +39,10 @@ class BetAmountTest {
     @Test
     void multiply() {
         // given
-        final BetAmount betAmount = BetAmount.from(10_000);
+        final BetAmount betAmount = new BetAmount(10_000);
 
         // when
-        final Profit profit = betAmount.multiply(1.5);
+        final Profit profit = betAmount.multiply();
 
         // then
         Assertions.assertThat(profit.getProfit()).isEqualTo((int) (10_000 * 1.5));
