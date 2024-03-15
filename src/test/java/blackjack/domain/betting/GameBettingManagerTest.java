@@ -3,6 +3,9 @@ package blackjack.domain.betting;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Pattern;
 import blackjack.domain.card.Rank;
+import blackjack.domain.deck.DeckGenerator;
+import blackjack.domain.deck.PlayingDeck;
+import blackjack.domain.deck.shuffle.NoShuffle;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
@@ -18,8 +21,9 @@ class GameBettingManagerTest {
     void calculateBattingReward_allBust() {
         //given
         GameBettingManager gameBettingManager = new GameBettingManager();
+        PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck(), new NoShuffle());
 
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(playingDeck);
         Player player = new Player("test");
         Betting betting = new Betting("1000.0");
         gameBettingManager.registerPlayerBetting(player, betting);
@@ -50,8 +54,9 @@ class GameBettingManagerTest {
     void calculateBattingReward_DealerBust() {
         //given
         GameBettingManager gameBettingManager = new GameBettingManager();
+        PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck(), new NoShuffle());
 
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(playingDeck);
         Player player = new Player("test");
         Betting betting = new Betting("1000.0");
         gameBettingManager.registerPlayerBetting(player, betting);
@@ -81,7 +86,9 @@ class GameBettingManagerTest {
     void calculateBattingReward_PlayerBlackjack() {
         //given
         GameBettingManager gameBettingManager = new GameBettingManager();
-        Dealer dealer = new Dealer();
+        PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck(), new NoShuffle());
+
+        Dealer dealer = new Dealer(playingDeck);
         Player player = new Player("test");
         Betting betting = new Betting("1000.0");
         gameBettingManager.registerPlayerBetting(player, betting);
@@ -111,7 +118,9 @@ class GameBettingManagerTest {
     void calculateBattingReward_allBlackjack() {
         //given
         GameBettingManager gameBettingManager = new GameBettingManager();
-        Dealer dealer = new Dealer();
+        PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck(), new NoShuffle());
+
+        Dealer dealer = new Dealer(playingDeck);
         Player player = new Player("test");
         Betting betting = new Betting("1000.0");
         gameBettingManager.registerPlayerBetting(player, betting);
@@ -140,7 +149,9 @@ class GameBettingManagerTest {
     void calculateBattingReward_neitherBusterOrBlackjack() {
         //given
         GameBettingManager gameBettingManager = new GameBettingManager();
-        Dealer dealer = new Dealer();
+        PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck(), new NoShuffle());
+
+        Dealer dealer = new Dealer(playingDeck);
         Player player = new Player("test");
         Betting betting = new Betting("1000.0");
         gameBettingManager.registerPlayerBetting(player, betting);
@@ -169,7 +180,9 @@ class GameBettingManagerTest {
     void calculateBattingReward_neitherBusterOrBlackjack_sameScore() {
         //given
         GameBettingManager gameBettingManager = new GameBettingManager();
-        Dealer dealer = new Dealer();
+        PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck(), new NoShuffle());
+
+        Dealer dealer = new Dealer(playingDeck);
         Player player = new Player("test");
         Betting betting = new Betting("1000.0");
         gameBettingManager.registerPlayerBetting(player, betting);

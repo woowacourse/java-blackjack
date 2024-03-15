@@ -1,13 +1,12 @@
 package blackjack;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.betting.Betting;
+import blackjack.domain.betting.GameBettingManager;
 import blackjack.domain.deck.DeckGenerator;
 import blackjack.domain.deck.PlayingDeck;
-import blackjack.domain.betting.Betting;
 import blackjack.domain.deck.shuffle.RandomShuffle;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.betting.GameBettingManager;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -16,13 +15,15 @@ import java.util.function.Supplier;
 
 public class BlackjackGamePlay {
 
-    private final PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck(), new RandomShuffle());
     private final GameBettingManager gameBettingManager = new GameBettingManager();
 
     public void run() {
         List<Player> players = retryUntilSuccess(this::registerPlayer);
         registerPlayersBatting(players);
-        playBlackJack(new Dealer(), players);
+
+        PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck(), new RandomShuffle());
+
+        playBlackJack(new Dealer(playingDeck), players);
     }
 
     private List<Player> registerPlayer() {
@@ -41,58 +42,36 @@ public class BlackjackGamePlay {
 
     private void playBlackJack(Dealer dealer, List<Player> players) {
         initialDraw(dealer, players);
-        runPlayerTurn(players);
+        runPlayerTurn(dealer, players);
         runDealerTurn(dealer);
         calculateResult(dealer, players);
     }
 
     private void initialDraw(Dealer dealer, List<Player> players) {
-        drawCardToDealer(dealer);
-        drawCardToPlayer(players);
+        dealer.initialDraw();
+        players.forEach(player -> player.initialDraw(dealer));
+
         OutputView.printInitialDrawResult(dealer, players);
     }
 
-    private void drawCardToDealer(Dealer dealer) {
-        Card firstDealerCard = playingDeck.drawCard();
-        Card secondDealerCard = playingDeck.drawCard();
-
-        dealer.initialDraw(List.of(firstDealerCard, secondDealerCard));
+    private void runPlayerTurn(Dealer dealer, List<Player> players) {
+        players.forEach(player -> hitOrStand(dealer, player));
     }
 
-    private void drawCardToPlayer(List<Player> players) {
-        for (Player player : players) {
-            Card firstPlayerCard = playingDeck.drawCard();
-            Card secondPlayerCard = playingDeck.drawCard();
-
-            player.initialDraw(List.of(firstPlayerCard, secondPlayerCard));
-        }
-    }
-
-    private void runPlayerTurn(List<Player> players) {
-        for (Player player : players) {
-            hitOrStand(player);
-        }
-    }
-
-    private void hitOrStand(Player player) {
+    private void hitOrStand(Dealer dealer, Player player) {
         while (player.canHit() && retryUntilSuccess(() -> InputView.askPlayerForCard(player))) {
-            executeHit(player);
+            player.receiveCard(dealer.drawCard());
+            OutputView.printPlayerCard(player);
         }
+
         if (player.canHit()) {
             OutputView.printPlayerCard(player);
         }
     }
 
-    private void executeHit(Player player) {
-        Card card = playingDeck.drawCard();
-        player.receiveCard(card);
-        OutputView.printPlayerCard(player);
-    }
-
     private void runDealerTurn(Dealer dealer) {
         if (dealer.canHit()) {
-            Card card = playingDeck.drawCard();
-            dealer.receiveCard(card);
+            dealer.receiveCard(dealer.drawCard());
             OutputView.printDealerHit();
         }
     }

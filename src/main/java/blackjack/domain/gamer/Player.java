@@ -10,6 +10,12 @@ public class Player extends Gamer {
         this.playerName = new Name(playerName);
     }
 
+    public void initialDraw(Dealer dealer) {
+        for (int i = 0; i < 2; i++) {
+            receiveCard(dealer.drawCard());
+        }
+    }
+
     public String getPlayerName() {
         return playerName.getName();
     }

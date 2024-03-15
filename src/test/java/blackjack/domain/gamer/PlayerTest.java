@@ -3,6 +3,9 @@ package blackjack.domain.gamer;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Pattern;
 import blackjack.domain.card.Rank;
+import blackjack.domain.deck.DeckGenerator;
+import blackjack.domain.deck.PlayingDeck;
+import blackjack.domain.deck.shuffle.NoShuffle;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,6 +28,27 @@ class PlayerTest {
 
         //then
         assertThat(playerDeck).containsExactly(card);
+    }
+
+    @DisplayName("플레이어가 최초 두 장의 카드를 받는다.")
+    @Test
+    void initialDraw() {
+        //given
+        PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck(), new NoShuffle());
+        Dealer dealer = new Dealer(playingDeck);
+        Player player = new Player("ted");
+
+        Card card = new Card(Pattern.SPADE, Rank.ACE);
+        Card card2 = new Card(Pattern.SPADE, Rank.TWO);
+
+        List<Card> cards = List.of(card, card2);
+
+        //when
+        player.initialDraw(dealer);
+        List<Card> playerDeck = player.getHandDeck();
+
+        //then
+        assertThat(playerDeck).isEqualTo(cards);
     }
 
     @DisplayName("플레이어 카드합이 21 이하일 때 히트할 수 있는지 확인한다.")
