@@ -41,8 +41,8 @@ public class BlackjackGame {
     private void startBetting(GameBoard gameBoard) {
         Players players = gameBoard.getPlayers();
         for (int i = 0; i < players.size(); i++) {
-            int money = inputView.readMoney(players.getOnePlayerName(i).getValue());
-            players.betOnePlayerMoney(new GamblingMoney(money), i);
+            int money = inputView.readMoney(players.getPlayerName(i).getValue());
+            players.betPlayerMoney(new GamblingMoney(money), i);
         }
     }
 

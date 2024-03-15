@@ -24,7 +24,7 @@ public class GameBoard {
     }
 
     public boolean isPlayerNotOver(int playerIndex) {
-        return players.isOnePlayerNotOver(playerIndex);
+        return players.isPlayerNotOver(playerIndex);
     }
 
     public boolean isDealerNotOver() {
@@ -40,12 +40,12 @@ public class GameBoard {
 
     private void distributeOnePlayerInitialHand(int playerIndex) {
         for (int cardCount = 0; cardCount < INITIAL_CARD_COUNT; cardCount++) {
-            players.receiveOnePlayerCard(dealer.drawCard(), playerIndex);
+            players.receivePlayerCard(dealer.drawCard(), playerIndex);
         }
     }
 
     public void addCardToPlayer(int playerIndex) {
-        players.receiveOnePlayerCard(dealer.drawCard(), playerIndex);
+        players.receivePlayerCard(dealer.drawCard(), playerIndex);
     }
 
     public void addCardToDealer() {
@@ -91,7 +91,7 @@ public class GameBoard {
     }
 
     public Name getPlayerName(int playerIndex) {
-        return players.getOnePlayerName(playerIndex);
+        return players.getPlayerName(playerIndex);
     }
 
     public Players getPlayers() {
@@ -99,7 +99,7 @@ public class GameBoard {
     }
 
     public Player getPlayer(int playerIndex) {
-        return players.getOnePlayer(playerIndex);
+        return players.getPlayer(playerIndex);
     }
 
     public Dealer getDealer() {

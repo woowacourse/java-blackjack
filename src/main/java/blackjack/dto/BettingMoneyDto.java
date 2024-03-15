@@ -10,7 +10,7 @@ public record BettingMoneyDto(Map<String, Integer> bettingMoneyResult) {
         Map<String, Integer> bettingMoneyResult = new LinkedHashMap<>();
         bettingMoneyResult.put(dealer.getName().getValue(), dealer.getGamblingMoney().getValue());
         for (int i = 0; i < players.size(); i++) {
-            bettingMoneyResult.put(players.getOnePlayerName(i).getValue(), players.getOnePlayerGamblingMoney(i).getValue());
+            bettingMoneyResult.put(players.getPlayerName(i).getValue(), players.getPlayerGamblingMoney(i).getValue());
         }
         return new BettingMoneyDto(bettingMoneyResult);
     }

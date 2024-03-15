@@ -21,15 +21,15 @@ public class Players {
         return result;
     }
 
-    public void betOnePlayerMoney(GamblingMoney gamblingMoney, int playerIndex) {
+    public void betPlayerMoney(GamblingMoney gamblingMoney, int playerIndex) {
         players.get(playerIndex).betMoney(gamblingMoney);
     }
 
-    public void receiveOnePlayerCard(Card card, int playerIndex) {
+    public void receivePlayerCard(Card card, int playerIndex) {
         players.get(playerIndex).receiveCard(card);
     }
 
-    public boolean isOnePlayerNotOver(int playerIndex) {
+    public boolean isPlayerNotOver(int playerIndex) {
         return players.get(playerIndex).isNotOver(BLACKJACK_SCORE);
     }
 
@@ -37,15 +37,15 @@ public class Players {
         return players.size();
     }
 
-    public Name getOnePlayerName(int playerIndex) {
+    public Name getPlayerName(int playerIndex) {
         return players.get(playerIndex).getName();
     }
 
-    public GamblingMoney getOnePlayerGamblingMoney(int playerIndex) {
+    public GamblingMoney getPlayerGamblingMoney(int playerIndex) {
         return players.get(playerIndex).getGamblingMoney();
     }
 
-    public Player getOnePlayer(int playerIndex) {
+    public Player getPlayer(int playerIndex) {
         return players.get(playerIndex);
     }
 
