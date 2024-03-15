@@ -1,14 +1,14 @@
-package blackjack.domain.strategy;
+package blackjack.domain.card.strategy;
 
 import blackjack.domain.card.Card;
 
 import java.util.Collections;
 import java.util.List;
 
-public class ReverseCardShuffleStrategy implements CardShuffleStrategy {
+public class RandomCardShuffleStrategy implements CardShuffleStrategy {
 
     @Override
     public void shuffle(final List<Card> cards) {
-        Collections.reverse(cards);
+        Collections.shuffle(cards);
     }
 }

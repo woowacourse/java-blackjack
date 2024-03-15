@@ -1,9 +1,9 @@
 package blackjack.fixture;
 
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.strategy.CardShuffleStrategy;
+import blackjack.domain.card.strategy.ReverseCardShuffleStrategy;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.strategy.CardShuffleStrategy;
-import blackjack.domain.strategy.ReverseCardShuffleStrategy;
 
 public class DealerFixture {
 

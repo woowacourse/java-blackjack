@@ -1,10 +1,10 @@
 package blackjack.dto;
 
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.strategy.ReverseCardShuffleStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.profit.ProfitResult;
-import blackjack.domain.strategy.ReverseCardShuffleStrategy;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

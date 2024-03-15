@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class InputValidatorTest {
-    private InputValidator inputValidator = new InputValidator();
+    private final InputValidator inputValidator = new InputValidator();
 
     @ParameterizedTest
     @NullAndEmptySource

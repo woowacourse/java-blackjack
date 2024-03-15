@@ -2,7 +2,7 @@ package blackjack.domain.profit;
 
 import blackjack.domain.batting.BattingAmount;
 import blackjack.domain.batting.BattingAmountRepository;
-import blackjack.domain.game.ResultStatus;
+import blackjack.domain.participant.ResultStatus;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 

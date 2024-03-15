@@ -3,8 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Score;
-import blackjack.domain.game.ResultStatus;
-import blackjack.domain.strategy.CardShuffleStrategy;
+import blackjack.domain.card.strategy.CardShuffleStrategy;
 import blackjack.utils.Constants;
 
 public class Dealer extends Participant {

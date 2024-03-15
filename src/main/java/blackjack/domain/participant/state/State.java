@@ -1,9 +1,9 @@
-package blackjack.domain.state;
+package blackjack.domain.participant.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
 import blackjack.domain.card.Score;
-import blackjack.domain.game.ResultStatus;
+import blackjack.domain.participant.ResultStatus;
 
 public interface State {
 

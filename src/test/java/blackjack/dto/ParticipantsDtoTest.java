@@ -1,9 +1,9 @@
 package blackjack.dto;
 
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.strategy.ReverseCardShuffleStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Players;
-import blackjack.domain.strategy.ReverseCardShuffleStrategy;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
