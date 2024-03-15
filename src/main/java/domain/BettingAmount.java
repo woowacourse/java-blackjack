@@ -1,7 +1,7 @@
 package domain;
 
 public class BettingAmount {
-    public static final int MAX_AMOUNT = 100_000_000;
+    private static final int MAX_AMOUNT = 100_000_000;
 
     private final int amount;
 

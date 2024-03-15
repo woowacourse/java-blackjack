@@ -7,7 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static domain.participant.PlayerName.MAX_NAME_LENGTH;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerNameTest {
@@ -33,6 +32,6 @@ public class PlayerNameTest {
         // When & Then
         Assertions.assertThatThrownBy(() -> new PlayerName(invalidName))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(String.format("플레이어 이름은 1글자 이상 %d글자 이하여야 합니다.", MAX_NAME_LENGTH));
+                .hasMessageContaining("플레이어 이름은 1글자 이상 5글자 이하여야 합니다.");
     }
 }

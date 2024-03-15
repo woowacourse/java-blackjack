@@ -5,7 +5,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static domain.BettingAmount.MAX_AMOUNT;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BettingAmountTest {
@@ -17,6 +16,6 @@ public class BettingAmountTest {
         // When & Then
         assertThatThrownBy(() -> new BettingAmount(invalidAmount))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(String.format("배팅 금액은 %d원 이하의 양의 정수만 가능합니다.", MAX_AMOUNT));
+                .hasMessageContaining("배팅 금액은 100000000원 이하의 양의 정수만 가능합니다.");
     }
 }

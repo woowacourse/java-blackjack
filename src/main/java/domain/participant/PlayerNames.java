@@ -7,7 +7,7 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 public record PlayerNames(List<PlayerName> values) {
-    public static final int MAX_PLAYER_NUMBER = 10;
+    private static final int MAX_PLAYER_NUMBER = 10;
 
     public PlayerNames {
         validateSize(values);
