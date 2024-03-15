@@ -34,8 +34,7 @@ public class OutputView {
     private static String makeCardsState(List<Card> cards) {
         final StringJoiner cardJoiner = new StringJoiner(", ");
         for (Card card : cards) {
-            //TODO: Number도 translate 해야 한다. A, 숫자, J, K, Q
-            cardJoiner.add(card.getRank().getValue() + SuitTranslator.translate(card.getSuit()));
+            cardJoiner.add(RankTranslator.translate(card.getRank()) + SuitTranslator.translate(card.getSuit()));
         }
         return cardJoiner.toString();
     }
