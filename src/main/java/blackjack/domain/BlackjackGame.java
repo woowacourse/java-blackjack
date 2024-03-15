@@ -1,22 +1,21 @@
 package blackjack.domain;
 
+import static java.util.stream.Collectors.toMap;
+
 import blackjack.domain.bet.BetLeverage;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hands;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.card.Deck;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerName;
-import blackjack.domain.player.PlayerNames;
 import blackjack.domain.player.Players;
 import blackjack.domain.rule.state.InitState;
-import blackjack.dto.FinalHandsScoreDto;
 import blackjack.dto.StartCardsDto;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.IntConsumer;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
@@ -24,10 +23,17 @@ public class BlackjackGame {
     private final Dealer dealer;
     private final Deck deck;
 
-    public BlackjackGame(final Players players, final Dealer dealer, final Deck deck) {
+    private BlackjackGame(final Players players, final Dealer dealer, final Deck deck) {
         this.players = players;
         this.dealer = dealer;
         this.deck = deck;
+    }
+
+    public static BlackjackGame from(final Players players) {
+        final Deck deck = Deck.create();
+        final Dealer dealer = new Dealer();
+
+        return new BlackjackGame(players, dealer, deck);
     }
 
     public StartCardsDto giveInitCards() {
@@ -107,17 +113,17 @@ public class BlackjackGame {
         dealerHitConsumer.accept(count);
     }
 
-    public FinalHandsScoreDto getFinalHandsScore() {
-        return FinalHandsScoreDto.of(players.getPlayersHands(), dealer.getHands());
+    public Map<PlayerName, Hands> getPlayerHands() {
+        return players.getPlayersHands();
+    }
+
+    public Hands getDealerHands() {
+        return dealer.getHands();
     }
 
     public Map<PlayerName, BetLeverage> getPlayersBetLeverage() {
         return players.getPlayers().stream()
-                .collect(Collectors.toMap(Player::getPlayerName,
+                .collect(toMap(Player::getPlayerName,
                         player -> BetLeverage.of(player.getState(), dealer.getState())));
-    }
-
-    public PlayerNames getPlayerNames() {
-        return players.getPlayerNames();
     }
 }

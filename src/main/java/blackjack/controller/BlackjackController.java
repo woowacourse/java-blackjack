@@ -5,8 +5,6 @@ import blackjack.domain.BlackjackGame;
 import blackjack.domain.bet.BetAmount;
 import blackjack.domain.bet.BetLeverage;
 import blackjack.domain.card.Hands;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.card.Deck;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.PlayerNames;
 import blackjack.domain.player.Players;
@@ -28,35 +26,29 @@ public class BlackjackController {
     }
 
     public void run() {
-        final BlackjackGame blackjackGame = initGame();
-        final BetAmountRepository betAmountRepository = saveBetAmount(blackjackGame);
+        final Players players = createPlayers();
+
+        final BlackjackGame blackjackGame = BlackjackGame.from(players);
+        final BetAmountRepository betAmountRepository = saveBetAmount(players);
 
         playGame(blackjackGame);
         finishGame(blackjackGame, betAmountRepository);
     }
 
-    private BlackjackGame initGame() {
-        final Deck deck = Deck.create();
-        final Dealer dealer = new Dealer();
-        final Players players = Players.from(createPlayerNames());
-
-        return new BlackjackGame(players, dealer, deck);
-    }
-
-    private PlayerNames createPlayerNames() {
+    private Players createPlayers() {
         try {
-            return inputView.readPlayerNames();
+            final PlayerNames playerNames = inputView.readPlayerNames();
+            return Players.from(playerNames);
         } catch (final NeedRetryException e) {
             outputView.printError(e.getMessage());
-            return createPlayerNames();
+            return createPlayers();
         }
     }
 
-    private BetAmountRepository saveBetAmount(final BlackjackGame blackjackGame) {
-        final PlayerNames playerNames = blackjackGame.getPlayerNames();
-        final Map<PlayerName, BetAmount> playerBetAmounts = inputView.readBetAmounts(playerNames);
+    private BetAmountRepository saveBetAmount(final Players players) {
+        final Map<PlayerName, BetAmount> playerBetAmounts = inputView.readBetAmounts(players.getPlayerNames());
 
-        return new BetAmountRepository(playerBetAmounts);
+        return new BetAmountRepository(players, playerBetAmounts);
     }
 
     private void playGame(final BlackjackGame blackjackGame) {
@@ -83,7 +75,9 @@ public class BlackjackController {
     }
 
     private void finishGame(final BlackjackGame blackjackGame, final BetAmountRepository betAmountRepository) {
-        final FinalHandsScoreDto finalHandsScore = blackjackGame.getFinalHandsScore();
+        final Map<PlayerName, Hands> playersHands = blackjackGame.getPlayerHands();
+        final Hands dealerHands = blackjackGame.getDealerHands();
+        final FinalHandsScoreDto finalHandsScore = FinalHandsScoreDto.of(playersHands, dealerHands);
 
         final Map<PlayerName, BetLeverage> playersBetLeverage = blackjackGame.getPlayersBetLeverage();
         final BetRevenueResultDto betRevenueResult = betAmountRepository.calculateBetRevenue(playersBetLeverage);

@@ -77,12 +77,11 @@ public class OutputView {
     }
 
     private void printDealerBetResult(final BetRevenue dealerBetRevenue) {
-        System.out.printf("%s: %f%n", Dealer.DEALER_NAME, dealerBetRevenue.value());
-
+        System.out.printf("%s: %.1f%n", Dealer.DEALER_NAME, dealerBetRevenue.value());
     }
 
     private void printPlayersBetResult(final List<PlayerBetResultDto> playersWinningResult) {
-        playersWinningResult.forEach(playerWinningResult -> System.out.printf("%s: %f%n", playerWinningResult.getName(),
+        playersWinningResult.forEach(playerWinningResult -> System.out.printf("%s: %.1f%n", playerWinningResult.getName(),
                 playerWinningResult.revenue().value()));
     }
 
