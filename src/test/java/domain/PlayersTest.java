@@ -16,7 +16,7 @@ class PlayersTest {
         final List<Player> players = new ArrayList<>();
 
         for (int i = 0; i < 9; i++) {
-            players.add(new Player(new Name("teba" + i)));
+            players.add(new Player(new Name("teba" + i), new BetAmount(100)));
         }
 
         assertThatCode(() -> new Players(players)).isInstanceOf(IllegalArgumentException.class);

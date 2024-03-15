@@ -10,7 +10,7 @@ class PlayerTest {
     @DisplayName("플레이어는 자신이 갖는 카드 합계를 계산할 수 있다")
     @Test
     void sum() {
-        final Player player = new Player(new Name("지쳐버린종이"));
+        final Player player = new Player(new Name("지쳐버린종이"), new BetAmount(100));
 
         player.drawCard(new Card(Denomination.FIVE, Suit.CLUBS));
         player.drawCard(new Card(Denomination.FIVE, Suit.CLUBS));
@@ -22,7 +22,7 @@ class PlayerTest {
     @DisplayName("플레이어는 자신이 갖는 카드 합계를 계산할 수 있다")
     @Test
     void sum2() {
-        final Player player = new Player(new Name("지쳐버린종이"));
+        final Player player = new Player(new Name("지쳐버린종이"), new BetAmount(100));
 
         player.drawCard(new Card(Denomination.KING, Suit.CLUBS));
         player.drawCard(new Card(Denomination.KING, Suit.CLUBS));
@@ -34,7 +34,7 @@ class PlayerTest {
     @DisplayName("합계 점수가 21을 초과하면 버스트")
     @Test
     void bust() {
-        final Player player = new Player(new Name("지쳐버린종이"));
+        final Player player = new Player(new Name("지쳐버린종이"), new BetAmount(100));
 
         player.drawCard(new Card(Denomination.KING, Suit.CLUBS));
         player.drawCard(new Card(Denomination.JACK, Suit.CLUBS));
@@ -48,7 +48,7 @@ class PlayerTest {
     void playerIsNotDealer() {
         final Name name = new Name("딜러");
 
-        assertThatThrownBy(() -> new Player(name))
+        assertThatThrownBy(() -> new Player(name, new BetAmount(100)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

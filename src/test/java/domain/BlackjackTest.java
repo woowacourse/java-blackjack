@@ -12,7 +12,8 @@ class BlackjackTest {
     @DisplayName("딜러에게 2장의 카드가 주어졌는지 확인한다")
     @Test
     void initializeDealer() {
-        final Players players = Players.from(List.of("pobi", "crong", "tebah"));
+        final Names names = new Names(List.of("pobi", "crong", "tebah"));
+        final Players players = Players.from(names, List.of(new BetAmount(100), new BetAmount(100), new BetAmount(100)));
         final Dealer dealer = new Dealer(new Deck());
         final BlackjackGame blackjack = new BlackjackGame(players, dealer);
 
@@ -22,7 +23,8 @@ class BlackjackTest {
     @DisplayName("플레이어에게 2장의 카드가 주어졌는지 확인한다")
     @Test
     void initializePlayers() {
-        final Players players = Players.from(List.of("pobi", "crong", "tebah"));
+        final Names names = new Names(List.of("pobi", "crong", "tebah"));
+        final Players players = Players.from(names, List.of(new BetAmount(100), new BetAmount(100), new BetAmount(100)));
         final Dealer dealer = new Dealer(new Deck());
         final BlackjackGame blackjack = new BlackjackGame(players, dealer);
 
@@ -32,7 +34,8 @@ class BlackjackTest {
     @DisplayName("플레이어에게 1장의 카드를 추가로 지급한다")
     @Test
     void dealCardsToPlayer() {
-        final Players players = Players.from(List.of("pobi", "crong", "tebah"));
+        final Names names = new Names(List.of("pobi", "crong", "tebah"));
+        final Players players = Players.from(names, List.of(new BetAmount(100), new BetAmount(100), new BetAmount(100)));
         final Dealer dealer = new Dealer(new Deck());
         final BlackjackGame blackjack = new BlackjackGame(players, dealer);
         final Player player = blackjack.getPlayers().get(0);

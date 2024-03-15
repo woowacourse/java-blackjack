@@ -6,6 +6,8 @@ import dto.PlayerInfos;
 import view.InputView;
 import view.OutputView;
 
+import java.util.List;
+
 public class Application {
     public static void main(final String[] args) {
         final BlackjackGame blackjackGame = createBlackjackGame();
@@ -27,7 +29,11 @@ public class Application {
     }
 
     private static Players createPlayers() {
-        return Players.from(InputView.inputNames());
+        final Names names = new Names(InputView.inputNames());
+        final List<BetAmount> betAmounts = names.getNames().stream()
+                .map(name -> new BetAmount(InputView.inputBetAmount(name.getName())))
+                .toList();
+        return Players.from(names, betAmounts);
     }
 
     private static void playGame(final BlackjackGame blackjack) {

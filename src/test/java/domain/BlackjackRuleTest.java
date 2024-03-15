@@ -14,9 +14,9 @@ class BlackjackRuleTest {
     @DisplayName("플레이어들과 딜러의 승패를 결정한다.")
     @Test
     void calculate() {
-        final Player tebah = new Player(new Name("tebah"));
+        final Player tebah = new Player(new Name("tebah"), new BetAmount(100));
         tebah.drawCard(new Card(Denomination.KING, Suit.CLUBS));
-        final Player pobi = new Player(new Name("pobi"));
+        final Player pobi = new Player(new Name("pobi"), new BetAmount(100));
         pobi.drawCard(new Card(Denomination.FIVE, Suit.CLUBS));
         final Players players = new Players(List.of(tebah, pobi));
         final Dealer dealer = new Dealer(new Deck());

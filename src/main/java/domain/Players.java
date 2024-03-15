@@ -1,8 +1,7 @@
 package domain;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Players {
     private final List<Player> players;
@@ -12,19 +11,18 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(final List<String> inputtedNames) {
-        return new Players(createPlayers(inputtedNames));
+    public static Players from(final Names names, final List<BetAmount> betAmounts) {
+        return new Players(createPlayers(names, betAmounts));
     }
 
-    private static List<Player> createPlayers(final List<String> inputtedNames) {
-        return inputtedNames.stream()
-                .map(inputtedName -> new Player(new Name(inputtedName)))
-                .collect(Collectors.toList());
+    private static List<Player> createPlayers(final Names names, final List<BetAmount> betAmounts) {
+        return IntStream.range(0, names.size())
+                .mapToObj(i -> new Player(names.get(i), betAmounts.get(i)))
+                .toList();
     }
 
     private void validate(final List<Player> players) {
         validatePlayerNumbers(players);
-        validateDuplicate(players);
     }
 
     private void validatePlayerNumbers(final List<Player> players) {
@@ -35,16 +33,6 @@ public class Players {
 
     private boolean isInvalidPlayersNumber(final List<Player> players) {
         return players.size() > 8;
-    }
-
-    private void validateDuplicate(final List<Player> players) {
-        if (hasDuplicatePlayers(players)) {
-            throw new IllegalArgumentException("플레이어의 이름은 중복될 수 없습니다");
-        }
-    }
-
-    private boolean hasDuplicatePlayers(final List<Player> players) {
-        return Set.copyOf(players).size() != players.size();
     }
 
     public List<Player> getPlayers() {

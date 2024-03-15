@@ -31,4 +31,15 @@ public class Names {
     public List<Name> getNames() {
         return Collections.unmodifiableList(names);
     }
+
+    public int size() {
+        return names.size();
+    }
+
+    public Name get(final int i) {
+        if (i >= getNames().size()) {
+            throw new IllegalArgumentException("이름의 숫자보다 많은 플레이어는 만들 수 없습니다.");
+        }
+        return names.get(i);
+    }
 }

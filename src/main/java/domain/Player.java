@@ -5,13 +5,16 @@ import domain.state.Ready;
 import domain.state.State;
 
 public class Player extends Participant {
-    private Player(final Name name, final State state) {
+    private final BetAmount betAmount;
+
+    private Player(final Name name, final State state, final BetAmount betAmount) {
         super(name, state);
+        this.betAmount = betAmount;
         validateName(name);
     }
 
-    public Player(final Name name) {
-        this(name, new Ready(new Hand()));
+    public Player(final Name name, final BetAmount betAmount) {
+        this(name, new Ready(new Hand()), betAmount);
     }
 
     private void validateName(final Name name) {
