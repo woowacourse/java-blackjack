@@ -11,10 +11,17 @@ public class BetAmount {
     }
 
     private void validate(final int value) {
-        validateRange(value);
+        validateMaRange(value);
+        validateNegativeNumber(value);
     }
 
-    private void validateRange(final int value) {
+    private void validateNegativeNumber(final int value) {
+        if(value < 0){
+            throw new IllegalArgumentException(String.format("배팅 금액: %d, 배팅 금액은 음수가 될 수 없습니다", value));
+        }
+    }
+
+    private void validateMaRange(final int value) {
         if (value > MAX_AMOUNT) {
             throw new IllegalArgumentException(String.format("배팅 금액: %d, 배팅 금액은 최대 %d원입니다", value, MAX_AMOUNT));
         }
