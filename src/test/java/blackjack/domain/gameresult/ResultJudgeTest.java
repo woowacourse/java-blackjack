@@ -17,7 +17,7 @@ import static blackjack.domain.gameresult.Result.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-class ResultTest {
+class ResultJudgeTest {
     private static Stream<Arguments> makeTestPlayerAndTestDealer() {
         Player testPlayer = new Player(new Name("pobi"), Batting.from(100.0));
         Dealer testDealer = new Dealer();
@@ -33,7 +33,7 @@ class ResultTest {
         testPlayer.addCard(new Card(SPADE, TEN));
         testDealer.addCard(new Card(HEART, ACE)); // 딜러 : 11
 
-        Result testResult = Result.judge(testPlayer, testDealer);
+        Result testResult = ResultJudge.judge(testPlayer, testDealer);
 
         assertThat(testResult).isEqualTo(BLACKJACK_WIN);
     }
@@ -46,7 +46,7 @@ class ResultTest {
         testPlayer.addCard(new Card(SPADE, NINE));
         testDealer.addCard(new Card(HEART, ACE)); // 딜러 - 11
 
-        Result testResult = Result.judge(testPlayer, testDealer);
+        Result testResult = ResultJudge.judge(testPlayer, testDealer);
 
         assertThat(testResult).isEqualTo(WIN);
     }
@@ -61,7 +61,7 @@ class ResultTest {
         testDealer.addCard(new Card(DIAMOND, NINE));
         testDealer.addCard(new Card(CLOVER, NINE));
 
-        Result testResult = Result.judge(testPlayer, testDealer);
+        Result testResult = ResultJudge.judge(testPlayer, testDealer);
 
         assertThat(testResult).isEqualTo(WIN);
     }
@@ -75,7 +75,7 @@ class ResultTest {
         testDealer.addCard(new Card(HEART, ACE)); // 딜러 - 14
         testDealer.addCard(new Card(HEART, THREE));
 
-        Result testResult = Result.judge(testPlayer, testDealer);
+        Result testResult = ResultJudge.judge(testPlayer, testDealer);
 
         assertThat(testResult).isEqualTo(LOSE);
     }
@@ -90,7 +90,7 @@ class ResultTest {
         testDealer.addCard(new Card(HEART, NINE)); //딜러 - 18
         testDealer.addCard(new Card(SPADE, NINE));
 
-        Result testResult = Result.judge(testPlayer, testDealer);
+        Result testResult = ResultJudge.judge(testPlayer, testDealer);
 
         assertThat(testResult).isEqualTo(LOSE);
     }
@@ -106,7 +106,7 @@ class ResultTest {
         testDealer.addCard(new Card(SPADE, NINE));
         testDealer.addCard(new Card(CLOVER, NINE));
 
-        Result testResult = Result.judge(testPlayer, testDealer);
+        Result testResult = ResultJudge.judge(testPlayer, testDealer);
 
         assertThat(testResult).isEqualTo(LOSE);
     }
@@ -118,7 +118,7 @@ class ResultTest {
         testPlayer.addCard(new Card(SPADE, ACE)); // 플레이어 - 11
         testDealer.addCard(new Card(HEART, ACE)); //딜러 - 11
 
-        Result testResult = Result.judge(testPlayer, testDealer);
+        Result testResult = ResultJudge.judge(testPlayer, testDealer);
 
         assertThat(testResult).isEqualTo(DRAW);
     }

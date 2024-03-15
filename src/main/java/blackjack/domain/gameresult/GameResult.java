@@ -28,7 +28,7 @@ public class GameResult {
     }
 
     private static Profit calculateProfit(Dealer dealer, Player player) {
-        Result result = Result.judge(player, dealer);
+        Result result = ResultJudge.judge(player, dealer);
         double profit = ProfitRate.calculateProfit(result, player.getBat());
         return Profit.from(profit);
     }

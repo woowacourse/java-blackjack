@@ -19,7 +19,7 @@ import static blackjack.domain.card.CardNumber.ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-class GameResultTest {
+class GameResultTestJudge {
     private static Stream<Arguments> makeWinningPlayersAndTestDealer() {
         List<Player> testPlayers = new ArrayList<>();
         testPlayers.add(new Player(new Name("pobi"), Batting.from(100.0)));
