@@ -14,7 +14,7 @@ class PlayerTest {
     public void create() {
         Player player = Player.createInitialStatePlayer(new Name("이상"));
 
-        assertThat(player.state()).isInstanceOf(InitialState.class);
+        assertThat(player.getState()).isInstanceOf(InitialState.class);
     }
 
     @DisplayName("플레이어는 카드를 뽑으면 새로운 상태를 가진 플레이어를 반환한다")
@@ -57,7 +57,7 @@ class PlayerTest {
 
         Player newPlayer = player.stand();
 
-        assertThat(newPlayer.state()).isInstanceOf(StandState.class);
+        assertThat(newPlayer.getState()).isInstanceOf(StandState.class);
     }
 
     @DisplayName("플레이어의 스코어를 계산한다")

@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.state.State;
+import java.util.List;
 
 public abstract class Participant {
     private final Name name;
@@ -15,19 +16,23 @@ public abstract class Participant {
 
     abstract Participant stand();
 
-    final Score calculateHand() {
+    public final Score calculateHand() {
         return state.calculateHand();
     }
 
-    final public boolean canDraw() {
+    public boolean canDraw() {
         return !state.isFinished();
     }
 
-    final public Name name() {
+    public final Name getName() {
         return name;
     }
 
-    final public State state() {
+    public final State getState() {
         return state;
+    }
+
+    public final List<Card> getCards() {
+        return state.getHand().getCards();
     }
 }
