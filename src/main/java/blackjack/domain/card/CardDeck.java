@@ -23,8 +23,8 @@ public class CardDeck {
     }
 
     private static List<Card> createFullCardDeck() {
-        List<CardRank> cardRanks = CardRank.getAllCardRanks();
-        List<CardSuit> cardSuits = CardSuit.getAllCardSuits();
+        List<CardRank> cardRanks = CardRank.allCardRanks();
+        List<CardSuit> cardSuits = CardSuit.allCardSuits();
 
         return cardRanks.stream()
                 .flatMap(rank -> generateCards(rank, cardSuits))
