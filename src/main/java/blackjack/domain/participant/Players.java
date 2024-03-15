@@ -53,11 +53,11 @@ public class Players {
         }
     }
 
-    public void play(Deck deck) {
+    public void drawAdditionalCard(Deck deck) {
         for (Player player : players) {
-            player.play(deck);
+            player.drawAdditionalCard(deck);
         }
-        dealer.play(deck);
+        dealer.drawAdditionalCard(deck);
     }
 
     public boolean isDealerDrawable() {

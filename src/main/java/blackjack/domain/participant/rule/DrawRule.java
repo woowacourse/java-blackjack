@@ -5,5 +5,5 @@ import blackjack.domain.participant.Participant;
 
 @FunctionalInterface
 public interface DrawRule<P extends Participant> {
-    void play(P p, Deck deck);
+    void draw(P participant, Deck deck);
 }

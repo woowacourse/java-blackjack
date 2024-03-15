@@ -39,9 +39,9 @@ public abstract class Participant {
         hand.add(card);
     }
 
-    public void play(Deck deck) {
+    public void drawAdditionalCard(Deck deck) {
         DrawRule rule = getRules();
-        rule.play(this, deck);
+        rule.draw(this, deck);
     }
 
     public final boolean isDrawable() {

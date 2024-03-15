@@ -22,7 +22,7 @@ public class BlackJackGame {
     }
 
     public void drawAdditionalCard() {
-        players.play(deck);
+        players.drawAdditionalCard(deck);
     }
 
     public boolean isDealerDrawable() {

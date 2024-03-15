@@ -9,9 +9,9 @@ public class DealerRule implements DrawRule<Dealer> {
     private final OutputView outputView = new OutputView();
 
     @Override
-    public void play(Dealer dealer, Deck deck) {
-        while (dealer.isDrawable()) {
-            dealer.add(deck.draw());
+    public void draw(Dealer participant, Deck deck) {
+        while (participant.isDrawable()) {
+            participant.add(deck.draw());
             outputView.printDealerDraw();
         }
     }

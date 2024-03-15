@@ -11,10 +11,10 @@ public class PlayerRule implements DrawRule<Player> {
     private final OutputView outputView = new OutputView();
 
     @Override
-    public void play(Player player, Deck deck) {
-        while (player.isDrawable() && inputView.isPlayerWantDraw(player.getName())) {
-            player.add(deck.draw());
-            outputView.printPlayerCards(player);
+    public void draw(Player participant, Deck deck) {
+        while (participant.isDrawable() && inputView.isPlayerWantDraw(participant.getName())) {
+            participant.add(deck.draw());
+            outputView.printPlayerCards(participant);
         }
     }
 }
