@@ -1,15 +1,16 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.List;
 import java.util.stream.IntStream;
 
 public class Deck {
-    private final List<Card> cards;
+    private final Deque<Card> cards;
 
     public Deck(ShuffleStrategy shuffleStrategy) {
-        cards = new ArrayList<>(shuffleStrategy.shuffle(createAllCards()));
+        cards = new ArrayDeque<>(shuffleStrategy.shuffle(createAllCards()));
     }
 
     private static List<Card> createAllCards() {
@@ -26,6 +27,6 @@ public class Deck {
     }
 
     private Card draw() {
-        return cards.remove(cards.size() - 1);
+        return cards.removeLast();
     }
 }
