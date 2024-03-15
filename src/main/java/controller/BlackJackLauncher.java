@@ -8,41 +8,41 @@ import java.util.List;
 import model.Choice;
 import model.casino.RandomCardShuffleMachine;
 import model.participant.Names;
-import service.CasinoService;
-import service.dto.DealerFaceUpResult;
-import service.dto.DealerMatchResult;
-import service.dto.FaceUpResult;
-import service.dto.PlayerMatchResult;
+import model.casino.Casino;
+import model.participant.dto.DealerFaceUpResult;
+import model.participant.dto.DealerMatchResult;
+import model.participant.dto.FaceUpResult;
+import model.participant.dto.PlayerMatchResult;
 import view.OutputView;
 
 public class BlackJackLauncher {
 
     public void execute() {
-        CasinoService casinoService = initCasino();
-        showInitialFaceUpResults(casinoService);
-        proceedPlayersTurn(casinoService);
-        proceedDealerTurn(casinoService);
-        showFinalFaceUpResults(casinoService);
-        showFinalMatchResults(casinoService);
+        Casino casino = initCasino();
+        showInitialFaceUpResults(casino);
+        proceedPlayersTurn(casino);
+        proceedDealerTurn(casino);
+        showFinalFaceUpResults(casino);
+        showFinalMatchResults(casino);
     }
 
-    private CasinoService initCasino() {
+    private Casino initCasino() {
         Names names = inputRetryHelper(() -> new Names(inputNames()));
-        return new CasinoService(names, new RandomCardShuffleMachine());
+        return new Casino(names, new RandomCardShuffleMachine());
     }
 
-    private void showInitialFaceUpResults(CasinoService casinoService) {
-        DealerFaceUpResult dealerFaceUpResult = casinoService.getDealerFaceUpResult();
-        List<FaceUpResult> playerFaceUpResults = casinoService.getPlayerFaceUpResult();
+    private void showInitialFaceUpResults(Casino casino) {
+        DealerFaceUpResult dealerFaceUpResult = casino.getDealerFaceUpResult();
+        List<FaceUpResult> playerFaceUpResults = casino.getPlayerFaceUpResult();
         OutputView.printInitialCardSetting(dealerFaceUpResult, playerFaceUpResults);
     }
 
-    private void proceedPlayersTurn(CasinoService casinoService) {
-        while (casinoService.hasAvailablePlayer()) {
-            FaceUpResult currentPlayerFaceUpInfo = casinoService.getNextPlayerFaceUpInfo();
+    private void proceedPlayersTurn(Casino casino) {
+        while (casino.hasAvailablePlayer()) {
+            FaceUpResult currentPlayerFaceUpInfo = casino.getNextPlayerFaceUpInfo();
             Choice playerChoice = inputRetryHelper(() -> Choice.from(
                     inputPlayerHitChoice(currentPlayerFaceUpInfo.getPartipantNameAsString())));
-            casinoService.distinctPlayerChoice(playerChoice);
+            casino.distinctPlayerChoice(playerChoice);
             showPlayerChoiceResult(playerChoice, currentPlayerFaceUpInfo);
         }
     }
@@ -54,22 +54,22 @@ public class BlackJackLauncher {
         }
     }
 
-    private void proceedDealerTurn(CasinoService casinoService) {
-        while (casinoService.isDealerHitAllowed()) {
-            casinoService.hitCardToDealer();
+    private void proceedDealerTurn(Casino casino) {
+        while (casino.isDealerHitAllowed()) {
+            casino.hitCardToDealer();
             OutputView.alertDealerHitMessage();
         }
     }
 
-    private void showFinalFaceUpResults(CasinoService casinoService) {
-        List<FaceUpResult> playerFinalFaceUpResults = casinoService.getPlayerFaceUpResult();
-        DealerFaceUpResult dealerFinalFaceUpResult = casinoService.getDealerFaceUpResult();
+    private void showFinalFaceUpResults(Casino casino) {
+        List<FaceUpResult> playerFinalFaceUpResults = casino.getPlayerFaceUpResult();
+        DealerFaceUpResult dealerFinalFaceUpResult = casino.getDealerFaceUpResult();
         OutputView.printFinalFaceUpResult(dealerFinalFaceUpResult, playerFinalFaceUpResults);
     }
 
-    private void showFinalMatchResults(CasinoService casinoService) {
-        DealerMatchResult dealerMatchResult = casinoService.calculateDealerMatchResult();
-        List<PlayerMatchResult> playerMatchResults = casinoService.calculatePlayerMatchResults();
+    private void showFinalMatchResults(Casino casino) {
+        DealerMatchResult dealerMatchResult = casino.calculateDealerMatchResult();
+        List<PlayerMatchResult> playerMatchResults = casino.calculatePlayerMatchResults();
         OutputView.printScoreResults(dealerMatchResult, playerMatchResults);
     }
 }

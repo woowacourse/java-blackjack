@@ -12,9 +12,9 @@ import java.util.Objects;
 import java.util.Queue;
 import model.card.Card;
 import model.casino.MatchResult;
-import service.dto.DealerFaceUpResult;
-import service.dto.FaceUpResult;
-import service.dto.PlayerMatchResult;
+import model.participant.dto.DealerFaceUpResult;
+import model.participant.dto.FaceUpResult;
+import model.participant.dto.PlayerMatchResult;
 
 public class Entrant {
     private final Dealer dealer;

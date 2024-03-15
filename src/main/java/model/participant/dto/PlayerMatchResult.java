@@ -1,4 +1,4 @@
-package service.dto;
+package model.participant.dto;
 
 import model.casino.MatchResult;
 import model.participant.Name;

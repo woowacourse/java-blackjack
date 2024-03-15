@@ -1,4 +1,4 @@
-package service.dto;
+package model.participant.dto;
 
 import java.util.EnumMap;
 import model.casino.MatchResult;

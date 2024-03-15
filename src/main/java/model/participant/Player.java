@@ -6,7 +6,7 @@ import static model.casino.MatchResult.WIN;
 
 import model.card.Card;
 import model.casino.MatchResult;
-import service.dto.FaceUpResult;
+import model.participant.dto.FaceUpResult;
 
 public class Player extends Participant {
     private final Name name;

@@ -1,23 +1,21 @@
-package service;
+package model.casino;
 
 import java.util.List;
 import model.Choice;
-import model.casino.CardDispenser;
-import model.casino.CardShuffleMachine;
 import model.participant.Dealer;
 import model.participant.Entrant;
 import model.participant.Names;
 import model.participant.Player;
-import service.dto.DealerFaceUpResult;
-import service.dto.DealerMatchResult;
-import service.dto.FaceUpResult;
-import service.dto.PlayerMatchResult;
+import model.participant.dto.DealerFaceUpResult;
+import model.participant.dto.DealerMatchResult;
+import model.participant.dto.FaceUpResult;
+import model.participant.dto.PlayerMatchResult;
 
-public class CasinoService {
+public class Casino {
     private final Entrant entrant;
     private final CardDispenser cardDispenser;
 
-    public CasinoService(Names names, CardShuffleMachine cardShuffleMachine) {
+    public Casino(Names names, CardShuffleMachine cardShuffleMachine) {
         this.cardDispenser = new CardDispenser(cardShuffleMachine);
         this.entrant = generateEntrant(names);
     }

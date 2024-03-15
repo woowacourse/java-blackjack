@@ -1,11 +1,10 @@
 package view;
 
 import java.util.List;
-import model.participant.Dealer;
-import service.dto.DealerFaceUpResult;
-import service.dto.DealerMatchResult;
-import service.dto.FaceUpResult;
-import service.dto.PlayerMatchResult;
+import model.participant.dto.DealerFaceUpResult;
+import model.participant.dto.DealerMatchResult;
+import model.participant.dto.FaceUpResult;
+import model.participant.dto.PlayerMatchResult;
 import model.casino.MatchResult;
 
 public class OutputView {

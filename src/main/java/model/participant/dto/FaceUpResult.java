@@ -1,11 +1,12 @@
-package service.dto;
+package model.participant.dto;
 
 import java.util.List;
 import model.card.Card;
+import model.participant.Name;
 
-public record DealerFaceUpResult(List<Card> cards, int hand) {
+public record FaceUpResult(Name name, List<Card> cards, int hand) {
     public String getPartipantNameAsString() {
-        return "딜러";
+        return name.getValue();
     }
 
     public List<String> getCardsAsStrings() {
