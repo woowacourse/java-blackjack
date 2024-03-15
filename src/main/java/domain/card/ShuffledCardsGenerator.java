@@ -1,6 +1,7 @@
 package domain.card;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
@@ -25,7 +26,7 @@ public class ShuffledCardsGenerator {
 
     private static List<Card> generateCardsOfOnePack() {
         return Stream.of(Symbol.values())
-                .flatMap(symbol -> Rank.getRanks().stream()
+                .flatMap(symbol -> Arrays.stream(Rank.values())
                         .map(rank -> new Card(symbol, rank)))
                 .toList();
     }

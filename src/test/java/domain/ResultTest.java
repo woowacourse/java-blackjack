@@ -24,7 +24,7 @@ class ResultTest {
 
         dealer = new Dealer();
 
-        spadeA = new Card(Symbol.SPADE, Rank.BIG_ACE);
+        spadeA = new Card(Symbol.SPADE, Rank.ACE);
         spadeK = new Card(Symbol.SPADE, Rank.KING);
         heart2 = new Card(Symbol.HEART, Rank.TWO);
     }

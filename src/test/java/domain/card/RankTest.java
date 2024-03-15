@@ -3,11 +3,10 @@ package domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
 
 class RankTest {
 
@@ -18,7 +17,7 @@ class RankTest {
         int expectedSize = 13;
 
         // when
-        List<Rank> ranks = Rank.getRanks();
+        List<Rank> ranks = Arrays.stream(Rank.values()).toList();
 
         // then
         assertThat(ranks).hasSize(expectedSize);
@@ -28,8 +27,8 @@ class RankTest {
     @Test
     void isAce() {
         // given
-        Rank bigAce = Rank.BIG_ACE;
-        Rank smallAce = Rank.SMALL_ACE;
+        Rank bigAce = Rank.ACE;
+        Rank smallAce = Rank.ACE;
         Rank king = Rank.KING;
 
         // when

@@ -13,7 +13,7 @@ public class DeckTest {
     void drawTest() {
         // given
         Card card1 = new Card(Symbol.DIAMOND, Rank.EIGHT);
-        Card card2 = new Card(Symbol.CLOVER, Rank.BIG_ACE);
+        Card card2 = new Card(Symbol.CLOVER, Rank.ACE);
         Card card3 = new Card(Symbol.SPADE, Rank.KING);
 
         List<Card> cards = List.of(card1, card2, card3);

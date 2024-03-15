@@ -26,7 +26,7 @@ public class BlackJackGameTest {
 
     @BeforeEach
     void init() {
-        Card card1 = new Card(Symbol.CLOVER, Rank.BIG_ACE);
+        Card card1 = new Card(Symbol.CLOVER, Rank.ACE);
         Card card2 = new Card(Symbol.DIAMOND, Rank.EIGHT);
         Card card3 = new Card(Symbol.SPADE, Rank.KING);
         Card card4 = new Card(Symbol.CLOVER, Rank.SEVEN);

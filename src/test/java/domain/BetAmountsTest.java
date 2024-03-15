@@ -100,10 +100,10 @@ public class BetAmountsTest {
 
             dealer.hit(new Card(Symbol.HEART, Rank.KING));
 
-            pobi.hit(new Card(Symbol.HEART, Rank.BIG_ACE));
+            pobi.hit(new Card(Symbol.HEART, Rank.ACE));
             jason.hit(new Card(Symbol.HEART, Rank.TWO));
             neo.hit(new Card(Symbol.HEART, Rank.KING));
-            solar.hit(new Card(Symbol.HEART, Rank.BIG_ACE));
+            solar.hit(new Card(Symbol.HEART, Rank.ACE));
             solar.hit(new Card(Symbol.HEART, Rank.KING));
         }
 

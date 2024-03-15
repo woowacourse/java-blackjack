@@ -1,7 +1,6 @@
 package domain.gamer;
 
 import domain.card.Card;
-import domain.card.Rank;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,6 +8,7 @@ import java.util.List;
 public class Hand {
     private static final int MAX_SUM = 21;
     private static final int BLACKJACK_CARD_COUNT_COND = 2;
+    private static final int ANOTHER_ACE_SCORE = 1;
     private final List<Card> cards;
 
     public Hand() {
@@ -44,7 +44,8 @@ public class Hand {
     private int sumExceptAceCards() {
         return cards.stream()
                 .filter(card -> !card.isAce())
-                .mapToInt(Card::getScore).sum();
+                .mapToInt(Card::getScore)
+                .sum();
     }
 
     private List<Card> filterAceCards() {
@@ -53,11 +54,12 @@ public class Hand {
                 .toList();
     }
 
-    private int accumulateScore(final Card card, final int sum) {
-        if (sum + card.getScore() <= MAX_SUM) {
-            return sum + card.getScore();
+    private int accumulateScore(final Card aceCard, final int exceptAceScore) {
+        int aceScore = aceCard.getScore();
+        if (exceptAceScore + aceScore <= MAX_SUM) {
+            return exceptAceScore + aceScore;
         }
-        return sum + Rank.SMALL_ACE.getScore();
+        return exceptAceScore + ANOTHER_ACE_SCORE;
     }
 
     public List<Card> getCards() {
