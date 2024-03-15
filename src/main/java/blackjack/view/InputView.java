@@ -24,7 +24,6 @@ public class InputView {
         } catch (NumberFormatException e) {
             throw new NumberFormatException("숫자만 입력하세요.");
         }
-
     }
 
     public boolean readCommand(String name) {
