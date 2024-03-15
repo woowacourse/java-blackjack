@@ -49,7 +49,7 @@ public class PlayerTest {
         player.receiveCard(new Card(Shape.HEART, Rank.TWO));
         player.receiveCard(new Card(Shape.DIAMOND, Rank.TEN));
 
-        assertThat(player.checkResult(20, false)).isEqualTo(Outcome.LOSE);
+        assertThat(player.checkOutcome(20, false)).isEqualTo(Outcome.LOSE);
     }
 
     @Test
@@ -59,7 +59,7 @@ public class PlayerTest {
         player.receiveCard(new Card(Shape.HEART, Rank.TEN));
         player.receiveCard(new Card(Shape.HEART, Rank.TWO));
 
-        assertThat(player.checkResult(25, false)).isEqualTo(Outcome.WIN);
+        assertThat(player.checkOutcome(25, false)).isEqualTo(Outcome.WIN);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class PlayerTest {
         player.receiveCard(new Card(Shape.HEART, Rank.TEN));
         player.receiveCard(new Card(Shape.HEART, Rank.ACE));
 
-        assertThat(player.checkResult(20, false)).isEqualTo(Outcome.BLACKJACK_WIN);
+        assertThat(player.checkOutcome(20, false)).isEqualTo(Outcome.BLACKJACK_WIN);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class PlayerTest {
         player.receiveCard(new Card(Shape.HEART, Rank.TEN));
         player.receiveCard(new Card(Shape.DIAMOND, Rank.TEN));
 
-        assertThat(player.checkResult(18, false)).isEqualTo(Outcome.WIN);
+        assertThat(player.checkOutcome(18, false)).isEqualTo(Outcome.WIN);
     }
 
     @Test
@@ -89,7 +89,7 @@ public class PlayerTest {
         player.receiveCard(new Card(Shape.HEART, Rank.TEN));
         player.receiveCard(new Card(Shape.DIAMOND, Rank.ACE));
 
-        assertThat(player.checkResult(21, true)).isEqualTo(Outcome.TIE);
+        assertThat(player.checkOutcome(21, true)).isEqualTo(Outcome.TIE);
     }
 
     @Test
@@ -98,7 +98,7 @@ public class PlayerTest {
         Player player = new Player(new Name("이름"));
         player.receiveCard(new Card(Shape.HEART, Rank.TEN));
 
-        assertThat(player.checkResult(20, false)).isEqualTo(Outcome.LOSE);
+        assertThat(player.checkOutcome(20, false)).isEqualTo(Outcome.LOSE);
     }
 
     @Test

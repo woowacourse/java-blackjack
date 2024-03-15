@@ -8,31 +8,31 @@ public class Player extends Gamer {
         super(name);
     }
 
-    public Outcome checkResult(int dealerScore, boolean isDealerBlackjack) {
-        return checkResultWhenBust(dealerScore, isDealerBlackjack);
+    public Outcome checkOutcome(int dealerScore, boolean isDealerBlackjack) {
+        return checkOutcomeWhenBust(dealerScore, isDealerBlackjack);
     }
 
-    private Outcome checkResultWhenBust(int dealerScore, boolean isDealerBlackjack) {
+    private Outcome checkOutcomeWhenBust(int dealerScore, boolean isDealerBlackjack) {
         if (calculateScore() > BLACKJACK_SCORE) {
             return Outcome.LOSE;
         }
         if (dealerScore > BLACKJACK_SCORE) {
             return Outcome.WIN;
         }
-        return checkResultWhenBlackjack(dealerScore, isDealerBlackjack);
+        return checkOutcomeWhenBlackjack(dealerScore, isDealerBlackjack);
     }
 
-    private Outcome checkResultWhenBlackjack(int dealerScore, boolean isDealerBlackjack) {
+    private Outcome checkOutcomeWhenBlackjack(int dealerScore, boolean isDealerBlackjack) {
         if (isBlackjack() && isDealerBlackjack) {
             return Outcome.TIE;
         }
         if (isBlackjack()) {
             return Outcome.BLACKJACK_WIN;
         }
-        return checkResultWhenNormal(dealerScore);
+        return checkOutcomeWhenNormal(dealerScore);
     }
 
-    private Outcome checkResultWhenNormal(int dealerScore) {
+    private Outcome checkOutcomeWhenNormal(int dealerScore) {
         if (calculateScore() < dealerScore) {
             return Outcome.LOSE;
         }
