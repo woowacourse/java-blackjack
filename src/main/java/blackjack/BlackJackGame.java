@@ -1,6 +1,7 @@
 package blackjack;
 
 import blackjack.dto.NameCardsScore;
+import blackjack.dto.NameProfit;
 import blackjack.model.betting.BettingRule;
 import blackjack.model.betting.Money;
 import blackjack.model.betting.MoneyStaff;
@@ -32,7 +33,7 @@ public class BlackJackGame {
         announceInitialCards(dealer, participants);
         play(dealer, participants, deck);
         Map<Player, ResultCommand> nameResults = announceResult(dealer, participants, referee);
-        announceProfitMoney(moneyStaff, nameResults);
+        announceProfitMoney(dealer, moneyStaff, nameResults);
     }
 
     private Participants initPlayers(final List<String> names, final Deck deck) {
@@ -109,11 +110,17 @@ public class BlackJackGame {
                 .toList();
     }
 
-    private void announceProfitMoney(final MoneyStaff moneyStaff, Map<Player, ResultCommand> playerResults) {
+    private void announceProfitMoney(final Dealer dealer, final MoneyStaff moneyStaff, Map<Player, ResultCommand> playerResults) {
         final Map<Player, Money> playerAndBettingMoney = moneyStaff.calculateProfitMoneys(playerResults);
         final Money dealerProfit = moneyStaff.calculateDealerProfitAmount(
                 playerAndBettingMoney.values().stream().toList());
-        OutputView.printDealerProfit(dealerProfit);
-        OutputView.printPlayerProfit(playerAndBettingMoney);
+        OutputView.printDealerProfit(dealer.getName(), dealerProfit);
+        OutputView.printPlayerProfit(collectNameProfit(playerAndBettingMoney));
+    }
+
+    private List<NameProfit> collectNameProfit(final Map<Player, Money> playerAndBettingMoney) {
+        return playerAndBettingMoney.keySet().stream()
+                .map(player -> new NameProfit(player.getName(), playerAndBettingMoney.get(player)))
+                .toList();
     }
 }
