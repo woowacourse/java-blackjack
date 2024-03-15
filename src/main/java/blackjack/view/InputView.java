@@ -39,7 +39,6 @@ public class InputView {
         return CardRequestFormat.from(input);
     }
 
-    // TODO: List<string>으로 보내는 방법은?
     public Map<String, Integer> readBettings(final List<ParticipantName> names) {
         return names.stream()
                 .collect(toMap(ParticipantName::getName,

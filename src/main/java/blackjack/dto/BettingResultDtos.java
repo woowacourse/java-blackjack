@@ -1,12 +1,12 @@
-package blackjack.domain;
+package blackjack.dto;
 
-import blackjack.dto.BettingResultDto;
+import blackjack.domain.PlayerBettings;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public record BettingResultDtos(List<BettingResultDto> bettingResultDtos) {
-    public static BettingResultDtos of(final BettingResults bettingResults) {
-        List<BettingResultDto> bettingResultDtos = bettingResults.getBettingResults().stream().
+    public static BettingResultDtos of(final PlayerBettings bettingResults) {
+        List<BettingResultDto> bettingResultDtos = bettingResults.getPlayerBettings().stream().
                 map(BettingResultDto::from)
                 .collect(Collectors.toList());
 

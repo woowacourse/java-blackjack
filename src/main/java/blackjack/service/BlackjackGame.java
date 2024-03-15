@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackjackGame {
-    private Deck deck; // TODOL not final
+    private Deck deck;
     private final Participants participants;
 
     public BlackjackGame(final List<String> playersName, final Deck deck) {
@@ -29,17 +29,15 @@ public class BlackjackGame {
 
     public void divideCard() {
         deck = deck.generate();
-        deck.shuffle(); // TODO
+        deck.shuffle();
         participants.addStartCards(deck);
     }
 
-    // TODO: 네이밍 이해가 애매한데...
     public List<ParticipantCardsDto> getStartCards() {
         return participants.getStartCards();
     }
 
     public boolean addCardToPlayers(final String name) {
-        // TODO: 여기서 pick? 아니면 안에서?
         return participants.addCardToPlayers(name, deck);
     }
 

@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.result.WinStatus;
 import blackjack.domain.result.WinningResult;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -28,17 +27,13 @@ public class BettingsTest {
 
         PlayerBetting pobiBetting = new PlayerBetting("pobi", 10000);
         PlayerBetting jasonBetting = new PlayerBetting("jason", 20000);
-
-        List<PlayerBetting> playerBettings = new ArrayList<>();
-        playerBettings.add(pobiBetting);
-        playerBettings.add(jasonBetting);
+        PlayerBettings playerBettings = new PlayerBettings(List.of(pobiBetting, jasonBetting));
 
         // when
-        BettingResults bettingResults = BettingResults.of(new PlayerBettings(playerBettings), winningResult);
+        PlayerBettings bettingResults = playerBettings.applyWinStatus(winningResult);
 
         // then
-        assertThat(bettingResults.getBettingResults()).contains(
-                new BettingResult(new ParticipantName("pobi"), pobiExpected),
-                new BettingResult(new ParticipantName("jason"), jasonExpected));
+        assertThat(bettingResults.getPlayerBettings().get(0).getBetting()).isEqualTo(pobiExpected);
+        assertThat(bettingResults.getPlayerBettings().get(1).getBetting()).isEqualTo(jasonExpected);
     }
 }

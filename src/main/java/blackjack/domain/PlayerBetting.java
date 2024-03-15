@@ -1,21 +1,34 @@
 package blackjack.domain;
 
 import blackjack.domain.participant.ParticipantName;
+import blackjack.domain.result.WinStatus;
 
 public class PlayerBetting {
     private final ParticipantName name;
     private final int betting;
 
-    public PlayerBetting(final String name, final int betting) {
-        validateBetting(betting);
-        this.name = new ParticipantName(name);
+    private PlayerBetting(final ParticipantName name, final int betting) {
+        this.name =name;
         this.betting = betting;
     }
+    public PlayerBetting(final String name, final int betting) {
+        this(new ParticipantName(name), betting);
+    }
 
-    private void validateBetting(final int betting) {
-        if (betting <=0 ) {
+    public static PlayerBetting create(final String name, final int betting) {
+        validateInitialBetting(betting);
+        return new PlayerBetting(name, betting);
+    }
+
+    private static void validateInitialBetting(final int betting) {
+        if (betting <= 0) {
             throw new IllegalArgumentException("배팅 금액은 0원보다 커야합니다.");
         }
+    }
+
+    public PlayerBetting applyWinStatus(final WinStatus winStatus) {
+        int bettingResult = (int) (this.betting * winStatus.getBetMultiplier());
+        return new PlayerBetting(this.name, bettingResult);
     }
 
     public boolean isName(final ParticipantName otherName) {
@@ -26,7 +39,7 @@ public class PlayerBetting {
         return name;
     }
 
-    public int applyWinstatus(final double betMultiplier) {
-        return (int) (betting * betMultiplier);
+    public int getBetting() {
+        return betting;
     }
 }
