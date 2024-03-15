@@ -1,14 +1,14 @@
 package blackjack.model.betting;
 
-import blackjack.model.participant.Participants;
 import blackjack.model.participant.Player;
 import blackjack.model.result.ResultCommand;
-import blackjack.view.InputView;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class MoneyStaff {
+    public static final int ABSOLUTE_RATE = -1;
+
     private final BettingRule bettingRule;
     private final Map<Player, Money> bettingMoneys;
 
@@ -36,6 +36,6 @@ public class MoneyStaff {
         int playerProfit = playerProfits.stream()
                 .mapToInt(Money::getValue)
                 .sum();
-        return new Money((-1) * playerProfit);
+        return new Money(ABSOLUTE_RATE * playerProfit);
     }
 }

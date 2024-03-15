@@ -15,8 +15,7 @@ class MoneyStaffTest {
     @Test
     @DisplayName("수익률 목록을 받아 플레이어들의 수익금을 계산한다.")
     void calculatePlayersProfitMoney() {
-        BettingRule bettingRule = new BettingRule();
-        MoneyStaff moneyStaff = new MoneyStaff(bettingRule, Map.of(
+        MoneyStaff moneyStaff = new MoneyStaff(new BettingRule(), Map.of(
                 BLACKJACK_PLAYER.getPlayer(), new Money(1_000),
                 NOT_BLACKJACK_21_PLAYER.getPlayer(), new Money(2_000)));
 
@@ -30,8 +29,7 @@ class MoneyStaffTest {
     @Test
     @DisplayName("딜러 수익은 모든 플레이어의 수익 합 * (-1)이다.")
     void calculateDealerProfit() {
-        BettingRule bettingRule = new BettingRule();
-        MoneyStaff moneyStaff = new MoneyStaff(bettingRule, Map.of(
+        MoneyStaff moneyStaff = new MoneyStaff(new BettingRule(), Map.of(
                 BLACKJACK_PLAYER.getPlayer(), new Money(1_000),
                 NOT_BLACKJACK_21_PLAYER.getPlayer(), new Money(2_000)));
 
