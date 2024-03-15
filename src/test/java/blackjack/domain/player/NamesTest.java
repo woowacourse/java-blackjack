@@ -14,8 +14,9 @@ public class NamesTest {
         List<String> values = List.of("초롱", "조이썬");
 
         Assertions.assertThatCode(() -> {
-            var sut = Names.from(values);
-        }).doesNotThrowAnyException();
+                      var sut = Names.from(values);
+                  })
+                  .doesNotThrowAnyException();
     }
 
     @Test
@@ -31,7 +32,7 @@ public class NamesTest {
     @Test
     @DisplayName("최대 7명까지만 입력 가능하다.")
     public void Names_Instance_limit_size() {
-        List<String> values = List.of("초롱","도비","조이썬","제우스","폰드","호티","배키","켬미");
+        List<String> values = List.of("초롱", "도비", "조이썬", "제우스", "폰드", "호티", "배키", "켬미");
 
         assertThatThrownBy(() -> Names.from(values))
                 .isInstanceOf(IllegalArgumentException.class)

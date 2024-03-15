@@ -26,15 +26,17 @@ public class InputView {
 
     public static List<String> inputPlayerBattingAmounts(Names names) {
         List<String> battingAmounts = new ArrayList<>();
-        for(Name name : names.getNames()) {
-            System.out.println(System.lineSeparator() + String.format("%s의 배팅 금액은?", name.asString()));
+        for (Name name : names.getNames()) {
+            System.out.println(
+                    System.lineSeparator() + String.format("%s의 배팅 금액은?", name.asString()));
             battingAmounts.add(input());
         }
         return battingAmounts;
     }
 
     public static BlackjackCommand inputBlackjackCommand(Name playerName) {
-        System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", playerName.asString()));
+        System.out.println(
+                String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", playerName.asString()));
 
         return BlackjackCommand.from(input());
     }

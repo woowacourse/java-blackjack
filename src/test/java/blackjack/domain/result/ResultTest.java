@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import blackjack.domain.Profit;
 import blackjack.domain.player.Name;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

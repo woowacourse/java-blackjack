@@ -1,7 +1,7 @@
 package blackjack.domain.player;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Cards;
@@ -19,7 +19,8 @@ public class DealerTest {
 
         assertThatCode(() -> {
                     var sut = Dealer.createDefaultDealer(cards);
-                    assertThat(sut.getName().asString()).isEqualTo("딜러");
+                    assertThat(sut.getName()
+                                  .asString()).isEqualTo("딜러");
                 }
         ).doesNotThrowAnyException();
     }

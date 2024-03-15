@@ -8,7 +8,7 @@ public enum BlackjackCommand {
 
     private final String value;
 
-    private BlackjackCommand(String value) {
+    BlackjackCommand(String value) {
         this.value = value;
     }
 

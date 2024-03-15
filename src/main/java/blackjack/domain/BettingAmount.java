@@ -14,7 +14,8 @@ public class BettingAmount {
     }
 
     private void validate(String value) {
-        if (!NUMERIC_PATTERN.matcher(value).matches() || Integer.parseInt(value) <= 0) {
+        if (!NUMERIC_PATTERN.matcher(value)
+                            .matches() || Integer.parseInt(value) <= 0) {
             throw new IllegalArgumentException("양수만 입력 가능합니다.");
         }
     }

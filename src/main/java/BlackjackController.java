@@ -1,9 +1,9 @@
 import blackjack.domain.BettingAmounts;
 import blackjack.domain.Blackjack;
 import blackjack.domain.card.Card;
-import blackjack.domain.player.Names;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.GamePlayer;
+import blackjack.domain.player.Names;
 import blackjack.domain.player.Players;
 import blackjack.domain.result.Result;
 import blackjack.view.BlackjackCommand;
@@ -26,7 +26,8 @@ public class BlackjackController {
 
     private Players joinPlayer() {
         Names names = Names.from(InputView.inputPlayerNames());
-        BettingAmounts battingAmounts = BettingAmounts.from(InputView.inputPlayerBattingAmounts(names));
+        BettingAmounts battingAmounts = BettingAmounts.from(
+                InputView.inputPlayerBattingAmounts(names));
         Players players = blackjack.acceptPlayers(names, battingAmounts);
         PlayerView.printPlayers(players);
         return players;

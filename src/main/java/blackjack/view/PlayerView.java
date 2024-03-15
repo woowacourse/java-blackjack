@@ -16,11 +16,13 @@ public class PlayerView {
     }
 
     public static void printDealerDrawMessage() {
-        System.out.println(System.lineSeparator() + String.format("딜러는 %d이하라 한장의 카드를 더 받았습니다.", Dealer.RECEIVE_SIZE));
+        System.out.println(System.lineSeparator() + String.format("딜러는 %d이하라 한장의 카드를 더 받았습니다.",
+                Dealer.RECEIVE_SIZE));
     }
 
     public static void printDealerNotDrawMessage() {
-        System.out.println(System.lineSeparator() + String.format("딜러는 %d를 초과하므로 카드를 받지 않았습니다.", Dealer.RECEIVE_SIZE));
+        System.out.println(System.lineSeparator() + String.format("딜러는 %d를 초과하므로 카드를 받지 않았습니다.",
+                Dealer.RECEIVE_SIZE));
     }
 
     private static void printPlayersPreview(Dealer dealer, List<GamePlayer> gamePlayers) {
@@ -30,7 +32,8 @@ public class PlayerView {
                                    .collect(Collectors.joining(","));
         System.out.println(
                 System.lineSeparator() +
-                        String.format("%s와 %s에게 2장을 나누었습니다.", dealer.getName().asString(), result));
+                        String.format("%s와 %s에게 2장을 나누었습니다.", dealer.getName()
+                                                                    .asString(), result));
     }
 
     private static void printPlayersFirstOpenCard(List<Player> players) {
@@ -39,7 +42,8 @@ public class PlayerView {
 
     public static void printPlayerOpenCards(Player player) {
         String result = CardPrinter.printCards(player.getOpenCards());
-        System.out.println(String.format("%s카드: %s", player.getName().asString(), result));
+        System.out.println(String.format("%s카드: %s", player.getName()
+                                                           .asString(), result));
     }
 
     public static void printPlayersWithScore(Players players) {
@@ -51,7 +55,8 @@ public class PlayerView {
 
     private static void printPlayerWithScore(Player player) {
         String result = CardPrinter.printCards(player.getCards());
-        System.out.println(String.format("%s 카드: %s - 결과 : %d", player.getName().asString(), result,
+        System.out.println(String.format("%s 카드: %s - 결과 : %d", player.getName()
+                                                                      .asString(), result,
                 player.calculateScore()));
     }
 

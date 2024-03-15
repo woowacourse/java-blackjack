@@ -75,10 +75,10 @@ public class GamePlayerTest {
     })
     @DisplayName("승패에 따라 수익이 결정된다.(승:1배, 무:0배, 패:-1배, 블랙잭승:1.5배")
     public void GamePlayer_Player_get_profit_from_resultStatus(CardValue dealerCard1,
-                                                                       CardValue dealerCard2,
-                                                                       CardValue playerCard1,
-                                                                       CardValue playerCard2,
-                                                                       int profit) {
+                                                               CardValue dealerCard2,
+                                                               CardValue playerCard1,
+                                                               CardValue playerCard2,
+                                                               int profit) {
         Name name = new Name("딜러");
         Cards cards = CardFixture.카드_목록_생성(List.of(dealerCard1, dealerCard2));
         Dealer dealer = new Dealer(name, cards);

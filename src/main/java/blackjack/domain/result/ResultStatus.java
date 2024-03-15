@@ -7,7 +7,7 @@ public enum ResultStatus {
     BLACKJACK(1.5);
 
     private double rate;
-    
+
     ResultStatus(double rate) {
         this.rate = rate;
     }
