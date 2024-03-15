@@ -1,8 +1,8 @@
 package view;
 
-import domain.UserDto;
 import domain.game.Result;
 import domain.user.Player;
+import dto.UserDto;
 
 import java.util.List;
 import java.util.Map;

@@ -2,13 +2,13 @@ package controller;
 
 import domain.Command;
 import domain.ExceptionHandler;
-import domain.UserDto;
 import domain.deck.TotalDeckGenerator;
 import domain.game.Game;
 import domain.game.State;
 import domain.user.Player;
 import domain.user.User;
 import domain.user.Users;
+import dto.UserDto;
 import view.InputView;
 import view.ResultView;
 
