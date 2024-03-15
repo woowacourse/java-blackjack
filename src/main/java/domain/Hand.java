@@ -8,12 +8,6 @@ public class Hand {
 
     private final List<Card> cards = new LinkedList<>();
 
-    public int calculateSum() {
-        return cards.stream()
-                .mapToInt(Card::getRankValue)
-                .sum();
-    }
-
     public void add(List<Card> cards) {
         this.cards.addAll(cards);
     }
@@ -28,6 +22,10 @@ public class Hand {
                 .count();
     }
 
+    private boolean isBustWithAce(int sum, int aceCount) {
+        return sum > 21 && aceCount > 0;
+    }
+
     public int calculateScore() {
         int aceCount = countAceCard();
         int sum = calculateSum();
@@ -40,8 +38,10 @@ public class Hand {
         return sum;
     }
 
-    private boolean isBustWithAce(int sum, int aceCount) {
-        return sum > 21 && aceCount > 0;
+    private int calculateSum() {
+        return cards.stream()
+                .mapToInt(Card::getRankValue)
+                .sum();
     }
 
     public int getSize() {
