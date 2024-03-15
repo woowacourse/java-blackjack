@@ -21,6 +21,7 @@ public enum ResultStatus {
 
     public static ResultStatus of(final Player player, final Dealer dealer) {
         final Optional<ResultStatus> resultStatusOpt = checkByState(player, dealer);
+
         return resultStatusOpt.orElseGet(() ->
                 compareScore(player.calculateScore(), dealer.calculateScore()));
     }

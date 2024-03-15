@@ -1,8 +1,10 @@
 package blackjack.domain.card;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Score {
     private static final int MINIMUM_SCORE = 0;
@@ -10,13 +12,9 @@ public class Score {
     private static final int BONUS_SCORE_OF_ACE = 10;
     private static final int BLACKJACK_SCORE = 21;
 
-    private static Map<Integer, Score> cachedScore = new HashMap<>();
-
-    static {
-        for (int score = MINIMUM_SCORE; score <= MAXIMUM_SCORE; score++) {
-            cachedScore.put(score, new Score(score));
-        }
-    }
+    private static Map<Integer, Score> cachedScore = IntStream.rangeClosed(MINIMUM_SCORE, MAXIMUM_SCORE)
+            .boxed()
+            .collect(Collectors.toMap(Function.identity(), Score::new));
 
     private final int score;
 
