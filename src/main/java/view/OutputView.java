@@ -8,6 +8,7 @@ import model.card.Card;
 import model.card.CardNumber;
 import model.card.CardShape;
 import model.card.Cards;
+import model.player.Name;
 import model.player.Participant;
 
 public class OutputView {
@@ -23,40 +24,40 @@ public class OutputView {
         System.out.println(System.lineSeparator() + DIVIDE_CARD_MESSAGE.formatted(String.join(", ", names)));
     }
 
-    public void printPlayerCards(Map<String, Cards> usersNameAndCards, Map<String, Cards> dealerNameAndCards) {
-        Entry<String, Cards> dealer = mapToDealerEntry(dealerNameAndCards);
+    public void printPlayerCards(Map<Name, Cards> usersNameAndCards, Map<Name, Cards> dealerNameAndCards) {
+        Entry<Name, Cards> dealer = mapToDealerEntry(dealerNameAndCards);
         System.out.println(cardsToString(dealer.getKey(), dealer.getValue(), 1));
-        for (Entry<String, Cards> entry : usersNameAndCards.entrySet()) {
+        for (Entry<Name, Cards> entry : usersNameAndCards.entrySet()) {
             System.out.println(cardsToString(entry));
         }
     }
 
-    private Entry<String, Cards> mapToDealerEntry(Map<String, Cards> dealerNameAndCards) {
+    private Entry<Name, Cards> mapToDealerEntry(Map<Name, Cards> dealerNameAndCards) {
         return dealerNameAndCards.entrySet().stream()
                 .findFirst()
                 .orElseThrow();
     }
 
-    public void printPlayerCardMessage(String name, Cards cards) {
+    public void printPlayerCardMessage(Name name, Cards cards) {
         System.out.println(cardsToString(name, cards, cards.getCards().size()));
     }
 
-    public void printBlackJackScore(Map<String, Cards> usersNameAndCards, Map<String, Cards> dealerNameAndCards) {
-        Entry<String, Cards> dealer = mapToDealerEntry(dealerNameAndCards);
+    public void printBlackJackScore(Map<Name, Cards> usersNameAndCards, Map<Name, Cards> dealerNameAndCards) {
+        Entry<Name, Cards> dealer = mapToDealerEntry(dealerNameAndCards);
         System.out.println(System.lineSeparator() +
                 cardsToString(dealer) + PLAYER_CARD_SUM_MESSAGE.formatted(dealer.getValue().calculateScore()));
-        for (Entry<String, Cards> participant : usersNameAndCards.entrySet()) {
+        for (Entry<Name, Cards> participant : usersNameAndCards.entrySet()) {
             System.out.println(cardsToString(participant) + PLAYER_CARD_SUM_MESSAGE.formatted(
                     participant.getValue().calculateScore()));
         }
     }
 
-    private String cardsToString(Entry<String, Cards> userNameAndCards) {
+    private String cardsToString(Entry<Name, Cards> userNameAndCards) {
         int size = userNameAndCards.getValue().getCards().size();
         return cardsToString(userNameAndCards.getKey(), userNameAndCards.getValue(), size);
     }
 
-    private String cardsToString(String name, Cards userCards, int cardCountToPrint) {
+    private String cardsToString(Name name, Cards userCards, int cardCountToPrint) {
         List<Card> cards = userCards.getCards();
         int cardCountNotToPrint = cards.size() - cardCountToPrint;
         String cardNames = String.join(", ", cards.stream()

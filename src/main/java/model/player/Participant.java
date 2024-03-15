@@ -9,7 +9,7 @@ public class Participant extends User {
 
     private BettingMoney bettingMoney;
 
-    public Participant(String name, List<Card> cards, BettingMoney bettingMoney) {
+    public Participant(Name name, List<Card> cards, BettingMoney bettingMoney) {
         super(name, cards);
         this.bettingMoney = bettingMoney;
     }

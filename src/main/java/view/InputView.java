@@ -3,6 +3,7 @@ package view;
 import java.util.List;
 import java.util.Scanner;
 import model.BettingMoney;
+import model.player.Name;
 
 public class InputView {
     private static final String ASK_PARTICIPANT_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
@@ -17,7 +18,7 @@ public class InputView {
         return List.of(input.split(",", -1));
     }
 
-    public boolean isOneMoreCard(String name) {
+    public boolean isOneMoreCard(Name name) {
         System.out.println(System.lineSeparator() + ASK_ONE_MORE_CARD_MESSAGE.formatted(name));
 
         String input = in.nextLine();

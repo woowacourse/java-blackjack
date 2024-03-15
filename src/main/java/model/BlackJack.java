@@ -9,6 +9,7 @@ import java.util.function.Function;
 import model.card.CardSize;
 import model.card.Cards;
 import model.player.Dealer;
+import model.player.Name;
 import model.player.Participant;
 import model.player.Participants;
 import model.player.User;
@@ -37,14 +38,14 @@ public class BlackJack {
         }
     }
 
-    public void decideParticipantsPlay(Function<String, Boolean> isMoreCard, BiConsumer<String, Cards> callback) {
+    public void decideParticipantsPlay(Function<Name, Boolean> isMoreCard, BiConsumer<Name, Cards> callback) {
         for (Participant participant : participants.getParticipants()) {
             decideParticipantPlay(participant, isMoreCard, callback);
         }
     }
 
     private void decideParticipantPlay(Participant participant,
-                                       Function<String, Boolean> isMoreCard, BiConsumer<String, Cards> callback) {
+                                       Function<Name, Boolean> isMoreCard, BiConsumer<Name, Cards> callback) {
         while (participant.isNotBust() && isMoreCard.apply(participant.getName())) {
             offerCardToParticipant(participant, CardSize.ONE);
             callback.accept(participant.getName(), participant.getCards());
@@ -87,7 +88,7 @@ public class BlackJack {
         return participants.calculateParticipantProfit(dealer);
     }
 
-    public Map<String, Cards> mapToUsersNameAndCards() {
+    public Map<Name, Cards> mapToUsersNameAndCards() {
         return participants.getParticipants().stream()
                 .collect(toMap(
                         User::getName,
@@ -97,9 +98,9 @@ public class BlackJack {
 
     public List<String> findParticipantsName() {
         return participants.findParticipantsName();
-    }
+    }//todo Name클래스로 분리
 
-    public Map<String, Cards> mapToDealerNameAndCards() {
+    public Map<Name, Cards> mapToDealerNameAndCards() {
         return Map.of(dealer.getName(), dealer.getCards());
     }
 }

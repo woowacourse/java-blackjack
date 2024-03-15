@@ -16,22 +16,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class UserTest {
 
-    @DisplayName("이름이 공백이면 예외가 발생한다.")
-    @Test
-    void validateBlankName() {
-        Assertions.assertThatThrownBy(() -> new User("",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
-        }).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @DisplayName("이름이 null이면 예외가 발생한다.")
-    @Test
-    void validateNullName() {
-        Assertions.assertThatThrownBy(() -> new User(null,
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
-        }).isInstanceOf(IllegalArgumentException.class);
-    }
-
     static Stream<Arguments> createCard() {
         return Stream.of(Arguments.of(
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE)),
@@ -43,14 +27,14 @@ class UserTest {
     @ParameterizedTest
     @MethodSource("createCard")
     void validateCardSize(List<Card> cards) {
-        Assertions.assertThatThrownBy(() -> new User("켬미", cards) {
+        Assertions.assertThatThrownBy(() -> new User(new Name("켬미"), cards) {
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("카드를 추가할 수 있다.")
     @Test
     void addCard() {
-        User user = new User("켬미",
+        User user = new User(new Name("켬미"),
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
         };
         Card card = new Card(CardShape.CLOVER, CardNumber.EIGHT);
@@ -61,7 +45,7 @@ class UserTest {
     @DisplayName("카드 여러 개를 추가할 수 있다.")
     @Test
     void addCards() {
-        User user = new User("켬미",
+        User user = new User(new Name("켬미"),
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
         };
         List<Card> cards = List.of(new Card(CardShape.CLOVER, CardNumber.EIGHT),
@@ -73,7 +57,7 @@ class UserTest {
     @DisplayName("카드의 합을 계산한다.")
     @Test
     void calculateScore() {
-        User user = new User("켬미",
+        User user = new User(new Name("켬미"),
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
         };
 
@@ -83,7 +67,7 @@ class UserTest {
     @DisplayName("Ace가 나왔을 때는 21을 초과하지 않으며 21과 가까운 수가 되도록 11이나 1을 고른다.")
     @Test
     void calculateScoreWithAce() {
-        User user = new User("켬미",
+        User user = new User(new Name("켬미"),
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE), new Card(CardShape.SPACE, CardNumber.FIVE))) {
         };
         user.addCard(new Card(CardShape.SPACE, CardNumber.ACE));

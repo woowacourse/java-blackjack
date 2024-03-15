@@ -7,6 +7,7 @@ import model.BlackJack;
 import model.card.CardDeck;
 import model.card.CardSize;
 import model.player.Dealer;
+import model.player.Name;
 import model.player.Participant;
 import model.player.Participants;
 import view.InputView;
@@ -43,9 +44,9 @@ public class BlackJackController {
         return new BlackJack(participants, dealer);
     }
 
-    private Participants createParticipants(List<String> names, CardDeck cardDeck) { //todo 베팅금액을 바로 넣는 방식
+    private Participants createParticipants(List<String> names, CardDeck cardDeck) {
         return new Participants(new ArrayList<>(names.stream()
-                .map(name -> new Participant(name, cardDeck.selectRandomCards(CardSize.TWO),
+                .map(name -> new Participant(new Name(name), cardDeck.selectRandomCards(CardSize.TWO),
                         inputView.askBettingAmount(name))).toList()));
     }
 

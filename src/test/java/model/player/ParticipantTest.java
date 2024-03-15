@@ -45,7 +45,7 @@ class ParticipantTest {
     @DisplayName("둘 다 21을 넘지 않았을 때, 합이 같으면 참가자의 수익은 베팅금액의 0배다.")
     @Test
     void findOutcomeDraw() {
-        Participant sameScoreParticipant = new Participant("배키",
+        Participant sameScoreParticipant = new Participant(new Name("배키"),
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE),
                         new Card(CardShape.SPACE, CardNumber.FIVE)),
                 new BettingMoney(100));
@@ -72,7 +72,7 @@ class ParticipantTest {
     @DisplayName("참가자, 딜러 모두 21을 넘지 않았을 때 21과의 차이가 먼 참가쟈의 수익은 베팅금액의 -1배다.")
     @Test
     void loseWhenParticipantFarFromThresholdThanDealer() {
-        Participant participant = new Participant("배키",
+        Participant participant = new Participant(new Name("배키"),
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE),
                         new Card(CardShape.SPACE, CardNumber.FIVE)),
                 new BettingMoney(100));
@@ -89,7 +89,7 @@ class ParticipantTest {
     @DisplayName("둘 다 21을 넘지 않은 경우, 21과의 차이가 가까운 참가자의 수익은 베팅금액의 1배다.")
     @Test
     void findOutcomeWin() {
-        Participant participant = new Participant("배키",
+        Participant participant = new Participant(new Name("배키"),
                 List.of(new Card(CardShape.SPACE, CardNumber.QUEEN),
                         new Card(CardShape.SPACE, CardNumber.KING)),
                 new BettingMoney(100));
@@ -167,7 +167,7 @@ class ParticipantTest {
     }
 
     private static Participant createBustParticipant() {
-        Participant bustParticipant = new Participant("배키",
+        Participant bustParticipant = new Participant(new Name("배키"),
                 List.of(new Card(CardShape.HEART, CardNumber.NINE),
                         new Card(CardShape.HEART, CardNumber.FIVE)),
                 new BettingMoney(100));
@@ -176,14 +176,14 @@ class ParticipantTest {
     }
 
     private static Participant createNotBustParticipant() {
-        return new Participant("배키",
+        return new Participant(new Name("배키"),
                 List.of(new Card(CardShape.DIAMOND, CardNumber.NINE),
                         new Card(CardShape.DIAMOND, CardNumber.FIVE)),
                 new BettingMoney(100));
     }
 
     private static Participant createBlackjackParticipant() {
-        return new Participant("켬미",
+        return new Participant(new Name("켬미"),
                 List.of(new Card(CardShape.SPACE, CardNumber.ACE),
                         new Card(CardShape.SPACE, CardNumber.JACK)),
                 new BettingMoney(100));

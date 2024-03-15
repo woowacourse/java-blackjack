@@ -9,7 +9,7 @@ import model.card.CardSize;
 public class Dealer extends User {
 
     private static final int NUMBER_THRESHOLD = 16;
-    private static final String DEALER_NAME = "딜러";
+    private static final Name DEALER_NAME = new Name("딜러");
 
     private final CardDeck cardDeck;
 

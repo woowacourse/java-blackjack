@@ -8,19 +8,12 @@ import model.card.Cards;
 
 public abstract class User {
 
-    protected final String name;
+    protected final Name name;
     protected Cards cards;
 
-    public User(String name, List<Card> cards) {
-        validateName(name);
+    public User(Name name, List<Card> cards) {
         this.name = name;
         this.cards = new Cards(cards);
-    }
-
-    private void validateName(String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("참가자의 이름은 공백이거나 null일 수 없습니다.");
-        }
     }
 
     public void addCards(List<Card> card) { //TODO Card...를 사용해서 리팩토링 해보기
@@ -67,7 +60,7 @@ public abstract class User {
         return Outcome.DRAW;
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 
