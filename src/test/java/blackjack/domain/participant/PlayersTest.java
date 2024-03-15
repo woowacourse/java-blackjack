@@ -4,12 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardRank;
-import blackjack.domain.card.CardSuit;
-import blackjack.domain.card.Hand;
 import blackjack.domain.game.PlayersResult;
 import blackjack.domain.game.Result;
+import fixture.DealerFixture;
+import fixture.PlayerFixture;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -64,25 +62,10 @@ class PlayersTest {
     @Test
     void judge() {
         // given
-        Hand dealerHand = new Hand(List.of(
-                new Card(CardRank.THREE, CardSuit.DIAMOND),
-                new Card(CardRank.NINE, CardSuit.CLUB),
-                new Card(CardRank.EIGHT, CardSuit.DIAMOND)
-        ));
-        Dealer dealer = new Dealer(dealerHand);
+        Dealer dealer = DealerFixture.createDealer();
 
-        Hand pobiHand = new Hand(List.of(
-                new Card(CardRank.TWO, CardSuit.HEART),
-                new Card(CardRank.EIGHT, CardSuit.SPADE),
-                new Card(CardRank.ACE, CardSuit.CLUB)
-        ));
-        Player pobi = new Player(new PlayerName("pobi"), pobiHand);
-
-        Hand jasonHand = new Hand(List.of(
-                new Card(CardRank.SEVEN, CardSuit.CLUB),
-                new Card(CardRank.KING, CardSuit.SPADE)
-        ));
-        Player jason = new Player(new PlayerName("jason"), jasonHand);
+        Player pobi = PlayerFixture.createPobi();
+        Player jason = PlayerFixture.createJason();
 
         Players players = new Players(List.of(pobi, jason));
 

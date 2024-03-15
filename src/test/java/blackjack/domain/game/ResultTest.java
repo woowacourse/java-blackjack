@@ -2,13 +2,11 @@ package blackjack.domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardRank;
-import blackjack.domain.card.CardSuit;
 import blackjack.domain.card.Hand;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.PlayerName;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerName;
+import fixture.CardFixture;
 import fixture.HandFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,10 +18,10 @@ class ResultTest {
     void testPlayerBust() {
         // given
         Hand playerHand = HandFixture.createHandWithScoreTotal21();
-        playerHand.append(new Card(CardRank.ACE, CardSuit.HEART));
+        playerHand.append(CardFixture.createAHeart());
         Player player = new Player(new PlayerName("pobi"), playerHand);
 
-        Dealer dealer = new Dealer(new Hand());
+        Dealer dealer = new Dealer();
 
         // when
         Result result = Result.determineResult(player, dealer);
@@ -37,11 +35,11 @@ class ResultTest {
     void testOnlyPlayerBlackjack() {
         // given
         Hand playerHand = new Hand();
-        playerHand.append(new Card(CardRank.ACE, CardSuit.HEART));
-        playerHand.append(new Card(CardRank.KING, CardSuit.HEART));
+        playerHand.append(CardFixture.createAHeart());
+        playerHand.append(CardFixture.createKHeart());
         Player player = new Player(new PlayerName("pobi"), playerHand);
 
-        Dealer dealer = new Dealer(new Hand());
+        Dealer dealer = new Dealer();
 
         // when
         Result result = Result.determineResult(player, dealer);
@@ -55,8 +53,8 @@ class ResultTest {
     void testAllBlackjack() {
         // given
         Hand hand = new Hand();
-        hand.append(new Card(CardRank.ACE, CardSuit.HEART));
-        hand.append(new Card(CardRank.KING, CardSuit.HEART));
+        hand.append(CardFixture.createAHeart());
+        hand.append(CardFixture.createKHeart());
 
         Player player = new Player(new PlayerName("pobi"), hand);
         Dealer dealer = new Dealer(hand);
@@ -75,7 +73,7 @@ class ResultTest {
         Player player = new Player(new PlayerName("pobi"), new Hand());
 
         Hand dealerHand = HandFixture.createHandWithScoreTotal21();
-        dealerHand.append(new Card(CardRank.ACE, CardSuit.HEART));
+        dealerHand.append(CardFixture.createAHeart());
         Dealer dealer = new Dealer(dealerHand);
 
         // when
@@ -90,11 +88,11 @@ class ResultTest {
     void testPlayerGreater() {
         // given
         Hand playerHand = new Hand();
-        playerHand.append(new Card(CardRank.THREE, CardSuit.HEART));
+        playerHand.append(CardFixture.createAHeart());
         Player player = new Player(new PlayerName("pobi"), playerHand);
 
         Hand dealerHand = new Hand();
-        dealerHand.append(new Card(CardRank.TWO, CardSuit.HEART));
+        dealerHand.append(CardFixture.create2Heart());
         Dealer dealer = new Dealer(dealerHand);
 
         // when
@@ -109,11 +107,11 @@ class ResultTest {
     void testPlayerLess() {
         // given
         Hand playerHand = new Hand();
-        playerHand.append(new Card(CardRank.TWO, CardSuit.HEART));
+        playerHand.append(CardFixture.create2Heart());
         Player player = new Player(new PlayerName("pobi"), playerHand);
 
         Hand dealerHand = new Hand();
-        dealerHand.append(new Card(CardRank.THREE, CardSuit.HEART));
+        dealerHand.append(CardFixture.create3Heart());
         Dealer dealer = new Dealer(dealerHand);
 
         // when
@@ -128,11 +126,11 @@ class ResultTest {
     void testPlayerEqual() {
         // given
         Hand playerHand = new Hand();
-        playerHand.append(new Card(CardRank.TWO, CardSuit.HEART));
+        playerHand.append(CardFixture.create2Heart());
         Player player = new Player(new PlayerName("pobi"), playerHand);
 
         Hand dealerHand = new Hand();
-        dealerHand.append(new Card(CardRank.TWO, CardSuit.HEART));
+        dealerHand.append(CardFixture.create2Heart());
         Dealer dealer = new Dealer(dealerHand);
 
         // when

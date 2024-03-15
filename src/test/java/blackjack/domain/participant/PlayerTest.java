@@ -15,7 +15,7 @@ class PlayerTest {
     @Test
     void testRevealHand() {
         // given
-        Player player = new Player(new PlayerName("pobi"), new Hand());
+        Player player = new Player(new PlayerName("pobi"));
 
         CardDeck cardDeck = CardDeck.createShuffledFullCardDeck();
         player.deal(cardDeck);

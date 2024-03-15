@@ -68,15 +68,15 @@ class CardDeckTest {
     void testEquals() {
         // given
         CardDeck cardDeck1 = new CardDeck(List.of(
-                new Card(CardRank.ACE, CardSuit.HEART),
-                new Card(CardRank.TWO, CardSuit.HEART),
-                new Card(CardRank.THREE, CardSuit.HEART)
+                CardFixture.createAHeart(),
+                CardFixture.create2Heart(),
+                CardFixture.create3Heart()
         ));
 
         CardDeck cardDeck2 = new CardDeck(List.of(
-                new Card(CardRank.THREE, CardSuit.HEART),
-                new Card(CardRank.TWO, CardSuit.HEART),
-                new Card(CardRank.ACE, CardSuit.HEART)
+                CardFixture.create3Heart(),
+                CardFixture.create2Heart(),
+                CardFixture.createAHeart()
         ));
 
         // when & then

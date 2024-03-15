@@ -11,7 +11,7 @@ import java.util.List;
 
 public class PlayerFixture {
 
-    public static Player createPobi2() {
+    public static Player createPobi() {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(CardRank.TWO, CardSuit.HEART));
         cards.add(new Card(CardRank.EIGHT, CardSuit.SPADE));
@@ -20,7 +20,7 @@ public class PlayerFixture {
         return new Player(new PlayerName("pobi"), hand);
     }
 
-    public static Player createJason2() {
+    public static Player createJason() {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(CardRank.SEVEN, CardSuit.CLUB));
         cards.add(new Card(CardRank.KING, CardSuit.SPADE));

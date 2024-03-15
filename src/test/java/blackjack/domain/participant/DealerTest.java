@@ -15,7 +15,7 @@ class DealerTest {
     @Test
     void testRevealHand() {
         // given
-        Dealer dealer = new Dealer(new Hand());
+        Dealer dealer = new Dealer();
         CardDeck cardDeck = CardDeck.createShuffledFullCardDeck();
 
         dealer.deal(cardDeck);

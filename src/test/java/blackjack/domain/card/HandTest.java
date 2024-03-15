@@ -46,9 +46,9 @@ class HandTest {
     void testRevealHand(int count) {
         // given
         Hand hand = new Hand();
-        hand.append(new Card(CardRank.ACE, CardSuit.HEART));
-        hand.append(new Card(CardRank.TWO, CardSuit.HEART));
-        hand.append(new Card(CardRank.THREE, CardSuit.HEART));
+        hand.append(CardFixture.createAHeart());
+        hand.append(CardFixture.create2Heart());
+        hand.append(CardFixture.create3Heart());
 
         // when
         Hand revealedCards = hand.revealHand(count);
@@ -112,8 +112,8 @@ class HandTest {
     void testIsBlackjack() {
         // given
         Hand hand = new Hand();
-        hand.append(new Card(CardRank.ACE, CardSuit.HEART));
-        hand.append(new Card(CardRank.KING, CardSuit.HEART));
+        hand.append(CardFixture.createAHeart());
+        hand.append(CardFixture.createKHeart());
 
         // when
         boolean actual = hand.isBlackjack();
@@ -127,9 +127,9 @@ class HandTest {
     void testIsNotBlackjackWithNonInitialHand() {
         // given
         Hand hand = new Hand();
-        hand.append(new Card(CardRank.ACE, CardSuit.HEART));
-        hand.append(new Card(CardRank.TWO, CardSuit.HEART));
-        hand.append(new Card(CardRank.EIGHT, CardSuit.HEART));
+        hand.append(CardFixture.createAHeart());
+        hand.append(CardFixture.create2Heart());
+        hand.append(CardFixture.create9Heart());
 
         // when
         boolean actual = hand.isBlackjack();
@@ -143,8 +143,8 @@ class HandTest {
     void testIsNotBlackjackWithDifferentHandScore() {
         // given
         Hand hand = new Hand();
-        hand.append(new Card(CardRank.ACE, CardSuit.HEART));
-        hand.append(new Card(CardRank.NINE, CardSuit.HEART));
+        hand.append(CardFixture.createAHeart());
+        hand.append(CardFixture.create9Heart());
 
         // when
         boolean actual = hand.isBlackjack();

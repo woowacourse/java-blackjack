@@ -17,10 +17,10 @@ class PlayersResultTest {
     @Test
     void testDealerWins() {
         // given
-        Dealer dealer = DealerFixture.createDealer2();
+        Dealer dealer = DealerFixture.createDealer();
 
-        Player pobi = PlayerFixture.createPobi2();
-        Player jason = PlayerFixture.createJason2();
+        Player pobi = PlayerFixture.createPobi();
+        Player jason = PlayerFixture.createJason();
 
         Players players = new Players(List.of(pobi, jason));
 
@@ -35,10 +35,10 @@ class PlayersResultTest {
     @Test
     void testDealerLosses() {
         // given
-        Dealer dealer = DealerFixture.createDealer2();
+        Dealer dealer = DealerFixture.createDealer();
 
-        Player pobi = PlayerFixture.createPobi2();
-        Player jason = PlayerFixture.createJason2();
+        Player pobi = PlayerFixture.createPobi();
+        Player jason = PlayerFixture.createJason();
 
         Players players = new Players(List.of(pobi, jason));
 
@@ -53,10 +53,10 @@ class PlayersResultTest {
     @Test
     void dealerTies() {
         // given
-        Dealer dealer = DealerFixture.createDealer2();
+        Dealer dealer = DealerFixture.createDealer();
 
-        Player pobi = PlayerFixture.createPobi2();
-        Player jason = PlayerFixture.createJason2();
+        Player pobi = PlayerFixture.createPobi();
+        Player jason = PlayerFixture.createJason();
 
         Players players = new Players(List.of(pobi, jason));
 

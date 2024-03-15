@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DealerFixture {
 
-    public static Dealer createDealer2() {
+    public static Dealer createDealer() {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(CardRank.THREE, CardSuit.CLUB));
         cards.add(new Card(CardRank.NINE, CardSuit.SPADE));

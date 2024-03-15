@@ -3,7 +3,6 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.game.Score;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -33,28 +32,5 @@ class CardRankTest {
 
         // then
         assertThat(actual).isEqualTo(new Score(12));
-    }
-
-    @Test
-    void allCardRanks() {
-        // when
-        List<CardRank> actual = CardRank.allCardRanks();
-
-        // then
-        assertThat(actual).containsExactlyInAnyOrder(
-                CardRank.ACE,
-                CardRank.TWO,
-                CardRank.THREE,
-                CardRank.FOUR,
-                CardRank.FIVE,
-                CardRank.SIX,
-                CardRank.SEVEN,
-                CardRank.EIGHT,
-                CardRank.NINE,
-                CardRank.TEN,
-                CardRank.JACK,
-                CardRank.QUEEN,
-                CardRank.KING
-        );
     }
 }
