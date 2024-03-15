@@ -1,5 +1,6 @@
 package controller;
 
+import domain.Betting;
 import domain.Referee;
 import domain.PlayerResult;
 import domain.card.Card;
@@ -8,14 +9,17 @@ import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Player;
 import domain.gamer.Players;
-import dto.DealerResult;
-import dto.PlayerResults;
+import dto.DealerProfit;
+import dto.PlayerProfits;
 import dto.TotalResult;
 import strategy.RandomShuffleStrategy;
 import view.InputView;
 import view.OutputView;
 
+import java.math.BigDecimal;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class BlackJackGame {
@@ -23,19 +27,29 @@ public class BlackJackGame {
 
     public void play() {
         Players players = readPlayers();
+        Betting betting = readBetting(players);
         Dealer dealer = new Dealer();
         Deck deck = new Deck(new RandomShuffleStrategy());
         prepareCards(deck, dealer, players);
         OutputView.printInitialCardsMessage(dealer, players);
         handOutCard(deck, dealer, players);
         OutputView.printCardsAndResult(dealer, players);
-        TotalResult totalResult = findTotalResult(dealer, players);
-        OutputView.printFinalGameResult(totalResult);
+        TotalResult totalResult = findTotalResult(dealer, players, betting);
+        OutputView.printTotalResult(totalResult);
     }
 
     private Players readPlayers() {
         List<String> names = InputView.readPlayerNames();
         return new Players(names);
+    }
+
+    private Betting readBetting(final Players players) {
+        Map<Player, String> betting = new LinkedHashMap<>();
+        for (final Player player : players.getPlayers()) {
+            String betMoney = InputView.readBetting(player);
+            betting.put(player,betMoney);
+        }
+        return new Betting(betting);
     }
 
     private void prepareCards(final Deck deck, final Dealer dealer, final Players players) {
@@ -90,14 +104,15 @@ public class BlackJackGame {
         return false;
     }
 
-    private TotalResult findTotalResult(final Dealer dealer, final Players players) {
-        PlayerResults playerResults = new PlayerResults();
-        DealerResult dealerResult = new DealerResult();
+    private TotalResult findTotalResult(final Dealer dealer, final Players players, final Betting betting) {
+        PlayerProfits playerProfits = new PlayerProfits();
+        DealerProfit dealerProfit = new DealerProfit();
         for (Player player : players.getPlayers()) {
             PlayerResult playerResult = Referee.judgePlayer(dealer, player);
-            dealerResult = dealerResult.addResult(playerResult);
-            playerResults.addResult(player, playerResult.reverse());
+            BigDecimal playerProfit = betting.calculateProfit(player,playerResult);
+            dealerProfit = dealerProfit.accumulate(playerProfit);
+            playerProfits.addResult(player, playerProfit);
         }
-        return new TotalResult(dealerResult, playerResults);
+        return new TotalResult(dealerProfit, playerProfits);
     }
 }

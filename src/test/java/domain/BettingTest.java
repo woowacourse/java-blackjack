@@ -18,7 +18,7 @@ class BettingTest {
         //given
         Player player = new Player(new Name("pobi"));
         String money = "500000";
-        Betting betting = new Betting(Map.of(player,new Money(money)));
+        Betting betting = new Betting(Map.of(player,money));
         PlayerResult playerResult = PlayerResult.BLACK_JACK_WIN;
         BigDecimal expectedProfit = new BigDecimal(money).multiply(new BigDecimal("1.5"));
 
