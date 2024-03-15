@@ -30,7 +30,7 @@ public class BlackJackGameTest {
     @DisplayName("플레이어가 카드를 더 받을 경우 플레이어의 카드 수는 1 증가한다.")
     @Test
     void increaseCardSizeWhenPlayerHit() {
-        BlackJackGame game = new BlackJackGame(List.of("dummy")); // 왜 같은 취급되지 않지? 주소는 같다고 출력되는데.
+        BlackJackGame game = new BlackJackGame(List.of("dummy"));
         Hand hand = new Hand();
         hand.addCard(new Card(CardNumber.THREE, CardShape.HEART));
         hand.addCard(new Card(CardNumber.FOUR, CardShape.DIAMOND));
