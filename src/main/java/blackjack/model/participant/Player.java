@@ -4,8 +4,6 @@ import blackjack.model.deck.Card;
 import java.util.List;
 
 public class Player implements Playable {
-    private static final int HITTABLE_THRESHOLD = 21;
-
     private final Name name;
     private Hand hand;
 
@@ -40,7 +38,7 @@ public class Player implements Playable {
 
     @Override
     public boolean canHit() {
-        return hand.calculateScore() < HITTABLE_THRESHOLD;
+        return hand.isUnder21();
     }
 
     @Override
