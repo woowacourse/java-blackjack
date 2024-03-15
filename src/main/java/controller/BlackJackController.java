@@ -3,13 +3,15 @@ package controller;
 import domain.Bet.BetAmount;
 import domain.Bet.BetResult;
 import domain.blackjack.BlackJack;
-import domain.participant.*;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Participants;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import view.HitOption;
 import view.InputView;
 import view.OutputView;
-
-import java.util.LinkedHashMap;
-import java.util.List;
 
 public class BlackJackController {
 
@@ -37,7 +39,7 @@ public class BlackJackController {
     }
 
     private BetResult startBet(Participants participants) {
-        LinkedHashMap<Participant, BetAmount> betAmountByParticipant = new LinkedHashMap<>();
+        Map<Participant, BetAmount> betAmountByParticipant = new LinkedHashMap<>();
         for (Participant participant : participants.getValue()) {
             int betAmount = InputView.inputBetAmount(participant);
             betAmountByParticipant.put(participant, BetAmount.from(betAmount));
