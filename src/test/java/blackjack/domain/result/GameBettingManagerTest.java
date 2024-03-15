@@ -11,17 +11,17 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class GameBattingManagerTest {
+class GameBettingManagerTest {
 
     @DisplayName("딜러와 플레이어가 둘 다 버스트면 플레이어가 배팅 금액을 모두 잃는다.")
     @Test
     void calculateBattingReward_allBust() {
         //given
-        GameBattingManager gameBattingManager = new GameBattingManager();
+        GameBettingManager gameBettingManager = new GameBettingManager();
 
         Dealer dealer = new Dealer();
         Player player = new Player("test");
-        gameBattingManager.registerPlayerBatting(player, 1000);
+        gameBettingManager.registerPlayerBetting(player, 1000);
 
         dealer.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Pattern.CLOVER, Rank.TEN));
@@ -32,10 +32,10 @@ class GameBattingManagerTest {
         player.receiveCard(new Card(Pattern.HEART, Rank.TEN));
 
         //when
-        gameBattingManager.decideWinner(dealer, player);
+        gameBettingManager.calculatePlayerProfit(dealer, player);
 
-        double dealerResult = gameBattingManager.getDealerResult();
-        double playerResult = gameBattingManager.getPlayersResult().get(player);
+        double dealerResult = gameBettingManager.getDealerResult();
+        double playerResult = gameBettingManager.getPlayersResult().get(player);
 
         //then
         assertAll(
@@ -44,14 +44,44 @@ class GameBattingManagerTest {
         );
     }
 
+    @DisplayName("딜러만 버스트라면 플레이어가 1배의 배팅 금액을 가져간다.")
+    @Test
+    void calculateBattingReward_DealerBust() {
+        //given
+        GameBettingManager gameBettingManager = new GameBettingManager();
+
+        Dealer dealer = new Dealer();
+        Player player = new Player("test");
+        gameBettingManager.registerPlayerBetting(player, 1000);
+
+        dealer.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
+        dealer.receiveCard(new Card(Pattern.CLOVER, Rank.TEN));
+        dealer.receiveCard(new Card(Pattern.HEART, Rank.TEN));
+
+        player.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
+        player.receiveCard(new Card(Pattern.CLOVER, Rank.TEN));
+
+        //when
+        gameBettingManager.calculatePlayerProfit(dealer, player);
+
+        double dealerResult = gameBettingManager.getDealerResult();
+        double playerResult = gameBettingManager.getPlayersResult().get(player);
+
+        //then
+        assertAll(
+                () -> assertThat(dealerResult).isEqualTo(-1000),
+                () -> assertThat(playerResult).isEqualTo(1000)
+        );
+    }
+
     @DisplayName("플레이어만 블랙잭이면 플레이어가 1.5배의 배팅 금액을 가져간다.")
     @Test
     void calculateBattingReward_PlayerBlackjack() {
         //given
-        GameBattingManager gameBattingManager = new GameBattingManager();
+        GameBettingManager gameBettingManager = new GameBettingManager();
         Dealer dealer = new Dealer();
         Player player = new Player("test");
-        gameBattingManager.registerPlayerBatting(player, 1000);
+        gameBettingManager.registerPlayerBetting(player, 1000);
 
         dealer.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Pattern.CLOVER, Rank.NINE));
@@ -61,10 +91,10 @@ class GameBattingManagerTest {
         player.receiveCard(new Card(Pattern.CLOVER, Rank.ACE));
 
         //when
-        gameBattingManager.decideWinner(dealer, player);
+        gameBettingManager.calculatePlayerProfit(dealer, player);
 
-        double dealerResult = gameBattingManager.getDealerResult();
-        double playerResult = gameBattingManager.getPlayersResult().get(player);
+        double dealerResult = gameBettingManager.getDealerResult();
+        double playerResult = gameBettingManager.getPlayersResult().get(player);
 
          //then
         assertAll(
@@ -73,14 +103,14 @@ class GameBattingManagerTest {
         );
     }
 
-    @DisplayName("플레이어와 딜러 모두 블랙잭이면 플레이어가 1배의 배팅 금액을 가져간다.")
+    @DisplayName("플레이어와 딜러 모두 블랙잭이면 플레이어가 1배의 배팅 금액을 돌려받는다.")
     @Test
     void calculateBattingReward_allBlackjack() {
         //given
-        GameBattingManager gameBattingManager = new GameBattingManager();
+        GameBettingManager gameBettingManager = new GameBettingManager();
         Dealer dealer = new Dealer();
         Player player = new Player("test");
-        gameBattingManager.registerPlayerBatting(player, 1000);
+        gameBettingManager.registerPlayerBetting(player, 1000);
 
         dealer.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Pattern.CLOVER, Rank.ACE));
@@ -89,15 +119,15 @@ class GameBattingManagerTest {
         player.receiveCard(new Card(Pattern.CLOVER, Rank.ACE));
 
         //when
-        gameBattingManager.decideWinner(dealer, player);
+        gameBettingManager.calculatePlayerProfit(dealer, player);
 
-        double dealerResult = gameBattingManager.getDealerResult();
-        double playerResult = gameBattingManager.getPlayersResult().get(player);
+        double dealerResult = gameBettingManager.getDealerResult();
+        double playerResult = gameBettingManager.getPlayersResult().get(player);
 
         //then
         assertAll(
-                () -> assertThat(dealerResult).isEqualTo(-1000),
-                () -> assertThat(playerResult).isEqualTo(1000)
+                () -> assertThat(dealerResult).isEqualTo(0),
+                () -> assertThat(playerResult).isEqualTo(0)
         );
     }
 
@@ -105,10 +135,10 @@ class GameBattingManagerTest {
     @Test
     void calculateBattingReward_neitherBusterOrBlackjack() {
         //given
-        GameBattingManager gameBattingManager = new GameBattingManager();
+        GameBettingManager gameBettingManager = new GameBettingManager();
         Dealer dealer = new Dealer();
         Player player = new Player("test");
-        gameBattingManager.registerPlayerBatting(player, 1000);
+        gameBettingManager.registerPlayerBetting(player, 1000);
 
         dealer.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Pattern.CLOVER, Rank.NINE));
@@ -117,10 +147,10 @@ class GameBattingManagerTest {
         player.receiveCard(new Card(Pattern.HEART, Rank.TWO));
 
         //when
-        gameBattingManager.decideWinner(dealer, player);
+        gameBettingManager.calculatePlayerProfit(dealer, player);
 
-        double dealerResult = gameBattingManager.getDealerResult();
-        double playerResult = gameBattingManager.getPlayersResult().get(player);
+        double dealerResult = gameBettingManager.getDealerResult();
+        double playerResult = gameBettingManager.getPlayersResult().get(player);
 
         //then
         assertAll(
@@ -129,14 +159,14 @@ class GameBattingManagerTest {
         );
     }
 
-    @DisplayName("딜러와 플레이어가 둘 다 버스트나 블랙잭이 아닐 때 점수가 같으면 플레이어가 1배의 금액을 가져간다.")
+    @DisplayName("딜러와 플레이어가 둘 다 버스트나 블랙잭이 아닐 때 점수가 같으면 플레이어가 1배의 금액을 돌려받는다.")
     @Test
     void calculateBattingReward_neitherBusterOrBlackjack_sameScore() {
         //given
-        GameBattingManager gameBattingManager = new GameBattingManager();
+        GameBettingManager gameBettingManager = new GameBettingManager();
         Dealer dealer = new Dealer();
         Player player = new Player("test");
-        gameBattingManager.registerPlayerBatting(player, 1000);
+        gameBettingManager.registerPlayerBetting(player, 1000);
 
         dealer.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Pattern.CLOVER, Rank.NINE));
@@ -145,15 +175,15 @@ class GameBattingManagerTest {
         player.receiveCard(new Card(Pattern.HEART, Rank.NINE));
 
         //when
-        gameBattingManager.decideWinner(dealer, player);
+        gameBettingManager.calculatePlayerProfit(dealer, player);
 
-        double dealerResult = gameBattingManager.getDealerResult();
-        double playerResult = gameBattingManager.getPlayersResult().get(player);
+        double dealerResult = gameBettingManager.getDealerResult();
+        double playerResult = gameBettingManager.getPlayersResult().get(player);
 
         //then
         assertAll(
-                () -> assertThat(dealerResult).isEqualTo(-1000),
-                () -> assertThat(playerResult).isEqualTo(1000)
+                () -> assertThat(dealerResult).isEqualTo(0),
+                () -> assertThat(playerResult).isEqualTo(0)
         );
     }
 
