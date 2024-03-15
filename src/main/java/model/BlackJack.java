@@ -102,8 +102,4 @@ public class BlackJack {
     public Map<String, Cards> mapToDealerNameAndCards() {
         return Map.of(dealer.getName(), dealer.getCards());
     }
-
-    public Participants getParticipants() {
-        return participants;
-    }
 }

@@ -5,14 +5,19 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.stream.Stream;
 import model.BettingMoney;
 import model.card.Card;
 import model.card.CardDeck;
 import model.card.CardNumber;
 import model.card.CardShape;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class ParticipantTest {
 
@@ -23,41 +28,32 @@ class ParticipantTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("카드의 합이 21이하일 때는 참을 반환한다.")
-    @Test
-    void noticeTrue() {
-        Participant participant = new Participant("배키",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE),
-                        new Card(CardShape.SPACE, CardNumber.FIVE)),
-                new BettingMoney(100));
-        assertFalse(participant.isBust());
-    }
-
-    @DisplayName("카드의 합이 21초과일 때는 거짓을 반환한다.")
+    @DisplayName("카드의 합이 21이하일 때는 거짓을 반환한다.")
     @Test
     void noticeFalse() {
-        Participant participant = new Participant("배키",
-                List.of(new Card(CardShape.SPACE, CardNumber.NINE),
-                        new Card(CardShape.SPACE, CardNumber.FIVE)),
-                new BettingMoney(100));
-        participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
-        participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
-        participant.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
-        assertTrue(participant.isBust());
+        Participant notBustParticipant = createNotBustParticipant();
+        assertFalse(notBustParticipant.isBust());
+    }
+
+    @DisplayName("카드의 합이 21초과일 때는 참을 반환한다.")
+    @Test
+    void noticeTrue() {
+        Participant bustParticipant = createBustParticipant();
+        assertTrue(bustParticipant.isBust());
     }
 
     @DisplayName("둘 다 21을 넘지 않았을 때, 합이 같으면 참가자의 수익은 베팅금액의 0배다.")
     @Test
     void findOutcomeDraw() {
-        Participant participant = new Participant("배키",
+        Participant sameScoreParticipant = new Participant("배키",
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE),
                         new Card(CardShape.SPACE, CardNumber.FIVE)),
                 new BettingMoney(100));
-        Dealer dealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
+        Dealer sameScoreDealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
                 List.of(new Card(CardShape.CLOVER, CardNumber.NINE),
                         new Card(CardShape.HEART, CardNumber.FIVE)));
 
-        Double playerProfit = participant.calculateProfit(dealer);
+        Double playerProfit = sameScoreParticipant.calculateProfit(sameScoreDealer);
 
         Assertions.assertThat(playerProfit).isEqualTo(0);
     }
@@ -65,17 +61,10 @@ class ParticipantTest {
     @DisplayName("참가자와 딜러 모두 카드의 합이 21을 넘으면 참가자의 수익은 베팅금액의 1배다.")
     @Test
     void loseWhenBothOverThreshold() {
-        Participant participant = new Participant("켬미",
-                List.of(new Card(CardShape.SPACE, CardNumber.TEN),
-                        new Card(CardShape.HEART, CardNumber.TEN)),
-                new BettingMoney(100));
-        participant.addCard(new Card(CardShape.SPACE, CardNumber.NINE));
-        Dealer dealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
-                List.of(new Card(CardShape.CLOVER, CardNumber.TEN),
-                        new Card(CardShape.DIAMOND, CardNumber.TEN)));
-        dealer.addCard(new Card(CardShape.SPACE, CardNumber.EIGHT));
+        Participant bustParticipant = createBustParticipant();
+        Dealer bustDealer = createBustDealer();
 
-        Double playerProfit = participant.calculateProfit(dealer);
+        Double playerProfit = bustParticipant.calculateProfit(bustDealer);
 
         Assertions.assertThat(playerProfit).isEqualTo(100);
     }
@@ -83,10 +72,11 @@ class ParticipantTest {
     @DisplayName("참가자, 딜러 모두 21을 넘지 않았을 때 21과의 차이가 먼 참가쟈의 수익은 베팅금액의 -1배다.")
     @Test
     void loseWhenParticipantFarFromThresholdThanDealer() {
-        Participant participant = new Participant("켬미",
-                List.of(new Card(CardShape.SPACE, CardNumber.KING),
+        Participant participant = new Participant("배키",
+                List.of(new Card(CardShape.SPACE, CardNumber.NINE),
                         new Card(CardShape.SPACE, CardNumber.FIVE)),
                 new BettingMoney(100));
+
         Dealer dealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
                 List.of(new Card(CardShape.SPACE, CardNumber.KING),
                         new Card(CardShape.SPACE, CardNumber.JACK)));
@@ -98,10 +88,10 @@ class ParticipantTest {
 
     @DisplayName("둘 다 21을 넘지 않은 경우, 21과의 차이가 가까운 참가자의 수익은 베팅금액의 1배다.")
     @Test
-    void findOutcomeWin() { // todo 변수명에 버스트 되었는지, 안되었는지 표시하기
-        Participant participant = new Participant("켬미",
-                List.of(new Card(CardShape.SPACE, CardNumber.KING),
-                        new Card(CardShape.SPACE, CardNumber.JACK)),
+    void findOutcomeWin() {
+        Participant participant = new Participant("배키",
+                List.of(new Card(CardShape.SPACE, CardNumber.QUEEN),
+                        new Card(CardShape.SPACE, CardNumber.KING)),
                 new BettingMoney(100));
         Dealer dealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
                 List.of(new Card(CardShape.SPACE, CardNumber.EIGHT),
@@ -112,36 +102,30 @@ class ParticipantTest {
         Assertions.assertThat(playerProfit).isEqualTo(100);
     }
 
-    @DisplayName("딜러가 버스트면 참가자의 수익률은 베팅금액의 1배이다.") //todo '참가자의 버스트 여부'와 상관없이 -> parameterize
-    @Test
-    void calculateWinProfit() {
-        Participant participant = new Participant("켬미",
-                List.of(new Card(CardShape.SPACE, CardNumber.KING),
-                        new Card(CardShape.SPACE, CardNumber.JACK)),
-                new BettingMoney(100));
-        Dealer dealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
-                List.of(new Card(CardShape.SPACE, CardNumber.EIGHT),
-                        new Card(CardShape.CLOVER, CardNumber.NINE)));
-        dealer.addCard(new Card(CardShape.CLOVER, CardNumber.TEN));
+    static Stream<Arguments> createParticipant() {
+        Participant bustParticipant = createBustParticipant();
+        Participant notBustParticipant = createNotBustParticipant();
+        return Stream.of(Arguments.of(bustParticipant, notBustParticipant));
+    }
 
-        double playerProfit = participant.calculateProfit(dealer);
+    @DisplayName("딜러가 버스트면 참가자의 수익률은 베팅금액의 1배이다.")
+    @ParameterizedTest
+    @MethodSource("createParticipant")
+    void calculateWinProfit(Participant participant) {
+        Dealer bustDealer = createBustDealer();
+
+        double playerProfit = participant.calculateProfit(bustDealer);
 
         Assertions.assertThat(playerProfit).isEqualTo(100);
     }
 
     @DisplayName("참가자가 버스트면 참가자의 수익률은 배팅금액의 -1배이다.")
     @Test
-    void calculateLoseProfit() {//TODO : bust된 참가자와 딜러, bust되지 않은 참가자와 딜러로 나누기(중복 제거)
-        Participant participant = new Participant("켬미",
-                List.of(new Card(CardShape.SPACE, CardNumber.KING),
-                        new Card(CardShape.SPACE, CardNumber.JACK)),
-                new BettingMoney(100));
-        participant.addCard(new Card(CardShape.CLOVER, CardNumber.FIVE));
-        Dealer dealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
-                List.of(new Card(CardShape.SPACE, CardNumber.EIGHT),
-                        new Card(CardShape.CLOVER, CardNumber.NINE)));
+    void calculateLoseProfit() {
+        Participant bustParticipant = createBustParticipant();
+        Dealer notBustDealer = createNotBustDealer();
 
-        double playerProfit = participant.calculateProfit(dealer);
+        double playerProfit = bustParticipant.calculateProfit(notBustDealer);
 
         Assertions.assertThat(playerProfit).isEqualTo(-100);
     }
@@ -149,15 +133,10 @@ class ParticipantTest {
     @DisplayName("참가자가 블랙잭이고 딜러가 블랙잭이면 수익률은 베팅금액의 1배이다.")
     @Test
     void calculateAllBlackjackProfit() {
-        Participant participant = new Participant("켬미",
-                List.of(new Card(CardShape.SPACE, CardNumber.ACE),
-                        new Card(CardShape.SPACE, CardNumber.JACK)),
-                new BettingMoney(100));
-        Dealer dealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
-                List.of(new Card(CardShape.CLOVER, CardNumber.ACE),
-                        new Card(CardShape.CLOVER, CardNumber.TEN)));
+        Participant blackjackParticipant = createBlackjackParticipant();
+        Dealer blackjackDealer = createBlackjackDealer();
 
-        double playerProfit = participant.calculateProfit(dealer);
+        double playerProfit = blackjackParticipant.calculateProfit(blackjackDealer);
 
         Assertions.assertThat(playerProfit).isEqualTo(100);
     }
@@ -165,17 +144,54 @@ class ParticipantTest {
     @DisplayName("참가자만 블랙잭이면 수익률은 베팅금액의 1.5배이다.")
     @Test
     void calculateOnlyParticipantBlackjackProfit() {
-        Participant participant = new Participant("켬미",
+        Participant blackjackParticipant = createBlackjackParticipant();
+        Dealer notBustDealer = createNotBustDealer();
+
+        double playerProfit = blackjackParticipant.calculateProfit(notBustDealer);
+
+        Assertions.assertThat(playerProfit).isEqualTo(150);
+    }
+
+    private static Dealer createBustDealer() {
+        Dealer dealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
+                List.of(new Card(CardShape.SPACE, CardNumber.EIGHT),
+                        new Card(CardShape.CLOVER, CardNumber.NINE)));
+        dealer.addCard(new Card(CardShape.CLOVER, CardNumber.TEN));
+        return dealer;
+    }
+
+    private static Dealer createNotBustDealer() {
+        return new Dealer(new CardDeck(CardDeck.createCards()), () ->
+                List.of(new Card(CardShape.SPACE, CardNumber.EIGHT),
+                        new Card(CardShape.CLOVER, CardNumber.NINE)));
+    }
+
+    private static Participant createBustParticipant() {
+        Participant bustParticipant = new Participant("배키",
+                List.of(new Card(CardShape.HEART, CardNumber.NINE),
+                        new Card(CardShape.HEART, CardNumber.FIVE)),
+                new BettingMoney(100));
+        bustParticipant.addCard(new Card(CardShape.HEART, CardNumber.EIGHT));
+        return bustParticipant;
+    }
+
+    private static Participant createNotBustParticipant() {
+        return new Participant("배키",
+                List.of(new Card(CardShape.DIAMOND, CardNumber.NINE),
+                        new Card(CardShape.DIAMOND, CardNumber.FIVE)),
+                new BettingMoney(100));
+    }
+
+    private static Participant createBlackjackParticipant() {
+        return new Participant("켬미",
                 List.of(new Card(CardShape.SPACE, CardNumber.ACE),
                         new Card(CardShape.SPACE, CardNumber.JACK)),
                 new BettingMoney(100));
-        Dealer dealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
-                List.of(new Card(CardShape.CLOVER, CardNumber.FIVE),
+    }
+
+    private static Dealer createBlackjackDealer() {
+        return new Dealer(new CardDeck(CardDeck.createCards()), () ->
+                List.of(new Card(CardShape.CLOVER, CardNumber.ACE),
                         new Card(CardShape.CLOVER, CardNumber.TEN)));
-        dealer.addCard(new Card(CardShape.HEART, CardNumber.SIX));
-
-        double playerProfit = participant.calculateProfit(dealer);
-
-        Assertions.assertThat(playerProfit).isEqualTo(150);
     }
 }
