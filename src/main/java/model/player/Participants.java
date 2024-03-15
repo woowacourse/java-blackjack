@@ -15,13 +15,16 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toMap;
 
-public record Participants(List<Participant> participants) {
+public class Participants {
     public static final int MINIMUM_PARTICIPANT_SIZE = 2;
     public static final int MAXIMUM_PARTICIPANT_SIZE = 8;
 
-    public Participants {
+    private final List<Participant> participants;
+
+    public Participants(List<Participant> participants) {
         validateNotDuplicatedParticipant(participants);
         validateParticipantSize(participants);
+        this.participants = participants;
     }
 
     private void validateNotDuplicatedParticipant(List<Participant> participants) {
@@ -69,7 +72,8 @@ public record Participants(List<Participant> participants) {
         return participants.stream()
                 .collect(toMap(
                         User::getName,
-                        User::getCards));
+                        User::getCards
+                ));
     }
 
     public Map<String, Integer> matchNameAndRevenues(Dealer dealer) {
@@ -78,10 +82,5 @@ public record Participants(List<Participant> participants) {
                         User::getName,
                         participant -> participant.calculateRevenue(dealer)
                 ));
-    }
-
-    @Override
-    public List<Participant> participants() {
-        return Collections.unmodifiableList(participants);
     }
 }
