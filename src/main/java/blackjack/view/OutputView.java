@@ -100,8 +100,8 @@ public class OutputView {
     }
 
     private void printDealerResults(Pot pot) {
-        int dealerPot = pot.calculateDealerPot();
-        System.out.printf(DEALER_RESULTS_FORMAT + System.lineSeparator(), dealerPot);
+        BetAmount dealerPot = pot.calculateDealerBetAmount();
+        System.out.printf(DEALER_RESULTS_FORMAT + System.lineSeparator(), dealerPot.amount());
     }
 
     private void printPlayersResult(Pot pot) {

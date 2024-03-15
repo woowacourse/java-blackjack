@@ -14,14 +14,6 @@ public class Pot {
         this.pot = pot;
     }
 
-    public Map<Player, BetAmount> getPot() {
-        return pot;
-    }
-
-    public BetAmount getBetAmount(Player player) {
-        return pot.get(player);
-    }
-
     public Pot calculatePlayerPot(RoundResult roundResult) {
         Map<Player, BetAmount> calculatedPot = new LinkedHashMap<>();
         Map<Player, HandResult> playersResult = roundResult.playersResult();
@@ -34,9 +26,19 @@ public class Pot {
         return new Pot(calculatedPot);
     }
 
-    public int calculateDealerPot() {
-        return DEALER_POT_COEFFICIENT * pot.values().stream()
+    public BetAmount calculateDealerBetAmount() {
+        return new BetAmount(
+                DEALER_POT_COEFFICIENT * pot.values().stream()
                 .mapToInt(BetAmount::amount)
-                .sum();
+                .sum()
+        );
+    }
+
+    public Map<Player, BetAmount> getPot() {
+        return pot;
+    }
+
+    public BetAmount getBetAmount(Player player) {
+        return pot.get(player);
     }
 }
