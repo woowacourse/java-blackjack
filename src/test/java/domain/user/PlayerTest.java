@@ -22,6 +22,23 @@ import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
     @Test
+    @DisplayName("손패의 합이 21 미만이면 receivable이다.")
+    void isReceivableTest() {
+        Player player = new Player(new Name("aa"), new Hand(new Card(SPADE, JACK), new Card(SPADE, QUEEN)));
+
+        assertThat(player.isReceivable()).isTrue();
+    }
+
+    @Test
+    @DisplayName("손패의 합이 21 이상이면 receivable이지 않다.")
+    void isNotReceivableTest() {
+        Player player = new Player(new Name("aa"),
+                new Hand(new Card(SPADE, JACK), new Card(SPADE, QUEEN), new Card(SPADE, ACE)));
+
+        assertThat(player.isReceivable()).isFalse();
+    }
+
+    @Test
     @DisplayName("player(15), dealer(11) -> WIN")
     void should_win_when_player15dealer11() {
         Player player = new Player(new Name("aa"), new Hand(new Card(SPADE, SEVEN), new Card(SPADE, EIGHT)));
