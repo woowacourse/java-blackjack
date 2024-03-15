@@ -6,13 +6,14 @@ import model.player.Dealer;
 import model.player.Participant;
 import model.player.Participants;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 
 public class BlackJack {
 
@@ -64,17 +65,17 @@ public class BlackJack {
     }
 
     public Map<String, Cards> matchUsersNameAndCards() {
-        Map<String, Cards> matchUser = matchDealerNameAndCards();
-        matchUser.putAll(matchParticipantNameAndCards());
+        Map<String, Cards> matchUser = new LinkedHashMap<>(matchDealerNameAndCards());
+        matchUser.putAll(matchParticipantsNameAndCards());
         return matchUser;
     }
 
     private Map<String, Cards> matchDealerNameAndCards() {
-        return new HashMap<>(Map.of(dealer.getName(), dealer.getCards()));
+        return Map.of(dealer.getName(), dealer.getCards());
     }
 
-    private Map<String, Cards> matchParticipantNameAndCards() {
-        return participants.matchUsersNameAndCards();
+    private Map<String, Cards> matchParticipantsNameAndCards() {
+        return participants.matchParticipantNameAndCards();
     }
 
     public int findDealerRevenue() {
