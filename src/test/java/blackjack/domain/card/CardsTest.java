@@ -12,10 +12,10 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CardsTest {
+class CardsTest {
     @Test
     @DisplayName("카드 목록을 포함한 일급 컬렉션을 생성 한다.")
-    public void create_with_CardList() {
+    void create_with_CardList() {
         List<Card> cards = List.of(new Card(CardValue.EIGHT, CardSymbol.DIAMOND),
                 new Card(CardValue.JACK, CardSymbol.CLOVER));
 
@@ -23,8 +23,21 @@ public class CardsTest {
     }
 
     @Test
+    @DisplayName("카드를 한장 받으면 새로운 Cards 를 생성한다.")
+    void draw_card() {
+        final List<Card> cards = List.of(new Card(CardValue.EIGHT, CardSymbol.DIAMOND),
+                new Card(CardValue.JACK, CardSymbol.CLOVER));
+        final var sut = new Cards(cards);
+
+        final var newCards = sut.draw(new Card(CardValue.ACE, CardSymbol.HEART));
+        final List<Card> cardList = newCards.toList();
+
+        assertThat(cardList).hasSize(3);
+    }
+
+    @Test
     @DisplayName("카드 목록의 숫자 합을 계산 한다. (케이스 1)")
-    public void sum_of_cards_case1() {
+    void sum_of_cards_case1() {
         List<CardValue> cardValues = List.of(CardValue.EIGHT, CardValue.JACK);
         var sut = CardFixture.카드_목록_생성(cardValues);
 
@@ -35,7 +48,7 @@ public class CardsTest {
 
     @Test
     @DisplayName("카드 목록의 숫자 합을 계산 한다. (케이스 2)")
-    public void sum_of_cards_case2() {
+    void sum_of_cards_case2() {
         List<CardValue> cardValues = List.of(CardValue.FIVE, CardValue.EIGHT);
         var sut2 = CardFixture.카드_목록_생성(cardValues);
 
@@ -46,7 +59,7 @@ public class CardsTest {
 
     @Test
     @DisplayName("A가 포함되어 있고 숫자합이 10이하라면 A는 11로 계산된다.")
-    public void sum_of_cards_with_A_special_value() {
+    void sum_of_cards_with_A_special_value() {
         final List<CardValue> cardValues = List.of(CardValue.FIVE, CardValue.ACE);
         var sut2 = CardFixture.카드_목록_생성(cardValues);
 
@@ -79,7 +92,7 @@ public class CardsTest {
 
     @Test
     @DisplayName("카드 목록에 첫 번째 카드를 가져온다")
-    public void get_first_card() {
+    void get_first_card() {
         List<Card> cards = List.of(new Card(CardValue.EIGHT, CardSymbol.DIAMOND),
                 new Card(CardValue.JACK, CardSymbol.CLOVER));
         var sut = new Cards(cards);

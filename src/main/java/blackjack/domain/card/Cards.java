@@ -3,6 +3,7 @@ package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Cards {
     private static final int BUST_SIZE = 21;
@@ -33,8 +34,9 @@ public class Cards {
         return calculate() > BUST_SIZE;
     }
 
-    public void add(final Card card) {
-        value.add(card);
+    public Cards draw(final Card card) {
+        this.value.add(card);
+        return new Cards(this.value);
     }
 
     private int sum() {
@@ -49,5 +51,17 @@ public class Cards {
 
     public List<Card> toList() {
         return value;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (!(o instanceof final Cards cards)) return false;
+        return Objects.equals(this.value, cards.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.value);
     }
 }
