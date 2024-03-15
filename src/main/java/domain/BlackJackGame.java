@@ -31,8 +31,9 @@ public class BlackJackGame {
         return new Gamers(players, dealer);
     }
 
-    public void setUpProfits(Player player, int bettingAmount) {
-        gameManager.initializeProfit(player, new Profit(bettingAmount));
+    public void setUpProfits(Player player, int rawBettingAmount) {
+        Bet bet = new Bet(rawBettingAmount);
+        gameManager.initializeProfit(player, new Profit(bet));
     }
 
     public void setUpGame() {
