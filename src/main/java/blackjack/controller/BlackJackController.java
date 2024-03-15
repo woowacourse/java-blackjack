@@ -5,6 +5,7 @@ import blackjack.model.cardgenerator.RandomCardGenerator;
 import blackjack.model.dealer.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.PlayerAction;
+import blackjack.model.player.PlayerActionExecutor;
 import blackjack.model.player.Players;
 import blackjack.model.result.BettingBoard;
 import blackjack.model.result.BettingMoney;
@@ -60,27 +61,19 @@ public class BlackJackController {
     }
 
     private void play(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
-        for (Player player : players.getPlayers()) {
-            doPlayerActionUntilEnd(player, cardGenerator);
-        }
+        doPlayerAction(players, cardGenerator);
         dealer.hitUntilEnd(cardGenerator);
         outputView.printDealerActionResult(dealer);
     }
 
-    private void doPlayerActionUntilEnd(final Player player, final CardGenerator cardGenerator) {
-        boolean isContinue = player.canHit();
-        while (isContinue) {
-            isContinue = doPlayerAction(player, cardGenerator);
-        }
-    }
-
-    private boolean doPlayerAction(final Player player, final CardGenerator cardGenerator) {
-        PlayerAction PlayerAction = retryOnException(() -> askPlayerHitTry(player.getName()));
-        if (PlayerAction.isHit()) {
-            player.hit(cardGenerator);
+    private void doPlayerAction(final Players players, final CardGenerator cardGenerator) {
+        PlayerActionExecutor playerActionExecutor = new PlayerActionExecutor(players, cardGenerator);
+        while (!playerActionExecutor.isFinished()) {
+            Player player = playerActionExecutor.getExecutingPlayer();
+            PlayerAction playerAction = retryOnException(() -> askPlayerHitTry(player.getName()));
+            playerActionExecutor.execute(playerAction);
             outputView.printPlayerActionResult(player);
         }
-        return PlayerAction.canContinue(player);
     }
 
     private PlayerAction askPlayerHitTry(final String playerName) {

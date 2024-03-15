@@ -11,11 +11,7 @@ public enum PlayerAction {
         return STAND;
     }
 
-    public boolean isHit() {
-        return this.equals(HIT);
-    }
-
-    public boolean canContinue(final Player player) {
-        return player.canHit() && this.equals(HIT);
+    public boolean canNotContinue(final Player player) {
+        return this.equals(STAND) || !player.canHit();
     }
 }
