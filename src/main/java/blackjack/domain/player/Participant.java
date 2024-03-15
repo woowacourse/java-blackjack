@@ -8,13 +8,20 @@ import java.util.Objects;
 
 public abstract class Participant implements CardReceivable {
 
-    protected final Name name;
     protected final Cards cards;
+    protected final PlayerInfo playerInfo;
+    private static final BettingMoney DEFAULT_BETTING_MONEY = new BettingMoney(1000);
 
     protected Participant(final Name name, final Cards cards) {
-        this.name = name;
+        this.playerInfo = new PlayerInfo(name, DEFAULT_BETTING_MONEY);
         this.cards = cards;
     }
+
+    protected Participant(final PlayerInfo playerInfo, final Cards cards) {
+        this.playerInfo = playerInfo;
+        this.cards = cards;
+    }
+
 
     public int calculateScore() {
         return cards.calculate();
@@ -29,11 +36,12 @@ public abstract class Participant implements CardReceivable {
     }
 
     public String getNameAsString() {
-        return name.asString();
+        return this.playerInfo.name()
+                              .asString();
     }
 
     public Name getName() {
-        return name;
+        return this.playerInfo.name();
     }
 
     public List<Card> getCards() {
@@ -44,11 +52,11 @@ public abstract class Participant implements CardReceivable {
     public boolean equals(final Object object) {
         if (this == object) return true;
         if (!(object instanceof final Participant that)) return false;
-        return Objects.equals(this.name, that.name);
+        return Objects.equals(this.playerInfo.name(), that.playerInfo.name());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.name);
+        return Objects.hash(this.playerInfo.name());
     }
 }
