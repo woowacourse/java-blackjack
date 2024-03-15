@@ -65,7 +65,7 @@ class PlayerResultsTest {
 
         PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
 
-        Assertions.assertThat(playerResults.playerWinLose(player)).isEqualTo(PlayerResult.PLAYER_BLACKJACK);
+        Assertions.assertThat(playerResults.playerWinLose(player)).isEqualTo(PlayerResult.BLACKJACK);
     }
 
     @Test

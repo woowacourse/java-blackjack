@@ -23,7 +23,7 @@ public class PlayerResults {
         );
     }
 
-    private static PlayerResult decideResult(Player player, Dealer dealer) {
+    public static PlayerResult decideResult(Player player, Dealer dealer) {
         if (player.isBust()) {
             return PlayerResult.LOSE;
         }
@@ -32,7 +32,7 @@ public class PlayerResults {
 
     private static PlayerResult decideResultByBlackjack(Player player, Dealer dealer) {
         if (player.isBlackjack() && dealer.isNotBlackjack()) {
-            return PlayerResult.PLAYER_BLACKJACK;
+            return PlayerResult.BLACKJACK;
         }
         return decideResultByScore(player, dealer);
     }
