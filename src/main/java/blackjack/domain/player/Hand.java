@@ -11,8 +11,10 @@ import static blackjack.domain.player.Player.BUST_CONDITION;
 public class Hand {
     private static final int BONUS_SCORE = 10;
     private static final int NON_SCORE = 0;
-
     private final List<Card> cards = new ArrayList<>();
+
+    Hand() {
+    }
 
     int getScore() {
         final int minimumScore = cards.stream()

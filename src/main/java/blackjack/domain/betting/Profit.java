@@ -13,10 +13,6 @@ public class Profit {
         this.value = value;
     }
 
-    private Profit() {
-        this(0);
-    }
-
     public static Profit of(final Money money, final WinningStatus status) {
         if (WIN.equals(status)) {
             return new Profit(money.value());
@@ -25,7 +21,7 @@ public class Profit {
             return new Profit(-money.value());
         }
         if (PUSH.equals(status)) {
-            return new Profit();
+            return new Profit(0);
         }
 
         throw new IllegalStateException();
