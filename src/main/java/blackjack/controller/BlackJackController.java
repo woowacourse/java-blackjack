@@ -8,14 +8,16 @@ import blackjack.model.player.PlayerAction;
 import blackjack.model.player.Players;
 import blackjack.model.result.BettingBoard;
 import blackjack.model.result.BettingMoney;
-import blackjack.model.result.MatchResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerEarning;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public class BlackJackController {
@@ -99,19 +101,8 @@ public class BlackJackController {
     }
 
     private void showEarnings(final Players players, final Dealer dealer, final BettingBoard bettingBoard) {
-        List<PlayerEarning> playerEarnings = determinePlayersEarning(players, dealer, bettingBoard);
+        List<PlayerEarning> playerEarnings = players.determineEarnings(dealer, bettingBoard);
         outputView.printEarnings(playerEarnings);
-    }
-
-    private List<PlayerEarning> determinePlayersEarning(
-            final Players players, final Dealer dealer, final BettingBoard bettingBoard) {
-        List<PlayerEarning> playerEarnings = new ArrayList<>();
-        for (Player player : players.getPlayers()) {
-            MatchResult matchResult = MatchResult.of(player, dealer);
-            PlayerEarning earning = bettingBoard.determineEarning(player.getName(), matchResult);
-            playerEarnings.add(earning);
-        }
-        return playerEarnings;
     }
 
     public <T> T retryOnException(final Supplier<T> retryOperation) {
