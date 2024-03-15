@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Money {
-    
+
     public static final Money ZERO = new Money(BigDecimal.ZERO);
 
     private final BigDecimal amount;
@@ -37,10 +37,6 @@ public class Money {
         }
     }
 
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
     public Money add(Money money) {
         return new Money(this.amount.add(money.amount));
     }
@@ -56,6 +52,10 @@ public class Money {
 
     public Money negative() {
         return new Money(this.amount.negate());
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
     }
 
     @Override
