@@ -17,7 +17,7 @@ public class Profit {
     }
 
     public Profit multiple(double ratio) {
-        return new Profit((int) Math.floor(profit * ratio), isPositive);
+        return new Profit((long) Math.floor(profit * ratio), isPositive);
     }
 
     public Profit inverse() {
