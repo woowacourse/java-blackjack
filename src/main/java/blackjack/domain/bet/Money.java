@@ -16,6 +16,10 @@ public class Money {
         return new Money((int) (amount * scope));
     }
 
+    public Profit calculateProfit(double leverage) {
+        return new Profit((int) (amount * leverage));
+    }
+
     public Money add(Money other) {
         return new Money(amount + other.amount);
     }

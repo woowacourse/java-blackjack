@@ -51,4 +51,11 @@ class MoneyTest {
         Money money = new Money(1000);
         assertThat(money.inverse().getAmount()).isEqualTo(-1000);
     }
+
+    @DisplayName("돈에 특정 이율을 적용한 Profit을 계산할 수 있다")
+    @Test
+    void testCalculateProfit() {
+        Money money = new Money(1000);
+        assertThat(money.calculateProfit(1.5).getValue()).isEqualTo(1500);
+    }
 }
