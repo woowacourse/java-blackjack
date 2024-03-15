@@ -24,4 +24,11 @@ public class MoneyStaff {
         double profitRate = bettingRule.calculateProfitRate(player, resultCommand);
         return bettingMoneys.get(player).multiple(profitRate);
     }
+
+    public Money calculateDealerProfitAmount(final List<Money> playerProfits) {
+        int playerProfit = playerProfits.stream()
+                .mapToInt(Money::getValue)
+                .sum();
+        return new Money((-1) * playerProfit);
+    }
 }
