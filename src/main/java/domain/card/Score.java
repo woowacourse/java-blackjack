@@ -8,8 +8,10 @@ public final class Score {
 
     private static final Score BLACKJACK_SCORE = new Score(21);
     private static final Score ACE_SPECIAL_SCORE = new Score(10);
+
     private static final int MINIMUM_SCORE = 0;
     private static final int MAXIMUM_SCORE = 31;
+
     private static final Map<Integer, Score> CACHE = new HashMap<>();
 
     private final int value;
@@ -47,7 +49,7 @@ public final class Score {
         return hand.getCards()
             .stream()
             .map(Card::score)
-            .reduce(new Score(MINIMUM_SCORE), Score::add);
+            .reduce(Score.valueOf(0), Score::add);
     }
 
     private void validate(int value) {
