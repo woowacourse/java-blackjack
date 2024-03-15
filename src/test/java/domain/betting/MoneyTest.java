@@ -76,5 +76,13 @@ class MoneyTest {
         Money addedMoney = money.add(Money.betValueOf(1000));
         assertThat(addedMoney.toInt()).isEqualTo(2000);
     }
+
+    @Test
+    @DisplayName("돈의 음수를 구할 수 있다")
+    void negative() {
+        Money money = Money.valueOf(1000);
+        Money negativeMoney = money.negative();
+        assertThat(negativeMoney.toInt()).isEqualTo(-1000);
+    }
 }
 
