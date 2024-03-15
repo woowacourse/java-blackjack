@@ -7,7 +7,7 @@ import domain.cards.cardinfo.CardShape;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
-import domain.result.Judge;
+import domain.result.GameManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -88,10 +88,10 @@ public class ResultView {
         System.out.println(stringBuilder);
     }
 
-    public void printFinalProfit(Dealer dealer, Judge judge) {
+    public void printFinalProfit(Dealer dealer, GameManager gameManager) {
         System.out.println("## 최종 수익");
-        Profit dealerProfit = judge.getDealerProfit();
-        Map<Player, Profit> playersProfit = judge.getPlayersProfit();
+        Profit dealerProfit = gameManager.getDealerProfit();
+        Map<Player, Profit> playersProfit = gameManager.getPlayersProfit();
         System.out.println(resolveDealerProfit(dealer, dealerProfit));
         System.out.println(resolvePlayersProfit(playersProfit));
     }

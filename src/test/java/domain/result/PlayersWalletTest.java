@@ -10,7 +10,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PlayersResultTest {
+class PlayersWalletTest {
 
     @DisplayName("플레이어들의 승패 상태를 바탕으로 수익을 계산한다.")
     @Test
@@ -19,18 +19,18 @@ class PlayersResultTest {
         Player player2 = new Player("p2", new Hand());
         Player player3 = new Player("p3", new Hand());
         Player player4 = new Player("p4", new Hand());
-        PlayersResult playersResult = new PlayersResult();
-        playersResult.addProfit(player1, new Profit(10));
-        playersResult.addProfit(player2, new Profit(10));
-        playersResult.addProfit(player3, new Profit(10));
-        playersResult.addProfit(player4, new Profit(10));
+        PlayersWallet playersWallet = new PlayersWallet();
+        playersWallet.addProfit(player1, new Profit(10));
+        playersWallet.addProfit(player2, new Profit(10));
+        playersWallet.addProfit(player3, new Profit(10));
+        playersWallet.addProfit(player4, new Profit(10));
 
-        playersResult.calculateProfit(player1, WinState.WIN);
-        playersResult.calculateProfit(player2, WinState.LOSE);
-        playersResult.calculateProfit(player3, WinState.BLACKJACK);
-        playersResult.calculateProfit(player4, WinState.DRAW);
+        playersWallet.calculateProfit(player1, WinState.WIN);
+        playersWallet.calculateProfit(player2, WinState.LOSE);
+        playersWallet.calculateProfit(player3, WinState.BLACKJACK);
+        playersWallet.calculateProfit(player4, WinState.DRAW);
 
-        Map<Player, Profit> profitResult = playersResult.getPlayersProfit();
+        Map<Player, Profit> profitResult = playersWallet.getPlayersProfit();
         assertThat(profitResult.get(player1).getValue()).isEqualTo(10);
         assertThat(profitResult.get(player2).getValue()).isEqualTo(-10);
         assertThat(profitResult.get(player3).getValue()).isEqualTo(15);

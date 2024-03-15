@@ -8,18 +8,18 @@ import domain.gamer.Player;
 import java.util.List;
 import java.util.Map;
 
-public class Judge {
+public class GameManager {
 
-    private final PlayersResult playersResult;
-    private final DealerResult dealerResult;
+    private final PlayersWallet playersWallet;
+    private final DealerWallet dealerWallet;
 
-    public Judge() {
-        this.playersResult = new PlayersResult();
-        this.dealerResult = new DealerResult();
+    public GameManager() {
+        this.playersWallet = new PlayersWallet();
+        this.dealerWallet = new DealerWallet();
     }
 
     public void initializeProfit(Player player, Profit profit) {
-        playersResult.addProfit(player, profit);
+        playersWallet.addProfit(player, profit);
     }
 
     public void decideResult(Gamers gamers) {
@@ -35,19 +35,19 @@ public class Judge {
 
     private void decidePlayerResult(Player player, Dealer dealer) {
         if (player.isBlackJack()) {
-            playersResult.calculateProfit(player, WinState.BLACKJACK);
+            playersWallet.calculateProfit(player, WinState.BLACKJACK);
             return;
         }
         if (player.isBust()) {
-            playersResult.calculateProfit(player, WinState.LOSE);
+            playersWallet.calculateProfit(player, WinState.LOSE);
             return;
         }
         if (dealer.isBust()) {
-            playersResult.calculateProfit(player, WinState.WIN);
+            playersWallet.calculateProfit(player, WinState.WIN);
             return;
         }
         WinState playerWinState = decidePlayerWinState(player, dealer);
-        playersResult.calculateProfit(player, playerWinState);
+        playersWallet.calculateProfit(player, playerWinState);
     }
 
     private WinState decidePlayerWinState(Player player, Dealer dealer) {
@@ -63,14 +63,14 @@ public class Judge {
     }
 
     private void decideDealerResult() {
-        dealerResult.calculateProfit(playersResult);
+        dealerWallet.calculateProfit(playersWallet);
     }
 
     public Map<Player, Profit> getPlayersProfit() {
-        return playersResult.getPlayersProfit();
+        return playersWallet.getPlayersProfit();
     }
 
     public Profit getDealerProfit() {
-        return dealerResult.getProfit();
+        return dealerWallet.getProfit();
     }
 }

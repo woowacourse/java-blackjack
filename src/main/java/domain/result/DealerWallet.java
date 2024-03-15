@@ -4,16 +4,16 @@ import domain.Profit;
 import domain.gamer.Player;
 import java.util.Map;
 
-public class DealerResult {
+public class DealerWallet {
 
     private final Profit profit;
 
-    public DealerResult() {
+    public DealerWallet() {
         this.profit = new Profit(0);
     }
 
-    public void calculateProfit(PlayersResult playersResult) {
-        Map<Player, Profit> playersProfit = playersResult.getPlayersProfit();
+    public void calculateProfit(PlayersWallet playersWallet) {
+        Map<Player, Profit> playersProfit = playersWallet.getPlayersProfit();
         double playersProfitSum = playersProfit.values().stream()
                 .mapToDouble(Profit::getValue)
                 .sum();

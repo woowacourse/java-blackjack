@@ -6,7 +6,7 @@ import domain.cards.Hand;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
-import domain.result.Judge;
+import domain.result.GameManager;
 import java.util.List;
 
 public class BlackJackGame {
@@ -15,12 +15,12 @@ public class BlackJackGame {
 
     private final Gamers gamers;
     private final CardPack cardPack;
-    private final Judge judge;
+    private final GameManager gameManager;
 
     public BlackJackGame(List<String> rawPlayersNames) {
         this.gamers = makeGamers(rawPlayersNames);
         this.cardPack = new CardPack();
-        this.judge = new Judge();
+        this.gameManager = new GameManager();
     }
 
     private Gamers makeGamers(List<String> rawPlayersNames) {
@@ -32,7 +32,7 @@ public class BlackJackGame {
     }
 
     public void setUpProfits(Player player, int bettingAmount) {
-        judge.initializeProfit(player, new Profit(bettingAmount));
+        gameManager.initializeProfit(player, new Profit(bettingAmount));
     }
 
     public void setUpGame() {
@@ -50,14 +50,14 @@ public class BlackJackGame {
     }
 
     public void makeResult() {
-        judge.decideResult(gamers);
+        gameManager.decideResult(gamers);
     }
 
     public Gamers getGamers() {
         return gamers;
     }
 
-    public Judge getJudge() {
-        return judge;
+    public GameManager getJudge() {
+        return gameManager;
     }
 }

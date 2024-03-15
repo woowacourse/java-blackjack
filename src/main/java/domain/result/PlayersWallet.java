@@ -7,11 +7,11 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class PlayersResult {
+public class PlayersWallet {
 
     private final Map<Player, Profit> playersProfit;
 
-    public PlayersResult() {
+    public PlayersWallet() {
         this.playersProfit = new LinkedHashMap<>();
     }
 
