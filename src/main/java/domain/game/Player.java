@@ -1,6 +1,6 @@
-package domain;
+package domain.game;
 
-import domain.constant.GamerResult;
+import domain.money.Money;
 
 public class Player extends Gamer {
 

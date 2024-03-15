@@ -1,4 +1,4 @@
-package domain;
+package domain.money;
 
 import java.math.BigDecimal;
 import org.assertj.core.api.Assertions;

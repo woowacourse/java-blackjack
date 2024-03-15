@@ -1,17 +1,15 @@
-package domain;
+package domain.card;
 
-import domain.constant.CardNumber;
-import domain.constant.CardType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    
+
     private final List<Card> cards;
 
-    private Deck(List<Card> cards) {
+    protected Deck(List<Card> cards) {
         this.cards = cards;
     }
 
@@ -25,7 +23,7 @@ public class Deck {
         return new Deck(cards);
     }
 
-    static Deck withCustomCards(Card... cards) {
+    protected static Deck withCustomCards(Card... cards) {
         return new Deck(new ArrayList<>(Arrays.stream(cards).toList()));
     }
 

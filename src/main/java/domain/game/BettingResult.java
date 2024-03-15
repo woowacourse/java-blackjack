@@ -1,6 +1,6 @@
-package domain;
+package domain.game;
 
-import domain.constant.GamerResult;
+import domain.money.Money;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;

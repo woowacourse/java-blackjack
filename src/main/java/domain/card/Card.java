@@ -1,7 +1,4 @@
-package domain;
-
-import domain.constant.CardNumber;
-import domain.constant.CardType;
+package domain.card;
 
 public class Card {
 

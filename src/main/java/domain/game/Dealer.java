@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 public class Dealer extends Gamer {
     

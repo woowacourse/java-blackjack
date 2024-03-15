@@ -1,4 +1,4 @@
-package domain.constant;
+package domain.game;
 
 public enum GamerResult {
     WIN,

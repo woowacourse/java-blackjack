@@ -1,6 +1,5 @@
-package domain;
+package domain.card;
 
-import domain.constant.CardNumber;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

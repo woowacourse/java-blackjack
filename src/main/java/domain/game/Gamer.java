@@ -1,5 +1,8 @@
-package domain;
+package domain.game;
 
+import domain.card.Card;
+import domain.card.Deck;
+import domain.card.Hand;
 import java.util.List;
 import java.util.stream.IntStream;
 

@@ -1,5 +1,6 @@
-package domain;
+package domain.game;
 
+import domain.card.Deck;
 import java.util.List;
 
 public class Players {

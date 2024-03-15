@@ -1,7 +1,10 @@
-package domain;
+package domain.game;
 
-import domain.constant.CardNumber;
-import domain.constant.CardType;
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardType;
+import domain.card.Deck;
+import domain.money.Money;
 import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -24,7 +27,7 @@ class BettingResultTest {
     }
 
     private Deck setDeck() {
-        return Deck.withCustomCards(
+        return TestDeck.withCustomCards(
                 new Card(CardType.SPADE, CardNumber.TWO),
                 new Card(CardType.SPADE, CardNumber.THREE),
                 new Card(CardType.DIAMOND, CardNumber.ACE),
