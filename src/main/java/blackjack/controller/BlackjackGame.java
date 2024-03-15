@@ -38,7 +38,7 @@ public class BlackjackGame {
     private BettingResult bet(Players players) {
         BettingResult bettingResult = new BettingResult();
         for (Player player : players.getPlayers()) {
-            bettingResult.bet(player, new Profit(inputView.readBettingPrice(player.getName().getName())));
+            bettingResult.bet(player, new Profit(inputView.readBettingPrice(player.getName())));
             System.out.println();
         }
         return bettingResult;
@@ -83,7 +83,7 @@ public class BlackjackGame {
 
     private void proceedOnePlayerTurn(GameBoard gameBoard, Player player) {
         while (player.canHit() &&
-                inputView.readCommand(player.getName().getName())) {
+                inputView.readCommand(player.getName())) {
             gameBoard.addCardToPlayer(player);
             outputView.printCurrentCard(new ParticipantDto(player));
             outputView.printNewLine();

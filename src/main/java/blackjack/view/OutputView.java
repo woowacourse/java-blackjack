@@ -63,7 +63,7 @@ public class OutputView {
     }
 
     private void printProfit(GameParticipant participant, Profit profit) {
-        System.out.printf("%s: %d\n", participant.getName().getName(), profit.getProfit());
+        System.out.printf("%s: %d\n", participant.getName(), profit.getProfit());
     }
 
     public void printNewLine() {

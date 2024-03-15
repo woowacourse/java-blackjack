@@ -41,8 +41,8 @@ public abstract class GameParticipant {
         return hands.size();
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.getName();
     }
 
     public Hands getHands() {

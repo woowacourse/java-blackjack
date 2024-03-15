@@ -9,7 +9,7 @@ import java.util.List;
 public record ParticipantDto(String playerName, List<String> allHands, int score) {
 
     public ParticipantDto(GameParticipant participant) {
-        this(participant.getName().getName(), handsToNames(participant.getHands()), participant.calculateScore());
+        this(participant.getName(), handsToNames(participant.getHands()), participant.calculateScore());
     }
 
     private static List<String> handsToNames(Hands hands) {
