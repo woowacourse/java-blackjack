@@ -15,4 +15,11 @@ class ProfitTest {
         Profit profit2 = new Profit(-1000);
         assertThat(profit1.add(profit2).getValue()).isEqualTo(0);
     }
+
+    @DisplayName("수익을 반전시킨 결과를 볼 수 있다")
+    @Test
+    void testInverse() {
+        Profit profit = new Profit(1000);
+        assertThat(profit.inverse().getValue()).isEqualTo(-1000);
+    }
 }

@@ -14,6 +14,10 @@ public class Profit {
         return new Profit(this.value + other.value);
     }
 
+    public Profit inverse() {
+        return new Profit(-1 * value);
+    }
+
     public int getValue() {
         return value;
     }
