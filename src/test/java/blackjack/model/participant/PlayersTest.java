@@ -1,5 +1,7 @@
 package blackjack.model.participant;
 
+import static blackjack.model.participant.Players.CAN_NOT_DUPLICATED_NAME;
+import static blackjack.model.participant.Players.OUT_OF_PLAYERS_SIZE_BOUND;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -26,7 +28,7 @@ class PlayersTest {
     void createPlayersByDuplicatedName() {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> Players.from(List.of("몰리", "몰리")))
-                .withMessage("중복되는 이름을 입력할 수 없습니다.");
+                .withMessage(CAN_NOT_DUPLICATED_NAME);
     }
 
     @ParameterizedTest
@@ -35,7 +37,7 @@ class PlayersTest {
     void createPlayersByOutBound(List<String> names) {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> Players.from(names))
-                .withMessage("참여할 인원의 수는 최소 1명 최대 10명이어야 합니다.");
+                .withMessage(OUT_OF_PLAYERS_SIZE_BOUND);
     }
 
     private static Stream<Arguments> InvalidNames() {

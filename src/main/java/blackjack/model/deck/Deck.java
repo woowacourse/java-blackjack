@@ -11,6 +11,8 @@ import java.util.stream.Stream;
 
 public class Deck {
     private static final int BLACKJACK_CARD_COUNT = 52;
+    static final String DECK_SIZE_IS_NOT_ENOUGH = "카드의 수가 52개가 아닙니다.";
+    static final String CAN_NOT_DRAWN_CARD = "카드가 부족합니다.";
 
     private final Deque<Card> deck;
 
@@ -24,7 +26,7 @@ public class Deck {
 
     private void validateSize(final List<Card> deck) {
         if (deck.size() != BLACKJACK_CARD_COUNT) {
-            throw new IllegalStateException("카드의 수가 52개가 아닙니다.");
+            throw new IllegalStateException(DECK_SIZE_IS_NOT_ENOUGH);
         }
     }
 
@@ -50,7 +52,7 @@ public class Deck {
         try {
             return deck.removeFirst();
         } catch (NoSuchElementException e) {
-            throw new NoSuchElementException("카드가 부족합니다.");
+            throw new NoSuchElementException(CAN_NOT_DRAWN_CARD);
         }
     }
 }

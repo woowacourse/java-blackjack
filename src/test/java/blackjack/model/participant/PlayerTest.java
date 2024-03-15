@@ -7,6 +7,7 @@ import static blackjack.model.deck.Score.TWO;
 import static blackjack.model.deck.Shape.CLOVER;
 import static blackjack.model.deck.Shape.DIA;
 import static blackjack.model.deck.Shape.SPADE;
+import static blackjack.model.participant.Player.CAN_NOT_BLANK_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -40,7 +41,7 @@ class PlayerTest {
         void throwExceptionWhenCreatePlayerByBlank(String name) {
             assertThatIllegalArgumentException()
                     .isThrownBy(() -> new Player(name))
-                    .withMessage("이름에는 공백을 사용할 수 없습니다.");
+                    .withMessage(CAN_NOT_BLANK_NAME);
         }
 
         @Test

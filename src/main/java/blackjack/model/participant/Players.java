@@ -2,7 +2,6 @@ package blackjack.model.participant;
 
 import blackjack.dto.NameCardsScore;
 import blackjack.model.deck.Card;
-import blackjack.model.money.Bets;
 import blackjack.model.result.Referee;
 import blackjack.model.result.ResultCommand;
 import java.util.HashSet;
@@ -11,13 +10,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
-import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Players {
     private static final int MAXIMUM_PLAYER_SIZE = 10;
+    static final String CAN_NOT_DUPLICATED_NAME = "중복되는 이름을 입력할 수 없습니다.";
+    static final String OUT_OF_PLAYERS_SIZE_BOUND = "참여할 인원의 수는 최소 1명 최대 10명이어야 합니다.";
 
     private final List<Player> players;
 
@@ -36,13 +36,13 @@ public class Players {
     private void validateNotDuplicateName(final List<Player> players) {
         Set<Player> uniquePlayer = new HashSet<>(players);
         if (players.size() != uniquePlayer.size()) {
-            throw new IllegalArgumentException("중복되는 이름을 입력할 수 없습니다.");
+            throw new IllegalArgumentException(CAN_NOT_DUPLICATED_NAME);
         }
     }
 
     private void validatePlayerSize(final List<Player> players) {
         if (players.isEmpty() || players.size() > MAXIMUM_PLAYER_SIZE) {
-            throw new IllegalArgumentException("참여할 인원의 수는 최소 1명 최대 10명이어야 합니다.");
+            throw new IllegalArgumentException(OUT_OF_PLAYERS_SIZE_BOUND);
         }
     }
 

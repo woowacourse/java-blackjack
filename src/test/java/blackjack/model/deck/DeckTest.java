@@ -1,5 +1,6 @@
 package blackjack.model.deck;
 
+import static blackjack.model.deck.Deck.CAN_NOT_DRAWN_CARD;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.NoSuchElementException;
@@ -17,7 +18,7 @@ class DeckTest {
 
         assertThatThrownBy(deck::drawn)
                 .isInstanceOf(NoSuchElementException.class)
-                .hasMessage("카드가 부족합니다.");
+                .hasMessage(CAN_NOT_DRAWN_CARD);
     }
 
     @Test
@@ -28,7 +29,7 @@ class DeckTest {
 
         assertThatThrownBy(repeatDistribute(deck::drawn, 53))
                 .isInstanceOf(NoSuchElementException.class)
-                .hasMessage("카드가 부족합니다.");
+                .hasMessage(CAN_NOT_DRAWN_CARD);
     }
 
     static ThrowingCallable repeatDistribute(Runnable distributor, int repeatCount) {

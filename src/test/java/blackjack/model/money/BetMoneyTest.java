@@ -1,5 +1,6 @@
 package blackjack.model.money;
 
+import static blackjack.model.money.BetMoney.OUT_OF_BET_MONEY_BOUND;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -15,7 +16,7 @@ public class BetMoneyTest {
     void createMoney() {
         int money = 1_000;
 
-        assertThat(new BetMoney(money).getBetMoney()).isEqualTo(1_000);
+        assertThat(new BetMoney(money)).isEqualTo(new BetMoney(1_000));
     }
 
     @ParameterizedTest(name = "[{index}] 베팅 금액이 {0}원이면 예외가 발생한다.")
@@ -24,7 +25,7 @@ public class BetMoneyTest {
     void createMoneyByInvalidBetMoneyAmount(int betMoney) {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> new BetMoney(betMoney))
-                .withMessage("1원부터 1억원까지만 베팅 가능합니다.");
+                .withMessage(OUT_OF_BET_MONEY_BOUND);
     }
 
     @Test

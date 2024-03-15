@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import static blackjack.view.InputView.INVALID_FORMAT;
+import static blackjack.view.InputView.SHOULD_NUMBER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -25,7 +27,7 @@ class InputViewTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> inputView.readBetMoney("리브"))
-                .withMessage("숫자를 입력해 주세요.");
+                .withMessage(SHOULD_NUMBER);
     }
 
     @Test
@@ -35,7 +37,7 @@ class InputViewTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> inputView.readHitOrNot("리브"))
-                .withMessage("y 혹은 n만 입력할 수 있습니다.");
+                .withMessage(INVALID_FORMAT);
     }
 
     @ParameterizedTest(name = "[{index}] 입력값이 {0}이면 예외를 던진다.")
@@ -46,7 +48,7 @@ class InputViewTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> inputView.readHitOrNot("리브"))
-                .withMessage("y 혹은 n만 입력할 수 있습니다.");
+                .withMessage(INVALID_FORMAT);
     }
 
     static class Fixtures {
