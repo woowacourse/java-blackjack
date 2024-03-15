@@ -57,11 +57,11 @@ public record Participants(List<Participant> participants) {
                 .map(participant -> participant.name).toList();
     }
 
-    public Map<Participant, Outcome> matchParticipantsOutcome(boolean isOtherNotHit, int otherDifference) {
+    public Map<Participant, Outcome> matchParticipantsOutcome(Dealer dealer) {
         return participants.stream().collect(
                 toMap(
                         participant -> participant,
-                        participant -> participant.findOutcome(isOtherNotHit, otherDifference)
+                        participant -> participant.findOutcome(dealer)
                 ));
     }
 
@@ -72,11 +72,11 @@ public record Participants(List<Participant> participants) {
                         User::getCards));
     }
 
-    public Map<String, Integer> matchNameAndRevenues(boolean isOtherNotHit, int otherDifference) {
+    public Map<String, Integer> matchNameAndRevenues(Dealer dealer) {
         return participants.stream()
                 .collect(toMap(
                         User::getName,
-                        participant -> participant.calculateRevenue(isOtherNotHit, otherDifference)
+                        participant -> participant.calculateRevenue(dealer)
                 ));
     }
 

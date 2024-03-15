@@ -61,7 +61,7 @@ public class BlackJack {
     }
 
     public Map<Participant, Outcome> matchParticipantsOutcome() {
-        return participants.matchParticipantsOutcome(dealer.isNotHit(), dealer.findPlayerDifference());
+        return participants.matchParticipantsOutcome(dealer);
     }
 
     public Map<String, Cards> matchUsersNameAndCards() {
@@ -87,7 +87,7 @@ public class BlackJack {
     }
 
     public Map<String, Integer> matchNameAndRevenues() {
-        return participants.matchNameAndRevenues(dealer.isNotHit(), dealer.findPlayerDifference());
+        return participants.matchNameAndRevenues(dealer);
     }
 
     public List<String> findParticipantsName() {

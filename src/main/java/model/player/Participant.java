@@ -16,14 +16,14 @@ public class Participant extends User {
         this.gameMoney = gameMoney;
     }
 
-    public Outcome findOutcome(boolean isOtherNotHit, int otherDifference) {
+    public Outcome findOutcome(Dealer dealer) {
         if (isNotHit()) {
             return Outcome.LOSE;
         }
-        if (isOtherNotHit) {
+        if (dealer.isNotHit()) {
             return Outcome.WIN;
         }
-        return findPlayerOutcome(otherDifference);
+        return findPlayerOutcome(dealer.findPlayerDifference());
     }
 
     private Outcome findPlayerOutcome(int otherDifference) {
@@ -37,7 +37,9 @@ public class Participant extends User {
         return Outcome.DRAW;
     }
 
-    public int calculateRevenue(boolean isOtherNotHit, int otherDifference) {
-        return gameMoney.calculateRevenue(findOutcome(isOtherNotHit, otherDifference), cards.findBlackJackState());
+    public int calculateRevenue(Dealer dealer) {
+        return gameMoney.calculateRevenue(
+                findOutcome(dealer),
+                cards.findBlackJackState());
     }
 }
