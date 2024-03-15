@@ -1,4 +1,4 @@
-package domain.game;
+package domain.gamer;
 
 import java.util.List;
 import java.util.stream.Collectors;

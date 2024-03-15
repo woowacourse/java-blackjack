@@ -1,4 +1,4 @@
-package domain.game;
+package domain.gamer;
 
 import java.util.Objects;
 import java.util.regex.Matcher;

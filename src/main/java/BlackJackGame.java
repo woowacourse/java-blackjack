@@ -1,10 +1,10 @@
 import domain.card.Deck;
-import domain.game.BettingResult;
-import domain.game.Dealer;
-import domain.game.Name;
-import domain.game.Player;
-import domain.game.Players;
+import domain.gamer.Dealer;
+import domain.gamer.Name;
+import domain.gamer.Player;
+import domain.gamer.Players;
 import domain.money.Money;
+import domain.result.BettingResult;
 import java.util.List;
 import util.ConsoleReader;
 import view.InputView;

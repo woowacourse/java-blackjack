@@ -1,4 +1,4 @@
-package domain.game;
+package domain.gamer;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

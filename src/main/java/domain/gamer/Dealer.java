@@ -1,7 +1,7 @@
-package domain.game;
+package domain.gamer;
 
 public class Dealer extends Gamer {
-    
+
     private static final int DEALER_HIT_CONDITION = 16;
 
     @Override

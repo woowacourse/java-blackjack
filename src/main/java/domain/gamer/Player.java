@@ -1,6 +1,7 @@
-package domain.game;
+package domain.gamer;
 
 import domain.money.Money;
+import domain.result.GamerResult;
 
 public class Player extends Gamer {
 

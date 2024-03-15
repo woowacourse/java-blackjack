@@ -1,5 +1,9 @@
-package domain.game;
+package domain.result;
 
+import domain.gamer.Dealer;
+import domain.gamer.Name;
+import domain.gamer.Player;
+import domain.gamer.Players;
 import domain.money.Money;
 import java.util.Collections;
 import java.util.Map;

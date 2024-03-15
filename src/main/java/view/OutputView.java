@@ -1,9 +1,9 @@
 package view;
 
 import domain.card.Card;
-import domain.game.BettingResult;
-import domain.game.Name;
+import domain.gamer.Name;
 import domain.money.Money;
+import domain.result.BettingResult;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;

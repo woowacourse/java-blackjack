@@ -1,5 +1,6 @@
-package domain.game;
+package domain.gamer;
 
+import domain.TestDeck;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardType;
