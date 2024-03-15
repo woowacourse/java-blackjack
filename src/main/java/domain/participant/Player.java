@@ -28,7 +28,7 @@ public class Player extends Participant {
 
     public GameResult determineGameResult(final Dealer dealer) {
         if (isWin(dealer)) {
-            return WIN;
+            return GameResult.getWinResult(isBlackJack());
         }
 
         if (isLose(dealer)) {

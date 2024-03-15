@@ -1,10 +1,18 @@
 package domain.constant;
 
 public enum GameResult {
-    WIN, LOSE, DRAW;
+    BLACKJACK_WIN, WIN, LOSE, DRAW;
+
+    public static GameResult getWinResult(final boolean isBlackJack) {
+        if (isBlackJack) {
+            return BLACKJACK_WIN;
+        }
+
+        return WIN;
+    }
 
     public GameResult getReverseResult() {
-        if (this == WIN) {
+        if (this == WIN || this == BLACKJACK_WIN) {
             return LOSE;
         }
 

@@ -110,7 +110,7 @@ class BlackjackGameResultsTest {
 
         // Then
         assertThat(dealerGameResult).isEqualTo(LOSE);
-        assertThat(playerGameResult).isEqualTo(WIN);
+        assertThat(playerGameResult).isEqualTo(BLACKJACK_WIN);
     }
 
     @DisplayName("플레이어의 손패합이 딜러의 손패합보다 크면 플레이어가 승리한다.")
