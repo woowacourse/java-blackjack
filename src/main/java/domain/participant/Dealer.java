@@ -18,8 +18,8 @@ public class Dealer extends Cards {
         return bestSumOfCardScore() <= MIN_SCORE;
     }
 
-    public String getFirstCard() {
-        return cards.get(0).asString();
+    public Card getFirstCard() {
+        return cards.get(0);
     }
 
     @Override

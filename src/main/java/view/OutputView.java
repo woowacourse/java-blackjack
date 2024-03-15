@@ -32,7 +32,7 @@ public class OutputView {
     }
 
     private static void printDealerFirstCard(Dealer dealer) {
-        String firstCard = dealer.getFirstCard();
+        String firstCard = dealer.getFirstCard().asString();
         System.out.println("딜러: " + firstCard);
     }
 
