@@ -6,6 +6,7 @@ import model.player.Dealer;
 import model.player.Participant;
 import model.player.Participants;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -64,12 +65,12 @@ public class BlackJack {
 
     public Map<String, Cards> matchUsersNameAndCards() {
         Map<String, Cards> matchUser = matchDealerNameAndCards();
-        matchUser.putAll(matchDealerNameAndCards());
+        matchUser.putAll(matchParticipantNameAndCards());
         return matchUser;
     }
 
     private Map<String, Cards> matchDealerNameAndCards() {
-        return Map.of(dealer.getName(), dealer.getCards());
+        return new HashMap<>(Map.of(dealer.getName(), dealer.getCards()));
     }
 
     private Map<String, Cards> matchParticipantNameAndCards() {
