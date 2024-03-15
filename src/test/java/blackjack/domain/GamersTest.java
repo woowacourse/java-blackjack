@@ -9,7 +9,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class GameBoardTest {
+class GamersTest {
 
     //@formatter:off
     /**
@@ -28,11 +28,11 @@ class GameBoardTest {
         bettings.put("pobi", (double) 10000);
         final Players players = Players.from(bettings);
         final Dealer dealer = Dealer.from(deck);
-        final GameBoard gameBoard = new GameBoard(dealer, players);
-        gameBoard.drawInitialPlayersHand();
-        gameBoard.drawInitialDealerHand();
+        final Gamers gamers = new Gamers(dealer, players);
+        gamers.drawInitialPlayersHand();
+        gamers.drawInitialDealerHand();
 
-        final Money dealerProfit = gameBoard.calculateDealerProfit();
+        final Money dealerProfit = gamers.calculateDealerProfit();
 
         assertThat(dealerProfit.value()).isEqualTo(0);
     }
@@ -47,11 +47,11 @@ class GameBoardTest {
         bettings.put("jason", (double) 20000);
         final Players players = Players.from(bettings);
         final Dealer dealer = Dealer.from(deck);
-        final GameBoard gameBoard = new GameBoard(dealer, players);
-        gameBoard.drawInitialDealerHand();
-        gameBoard.drawInitialPlayersHand();
+        final Gamers gamers = new Gamers(dealer, players);
+        gamers.drawInitialDealerHand();
+        gamers.drawInitialPlayersHand();
 
-        final Map<Name, Money> playerProfits = gameBoard.calculatePlayerProfits();
+        final Map<Name, Money> playerProfits = gamers.calculatePlayerProfits();
 
         assertAll(
                 () -> assertThat(playerProfits.size()).isEqualTo(players.getPlayers().size()),

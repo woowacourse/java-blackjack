@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.domain.Dealer;
-import blackjack.domain.GameBoard;
+import blackjack.domain.Gamers;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.card.Card;
@@ -17,14 +17,14 @@ import java.util.List;
 public class Application {
 
     public static void main(String[] args) {
-        final GameBoard gameBoard = createGameBoard();
-        drawInitialHands(gameBoard);
+        final Gamers gamers = createGamers();
+        drawInitialHands(gamers);
 
-        hitGamers(gameBoard);
+        hitGamers(gamers);
 
         //TODO: Dealer나 Players에 직접 접근하는 것보다 GameBoard로부터 필요한 정보를 얻는게 낫지 않을까?
         /**
-         * 근데 GameBoard 객체가 진짜 필요한가? 게임 방식을 다르게 진행하고 싶다면, 새로운 Controller를 만들면 되는 것 아닌가?
+         * 근데 Gamers 객체가 진짜 필요한가? 게임 방식을 다르게 진행하고 싶다면, 새로운 Controller를 만들면 되는 것 아닌가?
          * 여기서 main을 Controller로 쓰기로 했다는 말은, 게임을 여러 방식으로 제공하지는 않겠다는 의미이다.
          * 그럼 Main은 GameBoard의 도움 없이 domain 객체들을 연결시켜서 게임을 수행하는 것이 자연스럽지 않나?
          * -> 현재 방식처럼 GameBoard를 두는게 좋아 보이는지, 아니면 Main에서 직접 관리하는게 좋아 보이는지 여쭤보자.
@@ -34,23 +34,23 @@ public class Application {
          * -> 블랙잭 게임을 진행하기 위해 필요한 구체적인 행동들은 도메인에 속한다고 생각했다.
          */
         OutputView.printFinalState(
-                createDealerDto(gameBoard.getDealer().getHand()), createPlayerDtos(gameBoard.getPlayers()));
-        OutputView.printFinalProfits(gameBoard.calculateDealerProfit(), gameBoard.calculatePlayerProfits());
+                createDealerDto(gamers.getDealer().getHand()), createPlayerDtos(gamers.getPlayers()));
+        OutputView.printFinalProfits(gamers.calculateDealerProfit(), gamers.calculatePlayerProfits());
     }
 
-    private static GameBoard createGameBoard() {
+    private static Gamers createGamers() {
         final Deck deck = new ShuffledDeckFactory().create();
         final Dealer dealer = Dealer.from(deck);
         final Players players = Players.from(InputView.readPlayerNameAndBettingMoney());
-        return new GameBoard(dealer, players);
+        return new Gamers(dealer, players);
     }
 
-    private static void drawInitialHands(final GameBoard gameBoard) {
-        gameBoard.drawInitialPlayersHand();
-        gameBoard.drawInitialDealerHand();
+    private static void drawInitialHands(final Gamers gamers) {
+        gamers.drawInitialPlayersHand();
+        gamers.drawInitialDealerHand();
 
-        final DealerDto dealerDto = createDealerDto(gameBoard.openDealerFirstCard());
-        final List<PlayerDto> playerDtos = createPlayerDtos(gameBoard.getPlayers());
+        final DealerDto dealerDto = createDealerDto(gamers.openDealerFirstCard());
+        final List<PlayerDto> playerDtos = createPlayerDtos(gamers.getPlayers());
         OutputView.printInitialState(dealerDto, playerDtos);
     }
 
@@ -72,30 +72,30 @@ public class Application {
         return new PlayerDto(player.getName(), player.getHand().getCards(), player.calculateScore());
     }
 
-    private static void hitGamers(final GameBoard gameBoard) {
-        hitPlayers(gameBoard);
+    private static void hitGamers(final Gamers gamers) {
+        hitPlayers(gamers);
         OutputView.printLineSeparator();
-        hitDealer(gameBoard);
+        hitDealer(gamers);
         OutputView.printLineSeparator();
     }
 
-    private static void hitPlayers(final GameBoard gameBoard) {
-        final Players players = gameBoard.getPlayers();
+    private static void hitPlayers(final Gamers gamers) {
+        final Players players = gamers.getPlayers();
         for (Player player : players.getPlayers()) {
-            hitPlayer(gameBoard, player);
+            hitPlayer(gamers, player);
         }
     }
 
-    private static void hitPlayer(final GameBoard gameBoard, final Player player) {
-        while (gameBoard.canPlayerHit(player) && InputView.readDoesWantHit(player.getName())) {
-            gameBoard.hitPlayer(player);
+    private static void hitPlayer(final Gamers gamers, final Player player) {
+        while (gamers.canPlayerHit(player) && InputView.readDoesWantHit(player.getName())) {
+            gamers.hitPlayer(player);
             OutputView.printCurrentState(createPlayerDto(player));
         }
     }
 
-    private static void hitDealer(final GameBoard gameBoard) {
-        while (gameBoard.canDealerHit()) {
-            gameBoard.hitDealer();
+    private static void hitDealer(final Gamers gamers) {
+        while (gamers.canDealerHit()) {
+            gamers.hitDealer();
             OutputView.printDealerDrawMessage();
         }
     }

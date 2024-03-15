@@ -7,14 +7,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameBoard {
+public class Gamers {
 
     public static final int INITIAL_CARD_COUNT = 2;
 
     private final Dealer dealer;
     private final Players players;
 
-    public GameBoard(final Dealer dealer, final Players players) {
+    public Gamers(final Dealer dealer, final Players players) {
         this.dealer = dealer;
         this.players = players;
     }
