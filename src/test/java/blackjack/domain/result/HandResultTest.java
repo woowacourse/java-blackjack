@@ -16,6 +16,16 @@ public class HandResultTest {
         assertThat(handResult.getOpposite()).isEqualTo(HandResult.LOSE);
     }
 
+    @DisplayName("BLACKJACK과 반대되는 결과를 반환한다.")
+    @Test
+    void resultBlackjackGetOpposite() {
+        //given
+        HandResult handResult = HandResult.BLACKJACK;
+
+        //when & then
+        assertThat(handResult.getOpposite()).isEqualTo(HandResult.LOSE);
+    }
+
     @DisplayName("DRAW와 반대되는 결과를 반환한다.")
     @Test
     void resultDrawGetOpposite() {

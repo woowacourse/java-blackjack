@@ -74,7 +74,7 @@ public class BlackjackGame {
     private void hitIfCurrentPlayerWantCard(Players players) {
         Player player = players.getPlayerAtOrder();
         PlayerAction playerAction = retryOnException(() -> getPlayerAction(player));
-        if (playerAction.equals(PlayerAction.HIT)) {
+        if (playerAction == PlayerAction.HIT) {
             player.addCard(RandomDeck.getInstance());
         }
         outputView.printPlayerHand(player);

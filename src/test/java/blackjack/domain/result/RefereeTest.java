@@ -12,9 +12,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class RefereeTest {
-    @DisplayName("딜러가 이기는 게임의 최종 결과를 생성한다.")
+    @DisplayName("점수 판단으로 딜러가 이기는 게임의 최종 결과를 생성한다.")
     @Test
-    void generateResultThatDealerWin() {
+    void generateResultThatDealerScoreWin() {
         //given
         List<Number> numbers = List.of(Number.ACE, Number.SIX, Number.ACE, Number.EIGHT);
         Deck deck = new CustomDeck(numbers);
@@ -29,11 +29,11 @@ class RefereeTest {
         assertThat(blackjackResult.getPlayersResult().values()).containsExactly(HandResult.LOSE);
     }
 
-    @DisplayName("플레이어가 이기는 게임의 최종 결과를 생성한다.")
+    @DisplayName("점수 판단으로 플레이어가 이기는 게임의 최종 결과를 생성한다.")
     @Test
-    void generateResultThatPlayerWin() {
+    void generateResultThatPlayerScoreWin() {
         //given
-        List<Number> numbers = List.of(Number.ACE, Number.KING, Number.ACE, Number.EIGHT);
+        List<Number> numbers = List.of(Number.ACE, Number.NINE, Number.ACE, Number.EIGHT);
         Deck deck = new CustomDeck(numbers);
         List<Name> playerName = List.of(new Name("mason"));
         Round round = new Round(playerName, deck);
@@ -46,9 +46,9 @@ class RefereeTest {
         assertThat(blackjackResult.getPlayersResult().values()).containsExactly(HandResult.WIN);
     }
 
-    @DisplayName("비기는 게임의 최종 결과를 생성한다.")
+    @DisplayName("점수 판단으로 비기는 게임의 최종 결과를 생성한다.")
     @Test
-    void generateResultThatDraw() {
+    void generateResultThatScoreDraw() {
         //given
         List<Number> numbers = List.of(Number.SEVEN, Number.JACK, Number.QUEEN, Number.SEVEN);
         Deck deck = new CustomDeck(numbers);
@@ -61,5 +61,94 @@ class RefereeTest {
 
         //then
         assertThat(blackjackResult.getPlayersResult().values()).containsExactly(HandResult.DRAW);
+    }
+
+    @DisplayName("블랙잭으로 플레이어가 이기는 게임의 최종 결과를 생성한다.")
+    @Test
+    void generateResultThatPlayerBlackjack() {
+        //given
+        List<Number> numbers = List.of(Number.ACE, Number.JACK, Number.QUEEN, Number.SIX, Number.FIVE);
+        Deck deck = new CustomDeck(numbers);
+        List<Name> playerName = List.of(new Name("mason"));
+        Round round = new Round(playerName, deck);
+        round.getDealer().addCard(deck);
+        Referee referee = Referee.getInstance();
+
+        //when
+        BlackjackResult blackjackResult = round.generateResult(referee);
+
+        //then
+        assertThat(blackjackResult.getPlayersResult().values()).containsExactly(HandResult.BLACKJACK);
+    }
+
+    @DisplayName("블랙잭으로 딜러가 이기는 게임의 최종 결과를 생성한다.")
+    @Test
+    void generateResultThatDealerBlackjack() {
+        //given
+        List<Number> numbers = List.of(Number.ACE, Number.NINE, Number.QUEEN, Number.ACE, Number.ACE);
+        Deck deck = new CustomDeck(numbers);
+        List<Name> playerName = List.of(new Name("mason"));
+        Round round = new Round(playerName, deck);
+        round.getPlayers().getPlayerAtOrder().addCard(deck);
+        Referee referee = Referee.getInstance();
+
+        //when
+        BlackjackResult blackjackResult = round.generateResult(referee);
+
+        //then
+        assertThat(blackjackResult.getPlayersResult().values()).containsExactly(HandResult.LOSE);
+    }
+
+    @DisplayName("블랙잭으로 비기는 게임의 최종 결과를 생성한다.")
+    @Test
+    void generateResultThatPlayerBlackjackDraw() {
+        //given
+        List<Number> numbers = List.of(Number.ACE, Number.JACK, Number.QUEEN, Number.ACE);
+        Deck deck = new CustomDeck(numbers);
+        List<Name> playerName = List.of(new Name("mason"));
+        Round round = new Round(playerName, deck);
+        Referee referee = Referee.getInstance();
+
+        //when
+        BlackjackResult blackjackResult = round.generateResult(referee);
+
+        //then
+        assertThat(blackjackResult.getPlayersResult().values()).containsExactly(HandResult.DRAW);
+    }
+
+    @DisplayName("버스트로 플레이어가 이기는 게임의 최종 결과를 생성한다.")
+    @Test
+    void generateResultThatDealerBust() {
+        //given
+        List<Number> numbers = List.of(Number.ACE, Number.NINE, Number.QUEEN, Number.SIX, Number.SIX);
+        Deck deck = new CustomDeck(numbers);
+        List<Name> playerName = List.of(new Name("mason"));
+        Round round = new Round(playerName, deck);
+        round.getDealer().addCard(deck);
+        Referee referee = Referee.getInstance();
+
+        //when
+        BlackjackResult blackjackResult = round.generateResult(referee);
+
+        //then
+        assertThat(blackjackResult.getPlayersResult().values()).containsExactly(HandResult.WIN);
+    }
+
+    @DisplayName("버스트로 딜러가 이기는 게임의 최종 결과를 생성한다.")
+    @Test
+    void generateResultThatPlayerBust() {
+        //given
+        List<Number> numbers = List.of(Number.ACE, Number.NINE, Number.QUEEN, Number.NINE, Number.FIVE);
+        Deck deck = new CustomDeck(numbers);
+        List<Name> playerName = List.of(new Name("mason"));
+        Round round = new Round(playerName, deck);
+        round.getPlayers().getPlayerAtOrder().addCard(deck);
+        Referee referee = Referee.getInstance();
+
+        //when
+        BlackjackResult blackjackResult = round.generateResult(referee);
+
+        //then
+        assertThat(blackjackResult.getPlayersResult().values()).containsExactly(HandResult.LOSE);
     }
 }

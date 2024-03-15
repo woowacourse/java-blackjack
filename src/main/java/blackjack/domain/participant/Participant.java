@@ -44,7 +44,7 @@ public abstract class Participant {
         return cards.subList(0, count);
     }
 
-    protected boolean isBlackjack() {
+    public boolean isBlackjack() {
         return hand.isBlackjack();
     }
 
