@@ -1,6 +1,7 @@
 package domain.deck;
 
 import domain.card.Card;
+import domain.card.CardFactory;
 import strategy.ShuffleStrategy;
 
 import java.util.Collection;
@@ -16,7 +17,7 @@ public class Deck {
     private final Stack<Card> cards;
 
     public Deck(ShuffleStrategy shuffleStrategy) {
-        List<Card> cards = Stream.generate(Card::createCardPack)
+        List<Card> cards = Stream.generate(CardFactory::createCardPack)
                 .limit(DECKS_COUNT)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
