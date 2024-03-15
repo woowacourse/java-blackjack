@@ -4,11 +4,13 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
+import blackjack.domain.participant.BetAmount;
 import blackjack.domain.participant.Round;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.PlayerAction;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.BlackjackResult;
+import blackjack.domain.result.Pot;
 import blackjack.domain.result.Referee;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -21,6 +23,7 @@ public class BlackjackGame {
 
     public void run() {
         Round round = createRoundWithDeck();
+        Pot pot = createPot(round);
         outputView.printInitialHand(round);
         participantsHitCard(round);
         outputView.printParticipantsHandWithScore(round);
@@ -35,6 +38,19 @@ public class BlackjackGame {
     private Round createRoundWithNames(Deck deck) {
         List<Name> playersName = readPlayersName();
         return new Round(playersName, deck);
+    }
+
+    private Pot createPot(Round round) {
+        Players players = round.getPlayers();
+        List<BetAmount> betAmounts = players.getPlayers().stream()
+                .map(player -> retryOnException(() -> createBetAmount(player.getName())))
+                .toList();
+        return round.generatePot(betAmounts);
+    }
+
+    private BetAmount createBetAmount(String playerName) {
+        String amount = inputView.readPlayerBetAmount(playerName);
+        return new BetAmount(amount);
     }
 
     private List<Name> readPlayersName() {

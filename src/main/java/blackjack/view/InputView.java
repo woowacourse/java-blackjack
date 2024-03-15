@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class InputView {
     private static final String DELIMITER = ",";
     private static final String PLAYERS_NAME_REQUEST = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String BET_AMOUNT_REQUEST = "의 베팅 금액은?";
     private static final String PLAYER_HIT_REQUEST = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
 
     private final Scanner scanner = new Scanner(System.in);
@@ -18,6 +19,11 @@ public class InputView {
         validateDelimiter(input);
         return Arrays.stream(input.split(DELIMITER))
                 .toList();
+    }
+
+    public String readPlayerBetAmount(String playerName) {
+        System.out.println(System.lineSeparator() + playerName + BET_AMOUNT_REQUEST);
+        return scanner.nextLine();
     }
 
     public String readPlayerActionCommand(String playerName) {
