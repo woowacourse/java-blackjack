@@ -10,7 +10,7 @@ import java.util.List;
 public class OutputView {
     private static final String DELIMITER = ", ";
 
-    public void printDealInitialCardsMessage(final ParticipantDto dealer, final ParticipantsDto players) {
+    public void printInitialSettingMessage(final ParticipantDto dealer, final ParticipantsDto players) {
         final String dealerName = dealer.name();
         final List<String> playerNames = getParticipantNames(players.participants());
         final String playerNamesMessage = joinWithComma(playerNames);
