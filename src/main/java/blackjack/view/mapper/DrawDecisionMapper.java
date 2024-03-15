@@ -4,6 +4,7 @@ import blackjack.domain.game.DrawDecision;
 import java.util.Arrays;
 
 public enum DrawDecisionMapper {
+
     HIT(DrawDecision.HIT, "y"),
     STAY(DrawDecision.STAY, "n"),
     ;

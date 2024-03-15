@@ -20,6 +20,9 @@ public class MessageResolver {
     private static final String DEALER_NAME = "딜러";
     private static final String HAND_FORMAT = "%s 카드: %s";
 
+    public MessageResolver() {
+    }
+
     public String resolveDealDescriptionMessage(Players players) {
         String message = String.format("%s와 %s에게 2장을 나누었습니다.", DEALER_NAME, resolveNamesMessage(players));
         return String.join("", LINE_SEPARATOR, message);

@@ -6,6 +6,9 @@ public enum DrawDecision {
     STAY,
     ;
 
+    DrawDecision() {
+    }
+
     public boolean isHit() {
         return this == HIT;
     }

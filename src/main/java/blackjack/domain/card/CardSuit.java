@@ -11,6 +11,9 @@ public enum CardSuit {
     SPADE,
     ;
 
+    CardSuit() {
+    }
+
     public static List<CardSuit> allCardSuits() {
         return Arrays.asList(values());
     }
