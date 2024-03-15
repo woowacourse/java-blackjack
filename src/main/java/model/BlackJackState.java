@@ -2,7 +2,7 @@ package model;
 
 public enum BlackJackState {
     STAND(1),
-    BUST(0),
+    BUST(-1),
     BLACKJACK(1.5),
     ;
 
