@@ -9,6 +9,7 @@ import blackjack.domain.card.Hands;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerName;
+import blackjack.domain.player.PlayerNames;
 import blackjack.domain.player.Players;
 import blackjack.domain.rule.state.InitState;
 import blackjack.dto.StartCardsDto;
@@ -29,9 +30,10 @@ public class BlackjackGame {
         this.deck = deck;
     }
 
-    public static BlackjackGame from(final Players players) {
+    public static BlackjackGame from(final PlayerNames playerNames) {
         final Deck deck = Deck.create();
         final Dealer dealer = new Dealer();
+        final Players players = Players.from(playerNames);
 
         return new BlackjackGame(players, dealer, deck);
     }

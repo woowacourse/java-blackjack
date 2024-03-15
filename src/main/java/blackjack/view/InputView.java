@@ -6,11 +6,7 @@ import blackjack.domain.player.PlayerNames;
 import blackjack.exception.NeedRetryException;
 import blackjack.view.format.CardRequestFormat;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class InputView {
 
@@ -34,15 +30,7 @@ public class InputView {
         }
     }
 
-    public Map<PlayerName, BetAmount> readBetAmounts(final PlayerNames names) {
-        return names.getNames().stream()
-                .collect(Collectors.toMap(Function.identity(),
-                        this::readBetAmount,
-                        (v1, v2) -> v1,
-                        LinkedHashMap::new));
-    }
-
-    private BetAmount readBetAmount(final PlayerName name) {
+    public BetAmount readBetAmount(final PlayerName name) {
         try {
             System.out.println(name.getName() + "의 배팅 금액은?");
             return new BetAmount(readInt());

@@ -7,12 +7,12 @@ import blackjack.domain.bet.BetLeverage;
 import blackjack.domain.card.Hands;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.PlayerNames;
-import blackjack.domain.player.Players;
 import blackjack.dto.BetRevenueResultDto;
 import blackjack.dto.FinalHandsScoreDto;
 import blackjack.exception.NeedRetryException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BlackjackController {
@@ -26,29 +26,30 @@ public class BlackjackController {
     }
 
     public void run() {
-        final Players players = createPlayers();
+        final PlayerNames playerNames = createPlayerNames();
 
-        final BlackjackGame blackjackGame = BlackjackGame.from(players);
-        final BetAmountRepository betAmountRepository = saveBetAmount(players);
+        final BlackjackGame blackjackGame = BlackjackGame.from(playerNames);
+        final BetAmountRepository betAmountRepository = saveBetAmount(playerNames);
 
         playGame(blackjackGame);
         finishGame(blackjackGame, betAmountRepository);
     }
 
-    private Players createPlayers() {
+    private PlayerNames createPlayerNames() {
         try {
-            final PlayerNames playerNames = inputView.readPlayerNames();
-            return Players.from(playerNames);
+            return inputView.readPlayerNames();
         } catch (final NeedRetryException e) {
             outputView.printError(e.getMessage());
-            return createPlayers();
+            return createPlayerNames();
         }
     }
 
-    private BetAmountRepository saveBetAmount(final Players players) {
-        final Map<PlayerName, BetAmount> playerBetAmounts = inputView.readBetAmounts(players.getPlayerNames());
+    private BetAmountRepository saveBetAmount(final PlayerNames playerNames) {
+        final Map<PlayerName, BetAmount> playerBetAmounts = new LinkedHashMap<>();
 
-        return new BetAmountRepository(players, playerBetAmounts);
+        playerNames.getNames().forEach(name -> playerBetAmounts.put(name, inputView.readBetAmount(name)));
+
+        return new BetAmountRepository(playerBetAmounts);
     }
 
     private void playGame(final BlackjackGame blackjackGame) {

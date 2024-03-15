@@ -25,10 +25,6 @@ public interface State {
         return false;
     }
 
-    default boolean isHit() {
-        return false;
-    }
-
     default boolean isBust() {
         return false;
     }

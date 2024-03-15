@@ -1,28 +1,19 @@
 package blackjack.domain;
 
-import static java.util.stream.Collectors.toMap;
-
 import blackjack.domain.bet.BetAmount;
 import blackjack.domain.bet.BetLeverage;
 import blackjack.domain.bet.BetRevenue;
-import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerName;
-import blackjack.domain.player.Players;
 import blackjack.dto.BetRevenueResultDto;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 public class BetAmountRepository {
 
-    private final Map<Player, BetAmount> playerBetAmount;
+    private final Map<PlayerName, BetAmount> playersBetAmount;
 
-    public BetAmountRepository(final Players players, final Map<PlayerName, BetAmount> playerBetAmount) {
-        this.playerBetAmount = players.getPlayers().stream()
-                .collect(toMap(Function.identity(),
-                        player -> playerBetAmount.get(player.getPlayerName()),
-                        (v1, v2) -> v1,
-                        LinkedHashMap::new));
+    public BetAmountRepository(final Map<PlayerName, BetAmount> playersBetAmount) {
+        this.playersBetAmount = playersBetAmount;
     }
 
     public BetRevenueResultDto calculateBetRevenue(final Map<PlayerName, BetLeverage> playersBetLeverage) {
@@ -33,13 +24,12 @@ public class BetAmountRepository {
     }
 
     private Map<PlayerName, BetRevenue> calculatePlayersBetRevenue(
-            final Map<PlayerName, BetLeverage> playersBetLeverage) {
+            final Map<PlayerName, BetLeverage> playersBetLeverage
+    ) {
         final Map<PlayerName, BetRevenue> playersBetRevenue = new LinkedHashMap<>();
 
-        playerBetAmount.forEach((player, betAmount) -> {
-            final PlayerName name = player.getPlayerName();
-            playersBetRevenue.put(name, playersBetLeverage.get(name).applyLeverage(betAmount));
-        });
+        playersBetAmount.forEach((name, betAmount) ->
+                playersBetRevenue.put(name, playersBetLeverage.get(name).applyLeverage(betAmount)));
 
         return playersBetRevenue;
     }

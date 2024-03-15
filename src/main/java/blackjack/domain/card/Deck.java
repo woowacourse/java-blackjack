@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -30,10 +29,8 @@ public final class Deck {
     }
 
     private static List<Card> createOneDeck() {
-        final List<CardNumber> numbers = Arrays.asList(CardNumber.values());
-
-        return Arrays.stream(CardShape.values())
-                .flatMap(shape -> numbers.stream().map(number -> Card.of(number, shape)))
+        return CardShape.stream()
+                .flatMap(shape -> CardNumber.stream().map(number -> Card.of(number, shape)))
                 .collect(Collectors.toList());
     }
 
