@@ -33,7 +33,7 @@ public class InputView {
     private NamesInput readPlayersName() {
         System.out.println(PLAYER_NAME_INPUT);
         try {
-            return NamesInput.of(Arrays.stream(bufferedReader.readLine().split(NAME_SEPARATOR))
+            return NamesInput.from(Arrays.stream(bufferedReader.readLine().split(NAME_SEPARATOR))
                     .map(String::trim)
                     .toList());
         } catch (IOException exception) {

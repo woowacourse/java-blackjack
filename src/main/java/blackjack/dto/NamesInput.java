@@ -8,7 +8,7 @@ public record NamesInput(List<Name> names) {
 
     private static final String NAME_DUPLICATED_EXCEPTION = "플레이어의 이름들이 중복되었습니다. 다시 입력해주세요.";
 
-    public static NamesInput of(final List<String> names) {
+    public static NamesInput from(final List<String> names) {
         validate(names);
 
         return new NamesInput(names.stream()

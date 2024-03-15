@@ -24,7 +24,7 @@ class JudgeTest {
 
     private Dealer dealer;
     private final String bettingAmount = "10000";
-    private final PlayerInfos playerInfos = PlayerInfos.of(NamesInput.of(List.of("choco")), List.of(new Betting(bettingAmount)));
+    private final PlayerInfos playerInfos = PlayerInfos.of(NamesInput.from(List.of("choco")), List.of(new Betting(bettingAmount)));
     private Players players;
     private Player choco;
     private final int bustDrawCount = 10;

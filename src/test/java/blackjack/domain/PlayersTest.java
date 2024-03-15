@@ -26,7 +26,7 @@ public class PlayersTest {
     private final String bettingAmountB = "200000";
 
     private final PlayerInfos playerInfos = PlayerInfos.of(
-            NamesInput.of(List.of("a", "b")),
+            NamesInput.from(List.of("a", "b")),
             List.of(new Betting(bettingAmountA), new Betting(bettingAmountB))
     );
 

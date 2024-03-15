@@ -7,7 +7,7 @@ import java.util.List;
 public record BlackjackResult(String dealerProfit, List<PlayerProfitResult> playerProfits) {
     public static BlackjackResult of(Dealer dealer, Players players) {
         List<PlayerProfitResult> playerProfits = players.getPlayers().stream()
-                .map(PlayerProfitResult::of)
+                .map(PlayerProfitResult::from)
                 .toList();
 
         return new BlackjackResult(dealer.getProfit(), playerProfits);

@@ -16,7 +16,7 @@ class NamesInputTest {
         List<String> names = List.of("koko", "choco", "choco");
 
         //when & then
-        assertThatThrownBy(() -> NamesInput.of(names))
+        assertThatThrownBy(() -> NamesInput.from(names))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
