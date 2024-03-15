@@ -2,6 +2,8 @@ package blackjack.domain;
 
 import blackjack.strategy.profit.*;
 
+import java.math.BigDecimal;
+
 public enum GameResult {
 
     BLACKJACK(new BlackjackWinStrategy()),
@@ -16,7 +18,7 @@ public enum GameResult {
         this.profitStrategy = profitStrategy;
     }
 
-    public ProfitStrategy getProfitStrategy() {
-        return profitStrategy;
+    public BigDecimal calculateProfit(BigDecimal betting) {
+        return profitStrategy.calculate(betting);
     }
 }
