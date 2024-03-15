@@ -16,6 +16,8 @@ import org.junit.jupiter.api.Test;
 
 class BettingTest {
 
+    private final Betting betting = new Betting(new Player("lily"), 10000);
+
     @DisplayName("0 원 이하의 배팅을 하면 예외 발생")
     @Test
     void testInvalidBettingMoney() {
@@ -26,14 +28,12 @@ class BettingTest {
     @DisplayName("승리 시 배팅 금액을 수익으로 배당")
     @Test
     void testProfitWhenWin() {
-        Betting betting = new Betting(new Player("lily"), 10000);
         assertEquals(betting.getMoney(), betting.profit("승"));
     }
 
     @DisplayName("패배 or 버스트 시 배팅 금액은 소멸")
     @Test
     void testProfitWhenFail() {
-        Betting betting = new Betting(new Player("lily"), 10000);
         assertEquals(-10000, betting.profit("패"));
     }
 

@@ -16,8 +16,7 @@ public class Cards {
 
     public int calculateTotalNumbers() {
         int totalScore = totalScore();
-        boolean hasAce = hasAce();
-        if (hasAce && canAddAceScore(totalScore)) {
+        if (hasAce() && canAddAceScore(totalScore)) {
             return totalScore + ACE_ADDITIONAL_SCORE;
         }
         return totalScore;

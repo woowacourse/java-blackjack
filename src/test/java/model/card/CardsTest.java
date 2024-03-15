@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 class CardsTest {
 
-    @DisplayName("카드 숫자 합 계산한다")
+    @DisplayName("카드 숫자 합을 계산한다")
     @Test
     void testCalculateTotalCardNumbers() {
         Cards cards = new Cards(

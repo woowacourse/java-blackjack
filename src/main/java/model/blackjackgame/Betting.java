@@ -9,6 +9,7 @@ public class Betting {
     private static final String WIN_WORD = "승";
     private static final String FAIL_WORD = "패";
     private static final String DRAW_WORD = "무";
+    private static final double PROFIT_RATE = 1.5;
 
     private final Player player;
     private final int money;
@@ -33,7 +34,7 @@ public class Betting {
             return -money;
         }
         if (blackjack(result)) {
-            return (int) (money * 1.5);
+            return (int) (money * PROFIT_RATE);
         }
         return 0;
     }
