@@ -12,6 +12,7 @@ import java.util.Map;
 
 public class BlackJackGame {
     public static final int BLACKJACK_CONDITION = 21;
+    public static final int  INITIAL_DRAW = 2;
 
     private final Deck deck;
 
@@ -20,7 +21,7 @@ public class BlackJackGame {
     }
 
     public void firstDraw(final Dealer dealer, final List<Player> players) {
-        for (int gameCount = 0; gameCount < 2; gameCount++) {
+        for (int gameCount = 0; gameCount < INITIAL_DRAW; gameCount++) {
             players.forEach(player -> player.draw(deck));
             dealer.draw(deck);
         }

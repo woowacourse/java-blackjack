@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static domain.BlackJackGame.BLACKJACK_CONDITION;
+import static domain.BlackJackGame.INITIAL_DRAW;
 
 public class Hand {
     private final List<PlayingCard> playingCards;
@@ -50,6 +51,6 @@ public class Hand {
     }
 
     public boolean isBlackJack() {
-        return getOptimizedSum() == BLACKJACK_CONDITION && playingCards.size() == 2;
+        return getOptimizedSum() == BLACKJACK_CONDITION && playingCards.size() == INITIAL_DRAW;
     }
 }
