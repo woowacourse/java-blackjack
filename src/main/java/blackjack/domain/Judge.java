@@ -3,24 +3,22 @@ package blackjack.domain;
 public class Judge {
 
     private final Dealer dealer;
-    private final Player player;
 
-    public Judge(final Dealer dealer, final Player player) {
+    public Judge(final Dealer dealer) {
         this.dealer = dealer;
-        this.player = player;
     }
 
-    public PlayerOutcome calculatePlayerOutcome() {
+    public PlayerOutcome calculatePlayerOutcome(final Player player) {
         if (dealer.isBlackjack() || player.isBlackjack()) {
-            return calculateBlackjackCase();
+            return calculateBlackjackCase(player);
         }
         if (dealer.isBust() || player.isBust()) {
-            return calculateBustCase();
+            return calculateBustCase(player);
         }
-        return calculateNormalCase();
+        return calculateNormalCase(player);
     }
 
-    private PlayerOutcome calculateBlackjackCase() {
+    private PlayerOutcome calculateBlackjackCase(final Player player) {
         if (dealer.isBlackjack() && player.isBlackjack()) {
             return PlayerOutcome.PUSH;
         }
@@ -30,14 +28,14 @@ public class Judge {
         return PlayerOutcome.BLACKJACK_WIN;
     }
 
-    private PlayerOutcome calculateBustCase() {
+    private PlayerOutcome calculateBustCase(final Player player) {
         if (player.isBust()) {
             return PlayerOutcome.LOSE;
         }
         return PlayerOutcome.NORMAL_WIN;
     }
 
-    private PlayerOutcome calculateNormalCase() {
+    private PlayerOutcome calculateNormalCase(final Player player) {
         final int dealerScore = dealer.calculateScore();
         final int playerScore = player.calculateScore();
 

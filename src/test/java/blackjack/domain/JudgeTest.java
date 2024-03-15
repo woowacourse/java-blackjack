@@ -29,9 +29,9 @@ class JudgeTest {
         dealer.draw();
         dealer.draw();
         dealer.draw();
-        final Judge judge = new Judge(dealer, player);
+        final Judge judge = new Judge(dealer);
 
-        final PlayerOutcome playerOutcome = judge.calculatePlayerOutcome();
+        final PlayerOutcome playerOutcome = judge.calculatePlayerOutcome(player);
 
         assertThat(playerOutcome).isEqualTo(PlayerOutcome.LOSE);
     }
@@ -45,10 +45,9 @@ class JudgeTest {
         player.draw(dealer.drawPlayerCard());
         player.draw(dealer.drawPlayerCard());
         dealer.draw();
-        final Judge judge = new Judge(dealer, player);
+        final Judge judge = new Judge(dealer);
 
-        final PlayerOutcome playerOutcome = judge.calculatePlayerOutcome();
-
+        final PlayerOutcome playerOutcome = judge.calculatePlayerOutcome(player);
 
         assertThat(playerOutcome).isEqualTo(PlayerOutcome.LOSE);
     }
@@ -62,10 +61,9 @@ class JudgeTest {
         dealer.draw();
         dealer.draw();
         dealer.draw();
-        final Judge judge = new Judge(dealer, player);
+        final Judge judge = new Judge(dealer);
 
-        final PlayerOutcome playerOutcome = judge.calculatePlayerOutcome();
-
+        final PlayerOutcome playerOutcome = judge.calculatePlayerOutcome(player);
 
         assertThat(playerOutcome).isEqualTo(PlayerOutcome.NORMAL_WIN);
     }
@@ -82,9 +80,9 @@ class JudgeTest {
         }
         player.draw(dealer.drawPlayerCard());
         dealer.draw();
-        final Judge judge = new Judge(dealer, player);
+        final Judge judge = new Judge(dealer);
 
-        final PlayerOutcome playerOutcome = judge.calculatePlayerOutcome();
+        final PlayerOutcome playerOutcome = judge.calculatePlayerOutcome(player);
 
         assertThat(playerOutcome).isEqualTo(PlayerOutcome.PUSH);
     }
@@ -100,10 +98,9 @@ class JudgeTest {
             dealer.drawPlayerCard();
         }
         player.draw(dealer.drawPlayerCard());
-        final Judge judge = new Judge(dealer, player);
+        final Judge judge = new Judge(dealer);
 
-        final PlayerOutcome playerOutcome = judge.calculatePlayerOutcome();
-
+        final PlayerOutcome playerOutcome = judge.calculatePlayerOutcome(player);
 
         assertThat(playerOutcome).isEqualTo(PlayerOutcome.BLACKJACK_WIN);
     }
@@ -119,10 +116,9 @@ class JudgeTest {
             dealer.drawPlayerCard();
         }
         dealer.draw();
-        final Judge judge = new Judge(dealer, player);
+        final Judge judge = new Judge(dealer);
 
-        final PlayerOutcome playerOutcome = judge.calculatePlayerOutcome();
-
+        final PlayerOutcome playerOutcome = judge.calculatePlayerOutcome(player);
 
         assertThat(playerOutcome).isEqualTo(PlayerOutcome.LOSE);
     }
@@ -135,10 +131,9 @@ class JudgeTest {
         player.draw(dealer.drawPlayerCard());
         player.draw(dealer.drawPlayerCard());
         dealer.draw();
-        final Judge judge = new Judge(dealer, player);
+        final Judge judge = new Judge(dealer);
 
-        final PlayerOutcome playerOutcome = judge.calculatePlayerOutcome();
-
+        final PlayerOutcome playerOutcome = judge.calculatePlayerOutcome(player);
 
         assertThat(playerOutcome).isEqualTo(PlayerOutcome.NORMAL_WIN);
     }
@@ -151,10 +146,9 @@ class JudgeTest {
         player.draw(dealer.drawPlayerCard());
         dealer.draw();
         dealer.draw();
-        final Judge judge = new Judge(dealer, player);
+        final Judge judge = new Judge(dealer);
 
-        final PlayerOutcome playerOutcome = judge.calculatePlayerOutcome();
-
+        final PlayerOutcome playerOutcome = judge.calculatePlayerOutcome(player);
 
         assertThat(playerOutcome).isEqualTo(PlayerOutcome.LOSE);
     }
@@ -168,10 +162,9 @@ class JudgeTest {
         player.draw(dealer.drawPlayerCard());
         dealer.draw();
         dealer.draw();
-        final Judge judge = new Judge(dealer, player);
+        final Judge judge = new Judge(dealer);
 
-        final PlayerOutcome playerOutcome = judge.calculatePlayerOutcome();
-
+        final PlayerOutcome playerOutcome = judge.calculatePlayerOutcome(player);
 
         assertThat(playerOutcome).isEqualTo(PlayerOutcome.PUSH);
     }
