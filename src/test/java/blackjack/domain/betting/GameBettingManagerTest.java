@@ -1,4 +1,4 @@
-package blackjack.domain.result;
+package blackjack.domain.betting;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Pattern;
@@ -21,7 +21,8 @@ class GameBettingManagerTest {
 
         Dealer dealer = new Dealer();
         Player player = new Player("test");
-        gameBettingManager.registerPlayerBetting(player, 1000);
+        Betting betting = new Betting("1000.0");
+        gameBettingManager.registerPlayerBetting(player, betting);
 
         dealer.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Pattern.CLOVER, Rank.TEN));
@@ -35,7 +36,7 @@ class GameBettingManagerTest {
         gameBettingManager.calculatePlayerProfit(dealer, player);
 
         double dealerResult = gameBettingManager.getDealerResult();
-        double playerResult = gameBettingManager.getPlayersResult().get(player);
+        double playerResult = gameBettingManager.getPlayersResult().get(player).getBettingMoney();
 
         //then
         assertAll(
@@ -52,7 +53,8 @@ class GameBettingManagerTest {
 
         Dealer dealer = new Dealer();
         Player player = new Player("test");
-        gameBettingManager.registerPlayerBetting(player, 1000);
+        Betting betting = new Betting("1000.0");
+        gameBettingManager.registerPlayerBetting(player, betting);
 
         dealer.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Pattern.CLOVER, Rank.TEN));
@@ -65,7 +67,7 @@ class GameBettingManagerTest {
         gameBettingManager.calculatePlayerProfit(dealer, player);
 
         double dealerResult = gameBettingManager.getDealerResult();
-        double playerResult = gameBettingManager.getPlayersResult().get(player);
+        double playerResult = gameBettingManager.getPlayersResult().get(player).getBettingMoney();
 
         //then
         assertAll(
@@ -81,7 +83,8 @@ class GameBettingManagerTest {
         GameBettingManager gameBettingManager = new GameBettingManager();
         Dealer dealer = new Dealer();
         Player player = new Player("test");
-        gameBettingManager.registerPlayerBetting(player, 1000);
+        Betting betting = new Betting("1000.0");
+        gameBettingManager.registerPlayerBetting(player, betting);
 
         dealer.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Pattern.CLOVER, Rank.NINE));
@@ -94,7 +97,7 @@ class GameBettingManagerTest {
         gameBettingManager.calculatePlayerProfit(dealer, player);
 
         double dealerResult = gameBettingManager.getDealerResult();
-        double playerResult = gameBettingManager.getPlayersResult().get(player);
+        double playerResult = gameBettingManager.getPlayersResult().get(player).getBettingMoney();
 
          //then
         assertAll(
@@ -110,7 +113,8 @@ class GameBettingManagerTest {
         GameBettingManager gameBettingManager = new GameBettingManager();
         Dealer dealer = new Dealer();
         Player player = new Player("test");
-        gameBettingManager.registerPlayerBetting(player, 1000);
+        Betting betting = new Betting("1000.0");
+        gameBettingManager.registerPlayerBetting(player, betting);
 
         dealer.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Pattern.CLOVER, Rank.ACE));
@@ -122,7 +126,7 @@ class GameBettingManagerTest {
         gameBettingManager.calculatePlayerProfit(dealer, player);
 
         double dealerResult = gameBettingManager.getDealerResult();
-        double playerResult = gameBettingManager.getPlayersResult().get(player);
+        double playerResult = gameBettingManager.getPlayersResult().get(player).getBettingMoney();
 
         //then
         assertAll(
@@ -138,7 +142,8 @@ class GameBettingManagerTest {
         GameBettingManager gameBettingManager = new GameBettingManager();
         Dealer dealer = new Dealer();
         Player player = new Player("test");
-        gameBettingManager.registerPlayerBetting(player, 1000);
+        Betting betting = new Betting("1000.0");
+        gameBettingManager.registerPlayerBetting(player, betting);
 
         dealer.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Pattern.CLOVER, Rank.NINE));
@@ -150,7 +155,7 @@ class GameBettingManagerTest {
         gameBettingManager.calculatePlayerProfit(dealer, player);
 
         double dealerResult = gameBettingManager.getDealerResult();
-        double playerResult = gameBettingManager.getPlayersResult().get(player);
+        double playerResult = gameBettingManager.getPlayersResult().get(player).getBettingMoney();
 
         //then
         assertAll(
@@ -166,7 +171,8 @@ class GameBettingManagerTest {
         GameBettingManager gameBettingManager = new GameBettingManager();
         Dealer dealer = new Dealer();
         Player player = new Player("test");
-        gameBettingManager.registerPlayerBetting(player, 1000);
+        Betting betting = new Betting("1000.0");
+        gameBettingManager.registerPlayerBetting(player, betting);
 
         dealer.receiveCard(new Card(Pattern.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Pattern.CLOVER, Rank.NINE));
@@ -178,7 +184,7 @@ class GameBettingManagerTest {
         gameBettingManager.calculatePlayerProfit(dealer, player);
 
         double dealerResult = gameBettingManager.getDealerResult();
-        double playerResult = gameBettingManager.getPlayersResult().get(player);
+        double playerResult = gameBettingManager.getPlayersResult().get(player).getBettingMoney();
 
         //then
         assertAll(

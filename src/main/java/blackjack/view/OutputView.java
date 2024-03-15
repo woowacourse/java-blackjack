@@ -82,11 +82,11 @@ public class OutputView {
 
     private static void printPlayerResult(GameBettingManager gameBettingManager) {
         NumberFormat formatter = new DecimalFormat("0");
-        Map<Player, Double> playersResult = gameBettingManager.getPlayersResult();
+        Map<Player, Betting> playersResult = gameBettingManager.getPlayersResult();
 
         for (Player player : playersResult.keySet()) {
             String playerName = player.getPlayerName();
-            Double playerBattingResult = playersResult.get(player);
+            Double playerBattingResult = playersResult.get(player).getBettingMoney();
             System.out.printf("%s : %s" + NEW_LINE, playerName, formatter.format(playerBattingResult));
         }
     }

@@ -1,4 +1,4 @@
-package blackjack.domain.result;
+package blackjack.domain.betting;
 
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
@@ -13,27 +13,28 @@ public class GameBettingManager {
     private static final Double TIE_BETTING = 0.0;
     private static final Double LOSE_BETTING = -1.0;
 
-    private final Map<Player, Double> playerBetting = new LinkedHashMap<>();
+    private final Map<Player, Betting> playerBetting = new LinkedHashMap<>();
 
     public GameBettingManager() {
     }
 
-    public void registerPlayerBetting(Player player, double betting) {
+    public void registerPlayerBetting(Player player, Betting betting) {
         playerBetting.put(player, betting);
     }
 
     public void calculatePlayerProfit(Dealer dealer, Player player) {
         double profitRate = decideWinner(dealer, player);
-        playerBetting.put(player, playerBetting.get(player) * profitRate);
+        playerBetting.put(player, playerBetting.get(player).calculateBettingMoney(profitRate));
     }
 
     public double getDealerResult() {
         return playerBetting.values().stream()
-                .mapToDouble(betting -> -betting)
+                .map(Betting::getBettingMoney)
+                .mapToDouble(bettingResult -> -bettingResult)
                 .sum();
     }
 
-    public Map<Player, Double> getPlayersResult() {
+    public Map<Player, Betting> getPlayersResult() {
         return playerBetting;
     }
 
