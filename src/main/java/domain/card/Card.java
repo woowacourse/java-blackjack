@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class Card {
 
-    private static final Map<String, Card> CARD_POOL;
+    public static final Map<String, Card> CARD_POOL;
 
     static {
         CARD_POOL = Suit.getValues().stream()
