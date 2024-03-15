@@ -80,7 +80,7 @@ public class MessageResolver {
     }
 
     public String playerResultText(Player player, PlayerResults playerResults) {
-        return String.format("%s: %s", player.getName(), playerResultText(playerResults.playerWinLose(player)));
+        return String.format("%s: %s", player.getName(), playerResultText(playerResults.resultBy(player)));
     }
 
     private String playerResultText(PlayerResult playerResult) {

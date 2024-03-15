@@ -1,6 +1,7 @@
 package domain.game;
 
-import domain.betting.Accounts;
+import domain.betting.BetInfo;
+import domain.betting.ProfitInfo;
 import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -15,17 +16,24 @@ public class BlackjackGame {
     private final Dealer dealer;
     private final Players players;
     private final Deck deck;
-    private final Accounts accounts;
+    private final BetInfo betInfo;
+    private final ProfitInfo profitInfo;
 
-    private BlackjackGame(Dealer dealer, Players players, Deck deck, Accounts accounts) {
+    private BlackjackGame(Dealer dealer, Players players, Deck deck, BetInfo betInfo, ProfitInfo profitInfo) {
         this.dealer = dealer;
         this.players = players;
         this.deck = deck;
-        this.accounts = accounts;
+        this.betInfo = betInfo;
+        this.profitInfo = profitInfo;
     }
 
     public static BlackjackGame of(Players players, CardGenerator cardGenerator) {
-        return new BlackjackGame(Dealer.withNoCards(), players, Deck.from(cardGenerator), Accounts.withNoAccount());
+        return new BlackjackGame(
+            Dealer.withNoCards(),
+            players,
+            Deck.from(cardGenerator),
+            BetInfo.withNoEntry(),
+            ProfitInfo.withNoEntry());
     }
 
     public void distributeStartingCards() {
@@ -51,7 +59,11 @@ public class BlackjackGame {
         return players.getPlayers();
     }
 
-    public Accounts getAccounts() {
-        return accounts;
+    public BetInfo getBetInfo() {
+        return betInfo;
+    }
+
+    public ProfitInfo getProfitInfo() {
+        return profitInfo;
     }
 }

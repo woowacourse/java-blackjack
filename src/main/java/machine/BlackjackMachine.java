@@ -1,6 +1,5 @@
 package machine;
 
-import domain.betting.Account;
 import domain.betting.Money;
 import domain.game.BlackjackGame;
 import domain.game.PlayerResults;
@@ -29,7 +28,7 @@ public class BlackjackMachine {
         distributeStartingCards(game);
         playPlayerTurns(game);
         playDealerTurn(game);
-        distributeProfitMoney(game);
+        distributeMoney(game);
         printCardsAndScores(game);
         printResult(game);
         printProfits(game);
@@ -39,8 +38,7 @@ public class BlackjackMachine {
         for (Player player : game.getPlayers()) {
             int rawBetMoney = inputView.readBetAmount(player.getName());
             Money betMoney = Money.betValueOf(rawBetMoney);
-            game.getAccounts()
-                .add(player, betMoney);
+            game.getBetInfo().add(player, betMoney);
         }
     }
 
@@ -86,12 +84,12 @@ public class BlackjackMachine {
         }
     }
 
-    private void distributeProfitMoney(BlackjackGame game) {
+    private void distributeMoney(BlackjackGame game) {
         PlayerResults playerResults = PlayerResults.of(game.getPlayers(), game.getDealer());
         for (Player player : game.getPlayers()) {
-            Account account = game.getAccounts().findByPlayer(player);
-            Money profitMoney = account.balance().profitMoney(playerResults.playerWinLose(player));
-            account.setMoney(profitMoney);
+            Money money = game.getBetInfo().findBetAmountBy(player);
+            Money profitMoney = money.calculateProfit(playerResults.resultBy(player));
+            game.getProfitInfo().add(player, profitMoney);
         }
     }
 
@@ -107,7 +105,7 @@ public class BlackjackMachine {
 
     private void printProfits(BlackjackGame game) {
         for (Player player : game.getPlayers()) {
-            Money money = game.getAccounts().findByPlayer(player).balance(); // TODO: 상금 클래스 따로 만들기?
+            Money money = game.getProfitInfo().findProfitBy(player);
             outputView.printPlayerNameAndProfit(player.getName(), money);
         }
     }

@@ -30,7 +30,7 @@ class PlayerResultsTest {
 
         PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
 
-        Assertions.assertThat(playerResults.playerWinLose(player)).isEqualTo(PlayerResult.TIE);
+        Assertions.assertThat(playerResults.resultBy(player)).isEqualTo(PlayerResult.TIE);
     }
 
     @Test
@@ -47,7 +47,7 @@ class PlayerResultsTest {
 
         PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
 
-        Assertions.assertThat(playerResults.playerWinLose(player)).isEqualTo(PlayerResult.TIE);
+        Assertions.assertThat(playerResults.resultBy(player)).isEqualTo(PlayerResult.TIE);
     }
 
     @Test
@@ -65,7 +65,7 @@ class PlayerResultsTest {
 
         PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
 
-        Assertions.assertThat(playerResults.playerWinLose(player)).isEqualTo(PlayerResult.BLACKJACK);
+        Assertions.assertThat(playerResults.resultBy(player)).isEqualTo(PlayerResult.BLACKJACK);
     }
 
     @Test
@@ -76,7 +76,7 @@ class PlayerResultsTest {
 
         PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
 
-        Assertions.assertThat(playerResults.playerWinLose(player)).isEqualTo(PlayerResult.LOSE);
+        Assertions.assertThat(playerResults.resultBy(player)).isEqualTo(PlayerResult.LOSE);
     }
 
     @Test
@@ -87,7 +87,7 @@ class PlayerResultsTest {
 
         PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
 
-        Assertions.assertThat(playerResults.playerWinLose(player)).isEqualTo(PlayerResult.WIN);
+        Assertions.assertThat(playerResults.resultBy(player)).isEqualTo(PlayerResult.WIN);
     }
 
     @Test
@@ -100,7 +100,7 @@ class PlayerResultsTest {
 
         PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
 
-        Assertions.assertThat(playerResults.playerWinLose(player)).isEqualTo(PlayerResult.LOSE);
+        Assertions.assertThat(playerResults.resultBy(player)).isEqualTo(PlayerResult.LOSE);
     }
 
     @Test
@@ -113,7 +113,7 @@ class PlayerResultsTest {
 
         PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
 
-        Assertions.assertThat(playerResults.playerWinLose(player)).isEqualTo(PlayerResult.WIN);
+        Assertions.assertThat(playerResults.resultBy(player)).isEqualTo(PlayerResult.WIN);
     }
 
     @Test
@@ -129,7 +129,7 @@ class PlayerResultsTest {
 
         PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
 
-        Assertions.assertThat(playerResults.playerWinLose(player)).isEqualTo(PlayerResult.LOSE);
+        Assertions.assertThat(playerResults.resultBy(player)).isEqualTo(PlayerResult.LOSE);
     }
 
     @Test

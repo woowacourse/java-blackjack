@@ -45,28 +45,28 @@ class MoneyTest {
     @DisplayName("플레이어가 이긴 경우 1배의 수익 발생")
     void findPlayerProfitWhenPlayerWin() {
         Money money = Money.betValueOf(1_000_000_000);
-        assertThat(money.profitMoney(WIN).toInt()).isEqualTo(1_000_000_000);
+        assertThat(money.calculateProfit(WIN).toInt()).isEqualTo(1_000_000_000);
     }
 
     @Test
     @DisplayName("비긴 경우 0의 수익 발생")
     void findPlayerProfitWhenTie() {
         Money money = Money.betValueOf(1_000_000_000);
-        assertThat(money.profitMoney(TIE).toInt()).isEqualTo(0);
+        assertThat(money.calculateProfit(TIE).toInt()).isEqualTo(0);
     }
 
     @Test
     @DisplayName("플레이어가 진 경우 1배의 손해 발생")
     void findPlayerProfitWhenPlayerLose() {
         Money money = Money.betValueOf(1_000_000_000);
-        assertThat(money.profitMoney(LOSE).toInt()).isEqualTo(-1_000_000_000);
+        assertThat(money.calculateProfit(LOSE).toInt()).isEqualTo(-1_000_000_000);
     }
 
     @Test
     @DisplayName("플레이어가 블랙잭인 경우 1.5배의 수익 발생")
     void findPlayerProfitWhenPlayerBlackjack() {
         Money money = Money.betValueOf(1_000_000_000);
-        assertThat(money.profitMoney(BLACKJACK).toInt()).isEqualTo(1_500_000_000);
+        assertThat(money.calculateProfit(BLACKJACK).toInt()).isEqualTo(1_500_000_000);
     }
 
     @Test

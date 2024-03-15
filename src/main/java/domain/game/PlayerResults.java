@@ -68,7 +68,7 @@ public class PlayerResults {
             .count();
     }
 
-    public PlayerResult playerWinLose(Player player) {
+    public PlayerResult resultBy(Player player) {
         return resultMap.get(player);
     }
 }
