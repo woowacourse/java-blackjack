@@ -10,6 +10,7 @@ import domain.GameHost;
 import domain.Gamer;
 import domain.Gamers;
 import java.util.List;
+import view.GameCommand;
 import view.InputView;
 import view.OutputView;
 
@@ -71,7 +72,7 @@ public class GameHostController {
     }
 
     private GameCommand inputCommand(final String name) {
-        return GameCommand.valueOf(InputView.decideToGetMoreCard(name));
+        return GameCommand.of(InputView.decideToGetMoreCard(name));
     }
 
     private void printDealerDrawMessage() {

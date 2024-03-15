@@ -63,13 +63,6 @@ public class InputView {
         String commandValue = scanner.nextLine();
         validateCommandValue(commandValue);
 
-        if (commandValue.equals("y")) {
-            return "HIT";
-        }
-        if (commandValue.equals("n")) {
-            return "STAND";
-        }
-
         return scanner.nextLine();
     }
 
