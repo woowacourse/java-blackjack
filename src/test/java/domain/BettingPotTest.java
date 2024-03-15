@@ -24,10 +24,10 @@ class BettingPotTest {
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("결과에 따라 수익을 정산한다.")
+    @DisplayName("결과에 따라 사용자의 수익을 정산한다.")
     @ParameterizedTest
     @CsvSource(value = {"DEALER_WIN:10:-10", "PLAYER_WIN:10:10", "PLAYER_BLACK_JACK_WIN:10:15", "PUSH:10:0"}, delimiter = ':')
-    void settle(Result result, int betAmount, int expectedWinning) {
+    void settlePlayer(Result result, int betAmount, int expectedSettlement) {
         BettingPot bettingPot = new BettingPot();
         Player player = new Player("산초");
         Bet bet = new Bet(betAmount);
@@ -35,9 +35,26 @@ class BettingPotTest {
         Map<Player, Result> playerResult = new HashMap<>();
         playerResult.put(player, result);
 
-        Map<Player, Integer> settlement = bettingPot.settle(playerResult);
-        float actualWinning = settlement.get(player);
+        Map<Player, Integer> settlement = bettingPot.settlePlayer(playerResult);
+        float actualSettlement = settlement.get(player);
 
-        Assertions.assertThat(actualWinning).isEqualTo(expectedWinning);
+        Assertions.assertThat(actualSettlement).isEqualTo(expectedSettlement);
+    }
+
+    @DisplayName("결과에 따라 딜러의 수익을 정산한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"DEALER_WIN:10:-10", "PLAYER_WIN:10:10", "PLAYER_BLACK_JACK_WIN:10:15", "PUSH:10:0"}, delimiter = ':')
+    void settleDealer(Result result, int betAmount, int expectedPlayerSettlement) {
+        BettingPot bettingPot = new BettingPot();
+        Player player = new Player("산초");
+        Bet bet = new Bet(betAmount);
+        bettingPot.collect(player, bet);
+        Map<Player, Result> playerResult = new HashMap<>();
+        playerResult.put(player, result);
+
+        int actualDealerSettlement = bettingPot.settleDealer(playerResult);
+        int expectedDealerSettlement = expectedPlayerSettlement * -1;
+
+        Assertions.assertThat(actualDealerSettlement).isEqualTo(expectedDealerSettlement);
     }
 }
