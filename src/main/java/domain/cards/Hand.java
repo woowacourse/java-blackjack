@@ -22,14 +22,14 @@ public class Hand {
     }
 
     public int calculateScore() {
-        int score = sumAllCards(cards);
+        int score = sumAllCards();
         if (hasAce()) {
             score = decideScore(score);
         }
         return score;
     }
 
-    private int sumAllCards(List<Card> cards) {
+    private int sumAllCards() {
         return cards.stream()
                 .mapToInt(Card::score)
                 .sum();
