@@ -14,6 +14,10 @@ public class Player {
 
     private final GamerName name;
     protected final Hand hand;
+    // 캡슐화가 깨졌다 -> 상속을 없애고 싶다 -> 포함관계로 관리하자
+    // -> 또다시 중복 코드가 생긴다 -> 그런데 그건 전달 메서드라서 중복으로 취급하지 않는다?
+
+    // 전달 메서드를 중복으로 취급하지 않는 이유? 단지 호출하는 메서드일 뿐이라서?
 
     public Player(String name, Hand hand) {
         this.name = new GamerName(name);

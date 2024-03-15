@@ -32,12 +32,8 @@ public class BlackJackGame {
         gamers.shareInitCards(cardPack, INIT_CARDS_AMOUNT);
     }
 
-    public HitOption hitByPlayer(HitOption hitOption, Player player) {
-        if (hitOption.isHit()) {
-            player.hit(cardPack.pickOneCard());
-            return HitOption.HIT;
-        }
-        return HitOption.NOT_HIT;
+    public void hitByPlayer(Player player) {
+        player.hit(cardPack.pickOneCard());
     }
 
     public Card hitByDealer(Dealer dealer) {

@@ -1,5 +1,4 @@
 import domain.BlackJackGame;
-import domain.HitOption;
 import domain.Profit;
 import domain.cards.Card;
 import domain.gamer.Dealer;
@@ -60,18 +59,14 @@ public class Application {
     }
 
     private static void progressPlayerGame(BlackJackGame game, Player player) {
-        HitOption doPlayerHit = HitOption.HIT;
-        while (player.isNotBust() && doPlayerHit.isHit()) {
-            HitOption hitOption = inputView.readHitOption(player);
-            doPlayerHit = game.hitByPlayer(hitOption, player);
-            printPlayerHitCard(player, doPlayerHit);
+        while (player.isNotBust() && inputView.readHitOption(player).isHit()) {
+            game.hitByPlayer(player);
+            printPlayerHitCard(player);
         }
     }
 
-    private static void printPlayerHitCard(Player player, HitOption doPlayerHit) {
-        if (doPlayerHit.isHit()) {
-            resultView.printPlayerCards(player);
-        }
+    private static void printPlayerHitCard(Player player) {
+        resultView.printPlayerCards(player);
     }
 
     private static void progressDealerGame(BlackJackGame game, Dealer dealer) {
