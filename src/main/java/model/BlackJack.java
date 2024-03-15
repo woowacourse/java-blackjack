@@ -52,6 +52,13 @@ public class BlackJack {
         }
     }
 
+    public Map<Outcome, Long> getDealerOutCome() {
+        Map<Participant, Outcome> participantOutcome = matchParticipantsOutcome();
+        return participantOutcome.values()
+                .stream()
+                .collect(groupingBy(Outcome::reverse, counting()));
+    }
+
     public Map<Participant, Outcome> matchParticipantsOutcome() {
         List<Participant> sumPlayers = participants.participants();
         return sumPlayers.stream().collect(
@@ -61,26 +68,22 @@ public class BlackJack {
                 ));
     }
 
-    public Map<Outcome, Long> getDealerOutCome() {
-        Map<Participant, Outcome> participantOutcome = matchParticipantsOutcome();
-        return participantOutcome.values()
-                .stream()
-                .collect(groupingBy(Outcome::reverse, counting()));
-    }
-
     public Map<String, Cards> mapToUsersNameAndCards() {
         return participants.participants()
                 .stream()
                 .collect(toMap(User::getName, User::getCards));
     }
 
-    public Map<String, Integer> mapToNameAndRevenues() {
-        return participants.participants()
+    public int findDealerRevenue() {
+        return participants.mapToNameAndRevenues(dealer.isNotHit(), dealer.findPlayerDifference())
+                .values()
                 .stream()
-                .collect(toMap(
-                        User::getName,
-                        participant -> participant.calculateRevenue(dealer.isNotHit(), dealer.calculateScore())
-                ));
+                .mapToInt(money -> money)
+                .sum() * -1;
+    }
+
+    public Map<String, Integer> mapToNameAndRevenues() {
+        return participants.mapToNameAndRevenues(dealer.isNotHit(), dealer.findPlayerDifference());
     }
 
     public List<String> findParticipantsName() {

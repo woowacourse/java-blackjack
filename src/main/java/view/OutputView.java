@@ -53,9 +53,12 @@ public class OutputView {
         }
     }
 
-    public void printParticipantsRevenue(Map<String, Integer> revenue) {
+    public void printParticipantsRevenue(int dealerRevenue, Map<String, Integer> participantsRevenue) {
         System.out.println(System.lineSeparator() + GAME_RESULT_PROMPT_MESSAGE);
-        for (Entry<String, Integer> participant : revenue.entrySet()) {
+
+        System.out.println(GAME_RESULT_REVENUE_MESSAGE.formatted("딜러", dealerRevenue));
+
+        for (Entry<String, Integer> participant : participantsRevenue.entrySet()) {
             System.out.println(GAME_RESULT_REVENUE_MESSAGE.formatted(participant.getKey(), participant.getValue()));
         }
     }

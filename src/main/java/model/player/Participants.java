@@ -5,11 +5,14 @@ import model.card.Cards;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toMap;
 
 public record Participants(List<Participant> participants) {
     public static final int MINIMUM_PARTICIPANT_SIZE = 2;
@@ -51,6 +54,14 @@ public record Participants(List<Participant> participants) {
     public List<String> findParticipantsName() {
         return participants.stream()
                 .map(participant -> participant.name).toList();
+    }
+
+    public Map<String, Integer> mapToNameAndRevenues(boolean isOtherNotHit, int otherDifference) {
+        return participants.stream()
+                .collect(toMap(
+                        User::getName,
+                        participant -> participant.calculateRevenue(isOtherNotHit, otherDifference)
+                ));
     }
 
     @Override
