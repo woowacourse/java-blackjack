@@ -106,3 +106,13 @@
 - test/BattingTest : 성공/실패 각각의 테스트 케이스 추가
 - test/ProfitTest : 성공/실패 각각의 테스트 케이스 추가 
 
+## 2차 리뷰 개선사안
+- 상속관계 Participants 삭제
+- 베팅을 관리하는 GameBattings 객체 추가
+- 게임 결과 판단에 대한 책임을 Game으로 이전하여 Map<Player, Profit>을 GameResult에게 넘겨줌
+- 결과와 결과조건에 대한 책임 분리
+  - Result : 승패 결과만을 대변
+  - ResultJudge : 승패 판단 
+- GameResult : 딜러 수익 결과 반환 로직 추가
+- Profit : 범위 검증 과정 삭제
+- rename: Value > CardNumber 
