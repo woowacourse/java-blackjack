@@ -14,7 +14,7 @@ class DealerTest {
         dealer.receiveAdditionalCard(카드(Denomination.TEN));
         dealer.receiveAdditionalCard(카드(Denomination.SIX));
 
-        boolean result = dealer.isNotExceedDrawPolicy();
+        boolean result = dealer.isNotFinished();
         assertThat(result).isTrue();
     }
 
@@ -25,7 +25,7 @@ class DealerTest {
         dealer.receiveAdditionalCard(카드(Denomination.NINE));
         dealer.receiveAdditionalCard(카드(Denomination.EIGHT));
 
-        boolean result = dealer.isNotExceedDrawPolicy();
+        boolean result = dealer.isNotFinished();
         assertThat(result).isFalse();
     }
 }

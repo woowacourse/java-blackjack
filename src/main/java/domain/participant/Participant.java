@@ -6,7 +6,7 @@ import domain.card.Score;
 import java.util.List;
 import java.util.Objects;
 
-public class Participant {
+public abstract class Participant {
     private final Name name;
     private final Cards cards;
 
@@ -36,12 +36,18 @@ public class Participant {
         return cards.isBust();
     }
 
+    public abstract boolean isNotFinished();
+
     public String getName() {
         return this.name.getValue();
     }
 
     public List<Card> getAllCards() {
         return cards.getCards();
+    }
+
+    Cards getCards() {
+        return cards;
     }
 
     @Override

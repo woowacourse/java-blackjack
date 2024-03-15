@@ -39,14 +39,14 @@ public class BlackjackController {
     }
 
     private void dealToPlayer(Player player, BlackjackGame blackjackGame) {
-        while (inputView.askForMoreCard(player.getName())) {
+        while (player.isNotFinished() && inputView.askForMoreCard(player.getName())) {
             blackjackGame.dealCardTo(player);
             outputView.printAllCards(player);
         }
     }
 
     private void dealToDealer(Dealer dealer, BlackjackGame blackjackGame) {
-        while (dealer.isNotExceedDrawPolicy()) {
+        while (dealer.isNotFinished()) {
             blackjackGame.dealCardTo(dealer);
             outputView.printDealerReceiveCardMessage();
         }

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class ParticipantTest {
     @Test
     void 초기_카드를_2장_받는다() {
-        Participant participant = new Participant("prin");
+        Participant participant = new Player("prin");
 
         participant.receiveInitialCards(카드(), 카드());
 
@@ -28,7 +28,7 @@ class ParticipantTest {
 
     @Test
     void 카드의_합을_계산한다() {
-        Participant participant = new Participant("prin");
+        Participant participant = new Player("prin");
 
         participant.receiveInitialCards(카드(Denomination.KING), 카드(Denomination.SIX));
 

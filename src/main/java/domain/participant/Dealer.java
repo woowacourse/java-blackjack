@@ -10,7 +10,8 @@ public class Dealer extends Participant {
         super(DEFAULT_NAME);
     }
 
-    public boolean isNotExceedDrawPolicy() {
+    @Override
+    public boolean isNotFinished() {
         return calculateScore().isLessThan(Score.get(DEALER_MIN_SCORE_POLICY));
     }
 }
