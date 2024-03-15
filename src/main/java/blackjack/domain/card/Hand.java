@@ -30,12 +30,6 @@ public class Hand {
         cards.add(card);
     }
 
-    public int countAce() {
-        return (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
-    }
-
     public boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);

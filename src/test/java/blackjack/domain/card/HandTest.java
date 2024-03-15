@@ -40,13 +40,6 @@ class HandTest {
         assertThat(hand.countDraw()).isEqualTo(1);
     }
 
-    @DisplayName("핸드에 에이스 카드가 몇개 있는지 확인할 수 있다")
-    @Test
-    void testCountAceInHand() {
-        Hand hand = TestHandCreator.of(1, 1, 1, 3, 4, 5);
-        assertThat(hand.countAce()).isEqualTo(3);
-    }
-
     @DisplayName("핸드에 에이스 카드가 존재하는지 확인할 수 있다")
     @Test
     void testHasAceInHand() {
