@@ -14,7 +14,11 @@ public class InputView {
 
     public static int inputBetAmount(final String name) {
         System.out.println(name + "의 배팅 금액은?");
-        return scanner.nextInt();
+        return toInt(scanner.nextLine());
+    }
+
+    private static int toInt(final String input) {
+        return Integer.parseInt(input);
     }
 
     public static String inputHitCommand(final String name) {
