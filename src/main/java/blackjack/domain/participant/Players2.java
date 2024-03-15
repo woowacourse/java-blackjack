@@ -16,6 +16,15 @@ public class Players2 {
         this.players = players;
     }
 
+    public static Players2 create(List<String> rawNames) {
+        List<Player2> players = rawNames.stream()
+                .map(Name::new)
+                .map(Player2::new)
+                .toList();
+
+        return new Players2(players);
+    }
+
     public void deal(CardDeck cardDeck) {
         players.forEach(player -> player.deal(cardDeck));
     }

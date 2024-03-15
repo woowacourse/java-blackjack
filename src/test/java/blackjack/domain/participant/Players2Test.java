@@ -15,6 +15,22 @@ import org.junit.jupiter.api.Test;
 
 class Players2Test {
 
+    @DisplayName("주어진 플레이어 이름 리스트로 플레이어들을 생성한다.")
+    @Test
+    void testCreateByNameList() {
+        // given
+        List<String> playerNames = List.of("pobi", "jason");
+
+        // when
+        Players2 players = Players2.create(playerNames);
+
+        // then
+        assertThat(players.getPlayers()).containsExactly(
+                new Player2(new Name("pobi")),
+                new Player2(new Name("jason"))
+        );
+    }
+
     @DisplayName("모든 플레이어의 승패를 결정한다.")
     @Test
     void judge() {

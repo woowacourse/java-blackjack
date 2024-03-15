@@ -10,6 +10,10 @@ public class Dealer2 {
 
     private final Hand hand;
 
+    public Dealer2() {
+        this(new Hand());
+    }
+
     public Dealer2(Hand hand) {
         this.hand = hand;
     }

@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.game.Score;
+import java.util.Objects;
 
 public class Player2 {
 
@@ -10,6 +11,10 @@ public class Player2 {
 
     private final Name name;
     private final Hand hand;
+
+    public Player2(Name name) {
+        this(name, new Hand());
+    }
 
     public Player2(Name name, Hand hand) {
         this.name = name;
@@ -52,5 +57,22 @@ public class Player2 {
 
     public Hand getHand() {
         return hand;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Player2 player2 = (Player2) o;
+        return Objects.equals(name, player2.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

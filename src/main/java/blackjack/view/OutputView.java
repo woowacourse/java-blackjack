@@ -1,10 +1,10 @@
 package blackjack.view;
 
+import blackjack.domain.game.Judge;
 import blackjack.domain.game.PlayersResult;
 import blackjack.domain.participant.Dealer2;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.domain.game.Judge;
 import blackjack.domain.participant.Player2;
 import blackjack.domain.participant.Players2;
 
