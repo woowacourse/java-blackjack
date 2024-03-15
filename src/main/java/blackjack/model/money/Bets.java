@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Bets {
-    private final Map<Player, Money> bets;
+    private final Map<Player, BetMoney> bets;
 
     public Bets() {
         this.bets = new LinkedHashMap<>();
@@ -14,7 +14,7 @@ public class Bets {
 
     public void addBet(final Player player, final int money) {
         validatePositiveMoney(money);
-        bets.put(player, new Money(money));
+        bets.put(player, new BetMoney(money));
     }
 
     private void validatePositiveMoney(final int money) {
@@ -23,24 +23,24 @@ public class Bets {
         }
     }
 
-    public Map<Player, Money> calculatePlayersProfit(final Map<Player, ResultCommand> result) {
-        final Map<Player, Money> playersProfit = new LinkedHashMap<>();
+    public Map<Player, BetMoney> calculatePlayersProfit(final Map<Player, ResultCommand> result) {
+        final Map<Player, BetMoney> playersProfit = new LinkedHashMap<>();
         for (Player player : result.keySet()) {
             playersProfit.put(player, calculatePlayerProfit(result, player));
         }
         return playersProfit;
     }
 
-    private Money calculatePlayerProfit(final Map<Player, ResultCommand> result, final Player player) {
+    private BetMoney calculatePlayerProfit(final Map<Player, ResultCommand> result, final Player player) {
         final double multiplier = result.get(player).getRate();
         return bets.get(player).multiply(multiplier);
     }
 
-    public Money calculateDealerProfit(final Map<Player, ResultCommand> result) {
-        final Map<Player, Money> playersProfit = calculatePlayersProfit(result);
+    public BetMoney calculateDealerProfit(final Map<Player, ResultCommand> result) {
+        final Map<Player, BetMoney> playersProfit = calculatePlayersProfit(result);
         final int playerTotalProfit = playersProfit.values().stream()
-                .mapToInt(Money::getMoney)
+                .mapToInt(BetMoney::getBetMoney)
                 .sum();
-        return new Money(playerTotalProfit).multiply(-1);
+        return new BetMoney(playerTotalProfit).multiply(-1);
     }
 }
