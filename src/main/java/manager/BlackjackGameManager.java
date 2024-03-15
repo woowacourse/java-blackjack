@@ -1,12 +1,12 @@
 package manager;
 
-import domain.participant.BetAmount;
-import domain.participant.Name;
-import domain.Rule;
 import domain.card.Deck;
+import domain.participant.BetAmount;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Player;
 import domain.result.Income;
+import domain.result.Incomes;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -34,7 +34,9 @@ public class BlackjackGameManager {
 
         printResults(dealer, playerBundle);
 
-        printFinalIncomes(dealer, playerBundle);
+        Incomes incomes = new Incomes(playerBundle);
+
+        printFinalIncomes(incomes.dealerIncome(dealer), incomes.playersIncomes(dealer));
     }
 
     private List<Name> readNames() {
@@ -88,9 +90,7 @@ public class BlackjackGameManager {
         }
     }
 
-    private void printFinalIncomes(Dealer dealer, List<Player> playerBundle) {
-        Rule rule = Rule.of(dealer, playerBundle);
-        Map<Name, Income> incomes = rule.getIncomes();
-        printIncomes(rule.getDealerIncome(), incomes);
+    private void printFinalIncomes(Income dealerIncome, Map<Player, Income> playersIncomes) {
+        printIncomes(dealerIncome.getIncome(), playersIncomes);
     }
 }

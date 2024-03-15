@@ -1,8 +1,8 @@
 package view;
 
-import domain.participant.Name;
 import domain.card.Cards;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Player;
 import domain.result.Income;
 
@@ -76,10 +76,10 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printIncomes(int dealerIncome, Map<Name, Income> playerIncomes) {
+    public static void printIncomes(int dealerIncome, Map<Player, Income> playersIncomes) {
         System.out.println();
         System.out.println("최종 수익");
         System.out.println("딜러: " + dealerIncome);
-        playerIncomes.forEach((key, value) -> System.out.println(key.asString() + ": " + value.getIncome()));
+        playersIncomes.forEach((key, value) -> System.out.println(key.getPlayerName().asString() + ": " + value.getIncome()));
     }
 }
