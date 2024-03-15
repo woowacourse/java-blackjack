@@ -55,14 +55,14 @@ public class GameController {
         State state = game.determineState(command, player);
         UserDto userDto = UserDto.from(player);
         if (state == BUST || state == STAY) {
-            showMidTermResult(state, userDto);
+            notifyBust(state, userDto);
             return;
         }
         ResultView.printPlayerAndDeck(userDto);
         hitOrStayOnce(game, player);
     }
 
-    private void showMidTermResult(State state, UserDto userDto) {
+    private void notifyBust(State state, UserDto userDto) {
         if (state == BUST) {
             ResultView.printBust(userDto);
         }
