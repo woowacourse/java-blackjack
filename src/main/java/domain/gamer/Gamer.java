@@ -24,9 +24,6 @@ public abstract class Gamer {
     }
 
     public void hit(final Card card) {
-        if (!canHit()) {
-            throw new CardReceiveException(CardReceiveException.CAN_NOT_RECEIVE_CARD);
-        }
         hand.add(card);
     }
 

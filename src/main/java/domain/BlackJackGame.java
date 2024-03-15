@@ -5,6 +5,7 @@ import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Player;
 import domain.gamer.Players;
+import exception.CardReceiveException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -37,6 +38,9 @@ public class BlackJackGame {
     }
 
     public void giveCard(final Gamer gamer) {
+        if (!gamer.canHit()) {
+            throw new CardReceiveException(CardReceiveException.CAN_NOT_RECEIVE_CARD);
+        }
         gamer.hit(deck.draw());
     }
 
