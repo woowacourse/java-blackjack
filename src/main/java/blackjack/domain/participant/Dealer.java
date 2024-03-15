@@ -25,7 +25,7 @@ public class Dealer extends Participant {
         if (getCards().isEmpty()) {
             throw new IllegalStateException("딜러 카드가 비어 있습니다.");
         }
-        if (getCards().size() == STARTING_CARDS_AMOUNT) {
+        if (getCards().size() <= STARTING_CARDS_AMOUNT) {
             return List.of(getCards().get(0));
         }
         return getCards();
