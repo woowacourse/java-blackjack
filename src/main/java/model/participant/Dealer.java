@@ -9,11 +9,11 @@ public class Dealer extends Participant {
     private static final int HIT_CONDITION = 17;
 
     public Dealer() {
-        this(new Cards(List.of()));
+        this(List.of());
     }
 
-    public Dealer(Cards cards) {
-        super(Name.createDealerName(), cards);
+    public Dealer(List<Card> cards) {
+        super(Name.createDealerName(), new Cards(cards));
     }
 
     @Override
