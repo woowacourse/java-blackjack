@@ -1,7 +1,6 @@
 package controller;
 
-import domain.game.BlackjackGame;
-import domain.game.BlackjackGameResults;
+import domain.game.*;
 import domain.participant.Player;
 import domain.participant.PlayerName;
 import domain.participant.PlayerNames;
@@ -11,23 +10,26 @@ import dto.PlayingCardDto;
 import view.InputView;
 import view.OutputView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static java.util.Collections.unmodifiableMap;
 
 public class GameController {
 
     public void run() {
-        BlackjackGame blackjackGame = initGame();
+        PlayerNames playerNames = inputPlayerNames();
+        BettingMoneyStore bettingMoneyStore = initBettingMoney(playerNames);
+        BlackjackGame blackjackGame = initGame(playerNames);
 
-        startPlayersTurn(blackjackGame);
-        startDealerTurn(blackjackGame);
-        printParticipantStatusesAfterDrawing(blackjackGame);
-
-        BlackjackGameResults gameResults = BlackjackGameResults.of(blackjackGame);
-        OutputView.printGameResult(gameResults);
+        playGame(blackjackGame);
+        printGameResults(blackjackGame, bettingMoneyStore);
     }
 
-    private BlackjackGame initGame() {
-        BlackjackGame blackjackGame = BlackjackGame.init(inputPlayerNames());
+    private BlackjackGame initGame(final PlayerNames playerNames) {
+        BlackjackGame blackjackGame = BlackjackGame.init(playerNames);
         PlayingCardDto dealerCardDto = PlayingCardDto.of(blackjackGame.getDealer().getFirstPlayingCard());
         List<PlayerHandStatusDto> playerHandStatusDtos = blackjackGame.getPlayers()
                 .stream()
@@ -46,6 +48,34 @@ public class GameController {
             OutputView.printErrorMessage(e.getMessage());
             return inputPlayerNames();
         }
+    }
+
+    private BettingMoneyStore initBettingMoney(final PlayerNames playerNames) {
+        Map<PlayerName, BettingMoney> bettingMoneyStore = playerNames.values()
+                .stream()
+                .collect(Collectors.toMap(
+                        playerName -> playerName, this::inputBettingMoney,
+                        (key, value) -> key,
+                        HashMap::new
+                ));
+
+        return new BettingMoneyStore(unmodifiableMap(bettingMoneyStore));
+    }
+
+    private BettingMoney inputBettingMoney(final PlayerName playerName) {
+        try {
+            int inputBettingMoney = InputView.inputBettingMoney(playerName);
+            return new BettingMoney(inputBettingMoney);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputBettingMoney(playerName);
+        }
+    }
+
+    private void playGame(final BlackjackGame blackjackGame) {
+        startPlayersTurn(blackjackGame);
+        startDealerTurn(blackjackGame);
+        printParticipantStatusesAfterDrawing(blackjackGame);
     }
 
     private void startPlayersTurn(final BlackjackGame blackjackGame) {
@@ -86,5 +116,11 @@ public class GameController {
                 .toList();
 
         OutputView.printFinalHandStatus(dealerHandStatusDto, playerHandStatusDtos);
+    }
+
+    private void printGameResults(final BlackjackGame blackjackGame, final BettingMoneyStore bettingMoneyStore) {
+        BlackjackGameResults gameResults = BlackjackGameResults.of(blackjackGame);
+        BettingResults bettingResults = BettingResults.of(bettingMoneyStore, gameResults);
+        OutputView.printBettingResults(bettingResults);
     }
 }

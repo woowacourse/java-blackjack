@@ -47,4 +47,20 @@ public class InputView {
 
         throw new IllegalArgumentException("카드를 받을지 여부는 y/n만 입력할 수 있습니다.");
     }
+
+    public static int inputBettingMoney(final PlayerName playerName) {
+        System.out.println(playerName.value() + "의 배팅 금액은?");
+        String input = scanner.nextLine();
+        System.out.println();
+
+        return parseNumber(input);
+    }
+
+    private static int parseNumber(final String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("정수만 입력할 수 있습니다.");
+        }
+    }
 }
