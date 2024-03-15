@@ -38,7 +38,7 @@ class ParticipantsTest {
 
         participants.receiveDealerCard(card);
 
-        assertThat(participants.getDealer().getHands().size()).isEqualTo(1);
+        assertThat(participants.getDealer().getHands().getCards().size()).isEqualTo(1);
     }
 
     @Test
@@ -63,7 +63,7 @@ class ParticipantsTest {
                 new ArrayList<>(List.of(hands1, hands2, hands3))
         );
 
-        assertThat(siso.getHands().size()).isEqualTo(2);
+        assertThat(siso.getHands().getCards().size()).isEqualTo(2);
     }
 
     @Test

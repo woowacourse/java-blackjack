@@ -36,10 +36,6 @@ public abstract class GameParticipant {
         return hands.isBlackjack();
     }
 
-    public int getHandsSize() {
-        return hands.size();
-    }
-
     public String getName() {
         return name.getName();
     }

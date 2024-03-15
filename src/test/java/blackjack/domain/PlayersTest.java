@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 class PlayersTest {
 
     private final Player siso = new Player(new Name("시소"));
-    private final Player takan = new Player(new Name("타칸"));;
+    private final Player takan = new Player(new Name("타칸"));
     private final Players players = new Players(List.of(siso, takan));
 
 
@@ -35,8 +35,8 @@ class PlayersTest {
 
         players.distributeHands(hands);
 
-        Assertions.assertThat(siso.getHandsSize()).isEqualTo(2);
-        Assertions.assertThat(takan.getHandsSize()).isEqualTo(2);
+        Assertions.assertThat(siso.getHands().getCards().size()).isEqualTo(2);
+        Assertions.assertThat(takan.getHands().getCards().size()).isEqualTo(2);
     }
 
     @Test

@@ -24,7 +24,7 @@ public class HandsTest {
 
         hands.addCard(new Card(Shape.HEART, Rank.EIGHT));
 
-        Assertions.assertThat(hands.size()).isEqualTo(3);
+        Assertions.assertThat(hands.getCards().size()).isEqualTo(3);
     }
 
     @Test
@@ -114,6 +114,6 @@ public class HandsTest {
     @DisplayName("카드의 개수를 확인한다.")
     void sizeTest() {
         Hands hands = new Hands(new ArrayList<>());
-        assertThat(hands.size()).isEqualTo(0);
+        assertThat(hands.getCards().size()).isEqualTo(0);
     }
 }

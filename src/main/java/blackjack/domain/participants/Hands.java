@@ -22,10 +22,6 @@ public class Hands {
         cards.add(card);
     }
 
-    public int size() {
-        return cards.size();
-    }
-
     public int calculateScore() {
         int middleScore = calculateMiddleScore();
         return middleScore + addBonusScore(middleScore);
@@ -62,6 +58,7 @@ public class Hands {
     public boolean isBlackjack() {
         return cards.size() == BLACKJACK_SIZE && calculateScore() == Player.MAX_SCORE;
     }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

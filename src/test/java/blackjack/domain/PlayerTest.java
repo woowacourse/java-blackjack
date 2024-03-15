@@ -32,7 +32,7 @@ public class PlayerTest {
         );
         player.receiveHands(hands);
 
-        assertThat(player.getHands().size()).isEqualTo(2);
+        assertThat(player.getHands().getCards().size()).isEqualTo(2);
     }
 
     @Test

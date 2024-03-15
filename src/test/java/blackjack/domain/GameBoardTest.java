@@ -82,7 +82,7 @@ public class GameBoardTest {
     void initialDistributeTest() {
         gameBoard.distributeInitialHands();
 
-        assertThat(dealer.getHands().size()).isEqualTo(2);
+        assertThat(dealer.getHands().getCards().size()).isEqualTo(2);
     }
 
     @Test
@@ -90,7 +90,7 @@ public class GameBoardTest {
     void addCardToPlayerTest() {
         gameBoard.addCardToPlayer(siso);
 
-        assertThat(siso.getHands().size()).isEqualTo(3);
+        assertThat(siso.getHands().getCards().size()).isEqualTo(3);
     }
 
     @Test
@@ -98,6 +98,6 @@ public class GameBoardTest {
     void addCardToDealerTest() {
         gameBoard.addCardToDealer();
 
-        assertThat(dealer.getHands().size()).isEqualTo(1);
+        assertThat(dealer.getHands().getCards().size()).isEqualTo(1);
     }
 }
