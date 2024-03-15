@@ -46,10 +46,6 @@ public class Users {
         return new Index(users.size());
     }
 
-    public User getUserByIndex(Index index) {
-        return users.get(index.getCurrent());
-    }
-
     public void addCardOfCurrentUser(Card newCard, Index index) {
         users.get(index.getCurrent()).addCard(newCard);
     }
