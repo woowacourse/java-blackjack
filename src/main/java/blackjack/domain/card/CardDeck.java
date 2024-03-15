@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CardDeck {
 
@@ -25,9 +26,13 @@ public class CardDeck {
         List<CardSuit> cardSuits = CardSuit.getAllCardSuits();
 
         return cardRanks.stream()
-                .flatMap(rank -> cardSuits.stream()
-                        .map(suit -> new Card(rank, suit)))
+                .flatMap(rank -> generateCards(rank, cardSuits))
                 .collect(Collectors.toList());
+    }
+
+    private static Stream<Card> generateCards(CardRank rank, List<CardSuit> cardSuits) {
+        return cardSuits.stream()
+                .map(suit -> new Card(rank, suit));
     }
 
     public Card popCard() {
