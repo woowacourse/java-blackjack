@@ -16,12 +16,11 @@ public class ParticipantsBuilder {
     public static final int MINIMUM_PARTICIPANT_SIZE = 2;
     public static final int MAXIMUM_PARTICIPANT_SIZE = 8;
 
-    private List<String> names;
+    private List<Name> names;
     private List<GameMoney> gameMoneys;
     private List<Cards> cards;
 
-    public ParticipantsBuilder names(List<String> names) {
-        validateNotBlankName(names);
+    public ParticipantsBuilder names(List<Name> names) {
         validateNotDuplicatedParticipant(names);
         validateParticipantSize(names);
 
@@ -29,14 +28,9 @@ public class ParticipantsBuilder {
         return this;
     }
 
-    private void validateNotBlankName(List<String> names) {
-        if (names.stream().anyMatch(name -> name == null || name.isBlank())) {
-            throw new IllegalArgumentException("참가자의 이름은 공백이거나 null일 수 없습니다.");
-        }
-    }
-
-    private void validateNotDuplicatedParticipant(List<String> names) {
+    private void validateNotDuplicatedParticipant(List<Name> names) {
         Set<String> duplicates = names.stream()
+                .map(Name::getName)
                 .filter(name -> Collections.frequency(names, name) > 1)
                 .collect(Collectors.toSet());
 
@@ -46,7 +40,7 @@ public class ParticipantsBuilder {
         }
     }
 
-    private void validateParticipantSize(List<String> names) {
+    private void validateParticipantSize(List<Name> names) {
         if (names.size() < MINIMUM_PARTICIPANT_SIZE || names.size() > MAXIMUM_PARTICIPANT_SIZE) {
             throw new IllegalArgumentException("참가자의 수는 2~8명이어야 합니다.");
         }

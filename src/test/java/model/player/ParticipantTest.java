@@ -32,7 +32,7 @@ class ParticipantTest {
     @DisplayName("카드의 합이 21이하일 때는 참을 반환한다.")
     @Test
     void noticeTrue() {
-        Participant participant = new Participant("배키",
+        Participant participant = new Participant(new Name("배키"),
                 new Cards(List.of(
                         Card.of(Suit.SPACE, Denomination.TEN),
                         Card.of(Suit.SPACE, Denomination.KING))), new GameMoney(1000));
@@ -43,7 +43,7 @@ class ParticipantTest {
     @DisplayName("카드의 합이 21초과일 때는 거짓을 반환한다.")
     @Test
     void noticeFalse() {
-        Participant participant = new Participant("배키",
+        Participant participant = new Participant(new Name("배키"),
                 new Cards(List.of(
                         Card.of(Suit.SPACE, Denomination.TEN),
                         Card.of(Suit.SPACE, Denomination.KING))), new GameMoney(1000));
@@ -55,7 +55,7 @@ class ParticipantTest {
     @DisplayName("참가자와 딜러 카드의 합이 같을 때 무승부이다.")
     @Test
     void findOutcomeDraw() {
-        Participant participant = new Participant("배키",
+        Participant participant = new Participant(new Name("배키"),
                 new Cards(List.of(
                         Card.of(Suit.SPACE, Denomination.NINE),
                         Card.of(Suit.SPACE, Denomination.FIVE))), new GameMoney(1000));
@@ -70,11 +70,11 @@ class ParticipantTest {
     }
 
     static Stream<Arguments> createParticipant() {
-        Participant overThresholdParticipant = new Participant("켬미",
+        Participant overThresholdParticipant = new Participant(new Name("켬미"),
                 new Cards(List.of(
                         Card.of(Suit.SPACE, Denomination.EIGHT),
                         Card.of(Suit.CLOVER, Denomination.NINE))), new GameMoney(1000));
-        Participant underThresholdParticipant = new Participant("켬미",
+        Participant underThresholdParticipant = new Participant(new Name("켬미"),
                 new Cards(List.of(
                         Card.of(Suit.SPACE, Denomination.EIGHT),
                         Card.of(Suit.CLOVER, Denomination.NINE))), new GameMoney(1000));
@@ -120,7 +120,7 @@ class ParticipantTest {
     @ParameterizedTest
     @MethodSource("createDealer")
     void findOutcomeWin(Dealer dealer) {
-        Participant participant = new Participant("켬미",
+        Participant participant = new Participant(new Name("켬미"),
                 new Cards(List.of(
                         Card.of(Suit.SPACE, Denomination.KING),
                         Card.of(Suit.SPACE, Denomination.JACK))), new GameMoney(1000));

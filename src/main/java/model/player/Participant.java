@@ -8,7 +8,7 @@ public class Participant extends User {
 
     private final GameMoney gameMoney;
 
-    public Participant(String name, Cards cards, GameMoney gameMoney) {
+    public Participant(Name name, Cards cards, GameMoney gameMoney) {
         super(name, cards);
         this.gameMoney = gameMoney;
     }

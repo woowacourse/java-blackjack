@@ -34,7 +34,7 @@ public class Participants {
 
         if (!duplicates.isEmpty()) {
             String duplicatedName = duplicates.stream()
-                    .map(User::getName)
+                    .map(user -> user.getName().getName())
                     .collect(Collectors.joining(","));
             throw new IllegalArgumentException("중복된 이름(" + duplicatedName + ")가 있습니다, 참가자들의 이름은 중복되면 안됩니다.");
         }
@@ -46,7 +46,7 @@ public class Participants {
         }
     }
 
-    public void offerCardToParticipants(Predicate<String> inputForMoreCard, BiConsumer<String, Cards> printParticipantsCard, Supplier<Card> selectCard) {
+    public void offerCardToParticipants(Predicate<Name> inputForMoreCard, BiConsumer<Name, Cards> printParticipantsCard, Supplier<Card> selectCard) {
         for (Participant participant : participants) {
             while (participant.isHit() && inputForMoreCard.test(participant.getName())) {
                 participant.addCard(selectCard.get());
@@ -55,9 +55,9 @@ public class Participants {
         }
     }
 
-    public List<String> findParticipantsName() {
+    public List<Name> findParticipantsName() {
         return participants.stream()
-                .map(participant -> participant.name).toList();
+                .map(User::getName).toList();
     }
 
     public Map<Participant, Outcome> matchParticipantsOutcome(Dealer dealer) {
@@ -68,7 +68,7 @@ public class Participants {
                 ));
     }
 
-    public Map<String, Cards> matchParticipantNameAndCards() {
+    public Map<Name, Cards> matchParticipantNameAndCards() {
         return participants.stream()
                 .collect(toMap(
                         User::getName,
@@ -76,7 +76,7 @@ public class Participants {
                 ));
     }
 
-    public Map<String, Integer> matchNameAndRevenues(Dealer dealer) {
+    public Map<Name, Integer> matchNameAndRevenues(Dealer dealer) {
         return participants.stream()
                 .collect(toMap(
                         User::getName,

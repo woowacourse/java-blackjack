@@ -3,23 +3,17 @@ package model.player;
 import model.card.Card;
 import model.card.Cards;
 
+import java.awt.*;
 import java.util.Objects;
 
 public abstract class User {
 
-    protected final String name;
+    protected final Name name;
     protected final Cards cards;
 
-    public User(String name, Cards cards) {
-        validateNotBlankName(name);
+    public User(Name name, Cards cards) {
         this.name = name;
         this.cards = cards;
-    }
-
-    private void validateNotBlankName(String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("참가자의 이름은 공백이거나 null일 수 없습니다.");
-        }
     }
 
     public void addCard(Card card) {
@@ -42,7 +36,7 @@ public abstract class User {
         return cards.isHit();
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 

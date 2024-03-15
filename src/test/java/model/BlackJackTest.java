@@ -2,6 +2,7 @@ package model;
 
 import model.card.*;
 import model.player.Dealer;
+import model.player.Name;
 import model.player.Participant;
 import model.player.Participants;
 import org.assertj.core.api.Assertions;
@@ -38,7 +39,7 @@ class BlackJackTest {
                 Card.of(Suit.SPACE, Denomination.NINE),
                 Card.of(Suit.SPACE, Denomination.FIVE)));
         Assertions.assertThatThrownBy(
-                        () -> new BlackJack(new Participants(List.of(new Participant("배키", participantCards, new GameMoney(1000))))
+                        () -> new BlackJack(new Participants(List.of(new Participant(new Name("배키"), participantCards, new GameMoney(1000))))
                                 , null
                                 , cardDeck))
                 .isInstanceOf(IllegalArgumentException.class);

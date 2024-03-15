@@ -19,10 +19,10 @@ class ParticipantsTest {
     void validate() {
         Assertions.assertThatThrownBy(() ->
                         new Participants(List.of(
-                                new Participant("켬미", new Cards(List.of(
+                                new Participant(new Name("켬미"), new Cards(List.of(
                                         Card.of(Suit.SPACE, Denomination.NINE),
                                         Card.of(Suit.SPACE, Denomination.FIVE))), new GameMoney(1000)),
-                                new Participant("켬미", new Cards(List.of(
+                                new Participant(new Name("켬미"), new Cards(List.of(
                                         Card.of(Suit.SPACE, Denomination.NINE),
                                         Card.of(Suit.SPACE, Denomination.FIVE))), new GameMoney(1000))
                         )))
@@ -34,17 +34,17 @@ class ParticipantsTest {
         CardDeck cardDeck = new CardDeck(Card.createCardDeck());
 
         return Stream.of(Arguments.of(
-                List.of(new Participant("배키", cardDeck.selectRandomCards(CardSize.TWO), new GameMoney(1000))),
+                List.of(new Participant(new Name("배키"), cardDeck.selectRandomCards(CardSize.TWO), new GameMoney(1000))),
                 List.of(
-                        new Participant("도비", cardDeck.selectRandomCards(CardSize.TWO), new GameMoney(1000)),
-                        new Participant("리사", cardDeck.selectRandomCards(CardSize.TWO), new GameMoney(1000)),
-                        new Participant("명오", cardDeck.selectRandomCards(CardSize.TWO), new GameMoney(1000)),
-                        new Participant("제우스", cardDeck.selectRandomCards(CardSize.TWO), new GameMoney(1000)),
-                        new Participant("호티", cardDeck.selectRandomCards(CardSize.TWO), new GameMoney(1000)),
-                        new Participant("초롱", cardDeck.selectRandomCards(CardSize.TWO), new GameMoney(1000)),
-                        new Participant("조이썬", cardDeck.selectRandomCards(CardSize.TWO), new GameMoney(1000)),
-                        new Participant("프람", cardDeck.selectRandomCards(CardSize.TWO), new GameMoney(1000)),
-                        new Participant("폰드", cardDeck.selectRandomCards(CardSize.TWO), new GameMoney(1000))
+                        new Participant(new Name("도비"), cardDeck.selectRandomCards(CardSize.TWO), new GameMoney(1000)),
+                        new Participant(new Name("리사"), cardDeck.selectRandomCards(CardSize.TWO), new GameMoney(1000)),
+                        new Participant(new Name("명오"), cardDeck.selectRandomCards(CardSize.TWO), new GameMoney(1000)),
+                        new Participant(new Name("제우스"), cardDeck.selectRandomCards(CardSize.TWO), new GameMoney(1000)),
+                        new Participant(new Name("호티"), cardDeck.selectRandomCards(CardSize.TWO), new GameMoney(1000)),
+                        new Participant(new Name("초롱"), cardDeck.selectRandomCards(CardSize.TWO), new GameMoney(1000)),
+                        new Participant(new Name("조이썬"), cardDeck.selectRandomCards(CardSize.TWO), new GameMoney(1000)),
+                        new Participant(new Name("프람"), cardDeck.selectRandomCards(CardSize.TWO), new GameMoney(1000)),
+                        new Participant(new Name("폰드"), cardDeck.selectRandomCards(CardSize.TWO), new GameMoney(1000))
                 )));
     }
 

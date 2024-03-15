@@ -6,6 +6,7 @@ import model.card.CardDeck;
 import model.card.CardSize;
 import model.card.Cards;
 import model.player.Dealer;
+import model.player.Name;
 import model.player.Participants;
 import model.player.ParticipantsBuilder;
 import view.InputView;
@@ -13,6 +14,7 @@ import view.OutputView;
 
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class BlackJackController {
 
@@ -44,7 +46,10 @@ public class BlackJackController {
     }
 
     private Participants createParticipant(Supplier<Cards> selectCard) {
-        List<String> names = inputView.requestParticipantNames();
+        List<Name> names = inputView.requestParticipantNames()
+                .stream()
+                .map(Name::new)
+                .toList();
 
         return new ParticipantsBuilder().names(names)
                 .gameMoneys(names.stream()

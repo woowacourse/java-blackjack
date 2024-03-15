@@ -1,5 +1,7 @@
 package view;
 
+import model.player.Name;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,8 +18,8 @@ public class InputView {
         return List.of(input.split(",", -1));
     }
 
-    public Integer requestParticipantMoney(String name) {
-        System.out.println(REQUEST_PARTICIPANT_MONEY_MESSAGE.formatted(name));
+    public Integer requestParticipantMoney(Name name) {
+        System.out.println(REQUEST_PARTICIPANT_MONEY_MESSAGE.formatted(name.getName()));
 
         String input = in.nextLine();
 
@@ -27,8 +29,8 @@ public class InputView {
         return Integer.parseInt(input);
     }
 
-    public boolean isOneMoreCard(String name) {
-        System.out.println(REQUEST_ONE_MORE_CARD_MESSAGE.formatted(name));
+    public boolean isOneMoreCard(Name name) {
+        System.out.println(REQUEST_ONE_MORE_CARD_MESSAGE.formatted(name.getName()));
 
         String input = in.nextLine();
         if (Command.YES.compareTo(input)) {

@@ -3,6 +3,7 @@ package model;
 import model.card.CardDeck;
 import model.card.Cards;
 import model.player.Dealer;
+import model.player.Name;
 import model.player.Participants;
 
 import java.util.LinkedHashMap;
@@ -38,7 +39,7 @@ public class BlackJack {
         }
     }
 
-    public void decideParticipantsPlay(Predicate<String> inputForMoreCard, BiConsumer<String, Cards> printParticipantsCard) {
+    public void decideParticipantsPlay(Predicate<Name> inputForMoreCard, BiConsumer<Name, Cards> printParticipantsCard) {
         participants.offerCardToParticipants(inputForMoreCard, printParticipantsCard, cardDeck::selectRandomCard);
     }
 
@@ -49,17 +50,17 @@ public class BlackJack {
         }
     }
 
-    public Map<String, Cards> matchUsersNameAndCards() {
-        Map<String, Cards> matchUser = new LinkedHashMap<>(matchDealerNameAndCards());
+    public Map<Name, Cards> matchUsersNameAndCards() {
+        Map<Name, Cards> matchUser = new LinkedHashMap<>(matchDealerNameAndCards());
         matchUser.putAll(matchParticipantsNameAndCards());
         return matchUser;
     }
 
-    private Map<String, Cards> matchDealerNameAndCards() {
+    private Map<Name, Cards> matchDealerNameAndCards() {
         return Map.of(dealer.getName(), dealer.getCards());
     }
 
-    private Map<String, Cards> matchParticipantsNameAndCards() {
+    private Map<Name, Cards> matchParticipantsNameAndCards() {
         return participants.matchParticipantNameAndCards();
     }
 
@@ -71,11 +72,11 @@ public class BlackJack {
                 .sum() * -1;
     }
 
-    public Map<String, Integer> matchNameAndRevenues() {
+    public Map<Name, Integer> matchNameAndRevenues() {
         return participants.matchNameAndRevenues(dealer);
     }
 
-    public List<String> findParticipantsName() {
+    public List<Name> findParticipantsName() {
         return participants.findParticipantsName();
     }
 }
