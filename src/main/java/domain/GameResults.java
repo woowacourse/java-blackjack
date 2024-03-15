@@ -9,9 +9,11 @@ import java.util.Map;
 
 public class GameResults {
     private final Map<PlayerName, Integer> result;
+    private final int dealerBettingResult;
 
-    private GameResults(final Map<PlayerName, Integer> result) {
+    private GameResults(final Map<PlayerName, Integer> result, int dealerBettingResult) {
         this.result = result;
+        this.dealerBettingResult = dealerBettingResult;
     }
 
     public static GameResults of(
@@ -19,7 +21,8 @@ public class GameResults {
         Map<PlayerName, Integer> result = new HashMap<>();
         playerGameResults.forEach(
                 (key, value) -> result.put(key, getBettingResult(key, value, betting)));
-        return new GameResults(result);
+        int dealerBettingResult = -1 * result.values().stream().reduce(0, Integer::sum);
+        return new GameResults(result, dealerBettingResult);
     }
 
     public Map<PlayerName, Integer> getResult() {
@@ -27,7 +30,7 @@ public class GameResults {
     }
 
     public int getDealerBettingResult() {
-        return -1 * result.values().stream().reduce(0, Integer::sum);
+        return dealerBettingResult;
     }
 
     private static int getBettingResult(
