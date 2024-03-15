@@ -36,10 +36,10 @@ public class Names {
         return names.size();
     }
 
-    public Name get(final int i) {
-        if (i >= size()) {
-            throw new IllegalArgumentException("이름의 숫자보다 많은 플레이어는 만들 수 없습니다.");
+    public Name get(final int index) {
+        if (index >= size()) {
+            throw new IllegalArgumentException("존재하는 이름만큼만 조회할 수 있습니다.");
         }
-        return names.get(i);
+        return names.get(index);
     }
 }
