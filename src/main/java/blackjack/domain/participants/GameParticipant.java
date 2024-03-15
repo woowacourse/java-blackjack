@@ -6,8 +6,8 @@ public abstract class GameParticipant {
 
     public static final int MAX_SCORE = 21;
 
-    protected final Name name;
     protected final Hands hands;
+    private final Name name;
 
     public GameParticipant(Name name, Hands hands) {
         this.name = name;

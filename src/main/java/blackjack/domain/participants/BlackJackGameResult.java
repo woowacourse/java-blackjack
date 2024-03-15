@@ -11,10 +11,10 @@ public class BlackJackGameResult {
 
     public BlackJackGameResult(List<Player> players, Dealer dealer) {
         this.gameResult = new LinkedHashMap<>();
-        players.forEach(player -> gameResult.put(player, calculateState(player, dealer)));
+        players.forEach(player -> gameResult.put(player, resolveResult(player, dealer)));
     }
 
-    private Result calculateState(Player player, Dealer dealer) {
+    private Result resolveResult(Player player, Dealer dealer) {
         if (isWin(player, dealer)) {
             return Result.WIN;
         }
@@ -41,7 +41,7 @@ public class BlackJackGameResult {
         return player.isBlackjack() && dealer.isBlackjack();
     }
 
-    public Result getState(Player player) {
+    public Result getResult(Player player) {
         return gameResult.get(player);
     }
 

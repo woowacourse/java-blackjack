@@ -105,7 +105,7 @@ public class BlackjackGame {
         BlackJackGameResult blackJackGameResult = gameBoard.calculateGameResult();
         blackJackGameResult.getGameResult()
                 .keySet()
-                .forEach((player) -> betting.calculateProfit(player, blackJackGameResult.getState(player)));
+                .forEach((player) -> betting.calculateProfit(player, blackJackGameResult.getResult(player)));
         outputView.printGameResult(betting);
     }
 }
