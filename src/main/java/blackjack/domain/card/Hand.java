@@ -19,6 +19,14 @@ public class Hand {
         return new Hand(cardDeck.popCards(INITIAL_HAND_SIZE));
     }
 
+    public Score calculateScore() {
+        int sum = calculateCardSummation();
+        if (hasAce() && (sum + ACE_WEIGHT) <= BUST_THRESHOLD) {
+            sum += ACE_WEIGHT;
+        }
+        return new Score(sum);
+    }
+
     public int calculateCardSummation() {
         return cards.stream()
                 .map(Card::getCardNumber)
@@ -26,25 +34,17 @@ public class Hand {
                 .sum();
     }
 
-    public void appendCard(Card card) {
-        cards.add(card);
-    }
-
-    public boolean hasAce() {
+    private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
     }
 
-    public boolean isBlackJack() {
-        return calculateScore().isMaxScore() && cards.size() == INITIAL_HAND_SIZE;
+    public void appendCard(Card card) {
+        cards.add(card);
     }
 
-    public Score calculateScore() {
-        int sum = calculateCardSummation();
-        if (hasAce() && (sum + ACE_WEIGHT) <= BUST_THRESHOLD) {
-            sum += ACE_WEIGHT;
-        }
-        return new Score(sum);
+    public boolean isBlackJack() {
+        return calculateScore().isMaxScore() && cards.size() == INITIAL_HAND_SIZE;
     }
 
     public int countDraw() {

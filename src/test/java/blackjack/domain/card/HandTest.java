@@ -40,20 +40,6 @@ class HandTest {
         assertThat(hand.countDraw()).isEqualTo(1);
     }
 
-    @DisplayName("핸드에 에이스 카드가 존재하는지 확인할 수 있다")
-    @Test
-    void testHasAceInHand() {
-        Hand hand = TestHandCreator.of(1, 1, 1, 3, 4, 5);
-        assertThat(hand.hasAce()).isTrue();
-    }
-
-    @DisplayName("핸드에 에이스 카드가 없는 경우를 알 수 있다")
-    @Test
-    void testHasNoAceInHand() {
-        Hand hand = TestHandCreator.of(3, 4, 5);
-        assertThat(hand.hasAce()).isFalse();
-    }
-
     @DisplayName("적절한 점수를 계산할 수 있다 - Ace 카드 없음")
     @Test
     void testCalculateScoreWithNoAce() {
