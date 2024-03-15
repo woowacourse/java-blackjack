@@ -31,17 +31,25 @@ public class BlackjackMachine {
         BetInfo betInfo = BetInfo.withNoEntry();
         ProfitInfo profitInfo = ProfitInfo.withNoEntry();
         PlayerResults playerResults = PlayerResults.withNoEntry();
-
         Players players = makePlayers();
+
+        playGame(players, betInfo, dealer, deck, playerResults, profitInfo);
+        showResult(dealer, players, profitInfo);
+    }
+
+    private void showResult(Dealer dealer, Players players, ProfitInfo profitInfo) {
+        showCardsAndScores(dealer, players);
+        showProfits(players, profitInfo);
+    }
+
+    private void playGame(Players players, BetInfo betInfo, Dealer dealer, Deck deck, PlayerResults playerResults,
+        ProfitInfo profitInfo) {
         readBetAmount(players, betInfo);
         distributeStartingCards(dealer, players, deck);
         playPlayerTurns(players, deck);
         playDealerTurn(dealer, deck);
-
         makeResults(dealer, players, playerResults);
         distributeMoney(players, playerResults, betInfo, profitInfo);
-        showCardsAndScores(dealer, players);
-        showProfits(players, profitInfo);
     }
 
     private Players makePlayers() {
