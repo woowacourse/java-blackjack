@@ -12,6 +12,7 @@ import model.Choice;
 import model.casino.CardDispenser;
 import model.casino.DividendPolicyFactory;
 import model.casino.RandomCardShuffleMachine;
+import model.dto.FinalOddsResult;
 import model.dto.GameCompletionResult;
 import model.money.BetTable;
 import model.money.DividendPolicy;
@@ -40,6 +41,7 @@ public class Casino {
         proceedDealerTurn();
         showFinalFaceUpResults();
         distributeAllMoney();
+        showFinalOdds();
     }
 
     private void insertAllBetAmount() {
@@ -108,6 +110,8 @@ public class Casino {
 
     private void distributeAllMoney() {
         getInstance().findAllParticipantNames()
+                .stream()
+                .filter(name -> !name.equals(DEALER_NAME))
                 .forEach(this::distributeMoney);
     }
 
@@ -116,6 +120,13 @@ public class Casino {
         Participant player = participants.findParticipantByName(name);
         DividendPolicy policyInProceed = DividendPolicyFactory.findPolicy(dealer, player);
         BetTable.getInstance().remittanceByPolicy(name, policyInProceed);
+    }
+
+    private void showFinalOdds() {
+        FinalOddsResult dealerFinalOddsResult = BetTable.getInstance().getDealerFinalOddsResult();
+        List<FinalOddsResult> playerFinalOddsResults = getInstance().getPlayerFinalOddsResults();
+
+        OutputView.printFinalGameResult(dealerFinalOddsResult, playerFinalOddsResults);
     }
 
 }

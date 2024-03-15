@@ -32,6 +32,10 @@ public abstract class Participant {
         return cardDeck.isBust();
     }
 
+    public boolean isInitBlackjack() {
+        return cardDeck.isBlackJack() && cardDeck.cardSize() == 2;
+    }
+
     public boolean isSameName(Name name) {
         return this.name.equals(name);
     }

@@ -1,9 +1,7 @@
 package model.casino;
 
 import model.money.DividendPolicy;
-import model.participant.Dealer;
 import model.participant.Participant;
-import model.participant.Player;
 
 public class DividendPolicyFactory {
 
@@ -12,21 +10,20 @@ public class DividendPolicyFactory {
         if (policyInProceed != DividendPolicy.UNCERTAIN) {
             return policyInProceed;
         }
-        return findPolicyAfterProceed((Dealer)dealer, (Player)player);
+        return findPolicyAfterProceed(dealer, player);
     }
 
     private static DividendPolicy findPolicyInProceed(Participant participant) {
-        Player player = (Player) participant;
-        if (player.isInitBlackjack()) {
+        if (participant.isInitBlackjack()) {
             return DividendPolicy.INIT_BLACKJACK;
         }
-        if (player.isBustHand()) {
+        if (participant.isBustHand()) {
             return DividendPolicy.NORMAL_LOSE;
         }
         return DividendPolicy.UNCERTAIN;
     }
 
-    private static DividendPolicy findPolicyAfterProceed(Dealer dealer, Player player) {
+    private static DividendPolicy findPolicyAfterProceed(Participant dealer, Participant player) {
         if (!dealer.isBustHand() && !player.isBustHand()) {
             return getDividendPolicyHasNoBust(dealer, player);
         }
@@ -39,7 +36,7 @@ public class DividendPolicyFactory {
         throw new IllegalStateException();
     }
 
-    private static DividendPolicy getDividendPolicyHasNoBust(Dealer dealer, Player player) {
+    private static DividendPolicy getDividendPolicyHasNoBust(Participant dealer, Participant player) {
         if (dealer.getHand() > player.getHand()) {
             return DividendPolicy.NORMAL_LOSE;
         }
