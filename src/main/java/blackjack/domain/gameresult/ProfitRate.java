@@ -9,7 +9,8 @@ public enum ProfitRate {
     BLACKJACK_WIN_RATE(BLACKJACK_WIN, 1.5),
     WIN_RATE(WIN, 1),
     LOSE_PROFIT(LOSE, -1),
-    DRAW_PROFIT(DRAW, 0);
+    DRAW_PROFIT(DRAW, 0),
+    ;
 
     private final Result result;
     private final double rate;

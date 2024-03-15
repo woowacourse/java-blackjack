@@ -113,7 +113,7 @@ public class OutputView {
     }
 
     private static String resolveCardMessage(Card card) {
-        return ValueView.findValueName(card.getValue())
-                + KindView.findKindName(card.getKind());
+        return CardNumberView.findValueName(card.getValue())
+                + CardKindView.findKindName(card.getKind());
     }
 }

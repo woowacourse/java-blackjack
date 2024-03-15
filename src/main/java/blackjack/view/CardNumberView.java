@@ -5,23 +5,25 @@ import blackjack.domain.card.CardNumber;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public enum ValueView {
+import static blackjack.domain.card.CardNumber.*;
 
-    ACE_VIEW(CardNumber.ACE, "A"), TWO_VIEW(CardNumber.TWO, "2"), THREE_VIEW(CardNumber.THREE, "3"),
-    FOUR_VIEW(CardNumber.FOUR, "4"), FIVE_VIEW(CardNumber.FIVE, "5"), SIX_VIEW(CardNumber.SIX, "6"),
-    SEVEN_VIEW(CardNumber.SEVEN, "7"), EIGHT_VIEW(CardNumber.EIGHT, "8"), NINE_VIEW(CardNumber.NINE, "9"),
-    TEN_VIEW(CardNumber.TEN, "10"), JACK_VIEW(CardNumber.JACK, "J"), QUEEN_VIEW(CardNumber.QUEEN, "Q"), KING_VIEW(CardNumber.KING, "K");
+public enum CardNumberView {
+
+    ACE_VIEW(ACE, "A"), TWO_VIEW(TWO, "2"), THREE_VIEW(THREE, "3"),
+    FOUR_VIEW(FOUR, "4"), FIVE_VIEW(FIVE, "5"), SIX_VIEW(SIX, "6"),
+    SEVEN_VIEW(SEVEN, "7"), EIGHT_VIEW(EIGHT, "8"), NINE_VIEW(NINE, "9"),
+    TEN_VIEW(TEN, "10"), JACK_VIEW(JACK, "J"), QUEEN_VIEW(QUEEN, "Q"), KING_VIEW(KING, "K");
 
     private final CardNumber cardNumber;
     private final String valueName;
 
-    ValueView(CardNumber cardNumber, String valueName) {
+    CardNumberView(CardNumber cardNumber, String valueName) {
         this.cardNumber = cardNumber;
         this.valueName = valueName;
     }
 
     public static String findValueName(CardNumber cardNumber) {
-        Optional<ValueView> targetValueView = Stream.of(values())
+        Optional<CardNumberView> targetValueView = Stream.of(values())
                 .filter(view -> view.cardNumber == cardNumber)
                 .findAny();
 
