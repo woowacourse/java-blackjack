@@ -24,7 +24,7 @@ public class Deck {
         return new Deck(cards);
     }
 
-    static Deck withCustomCards(Card ... cards) {
+    static Deck withCustomCards(Card... cards) {
         return new Deck(new ArrayList<>(Arrays.stream(cards).toList()));
     }
 

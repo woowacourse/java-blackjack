@@ -7,13 +7,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class MoneyTest {
-
     @Test
     @DisplayName("금액은 숫자 문자열로 초기화 가능하다.")
-    void createMoney(){
+    void createMoney() {
         Assertions.assertThatCode(() -> new Money("100"))
                 .doesNotThrowAnyException();
     }
+
     @ParameterizedTest
     @DisplayName("금액이 숫자가 아닌 값이 나올경우 예외가 발생한다.")
     @ValueSource(strings = {"n", "0x23", "abc", "  "})
@@ -37,6 +37,7 @@ class MoneyTest {
         Money money = new Money("100");
         Assertions.assertThat(money.getAmount()).isEqualTo("100");
     }
+
     @Test
     @DisplayName("금액은 더해서 새로운 금액을 만들 수 있다.")
     void add() {

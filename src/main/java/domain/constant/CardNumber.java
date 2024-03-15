@@ -14,7 +14,7 @@ public enum CardNumber {
     JACK(10, "J"),
     QUEEN(10, "Q"),
     KING(10, "K");
-
+    
     private final int score;
     private final String symbol;
 

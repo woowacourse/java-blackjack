@@ -19,7 +19,7 @@ public class BettingResult {
                 .filter(player -> !GamerResult.DRAW.equals(dealer.judge(player)))
                 .map(player -> player.bet(dealer))
                 .map(Money::negative)
-                .reduce(Money.ZERO,Money::add);
+                .reduce(Money.ZERO, Money::add);
     }
 
     private Map<Name, Money> calculatePlayersResult(Dealer dealer, Players players) {

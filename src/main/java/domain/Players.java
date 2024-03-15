@@ -5,6 +5,7 @@ import java.util.List;
 public class Players {
     private static final int MAX_PLAYERS_COUNT = 8;
     private static final Name DEALER_NAME = new Name("딜러");
+
     private final List<Player> players;
 
     public Players(List<Player> players) {
@@ -23,7 +24,6 @@ public class Players {
     private void validatePlayerName(List<Player> players) {
         boolean isDealerExist = players.stream()
                 .anyMatch(player -> player.hasName(DEALER_NAME));
-
         if (isDealerExist) {
             throw new IllegalArgumentException("플레이어 이름을 \"딜러\"로 생성할 수 없습니다.");
         }

@@ -35,7 +35,9 @@ public abstract class Gamer {
         return hand.isBust();
     }
 
-    public boolean isBlackJack() { return hand.isBlackJack(); }
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
 
     public GamerResult judge(Gamer opponent) {
         return this.hand.judge(opponent.hand);

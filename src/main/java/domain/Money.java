@@ -5,6 +5,7 @@ import java.util.Objects;
 
 public class Money {
     public static final Money ZERO = new Money(BigDecimal.ZERO);
+
     private final BigDecimal amount;
 
     private Money(BigDecimal amount) {
@@ -20,6 +21,7 @@ public class Money {
         validateNull(amount);
         validateNumeric(amount);
     }
+
     private void validateNull(String amount) {
         if (amount == null) {
             throw new IllegalArgumentException("금액 문자열은 null이 될 수 없습니다.");
@@ -29,7 +31,7 @@ public class Money {
     private void validateNumeric(String amount) {
         try {
             Double.parseDouble(amount);
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException("금액과 관련된 연산은 숫자만 입력 가능합니다.");
         }
     }
@@ -54,6 +56,7 @@ public class Money {
     public Money negative() {
         return new Money(this.amount.negate());
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

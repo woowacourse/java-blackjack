@@ -2,7 +2,6 @@ package domain;
 
 import domain.constant.CardNumber;
 import domain.constant.CardType;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -52,7 +51,6 @@ class BettingResultTest {
                 new Player(new Name("lose2"), new Money("100")))
         );
     }
-
 
     @Test
     @DisplayName("Player들의 배팅 결과를 반환한다.")

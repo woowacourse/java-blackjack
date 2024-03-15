@@ -22,11 +22,9 @@ public class Hand {
 
     public int getResultScore() {
         int total = getTotalScore();
-
         if (total <= BUST_THRESHOLD - ACE_VALUE_GAP && containsAce()) {
             return total + ACE_VALUE_GAP;
         }
-
         return total;
     }
 
@@ -68,7 +66,6 @@ public class Hand {
         if (this.isBlackJack() && opponent.isBlackJack()) {
             return GamerResult.DRAW;
         }
-
         if (this.isBlackJack()) {
             return GamerResult.WIN;
         }

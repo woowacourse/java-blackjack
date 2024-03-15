@@ -43,7 +43,7 @@ public class BlackJackGame {
     private static Player setBettingMoney(Name name) {
         String input = InputView.readBettingMoney(CONSOLE_READER, name.name());
         OutputView.printNewLine();
-        return new Player(name,new Money(input));
+        return new Player(name, new Money(input));
     }
 
     private static void playInitialStep(Dealer dealer, Players players, Deck deck) {
@@ -51,7 +51,6 @@ public class BlackJackGame {
             player.pickCards(deck, INITIAL_CARD_COUNT);
         }
         dealer.pickCards(deck, INITIAL_CARD_COUNT);
-
         OutputView.printDealerInitialCards(dealer.getCards());
         printInitialPlayersCards(players);
     }
