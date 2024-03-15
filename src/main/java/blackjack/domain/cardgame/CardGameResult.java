@@ -18,9 +18,9 @@ public record CardGameResult(Map<Name, WinningStatus> totalResult) {
         return new CardGameResult(
                 players.stream()
                         .collect(Collectors.toMap(
-                                Player::getName,
+                                Player::name,
                                 player -> WinningStatus.doesPlayerWin(dealer, player),
-                                (key, value) -> key,
+                                (name, status) -> name,
                                 LinkedHashMap::new
                         )));
     }

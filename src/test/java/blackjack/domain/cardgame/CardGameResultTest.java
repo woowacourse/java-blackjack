@@ -61,7 +61,7 @@ class CardGameResultTest {
         var result = CardGameResult.of(dealer, List.of(player))
                 .totalResult();
 
-        assertThat(result.get(player.getName())).isEqualTo(WinningStatus.LOSE);
+        assertThat(result.get(player.name())).isEqualTo(WinningStatus.LOSE);
     }
 
     @Test
@@ -72,7 +72,7 @@ class CardGameResultTest {
         var result = CardGameResult.of(dealer, List.of(player))
                 .totalResult();
 
-        assertThat(result.get(player.getName())).isEqualTo(WinningStatus.WIN);
+        assertThat(result.get(player.name())).isEqualTo(WinningStatus.WIN);
     }
 
     @Test
@@ -87,7 +87,7 @@ class CardGameResultTest {
         var result = CardGameResult.of(dealer, List.of(player))
                 .totalResult();
 
-        assertThat(result.get(player.getName())).isEqualTo(WinningStatus.LOSE);
+        assertThat(result.get(player.name())).isEqualTo(WinningStatus.LOSE);
     }
 
     @Test
@@ -101,7 +101,7 @@ class CardGameResultTest {
         var result = CardGameResult.of(dealer, List.of(player))
                 .totalResult();
 
-        assertThat(result.get(player.getName())).isEqualTo(WinningStatus.WIN);
+        assertThat(result.get(player.name())).isEqualTo(WinningStatus.WIN);
     }
 
     @Test
@@ -112,7 +112,7 @@ class CardGameResultTest {
         var result = CardGameResult.of(dealer, List.of(player))
                 .totalResult();
 
-        assertThat(result.get(player.getName())).isEqualTo(WinningStatus.WIN);
+        assertThat(result.get(player.name())).isEqualTo(WinningStatus.WIN);
     }
 
     @Test

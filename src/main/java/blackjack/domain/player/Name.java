@@ -2,15 +2,12 @@ package blackjack.domain.player;
 
 import java.util.Objects;
 
-public class Name {
+public record Name(String value) {
     private static final int MINIMUM_LENGTH = 1;
     private static final int MAXIMUM_LENGTH = 10;
 
-    private final String value;
-
-    public Name(final String value) {
+    public Name {
         validateLength(value);
-        this.value = value;
     }
 
     private void validateLength(final String value) {
@@ -33,12 +30,4 @@ public class Name {
         return Objects.equals(value, name.value);
     }
 
-    @Override
-    public int hashCode() {
-        return value != null ? value.hashCode() : 0;
-    }
-
-    public String getValue() {
-        return value;
-    }
 }

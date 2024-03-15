@@ -15,16 +15,24 @@ public class BetDetails {
     }
 
     public ProfitDetails calculateProfit(final CardGameResult result) {
-        final Map<Name, Profit> map = new LinkedHashMap<>();
+        final Map<Name, Profit> profitDetails = new LinkedHashMap<>();
 
-        for (final var entries : result.totalResult().entrySet()) {
-            final Name name = entries.getKey();
-            final WinningStatus status = entries.getValue();
-            final Money money = findBettingMoney(name);
-            map.put(name, Profit.of(money, status));
+        for (final var nameAndStatus : result.totalResult().entrySet()) {
+            final Name name = extractName(nameAndStatus);
+            final WinningStatus status = extractStatus(nameAndStatus);
+            final Profit profit = Profit.of(findBettingMoney(name), status);
+            profitDetails.put(name, profit);
         }
 
-        return new ProfitDetails(map);
+        return new ProfitDetails(profitDetails);
+    }
+
+    private Name extractName(final Map.Entry<Name, WinningStatus> nameAndStatus) {
+        return nameAndStatus.getKey();
+    }
+
+    private WinningStatus extractStatus(final Map.Entry<Name, WinningStatus> nameAndStatus) {
+        return nameAndStatus.getValue();
     }
 
     private Money findBettingMoney(final Name name) {

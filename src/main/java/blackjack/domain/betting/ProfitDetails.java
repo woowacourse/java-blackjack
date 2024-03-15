@@ -13,8 +13,11 @@ public class ProfitDetails {
     }
 
     public Profit getDealerProfit() {
-        int sum = profits.values().stream().mapToInt(Profit::value).sum();
-        return new Profit(-sum);
+        final int playersProfitSum = profits.values()
+                .stream()
+                .mapToInt(Profit::value)
+                .sum();
+        return new Profit(-playersProfitSum);
     }
 
     public Map<Name, Profit> details() {

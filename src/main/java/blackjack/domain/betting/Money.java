@@ -1,6 +1,7 @@
 package blackjack.domain.betting;
 
 public record Money(int value) {
+
     public Money {
         validateMinimum(value);
     }

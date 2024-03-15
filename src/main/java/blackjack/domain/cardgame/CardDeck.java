@@ -3,7 +3,7 @@ package blackjack.domain.cardgame;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import blackjack.domain.player.Player;
+import blackjack.domain.player.Participant;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -37,21 +37,20 @@ public class CardDeck {
                 .map(cardNumber -> new Card(cardNumber, cardShape));
     }
 
-    public void giveInitialCards(Player player) {
+    public void giveInitialCards(final Participant participant) {
         for (int i = 0; i < INITIAL_CARD_NUMBER; i++) {
-            giveCard(player);
+            giveCard(participant);
         }
     }
 
-    public void giveCard(final Player player) {
-        player.addCard(this.draw());
+    public void giveCard(final Participant participant) {
+        participant.addCard(this.draw());
     }
 
     private Card draw() {
         if (deck.size() == 0) {
             throw new IllegalStateException("카드가 존재하지 않습니다.");
         }
-
         return deck.pop();
     }
 }

@@ -19,10 +19,10 @@ public enum WinningStatus {
         if (!dealer.isAlive()) {
             return WinningStatus.WIN;
         }
-        if (dealer.getScore() == player.getScore()) {
+        if (dealer.score() == player.score()) {
             return WinningStatus.PUSH;
         }
-        if (dealer.getScore() < player.getScore()) {
+        if (dealer.score() < player.score()) {
             return WinningStatus.WIN;
         }
         return WinningStatus.LOSE;

@@ -2,15 +2,19 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 
-public class Dealer extends Player {
+public class Dealer extends Participant {
     private static final int HIT_CONDITION = 16;
 
+    private Dealer(final Hand hand, final Name name) {
+        super(hand, name);
+    }
+
     public Dealer() {
-        super(new Name("딜러"));
+        this(new Hand(), new Name("딜러"));
     }
 
     public boolean isMoreCardNeeded() {
-        return this.getScore() <= HIT_CONDITION;
+        return this.score() <= HIT_CONDITION;
     }
 
     public Card getFirstCard() {
