@@ -137,6 +137,21 @@ class BlackjackGameTest {
             GameResult result = blackjackGame.createGameResult(dealer, players);
             assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), ResultStatus.WIN);
         }
+
+        @Test
+        void 딜러가_일반_점수_21이면_이긴다() {
+            CardDeck cardDeck = new CardDeck(
+                    카드들(카드(Denomination.SIX), 카드(Denomination.ACE), 카드(Denomination.TEN), 카드(Denomination.FIVE),
+                            카드(Denomination.QUEEN)));
+            BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
+            Dealer dealer = new Dealer();
+            Players players = 플레이어들("프린");
+            blackjackGame.initGame(dealer, players);
+            blackjackGame.dealCardTo(dealer);
+
+            GameResult result = blackjackGame.createGameResult(dealer, players);
+            assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), ResultStatus.WIN);
+        }
     }
 
     @Nested

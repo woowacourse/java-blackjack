@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Cards {
     private static final int INIT_CARD_COUNT = 2;
+
     private final List<Card> cards;
 
     public Cards() {
@@ -13,9 +14,6 @@ public class Cards {
     }
 
     public void addCard(Card card) {
-        if (sumAllCards().isBustScore()) {
-            throw new IllegalStateException("버스트 상태에서는 카드를 추가할 수 없습니다.");
-        }
         cards.add(card);
     }
 
@@ -38,6 +36,14 @@ public class Cards {
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == INIT_CARD_COUNT && sumAllCards().isBlackjackScore();
+    }
+
+    public boolean isBust() {
+        return sumAllCards().isBustScore();
     }
 
     public List<Card> getCards() {

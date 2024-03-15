@@ -36,20 +36,32 @@ public class BlackjackGame {
         GameResult gameResult = new GameResult();
         for (Player player : players.getPlayers()) {
             Score playerScore = player.calculateScore();
-            ResultStatus status = getResultStatus(playerScore, dealerScore);
+            ResultStatus status = getResultStatusByScore(dealer, player);
             gameResult.record(player, status);
         }
         return gameResult;
     }
 
-    private ResultStatus getResultStatus(Score playerScore, Score dealerScore) {
-        if (playerScore.isBustScore()) {
+    private ResultStatus getResultStatusByScore(Dealer dealer, Player player) {
+        if (player.isBust()) {
             return ResultStatus.LOSE;
         }
-        if (dealerScore.isBustScore()) {
+        if (dealer.isBust()) {
             return ResultStatus.WIN;
         }
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return ResultStatus.DRAW;
+        }
+        if (player.isBlackjack()) {
+            return ResultStatus.WIN;
+        }
+        if (dealer.isBlackjack()) {
+            return ResultStatus.LOSE;
+        }
+        return getResultStatusByScore(player.calculateScore(), dealer.calculateScore());
+    }
 
+    private ResultStatus getResultStatusByScore(Score playerScore, Score dealerScore) {
         if (playerScore.isGreaterThan(dealerScore)) {
             return ResultStatus.WIN;
         }

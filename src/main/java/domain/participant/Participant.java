@@ -28,11 +28,19 @@ public class Participant {
         return cards.sumAllCards();
     }
 
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return cards.isBust();
+    }
+
     public String getName() {
         return this.name.getValue();
     }
 
-    public List<Card> getCardList() {
+    public List<Card> getCardList() { // todo getAllCards
         return cards.getCards();
     }
 
