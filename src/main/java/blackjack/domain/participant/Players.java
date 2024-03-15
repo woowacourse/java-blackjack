@@ -8,11 +8,11 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public class Players2 {
+public class Players {
 
     private final List<Player> players;
 
-    public Players2(List<Player> players) {
+    public Players(List<Player> players) {
         validate(players);
         this.players = players;
     }
@@ -40,13 +40,13 @@ public class Players2 {
                 .count();
     }
 
-    public static Players2 create(List<String> rawNames) {
+    public static Players create(List<String> rawNames) {
         List<Player> players = rawNames.stream()
                 .map(Name::new)
                 .map(Player::new)
                 .toList();
 
-        return new Players2(players);
+        return new Players(players);
     }
 
     public void deal(CardDeck cardDeck) {

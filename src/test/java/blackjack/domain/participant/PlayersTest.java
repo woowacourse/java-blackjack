@@ -15,12 +15,12 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class Players2Test {
+class PlayersTest {
 
     @DisplayName("플레이어가 없으면 예외가 발생한다.")
     @Test
     void testCreatePlayersWithEmptyEntry() {
-        assertThatThrownBy(() -> new Players2(List.of()))
+        assertThatThrownBy(() -> new Players(List.of()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -30,7 +30,7 @@ class Players2Test {
         Player player1 = new Player(new Name("pobi"));
         Player player = new Player(new Name("pobi"));
 
-        assertThatThrownBy(() -> new Players2(List.of(player1, player)))
+        assertThatThrownBy(() -> new Players(List.of(player1, player)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -40,7 +40,7 @@ class Players2Test {
         Player player1 = new Player(new Name("pobi"));
         Player player = new Player(new Name("jason"));
 
-        assertThatCode(() -> new Players2(List.of(player1, player)))
+        assertThatCode(() -> new Players(List.of(player1, player)))
                 .doesNotThrowAnyException();
     }
 
@@ -51,7 +51,7 @@ class Players2Test {
         List<String> playerNames = List.of("pobi", "jason");
 
         // when
-        Players2 players = Players2.create(playerNames);
+        Players players = Players.create(playerNames);
 
         // then
         assertThat(players.getPlayers()).containsExactly(
@@ -84,7 +84,7 @@ class Players2Test {
         ));
         Player jason = new Player(new Name("jason"), jasonHand);
 
-        Players2 players = new Players2(List.of(pobi, jason));
+        Players players = new Players(List.of(pobi, jason));
 
         // when
         PlayersResult playersResult = players.judge(dealer);

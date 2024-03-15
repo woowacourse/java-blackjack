@@ -7,7 +7,7 @@ import blackjack.domain.game.Result;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players2;
+import blackjack.domain.participant.Players;
 import blackjack.view.mapper.CardRankMapper;
 import blackjack.view.mapper.CardSuitMapper;
 import blackjack.view.mapper.ResultStateMapper;
@@ -20,12 +20,12 @@ public class MessageResolver {
     private static final String DEALER_NAME = "딜러";
     private static final String HAND_FORMAT = "%s 카드: %s";
 
-    public String resolveDealDescriptionMessage(Players2 players) {
+    public String resolveDealDescriptionMessage(Players players) {
         String message = String.format("%s와 %s에게 2장을 나누었습니다.", DEALER_NAME, resolveNamesMessage(players));
         return String.join("", LINE_SEPARATOR, message);
     }
 
-    private String resolveNamesMessage(Players2 players) {
+    private String resolveNamesMessage(Players players) {
         return players.getPlayers().stream()
                 .map(Player::getName)
                 .map(Name::value)
@@ -36,7 +36,7 @@ public class MessageResolver {
         return String.format(HAND_FORMAT, DEALER_NAME, resolveHandMessage(dealer.revealHand()));
     }
 
-    public String resolveDealToPlayersMessage(Players2 players) {
+    public String resolveDealToPlayersMessage(Players players) {
         return players.getPlayers().stream()
                 .map(this::resolveDealToPlayerMessage)
                 .collect(Collectors.joining(LINE_SEPARATOR));
@@ -94,7 +94,7 @@ public class MessageResolver {
         return String.join("", LINE_SEPARATOR, message);
     }
 
-    public String resolvePlayersHandScoreMessage(Players2 players) {
+    public String resolvePlayersHandScoreMessage(Players players) {
         return players.getPlayers().stream()
                 .map(this::resolvePlayerHandScoreMessage)
                 .collect(Collectors.joining(LINE_SEPARATOR));

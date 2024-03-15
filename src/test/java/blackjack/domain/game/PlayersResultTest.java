@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players2;
+import blackjack.domain.participant.Players;
 import fixture.DealerFixture;
 import fixture.PlayerFixture;
 import java.util.List;
@@ -22,7 +22,7 @@ class PlayersResultTest {
         Player pobi = PlayerFixture.createPobi2();
         Player jason = PlayerFixture.createJason2();
 
-        Players2 players = new Players2(List.of(pobi, jason));
+        Players players = new Players(List.of(pobi, jason));
 
         // when
         PlayersResult playersResult = players.judge(dealer);
@@ -40,7 +40,7 @@ class PlayersResultTest {
         Player pobi = PlayerFixture.createPobi2();
         Player jason = PlayerFixture.createJason2();
 
-        Players2 players = new Players2(List.of(pobi, jason));
+        Players players = new Players(List.of(pobi, jason));
 
         // when
         PlayersResult playersResult = players.judge(dealer);
@@ -58,7 +58,7 @@ class PlayersResultTest {
         Player pobi = PlayerFixture.createPobi2();
         Player jason = PlayerFixture.createJason2();
 
-        Players2 players = new Players2(List.of(pobi, jason));
+        Players players = new Players(List.of(pobi, jason));
 
         // when
         PlayersResult playersResult = players.judge(dealer);

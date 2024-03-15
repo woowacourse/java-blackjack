@@ -3,7 +3,7 @@ package blackjack.view;
 import blackjack.domain.game.PlayersResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players2;
+import blackjack.domain.participant.Players;
 
 public class OutputView {
 
@@ -13,7 +13,7 @@ public class OutputView {
         this.messageResolver = messageResolver;
     }
 
-    public void printDealToAll(Dealer dealer, Players2 players) {
+    public void printDealToAll(Dealer dealer, Players players) {
         System.out.println(messageResolver.resolveDealDescriptionMessage(players));
         System.out.println(messageResolver.resolveDealToDealerMessage(dealer));
         System.out.println(messageResolver.resolveDealToPlayersMessage(players));
@@ -31,7 +31,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printParticipantsHandScore(Dealer dealer, Players2 players) {
+    public void printParticipantsHandScore(Dealer dealer, Players players) {
         System.out.println(messageResolver.resolveDealerHandScoreMessage(dealer));
         System.out.println(messageResolver.resolvePlayersHandScoreMessage(players));
     }

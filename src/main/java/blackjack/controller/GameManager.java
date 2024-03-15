@@ -4,7 +4,7 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.game.PlayersResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players2;
+import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -19,7 +19,7 @@ public class GameManager {
     }
 
     public void start() {
-        Players2 players = Players2.create(inputView.readNames());
+        Players players = Players.create(inputView.readNames());
         Dealer dealer = new Dealer();
 
         CardDeck cardDeck = CardDeck.createShuffledFullCardDeck();
@@ -29,19 +29,19 @@ public class GameManager {
         judge(players, dealer);
     }
 
-    private void deal(Players2 players, Dealer dealer, CardDeck cardDeck) {
+    private void deal(Players players, Dealer dealer, CardDeck cardDeck) {
         dealer.deal(cardDeck);
         players.deal(cardDeck);
         outputView.printDealToAll(dealer, players);
     }
 
-    private void draw(Players2 players, Dealer dealer, CardDeck cardDeck) {
+    private void draw(Players players, Dealer dealer, CardDeck cardDeck) {
         drawToPlayers(players, cardDeck);
         drawToDealer(dealer, cardDeck);
         outputView.printParticipantsHandScore(dealer, players);
     }
 
-    private void drawToPlayers(Players2 players, CardDeck cardDeck) {
+    private void drawToPlayers(Players players, CardDeck cardDeck) {
         players.draw(player -> drawToPlayer(player, cardDeck));
         outputView.printLineSeparator();
     }
@@ -64,7 +64,7 @@ public class GameManager {
         }
     }
 
-    private void judge(Players2 players, Dealer dealer) {
+    private void judge(Players players, Dealer dealer) {
         PlayersResult playersResult = players.judge(dealer);
         outputView.printResult(playersResult);
     }
