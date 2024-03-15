@@ -13,7 +13,7 @@ public class BlackJackGame {
     private static final int INIT_CARDS_AMOUNT = 2;
 
     private final Gamers gamers;
-    private CardPack cardPack;
+    private final CardPack cardPack;
 
     public BlackJackGame(List<String> rawPlayersNames) {
         this.gamers = makeGamers(rawPlayersNames);
@@ -32,12 +32,12 @@ public class BlackJackGame {
         gamers.shareInitCards(cardPack, INIT_CARDS_AMOUNT);
     }
 
-    public boolean hitByPlayer(HitOption hitOption, Player player) {
+    public HitOption hitByPlayer(HitOption hitOption, Player player) {
         if (hitOption.isHit()) {
             player.hit(cardPack.pickOneCard());
-            return true;
+            return HitOption.HIT;
         }
-        return false;
+        return HitOption.NOT_HIT;
     }
 
     public Card hitByDealer(Dealer dealer) {

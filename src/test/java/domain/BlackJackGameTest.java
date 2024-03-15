@@ -37,9 +37,9 @@ public class BlackJackGameTest {
         hand.addCard(new Card(CardNumber.FIVE, CardShape.CLOVER));
         Player player = new Player("p1", hand);
 
-        boolean isHit = game.hitByPlayer(HitOption.HIT, player);
+        HitOption isHit = game.hitByPlayer(HitOption.HIT, player);
 
-        assertThat(isHit).isTrue();
+        assertThat(isHit.isHit()).isTrue();
         assertThat(player.getCards()).hasSize(3 + 1);
     }
 

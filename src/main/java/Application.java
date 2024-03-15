@@ -60,16 +60,16 @@ public class Application {
     }
 
     private static void progressPlayerGame(BlackJackGame game, Player player) {
-        boolean doPlayerHit = true;
-        while (player.isNotBust() && doPlayerHit) {
+        HitOption doPlayerHit = HitOption.HIT;
+        while (player.isNotBust() && doPlayerHit.isHit()) {
             HitOption hitOption = inputView.readHitOption(player);
             doPlayerHit = game.hitByPlayer(hitOption, player);
             printPlayerHitCard(player, doPlayerHit);
         }
     }
 
-    private static void printPlayerHitCard(Player player, boolean doPlayerHit) {
-        if (doPlayerHit) {
+    private static void printPlayerHitCard(Player player, HitOption doPlayerHit) {
+        if (doPlayerHit.isHit()) {
             resultView.printPlayerCards(player);
         }
     }
