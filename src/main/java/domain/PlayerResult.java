@@ -1,11 +1,12 @@
 package domain;
 
-public enum Result {
+public enum PlayerResult {
+    BLACK_JACK_WIN,
     WIN,
     LOSE,
     TIE;
 
-    public Result reverse() {
+    public PlayerResult reverse() {
         if (this==WIN) {
             return LOSE;
         }

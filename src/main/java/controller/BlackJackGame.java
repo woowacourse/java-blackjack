@@ -1,7 +1,7 @@
 package controller;
 
 import domain.Referee;
-import domain.Result;
+import domain.PlayerResult;
 import domain.card.Card;
 import domain.deck.Deck;
 import domain.gamer.Dealer;
@@ -94,9 +94,9 @@ public class BlackJackGame {
         PlayerResults playerResults = new PlayerResults();
         DealerResult dealerResult = new DealerResult();
         for (Player player : players.getPlayers()) {
-            Result result = Referee.judgeBasedOnDealer(dealer, player);
-            dealerResult = dealerResult.addResult(result);
-            playerResults.addResult(player, result.reverse());
+            PlayerResult playerResult = Referee.judgePlayer(dealer, player);
+            dealerResult = dealerResult.addResult(playerResult);
+            playerResults.addResult(player, playerResult.reverse());
         }
         return new TotalResult(dealerResult, playerResults);
     }

@@ -38,29 +38,17 @@ class RefereeTest {
         players = new Players(List.of("pobi", "neo"));
     }
 
-    private void prepareCards(final Dealer dealer, final Players players) {
-        dealer.receive(drawTwoCards(deck));
-        for (final Player player : players.getPlayers()) {
-            player.receive(drawTwoCards(deck));
-        }
-    }
-
-    private List<Card> drawTwoCards(final Deck deck) {
-        return Stream.generate(deck::draw)
-                .limit(2)
-                .toList();
-    }
-
     @DisplayName("딜러가 버스트인 경우")
     @Nested
     class ifDealerBust {
+
         @BeforeEach
         void setDeckAndDealerBust() {
             Card card1 = Card.of(Symbol.CLOVER, Rank.KING);
             Card card2 = Card.of(Symbol.CLOVER, Rank.BIG_ACE);
             Card card3 = Card.of(Symbol.DIAMOND, Rank.EIGHT);
             Card card4 = Card.of(Symbol.SPADE, Rank.KING);
-            Card card5 = Card.of(Symbol.CLOVER, Rank.SEVEN);
+            Card card5 = Card.of(Symbol.CLOVER, Rank.BIG_ACE);
             Card card6 = Card.of(Symbol.SPADE, Rank.EIGHT);
             Card card7 = Card.of(Symbol.HEART, Rank.THREE);
             Card card8 = Card.of(Symbol.CLOVER, Rank.NINE);
@@ -73,21 +61,35 @@ class RefereeTest {
             dealer.hit(deck.draw());
         }
 
-        @DisplayName("플레이어가 버스트가 아니라면 딜러가 진다.")
+        @DisplayName("플레이어(네오)가 블랙잭이라면 플레이어(네오)가 이긴다.")
         @Test
-        void playerNotBust() {
+        void playerIsBlackJack() {
             // when
-            Result result1 = Referee.judgeBasedOnDealer(dealer, findPobi(players));
-            Result result2 = Referee.judgeBasedOnDealer(dealer, findNeo(players));
+            PlayerResult playerResult1 = Referee.judgePlayer(dealer, findPobi(players));
+            PlayerResult playerResult2 = Referee.judgePlayer(dealer, findNeo(players));
 
             // then
             assertAll(
-                    () -> assertThat(result1).isEqualTo(Result.LOSE),
-                    () -> assertThat(result2).isEqualTo(Result.LOSE)
+                    () -> assertThat(playerResult1).isEqualTo(PlayerResult.WIN),
+                    () -> assertThat(playerResult2).isEqualTo(PlayerResult.BLACK_JACK_WIN)
             );
         }
 
-        @DisplayName("플레이어(포비)가 버스트라면 딜러가 이긴다.")
+        @DisplayName("플레이어가 버스트가 아니라면 플레이어가 이긴다.")
+        @Test
+        void playerNotBust() {
+            // when
+            PlayerResult playerResult1 = Referee.judgePlayer(dealer, findPobi(players));
+            PlayerResult playerResult2 = Referee.judgePlayer(dealer, findNeo(players));
+
+            // then
+            assertAll(
+                    () -> assertThat(playerResult1).isEqualTo(PlayerResult.WIN),
+                    () -> assertThat(playerResult2).isEqualTo(PlayerResult.BLACK_JACK_WIN)
+            );
+        }
+
+        @DisplayName("플레이어(포비)가 버스트라면 플레이어(포비)가 진다.")
         @Test
         void playerIsBust() {
             // given
@@ -95,13 +97,13 @@ class RefereeTest {
             findPobi(players).hit(deck.draw());
 
             // when
-            Result result1 = Referee.judgeBasedOnDealer(dealer, findPobi(players));
-            Result result2 = Referee.judgeBasedOnDealer(dealer, findNeo(players));
+            PlayerResult playerResult1 = Referee.judgePlayer(dealer, findPobi(players));
+            PlayerResult playerResult2 = Referee.judgePlayer(dealer, findNeo(players));
 
             // then
             assertAll(
-                    () -> assertThat(result1).isEqualTo(Result.WIN),
-                    () -> assertThat(result2).isEqualTo(Result.LOSE)
+                    () -> assertThat(playerResult1).isEqualTo(PlayerResult.LOSE),
+                    () -> assertThat(playerResult2).isEqualTo(PlayerResult.BLACK_JACK_WIN)
             );
         }
     }
@@ -132,30 +134,30 @@ class RefereeTest {
         @Test
         void playerIsBlackJack() {
             // when
-            Result result1 = Referee.judgeBasedOnDealer(dealer, findPobi(players));
-            Result result2 = Referee.judgeBasedOnDealer(dealer, findNeo(players));
+            PlayerResult playerResult1 = Referee.judgePlayer(dealer, findPobi(players));
+            PlayerResult playerResult2 = Referee.judgePlayer(dealer, findNeo(players));
 
             // then
             assertAll(
-                    () -> assertThat(result1).isEqualTo(Result.TIE),
-                    () -> assertThat(result2).isEqualTo(Result.WIN)
+                    () -> assertThat(playerResult1).isEqualTo(PlayerResult.TIE),
+                    () -> assertThat(playerResult2).isEqualTo(PlayerResult.LOSE)
             );
         }
 
-        @DisplayName("플레이어(네오)가 블랙잭이 아니라면 딜러가 이긴다.")
+        @DisplayName("플레이어(네오)가 블랙잭이 아니라면 플레이어가 진다.")
         @Test
         void playerIsNotBlackJack() {
             // given
             findNeo(players).hit(deck.draw());
 
             // when
-            Result result1 = Referee.judgeBasedOnDealer(dealer, findPobi(players));
-            Result result2 = Referee.judgeBasedOnDealer(dealer, findNeo(players));
+            PlayerResult playerResult1 = Referee.judgePlayer(dealer, findPobi(players));
+            PlayerResult playerResult2 = Referee.judgePlayer(dealer, findNeo(players));
 
             // then
             assertAll(
-                    () -> assertThat(result1).isEqualTo(Result.TIE),
-                    () -> assertThat(result2).isEqualTo(Result.WIN)
+                    () -> assertThat(playerResult1).isEqualTo(PlayerResult.TIE),
+                    () -> assertThat(playerResult2).isEqualTo(PlayerResult.LOSE)
             );
         }
     }
@@ -182,21 +184,21 @@ class RefereeTest {
             prepareCards(dealer, players);
         }
 
-        @DisplayName("플레이어(포비)가 블랙잭이라면 딜러가 진다.")
+        @DisplayName("플레이어(포비)가 블랙잭이라면 플레이어가 이긴다.")
         @Test
         void playerIsBlackJack() {
             // when
-            Result result1 = Referee.judgeBasedOnDealer(dealer, findPobi(players));
-            Result result2 = Referee.judgeBasedOnDealer(dealer, findNeo(players));
+            PlayerResult playerResult1 = Referee.judgePlayer(dealer, findPobi(players));
+            PlayerResult playerResult2 = Referee.judgePlayer(dealer, findNeo(players));
 
             // then
             assertAll(
-                    () -> assertThat(result1).isEqualTo(Result.LOSE),
-                    () -> assertThat(result2).isEqualTo(Result.WIN)
+                    () -> assertThat(playerResult1).isEqualTo(PlayerResult.BLACK_JACK_WIN),
+                    () -> assertThat(playerResult2).isEqualTo(PlayerResult.LOSE)
             );
         }
 
-        @DisplayName("플레이어(네오)가 버스트라면 딜러가 이긴다.")
+        @DisplayName("플레이어(네오)가 버스트라면 플레이어(네오)가 진다.")
         @Test
         void playerIsBust() {
             // given
@@ -205,13 +207,31 @@ class RefereeTest {
             findNeo(players).hit(deck.draw());
 
             // when
-            Result result1 = Referee.judgeBasedOnDealer(dealer, findPobi(players));
-            Result result2 = Referee.judgeBasedOnDealer(dealer, findNeo(players));
+            PlayerResult playerResult1 = Referee.judgePlayer(dealer, findPobi(players));
+            PlayerResult playerResult2 = Referee.judgePlayer(dealer, findNeo(players));
 
             // then
             assertAll(
-                    () -> assertThat(result1).isEqualTo(Result.LOSE),
-                    () -> assertThat(result2).isEqualTo(Result.WIN)
+                    () -> assertThat(playerResult1).isEqualTo(PlayerResult.BLACK_JACK_WIN),
+                    () -> assertThat(playerResult2).isEqualTo(PlayerResult.LOSE)
+            );
+        }
+
+        @DisplayName("플레이어(네오)와 딜러 모두 일반 점수인 경우, 플레이어(네오)의 점수가 더 높으면 플레이어(네오)가 이긴다.")
+        @Test
+        void playerIsSameNormalScoreAndBigger() {
+            // given
+            findNeo(players).hit(deck.draw());
+            findNeo(players).hit(deck.draw());
+
+            // when
+            PlayerResult playerResult1 = Referee.judgePlayer(dealer, findPobi(players));
+            PlayerResult playerResult2 = Referee.judgePlayer(dealer, findNeo(players));
+
+            // then
+            assertAll(
+                    () -> assertThat(playerResult1).isEqualTo(PlayerResult.BLACK_JACK_WIN),
+                    () -> assertThat(playerResult2).isEqualTo(PlayerResult.WIN)
             );
         }
 
@@ -222,33 +242,42 @@ class RefereeTest {
             findNeo(players).hit(deck.draw());
 
             // when
-            Result result1 = Referee.judgeBasedOnDealer(dealer, findPobi(players));
-            Result result2 = Referee.judgeBasedOnDealer(dealer, findNeo(players));
+            PlayerResult playerResult1 = Referee.judgePlayer(dealer, findPobi(players));
+            PlayerResult playerResult2 = Referee.judgePlayer(dealer, findNeo(players));
 
             // then
             assertAll(
-                    () -> assertThat(result1).isEqualTo(Result.LOSE),
-                    () -> assertThat(result2).isEqualTo(Result.TIE)
+                    () -> assertThat(playerResult1).isEqualTo(PlayerResult.BLACK_JACK_WIN),
+                    () -> assertThat(playerResult2).isEqualTo(PlayerResult.TIE)
             );
         }
 
-        @DisplayName("플레이어(네오)와 딜러 모두 일반 점수인 경우, 딜러의 점수가 더 낮으면 딜러가 진다.")
+        @DisplayName("플레이어(네오)와 딜러 모두 일반 점수인 경우, 플레이어(네오)의 점수가 더 낮으면 플레이어(네오)가 진다.")
         @Test
         void playerIsSameNormalScoreAndSmaller() {
-            // given
-            findNeo(players).hit(deck.draw());
-            findNeo(players).hit(deck.draw());
-
             // when
-            Result result1 = Referee.judgeBasedOnDealer(dealer, findPobi(players));
-            Result result2 = Referee.judgeBasedOnDealer(dealer, findNeo(players));
+            PlayerResult playerResult1 = Referee.judgePlayer(dealer, findPobi(players));
+            PlayerResult playerResult2 = Referee.judgePlayer(dealer, findNeo(players));
 
             // then
             assertAll(
-                    () -> assertThat(result1).isEqualTo(Result.LOSE),
-                    () -> assertThat(result2).isEqualTo(Result.LOSE)
+                    () -> assertThat(playerResult1).isEqualTo(PlayerResult.BLACK_JACK_WIN),
+                    () -> assertThat(playerResult2).isEqualTo(PlayerResult.LOSE)
             );
         }
+    }
+
+    private void prepareCards(final Dealer dealer, final Players players) {
+        dealer.receive(drawTwoCards(deck));
+        for (final Player player : players.getPlayers()) {
+            player.receive(drawTwoCards(deck));
+        }
+    }
+
+    private List<Card> drawTwoCards(final Deck deck) {
+        return Stream.generate(deck::draw)
+                .limit(2)
+                .toList();
     }
 
     private Player findPobi(final Players players) {

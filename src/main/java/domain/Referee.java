@@ -8,7 +8,7 @@ public class Referee {
     private Referee() {
     }
 
-    public static Result judgeBasedOnDealer(final Dealer dealer, final Player player) {
+    public static PlayerResult judgePlayer(final Dealer dealer, final Player player) {
         if (dealer.isBust()) {
             return isDealerBust(player);
         }
@@ -18,39 +18,42 @@ public class Referee {
         return isDealerNormalScore(dealer, player);
     }
 
-    private static Result isDealerBust(final Player player) {
+    private static PlayerResult isDealerBust(final Player player) {
+        if (player.isBlackJack()) {
+            return PlayerResult.BLACK_JACK_WIN;
+        }
         if (!player.isBust()) {
-            return Result.LOSE;
+            return PlayerResult.WIN;
         }
-        return Result.WIN;
+        return PlayerResult.LOSE;
     }
 
-    private static Result isDealerBlackJack(final Player player) {
+    private static PlayerResult isDealerBlackJack(final Player player) {
         if (player.isBlackJack()) {
-            return Result.TIE;
+            return PlayerResult.TIE;
         }
-        return Result.WIN;
+        return PlayerResult.LOSE;
     }
 
-    private static Result isDealerNormalScore(final Dealer dealer, final Player player) {
+    private static PlayerResult isDealerNormalScore(final Dealer dealer, final Player player) {
         if (player.isBlackJack()) {
-            return Result.LOSE;
+            return PlayerResult.BLACK_JACK_WIN;
         }
         if (player.isNormalScore()) {
             return judeByNormalScore(dealer, player);
         }
-        return Result.WIN;
+        return PlayerResult.LOSE;
     }
 
-    private static Result judeByNormalScore(final Dealer dealer, final Player player) {
+    private static PlayerResult judeByNormalScore(final Dealer dealer, final Player player) {
         int dealerScore = dealer.calculateTotalScore();
         int playerScore = player.calculateTotalScore();
-        if (dealerScore > playerScore) {
-            return Result.WIN;
-        }
         if (dealerScore < playerScore) {
-            return Result.LOSE;
+            return PlayerResult.WIN;
         }
-        return Result.TIE;
+        if (dealerScore > playerScore) {
+            return PlayerResult.LOSE;
+        }
+        return PlayerResult.TIE;
     }
 }
