@@ -6,6 +6,7 @@ import java.util.List;
 public class HandValue {
 
     private static final int BLACKJACK_MAX_SCORE = 21;
+    private static final int BLACKJACK_HAND_SIZE_CONDITION = 2;
     private static final int ACE_VALUE_MODIFIER = 10;
 
     private final int score;
@@ -62,7 +63,7 @@ public class HandValue {
     }
 
     public boolean isBlackjack() {
-        return score == BLACKJACK_MAX_SCORE && handSize == 2;
+        return score == BLACKJACK_MAX_SCORE && handSize == BLACKJACK_HAND_SIZE_CONDITION;
     }
 
     public boolean isNotBlackjack() {
