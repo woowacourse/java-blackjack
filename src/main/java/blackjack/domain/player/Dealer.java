@@ -2,7 +2,6 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.result.ResultStatus;
 
 public class Dealer extends Participant {
     public static final Integer RECEIVE_SIZE = 16;
@@ -17,11 +16,12 @@ public class Dealer extends Participant {
     }
 
     public Card getFirstCard() {
-        return cards.getFirstCard();
+        return this.state.getCards()
+                         .get(0);
     }
 
     @Override
     public boolean isReceivable() {
-        return cards.calculate() <= RECEIVE_SIZE;
+        return this.state.calculate() <= RECEIVE_SIZE;
     }
 }
