@@ -58,7 +58,7 @@ class PlayerTest {
         assertThat(player.state).isInstanceOf(Bust.class);
     }
 
-    @DisplayName("합계 점수가 21을 초과하면 버스트")
+    @DisplayName("합계 점수가 21이 넘지 않으면 히트")
     @Test
     void hitState() {
         final Player player = new Player(new Name("지쳐버린종이"), new BetAmount(100));
@@ -69,7 +69,7 @@ class PlayerTest {
         assertThat(player.state).isInstanceOf(Hit.class);
     }
 
-    @DisplayName("합계 점수가 21을 초과하면 버스트")
+    @DisplayName("합계 점수가 21이면 블랙잭")
     @Test
     void blackjackState() {
         final Player player = new Player(new Name("지쳐버린종이"), new BetAmount(100));
