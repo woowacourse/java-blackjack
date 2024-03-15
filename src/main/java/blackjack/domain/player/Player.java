@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Player {
     static final int BUST_CONDITION = 21;
+    private static final int BLACKJACK_CONDITION = 21;
 
     protected final Hand hand;
     private final Name name;
@@ -21,6 +22,10 @@ public class Player {
 
     public final void addCard(final Card card) {
         hand.add(card);
+    }
+
+    public boolean isBlackjack() {
+        return hand.hasExactlyTwoCards() && hand.getScore() == BLACKJACK_CONDITION;
     }
 
     public final boolean isAlive() {

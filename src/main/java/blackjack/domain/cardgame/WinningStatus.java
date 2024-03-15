@@ -6,9 +6,13 @@ import blackjack.domain.player.Player;
 public enum WinningStatus {
     WIN,
     PUSH,
-    LOSE;
+    LOSE,
+    BLACKJACK;
 
     public static WinningStatus doesPlayerWin(final Dealer dealer, final Player player) {
+        if (player.isBlackjack()) {
+            return WinningStatus.BLACKJACK;
+        }
         if (!player.isAlive()) {
             return WinningStatus.LOSE;
         }

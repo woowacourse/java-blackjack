@@ -42,4 +42,8 @@ public class Hand {
     List<Card> getAllCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public boolean hasExactlyTwoCards() {
+        return cards.size() == 2;
+    }
 }

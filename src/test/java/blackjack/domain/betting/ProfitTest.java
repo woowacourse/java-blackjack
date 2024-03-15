@@ -32,4 +32,13 @@ public class ProfitTest {
 
         assertThat(profit).isEqualTo(new Profit(0));
     }
+
+    @Test
+    void 블랙잭인_경우에_수익률은_베팅_금액에_150퍼센트이다() {
+        Money money = new Money(1000);
+        WinningStatus status = WinningStatus.BLACKJACK;
+        Profit profit = Profit.of(money, status);
+
+        assertThat(profit).isEqualTo(new Profit(1500));
+    }
 }

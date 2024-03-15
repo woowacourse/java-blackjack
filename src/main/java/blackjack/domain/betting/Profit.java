@@ -2,6 +2,7 @@ package blackjack.domain.betting;
 
 import blackjack.domain.cardgame.WinningStatus;
 
+import static blackjack.domain.cardgame.WinningStatus.BLACKJACK;
 import static blackjack.domain.cardgame.WinningStatus.LOSE;
 import static blackjack.domain.cardgame.WinningStatus.PUSH;
 import static blackjack.domain.cardgame.WinningStatus.WIN;
@@ -22,6 +23,9 @@ public class Profit {
         }
         if (PUSH.equals(status)) {
             return new Profit(0);
+        }
+        if (BLACKJACK.equals(status)) {
+            return new Profit((int) (money.value() * 1.5));
         }
 
         throw new IllegalStateException();
