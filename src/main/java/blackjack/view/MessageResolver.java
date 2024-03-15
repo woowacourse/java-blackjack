@@ -8,7 +8,6 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Dealer2;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Player2;
 import blackjack.domain.participant.PlayerName;
@@ -48,12 +47,6 @@ public class MessageResolver {
                 .map(Player2::getName)
                 .map(Name::value)
                 .collect(Collectors.joining(SEPARATOR));
-    }
-
-    public String resolveDealToAllMessage(Participants participants) {
-        return participants.getParticipants().stream()
-                .map(this::resolveDealToOneMessage)
-                .collect(Collectors.joining(LINE_SEPARATOR));
     }
 
     public String resolveDealToDealerMessage(Dealer2 dealer) {
@@ -121,13 +114,6 @@ public class MessageResolver {
 
     public String resolveDrawToDealerMessage() {
         return String.format("%s는 16이하라 한장의 카드를 더 받았습니다.", DEALER_NAME);
-    }
-
-    public String resolveParticipantsHandScoreMessage(Participants participants) {
-        String message = participants.getParticipants().stream()
-                .map(this::resolveParticipantHandScoreMessage)
-                .collect(Collectors.joining(LINE_SEPARATOR));
-        return String.join("", LINE_SEPARATOR, message);
     }
 
     private String resolveParticipantHandScoreMessage(Participant participant) {
