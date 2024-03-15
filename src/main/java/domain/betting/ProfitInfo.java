@@ -23,4 +23,11 @@ public class ProfitInfo {
     public Money findProfitBy(Player player) {
         return profitMap.get(player);
     }
+
+    public Money calculateDealerProfit() {
+        return profitMap.values()
+            .stream()
+            .reduce(Money.valueOf(0), Money::add)
+            .negative();
+    }
 }

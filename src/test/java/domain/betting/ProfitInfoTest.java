@@ -19,4 +19,19 @@ class ProfitInfoTest {
 
         assertThat(profitInfo.findProfitBy(player)).isEqualTo(profit);
     }
+
+    @Test
+    @DisplayName("딜러의 수익금을 계산할 수 있다.")
+    void calculateDealerProfit() {
+        ProfitInfo profitInfo = ProfitInfo.withNoEntry();
+        Player player1 = Player.withName("user1");
+        Player player2 = Player.withName("user2");
+        Money profit1 = Money.valueOf(1000);
+        Money profit2 = Money.valueOf(2000);
+
+        profitInfo.add(player1, profit1);
+        profitInfo.add(player2, profit2);
+
+        assertThat(profitInfo.calculateDealerProfit().toInt()).isEqualTo(-3000);
+    }
 }
