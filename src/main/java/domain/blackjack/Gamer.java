@@ -24,16 +24,20 @@ abstract class Gamer {
         return draw(deck, RandomCardSelectStrategy.INSTANCE);
     }
 
-    public final List<Card> getRawHoldingCards() {
-        return blackJackGameMachine.getRawHoldingCards();
-    }
-
     public final int calculateSummationCardPointAsInt() {
         return blackJackGameMachine.calculateSummationCardPointAsInt();
     }
 
     final SummationCardPoint calculateSummationCardPoint() {
         return blackJackGameMachine.calculateSummationCardPoint();
+    }
+
+    public final List<Card> getRawHoldingCards() {
+        return getRawHoldingCards(AllCardShowStrategy.INSTANCE);
+    }
+
+    public final List<Card> getRawHoldingCards(CardShowStrategy cardShowStrategy) {
+        return blackJackGameMachine.getRawHoldingCards(cardShowStrategy);
     }
 
     final boolean isBust() {

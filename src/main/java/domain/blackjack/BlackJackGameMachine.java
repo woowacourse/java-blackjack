@@ -58,6 +58,11 @@ class BlackJackGameMachine {
         return List.copyOf(holdingCards.getHoldingCards());
     }
 
+    List<Card> getRawHoldingCards(CardShowStrategy cardShowStrategy) {
+        List<Card> allCards = holdingCards.getHoldingCards();
+        return List.copyOf(cardShowStrategy.show(allCards));
+    }
+
     int calculateSummationCardPointAsInt() {
         return calculateSummationCardPoint().summationCardPoint();
     }

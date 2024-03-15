@@ -4,6 +4,7 @@ import domain.blackjack.BlackJackGame;
 import domain.blackjack.Dealer;
 import domain.blackjack.Player;
 import domain.blackjack.Players;
+import domain.blackjack.WithOutFirstCardShowStrategy;
 import domain.card.Card;
 import domain.card.Deck;
 import dto.DealerDTO;
@@ -59,7 +60,7 @@ public class BlackJackController {
     }
 
     private void printDealerWithoutFirstCard(Dealer dealer) {
-        List<Card> rawHoldingCards = dealer.getRawHoldingCardsWithoutFirstCard();
+        List<Card> rawHoldingCards = dealer.getRawHoldingCards(WithOutFirstCardShowStrategy.INSTANCE);
         DealerDTO dealerDTO = new DealerDTO(rawHoldingCards, dealer.calculateSummationCardPointAsInt());
         DealerOutputView.printWithoutSummationCardPoint(dealerDTO);
     }
