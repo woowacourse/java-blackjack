@@ -7,4 +7,8 @@ public class Profit {
     public Profit(int value) {
         this.value = value;
     }
+
+    public int getValue() {
+        return value;
+    }
 }
