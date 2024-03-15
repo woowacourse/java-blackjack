@@ -32,7 +32,7 @@ class ScoreTest {
         Score actual = score.add(new Score(2));
 
         // then
-        assertThat(actual).extracting("value").isEqualTo(3);
+        assertThat(actual).isEqualTo(new Score(3));
     }
 
     @DisplayName("점수에 값을 더한다.")
@@ -45,7 +45,7 @@ class ScoreTest {
         Score actual = score.add(2);
 
         // then
-        assertThat(actual).extracting("value").isEqualTo(3);
+        assertThat(actual).isEqualTo(new Score(3));
     }
 
     @DisplayName("21이면 블랙잭 점수다.")
