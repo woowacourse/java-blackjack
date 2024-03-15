@@ -28,7 +28,7 @@ class HandTest {
         Hand hand = new Hand();
         hand.add(List.of(SEVEN_HEART, TEN_HEART));
 
-        int actual = hand.calculateSum();
+        int actual = hand.calculateScore();
         int expected = SEVEN_HEART.getRankValue() + TEN_HEART.getRankValue();
 
         assertThat(actual).isEqualTo(expected);
