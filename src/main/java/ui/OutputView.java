@@ -29,7 +29,7 @@ public class OutputView {
     }
 
     private String generateCardMessage(Participant participant) {
-        String message = joinCards(participant.getCardList());
+        String message = joinCards(participant.getAllCards());
         return formatCardsMessage(participant, message);
     }
 

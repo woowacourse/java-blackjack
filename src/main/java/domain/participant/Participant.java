@@ -40,7 +40,7 @@ public class Participant {
         return this.name.getValue();
     }
 
-    public List<Card> getCardList() { // todo getAllCards
+    public List<Card> getAllCards() {
         return cards.getCards();
     }
 

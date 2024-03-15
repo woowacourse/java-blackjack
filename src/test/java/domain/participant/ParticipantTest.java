@@ -14,7 +14,7 @@ class ParticipantTest {
 
         participant.receiveInitialCards(카드(), 카드());
 
-        assertThat(participant.getCardList()).hasSize(2);
+        assertThat(participant.getAllCards()).hasSize(2);
     }
 
     @Test
@@ -23,7 +23,7 @@ class ParticipantTest {
 
         player.receiveAdditionalCard(카드());
 
-        assertThat(player.getCardList()).hasSize(1);
+        assertThat(player.getAllCards()).hasSize(1);
     }
 
     @Test

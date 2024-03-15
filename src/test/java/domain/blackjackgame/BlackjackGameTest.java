@@ -38,10 +38,10 @@ class BlackjackGameTest {
         blackjackGame.initGame(dealer, players);
         List<Player> playerList = players.getPlayers();
         assertAll(
-                () -> assertThat(dealer.getCardList()).hasSize(2),
-                () -> assertThat(playerList.get(0).getCardList()).hasSize(2),
-                () -> assertThat(playerList.get(1).getCardList()).hasSize(2),
-                () -> assertThat(playerList.get(2).getCardList()).hasSize(2)
+                () -> assertThat(dealer.getAllCards()).hasSize(2),
+                () -> assertThat(playerList.get(0).getAllCards()).hasSize(2),
+                () -> assertThat(playerList.get(1).getAllCards()).hasSize(2),
+                () -> assertThat(playerList.get(2).getAllCards()).hasSize(2)
         );
     }
 
