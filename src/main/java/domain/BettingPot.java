@@ -15,7 +15,7 @@ public class BettingPot {
         Map<Player, Integer> settlement = new LinkedHashMap<>();
         for (Map.Entry<Player, Result> playerResult : playerResults.entrySet()) {
             Player player = playerResult.getKey();
-            int amount = betRecord.get(player).getAmount();
+            int amount = getPlayerBetAmount(player);
             amount = calculateAmount(playerResult.getValue(), amount);
             settlement.put(player, amount);
         }
@@ -27,7 +27,7 @@ public class BettingPot {
         int allPlayersWinning = 0;
         for (Map.Entry<Player, Result> playerResult : playerResults.entrySet()) {
             Player player = playerResult.getKey();
-            int amount = betRecord.get(player).getAmount();
+            int amount = getPlayerBetAmount(player);
             allPlayersWinning += calculateAmount(playerResult.getValue(), amount);
         }
 
@@ -36,5 +36,9 @@ public class BettingPot {
 
     private int calculateAmount(Result result, int amount) {
         return (int) (amount * result.getPlayerWinningRate());
+    }
+
+    private int getPlayerBetAmount(Player player) {
+        return betRecord.get(player).getAmount();
     }
 }
