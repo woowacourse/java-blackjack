@@ -5,31 +5,31 @@ import java.util.Map;
 
 public class PlayersResult {
 
-    private final Map<Player2, Result2> results;
+    private final Map<Player2, Result> results;
 
-    public PlayersResult(Map<Player2, Result2> results) {
+    public PlayersResult(Map<Player2, Result> results) {
         this.results = results;
     }
 
     public int dealerWins() {
         return (int) results.values().stream()
-                .filter(Result2::isLoss)
+                .filter(Result::isLoss)
                 .count();
     }
 
     public int dealerLosses() {
         return (int) results.values().stream()
-                .filter(Result2::isWin)
+                .filter(Result::isWin)
                 .count();
     }
 
     public int dealerTies() {
         return (int) results.values().stream()
-                .filter(Result2::isTie)
+                .filter(Result::isTie)
                 .count();
     }
 
-    public Map<Player2, Result2> getResults() {
+    public Map<Player2, Result> getResults() {
         return Map.copyOf(results);
     }
 }

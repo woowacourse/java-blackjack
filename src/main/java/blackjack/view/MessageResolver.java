@@ -3,7 +3,7 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import blackjack.domain.game.PlayersResult;
-import blackjack.domain.game.Result2;
+import blackjack.domain.game.Result;
 import blackjack.domain.participant.Dealer2;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player2;
@@ -85,8 +85,8 @@ public class MessageResolver {
                 .collect(Collectors.joining(LINE_SEPARATOR));
     }
 
-    private String resolvePlayerResultMessage(Player2 player, Result2 result2) {
-        return String.format("%s: %s", player.getName().value(), ResultStateMapper.toSymbol(result2));
+    private String resolvePlayerResultMessage(Player2 player, Result result) {
+        return String.format("%s: %s", player.getName().value(), ResultStateMapper.toSymbol(result));
     }
 
     public String resolveDealerHandScoreMessage(Dealer2 dealer) {

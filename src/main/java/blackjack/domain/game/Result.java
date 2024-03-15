@@ -3,14 +3,14 @@ package blackjack.domain.game;
 import blackjack.domain.participant.Dealer2;
 import blackjack.domain.participant.Player2;
 
-public enum Result2 {
+public enum Result {
 
     WIN,
     LOSE,
     TIE,
     ;
 
-    Result2() {
+    Result() {
     }
 
     public boolean isWin() {
@@ -25,29 +25,29 @@ public enum Result2 {
         return this == TIE;
     }
 
-    public static Result2 determineResult(Player2 player, Dealer2 dealer) {
+    public static Result determineResult(Player2 player, Dealer2 dealer) {
         if (player.isBust()) {
-            return Result2.LOSE;
+            return Result.LOSE;
         }
         if (player.isBlackjack() && dealer.isNotBlackjack()) {
-            return Result2.WIN;
+            return Result.WIN;
         }
         if (dealer.isBust()) {
-            return Result2.WIN;
+            return Result.WIN;
         }
         return compareScore(player, dealer);
     }
 
-    private static Result2 compareScore(Player2 player, Dealer2 dealer) {
+    private static Result compareScore(Player2 player, Dealer2 dealer) {
         Score playerScore = player.handScore();
         Score dealerScore = dealer.handScore();
 
         if (playerScore.isBiggerThan(dealerScore)) {
-            return Result2.WIN;
+            return Result.WIN;
         }
         if (playerScore.isLessThan(dealerScore)) {
-            return Result2.LOSE;
+            return Result.LOSE;
         }
-        return Result2.TIE;
+        return Result.TIE;
     }
 }

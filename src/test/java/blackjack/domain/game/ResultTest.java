@@ -13,7 +13,7 @@ import fixture.HandFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class Result2Test {
+class ResultTest {
 
     @DisplayName("플레이어가 버스트면 플레이어는 패배다.")
     @Test
@@ -26,10 +26,10 @@ class Result2Test {
         Dealer2 dealer = new Dealer2(new Hand());
 
         // when
-        Result2 result = Result2.determineResult(player, dealer);
+        Result result = Result.determineResult(player, dealer);
 
         // then
-        assertThat(result).isEqualTo(Result2.LOSE);
+        assertThat(result).isEqualTo(Result.LOSE);
     }
 
     @DisplayName("플레이어가 블랙잭이고 딜러는 블랙잭이 아니면 플레이어는 승리다.")
@@ -44,10 +44,10 @@ class Result2Test {
         Dealer2 dealer = new Dealer2(new Hand());
 
         // when
-        Result2 result = Result2.determineResult(player, dealer);
+        Result result = Result.determineResult(player, dealer);
 
         // then
-        assertThat(result).isEqualTo(Result2.WIN);
+        assertThat(result).isEqualTo(Result.WIN);
     }
 
     @DisplayName("플레이어와 딜러가 모두 블랙잭이면 플레이어는 무승부다.")
@@ -62,10 +62,10 @@ class Result2Test {
         Dealer2 dealer = new Dealer2(hand);
 
         // when
-        Result2 result = Result2.determineResult(player, dealer);
+        Result result = Result.determineResult(player, dealer);
 
         // then
-        assertThat(result).isEqualTo(Result2.TIE);
+        assertThat(result).isEqualTo(Result.TIE);
     }
 
     @DisplayName("플레이어가 버스트가 아니고 딜러가 버스트면 플레이어는 승리다.")
@@ -79,10 +79,10 @@ class Result2Test {
         Dealer2 dealer = new Dealer2(dealerHand);
 
         // when
-        Result2 result = Result2.determineResult(player, dealer);
+        Result result = Result.determineResult(player, dealer);
 
         // then
-        assertThat(result).isEqualTo(Result2.WIN);
+        assertThat(result).isEqualTo(Result.WIN);
     }
 
     @DisplayName("플레이어와 딜러가 모두 버스트가 아니고 플레이어 핸드가 크면 플레이어는 승리다.")
@@ -98,10 +98,10 @@ class Result2Test {
         Dealer2 dealer = new Dealer2(dealerHand);
 
         // when
-        Result2 result = Result2.determineResult(player, dealer);
+        Result result = Result.determineResult(player, dealer);
 
         // then
-        assertThat(result).isEqualTo(Result2.WIN);
+        assertThat(result).isEqualTo(Result.WIN);
     }
 
     @DisplayName("플레이어와 딜러가 모두 버스트가 아니고 플레이어 핸드가 작으면 플레이어는 패배다.")
@@ -117,10 +117,10 @@ class Result2Test {
         Dealer2 dealer = new Dealer2(dealerHand);
 
         // when
-        Result2 result = Result2.determineResult(player, dealer);
+        Result result = Result.determineResult(player, dealer);
 
         // then
-        assertThat(result).isEqualTo(Result2.LOSE);
+        assertThat(result).isEqualTo(Result.LOSE);
     }
 
     @DisplayName("플레이어와 딜러가 모두 버스트가 아니고 둘의 핸드가 같으면 플레이어는 무승부다.")
@@ -136,9 +136,9 @@ class Result2Test {
         Dealer2 dealer = new Dealer2(dealerHand);
 
         // when
-        Result2 result = Result2.determineResult(player, dealer);
+        Result result = Result.determineResult(player, dealer);
 
         // then
-        assertThat(result).isEqualTo(Result2.TIE);
+        assertThat(result).isEqualTo(Result.TIE);
     }
 }

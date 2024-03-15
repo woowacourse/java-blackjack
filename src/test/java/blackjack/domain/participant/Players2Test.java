@@ -9,7 +9,7 @@ import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
 import blackjack.domain.card.Hand;
 import blackjack.domain.game.PlayersResult;
-import blackjack.domain.game.Result2;
+import blackjack.domain.game.Result;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -92,8 +92,8 @@ class Players2Test {
         // then
         assertThat(playersResult.getResults()).containsExactlyEntriesOf(
                 Map.of(
-                        pobi, Result2.WIN,
-                        jason, Result2.LOSE
+                        pobi, Result.WIN,
+                        jason, Result.LOSE
                 )
         );
     }

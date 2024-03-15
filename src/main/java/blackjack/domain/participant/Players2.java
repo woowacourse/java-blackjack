@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.game.PlayersResult;
-import blackjack.domain.game.Result2;
+import blackjack.domain.game.Result;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -58,10 +58,10 @@ public class Players2 {
     }
 
     public PlayersResult judge(Dealer2 dealer) {
-        Map<Player2, Result2> results = players.stream()
+        Map<Player2, Result> results = players.stream()
                 .collect(Collectors.toMap(
                         player -> player,
-                        player -> Result2.determineResult(player, dealer)
+                        player -> Result.determineResult(player, dealer)
                 ));
 
         return new PlayersResult(results);
