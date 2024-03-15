@@ -3,14 +3,16 @@ package blackjack.domain.game;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.gamer.GameResult;
-import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Player;
-import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class GameAccountTest {
 
@@ -21,7 +23,7 @@ class GameAccountTest {
     @BeforeEach
     void setUp() {
         gameAccount = new GameAccount();
-        player = new Player(new Name("loki"));
+        player = new Player("loki");
         money = new Money(50000);
     }
 
@@ -38,23 +40,33 @@ class GameAccountTest {
         assertThat(gameAccount.findMoney(player)).isEqualTo(new Money(50000));
     }
 
-    @Test
+    @ParameterizedTest
+    @MethodSource("provideGameResultsAndMoney")
     @DisplayName("플레이어의 게임 결과를 배팅한 금액에 적용한다")
-    void applyGameResultsTest() {
-        Map<Player, GameResult> gameResults = new LinkedHashMap<>();
-        gameAccount.betMoney(player, money);
-        gameResults.put(player, GameResult.BLACKJACK_WIN);
+    void applyGameResultsTest(GameResult gameResult, Money expectedMoney) {
+        Map<Player, GameResult> gameResults = Map.of(player, gameResult);
 
+        gameAccount.betMoney(player, money);
         gameAccount.applyGameResults(gameResults);
 
-        assertThat(gameAccount.findMoney(player)).isEqualTo(new Money(75000));
+        assertThat(gameAccount.findMoney(player)).isEqualTo(expectedMoney);
     }
+
+    private static Stream<Arguments> provideGameResultsAndMoney() {
+        return Stream.of(
+                Arguments.of(GameResult.BLACKJACK_WIN, new Money(75000)),
+                Arguments.of(GameResult.WIN, new Money(50000)),
+                Arguments.of(GameResult.DRAW, new Money(0)),
+                Arguments.of(GameResult.LOSE, new Money(-50000)
+                ));
+    }
+
 
     @Test
     @DisplayName("플레이어의 배팅 금액 결과로 딜러의 수익을 계산한다.")
     void calculateDealerIncome() {
         gameAccount.betMoney(player, money);
-        gameAccount.betMoney(new Player(new Name("jazz")), new Money(-20000));
+        gameAccount.betMoney(new Player("jazz"), new Money(-20000));
 
         Money dealerIncome = gameAccount.calculateDealerIncome();
 

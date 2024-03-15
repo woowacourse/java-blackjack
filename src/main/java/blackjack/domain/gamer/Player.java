@@ -6,8 +6,8 @@ public class Player extends BlackjackGamer {
 
     private final Name name;
 
-    public Player(Name name) {
-        this.name = name;
+    public Player(String name) {
+        this.name = new Name(name);
     }
 
     public Player(Hand hand, Name name) {
