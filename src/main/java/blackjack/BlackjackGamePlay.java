@@ -4,8 +4,10 @@ import blackjack.domain.result.GameBettingManager;
 import blackjack.domain.card.Card;
 import blackjack.domain.deck.DeckGenerator;
 import blackjack.domain.deck.PlayingDeck;
+import blackjack.domain.betting.Betting;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.betting.GameBettingManager;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
