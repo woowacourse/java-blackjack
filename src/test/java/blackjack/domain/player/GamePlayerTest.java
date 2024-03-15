@@ -114,4 +114,17 @@ public class GamePlayerTest {
 
         assertThat(result).isEqualTo(new Profit(0));
     }
+
+    @Test
+    @DisplayName("플레이어는 블랙잭이고 딜러는 블랙잭이 아닌 21점이라면 승리한다.")
+    public void GamePlayer_Player_win_when_blackjack_dealer_not_blackjack_21() {
+        Name name = new Name("딜러");
+        Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.TWO, CardValue.TEN, CardValue.NINE));
+        Dealer dealer = new Dealer(name, cards);
+        var sut = PlayerFixture.게임_플레이어_생성(List.of(CardValue.ACE, CardValue.QUEEN));
+
+        var result = sut.confirmProfit(dealer);
+
+        assertThat(result).isEqualTo(new Profit(15000));
+    }
 }
