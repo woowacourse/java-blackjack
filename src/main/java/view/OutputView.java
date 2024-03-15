@@ -13,11 +13,11 @@ import java.util.Map.Entry;
 
 public class OutputView {
 
-    private static final String DIVIDE_CARD_MESSAGE = "딜러와 %s에게 2장을 나누었습니다.";
+    private static final String DEALER_NAME = "딜러";
+    private static final String DIVIDE_CARD_MESSAGE = DEALER_NAME+"와 %s에게 2장을 나누었습니다.";
     private static final String RECEIVED_CARD_MESSAGE = "%s 카드 : %s";
-    private static final String GAME_RESULT_MESSAGE = "%s : %s";
     private static final String PLAYER_CARD_SUM_MESSAGE = " - 결과: %d";
-    private static final String DEALER_ADD_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String DEALER_ADD_CARD_MESSAGE = DEALER_NAME+"는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String GAME_RESULT_PROMPT_MESSAGE = "## 최종 수익";
     private static final String GAME_RESULT_REVENUE_MESSAGE = "%s : %d";
 
@@ -29,8 +29,8 @@ public class OutputView {
     }
 
     public void printPlayerCards(Map<Name, Cards> usersNameAndCards) {
-        Cards dealerCards = usersNameAndCards.remove(new Name("딜러"));
-        System.out.println(cardsToString(new Name("딜러"), dealerCards, 1));
+        Cards dealerCards = usersNameAndCards.remove(new Name(DEALER_NAME));
+        System.out.println(cardsToString(new Name(DEALER_NAME), dealerCards, 1));
 
         for (Entry<Name, Cards> entry : usersNameAndCards.entrySet()) {
             System.out.println(cardsToString(entry));
@@ -52,7 +52,7 @@ public class OutputView {
     public void printParticipantsRevenue(int dealerRevenue, Map<Name, Integer> participantsRevenue) {
         System.out.println(System.lineSeparator() + GAME_RESULT_PROMPT_MESSAGE);
 
-        System.out.println(GAME_RESULT_REVENUE_MESSAGE.formatted("딜러", dealerRevenue));
+        System.out.println(GAME_RESULT_REVENUE_MESSAGE.formatted(DEALER_NAME, dealerRevenue));
 
         for (Entry<Name, Integer> participant : participantsRevenue.entrySet()) {
             System.out.println(GAME_RESULT_REVENUE_MESSAGE.formatted(participant.getKey().getName(), participant.getValue()));
