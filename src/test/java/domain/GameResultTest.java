@@ -8,7 +8,6 @@ import static domain.HandsTestFixture.sum20Size2;
 import static domain.HandsTestFixture.sum20Size3;
 import static domain.HandsTestFixture.sum21Size3;
 
-import java.text.DecimalFormat;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,17 +39,5 @@ class GameResultTest {
     void isWinBlackJack() {
         Assertions.assertThat(blackJack.calculateResult(sum20Size2)).isEqualTo(GameResult.BLACK_JACK_WIN);
         Assertions.assertThat(sum20Size2.calculateResult(blackJack)).isEqualTo(GameResult.LOSE);
-    }
-
-    @Test
-    @DisplayName("Test name")
-    void methodName() {
-        //given
-
-        //when
-        long money = 100_000_000_000_000L;
-        String str = String.format("%,d", money);
-        System.out.println(str);
-        //then
     }
 }
