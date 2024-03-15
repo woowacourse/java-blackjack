@@ -75,6 +75,10 @@ public class OutputView {
     }
 
     private String profitMessage(String name, Double profit) {
+        if (Math.floor(profit) != profit) {
+            return String.format("%s: %f%n", name, profit);
+        }
+
         return String.format("%s: %.0f%n", name, profit);
     }
 }
