@@ -46,7 +46,7 @@ public class InputView {
     }
 
     public boolean askForMoreCard(String name) {
-        System.out.printf("%s는 한 장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", name, YES, NO);
+        System.out.printf("%s는 한 장의 카드를 더 받겠습니까? (예는 %s, 아니오는 %s)%n", name, YES, NO);
         String yesOrNo = scanner.nextLine().trim();
         validateInput(yesOrNo);
         if (YES.equals(yesOrNo)) {

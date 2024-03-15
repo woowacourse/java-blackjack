@@ -2,13 +2,11 @@ package controller;
 
 import domain.blackjackgame.BlackjackGame;
 import domain.blackjackgame.GameResult;
-import domain.blackjackgame.ResultStatus;
 import domain.card.CardFactory;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
 import java.util.Collections;
-import java.util.Map;
 import ui.InputView;
 import ui.OutputView;
 
@@ -24,14 +22,13 @@ public class BlackjackController {
     public void start() {
         Participants participants = Participants.createPlayers(inputView.readPlayerNames());
         BlackjackGame blackjackGame = new BlackjackGame(CardFactory.createCardDeck(), Collections::shuffle);
-
         GameResult gameResult = playBlackjackGame(participants, blackjackGame);
-        showGameResult(gameResult);
+        outputView.printGameResult(gameResult);
     }
 
     private GameResult playBlackjackGame(Participants participants, BlackjackGame blackjackGame) {
         blackjackGame.initGame(participants);
-        outputView.printCards(participants);
+        outputView.printInitialCards(participants);
 
         for (Player player : participants.getPlayers()) {
             dealToPlayer(player, blackjackGame);
@@ -44,7 +41,7 @@ public class BlackjackController {
     private void dealToPlayer(Player player, BlackjackGame blackjackGame) {
         while (inputView.askForMoreCard(player.getName())) {
             blackjackGame.dealCardTo(player);
-            outputView.printCardsAfterHit(player);
+            outputView.printAllCards(player);
         }
     }
 
@@ -53,12 +50,5 @@ public class BlackjackController {
             blackjackGame.dealCardTo(dealer);
             outputView.printDealerReceiveCardMessage();
         }
-    }
-
-    private void showGameResult(GameResult gameResult) {
-        Map<ResultStatus, Integer> dealerResult = gameResult.getDealerResult();
-        Map<Player, ResultStatus> playerResult = gameResult.getPlayerResult();
-
-        outputView.printParticipantResult(dealerResult, playerResult);
     }
 }

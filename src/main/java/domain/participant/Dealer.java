@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.card.Card;
 import domain.card.Score;
 
 public class Dealer extends Participant {
@@ -13,9 +12,5 @@ public class Dealer extends Participant {
 
     public boolean isNotExceedDrawPolicy() {
         return calculateScore().isLessThan(Score.get(DEALER_MIN_SCORE_POLICY));
-    }
-
-    public Card getFirstCard() {
-        return super.getAllCards().get(0);
     }
 }
