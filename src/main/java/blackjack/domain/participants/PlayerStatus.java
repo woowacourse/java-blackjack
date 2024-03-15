@@ -8,7 +8,7 @@ public class PlayerStatus {
     private GamblingMoney gamblingMoney;
 
     public PlayerStatus() {
-        hand = new Hand();
+        this.hand = new Hand();
         this.gamblingMoney = new GamblingMoney();
     }
 
