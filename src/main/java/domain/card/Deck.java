@@ -17,7 +17,7 @@ public class Deck {
         this.cards = cards;
     }
 
-    public static Deck from(CardGenerator cardGenerator) {
+    public static Deck generatedBy(CardGenerator cardGenerator) {
         Queue<Card> generatedCards = new LinkedList<>(cardGenerator.generate());
         return new Deck(generatedCards);
     }
