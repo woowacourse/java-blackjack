@@ -38,19 +38,11 @@ public class Money {
     }
 
     public Money increase(Money money) {
-        validateNegative(money);
         return new Money(this.amount + money.amount);
     }
 
     public Money decrease(Money money) {
-        validateNegative(money);
         return new Money(this.amount - money.amount);
-    }
-
-    private void  validateNegative(Money money) {
-        if (money.amount < 0) {
-            throw new IllegalArgumentException("더할 값은 양수여야만 한다");
-        }
     }
 
     @Override
@@ -68,5 +60,9 @@ public class Money {
     @Override
     public int hashCode() {
         return Objects.hash(amount);
+    }
+
+    public int getAmount() {
+        return amount;
     }
 }
