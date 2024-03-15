@@ -60,6 +60,10 @@ public class OutputView {
         printPlayerResultsFormat(gameResult);
     }
 
+    public void printBlackJackState(Player player) {
+        System.out.printf("%s의 카드가 블랙잭입니다. 턴을 종료합니다.%n", player.getName());
+    }
+
     public void printBustState() {
         System.out.println("카드 합계가 21을 초과하였습니다. 턴을 종료합니다.");
     }

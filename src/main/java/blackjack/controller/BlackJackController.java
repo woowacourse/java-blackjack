@@ -4,6 +4,7 @@ import blackjack.model.blackjackgame.BlackJackGame;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
 import blackjack.model.results.PlayerProfits;
+import blackjack.model.state.BlackJack;
 import blackjack.view.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -75,6 +76,10 @@ public class BlackJackController {
     }
 
     private boolean checkDrawCardState(Player player) {
+        if (player.getState() instanceof BlackJack) {
+            outputView.printBlackJackState(player);
+            return player.canHit();
+        }
         if (!player.canHit()) {
             outputView.printBustState();
         }
