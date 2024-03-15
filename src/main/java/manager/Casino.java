@@ -28,7 +28,7 @@ public class Casino {
         Deck deck = new Deck();
         ScoreBoard scoreBoard = new ScoreBoard(bets);
         DealerCards dealerCards = new DealerCards(deck.drawTwoCards());
-        List<PlayerCards> playerCardsBundle = makePlayerCards(names, deck);
+        List<PlayerCards> playerCardsBundle = readyPlayerCards(names, deck);
         outputView.printInitialCards(dealerCards, playerCardsBundle);
 
         Referee referee = new Referee(scoreBoard);
@@ -74,7 +74,7 @@ public class Casino {
         }
     }
 
-    private List<PlayerCards> makePlayerCards(Names names, Deck deck) {
+    private List<PlayerCards> readyPlayerCards(Names names, Deck deck) {
         return names.getNames().stream()
                 .map(name -> new PlayerCards(name, deck.drawTwoCards()))
                 .toList();
