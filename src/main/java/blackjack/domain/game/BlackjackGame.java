@@ -6,9 +6,6 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.utils.Constants;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 public class BlackjackGame {
     private final Dealer dealer;
     private final Players players;
@@ -52,14 +49,12 @@ public class BlackjackGame {
         return dealer.pickCard();
     }
 
-    public Map<Player, ResultStatus> judgeGameResult() {
-        final Map<Player, ResultStatus> gameResult = new LinkedHashMap<>();
+    public GameResult compareDealerAndPlayers() {
+        final GameResult gameResult = new GameResult();
 
         for (int playerIndex = 0; playerIndex < players.count(); playerIndex++) {
             final Player player = players.findPlayerByIndex(playerIndex);
-            final ResultStatus resultStatus = ResultStatus.of(player, dealer);
-
-            gameResult.put(player, resultStatus);
+            gameResult.compare(player, dealer);
         }
 
         return gameResult;

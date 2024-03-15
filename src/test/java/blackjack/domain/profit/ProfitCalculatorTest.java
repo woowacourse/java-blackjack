@@ -1,6 +1,7 @@
 package blackjack.domain.profit;
 
 import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.game.GameResult;
 import blackjack.domain.game.ResultStatus;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -39,9 +40,10 @@ class ProfitCalculatorTest {
         dealer.receiveCard(카드(TEN));
         player.receiveCard(카드(ACE));
         player.receiveCard(카드(JACK));
-        final Map<Player, ResultStatus> gameResult = blackjackGame.judgeGameResult();
+        final GameResult gameResult = blackjackGame.compareDealerAndPlayers();
+        final Map<Player, ResultStatus> result = gameResult.getResult();
 
-        final ProfitResult profitResult = profitCalculator.calculate(dealer, gameResult);
+        final ProfitResult profitResult = profitCalculator.calculate(dealer, result);
 
         assertThat(profitResult.getResult()).containsExactly(
                 entry(dealer, -15000), entry(player, 15000)
@@ -54,9 +56,10 @@ class ProfitCalculatorTest {
         dealer.receiveCard(카드(TEN));
         player.receiveCard(카드(ACE));
         player.receiveCard(카드(JACK));
-        final Map<Player, ResultStatus> gameResult = blackjackGame.judgeGameResult();
+        final GameResult gameResult = blackjackGame.compareDealerAndPlayers();
+        final Map<Player, ResultStatus> result = gameResult.getResult();
 
-        final ProfitResult profitResult = profitCalculator.calculate(dealer, gameResult);
+        final ProfitResult profitResult = profitCalculator.calculate(dealer, result);
 
         assertThat(profitResult.getResult()).containsExactly(
                 entry(dealer, 0), entry(player, 0)
@@ -70,9 +73,10 @@ class ProfitCalculatorTest {
         player.receiveCard(카드(TEN));
         player.receiveCard(카드(SIX));
         player.stay();
-        final Map<Player, ResultStatus> gameResult = blackjackGame.judgeGameResult();
+        final GameResult gameResult = blackjackGame.compareDealerAndPlayers();
+        final Map<Player, ResultStatus> result = gameResult.getResult();
 
-        final ProfitResult profitResult = profitCalculator.calculate(dealer, gameResult);
+        final ProfitResult profitResult = profitCalculator.calculate(dealer, result);
 
         assertThat(profitResult.getResult()).containsExactly(
                 entry(dealer, -10000), entry(player, 10000)
@@ -86,9 +90,10 @@ class ProfitCalculatorTest {
         player.receiveCard(카드(FIVE));
         player.receiveCard(카드(FOUR));
         player.stay();
-        final Map<Player, ResultStatus> gameResult = blackjackGame.judgeGameResult();
+        final GameResult gameResult = blackjackGame.compareDealerAndPlayers();
+        final Map<Player, ResultStatus> result = gameResult.getResult();
 
-        final ProfitResult profitResult = profitCalculator.calculate(dealer, gameResult);
+        final ProfitResult profitResult = profitCalculator.calculate(dealer, result);
 
         assertThat(profitResult.getResult()).containsExactly(
                 entry(dealer, 10000), entry(player, -10000)
@@ -102,9 +107,10 @@ class ProfitCalculatorTest {
         player.receiveCard(카드(KING));
         player.receiveCard(카드(QUEEN));
         player.stay();
-        final Map<Player, ResultStatus> gameResult = blackjackGame.judgeGameResult();
+        final GameResult gameResult = blackjackGame.compareDealerAndPlayers();
+        final Map<Player, ResultStatus> result = gameResult.getResult();
 
-        final ProfitResult profitResult = profitCalculator.calculate(dealer, gameResult);
+        final ProfitResult profitResult = profitCalculator.calculate(dealer, result);
 
         assertThat(profitResult.getResult()).containsExactly(
                 entry(dealer, 0), entry(player, 0)

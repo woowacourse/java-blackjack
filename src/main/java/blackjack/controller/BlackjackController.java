@@ -5,6 +5,7 @@ import blackjack.domain.batting.BattingAmountRepository;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.GameCommand;
+import blackjack.domain.game.GameResult;
 import blackjack.domain.game.ResultStatus;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -38,10 +39,10 @@ public class BlackjackController {
         Players players = replyOnException(this::generatePlayers);
         BattingAmountRepository repository = initBattingAmountRepository(players);
 
-        Map<Player, ResultStatus> gameResult = playBlackjackGame(dealer, players);
+        GameResult gameResult = playBlackjackGame(dealer, players);
 
         showParticipantsCardsWithScore(dealer, players);
-        showParticipantsProfit(dealer, repository, gameResult);
+        showParticipantsProfit(dealer, repository, gameResult.getResult());
     }
 
     private Dealer generateDealer() {
@@ -77,14 +78,14 @@ public class BlackjackController {
         return new BattingAmount(readBattingAmount);
     }
 
-    private Map<Player, ResultStatus> playBlackjackGame(Dealer dealer, Players players) {
+    private GameResult playBlackjackGame(Dealer dealer, Players players) {
         BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
         blackjackGame.start();
 
         showCardsAfterFirstDeal(dealer, players);
 
         dealToParticipants(players, dealer, blackjackGame);
-        return blackjackGame.judgeGameResult();
+        return blackjackGame.compareDealerAndPlayers();
     }
 
     private void showCardsAfterFirstDeal(Dealer dealer, Players players) {
