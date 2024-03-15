@@ -20,4 +20,12 @@ public class PlayerProfitResult {
         return playerProfitMap.values().stream()
                 .reduce(new Profit(0), Profit::add);
     }
+
+    public Profit calculateDealerProfit() {
+        return calculateTotalProfit().inverse();
+    }
+
+    public Map<Player, Profit> getPlayerProfitMap() {
+        return playerProfitMap;
+    }
 }
