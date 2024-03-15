@@ -8,36 +8,36 @@ public class Card {
 
     private static final List<Card> CACHE;
 
-    private final Number number;
+    private final Rank rank;
     private final Suit suit;
 
-    private Card(final Number number, final Suit suit) {
-        this.number = number;
+    private Card(final Rank rank, final Suit suit) {
+        this.rank = rank;
         this.suit = suit;
     }
 
     static {
         final List<Card> cache = new ArrayList<>();
-        for (final Number number : Number.values()) {
-            cache.addAll(createSuits(number));
+        for (final Rank rank : Rank.values()) {
+            cache.addAll(createSuits(rank));
         }
         CACHE = Collections.unmodifiableList(cache);
     }
 
-    private static List<Card> createSuits(final Number number) {
+    private static List<Card> createSuits(final Rank rank) {
         final List<Card> suits = new ArrayList<>();
         for (final Suit suit : Suit.values()) {
-            suits.add(new Card(number, suit));
+            suits.add(new Card(rank, suit));
         }
         return suits;
     }
 
-    public static Card of(final Number number, final Suit suit) {
-        return CACHE.get((number.ordinal() * Suit.values().length) + suit.ordinal());
+    public static Card of(final Rank rank, final Suit suit) {
+        return CACHE.get((rank.ordinal() * Suit.values().length) + suit.ordinal());
     }
 
-    public Number getNumber() {
-        return number;
+    public Rank getRank() {
+        return rank;
     }
 
     public Suit getSuit() {

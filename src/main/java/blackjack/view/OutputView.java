@@ -35,7 +35,7 @@ public class OutputView {
         final StringJoiner cardJoiner = new StringJoiner(", ");
         for (Card card : cards) {
             //TODO: Number도 translate 해야 한다. A, 숫자, J, K, Q
-            cardJoiner.add(card.getNumber().getValue() + SuitTranslator.translate(card.getSuit()));
+            cardJoiner.add(card.getRank().getValue() + SuitTranslator.translate(card.getSuit()));
         }
         return cardJoiner.toString();
     }
@@ -71,11 +71,11 @@ public class OutputView {
     }
 
     private static String formatMoney(final Money money) {
-        String formattedNumber = String.valueOf(money.value());
+        String formattedMoney = String.valueOf(money.value());
         if (money.isInt()) {
-            formattedNumber = String.valueOf(money.toInt());
+            formattedMoney = String.valueOf(money.toInt());
         }
-        return formattedNumber;
+        return formattedMoney;
     }
 
     public static void printLineSeparator(){

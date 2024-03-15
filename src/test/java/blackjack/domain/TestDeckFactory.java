@@ -3,7 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckFactory;
-import blackjack.domain.card.Number;
+import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,16 +25,16 @@ public class TestDeckFactory implements DeckFactory {
     @Override
     public Deck create() {
         final Stack<Card> deck = new Stack<>();
-        for (final Number number : Number.values()) {
-            deck.addAll(createSuits(number));
+        for (final Rank rank : Rank.values()) {
+            deck.addAll(createSuits(rank));
         }
         return new Deck(deck);
     }
 
-    private List<Card> createSuits(final Number number) {
+    private List<Card> createSuits(final Rank rank) {
         final List<Card> suits = new ArrayList<>();
         for (final Suit suit : Suit.values()) {
-            suits.add(Card.of(number, suit));
+            suits.add(Card.of(rank, suit));
         }
         return suits;
     }

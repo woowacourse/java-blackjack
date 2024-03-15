@@ -12,9 +12,9 @@ class ShuffledDeckFactoryTest {
     @Test
     void createDistinctCards() {
         Stack<Card> expectedCards = new Stack<>();
-        for (final Number number : Number.values()) {
+        for (final Rank rank : Rank.values()) {
             for (final Suit suit : Suit.values()) {
-                expectedCards.push(Card.of(number, suit));
+                expectedCards.push(Card.of(rank, suit));
             }
         }
 

@@ -10,10 +10,10 @@ class HandTest {
 
     @DisplayName("에이스가 없을 때, 카드들의 숫자 합을 구한다.")
     @Test
-    void calculateCardNumbersSum() {
+    void calculateCardSum() {
         final Hand hand = new Hand(List.of(
-                Card.of(Number.TEN, Suit.DIAMOND),
-                Card.of(Number.EIGHT, Suit.CLOVER)
+                Card.of(Rank.TEN, Suit.DIAMOND),
+                Card.of(Rank.EIGHT, Suit.CLOVER)
         ));
 
         final int actual = hand.calculateOptimalSum();
@@ -25,8 +25,8 @@ class HandTest {
     @Test
     void calculateAceToEleven() {
         final Hand hand = new Hand(List.of(
-                Card.of(Number.ACE, Suit.DIAMOND),
-                Card.of(Number.EIGHT, Suit.CLOVER)
+                Card.of(Rank.ACE, Suit.DIAMOND),
+                Card.of(Rank.EIGHT, Suit.CLOVER)
         ));
 
         final int actual = hand.calculateOptimalSum();
@@ -38,9 +38,9 @@ class HandTest {
     @Test
     void calculateAceToOne() {
         final Hand hand = new Hand(List.of(
-                Card.of(Number.ACE, Suit.DIAMOND),
-                Card.of(Number.EIGHT, Suit.CLOVER),
-                Card.of(Number.TEN, Suit.CLOVER)
+                Card.of(Rank.ACE, Suit.DIAMOND),
+                Card.of(Rank.EIGHT, Suit.CLOVER),
+                Card.of(Rank.TEN, Suit.CLOVER)
         ));
 
         final int actual = hand.calculateOptimalSum();
@@ -52,8 +52,8 @@ class HandTest {
     @Test
     void calculateAceToSoftHand() {
         final Hand hand = new Hand(List.of(
-                Card.of(Number.ACE, Suit.DIAMOND),
-                Card.of(Number.EIGHT, Suit.CLOVER)
+                Card.of(Rank.ACE, Suit.DIAMOND),
+                Card.of(Rank.EIGHT, Suit.CLOVER)
         ));
 
         final int actual = hand.calculateOptimalSum();
@@ -65,8 +65,8 @@ class HandTest {
     @Test
     void calculateOnlyOneAceToSoftHand() {
         final Hand hand = new Hand(List.of(
-                Card.of(Number.ACE, Suit.DIAMOND),
-                Card.of(Number.ACE, Suit.CLOVER)
+                Card.of(Rank.ACE, Suit.DIAMOND),
+                Card.of(Rank.ACE, Suit.CLOVER)
         ));
 
         final int actual = hand.calculateOptimalSum();
@@ -78,9 +78,9 @@ class HandTest {
     @Test
     void calculateAllAceToOne() {
         final Hand hand = new Hand(List.of(
-                Card.of(Number.ACE, Suit.DIAMOND),
-                Card.of(Number.ACE, Suit.CLOVER),
-                Card.of(Number.TEN, Suit.CLOVER)
+                Card.of(Rank.ACE, Suit.DIAMOND),
+                Card.of(Rank.ACE, Suit.CLOVER),
+                Card.of(Rank.TEN, Suit.CLOVER)
         ));
 
         final int actual = hand.calculateOptimalSum();
