@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Deck;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,30 +19,7 @@ class GameBoardTest {
      * 카드 pop 순서는 카드 저장 순서의 역순이다.
      */
     //@formatter:on
-    @DisplayName("플레이어들이 돌려 받을 금액을 계산한다")
-    @Test
-    void calculatePlayerProfits() {
-        final TestDeckFactory testDeckFactory = new TestDeckFactory();
-        final Deck deck = testDeckFactory.create();
-        final Map<String, Double> bettings = new LinkedHashMap<>();
-        bettings.put("pobi", (double) 10000);
-        bettings.put("jason", (double) 20000);
-        final Players players = Players.from(bettings);
-        final Dealer dealer = Dealer.from(deck);
-        final GameBoard gameBoard = new GameBoard(dealer, players);
-        gameBoard.drawInitialDealerHand();
-        gameBoard.drawInitialPlayersHand();
-
-        final Map<Name, Outcome> playerOutcomes = gameBoard.getPlayerOutcomes();
-
-        assertAll(
-                () -> assertThat(playerOutcomes.size()).isEqualTo(players.getPlayers().size()),
-                () -> assertThat(playerOutcomes.get(new Name("pobi"))).isEqualTo(Outcome.PUSH),
-                () -> assertThat(playerOutcomes.get(new Name("jason"))).isEqualTo(Outcome.PUSH)
-        );
-    }
-
-    @DisplayName("딜러의 최종 승패를 알려준다.")
+    @DisplayName("딜러의 최종 수익을 알려준다.")
     @Test
     void informDealerOutcome() {
         final TestDeckFactory testDeckFactory = new TestDeckFactory();
@@ -56,12 +32,12 @@ class GameBoardTest {
         gameBoard.drawInitialPlayersHand();
         gameBoard.drawInitialDealerHand();
 
-        final List<Outcome> dealerOutcome = gameBoard.getDealerOutcome();
+        final Money dealerProfit = gameBoard.getDealerProfit();
 
-        assertThat(dealerOutcome).containsExactly(Outcome.PUSH);
+        assertThat(dealerProfit.value()).isEqualTo(0);
     }
 
-    @DisplayName("모든 플레이어의 최종 승패를 알려준다.")
+    @DisplayName("모든 플레이어의 최종 수익을 알려준다.")
     @Test
     void informPlayersOutcome() {
         final TestDeckFactory testDeckFactory = new TestDeckFactory();
@@ -75,12 +51,12 @@ class GameBoardTest {
         gameBoard.drawInitialDealerHand();
         gameBoard.drawInitialPlayersHand();
 
-        final Map<Name, Outcome> playerOutcomes = gameBoard.getPlayerOutcomes();
+        final Map<Name, Money> playerProfits = gameBoard.getPlayerProfits();
 
         assertAll(
-                () -> assertThat(playerOutcomes.size()).isEqualTo(players.getPlayers().size()),
-                () -> assertThat(playerOutcomes.get(new Name("pobi"))).isEqualTo(Outcome.PUSH),
-                () -> assertThat(playerOutcomes.get(new Name("jason"))).isEqualTo(Outcome.PUSH)
-        );
+                () -> assertThat(playerProfits.size()).isEqualTo(players.getPlayers().size()),
+                () -> assertThat(playerProfits.get(new Name("pobi"))).isEqualTo(new Money(0)),
+                () -> assertThat(playerProfits.get(new Name("jason"))).isEqualTo(new Money(0))
+                );
     }
 }

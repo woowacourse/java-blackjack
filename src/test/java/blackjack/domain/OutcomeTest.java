@@ -155,28 +155,4 @@ class OutcomeTest {
 
         assertThat(dealerProfit.value()).isEqualTo(10000);
     }
-
-    @DisplayName("승을 패로 반전한다.")
-    @Test
-    void convertWinToLose() {
-        final Outcome convertedOutcome = Outcome.reverse(Outcome.WIN);
-
-        assertThat(convertedOutcome).isEqualTo(Outcome.LOSE);
-    }
-
-    @DisplayName("패를 승으로 반전한다.")
-    @Test
-    void convertLoseToWin() {
-        final Outcome convertedOutcome = Outcome.reverse(Outcome.LOSE);
-
-        assertThat(convertedOutcome).isEqualTo(Outcome.WIN);
-    }
-
-    @DisplayName("무는 반전해도 무다.")
-    @Test
-    void convertPushToPush() {
-        final Outcome convertedOutcome = Outcome.reverse(Outcome.PUSH);
-
-        assertThat(convertedOutcome).isEqualTo(Outcome.PUSH);
-    }
 }

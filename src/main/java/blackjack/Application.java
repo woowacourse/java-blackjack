@@ -2,7 +2,6 @@ package blackjack;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.GameBoard;
-import blackjack.domain.Outcome;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.card.Card;
@@ -23,9 +22,20 @@ public class Application {
 
         hitGamers(gameBoard);
 
+        //TODO: Dealer나 Players에 직접 접근하는 것보다 GameBoard로부터 필요한 정보를 얻는게 낫지 않을까?
+        /**
+         * 근데 GameBoard 객체가 진짜 필요한가? 게임 방식을 다르게 진행하고 싶다면, 새로운 Controller를 만들면 되는 것 아닌가?
+         * 여기서 main을 Controller로 쓰기로 했다는 말은, 게임을 여러 방식으로 제공하지는 않겠다는 의미이다.
+         * 그럼 Main은 GameBoard의 도움 없이 domain 객체들을 연결시켜서 게임을 수행하는 것이 자연스럽지 않나?
+         * -> 현재 방식처럼 GameBoard를 두는게 좋아 보이는지, 아니면 Main에서 직접 관리하는게 좋아 보이는지 여쭤보자.
+         *
+         * GameBoard를 중간에 둔 이유
+         * 컨트롤러가 게임이 정확히 어떻게 진행되는지(예를 들어, 초기 카드는 2장씩 나눠준다든지...)를 알아야할까? 라는 의문에서 시작했다.
+         * -> 블랙잭 게임을 진행하기 위해 필요한 구체적인 행동들은 도메인에 속한다고 생각했다.
+         */
         OutputView.printFinalState(
                 createDealerDto(gameBoard.getDealer().getHand()), createPlayerDtos(gameBoard.getPlayers()));
-        OutputView.printFinalOutcomes(Outcome.countByKind(gameBoard.getDealerOutcome()), gameBoard.getPlayerOutcomes());
+        OutputView.printFinalProfits(gameBoard.getDealerProfit(), gameBoard.getPlayerProfits());
     }
 
     private static GameBoard createGameBoard() {

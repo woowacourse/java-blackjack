@@ -1,7 +1,7 @@
 package blackjack.view;
 
+import blackjack.domain.Money;
 import blackjack.domain.Name;
-import blackjack.domain.Outcome;
 import blackjack.domain.card.Card;
 import blackjack.dto.DealerDto;
 import blackjack.dto.PlayerDto;
@@ -13,7 +13,6 @@ import java.util.StringJoiner;
 public class OutputView {
 
     private static final String DEALER = "딜러";
-    public static final long NO_COUNT = 0L;
 
     public static void printInitialState(DealerDto dealerDto, List<PlayerDto> playerDtos) {
         System.out.println(System.lineSeparator() + DEALER + "와 " + makePlayerName(playerDtos) + "에게 2장을 나누었습니다.");
@@ -35,6 +34,7 @@ public class OutputView {
     private static String makeCardsState(List<Card> cards) {
         final StringJoiner cardJoiner = new StringJoiner(", ");
         for (Card card : cards) {
+            //TODO: Number도 translate 해야 한다. A, 숫자, J, K, Q
             cardJoiner.add(card.getNumber().getValue() + SuitTranslator.translate(card.getSuit()));
         }
         return cardJoiner.toString();
@@ -58,28 +58,24 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printFinalOutcomes(final Map<Outcome, Long> dealerOutcome, final Map<Name, Outcome> playerOutcomes) {
-        System.out.println("## 최종 승패");
-        printDealerOutcome(dealerOutcome);
-        printPlayersOutcome(playerOutcomes);
+    public static void printFinalProfits(final Money dealerProfit, final Map<Name, Money> playerProfits) {
+        System.out.println("## 최종 수익");
+        System.out.println(DEALER + ": " + formatMoney(dealerProfit));
+        printPlayerProfits(playerProfits);
     }
 
-    private static void printDealerOutcome(final Map<Outcome, Long> dealerOutcome) {
-        System.out.print(DEALER + ": " +
-                        dealerOutcome.getOrDefault(Outcome.WIN, NO_COUNT) + "승 " +
-                        dealerOutcome.getOrDefault(Outcome.LOSE, NO_COUNT) + "패 ");
-
-        final Long pushCount = dealerOutcome.getOrDefault(Outcome.PUSH, NO_COUNT);
-        if (pushCount != NO_COUNT) {
-            System.out.print(pushCount + "무");
+    private static void printPlayerProfits(final Map<Name, Money> playerProfits) {
+        for (final Entry<Name, Money> playerProfit : playerProfits.entrySet()) {
+            System.out.println(playerProfit.getKey().value() + ": " + formatMoney(playerProfit.getValue()));
         }
-        System.out.println();
     }
 
-    private static void printPlayersOutcome(final Map<Name, Outcome> playerOutcomes) {
-        for (final Entry<Name, Outcome> entry : playerOutcomes.entrySet()) {
-            System.out.println(entry.getKey().value() + ": " + OutcomeTranslator.translate(entry.getValue()));
+    private static String formatMoney(final Money money) {
+        String formattedNumber = String.valueOf(money.value());
+        if (money.isInt()) {
+            formattedNumber = String.valueOf(money.toInt());
         }
+        return formattedNumber;
     }
 
     public static void printLineSeparator(){

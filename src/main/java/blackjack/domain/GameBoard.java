@@ -29,6 +29,7 @@ public class GameBoard {
         players.drawInitialHand(dealer);
     }
 
+    //TODO: get은 필드에 대한 getter 느낌을 주기 때문에 메서드 명 더 적절하게 변경하기
     public Card getDealerFirstCard() {
         return dealer.openFirstCard();
     }
@@ -49,22 +50,20 @@ public class GameBoard {
         return player.canDraw();
     }
 
-    public List<Outcome> getDealerOutcome() {
-        final List<Outcome> dealerOutcomes = new ArrayList<>();
-        for (final Player player : players.getPlayers()) {
-            final Outcome playerOutcome = Outcome.doesPlayerWin(dealer, player);
-            dealerOutcomes.add(Outcome.reverse(playerOutcome));
-        }
-        return Collections.unmodifiableList(dealerOutcomes);
+    //TODO: get은 필드에 대한 getter 느낌을 주기 때문에 메서드 명 더 적절하게 변경하기
+    public Money getDealerProfit() {
+        final List<Money> playerProfits = new ArrayList<>(getPlayerProfits().values());
+        return Outcome.calculateDealerProfit(playerProfits);
     }
 
-    public Map<Name, Outcome> getPlayerOutcomes() {
-        final Map<Name, Outcome> playerOutcomes = new LinkedHashMap<>();
+    //TODO: get은 필드에 대한 getter 느낌을 주기 때문에 메서드 명 더 적절하게 변경하기
+    public Map<Name, Money> getPlayerProfits() {
+        final Map<Name, Money> playerProfits = new LinkedHashMap<>();
+        //TODO: 일급 컬렉션인 Players에게 직접 시키는 방향으로 변경하기
         for (final Player player : players.getPlayers()) {
-            final Outcome playerOutcome = Outcome.doesPlayerWin(dealer, player);
-            playerOutcomes.put(player.getName(), playerOutcome);
+            playerProfits.put(player.getName(), Outcome.calculatePlayerProfit(dealer, player));
         }
-        return Collections.unmodifiableMap(playerOutcomes);
+        return Collections.unmodifiableMap(playerProfits);
     }
 
     public Dealer getDealer() {

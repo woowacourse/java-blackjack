@@ -5,8 +5,9 @@ import blackjack.domain.card.Hand;
 
 public class Player extends Gamer {
 
-    private static final int PUSH_PROFIT = 0;
-    private static final double BLACKJACK_MULTIPLIER = 1.5;
+    private static final int WIN_PROFIT_MULTIPLIER = 1;
+    private static final double BLACKJACK_WIN_PROFIT_MULTIPLIER = 1.5;
+    private static final int PUSH_PROFIT_MULTIPLIER = 0;
 
     private final Name name;
     private final Money bettingMoney;
@@ -15,10 +16,6 @@ public class Player extends Gamer {
         super(hand);
         this.name = name;
         this.bettingMoney = bettingMoney;
-    }
-
-    public static Player from(final String name) {
-        return new Player(new Name(name), new Hand(), new Money(0));
     }
 
     public static Player of(final String name, final double bettingMoney) {
@@ -39,15 +36,15 @@ public class Player extends Gamer {
     }
 
     public Money calculateWinProfit() {
-        return bettingMoney;
+        return bettingMoney.multiply(WIN_PROFIT_MULTIPLIER);
     }
 
     public Money calculatePushProfit() {
-        return new Money(PUSH_PROFIT);
+        return bettingMoney.multiply(PUSH_PROFIT_MULTIPLIER);
     }
 
     public Money calculateBlackjackWinProfit() {
-        return bettingMoney.multiply(BLACKJACK_MULTIPLIER);
+        return bettingMoney.multiply(BLACKJACK_WIN_PROFIT_MULTIPLIER);
     }
 
     public Name getName() {
