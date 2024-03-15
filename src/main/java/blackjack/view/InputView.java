@@ -17,28 +17,35 @@ public class InputView {
         return createBettings(playerNames);
     }
 
-    private static List<String> readPlayerNames() {
+    public static List<String> readPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         final List<String> playerNames = List.of(SCANNER.nextLine().split(","));
         System.out.println();
         return playerNames;
     }
 
+    public static double readBettingMoney(final Name playerName) {
+        System.out.println(playerName.value() + "의 배팅 금액은?");
+        final double bettingMoney = readDouble();
+        System.out.println();
+        return bettingMoney;
+    }
+
     private static Map<String, Double> createBettings(final List<String> playerNames) {
         final Map<String, Double> bettings = new LinkedHashMap<>();
         for (final String playerName : playerNames) {
             System.out.println(playerName + "의 배팅 금액은?");
-            bettings.put(playerName, (double) readInteger());
+            bettings.put(playerName, readDouble());
             System.out.println();
         }
         return bettings;
     }
 
-    private static int readInteger() {
+    private static double readDouble() {
         try {
-            return Integer.parseInt(SCANNER.nextLine());
+            return Double.parseDouble(SCANNER.nextLine());
         } catch (NumberFormatException e) {
-            throw new IllegalStateException("숫자로 변환할 수 없는 입력입니다.");
+            throw new IllegalStateException("숫자만 입력해주세요.");
         }
     }
 
