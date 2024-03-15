@@ -32,7 +32,7 @@ public class Money {
         return amount;
     }
 
-    public void validateRange(int amount) {
+    private void validateRange(int amount) {
         if (amount < MIN || MAX < amount) {
             throw new IllegalArgumentException("[ERROR] 금액은 " + MIN + "부터 " + MAX + "이하까지 가능합니다.");
         }
