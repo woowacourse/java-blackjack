@@ -20,7 +20,7 @@ public class InputView {
     }
 
     public int inputBettingMoney(String name) {
-        System.out.println(name + "의 배팅 금액은?");
+        System.out.println("\n" + name.trim() + "의 배팅 금액은?");
 
         return Integer.parseInt(scanner.nextLine());
     }

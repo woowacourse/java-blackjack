@@ -16,7 +16,7 @@ class GameParticipantCardsTest {
     @DisplayName("해당하는 유저가 Bust일 경우 true를 리턴한다.")
     @Test
     void isBustPlayer() {
-        Player player = Player.joinGame("pola", new CardDeck().firstCardSettings(), 100);
+        Player player = Player.joinGame("pola", new CardDeck().firstCardSettings(), 3000);
 
         player.receiveCard(new Card(CardNumber.JACK, CardPattern.DIA_PATTERN));
         player.receiveCard(new Card(CardNumber.JACK, CardPattern.SPADE_PATTERN));
@@ -27,7 +27,7 @@ class GameParticipantCardsTest {
     @DisplayName("해당하는 유저가 Bust가 아닐 경우 false를 리턴한다.")
     @Test
     void isNotBustPlayer() {
-        Player player = Player.joinGame("pola", new CardDeck().firstCardSettings(), 1000);
+        Player player = Player.joinGame("pola", new CardDeck().firstCardSettings(), 3000);
 
         Assertions.assertThat(player.isBust()).isFalse();
     }
