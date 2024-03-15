@@ -114,9 +114,6 @@ public class BlackjackMachine {
     }
 
     private void showProfits(Players players, ProfitInfo profitInfo) {
-        for (Player player : players.getPlayers()) {
-            Money money = profitInfo.findProfitBy(player);
-            outputView.printPlayerNameAndProfit(player.getName(), money);
-        }
+        outputView.printPlayerNamesAndProfitsOfAllParticipants(players, profitInfo);
     }
 }

@@ -1,6 +1,7 @@
 package view;
 
 import domain.betting.Money;
+import domain.betting.ProfitInfo;
 import domain.card.Card;
 import domain.card.Score;
 import domain.participant.Dealer;
@@ -60,8 +61,19 @@ public class OutputView {
             resolver.scoreText(score));
     }
 
-    public void printPlayerNameAndProfit(String name, Money money) {
+    public void printPlayerNamesAndProfitsOfAllParticipants(Players players, ProfitInfo profitInfo) {
         System.out.println("## 최종 결과");
-        System.out.printf("%s: %s%n", name, resolver.moneyText(money)); // TODO: for문 쓰기
+        printDealerNameAndProfit(profitInfo.calculateDealerProfit());
+        for (Player player : players.getPlayers()) {
+            printPlayerNameAndProfit(player.getName(), profitInfo.findProfitBy(player));
+        }
+    }
+
+    private void printDealerNameAndProfit(Money money) {
+        System.out.printf("%s: %s%n", DEALER_NAME, resolver.moneyText(money));
+    }
+
+    private void printPlayerNameAndProfit(String name, Money money) {
+        System.out.printf("%s: %s%n", name, resolver.moneyText(money));
     }
 }
