@@ -98,7 +98,7 @@ public class BlackJackController {
 
     private boolean isBlackJack(final Player player) {
         if (player.isBlackJack()) {
-            outputView.printBlackJack();
+            outputView.printBlackJack(player.getName());
             return true;
         }
         return false;
@@ -114,7 +114,7 @@ public class BlackJackController {
         if (player.canDeal()) {
             return !answer.isHit();
         }
-        outputView.printDealEndMessage(player.isBust());
+        outputView.printPlayerEndMessage(player.isBust());
         return true;
     }
 

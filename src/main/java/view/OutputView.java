@@ -69,20 +69,20 @@ public class OutputView {
         System.out.printf("BUST%n");
     }
 
-    public void printBlackJack() {
-        System.out.printf("BLACK JACK!!!%n");
+    public void printBlackJack(final String name) {
+        System.out.printf("%s 축하드립니다! BLACK JACK!!!%n", name);
     }
 
     public void printException(final ErrorCode errorCode) {
         System.out.printf(ERROR_FORM, ErrorCodeMessage.from(errorCode).getMessage());
     }
 
-    public void printDealEndMessage(final boolean isBust) {
+    public void printPlayerEndMessage(final boolean isBust) {
         if (isBust) {
             printBust();
             return;
         }
-        printBlackJack();
+        System.out.println("카드의 합이 21이라 더 이상 카드를 받을 수 없습니다.");
     }
 
     public void printDealerBlackJack() {
