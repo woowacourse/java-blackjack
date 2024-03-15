@@ -4,8 +4,10 @@ import java.util.List;
 import model.Choice;
 import model.casino.CardDispenser;
 import model.casino.CardShuffleMachine;
+import model.participant.Dealer;
 import model.participant.Entrant;
 import model.participant.Names;
+import model.participant.Player;
 import service.dto.DealerFaceUpResult;
 import service.dto.DealerMatchResult;
 import service.dto.FaceUpResult;
@@ -16,18 +18,17 @@ public class CasinoService {
     private final CardDispenser cardDispenser;
 
     public CasinoService(Names names, CardShuffleMachine cardShuffleMachine) {
-        this.entrant = new Entrant(names);
         this.cardDispenser = new CardDispenser(cardShuffleMachine);
+        this.entrant = generateEntrant(names);
     }
 
-    public void initializeGame() {
-        int playerSize = entrant.getPlayerSize();
-        for (int i = 0; i < playerSize; i++) {
-            entrant.hitAndMoveToNextPlayer(cardDispenser.dispenseCard());
-            entrant.hitAndMoveToNextPlayer(cardDispenser.dispenseCard());
-        }
-        hitCardToDealer();
-        hitCardToDealer();
+    private Entrant generateEntrant(Names names) {
+        List<Player> players = names.getPlayerNames()
+                .stream()
+                .map(name -> new Player(name, cardDispenser.dispenseCard(), cardDispenser.dispenseCard()))
+                .toList();
+        Dealer dealer = new Dealer(cardDispenser.dispenseCard(), cardDispenser.dispenseCard());
+        return new Entrant(dealer, players);
     }
 
     public void distinctPlayerChoice(Choice choice) {

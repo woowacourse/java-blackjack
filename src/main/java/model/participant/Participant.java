@@ -3,15 +3,16 @@ package model.participant;
 import model.card.Card;
 import model.card.CardDeck;
 import model.casino.MatchResult;
-import service.dto.FaceUpResult;
 
 public abstract class Participant {
 
     protected static final int BUST_THRESHOLD = 22;
     protected final CardDeck cardDeck;
 
-    protected Participant() {
+    protected Participant(final Card firstCard, final Card secondCard) {
         this.cardDeck = new CardDeck();
+        cardDeck.addCard(firstCard);
+        cardDeck.addCard(secondCard);
     }
 
     public abstract boolean canHit();

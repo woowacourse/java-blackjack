@@ -19,7 +19,6 @@ public class BlackJackLauncher {
 
     public void execute() {
         CasinoService casinoService = initCasino();
-        casinoService.initializeGame();
         showInitialFaceUpResults(casinoService);
         proceedPlayersTurn(casinoService);
         proceedDealerTurn(casinoService);

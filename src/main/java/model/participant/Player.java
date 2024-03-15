@@ -4,6 +4,7 @@ import static model.casino.MatchResult.DRAW;
 import static model.casino.MatchResult.LOSE;
 import static model.casino.MatchResult.WIN;
 
+import model.card.Card;
 import model.casino.MatchResult;
 import service.dto.FaceUpResult;
 
@@ -11,8 +12,8 @@ public class Player extends Participant {
     private final Name name;
     private boolean isTurnOver;
 
-    public Player(Name name) {
-        super();
+    public Player(Name name, Card card1, Card card2) {
+        super(card1, card2);
         this.name = name;
         this.isTurnOver = false;
     }
@@ -37,7 +38,6 @@ public class Player extends Participant {
     public void turnOver() {
         isTurnOver = true;
     }
-
 
     public FaceUpResult generateFaceUpResult() {
         return new FaceUpResult(name, cardDeck.getCards(), cardDeck.calculateHand());

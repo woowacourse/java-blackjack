@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
-import java.util.stream.Collectors;
 import model.card.Card;
 import model.casino.MatchResult;
 import service.dto.DealerFaceUpResult;
@@ -21,16 +20,9 @@ public class Entrant {
     private final Dealer dealer;
     private final Queue<Player> players;
 
-    public Entrant(Names names) {
-        this.dealer = new Dealer();
-        this.players = generatePlayers(names);
-    }
-
-    private Queue<Player> generatePlayers(Names names) {
-        return names.getPlayerNames()
-                .stream()
-                .map(Player::new)
-                .collect(Collectors.toCollection(LinkedList::new));
+    public Entrant(final Dealer dealer, final List<Player> players) {
+        this.dealer = dealer;
+        this.players = new LinkedList<>(players);
     }
 
     public void hitDealer(Card card) {
@@ -39,11 +31,6 @@ public class Entrant {
 
     public boolean canHitDealer() {
         return dealer.canHit();
-    }
-
-    public void hitAndMoveToNextPlayer(Card card) {
-        hitPlayer(card);
-        moveToNextPlayer();
     }
 
     public void hitPlayer(Card card) {

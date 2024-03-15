@@ -7,11 +7,11 @@ import java.util.List;
 import model.card.Card;
 import model.card.Emblem;
 import model.card.Number;
-import service.dto.DealerFaceUpResult;
-import service.dto.FaceUpResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import service.dto.DealerFaceUpResult;
+import service.dto.FaceUpResult;
 
 class EntrantTest {
     Entrant entrant;
@@ -19,24 +19,24 @@ class EntrantTest {
     @BeforeEach
     void setUp() {
         // Given
+        Card card1 = Card.from(Number.ACE, Emblem.SPADE);
+        Card card2 = Card.from(Number.TWO, Emblem.SPADE);
         Names names = new Names(List.of("프람"));
-        entrant = new Entrant(names);
+        entrant = generateEntrant(names, card1, card2);
 
         // When
-        entrant.hitDealer(Card.from(Number.ACE, Emblem.SPADE));
-        entrant.hitDealer(Card.from(Number.TWO, Emblem.SPADE));
+
         entrant.hitDealer(Card.from(Number.THREE, Emblem.SPADE));
+        entrant.hitPlayer(Card.from(Number.THREE, Emblem.HEART));
+    }
 
-        entrant.getPlayers()
-                .peek()
-                .hitCard(Card.from(Number.ACE, Emblem.HEART));
-        entrant.getPlayers()
-                .peek()
-                .hitCard(Card.from(Number.TWO, Emblem.HEART));
-        entrant.getPlayers()
-                .peek()
-                .hitCard(Card.from(Number.THREE, Emblem.HEART));
-
+    private Entrant generateEntrant(Names names, Card card1, Card card2) {
+        List<Player> players = names.getPlayerNames()
+                .stream()
+                .map(name -> new Player(name, card1, card2))
+                .toList();
+        Dealer dealer = new Dealer(card1, card2);
+        return new Entrant(dealer, players);
     }
 
     @Test
@@ -61,7 +61,7 @@ class EntrantTest {
         assertAll(() -> {
             assertEquals("프람", result.get(0)
                     .getPartipantNameAsString());
-            assertEquals(List.of("A하트", "2하트", "3하트"), result.get(0)
+            assertEquals(List.of("A스페이드", "2스페이드", "3하트"), result.get(0)
                     .getCardsAsStrings());
             assertEquals(16, result.get(0)
                     .hand());
