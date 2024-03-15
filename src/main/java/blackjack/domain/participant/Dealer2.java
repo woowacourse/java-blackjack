@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Hand;
+import blackjack.domain.game.Score;
 
 public class Dealer2 {
 
@@ -31,7 +32,19 @@ public class Dealer2 {
         return hand.calculateHandScore().isDealerHit();
     }
 
+    public Score handScore() {
+        return hand.calculateHandScore();
+    }
+
     public Hand getHand() {
         return hand;
+    }
+
+    public boolean isNotBlackjack() {
+        return !hand.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return hand.isBust();
     }
 }
