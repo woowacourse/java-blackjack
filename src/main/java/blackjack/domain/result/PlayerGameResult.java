@@ -10,4 +10,8 @@ public class PlayerGameResult {
     public PlayerGameResult(Map<Player, GameResult> playerGameResultMap) {
         this.playerGameResultMap = playerGameResultMap;
     }
+
+    public Map<Player, GameResult> getPlayerGameResultMap() {
+        return playerGameResultMap;
+    }
 }
