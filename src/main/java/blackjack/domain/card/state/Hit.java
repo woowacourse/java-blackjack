@@ -10,7 +10,19 @@ public class Hit extends AbstractState {
 
     @Override
     public State draw(final Card card) {
-        return null;
+        final var newCards = cards().draw(card);
+        if (newCards.calculate() > 21) {
+            return new Bust(newCards);
+        }
+        if (newCards.calculate() == 21) {
+            return new Stand(newCards);
+        }
+        return new Hit(newCards);
+    }
+
+    @Override
+    public State stand() {
+        return new Stand(cards());
     }
 
     @Override
