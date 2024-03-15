@@ -8,6 +8,8 @@ import domain.result.GameResult;
 import domain.result.GameResultStatus;
 import domain.result.ResultProfitRatio;
 
+import java.util.List;
+
 public class BlackjackGame {
 
     public static final int INITIAL_CARD_COUNT = 2;
@@ -29,10 +31,12 @@ public class BlackjackGame {
     }
 
     private void checkBlackjack() {
-        for (Player player : players.getPlayers()) {
-            if (player.isBlackjack() && !dealer.isBlackjack()) {
-                player.revenue(ResultProfitRatio.BLACKJACK);
-            }
+        List<Player> winners =  players.getPlayers()
+               .stream()
+               .filter(player -> player.isBlackjack() && !dealer.isBlackjack())
+               .toList();
+        for(Player player : winners){
+            player.revenue(ResultProfitRatio.BLACKJACK);
         }
     }
 
