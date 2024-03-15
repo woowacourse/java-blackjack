@@ -1,8 +1,8 @@
 package domain.user;
 
-import static domain.card.Number.ACE;
 import static domain.card.Number.JACK;
-import static domain.card.Number.QUEEN;
+import static domain.card.Number.SEVEN;
+import static domain.card.Number.SIX;
 import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,17 +14,16 @@ public class DealerTest {
     @Test
     @DisplayName("손패의 합이 16 이하이면 receivable이다.")
     void isReceivableTest() {
-        Player player = new Player(new Name("aa"), new Hand(new Card(SPADE, JACK), new Card(SPADE, QUEEN)));
+        Dealer dealer = new Dealer(new Hand(new Card(SPADE, JACK), new Card(SPADE, SIX)));
 
-        assertThat(player.isReceivable()).isTrue();
+        assertThat(dealer.isReceivable()).isTrue();
     }
 
     @Test
     @DisplayName("손패의 합이 16 초과이면 receivable이지 않다.")
     void isNotReceivableTest() {
-        Player player = new Player(new Name("aa"),
-                new Hand(new Card(SPADE, JACK), new Card(SPADE, QUEEN), new Card(SPADE, ACE)));
+        Dealer dealer = new Dealer(new Hand(new Card(SPADE, JACK), new Card(SPADE, SEVEN)));
 
-        assertThat(player.isReceivable()).isFalse();
+        assertThat(dealer.isReceivable()).isFalse();
     }
 }
