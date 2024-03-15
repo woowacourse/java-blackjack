@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.model.betting.Money;
 import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.cardgenerator.RandomCardGenerator;
 import blackjack.model.dealer.Dealer;
@@ -24,18 +25,25 @@ public class BlackjackGame {
     }
 
     public void play() {
-        Players players = retryOnException(this::preparePlayers);
+        Players players = retryOnException(this::createPlayers);
         Dealer dealer = new Dealer();
         CardGenerator cardGenerator = new RandomCardGenerator();
+        createBetting(players); // TODO: betting 반환하게 수정
 
         dealCards(players, dealer, cardGenerator);
         drawCards(players, dealer, cardGenerator);
         showResult(players, dealer);
     }
 
-    private Players preparePlayers() {
+    private Players createPlayers() {
         List<String> playerNames = inputView.askPlayerNames();
         return new Players(playerNames);
+    }
+
+    private void createBetting(Players players) {
+        for (String playerName : players.getNames()) {
+            Money money = retryOnException(() -> inputView.askBettingMoneyToPlayer(playerName));
+        }
     }
 
     private void dealCards(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
@@ -66,7 +74,7 @@ public class BlackjackGame {
     }
 
     private boolean drawPlayerCard(final Player player, final CardGenerator cardGenerator) {
-        Command command = retryOnException(() -> inputView.askPlayerDrawOrStandCommand(player.getName()));
+        Command command = retryOnException(() -> inputView.askDrawOrStandCommandToPlayer(player.getName()));
         if (command.isDraw()) {
             player.drawCard(cardGenerator);
             outputView.printPlayerDrawingCards(player);
