@@ -1,10 +1,10 @@
 package blackjack.view;
 
 import blackjack.dto.NameCardsScore;
+import blackjack.model.betting.Money;
 import blackjack.model.deck.Card;
 import blackjack.model.participant.Name;
-import blackjack.model.result.ResultCommand;
-import blackjack.view.display.result.ResultCommandDisplay;
+import blackjack.model.participant.Player;
 import blackjack.view.display.deck.ScoreDisplay;
 import blackjack.view.display.deck.ShapeDisplay;
 import java.util.List;
@@ -51,24 +51,18 @@ public class OutputView {
                 nameCardsScore.name().getRawName() + ": " + convert(nameCardsScore.cards()) + " - 결과: " + nameCardsScore.score());
     }
 
-    public static void printDealerFinalResult(final Map<ResultCommand, Integer> dealerResults) {
+    public static void printDealerProfit(final Money dealerProfit) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.println("딜러: " + formatFinalResult(dealerResults));
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + dealerProfit.getValue());
     }
 
-    private static String formatFinalResult(final Map<ResultCommand, Integer> dealerResults) {
-        return dealerResults.entrySet().stream()
-                .map(resultIntegerEntry -> resultIntegerEntry.getValue() + ResultCommandDisplay.getValue(
-                        resultIntegerEntry.getKey()))
-                .collect(Collectors.joining(" "));
+    // TODO: DTO etc
+    public static void printPlayerProfit(final Map<Player, Money> playerProfits) {
+        playerProfits.forEach((player, profitMoney) -> System.out.println(formatFinalResult(player.getName(), profitMoney)));
     }
 
-    public static void printFinalResult(final Map<Name, ResultCommand> playerResults) {
-        playerResults.forEach((name, result) -> System.out.println(formatFinalResult(name.getRawName(), result)));
-    }
-
-    private static String formatFinalResult(final String name, final ResultCommand result) {
-        return name + ": " + ResultCommandDisplay.getValue(result);
+    private static String formatFinalResult(final Name name, final Money money) {
+        return name.getRawName() + ": " + money.getValue();
     }
 }
