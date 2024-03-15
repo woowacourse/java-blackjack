@@ -10,6 +10,7 @@ import model.blackjackgame.Betting;
 import model.blackjackgame.Bettings;
 import model.blackjackgame.Blackjack;
 import model.blackjackgame.BlackjackGame;
+import model.blackjackgame.Profit;
 import model.blackjackgame.Result;
 import model.card.Card;
 import model.card.CardDispenser;
@@ -51,7 +52,10 @@ public class BlackjackGameController {
 
         printFinalCardStatus(blackjackGame.getDealer(), blackjackGame.getPlayers());
         Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers(), blackjack);
-        outputView.printFinalResult(result.getDealerResult(), result.getPlayerResult());
+        Profit profit = new Profit(bettings);
+        profit.createPlayersProfit(blackjackGame.getPlayers(), bettings, result);
+
+        outputView.printFinalProfit(profit);
     }
 
     private Betting betting(Player player) {

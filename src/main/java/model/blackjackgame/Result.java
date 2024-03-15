@@ -84,6 +84,10 @@ public class Result {
         return playerResult;
     }
 
+    public String getResult(Player player) {
+        return playerResult.get(player.getName());
+    }
+
     public String getDealerResult() {
         return dealerResult;
     }

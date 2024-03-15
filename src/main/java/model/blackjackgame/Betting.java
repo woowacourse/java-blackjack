@@ -11,7 +11,7 @@ public class Betting {
     private static final String DRAW_WORD = "무";
 
     private final Player player;
-    private final double money;
+    private final int money;
 
     public Betting(Player player, int money) {
         validate(money);
@@ -25,7 +25,7 @@ public class Betting {
         }
     }
 
-    public double profit(String result) {
+    public int profit(String result) {
         if (winOrDraw(result)) {
             return money;
         }
@@ -33,7 +33,7 @@ public class Betting {
             return -money;
         }
         if (blackjack(result)) {
-            return money * 1.5;
+            return (int) (money * 1.5);
         }
         return 0;
     }
@@ -50,7 +50,11 @@ public class Betting {
         return result.equals(BLACKJACK_WORD);
     }
 
-    public double getMoney() {
+    public Player getPlayer() {
+        return player;
+    }
+
+    public int getMoney() {
         return money;
     }
 }

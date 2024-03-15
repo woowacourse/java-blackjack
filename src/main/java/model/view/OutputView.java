@@ -1,8 +1,8 @@
 package model.view;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
+import model.blackjackgame.Profit;
 import model.card.CardType;
 import model.dealer.Dealer;
 import model.player.Player;
@@ -39,11 +39,11 @@ public class OutputView {
         System.out.println(" - 결과: " + totalScore);
     }
 
-    public void printFinalResult(String dealerResult, Map<String, String> playerResult) {
-        System.out.println("## 최종 승패");
-        System.out.println("딜러: " + dealerResult);
-        for (Entry<String, String> entrySet : playerResult.entrySet()) {
-            System.out.println(String.join(": ", entrySet.getKey(), entrySet.getValue()));
+    public void printFinalProfit(Profit profit) {
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + profit.getDealerProfit());
+        for (Entry<String, Integer> entrySet : profit.getPlayerProfit().entrySet()) {
+            System.out.println(String.join(": ", entrySet.getKey(), String.valueOf(entrySet.getValue())));
         }
     }
 }
