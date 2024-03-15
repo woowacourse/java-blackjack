@@ -60,7 +60,7 @@ class HandTest {
         assertThat(hand.isBlackjack()).isTrue();
     }
 
-    @DisplayName("플레이어의 카드가 2 장을 넘으면 21점이더라도 블랙잭이 아니다")
+    @DisplayName("플레이어의 카드가 두장도 21점도 아니라면 블랙잭이 아니다")
     @Test
     void testIsBlackJack2() {
         Hand hand = new Hand();

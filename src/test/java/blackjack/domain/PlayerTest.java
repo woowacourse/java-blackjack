@@ -29,11 +29,56 @@ class PlayerTest {
     @Test
     void putCard() {
         Player player = new Player("마크");
-        Card card = CardFixture.heartJack();
 
-        player.putCard(card);
+        player.putCard(CardFixture.heartJack());
         int score = player.calculate();
 
         assertThat(score).isEqualTo(10);
+    }
+
+    @DisplayName("플레이어의 카드 점수 합계가 20 이하이면 hit할 수 있다")
+    @Test
+    void testHit1() {
+        Player player = new Player("마크");
+
+        player.putCard(CardFixture.heartJack());
+        player.putCard(CardFixture.heartJack());
+
+        assertThat(player.canHit()).isTrue();
+    }
+
+    @DisplayName("플레이어의 카드 점수 합계가 21 이상이면 hit할 수 없다")
+    @Test
+    void testHit2() {
+        Player player = new Player("마크");
+
+        player.putCard(CardFixture.heartJack());
+        player.putCard(CardFixture.heartJack());
+        player.putCard(CardFixture.heartJack());
+
+        assertThat(player.canHit()).isFalse();
+    }
+
+    @DisplayName("플레이어의 카드가 두 장이고 21점 이라면 블랙잭이다")
+    @Test
+    void testIsBlackJack1() {
+        Player player = new Player("마크");
+
+        player.putCard(CardFixture.heartJack());
+        player.putCard(CardFixture.cloverAce());
+
+        assertThat(player.isBlackjack()).isTrue();
+    }
+
+    @DisplayName("플레이어의 카드가 두 장이고 21점이 아니라면 블랙잭이 아니다")
+    @Test
+    void testIsBlackJack2() {
+        Player player = new Player("마크");
+
+        player.putCard(CardFixture.heartJack());
+        player.putCard(CardFixture.cloverAce());
+        player.putCard(CardFixture.diamond3());
+
+        assertThat(player.isBlackjack()).isFalse();
     }
 }
