@@ -25,8 +25,9 @@ public class MoneyStaff {
     }
 
     private Money calculateProfitMoney(final Player player, final ResultCommand resultCommand) {
-        double profitRate = bettingRule.calculateProfitRate(player, resultCommand);
-        return bettingMoneys.get(player).multiple(profitRate);
+        ProfitRate profitRate = bettingRule.calculateProfitRate(player, resultCommand);
+        Money money = bettingMoneys.get(player);
+        return money.multiple(profitRate);
     }
 
     public Money calculateDealerProfitAmount(final List<Money> playerProfits) {

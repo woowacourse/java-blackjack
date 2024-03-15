@@ -10,6 +10,6 @@ class MoneyTest {
     @DisplayName("곱셈한 금액을 구한다.")
     void multiple() {
         Money money = new Money(1_000);
-        assertThat(money.multiple(1.5)).isEqualTo(new Money(1_500));
+        assertThat(money.multiple(ProfitRate.PLUS_150_PERCENT)).isEqualTo(new Money(1_500));
     }
 }

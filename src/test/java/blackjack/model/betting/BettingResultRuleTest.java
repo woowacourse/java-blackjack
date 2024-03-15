@@ -3,6 +3,10 @@ package blackjack.model.betting;
 
 import static blackjack.model.PlayerFixture.BLACKJACK_PLAYER;
 import static blackjack.model.PlayerFixture.NOT_BLACKJACK_21_PLAYER;
+import static blackjack.model.betting.ProfitRate.MINUS_100_PERCENT;
+import static blackjack.model.betting.ProfitRate.PLUS_100_PERCENT;
+import static blackjack.model.betting.ProfitRate.PLUS_150_PERCENT;
+import static blackjack.model.betting.ProfitRate.ZERO;
 import static blackjack.model.result.ResultCommand.DRAW;
 import static blackjack.model.result.ResultCommand.LOSE;
 import static blackjack.model.result.ResultCommand.WIN;
@@ -28,7 +32,7 @@ class BettingResultRuleTest {
         void calculateProfitRateByBlackJack() {
             BettingRule bettingRule = new BettingRule(
                     new Dealer(new Hand(List.of(new Card(Shape.SPADE, Score.ACE), new Card(Shape.HEART, Score.TWO)))));
-            assertThat(bettingRule.calculateProfitRate(BLACKJACK_PLAYER.getPlayer(), WIN)).isEqualTo(1.5);
+            assertThat(bettingRule.calculateProfitRate(BLACKJACK_PLAYER.getPlayer(), WIN)).isEqualTo(PLUS_150_PERCENT);
         }
 
         @Test
@@ -37,7 +41,7 @@ class BettingResultRuleTest {
             BettingRule bettingRule = new BettingRule(new Dealer(new Hand(
                     List.of(new Card(Shape.SPADE, Score.TEN), new Card(Shape.HEART, Score.TEN),
                             new Card(Shape.DIA, Score.TEN)))));
-            assertThat(bettingRule.calculateProfitRate(NOT_BLACKJACK_21_PLAYER.getPlayer(), WIN)).isEqualTo(0);
+            assertThat(bettingRule.calculateProfitRate(NOT_BLACKJACK_21_PLAYER.getPlayer(), WIN)).isEqualTo(ZERO);
         }
 
         @Test
@@ -45,7 +49,7 @@ class BettingResultRuleTest {
         void calculateProfitRateByDealerNotBust() {
             BettingRule bettingRule = new BettingRule(
                     new Dealer(new Hand(List.of(new Card(Shape.SPADE, Score.TWO), new Card(Shape.HEART, Score.TWO)))));
-            assertThat(bettingRule.calculateProfitRate(NOT_BLACKJACK_21_PLAYER.getPlayer(), WIN)).isEqualTo(1);
+            assertThat(bettingRule.calculateProfitRate(NOT_BLACKJACK_21_PLAYER.getPlayer(), WIN)).isEqualTo(PLUS_100_PERCENT);
         }
     }
 
@@ -54,7 +58,7 @@ class BettingResultRuleTest {
     void calculateProfitRateWhenDraw() {
         BettingRule bettingRule = new BettingRule(
                 new Dealer(new Hand(List.of(new Card(Shape.SPADE, Score.TWO), new Card(Shape.HEART, Score.TWO)))));
-        assertThat(bettingRule.calculateProfitRate(NOT_BLACKJACK_21_PLAYER.getPlayer(), DRAW)).isEqualTo(0);
+        assertThat(bettingRule.calculateProfitRate(NOT_BLACKJACK_21_PLAYER.getPlayer(), DRAW)).isEqualTo(ZERO);
     }
 
     @Test
@@ -62,6 +66,6 @@ class BettingResultRuleTest {
     void calculateProfitRateWhenPlayerLose() {
         BettingRule bettingRule = new BettingRule(
                 new Dealer(new Hand(List.of(new Card(Shape.SPADE, Score.ACE), new Card(Shape.HEART, Score.TEN)))));
-        assertThat(bettingRule.calculateProfitRate(NOT_BLACKJACK_21_PLAYER.getPlayer(), LOSE)).isEqualTo(-1);
+        assertThat(bettingRule.calculateProfitRate(NOT_BLACKJACK_21_PLAYER.getPlayer(), LOSE)).isEqualTo(MINUS_100_PERCENT);
     }
 }

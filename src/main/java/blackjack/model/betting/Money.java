@@ -9,8 +9,8 @@ public class Money {
         this.value = value;
     }
 
-    public Money multiple(final double rate) {
-        return new Money((int) (value * rate));
+    public Money multiple(final ProfitRate rate) {
+        return new Money((int) (value * rate.getRate()));
     }
 
     public int getValue() {
