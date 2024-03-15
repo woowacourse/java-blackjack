@@ -1,10 +1,15 @@
 package domain.state.fininsh;
 
-import domain.player.Hands;
+import domain.state.Hands;
 
-public class Bust extends Finished {
+public final class Bust extends Finished {
     public Bust(final Hands hands) {
         super(hands);
+    }
+
+    @Override
+    public boolean isBust() {
+        return true;
     }
 
     @Override

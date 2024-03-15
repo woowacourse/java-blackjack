@@ -1,38 +1,49 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.card.Deck;
+import domain.state.Started;
+import domain.state.State;
 import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
 
-    private final Deck hands;
+    protected State state;
 
-    public Participant() {
-        this.hands = Deck.makeEmptyDeck();
+
+    public final void init(final Card cardA, final Card cardB) {
+        this.state = Started.ofTwoCard(cardA, cardB);
     }
 
-    public boolean isBust() {
-//        return calculateScore() > PERFECT_SCORE;
-        return false;
+    public final boolean isFinished() {
+        return this.state.isFinished();
     }
 
-    public boolean isNotBust() {
-        return !isBust();
+    public final boolean isNotFinished() {
+        return !isFinished();
     }
 
-//    public abstract boolean canHit();
 
-    public void hit(final Card card) {
-        hands.add(card);
+    public int getScore() {
+        return this.state.getScore();
     }
+
+    public final boolean isBust() {
+        return this.state.isBust();
+    }
+
+    public final void add(final Card card) {
+        this.state = this.state.add(card);
+    }
+
+    public abstract boolean canHit();
+
 
     public String getName() {
         throw new IllegalCallerException("참여자의 이름이 정해지지 않았습니다");
     }
 
-    public List<Card> getHands() {
-        return Collections.unmodifiableList(hands.getValue());
+    public final List<Card> getHands() {
+        return Collections.unmodifiableList(state.getHands().getValue());
     }
 }

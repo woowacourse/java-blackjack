@@ -1,6 +1,6 @@
 package domain.state.run;
 
-import domain.player.Hands;
+import domain.state.Hands;
 import domain.state.Started;
 
 public abstract class Running extends Started {

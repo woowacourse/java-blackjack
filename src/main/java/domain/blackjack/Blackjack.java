@@ -2,13 +2,12 @@ package domain.blackjack;
 
 import domain.card.Card;
 import domain.player.Dealer;
-import domain.player.Participant;
 import domain.player.Player;
+import domain.player.PlayerResult;
 import domain.player.Players;
 import dto.GameResult;
 import dto.ParticipantsResponse;
 import dto.PlayerResponse;
-import dto.PlayerResult;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,21 +22,24 @@ public class Blackjack {
         this.dealer = dealer;
     }
 
-    public static Blackjack startGameWithInitialization(final Players players) {
-        final Blackjack blackjack = new Blackjack(players, new Dealer());
-        blackjack.init();
-        return blackjack;
+    public static void init(final Players players, final Dealer dealer) {
+        dealer.init(dealer.draw(), dealer.draw());
+        players.stream().forEach(r -> r.init(dealer.draw(), dealer.draw()));
     }
 
-    public static Blackjack fromPlayerNamesWithInitialization(final List<String> names) {
-        return startGameWithInitialization(Players.fromNames(names));
+    public static Blackjack of(final Players players) {
+        final Dealer dealer1 = new Dealer();
+        init(players, dealer1);
+        return new Blackjack(players, dealer1);
     }
 
-    public void init() {
-        players.getValue().forEach(this::dealInitialCards);
-        dealInitialCards(dealer);
-    }
+    public static Blackjack fromNames(final List<String> names) {
+        final Dealer dealer1 = new Dealer();
+        final Players players1 = Players.fromNames(names);
+        init(players1,dealer1);
+        return new Blackjack(players1, dealer1);
 
+    }
 
     public boolean canPlayerHit(final String name) {
         return getPlayers().stream()
@@ -47,22 +49,16 @@ public class Blackjack {
 
     public void playerHit(final String name) {
         final Player player = players.findPlayerByName(name);
-        player.hit(dealer.draw());
-    }
-
-    private void dealInitialCards(final Participant player) {
-        player.hit(dealer.draw());
-        player.hit(dealer.draw());
+        player.add(dealer.draw());
     }
 
     public boolean canDealerHit() {
-        return false;
-//        return dealer.canHit();
+        return dealer.canHit();
     }
 
     public void dealerHit() {
-        final Card card = dealer.draw();
-        dealer.hit(card);
+        final Card nextCard = dealer.draw();
+        dealer.add(nextCard);
     }
 
     public GameResult toGameResult() {
@@ -76,10 +72,8 @@ public class Blackjack {
     }
 
     public ParticipantsResponse toParticipantsResponse() {
-//        return new ParticipantsResponse(dealer.toDealerResponse(),
-//                players.stream().map(Player::toPlayerResponse).toList());
-        return null;
-
+        return new ParticipantsResponse(dealer.toDealerResponse(),
+                players.stream().map(Player::toPlayerResponse).toList());
     }
 
     public PlayerResponse toPlayerResponse(final String name) {

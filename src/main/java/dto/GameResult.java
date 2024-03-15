@@ -1,5 +1,6 @@
 package dto;
 
+import domain.player.PlayerResult;
 import java.util.Map;
 
 public record GameResult(Map<PlayerResult, Integer> dealerResult,

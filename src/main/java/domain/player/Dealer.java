@@ -2,47 +2,40 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.Deck;
-import dto.PlayerResult;
+import dto.DealerResponse;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Dealer extends Participant {
     private static final int HIT_UPPER_BOUND = 17;
-
     private final Deck decks = Deck.makeDecks();
-
-    public Dealer() {
-        super();
-    }
-
 
     public Card draw() {
         return decks.draw();
     }
 
 
-
     public PlayerResult compareHandsWith(final Player player) {
-        if (player.isBust()) {
-            return PlayerResult.WIN;
-        }
         if (isBust()) {
             return PlayerResult.LOSE;
+        }
+
+        if (player.isBust()) {
+            return PlayerResult.WIN;
         }
 
         return compareScore(player);
     }
 
     private PlayerResult compareScore(final Player player) {
-//        if (player.calculateScore() == calculateScore()) {
-//            return PlayerResult.TIE;
-//        }
-//        if (player.calculateScore() > calculateScore()) {
-//            return PlayerResult.LOSE;
-//        }
-//        return PlayerResult.WIN;
-        return null;
+        if (this.getScore() == player.getScore()) {
+            return PlayerResult.TIE;
+        }
+        if (this.getScore() < player.getScore()) {
+            return PlayerResult.LOSE;
+        }
+        return PlayerResult.WIN;
     }
 
     public Map<PlayerResult, Integer> wrapUp(final Players players) {
@@ -52,9 +45,15 @@ public class Dealer extends Participant {
         return Collections.unmodifiableMap(result);
     }
 
-//    public DealerResponse toDealerResponse() {
-//        return new DealerResponse(getHands().stream().
-//                map(Card::toCardResponse)
-//                .toList(), calculateScore());
-//    }
+    @Override
+    public boolean canHit() {
+        return state.canHit(HIT_UPPER_BOUND);
+    }
+
+    public DealerResponse toDealerResponse() {
+        return new DealerResponse(getHands().stream().
+                map(Card::toCardResponse)
+                .toList(), state.getHands().calculateScore());
+    }
 }
+

@@ -1,11 +1,11 @@
 package view;
 
+import domain.player.PlayerResult;
 import dto.CardResponse;
 import dto.DealerResponse;
 import dto.GameResult;
 import dto.ParticipantsResponse;
 import dto.PlayerResponse;
-import dto.PlayerResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
