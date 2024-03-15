@@ -36,12 +36,12 @@ public class BetAmounts {
         }
     }
 
+    public int calculateDealerBetProfit(final Player player, final Dealer dealer) {
+        return calculatePlayerBetProfit(player, dealer) * -1;
+    }
+
     public int calculatePlayerBetProfit(final Player player, final Dealer dealer) {
         Result playerResult = Result.getPlayerResultWith(player, dealer);
         return playerResult.calculateProfit(amounts.get(player));
-    }
-
-    public int calculateDealerBetProfit(final Player player, final Dealer dealer) {
-        return calculatePlayerBetProfit(player, dealer) * -1;
     }
 }
