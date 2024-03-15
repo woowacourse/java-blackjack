@@ -20,7 +20,7 @@ public abstract class Participant {
     }
 
     public boolean canHit() {
-        return hands.calculateScore() < getThreshold();
+        return hands.calculateScore() <= getThreshold();
     }
 
     abstract int getThreshold();
