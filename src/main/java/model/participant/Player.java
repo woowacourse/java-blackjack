@@ -5,7 +5,6 @@ import static model.participant.MatchResult.LOSE;
 import static model.participant.MatchResult.WIN;
 
 import model.card.Card;
-import model.participant.dto.FaceUpResult;
 
 public class Player extends Participant {
     private final Name name;
@@ -22,7 +21,6 @@ public class Player extends Participant {
         return !cardDeck.isBust() && !isTurnOver;
     }
 
-    @Override
     public MatchResult calculateMatchResult(int dealerHand) {
         int playerHand = cardDeck.calculateHand();
         if (playerHand >= BUST_THRESHOLD || (dealerHand < BUST_THRESHOLD) && (playerHand < dealerHand)) {
@@ -36,10 +34,6 @@ public class Player extends Participant {
 
     public void turnOver() {
         isTurnOver = true;
-    }
-
-    public FaceUpResult generateFaceUpResult() {
-        return new FaceUpResult(name, cardDeck.getCards(), cardDeck.calculateHand());
     }
 
     public Name getName() {

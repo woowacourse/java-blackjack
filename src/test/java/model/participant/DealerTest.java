@@ -1,5 +1,6 @@
 package model.participant;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -37,91 +38,17 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("Bust되지 않은 딜러와 Player일 때, 딜러의 점수가 높으면 WIN을 반환한다.")
+    @DisplayName("Dealer는 Player의 반대 결과를 반환한다.")
     void calculateMatchResult_ShouldReturnWIN_WhenNotBustDealerWins() {
-        // Given
         Card card1 = Card.from(Number.TEN, Emblem.SPADE);
         Card card2 = Card.from(Number.SEVEN, Emblem.HEART);
-        Participant dealer = new Dealer(card1, card2);
+        Dealer dealer = new Dealer(card1, card2);
 
-        // When
-        int playerHand = 16;
-
-        // Then
-        assertEquals(MatchResult.WIN, dealer.calculateMatchResult(playerHand));
+        assertAll(()->{
+            assertEquals(MatchResult.WIN, dealer.determineMatchResult(MatchResult.LOSE));
+            assertEquals(MatchResult.DRAW, dealer.determineMatchResult(MatchResult.DRAW));
+            assertEquals(MatchResult.LOSE, dealer.determineMatchResult(MatchResult.WIN));
+        });
     }
 
-    @ParameterizedTest
-    @EnumSource(value = Number.class)
-    @DisplayName("Bust된 Player일 때, 딜러의 Bust 여부와 상관없이 WIN을 반환한다.")
-    void calculateMatchResult_ShouldReturnWIN_WhenPlayerBust(Number number) {
-        // Given
-        Card card1 = Card.from(number, Emblem.HEART);
-        Card card2 = Card.from(number, Emblem.SPADE);
-        Card card3 = Card.from(number, Emblem.DIAMOND);
-        Participant dealer = new Dealer(card1, card2);
-
-        // When
-        int playerHand = 22;
-
-        // Then
-        assertEquals(MatchResult.WIN, dealer.calculateMatchResult(playerHand));
-    }
-
-    @ParameterizedTest
-    @EnumSource(value = Number.class)
-    @DisplayName("Player와 딜러가 Bust되지 않았을 때, Hand가 같으면 DRAW를 반환한다.")
-    void calculateMatchResult_ShouldReturnDRAW_WhenSameHandAndBothNotBust(Number number) {
-        // Given
-        Card card1 = Card.from(number, Emblem.HEART);
-        Card card2 = Card.from(number, Emblem.SPADE);
-        Participant dealer = new Dealer(card1, card2);
-        Participant player = new Player(new Name("도비"), card1, card2);
-
-        // When
-        int playerHand = player.cardDeck.calculateHand();
-
-        // Then
-        assertEquals(MatchResult.DRAW, dealer.calculateMatchResult(playerHand));
-    }
-
-    @ParameterizedTest
-    @EnumSource(value = Number.class)
-    @DisplayName("Player가 Bust되지 않았을 때, Dealer가 Bust이면 LOSE를 반환한다.")
-    void calculateMatchResult_ShouldReturnLOSE_WhenDealerBustAndPlayerNotBust(Number number) {
-        // Given
-        Card card1 = Card.from(Number.TEN, Emblem.HEART);
-        Card card2 = Card.from(Number.TEN, Emblem.SPADE);
-        Card card3 = Card.from(Number.TWO, Emblem.SPADE);
-        Participant dealer = new Dealer(card1, card2);
-        dealer.hitCard(card3);
-
-        Participant player = new Player(new Name("도비"), card1, card2);
-
-        // When
-        int playerHand = player.cardDeck.calculateHand();
-
-        // Then
-        assertEquals(MatchResult.LOSE, dealer.calculateMatchResult(playerHand));
-    }
-
-    @ParameterizedTest
-    @EnumSource(value = Number.class)
-    @DisplayName("Player와 딜러가 Bust되지 않았을 때, 딜러 Hand가 Player보다 작으면 LOSE를 반환한다.")
-    void calculateMatchResult_ShouldReturnLOSE_WhenBothNotBustAndSmallerDealerHand(Number number) {
-        // Given
-        Card card1 = Card.from(number, Emblem.HEART);
-        Card card2 = Card.from(Number.TWO, Emblem.SPADE);
-
-        Participant dealer = new Dealer(card1, card2);
-
-        Participant player = new Player(new Name("도비"), card1, card2);
-        player.hitCard(card2);
-
-        // When
-        int playerHand = player.cardDeck.calculateHand();
-
-        // Then
-        assertEquals(MatchResult.LOSE, dealer.calculateMatchResult(playerHand));
-    }
 }

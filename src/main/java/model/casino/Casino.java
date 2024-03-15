@@ -7,8 +7,7 @@ import model.participant.Entrant;
 import model.participant.Names;
 import model.participant.Player;
 import model.participant.dto.DealerFaceUpResult;
-import model.participant.dto.DealerMatchResult;
-import model.participant.dto.FaceUpResult;
+import model.participant.dto.PlayerFaceUpResult;
 import model.participant.dto.PlayerMatchResult;
 
 public class Casino {
@@ -57,19 +56,15 @@ public class Casino {
         return entrant.getDealerFaceUpResult();
     }
 
-    public List<FaceUpResult> getPlayerFaceUpResult() {
+    public List<PlayerFaceUpResult> getPlayerFaceUpResult() {
         return entrant.getPlayerFaceUpResults();
     }
 
-    public FaceUpResult getNextPlayerFaceUpInfo() {
+    public PlayerFaceUpResult getNextPlayerFaceUpInfo() {
         return entrant.getNextAvailablePlayerName();
     }
 
     public List<PlayerMatchResult> calculatePlayerMatchResults() {
-        return entrant.calculatePlayerMatchResults();
-    }
-
-    public DealerMatchResult calculateDealerMatchResult() {
-        return new DealerMatchResult(entrant.calculateDealerMatchResult());
+        return entrant.determineFinalPlayerMatchResults();
     }
 }

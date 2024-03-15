@@ -18,13 +18,15 @@ public abstract class Participant {
 
     public abstract boolean canHit();
 
-    public abstract MatchResult calculateMatchResult(int opponentHand);
-
     public void hitCard(Card card) {
         cardDeck.addCard(card);
     }
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cardDeck.getCards());
+    }
+
+    public int getHand(){
+        return cardDeck.calculateHand();
     }
 }

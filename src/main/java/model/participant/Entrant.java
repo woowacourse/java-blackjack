@@ -1,18 +1,12 @@
 package model.participant;
 
-import static java.util.Collections.frequency;
-import static model.participant.MatchResult.DRAW;
-import static model.participant.MatchResult.LOSE;
-import static model.participant.MatchResult.WIN;
-
-import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
 import model.card.Card;
 import model.participant.dto.DealerFaceUpResult;
-import model.participant.dto.FaceUpResult;
+import model.participant.dto.PlayerFaceUpResult;
 import model.participant.dto.PlayerMatchResult;
 import util.ResultMapper;
 
@@ -42,10 +36,10 @@ public class Entrant {
         moveToNextPlayer();
     }
 
-    public FaceUpResult getNextAvailablePlayerName() {
+    public PlayerFaceUpResult getNextAvailablePlayerName() {
         Player currentPlayer = getCurrentPlayer();
         if (currentPlayer.canHit()) {
-            return currentPlayer.generateFaceUpResult();
+            return ResultMapper.toPlayerFaceUpResult(currentPlayer);
         }
         moveToNextPlayer();
         return getNextAvailablePlayerName();
@@ -65,33 +59,18 @@ public class Entrant {
     }
 
     public DealerFaceUpResult getDealerFaceUpResult() {
-        return new DealerFaceUpResult(dealer.cardDeck.getCards(), dealer.cardDeck.calculateHand());
+        return ResultMapper.toDealerFaceUpResult(dealer);
     }
 
-    public List<FaceUpResult> getPlayerFaceUpResults() {
-        return ResultMapper.toPlayerFaceUpResult((List<Player>) players);
-    }
-
-    public EnumMap<MatchResult, Integer> calculateDealerMatchResult() {
-        EnumMap<MatchResult, Integer> dealerScoreBoard = new EnumMap<>(MatchResult.class);
-        List<MatchResult> playerScores = calculateMatchResults();
-        dealerScoreBoard.put(WIN, frequency(playerScores, LOSE));
-        dealerScoreBoard.put(DRAW, frequency(playerScores, DRAW));
-        dealerScoreBoard.put(LOSE, frequency(playerScores, WIN));
-        return dealerScoreBoard;
-    }
-
-    private List<MatchResult> calculateMatchResults() {
-        int dealerHand = dealer.cardDeck.calculateHand();
+    public List<PlayerFaceUpResult> getPlayerFaceUpResults() {
         return players.stream()
-                .map(player -> player.calculateMatchResult(dealerHand))
+                .map(ResultMapper::toPlayerFaceUpResult)
                 .toList();
     }
 
-    public List<PlayerMatchResult> calculatePlayerMatchResults() {
-        int dealerHand = dealer.cardDeck.calculateHand();
+    public List<PlayerMatchResult> determineFinalPlayerMatchResults() {
         return players.stream()
-                .map(player -> new PlayerMatchResult(player.getName(), player.calculateMatchResult(dealerHand)))
+                .map(player -> ResultMapper.toPlayerMatchResult(player, dealer))
                 .toList();
     }
 }

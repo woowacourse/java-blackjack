@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import model.participant.dto.DealerFaceUpResult;
-import model.participant.dto.FaceUpResult;
+import model.participant.dto.PlayerFaceUpResult;
 
 class EntrantTest {
     Entrant entrant;
@@ -46,7 +46,6 @@ class EntrantTest {
         // Then
         DealerFaceUpResult result = entrant.getDealerFaceUpResult();
         assertAll(() -> {
-            assertEquals("딜러", result.getPartipantNameAsString());
             assertEquals(List.of("A스페이드", "2스페이드", "3스페이드"), result.getCardsAsStrings());
             assertEquals(16, result.hand());
         });
@@ -57,7 +56,7 @@ class EntrantTest {
     void getPlayerFaceUpResult_ShouldReturnPlayerCardInfo_WhenCalled() {
 
         // Then
-        List<FaceUpResult> result = entrant.getPlayerFaceUpResults();
+        List<PlayerFaceUpResult> result = entrant.getPlayerFaceUpResults();
         assertAll(() -> {
             assertEquals("프람", result.get(0)
                     .getPartipantNameAsString());
