@@ -3,12 +3,12 @@ package blackjack.domain;
 import blackjack.domain.result.ResultStatus;
 import java.util.regex.Pattern;
 
-public class BattingAmount {
+public class BettingAmount {
     private static final Pattern NUMERIC_PATTERN = Pattern.compile("^[1-9][0-9]*$");
 
     private final int value;
 
-    public BattingAmount(String value) {
+    public BettingAmount(String value) {
         validate(value);
         this.value = Integer.parseInt(value);
     }

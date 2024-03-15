@@ -10,7 +10,6 @@ import blackjack.domain.player.Names;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.GamePlayer;
 import blackjack.domain.player.Player;
-import blackjack.domain.result.ResultStatus;
 import blackjack.fixture.CardFixture;
 import blackjack.fixture.PlayerFixture;
 import java.util.List;
@@ -24,7 +23,7 @@ class BlackjackTest {
     public void Blackjack_Accept_players() {
         Blackjack blackjack = new Blackjack(CardFixture.카드_덱_생성());
         Names names = Names.from(List.of("초롱", "조이썬"));
-        BattingAmounts battingAmounts = BattingAmounts.from(List.of("10000", "20000"));
+        BettingAmounts battingAmounts = BettingAmounts.from(List.of("10000", "20000"));
 
         var result = blackjack.acceptPlayers(names, battingAmounts);
 
@@ -47,7 +46,7 @@ class BlackjackTest {
 
         var result = sut.compareResults(dealer, List.of(gamePlayer));
 
-        assertThat(result.getGamePlayerResults()
+        assertThat(result.getPlayerResults()
                          .get(0)
                          .getProfit()).isEqualTo(new Profit(-10000));
         assertThat(result.getDealerResult()
