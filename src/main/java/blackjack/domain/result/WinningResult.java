@@ -16,10 +16,6 @@ public class WinningResult {
         this.participantsWinStatus = participantsWinStatus;
     }
 
-//    public static WinningResult of(final Players players, final Score dealerScore) {
-//        return new WinningResult(players.determineWinStatus(dealerScore));
-//    }
-
     public static WinningResult of(final Players players, final Dealer dealer) {
         ParticipantScoreStatus dealerScoreStatus = new ParticipantScoreStatus(dealer.isBlackjack(), dealer.calculate());
         return new WinningResult(players.determineWinStatus(dealerScoreStatus));
