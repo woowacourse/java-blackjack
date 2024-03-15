@@ -67,6 +67,17 @@ public class ParticipantsBuilder {
         return this;
     }
 
+    private int getParticipantSize() {
+        if (names != null) {
+            return names.size();
+        }
+        if (gameMoneys != null) {
+            return gameMoneys.size();
+        }
+
+        throw new IllegalStateException("현재 참가자의 갯수를 셀 수 있는 인스턴스가 없습니다.");
+    }
+
     public Participants build() {
         validateInstance();
         List<Participant> participants = IntStream.range(0, names.size())
@@ -76,23 +87,12 @@ public class ParticipantsBuilder {
         return new Participants(participants);
     }
 
-    private int getParticipantSize() {
-        if(names != null) {
-            return names.size();
-        }
-        if(gameMoneys != null) {
-            return gameMoneys.size();
-        }
-
-        throw new IllegalStateException("현재 참가자의 갯수를 셀 수 있는 인스턴스가 없습니다.");
-    }
-
     private void validateInstance() {
-        if(names == null || gameMoneys == null || cards == null) {
+        if (names == null || gameMoneys == null || cards == null) {
             throw new IllegalStateException("Participants 제작에 필요한 인자 중 입력되지 않은 인자가 있습니다.");
         }
 
-        if(names.size() != gameMoneys.size() || gameMoneys.size() != cards.size()) {
+        if (names.size() != gameMoneys.size() || gameMoneys.size() != cards.size()) {
             throw new IllegalStateException("Participants 제작에 필요한 인자들의 리스트 크기가 다릅니다.");
         }
     }

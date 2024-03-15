@@ -12,16 +12,16 @@ public class GameMoney {
     }
 
     private void validateGameMoneyOverZero(int value) {
-        if(value < 1) {
+        if (value < 1) {
             throw new IllegalArgumentException("게임 배팅 금액은 0보다 커야 합니다.");
         }
     }
 
     public int calculateRevenue(Outcome outcome, BlackJackState blackJackState) {
-        if(outcome == Outcome.LOSE) {
+        if (outcome == Outcome.LOSE) {
             return (int) (value * LOSE_RATE);
         }
-        if(outcome == Outcome.DRAW) {
+        if (outcome == Outcome.DRAW) {
             return (int) (value * DRAW_RATE);
         }
         return blackJackState.calculateBattingRatio(value);

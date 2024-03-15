@@ -2,10 +2,7 @@ package model.player;
 
 import model.GameMoney;
 import model.Outcome;
-import model.card.Card;
 import model.card.Cards;
-
-import java.util.List;
 
 public class Participant extends User {
 
@@ -14,6 +11,12 @@ public class Participant extends User {
     public Participant(String name, Cards cards, GameMoney gameMoney) {
         super(name, cards);
         this.gameMoney = gameMoney;
+    }
+
+    public int calculateRevenue(Dealer dealer) {
+        return gameMoney.calculateRevenue(
+                findOutcome(dealer),
+                cards.findBlackJackState());
     }
 
     public Outcome findOutcome(Dealer dealer) {
@@ -35,11 +38,5 @@ public class Participant extends User {
             return Outcome.LOSE;
         }
         return Outcome.DRAW;
-    }
-
-    public int calculateRevenue(Dealer dealer) {
-        return gameMoney.calculateRevenue(
-                findOutcome(dealer),
-                cards.findBlackJackState());
     }
 }

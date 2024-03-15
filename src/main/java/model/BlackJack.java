@@ -3,7 +3,6 @@ package model;
 import model.card.CardDeck;
 import model.card.Cards;
 import model.player.Dealer;
-import model.player.Participant;
 import model.player.Participants;
 
 import java.util.LinkedHashMap;
@@ -11,9 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
-
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 
 public class BlackJack {
 
@@ -51,17 +47,6 @@ public class BlackJack {
             runnable.run();
             dealer.addCard(cardDeck.selectRandomCard());
         }
-    }
-
-    public Map<Outcome, Long> getDealerOutCome() {
-        Map<Participant, Outcome> participantOutcome = matchParticipantsOutcome();
-        return participantOutcome.values()
-                .stream()
-                .collect(groupingBy(Outcome::reverse, counting()));
-    }
-
-    public Map<Participant, Outcome> matchParticipantsOutcome() {
-        return participants.matchParticipantsOutcome(dealer);
     }
 
     public Map<String, Cards> matchUsersNameAndCards() {
