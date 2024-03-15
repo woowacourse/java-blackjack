@@ -14,4 +14,8 @@ public class PlayerGameResult {
     public Map<Player, GameResult> getPlayerGameResultMap() {
         return playerGameResultMap;
     }
+
+    public GameResult findGameResultOfPlayer(Player player) {
+        return playerGameResultMap.get(player);
+    }
 }
