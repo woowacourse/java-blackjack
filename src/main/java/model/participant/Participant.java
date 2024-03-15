@@ -6,9 +6,11 @@ import model.game.HitAction;
 
 public abstract class Participant implements HitAction {
 
+    protected Name name;
     protected Cards cards;
 
-    protected Participant(Cards cards) {
+    protected Participant(Name name, Cards cards) {
+        this.name = name;
         this.cards = cards;
     }
 
@@ -19,6 +21,10 @@ public abstract class Participant implements HitAction {
 
     public int cardsSize() {
         return cards.size();
+    }
+
+    public String getName() {
+        return name.getValue();
     }
 
     public Cards getCards() {

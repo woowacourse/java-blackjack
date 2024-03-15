@@ -19,22 +19,14 @@ public class Players {
     public static Players from(List<String> playerNames) {
         validate(playerNames);
         return playerNames.stream()
-            .map(Player::new)
+            .map(Player::from)
             .collect(collectingAndThen(toList(), Players::new));
     }
 
     private static void validate(List<String> playerNames) {
-        validateEmpty(playerNames);
-        validatePlayerNamesUnique(playerNames);
-    }
-
-    private static void validateEmpty(List<String> playerNames) {
         if (playerNames.isEmpty()) {
             throw new IllegalArgumentException("플레이어 수는 1명 이상이어야 합니다.");
         }
-    }
-
-    private static void validatePlayerNamesUnique(List<String> playerNames) {
         Set<String> uniqueNames = new HashSet<>(playerNames);
         if (uniqueNames.size() < playerNames.size()) {
             throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");

@@ -13,7 +13,7 @@ public class Dealer extends Participant {
     }
 
     public Dealer(Cards cards) {
-        super(cards);
+        super(Name.createDealerName(), cards);
     }
 
     @Override

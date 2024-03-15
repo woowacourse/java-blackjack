@@ -34,4 +34,8 @@ public class Name {
             throw new IllegalArgumentException("플레이어 이름은 딜러의 이름일 수 없습니다.");
         }
     }
+
+    public String getValue() {
+        return value;
+    }
 }
