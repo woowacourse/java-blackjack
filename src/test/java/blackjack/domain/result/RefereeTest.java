@@ -26,7 +26,7 @@ class RefereeTest {
         RoundResult roundResult = round.generateResult(referee);
 
         //then
-        assertThat(roundResult.getPlayersResult().values()).containsExactly(HandResult.LOSE);
+        assertThat(roundResult.playersResult().values()).containsExactly(HandResult.LOSE);
     }
 
     @DisplayName("점수 판단으로 플레이어가 이기는 게임의 최종 결과를 생성한다.")
@@ -43,7 +43,7 @@ class RefereeTest {
         RoundResult roundResult = round.generateResult(referee);
 
         //then
-        assertThat(roundResult.getPlayersResult().values()).containsExactly(HandResult.WIN);
+        assertThat(roundResult.playersResult().values()).containsExactly(HandResult.WIN);
     }
 
     @DisplayName("점수 판단으로 비기는 게임의 최종 결과를 생성한다.")
@@ -60,7 +60,7 @@ class RefereeTest {
         RoundResult roundResult = round.generateResult(referee);
 
         //then
-        assertThat(roundResult.getPlayersResult().values()).containsExactly(HandResult.DRAW);
+        assertThat(roundResult.playersResult().values()).containsExactly(HandResult.DRAW);
     }
 
     @DisplayName("블랙잭으로 플레이어가 이기는 게임의 최종 결과를 생성한다.")
@@ -78,7 +78,7 @@ class RefereeTest {
         RoundResult roundResult = round.generateResult(referee);
 
         //then
-        assertThat(roundResult.getPlayersResult().values()).containsExactly(HandResult.BLACKJACK);
+        assertThat(roundResult.playersResult().values()).containsExactly(HandResult.BLACKJACK);
     }
 
     @DisplayName("블랙잭으로 딜러가 이기는 게임의 최종 결과를 생성한다.")
@@ -96,7 +96,7 @@ class RefereeTest {
         RoundResult roundResult = round.generateResult(referee);
 
         //then
-        assertThat(roundResult.getPlayersResult().values()).containsExactly(HandResult.LOSE);
+        assertThat(roundResult.playersResult().values()).containsExactly(HandResult.LOSE);
     }
 
     @DisplayName("블랙잭으로 비기는 게임의 최종 결과를 생성한다.")
@@ -113,7 +113,7 @@ class RefereeTest {
         RoundResult roundResult = round.generateResult(referee);
 
         //then
-        assertThat(roundResult.getPlayersResult().values()).containsExactly(HandResult.DRAW);
+        assertThat(roundResult.playersResult().values()).containsExactly(HandResult.DRAW);
     }
 
     @DisplayName("버스트로 플레이어가 이기는 게임의 최종 결과를 생성한다.")
@@ -131,7 +131,7 @@ class RefereeTest {
         RoundResult roundResult = round.generateResult(referee);
 
         //then
-        assertThat(roundResult.getPlayersResult().values()).containsExactly(HandResult.WIN);
+        assertThat(roundResult.playersResult().values()).containsExactly(HandResult.WIN);
     }
 
     @DisplayName("버스트로 딜러가 이기는 게임의 최종 결과를 생성한다.")
@@ -149,6 +149,6 @@ class RefereeTest {
         RoundResult roundResult = round.generateResult(referee);
 
         //then
-        assertThat(roundResult.getPlayersResult().values()).containsExactly(HandResult.LOSE);
+        assertThat(roundResult.playersResult().values()).containsExactly(HandResult.LOSE);
     }
 }

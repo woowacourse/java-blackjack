@@ -24,7 +24,7 @@ public class Pot {
 
     public Pot calculatePlayerPot(RoundResult roundResult) {
         Map<Player, BetAmount> calculatedPot = new LinkedHashMap<>();
-        Map<Player, HandResult> playersResult = roundResult.getPlayersResult();
+        Map<Player, HandResult> playersResult = roundResult.playersResult();
         for (Player player : playersResult.keySet()) {
             HandResult handResult = playersResult.get(player);
             BetAmount initialBetAmount = this.pot.get(player);
