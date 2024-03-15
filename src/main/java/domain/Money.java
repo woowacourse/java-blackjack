@@ -54,6 +54,10 @@ public class Money {
         return new Money(this.amount.negate());
     }
 
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -69,9 +73,5 @@ public class Money {
     @Override
     public int hashCode() {
         return Objects.hash(amount);
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
     }
 }
