@@ -17,13 +17,9 @@ public class Dealer extends Participant {
     private final Cards deck;
     private boolean hasSoftAce;
 
-    private Dealer(final Cards cards) {
+    public Dealer(final Cards cards) {
         super(DEFAULT_DEALER_NAME);
         deck = cards;
-    }
-
-    public static Dealer from(final Cards cards) {
-        return new Dealer(cards);
     }
 
     public void shuffleCards() {

@@ -44,7 +44,7 @@ class DealerTest {
         static Stream<Arguments> deal() {
             return Stream.of(
                     Arguments.of(cardOf(ACE), new Player("Zeus")),
-                    Arguments.of(cardOf(TWO), Dealer.from(Cards.emptyCards()))
+                    Arguments.of(cardOf(TWO), new Dealer(Cards.emptyCards()))
             );
         }
 
@@ -52,7 +52,7 @@ class DealerTest {
         @MethodSource
         @ParameterizedTest
         void deal(Card card, Participant participant) {
-            Dealer dealer = Dealer.from(Cards.from(List.of(card)));
+            Dealer dealer = new Dealer(Cards.from(List.of(card)));
 
             dealer.deal(participant);
             Cards hand = participant.hand();
@@ -67,9 +67,9 @@ class DealerTest {
             Player player2 = new Player("조이썬");
             Cards cards = Cards.from(List.of(
                     cardOf(ACE), cardOf(THREE), cardOf(FIVE), cardOf(SEVEN), cardOf(NINE), cardOf(ACE)));
-            Dealer dealer = Dealer.from(cards);
+            Dealer dealer = new Dealer(cards);
 
-            dealer.dealInitialCards(Players.from(new LinkedHashSet<>(List.of(player1,  player2))));
+            dealer.dealInitialCards(new Players(new LinkedHashSet<>(List.of(player1,  player2))));
 
             assertAll(
                     () -> assertThat(dealer.peek()).isEqualTo(cardOf(ACE)),
@@ -90,7 +90,7 @@ class DealerTest {
         @MethodSource
         @ParameterizedTest
         void dealInitialCardsSelf(Cards cards, int expected) {
-            Dealer dealer = Dealer.from(cards);
+            Dealer dealer = new Dealer(cards);
             dealer.deal(dealer, 2);
             assertThat(dealer.score()).isEqualTo(expected);
         }
@@ -107,7 +107,7 @@ class DealerTest {
         @MethodSource
         @ParameterizedTest
         void dealAdditionalCard(Cards cards, int expected) {
-            Dealer dealer = Dealer.from(cards);
+            Dealer dealer = new Dealer(cards);
             dealer.deal(dealer, 3);
             assertThat(dealer.score()).isEqualTo(expected);
         }
@@ -124,7 +124,7 @@ class DealerTest {
     @MethodSource
     @ParameterizedTest
     void isBust(Cards cards, int expectedTotal, boolean expectedBust) {
-        Dealer dealer = Dealer.from(cards);
+        Dealer dealer = new Dealer(cards);
         dealer.deal(dealer, 3);
         assertAll(
                 () -> assertThat(dealer.score()).isEqualTo(expectedTotal),
@@ -144,7 +144,7 @@ class DealerTest {
     @MethodSource
     @ParameterizedTest
     void canHit(Cards cards, int expectedTotal, boolean expectedHit) {
-        Dealer dealer = Dealer.from(cards);
+        Dealer dealer = new Dealer(cards);
         dealer.deal(dealer, 2);
         assertAll(
                 () -> assertThat(dealer.score()).isEqualTo(expectedTotal),
@@ -167,7 +167,7 @@ class DealerTest {
     @MethodSource
     @ParameterizedTest
     void resultStatusOf(Cards dealerCards, Cards playerCards, BlackjackResultStatus expected) {
-        Dealer dealer = Dealer.from(Cards.emptyCards());
+        Dealer dealer = new Dealer(Cards.emptyCards());
         Player player = new Player("hotea");
         receiveCards(dealer, dealerCards);
         receiveCards(player, playerCards);
