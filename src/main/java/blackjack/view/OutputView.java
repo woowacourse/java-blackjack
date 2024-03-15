@@ -3,8 +3,10 @@ package blackjack.view;
 import blackjack.dto.CardDto;
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.ParticipantsDto;
+import blackjack.dto.ProfitResultDto;
 
 import java.util.List;
+import java.util.Map;
 
 import static blackjack.utils.Constants.*;
 
@@ -104,5 +106,15 @@ public class OutputView {
         final int score = participant.score();
 
         return String.format("%s - 결과: %d", participantCardsMessage, score);
+    }
+
+    public void printProfits(final ProfitResultDto profitResult) {
+        System.out.println(NEWLINE + "## 최종 수익");
+
+        final Map<String, Integer> result = profitResult.result();
+        result.forEach((name, profit) -> {
+            final String profitMessage = String.format("%s: %d", name, profit);
+            System.out.println(profitMessage);
+        });
     }
 }
