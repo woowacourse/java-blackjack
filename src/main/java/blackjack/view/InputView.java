@@ -8,7 +8,6 @@ import static blackjack.utils.Constants.EXPRESSION_OF_NO;
 import static blackjack.utils.Constants.EXPRESSION_OF_YES;
 
 public class InputView {
-    private static final String NEWLINE = System.lineSeparator();
     private static Scanner scanner = new Scanner(System.in);
     private final InputValidator inputValidator;
 
@@ -24,12 +23,12 @@ public class InputView {
         return input;
     }
 
-    public String readBattingAmount(String name) {
-        System.out.printf(NEWLINE + "%s의 배팅 금액은?" + NEWLINE, name);
+    public int readBattingAmount(String name) {
+        System.out.printf("%n%s의 배팅 금액은?%n", name);
         final String input = scanner.nextLine();
 
         inputValidator.validateBattingAmount(input);
-        return input;
+        return Integer.parseInt(input);
     }
 
     public String readReceiveMoreCardOrNot(String name) {
