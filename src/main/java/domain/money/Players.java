@@ -1,6 +1,5 @@
 package domain.money;
 
-import domain.Deck;
 import domain.user.Dealer;
 import domain.user.Player;
 import java.util.LinkedHashMap;
@@ -8,9 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.BiConsumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import view.Command;
 
 public class Players {
     public static final int DEALER_MULTIPLIER = -1;
@@ -18,12 +15,6 @@ public class Players {
 
     public Players(Map<Player, Money> playersMoney) {
         this.playersMoney = playersMoney;
-    }
-
-    public void play(Function<String, Command> commandFunction, Deck deck) {
-        for (Player player : playersMoney.keySet()) {
-            player.receiveCard(commandFunction, deck);
-        }
     }
 
     public Players generateMoneyResult(Dealer dealer) {

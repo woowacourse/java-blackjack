@@ -1,7 +1,6 @@
 package domain.user;
 
-import domain.Deck;
-import view.OutputView;
+import domain.card.Card;
 
 public class Dealer {
     private static final int RECEIVABLE_THRESHOLD = 16;
@@ -11,15 +10,12 @@ public class Dealer {
         this.hand = hand;
     }
 
-    public void play(Deck deck) {
-        while (isReceivable()) {
-            hand.receiveCard(deck.drawCard());
-            OutputView.printDealerHitMessage();
-        }
+    public boolean isReceivable() {
+        return sumCard() <= RECEIVABLE_THRESHOLD;
     }
 
-    private boolean isReceivable() {
-        return sumCard() <= RECEIVABLE_THRESHOLD;
+    public void receive(Card card) {
+        hand.receive(card);
     }
 
     public boolean isBlackjack() {

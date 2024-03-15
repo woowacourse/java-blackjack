@@ -16,7 +16,7 @@ public class Hand {
         this.cards = new ArrayList<>(List.of(cards));
     }
 
-    public void receiveCard(Card card) {
+    public void receive(Card card) {
         cards.add(card);
     }
 

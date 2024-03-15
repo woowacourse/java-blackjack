@@ -15,7 +15,7 @@ public class HandTest {
         Card card = new Card(Shape.CLUB, Number.ACE);
         Hand hand = new Hand();
 
-        hand.receiveCard(card);
+        hand.receive(card);
 
         assertThat(hand.getCards()).contains(card);
     }
@@ -25,8 +25,8 @@ public class HandTest {
     void sumCardcurrentDeck() {
         Hand hand = new Hand();
 
-        hand.receiveCard(new Card(Shape.CLUB, Number.THREE));
-        hand.receiveCard(new Card(Shape.CLUB, Number.EIGHT));
+        hand.receive(new Card(Shape.CLUB, Number.THREE));
+        hand.receive(new Card(Shape.CLUB, Number.EIGHT));
 
         assertThat(hand.sumCard()).isEqualTo(11);
     }
@@ -36,8 +36,8 @@ public class HandTest {
     void sumCardContainingAce11Test() {
         Hand hand = new Hand();
 
-        hand.receiveCard(new Card(Shape.CLUB, Number.ACE));
-        hand.receiveCard(new Card(Shape.CLUB, Number.TWO));
+        hand.receive(new Card(Shape.CLUB, Number.ACE));
+        hand.receive(new Card(Shape.CLUB, Number.TWO));
 
         assertThat(hand.sumCard()).isEqualTo(13);
     }
@@ -47,9 +47,9 @@ public class HandTest {
     void sumCardContainingAce1Test() {
         Hand hand = new Hand();
 
-        hand.receiveCard(new Card(Shape.CLUB, Number.ACE));
-        hand.receiveCard(new Card(Shape.CLUB, Number.TWO));
-        hand.receiveCard(new Card(Shape.CLUB, Number.TEN));
+        hand.receive(new Card(Shape.CLUB, Number.ACE));
+        hand.receive(new Card(Shape.CLUB, Number.TWO));
+        hand.receive(new Card(Shape.CLUB, Number.TEN));
 
         assertThat(hand.sumCard()).isEqualTo(13);
     }
@@ -59,8 +59,8 @@ public class HandTest {
     void isBlackJackTest() {
         Hand hand = new Hand();
 
-        hand.receiveCard(new Card(Shape.CLUB, Number.ACE));
-        hand.receiveCard(new Card(Shape.CLUB, Number.TEN));
+        hand.receive(new Card(Shape.CLUB, Number.ACE));
+        hand.receive(new Card(Shape.CLUB, Number.TEN));
 
         assertThat(hand.isBlackjack()).isTrue();
     }
@@ -70,8 +70,8 @@ public class HandTest {
     void isNotBlackJackBySumTest() {
         Hand hand = new Hand();
 
-        hand.receiveCard(new Card(Shape.CLUB, Number.ACE));
-        hand.receiveCard(new Card(Shape.CLUB, Number.TWO));
+        hand.receive(new Card(Shape.CLUB, Number.ACE));
+        hand.receive(new Card(Shape.CLUB, Number.TWO));
 
         assertThat(hand.isBlackjack()).isFalse();
     }
@@ -81,9 +81,9 @@ public class HandTest {
     void isNotBlackJackByCardsCountTest() {
         Hand hand = new Hand();
 
-        hand.receiveCard(new Card(Shape.CLUB, Number.ACE));
-        hand.receiveCard(new Card(Shape.CLUB, Number.TEN));
-        hand.receiveCard(new Card(Shape.CLUB, Number.JACK));
+        hand.receive(new Card(Shape.CLUB, Number.ACE));
+        hand.receive(new Card(Shape.CLUB, Number.TEN));
+        hand.receive(new Card(Shape.CLUB, Number.JACK));
 
         assertThat(hand.isBlackjack()).isFalse();
     }
