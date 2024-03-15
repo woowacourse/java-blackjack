@@ -8,11 +8,8 @@ import java.util.Map;
 public class ResultView {
     public static void printResult(Result result) {
         System.out.println(System.lineSeparator() + "## 최종 수익");
-        printPlayerResults(result.getResult());
-    }
-
-    private static void printPlayerResults(Map<Name, Profit> gamePlayerResults) {
-        gamePlayerResults.forEach(ResultView::printPlayerResult);
+        result.getResult()
+                      .forEach(ResultView::printPlayerResult);
     }
 
     private static void printPlayerResult(Name name, Profit profit) {
