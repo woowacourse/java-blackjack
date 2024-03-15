@@ -43,7 +43,7 @@ class BlackjackGameTest {
 
     @Test
     void 플레이어에게_카드를_추가로_지급할_수_있다() {
-        blackjackGame.distributeCardTo(player);
+        blackjackGame.dealCardTo(player);
 
         assertThat(player.getCardHand())
                 .extracting("cards", InstanceOfAssertFactories.list(Card.class))
@@ -52,7 +52,7 @@ class BlackjackGameTest {
 
     @Test
     void 딜러에게_카드를_추가로_지급할_수_있다() {
-        blackjackGame.distributeCardToDealer();
+        blackjackGame.dealCardToDealer();
 
         assertThat(dealer.getCardHand())
                 .extracting("cards", InstanceOfAssertFactories.list(Card.class))

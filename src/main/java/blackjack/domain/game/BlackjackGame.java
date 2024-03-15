@@ -21,29 +21,29 @@ public class BlackjackGame {
     public void start() {
         dealer.shuffleCards();
 
-        distributeInitialCards();
+        dealInitialCards();
     }
 
-    private void distributeInitialCards() {
+    private void dealInitialCards() {
         for (int i = 0; i < Constants.INITIAL_CARD_COUNT; i++) {
-            distributeCardToDealer();
-            distributeCardToPlayers();
+            dealCardToDealer();
+            dealCardToPlayers();
         }
     }
 
-    public void distributeCardToDealer() {
+    public void dealCardToDealer() {
         final Card card = pickCard();
         dealer.receiveCard(card);
     }
 
-    private void distributeCardToPlayers() {
+    private void dealCardToPlayers() {
         for (int playerIndex = 0; playerIndex < players.count(); playerIndex++) {
             final Player player = players.findPlayerByIndex(playerIndex);
-            distributeCardTo(player);
+            dealCardTo(player);
         }
     }
 
-    public void distributeCardTo(final Player player) {
+    public void dealCardTo(final Player player) {
         final Card card = pickCard();
         player.receiveCard(card);
     }
