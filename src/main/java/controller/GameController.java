@@ -1,7 +1,6 @@
 package controller;
 
 import domain.Command;
-import domain.DealerDto;
 import domain.ExceptionHandler;
 import domain.UserDto;
 import domain.deck.TotalDeckGenerator;
@@ -36,7 +35,7 @@ public class GameController {
         for (Player player : players) {
             playerDtos.add(UserDto.from(player));
         }
-        DealerDto dealerDto = DealerDto.from(users.getDealer());
+        UserDto dealerDto = UserDto.from(users.getDealer());
         ResultView.showStartStatus(playerDtos, dealerDto);
     }
 

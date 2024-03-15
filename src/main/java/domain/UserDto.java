@@ -22,4 +22,8 @@ public class UserDto {
                 .toList();
         return new UserDto(user.getName().value(), cards, user.getUserDeck().sumCard());
     }
+
+    public String getFirstCard() {
+        return cards.get(0);
+    }
 }

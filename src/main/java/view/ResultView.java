@@ -1,6 +1,5 @@
 package view;
 
-import domain.DealerDto;
 import domain.UserDto;
 import domain.game.Result;
 import domain.user.Player;
@@ -10,7 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ResultView {
-    public static void showStartStatus(List<UserDto> userDtos, DealerDto dealerDto) {
+    public static void showStartStatus(List<UserDto> userDtos, UserDto dealerDto) {
         printUserNames(userDtos);
         printDealerCard(dealerDto);
         printUserCards(userDtos);
@@ -25,8 +24,8 @@ public class ResultView {
         System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.%n", names);
     }
 
-    private static void printDealerCard(DealerDto dealerDto) {
-        System.out.println(dealerDto.name + ": " + dealerDto.visibleCard);
+    private static void printDealerCard(UserDto dealerDto) {
+        System.out.println(dealerDto.name + ": " + dealerDto.getFirstCard());
     }
 
     private static void printUserCards(List<UserDto> userDtos) {
