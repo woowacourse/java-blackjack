@@ -13,7 +13,7 @@ public enum WinState {
         this.profitMultiplier = profitMultiplier;
     }
 
-    public void calculateProfit(Profit profit) {
-        profit.multiply(profitMultiplier);
+    public Profit calculateProfit(Profit profit) {
+        return profit.multiply(profitMultiplier);
     }
 }

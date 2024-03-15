@@ -11,7 +11,6 @@ class ProfitTest {
     @Test
     void calculateProfitByMultiplication() {
         Profit profit = new Profit(10);
-        profit.multiply(1.5);
-        assertThat(profit.getValue()).isEqualTo(15);
+        assertThat(profit.multiply(1.5).getValue()).isEqualTo(15);
     }
 }

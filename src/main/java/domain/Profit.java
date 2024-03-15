@@ -4,25 +4,18 @@ import java.util.Objects;
 
 public class Profit {
 
-    private double value;
+    private final double value;
+
+    public Profit(Bet bet) {
+        this(bet.getValue());
+    }
 
     public Profit(double value) {
-        validateRange(value);
         this.value = value;
     }
 
-    private void validateRange(double value) {
-        if (value < 0) {
-            throw new IllegalArgumentException("[ERROR] 0원 이상의 금액을 배팅해주세요.");
-        }
-    }
-
-    public void multiply(double multiplier) {
-        value = value * multiplier;
-    }
-
-    public void update(double newValue) {
-        value = newValue;
+    public Profit multiply(double multiplier) {
+        return new Profit(value * multiplier);
     }
 
     public double getValue() {

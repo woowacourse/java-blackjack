@@ -20,8 +20,8 @@ public class PlayersWallet {
     }
 
     public void calculateProfit(Player player, WinState winState) {
-        winState.calculateProfit(playersProfit.get(player));
-        playersProfit.replace(player, playersProfit.get(player));
+        Profit profit = winState.calculateProfit(playersProfit.get(player));
+        playersProfit.replace(player, profit);
     }
 
     public Map<Player, Profit> getPlayersProfit() {

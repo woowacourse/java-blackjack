@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class DealerWallet {
 
-    private final Profit profit;
+    private Profit profit;
 
     public DealerWallet() {
         this.profit = new Profit(0);
@@ -17,7 +17,7 @@ public class DealerWallet {
         double playersProfitSum = playersProfit.values().stream()
                 .mapToDouble(Profit::getValue)
                 .sum();
-        profit.update(-playersProfitSum);
+        profit = new Profit(-playersProfitSum);
     }
 
     public Profit getProfit() {
