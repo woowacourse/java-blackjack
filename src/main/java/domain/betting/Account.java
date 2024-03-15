@@ -23,4 +23,8 @@ public class Account {
     public Money balance() {
         return money;
     }
+
+    public Player getPlayer() {
+        return player;
+    }
 }

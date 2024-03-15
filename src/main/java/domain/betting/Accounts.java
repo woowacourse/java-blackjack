@@ -20,6 +20,13 @@ public class Accounts {
         accounts.add(new Account(player, money));
     }
 
+    public Account findByPlayer(Player player) {
+        return accounts.stream()
+            .filter(account -> account.getPlayer() == player)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("[ERROR] Player를 찾을 수 없습니다."));
+    }
+
     public List<Account> getAccounts() {
         return accounts;
     }
