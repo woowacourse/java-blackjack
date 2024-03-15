@@ -1,6 +1,7 @@
 package blackjack.domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,17 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class ScoreTest {
+
+    @DisplayName("점수는 음수일 수 없다.")
+    @Test
+    void testCreateNegativeScore() {
+        // given
+        int value = -1;
+
+        // when & then
+        assertThatThrownBy(() -> new Score(value))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 
     @DisplayName("점수끼리 더한다.")
     @Test

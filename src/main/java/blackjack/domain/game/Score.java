@@ -10,7 +10,14 @@ public class Score {
     private final int value;
 
     public Score(int value) {
+        validateNotNegative(value);
         this.value = value;
+    }
+
+    private void validateNotNegative(int value) {
+        if (value < 0) {
+            throw new IllegalArgumentException("[ERROR] 점수는 음수일 수 없습니다.");
+        }
     }
 
     public Score add(Score other) {
@@ -35,10 +42,6 @@ public class Score {
 
     public boolean isDealerHit() {
         return this.value <= DEALER_HIT_THRESHOLD;
-    }
-
-    public boolean canHit(Score threshold) {
-        return value <= threshold.value;
     }
 
     public boolean isBiggerThan(Score other) {
