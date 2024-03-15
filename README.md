@@ -142,7 +142,7 @@ example feat: 사용자 입력 후 도메인 사용
 - [ ] Judge에서는 승패 계산만 하도록 바꾼다
 - [ ] 이름이 문제였다면 베팅 금액 받기전에 알려준다.
 - [ ] 중복인 이름은 베팅 금액 받기전에 알려준다.
-- [ ] createPlayers() 메서드로 분리하지 않고 바로 of를 호출한다.
+- [x] createPlayers() 메서드로 분리하지 않고 바로 of를 호출한다.
 # 객체 협력 관계
 
 <img alt="결과" width="550" src=./src/main/java/resources/static/objectRelations.png>

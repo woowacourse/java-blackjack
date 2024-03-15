@@ -21,16 +21,12 @@ public class BlackjackGame {
 
     public void start() {
         Dealer dealer = Dealer.create(new RandomShuffleStrategy());
-        Players players = createPlayers();
+        Players players = Players.of(inputView.readPlayerInfos());
 
         initializeGame(dealer, players);
         printCardDistribute(dealer, players);
         requestExtraCard(dealer, players);
         outputView.printTotalProfit(Judge.judge(dealer, players));
-    }
-
-    private Players createPlayers() {
-        return Players.of(inputView.readPlayerInfos());
     }
 
     private void initializeGame(final Dealer dealer, final Players players) {
