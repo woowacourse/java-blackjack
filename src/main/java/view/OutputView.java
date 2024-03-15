@@ -3,6 +3,7 @@ package view;
 import domain.card.Cards;
 import domain.card.DealerCards;
 import domain.card.PlayerCards;
+import domain.game.BlackjackGame;
 import domain.player.Name;
 import domain.score.Revenue;
 import domain.score.ScoreBoard;
@@ -12,41 +13,44 @@ import java.util.Map;
 
 public class OutputView {
 
-    public void printInitialCards(DealerCards dealerCards, List<PlayerCards> playerCards) {
-        List<String> names = playerCards.stream()
-                .map(playerCard -> playerCard.getPlayerName().toString())
-                .toList();
+    public void printInitialCards(BlackjackGame game) {
+        Map<Name, PlayerCards> players = game.players();
+        printDrawNotice(players);
 
-        System.out.println();
-        System.out.println("딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.");
-
-        String firstCard = dealerCards.getFirstCard();
+        String firstCard = game.dealer().getFirstCard();
         System.out.print("딜러: " + firstCard);
 
-        for (PlayerCards playerCard : playerCards) {
+        players.forEach((name, player) -> {
             System.out.println();
-            printPlayerCards(playerCard);
-        }
+            printPlayerCards(name, player);
+        });
         System.out.println();
     }
 
-    public void printPlayerCards(PlayerCards cards) {
-        Name playerName = cards.getPlayerName();
-        System.out.print(playerName + "카드: " + formatCards(cards));
+    public void printPlayerCards(Name name, PlayerCards player) {
+        System.out.print(name + "카드: " + formatCards(player));
+    }
+
+    private void printDrawNotice(Map<Name, PlayerCards> players) {
+        List<String> names = players.keySet().stream()
+                .map(Name::toString)
+                .toList();
+        System.out.println();
+        System.out.println("딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.");
     }
 
     private String formatCards(Cards cards) {
         return String.join(", ", cards.getCards());
     }
 
-    public void printResults(DealerCards dealerCards, List<PlayerCards> playerCards) {
+    public void printResults(BlackjackGame game) {
         System.out.println();
-        printDealerCards(dealerCards);
-        printSumOfCards(dealerCards);
-        for (PlayerCards playerCard : playerCards) {
-            printPlayerCards(playerCard);
-            printSumOfCards(playerCard);
-        }
+        printDealerCards(game.dealer());
+        printSumOfCards(game.dealer());
+        game.players().forEach((name, player) -> {
+            printPlayerCards(name, player);
+            printSumOfCards(player);
+        });
     }
 
     private void printDealerCards(DealerCards cards) {

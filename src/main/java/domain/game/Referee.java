@@ -3,10 +3,11 @@ package domain.game;
 import domain.card.Cards;
 import domain.card.DealerCards;
 import domain.card.PlayerCards;
+import domain.player.Name;
 import domain.score.Outcome;
 import domain.score.ScoreBoard;
 
-import java.util.List;
+import java.util.Map;
 
 import static domain.score.Outcome.*;
 
@@ -20,11 +21,11 @@ public class Referee {
         this.scoreBoard = scoreBoard;
     }
 
-    public void decideResult(DealerCards dealer, List<PlayerCards> players) {
-        for (PlayerCards player : players) {
+    public void decideResult(DealerCards dealer, Map<Name, PlayerCards> players) {
+        players.forEach((name, player) -> {
             Outcome outcome = judgeOutcome(dealer, player);
-            scoreBoard.updatePlayerScore(player.getPlayerName(), outcome);
-        }
+            scoreBoard.updatePlayerScore(name, outcome);
+        });
     }
 
     private Outcome judgeOutcome(DealerCards dealer, PlayerCards player) {

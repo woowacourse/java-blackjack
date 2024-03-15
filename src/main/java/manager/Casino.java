@@ -1,9 +1,6 @@
 package manager;
 
-import domain.card.DealerCards;
-import domain.card.Deck;
-import domain.card.PlayerCards;
-import domain.game.Referee;
+import domain.game.BlackjackGame;
 import domain.player.Bet;
 import domain.player.Name;
 import domain.player.Names;
@@ -24,17 +21,26 @@ public class Casino {
     public void run() {
         Names names = readNames();
         Map<Name, Bet> bets = readBets(names);
+        BlackjackGame game = BlackjackGame.from(names);
+        outputView.printInitialCards(game);
 
-        Deck deck = new Deck();
-        ScoreBoard scoreBoard = new ScoreBoard(bets);
-        DealerCards dealerCards = new DealerCards(deck.drawTwoCards());
-        List<PlayerCards> playerCardsBundle = readyPlayerCards(names, deck);
-        outputView.printInitialCards(dealerCards, playerCardsBundle);
-
-        Referee referee = new Referee(scoreBoard);
-        playGame(deck, dealerCards, playerCardsBundle);
-        determineOutcome(dealerCards, playerCardsBundle, referee);
+        play(game, names);
+        ScoreBoard scoreBoard = game.payout(bets);
+        outputView.printResults(game);
         outputView.printScores(scoreBoard);
+    }
+
+    private Names readNames() {
+        try {
+            List<Name> names = inputView.readPlayerNames()
+                    .stream()
+                    .map(Name::new)
+                    .toList();
+            return new Names(names);
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return readNames();
+        }
     }
 
     private Map<Name, Bet> readBets(Names names) {
@@ -56,62 +62,24 @@ public class Casino {
         }
     }
 
-    private void determineOutcome(DealerCards dealerCards, List<PlayerCards> playerCardsBundle, Referee referee) {
-        referee.decideResult(dealerCards, playerCardsBundle);
-        outputView.printResults(dealerCards, playerCardsBundle);
-    }
-
-    private Names readNames() {
-        try {
-            List<Name> names = inputView.readPlayerNames()
-                    .stream()
-                    .map(Name::new)
-                    .toList();
-            return new Names(names);
-        } catch (IllegalArgumentException e) {
-            outputView.printError(e.getMessage());
-            return readNames();
+    private void play(BlackjackGame game, Names names) {
+        for (Name name : names.getNames()) {
+            drawByOpinion(game, name);
         }
-    }
-
-    private List<PlayerCards> readyPlayerCards(Names names, Deck deck) {
-        return names.getNames().stream()
-                .map(name -> new PlayerCards(name, deck.drawTwoCards()))
-                .toList();
-    }
-
-    private void playGame(Deck deck, DealerCards dealerCards, List<PlayerCards> playerCardsBundle) {
-        for (PlayerCards playerCards : playerCardsBundle) {
-            drawByOpinion(deck, playerCards);
-        }
-        drawDealerCards(deck, dealerCards);
-    }
-
-    private void drawByOpinion(Deck deck, PlayerCards playerCards) {
-        boolean opinionToHit = inputView.readHitOpinion(playerCards.getPlayerName());
-        if (opinionToHit) {
-            drawPlayerCards(deck, playerCards);
-        }
-        outputView.printPlayerCards(playerCards);
-        if (retryToDraw(playerCards, opinionToHit)) {
-            drawByOpinion(deck, playerCards);
-        }
-    }
-
-    private boolean retryToDraw(PlayerCards playerCards, boolean opinionToHit) {
-        return opinionToHit && playerCards.canDraw();
-    }
-
-    private void drawDealerCards(Deck deck, DealerCards dealerCards) {
-        while (dealerCards.canDraw()) {
-            dealerCards.receive(deck.draw());
+        while (game.dealerCanDraw()) {
+            game.drawDealerCards();
             outputView.printDealerGivenCard();
         }
     }
 
-    private void drawPlayerCards(Deck deck, PlayerCards playerCards) {
-        if (playerCards.canDraw()) {
-            playerCards.receive(deck.draw());
+    private void drawByOpinion(BlackjackGame game, Name name) {
+        boolean opinionToHit = inputView.readHitOpinion(name);
+        if (opinionToHit) {
+            game.drawPlayerCards(name);
+        }
+        outputView.printPlayerCards(name, game.player(name));
+        if (opinionToHit && game.playerCanDraw(name)) {
+            drawByOpinion(game, name);
         }
     }
 }
