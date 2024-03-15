@@ -4,18 +4,18 @@ import blackjack.domain.participants.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class BettingRepository {
-    private final Map<Player, Profit> bettingResult;
+public class PlayerBetting {
+    private final Map<Player, Profit> playerBetting;
 
-    public BettingRepository() {
-        this.bettingResult = new LinkedHashMap<>();
+    public PlayerBetting() {
+        this.playerBetting = new LinkedHashMap<>();
     }
 
     public void bet(Player player, Profit profit) {
-        bettingResult.put(player, profit);
+        playerBetting.put(player, profit);
     }
 
     public Profit getBettingProfit(Player player) {
-        return bettingResult.get(player);
+        return playerBetting.get(player);
     }
 }

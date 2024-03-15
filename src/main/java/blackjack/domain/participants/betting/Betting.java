@@ -6,20 +6,20 @@ import java.util.Map;
 
 public class Betting {
 
-    private final BettingRepository bettingRepository;
+    private final PlayerBetting playerBetting;
     private final BettingProfit bettingProfit;
 
     public Betting() {
-        this.bettingRepository = new BettingRepository();
+        this.playerBetting = new PlayerBetting();
         this.bettingProfit = new BettingProfit();
     }
 
     public void calculateProfit(Player player, Result result) {
-        bettingProfit.calculateProfit(player, result, bettingRepository.getBettingProfit(player));
+        bettingProfit.calculateProfit(player, result, playerBetting.getBettingProfit(player));
     }
 
     public void bet(Player player, Profit profit) {
-        bettingRepository.bet(player, profit);
+        playerBetting.bet(player, profit);
     }
 
     public Profit getProfit(Player player) {
