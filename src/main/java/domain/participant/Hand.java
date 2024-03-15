@@ -10,6 +10,8 @@ import static domain.BlackJackGame.BLACKJACK_CONDITION;
 import static domain.BlackJackGame.INITIAL_DRAW;
 
 public class Hand {
+    private static final int ACE_GAP = 10;
+    
     private final List<PlayingCard> playingCards;
 
     private Hand(final List<PlayingCard> playingCards) {
@@ -20,22 +22,31 @@ public class Hand {
         return new Hand(new ArrayList<>());
     }
 
-    private int getCardsSum(final int intermediate) {
-        return playingCards.stream()
-                .map(playingCard -> playingCard.getValue(intermediate))
-                .reduce(0, Integer::sum);
+    public int getHandSum() {
+        int primitiveSum = getPrimitiveSum();
+        if (isAddable()) {
+            return primitiveSum + ACE_GAP;
+        }
+        return primitiveSum;
     }
 
-    public int getOptimizedSum() {
-        return getCardsSum(getPrimitiveSum());
+    private boolean hasAce() {
+        return playingCards.stream()
+                .anyMatch(PlayingCard::isAce);
+    }
+
+    private boolean isAddable() {
+        return hasAce() && (getPrimitiveSum() + ACE_GAP <= BLACKJACK_CONDITION);
     }
 
     private int getPrimitiveSum() {
-        return getCardsSum(BLACKJACK_CONDITION);
+        return playingCards.stream()
+                .map(PlayingCard::getValue)
+                .reduce(0, Integer::sum);
     }
 
     public boolean isNotBust() {
-        return getOptimizedSum() <= BLACKJACK_CONDITION;
+        return getHandSum() <= BLACKJACK_CONDITION;
     }
 
     public void addCard(final PlayingCard card) {
@@ -47,10 +58,10 @@ public class Hand {
     }
 
     public boolean isNotMaximum() {
-        return getOptimizedSum() != BLACKJACK_CONDITION;
+        return getHandSum() != BLACKJACK_CONDITION;
     }
 
     public boolean isBlackJack() {
-        return getOptimizedSum() == BLACKJACK_CONDITION && playingCards.size() == INITIAL_DRAW;
+        return getHandSum() == BLACKJACK_CONDITION && playingCards.size() == INITIAL_DRAW;
     }
 }

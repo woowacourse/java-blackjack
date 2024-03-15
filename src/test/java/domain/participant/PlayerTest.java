@@ -48,13 +48,13 @@ public class PlayerTest {
         // Given
         Deck deck = Deck.init();
         Hand initHand = Hand.init();
-        int initCardNumberSum = initHand.getOptimizedSum();
+        int initCardNumberSum = initHand.getHandSum();
         Player player = new Player(new PlayerName("kelly"), initHand);
 
         // When
         player.draw(deck);
 
         // Then
-        assertThat(initCardNumberSum).isNotEqualTo(initHand.getOptimizedSum());
+        assertThat(initCardNumberSum).isNotEqualTo(initHand.getHandSum());
     }
 }

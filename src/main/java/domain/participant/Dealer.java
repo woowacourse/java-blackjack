@@ -13,12 +13,12 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isDrawable() {
-        return hand.getOptimizedSum() <= MAX_DEALER_HAND_VALUE;
+        return hand.getHandSum() <= MAX_DEALER_HAND_VALUE;
     }
 
     public boolean isDealerWin(final Player player) {
         if (player.isNotBust()) {
-            return hand.isNotBust() && (hand.getOptimizedSum() > player.getHandSum());
+            return hand.isNotBust() && (hand.getHandSum() > player.getHandSum());
         }
         return true;
     }

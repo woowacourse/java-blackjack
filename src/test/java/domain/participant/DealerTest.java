@@ -50,14 +50,14 @@ public class DealerTest {
         // Given
         Deck deck = Deck.init();
         Hand initHand = Hand.init();
-        int initCardNumberSum = initHand.getOptimizedSum();
+        int initCardNumberSum = initHand.getHandSum();
         Dealer dealer = new Dealer(initHand);
 
         // When
         dealer.draw(deck);
 
         // Then
-        assertThat(initCardNumberSum).isNotEqualTo(initHand.getOptimizedSum());
+        assertThat(initCardNumberSum).isNotEqualTo(initHand.getHandSum());
     }
 
     @DisplayName("딜러와 플레이어의 게임 결과를 반환한다.")

@@ -25,22 +25,21 @@ public class PlayingCardTest {
         assertThat(playingCard).isNotNull();
     }
 
-    @DisplayName("상황에 맞게 카드의 숫자를 반환한다.")
-    @MethodSource("addValueParameters")
+    @DisplayName("카드의 숫자를 반환한다.")
+    @MethodSource("getValueParameters")
     @ParameterizedTest(name = "[{index}] \"{0}\" => {1}")
-    void addValueTest(PlayingCard playingCard, int inputNumber, int expect) {
+    void getValueTest(PlayingCard playingCard, int expect) {
         // When
-        int result = playingCard.getValue(inputNumber);
+        int result = playingCard.getValue();
 
         // Then
         assertThat(result).isEqualTo(expect);
     }
 
-    private static Stream<Arguments> addValueParameters() {
+    private static Stream<Arguments> getValueParameters() {
         return Stream.of(
-                Arguments.of(new PlayingCard(HEART, ACE), 4, 11),
-                Arguments.of(new PlayingCard(HEART, ACE), 18, 1),
-                Arguments.of(new PlayingCard(HEART, FIVE), 15, 5)
+                Arguments.of(new PlayingCard(HEART, ACE), 1),
+                Arguments.of(new PlayingCard(HEART, FIVE), 5)
         );
     }
 }
