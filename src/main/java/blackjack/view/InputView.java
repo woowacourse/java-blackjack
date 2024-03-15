@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.participant.Player;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,7 +19,8 @@ public class InputView {
                 .split(NAME_DELIMITER));
     }
 
-    public static Boolean askDraw() {
+    public static Boolean askDraw(Player player) {
+        OutputView.printAskDrawMessage(player.getName());
         String answer = scanner.nextLine()
                 .toLowerCase();
         if (ACCEPT_DRAW_MESSAGE.equals(answer)) {

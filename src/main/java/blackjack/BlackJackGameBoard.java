@@ -89,9 +89,8 @@ public class BlackJackGameBoard {
     }
 
     private static void askDrawToPlayer(Player player, Deck deck) {
-        while (player.canDraw() && !player.isBust()) {
-            OutputView.printAskDrawMessage(player.getName());
-            player.draw(InputView::askDraw, deck);
+        while (!player.isBust() && InputView.askDraw(player)) {
+            player.draw(deck);
             OutputView.printPlayerHands(player);
         }
     }

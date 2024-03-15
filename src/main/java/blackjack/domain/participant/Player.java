@@ -3,7 +3,6 @@ package blackjack.domain.participant;
 import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Deck;
 import java.util.List;
-import java.util.function.BooleanSupplier;
 
 public class Player {
     private final Name name;
@@ -22,14 +21,8 @@ public class Player {
         return new Player(name, initialHands);
     }
 
-    public void draw(BooleanSupplier supplier, Deck deck) {
-        if (supplier.getAsBoolean()) {
-            hands.addCard(deck.draw());
-        }
-    }
-
-    public boolean canDraw() {
-        return !hands.isBust();
+    public void draw(Deck deck) {
+        hands.addCard(deck.draw());
     }
 
     public String getName() {
