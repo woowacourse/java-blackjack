@@ -1,13 +1,16 @@
 package blackjack.model.participant;
 
+import static blackjack.model.participant.HandStatus.Constants.BLACKJACK_CARD_SIZE;
+import static blackjack.model.participant.HandStatus.Constants.BLACKJACK_SCORE;
+
 import java.util.Arrays;
 import java.util.function.Predicate;
 
 public enum HandStatus {
-    BUST((score -> score > 21), (cardSize -> cardSize >= 2)),
-    BLACKJACK((score -> score == 21), (cardSize -> cardSize == 2)),
-    NOT_BLACKJACK_BUT_21((score -> score == 21), (cardSize -> cardSize > 2)),
-    UNDER_21((score -> score < 21), (cardSize -> cardSize >= 2));
+    BUST((score -> score > BLACKJACK_SCORE), (cardSize -> cardSize >= BLACKJACK_CARD_SIZE)),
+    BLACKJACK((score -> score == BLACKJACK_SCORE), (cardSize -> cardSize == BLACKJACK_CARD_SIZE)),
+    NOT_BLACKJACK_BUT_21((score -> score == BLACKJACK_SCORE), (cardSize -> cardSize > BLACKJACK_CARD_SIZE)),
+    UNDER_21((score -> score < BLACKJACK_SCORE), (cardSize -> cardSize >= BLACKJACK_CARD_SIZE));
 
     private final Predicate<Integer> scoreCondition;
     private final Predicate<Integer> cardSizeCondition;
@@ -27,5 +30,10 @@ public enum HandStatus {
     public boolean test(final int score, final int cardSize) {
         return scoreCondition.test(score) &&
                 cardSizeCondition.test(cardSize);
+    }
+
+    static class Constants {
+        public static final int BLACKJACK_SCORE = 21;
+        public static final int BLACKJACK_CARD_SIZE = 2;
     }
 }

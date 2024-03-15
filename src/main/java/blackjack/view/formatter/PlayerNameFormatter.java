@@ -4,10 +4,10 @@ import blackjack.model.participant.Name;
 
 public class PlayerNameFormatter {
     public static String formatWithCardComment(Name name) {
-        return name.getRawName() + " 카드: " ;
+        return name.getValue() + " 카드: " ;
     }
 
     public static String format(Name name) {
-        return name.getRawName() + " : ";
+        return name.getValue() + " : ";
     }
 }

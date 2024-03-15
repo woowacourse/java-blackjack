@@ -24,7 +24,7 @@ public class OutputView {
 
     public static void printDistributionSubject(final List<Name> names) {
         String formattedName = names.stream()
-                .map(Name::getRawName)
+                .map(Name::getValue)
                 .collect(Collectors.joining(", "));
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", formattedName);
     }

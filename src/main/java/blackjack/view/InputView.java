@@ -26,7 +26,7 @@ public class InputView {
     }
 
     public static boolean readHitOrNot(final Name playerName, Supplier<String> reader) {
-        System.out.println(playerName.getRawName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        System.out.println(playerName.getValue() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = reader.get();
         validateHitOrNotCommand(input);
         return YES.equals(input);
@@ -39,7 +39,7 @@ public class InputView {
     }
 
     public static int readBettingAmount(final Name playerName, final Supplier<String> reader) {
-        System.out.println(playerName.getRawName() + "의 배팅 금액은?");
+        System.out.println(playerName.getValue() + "의 배팅 금액은?");
         try {
             return Integer.parseInt(reader.get());
         } catch (NumberFormatException e) {
