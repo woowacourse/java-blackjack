@@ -36,6 +36,11 @@ public class Hand {
                 .count();
     }
 
+    public boolean hasAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
+    }
+
     public boolean isBlackJack() {
         return calculateScore().isMaxScore() && cards.size() == INITIAL_HAND_SIZE;
     }
