@@ -28,9 +28,9 @@ public class OutputView {
         return String.join(DELIMITER, source);
     }
 
-    public void printFirstCardOfDealer(final ParticipantDto participantDto) {
-        final String dealerName = participantDto.name();
-        final List<CardDto> cardDtos = participantDto.cards();
+    public void printFirstCardOfDealer(final ParticipantDto participant) {
+        final String dealerName = participant.name();
+        final List<CardDto> cardDtos = participant.cards();
         final List<CardDto> firstCardOfDealer = List.of(cardDtos.get(0));
         final String cardsInfoMessage = generateCardsInfoMessage(firstCardOfDealer);
 
@@ -57,10 +57,15 @@ public class OutputView {
                 .forEach(System.out::println);
     }
 
-    private String generateParticipantCardsMessage(ParticipantDto participantDto) {
-        final String name = participantDto.name();
-        final String cardsInfoMessage = generateCardsInfoMessage(participantDto.cards());
+    private String generateParticipantCardsMessage(ParticipantDto participant) {
+        final String name = participant.name();
+        final String cardsInfoMessage = generateCardsInfoMessage(participant.cards());
 
         return String.format("%s카드: %s", name, cardsInfoMessage);
+    }
+
+    public void printParticipantCards(final ParticipantDto participant) {
+        final String participantCardsMessage = generateParticipantCardsMessage(participant);
+        System.out.println(participantCardsMessage);
     }
 }
