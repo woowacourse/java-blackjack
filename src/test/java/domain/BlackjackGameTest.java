@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-class BlackjackTest {
+class BlackjackGameTest {
 
     @DisplayName("딜러에게 2장의 카드가 주어졌는지 확인한다")
     @Test
