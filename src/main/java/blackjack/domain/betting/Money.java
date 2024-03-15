@@ -10,4 +10,12 @@ public record Money(int value) {
             throw new IllegalArgumentException("돈의 액수는 0 이상이어야 합니다.");
         }
     }
+
+    int minusValue() {
+        return -value;
+    }
+
+    int multipleValue(final double rate) {
+        return (int) (value * rate);
+    }
 }

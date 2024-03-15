@@ -8,6 +8,8 @@ import static blackjack.domain.cardgame.WinningStatus.PUSH;
 import static blackjack.domain.cardgame.WinningStatus.WIN;
 
 public class Profit {
+    private static final double BLACKJACK_PROFIT_RATE = 1.5;
+
     private final int value;
 
     Profit(final int value) {
@@ -19,13 +21,13 @@ public class Profit {
             return new Profit(money.value());
         }
         if (LOSE.equals(status)) {
-            return new Profit(-money.value());
+            return new Profit(money.minusValue());
         }
         if (PUSH.equals(status)) {
             return new Profit(0);
         }
         if (BLACKJACK.equals(status)) {
-            return new Profit((int) (money.value() * 1.5));
+            return new Profit(money.multipleValue(BLACKJACK_PROFIT_RATE));
         }
 
         throw new IllegalStateException();
