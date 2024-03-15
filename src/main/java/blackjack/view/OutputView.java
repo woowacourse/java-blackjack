@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.game.BettingCashier;
 import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.game.PlayerState;
 import blackjack.domain.game.Result;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
@@ -71,9 +72,9 @@ public class OutputView {
     public void printResult(BlackjackGame game, Result result) {
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %s%s%s%n",
-                resultText(result.countDealerWins(), "승 "),
-                resultText(result.countDealerTies(), "무 "),
-                resultText(result.countDealerLoses(), "패")
+                resultText(result.countDealerResults().get(PlayerState.WIN), "승 "),
+                resultText(result.countDealerResults().get(PlayerState.TIE), "무 "),
+                resultText(result.countDealerResults().get(PlayerState.LOSE), "패")
         );
         for (Player player : game.getPlayers()) {
             System.out.println(player.getName() + ": " + playerStateText(result, player));

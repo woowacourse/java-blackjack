@@ -6,6 +6,7 @@ import blackjack.domain.participant.Player;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Result {
 
@@ -49,22 +50,20 @@ public class Result {
         return PlayerState.TIE;
     }
 
-    public long countDealerWins() {
+    public Map<PlayerState, Long> countDealerResults() {
         return resultMap.values().stream()
-                .filter(value -> value == PlayerState.LOSE)
-                .count();
+                .map(this::replaceToDealerState)
+                .collect(Collectors.groupingBy(e -> e, Collectors.counting()));
     }
 
-    public long countDealerLoses() {
-        return resultMap.values().stream()
-                .filter(value -> value == PlayerState.WIN || value == PlayerState.BLACKJACK)
-                .count();
-    }
-
-    public long countDealerTies() {
-        return resultMap.values().stream()
-                .filter(value -> value == PlayerState.TIE)
-                .count();
+    private PlayerState replaceToDealerState(PlayerState playerState) {
+        if (playerState == PlayerState.BLACKJACK || playerState == PlayerState.WIN) {
+            return PlayerState.LOSE;
+        }
+        if (playerState == PlayerState.LOSE) {
+            return PlayerState.WIN;
+        }
+        return playerState;
     }
 
     public PlayerState getPlayerState(Player player) {

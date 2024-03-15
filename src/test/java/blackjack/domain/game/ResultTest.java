@@ -124,7 +124,7 @@ class ResultTest {
             distributeLoseCards(players);
             Result result = Result.of(players, dealer);
 
-            assertThat(result.countDealerWins()).isEqualTo(3);
+            assertThat(result.countDealerResults().get(PlayerState.WIN)).isEqualTo(3);
         }
 
         @Test
@@ -133,7 +133,7 @@ class ResultTest {
             distributeWinCards(players);
             Result result = Result.of(players, dealer);
 
-            assertThat(result.countDealerLoses()).isEqualTo(3);
+            assertThat(result.countDealerResults().get(PlayerState.LOSE)).isEqualTo(3);
         }
 
         @Test
@@ -142,7 +142,7 @@ class ResultTest {
             distributeTieCards(players);
             Result result = Result.of(players, dealer);
 
-            assertThat(result.countDealerTies()).isEqualTo(3);
+            assertThat(result.countDealerResults().get(PlayerState.TIE)).isEqualTo(3);
         }
 
         private void distributeWinCards(List<Player> players) {
