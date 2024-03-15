@@ -57,7 +57,7 @@ public class BlackJackLauncher {
     private void proceedDealerTurn(CasinoService casinoService) {
         while (casinoService.isDealerHitAllowed()) {
             casinoService.hitCardToDealer();
-            OutputView.showDealerHitMessage();
+            OutputView.alertDealerHitMessage();
         }
     }
 
