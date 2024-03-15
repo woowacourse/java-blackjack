@@ -46,14 +46,15 @@ public class BlackjackController {
     }
 
     private BetDetails getPlayersBettingMoney(final List<Name> playerNames) {
-        return new BetDetails(playerNames.stream()
+        return playerNames.stream()
                 .collect(
-                        Collectors.toMap(
-                                name -> name,
-                                inputView::askBettingMoney,
-                                (name, money) -> name,
-                                LinkedHashMap::new
-                        )));
+                        Collectors.collectingAndThen(
+                                Collectors.toMap(
+                                        name -> name,
+                                        inputView::askBettingMoney,
+                                        (name, money) -> name,
+                                        LinkedHashMap::new
+                                ), BetDetails::new));
     }
 
     private void initializeHand(final CardDeck deck, final Dealer dealer, final List<Player> players) {

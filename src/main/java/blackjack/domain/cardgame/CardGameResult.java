@@ -14,15 +14,17 @@ import static blackjack.domain.cardgame.WinningStatus.LOSE;
 import static blackjack.domain.cardgame.WinningStatus.WIN;
 
 public record CardGameResult(Map<Name, WinningStatus> totalResult) {
+
     public static CardGameResult of(final Dealer dealer, final List<Player> players) {
-        return new CardGameResult(
-                players.stream()
-                        .collect(Collectors.toMap(
-                                Player::name,
-                                player -> WinningStatus.doesPlayerWin(dealer, player),
-                                (name, status) -> name,
-                                LinkedHashMap::new
-                        )));
+        return players.stream()
+                .collect(
+                        Collectors.collectingAndThen(
+                                Collectors.toMap(
+                                        Player::name,
+                                        player -> WinningStatus.doesPlayerWin(dealer, player),
+                                        (name, status) -> name,
+                                        LinkedHashMap::new
+                                ), CardGameResult::new));
     }
 
     public Map<Name, WinningStatus> totalResult() {
