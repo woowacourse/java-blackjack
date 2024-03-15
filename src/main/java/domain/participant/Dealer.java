@@ -8,11 +8,12 @@ import java.util.List;
 public class Dealer extends Participant {
 
     private static final int DEALER_HIT_COUNT = 16;
+    public static final String DEALER_NAME = "딜러";
 
     private final Deck deck;
 
     public Dealer() {
-        super(new Name("딜러"));
+        super(new Name(DEALER_NAME));
         deck = new Deck();
     }
 
