@@ -18,7 +18,6 @@ public class Player extends Participant {
         }
     }
 
-    @Override
     public boolean canHit() {
         return hand.calculateScore() < HITTABLE_THRESHOLD;
     }

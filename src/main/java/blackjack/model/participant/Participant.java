@@ -29,8 +29,6 @@ public abstract class Participant {
         return hand.getCards();
     }
 
-    public abstract boolean canHit();
-
     public boolean isBust() {
         return hand.isBust();
     }
