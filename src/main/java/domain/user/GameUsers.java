@@ -5,6 +5,7 @@ import static domain.money.GameResult.WIN;
 
 import domain.Deck;
 import domain.money.GameResult;
+import domain.money.PlayersMoney;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,22 +13,22 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class GameUsers {
-    private final Players players;
+    private final PlayersMoney playersMoney;
     private final Dealer dealer;
 
-    public GameUsers(Players players, Deck deck) {
-        this.players = players;
+    public GameUsers(PlayersMoney playersMoney, Deck deck) {
+        this.playersMoney = playersMoney;
         this.dealer = new Dealer();
         addStartCards(deck);
     }
 
     private void addStartCards(Deck deck) {
-        players.addStartCards(deck);
+        playersMoney.addStartCards(deck);
         dealer.addStartCards(deck);
     }
 
     public Map<Player, GameResult> generatePlayersResult() {
-        return players.getPlayers()
+        return playersMoney.getPlayers()
                 .stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
@@ -56,7 +57,7 @@ public class GameUsers {
     }
 
     public List<Player> getPlayers() {
-        return players.getPlayers();
+        return playersMoney.getPlayers();
     }
 
     public Dealer getDealer() {

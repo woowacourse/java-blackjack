@@ -3,8 +3,7 @@ package view;
 import domain.money.BetAmount;
 import domain.money.Money;
 import domain.user.Name;
-import domain.user.Player;
-import domain.user.Players;
+import domain.user.PlayerNames;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,13 +13,13 @@ public class InputView {
     private InputView() {
     }
 
-    public static Players inputPlayers() {
+    public static PlayerNames inputNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         List<String> names = List.of(SCANNER.nextLine().split(",", -1));
-        List<Player> players = names.stream()
-                .map((name) -> new Player(new Name(name)))
+        List<Name> playerNames = names.stream()
+                .map(Name::new)
                 .toList();
-        return new Players(players);
+        return new PlayerNames(playerNames);
     }
 
     public static Money inputMoney(String name) {

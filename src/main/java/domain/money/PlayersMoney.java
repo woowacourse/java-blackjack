@@ -1,7 +1,9 @@
 package domain.money;
 
+import domain.Deck;
 import domain.user.Player;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -12,6 +14,12 @@ public class PlayersMoney {
 
     public PlayersMoney(Map<Player, Money> playersMoney) {
         this.playersMoney = playersMoney;
+    }
+
+    public void addStartCards(Deck deck) {
+        for (Player player : playersMoney.keySet()) {
+            player.addStartCards(deck);
+        }
     }
 
     public PlayersMoney changeByPlayersResult(Map<Player, GameResult> playerResults) {
@@ -41,6 +49,10 @@ public class PlayersMoney {
                 .stream()
                 .mapToInt(Money::value)
                 .sum() * DEALER_MULTIPLIER;
+    }
+
+    public List<Player> getPlayers() {
+        return playersMoney.keySet().stream().toList();
     }
 
     public Map<Player, Money> getPlayersMoney() {

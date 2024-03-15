@@ -10,9 +10,8 @@ import domain.money.PlayersMoney;
 import domain.user.Dealer;
 import domain.user.GameUsers;
 import domain.user.Player;
-import domain.user.Players;
+import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import view.Command;
 import view.InputView;
@@ -21,20 +20,20 @@ import view.OutputView;
 public class BlackjackRunner {
     public void play() {
         Deck deck = new Deck(new DeckGenerator().generate());
-        Players players = ExceptionHandler.handle(InputView::inputPlayers);
-        PlayersMoney playersMoney = new PlayersMoney(inputPlayersMoney(players));
-        GameUsers gameUsers = new GameUsers(players, deck);
+        PlayersMoney playersMoney = new PlayersMoney(inputPlayersMoney());
+        GameUsers gameUsers = new GameUsers(playersMoney, deck);
         OutputView.printStartStatus(gameUsers);
-        doPlayersTurn(players, deck);
+        doPlayersTurn(gameUsers.getPlayers(), deck);
         doDealersTurn(gameUsers.getDealer(), deck);
         doResult(playersMoney, gameUsers);
     }
 
-    private Map<Player, Money> inputPlayersMoney(Players players) {
-        return players.getPlayers()
-                .stream().collect(Collectors.toMap(
-                        Function.identity(),
-                        player -> getValidatedMoney(player.getNameValue())
+    private Map<Player, Money> inputPlayersMoney() {
+        return ExceptionHandler.handle(InputView::inputNames)
+                .stream()
+                .collect(Collectors.toMap(
+                        Player::new,
+                        name -> getValidatedMoney(name.value())
                 ));
     }
 
@@ -42,8 +41,8 @@ public class BlackjackRunner {
         return ExceptionHandler.handle(() -> InputView.inputMoney(nameValue));
     }
 
-    private void doPlayersTurn(Players players, Deck deck) {
-        for (Player player : players.getPlayers()) {
+    private void doPlayersTurn(List<Player> players, Deck deck) {
+        for (Player player : players) {
             hitOrStay(player, deck);
         }
     }
