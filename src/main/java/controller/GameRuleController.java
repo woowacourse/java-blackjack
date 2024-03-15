@@ -8,19 +8,20 @@ import controller.dto.dealer.DealerHand;
 import controller.dto.dealer.DealerScore;
 import controller.dto.gamer.GamerHand;
 import controller.dto.gamer.GamerScore;
-import domain.BetAmount;
 import domain.GameHost;
 import domain.GameRule;
 import domain.Gamer;
 import domain.Gamers;
+import domain.Hand;
 import domain.constants.ProfitRate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
 public class GameRuleController {
-    private final BetAmount betAmount = new BetAmount();
     private final GameHost gameHost;
 
     public GameRuleController(final GameHost gameHost) {
@@ -29,34 +30,37 @@ public class GameRuleController {
 
     public void betting() {
         Gamers gamers = gameHost.findPlayingGamers();
+        Map<Gamer, Integer> bettingAmounts = new HashMap<>();
+
         for (Gamer gamer : gamers.listOf()) {
-            betAmount.saveAmount(gamer, InputView.enterGamerBettingAmounts(gamer.getName()));
+            bettingAmounts.put(gamer, InputView.enterGamerBettingAmounts(gamer.getName()));
         }
+        gamers.saveBettingAmounts(bettingAmounts);
     }
 
     public void printResult() {
         Gamers gamers = gameHost.findPlayingGamers();
 
-        printCardStatusAndScores(gamers);
+        printCardStatusAndScores();
         OutputView.printGameResult(getResultsOfGame(gamers));
     }
 
-    private void printCardStatusAndScores(final Gamers gamers) {
+    private void printCardStatusAndScores() {
         OutputView.printHandStatusWithScore(
                 getCurrentDealerHandScore(),
-                getCurrentGamerHandScore(gamers),
-                gamers.getNames()
+                getCurrentGamerHandScore(),
+                gameHost.gamerNames()
         );
     }
 
     private DealerScore getCurrentDealerHandScore() {
-        DealerHand dealerHand = new DealerHand(getHandStatusAsString(gameHost.getDealerHand()));
-        return new DealerScore(dealerHand, gameHost.getDealerScore());
+        DealerHand dealerHand = new DealerHand(getHandStatusAsString(gameHost.dealerHand()));
+        return new DealerScore(dealerHand, gameHost.dealerScore());
     }
 
-    private List<GamerScore> getCurrentGamerHandScore(final Gamers gamers) {
-        List<GamerHand> gamerHandStatuses = getGamerHandStatuses(gamers);
-        List<Integer> scores = getGamerResultScore(gamers);
+    private List<GamerScore> getCurrentGamerHandScore() {
+        List<GamerHand> gamerHandStatuses = getGamerHandStatuses();
+        List<Integer> scores = gameHost.gamerScores();
 
         List<GamerScore> gamerScores = new ArrayList<>();
         for (int i = 0; i < gamerHandStatuses.size(); i++) {
@@ -66,21 +70,13 @@ public class GameRuleController {
         return gamerScores;
     }
 
-    private List<Integer> getGamerResultScore(final Gamers gamers) {
-        List<Integer> scores = new ArrayList<>();
-        for (Gamer gamer : gamers.listOf()) {
-            scores.add(gamer.calculateResultScore());
-        }
-        return scores;
-    }
-
-    private List<GamerHand> getGamerHandStatuses(final Gamers gamers) {
+    private List<GamerHand> getGamerHandStatuses() {
         List<GamerHand> gamerHandStatuses = new ArrayList<>();
+        List<String> gamerNames = gameHost.gamerNames();
+        List<Hand> gamerHands = gameHost.gamerHands();
 
-        for (Gamer gamer : gamers.listOf()) {
-            gamerHandStatuses.add(
-                    new GamerHand(gamer.getName(), getHandStatusAsString(gamer.getHand()))
-            );
+        for (int i = 0; i < gamerNames.size(); i++) {
+            gamerHandStatuses.add(new GamerHand(gamerNames.get(i), getHandStatusAsString(gamerHands.get(i))));
         }
         return gamerHandStatuses;
     }
@@ -94,22 +90,13 @@ public class GameRuleController {
 
     private List<PlayerResult> createPlayerResults(final Gamers gamers, final List<ProfitRate> results) {
         List<PlayerResult> playerResults = new ArrayList<>();
-        List<Gamer> gamerList = gamers.listOf();
-        List<String> names = gamers.getNames();
-        List<Integer> betAmounts = getGamerBetAmounts(gamerList);
+        List<String> names = gamers.names();
+        List<Integer> betAmounts = gamers.betAmounts();
 
         for (int i = 0; i < names.size(); i++) {
             ProfitRate profitRate = results.get(i);
             playerResults.add(new PlayerResult(names.get(i), profitRate.getProfit(betAmounts.get(i))));
         }
         return playerResults;
-    }
-
-    private List<Integer> getGamerBetAmounts(final List<Gamer> gamerList) {
-        List<Integer> betAmounts = new ArrayList<>();
-        for (Gamer gamer : gamerList) {
-            betAmounts.add(betAmount.getAmount(gamer));
-        }
-        return betAmounts;
     }
 }

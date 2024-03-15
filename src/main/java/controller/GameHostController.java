@@ -28,13 +28,13 @@ public class GameHostController {
     }
 
     private void printInitiateGameResult() {
-        List<String> gamerNames = gameHost.getGamerNames();
+        List<String> gamerNames = gameHost.gamerNames();
         OutputView.printNoticeAfterStartGame(gamerNames);
 
-        DealerHand dealerHandWithHiddenCard = getDealerHandWithHiddenCard(gameHost.getDealerHand());
+        DealerHand dealerHandWithHiddenCard = getDealerHandWithHiddenCard(gameHost.dealerHand());
         OutputView.printDealerStatus(dealerHandWithHiddenCard);
 
-        List<GamerHand> gamerHandStatus = getGamerHandStatus(gamerNames, gameHost.getGamerHands());
+        List<GamerHand> gamerHandStatus = getGamerHandStatus(gamerNames, gameHost.gamerHands());
         OutputView.printPlayerStatus(gamerNames, gamerHandStatus);
     }
 
