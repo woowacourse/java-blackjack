@@ -32,7 +32,7 @@ public class Dealer {
     }
 
     public boolean isBust() {
-        return hand.totalScore().isBust();
+        return score().isBust();
     }
 
     public boolean isNotBlackjack() {
@@ -44,8 +44,7 @@ public class Dealer {
     }
 
     public Card firstCard() {
-        return hand.getCards()
-            .get(0);
+        return getCards().get(0);
     }
 
     public boolean isReceivable() {
