@@ -34,8 +34,8 @@ public class ResultView {
         );
     }
 
-    public static void printPlayerAndDeck(String name, List<String> userDeck) {
-        System.out.println(joinUserNameAndDeck(name, userDeck));
+    public static void printPlayerAndDeck(UserDto userDto) {
+        System.out.println(joinUserNameAndDeck(userDto.name, userDto.cards));
     }
 
     private static String joinUserNameAndDeck(String name, List<String> userDeck) {
@@ -76,7 +76,7 @@ public class ResultView {
     }
 
     public static void printBust(UserDto userDto) {
-        printPlayerAndDeck(userDto.name, userDto.cards);
+        printPlayerAndDeck(userDto);
         System.out.println("버스트!");
     }
 }

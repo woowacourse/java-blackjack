@@ -58,7 +58,7 @@ public class GameController {
             showMidTermResult(state, userDto);
             return;
         }
-        ResultView.printPlayerAndDeck(userDto.name, userDto.cards);
+        ResultView.printPlayerAndDeck(userDto);
         hitOrStayOnce(game, player);
     }
 
