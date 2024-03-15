@@ -84,5 +84,9 @@ public class OutputView {
         }
         return dealerScoresText;
     }
+    
+    public static void alertDealerHitMessage(){
+        printMessage("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
 
 }

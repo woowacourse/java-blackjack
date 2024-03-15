@@ -27,7 +27,7 @@ public class BlackJackLauncher {
     }
 
     private CasinoService initCasino() {
-        Names names = inputRetryHelper(() -> new Names(inputNames("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")));
+        Names names = inputRetryHelper(() -> new Names(inputNames()));
         return new CasinoService(names, new RandomCardShuffleMachine());
     }
 
@@ -57,7 +57,7 @@ public class BlackJackLauncher {
     private void proceedDealerTurn(CasinoService casinoService) {
         while (casinoService.isDealerHitAllowed()) {
             casinoService.hitCardToDealer();
-            OutputView.printMessage("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+            OutputView.showDealerHitMessage();
         }
     }
 

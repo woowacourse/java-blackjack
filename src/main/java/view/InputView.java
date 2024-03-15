@@ -33,8 +33,8 @@ public class InputView {
         throw new IllegalArgumentException("[ERROR] y 혹은 n만 입력 가능합니다.");
     }
 
-    public static List<String> inputNames(String inputRequestMessage) {
-        String initialInput = validateContainsDealerName(input(inputRequestMessage));
+    public static List<String> inputNames() {
+        String initialInput = validateContainsDealerName(input("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"));
         return Arrays.stream(initialInput.split(INPUT_PARSE_DELIMITER))
                 .map(String::trim)
                 .toList();
