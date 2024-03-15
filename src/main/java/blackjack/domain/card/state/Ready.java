@@ -23,4 +23,9 @@ public class Ready extends AbstractState {
         }
         return new Ready(newCards);
     }
+
+    @Override
+    public State stand() {
+        throw new IllegalStateException("준비 상태에서 스탠드를 할 수 없습니다.");
+    }
 }

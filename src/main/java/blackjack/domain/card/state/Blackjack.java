@@ -14,6 +14,12 @@ public class Blackjack extends AbstractState {
     }
 
     @Override
+    public State stand() {
+        throw new IllegalStateException("블랙잭 상태에서 스탠드를 할 수 없습니다.");
+    }
+
+
+    @Override
     public boolean isBlackjack() {
         return true;
     }
