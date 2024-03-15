@@ -1,12 +1,13 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.participant.Betting;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.dto.BlackjackResult;
-import blackjack.dto.PlayerInfo;
+import blackjack.dto.NamesInput;
+import blackjack.dto.PlayerInfos;
 import blackjack.strategy.ShuffleStrategy;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -23,28 +24,16 @@ public class PlayersTest {
     private Players players;
     private final String bettingAmountA = "10000";
     private final String bettingAmountB = "200000";
-    private final PlayerInfo playerA = PlayerInfo.of("a", bettingAmountA);
-    private final PlayerInfo playerB = PlayerInfo.of("b", bettingAmountB);
+
+    private final PlayerInfos playerInfos = PlayerInfos.of(
+            NamesInput.of(List.of("a", "b")),
+            List.of(new Betting(bettingAmountA), new Betting(bettingAmountB))
+    );
 
     @BeforeEach
     void setUp() {
         dealer = Dealer.create(shuffleStrategy);
-        players = Players.of(List.of(playerA, playerB));
-    }
-
-    @DisplayName("플레이어 이름이 중복되면 예외가 발생한다.")
-    @Test
-    void validateDuplicatedNames() {
-        //given
-        List<PlayerInfo> playerInfos = List.of(
-                PlayerInfo.of("choco", "10000"),
-                PlayerInfo.of("choco", "20000"),
-                PlayerInfo.of("chip", "9800")
-        );
-
-        //when & then
-        assertThatThrownBy(() -> Players.of(playerInfos))
-                .isInstanceOf(IllegalArgumentException.class);
+        players = Players.of(playerInfos);
     }
 
     @DisplayName("플레이어들의 승패를 계산한다.")
@@ -56,7 +45,7 @@ public class PlayersTest {
         String expectedProfitSum = String.valueOf(Integer.parseInt(bettingAmountA) + Integer.parseInt(bettingAmountB));
 
         //when
-       Judge.judge(dealer, players);
+        Judge.judge(dealer, players);
 
         //then
         assertThat(BlackjackResult.of(dealer, players).playerProfits().get(0).profit()).isEqualTo("-" + bettingAmountA);

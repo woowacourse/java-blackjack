@@ -1,6 +1,9 @@
 package blackjack.view;
 
-import blackjack.dto.PlayerInfo;
+import blackjack.domain.participant.Betting;
+import blackjack.domain.participant.Name;
+import blackjack.dto.NamesInput;
+import blackjack.dto.PlayerInfos;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,12 +30,12 @@ public class InputView {
         return instance;
     }
 
-    private List<String> readPlayersName() {
+    private NamesInput readPlayersName() {
         System.out.println(PLAYER_NAME_INPUT);
         try {
-            return Arrays.stream(bufferedReader.readLine().split(NAME_SEPARATOR))
+            return NamesInput.of(Arrays.stream(bufferedReader.readLine().split(NAME_SEPARATOR))
                     .map(String::trim)
-                    .toList();
+                    .toList());
         } catch (IOException exception) {
             throw new IllegalArgumentException(IOEXCEPTION_ERROR);
         }
@@ -47,20 +50,22 @@ public class InputView {
         }
     }
 
-    public List<PlayerInfo> readPlayerInfos() {
-        List<String> names = readPlayersName();
+    public PlayerInfos readPlayerInfos() {
+        NamesInput names = readPlayersName();
         System.out.println();
-        return names.stream()
+        List<Betting> bettings = names.names().stream()
                 .map(this::readBettingAmount)
                 .toList();
+
+        return PlayerInfos.of(names, bettings);
     }
 
-    private PlayerInfo readBettingAmount(final String name) {
+    private Betting readBettingAmount(final Name name) {
         System.out.printf(BETTING_AMOUNT_INPUT, name);
         try {
             String input = bufferedReader.readLine();
             System.out.println();
-            return PlayerInfo.of(name, input);
+            return new Betting(input);
         } catch (IOException exception) {
             throw new IllegalArgumentException(IOEXCEPTION_ERROR);
         }

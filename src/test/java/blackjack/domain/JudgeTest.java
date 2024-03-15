@@ -2,11 +2,13 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.participant.Betting;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.dto.BlackjackResult;
-import blackjack.dto.PlayerInfo;
+import blackjack.dto.NamesInput;
+import blackjack.dto.PlayerInfos;
 import blackjack.strategy.ShuffleStrategy;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -22,7 +24,7 @@ class JudgeTest {
 
     private Dealer dealer;
     private final String bettingAmount = "10000";
-    private final List<PlayerInfo> playerInfos = List.of(PlayerInfo.of("choco", bettingAmount));
+    private final PlayerInfos playerInfos = PlayerInfos.of(NamesInput.of(List.of("choco")), List.of(new Betting(bettingAmount)));
     private Players players;
     private Player choco;
     private final int bustDrawCount = 10;
