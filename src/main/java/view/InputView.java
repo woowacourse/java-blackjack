@@ -63,7 +63,7 @@ public class InputView {
         String commandValue = scanner.nextLine();
         validateCommandValue(commandValue);
 
-        return scanner.nextLine();
+        return commandValue;
     }
 
     private static void validateCommandValue(final String commandValue) {

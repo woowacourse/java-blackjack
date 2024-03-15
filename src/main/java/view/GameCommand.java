@@ -11,10 +11,10 @@ public enum GameCommand {
     }
 
     public static GameCommand of(final String input) {
-        if (HIT.command.equals(input)) {
+        if (input.equals(HIT.command)) {
             return HIT;
         }
-        if (STAND.command.equals(input)) {
+        if (input.equals(STAND.command)) {
             return STAND;
         }
         throw new IllegalArgumentException("잘못된 명령어입니다.");
