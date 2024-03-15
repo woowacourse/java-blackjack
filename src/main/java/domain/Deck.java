@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
+    
     private final List<Card> cards;
 
     private Deck(List<Card> cards) {

@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    
     private static final String DELIMITER = ", ";
     private static final DecimalFormat MONEY_FORMAT = new DecimalFormat("###########");
 

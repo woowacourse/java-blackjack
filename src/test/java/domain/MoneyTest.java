@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class MoneyTest {
+    
     @Test
     @DisplayName("금액은 숫자 문자열로 초기화 가능하다.")
     void createMoney() {

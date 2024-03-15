@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class InputView {
+    
     private static final String DELIMITER = ",";
     private static final String COMMAND_YES = "y";
     private static final String COMMAND_NO = "n";

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
+    
     @Test
     @DisplayName("딜러는 자신의 패를 반환할 수 있다.")
     void getHand() {

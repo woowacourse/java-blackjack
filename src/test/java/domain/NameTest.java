@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class NameTest {
+    
     @Test
     @DisplayName("생성자로 받은 이름 문자열을 반환한다")
     void getName() {

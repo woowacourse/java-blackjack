@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BettingResult {
+    
     private final Map<Name, Money> playersResult;
     private final Money dealerResult;
 

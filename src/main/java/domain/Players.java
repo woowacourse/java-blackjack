@@ -3,6 +3,7 @@ package domain;
 import java.util.List;
 
 public class Players {
+    
     private static final int MAX_PLAYERS_COUNT = 8;
     private static final Name DEALER_NAME = new Name("딜러");
 

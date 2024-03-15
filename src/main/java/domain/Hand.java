@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Hand {
+    
     private static final int ACE_VALUE_GAP = 10;
     private static final int BUST_THRESHOLD = 21;
     private static final int INITIAL_CARD_COUNT = 2;

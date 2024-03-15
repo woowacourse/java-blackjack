@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DeckTest {
+    
     @Test
     @DisplayName("가장 마지막에 있는 카드를 반환한다.")
     void draw() {

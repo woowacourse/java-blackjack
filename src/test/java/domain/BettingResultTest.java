@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BettingResultTest {
+    
     private Dealer dealer;
     private Players players;
 

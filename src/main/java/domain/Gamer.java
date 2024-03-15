@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public abstract class Gamer {
+    
     private final Hand hand;
 
     public Gamer() {

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class HandTest {
+    
     @Test
     @DisplayName("현재 패의 점수 합계를 반환한다.")
     void totalScore() {

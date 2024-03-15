@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
+    
     @Test
     @DisplayName("플레이어들은 플레이어 리스트로 생성 된다.")
     void createPlayers() {

@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public record Name(String name) {
+    
     private static final Pattern pattern = Pattern.compile("^[^가-힣a-zA-Z-_0-9].*$");
     private static final int MAX_NAME_LENGTH = 5;
 

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CardTest {
+    
     @Test
     @DisplayName("생성자의 인자가 null일 경우 예외를 발생시킨다.")
     void createCard() {
