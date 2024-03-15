@@ -33,8 +33,24 @@ public abstract class Participant {
         return hand.calculateScore().isBustScore();
     }
 
+    public boolean isNotBusted() {
+        return !hand.calculateScore().isBustScore();
+    }
+
     public boolean hasBlackJackHand() {
         return hand.isBlackJack();
+    }
+
+    public boolean hasNoBlackJackHand() {
+        return !hand.isBlackJack();
+    }
+
+    public boolean hasScoreAbove(Participant other) {
+        return this.calculateHandScore().isAbove(other.calculateHandScore());
+    }
+
+    public boolean hasSameScore(Participant other) {
+        return this.calculateHandScore().equals(other.calculateHandScore());
     }
 
     @Override
