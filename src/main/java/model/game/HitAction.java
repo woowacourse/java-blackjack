@@ -6,5 +6,5 @@ public interface HitAction {
 
     boolean isPossibleHit();
 
-    void hitCard(Card card);
+    void hit(Card card);
 }

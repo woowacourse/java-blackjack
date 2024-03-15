@@ -15,7 +15,7 @@ public abstract class Participant implements HitAction {
     }
 
     @Override
-    public void hitCard(Card card) {
+    public void hit(Card card) {
         cards = cards.add(card);
     }
 

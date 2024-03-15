@@ -36,7 +36,7 @@ class DealerTest {
     void testHitCard() {
         Dealer dealer = new Dealer();
         Card card = new Card(TWO, DIAMOND);
-        dealer.hitCard(card);
+        dealer.hit(card);
         assertThat(dealer.cardsSize()).isEqualTo(1);
     }
 

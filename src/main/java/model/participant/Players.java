@@ -6,7 +6,6 @@ import static java.util.stream.Collectors.toList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import model.card.Card;
 
 public class Players {
 
@@ -33,18 +32,13 @@ public class Players {
         }
     }
 
-    public void hitCard(int order, Card card) {
-        Player player = players.get(order);
-        player.hitCard(card);
-    }
-
     public List<String> names() {
         return players.stream()
             .map(Player::getName)
             .toList();
     }
 
-    public int count() {
+    public int size() {
         return players.size();
     }
 

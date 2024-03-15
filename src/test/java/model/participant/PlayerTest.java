@@ -36,7 +36,7 @@ class PlayerTest {
     void testHitCard() {
         Player player = Player.from("조조");
         Card card = new Card(TWO, DIAMOND);
-        player.hitCard(card);
+        player.hit(card);
         assertThat(player.cardsSize()).isEqualTo(1);
     }
 }
