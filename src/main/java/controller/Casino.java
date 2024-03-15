@@ -32,8 +32,7 @@ public class Casino {
         List<BettingMoney> bettingMoneyList = askBettingMoney(names);
         Dealer dealer = new Dealer(Cards.deck());
         dealer.shuffleCards();
-        BlackjackGame game = new BlackjackGame(dealer,
-                ParticipantMapper.namesAndBettingMoneyToPlayer(names, bettingMoneyList));
+        BlackjackGame game = new BlackjackGame(dealer, ParticipantMapper.namesAndBettingMoneyToPlayer(names, bettingMoneyList));
         game.setUp();
         playOf(game);
         resultOf(game);
@@ -42,9 +41,7 @@ public class Casino {
     private List<BettingMoney> askBettingMoney(Names names) {
         return names.playerNames()
                     .stream()
-                    .map(name -> new BettingMoney(
-                            inputView.askBettingMoney(
-                                    new NameDto(name.value()))))
+                    .map(name -> new BettingMoney(inputView.askBettingMoney(new NameDto(name.value()))))
                     .toList();
     }
 
@@ -54,7 +51,7 @@ public class Casino {
         resultView.printInitialCards(ParticipantMapper.participantAndCardToParticipantDto(dealer, dealer.peekCard()),
                 ParticipantMapper.playersToParticipantsDto(players));
         players.forEach(player -> askReceiveMoreCard(dealer, player));
-        if (dealer.canReceiveMoreCard()) {
+        while (dealer.canReceiveMoreCard()) {
             resultView.printDealerCardMessage(ParticipantMapper.participantToParticipantDto(dealer));
             game.handOutCards(dealer, 1);
         }
