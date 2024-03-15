@@ -1,6 +1,5 @@
 package blackjack;
 
-import blackjack.domain.Judge;
 import blackjack.domain.bet.BettingBank;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Hand;
@@ -8,7 +7,6 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
-import blackjack.domain.result.PlayerGameResult;
 import blackjack.domain.result.PlayerProfitResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -29,15 +27,13 @@ public class BlackJackGame {
         Players players = initPlayers(cardDeck);
         BettingBank bettingBank = inputView.readBetInformation(players);
         Dealer dealer = new Dealer(Hand.createHandFrom(cardDeck));
-        Judge judge = new Judge();
         outputView.printParticipantInitialHand(dealer, players);
 
         completePlayersHand(players, cardDeck);
         dealer.completeHand(cardDeck);
         outputView.printCompletedHandsStatus(dealer, players);
 
-        PlayerGameResult playerGameResult = judge.calculatePlayerGameResult(dealer, players);
-        PlayerProfitResult playerProfitResult = bettingBank.calculateProfitResult(playerGameResult);
+        PlayerProfitResult playerProfitResult = bettingBank.calculateProfitResult(dealer);
         outputView.printProfitResults(playerProfitResult);
     }
 
