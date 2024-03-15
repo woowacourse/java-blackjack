@@ -21,11 +21,13 @@ public class BlackjackGame {
     }
 
     public void start() {
+        Dealer dealer = Dealer.from(new RandomShuffleStrategy());
+        Players players = Players.from(inputView.readPlayerInfos());
 
         initializeGame(dealer, players);
         printCardDistribute(dealer, players);
         requestExtraCard(dealer, players);
-        Judge.judge(dealer, players);
+        new Judge().judge(dealer, players);
         outputView.printTotalProfit(BlackjackResult.of(dealer, players));
     }
 

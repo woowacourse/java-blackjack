@@ -3,17 +3,16 @@ package blackjack.domain;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
-public class Judge {
+public final class Judge {
 
-    private Judge() {
-    }
+    public Judge() {}
 
-    public static void judge(final Dealer dealer, final Players players) {
+    public void judge(final Dealer dealer, final Players players) {
         players.getPlayers()
                 .forEach(player -> judge(dealer, player));
     }
 
-    private static void judge(final Dealer dealer, final Player player) {
+    private void judge(final Dealer dealer, final Player player) {
         if (dealer.isBust()) {
             judgeWhenDealerBust(dealer, player);
             return;
@@ -27,7 +26,7 @@ public class Judge {
         judgeWhenDealerNormal(dealer, player);
     }
 
-    private static void judgeWhenDealerBust(final Dealer dealer, final Player player) {
+    private void judgeWhenDealerBust(final Dealer dealer, final Player player) {
         if (player.isBust()) {
             return;
         }
@@ -40,7 +39,7 @@ public class Judge {
         dealerLose(dealer, player);
     }
 
-    private static void judgeWhenDealerBlackjack(final Dealer dealer, final Player player) {
+    private void judgeWhenDealerBlackjack(final Dealer dealer, final Player player) {
         if (player.isBust()) {
             dealerWins(dealer, player);
             return;
@@ -53,7 +52,7 @@ public class Judge {
         dealerWins(dealer, player);
     }
 
-    private static void judgeWhenDealerNormal(final Dealer dealer, final Player player) {
+    private void judgeWhenDealerNormal(final Dealer dealer, final Player player) {
         if (player.isBust()) {
             dealerWins(dealer, player);
             return;
@@ -67,7 +66,7 @@ public class Judge {
         judgeWhenNormalTogether(dealer, player);
     }
 
-    private static void judgeWhenNormalTogether(final Dealer dealer, final Player player) {
+    private void judgeWhenNormalTogether(final Dealer dealer, final Player player) {
         if (dealer.isSameScore(player.getScore())) {
             return;
         }
@@ -80,11 +79,11 @@ public class Judge {
         dealerLose(dealer, player);
     }
 
-    private static void dealerWins(final Dealer dealer, final Player player) {
+    private void dealerWins(final Dealer dealer, final Player player) {
         player.lose(dealer.getDealerProfit());
     }
 
-    private static void dealerLose(final Dealer dealer, final Player player) {
+    private void dealerLose(final Dealer dealer, final Player player) {
         player.win(dealer.getDealerProfit());
     }
 }
