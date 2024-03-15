@@ -1,6 +1,6 @@
 package blackjack.domain.participants;
 
-public enum Victory {
+public enum Result {
     BLACKJACK_WIN(1.5F),
     WIN(1),
     TIE(0),
@@ -8,7 +8,7 @@ public enum Victory {
 
     private final float benefit;
 
-    Victory(float benefit) {
+    Result(float benefit) {
         this.benefit = benefit;
     }
 

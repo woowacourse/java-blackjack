@@ -7,7 +7,7 @@ import blackjack.domain.cards.Rank;
 import blackjack.domain.cards.Shape;
 import blackjack.domain.participants.GamblingMoney;
 import blackjack.domain.participants.PlayerStatus;
-import blackjack.domain.participants.Victory;
+import blackjack.domain.participants.Result;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,7 +56,7 @@ public class PlayerStatusTest {
         PlayerStatus playerStatus = new PlayerStatus();
         playerStatus.addMoney(new GamblingMoney(3000));
 
-        playerStatus.calculateBettingMoney(Victory.BLACKJACK_WIN.getBenefit());
+        playerStatus.calculateBettingMoney(Result.BLACKJACK_WIN.getBenefit());
 
         Assertions.assertThat(playerStatus.getGamblingMoney().getValue()).isEqualTo(4500);
     }
@@ -67,7 +67,7 @@ public class PlayerStatusTest {
         PlayerStatus playerStatus = new PlayerStatus();
         playerStatus.addMoney(new GamblingMoney(3000));
 
-        playerStatus.calculateBettingMoney(Victory.WIN.getBenefit());
+        playerStatus.calculateBettingMoney(Result.WIN.getBenefit());
 
         Assertions.assertThat(playerStatus.getGamblingMoney().getValue()).isEqualTo(3000);
     }
@@ -78,7 +78,7 @@ public class PlayerStatusTest {
         PlayerStatus playerStatus = new PlayerStatus();
         playerStatus.addMoney(new GamblingMoney(3000));
 
-        playerStatus.calculateBettingMoney(Victory.TIE.getBenefit());
+        playerStatus.calculateBettingMoney(Result.TIE.getBenefit());
 
         Assertions.assertThat(playerStatus.getGamblingMoney().getValue()).isEqualTo(0);
     }
@@ -89,7 +89,7 @@ public class PlayerStatusTest {
         PlayerStatus playerStatus = new PlayerStatus();
         playerStatus.addMoney(new GamblingMoney(3000));
 
-        playerStatus.calculateBettingMoney(Victory.LOSE.getBenefit());
+        playerStatus.calculateBettingMoney(Result.LOSE.getBenefit());
 
         Assertions.assertThat(playerStatus.getGamblingMoney().getValue()).isEqualTo(-3000);
     }

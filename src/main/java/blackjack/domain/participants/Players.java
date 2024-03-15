@@ -15,9 +15,9 @@ public class Players {
         this.players = players;
     }
 
-    public Map<Player, Victory> calculateVictory(int dealerScore, boolean isDealerBlackjack) {
-        Map<Player, Victory> result = new LinkedHashMap<>();
-        players.forEach(player -> result.put(player, player.checkVictory(dealerScore, isDealerBlackjack)));
+    public Map<Player, Result> calculateResult(int dealerScore, boolean isDealerBlackjack) {
+        Map<Player, Result> result = new LinkedHashMap<>();
+        players.forEach(player -> result.put(player, player.checkResult(dealerScore, isDealerBlackjack)));
         return result;
     }
 

@@ -24,38 +24,38 @@ public class Player {
         return playerStatus.calculateScore();
     }
 
-    public Victory checkVictory(int dealerScore, boolean isDealerBlackjack) {
-        return checkVictoryWhenBust(dealerScore, isDealerBlackjack);
+    public Result checkResult(int dealerScore, boolean isDealerBlackjack) {
+        return checkResultWhenBust(dealerScore, isDealerBlackjack);
     }
 
-    private Victory checkVictoryWhenBust(int dealerScore, boolean isDealerBlackjack) {
+    private Result checkResultWhenBust(int dealerScore, boolean isDealerBlackjack) {
         if (calculateScore() > BLACKJACK_SCORE) {
-            return Victory.LOSE;
+            return Result.LOSE;
         }
         if (dealerScore > BLACKJACK_SCORE) {
-            return Victory.WIN;
+            return Result.WIN;
         }
-        return checkVictoryWhenBlackjack(dealerScore, isDealerBlackjack);
+        return checkResultWhenBlackjack(dealerScore, isDealerBlackjack);
     }
 
-    private Victory checkVictoryWhenBlackjack(int dealerScore, boolean isDealerBlackjack) {
+    private Result checkResultWhenBlackjack(int dealerScore, boolean isDealerBlackjack) {
         if (isBlackjack() && isDealerBlackjack) {
-            return Victory.TIE;
+            return Result.TIE;
         }
         if (isBlackjack()) {
-            return Victory.BLACKJACK_WIN;
+            return Result.BLACKJACK_WIN;
         }
-        return checkVictoryWhenNormal(dealerScore);
+        return checkResultWhenNormal(dealerScore);
     }
 
-    private Victory checkVictoryWhenNormal(int dealerScore) {
+    private Result checkResultWhenNormal(int dealerScore) {
         if (calculateScore() < dealerScore) {
-            return Victory.LOSE;
+            return Result.LOSE;
         }
         if (calculateScore() > dealerScore) {
-            return Victory.WIN;
+            return Result.WIN;
         }
-        return Victory.TIE;
+        return Result.TIE;
     }
 
     public boolean isBlackjack() {
