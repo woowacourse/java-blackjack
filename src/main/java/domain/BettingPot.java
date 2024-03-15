@@ -24,12 +24,6 @@ public class BettingPot {
     }
 
     private int calculateAmount(Result result, int amount) {
-        if (result == Result.DEALER_WIN) {
-            return amount * -1;
-        }
-        if (result == Result.PLAYER_WIN) {
-            return amount * 2;
-        }
-        return amount;
+        return (int) (amount * result.getPlayerWinningRate());
     }
 }
