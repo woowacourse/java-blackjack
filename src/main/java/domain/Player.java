@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.List;
 import java.util.Objects;
 
 import static domain.Dealer.DEALER_NAME;
@@ -7,10 +8,15 @@ import static domain.Dealer.DEALER_NAME;
 public class Player extends Participant {
 
     static final int MAX_SCORE_TO_HIT = 21;
-    static final String DEALER_NAME_MESSAGE = "딜러라는 이름은 사용할 수 없습니다.";
+    static final String DEALER_NAME_MESSAGE = String.format("%s라는 이름은 사용할 수 없습니다.", DEALER_NAME);
 
     public Player(String name) {
         super(validateNameNotEqualToDealer(name));
+    }
+
+    Player(List<Card> cards) {
+        super("플레이어");
+        this.hand.add(cards);
     }
 
     private static String validateNameNotEqualToDealer(String name) {
