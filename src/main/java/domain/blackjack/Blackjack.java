@@ -42,6 +42,7 @@ public class Blackjack {
     }
 
     public boolean canPlayerHit(final String name) {
+
         return getPlayers().stream()
                 .filter(player -> player.getName().equals(name))
                 .anyMatch(Player::canHit);
