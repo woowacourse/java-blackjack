@@ -1,6 +1,5 @@
 package blackjack.domain.player;
 
-import blackjack.domain.dealer.Dealer;
 import blackjack.exception.NeedRetryException;
 import java.util.Collections;
 import java.util.List;

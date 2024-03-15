@@ -1,39 +1,43 @@
 package blackjack.domain.rule.state;
 
-import blackjack.domain.bet.BetLeverage;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 
-public abstract class State {
+public interface State {
 
-    public static final int START_CARD_COUNT = 2;
-    protected static final String ERROR_MESSAGE = "사용할 수 없는 기능입니다.";
+    State draw(Card card);
 
-    protected final Hands hands;
+    State stand();
 
-    protected State(final Hands hands) {
-        this.hands = hands;
-    }
+    Hands hands();
 
-    public abstract State draw(Card card);
+    State copy();
 
-    public abstract State stand();
-
-    public abstract BetLeverage calculateBetLeverage(State other);
-
-    public boolean isHit() {
+    default boolean isHit() {
         return false;
     }
 
-    public boolean isBlackjack() {
+    default boolean isBlackjack() {
         return false;
     }
 
-    public boolean isBust() {
+    default boolean isNotBlackjack() {
+        return !isBlackjack();
+    }
+
+    default boolean isBust() {
         return false;
     }
 
-    public Hands getHands() {
-        return hands;
+    default boolean isNotBust() {
+        return !isBust();
+    }
+
+    default boolean isFinish() {
+        return false;
+    }
+
+    default boolean isNotFinish() {
+        return !isFinish();
     }
 }

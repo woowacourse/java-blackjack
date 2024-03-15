@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public final class Hands implements Comparable<Hands> {
+public final class Hands {
 
     private static final Score ACE_SCORE_GAP = CardNumber.ACE.getScore().minus(CardNumber.ACE_BONUS_NUMBER);
 
@@ -56,17 +56,16 @@ public final class Hands implements Comparable<Hands> {
         return calculateScore().isBlackjack();
     }
 
+    public int size() {
+        return cards.size();
+    }
+
     public Card getFirstCard() {
         return cards.get(0);
     }
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
-    }
-
-    @Override
-    public int compareTo(final Hands o) {
-        return calculateScore().compareTo(o.calculateScore());
     }
 
     @Override

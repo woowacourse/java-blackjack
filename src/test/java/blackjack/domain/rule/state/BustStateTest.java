@@ -1,9 +1,7 @@
 package blackjack.domain.rule.state;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.bet.BetLeverage;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
@@ -27,22 +25,10 @@ class BustStateTest {
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 
-    @DisplayName("Burst 상태에서 stand하면 Burst 상태이다.")
+    @DisplayName("Burst 상태에서 stand할 수 없다..")
     @Test
     void stand() {
-        final State newState = state.stand();
-
-        assertThat(newState).isInstanceOf(BustState.class);
-    }
-
-    @DisplayName("Burst 상태에서 배팅 레버리지 상태는 LOSE이다.")
-    @Test
-    void calculateBetLeverage() {
-        final State dealerState = DealerHitState.start(Card.of(CardNumber.TWO, CardShape.SPADE),
-                Card.of(CardNumber.TWO, CardShape.DIA));
-
-        final BetLeverage betLeverage = state.calculateBetLeverage(dealerState);
-
-        assertThat(betLeverage).isEqualTo(BetLeverage.LOSE);
+        assertThatThrownBy(() -> state.stand())
+                .isInstanceOf(UnsupportedOperationException.class);
     }
 }

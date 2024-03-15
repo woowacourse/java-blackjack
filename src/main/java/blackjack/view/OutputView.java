@@ -1,12 +1,11 @@
 package blackjack.view;
 
+import blackjack.domain.bet.BetRevenue;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
-import blackjack.domain.dealer.Dealer;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.PlayerName;
-import blackjack.domain.bet.BetRevenue;
-import blackjack.domain.rule.state.DealerHitState;
-import blackjack.domain.rule.state.State;
+import blackjack.domain.rule.state.InitState;
 import blackjack.dto.BetRevenueResultDto;
 import blackjack.dto.FinalHandsScoreDto;
 import blackjack.dto.PlayerBetResultDto;
@@ -27,7 +26,7 @@ public class OutputView {
 
         System.out.printf("%n%s와 %s에게 %d장을 나누었습니다.%n", Dealer.DEALER_NAME,
                 String.join(DELIMITER, playersCards.stream().map(PlayerCardsDto::getName).toList()),
-                State.START_CARD_COUNT);
+                InitState.START_CARD_COUNT);
 
         System.out.printf("%s: %s%n", Dealer.DEALER_NAME, convertToCardsFormat(dealerHands));
 
@@ -89,7 +88,7 @@ public class OutputView {
 
     public void printDealerMoreCard(int count) {
         while (count-- > 0) {
-            System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.%n", Dealer.DEALER_NAME, DealerHitState.NEED_CARD_SCORE_MAX.toInt());
+            System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.%n", Dealer.DEALER_NAME, Dealer.NEED_CARD_SCORE_MAX.toInt());
         }
     }
 
