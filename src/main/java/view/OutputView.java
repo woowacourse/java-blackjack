@@ -2,8 +2,8 @@ package view;
 
 import domain.card.Card;
 import domain.money.PlayersMoney;
-import domain.user.Hand;
-import domain.user.Player;
+import domain.player.Hand;
+import domain.player.Player;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;

@@ -1,4 +1,4 @@
-package domain.user;
+package domain.player;
 
 import java.util.ArrayList;
 import java.util.List;

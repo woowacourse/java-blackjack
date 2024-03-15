@@ -1,4 +1,4 @@
-package domain.user;
+package domain.player;
 
 import static domain.card.Number.ACE;
 import static domain.card.Number.EIGHT;

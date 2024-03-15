@@ -1,8 +1,8 @@
 package domain.money;
 
 import domain.Deck;
-import domain.user.Hand;
-import domain.user.Player;
+import domain.player.Hand;
+import domain.player.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;

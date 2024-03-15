@@ -1,4 +1,4 @@
-package domain.user;
+package domain.player;
 
 import static domain.money.GameResult.LOSE;
 import static domain.money.GameResult.WIN;
