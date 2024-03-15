@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import blackjack.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CardHand {
@@ -50,6 +51,6 @@ public class CardHand {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 }
