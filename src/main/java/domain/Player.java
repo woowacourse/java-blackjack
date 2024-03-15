@@ -5,7 +5,7 @@ import domain.constant.GamerResult;
 public class Player extends Gamer {
 
     private static final String BLACKJACK_BONUS_RATIO = "1.5";
-
+    
     private final Name name;
     private final Money money;
 
@@ -35,8 +35,41 @@ public class Player extends Gamer {
         return money;
     }
 
-    private Money loseMoney() {
-        return money.negative();
+    public GamerResult judge(Dealer opponent) {
+        return judgeBust(opponent);
+    }
+
+    private GamerResult judgeBust(Dealer opponent) {
+        if (this.isBust()) {
+            return GamerResult.LOSE;
+        }
+        if (opponent.isBust()) {
+            return GamerResult.WIN;
+        }
+        return judgeBlackJack(opponent);
+    }
+
+    private GamerResult judgeBlackJack(Dealer opponent) {
+        if (this.isBlackJack() && opponent.isBlackJack()) {
+            return GamerResult.DRAW;
+        }
+        if (this.isBlackJack()) {
+            return GamerResult.WIN;
+        }
+        if (opponent.isBlackJack()) {
+            return GamerResult.LOSE;
+        }
+        return judgeScore(opponent);
+    }
+
+    private GamerResult judgeScore(Dealer opponent) {
+        if (this.getTotalScore() > opponent.getTotalScore()) {
+            return GamerResult.WIN;
+        }
+        if (this.getTotalScore() < opponent.getTotalScore()) {
+            return GamerResult.LOSE;
+        }
+        return GamerResult.DRAW;
     }
 
     private Money gainMoney() {
@@ -44,6 +77,10 @@ public class Player extends Gamer {
             return money.multiply(BLACKJACK_BONUS_RATIO);
         }
         return money;
+    }
+
+    private Money loseMoney() {
+        return money.negative();
     }
 
     public boolean hasName(Name comparedName) {

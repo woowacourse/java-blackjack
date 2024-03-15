@@ -17,7 +17,7 @@ public class BettingResult {
 
     private Money calculateDealerResult(Dealer dealer, Players players) {
         return players.getPlayers().stream()
-                .filter(player -> GamerResult.DRAW != dealer.judge(player))
+                .filter(player -> GamerResult.DRAW != player.judge(dealer))
                 .map(player -> player.bet(dealer))
                 .map(Money::negative)
                 .reduce(Money.ZERO, Money::add);

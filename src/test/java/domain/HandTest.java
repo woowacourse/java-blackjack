@@ -2,13 +2,12 @@ package domain;
 
 import domain.constant.CardNumber;
 import domain.constant.CardType;
-import domain.constant.GamerResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class HandTest {
-    
+
     @Test
     @DisplayName("현재 패의 점수 합계를 반환한다.")
     void totalScore() {
@@ -51,19 +50,5 @@ public class HandTest {
         hand.add(new Card(CardType.DIAMOND, CardNumber.TEN));
         Assertions.assertThat(hand.getResultScore())
                 .isEqualTo(22);
-    }
-
-    @Test
-    @DisplayName("둘 다 블랙젝 점수일 경우 카드가 적은 쪽이 이긴다.")
-    void blackJackAlwaysWin() {
-        Hand hand = new Hand();
-        hand.add(new Card(CardType.DIAMOND, CardNumber.ACE));
-        hand.add(new Card(CardType.DIAMOND, CardNumber.KING));
-        Hand opponent = new Hand();
-        opponent.add(new Card(CardType.DIAMOND, CardNumber.TEN));
-        opponent.add(new Card(CardType.DIAMOND, CardNumber.TEN));
-        opponent.add(new Card(CardType.DIAMOND, CardNumber.ACE));
-        Assertions.assertThat(hand.judge(opponent))
-                .isEqualTo(GamerResult.WIN);
     }
 }

@@ -1,7 +1,6 @@
 package domain;
 
 import domain.constant.CardNumber;
-import domain.constant.GamerResult;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,45 +29,8 @@ public class Hand {
         return getResultScore() > BUST_THRESHOLD;
     }
 
-    public GamerResult judge(Hand opponent) {
-        return judgeBust(opponent);
-    }
-
-    private GamerResult judgeBust(Hand opponent) {
-        if (this.isBust()) {
-            return GamerResult.LOSE;
-        }
-        if (opponent.isBust()) {
-            return GamerResult.WIN;
-        }
-        return judgeBlackJack(opponent);
-    }
-
-    private GamerResult judgeBlackJack(Hand opponent) {
-        if (this.isBlackJack() && opponent.isBlackJack()) {
-            return GamerResult.DRAW;
-        }
-        if (this.isBlackJack()) {
-            return GamerResult.WIN;
-        }
-        if (opponent.isBlackJack()) {
-            return GamerResult.LOSE;
-        }
-        return judgeScore(opponent);
-    }
-
     public boolean isBlackJack() {
         return this.getResultScore() == BUST_THRESHOLD && cards.size() == INITIAL_CARD_COUNT;
-    }
-
-    private GamerResult judgeScore(Hand opponent) {
-        if (this.getResultScore() > opponent.getResultScore()) {
-            return GamerResult.WIN;
-        }
-        if (this.getResultScore() < opponent.getResultScore()) {
-            return GamerResult.LOSE;
-        }
-        return GamerResult.DRAW;
     }
 
     public int getResultScore() {

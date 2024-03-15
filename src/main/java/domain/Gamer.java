@@ -1,6 +1,5 @@
 package domain;
 
-import domain.constant.GamerResult;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -30,10 +29,6 @@ public abstract class Gamer {
 
     public boolean isBlackJack() {
         return hand.isBlackJack();
-    }
-
-    public GamerResult judge(Gamer opponent) {
-        return this.hand.judge(opponent.hand);
     }
 
     public List<Card> getCards() {
