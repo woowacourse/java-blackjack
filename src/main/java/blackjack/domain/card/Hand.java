@@ -46,11 +46,9 @@ public class Hand {
     }
 
     public Score calculateScore() {
-        int aceCount = countAce();
         int sum = calculateCardSummation();
-        while (aceCount > 0 && (sum + ACE_WEIGHT) <= BUST_THRESHOLD) {
+        if (hasAce() && (sum + ACE_WEIGHT) <= BUST_THRESHOLD) {
             sum += ACE_WEIGHT;
-            aceCount--;
         }
         return new Score(sum);
     }
