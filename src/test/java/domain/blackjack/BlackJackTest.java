@@ -38,8 +38,9 @@ class BlackJackTest {
     @Test
     void play() {
         Player playTest1 = new Player(new Name("playTest1"), new BetAmount(1000));
-        playTest1.receiveCard(new Card(Shape.CLOVER, Rank.ACE));
-        playTest1.receiveCard(new Card(Shape.SPADE, Rank.TEN));
+        playTest1.receiveCard(new Card(Shape.CLOVER, Rank.TEN));
+        playTest1.receiveCard(new Card(Shape.SPADE, Rank.NINE));
+        playTest1.receiveCard(new Card(Shape.SPADE, Rank.TWO));
         Players players = new Players(List.of(
                 playTest1,
                 new Player(new Name("playTest2"), new BetAmount(1000))
@@ -56,6 +57,6 @@ class BlackJackTest {
 
         blackJack.play(testFunction, participantDto -> {});
 
-        assertThat(players.getValue().get(0).getCardCount()).isEqualTo(3);
+        assertThat(players.getValue().get(0).getCardCount()).isEqualTo(4);
     }
 }
