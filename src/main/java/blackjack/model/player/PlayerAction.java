@@ -1,17 +1,17 @@
 package blackjack.model.player;
 
-public enum isHit {
+public enum PlayerAction {
     HIT,
     STAND;
 
-    public static isHit from(final boolean askContinuance) {
+    public static PlayerAction from(final boolean askContinuance) {
         if (askContinuance) {
             return HIT;
         }
         return STAND;
     }
 
-    public boolean isAsked() {
+    public boolean isHit() {
         return this.equals(HIT);
     }
 
