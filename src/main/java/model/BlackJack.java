@@ -80,7 +80,7 @@ public class BlackJack {
     }
 
     public Double getDealerProfit() {
-        return participants.calculateDealerProfit(dealer); //todo dealer의 profit인데 participants에서 가져오는 것이 어색함
+        return participants.sumAllParticipantProfit(dealer) * -1.0;
     }
 
     public Map<Participant, Double> getParticipantProfits() {

@@ -49,9 +49,9 @@ public class Participants {
                 .map(participant -> participant.name).toList();
     }
 
-    public Double calculateDealerProfit(Dealer dealer) {
+    public Double sumAllParticipantProfit(Dealer dealer) {
         return participants.stream()
-                .mapToDouble(participant -> participant.calculateProfit(dealer) * -1.0)
+                .mapToDouble(participant -> participant.calculateProfit(dealer))
                 .sum();
     }
 

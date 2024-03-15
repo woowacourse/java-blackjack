@@ -83,7 +83,7 @@ class ParticipantsTest {
                 List.of(new Card(CardShape.CLOVER, CardNumber.TEN),
                         new Card(CardShape.DIAMOND, CardNumber.TEN)));
 
-        Double dealerProfit = participants.calculateDealerProfit(dealerScore20);
+        Double dealerProfit = participants.sumAllParticipantProfit(dealerScore20);
 
         assertThat(dealerProfit).isEqualTo(-100.0);
     }
@@ -107,7 +107,7 @@ class ParticipantsTest {
                 List.of(new Card(CardShape.CLOVER, CardNumber.TEN),
                         new Card(CardShape.DIAMOND, CardNumber.TEN)));
 
-        Double dealerProfit = participants.calculateDealerProfit(dealerScore20);
+        Double dealerProfit = participants.sumAllParticipantProfit(dealerScore20);
 
         assertThat(dealerProfit).isEqualTo(100.0);
     }
