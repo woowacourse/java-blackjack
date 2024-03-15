@@ -1,11 +1,9 @@
 package blackjack.controller;
 
-import blackjack.domain.BettingResult;
 import blackjack.domain.BettingResultDtos;
 import blackjack.domain.BettingResults;
 import blackjack.domain.PlayerBettings;
 import blackjack.domain.participant.Players;
-import blackjack.domain.result.WinningResult;
 import blackjack.dto.CardDto;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantScoresDto;
@@ -24,8 +22,8 @@ public class BlackjackController {
     }
 
     public void runBlackjack() {
-        Players players = createPlayers();
-        PlayerBettings playerBettings = createBettings(players);
+        final Players players = createPlayers();
+        final PlayerBettings playerBettings = createBettings(players);
 
         final BlackjackGame blackjackGame = readyGame(players);
 
@@ -110,12 +108,8 @@ public class BlackjackController {
         final ParticipantScoresDto participantScoresDto = ParticipantScoresDto.of(blackjackGame.getHandResult(),
                 blackjackGame.getScoreResult());
 
-        final WinningResult winningResult = blackjackGame.getWinningResult(); // 딜러 처리 빼든지
-
-        BettingResults bettingResults = BettingResults.of(playerBettings, winningResult);
-        BettingResult dealerResult = bettingResults.getDealerResult();
-        BettingResultDtos bettingResultDtos = BettingResultDtos.of(bettingResults, dealerResult);
-//        final WinningResultDto winningResultDto = WinningResultDto.of(winningResult.getParticipantsResult(), winningResult.summarizeDealerResult());
+        final BettingResults bettingResults = BettingResults.of(playerBettings, blackjackGame.getWinningResult());
+        final BettingResultDtos bettingResultDtos = BettingResultDtos.of(bettingResults);
 
         outputView.printFinalResult(participantScoresDto, bettingResultDtos);
     }
