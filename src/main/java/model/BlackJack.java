@@ -22,6 +22,7 @@ public class BlackJack {
     public BlackJack(Participants participants, Dealer dealer, CardDeck cardDeck) {
         validateParticipantIsNotNull(participants);
         validateDealerIsNotNull(dealer);
+
         this.participants = participants;
         this.dealer = dealer;
         this.cardDeck = cardDeck;

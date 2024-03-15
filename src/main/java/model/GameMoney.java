@@ -1,9 +1,6 @@
 package model;
 
 public class GameMoney {
-
-    private static final double BLACKJACK_RATE = 1.5;
-    private static final double WIN_RATE = 1;
     private static final double LOSE_RATE = -1;
     private static final double DRAW_RATE = 0;
 
@@ -21,15 +18,12 @@ public class GameMoney {
     }
 
     public int calculateRevenue(Outcome outcome, BlackJackState blackJackState) {
-        if(blackJackState == BlackJackState.BLACKJACK && outcome == Outcome.WIN) {
-            return (int) (value * BLACKJACK_RATE);
-        }
-        if(outcome == Outcome.WIN) {
-            return (int) (value * WIN_RATE);
-        }
         if(outcome == Outcome.LOSE) {
             return (int) (value * LOSE_RATE);
         }
-        return (int) (value * DRAW_RATE);
+        if(outcome == Outcome.DRAW) {
+            return (int) (value * DRAW_RATE);
+        }
+        return blackJackState.calculateBattingRatio(value);
     }
 }
