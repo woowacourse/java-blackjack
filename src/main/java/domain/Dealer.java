@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer extends Participant {
-    public static final int DEALER_HIT_THRESHOLD = 17;
+    private static final int DEALER_HIT_THRESHOLD = 17;
     private static final String DEALER_NAME = "딜러";
 
     private final Deck deck;

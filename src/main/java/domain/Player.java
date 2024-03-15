@@ -5,7 +5,7 @@ import domain.state.Ready;
 import domain.state.State;
 
 public class Player extends Participant {
-    public Player(final Name name, final State state) {
+    private Player(final Name name, final State state) {
         super(name, state);
         validateName(name);
     }
