@@ -1,13 +1,13 @@
 package blackjack.domain.bet;
 
-public class Money {
+public class BetAmout {
 
     private static final int MAX = 1_000_000_000;
-    private static final int MIN = 0;
+    private static final int MIN = 1_000;
 
     private final int amount;
 
-    public Money(int amount) {
+    public BetAmout(int amount) {
         validateRange(amount);
         this.amount = amount;
     }
@@ -18,7 +18,7 @@ public class Money {
 
     private void validateRange(int amount) {
         if (amount < MIN || MAX < amount) {
-            throw new IllegalArgumentException("[ERROR] 금액은 " + MIN + "부터 " + MAX + "이하까지 가능합니다.");
+            throw new IllegalArgumentException("[ERROR] 베팅 금액은 " + MIN + "부터 " + MAX + "이하까지 가능합니다.");
         }
     }
 }

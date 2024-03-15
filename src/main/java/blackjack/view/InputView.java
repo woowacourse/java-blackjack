@@ -2,8 +2,8 @@ package blackjack.view;
 
 import blackjack.InputMapper;
 import blackjack.domain.DrawDecision;
+import blackjack.domain.bet.BetAmout;
 import blackjack.domain.bet.BettingBank;
-import blackjack.domain.bet.Money;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
@@ -38,8 +38,8 @@ public class InputView {
                 .collect(Collectors.toMap(player -> player, this::readBetAmount)));
     }
 
-    public Money readBetAmount(Player player) {
+    public BetAmout readBetAmount(Player player) {
         System.out.println(String.format("%s의 배팅 금액은?", player.getName()));
-        return new Money(Integer.parseInt(scanner.nextLine()));
+        return new BetAmout(Integer.parseInt(scanner.nextLine()));
     }
 }

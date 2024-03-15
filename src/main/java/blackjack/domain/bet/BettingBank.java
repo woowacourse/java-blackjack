@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 
 public class BettingBank {
 
-    private final Map<Player, Money> playerMoneyMap;
+    private final Map<Player, BetAmout> playerMoneyMap;
 
-    public BettingBank(Map<Player, Money> playerMoneyMap) {
+    public BettingBank(Map<Player, BetAmout> playerMoneyMap) {
         this.playerMoneyMap = playerMoneyMap;
     }
 
@@ -24,7 +24,7 @@ public class BettingBank {
 
     private Profit calculatePlayerProfit(Player player, PlayerGameResult playerGameResult) {
         GameResult gameResultOfPlayer = playerGameResult.findGameResultOfPlayer(player);
-        Money betOfPlayer = playerMoneyMap.get(player);
+        BetAmout betOfPlayer = playerMoneyMap.get(player);
         return betOfPlayer.calculateProfit(gameResultOfPlayer.getProfitLeverage());
     }
 }

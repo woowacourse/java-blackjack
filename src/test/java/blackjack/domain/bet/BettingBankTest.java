@@ -24,9 +24,9 @@ class BettingBankTest {
         Player player1 = TestPlayerCreator.of("리비", 1, 10);
         Player player2 = TestPlayerCreator.of("썬", 3, 4, 5, 6);
 
-        Map<Player, Money> playerMoneyMap = new HashMap<>();
-        playerMoneyMap.put(player1, new Money(1000));
-        playerMoneyMap.put(player2, new Money(1000));
+        Map<Player, BetAmout> playerMoneyMap = new HashMap<>();
+        playerMoneyMap.put(player1, new BetAmout(1000));
+        playerMoneyMap.put(player2, new BetAmout(1000));
         BettingBank bettingBank = new BettingBank(playerMoneyMap);
 
         Map<Player, GameResult> playerGameResultMap = new HashMap<>();
