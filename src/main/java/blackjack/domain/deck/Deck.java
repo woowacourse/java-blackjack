@@ -1,6 +1,7 @@
 package blackjack.domain.deck;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
@@ -8,6 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Deck {
+
+    private static final int INITIAL_CARD_COUNT = 2;
 
     private static final List<Card> CACHE_DECK = Arrays.stream(Kind.values())
             .flatMap(kind -> Arrays.stream(Value.values())
@@ -23,6 +26,14 @@ public class Deck {
     public static Deck createShuffledDeck() {
         Collections.shuffle(CACHE_DECK);
         return new Deck(new ArrayDeque<>(CACHE_DECK));
+    }
+
+    public List<Card> drawInitialCards() {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+            cards.add(draw());
+        }
+        return cards;
     }
 
     public Card draw() {

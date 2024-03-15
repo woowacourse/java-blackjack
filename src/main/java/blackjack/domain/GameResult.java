@@ -1,7 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.participant.BetMoney;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Hands;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.LinkedHashMap;
@@ -22,43 +22,28 @@ public class GameResult {
     private static Map<Player, Result> makeGameResult(Dealer dealer, Players players) {
         Map<Player, Result> gameResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            gameResult.put(player, judgeResult(dealer.getHands(), player.getHands()));
+            gameResult.put(player, Result.of(dealer, player));
         }
         return gameResult;
     }
 
-    private static Result judgeResult(Hands dealerHands, Hands playerHands) {
-        if ((dealerHands.isBust() && playerHands.isBust())
-                || (playerHands.isSameScore(dealerHands))) {
-            return Result.DRAW;
-        }
-        if (playerHands.isBlackJack()) {
-            return Result.BLACK_JACK;
-        }
-        if (dealerHands.isBust()
-                || ((playerHands.isHigherScore(dealerHands)) && !playerHands.isBust())) {
-            return Result.WIN;
-        }
-        return Result.LOSE;
-    }
-
-    public long getTargetResultCount(Result targetResult) {
+    public long findTargetResultCount(Result targetResult) {
         return gameResult.values()
                 .stream()
                 .filter(result -> result == targetResult)
                 .count();
     }
 
-    public long getPlayerResult(Player player) {
+    public long calculatePlayerProfit(Player player, BetMoney betMoney) {
         Result playerResult = gameResult.get(player);
-        return playerResult.findBetProfit(player.getBetMoney());
+        return playerResult.findBetProfit(betMoney);
     }
 
-    public long getDealerProfit() {
-        int totalPlayerProfit = 0;
+    public long calculateDealerProfit(BetManager betManager) {
+        long totalPlayerProfit = 0;
         for (Player player : gameResult.keySet()) {
-            Result playerResult = gameResult.get(player);
-            totalPlayerProfit += playerResult.findBetProfit(player.getBetMoney());
+            BetMoney betMoney = betManager.findPlayerBetMoney(player);
+            totalPlayerProfit += calculatePlayerProfit(player, betMoney);
         }
         return -totalPlayerProfit;
     }

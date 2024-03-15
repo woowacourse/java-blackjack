@@ -1,6 +1,9 @@
 package blackjack.domain;
 
 import blackjack.domain.participant.BetMoney;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Hands;
+import blackjack.domain.participant.Player;
 import java.util.function.Function;
 
 public enum Result {
@@ -18,6 +21,31 @@ public enum Result {
     Result(String result, Function<BetMoney, Integer> profitFormula) {
         this.result = result;
         this.profitFormula = profitFormula;
+    }
+
+    public static Result of(Dealer dealer, Player player) {
+        Hands dealerHands = dealer.getHands();
+        Hands playerHands = player.getHands();
+        if (isDraw(dealerHands, playerHands)) {
+            return Result.DRAW;
+        }
+        if (playerHands.isBlackJack()) {
+            return Result.BLACK_JACK;
+        }
+        if (isWin(dealerHands, playerHands)) {
+            return Result.WIN;
+        }
+        return Result.LOSE;
+    }
+
+    private static boolean isDraw(Hands dealerHands, Hands playerHands) {
+        return (dealerHands.isBust() && playerHands.isBust())
+                || (playerHands.isSameScore(dealerHands));
+    }
+
+    private static boolean isWin(Hands dealerHands, Hands playerHands) {
+        return dealerHands.isBust()
+                || ((playerHands.isHigherScore(dealerHands)) && !playerHands.isBust());
     }
 
     public static Result reverseResult(Result result) {

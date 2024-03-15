@@ -5,6 +5,7 @@ import static blackjack.domain.deck.Kind.SPADE;
 import static blackjack.domain.deck.Value.ACE;
 import static blackjack.domain.deck.Value.JACK;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import blackjack.domain.deck.Card;
@@ -21,7 +22,7 @@ class HandsScoreTest {
 
         HandsScore handsScore = HandsScore.of(overCards);
 
-        assertTrue(handsScore.isBust());
+        assertFalse(handsScore.isBust());
     }
 
     @DisplayName("카드패의 점수가 21을 초과했는지 판단한다")

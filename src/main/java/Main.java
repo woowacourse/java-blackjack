@@ -1,9 +1,9 @@
-import blackjack.controller.GameMachine;
+import blackjack.controller.BlackJackGameBoard;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            GameMachine.run();
+            BlackJackGameBoard.startGame();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {

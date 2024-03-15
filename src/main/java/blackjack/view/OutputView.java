@@ -1,8 +1,10 @@
 package blackjack.view;
 
+import blackjack.domain.BetManager;
 import blackjack.domain.GameResult;
 import blackjack.domain.Result;
 import blackjack.domain.deck.Card;
+import blackjack.domain.participant.BetMoney;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -74,11 +76,13 @@ public class OutputView {
         printPlayerGameResult(gameResult.getGameResult());
     }
 
-    public static void printProfitResult(Dealer dealer, Players players, GameResult gameResult) {
+    public static void printProfitResult(Dealer dealer, Players players, GameResult gameResult, BetManager betManager) {
         System.out.println(FINAL_PROFIT_RESULT_MESSAGE);
-        System.out.printf(FINAL_PROFIT_RESULT_FORMAT, dealer.getName(), gameResult.getDealerProfit());
+        System.out.printf(FINAL_PROFIT_RESULT_FORMAT, dealer.getName(), gameResult.calculateDealerProfit(betManager));
         for (Player player : players.getPlayers()) {
-            System.out.printf(FINAL_PROFIT_RESULT_FORMAT, player.getName(), gameResult.getPlayerResult(player));
+            BetMoney betMoney = betManager.findPlayerBetMoney(player);
+            System.out.printf(FINAL_PROFIT_RESULT_FORMAT, player.getName(),
+                    gameResult.calculatePlayerProfit(player, betMoney));
         }
     }
 
@@ -123,7 +127,7 @@ public class OutputView {
     }
 
     private static String resolveDealerResultMessage(GameResult gameResult, Result result) {
-        long cnt = gameResult.getTargetResultCount(Result.reverseResult(result));
+        long cnt = gameResult.findTargetResultCount(Result.reverseResult(result));
         if (cnt == 0) {
             return "";
         }

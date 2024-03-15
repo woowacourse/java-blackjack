@@ -1,8 +1,8 @@
 package blackjack.controller;
 
+import blackjack.domain.BetManager;
 import blackjack.domain.Game;
 import blackjack.domain.GameResult;
-import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.BetMoney;
 import blackjack.domain.participant.Dealer;
@@ -12,29 +12,40 @@ import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class GameMachine {
+public class BlackJackGameBoard {
 
-    private static final int INITIAL_CARD_COUNT = 2;
-
-    private GameMachine() {
+    private BlackJackGameBoard() {
     }
 
-    public static void run() {
+    public static void startGame() {
         Deck deck = Deck.createShuffledDeck();
         Game game = makeGame(deck);
         Dealer gameDealer = game.getDealer();
         Players gamePlayers = game.getPlayers();
+        BetManager betManager = readPlayersBetMoney(gamePlayers);
 
         printInitialHands(gameDealer, gamePlayers);
 
         confirmParticipantsHands(gameDealer, gamePlayers, deck);
 
         OutputView.printFinalHandsAndScoreMessage(gameDealer, gamePlayers);
+
         GameResult gameResult = game.makeGameResult();
         OutputView.printGameResult(gameDealer, gameResult);
-        OutputView.printProfitResult(gameDealer, gamePlayers, gameResult);
+        OutputView.printProfitResult(gameDealer, gamePlayers, gameResult, betManager);
+    }
+
+    private static BetManager readPlayersBetMoney(Players players) {
+        Map<Player, BetMoney> betMoneys = new HashMap<>();
+        for (Player player : players.getPlayers()) {
+            BetMoney betMoney = new BetMoney(InputView.readBetMoney(player.getName()));
+            betMoneys.put(player, betMoney);
+        }
+        return new BetManager(betMoneys);
     }
 
     private static Game makeGame(Deck deck) {
@@ -43,36 +54,27 @@ public class GameMachine {
         List<String> playerNames = InputView.readNames();
         Players players = createPlayers(playerNames, deck);
 
-        Dealer dealer = Dealer.createDealerWithCards(drawInitialCards(deck));
+        Dealer dealer = Dealer.createDealerWithCards(deck.drawInitialCards());
         return new Game(dealer, players);
-    }
-
-    private static List<Card> drawInitialCards(Deck deck) {
-        List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
-            cards.add(deck.draw());
-        }
-        return cards;
     }
 
     private static Players createPlayers(List<String> playerNames, Deck deck) {
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            BetMoney betMoney = new BetMoney(InputView.readBetAmount(playerName));
-            Player player = Player.createPlayer(new Name(playerName), drawInitialCards(deck), betMoney);
+            Player player = Player.createPlayer(new Name(playerName), deck.drawInitialCards());
             players.add(player);
         }
         return new Players(players);
     }
 
-    private static void confirmParticipantsHands(Dealer dealer, Players players, Deck deck) {
-        askDrawUntilConfirmHands(players, deck);
-        confirmDealerHands(dealer, deck);
-    }
-
     private static void printInitialHands(Dealer dealer, Players players) {
         OutputView.printDrawInitialHandsMessage(dealer, players);
         OutputView.printParticipantsInitialHands(dealer, players);
+    }
+
+    private static void confirmParticipantsHands(Dealer dealer, Players players, Deck deck) {
+        askDrawUntilConfirmHands(players, deck);
+        confirmDealerHands(dealer, deck);
     }
 
     private static void confirmDealerHands(Dealer dealer, Deck deck) {
@@ -86,11 +88,9 @@ public class GameMachine {
     }
 
     private static void askDrawToPlayer(Player player, Deck deck) {
-        boolean isBust = false;
-        while (player.canDraw() && !isBust) {
+        while (player.canDraw() && !player.isBust()) {
             OutputView.printAskDrawMessage(player.getName());
             player.draw(InputView::askDraw, deck);
-            isBust = !player.isBust();
             OutputView.printPlayerHands(player);
         }
     }

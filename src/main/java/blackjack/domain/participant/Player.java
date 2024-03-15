@@ -8,20 +8,18 @@ import java.util.function.BooleanSupplier;
 public class Player {
     private final Name name;
     private final Hands hands;
-    private final BetMoney betMoney;
 
-    private Player(Name name, Hands hands, BetMoney betMoney) {
+    private Player(Name name, Hands hands) {
         this.name = name;
         this.hands = hands;
-        this.betMoney = betMoney;
     }
 
-    public static Player createPlayer(Name name, List<Card> initialCards, BetMoney betMoney) {
+    public static Player createPlayer(Name name, List<Card> initialCards) {
         Hands initialHands = new Hands();
         for (Card card : initialCards) {
             initialHands.addCard(card);
         }
-        return new Player(name, initialHands, betMoney);
+        return new Player(name, initialHands);
     }
 
     public void draw(BooleanSupplier supplier, Deck deck) {
@@ -44,10 +42,6 @@ public class Player {
 
     public Hands getHands() {
         return hands;
-    }
-
-    public BetMoney getBetMoney() {
-        return betMoney;
     }
 
     public int findHandsScore() {

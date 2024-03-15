@@ -31,7 +31,7 @@ public class InputView {
                 + REJECT_DRAW_MESSAGE + "만 가능합니다");
     }
 
-    public static int readBetAmount(String playerName) {
+    public static int readBetMoney(String playerName) {
         System.out.println(System.lineSeparator() + playerName + "의 배팅 금액은?");
         String line = scanner.nextLine();
         try {

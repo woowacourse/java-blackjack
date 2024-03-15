@@ -19,8 +19,7 @@ class PlayerTest {
         Deck deck = Deck.createShuffledDeck();
         Player testPlayer = Player.createPlayer(new Name("pobi"),
                 List.of(new Card(SPADE, ACE),
-                        new Card(SPADE, TWO)),
-                new BetMoney(1));
+                        new Card(SPADE, TWO)));
 
         testPlayer.draw(() -> Boolean.TRUE, deck);
 
@@ -33,8 +32,7 @@ class PlayerTest {
         Deck deck = Deck.createShuffledDeck();
         Player testPlayer = Player.createPlayer(new Name("pobi"),
                 List.of(new Card(SPADE, ACE),
-                        new Card(SPADE, TWO)),
-                new BetMoney(1));
+                        new Card(SPADE, TWO)));
 
         testPlayer.draw(() -> Boolean.FALSE, deck);
 

@@ -30,8 +30,7 @@ class PlayersTest {
                 limit(9)
                 .map((input) -> Player.createPlayer(new Name(input.toString()),
                         List.of(new Card(SPADE, ACE),
-                                new Card(SPADE, JACK)),
-                        new BetMoney(input))).toList();
+                                new Card(SPADE, JACK)))).toList();
         assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임 참여자는 최소 1명에서 최대 8명까지 가능합니다");
