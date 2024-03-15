@@ -3,8 +3,8 @@ package view;
 import static domain.constants.Outcome.WIN;
 
 import controller.dto.InitialCardStatus;
-import controller.dto.JudgeResult;
 import controller.dto.ParticipantHandStatus;
+import controller.dto.ParticipantProfitResponse;
 import controller.dto.PlayerOutcome;
 import domain.card.Card;
 import domain.constants.Outcome;
@@ -87,14 +87,14 @@ public class OutputView {
                 .toList();
     }
 
-    public void printJudgeResult(final JudgeResult judgeResult) {
+    public void printParticipantProfitResponse(final List<ParticipantProfitResponse> responses) {
         System.out.printf(JUDGE_RESULT_MESSAGE);
 
-        int winnersCount = judgeResult.winnerCount();
-        int losersCount = judgeResult.results().size() - winnersCount;
+        int winnersCount = responses.winnerCount();
+        int losersCount = responses.results().size() - winnersCount;
         System.out.printf(JUDGE_DEALER_RESULT_FORMAT, Dealer.DEALER_NAME, losersCount, winnersCount);
 
-        for (PlayerOutcome result : judgeResult.results()) {
+        for (PlayerOutcome result : responses.results()) {
             System.out.printf(
                     JUDGE_PLAYER_RESULT_FORMAT,
                     result.name(),

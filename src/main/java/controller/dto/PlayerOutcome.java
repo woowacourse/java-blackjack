@@ -1,9 +1,10 @@
 package controller.dto;
 
 import domain.constants.Outcome;
+import domain.participant.Player;
 
 public record PlayerOutcome(
-        String name,
+        Player player,
         Outcome outcome
 ) {
 }
