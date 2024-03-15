@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.dto.BlackjackResult;
-import blackjack.dto.PlayerProfit;
+import blackjack.dto.PlayerProfitResult;
 import java.util.List;
 
 public class OutputView {
@@ -80,7 +80,7 @@ public class OutputView {
         System.out.printf(PROFIT_FORMAT, "딜러", dealerProfit);
     }
 
-    private void printProfit(final List<PlayerProfit> playerProfits) {
+    private void printProfit(final List<PlayerProfitResult> playerProfits) {
         playerProfits.forEach(
                 playerProfit -> System.out.printf(PROFIT_FORMAT, playerProfit.name(), playerProfit.profit()));
     }
