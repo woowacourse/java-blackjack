@@ -1,27 +1,14 @@
 package blackjack.domain.gameresult;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.game.GameBattings;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.hands.Name;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
-import static blackjack.domain.card.CardKind.SPADE;
-import static blackjack.domain.card.CardNumber.ACE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class GameResultTest {
     @DisplayName("GameResult는 딜러의 수익 합산을 반환한다")

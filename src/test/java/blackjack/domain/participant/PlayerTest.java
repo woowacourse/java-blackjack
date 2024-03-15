@@ -22,7 +22,6 @@ class PlayerTest {
 
     @DisplayName("플레이어가 버스트가 아니라면, 한장을 더 받을 수 있다")
     @Test
-    
     void should_getFinishedState_When_PlayerBust() {
         Player testPlayer = new Player("pobi");
         testPlayer.addCard(new Card(SPADE, JACK));

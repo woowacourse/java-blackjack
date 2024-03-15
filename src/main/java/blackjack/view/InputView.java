@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.gameresult.Batting;
+import blackjack.domain.gameresult.Betting;
 
 import java.util.List;
 import java.util.Scanner;
@@ -23,10 +23,10 @@ public class InputView {
                 .toList();
     }
 
-    public static Batting readBatting(String playerName) {
+    public static Betting readBatting(String playerName) {
         System.out.println(playerName + "의 배팅금액은?");
         try {
-            return Batting.from(Double.parseDouble(scanner.nextLine()));
+            return Betting.from(Double.parseDouble(scanner.nextLine()));
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("배팅 금액은 실수의 숫자로만 입력할 수 있습니다");
         }

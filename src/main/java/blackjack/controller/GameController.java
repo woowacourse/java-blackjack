@@ -3,9 +3,9 @@ package blackjack.controller;
 import blackjack.domain.card.Card;
 import blackjack.domain.game.Deck;
 import blackjack.domain.game.Game;
-import blackjack.domain.game.GameBattings;
+import blackjack.domain.game.GameBettings;
 import blackjack.domain.game.GameParticipants;
-import blackjack.domain.gameresult.Batting;
+import blackjack.domain.gameresult.Betting;
 import blackjack.domain.gameresult.GameResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -38,8 +38,8 @@ public class GameController {
     private static Game makeGame(Deck deck) {
         try {
             Players players = makePlayers();
-            GameBattings gameBattings = makeGameBattings(players.getPlayers());
-            return Game.of(GameParticipants.of(players), gameBattings, deck);
+            GameBettings gameBettings = makeGameBattings(players.getPlayers());
+            return Game.of(GameParticipants.of(players), gameBettings, deck);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             makeGame(deck);
@@ -52,12 +52,12 @@ public class GameController {
         return new Players(InputView.readNames());
     }
 
-    private static GameBattings makeGameBattings(List<Player> players) {
-        Map<Player, Batting> gameBattings = new LinkedHashMap<>();
+    private static GameBettings makeGameBattings(List<Player> players) {
+        Map<Player, Betting> gameBattings = new LinkedHashMap<>();
         for (Player player : players) {
             gameBattings.put(player, InputView.readBatting(player.getName()));
         }
-        return new GameBattings(gameBattings);
+        return new GameBettings(gameBattings);
     }
 
     private static void confirmParticipantsHands(Players players, Deck deck, Dealer dealer) {

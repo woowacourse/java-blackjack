@@ -5,5 +5,4 @@ public enum CardKind {
     DIAMOND,
     HEART,
     CLOVER,
-    ;
 }

@@ -11,16 +11,16 @@ import java.util.Map;
 public class Game {
 
     private final GameParticipants gameParticipants;
-    private final GameBattings gameBattings;
+    private final GameBettings gameBettings;
 
-    public Game(GameParticipants gameParticipants, GameBattings gameBattings) {
+    public Game(GameParticipants gameParticipants, GameBettings gameBettings) {
         this.gameParticipants = gameParticipants;
-        this.gameBattings = gameBattings;
+        this.gameBettings = gameBettings;
     }
 
-    public static Game of(GameParticipants gameParticipants, GameBattings gameBattings, Deck deck) {
+    public static Game of(GameParticipants gameParticipants, GameBettings gameBettings, Deck deck) {
         gameParticipants.handOutInitialCards(deck);
-        return new Game(gameParticipants, gameBattings);
+        return new Game(gameParticipants, gameBettings);
     }
 
     public Map<Player, Profit> makeGameResult() {
@@ -37,8 +37,8 @@ public class Game {
 
     private Profit calculateProfit(Dealer dealer, Player player) {
         Result result = ResultJudge.judge(player, dealer);
-        Batting playerBat = gameBattings.findPlayerBatting(player);
-        double profit = ProfitRate.calculateProfit(result, playerBat.getBat());
+        Betting playerBat = gameBettings.findPlayerBatting(player);
+        double profit = ProfitRate.calculateProfit(result, playerBat.getBet());
         return Profit.from(profit);
     }
 
