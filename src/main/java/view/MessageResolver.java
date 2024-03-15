@@ -1,5 +1,6 @@
 package view;
 
+import domain.betting.Money;
 import domain.card.Card;
 import domain.card.Score;
 import domain.card.Symbol;
@@ -79,10 +80,10 @@ public class MessageResolver {
     }
 
     public String playerResultText(Player player, PlayerResults playerResults) {
-        return String.format("%s: %s", player.getName(), winLoseText(playerResults.playerWinLose(player)));
+        return String.format("%s: %s", player.getName(), playerResultText(playerResults.playerWinLose(player)));
     }
 
-    private String winLoseText(PlayerResult playerResult) {
+    private String playerResultText(PlayerResult playerResult) {
         if (playerResult == PlayerResult.WIN) {
             return WIN_TEXT;
         }
@@ -92,6 +93,13 @@ public class MessageResolver {
         if (playerResult == PlayerResult.LOSE) {
             return LOSE_TEXT;
         }
+        if (playerResult == PlayerResult.BLACKJACK) {
+            return "블랙잭";
+        }
         throw new IllegalArgumentException("[ERROR] 존재하지 않는 WinLose입니다.");
+    }
+
+    public String moneyText(Money money) {
+        return String.valueOf(money.toInt());
     }
 }

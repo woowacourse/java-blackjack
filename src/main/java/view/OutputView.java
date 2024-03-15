@@ -1,5 +1,6 @@
 package view;
 
+import domain.betting.Money;
 import domain.card.Card;
 import domain.card.Score;
 import domain.game.BlackjackGame;
@@ -68,5 +69,10 @@ public class OutputView {
         for (Player player : game.getPlayers()) {
             System.out.println(resolver.playerResultText(player, playerResults));
         }
+    }
+
+    public void printPlayerNameAndProfit(String name, Money money) {
+        System.out.println("## 최종 결과");
+        System.out.printf("%s: %s%n", name, resolver.moneyText(money));
     }
 }

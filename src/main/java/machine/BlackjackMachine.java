@@ -1,5 +1,6 @@
 package machine;
 
+import domain.betting.Account;
 import domain.betting.Money;
 import domain.game.BlackjackGame;
 import domain.game.PlayerResults;
@@ -22,13 +23,16 @@ public class BlackjackMachine {
     }
 
     public void run() {
+        // TODO: game이랑 machine 합쳐 보기 -- 현재는 인스턴스 변수 4개로 요구사항 위반
         BlackjackGame game = initializeGame();
         readBetAmount(game);
         distributeStartingCards(game);
         playPlayerTurns(game);
         playDealerTurn(game);
+        distributeProfitMoney(game);
         printCardsAndScores(game);
         printResult(game);
+        printProfits(game);
     }
 
     private void readBetAmount(BlackjackGame game) {
@@ -82,12 +86,29 @@ public class BlackjackMachine {
         }
     }
 
+    private void distributeProfitMoney(BlackjackGame game) {
+        PlayerResults playerResults = PlayerResults.of(game.getPlayers(), game.getDealer());
+        for (Player player : game.getPlayers()) {
+            Account account = game.getAccounts().findByPlayer(player);
+            Money profitMoney = account.balance().profitMoney(playerResults.playerWinLose(player));
+            account.setMoney(profitMoney);
+        }
+    }
+
     private void printCardsAndScores(BlackjackGame game) {
         outputView.printFinalCardsAndScoresOfAllParticipants(game);
     }
 
     private void printResult(BlackjackGame game) {
+        // TODO: 게임 결과 산출이 한 번만 진행되도록 수정하기
         PlayerResults playerResults = PlayerResults.of(game.getPlayers(), game.getDealer());
         outputView.printWinLoseOfAllParticipants(game, playerResults);
+    }
+
+    private void printProfits(BlackjackGame game) {
+        for (Player player : game.getPlayers()) {
+            Money money = game.getAccounts().findByPlayer(player).balance(); // TODO: 상금 클래스 따로 만들기?
+            outputView.printPlayerNameAndProfit(player.getName(), money);
+        }
     }
 }

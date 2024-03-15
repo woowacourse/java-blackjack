@@ -27,4 +27,9 @@ public class Account {
     public Player getPlayer() {
         return player;
     }
+
+    // TODO: setter 제거 -> 수익금에 대한 클래스 따로 만들기
+    public void setMoney(Money money) {
+        this.money = money;
+    }
 }
