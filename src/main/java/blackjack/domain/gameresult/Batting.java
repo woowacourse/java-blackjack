@@ -17,10 +17,6 @@ public class Batting {
         return new Batting(bat);
     }
 
-    public static int maxBat() {
-        return MAX_BAT;
-    }
-
     private static void validateBat(double bat) {
         if (bat < MIN_BAT || bat > MAX_BAT) {
             throw new IllegalArgumentException("배팅은 최소 " + MIN_BAT + "부터 "
