@@ -5,6 +5,7 @@ import java.util.List;
 public abstract class Participant {
 
     protected static final int BLACK_JACK_SCORE = 21;
+    protected static final int BLACK_JACK_CARD_SIZE = 2;
 
     protected final Name name;
     protected final Hand hand;
@@ -26,6 +27,10 @@ public abstract class Participant {
 
     public boolean isBust() {
         return getTotalScore() > BLACK_JACK_SCORE;
+    }
+
+    public boolean isBlackJack() {
+        return getTotalScore() == BLACK_JACK_SCORE && hand.getSize() == BLACK_JACK_CARD_SIZE;
     }
 
     public int getTotalScore() {

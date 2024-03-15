@@ -44,6 +44,10 @@ public class Hand {
         return sum > 21 && aceCount > 0;
     }
 
+    public int getSize() {
+        return this.cards.size();
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
