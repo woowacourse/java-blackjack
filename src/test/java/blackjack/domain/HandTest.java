@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import static blackjack.fixture.CardFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("카드 손패")
 public class HandTest {
@@ -27,10 +28,10 @@ public class HandTest {
     @DisplayName("패에 카드를 추가한다.")
     @Test
     void addCard() {
-        //when
+        // when
         hand.add(cardFourSpade, cardFiveSpade);
 
-        //then
+        // then
         assertThat(hand.getCards())
                 .contains(cardFourSpade, cardFiveSpade);
     }
@@ -38,27 +39,33 @@ public class HandTest {
     @DisplayName("패에 있는 카드들의 점수를 반환한다.")
     @Test
     void calculateScore() {
-        //when
+        // given
         hand.add(cardFourSpade, cardFiveSpade);
 
-        //then
-        assertThat(hand.calculateScore()).isEqualTo(9);
+        // when
+        long actual = hand.calculateScore();
+
+        // then
+        assertThat(actual).isEqualTo(9);
     }
 
     @DisplayName("패에 있는 첫 번째 카드를 반환한다.")
     @Test
     void getFirstHandCard() {
-        //when
+        // given
         hand.add(cardFourSpade, cardFiveSpade);
 
-        //then
-        assertThat(hand.getFirstCard()).isEqualTo(new Card(Rank.FOUR, Suit.SPADE));
+        // when
+        Card actual = hand.getFirstCard();
+
+        // then
+        assertThat(actual).isEqualTo(new Card(Rank.FOUR, Suit.SPADE));
     }
 
     @DisplayName("패가 비어있으면 첫 번째 카드 반환 시도 시 예외가 발생한다.")
     @Test
     void getFirstHandCardException() {
-        //when & then
+        // when & then
         assertThatThrownBy(() -> hand.getFirstCard())
                 .isInstanceOf(IllegalStateException.class);
     }
@@ -66,13 +73,12 @@ public class HandTest {
     @DisplayName("에이스가 포함된 패의 점수를 반환한다.")
     @Test
     void calculateScoreWithAce() {
-        //given
+        // given
         Card cardAceClover = aceCloverCard();
         Card cardAceDiamond = aceDiamondCard();
         Card cardAceSpade = aceSpadeCard();
         Card cardKingSpade = kingSpadeCard();
 
-        //when
         Hand hand1 = new Hand();
         hand1.add(cardAceClover, cardAceDiamond);
 
@@ -82,29 +88,36 @@ public class HandTest {
         Hand hand3 = new Hand();
         hand3.add(cardKingSpade, cardFourSpade, cardAceClover, cardAceDiamond, cardAceSpade);
 
-        //then
-        assertThat(hand1.calculateScore()).isEqualTo(12);
-        assertThat(hand2.calculateScore()).isEqualTo(17);
-        assertThat(hand3.calculateScore()).isEqualTo(17);
+        // when
+        long actual1 = hand1.calculateScore();
+        long actual2 = hand2.calculateScore();
+        long actual3 = hand3.calculateScore();
+
+        // then
+        assertAll(
+                () -> assertThat(actual1).isEqualTo(12),
+                () -> assertThat(actual2).isEqualTo(17),
+                () -> assertThat(actual3).isEqualTo(17)
+        );
     }
 
     @DisplayName("카드 패의 버스트 여부를 반환한다.")
     @Test
     void isBust() {
-        //given
+        // given
         hand.add(threeSpadeCard(), kingSpadeCard(), cardFourSpade, fiveSpadeCard());
 
-        //when & then
+        // when & then
         assertThat(hand.isBust()).isTrue();
     }
 
     @DisplayName("카드 패의 블랙잭 여부를 반환한다.")
     @Test
     void isBlackjack() {
-        //given
+        // given
         hand.add(kingSpadeCard(), aceCloverCard());
 
-        //when & then
+        // when & then
         assertThat(hand.isBlackjack()).isTrue();
     }
 }

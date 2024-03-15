@@ -22,7 +22,6 @@ public class PlayersTest {
 
     private final ShuffleStrategy shuffleStrategy = new NoShuffleStrategy();
 
-    private Deck deck;
     private Dealer dealer;
     private Players players;
     private final String nameA = "choco";
@@ -31,7 +30,7 @@ public class PlayersTest {
 
     @BeforeEach
     void setUp() {
-        deck = new Deck(shuffleStrategy);
+        Deck deck = new Deck(shuffleStrategy);
         dealer = new Dealer(deck);
         players = Players.of(List.of(nameA, nameB), dealer);
     }
@@ -39,10 +38,10 @@ public class PlayersTest {
     @DisplayName("플레이어 이름이 중복되면 예외가 발생한다.")
     @Test
     void validateDuplicatedNames() {
-        //given
+        // given
         List<String> names = List.of("choco", "choco", "chip");
 
-        //when & then
+        // when & then
         assertThatThrownBy(() -> Players.validate(names))
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -50,7 +49,7 @@ public class PlayersTest {
     @DisplayName("플레이어들의 승패를 토대로 수익률을 계산한다.")
     @Test
     void calculateProfits() {
-        //given
+        // given
         Player choco = players.getPlayers().get(0);
         choco.draw(dealer);
         Player clover = players.getPlayers().get(1);
@@ -58,9 +57,10 @@ public class PlayersTest {
         Map<Player, Betting> betting = new HashMap<>();
         betting.put(players.getPlayers().get(0), new Betting(bettingAmount));
         betting.put(players.getPlayers().get(1), new Betting(bettingAmount));
+
         BettingTable bettingTable = new BettingTable(betting);
 
-        //when & then
+        // when & then
         assertAll(
                 () -> assertThat(players.createProfitResult(dealer, bettingTable).findByPlayer(choco)).isEqualTo(BigDecimal.valueOf(1000)),
                 () -> assertThat(players.createProfitResult(dealer, bettingTable).findByPlayer(clover)).isEqualTo(BigDecimal.valueOf(-1000))

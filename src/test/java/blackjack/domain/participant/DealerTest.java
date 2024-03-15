@@ -38,39 +38,39 @@ public class DealerTest {
     @DisplayName("딜러는 한 장을 뽑아서 손패에 넣는다.")
     @Test
     void drawExtraCard() {
-        //when
+        // when
         dealer.drawExtraCard();
 
-        //then
+        // then
         assertThat(dealer.getHandCards()).contains(cardAceSpade);
     }
 
     @DisplayName("딜러는 16점 이상이면 더 이상 카드를 받지 않는다.")
     @Test
     void cantDrawExtraCard() {
-        //given
+        // given
         for (int i = 0; i < 4; i++) {
             dealer.drawExtraCard();
         }
 
-        //when
+        // when
         dealer.drawExtraCard();
 
-        //then
+        // then
         assertThat(dealer.getScore()).isEqualTo(20L);
     }
 
     @DisplayName("딜러의 첫번째 카드를 공개한다.")
     @Test
     void showFirstCard() {
-        //when & then
+        // when & then
         assertThat(dealer.showFirstCard()).isEqualTo(cardAceSpade);
     }
 
     @DisplayName("딜러는 자신의 수익률을 계산한다.")
     @Test
     void calculateProfit() {
-        //given
+        // given
         Players players = Players.of(List.of("choco", "clover"), dealer);
         players.getPlayers().get(1).draw(dealer);
 
@@ -81,7 +81,10 @@ public class DealerTest {
         BettingTable bettingTable = new BettingTable(betting);
         ProfitResult profitResult = players.createProfitResult(dealer, bettingTable);
 
-        //when & then
-        assertThat(dealer.calculateProfit(profitResult)).isEqualTo(BigDecimal.valueOf(400000));
+        // when
+        BigDecimal actual = dealer.calculateProfit(profitResult);
+
+        // then
+        assertThat(actual).isEqualTo(BigDecimal.valueOf(400000));
     }
 }

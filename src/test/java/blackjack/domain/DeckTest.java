@@ -27,22 +27,25 @@ public class DeckTest {
     @DisplayName("카드 뭉치의 첫 번째 카드를 반환한다.")
     @Test
     void draw() {
-        //given
+        // given
         Card cardAceSpade = aceSpadeCard();
 
-        //when & then
-        assertThat(deck.draw()).isEqualTo(cardAceSpade);
+        // when
+        Card actual = deck.draw();
+
+        // then
+        assertThat(actual).isEqualTo(cardAceSpade);
     }
 
     @DisplayName("카드 뭉치에 반환할 카드가 없으면 예외가 발생한다.")
     @Test
     void drawException() {
-        //given
+        // given
         for (int i = 0; i < Suit.values().length * Rank.values().length; i++) {
             deck.draw();
         }
 
-        //when & then
+        // when & then
         assertThatThrownBy(() -> deck.draw())
                 .isInstanceOf(IllegalStateException.class);
     }

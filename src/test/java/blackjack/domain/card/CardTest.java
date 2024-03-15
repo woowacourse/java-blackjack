@@ -12,14 +12,14 @@ public class CardTest {
     @DisplayName("숫자와 기호를 가진 카드 조회에 성공한다.")
     @Test
     void createCard() {
-        //given
+        // given
         Rank rank = Rank.FOUR;
         Suit suit = Suit.CLOVER;
 
-        //when
+        // when
         Card card = new Card(rank, suit);
 
-        //then
+        // then
         assertAll(
                 () -> assertThat(card.getRank()).isEqualTo(rank),
                 () -> assertThat(card.getSuit()).isEqualTo(suit)

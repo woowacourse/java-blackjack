@@ -18,15 +18,15 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class PlayerTest {
 
     private final ShuffleStrategy shuffleStrategy = new NoShuffleStrategy();
-    private Deck deck;
     private Dealer dealer;
     private Player choco;
     private Player clover;
 
     @BeforeEach
     void setUp() {
-        deck = new Deck(shuffleStrategy);
+        Deck deck = new Deck(shuffleStrategy);
         dealer = new Dealer(deck);
+
         choco = playerChoco(dealer);
         clover = playerClover(dealer);
     }
@@ -34,10 +34,10 @@ public class PlayerTest {
     @DisplayName("사용자의 이름이 형식에 맞지 않으면 예외가 발생한다.")
     @Test
     void validateName() {
-        //given
+        // given
         String name = "noValidName123";
 
-        //when & then
+        // when & then
         assertThatThrownBy(() -> new Player(name, dealer))
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -48,7 +48,7 @@ public class PlayerTest {
         // when
         choco.draw(dealer);
 
-        //then
+        // then
         assertThat(choco.canReceiveCard()).isTrue();
     }
 
@@ -60,20 +60,20 @@ public class PlayerTest {
             clover.draw(dealer);
         }
 
-        //then
+        // then
         assertThat(clover.canReceiveCard()).isFalse();
     }
 
     @DisplayName("플레이어는 한 장을 뽑아서 손패에 넣는다.")
     @Test
     void draw() {
-        //given
+        // given
         Card card = threeSpadeCard();
 
-        //when
+        // when
         choco.draw(dealer);
 
-        //then
+        // then
         assertThat(choco.getHandCards()).contains(card);
     }
 }

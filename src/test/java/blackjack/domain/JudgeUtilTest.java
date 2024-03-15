@@ -3,7 +3,6 @@ package blackjack.domain;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.stategy.NoShuffleStrategy;
-import blackjack.dto.ProfitResult;
 import blackjack.strategy.shuffle.ShuffleStrategy;
 import blackjack.util.JudgeUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +24,6 @@ class JudgeUtilTest {
     private final List<String> playerNames = List.of("choco");
     private Players players;
     private Player choco;
-    private ProfitResult profitResult;
 
     @DisplayName("딜러가 버스트된 경우")
     @Nested
@@ -38,22 +36,20 @@ class JudgeUtilTest {
 
             dealer = new Dealer(deck);
             bustDealer();
-
-            profitResult = new ProfitResult();
         }
 
         @DisplayName("플레이어가 버스트된 상황은 딜러는 무승부로 판단한다.")
         @Test
         void drawWhenBustTogether() {
-            //given
+            // given
             players = Players.of(playerNames, dealer);
             choco = players.getPlayers().get(0);
 
-            //when
+            // when
             bustPlayerChoco(dealer);
             GameResult gameResult = JudgeUtil.judge(dealer, choco);
 
-            //then
+            // then
             assertThat(isDraw(gameResult))
                     .isTrue();
         }
@@ -61,16 +57,16 @@ class JudgeUtilTest {
         @DisplayName("플레이어가 블랙잭인 경우 딜러가 패배한다.")
         @Test
         void loseWhenPlayerBlackjack() {
-            //given
+            // given
             deckDrawLoop(3);
 
             players = Players.of(playerNames, dealer);
             choco = players.getPlayers().get(0);
 
-            //when
+            // when
             GameResult gameResult = JudgeUtil.judge(dealer, choco);
 
-            //then
+            // then
             assertThat(isPlayerResultBlackjackWin(gameResult))
                     .isTrue();
         }
@@ -78,14 +74,14 @@ class JudgeUtilTest {
         @DisplayName("플레이어가 일반 카드인 경우 딜러가 패배한다.")
         @Test
         void loseWhenPlayerNormal() {
-            //given
+            // given
             players = Players.of(playerNames, dealer);
             choco = players.getPlayers().get(0);
 
-            //when
+            // when
             GameResult gameResult = JudgeUtil.judge(dealer, choco);
 
-            //then
+            // then
             assertThat(isPlayerResultWin(gameResult))
                     .isTrue();
         }
@@ -101,22 +97,20 @@ class JudgeUtilTest {
             deckDrawLoop(12);
 
             dealer = new Dealer(deck);
-            profitResult = new ProfitResult();
         }
 
         @DisplayName("플레이어가 버스트되면 딜러가 승리한다.")
         @Test
         void winWhenPlayerBust() {
-            //given
+            // given
             players = Players.of(playerNames, dealer);
             choco = players.getPlayers().get(0);
 
-            //when
-
+            // when
             bustPlayerChoco(dealer);
             GameResult gameResult = JudgeUtil.judge(dealer, choco);
 
-            //then
+            // then
             assertThat(isPlayerResultLose(gameResult))
                     .isTrue();
         }
@@ -161,21 +155,20 @@ class JudgeUtilTest {
         void setUp() {
             deck = new Deck(shuffleStrategy);
             dealer = new Dealer(deck);
-            profitResult = new ProfitResult();
         }
 
         @DisplayName("플레이어가 버스트되면 딜러가 승리한다.")
         @Test
         void winWhenPlayerBust() {
-            //given
+            // given
             players = Players.of(playerNames, dealer);
             choco = players.getPlayers().get(0);
 
-            //when
+            // when
             bustPlayerChoco(dealer);
             GameResult gameResult = JudgeUtil.judge(dealer, choco);
 
-            //then
+            // then
             assertThat(isPlayerResultLose(gameResult))
                     .isTrue();
         }
@@ -183,16 +176,16 @@ class JudgeUtilTest {
         @DisplayName("플레이어가 블랙잭이면 딜러가 패배한다.")
         @Test
         void loseWhenPlayerBlackjack() {
-            //given
+            // given
             deckDrawLoop(10);
 
             players = Players.of(playerNames, dealer);
             choco = players.getPlayers().get(0);
 
-            //when
+            // when
             GameResult gameResult = JudgeUtil.judge(dealer, choco);
 
-            //then
+            // then
             assertThat(isPlayerResultBlackjackWin(gameResult))
                     .isTrue();
         }
@@ -200,14 +193,14 @@ class JudgeUtilTest {
         @DisplayName("플레이어가 일반이면 딜러 카드가 클 경우 딜러가 승리한다.")
         @Test
         void winWhenPlayerNormalWithSmallerScore() {
-            //given
+            // given
             players = Players.of(playerNames, dealer);
             choco = players.getPlayers().get(0);
 
-            //when
+            // when
             GameResult gameResult = JudgeUtil.judge(dealer, choco);
 
-            //then
+            // then
             assertThat(isPlayerResultLose(gameResult))
                     .isTrue();
         }
@@ -215,15 +208,15 @@ class JudgeUtilTest {
         @DisplayName("플레이어가 일반이면 딜러 카드가 작을 경우 딜러가 패배한다.")
         @Test
         void loseWhenPlayerNormalWithBiggerScore() {
-            //given
+            // given
             deckDrawLoop(5);
             players = Players.of(playerNames, dealer);
             choco = players.getPlayers().get(0);
 
-            //when
+            // when
             GameResult gameResult = JudgeUtil.judge(dealer, choco);
 
-            //then
+            // then
             assertThat(isPlayerResultWin(gameResult))
                     .isTrue();
         }
@@ -231,15 +224,15 @@ class JudgeUtilTest {
         @DisplayName("플레이어와 점수가 같을 경우 딜러는 무승부로 판정한다.")
         @Test
         void drawWhenPlayerNormalWithSameScore() {
-            //given
+            // given
             deckDrawLoop(3);
             players = Players.of(playerNames, dealer);
             choco = players.getPlayers().get(0);
 
-            //when
+            // when
             GameResult gameResult = JudgeUtil.judge(dealer, choco);
 
-            //then
+            // then
             assertThat(isDraw(gameResult))
                     .isTrue();
         }

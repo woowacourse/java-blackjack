@@ -32,24 +32,27 @@ class ProfitResultTest {
     @DisplayName("모든 사용자의 수익을 합해서 반환한다.")
     @Test
     void sumProfits() {
-        //given
+        // given
         ProfitResult profitResult = new ProfitResult();
         profitResult.addProfitResult(choco, new BigDecimal(1000));
         profitResult.addProfitResult(clover, new BigDecimal(1000));
 
-        //when & then
-        assertThat(profitResult.sumAllProfit()).isEqualTo(new BigDecimal(2000));
+        // when
+        BigDecimal actual = profitResult.sumAllProfit();
+
+        // when & then
+        assertThat(actual).isEqualTo(new BigDecimal(2000));
     }
 
     @DisplayName("존재하지 않는 사용자로 조회하면 예외가 발생한다.")
     @Test
     void findByPlayer() {
-        //given
+        // given
         ProfitResult profitResult = new ProfitResult();
         profitResult.addProfitResult(choco, new BigDecimal(1000));
         profitResult.addProfitResult(clover, new BigDecimal(1000));
 
-        //when & then
+        // when & then
         assertThatThrownBy(() -> profitResult.findByPlayer(new Player("nope", dealer)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
