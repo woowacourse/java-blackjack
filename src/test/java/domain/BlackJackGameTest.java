@@ -23,8 +23,8 @@ public class BlackJackGameTest {
 
         Dealer dealer = game.getGamers().getDealer();
         List<Player> players = game.getGamers().getPlayers();
-        assertThat(dealer.getHand()).hasSize(2);
-        players.forEach(player -> assertThat(player.getHand()).hasSize(2));
+        assertThat(dealer.getCards()).hasSize(2);
+        players.forEach(player -> assertThat(player.getCards()).hasSize(2));
     }
 
     @DisplayName("플레이어가 카드를 더 받을 경우 플레이어의 카드 수는 1 증가한다.")
@@ -40,7 +40,7 @@ public class BlackJackGameTest {
         boolean isHit = game.hitByPlayer(HitOption.HIT, player);
 
         assertThat(isHit).isTrue();
-        assertThat(player.getHand()).hasSize(3 + 1);
+        assertThat(player.getCards()).hasSize(3 + 1);
     }
 
     @DisplayName("딜러가 카드를 더 받을 경우 딜러의 카드 수는 1 증가한다.")
@@ -55,6 +55,6 @@ public class BlackJackGameTest {
 
         game.hitByDealer(dealer);
 
-        assertThat(dealer.getHand()).hasSize(3 + 1);
+        assertThat(dealer.getCards()).hasSize(3 + 1);
     }
 }

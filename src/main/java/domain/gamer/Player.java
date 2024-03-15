@@ -50,7 +50,7 @@ public class Player {
         return name.getValue();
     }
 
-    public List<Card> getHand() {
+    public List<Card> getCards() {
         return Collections.unmodifiableList(hand.getCards());
     }
 

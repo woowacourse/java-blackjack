@@ -18,7 +18,7 @@ public class PlayerTest {
         Card newCard = new Card(CardNumber.FIVE, CardShape.CLOVER);
         player.hit(newCard);
 
-        assertThat(player.getHand()).contains(newCard);
+        assertThat(player.getCards()).contains(newCard);
     }
 
     @DisplayName("패배(Bust)하지 않는 상황인지 알려준다.")

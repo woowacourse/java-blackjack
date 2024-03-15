@@ -54,7 +54,7 @@ public class ResultView {
 
     private String resolvePlayerCards(Player player) {
         String playerName = player.getPlayerName();
-        List<Card> playerCards = player.getHand();
+        List<Card> playerCards = player.getCards();
         List<String> playerCardsExpression = playerCards.stream()
                 .map(this::resolveCardExpression)
                 .toList();
