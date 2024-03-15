@@ -12,6 +12,7 @@ import mapper.ParticipantMapper;
 import view.BlackJackGameCommand;
 import view.InputView;
 import view.ResultView;
+import view.dto.participant.NameDto;
 import vo.BettingMoney;
 
 import java.util.List;
@@ -28,13 +29,21 @@ public class Casino {
 
     public void open() {
         Names names = NameMapper.namesDtoToNames(inputView.askPlayerNames());
-        // TODO
-        List<BettingMoney> bettingMoneyList = List.of();
+        List<BettingMoney> bettingMoneyList = askBettingMoney(names);
         BlackjackGame game = new BlackjackGame(new Dealer(Cards.deck()),
                 ParticipantMapper.namesAndBettingMoneyToPlayer(names, bettingMoneyList));
         game.setUp();
         playOf(game);
         resultOf(game);
+    }
+
+    private List<BettingMoney> askBettingMoney(Names names) {
+        return names.playerNames()
+                    .stream()
+                    .map(name -> new BettingMoney(
+                            inputView.askBettingMoney(
+                                    new NameDto(name.value()))))
+                    .toList();
     }
 
     private void playOf(final BlackjackGame game) {
@@ -53,7 +62,7 @@ public class Casino {
         if (!player.canReceiveMoreCard()) {
             return;
         }
-        BlackJackGameCommand command = inputView.askMoreCard(ParticipantMapper.participantToParticipantDto(player));
+        BlackJackGameCommand command = inputView.askMoreCard(NameMapper.playerToNameDto(player));
         if (command.yes()) {
             dealer.deal(player);
             resultView.printParticipantHand(ParticipantMapper.participantToParticipantDto(player));
