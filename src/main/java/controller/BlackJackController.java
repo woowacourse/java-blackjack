@@ -25,7 +25,7 @@ public class BlackJackController {
 
     public void start() {
         Dealer dealer = new Dealer();
-        Players players =  retryHandler.retry(this::createPlayers);
+        Players players = retryHandler.retry(this::createPlayers);
         BlackJackGame blackJackGame = createBlackJackGame();
         startBet(players, blackJackGame);
         blackJackGame.prepareCards(dealer, players);
@@ -44,7 +44,7 @@ public class BlackJackController {
 
     private BlackJackGame createBlackJackGame() {
         ShuffledCardsGenerator shuffledCardsGenerator = new ShuffledCardsGenerator();
-        Deck deck = Deck.from(shuffledCardsGenerator.generate());
+        Deck deck = Deck.combine(shuffledCardsGenerator.generate());
         BetAmounts betAmounts = new BetAmounts();
         return new BlackJackGame(deck, betAmounts);
     }
@@ -77,18 +77,18 @@ public class BlackJackController {
         if (!retryHandler.retry(() -> InputView.readSelectionOf(player))) {
             return false;
         }
-        return tryGiveCard(blackJackGame, player);
+        return canGive(blackJackGame, player);
     }
 
     private void askDealerHit(final BlackJackGame blackJackGame, final Dealer dealer) {
         OutputView.printNewLine();
-        while (tryGiveCard(blackJackGame, dealer)) {
+        while (canGive(blackJackGame, dealer)) {
             OutputView.printDealerHit(dealer);
         }
         OutputView.printNewLine();
     }
 
-    private boolean tryGiveCard(final BlackJackGame blackJackGame, final Gamer gamer) {
+    private boolean canGive(final BlackJackGame blackJackGame, final Gamer gamer) {
         try {
             blackJackGame.giveCard(gamer);
             return true;
