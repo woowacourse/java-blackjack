@@ -15,4 +15,9 @@ public class PlayerProfitResult {
     public Profit findProfitOfPlayer(Player player) {
         return playerProfitMap.get(player);
     }
+
+    public Profit calculateTotalProfit() {
+        return playerProfitMap.values().stream()
+                .reduce(new Profit(0), Profit::add);
+    }
 }

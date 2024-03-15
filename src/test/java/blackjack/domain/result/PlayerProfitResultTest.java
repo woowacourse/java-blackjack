@@ -26,4 +26,18 @@ class PlayerProfitResultTest {
 
         assertThat(playerProfitResult.findProfitOfPlayer(player1)).isEqualTo(new Profit(30));
     }
+
+    @DisplayName("전체 플레이어들의 수익을 총합계산할 수 있다")
+    @Test
+    void testCalculateTotalProfit() {
+        Player player1 = TestPlayerCreator.of("썬", 1, 2, 3, 4);
+        Player player2 = TestPlayerCreator.of("리비", 3, 4);
+
+        Map<Player, Profit> playerProfitMap = new HashMap<>();
+        playerProfitMap.put(player1, new Profit(-30000));
+        playerProfitMap.put(player2, new Profit(40000));
+        PlayerProfitResult playerProfitResult = new PlayerProfitResult(playerProfitMap);
+
+        assertThat(playerProfitResult.calculateTotalProfit().getValue()).isEqualTo(10000);
+    }
 }
