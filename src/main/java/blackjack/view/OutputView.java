@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.participants.Betting;
 import blackjack.domain.participants.GameParticipant;
-import blackjack.domain.Profit;
+import blackjack.domain.participants.Profit;
 import blackjack.dto.ParticipantDto;
 import java.util.List;
 import java.util.stream.Collectors;

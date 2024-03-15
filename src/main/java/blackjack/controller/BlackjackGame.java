@@ -8,7 +8,7 @@ import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
 import blackjack.domain.participants.BlackJackGameResult;
-import blackjack.domain.Profit;
+import blackjack.domain.participants.Profit;
 import blackjack.dto.ParticipantDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;

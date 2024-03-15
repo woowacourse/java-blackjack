@@ -1,6 +1,5 @@
 package blackjack.domain.participants;
 
-import blackjack.domain.Profit;
 import java.util.Map;
 
 public class Betting {
