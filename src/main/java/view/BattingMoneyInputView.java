@@ -5,8 +5,8 @@ import java.util.List;
 public class BattingMoneyInputView {
     public static List<Integer> getMoney(List<String> playersName) {
         return playersName.stream()
+                .peek(playerName -> Console.printf("%s의 배팅 금액은?%n", playerName))
                 .map(playerName -> {
-                    Console.printf("%s의 배팅 금액은?%n", playerName);
                     String inputFromConsole = Console.getInputFromConsole();
                     validateInput(inputFromConsole);
                     return Integer.parseInt(inputFromConsole);
