@@ -3,10 +3,20 @@ package blackjack.model.money;
 import java.util.Objects;
 
 public class BetMoney {
+    private static final int MIN_BET_MONEY = 1;
+    private static final int MAX_BET_MONEY = 100_000_000;
+
     private final int betMoney;
 
     public BetMoney(final int betMoney) {
+        validateBetMoneyInBound(betMoney);
         this.betMoney = betMoney;
+    }
+
+    private void validateBetMoneyInBound(int betMoney) {
+        if (betMoney < MIN_BET_MONEY || betMoney > MAX_BET_MONEY) {
+            throw new IllegalArgumentException("1원부터 1억원까지만 베팅 가능합니다.");
+        }
     }
 
     public int multiply(final double multiplier) {

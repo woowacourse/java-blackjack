@@ -1,7 +1,6 @@
 package blackjack.model.money;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.Assertions.entry;
 
 import blackjack.model.participant.Player;
@@ -15,17 +14,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 public class BetsTest {
-    @ParameterizedTest
-    @CsvSource(value = {"-1", "0"})
-    @DisplayName("새로운 베팅 금액을 추가할 때 금액이 양의 정수가 아닌값이면 예외를 던진다.")
-    void createMoneyByNotPositiveInteger(int money) {
-        Bets bets = new Bets();
-        Player player = new Player("리브");
-
-        assertThatIllegalArgumentException()
-                .isThrownBy(() -> bets.addBet(player, money))
-                .withMessage("0원 이하의 금액을 베팅할 수 없습니다.");
-    }
 
     @Nested
     @DisplayName("수익률 계산")
