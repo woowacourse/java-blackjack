@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.player.PlayerName;
+import blackjack.domain.player.Player;
 import blackjack.domain.result.BettingBoard;
 import blackjack.domain.score.GameResult;
 import blackjack.domain.result.Money;
@@ -20,9 +20,9 @@ class BettingBoardTest {
     @DisplayName("플레이어들이 배팅금액을 설정할 수 있다.")
     void createBettingBoardTest() {
         BettingBoard bettingBoard = new BettingBoard();
-        PlayerName playerName = new PlayerName("loki");
-        bettingBoard.bet(playerName, new Money(1000));
-        Money money = bettingBoard.findByPlayerName(playerName);
+        Player player = new Player("loki");
+        bettingBoard.bet(player, new Money(1000));
+        Money money = bettingBoard.findByPlayer(player);
         assertThat(money).isEqualTo(new Money(1000));
     }
 
@@ -30,12 +30,12 @@ class BettingBoardTest {
     @MethodSource("resultAndMoney")
     @DisplayName("결과에 따른 돈을 계산할 수 있다.")
     void calculateMoneyTest(GameResult gameResult, Money expected) {
-        PlayerName playerName = new PlayerName("loki");
+        Player player = new Player("loki");
         BettingBoard bettingBoard = new BettingBoard();
-        bettingBoard.bet(playerName, new Money(1000));
-        Map<PlayerName, GameResult> resultBoard = Map.of(playerName, gameResult);
+        bettingBoard.bet(player, new Money(1000));
+        Map<Player, GameResult> resultBoard = Map.of(player, gameResult);
         bettingBoard.calculateMoney(resultBoard);
-        Money money = bettingBoard.findByPlayerName(playerName);
+        Money money = bettingBoard.findByPlayer(player);
         assertThat(money).isEqualTo(expected);
     }
 
@@ -59,14 +59,14 @@ class BettingBoardTest {
     @Test
     @DisplayName("딜러의 돈을 계산할 수 있다.")
     void calculateDealerMoneyTest() {
-        PlayerName playerName1 = new PlayerName("loki");
-        PlayerName playerName2 = new PlayerName("pedro");
+        Player player1 = new Player("loki");
+        Player player2 = new Player("pedro");
         BettingBoard bettingBoard = new BettingBoard();
-        bettingBoard.bet(playerName1, new Money(1000));
-        bettingBoard.bet(playerName2, new Money(1000));
-        Map<PlayerName, GameResult> resultBoard = Map.of(
-                playerName1, GameResult.WIN,
-                playerName2, GameResult.WIN_BY_BLACK_JACK
+        bettingBoard.bet(player1, new Money(1000));
+        bettingBoard.bet(player2, new Money(1000));
+        Map<Player, GameResult> resultBoard = Map.of(
+                player1, GameResult.WIN,
+                player2, GameResult.WIN_BY_BLACK_JACK
         );
         bettingBoard.calculateMoney(resultBoard);
         Money dealerMoney = bettingBoard.calculateDealerMoney();

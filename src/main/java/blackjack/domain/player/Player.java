@@ -35,10 +35,6 @@ public class Player {
         return true;
     }
 
-    public PlayerName getPlayerName() {
-        return playerName;
-    }
-
     public String getName() {
         return playerName.name();
     }

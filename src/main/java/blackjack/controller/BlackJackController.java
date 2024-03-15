@@ -38,7 +38,7 @@ public class BlackJackController {
 
     private void betMoney(BettingBoard bettingBoard, Players players) {
         for (Player player : players.getPlayers()) {
-            bettingBoard.bet(player.getPlayerName(), new Money(inputView.inputMoney(player.getName())));
+            bettingBoard.bet(player, new Money(inputView.inputMoney(player.getName())));
         }
     }
 
@@ -117,7 +117,7 @@ public class BlackJackController {
         Money dealerMoney = bettingBoard.calculateDealerMoney();
         outputView.printDealerMoney(dealerMoney.money());
         for (Player player : players.getPlayers()) {
-            Money playerMoney = bettingBoard.findByPlayerName(player.getPlayerName());
+            Money playerMoney = bettingBoard.findByPlayer(player);
             outputView.printPlayerMoney(player.getName(), playerMoney.money());
         }
     }

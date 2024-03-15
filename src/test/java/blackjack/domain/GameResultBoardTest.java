@@ -42,7 +42,7 @@ class GameResultBoardTest {
         giveCardToPlayer(player, deck, 2);
 
         GameResultBoard gameResultBoard = new GameResultBoard(dealer, List.of(player));
-        GameResult gameResult = gameResultBoard.findByPlayerName(player.getPlayerName());
+        GameResult gameResult = gameResultBoard.findByPlayer(player);
         assertThat(gameResult).isEqualTo(expected);
     }
 
@@ -74,7 +74,7 @@ class GameResultBoardTest {
         giveCardToPlayer(player, deck, 3);
 
         GameResultBoard gameResultBoard = new GameResultBoard(dealer, List.of(player));
-        GameResult gameResult = gameResultBoard.findByPlayerName(player.getPlayerName());
+        GameResult gameResult = gameResultBoard.findByPlayer(player);
         assertThat(gameResult).isEqualTo(GameResult.LOSE);
     }
 
@@ -92,7 +92,7 @@ class GameResultBoardTest {
         giveCardToPlayer(player, deck, 2);
 
         GameResultBoard gameResultBoard = new GameResultBoard(dealer, List.of(player));
-        GameResult gameResult = gameResultBoard.findByPlayerName(player.getPlayerName());
+        GameResult gameResult = gameResultBoard.findByPlayer(player);
         assertThat(gameResult).isEqualTo(GameResult.WIN_BY_BLACK_JACK);
     }
 
