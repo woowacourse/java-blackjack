@@ -3,8 +3,8 @@ package view;
 import static domain.participant.Dealer.INIT_HANDS_SIZE;
 import static domain.participant.Dealer.THRESHOLD;
 
-import domain.participant.BetAmount;
-import domain.participant.Player;
+import domain.Profit;
+import domain.participant.Participant;
 import dto.DealerHandsDto;
 import dto.ParticipantDto;
 import dto.ParticipantsDto;
@@ -48,8 +48,8 @@ public class OutputView {
         System.out.println("## 최종 수익");
     }
 
-    public void printGameResult(final Player player, final BetAmount betAmount) {
-        System.out.printf(RESULT_FORM, player.getName(), betAmount.getAmount());
+    public void printGameResult(final Participant participant, final Profit profit) {
+        System.out.printf(RESULT_FORM, participant.getName(), profit.getProfit());
     }
 
     public void printBust() {

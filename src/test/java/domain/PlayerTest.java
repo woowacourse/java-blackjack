@@ -45,10 +45,10 @@ class PlayerTest {
         final Player player = new Player(new Name("제제"), blackJack, betAmount);
 
         // when
-        final BetAmount resultBetAmount = player.calculateProfitBy(dealer);
+        final Profit profit = player.calculateProfitBy(dealer);
 
         // then
-        Assertions.assertThat(resultBetAmount.getAmount()).isEqualTo((int) (10_000 * 1.5)); //TODO int 괜찮은지 확인하기 ??
+        Assertions.assertThat(profit.getProfit()).isEqualTo((int) (10_000 * 1.5)); //TODO int 괜찮은지 확인하기 ??
     }
 
     @DisplayName("참여자가 블랙잭이 아니면서 승리하면 배팅 금액의 1배를 받는다.")
@@ -60,10 +60,10 @@ class PlayerTest {
         final Player player = new Player(new Name("제제"), sum20Size3, betAmount);
 
         // when
-        final BetAmount resultBetAmount = player.calculateProfitBy(dealer);
+        final Profit profit = player.calculateProfitBy(dealer);
 
         // then
-        Assertions.assertThat(resultBetAmount.getAmount()).isEqualTo(10_000);
+        Assertions.assertThat(profit.getProfit()).isEqualTo(10_000);
     }
 
     @DisplayName("참여자가 패배하면 배팅 금액을 모두 잃는다.")
@@ -75,10 +75,10 @@ class PlayerTest {
         final Player player = new Player(new Name("제제"), bustHands, betAmount);
 
         // when
-        final BetAmount resultBetAmount = player.calculateProfitBy(dealer);
+        final Profit profit = player.calculateProfitBy(dealer);
 
         // then
-        Assertions.assertThat(resultBetAmount.getAmount()).isEqualTo((-1) * 10_000);
+        Assertions.assertThat(profit.getProfit()).isEqualTo((-1) * 10_000);
     }
 
     @DisplayName("무승부이면 금액을 돌려받는다.")
@@ -89,10 +89,10 @@ class PlayerTest {
         final Player player = new Player(new Name("제제"), sum21Size2, betAmount);
 
         // when
-        final BetAmount resultBetAmount = player.calculateProfitBy(dealer);
+        final Profit profit = player.calculateProfitBy(dealer);
 
         // then
-        Assertions.assertThat(resultBetAmount.getAmount()).isEqualTo(0);
+        Assertions.assertThat(profit.getProfit()).isEqualTo(0);
     }
 
 //    @DisplayName("딜러의 수익을 계산한다.")

@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.Answer;
+import domain.Profit;
 import domain.Result;
 import domain.card.CardDeck;
 import java.util.EnumMap;
@@ -55,6 +56,15 @@ public class Dealer extends Participant {
         }
 
         return result;
+    }
+
+    public Profit calculateProfitBy(final Players players) {
+        int result = players.calculateProfits(this).values().stream()
+                .map(value -> value.getProfit() * (-1))
+                .mapToInt(Integer::intValue)
+                .sum();
+
+        return new Profit(result);
     }
 
     @Override

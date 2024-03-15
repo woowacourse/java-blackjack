@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.Profit;
 import domain.Result;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -32,6 +33,16 @@ public class Players {
 
         for (Player name : players) {
             result.put(name, name.calculateResultBy(dealer));
+        }
+
+        return result;
+    }
+
+    public Map<Player, Profit> calculateProfits(final Dealer dealer) {
+        final Map<Player, Profit> result = new LinkedHashMap<>();
+
+        for (Player player : players) {
+            result.put(player, player.calculateProfitBy(dealer));
         }
 
         return result;

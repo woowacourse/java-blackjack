@@ -42,9 +42,9 @@ class BetAmountTest {
         final BetAmount betAmount = BetAmount.from(10_000);
 
         // when
-        final BetAmount newBetAmount = betAmount.multiply(1.5);
+        final Profit profit = betAmount.multiply(1.5);
 
         // then
-        Assertions.assertThat(newBetAmount.getAmount()).isEqualTo((int) (10_000 * 1.5));
+        Assertions.assertThat(profit.getProfit()).isEqualTo((int) (10_000 * 1.5));
     }
 }

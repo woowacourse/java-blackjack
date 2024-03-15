@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.Profit;
 import java.util.Objects;
 
 public class BetAmount {
@@ -16,16 +17,16 @@ public class BetAmount {
         return new BetAmount(amount);
     }
 
-    public BetAmount multiply(final double value) { //TODO 값 직접 바꾸기, 네이밍 변경
-        return new BetAmount((int) (amount * value));
+    public Profit multiply(final double value) { //TODO 값 직접 바꾸기, 네이밍 변경
+        return new Profit((int) (amount * value));
     }
 
-    public BetAmount lose() {
-        return new BetAmount((-1) * amount);
+    public Profit lose() {
+        return new Profit((-1) * amount);
     }
 
-    public BetAmount makeZero() {
-        return new BetAmount(0);
+    public Profit makeZero() {
+        return new Profit(0);
     }
 
     public int getAmount() {

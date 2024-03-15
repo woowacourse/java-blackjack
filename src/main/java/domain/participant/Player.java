@@ -2,6 +2,7 @@ package domain.participant;
 
 import static domain.participant.Hands.BLACK_JACK;
 
+import domain.Profit;
 import domain.Result;
 
 public class Player extends Participant {
@@ -20,7 +21,7 @@ public class Player extends Participant {
         this.betAmount = betAmount;
     }
 
-    public BetAmount calculateProfitBy(final Dealer dealer) {
+    public Profit calculateProfitBy(final Dealer dealer) {
         return Result.calculate(super.getHands(), dealer.getHands(), betAmount);
     }
 

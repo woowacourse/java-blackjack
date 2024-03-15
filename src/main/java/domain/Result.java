@@ -8,15 +8,15 @@ import java.util.function.Function;
 
 public enum Result {
 
-    WIN(Result::winningCondition, betAmount -> betAmount),
+    WIN(Result::winningCondition, betAmount -> new Profit(betAmount.getAmount())),
     WIN_BLACKJACK(Result::winningBlackJackCondition, betAmount -> betAmount.multiply(1.5)),
     TIE(Result::tieCondition, BetAmount::makeZero),
     LOSE(Result::loseCondition, BetAmount::lose);
 
     private final BiPredicate<Hands, Hands> condition;
-    private final Function<BetAmount, BetAmount> betAmountFunction;
+    private final Function<BetAmount, Profit> betAmountFunction;
 
-    Result(BiPredicate<Hands, Hands> condition, Function<BetAmount, BetAmount> betAmountFunction) {
+    Result(BiPredicate<Hands, Hands> condition, Function<BetAmount, Profit> betAmountFunction) {
         this.condition = condition;
         this.betAmountFunction = betAmountFunction;
     }
@@ -40,7 +40,7 @@ public enum Result {
                 .get();
     }
 
-    public static BetAmount calculate(final Hands hands, final Hands target, final BetAmount betAmount) {
+    public static Profit calculate(final Hands hands, final Hands target, final BetAmount betAmount) {
         return Arrays.stream(Result.values())
                 .filter(result -> result.condition.test(hands, target))
                 .map(result -> result.betAmountFunction.apply(betAmount))
@@ -48,7 +48,7 @@ public enum Result {
                 .get();
     }
 
-    public BetAmount calculate(final BetAmount betAmount) {
+    public Profit calculate(final BetAmount betAmount) {
         return this.betAmountFunction.apply(betAmount);
     }
 
