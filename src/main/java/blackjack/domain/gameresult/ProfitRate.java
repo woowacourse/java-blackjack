@@ -20,9 +20,9 @@ public enum ProfitRate {
         this.rate = rate;
     }
 
-    public static double calculateProfit(Result targetResultJudge, double batting) {
+    public static double calculateProfit(Result targetResult, double batting) {
         ProfitRate profitRate = Stream.of(values())
-                .filter(rp -> rp.result == targetResultJudge)
+                .filter(pr -> pr.result == targetResult)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("경기 결과와 매칭되는 수익 반환식이 없습니다."));
         return profitRate.rate * batting;
