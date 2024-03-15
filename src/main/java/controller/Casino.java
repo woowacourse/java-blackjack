@@ -39,6 +39,7 @@ public class Casino {
         proceedPlayersTurn();
         proceedDealerTurn();
         showFinalFaceUpResults();
+        distributeAllMoney();
     }
 
     private void insertAllBetAmount() {
@@ -105,12 +106,12 @@ public class Casino {
         participants.turnOverPlayer();
     }
 
-    private void distributeAllMoneyInProceed() {
+    private void distributeAllMoney() {
         getInstance().findAllParticipantNames()
-                .forEach(this::distributeMoneyInProceed);
+                .forEach(this::distributeMoney);
     }
 
-    private void distributeMoneyInProceed(Name name) {
+    private void distributeMoney(Name name) {
         Participant dealer = participants.findParticipantByName(DEALER_NAME);
         Participant player = participants.findParticipantByName(name);
         DividendPolicy policyInProceed = DividendPolicyFactory.findPolicy(dealer, player);
