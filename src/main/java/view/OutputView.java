@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     private static final String DELIMITER = ", ";
-    private static final DecimalFormat MONEY_FORMAT = new DecimalFormat("###########");
+    private static final DecimalFormat MONEY_FORMAT = new DecimalFormat("#");
 
     public static void printInitialStep(List<Name> names) {
         System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.%n", buildGamerNames(names));
