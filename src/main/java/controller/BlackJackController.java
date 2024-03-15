@@ -51,13 +51,11 @@ public class BlackJackController {
 
     private Bets initBets(final PlayerNames playerNames) throws IOException {
         Map<PlayerName, Bet> playerBets = new LinkedHashMap<>();
-        List<String> names = playerNames.names();
-        List<Integer> bets = inputView.readBettingMoney(names);
+        Map<PlayerName, Integer> betsInput = inputView.readBettingMoney(playerNames.names());
 
-        for (int i = 0; i < names.size(); i++) {
-            playerBets.put(new PlayerName(names.get(i)), new Bet(bets.get(i)));
-        }
-
+        betsInput.forEach((playerName, bet) -> {
+            playerBets.put(playerName, new Bet(bet));
+        });
         return new Bets(playerBets);
     }
 

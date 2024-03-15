@@ -1,11 +1,13 @@
 package view;
 
+import domain.player.PlayerName;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InputView {
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
@@ -19,13 +21,14 @@ public class InputView {
         return Arrays.stream(input.split(",")).toList();
     }
 
-    public List<Integer> readBettingMoney(final List<String> playerNames) throws IOException {
-        List<Integer> inputs = new LinkedList<>();
-        for (String playerName : playerNames) {
-            System.out.println(playerName + "의 배팅 금액은?");
+    public Map<PlayerName, Integer> readBettingMoney(final List<PlayerName> playerNames) throws IOException {
+        Map<PlayerName, Integer> inputs = new LinkedHashMap<>();
+
+        for (PlayerName playerName : playerNames) {
+            System.out.println(playerName.name() + "의 배팅 금액은?");
             String input = bufferedReader.readLine();
             validateNotBlank(input);
-            inputs.add(parseInt(input));
+            inputs.put(playerName, parseInt(input));
         }
         return inputs;
     }

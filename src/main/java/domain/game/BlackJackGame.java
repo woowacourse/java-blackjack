@@ -5,7 +5,6 @@ import domain.betting.Profit;
 import domain.betting.ProfitRate;
 import domain.player.Dealer;
 import domain.player.Player;
-import domain.player.PlayerName;
 import domain.player.PlayerNames;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,11 +22,8 @@ public class BlackJackGame {
     public BlackJackGame(final PlayerNames playerNames, final Dealer dealer) {
         this.dealer = dealer;
 
-        List<String> names = playerNames.names();
-
-        names.forEach(name -> {
-            PlayerName playerName = new PlayerName(name);
-            Player player = new Player(playerName, dealer.dealHand());
+        playerNames.names().forEach(name -> {
+            Player player = new Player(name, dealer.dealHand());
             this.players.add(player);
         });
     }
