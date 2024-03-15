@@ -22,9 +22,9 @@ public class PlayerTest {
 
     @BeforeEach
     void init() {
-        Card card1 = new Card(Symbol.HEART, Rank.NINE);
-        Card card2 = new Card(Symbol.SPADE, Rank.QUEEN);
-        Card card3 = new Card(Symbol.SPADE, Rank.THREE);
+        Card card1 = Card.of(Symbol.HEART, Rank.NINE);
+        Card card2 = Card.of(Symbol.SPADE, Rank.QUEEN);
+        Card card3 = Card.of(Symbol.SPADE, Rank.THREE);
 
         cards = Stream.of(card1, card2, card3)
                 .collect(Collectors.toCollection(Stack::new));

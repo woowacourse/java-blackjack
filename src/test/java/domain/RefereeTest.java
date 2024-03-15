@@ -56,15 +56,15 @@ class RefereeTest {
     class ifDealerBust {
         @BeforeEach
         void setDeckAndDealerBust() {
-            Card card1 = new Card(Symbol.CLOVER, Rank.KING);
-            Card card2 = new Card(Symbol.CLOVER, Rank.BIG_ACE);
-            Card card3 = new Card(Symbol.DIAMOND, Rank.EIGHT);
-            Card card4 = new Card(Symbol.SPADE, Rank.KING);
-            Card card5 = new Card(Symbol.CLOVER, Rank.SEVEN);
-            Card card6 = new Card(Symbol.SPADE, Rank.EIGHT);
-            Card card7 = new Card(Symbol.HEART, Rank.THREE);
-            Card card8 = new Card(Symbol.CLOVER, Rank.NINE);
-            Card card9 = new Card(Symbol.DIAMOND, Rank.SEVEN);
+            Card card1 = Card.of(Symbol.CLOVER, Rank.KING);
+            Card card2 = Card.of(Symbol.CLOVER, Rank.BIG_ACE);
+            Card card3 = Card.of(Symbol.DIAMOND, Rank.EIGHT);
+            Card card4 = Card.of(Symbol.SPADE, Rank.KING);
+            Card card5 = Card.of(Symbol.CLOVER, Rank.SEVEN);
+            Card card6 = Card.of(Symbol.SPADE, Rank.EIGHT);
+            Card card7 = Card.of(Symbol.HEART, Rank.THREE);
+            Card card8 = Card.of(Symbol.CLOVER, Rank.NINE);
+            Card card9 = Card.of(Symbol.DIAMOND, Rank.SEVEN);
 
             List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8, card9);
             shuffleStrategy = new SettedShuffleStrategy(cards);
@@ -112,15 +112,15 @@ class RefereeTest {
 
         @BeforeEach
         void setDeckAndDealerBlackJack() {
-            Card card1 = new Card(Symbol.CLOVER, Rank.KING);
-            Card card2 = new Card(Symbol.CLOVER, Rank.BIG_ACE);
-            Card card3 = new Card(Symbol.DIAMOND, Rank.FOUR);
-            Card card4 = new Card(Symbol.SPADE, Rank.KING);
-            Card card5 = new Card(Symbol.CLOVER, Rank.SEVEN);
-            Card card6 = new Card(Symbol.SPADE, Rank.BIG_ACE);
-            Card card7 = new Card(Symbol.HEART, Rank.TEN);
-            Card card8 = new Card(Symbol.CLOVER, Rank.BIG_ACE);
-            Card card9 = new Card(Symbol.DIAMOND, Rank.TEN);
+            Card card1 = Card.of(Symbol.CLOVER, Rank.KING);
+            Card card2 = Card.of(Symbol.CLOVER, Rank.BIG_ACE);
+            Card card3 = Card.of(Symbol.DIAMOND, Rank.FOUR);
+            Card card4 = Card.of(Symbol.SPADE, Rank.KING);
+            Card card5 = Card.of(Symbol.CLOVER, Rank.SEVEN);
+            Card card6 = Card.of(Symbol.SPADE, Rank.BIG_ACE);
+            Card card7 = Card.of(Symbol.HEART, Rank.TEN);
+            Card card8 = Card.of(Symbol.CLOVER, Rank.BIG_ACE);
+            Card card9 = Card.of(Symbol.DIAMOND, Rank.TEN);
 
             List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8, card9);
             shuffleStrategy = new SettedShuffleStrategy(cards);
@@ -166,15 +166,15 @@ class RefereeTest {
 
         @BeforeEach
         void setDeckAndDealerBust() {
-            Card card1 = new Card(Symbol.CLOVER, Rank.KING);
-            Card card2 = new Card(Symbol.CLOVER, Rank.TWO);
-            Card card3 = new Card(Symbol.DIAMOND, Rank.TWO);
-            Card card4 = new Card(Symbol.SPADE, Rank.KING);
-            Card card5 = new Card(Symbol.CLOVER, Rank.SEVEN);
-            Card card6 = new Card(Symbol.SPADE, Rank.BIG_ACE);
-            Card card7 = new Card(Symbol.HEART, Rank.TEN);
-            Card card8 = new Card(Symbol.CLOVER, Rank.TEN);
-            Card card9 = new Card(Symbol.DIAMOND, Rank.NINE);
+            Card card1 = Card.of(Symbol.CLOVER, Rank.KING);
+            Card card2 = Card.of(Symbol.CLOVER, Rank.TWO);
+            Card card3 = Card.of(Symbol.DIAMOND, Rank.TWO);
+            Card card4 = Card.of(Symbol.SPADE, Rank.KING);
+            Card card5 = Card.of(Symbol.CLOVER, Rank.SEVEN);
+            Card card6 = Card.of(Symbol.SPADE, Rank.BIG_ACE);
+            Card card7 = Card.of(Symbol.HEART, Rank.TEN);
+            Card card8 = Card.of(Symbol.CLOVER, Rank.TEN);
+            Card card9 = Card.of(Symbol.DIAMOND, Rank.NINE);
 
             List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8, card9);
             shuffleStrategy = new SettedShuffleStrategy(cards);

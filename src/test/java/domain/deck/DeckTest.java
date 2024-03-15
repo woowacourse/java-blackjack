@@ -16,7 +16,7 @@ public class DeckTest {
 
     @DisplayName("52 * 6개의 카드를 생성한다.")
     @Test
-    void createDecksTest() {
+    void createDeckTest() {
         // given
         int expectedSize = DECK_SIZE;
 
@@ -30,7 +30,22 @@ public class DeckTest {
 
     @DisplayName("52 * 6개의 카드를 생성한다.")
     @Test
-    void emptyDecksTest() {
+    void drawDeckTest() {
+        // given
+        int expectedSize = DECK_SIZE - 1;
+        RandomShuffleStrategy shuffleStrategy = new RandomShuffleStrategy();
+        Deck deck = new Deck(shuffleStrategy);
+
+        // when
+        deck.draw();
+
+        // then
+        assertThat(deck.getCards()).hasSize(expectedSize);
+    }
+
+    @DisplayName("52 * 6개 이상 뽑으면 예외를 던진다.")
+    @Test
+    void emptyDeckTest() {
         // given
         SettedShuffleStrategy shuffleStrategy = new SettedShuffleStrategy(List.of());
         Deck deck = new Deck(shuffleStrategy);

@@ -22,9 +22,9 @@ public class HandTest {
 
     @BeforeEach
     void init() {
-        Card card1 = new Card(Symbol.SPADE, Rank.KING);
-        Card card2 = new Card(Symbol.HEART, Rank.THREE);
-        Card card3 = new Card(Symbol.CLOVER, Rank.NINE);
+        Card card1 = Card.of(Symbol.SPADE, Rank.KING);
+        Card card2 = Card.of(Symbol.HEART, Rank.THREE);
+        Card card3 = Card.of(Symbol.CLOVER, Rank.NINE);
 
         cards = Stream.of(card1, card2, card3)
                 .collect(Collectors.toCollection(Stack::new));
@@ -35,7 +35,7 @@ public class HandTest {
     @Test
     void addCardTest() {
         // given
-        Card expectedCard = new Card(Symbol.CLOVER, Rank.NINE);
+        Card expectedCard = Card.of(Symbol.CLOVER, Rank.NINE);
 
         // when
         hand.add(cards.pop());
@@ -52,7 +52,7 @@ public class HandTest {
     @Test
     void sumScoreTest() {
         // given
-        Card aceCard = new Card(Symbol.CLOVER, Rank.BIG_ACE);
+        Card aceCard = Card.of(Symbol.CLOVER, Rank.BIG_ACE);
         hand.add(aceCard);
         hand.add(cards.pop());
         hand.add(cards.pop());
