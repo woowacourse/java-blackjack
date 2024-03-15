@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map.Entry;
 import model.blackjackgame.Profit;
 import model.card.CardType;
-import model.dealer.Dealer;
-import model.player.Player;
-import model.player.Players;
+import model.participants.dealer.Dealer;
+import model.participants.player.Player;
+import model.participants.player.Players;
 
 public class OutputView {
 

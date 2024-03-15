@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 import model.card.Card;
 import model.card.Cards;
-import model.dealer.Dealer;
-import model.player.Players;
+import model.participants.dealer.Dealer;
+import model.participants.player.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

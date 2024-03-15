@@ -1,4 +1,4 @@
-package model.player;
+package model.participants.player;
 
 import java.util.Objects;
 import model.blackjackgame.BlackjackGame;

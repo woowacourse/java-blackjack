@@ -3,8 +3,8 @@ package model.view;
 import java.util.List;
 import java.util.Scanner;
 import model.blackjackgame.Answer;
-import model.player.Player;
-import model.player.Players;
+import model.participants.player.Player;
+import model.participants.player.Players;
 
 public class InputView {
 

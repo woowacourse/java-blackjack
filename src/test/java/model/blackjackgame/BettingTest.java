@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 import model.card.Card;
 import model.card.Cards;
-import model.player.Player;
+import model.participants.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

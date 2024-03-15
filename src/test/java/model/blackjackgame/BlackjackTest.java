@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 import model.card.Card;
 import model.card.Cards;
-import model.dealer.Dealer;
+import model.participants.dealer.Dealer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

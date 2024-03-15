@@ -1,6 +1,6 @@
 package model.blackjackgame;
 
-import model.player.Player;
+import model.participants.player.Player;
 
 public class Betting {
 

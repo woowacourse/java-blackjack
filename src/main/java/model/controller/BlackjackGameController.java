@@ -16,10 +16,10 @@ import model.card.Card;
 import model.card.CardDispenser;
 import model.card.CardType;
 import model.card.Cards;
-import model.dealer.Dealer;
-import model.player.Player;
-import model.player.Players;
-import model.player.UpdatedPlayer;
+import model.participants.dealer.Dealer;
+import model.participants.player.Player;
+import model.participants.player.Players;
+import model.participants.player.UpdatedPlayer;
 import model.view.InputView;
 import model.view.OutputView;
 

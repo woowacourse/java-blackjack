@@ -2,9 +2,9 @@ package model.blackjackgame;
 
 import java.util.HashMap;
 import java.util.Map;
-import model.dealer.Dealer;
-import model.player.Player;
-import model.player.Players;
+import model.participants.dealer.Dealer;
+import model.participants.player.Player;
+import model.participants.player.Players;
 
 public class Blackjack {
 

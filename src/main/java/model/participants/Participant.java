@@ -1,30 +1,19 @@
-package model.dealer;
+package model.participants;
 
 import java.util.List;
 import model.card.Card;
 import model.card.Cards;
 
-public class Dealer {
+public class Participant {
 
-    private static final int ADD_CARD_CONDITION = 17;
-    private static final String TITLE_FOR_DEALER = "딜러";
     private static final int BLACKJACK_NUMBER = 21;
 
-    private final String name;
-    private final Cards cards;
+    protected final String name;
+    protected final Cards cards;
 
-    public Dealer() {
-        this(new Cards(List.of()));
-    }
-
-    public Dealer(Cards cards) {
-        this.name = TITLE_FOR_DEALER;
+    public Participant(String name, Cards cards) {
+        this.name = name;
         this.cards = cards;
-    }
-
-    public boolean isPossibleAddCard() {
-        int totalNumbers = cards.calculateTotalNumbers();
-        return totalNumbers < ADD_CARD_CONDITION;
     }
 
     public boolean isBlackjack() {
@@ -35,14 +24,14 @@ public class Dealer {
         return cards.calculateTotalNumbers() > BLACKJACK_NUMBER;
     }
 
-    public Dealer addCard(Card card) {
+    public Participant addCard(Card card) {
         Cards addedCards = cards.add(card);
-        return new Dealer(addedCards);
+        return new Participant(name, addedCards);
     }
 
-    public Dealer addCards(List<Card> cardsElement) {
+    public Participant addCards(List<Card> cardsElement) {
         Cards addedCards = cards.addAll(cardsElement);
-        return new Dealer(addedCards);
+        return new Participant(name, addedCards);
     }
 
     public int cardsSize() {

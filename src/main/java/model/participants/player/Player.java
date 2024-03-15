@@ -1,45 +1,34 @@
-package model.player;
+package model.participants.player;
 
 import java.util.List;
 import java.util.Objects;
 import model.card.Card;
 import model.card.Cards;
+import model.participants.Participant;
 
-public class Player {
+public class Player extends Participant {
 
     private static final int ADD_CARD_CONDITION = 22;
-    private static final int BLACKJACK_NUMBER = 21;
-
-    private final String name;
-    private final Cards cards;
 
     public Player(String name) {
-        this(name, new Cards(List.of()));
+        super(name, new Cards(List.of()));
     }
 
     public Player(String name, Cards cards) {
-        this.name = name;
-        this.cards = cards;
+        super(name, cards);
     }
 
     public boolean isNotBust() {
-        int totalNumbers = cards.calculateTotalNumbers();
-        return totalNumbers < ADD_CARD_CONDITION;
+        return cards.calculateTotalNumbers() < ADD_CARD_CONDITION;
     }
 
-    public boolean isBust() {
-        return !isNotBust();
-    }
-
-    public boolean isBlackjack() {
-        return cards.calculateTotalNumbers() == BLACKJACK_NUMBER;
-    }
-
+    @Override
     public Player addCard(Card card) {
         Cards addedCards = cards.add(card);
         return new Player(name, addedCards);
     }
 
+    @Override
     public Player addCards(List<Card> cardsElement) {
         Cards addedCards = cards.addAll(cardsElement);
         return new Player(name, addedCards);
@@ -60,21 +49,5 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name, cards);
-    }
-
-    public int cardsSize() {
-        return cards.size();
-    }
-
-    public int totalNumber() {
-        return cards.calculateTotalNumbers();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Cards getCards() {
-        return cards;
     }
 }
