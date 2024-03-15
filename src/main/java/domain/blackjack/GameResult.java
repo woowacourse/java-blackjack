@@ -13,16 +13,6 @@ public enum GameResult {
         this.earnMoneyCalculator = earnMoneyCalculator;
     }
 
-    GameResult changeBase() {
-        if (this == WIN || this == WIN_BLACK_JACK) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return TIE;
-    }
-
     int calculateEarnMoney(int bettingMoney) {
         return earnMoneyCalculator.apply(bettingMoney);
     }

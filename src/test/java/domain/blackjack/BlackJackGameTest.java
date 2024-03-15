@@ -40,8 +40,8 @@ class BlackJackGameTest {
         Dealer dealer = blackJackGame.getDealer();
 
         Player player = Player.from("플레이어", HoldingCards.of(TWO_HEART));
-        GameResult gameResult = GameResultCalculator.calculate(player, dealer).changeBase();
+        GameResult gameResult = GameResultCalculator.calculate(player, dealer);
         Assertions.assertThat(gameResult)
-                .isEqualTo(GameResult.WIN);
+                .isEqualTo(GameResult.LOSE);
     }
 }
