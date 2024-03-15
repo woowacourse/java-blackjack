@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.dealer.Dealer;
+import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.result.WinningResult;
 import java.util.List;
 

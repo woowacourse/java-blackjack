@@ -33,4 +33,40 @@ public class InputView {
 
         return CardRequestFormat.from(input);
     }
+
+    // TODO: List<string>으로 보내는 방법은?
+    public Map<String, Integer> readBettings(final List<ParticipantName> names) {
+        return names.stream()
+                .collect(toMap(ParticipantName::getName,
+                        this::readBetting,
+                        (v1, v2) -> v1,
+                        LinkedHashMap::new));
+    }
+
+    private int readBetting(final ParticipantName name) {
+        System.out.printf("%s의 배팅 금액은?", name.getName());
+        String input = SCANNER.nextLine();
+        validateBetting(input);
+
+        return Integer.parseInt(input);
+    }
+
+    private void validateBetting(final String input) {
+        validateEmpty(input);
+        validateNumeric(input);
+    }
+
+    private void validateEmpty(final String input) {
+        if (input == null || input.isBlank()) {
+            throw new IllegalArgumentException("금액에 공백을 입력할 수 없습니다.");
+        }
+    }
+
+    private void validateNumeric(final String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("정상적인 숫자를 입력해주세요");
+        }
+    }
 }
