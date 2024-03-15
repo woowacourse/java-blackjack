@@ -4,6 +4,7 @@ import blackjack.domain.BetManager;
 import blackjack.domain.Game;
 import blackjack.domain.GameResult;
 import blackjack.domain.deck.Deck;
+import blackjack.domain.deck.ShuffledDeckCreateStrategy;
 import blackjack.domain.participant.BetMoney;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
@@ -22,7 +23,7 @@ public class BlackJackGameBoard {
     }
 
     public static void startGame() {
-        Deck deck = Deck.createShuffledDeck();
+        Deck deck = new Deck(new ShuffledDeckCreateStrategy());
         Game game = makeGame(deck);
         Dealer gameDealer = game.getDealer();
         Players gamePlayers = game.getPlayers();

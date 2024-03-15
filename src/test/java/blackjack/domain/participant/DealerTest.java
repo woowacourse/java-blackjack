@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Deck;
+import blackjack.domain.deck.ShuffledDeckCreateStrategy;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ class DealerTest {
         Dealer dealer = Dealer.createDealerWithCards(List.of(
                 new Card(SPADE, JACK),
                 new Card(SPADE, SIX)));
-        Deck deck = Deck.createShuffledDeck();
+        Deck deck = new Deck(new ShuffledDeckCreateStrategy());
 
         dealer.addCard(deck.draw());
 
@@ -33,7 +34,7 @@ class DealerTest {
         Dealer dealer = Dealer.createDealerWithCards(List.of(
                 new Card(SPADE, JACK),
                 new Card(SPADE, SEVEN)));
-        Deck deck = Deck.createShuffledDeck();
+        Deck deck = new Deck(new ShuffledDeckCreateStrategy());
 
         dealer.confirmDealerHands(deck, message -> {
         });

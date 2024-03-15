@@ -12,20 +12,10 @@ public class Deck {
 
     private static final int INITIAL_CARD_COUNT = 2;
 
-    private static final List<Card> CACHE_DECK = Arrays.stream(Kind.values())
-            .flatMap(kind -> Arrays.stream(Value.values())
-                    .map(value -> new Card(kind, value)))
-            .collect(Collectors.toList());
-
     private final Deque<Card> cards;
 
-    private Deck(Deque<Card> cards) {
-        this.cards = cards;
-    }
-
-    public static Deck createShuffledDeck() {
-        Collections.shuffle(CACHE_DECK);
-        return new Deck(new ArrayDeque<>(CACHE_DECK));
+    public Deck(DeckCreateStrategy deckCreateStrategy) {
+        this.cards = deckCreateStrategy.createDeck();
     }
 
     public List<Card> drawInitialCards() {
