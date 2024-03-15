@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.gameresult.Batting;
-import blackjack.domain.participant.Name;
+import blackjack.domain.hands.Name;
 
 import java.util.List;
 import java.util.Scanner;

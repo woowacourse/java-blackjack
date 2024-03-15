@@ -2,7 +2,7 @@ package blackjack.domain.gameresult;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
+import blackjack.domain.hands.Name;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

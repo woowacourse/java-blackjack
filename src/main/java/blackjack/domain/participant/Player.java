@@ -2,7 +2,9 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.gameresult.Batting;
+import blackjack.domain.hands.GamerHands;
 import blackjack.domain.hands.HandsScore;
+import blackjack.domain.hands.Name;
 
 import java.util.List;
 
