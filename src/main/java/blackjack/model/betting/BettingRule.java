@@ -13,7 +13,7 @@ import blackjack.model.result.ResultCommand;
 public class BettingRule {
 
     public ProfitRate calculateProfitRate(final Player player, final ResultCommand resultCommand) {
-        if (resultCommand.equals(WIN)) {
+        if (resultCommand == WIN) {
             return calculateProfitRateWhenPlayerWin(player);
         }
 
@@ -29,7 +29,7 @@ public class BettingRule {
     }
 
     private ProfitRate calculateProfitRateWhenPlayerNotWin(final ResultCommand resultCommand) {
-        if (resultCommand.equals(DRAW)) {
+        if (resultCommand == DRAW) {
             return DRAW_RATE;
         }
         return LOSE_RATE;
