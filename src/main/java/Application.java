@@ -1,10 +1,8 @@
 import domain.BlackJackGame;
-import domain.Profit;
 import domain.cards.Card;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
-import domain.result.Judge;
 import java.util.List;
 import view.InputView;
 import view.ResultView;
@@ -16,15 +14,14 @@ public class Application {
 
     public static void main(String[] args) {
         BlackJackGame game = startGame();
-        Judge judge = new Judge();
 
-        setUpPlayers(game, judge);
+        setUpPlayers(game);
 
         setUpGame(game);
 
         progressGame(game);
 
-        makeResult(game, judge);
+        makeResult(game);
     }
 
     private static BlackJackGame startGame() {
@@ -32,10 +29,10 @@ public class Application {
         return new BlackJackGame(rawPlayersNames);
     }
 
-    private static void setUpPlayers(BlackJackGame game, Judge judge) {
+    private static void setUpPlayers(BlackJackGame game) {
         for (Player player : game.getGamers().getPlayers()) {
             int bettingAmount = inputView.readBettingAmount(player);
-            judge.initializeProfit(player, new Profit(bettingAmount));
+            game.setUpProfits(player, bettingAmount);
         }
     }
 
@@ -76,9 +73,8 @@ public class Application {
         }
     }
 
-    private static void makeResult(BlackJackGame game, Judge judge) {
-        Gamers gamers = game.getGamers();
-        judge.decideResult(gamers);
-        resultView.printFinalProfit(gamers.getDealer(), judge);
+    private static void makeResult(BlackJackGame game) {
+        game.makeResult();
+        resultView.printFinalProfit(game.getGamers().getDealer(), game.getJudge());
     }
 }
