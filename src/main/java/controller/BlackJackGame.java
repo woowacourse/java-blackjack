@@ -1,8 +1,8 @@
 package controller;
 
 import domain.Betting;
-import domain.Referee;
 import domain.PlayerResult;
+import domain.Referee;
 import domain.card.Card;
 import domain.deck.Deck;
 import domain.gamer.Dealer;
@@ -47,7 +47,7 @@ public class BlackJackGame {
         Map<Player, String> betting = new LinkedHashMap<>();
         for (final Player player : players.getPlayers()) {
             String betMoney = InputView.readBetting(player);
-            betting.put(player,betMoney);
+            betting.put(player, betMoney);
         }
         return new Betting(betting);
     }
@@ -109,8 +109,8 @@ public class BlackJackGame {
         DealerProfit dealerProfit = new DealerProfit();
         for (Player player : players.getPlayers()) {
             PlayerResult playerResult = Referee.judgePlayer(dealer, player);
-            BigDecimal playerProfit = betting.calculateProfit(player,playerResult);
-            dealerProfit = dealerProfit.accumulate(playerProfit);
+            BigDecimal playerProfit = betting.calculateProfit(player, playerResult);
+            dealerProfit = dealerProfit.accumulate(playerProfit.negate());
             playerProfits.addResult(player, playerProfit);
         }
         return new TotalResult(dealerProfit, playerProfits);
