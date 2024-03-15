@@ -46,11 +46,10 @@ class BlackjackTest {
 
         var result = sut.compareResults(dealer, List.of(gamePlayer));
 
-        assertThat(result.getPlayerResults()
-                         .get(0)
-                         .getProfit()).isEqualTo(new Profit(-10000));
-        assertThat(result.getDealerResult()
-                .getProfit()).isEqualTo(new Profit(10000));
+        assertThat(result.getResult()
+                         .get(gamePlayer.getName())).isEqualTo(new Profit(-10000));
+        assertThat(result.getResult()
+                         .get(name)).isEqualTo(new Profit(10000));
     }
 
     private void assertPlayer(Player player, int value) {

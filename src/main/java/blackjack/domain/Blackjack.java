@@ -1,19 +1,17 @@
 package blackjack.domain;
 
-import static java.util.stream.Collectors.toList;
-
-import blackjack.domain.card.Deck;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.player.Names;
+import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.GamePlayer;
+import blackjack.domain.player.Name;
+import blackjack.domain.player.Names;
 import blackjack.domain.player.Players;
-import blackjack.domain.result.DealerResult;
-import blackjack.domain.result.GamePlayerResult;
 import blackjack.domain.result.Result;
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 public class Blackjack {
@@ -23,7 +21,7 @@ public class Blackjack {
         this.deck = deck;
     }
 
-    public Players acceptPlayers(Names names, BattingAmounts battingAmounts) {
+    public Players acceptPlayers(Names names, BettingAmounts battingAmounts) {
         Dealer dealer = Dealer.createDefaultDealer(drawTwo());
         List<GamePlayer> gamePlayers = IntStream.range(0, names.size())
                                                 .mapToObj(i -> new GamePlayer(names.getName(i),
@@ -34,14 +32,18 @@ public class Blackjack {
     }
 
     public Result compareResults(Dealer dealer, List<GamePlayer> gamePlayers) {
-        List<GamePlayerResult> gamePlayerResults = new ArrayList<>();
+        Map<Name, Profit> playerResults = new LinkedHashMap<>();
+        Profit dealerProfit = new Profit(0);
+        playerResults.put(dealer.getName(), dealerProfit);
 
         for (GamePlayer gamePlayer : gamePlayers) {
-            gamePlayerResults.add(
-                    new GamePlayerResult(gamePlayer.getName(), gamePlayer.confirmProfit(dealer)));
+            Profit playerProfit = gamePlayer.confirmProfit(dealer);
+            playerResults.put(gamePlayer.getName(), playerProfit);
+            dealerProfit = dealerProfit.subtractProfit(playerProfit);
         }
+        playerResults.put(dealer.getName(), dealerProfit);
 
-        return new Result(gamePlayerResults, DealerResult.of(dealer.getName(), gamePlayerResults));
+        return new Result(playerResults);
     }
 
     private Cards drawTwo() {

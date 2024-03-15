@@ -3,10 +3,14 @@ package blackjack.domain;
 import java.util.Objects;
 
 public class Profit {
-    private final double value;
+    private final int value;
 
-    public Profit(double value) {
+    public Profit(int value) {
         this.value = value;
+    }
+
+    public Profit subtractProfit(Profit playerProfit) {
+        return new Profit(value - playerProfit.value);
     }
 
     @Override
@@ -22,11 +26,7 @@ public class Profit {
         return Objects.hash(value);
     }
 
-    public double getValue() {
+    public int getValue() {
         return value;
-    }
-
-    public Profit sum(Profit playerProfit) {
-        return new Profit(value - playerProfit.value);
     }
 }
