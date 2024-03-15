@@ -34,7 +34,7 @@ class JudgeTest {
     class whenDealerBust {
         @BeforeEach
         void setUp() {
-            dealer = Dealer.create(shuffleStrategy);
+            dealer = Dealer.from(shuffleStrategy);
             deckDrawLoop(6);
             dealer.draw(2);
             bustDealer();
@@ -44,7 +44,7 @@ class JudgeTest {
         @Test
         void drawWhenBustTogether() {
             //given
-            players = Players.of(playerInfos);
+            players = Players.from(playerInfos);
             choco = players.getPlayers().get(0);
             players.initialDeal(dealer::draw);
 
@@ -62,7 +62,7 @@ class JudgeTest {
         void loseWhenPlayerBlackjack() {
             //given
             deckDrawLoop(3);
-            players = Players.of(playerInfos);
+            players = Players.from(playerInfos);
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));
@@ -79,7 +79,7 @@ class JudgeTest {
         @Test
         void loseWhenPlayerNormal() {
             //given
-            players = Players.of(playerInfos);
+            players = Players.from(playerInfos);
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));
@@ -98,7 +98,7 @@ class JudgeTest {
     class whenDealerBlackjack {
         @BeforeEach
         void setUp() {
-            dealer = Dealer.create(shuffleStrategy);
+            dealer = Dealer.from(shuffleStrategy);
             deckDrawLoop(12);
             dealer.draw(2);
         }
@@ -107,7 +107,7 @@ class JudgeTest {
         @Test
         void winWhenPlayerBust() {
             //given
-            players = Players.of(playerInfos);
+            players = Players.from(playerInfos);
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));
@@ -127,7 +127,7 @@ class JudgeTest {
             //given
             deckDrawLoop(11);
 
-            players = Players.of(playerInfos);
+            players = Players.from(playerInfos);
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));
@@ -144,7 +144,7 @@ class JudgeTest {
         @Test
         void winWhenPlayerNormal() {
             //given
-            players = Players.of(playerInfos);
+            players = Players.from(playerInfos);
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));
@@ -163,7 +163,7 @@ class JudgeTest {
     class whenDealerNormal {
         @BeforeEach
         void setUp() {
-            dealer = Dealer.create(shuffleStrategy);
+            dealer = Dealer.from(shuffleStrategy);
             dealer.draw(2);
         }
 
@@ -171,7 +171,7 @@ class JudgeTest {
         @Test
         void winWhenPlayerBust() {
             //given
-            players = Players.of(playerInfos);
+            players = Players.from(playerInfos);
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));
@@ -191,7 +191,7 @@ class JudgeTest {
             //given
             deckDrawLoop(10);
 
-            players = Players.of(playerInfos);
+            players = Players.from(playerInfos);
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));
@@ -208,7 +208,7 @@ class JudgeTest {
         @Test
         void winWhenPlayerNormalWithSmallerScore() {
             //given
-            players = Players.of(playerInfos);
+            players = Players.from(playerInfos);
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));
@@ -226,7 +226,7 @@ class JudgeTest {
         void loseWhenPlayerNormalWithBiggerScore() {
             //given
             deckDrawLoop(5);
-            players = Players.of(playerInfos);
+            players = Players.from(playerInfos);
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));
@@ -244,7 +244,7 @@ class JudgeTest {
         void drawWhenPlayerNormalWithSameScore() {
             //given
             deckDrawLoop(3);
-            players = Players.of(playerInfos);
+            players = Players.from(playerInfos);
             choco = players.getPlayers().get(0);
             IntStream.range(0, 2)
                     .forEach(i -> choco.draw(dealer.draw()));

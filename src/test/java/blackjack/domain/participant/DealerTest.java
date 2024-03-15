@@ -22,7 +22,7 @@ public class DealerTest {
 
     @BeforeEach
     void setUp() {
-        dealer = Dealer.create(shuffleStrategy);
+        dealer = Dealer.from(shuffleStrategy);
     }
 
     @DisplayName("딜러는 한 장을 뽑아서 손패에 넣는다.")

@@ -18,7 +18,7 @@ public class Dealer extends Gamer {
         this.deck = deck;
     }
 
-    public static Dealer create(final ShuffleStrategy shuffleStrategy) {
+    public static Dealer from(final ShuffleStrategy shuffleStrategy) {
         return new Dealer(new Deck(shuffleStrategy));
     }
 

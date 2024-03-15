@@ -21,8 +21,6 @@ public class BlackjackGame {
     }
 
     public void start() {
-        Dealer dealer = Dealer.create(new RandomShuffleStrategy());
-        Players players = Players.of(inputView.readPlayerInfos());
 
         initializeGame(dealer, players);
         printCardDistribute(dealer, players);

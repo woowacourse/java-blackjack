@@ -32,8 +32,8 @@ public class PlayersTest {
 
     @BeforeEach
     void setUp() {
-        dealer = Dealer.create(shuffleStrategy);
-        players = Players.of(playerInfos);
+        dealer = Dealer.from(shuffleStrategy);
+        players = Players.from(playerInfos);
     }
 
     @DisplayName("플레이어들의 승패를 계산한다.")
@@ -58,7 +58,7 @@ public class PlayersTest {
     void dealerBustPlayerWins() {
         //given
         players.initialDeal(dealer::draw);
-        Dealer bustedDealer = Dealer.create(shuffleStrategy);
+        Dealer bustedDealer = Dealer.from(shuffleStrategy);
 
         //when
         IntStream.range(0, 9)

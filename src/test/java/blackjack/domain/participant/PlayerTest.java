@@ -23,7 +23,7 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        dealer = Dealer.create(shuffleStrategy);
+        dealer = Dealer.from(shuffleStrategy);
         choco = playerChoco();
         clover = playerClover();
     }
