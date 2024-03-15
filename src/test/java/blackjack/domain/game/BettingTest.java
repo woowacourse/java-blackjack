@@ -54,4 +54,17 @@ class BettingTest {
         assertThatCode(unmodifiableBetting::unmodifiableBetting)
                 .isInstanceOf(UnsupportedOperationException.class);
     }
+
+    @Test
+    @DisplayName("실패: 존재하지 않는 Player에 대한 배팅 액수 요청")
+    void findMoneyOf_Exception_NotExist() {
+        Player existingPlayer = Player.nameOf("name");
+        Player notExistingPlayer = Player.nameOf("name");
+
+        Betting betting = new Betting();
+        betting.bet(existingPlayer, 100);
+
+        assertThatCode(() -> betting.findMoneyOf(notExistingPlayer))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }

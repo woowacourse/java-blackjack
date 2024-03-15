@@ -37,4 +37,16 @@ class BlackjackGameTest {
 
         Assertions.assertThat(player.getCards()).hasSize(1);
     }
+
+    @Test
+    @DisplayName("실패: 참가자가 아닌 사람에게 카드 한장 주기")
+    void giveOneCard_Exception_NotExist() {
+        Player existingPlayer = Player.nameOf("name");
+        Player notExistingPlayer = Player.nameOf("name");
+        Participants participants = Participants.createWithDealer(List.of(existingPlayer));
+        BlackjackGame game = new BlackjackGame(participants, new RandomCardGenerator());
+
+        Assertions.assertThatCode(() -> game.giveOneCard(notExistingPlayer))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
