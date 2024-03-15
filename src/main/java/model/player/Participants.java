@@ -65,9 +65,11 @@ public record Participants(List<Participant> participants) {
                 ));
     }
 
-    public Map<String, Cards> matchUsersNameAndCards() {
+    public Map<String, Cards> matchParticipantNameAndCards() {
         return participants.stream()
-                .collect(toMap(User::getName, User::getCards));
+                .collect(toMap(
+                        User::getName,
+                        User::getCards));
     }
 
     public Map<String, Integer> matchNameAndRevenues(boolean isOtherNotHit, int otherDifference) {
