@@ -18,7 +18,7 @@ class PlayerTest {
     @Test
     void should_AddCard_When_PlayerAcceptDraw() {
         Deck deck = new Deck(new ShuffledDeckCreateStrategy());
-        Player testPlayer = Player.createPlayer(new Name("pobi"),
+        Player testPlayer = Player.createPlayerWithCards(new Name("pobi"),
                 List.of(new Card(SPADE, ACE),
                         new Card(SPADE, TWO)));
 
@@ -31,7 +31,7 @@ class PlayerTest {
     @Test
     void should_NotAddCard_When_PlayerRejectDraw() {
         Deck deck = new Deck(new ShuffledDeckCreateStrategy());
-        Player testPlayer = Player.createPlayer(new Name("pobi"),
+        Player testPlayer = Player.createPlayerWithCards(new Name("pobi"),
                 List.of(new Card(SPADE, ACE),
                         new Card(SPADE, TWO)));
 

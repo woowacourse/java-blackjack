@@ -8,7 +8,7 @@ public class BetMoney {
 
     public BetMoney(int betMoney) {
         if (betMoney < MINIMUM_BET_MONEY) {
-            throw new IllegalArgumentException("배팅금액은 0이상이어야 합니다.");
+            throw new IllegalArgumentException("배팅금액은 "+MINIMUM_BET_MONEY+"이상이어야 합니다.");
         }
         this.betMoney = betMoney;
     }

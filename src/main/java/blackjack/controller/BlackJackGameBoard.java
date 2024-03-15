@@ -62,7 +62,7 @@ public class BlackJackGameBoard {
     private static Players createPlayers(List<String> playerNames, Deck deck) {
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            Player player = Player.createPlayer(new Name(playerName), deck.drawInitialCards());
+            Player player = Player.createPlayerWithCards(new Name(playerName), deck.drawInitialCards());
             players.add(player);
         }
         return new Players(players);

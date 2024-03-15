@@ -13,8 +13,6 @@ public enum Result {
     LOSE("패", (betMoney) -> -betMoney.getBetMoney()),
     DRAW("무", (betMoney) -> 0);
 
-    private static final int DRAW_PROFIT = 0;
-
     private final String result;
     private final Function<BetMoney, Integer> profitFormula;
 

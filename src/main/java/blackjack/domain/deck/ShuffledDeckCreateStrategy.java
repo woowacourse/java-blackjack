@@ -7,7 +7,7 @@ import java.util.Deque;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ShuffledDeckCreateStrategy implements DeckCreateStrategy{
+public class ShuffledDeckCreateStrategy implements DeckCreateStrategy {
     private static final List<Card> CACHE_DECK = Arrays.stream(Kind.values())
             .flatMap(kind -> Arrays.stream(Value.values())
                     .map(value -> new Card(kind, value)))

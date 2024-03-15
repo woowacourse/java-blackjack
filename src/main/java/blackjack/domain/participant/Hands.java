@@ -27,19 +27,16 @@ public class Hands {
         return HandsScore.of(hands).isBust();
     }
 
-    public int compareHandsScore(Hands otherHands) {
-        if (findHandsScore() == otherHands.findHandsScore()) {
-            return 0;
-        }
-        return findHandsScore() - otherHands.findHandsScore();
-    }
-
     public boolean isHigherScore(Hands otherHands) {
         return findHandsScore() > otherHands.findHandsScore();
     }
 
     public boolean isSameScore(Hands otherHands) {
         return findHandsScore() == otherHands.findHandsScore();
+    }
+
+    public boolean isBlackJack() {
+        return (size() == INITIAL_DRAW_CARD_NUMBER) && (findHandsScore() == BLACK_JACK);
     }
 
     public String getFirstCardName() {
@@ -53,9 +50,5 @@ public class Hands {
 
     public int size() {
         return hands.size();
-    }
-
-    public boolean isBlackJack() {
-        return (size() == INITIAL_DRAW_CARD_NUMBER) && (findHandsScore() == BLACK_JACK);
     }
 }

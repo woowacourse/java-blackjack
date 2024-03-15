@@ -28,7 +28,7 @@ class PlayersTest {
 
         List<Player> players = Stream.iterate(1, (i) -> i + 1).
                 limit(9)
-                .map((input) -> Player.createPlayer(new Name(input.toString()),
+                .map((input) -> Player.createPlayerWithCards(new Name(input.toString()),
                         List.of(new Card(SPADE, ACE),
                                 new Card(SPADE, JACK)))).toList();
         assertThatThrownBy(() -> new Players(players))

@@ -14,7 +14,7 @@ public class Player {
         this.hands = hands;
     }
 
-    public static Player createPlayer(Name name, List<Card> initialCards) {
+    public static Player createPlayerWithCards(Name name, List<Card> initialCards) {
         Hands initialHands = new Hands();
         for (Card card : initialCards) {
             initialHands.addCard(card);
