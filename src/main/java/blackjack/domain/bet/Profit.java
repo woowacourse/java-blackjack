@@ -10,6 +10,10 @@ public class Profit {
         this.value = value;
     }
 
+    public Profit add(Profit other) {
+        return new Profit(this.value + other.value);
+    }
+
     public int getValue() {
         return value;
     }
