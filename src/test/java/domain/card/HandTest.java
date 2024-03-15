@@ -13,6 +13,7 @@ import static domain.card.CardFixture.cardsOfSoft20;
 import static domain.card.CardFixture.cardsOfSoft22;
 import static domain.card.Rank.ACE;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -50,9 +51,9 @@ class HandTest {
     @DisplayName("패의 에이스 유무를 알 수 있다.")
     @MethodSource
     @ParameterizedTest
-    void hasAce(Cards cards, boolean expected) {
+    void hasAce(List<Card> cards, boolean expected) {
         Hand hand = new Hand();
-        cards.toList().forEach(hand::add);
+        cards.forEach(hand::add);
         assertThat(hand.hasAce()).isEqualTo(expected);
     }
 
@@ -73,9 +74,9 @@ class HandTest {
     @DisplayName("패의 점수를 계산할 수 있다.")
     @MethodSource
     @ParameterizedTest
-    void score(Cards cards, int expected) {
+    void score(List<Card> cards, int expected) {
         Hand hand = new Hand();
-        cards.toList().forEach(hand::add);
+        cards.forEach(hand::add);
         assertThat(hand.score(true)).isEqualTo(expected);
     }
 }

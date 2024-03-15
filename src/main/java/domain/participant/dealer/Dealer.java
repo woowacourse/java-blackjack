@@ -2,8 +2,10 @@ package domain.participant.dealer;
 
 import static game.BlackjackGame.BLACKJACK_SCORE;
 
+import java.util.List;
+
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Deck;
 import domain.participant.Participant;
 import domain.participant.attributes.Name;
 import domain.participant.player.Players;
@@ -15,12 +17,12 @@ public class Dealer extends Participant {
 
     private static final Name DEFAULT_DEALER_NAME = new Name("딜러");
 
-    private final Cards deck;
+    private final Deck deck;
     private boolean hasSoftAce;
 
-    public Dealer(final Cards cards) {
+    public Dealer(final Deck deck) {
         super(DEFAULT_DEALER_NAME);
-        deck = cards;
+        this.deck = deck;
     }
 
     public void shuffleCards() {
@@ -53,7 +55,8 @@ public class Dealer extends Participant {
     }
 
     public Card peek() {
-        return hand.peek();
+        List<Card> cards = hand.toList();
+        return cards.get(0);
     }
 
     public boolean canHit() {

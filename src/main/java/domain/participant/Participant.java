@@ -7,17 +7,17 @@ import static game.BlackjackGame.BLACKJACK_SCORE;
 
 import domain.BlackjackResultStatus;
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.participant.attributes.Name;
 
 public abstract class Participant {
 
     protected final Name name;
-    protected final Cards hand;
+    protected final Hand hand;
 
     public Participant(final Name name) {
         this.name = name;
-        hand = Cards.emptyCards();
+        hand = new Hand();
     }
 
     public void receive(final Card card) {
@@ -61,7 +61,7 @@ public abstract class Participant {
         return name;
     }
 
-    public Cards hand() {
+    public Hand hand() {
         return hand;
     }
 

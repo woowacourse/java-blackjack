@@ -17,35 +17,35 @@ public class CardFixture {
         return new Card(SPADE, rank);
     }
 
-    public static Cards cardsOfBlackjack() {
-        return Cards.from(List.of(cardOf(ACE), cardOf(KING)));
+    public static List<Card> cardsOfBlackjack() {
+        return List.of(cardOf(ACE), cardOf(KING));
     }
 
-    public static Cards cardsOfSoft22() {
-        return Cards.from(List.of(cardOf(ACE), cardOf(ACE), cardOf(TEN)));
+    public static List<Card> cardsOfSoft22() {
+        return List.of(cardOf(ACE), cardOf(ACE), cardOf(TEN));
     }
 
-    public static Cards cardsOfSoft20() {
-        return Cards.from(List.of(cardOf(ACE), cardOf(NINE)));
+    public static List<Card> cardsOfSoft20() {
+        return List.of(cardOf(ACE), cardOf(NINE));
     }
 
-    public static Cards cardsOfSoft15() {
-        return Cards.from(List.of(cardOf(ACE), cardOf(FOUR)));
+    public static List<Card> cardsOfSoft15() {
+        return List.of(cardOf(ACE), cardOf(FOUR));
     }
 
-    public static Cards cardsOfSoft12() {
-        return Cards.from(List.of(cardOf(ACE), cardOf(ACE)));
+    public static List<Card> cardsOfSoft12() {
+        return List.of(cardOf(ACE), cardOf(ACE));
     }
 
-    public static Cards cardsOf22() {
-        return Cards.from(List.of(cardOf(KING), cardOf(KING), cardOf(TWO)));
+    public static List<Card> cardsOf22() {
+        return List.of(cardOf(KING), cardOf(KING), cardOf(TWO));
     }
 
-    public static Cards cardsOf20() {
-        return Cards.from(List.of(cardOf(KING), cardOf(KING)));
+    public static List<Card> cardsOf20() {
+        return List.of(cardOf(KING), cardOf(KING));
     }
 
-    public static Cards cardsOf15() {
-        return Cards.from(List.of(cardOf(KING), cardOf(FIVE)));
+    public static List<Card> cardsOf15() {
+        return List.of(cardOf(KING), cardOf(FIVE));
     }
 }

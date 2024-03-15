@@ -12,12 +12,12 @@ public class CardMachine {
 
     private CardMachine() {}
 
-    public static Cards cardDecks() {
-        List<Card> cardDecks = new ArrayList<>();
+    public static Deck newDeck() {
+        List<Card> deck = new ArrayList<>();
         for (int i = 0; i < DEFAULT_NUMBER_OF_DECKS; i++) {
-            cardDecks.addAll(createCardDeck());
+            deck.addAll(createCardDeck());
         }
-        return Cards.from(cardDecks);
+        return new Deck(deck);
     }
 
     private static List<Card> createCardDeck() {

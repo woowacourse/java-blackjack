@@ -7,7 +7,7 @@ import java.util.EnumSet;
 
 import domain.BlackjackResult;
 import domain.BlackjackResultStatus;
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.participant.Participant;
 import domain.participant.dealer.Dealer;
 import domain.participant.dealer.DealerResult;
@@ -43,11 +43,11 @@ public class ResultView implements BlackjackViewParser {
     }
 
     public void printParticipantHand(final Participant participant) {
-        Cards cards = participant.hand();
+        Hand hand = participant.hand();
         System.out.printf(
                 PARTICIPANT_NAME_AND_CARDS,
                 parseName(participant.name()),
-                parseCards(cards)
+                parseHand(hand)
         );
     }
 
@@ -70,11 +70,11 @@ public class ResultView implements BlackjackViewParser {
     }
 
     private void printCardAndSum(final Participant participant) {
-        Cards cards = participant.hand();
+        Hand hand = participant.hand();
         System.out.printf(
                 PARTICIPANT_NAME_AND_CARDS + " - 결과: %d",
                 parseName(participant.name()),
-                parseCards(cards),
+                parseHand(hand),
                 participant.score()
         );
     }

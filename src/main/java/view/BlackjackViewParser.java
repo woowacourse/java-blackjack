@@ -2,9 +2,9 @@ package view;
 
 import domain.BlackjackResultStatus;
 import domain.card.Card;
+import domain.card.Hand;
 import domain.card.Rank;
 import domain.card.Suit;
-import domain.card.Cards;
 import domain.participant.attributes.Name;
 import domain.participant.player.Players;
 
@@ -21,8 +21,9 @@ public interface BlackjackViewParser {
         return name.value();
     }
 
-    default String parseCards(final Cards cards) {
-        return cards.stream()
+    default String parseHand(final Hand hand) {
+        return hand.toList()
+                .stream()
                 .map(this::parseCard)
                 .reduce((card1, card2) -> card1 + ", " + card2)
                 .orElse("");

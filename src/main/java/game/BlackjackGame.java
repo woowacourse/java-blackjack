@@ -1,7 +1,5 @@
 package game;
 
-import java.util.List;
-
 import domain.BlackjackResult;
 import domain.card.CardMachine;
 import domain.participant.attributes.Names;
@@ -26,7 +24,7 @@ public class BlackjackGame {
 
     public void play() {
         Players players = createPlayers();
-        Dealer dealer = new Dealer(CardMachine.cardDecks());
+        Dealer dealer = new Dealer(CardMachine.newDeck());
         initialize(dealer, players);
         askAndDealMoreCards(dealer, players);
         dealAndPrintIfHit(dealer);
