@@ -18,6 +18,6 @@ class CardHandDtoTest {
 
         final CardHandDto cardHandDto = CardHandDto.from(cardHand);
 
-        assertThat(cardHandDto.cardDtos()).hasSize(2);
+        assertThat(cardHandDto.cards()).hasSize(2);
     }
 }

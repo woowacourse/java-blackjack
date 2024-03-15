@@ -17,7 +17,7 @@ class ParticipantsDtoTest {
         final Players players = new Players(List.of("pobi", "jason"));
         final ParticipantsDto participantsDto = ParticipantsDto.toDtoWithoutDealer(players);
 
-        final List<ParticipantDto> participantDtos = participantsDto.participantDtos();
+        final List<ParticipantDto> participantDtos = participantsDto.participants();
 
         assertThat(participantDtos).hasSize(2);
     }
@@ -28,7 +28,7 @@ class ParticipantsDtoTest {
         final Players players = new Players(List.of("pobi", "jason"));
         final ParticipantsDto participantsDto = ParticipantsDto.toDtoWithDealer(dealer, players);
 
-        final List<ParticipantDto> participantDtos = participantsDto.participantDtos();
+        final List<ParticipantDto> participantDtos = participantsDto.participants();
 
         assertThat(participantDtos).hasSize(3);
     }

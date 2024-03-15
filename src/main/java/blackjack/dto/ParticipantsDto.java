@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record ParticipantsDto(List<ParticipantDto> participantDtos) {
+public record ParticipantsDto(List<ParticipantDto> participants) {
 
     public static ParticipantsDto toDtoWithoutDealer(final Players players) {
         final List<Participant> participants = new ArrayList<>(players.getPlayers());

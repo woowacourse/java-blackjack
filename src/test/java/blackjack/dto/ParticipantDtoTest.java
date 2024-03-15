@@ -6,6 +6,8 @@ import blackjack.domain.card.Suit;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class ParticipantDtoTest {
@@ -17,12 +19,12 @@ class ParticipantDtoTest {
         final ParticipantDto participantDto = ParticipantDto.from(player);
 
         final String name = participantDto.name();
-        final CardHandDto cardHandDto = participantDto.cardHandDto();
+        final List<CardDto> cardDtos = participantDto.cards();
         final int score = participantDto.score();
 
         assertSoftly(softly -> {
             softly.assertThat(name).isEqualTo("pobi");
-            softly.assertThat(cardHandDto.cardDtos()).hasSize(1);
+            softly.assertThat(cardDtos).hasSize(1);
             softly.assertThat(score).isEqualTo(10);
         });
     }

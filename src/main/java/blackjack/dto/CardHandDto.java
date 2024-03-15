@@ -6,7 +6,7 @@ import blackjack.domain.card.CardHand;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record CardHandDto(List<CardDto> cardDtos) {
+public record CardHandDto(List<CardDto> cards) {
 
     public static CardHandDto from(final CardHand cardHand) {
         final List<Card> cards = cardHand.getCards();
