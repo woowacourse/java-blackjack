@@ -6,6 +6,8 @@ import blackjack.domain.hands.HandsScore;
 
 import java.util.List;
 
+// TODO 메서드 순서 - business method > getter > abstract
+
 public abstract class Participant {
 
     protected final Name name;

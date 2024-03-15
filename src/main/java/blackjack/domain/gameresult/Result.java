@@ -6,6 +6,7 @@ import blackjack.domain.participant.Player;
 import java.util.function.BiPredicate;
 import java.util.stream.Stream;
 
+// Condition에 대한 판단을 옮겨보기
 public enum Result {
 
     BLACKJACK_WIN(Result::isBlackJackWin),

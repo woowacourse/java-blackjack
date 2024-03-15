@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Kind;
-import blackjack.domain.card.Value;
+import blackjack.domain.card.CardKind;
+import blackjack.domain.card.CardNumber;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,8 +26,8 @@ class DealerTest {
     @Test
     void should_AddCard_When_HandsScoreBelowThreshold() {
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Kind.SPADE, Value.JACK));
-        dealer.addCard(new Card(Kind.HEART, Value.SIX));
+        dealer.addCard(new Card(CardKind.SPADE, CardNumber.JACK));
+        dealer.addCard(new Card(CardKind.HEART, CardNumber.SIX));
 
         assertTrue(dealer::canAddCard);
     }
@@ -36,8 +36,8 @@ class DealerTest {
     @Test
     void should_NotAddCard_When_HandsScoreOverThreshold() {
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Kind.SPADE, Value.JACK));
-        dealer.addCard(new Card(Kind.HEART, Value.SEVEN));
+        dealer.addCard(new Card(CardKind.SPADE, CardNumber.JACK));
+        dealer.addCard(new Card(CardKind.HEART, CardNumber.SEVEN));
 
         assertFalse(dealer::canAddCard);
     }
@@ -46,10 +46,10 @@ class DealerTest {
     @Test
     void should_ShowFirstCard() {
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Kind.SPADE, Value.JACK));
-        dealer.addCard(new Card(Kind.HEART, Value.SIX));
+        dealer.addCard(new Card(CardKind.SPADE, CardNumber.JACK));
+        dealer.addCard(new Card(CardKind.HEART, CardNumber.SIX));
 
         assertThat(dealer.getFirstCard())
-                .isEqualTo(new Card(Kind.SPADE, Value.JACK));
+                .isEqualTo(new Card(CardKind.SPADE, CardNumber.JACK));
     }
 }

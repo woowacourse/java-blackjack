@@ -8,8 +8,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static blackjack.domain.card.Kind.*;
-import static blackjack.domain.card.Value.*;
+import static blackjack.domain.card.CardKind.*;
+import static blackjack.domain.card.CardNumber.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -28,10 +28,10 @@ class CardTest {
     @ParameterizedTest
     @MethodSource("makeDummyCards")
     void should_CreateCard_When_GiveCardKindAndValue(Card testCard,
-                                                     Kind expectedKind, Value expectedValue) {
+                                                     CardKind expectedCardKind, CardNumber expectedCardNumber) {
         assertAll(
-                () -> assertThat(testCard.getKind()).isEqualTo(expectedKind),
-                () -> assertThat(testCard.getValue()).isEqualTo(expectedValue)
+                () -> assertThat(testCard.getKind()).isEqualTo(expectedCardKind),
+                () -> assertThat(testCard.getValue()).isEqualTo(expectedCardNumber)
         );
     }
 

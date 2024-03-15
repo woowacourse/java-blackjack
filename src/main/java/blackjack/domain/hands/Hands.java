@@ -5,7 +5,7 @@ import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-import static blackjack.domain.card.Value.ACE;
+import static blackjack.domain.card.CardNumber.ACE;
 
 public class Hands {
     private static final HandsScore BLACK_JACK = HandsScore.blackJack();

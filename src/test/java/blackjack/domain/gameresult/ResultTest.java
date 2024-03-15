@@ -11,8 +11,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static blackjack.domain.card.Kind.*;
-import static blackjack.domain.card.Value.*;
+import static blackjack.domain.card.CardKind.*;
+import static blackjack.domain.card.CardNumber.*;
 import static blackjack.domain.gameresult.Result.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;

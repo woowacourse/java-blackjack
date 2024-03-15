@@ -9,8 +9,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static blackjack.domain.card.Kind.SPADE;
-import static blackjack.domain.card.Value.*;
+import static blackjack.domain.card.CardKind.SPADE;
+import static blackjack.domain.card.CardNumber.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

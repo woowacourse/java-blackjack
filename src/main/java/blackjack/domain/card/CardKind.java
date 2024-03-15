@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-public enum Kind {
+public enum CardKind {
     SPADE,
     DIAMOND,
     HEART,

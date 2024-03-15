@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static blackjack.domain.card.Kind.SPADE;
-import static blackjack.domain.card.Value.ACE;
+import static blackjack.domain.card.CardKind.SPADE;
+import static blackjack.domain.card.CardNumber.ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 

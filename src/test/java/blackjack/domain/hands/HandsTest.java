@@ -1,8 +1,8 @@
 package blackjack.domain.hands;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Kind;
-import blackjack.domain.card.Value;
+import blackjack.domain.card.CardKind;
+import blackjack.domain.card.CardNumber;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +15,7 @@ class HandsTest {
     @Test
     void should_addCard_IntoHands() {
         Hands hands = new Hands();
-        hands.addCard(new Card(Kind.CLOVER, Value.ACE));
+        hands.addCard(new Card(CardKind.CLOVER, CardNumber.ACE));
         assertThat(hands.getHands()).hasSize(1);
     }
 
@@ -24,8 +24,8 @@ class HandsTest {
     void should_HandsScore_Equals_SumOfCardScores() {
         Hands hands = new Hands();
 
-        hands.addCard(new Card(Kind.CLOVER, Value.TWO));
-        hands.addCard(new Card(Kind.HEART, Value.TWO));
+        hands.addCard(new Card(CardKind.CLOVER, CardNumber.TWO));
+        hands.addCard(new Card(CardKind.HEART, CardNumber.TWO));
 
         assertThat(hands.getHandsScore()).isEqualTo(HandsScore.from(4));
     }
@@ -36,11 +36,11 @@ class HandsTest {
         Hands hands = new Hands();
         assertAll(
                 () -> {
-                    hands.addCard(new Card(Kind.CLOVER, Value.ACE));
+                    hands.addCard(new Card(CardKind.CLOVER, CardNumber.ACE));
                     assertThat(hands.getHandsScore()).isEqualTo(HandsScore.from(11));
                 },
                 () -> {
-                    hands.addCard(new Card(Kind.HEART, Value.ACE));
+                    hands.addCard(new Card(CardKind.HEART, CardNumber.ACE));
                     assertThat(hands.getHandsScore()).isEqualTo(HandsScore.from(12));
                 });
     }

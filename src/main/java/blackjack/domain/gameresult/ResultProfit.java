@@ -4,6 +4,7 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 import static blackjack.domain.gameresult.Result.*;
+// TODO 곱하는 RATE로 제한하기
 
 public enum ResultProfit {
 

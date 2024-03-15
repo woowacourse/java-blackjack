@@ -1,8 +1,8 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Kind;
-import blackjack.domain.card.Value;
+import blackjack.domain.card.CardKind;
+import blackjack.domain.card.CardNumber;
 
 import java.util.ArrayDeque;
 import java.util.Collections;
@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Deck {
-    private static final List<Card> CACHE_DECK = Stream.of(Kind.values())
-            .flatMap(kind -> Stream.of(Value.values()).map(value -> new Card(kind, value)))
+    private static final List<Card> CACHE_DECK = Stream.of(CardKind.values())
+            .flatMap(kind -> Stream.of(CardNumber.values()).map(value -> new Card(kind, value)))
             .collect(Collectors.toList());
 
     private final Deque<Card> cards;
