@@ -7,8 +7,14 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class ShuffledCardsGenerator {
-    private static final int DUPLICATES_COUNT = 6;
-    private static final List<Card> cachedCards = generateCardsOfOnePack();
+    private static final List<Card> cachedCards;
+
+    static {
+        cachedCards = Stream.of(Symbol.values())
+                .flatMap(symbol -> Arrays.stream(Rank.values())
+                        .map(rank -> new Card(symbol, rank)))
+                .toList();
+    }
 
     public List<Card> generate() {
         List<Card> cards = generateBlackJackCards();
@@ -18,16 +24,9 @@ public class ShuffledCardsGenerator {
 
     private List<Card> generateBlackJackCards() {
         List<Card> blackJackCards = new ArrayList<>();
-        for (int count = 0; count < DUPLICATES_COUNT; count++) {
+        for (int count = 0; count < Deck.DECK_COUNT; count++) {
             blackJackCards.addAll(new ArrayList<>(cachedCards));
         }
         return blackJackCards;
-    }
-
-    private static List<Card> generateCardsOfOnePack() {
-        return Stream.of(Symbol.values())
-                .flatMap(symbol -> Arrays.stream(Rank.values())
-                        .map(rank -> new Card(symbol, rank)))
-                .toList();
     }
 }

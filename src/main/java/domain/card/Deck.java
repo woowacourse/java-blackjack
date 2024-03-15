@@ -5,6 +5,7 @@ import java.util.Deque;
 import java.util.List;
 
 public class Deck {
+    public static final int DECK_COUNT = 6;
     private final Deque<Card> cards;
 
     private Deck(Deque<Card> cards) {
