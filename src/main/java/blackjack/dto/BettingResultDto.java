@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.domain.PlayerBetting;
+import blackjack.domain.betting.PlayerBetting;
 
 public record BettingResultDto(String name, int betting) {
    public static BettingResultDto from(final PlayerBetting bettingResult) {

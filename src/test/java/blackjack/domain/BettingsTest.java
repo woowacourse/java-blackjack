@@ -2,6 +2,8 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.betting.PlayerBetting;
+import blackjack.domain.betting.PlayerBettings;
 import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.result.WinStatus;
 import blackjack.domain.result.WinningResult;
@@ -19,7 +21,7 @@ public class BettingsTest {
             "WIN_BLACKJACK, 15000, 30000",
             "LOSE, -10000, -20000",
             "DRAW, 0, 0"})
-    void getBettingResults(WinStatus winStatus, int pobiExpected, int jasonExpected) {
+    void applyWinStatus(WinStatus winStatus, int pobiExpected, int jasonExpected) {
         // given
         WinningResult winningResult = new WinningResult(Map.of(
                 new ParticipantName("pobi"), winStatus,
@@ -35,5 +37,30 @@ public class BettingsTest {
         // then
         assertThat(bettingResults.getPlayerBettings().get(0).getBetting()).isEqualTo(pobiExpected);
         assertThat(bettingResults.getPlayerBettings().get(1).getBetting()).isEqualTo(jasonExpected);
+    }
+
+    @DisplayName("플레이어의 승패에 따라 딜러의 최종 수익을 구한다.")
+    @ParameterizedTest
+    @CsvSource(value = {
+            "WIN, LOSE, 10000 ",
+            "LOSE, WIN, -10000",
+            "WIN, DRAW, -10000",
+            "DRAW, DRAW, 0"})
+    void getDealerResult(WinStatus pobiWinStatus, WinStatus jasonWinStatus, int expeted) {
+        // given
+        WinningResult winningResult = new WinningResult(Map.of(
+                new ParticipantName("pobi"), pobiWinStatus,
+                new ParticipantName("jason"), jasonWinStatus));
+
+        PlayerBetting pobiBetting = new PlayerBetting("pobi", 10000);
+        PlayerBetting jasonBetting = new PlayerBetting("jason", 20000);
+        PlayerBettings playerBettings = new PlayerBettings(List.of(pobiBetting, jasonBetting));
+        PlayerBettings bettingResults = playerBettings.applyWinStatus(winningResult);
+
+        // when
+        PlayerBetting dealerResult = bettingResults.getDealerResult();
+
+        // then
+        assertThat(dealerResult.getBetting()).isEqualTo(expeted);
     }
 }

@@ -1,6 +1,4 @@
-package blackjack.domain;
-
-import blackjack.domain.result.Score;
+package blackjack.domain.result;
 
 public class ParticipantScoreStatus {
     private final boolean isBlackjack;

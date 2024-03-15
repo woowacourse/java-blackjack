@@ -1,7 +1,5 @@
 package blackjack.domain.result;
 
-import blackjack.domain.ParticipantScoreStatus;
-
 public enum BlackjackStatus {
     DEAD,
     ALIVE,

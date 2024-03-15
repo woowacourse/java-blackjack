@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.domain.PlayerBettings;
+import blackjack.domain.betting.PlayerBettings;
 import java.util.List;
 import java.util.stream.Collectors;
 
