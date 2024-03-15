@@ -3,24 +3,12 @@ package blackjack.view;
 import blackjack.dto.BettingMoneyDto;
 import blackjack.dto.PlayerDto;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private void printVictory(Map<String, Boolean> victoryResult, String playerName) {
-        if (victoryResult.get(playerName)) {
-            System.out.println(playerName + ": 승");
-            return;
-        }
-        System.out.println(playerName + ": 패");
-    }
-
-    public void printMoneyResult(List<BettingMoneyDto> bettingMoneyResult) {
+    public void printMoneyResult(BettingMoneyDto bettingMoneyResult) {
         System.out.println("## 최종 수익");
-        for (BettingMoneyDto bettingMoneyDto : bettingMoneyResult) {
-            System.out.printf("%s: %d\n", bettingMoneyDto.playerName(), bettingMoneyDto.money());
-        }
-
+        System.out.println(bettingMoneyResult.toString());
     }
 
     public void printSetting(PlayerDto dealer, List<PlayerDto> players) {

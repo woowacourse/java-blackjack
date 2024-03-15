@@ -52,14 +52,15 @@ public class GameBoard {
         dealer.receiveCard(dealer.drawCard());
     }
 
-    public Map<Player, Victory> calculateVictory() {
-        return players.calculateVictory(dealer.calculateScore(), dealer.isBlackjack());
-    }
-
-    public void calculateBettingMoney(Map<Player, Victory> victory) {
+    public void calculateBettingMoney() {
+        Map<Player, Victory> victory = calculateVictory();
         for (Player onePlayer : victory.keySet()) {
             calculateOnePlayerBettingMoney(onePlayer, victory.get(onePlayer));
         }
+    }
+
+    private Map<Player, Victory> calculateVictory() {
+        return players.calculateVictory(dealer.calculateScore(), dealer.isBlackjack());
     }
 
     private void calculateOnePlayerBettingMoney(Player onePlayer, Victory victory) {

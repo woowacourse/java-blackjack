@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.GameBoard;
-import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.GamblingMoney;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
@@ -10,7 +9,6 @@ import blackjack.dto.BettingMoneyDto;
 import blackjack.dto.PlayerDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackGame {
@@ -97,22 +95,8 @@ public class BlackjackGame {
     }
 
     private void handleBettingMoney(GameBoard gameBoard) {
-        List<BettingMoneyDto> bettingMoneyResult = new ArrayList<>();
-        gameBoard.calculateBettingMoney(gameBoard.calculateVictory());
-        handleDealerBettingMoney(gameBoard, bettingMoneyResult);
-        handlePlayersBettingMoney(gameBoard, bettingMoneyResult);
+        gameBoard.calculateBettingMoney();
+        BettingMoneyDto bettingMoneyResult = BettingMoneyDto.from(gameBoard.getDealer(), gameBoard.getPlayers());
         outputView.printMoneyResult(bettingMoneyResult);
-    }
-
-    private void handleDealerBettingMoney(GameBoard gameBoard, List<BettingMoneyDto> bettingMoneyResult) {
-        Dealer dealer = gameBoard.getDealer();
-        bettingMoneyResult.add(BettingMoneyDto.from(dealer));
-    }
-
-    private void handlePlayersBettingMoney(GameBoard gameBoard, List<BettingMoneyDto> bettingMoneyResult) {
-        Players players = gameBoard.getPlayers();
-        for (int i = 0; i < gameBoard.countPlayers(); i++) {
-            bettingMoneyResult.add(BettingMoneyDto.from(players.getOnePlayer(i)));
-        }
     }
 }
