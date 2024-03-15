@@ -19,7 +19,7 @@ class ParticipantTest {
         Card cardTwo = new Card(CardShape.SPADE, CardNumber.TWO);
         Card cardKing = new Card(HEART, CardNumber.KING);
         Card cardQueen = new Card(HEART, CardNumber.QUEEN);
-        Player player = new Player(new Name("hotea"), new BettingMoney(5000));
+        Player player = Player.register(new Name("hotea"), new BettingMoney(5000));
         player.receive(cardTwo);
         player.receive(cardKing);
         player.receive(cardQueen);
@@ -31,7 +31,7 @@ class ParticipantTest {
     void isBlackjack() {
         Card cardAce = new Card(CardShape.SPADE, CardNumber.ACE);
         Card cardKing = new Card(HEART, CardNumber.KING);
-        Player player = new Player(new Name("hotea"), new BettingMoney(5000));
+        Player player = Player.register(new Name("hotea"), new BettingMoney(5000));
         player.receive(cardAce);
         player.receive(cardKing);
         assertThat(player.isBlackjack()).isTrue();

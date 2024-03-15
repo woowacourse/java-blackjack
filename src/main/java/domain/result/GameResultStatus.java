@@ -35,4 +35,7 @@ public enum GameResultStatus {
         return value;
     }
 
+    public ResultProfitRatio getResultProfitRatio() {
+        return resultProfitRatio;
+    }
 }

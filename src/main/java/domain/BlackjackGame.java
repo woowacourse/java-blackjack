@@ -23,7 +23,6 @@ public class BlackjackGame {
     }
 
     public void setUp() {
-        dealer.shuffleCards();
         handOutCards(dealer, INITIAL_CARD_COUNT);
         players.forEach(player -> handOutCards(player, INITIAL_CARD_COUNT));
         checkBlackjack();
@@ -43,20 +42,17 @@ public class BlackjackGame {
         }
     }
 
-    public GameResult resultsOfPlayerPosition() {
+    public GameResult resultsOfParticipants() {
         GameResult gameResult = new GameResult();
-        players.forEach(player -> gameResult.put(player, getResultOf(player, dealer)));
+        players.forEach(player -> player.revenue(getResultOf(player, dealer)));
+        gameResult.put(dealer, dealer.calculateProfit(players));
+        players.forEach(player -> gameResult.put(player, player.profit()));
         return gameResult;
     }
 
-    public GameResult resultsOfDealerPosition() {
-        GameResult gameResult = new GameResult();
-        players.forEach(player -> gameResult.put(player, getResultOf(dealer, player)));
-        return gameResult;
-    }
-
-    private GameResultStatus getResultOf(Participant standardTarget, Participant comparisonTarget) {
-        return GameResultStatus.comparedTo(standardTarget.score(), comparisonTarget.score());
+    private ResultProfitRatio getResultOf(Participant standardTarget, Participant comparisonTarget) {
+        return GameResultStatus.comparedTo(standardTarget.score(), comparisonTarget.score())
+                               .getResultProfitRatio();
     }
 
     public Dealer dealer() {

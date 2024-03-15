@@ -16,7 +16,7 @@ public class ParsingView {
                       .map(participantDto -> participantDto.nameDto().name())
                       .collect(Collectors.joining(DELIMITER + SPACING));
     }
-    public String playerResult(final Map<String, String> playerResults) {
+    public String playerResult(final Map<String, Integer> playerResults) {
         return playerResults.keySet()
                             .stream()
                             .map(player -> player + CONNECT + playerResults.get(player))

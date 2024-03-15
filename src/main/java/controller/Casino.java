@@ -30,7 +30,9 @@ public class Casino {
     public void open() {
         Names names = NameMapper.namesDtoToNames(inputView.askPlayerNames());
         List<BettingMoney> bettingMoneyList = askBettingMoney(names);
-        BlackjackGame game = new BlackjackGame(new Dealer(Cards.deck()),
+        Dealer dealer = new Dealer(Cards.deck());
+        dealer.shuffleCards();
+        BlackjackGame game = new BlackjackGame(dealer,
                 ParticipantMapper.namesAndBettingMoneyToPlayer(names, bettingMoneyList));
         game.setUp();
         playOf(game);
@@ -74,8 +76,7 @@ public class Casino {
         resultView.printResults(
                 ParticipantMapper.participantToParticipantDto(game.dealer()),
                 ParticipantMapper.playersToParticipantsDto(game.players()),
-                GameResultMapper.gameResultToGameResultDto(game.resultsOfDealerPosition(),
-                        game.resultsOfPlayerPosition())
+                GameResultMapper.gameResultToGameResultDto(game.resultsOfParticipants())
         );
     }
 }

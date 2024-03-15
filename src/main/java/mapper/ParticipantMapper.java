@@ -36,7 +36,7 @@ public class ParticipantMapper {
         List<Name> nameList = names.playerNames();
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < nameList.size(); i++) {
-            players.add(new Player(nameList.get(i), bettingMoneys.get(i)));
+            players.add(Player.register(nameList.get(i), bettingMoneys.get(i)));
         }
         return new Players(players);
     }
