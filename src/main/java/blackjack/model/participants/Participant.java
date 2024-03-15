@@ -7,7 +7,7 @@ import blackjack.model.state.State;
 import java.util.List;
 
 public abstract class Participant {
-    protected State state;
+    private State state;
 
     protected Participant() {
         this.state = new InitialState();
@@ -33,5 +33,9 @@ public abstract class Participant {
 
     public void finishTurn() {
         state = state.stand();
+    }
+
+    public State getState() {
+        return state;
     }
 }

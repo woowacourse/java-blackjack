@@ -15,4 +15,6 @@ public interface State {
     Money calculateProfit(Money betMoney);
 
     public Cards cards();
+    
+    public int getScore();
 }

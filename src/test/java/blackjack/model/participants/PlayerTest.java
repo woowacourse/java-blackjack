@@ -7,6 +7,10 @@ import blackjack.model.cards.Card;
 import blackjack.model.cards.CardNumber;
 import blackjack.model.cards.CardShape;
 import blackjack.model.cards.Cards;
+import blackjack.model.state.BlackJack;
+import blackjack.model.state.Bust;
+import blackjack.model.state.Stand;
+import blackjack.model.state.State;
 import blackjack.vo.Money;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -79,8 +83,9 @@ class PlayerTest {
     void evaluateProfitBust() {
         Card card = new Card(CardNumber.TEN, CardShape.SPADE);
         player.addCard(card);
+        State comparisonState = new Bust(comparisonCards);
 
-        Money profit = player.evaluateProfit(comparisonCards);
+        Money profit = player.evaluateProfit(comparisonState);
 
         assertThat(profit).isEqualTo(new Money(-1000));
     }
@@ -91,8 +96,9 @@ class PlayerTest {
         Card card = new Card(CardNumber.TEN, CardShape.DIAMOND);
         comparisonCards.add(card);
         player.finishTurn();
+        State comparisonState = new Bust(comparisonCards);
 
-        Money profit = player.evaluateProfit(comparisonCards);
+        Money profit = player.evaluateProfit(comparisonState);
 
         assertThat(profit).isEqualTo(new Money(1000));
     }
@@ -104,8 +110,9 @@ class PlayerTest {
         player.addCard(new Card(cardNumber, CardShape.HEART));
         player.finishTurn();
         comparisonCards.add(new Card(otherNumber, CardShape.HEART));
+        State comparisionState = new Stand(comparisonCards);
 
-        Money profit = player.evaluateProfit(comparisonCards);
+        Money profit = player.evaluateProfit(comparisionState);
 
         assertThat(profit).isEqualTo(new Money(expected));
     }
@@ -127,8 +134,9 @@ class PlayerTest {
         );
         player.addCards(given);
         player.betMoney(new Money(1000));
+        State comparisionState = new Stand(comparisonCards);
 
-        Money profit = player.evaluateProfit(comparisonCards);
+        Money profit = player.evaluateProfit(comparisionState);
 
         assertThat(profit).isEqualTo(new Money(1500));
     }
@@ -149,8 +157,9 @@ class PlayerTest {
         );
         player.addCards(given);
         player.betMoney(new Money(1000));
+        State comparisionState = new BlackJack(comparisonCards);
 
-        Money profit = player.evaluateProfit(comparisonCards);
+        Money profit = player.evaluateProfit(comparisionState);
 
         assertThat(profit).isEqualTo(new Money(0));
     }

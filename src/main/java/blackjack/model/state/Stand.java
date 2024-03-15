@@ -8,10 +8,6 @@ public class Stand extends Finished {
         super(cards);
     }
 
-    public int getScore() {
-        return cards().getScore();
-    }
-
     @Override
     public Money calculateProfit(Money betMoney) {
         return new Money(betMoney.value());

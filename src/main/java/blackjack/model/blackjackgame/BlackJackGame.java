@@ -39,7 +39,7 @@ public class BlackJackGame {
 
     public PlayerProfits calculatePlayerProfits() {
         Map<Player, Money> result = new LinkedHashMap<>();
-        players.forEach(player -> result.put(player, player.evaluateProfit(dealer.getCards())));
+        players.forEach(player -> result.put(player, player.evaluateProfit(dealer.getState())));
         return new PlayerProfits(result);
     }
 

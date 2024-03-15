@@ -1,9 +1,10 @@
 package blackjack.model.participants;
 
-import blackjack.model.cards.Cards;
 import blackjack.model.state.BlackJack;
+import blackjack.model.state.Bust;
 import blackjack.model.state.Hit;
 import blackjack.model.state.Stand;
+import blackjack.model.state.State;
 import blackjack.vo.Money;
 import blackjack.vo.Name;
 
@@ -17,31 +18,42 @@ public class Player extends Participant {
 
     @Override
     public boolean canHit() {
-        return state.getClass().equals(Hit.class) || state.getClass().equals(BlackJack.class);
+        return getState() instanceof Hit;
     }
 
     public void betMoney(Money betMoney) {
         betAmount = betMoney;
     }
 
-    public Money evaluateProfit(Cards otherCards) {
-        if (state.getClass().equals(BlackJack.class) && otherCards.isBlackJack()) {
+    public Money evaluateProfit(State otherState) {
+        if (isBlackJack(getState()) && isBlackJack(otherState)) {
             return new Money();
         }
-        if (state.getClass().equals(Stand.class) && !otherCards.isBust()) {
-            return compareScore(otherCards, betAmount);
+        if (isStand(getState()) && isNotBust(otherState)) {
+            return compareState(otherState, betAmount);
         }
-        return state.calculateProfit(betAmount);
+        return getState().calculateProfit(betAmount);
     }
 
-    private Money compareScore(Cards otherCards, Money betAmount) {
-        Stand stand = (Stand) state;
-        int score = stand.getScore();
-        if (score > otherCards.getScore()) {
-            return state.calculateProfit(betAmount);
+    private boolean isStand(State state) {
+        return state instanceof Stand;
+    }
+
+    private boolean isNotBust(State otherState) {
+        return !(otherState instanceof Bust);
+    }
+
+    private boolean isBlackJack(State state) {
+        return state instanceof BlackJack;
+    }
+
+    private Money compareState(State otherState, Money betAmount) {
+        int score = getScore();
+        if (score > otherState.getScore()) {
+            return getState().calculateProfit(betAmount);
         }
-        if (score < otherCards.getScore()) {
-            return state.calculateProfit(new Money(-betAmount.value()));
+        if (score < otherState.getScore()) {
+            return getState().calculateProfit(new Money(-betAmount.value()));
         }
         return new Money();
     }
