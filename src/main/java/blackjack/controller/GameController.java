@@ -25,11 +25,11 @@ public class GameController {
         Players gamePlayers = game.getPlayers();
         Deck deck = game.getDeck();
 
-        printInitialHands(gameDealer.getName(), gameDealer.getFirstCard(), gamePlayers.getPlayers());
+        printInitialHands(gameDealer.getFirstCard(), gamePlayers.getPlayers());
         confirmParticipantsHands(gamePlayers, deck, gameDealer);
 
         OutputView.printFinalHandsAndScoreMessage(gameDealer, gamePlayers);
-        OutputView.printGameResult(gameDealer.getName(), game.makeGameResult());
+        OutputView.printGameResult(game.makeGameResult());
     }
 
     private static Game makeGame() {
@@ -59,15 +59,15 @@ public class GameController {
         confirmDealerHands(dealer, deck);
     }
 
-    private static void printInitialHands(String dealerName, Card dealerFirstCard, List<Player> players) {
-        OutputView.printDrawInitialHandsMessage(dealerName, players);
-        OutputView.printParticipantsInitialHands(dealerName, dealerFirstCard, players);
+    private static void printInitialHands(Card dealerFirstCard, List<Player> players) {
+        OutputView.printDrawInitialHandsMessage(players);
+        OutputView.printParticipantsInitialHands(dealerFirstCard, players);
     }
 
     private static void confirmDealerHands(Dealer dealer, Deck deck) {
-        while (dealer.canAddCard()) {
+        while (dealer.shouldDraw()) {
             dealer.addCard(deck.draw());
-            OutputView.printDealerDrawMessage(dealer);
+            OutputView.printDealerDrawMessage();
         }
     }
 
@@ -78,7 +78,7 @@ public class GameController {
     }
 
     private static void askDrawToPlayer(Player player, Deck deck) {
-        while (InputView.askDraw(player.getName()) && player.canAddCard()) {
+        while (player.canAddCard() && InputView.askDraw(player.getName())) {
             player.addCard(deck.draw());
             OutputView.printParticipantHands(player.getName(), player.getHandsCards());
         }

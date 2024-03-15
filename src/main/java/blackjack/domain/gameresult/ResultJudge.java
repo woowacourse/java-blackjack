@@ -37,16 +37,16 @@ public enum ResultJudge {
 
     private static boolean isWin(Player player, Dealer dealer) {
         return (dealer.isBust() && !player.isBust())
-                || !player.isBust() && player.hasHigherScore(dealer);
+                || !player.isBust() && dealer.hasLowerScore(player);
     }
 
     private static boolean isLose(Player player, Dealer dealer) {
         return player.isBust()
-                || !player.isBust() && player.hasLowerScore(dealer);
+                || !player.isBust() && dealer.hasHigherScore(player);
     }
 
     private static boolean isDraw(Player player, Dealer dealer) {
         return (!dealer.isBust() && !player.isBust())
-                && player.hasSameScore(dealer);
+                && dealer.hasSameScore(player);
     }
 }

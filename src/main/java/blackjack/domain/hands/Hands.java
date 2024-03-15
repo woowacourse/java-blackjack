@@ -27,7 +27,7 @@ public class Hands {
         return HandsScore.from(score);
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return getHandsScore().isHigherThan(BLACK_JACK);
     }
 
