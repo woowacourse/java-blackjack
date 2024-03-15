@@ -15,7 +15,6 @@ import blackjack.domain.participant.Player2;
 import blackjack.domain.participant.PlayerName;
 import blackjack.domain.participant.Players;
 
-import blackjack.domain.game.Judge;
 import blackjack.domain.participant.Players2;
 import blackjack.view.mapper.CardRankMapper;
 import blackjack.view.mapper.CardSuitMapper;
@@ -50,7 +49,7 @@ public class MessageResolver {
     private String resolveNamesMessage(Players2 players) {
         return players.getPlayers().stream()
                 .map(Player2::getName)
-                .map(Name::getValue)
+                .map(Name::value)
                 .collect(Collectors.joining(SEPARATOR));
     }
 
@@ -71,7 +70,7 @@ public class MessageResolver {
     }
 
     private String resolveDealToPlayerMessage(Player2 player) {
-        return String.format(HAND_FORMAT, player.getName().getValue(), resolveHandMessage(player.revealHand()));
+        return String.format(HAND_FORMAT, player.getName().value(), resolveHandMessage(player.revealHand()));
     }
 
     private String resolveDealToOneMessage(Participant participant) {
@@ -94,7 +93,7 @@ public class MessageResolver {
     }
 
     public String resolveDrawToPlayerMessage(Player2 player) {
-        return String.format(HAND_FORMAT, player.getName().getValue(), resolveHandMessage(player.getHand()));
+        return String.format(HAND_FORMAT, player.getName().value(), resolveHandMessage(player.getHand()));
     }
 
     public String temp(Dealer2 dealer) {
@@ -171,7 +170,7 @@ public class MessageResolver {
     }
 
     private String resolvePlayerResultMessage(Player2 player, Result2 result2) {
-        return String.format("%s: %s", player.getName().getValue(), ResultStateMapper.toSymbol(result2));
+        return String.format("%s: %s", player.getName().value(), ResultStateMapper.toSymbol(result2));
     }
 
     private String resolvePlayerResult(Player player, Result result) {

@@ -31,7 +31,7 @@ public class InputView {
     }
 
     public DrawDecision readDrawDecision(Name name) {
-        String message = String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name.getValue());
+        String message = String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name.value());
         System.out.println(String.join("", LINE_SEPARATOR, message));
         return DrawDecisionMapper.toDrawDecision(scanner.nextLine());
     }
