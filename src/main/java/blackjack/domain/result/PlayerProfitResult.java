@@ -11,4 +11,8 @@ public class PlayerProfitResult {
     public PlayerProfitResult(Map<Player, Profit> playerProfitMap) {
         this.playerProfitMap = playerProfitMap;
     }
+
+    public Profit findProfitOfPlayer(Player player) {
+        return playerProfitMap.get(player);
+    }
 }
