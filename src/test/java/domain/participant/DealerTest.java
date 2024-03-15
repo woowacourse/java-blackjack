@@ -1,50 +1,31 @@
 package domain.participant;
 
-import static fixture.CardFixture.전체_카드;
 import static fixture.CardFixture.카드;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
-import domain.card.CardDeck;
 import domain.card.Denomination;
-import domain.card.Suit;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
     @Test
-    void 카드_덱에서_카드를_뽑는다() {
-        CardDeck cardDeck = new CardDeck(전체_카드());
-        Dealer dealer = new Dealer(cardDeck, cards -> {
-        });
-
-        Card card = dealer.pickCard();
-
-        assertThat(card).isEqualTo(new Card(Denomination.KING, Suit.DIAMOND));
-    }
-
-    @Test
-    void 점수의_합이_17보다_작으면_카드를_더_받아야_한다() {
-        CardDeck cardDeck = new CardDeck(전체_카드());
-        Dealer dealer = new Dealer(cardDeck, cards -> {
-        });
+    void 점수가_최소_점수_정책보다_작으면_true를_반환한다() {
+        Dealer dealer = new Dealer();
 
         dealer.receiveAdditionalCard(카드(Denomination.TEN));
         dealer.receiveAdditionalCard(카드(Denomination.SIX));
 
-        boolean result = dealer.isNecessaryMoreCard();
+        boolean result = dealer.isNotExceedDrawPolicy();
         assertThat(result).isTrue();
     }
 
     @Test
-    void 점수의_합이_17이상이면_카드를_더_받을_수_없다() {
-        CardDeck cardDeck = new CardDeck(전체_카드());
-        Dealer dealer = new Dealer(cardDeck, cards -> {
-        });
+    void 점수가_최소_점수_정책보다_크거나_같으면_false를_반환한다() {
+        Dealer dealer = new Dealer();
 
         dealer.receiveAdditionalCard(카드(Denomination.NINE));
         dealer.receiveAdditionalCard(카드(Denomination.EIGHT));
 
-        boolean result = dealer.isNecessaryMoreCard();
+        boolean result = dealer.isNotExceedDrawPolicy();
         assertThat(result).isFalse();
     }
 }

@@ -1,18 +1,23 @@
 package domain.blackjackgame;
 
 import static fixture.CardFixture.카드;
-import static fixture.DealerFixture.딜러;
+import static fixture.CardFixture.카드들;
 import static fixture.PlayersFixture.플레이어;
 import static fixture.PlayersFixture.플레이어들;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import domain.card.Card;
+import domain.card.CardDeck;
+import domain.card.CardFactory;
+import domain.card.CardShuffleStrategy;
 import domain.card.Denomination;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
-import java.util.Map;
+import java.util.List;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -20,75 +25,188 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-@TestInstance(Lifecycle.PER_CLASS)
 class BlackjackGameTest {
-    @Test
-    void 게임을_시작하면_딜러와_플레이어들에게_카드를_두장씩_나눠준다() {
-        Dealer dealer = 딜러();
-        Players players = 플레이어들("뽀로로", "프린", "포비");
-        BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
+    private final CardShuffleStrategy cardNoShuffleStrategy = cards -> {
+    };
 
-        blackjackGame.startGame();
+    @Test
+    void 게임을_시작하면_딜러와_플레이어들에게_카드를_두_장씩_나눠준다() {
+        BlackjackGame blackjackGame = new BlackjackGame(CardFactory.createCardDeck(), cardNoShuffleStrategy);
+        Dealer dealer = new Dealer();
+        Players players = 플레이어들("뽀로로", "프린", "포비");
+
+        blackjackGame.initGame(dealer, players);
+        List<Player> playerList = players.getPlayers();
         assertAll(
                 () -> assertThat(dealer.getCardList()).hasSize(2),
-                () -> assertThat(players.findPlayerByIndex(0).getCardList()).hasSize(2),
-                () -> assertThat(players.findPlayerByIndex(1).getCardList()).hasSize(2),
-                () -> assertThat(players.findPlayerByIndex(2).getCardList()).hasSize(2)
+                () -> assertThat(playerList.get(0).getCardList()).hasSize(2),
+                () -> assertThat(playerList.get(1).getCardList()).hasSize(2),
+                () -> assertThat(playerList.get(2).getCardList()).hasSize(2)
         );
     }
 
-    @ParameterizedTest
-    @MethodSource("provideDealerAndResult")
-    void 블랙잭_게임의_결과를_반환한다(Dealer dealer, ResultStatus resultStatus) {
-        Players players = 플레이어들("뽀로로");
-        BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
+    @Nested
+    class 플레이어가_bust일_때 {
+        @Test
+        void 딜러가_bust이면_진다() {
+            CardDeck cardDeck = new CardDeck(
+                    카드들(카드(Denomination.KING), 카드(Denomination.KING), 카드(Denomination.QUEEN), 카드(Denomination.TEN),
+                            카드(Denomination.JACK), 카드(Denomination.TEN)));
+            BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
+            Dealer dealer = new Dealer();
+            Players players = 플레이어들("프린");
+            blackjackGame.initGame(dealer, players);
+            blackjackGame.dealCardTo(players.getPlayers().get(0));
+            blackjackGame.dealCardTo(dealer);
 
-        blackjackGame.startGame();
+            GameResult result = blackjackGame.createGameResult(dealer, players);
+            assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), ResultStatus.LOSE);
+        }
 
-        GameResult result = blackjackGame.createGameResult();
-        Map<Player, ResultStatus> playerResult = result.getPlayerResult();
-        assertThat(playerResult).containsEntry(플레이어("뽀로로"), resultStatus);
+        @Test
+        void 딜러가_blackjack이면_진다() {
+            CardDeck cardDeck = new CardDeck(
+                    카드들(카드(Denomination.THREE), 카드(Denomination.QUEEN), 카드(Denomination.TEN), 카드(Denomination.ACE),
+                            카드(Denomination.TEN)));
+            BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
+            Dealer dealer = new Dealer();
+            Players players = 플레이어들("프린");
+            blackjackGame.initGame(dealer, players);
+            blackjackGame.dealCardTo(players.getPlayers().get(0));
+
+            GameResult result = blackjackGame.createGameResult(dealer, players);
+            assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), ResultStatus.LOSE);
+        }
+
+        @Test
+        void 딜러가_일반_점수이면_진다() {
+            CardDeck cardDeck = new CardDeck(
+                    카드들(카드(Denomination.THREE), 카드(Denomination.QUEEN), 카드(Denomination.TEN), 카드(Denomination.KING),
+                            카드(Denomination.SEVEN)));
+            BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
+            Dealer dealer = new Dealer();
+            Players players = 플레이어들("프린");
+            blackjackGame.initGame(dealer, players);
+            blackjackGame.dealCardTo(players.getPlayers().get(0));
+
+            GameResult result = blackjackGame.createGameResult(dealer, players);
+            assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), ResultStatus.LOSE);
+        }
     }
 
-    private Stream<Arguments> provideDealerAndResult() {
-        return Stream.of(
-                Arguments.of(
-                        딜러(카드(Denomination.THREE), 카드(Denomination.TEN), 카드(Denomination.SIX), 카드(Denomination.QUEEN)),
-                        ResultStatus.LOSE
-                ),
-                Arguments.of(
-                        딜러(카드(Denomination.TEN), 카드(Denomination.KING), 카드(Denomination.JACK), 카드(Denomination.QUEEN)),
-                        ResultStatus.DRAW
-                ),
-                Arguments.of(
-                        딜러(카드(Denomination.TEN), 카드(Denomination.THREE), 카드(Denomination.QUEEN), 카드(Denomination.SIX)),
-                        ResultStatus.WIN
-                )
-        );
+    @Nested
+    class 플레이어가_blackjack일_때 {
+        @Test
+        void 딜러가_bust이면_이긴다() {
+            CardDeck cardDeck = new CardDeck(
+                    카드들(카드(Denomination.KING), 카드(Denomination.ACE), 카드(Denomination.TEN),
+                            카드(Denomination.JACK), 카드(Denomination.TEN)));
+            BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
+            Dealer dealer = new Dealer();
+            Players players = 플레이어들("프린");
+            blackjackGame.initGame(dealer, players);
+            blackjackGame.dealCardTo(dealer);
+
+            GameResult result = blackjackGame.createGameResult(dealer, players);
+            assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), ResultStatus.WIN);
+        }
+
+        @Test
+        void 딜러가_blackjack이면_무승부이다() {
+            CardDeck cardDeck = new CardDeck(
+                    카드들(카드(Denomination.ACE), 카드(Denomination.TEN), 카드(Denomination.ACE),
+                            카드(Denomination.TEN)));
+            BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
+            Dealer dealer = new Dealer();
+            Players players = 플레이어들("프린");
+            blackjackGame.initGame(dealer, players);
+
+            GameResult result = blackjackGame.createGameResult(dealer, players);
+            assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), ResultStatus.DRAW);
+        }
+
+        @Test
+        void 딜러가_일반_점수이면_이긴다() {
+            CardDeck cardDeck = new CardDeck(
+                    카드들(카드(Denomination.ACE), 카드(Denomination.TEN), 카드(Denomination.JACK), 카드(Denomination.TEN)));
+            BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
+            Dealer dealer = new Dealer();
+            Players players = 플레이어들("프린");
+            blackjackGame.initGame(dealer, players);
+
+            GameResult result = blackjackGame.createGameResult(dealer, players);
+            assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), ResultStatus.WIN);
+        }
     }
 
-    @ParameterizedTest
-    @MethodSource("provideDealerAndBoolean")
-    void 딜러가_카드를_더_받아야_하는지_확인한다(Dealer dealer, boolean expected) {
-        Players players = 플레이어들("프린");
-        BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
+    @Nested
+    @TestInstance(Lifecycle.PER_CLASS)
+    class 플레이어가_stay일_때 {
+        @Test
+        void 딜러가_bust이면_이긴다() {
+            CardDeck cardDeck = new CardDeck(
+                    카드들(카드(Denomination.KING), 카드(Denomination.KING), 카드(Denomination.QUEEN), 카드(Denomination.TEN),
+                            카드(Denomination.JACK), 카드(Denomination.TEN)));
+            BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
+            Dealer dealer = new Dealer();
+            Players players = 플레이어들("프린");
+            blackjackGame.initGame(dealer, players);
+            blackjackGame.dealCardTo(players.getPlayers().get(0));
+            blackjackGame.dealCardTo(dealer);
+            blackjackGame.dealCardTo(dealer);
 
-        blackjackGame.startGame();
-        boolean actual = blackjackGame.shouldDealerDrawCard();
+            GameResult result = blackjackGame.createGameResult(dealer, players);
+            assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), ResultStatus.WIN);
+        }
 
-        assertThat(actual).isEqualTo(expected);
-    }
+        @Test
+        void 딜러가_blackjack이면_진다() {
+            CardDeck cardDeck = new CardDeck(
+                    카드들(카드(Denomination.THREE), 카드(Denomination.QUEEN), 카드(Denomination.TEN), 카드(Denomination.ACE),
+                            카드(Denomination.TEN)));
+            BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
+            Dealer dealer = new Dealer();
+            Players players = 플레이어들("프린");
+            blackjackGame.initGame(dealer, players);
+            blackjackGame.dealCardTo(players.getPlayers().get(0));
+            blackjackGame.dealCardTo(dealer);
 
-    private Stream<Arguments> provideDealerAndBoolean() {
-        return Stream.of(
-                Arguments.of(
-                        딜러(카드(Denomination.THREE), 카드(Denomination.TEN), 카드(Denomination.SIX), 카드(Denomination.QUEEN)),
-                        false
-                ),
-                Arguments.of(
-                        딜러(카드(Denomination.TEN), 카드(Denomination.THREE), 카드(Denomination.QUEEN), 카드(Denomination.SIX)),
-                        true
-                )
-        );
+            GameResult result = blackjackGame.createGameResult(dealer, players);
+            assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), ResultStatus.LOSE);
+        }
+
+        @ParameterizedTest
+        @MethodSource("provideCardsAndResult")
+        void 딜러가_일반_점수이면_점수가_높은_쪽이_이긴다(List<Card> cards, ResultStatus expected) {
+            CardDeck cardDeck = new CardDeck(cards);
+            BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
+            Dealer dealer = new Dealer();
+
+            Players players = 플레이어들("프린");
+            blackjackGame.initGame(dealer, players);
+
+            GameResult result = blackjackGame.createGameResult(dealer, players);
+            assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), expected);
+        }
+
+        private Stream<Arguments> provideCardsAndResult() {
+            return Stream.of(
+                    Arguments.of(
+                            카드들(카드(Denomination.TEN), 카드(Denomination.NINE), 카드(Denomination.ACE),
+                                    카드(Denomination.SEVEN)),
+                            ResultStatus.WIN
+                    ),
+                    Arguments.of(
+                            카드들(카드(Denomination.TEN), 카드(Denomination.KING), 카드(Denomination.QUEEN),
+                                    카드(Denomination.JACK)),
+                            ResultStatus.DRAW
+                    ),
+                    Arguments.of(
+                            카드들(카드(Denomination.TWO), 카드(Denomination.THREE), 카드(Denomination.QUEEN),
+                                    카드(Denomination.KING)),
+                            ResultStatus.LOSE
+                    )
+            );
+        }
     }
 }

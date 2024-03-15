@@ -3,7 +3,6 @@ package controller;
 import domain.blackjackgame.BlackjackGame;
 import domain.blackjackgame.GameResult;
 import domain.blackjackgame.ResultStatus;
-import domain.card.CardDeck;
 import domain.card.CardFactory;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -23,52 +22,36 @@ public class BlackjackController {
     }
 
     public void start() {
-        Dealer dealer = generateDealer();
+        Dealer dealer = new Dealer();
         Players players = new Players(inputView.readPlayerNames());
-        BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
+        BlackjackGame blackjackGame = new BlackjackGame(CardFactory.createCardDeck(), Collections::shuffle);
 
         GameResult gameResult = playBlackjackGame(dealer, players, blackjackGame);
         showGameResult(gameResult);
     }
 
-    private Dealer generateDealer() {
-        CardDeck cardDeck = CardFactory.createCardDeck();
-        return new Dealer(cardDeck, Collections::shuffle);
-    }
-
     private GameResult playBlackjackGame(Dealer dealer, Players players, BlackjackGame blackjackGame) {
-        blackjackGame.startGame();
+        blackjackGame.initGame(dealer, players);
         outputView.printCards(dealer, players);
 
-        dealToParticipants(dealer, players, blackjackGame);
-        return blackjackGame.createGameResult();
-    }
-
-    private void dealToParticipants(Dealer dealer, Players players, BlackjackGame blackjackGame) {
-        dealToPlayers(players, blackjackGame);
-        dealToDealer(blackjackGame);
+        for (Player player : players.getPlayers()) {
+            dealToPlayer(player, blackjackGame);
+        }
+        dealToDealer(dealer, blackjackGame);
         outputView.printCardsWithScore(dealer, players);
+        return blackjackGame.createGameResult(dealer, players);
     }
 
-    private void dealToPlayers(Players players, BlackjackGame blackjackGame) {
-        for (int i = 0; i < players.count(); i++) {
-            Player player = players.findPlayerByIndex(i);
-            hitUntilStay(blackjackGame, player, i);
-        }
-    }
-
-    private void hitUntilStay(BlackjackGame blackjackGame, Player player, int playerIndex) {
-        boolean isHit = inputView.askForMoreCard(player.getName());
-        while (isHit) {
-            blackjackGame.dealToPlayer(playerIndex);
+    private void dealToPlayer(Player player, BlackjackGame blackjackGame) {
+        while (inputView.askForMoreCard(player.getName())) {
+            blackjackGame.dealCardTo(player);
             outputView.printCardsAfterHit(player);
-            isHit = inputView.askForMoreCard(player.getName());
         }
     }
 
-    private void dealToDealer(BlackjackGame blackjackGame) {
-        while (blackjackGame.shouldDealerDrawCard()) {
-            blackjackGame.dealToDealer();
+    private void dealToDealer(Dealer dealer, BlackjackGame blackjackGame) {
+        while (dealer.isNotExceedDrawPolicy()) {
+            blackjackGame.dealCardTo(dealer);
             outputView.printDealerReceiveCardMessage();
         }
     }

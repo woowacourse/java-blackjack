@@ -1,59 +1,44 @@
 package domain.blackjackgame;
 
-import domain.card.Card;
+import domain.card.CardDeck;
+import domain.card.CardShuffleStrategy;
 import domain.card.Score;
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 
 public class BlackjackGame {
-    private static final int INITIAL_CARD_COUNT = 2;
+    private final CardDeck cardDeck;
+    private final CardShuffleStrategy cardShuffleStrategy;
 
-    private final Dealer dealer;
-    private final Players players;
-
-    public BlackjackGame(Dealer dealer, Players players) {
-        this.dealer = dealer;
-        this.players = players;
+    public BlackjackGame(CardDeck cardDeck, CardShuffleStrategy cardShuffleStrategy) {
+        this.cardDeck = cardDeck;
+        this.cardShuffleStrategy = cardShuffleStrategy;
     }
 
-    public void startGame() {
-        dealer.shuffleCardDeck();
+    public void initGame(Dealer dealer, Players players) {
+        cardDeck.shuffle(cardShuffleStrategy);
 
-        for (int count = 0; count < INITIAL_CARD_COUNT; count++) {
-            dealAllParticipants();
+        dealer.receiveInitialCards(cardDeck.draw(), cardDeck.draw());
+        for (Player player : players.getPlayers()) {
+            player.receiveInitialCards(cardDeck.draw(), cardDeck.draw());
         }
     }
 
-    private void dealAllParticipants() {
-        dealToDealer();
-
-        for (int playerIndex = 0; playerIndex < players.count(); playerIndex++) {
-            dealToPlayer(playerIndex);
-        }
+    public void dealCardTo(Participant participant) {
+        participant.receiveAdditionalCard(cardDeck.draw());
     }
 
-    public void dealToDealer() {
-        Card dealerCard = dealer.pickCard();
-        dealer.receiveAdditionalCard(dealerCard);
-    }
-
-    public void dealToPlayer(int playerIndex) {
-        Card playerCard = dealer.pickCard();
-        players.giveCardToPlayer(playerIndex, playerCard);
-    }
-
-    public GameResult createGameResult() {
+    public GameResult createGameResult(Dealer dealer, Players players) {
         Score dealerScore = dealer.calculateScore();
 
         GameResult gameResult = new GameResult();
-        for (int i = 0; i < players.count(); i++) {
-            Player player = players.findPlayerByIndex(i);
+        for (Player player : players.getPlayers()) {
             Score playerScore = player.calculateScore();
             ResultStatus status = getResultStatus(playerScore, dealerScore);
             gameResult.record(player, status);
         }
-
         return gameResult;
     }
 
@@ -64,6 +49,7 @@ public class BlackjackGame {
         if (dealerScore.isBustScore()) {
             return ResultStatus.WIN;
         }
+
         if (playerScore.isGreaterThan(dealerScore)) {
             return ResultStatus.WIN;
         }
@@ -71,9 +57,5 @@ public class BlackjackGame {
             return ResultStatus.DRAW;
         }
         return ResultStatus.LOSE;
-    }
-
-    public boolean shouldDealerDrawCard() {
-        return dealer.isNecessaryMoreCard();
     }
 }
