@@ -28,6 +28,16 @@ public class InputView {
         return command;
     }
 
+    public int readBetAmount(String playerName) {
+        System.out.printf("%s의 배팅 금액은?%n", playerName);
+        String betAmount = readLineWithBuffer();
+        validateNotBlank(betAmount);
+        betAmount = removeBlank(betAmount);
+        validateInteger(betAmount);
+
+        return Integer.parseInt(betAmount);
+    }
+
     private void validateNotBlank(String input) {
         if (input.isBlank()) {
             throw new IllegalArgumentException("빈 값을 입력할 수 없습니다.");
@@ -41,6 +51,14 @@ public class InputView {
     private void validateCommand(String input) {
         if (!"y".equals(input) && !"n".equals(input)) {
             throw new IllegalArgumentException("입력은 y 또는 n 이어야 합니다.");
+        }
+    }
+
+    private void validateInteger(String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("배팅 금액은 정수여야 합니다.");
         }
     }
 
