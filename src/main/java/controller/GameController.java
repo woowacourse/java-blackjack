@@ -50,16 +50,16 @@ public class GameController {
         }
     }
 
-    private void hitOrStayOnce(Game game, Player user) {
-        Command command = ExceptionHandler.handle(() -> InputView.inputAddCommand(user.getName().value()));
-        State state = game.determineState(command, user);
-        UserDto userDto = UserDto.from(user);
+    private void hitOrStayOnce(Game game, Player player) {
+        Command command = ExceptionHandler.handle(() -> InputView.inputAddCommand(player.getName().value()));
+        State state = game.determineState(command, player);
+        UserDto userDto = UserDto.from(player);
         if (state == BUST || state == STAY) {
             showMidTermResult(state, userDto);
             return;
         }
         ResultView.printPlayerAndDeck(userDto.name, userDto.cards);
-        hitOrStayOnce(game, user);
+        hitOrStayOnce(game, player);
     }
 
     private void showMidTermResult(State state, UserDto userDto) {
