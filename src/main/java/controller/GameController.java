@@ -51,7 +51,7 @@ public class GameController {
     }
 
     private void hitOrStayOnce(Game game, Player player) {
-        Command command = ExceptionHandler.handle(() -> InputView.inputAddCommand(player.getName().value()));
+        Command command = ExceptionHandler.handle(() -> InputView.inputAddCommand(player.getName()));
         State state = game.determineState(command, player);
         UserDto userDto = UserDto.from(player);
         if (state == BUST || state == STAY) {

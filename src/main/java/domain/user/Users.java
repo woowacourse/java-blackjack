@@ -27,7 +27,7 @@ public class Users {
 
     private void validateDuplicatedName(List<Player> players) {
         long count = players.stream()
-                .map(player -> player.getName().value())
+                .map(player -> player.getName())
                 .distinct()
                 .count();
         if (players.size() != count) {

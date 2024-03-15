@@ -24,8 +24,8 @@ public class User {
         return userDeck.isBust();
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.value();
     }
 
     public UserDeck getUserDeck() {

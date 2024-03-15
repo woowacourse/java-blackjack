@@ -64,7 +64,7 @@ public class ResultView {
         System.out.println("딜러: " + getDealerResultDetail(dealerResult));
 
         playerResults.forEach(((player, result) ->
-                System.out.println(player.getName().value() + ": " + result.getResult())));
+                System.out.println(player.getName() + ": " + result.getResult())));
     }
 
     private static String getDealerResultDetail(Map<Result, Integer> dealerResult) {

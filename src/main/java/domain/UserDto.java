@@ -20,7 +20,7 @@ public class UserDto {
         List<String> cards = user.getUserDeck().getCards().stream()
                 .map(Card::getName)
                 .toList();
-        return new UserDto(user.getName().value(), cards, user.getUserDeck().sumCard());
+        return new UserDto(user.getName(), cards, user.getUserDeck().sumCard());
     }
 
     public String getFirstCard() {
