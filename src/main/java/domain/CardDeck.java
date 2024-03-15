@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Collections;
 import java.util.List;
 
 public class CardDeck {
@@ -10,11 +11,11 @@ public class CardDeck {
         this.deck = deck;
     }
 
-    public static CardDeck of(CardShuffleStrategy cardShuffleStrategy) {
+    public static CardDeck of() {
         List<Card> allCards = Card.getAllCards();
-        List<Card> shuffledCards = cardShuffleStrategy.shuffle(allCards);
+        Collections.shuffle(allCards);
 
-        return new CardDeck(shuffledCards);
+        return new CardDeck(allCards);
     }
 
     public Card draw() {
