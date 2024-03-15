@@ -5,6 +5,7 @@ import static domain.participant.Dealer.THRESHOLD;
 
 import domain.Profit;
 import domain.participant.Participant;
+import domain.participant.Player;
 import dto.DealerHandsDto;
 import dto.ParticipantDto;
 import dto.ParticipantsDto;
@@ -56,8 +57,8 @@ public class OutputView {
         System.out.printf("BUST" + System.lineSeparator());
     }
 
-    public void printBlackJack() {
-        System.out.printf("BLACK JACK!!!" + System.lineSeparator());
+    public void printBlackJack(final Player player) {
+        System.out.printf("%s : BLACK JACK!!!" + System.lineSeparator(), player.getName());
     }
 
     public void printDealerEndMessage(boolean isBust) {

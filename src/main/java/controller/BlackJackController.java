@@ -114,7 +114,7 @@ public class BlackJackController {
 
     private void deal(final Player player, final Dealer dealer) {
         if (player.isBlackJack()) {
-            outputView.printBlackJack();
+            outputView.printBlackJack(player);
             return;
         }
 
