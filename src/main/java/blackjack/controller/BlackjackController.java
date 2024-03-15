@@ -11,8 +11,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayerCommand;
 
-import java.util.Optional;
-import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 public class BlackjackController {
@@ -20,8 +18,7 @@ public class BlackjackController {
     public void run() {
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
         Dealer dealer = new Dealer(new Gamer(blackjackGame.makeInitialHand()));
-        Players players = requestUntilValid(() ->
-                Players.from(InputView.readPlayersName(), blackjackGame.makeInitialHand()));
+        Players players = Players.from(InputView.readPlayersName(), blackjackGame.makeInitialHand());
 
         dealAndPrintResult(blackjackGame, dealer, players);
 
@@ -56,8 +53,7 @@ public class BlackjackController {
 
         boolean isRun = true;
         while (isRun) {
-            PlayerCommand command = requestUntilValid(() ->
-                    PlayerCommand.from(InputView.readPlayerCommand(player.getName())));
+            PlayerCommand command = PlayerCommand.from(InputView.readPlayerCommand(player.getName()));
             hitOrStandAndPrint(blackjackGame, player, command);
             isRun = isRun(blackjackGame, player, command);
         }
@@ -110,23 +106,5 @@ public class BlackjackController {
         OutputView.printWinAnnounce();
         OutputView.printDealerWinStatus(referee.getDealerResult());
         referee.getPlayersNameAndResults().forEach(OutputView::printPlayerWinStatus);
-    }
-
-
-    private <T> T requestUntilValid(Supplier<T> supplier) {
-        Optional<T> result = Optional.empty();
-        while (result.isEmpty()) {
-            result = tryGet(supplier);
-        }
-        return result.get();
-    }
-
-    private <T> Optional<T> tryGet(Supplier<T> supplier) {
-        try {
-            return Optional.of(supplier.get());
-        } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            return Optional.empty();
-        }
     }
 }
