@@ -1,7 +1,7 @@
 package domain.card;
 
-import domain.BetAmount;
-import domain.Name;
+import domain.participant.BetAmount;
+import domain.participant.Name;
 import domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

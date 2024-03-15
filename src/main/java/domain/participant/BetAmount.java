@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import domain.result.Income;
 import domain.result.Status;

@@ -1,7 +1,7 @@
 package manager;
 
-import domain.BetAmount;
-import domain.Name;
+import domain.participant.BetAmount;
+import domain.participant.Name;
 import domain.Rule;
 import domain.card.Deck;
 import domain.participant.Dealer;

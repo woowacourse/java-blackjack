@@ -2,7 +2,9 @@ package domain;
 
 import domain.card.Card;
 import domain.card.Shape;
+import domain.participant.BetAmount;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Player;
 import domain.result.Status;
 import org.assertj.core.api.Assertions;

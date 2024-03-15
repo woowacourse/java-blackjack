@@ -1,7 +1,5 @@
 package domain.participant;
 
-import domain.BetAmount;
-import domain.Name;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.result.Income;

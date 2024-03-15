@@ -1,5 +1,6 @@
 package domain;
 
+import domain.participant.BetAmount;
 import domain.result.Income;
 import domain.result.Status;
 import org.assertj.core.api.Assertions;

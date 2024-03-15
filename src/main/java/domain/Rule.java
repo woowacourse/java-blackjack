@@ -2,6 +2,7 @@ package domain;
 
 import domain.card.Cards;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Player;
 import domain.result.Income;
 import domain.result.Incomes;

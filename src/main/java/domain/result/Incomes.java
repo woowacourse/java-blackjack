@@ -1,6 +1,6 @@
 package domain.result;
 
-import domain.Name;
+import domain.participant.Name;
 
 import java.util.Map;
 import java.util.Objects;
