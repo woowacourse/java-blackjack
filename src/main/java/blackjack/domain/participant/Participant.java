@@ -40,16 +40,8 @@ public abstract class Participant {
         return hands.isBurst();
     }
 
-    public boolean isNotBust() {
-        return !isBust();
-    }
-
     public boolean isBlackJack() {
         return hands.isBlackJack();
-    }
-
-    public boolean isNotBlackJack() {
-        return !isBlackJack();
     }
 
     public List<Card> getHandsCards() {

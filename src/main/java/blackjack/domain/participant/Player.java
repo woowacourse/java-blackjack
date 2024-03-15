@@ -12,7 +12,7 @@ public class Player extends Participant {
 
     @Override
     public boolean canAddCard() {
-        return (isNotBust());
+        return (!isBust());
     }
 
     public boolean isFirstTurnBackJack() {

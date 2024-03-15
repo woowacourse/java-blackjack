@@ -28,21 +28,21 @@ public enum Result {
     }
 
     private static boolean isBlackJackWin(Player player, Dealer dealer) {
-        return player.isFirstTurnBackJack() && dealer.isNotBlackJack();
+        return player.isFirstTurnBackJack() && !dealer.isBlackJack();
     }
 
     private static boolean isWin(Player player, Dealer dealer) {
-        return (dealer.isBust() && player.isNotBust())
-                || player.isNotBust() && player.hasHigherScore(dealer);
+        return (dealer.isBust() && !player.isBust())
+                || !player.isBust() && player.hasHigherScore(dealer);
     }
 
     private static boolean isLose(Player player, Dealer dealer) {
         return player.isBust()
-                || player.isNotBust() && player.hasLowerScore(dealer);
+                || !player.isBust() && player.hasLowerScore(dealer);
     }
 
     private static boolean isDraw(Player player, Dealer dealer) {
-        return (dealer.isNotBust() && player.isNotBust())
+        return (!dealer.isBust() && !player.isBust())
                 && player.hasSameScore(dealer);
     }
 }
