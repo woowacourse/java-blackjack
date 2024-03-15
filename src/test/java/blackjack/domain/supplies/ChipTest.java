@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("칩")
 public class ChipTest {
     @Test
     @DisplayName("2000이 있던 칩에 1000을 더하면 3000이 된다.")
