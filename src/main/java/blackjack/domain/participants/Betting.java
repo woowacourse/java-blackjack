@@ -13,8 +13,8 @@ public class Betting {
         this.bettingProfit = new BettingProfit();
     }
 
-    public void calculateProfit(Player player, State state) {
-        bettingProfit.calculateProfit(player, state, bettingRepository.getBettingProfit(player));
+    public void calculateProfit(Player player, Result result) {
+        bettingProfit.calculateProfit(player, result, bettingRepository.getBettingProfit(player));
     }
 
     public void bet(Player player, Profit profit) {

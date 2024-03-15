@@ -7,21 +7,21 @@ import java.util.Map;
 
 public class BlackJackGameResult {
 
-    private final Map<Player, State> gameResult;
+    private final Map<Player, Result> gameResult;
 
     public BlackJackGameResult(List<Player> players, Dealer dealer) {
         this.gameResult = new LinkedHashMap<>();
         players.forEach(player -> gameResult.put(player, calculateState(player, dealer)));
     }
 
-    private State calculateState(Player player, Dealer dealer) {
+    private Result calculateState(Player player, Dealer dealer) {
         if (isWin(player, dealer)) {
-            return State.WIN;
+            return Result.WIN;
         }
         if (isTie(player, dealer)) {
-            return State.TIE;
+            return Result.TIE;
         }
-        return State.LOSE;
+        return Result.LOSE;
     }
 
     private boolean isWin(Player player, Dealer dealer) {
@@ -41,11 +41,11 @@ public class BlackJackGameResult {
         return player.isBlackjack() && dealer.isBlackjack();
     }
 
-    public State getState(Player player) {
+    public Result getState(Player player) {
         return gameResult.get(player);
     }
 
-    public Map<Player, State> getGameResult() {
+    public Map<Player, Result> getGameResult() {
         return new HashMap<>(gameResult);
     }
 }

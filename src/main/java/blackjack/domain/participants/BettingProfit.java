@@ -14,12 +14,12 @@ public class BettingProfit {
         this.profitResult = new LinkedHashMap<>();
     }
 
-    public void calculateProfit(Player player, State state, Profit bettingProfit) {
-        if (state == State.WIN) {
+    public void calculateProfit(Player player, Result result, Profit bettingProfit) {
+        if (result == Result.WIN) {
             handleWin(player, bettingProfit);
             return;
         }
-        if (state == State.LOSE) {
+        if (result == Result.LOSE) {
             profitResult.put(player, bettingProfit.inverse());
             return;
         }

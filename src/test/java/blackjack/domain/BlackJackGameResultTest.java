@@ -8,7 +8,7 @@ import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Hands;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
-import blackjack.domain.participants.State;
+import blackjack.domain.participants.Result;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -57,10 +57,10 @@ public class BlackJackGameResultTest {
 
         dealer.receiveHands(dealerHands);
         BlackJackGameResult blackJackGameResult = new BlackJackGameResult(players, dealer);
-        Map<Player, State> gameResult = blackJackGameResult.getGameResult();
+        Map<Player, Result> gameResult = blackJackGameResult.getGameResult();
 
-        Assertions.assertThat(gameResult.get(siso)).isEqualTo(State.WIN);
-        Assertions.assertThat(gameResult.get(takan)).isEqualTo(State.WIN);
+        Assertions.assertThat(gameResult.get(siso)).isEqualTo(Result.WIN);
+        Assertions.assertThat(gameResult.get(takan)).isEqualTo(Result.WIN);
     }
 
     @Test
@@ -73,9 +73,9 @@ public class BlackJackGameResultTest {
 
         dealer.receiveHands(dealerHands);
         BlackJackGameResult blackJackGameResult = new BlackJackGameResult(players, dealer);
-        Map<Player, State> gameResult = blackJackGameResult.getGameResult();
+        Map<Player, Result> gameResult = blackJackGameResult.getGameResult();
 
-        Assertions.assertThat(gameResult.get(takan)).isEqualTo(State.WIN);
+        Assertions.assertThat(gameResult.get(takan)).isEqualTo(Result.WIN);
     }
 
     @Test
@@ -104,10 +104,10 @@ public class BlackJackGameResultTest {
         siso.receiveHands(sisoHands);
         takan.receiveHands(takanHands);
         BlackJackGameResult blackJackGameResult = new BlackJackGameResult(players, dealer);
-        Map<Player, State> gameResult = blackJackGameResult.getGameResult();
+        Map<Player, Result> gameResult = blackJackGameResult.getGameResult();
 
-        Assertions.assertThat(gameResult.get(siso)).isEqualTo(State.LOSE);
-        Assertions.assertThat(gameResult.get(takan)).isEqualTo(State.LOSE);
+        Assertions.assertThat(gameResult.get(siso)).isEqualTo(Result.LOSE);
+        Assertions.assertThat(gameResult.get(takan)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -120,10 +120,10 @@ public class BlackJackGameResultTest {
 
         dealer.receiveHands(dealerHands);
         BlackJackGameResult blackJackGameResult = new BlackJackGameResult(players, dealer);
-        Map<Player, State> gameResult = blackJackGameResult.getGameResult();
+        Map<Player, Result> gameResult = blackJackGameResult.getGameResult();
 
-        Assertions.assertThat(gameResult.get(siso)).isEqualTo(State.LOSE);
-        Assertions.assertThat(gameResult.get(takan)).isEqualTo(State.LOSE);
+        Assertions.assertThat(gameResult.get(siso)).isEqualTo(Result.LOSE);
+        Assertions.assertThat(gameResult.get(takan)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -136,9 +136,9 @@ public class BlackJackGameResultTest {
 
         dealer.receiveHands(dealerHands);
         BlackJackGameResult blackJackGameResult = new BlackJackGameResult(players, dealer);
-        Map<Player, State> gameResult = blackJackGameResult.getGameResult();
+        Map<Player, Result> gameResult = blackJackGameResult.getGameResult();
 
-        Assertions.assertThat(gameResult.get(takan)).isEqualTo(State.LOSE);
+        Assertions.assertThat(gameResult.get(takan)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -157,8 +157,8 @@ public class BlackJackGameResultTest {
         dealer.receiveHands(dealerHands);
         takan.receiveHands(takanHands);
         BlackJackGameResult blackJackGameResult = new BlackJackGameResult(players, dealer);
-        Map<Player, State> gameResult = blackJackGameResult.getGameResult();
+        Map<Player, Result> gameResult = blackJackGameResult.getGameResult();
 
-        Assertions.assertThat(gameResult.get(takan)).isEqualTo(State.TIE);
+        Assertions.assertThat(gameResult.get(takan)).isEqualTo(Result.TIE);
     }
 }

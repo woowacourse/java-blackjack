@@ -7,7 +7,7 @@ import blackjack.domain.participants.Betting;
 import blackjack.domain.participants.Hands;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
-import blackjack.domain.participants.State;
+import blackjack.domain.participants.Result;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -28,7 +28,7 @@ public class BettingTest {
 
         takan.receiveHands(hands);
         betting.bet(takan, profit);
-        betting.calculateProfit(takan, State.WIN);
+        betting.calculateProfit(takan, Result.WIN);
         Profit result = betting.getProfit(takan);
 
         Assertions.assertThat(profit.getProfit()).isEqualTo(result.getProfit());
@@ -47,7 +47,7 @@ public class BettingTest {
         takan.receiveHands(hands);
         Profit profit = new Profit(1000);
         betting.bet(takan, profit);
-        betting.calculateProfit(takan, State.WIN);
+        betting.calculateProfit(takan, Result.WIN);
         Profit result = betting.getProfit(takan);
 
         Assertions.assertThat(result.getProfit()).isEqualTo(profit.multiple(1.5).getProfit());
@@ -65,7 +65,7 @@ public class BettingTest {
 
         takan.receiveHands(hands);
         betting.bet(takan, new Profit(1000));
-        betting.calculateProfit(takan, State.TIE);
+        betting.calculateProfit(takan, Result.TIE);
         Profit result = betting.getProfit(takan);
 
         Assertions.assertThat(result.getProfit()).isEqualTo(new Profit(0).getProfit());
@@ -84,7 +84,7 @@ public class BettingTest {
 
         takan.receiveHands(hands);
         betting.bet(takan, profit);
-        betting.calculateProfit(takan, State.LOSE);
+        betting.calculateProfit(takan, Result.LOSE);
         Profit result = betting.getProfit(takan);
 
         Assertions.assertThat(result.getProfit()).isEqualTo(profit.inverse().getProfit());

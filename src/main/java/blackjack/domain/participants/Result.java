@@ -1,5 +1,5 @@
 package blackjack.domain.participants;
 
-public enum State {
+public enum Result {
     LOSE, WIN, TIE
 }
