@@ -18,7 +18,7 @@ public class Deck {
         this.cards = new LinkedList<>(CACHE);
     }
 
-    public Deck(LinkedList<Card> cards) {
+    Deck(LinkedList<Card> cards) {
         this.cards = cards;
     }
 

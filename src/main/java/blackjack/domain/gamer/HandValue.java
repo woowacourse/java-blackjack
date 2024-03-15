@@ -16,7 +16,7 @@ public class HandValue {
         this.handSize = cards.size();
     }
 
-    public HandValue(int score, int handSize) {
+    HandValue(int score, int handSize) {
         this.score = score;
         this.handSize = handSize;
     }
