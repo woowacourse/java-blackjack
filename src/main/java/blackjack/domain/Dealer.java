@@ -19,25 +19,21 @@ public class Dealer extends Participant {
 
     @Override
     public Dealer draw(Deck deck) {
-        State newState = getState().draw(deck);
-        return new Dealer(getName(), newState);
+        return new Dealer(getName(), drawHand(deck));
     }
 
     @Override
     public Dealer stand() {
-        State newState = getState().stand();
-        return new Dealer(getName(), newState);
+        return new Dealer(getName(), standHand());
     }
 
     @Override
     public boolean canDraw() {
-        State state = getState();
-        Score score = state.calculateHand();
-        return !state.isFinished() && isDealerScoreUnderLimit(score);
+        return !isFinished() && isDealerScoreUnderLimit(calculateHand());
     }
 
     private boolean isDealerScoreUnderLimit(Score score) {
-        return Score.from(STAND_LIMIT_VALUE).isBiggerThanOrEqual(score);
+        return Score.from(STAND_LIMIT_VALUE).isBiggerThan(score);
     }
 
     public List<Card> getVisibleCards() {

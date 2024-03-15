@@ -15,13 +15,11 @@ public class Player extends Participant {
 
     @Override
     public Player draw(Deck deck) {
-        State newState = getState().draw(deck);
-        return new Player(getName(), newState);
+        return new Player(getName(), drawHand(deck));
     }
 
     @Override
     public Player stand() {
-        State newState = getState().stand();
-        return new Player(getName(), newState);
+        return new Player(getName(), standHand());
     }
 }

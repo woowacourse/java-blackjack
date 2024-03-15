@@ -12,9 +12,9 @@ public abstract class Participant {
         this.state = state;
     }
 
-    abstract Participant draw(Deck deck);
+    public abstract Participant draw(Deck deck);
 
-    abstract Participant stand();
+    public abstract Participant stand();
 
     public final Score calculateHand() {
         return state.calculateHand();
@@ -24,12 +24,32 @@ public abstract class Participant {
         return !state.isFinished();
     }
 
+    final State drawHand(Deck deck) {
+        return state.draw(deck);
+    }
+
+    final State standHand() {
+        return state.stand();
+    }
+
+    final Hand getHand() {
+        return state.getHand();
+    }
+
+    final double calculateProfitRate(Hand other) {
+        return state.getProfitRate(other);
+    }
+
     public final Name getName() {
         return name;
     }
 
-    public final State getState() {
+    final State getState() {
         return state;
+    }
+
+    public final boolean isFinished() {
+        return state.isFinished();
     }
 
     public final List<Card> getCards() {

@@ -23,6 +23,8 @@ public class DealerTest {
         Dealer dealer = Dealer.createInitialStateDealer();
 
         Dealer newDealer = dealer.draw(Deck.of(new CardFactory(), cards -> cards));
+
+        assertThat(newDealer).isNotInstanceOf(InitialState.class);
     }
 
     @DisplayName("딜러의 상태가 종료되지 않았다면 true를 반환한다")
