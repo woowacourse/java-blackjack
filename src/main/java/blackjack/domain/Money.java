@@ -22,10 +22,6 @@ public class Money {
         return new Money(value + other.value);
     }
 
-    public Money multiplication(double multiplicationFactor) {
-        return new Money((int) (value * multiplicationFactor));
-    }
-
     public int getValue() {
         return value;
     }

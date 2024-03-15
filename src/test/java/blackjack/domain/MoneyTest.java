@@ -37,14 +37,4 @@ public class MoneyTest {
 
         assertThat(result).isEqualTo(new Money(3000));
     }
-
-    @DisplayName("배팅 금액은 곱할 수 있다")
-    @Test
-    public void multiplication() {
-        Money money = new Money(1000);
-
-        Money result = money.multiplication(1.5);
-
-        assertThat(result).isEqualTo(new Money(1500));
-    }
 }
