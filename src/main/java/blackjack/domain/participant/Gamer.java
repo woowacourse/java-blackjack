@@ -13,21 +13,21 @@ public abstract class Gamer {
         this.hand = new Hand();
     }
 
-    abstract boolean canReceiveCard();
-
-    final public boolean isBust() {
+    public final boolean isBust() {
         return hand.isBust();
     }
 
-    final public boolean isBlackjack() {
+    public final boolean isBlackjack() {
         return hand.isBlackjack();
     }
 
-    final public long getScore() {
+    public final long getScore() {
         return hand.calculateScore();
     }
 
-    final public List<Card> getHandCards() {
+    public final List<Card> getHandCards() {
         return hand.getCards();
     }
+
+    abstract boolean canReceiveCard();
 }
