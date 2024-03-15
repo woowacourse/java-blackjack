@@ -47,23 +47,14 @@ public class InputView {
         System.out.println(message);
         String input = scanner.nextLine();
         int betAmount = convertToInteger(input);
-        validateBetAmount(betAmount);
-        return new Money(betAmount);
+        return Money.fromInput(betAmount);
     }
 
     private int convertToInteger(String input) {
         try {
-            int value = Integer.parseInt(input);
-            validateBetAmount(value);
-            return value;
+            return Integer.parseInt(input);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("베팅 금액은 숫자이어야한다");
-        }
-    }
-
-    private void validateBetAmount(int value) {
-        if (value % BET_AMOUNT_UNIT != 0) {
-            throw new IllegalArgumentException("베팅 금액은 1000단위의 숫자이어야한다.");
         }
     }
 

@@ -13,6 +13,20 @@ public class Money {
         this(0);
     }
 
+    public static Money fromInput(int money) {
+        validateInputValue(money);
+        return new Money(money);
+    }
+
+    private static void validateInputValue(int money) {
+        if (money < 0) {
+            throw new IllegalArgumentException("베팅 금액은 양수이어야한다.");
+        }
+        if (money % 1000 != 0) {
+            throw new IllegalArgumentException("베팅 금액은 1000단위의 숫자이어야한다.");
+        }
+    }
+
     public int value() {
         return money;
     }
