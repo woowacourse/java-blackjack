@@ -1,11 +1,17 @@
 package domain;
 
 public enum Result {
-    DEALER_WIN,
-    PLAYER_WIN,
-    PLAYER_BLACK_JACK_WIN,
-    PUSH,
+    DEALER_WIN(-1),
+    PLAYER_WIN(1),
+    PLAYER_BLACK_JACK_WIN(1.5f),
+    PUSH(0),
     ;
+
+    private final float playerWinningRate;
+
+    Result(float playerWinningRate) {
+        this.playerWinningRate = playerWinningRate;
+    }
 
     public static Result of(Dealer dealer, Player player) {
         if (player.isBlackJack()) {
@@ -39,5 +45,9 @@ public enum Result {
         }
 
         return PUSH;
+    }
+
+    public float getPlayerWinningRate() {
+        return playerWinningRate;
     }
 }

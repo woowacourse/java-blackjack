@@ -11,7 +11,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-public class BettingPotTest {
+class BettingPotTest {
 
     @DisplayName("사용자와 배팅 기록을 기록한다.")
     @Test
@@ -26,7 +26,7 @@ public class BettingPotTest {
 
     @DisplayName("결과에 따라 수익을 정산한다.")
     @ParameterizedTest
-    @CsvSource(value = {"DEALER_WIN:10:-10", "PLAYER_WIN:10:20", "PUSH:10:10"}, delimiter = ':')
+    @CsvSource(value = {"DEALER_WIN:10:-10", "PLAYER_WIN:10:10", "PLAYER_BLACK_JACK_WIN:10:15", "PUSH:10:0"}, delimiter = ':')
     void settle(Result result, int betAmount, int expectedWinning) {
         BettingPot bettingPot = new BettingPot();
         Player player = new Player("산초");
@@ -36,7 +36,7 @@ public class BettingPotTest {
         playerResult.put(player, result);
 
         Map<Player, Integer> settlement = bettingPot.settle(playerResult);
-        Integer actualWinning = settlement.get(player);
+        float actualWinning = settlement.get(player);
 
         Assertions.assertThat(actualWinning).isEqualTo(expectedWinning);
     }
