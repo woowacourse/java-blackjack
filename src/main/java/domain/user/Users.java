@@ -18,7 +18,10 @@ public class Users {
     private static final int FIRST_PLAYER_INDEX = 1;
     private final List<User> users;
 
-    public Users(List<Player> players) {
+    public Users(List<String> names) {
+        List<Player> players = names.stream()
+                .map((name) -> new Player(new Name(name)))
+                .collect(Collectors.toList());
         validateDuplicatedName(players);
         this.users = new ArrayList<>();
         users.add(new Dealer());

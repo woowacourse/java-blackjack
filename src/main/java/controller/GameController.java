@@ -21,7 +21,7 @@ import static domain.game.State.STAY;
 public class GameController {
 
     public void play() {
-        Users users = ExceptionHandler.handle(InputView::inputNames);
+        Users users = ExceptionHandler.handle(() -> new Users(InputView.inputNames()));
         Game game = new Game(TotalDeckGenerator.generate(), users);
         showStartStatus(users);
 
@@ -51,7 +51,7 @@ public class GameController {
     }
 
     private void hitOrStayOnce(Game game, Player player) {
-        Command command = ExceptionHandler.handle(() -> InputView.inputAddCommand(player.getName()));
+        Command command = ExceptionHandler.handle(() -> Command.get(InputView.inputAddCommand(player.getName())));
         State state = game.determineState(command, player);
         UserDto userDto = UserDto.from(player);
         if (state == BUST || state == STAY) {
