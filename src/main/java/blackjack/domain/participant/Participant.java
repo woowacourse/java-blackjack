@@ -6,7 +6,6 @@ import blackjack.domain.hands.HandsScore;
 
 import java.util.List;
 
-// TODO 메서드 순서 - business method > getter > abstract
 
 public abstract class Participant {
 
@@ -18,22 +17,8 @@ public abstract class Participant {
         this.hands = new Hands();
     }
 
-    abstract boolean canAddCard();
-
     public void addCard(Card card) {
         hands.addCard(card);
-    }
-
-    public List<Card> getHandsCards() {
-        return hands.getHands();
-    }
-
-    public String getName() {
-        return name.getName();
-    }
-
-    public HandsScore getHandsScore() {
-        return hands.getHandsScore();
     }
 
     public boolean hasHigherScore(Participant participant) {
@@ -66,4 +51,18 @@ public abstract class Participant {
     public boolean isNotBlackJack() {
         return !isBlackJack();
     }
+
+    public List<Card> getHandsCards() {
+        return hands.getHands();
+    }
+
+    public String getName() {
+        return name.getName();
+    }
+
+    public HandsScore getHandsScore() {
+        return hands.getHandsScore();
+    }
+
+    abstract boolean canAddCard();
 }
