@@ -14,9 +14,10 @@ public class DealerResult {
 
     public void calculateProfit(PlayersResult playersResult) {
         Map<Player, Profit> playersProfit = playersResult.getPlayersProfit();
-        profit.update(-playersProfit.values().stream()
+        double playersProfitSum = playersProfit.values().stream()
                 .mapToDouble(Profit::getValue)
-                .sum());
+                .sum();
+        profit.update(-playersProfitSum);
     }
 
     public Profit getProfit() {
