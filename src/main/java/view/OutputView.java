@@ -3,10 +3,9 @@ package view;
 import domain.betting.Money;
 import domain.card.Card;
 import domain.card.Score;
-import domain.game.BlackjackGame;
-import domain.game.PlayerResults;
 import domain.participant.Dealer;
 import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 
 public class OutputView {
@@ -20,15 +19,15 @@ public class OutputView {
         this.resolver = resolver;
     }
 
-    public void printDistributionMessage(BlackjackGame game) {
+    public void printDistributionMessage(List<Player> players) {
         System.out.printf("%n딜러와 %s에게 %d장을 나누었습니다.%n",
-            resolver.playerNamesText(game.getPlayers()),
+            resolver.playerNamesText(players),
             STARTING_CARDS_AMOUNT);
     }
 
-    public void printStartingCardsOfAllParticipants(BlackjackGame game) {
-        System.out.println(resolver.dealerNameAndStartingCardsText(game.getDealer()));
-        for (Player player : game.getPlayers()) {
+    public void printStartingCardsOfAllParticipants(Dealer dealer, Players players) {
+        System.out.println(resolver.dealerNameAndStartingCardsText(dealer));
+        for (Player player : players.getPlayers()) {
             printNameAndCardsOfParticipant(player.getName(), player.getCards());
         }
         System.out.println();
@@ -46,12 +45,10 @@ public class OutputView {
         System.out.printf("%n딜러는 %d이하라 한장의 카드를 더 받았습니다.%n", Dealer.MAX_RECEIVABLE_SCORE);
     }
 
-    public void printFinalCardsAndScoresOfAllParticipants(BlackjackGame game) {
-        Dealer dealer = game.getDealer();
-
+    public void printFinalCardsAndScoresOfAllParticipants(Dealer dealer, Players players) {
         System.out.println();
         printFinalCardsAndScoresOfParticipant(DEALER_NAME, dealer.getCards(), dealer.score());
-        for (Player player : game.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             printFinalCardsAndScoresOfParticipant(player.getName(), player.getCards(), player.score());
         }
         System.out.println();
@@ -63,16 +60,8 @@ public class OutputView {
             resolver.scoreText(score));
     }
 
-    public void printWinLoseOfAllParticipants(BlackjackGame game, PlayerResults playerResults) {
-        System.out.println("## 최종 승패");
-        System.out.println(resolver.dealerResultText(playerResults));
-        for (Player player : game.getPlayers()) {
-            System.out.println(resolver.playerResultText(player, playerResults));
-        }
-    }
-
     public void printPlayerNameAndProfit(String name, Money money) {
         System.out.println("## 최종 결과");
-        System.out.printf("%s: %s%n", name, resolver.moneyText(money));
+        System.out.printf("%s: %s%n", name, resolver.moneyText(money)); // TODO: for문 쓰기
     }
 }

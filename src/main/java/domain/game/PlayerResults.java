@@ -2,6 +2,7 @@ package domain.game;
 
 import domain.participant.Dealer;
 import domain.participant.Player;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,6 +13,14 @@ public class PlayerResults {
 
     private PlayerResults(Map<Player, PlayerResult> resultMap) {
         this.resultMap = resultMap;
+    }
+
+    public static PlayerResults withNoEntry() {
+        return new PlayerResults(new HashMap<>());
+    }
+
+    public void addResultOf(Player player, Dealer dealer) {
+        resultMap.put(player, decideResult(player, dealer));
     }
 
     public static PlayerResults of(List<Player> players, Dealer dealer) {
