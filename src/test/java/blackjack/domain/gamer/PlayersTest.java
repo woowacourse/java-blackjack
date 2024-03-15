@@ -1,0 +1,52 @@
+package blackjack.domain.gamer;
+
+import blackjack.domain.card.Hand;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+
+@DisplayName("플레이어들")
+public class PlayersTest {
+    @Test
+    @DisplayName("여러명일 수 있다.")
+    void playersCreateTest() {
+        // given
+        List<String> names = List.of("pobi", "lemone", "seyang");
+        List<String> expectedNames = List.of("pobi", "lemone", "seyang");
+
+        // when
+        Players blackJackGame = Players.from(names, new Hand(List.of()));
+
+        // then
+        assertThat(blackJackGame.getNames())
+                .usingRecursiveComparison()
+                .isEqualTo(expectedNames);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", "    "})
+    @DisplayName("없을 경우 예외가 발생한다.")
+    void validateNoPlayer(String names) {
+        // given & when & then
+        assertThatCode(() -> Players.from(List.of(names), new Hand(List.of())))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("공백이 아닌 플레이어를 입력해 주세요.");
+    }
+
+    @Test
+    @DisplayName("이름이 중복될 경우 예외가 발생한다.")
+    void validateDuplicate() {
+        // given
+        List<String> names = List.of("pobi", "pobi");
+        // when & then
+        assertThatCode(() -> Players.from(names, new Hand(List.of())))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("플레이어 이름은 중복될 수 없습니다.");
+    }
+}
