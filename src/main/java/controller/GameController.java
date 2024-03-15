@@ -70,8 +70,7 @@ public class GameController {
 
     private void showGameResult(Users users, Game game) {
         List<UserDto> userDtos = new ArrayList<>();
-        List<User> gameCompletedUsers = users.getUsers();
-        for (User user : gameCompletedUsers) {
+        for (User user : users.getUsers()) {
             userDtos.add(UserDto.from(user));
         }
         ResultView.showCardsAndSum(userDtos);
