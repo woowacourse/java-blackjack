@@ -40,8 +40,8 @@ public class BlackjackMachine {
 
         makeResults(dealer, players, playerResults);
         distributeMoney(players, playerResults, betInfo, profitInfo);
-        printCardsAndScores(dealer, players);
-        printProfits(players, profitInfo);
+        showCardsAndScores(dealer, players);
+        showProfits(players, profitInfo);
     }
 
     private Players makePlayers() {
@@ -109,11 +109,11 @@ public class BlackjackMachine {
         }
     }
 
-    private void printCardsAndScores(Dealer dealer, Players players) {
+    private void showCardsAndScores(Dealer dealer, Players players) {
         outputView.printFinalCardsAndScoresOfAllParticipants(dealer, players);
     }
 
-    private void printProfits(Players players, ProfitInfo profitInfo) {
+    private void showProfits(Players players, ProfitInfo profitInfo) {
         for (Player player : players.getPlayers()) {
             Money money = profitInfo.findProfitBy(player);
             outputView.printPlayerNameAndProfit(player.getName(), money);
