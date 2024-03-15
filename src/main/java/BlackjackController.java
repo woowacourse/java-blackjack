@@ -1,4 +1,4 @@
-import blackjack.domain.BettingAmounts;
+import blackjack.domain.player.BettingAmounts;
 import blackjack.domain.Blackjack;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;

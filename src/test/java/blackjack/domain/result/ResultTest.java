@@ -2,7 +2,7 @@ package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.Profit;
+import blackjack.domain.player.Profit;
 import blackjack.domain.player.Name;
 import java.util.LinkedHashMap;
 import java.util.Map;

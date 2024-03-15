@@ -2,7 +2,6 @@ package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.BettingAmount;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardValue;

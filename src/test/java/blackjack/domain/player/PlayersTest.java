@@ -2,7 +2,6 @@ package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.BettingAmount;
 import blackjack.fixture.PlayerFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

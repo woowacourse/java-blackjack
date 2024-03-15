@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
 import blackjack.domain.result.ResultStatus;
 import java.util.regex.Pattern;

@@ -1,9 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.player.BettingAmount;
+import blackjack.domain.player.Profit;
 import blackjack.domain.result.ResultStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
