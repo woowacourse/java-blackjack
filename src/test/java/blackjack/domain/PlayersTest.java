@@ -56,7 +56,7 @@ class PlayersTest {
 
     @Test
     @DisplayName("한 플레이어는 돈을 배팅한다.")
-    void betOnePlayerMoneyTest() {
+    void betPlayerMoneyTest() {
         players.betPlayerMoney(new GamblingMoney(3000), 0);
         assertThat(siso.getGamblingMoney().equals(new GamblingMoney(3000))).isTrue();
     }
@@ -64,7 +64,7 @@ class PlayersTest {
 
     @Test
     @DisplayName("한 플레이어는 하나의 카드를 받는다.")
-    void receiveOnePlayerCardTest() {
+    void receivePlayerCardTest() {
         players.receivePlayerCard(new Card(Shape.DIAMOND, Rank.TWO), 0);
 
         assertThat(siso.getHand().size()).isEqualTo(3);
@@ -72,7 +72,7 @@ class PlayersTest {
 
     @Test
     @DisplayName("한 플레이어는 기준 점수보다 낮은 점수다.")
-    void isOnePlayerNotO0verTest() {
+    void isPlayerNotO0verTest() {
         assertThat(players.isPlayerNotOver(0)).isTrue();
     }
 

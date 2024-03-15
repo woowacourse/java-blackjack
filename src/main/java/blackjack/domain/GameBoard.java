@@ -34,11 +34,11 @@ public class GameBoard {
     public void distributeInitialHand() {
         dealer.setInitialHand();
         for (int playerIndex = 0; playerIndex < players.size(); playerIndex++) {
-            distributeOnePlayerInitialHand(playerIndex);
+            distributePlayerInitialHand(playerIndex);
         }
     }
 
-    private void distributeOnePlayerInitialHand(int playerIndex) {
+    private void distributePlayerInitialHand(int playerIndex) {
         for (int cardCount = 0; cardCount < INITIAL_CARD_COUNT; cardCount++) {
             players.receivePlayerCard(dealer.drawCard(), playerIndex);
         }
@@ -54,8 +54,8 @@ public class GameBoard {
 
     public void calculateBettingMoney() {
             Map<Player, Outcome> outcome = calculateOutcome();
-        for (Player onePlayer : outcome.keySet()) {
-            calculatePlayerBettingMoney(onePlayer, outcome.get(onePlayer));
+        for (Player player : outcome.keySet()) {
+            calculatePlayerBettingMoney(player, outcome.get(player));
         }
     }
 
@@ -63,11 +63,11 @@ public class GameBoard {
         return players.calculateOutcome(dealer.calculateScore(), dealer.isBlackjack());
     }
 
-    private void calculatePlayerBettingMoney(Player onePlayer, Outcome outcome) {
+    private void calculatePlayerBettingMoney(Player player, Outcome outcome) {
         float benefit = calculateBenefit(outcome);
-        calculateDealerGainMoney(onePlayer, outcome);
-        onePlayer.checkBettingMoney(benefit);
-        calculateDealerLoseMoney(onePlayer, outcome);
+        calculateDealerGainMoney(player, outcome);
+        player.checkBettingMoney(benefit);
+        calculateDealerLoseMoney(player, outcome);
     }
 
     private float calculateBenefit(Outcome outcome) {
@@ -78,15 +78,15 @@ public class GameBoard {
                 .orElse(Outcome.LOSE.getBenefit());
     }
 
-    private void calculateDealerGainMoney(Player onePlayer, Outcome outcome) {
+    private void calculateDealerGainMoney(Player player, Outcome outcome) {
         if (outcome.equals(Outcome.LOSE)) {
-            dealer.gainMoney(onePlayer.getGamblingMoney());
+            dealer.gainMoney(player.getGamblingMoney());
         }
     }
 
-    private void calculateDealerLoseMoney(Player onePlayer, Outcome outcome) {
+    private void calculateDealerLoseMoney(Player player, Outcome outcome) {
         if (outcome.equals(Outcome.BLACKJACK_WIN) || outcome.equals(Outcome.WIN)) {
-            dealer.loseMoney(onePlayer.getGamblingMoney());
+            dealer.loseMoney(player.getGamblingMoney());
         }
     }
 
