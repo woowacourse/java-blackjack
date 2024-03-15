@@ -21,18 +21,22 @@ public class BettingsTest {
             "LOSE, -10000, -20000",
             "DRAW, 0, 0"})
     void getBettingResults(WinStatus winStatus, int pobiExpected, int jasonExpected) {
+        // given
         WinningResult winningResult = new WinningResult(Map.of(
                 new ParticipantName("pobi"), winStatus,
                 new ParticipantName("jason"), winStatus));
 
-        PlayerBetting pobiBetting = new PlayerBetting(new ParticipantName("pobi"), 10000);
-        PlayerBetting jasonBetting = new PlayerBetting(new ParticipantName("jason"), 20000);
+        PlayerBetting pobiBetting = new PlayerBetting("pobi", 10000);
+        PlayerBetting jasonBetting = new PlayerBetting("jason", 20000);
 
         List<PlayerBetting> playerBettings = new ArrayList<>();
         playerBettings.add(pobiBetting);
         playerBettings.add(jasonBetting);
 
-        BettingResults bettingResults = BettingResults.of(playerBettings, winningResult);
+        // when
+        BettingResults bettingResults = BettingResults.of(new PlayerBettings(playerBettings), winningResult);
+
+        // then
         assertThat(bettingResults.getBettingResults()).contains(
                 new BettingResult(new ParticipantName("pobi"), pobiExpected),
                 new BettingResult(new ParticipantName("jason"), jasonExpected));

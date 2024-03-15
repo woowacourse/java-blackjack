@@ -34,7 +34,7 @@ public class BlackjackController {
             playGame(blackjackGame);
         }
 
-        finishGame(blackjackGame);
+        finishGame(blackjackGame, playerBettings);
     }
 
     private BlackjackGame readyGame(final Players players) {

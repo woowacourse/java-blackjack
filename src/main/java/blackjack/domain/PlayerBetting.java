@@ -6,8 +6,8 @@ public class PlayerBetting {
     private final ParticipantName name;
     private final int betting;
 
-    public PlayerBetting(final ParticipantName name, final int betting) {
-        this.name = name;
+    public PlayerBetting(final String name, final int betting) {
+        this.name = new ParticipantName(name);
         this.betting = betting;
     }
 

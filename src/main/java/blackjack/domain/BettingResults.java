@@ -12,13 +12,20 @@ public class BettingResults {
         this.bettingResults = bettingResults;
     }
 
-    public static BettingResults of(final List<PlayerBetting> playerBettings, final WinningResult winningResult) {
+    public static BettingResults of(final PlayerBettings playerBettings, final WinningResult winningResult) {
         List<BettingResult> bettingResults = winningResult.getParticipantsResult().entrySet().stream()
-                .flatMap(entry -> playerBettings.stream()
+                .flatMap(entry -> playerBettings.getPlayerBettings().stream()
                         .filter(playerBetting -> playerBetting.isName(entry.getKey()))
                         .map(playerBetting -> BettingResult.of(entry.getValue(), playerBetting)))
                 .toList();
         return new BettingResults(bettingResults);
+    }
+
+    public BettingResult getDealerResult() {
+        int dealerProfit = bettingResults.stream()
+                .mapToInt(BettingResult::getBetting)
+                .sum();
+        return new BettingResult(new ParticipantName(Dealer.DEALER_NAME), -dealerProfit);
     }
 
     public List<BettingResult> getBettingResults() {

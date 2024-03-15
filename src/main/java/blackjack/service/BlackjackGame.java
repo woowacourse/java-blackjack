@@ -22,8 +22,8 @@ public class BlackjackGame {
         this.deck = deck;
     }
 
-    public BlackjackGame(final List<String> playersName) {
-        this.participants = new Participants(Players.from(playersName), new Dealer());
+    public BlackjackGame(final Players players) {
+        this.participants = new Participants(players, new Dealer());
         this.deck = Deck.empty();
     }
 
