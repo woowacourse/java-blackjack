@@ -1,26 +1,45 @@
 package blackjack.domain.game;
 
-import blackjack.domain.gameresult.GameResult;
+import blackjack.domain.gameresult.*;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Game {
 
     private final GameParticipants gameParticipants;
-    private final Deck deck;
+    private final GameBattings gameBattings;
 
-    private Game(GameParticipants gameParticipants, Deck deck) {
+    public Game(GameParticipants gameParticipants, GameBattings gameBattings) {
         this.gameParticipants = gameParticipants;
-        this.gameParticipants.handOutInitialCards(deck);
-        this.deck = deck;
+        this.gameBattings = gameBattings;
     }
 
-    public static Game of(GameParticipants gameParticipants) {
-        return new Game(gameParticipants, Deck.createShuffledDeck());
+    public static Game of(GameParticipants gameParticipants, GameBattings gameBattings, Deck deck) {
+        gameParticipants.handOutInitialCards(deck);
+        return new Game(gameParticipants, gameBattings);
     }
 
-    public GameResult makeGameResult() {
-        return GameResult.of(gameParticipants.getDealer(), gameParticipants.getPlayers());
+    public Map<Player, Profit> makeGameResult() {
+        Dealer dealer = gameParticipants.getDealer();
+        Players players = gameParticipants.getPlayers();
+
+        Map<Player, Profit> gameResult = new LinkedHashMap<>();
+
+        for (Player player : players.getPlayers()) {
+            gameResult.put(player, calculateProfit(dealer, player));
+        }
+        return gameResult;
+    }
+
+    private Profit calculateProfit(Dealer dealer, Player player) {
+        Result result = ResultJudge.judge(player, dealer);
+        Batting playerBat = gameBattings.findPlayerBatting(player);
+        double profit = ProfitRate.calculateProfit(result, playerBat.getBat());
+        return Profit.from(profit);
     }
 
     public Dealer getDealer() {
@@ -29,9 +48,5 @@ public class Game {
 
     public Players getPlayers() {
         return gameParticipants.getPlayers();
-    }
-
-    public Deck getDeck() {
-        return deck;
     }
 }

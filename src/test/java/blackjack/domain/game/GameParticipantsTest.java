@@ -18,9 +18,7 @@ class GameParticipantsTest {
     @Test
     void should_getTwoCards_To_InitialHands() {
         List<Player> testPlayers = new ArrayList<>();
-        testPlayers.add(new Player(new Name("pobi"), Batting.from(1.0)));
-        testPlayers.add(new Player(new Name("coli"), Batting.from(1.0)));
-        Players players = new Players(testPlayers);
+        Players players = new Players(List.of("pobi", "coli"));
         GameParticipants gameParticipants = GameParticipants.of(players);
 
         gameParticipants.handOutInitialCards(Deck.createShuffledDeck());

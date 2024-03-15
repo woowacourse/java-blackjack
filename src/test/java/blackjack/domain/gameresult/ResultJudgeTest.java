@@ -19,7 +19,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class ResultJudgeTest {
     private static Stream<Arguments> makeTestPlayerAndTestDealer() {
-        Player testPlayer = new Player(new Name("pobi"), Batting.from(100.0));
+        Player testPlayer = new Player("pobi");
         Dealer testDealer = new Dealer();
 
         return Stream.of(arguments(testPlayer, testDealer));

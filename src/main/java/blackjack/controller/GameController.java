@@ -3,16 +3,19 @@ package blackjack.controller;
 import blackjack.domain.card.Card;
 import blackjack.domain.game.Deck;
 import blackjack.domain.game.Game;
+import blackjack.domain.game.GameBattings;
 import blackjack.domain.game.GameParticipants;
+import blackjack.domain.gameresult.Batting;
+import blackjack.domain.gameresult.GameResult;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.hands.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameController {
 
@@ -20,38 +23,41 @@ public class GameController {
     }
 
     public static void run() {
-        Game game = makeGame();
+        Deck deck = Deck.createShuffledDeck();
+        Game game = makeGame(deck);
         Dealer gameDealer = game.getDealer();
         Players gamePlayers = game.getPlayers();
-        Deck deck = game.getDeck();
 
         printInitialHands(gameDealer.getFirstCard(), gamePlayers.getPlayers());
         confirmParticipantsHands(gamePlayers, deck, gameDealer);
 
         OutputView.printFinalHandsAndScoreMessage(gameDealer, gamePlayers);
-        OutputView.printGameResult(game.makeGameResult());
+        OutputView.printGameResult(new GameResult(game.makeGameResult()));
     }
 
-    private static Game makeGame() {
+    private static Game makeGame(Deck deck) {
         try {
-            return Game.of(GameParticipants.of(makePlayers()));
+            Players players = makePlayers();
+            GameBattings gameBattings = makeGameBattings(players.getPlayers());
+            return Game.of(GameParticipants.of(players), gameBattings, deck);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            makeGame();
+            makeGame(deck);
         }
         throw new IllegalStateException("게임 객체가 생성되지 않았습니다.");
     }
 
     private static Players makePlayers() {
         OutputView.printAskNameMessage();
-        List<Name> playerNames = InputView.readNames();
-        List<Player> players = new ArrayList<>();
+        return new Players(InputView.readNames());
+    }
 
-        for (Name playerName : playerNames) {
-            players.add(new Player(playerName, InputView.readBatting(playerName)));
+    private static GameBattings makeGameBattings(List<Player> players) {
+        Map<Player, Batting> gameBattings = new LinkedHashMap<>();
+        for (Player player : players) {
+            gameBattings.put(player, InputView.readBatting(player.getName()));
         }
-
-        return new Players(players);
+        return new GameBattings(gameBattings);
     }
 
     private static void confirmParticipantsHands(Players players, Deck deck, Dealer dealer) {

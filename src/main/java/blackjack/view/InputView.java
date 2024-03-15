@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.domain.gameresult.Batting;
-import blackjack.domain.hands.Name;
 
 import java.util.List;
 import java.util.Scanner;
@@ -18,15 +17,14 @@ public class InputView {
     private InputView() {
     }
 
-    public static List<Name> readNames() {
+    public static List<String> readNames() {
         return Stream.of(scanner.nextLine().split(NAME_DELIMITER))
                 .map(String::trim)
-                .map(Name::new)
                 .toList();
     }
 
-    public static Batting readBatting(Name playerName) {
-        System.out.println(playerName.getName() + "의 배팅금액은?");
+    public static Batting readBatting(String playerName) {
+        System.out.println(playerName + "의 배팅금액은?");
         try {
             return Batting.from(Double.parseDouble(scanner.nextLine()));
         } catch (NumberFormatException e) {

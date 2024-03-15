@@ -1,51 +1,47 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.gameresult.Batting;
-import blackjack.domain.hands.GamerHands;
+import blackjack.domain.hands.Hands;
 import blackjack.domain.hands.HandsScore;
 import blackjack.domain.hands.Name;
 
 import java.util.List;
 
-public class Player{
-    private final GamerHands playerHands;
-    private final Batting batting;
+public class Player {
+    private final Name name;
+    private final Hands hands;
 
-    public Player(Name name, Batting batting) {
-        this.playerHands = new GamerHands(name);
-        this.batting = batting;
+    public Player(String name) {
+        this.name = new Name(name);
+        this.hands = new Hands();
     }
 
     public boolean canAddCard() {
-        return (!playerHands.isBust());
+        return (!hands.isBust());
     }
 
     public boolean isFirstTurnBackJack() {
-        return playerHands.isBlackJack() && playerHands.getHandsCards().size() == 2;
+        return hands.isBlackJack() && hands.getHands().size() == 2;
     }
 
     public void addCard(Card card) {
-        playerHands.addCard(card);
+        hands.addCard(card);
     }
 
     public boolean isBust() {
-        return playerHands.isBust();
+        return hands.isBust();
     }
 
-    public Double getBat() {
-        return batting.getBat();
-    }
 
     public List<Card> getHandsCards() {
-        return playerHands.getHandsCards();
+        return hands.getHands();
     }
 
     public String getName() {
-        return playerHands.getName();
+        return name.getName();
     }
 
     public HandsScore getHandsScore() {
-        return playerHands.getHandsScore();
+        return hands.getHandsScore();
     }
 }
