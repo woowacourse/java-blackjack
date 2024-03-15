@@ -9,6 +9,7 @@ import java.util.List;
 import static blackjack.utils.Constants.*;
 
 public class OutputView {
+    private static final String NEWLINE = System.lineSeparator();
     private static final String DELIMITER = ", ";
 
     public void printInitialSettingMessage(final ParticipantDto dealer, final ParticipantsDto players) {
@@ -52,10 +53,20 @@ public class OutputView {
 
     public void printParticipantsCards(final ParticipantsDto participants) {
         final List<ParticipantDto> participantDtos = participants.participants();
+        final List<String> participantsCardsMessage = generateParticipantsCardsMessage(participantDtos);
 
-        participantDtos.stream()
+        final String message = joinWithBlankLine(participantsCardsMessage);
+        System.out.println(message + NEWLINE);
+    }
+
+    private String joinWithBlankLine(final List<String> source) {
+        return String.join(NEWLINE, source);
+    }
+
+    private List<String> generateParticipantsCardsMessage(final List<ParticipantDto> participantDtos) {
+        return participantDtos.stream()
                 .map(this::generateParticipantCardsMessage)
-                .forEach(System.out::println);
+                .toList();
     }
 
     private String generateParticipantCardsMessage(ParticipantDto participant) {
@@ -71,7 +82,27 @@ public class OutputView {
     }
 
     public void printDealerReceiveCardMessage() {
-        final String message = String.format("%n%s는 %d이하라 한장의 카드를 더 받았습니다.%n", DEFAULT_NAME_OF_DEALER, DEALER_MIN_SCORE_POLICY);
+        final String message = String.format("%n%s는 %d이하라 한장의 카드를 더 받았습니다.", DEFAULT_NAME_OF_DEALER, DEALER_MIN_SCORE_POLICY);
         System.out.println(message);
+    }
+
+    public void printParticipantsCardsWithScore(final ParticipantsDto participantsDto) {
+        final List<ParticipantDto> participants = participantsDto.participants();
+        final List<String> cardsWithScoreMessages = generateCardsWithScoreMessages(participants);
+
+        System.out.println(NEWLINE + joinWithBlankLine(cardsWithScoreMessages));
+    }
+
+    private List<String> generateCardsWithScoreMessages(final List<ParticipantDto> participants) {
+        return participants.stream()
+                .map(this::generateCardsWithScoreMessage)
+                .toList();
+    }
+
+    private String generateCardsWithScoreMessage(final ParticipantDto participant) {
+        final String participantCardsMessage = generateParticipantCardsMessage(participant);
+        final int score = participant.score();
+
+        return String.format("%s - 결과: %d", participantCardsMessage, score);
     }
 }
