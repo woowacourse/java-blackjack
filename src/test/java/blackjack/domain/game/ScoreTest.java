@@ -5,13 +5,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class ScoreTest {
 
     @DisplayName("점수끼리 더한다.")
     @Test
-    void testAdd() {
+    void testAddScore() {
         // given
         Score score = new Score(1);
 
@@ -22,85 +23,20 @@ class ScoreTest {
         assertThat(actual).extracting("value").isEqualTo(3);
     }
 
-    @DisplayName("주어진 한계값 이하이면 히트가 가능하다.")
+    @DisplayName("점수에 값을 더한다.")
     @Test
-    void testCanHit() {
+    void testAddValue() {
         // given
-        Score score = new Score(2);
+        Score score = new Score(1);
 
         // when
-        boolean actual = score.canHit(new Score(2));
+        Score actual = score.add(2);
 
         // then
-        assertThat(actual).isTrue();
+        assertThat(actual).extracting("value").isEqualTo(3);
     }
 
-    @DisplayName("주어진 한계값 초과이면 히트가 불가능하다.")
-    @Test
-    void testCanNotHit() {
-        // given
-        Score score = new Score(3);
-
-        // when
-        boolean actual = score.canHit(new Score(2));
-
-        // then
-        assertThat(actual).isFalse();
-    }
-
-    @DisplayName("주어진 점수보다 큼을 확인한다.")
-    @Test
-    void testisBiggerThan() {
-        // given
-        Score score = new Score(2);
-
-        // when
-        boolean actual = score.isBiggerThan(new Score(1));
-
-        // then
-        assertThat(actual).isTrue();
-    }
-
-    @DisplayName("주어진 점수보다 작음을 확인한다.")
-    @Test
-    void testIsSmallerThan() {
-        // given
-        Score score = new Score(2);
-
-        // when
-        boolean actual = score.isBiggerThan(new Score(3));
-
-        // then
-        assertThat(actual).isFalse();
-    }
-
-    @DisplayName("점수가 21을 초과하지 않으면 Ace는 11로 계산한다.")
-    @Test
-    void testAdjustAceScore() {
-        // given
-        Score score = new Score(11);
-
-        // when
-        Score actual = score.adjustAceScore();
-
-        // then
-        assertThat(actual).extracting("value").isEqualTo(21);
-    }
-
-    @DisplayName("점수가 21을 초과하면 Ace를 11로 계산하지 않는다.")
-    @Test
-    void testNotAdjustAceScore() {
-        // given
-        Score score = new Score(12);
-
-        // when
-        Score actual = score.adjustAceScore();
-
-        // then
-        assertThat(actual).extracting("value").isEqualTo(12);
-    }
-
-    @DisplayName("21이면 블랙잭이다.")
+    @DisplayName("21이면 블랙잭 점수다.")
     @Test
     void testIsBlackjack() {
         // given
@@ -113,7 +49,7 @@ class ScoreTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("21이 아니면 블랙잭이 아니다.")
+    @DisplayName("21이 아니면 블랙잭 점수가 아니다.")
     @ParameterizedTest
     @ValueSource(ints = {20, 22})
     void testIsNotBlackjack(int value) {
@@ -127,7 +63,7 @@ class ScoreTest {
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("21을 초과하면 버스트다.")
+    @DisplayName("21을 초과하면 버스트 점수다.")
     @Test
     void testIsBust() {
         // given
@@ -140,7 +76,7 @@ class ScoreTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("21을 초과하지 않으면 버스트가 아니다.")
+    @DisplayName("21을 초과하지 않으면 버스트 점수가 아니다.")
     @Test
     void testIsNotBust() {
         // given
@@ -153,7 +89,7 @@ class ScoreTest {
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("플레이어는 21을 넘지 않을 경우 히트할 수 있다.")
+    @DisplayName("21을 넘지 않을 경우 플레이어 히트 가능 점수다.")
     @ParameterizedTest
     @ValueSource(ints = {21, 20})
     void testIsPlayerHit(int value) {
@@ -167,7 +103,7 @@ class ScoreTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("플레이어는 21을 넘으면 히트할 수 없다.")
+    @DisplayName("21을 넘으면 플레이어 히트 가능 점수가 아니다.")
     @Test
     void testIsNotPlayerHit() {
         // given
@@ -180,7 +116,7 @@ class ScoreTest {
         assertThat(actual).isFalse();
     }
 
-    @DisplayName("딜러는 16을 넘지 않을 경우 히트할 수 있다.")
+    @DisplayName("16을 넘지 않을 경우 딜러 히트 가능 점수다.")
     @ParameterizedTest
     @ValueSource(ints = {16, 15})
     void testIsDealerHit(int value) {
@@ -194,7 +130,7 @@ class ScoreTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("딜러는 16을 넘으면 히트할 수 없다.")
+    @DisplayName("16을 넘으면 딜러 히트 가능 점수가 아니다.")
     @Test
     void testIsNotDealerHit() {
         // given
@@ -205,5 +141,33 @@ class ScoreTest {
 
         // when & then
         assertThat(actual).isFalse();
+    }
+
+    @DisplayName("주어진 점수보다 큰지 판별한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"1, true", "2, false", "3, false"})
+    void testIsBiggerThan(int value, boolean expected) {
+        // given
+        Score score = new Score(2);
+
+        // when
+        boolean actual = score.isBiggerThan(new Score(value));
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("주어진 점수보다 작은지 판별한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"1, false", "2, false", "3, true"})
+    void testIsSmallerThan(int value, boolean expected) {
+        // given
+        Score score = new Score(2);
+
+        // when
+        boolean actual = score.isLessThan(new Score(value));
+
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 }

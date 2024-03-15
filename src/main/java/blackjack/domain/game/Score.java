@@ -1,12 +1,9 @@
 package blackjack.domain.game;
 
-import blackjack.domain.card.CardRank;
-
 public class Score {
 
     private static final int BLACKJACK = 21;
     private static final int DEALER_HIT_THRESHOLD = 16;
-    private static final int ACE_SCORE_DIFFERENCE = CardRank.ACE.getSpecialScore() - CardRank.ACE.getScore();
 
     private final int value;
 
@@ -15,7 +12,11 @@ public class Score {
     }
 
     public Score add(Score other) {
-        return new Score(this.value + other.value);
+        return this.add(other.value);
+    }
+
+    public Score add(int value) {
+        return new Score(this.value + value);
     }
 
     public boolean isBlackjack() {
@@ -26,12 +27,8 @@ public class Score {
         return value > BLACKJACK;
     }
 
-    public boolean isNotBust() {
-        return !isBust();
-    }
-
     public boolean isPlayerHit() {
-        return isNotBust();
+        return !isBust();
     }
 
     public boolean isDealerHit() {
@@ -46,12 +43,8 @@ public class Score {
         return this.value > other.value;
     }
 
-    public Score adjustAceScore() {
-        Score newScore = new Score(this.value + ACE_SCORE_DIFFERENCE);
-        if (newScore.isNotBust()) {
-            return newScore;
-        }
-        return this;
+    public boolean isLessThan(Score other) {
+        return this.value < other.value;
     }
 
     public int getValue() {
