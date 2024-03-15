@@ -1,8 +1,13 @@
 package domain.user;
 
+import static domain.money.GameResult.LOSE;
+import static domain.money.GameResult.WIN;
+
 import domain.card.Card;
 import domain.card.Number;
+import domain.money.GameResult;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,15 +17,8 @@ public class Hand {
     public static final int FIRST_INDEX = 0;
     private final List<Card> cards;
 
-    public Hand() {
-        this.cards = new ArrayList<>();
-    }
-
-    public void addStartCards(Card... startCards) {
-        if (!cards.isEmpty()) {
-            throw new UnsupportedOperationException("카드가 존재하지 않을 때만 가능합니다.");
-        }
-        cards.addAll(List.of(startCards));
+    public Hand(Card... cards) {
+        this.cards = new ArrayList<>(List.of(cards));
     }
 
     public void receiveCard(Card card) {
@@ -44,6 +42,32 @@ public class Hand {
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    public GameResult generateResult(Hand opponent) {
+        if (busted() || isOpponentBlackjackOnly(opponent)) {
+            return LOSE;
+        }
+        if (opponent.busted() || isCurrentBlackjackOnly(opponent)) {
+            return WIN;
+        }
+        return compare(sumCard(), opponent.sumCard());
+    }
+
+    private GameResult compare(int current, int opponent) {
+        return Arrays.stream(GameResult.values())
+                .filter(result -> result.getCondition().test(current, opponent))
+                .findFirst()
+                .orElseThrow(() ->
+                        new IllegalStateException("입력에 따른 결과가 존재하지 않습니다."));
+    }
+
+    private boolean isOpponentBlackjackOnly(Hand opponent) {
+        return !isBlackjack() && opponent.isBlackjack();
+    }
+
+    private boolean isCurrentBlackjackOnly(Hand opponent) {
+        return isBlackjack() && !opponent.isBlackjack();
     }
 
     public boolean isBlackjack() {

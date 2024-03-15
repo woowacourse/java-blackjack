@@ -1,12 +1,15 @@
 package domain.money;
 
 import domain.Deck;
+import domain.user.Hand;
 import domain.user.Player;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import view.Command;
 
 public class PlayersMoney {
     public static final int DEALER_MULTIPLIER = -1;
@@ -16,32 +19,31 @@ public class PlayersMoney {
         this.playersMoney = playersMoney;
     }
 
-    public void addStartCards(Deck deck) {
+    public void doPlayerTurn(Function<String, Command> commandFunction, Deck deck) {
         for (Player player : playersMoney.keySet()) {
-            player.addStartCards(deck);
+            player.receiveCard(commandFunction, deck);
         }
     }
 
-    public PlayersMoney changeByPlayersResult(Map<Player, GameResult> playerResults) {
+    public PlayersMoney changeByGameResult(Hand dealerHand) {
         return new PlayersMoney(playersMoney.entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         Entry::getKey,
-                        entry -> moneyByGameResult(playerResults, entry)
+                        entry -> moneyByGameResult(dealerHand, entry)
                 )));
     }
 
-    private static Money moneyByGameResult(Map<Player, GameResult> playerResults, Entry<Player, Money> entry) {
-        Money money = entry.getValue();
-        money = changeMoneyIfBlackjack(entry, money);
-        return money.change(playerResults.get(entry.getKey()));
+    private Money moneyByGameResult(Hand dealerHand, Entry<Player, Money> entry) {
+        Money money = changeMoneyIfBlackjack(entry);
+        return money.change(entry.getKey().generatePlayerResult(dealerHand));
     }
 
-    private static Money changeMoneyIfBlackjack(Entry<Player, Money> entry, Money money) {
+    private Money changeMoneyIfBlackjack(Entry<Player, Money> entry) {
         if (entry.getKey().isBlackjack()) {
-            return money.changeByBlackjack();
+            return entry.getValue().changeByBlackjack();
         }
-        return money;
+        return entry.getValue();
     }
 
     public int calculateDealerMoney() {

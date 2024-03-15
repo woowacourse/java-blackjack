@@ -1,42 +1,57 @@
 package domain.user;
 
+import static view.Command.YES;
+
 import domain.Deck;
 import domain.card.Card;
+import domain.money.GameResult;
 import java.util.List;
-import java.util.Objects;
+import java.util.function.Function;
+import view.Command;
+import view.OutputView;
 
 public class Player {
     public static final int RECEIVABLE_THRESHOLD = 21;
     private final Name name;
     private final Hand hand;
 
-    public Player(Name name) {
+    public Player(Name name, Card... cards) {
         this.name = name;
-        this.hand = new Hand();
+        this.hand = new Hand(cards);
     }
 
-    public void addStartCards(Deck deck) {
-        hand.addStartCards(deck.drawCard(), deck.drawCard());
+    public void receiveCard(Function<String, Command> commandFunction, Deck deck) {
+        if (hand.isBlackjack()) {
+            OutputView.printBlackjack(name.value());
+            return;
+        }
+        while (isReceivable() && YES == commandFunction.apply(name.value())) {
+            hand.receiveCard(deck.drawCard());
+            printByState();
+        }
     }
 
-    public void receiveCard(Card card) {
-        hand.receiveCard(card);
+    private void printByState() {
+        OutputView.printUserAndCards(name.value(), hand.getCards());
+        if (hand.busted()) {
+            OutputView.printBust();
+        }
     }
 
     public int sumHand() {
         return hand.sumCard();
     }
 
-    public boolean busted() {
-        return hand.busted();
-    }
-
     public boolean isBlackjack() {
         return hand.isBlackjack();
     }
 
-    public boolean isReceivable() {
+    private boolean isReceivable() {
         return hand.sumCard() < RECEIVABLE_THRESHOLD;
+    }
+
+    public GameResult generatePlayerResult(Hand dealerHand) {
+        return hand.generateResult(dealerHand);
     }
 
     public List<Card> getAllCards() {
@@ -45,22 +60,5 @@ public class Player {
 
     public String getNameValue() {
         return name.value();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Player player = (Player) o;
-        return Objects.equals(name, player.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
     }
 }

@@ -5,15 +5,25 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class PlayerNames {
+    private static final int MAX_AMOUNT = 8;
+    private static final int MIN_AMOUNT = 2;
     private final List<Name> playerNames;
 
     public PlayerNames(List<Name> playerNames) {
+        validateNamesAmount(playerNames);
         validateDuplicatedName(playerNames);
         this.playerNames = playerNames;
     }
 
     public Stream<Name> stream() {
         return playerNames.stream();
+    }
+
+    private void validateNamesAmount(List<Name> playerNames) {
+        if (playerNames.size() > MAX_AMOUNT || playerNames.size() < MIN_AMOUNT) {
+            throw new IllegalArgumentException(
+                    "플레이어의 수는 %d명에서 %d명이여야 합니다: %d".formatted(MIN_AMOUNT, MAX_AMOUNT, playerNames.size()));
+        }
     }
 
     private void validateDuplicatedName(List<Name> names) {

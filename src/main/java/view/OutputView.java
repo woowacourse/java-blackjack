@@ -2,11 +2,12 @@ package view;
 
 import domain.card.Card;
 import domain.money.PlayersMoney;
-import domain.user.GameUsers;
+import domain.user.Hand;
 import domain.user.Player;
 import java.util.List;
 import java.util.stream.Collectors;
 import view.viewer.HandViewer;
+import view.viewer.card.CardViewer;
 
 public class OutputView {
     private static final String DEALER_NAME_VALUE = "딜러";
@@ -14,24 +15,22 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printStartStatus(GameUsers gameUsers) {
-        printUserNames(gameUsers);
-        printUsersStartCards(gameUsers);
+    public static void printStartStatus(Hand dealerHand, List<Player> players) {
+        printUserNames(players);
+        printUsersStartCards(dealerHand, players);
         System.out.println();
     }
 
-    private static void printUserNames(GameUsers gameUsers) {
-        String names = gameUsers.getPlayers()
-                .stream()
+    private static void printUserNames(List<Player> players) {
+        String names = players.stream()
                 .map(Player::getNameValue)
                 .collect(Collectors.joining(", "));
         System.out.printf("\n%s와 %s에게 2장을 나누었습니다.%n", DEALER_NAME_VALUE, names);
     }
 
-    private static void printUsersStartCards(GameUsers gameUsers) {
-        printUserAndCards(DEALER_NAME_VALUE, gameUsers.getDealer().getVisibleCard());
-        gameUsers.getPlayers()
-                .forEach(player -> printUserAndCards(player.getNameValue(), player.getAllCards()));
+    private static void printUsersStartCards(Hand dealerHand, List<Player> players) {
+        System.out.println(DEALER_NAME_VALUE + "카드: " + CardViewer.show(dealerHand.getFirstCard()));
+        players.forEach(player -> printUserAndCards(player.getNameValue(), player.getAllCards()));
     }
 
     public static void printUserAndCards(String name, List<Card> cards) {
@@ -54,21 +53,19 @@ public class OutputView {
         System.out.printf("%n%s는 16이하라 한장의 카드를 더 받았습니다.%n", DEALER_NAME_VALUE);
     }
 
-    public static void printAllUserCardsAndSum(GameUsers gameUsers) {
+    public static void printAllUserCardsAndSum(Hand dealerHand, List<Player> players) {
         System.out.println();
-        System.out.println(showUserNameAndCards(DEALER_NAME_VALUE, gameUsers.getDealer().getAllCards())
-                + " - 결과: " + gameUsers.getDealer().sumHand());
-        gameUsers.getPlayers()
-                .forEach(player ->
-                        System.out.println(showUserNameAndCards(player.getNameValue(), player.getAllCards())
-                                + " - 결과: " + player.sumHand()));
+        System.out.println(showUserNameAndCards(
+                DEALER_NAME_VALUE, dealerHand.getCards()) + " - 결과: " + dealerHand.sumCard());
+        players.forEach(player -> System.out.println(showUserNameAndCards(
+                player.getNameValue(), player.getAllCards()) + " - 결과: " + player.sumHand()));
     }
 
     public static void printFinalResult(PlayersMoney playersMoney) {
         System.out.println("\n## 최종 수익");
         System.out.println(DEALER_NAME_VALUE + ": " + playersMoney.calculateDealerMoney());
         playersMoney.getPlayersMoney()
-                .forEach(((player, betAmount) ->
-                        System.out.println(player.getNameValue() + ": " + betAmount.value())));
+                .forEach(((player, money) ->
+                        System.out.println(player.getNameValue() + ": " + money.value())));
     }
 }

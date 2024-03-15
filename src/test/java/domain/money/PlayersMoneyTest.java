@@ -1,11 +1,14 @@
 package domain.money;
 
-import static domain.money.GameResult.WIN;
+import static domain.card.Number.ACE;
+import static domain.card.Number.SIX;
+import static domain.card.Number.TEN;
+import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.Number;
-import domain.card.Shape;
+import domain.user.Hand;
 import domain.user.Name;
 import domain.user.Player;
 import java.util.HashMap;
@@ -16,14 +19,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class PlayersMoneyTest {
-    @ParameterizedTest(name = "{0}")
-    @CsvSource(value = {"WIN,1000", "DRAW,0", "LOSE,-1000"})
+    @ParameterizedTest(name = "{2}")
+    @CsvSource(value = {"SEVEN,1000,win", "SIX,0,draw", "FIVE,-1000,lose"})
     @DisplayName("플레이 결과에 따라 플레이어의 돈을 바꾼다.")
-    void changeByPlayerResultsWinTest(GameResult gameResult, int moneyValue) {
-        Player player = new Player(new Name("aa"));
+    void changeByPlayerResultsWinTest(Number number, int moneyValue, String result) {
+        Player player = new Player(new Name("aa"), new Card(SPADE, number));
+        Hand dealerHand = new Hand(new Card(SPADE, SIX));
         PlayersMoney playersMoney = new PlayersMoney(new HashMap<>(Map.of(player, new Money(1000))));
-        Map<Player, GameResult> playersResult = Map.of(player, gameResult);
-        PlayersMoney resultPlayersMoney = playersMoney.changeByPlayersResult(playersResult);
+        PlayersMoney resultPlayersMoney = playersMoney.changeByGameResult(dealerHand);
 
         assertThat(resultPlayersMoney.getPlayersMoney()).containsExactly(Map.entry(player, new Money(moneyValue)));
     }
@@ -31,12 +34,10 @@ class PlayersMoneyTest {
     @Test
     @DisplayName("플레이어가 블랙잭으로 승리한 경우 금액의 1.5배를 받는다.")
     void earn150PercentMoneyWhenBlackjackAndWin() {
-        Player player = new Player(new Name("aa"));
-        player.receiveCard(new Card(Shape.SPADE, Number.ACE));
-        player.receiveCard(new Card(Shape.SPADE, Number.TEN));
+        Player player = new Player(new Name("aa"), new Card(SPADE, ACE), new Card(SPADE, TEN));
+        Hand dealerHand = new Hand(new Card(SPADE, SIX));
         PlayersMoney playersMoney = new PlayersMoney(new HashMap<>(Map.of(player, new Money(1000))));
-        Map<Player, GameResult> playersResult = Map.of(player, WIN);
-        PlayersMoney resultPlayersMoney = playersMoney.changeByPlayersResult(playersResult);
+        PlayersMoney resultPlayersMoney = playersMoney.changeByGameResult(dealerHand);
 
         assertThat(resultPlayersMoney.getPlayersMoney()).containsExactly(Map.entry(player, new Money(1500)));
 
