@@ -1,0 +1,79 @@
+package ui;
+
+import domain.blackjackgame.GameResult;
+import domain.blackjackgame.ResultStatus;
+import domain.card.Card;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Participants;
+import domain.participant.Player;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class OutputView {
+    public void printInitialCards(Participants participants) {
+        Dealer dealer = participants.getDealer();
+        String playerNames = String.join(", ", participants.getPlayerNames());
+        System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), playerNames);
+
+        System.out.println(formatCardsMessage(dealer, 1));
+        for (Player player : participants.getPlayers()) {
+            printAllCards(player);
+        }
+        System.out.println();
+    }
+
+    public void printAllCards(Participant participant) {
+        System.out.println(formatCardsMessage(participant));
+    }
+
+    private String formatCardsMessage(Participant participant) {
+        return formatCardsMessage(participant, participant.getAllCards().size());
+    }
+
+    private String formatCardsMessage(Participant participant, int cardPrintCount) {
+        String cardsMessage = participant.getAllCards().stream()
+                .limit(cardPrintCount)
+                .map(this::generateCardMessage)
+                .collect(Collectors.joining(", "));
+
+        return String.format("%s카드: %s", participant.getName(), cardsMessage);
+    }
+
+    private String generateCardMessage(Card card) {
+        return card.getDenominationExpression() + card.getSuitName();
+    }
+
+    public void printDealerReceiveCardMessage() {
+        System.out.println(System.lineSeparator() + "딜러는 16이하라 한 장의 카드를 더 받았습니다.");
+    }
+
+    public void printCardsWithScore(Participants participants) {
+        System.out.println();
+        for (Participant participant : participants.getParticipants()) {
+            System.out.println(formatScoreMessage(participant));
+        }
+    }
+
+    private String formatScoreMessage(Participant participant) {
+        return formatCardsMessage(participant) + " - 결과: " + participant.calculateScore().getValue();
+    }
+
+    public void printGameResult(GameResult gameResult) {
+        System.out.println(System.lineSeparator() + "## 최종 승패");
+        printDealerResult(gameResult.getDealerResult());
+        printPlayerResult(gameResult.getPlayerResult());
+    }
+
+    private void printDealerResult(Map<ResultStatus, Integer> dealerResult) {
+        String dealerResultMessage = dealerResult.entrySet()
+                .stream()
+                .map(entry -> String.format("%d%s", entry.getValue(), entry.getKey().getName()))
+                .collect(Collectors.joining(" "));
+        System.out.printf("딜러: %s%n", dealerResultMessage);
+    }
+
+    private void printPlayerResult(Map<Player, ResultStatus> playerResult) {
+        playerResult.forEach((key, value) -> System.out.printf("%s: %s%n", key.getName(), value.getName()));
+    }
+}
