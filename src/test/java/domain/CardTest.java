@@ -16,17 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 class CardTest {
 
-    static Stream<Arguments> createCard() {
-        return Stream.of(
-                Arguments.of(
-                        Map.entry(TWO_HEART, 2),
-                        Map.entry(TEN_HEART, 10),
-                        Map.entry(ACE_HEART, 11)
-                )
-        );
-    }
-
-    @DisplayName("문자(String)와 모양(String)을 가지고 있다.")
+    @DisplayName("문자와 모양을 가지고 있다.")
     @Test
     void create_success() {
         assertThatCode(() -> Card.of(Rank.FOUR, Suit.DIAMONDS))
@@ -41,6 +31,14 @@ class CardTest {
         int expected = input.getValue();
 
         assertThat(actual).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> createCard() {
+        return Stream.of(
+                Arguments.of(TWO_HEART, 2),
+                Arguments.of(TEN_HEART, 10),
+                Arguments.of(ACE_HEART, 11)
+        );
     }
 
     @DisplayName("현재 카드가 Ace인지 판단한다.")

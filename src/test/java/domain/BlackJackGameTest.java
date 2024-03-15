@@ -32,10 +32,10 @@ class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
 
         blackJackGame.initHand(); // 딜러 : 2하트, 3하트 / 산초 : 4하트, 5하트
-        Map<Player, Result> resultMap = blackJackGame.getGameResults();
+        Map<Player, PlayerGameResult> resultMap = blackJackGame.getPlayerGameResult();
 
-        Result result = resultMap.get(new Player(name));
+        PlayerGameResult playerGameResult = resultMap.get(new Player(name));
 
-        assertThat(result).isEqualTo(Result.PLAYER_WIN);
+        assertThat(playerGameResult).isEqualTo(PlayerGameResult.WIN);
     }
 }

@@ -3,7 +3,6 @@ package domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
@@ -34,15 +33,6 @@ class PlayersTest {
                 .hasMessage(NAME_DUPLICATE_MESSAGE);
     }
 
-    static Stream<Arguments> createValidNames() {
-        return Stream.of(
-                Arguments.of(
-                        List.of("산초"),
-                        List.of("A", "B", "C", "D", "E", "F", "G", "H", "I")
-                )
-        );
-    }
-
     @DisplayName("1명 이상 10명 이하면 예외를 발생하지 않는다.")
     @ParameterizedTest
     @MethodSource("createValidNames")
@@ -51,15 +41,12 @@ class PlayersTest {
                 .doesNotThrowAnyException();
     }
 
-    static Stream<Arguments> createInValidNames() {
+    static Stream<List<String>> createValidNames() {
         return Stream.of(
-                Arguments.of(
-                        List.of(),
-                        List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J")
-                )
+                List.of("산초"),
+                List.of("A", "B", "C", "D", "E", "F", "G", "H", "I")
         );
     }
-
 
     @DisplayName("1명 이상 10명 이하면 예외를 발생하지 않는다.")
     @ParameterizedTest
@@ -68,5 +55,12 @@ class PlayersTest {
         assertThatThrownBy(() -> new Players(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(NAMES_SIZE_INVALID_MESSAGE);
+    }
+
+    static Stream<List<String>> createInValidNames() {
+        return Stream.of(
+                List.of(),
+                List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J")
+        );
     }
 }

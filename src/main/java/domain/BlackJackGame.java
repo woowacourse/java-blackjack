@@ -32,10 +32,10 @@ public class BlackJackGame {
         return dealer.isHittable();
     }
 
-    public Map<Player, Result> getGameResults() {
-        Map<Player, Result> results = new LinkedHashMap<>();
+    public Map<Player, PlayerGameResult> getPlayerGameResult() {
+        Map<Player, PlayerGameResult> results = new LinkedHashMap<>();
         for (Player player : players) {
-            results.put(player, Result.of(dealer, player));
+            results.put(player, PlayerGameResult.of(dealer, player));
         }
         return results;
     }
