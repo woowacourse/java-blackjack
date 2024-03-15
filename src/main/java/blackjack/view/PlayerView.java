@@ -13,6 +13,7 @@ public class PlayerView {
     public static void printPlayers(Players players) {
         printPlayersPreview(players.getDealer(), players.getGamePlayers());
         printPlayersFirstOpenCard(players.getPlayers());
+        System.out.println();
     }
 
     public static void printDealerDrawMessage() {

@@ -12,7 +12,7 @@ public class InputView {
 
     private static String input() {
         Scanner scanner = new Scanner(System.in);
-        return scanner.next();
+        return scanner.nextLine();
     }
 
     public static List<String> inputPlayerNames() {
