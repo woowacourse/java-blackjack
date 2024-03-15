@@ -27,4 +27,8 @@ public class Player extends Participant {
     public ParticipantHandStatus createInitialHandStatus() {
         return createHandStatus();
     }
+
+    public int bettingMoney() {
+        return this.bettingMoney.getValue();
+    }
 }

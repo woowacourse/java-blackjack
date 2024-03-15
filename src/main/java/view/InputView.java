@@ -7,7 +7,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class InputView {
-    private static final String REQUEST_BETTING_MONEY_MESSAGE = "%n%s의 배팅 금액은?";
+    private static final String REQUEST_BETTING_MONEY_MESSAGE = "%n%s의 배팅 금액은?%n";
     private static final String INVALID_DELIMITER_MESSAGE = "잘못된 구분자 입력입니다.";
     private static final String REQUEST_WHETHER_GET_MORE_CARD = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n";
     private final Scanner scanner = new Scanner(System.in);

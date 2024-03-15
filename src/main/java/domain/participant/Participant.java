@@ -7,8 +7,6 @@ import controller.dto.response.ParticipantHandStatus;
 import domain.card.Card;
 import domain.game.DecisionToContinue;
 import domain.game.deck.Deck;
-import domain.money.Money;
-import domain.money.Profit;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,11 +14,9 @@ public abstract class Participant {
 
     protected final String name;
     protected final Hand hand;
-    protected final Profit profit;
 
     protected Participant(final String name) {
         this.name = name;
-        this.profit = new Profit();
         this.hand = new Hand();
     }
 
@@ -29,18 +25,6 @@ public abstract class Participant {
             hand.saveCard(deck.pick());
         }
         return hand.getCards();
-    }
-
-    public void earn(final Money money) {
-        profit.increase(money);
-    }
-
-    public void lose(final Money money) {
-        profit.decrease(money);
-    }
-
-    public int totalProfit() {
-        return profit.getValue();
     }
 
     public boolean isBlackJack() {

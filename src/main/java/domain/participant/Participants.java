@@ -19,8 +19,8 @@ public class Participants {
 
     public static Participants from(final List<PlayerBettingMoney> requests) {
         return Stream.concat(
-                Stream.of(new Dealer()),
-                generatePlayers(requests)
+                generatePlayers(requests),
+                Stream.of(new Dealer())
         ).collect(Collectors.collectingAndThen(toList(), Participants::new));
     }
 

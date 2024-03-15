@@ -18,7 +18,6 @@ public class OutputView {
     private static final String PARTICIPANT_PROFIT_RESPONSE_MESSAGE = "%n## 최종 수익";
     private static final String PARTICIPANT_PROFIT_RESULT_FORMAT = "%n%s: %d";
 
-
     public void printInitialHandStatus(final InitialCardStatus initialCardStatus) {
         List<String> names = generateParticipantNames(initialCardStatus);
         System.out.printf(

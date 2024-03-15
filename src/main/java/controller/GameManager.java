@@ -30,7 +30,6 @@ public class GameManager {
     }
 
     private BlackJackGame start() {
-
         BlackJackGame blackJackGame = BlackJackGame.from(
                 generatePlayerBettingMoney(),
                 new RandomDeckGenerator()

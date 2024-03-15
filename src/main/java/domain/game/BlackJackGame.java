@@ -88,9 +88,10 @@ public class BlackJackGame {
     }
 
     private ParticipantProfitResponse generateDealerProfitResponse(final List<PlayerOutcome> outcomes) {
-        int dealerProfit = outcomes.stream()
-                .mapToInt(outcome -> calculateProfit(outcome.player(), outcome.outcome()))
+        int sumOfPlayerProfit = outcomes.stream()
+                .mapToInt(outcome -> calculatePlayerProfit(outcome.player(), outcome.outcome()))
                 .sum();
+        int dealerProfit = (-1) * sumOfPlayerProfit;
         return new ParticipantProfitResponse(Dealer.DEALER_NAME, dealerProfit);
     }
 
@@ -98,14 +99,14 @@ public class BlackJackGame {
         return outcomes.stream()
                 .map(outcome -> new ParticipantProfitResponse(
                         outcome.player().getName(),
-                        calculateProfit(outcome.player(), outcome.outcome()))
+                        calculatePlayerProfit(outcome.player(), outcome.outcome()))
                 );
     }
 
-    private int calculateProfit(final Player player, final Outcome outcome) {
+    private int calculatePlayerProfit(final Player player, final Outcome outcome) {
         double rates = outcome.earningRates();
-        int currentProfit = player.totalProfit();
-        return (int) Math.ceil(currentProfit * rates);
+        int bettingMoney = player.bettingMoney();
+        return (int) Math.ceil(bettingMoney * rates);
     }
 
     public List<Participant> getParticipants() {
