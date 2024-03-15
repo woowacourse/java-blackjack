@@ -25,6 +25,14 @@ class NameTest {
             .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("플레이어 이름이 빈 값이 아니고, 딜러의 이름과 다르면 객체 생성 성공")
+    @ParameterizedTest
+    @ValueSource(strings = {"jojo", "lily", "조조"})
+    void createPlayerNameWithNotEmptyAndNotDealerName(String name) {
+        assertThatCode(() -> Name.createPlayerName(name))
+            .doesNotThrowAnyException();
+    }
+
     @DisplayName("딜러 이름 생성 성공")
     @Test
     void createDealerName() {
