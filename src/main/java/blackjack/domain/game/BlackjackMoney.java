@@ -6,10 +6,6 @@ public class BlackjackMoney {
 
     private final int amount;
 
-    public BlackjackMoney() {
-        this.amount = 0;
-    }
-
     public BlackjackMoney(int amount) {
         this.amount = amount;
     }
