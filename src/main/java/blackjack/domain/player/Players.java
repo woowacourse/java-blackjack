@@ -20,8 +20,8 @@ public class Players {
         return new Players(playerNames.getNames().stream().map(Player::new).toList());
     }
 
-    public boolean isAnyNotBust() {
-        return players.stream().anyMatch(Player::isNotBust);
+    public boolean hasStandPlayer() {
+        return players.stream().anyMatch(Player::isStand);
     }
 
     public Map<PlayerName, Hands> getPlayersHands() {

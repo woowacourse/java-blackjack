@@ -39,7 +39,7 @@ public enum BetLeverage {
 
     private static void validateState(final State playerState, final State dealerState) {
         if (playerState.isNotFinish() || dealerState.isNotFinish()) {
-            throw new IllegalStateException("Hit 상태에서 결과를 계산할 수 없습니다.");
+            throw new IllegalStateException("종료되지 않은 상태에서 결과를 계산할 수 없습니다.");
         }
     }
 

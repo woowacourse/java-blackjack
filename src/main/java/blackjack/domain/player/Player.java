@@ -8,10 +8,6 @@ public class Player extends User {
 
     @Override
     public boolean canHit() {
-        return isHitState();
-    }
-
-    public boolean isNotBust() {
-        return !isBurstState();
+        return isNotFinished();
     }
 }

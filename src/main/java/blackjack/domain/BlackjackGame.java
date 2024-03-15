@@ -50,9 +50,7 @@ public class BlackjackGame {
             final BiConsumer<PlayerName, Hands> playerCallAfter,
             final IntConsumer dealerCallAfter
     ) {
-        if (dealer.isBlackjackState()) {
-            runPlayersTurn(userWantToHit, playerCallAfter);
-        }
+        runPlayersTurn(userWantToHit, playerCallAfter);
         runDealerTurn(dealerCallAfter);
     }
 
@@ -70,6 +68,10 @@ public class BlackjackGame {
             final BiConsumer<PlayerName, Hands> playerCallAfter,
             final Player player
     ) {
+        if (dealer.isFinished()) {
+            player.stand();
+            return;
+        }
         while (player.canHit()) {
             runHitOrStandByUser(player, userWantToHit);
             playerCallAfter.accept(player.getPlayerName(), player.getHands());
@@ -86,20 +88,20 @@ public class BlackjackGame {
             return;
         }
 
-        if (player.isHitState()) {
+        if (player.isNotFinished()) {
             player.stand();
         }
     }
 
     private void runDealerTurn(final IntConsumer dealerHitConsumer) {
         int count = 0;
-        while (players.isAnyNotBust() && dealer.canHit()) {
+        while (players.hasStandPlayer() && dealer.canHit()) {
             final Card card = deck.pick();
             dealer.draw(card);
             count++;
         }
 
-        if (dealer.isHitState()) {
+        if (dealer.isNotFinished()) {
             dealer.stand();
         }
         dealerHitConsumer.accept(count);

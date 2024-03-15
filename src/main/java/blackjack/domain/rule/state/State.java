@@ -13,16 +13,20 @@ public interface State {
 
     State copy();
 
-    default boolean isHit() {
-        return false;
-    }
-
     default boolean isBlackjack() {
         return false;
     }
 
     default boolean isNotBlackjack() {
         return !isBlackjack();
+    }
+
+    default boolean isStand() {
+        return false;
+    }
+
+    default boolean isHit() {
+        return false;
     }
 
     default boolean isBust() {
@@ -33,11 +37,11 @@ public interface State {
         return !isBust();
     }
 
-    default boolean isFinish() {
+    default boolean isFinished() {
         return false;
     }
 
     default boolean isNotFinish() {
-        return !isFinish();
+        return !isFinished();
     }
 }

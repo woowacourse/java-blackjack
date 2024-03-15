@@ -24,16 +24,16 @@ public abstract class User {
         state = state.stand();
     }
 
-    public boolean isHitState() {
-        return state.isHit();
+    public boolean isFinished() {
+        return state.isFinished();
     }
 
-    public boolean isBlackjackState() {
-        return state.isBlackjack();
+    public boolean isNotFinished() {
+        return !isFinished();
     }
 
-    public boolean isBurstState() {
-        return state.isBust();
+    public boolean isStand() {
+        return state.isStand();
     }
 
     public Hands getOpenedHands() {
