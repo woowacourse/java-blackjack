@@ -3,6 +3,7 @@ package domain.result;
 import domain.participant.Dealer;
 import domain.participant.Player;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -28,7 +29,9 @@ public class Incomes {
         return players.stream()
                 .collect(Collectors.toMap(
                         player -> player,
-                        player -> player.determineIncome(dealer.decideStatus(player))
+                        player -> player.determineIncome(dealer.decideStatus(player)),
+                        (oldValue, newValue) -> newValue,
+                        LinkedHashMap::new
                 ));
     }
 
