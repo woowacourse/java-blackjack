@@ -19,7 +19,7 @@ public class OutputView {
     private static final String LINE = System.lineSeparator();
     private static final String FORM = "%s카드: %s%n";
     private static final String TOTAL_SUM_FORM = "%s 카드: %s - 결과: %d%n";
-    private static final String RESULT_FORM = "%s: %s%n";
+    private static final String RESULT_FORM = "%s: %,d%n";
     private static final String ERROR_FORM = "[ERROR] %s%n";
 
 
@@ -54,7 +54,7 @@ public class OutputView {
 
     public void printGameResult(final Map<Player, Amount> playerAmountMap, final Amount amount) {
         System.out.println("## 최종 수익");
-        System.out.printf("딜러: %d%n", amount.getValue()); // TODO 숫자 세자리마다 쉼표
+        System.out.printf("딜러: %,d%n", amount.getValue());
 
         for (Entry<Player, Amount> entry : playerAmountMap.entrySet()) {
             System.out.printf(RESULT_FORM, entry.getKey().getName(), entry.getValue().getValue());
