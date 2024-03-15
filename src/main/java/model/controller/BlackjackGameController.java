@@ -25,6 +25,7 @@ import model.view.OutputView;
 
 public class BlackjackGameController {
 
+    private static final int DEALER_COUNT = 1;
     private static final int CARD_COUNT_FOR_SETTING = 2;
     private static final String NO_HIT_WORD = "n";
 
@@ -38,23 +39,13 @@ public class BlackjackGameController {
 
     public void run() {
         Players players = repeatUntilSuccess(inputView::requestPlayersName);
-        Dealer dealer = new Dealer();
-        BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
+        BlackjackGame blackjackGame = new BlackjackGame(new Dealer(), players);
         Bettings bettings = new Bettings(players.getPlayers().stream().map(this::betting).toList());
-
-        cardSettingBeforeGameStart(players, blackjackGame);
-        printCardSetting(blackjackGame.getDealer(), blackjackGame.getPlayers());
-        Blackjack blackjack = new Blackjack(blackjackGame.getDealer());
-        blackjack.playerBlackjackStatus(blackjackGame.getPlayers());
-
-        turnHitPlayers(blackjackGame.getPlayers(), blackjackGame);
-        turnHitDealer(blackjackGame);
-
-        printFinalCardStatus(blackjackGame.getDealer(), blackjackGame.getPlayers());
-        Result result = new Result(blackjackGame.getDealer(), blackjackGame.getPlayers(), blackjack);
-        Profit profit = new Profit(bettings);
-        profit.createPlayersProfit(blackjackGame.getPlayers(), bettings, result);
-
+        gameSetting(players, blackjackGame);
+        Blackjack blackjack = checkBlackjack(blackjackGame);
+        turnHit(blackjackGame);
+        Result result = gameResult(blackjackGame, blackjack);
+        Profit profit = gameProfit(blackjackGame, bettings, result);
         outputView.printFinalProfit(profit);
     }
 
@@ -62,13 +53,17 @@ public class BlackjackGameController {
         return new Betting(player, repeatUntilSuccess(inputView::requestBettingMoney, player));
     }
 
+    private void gameSetting(Players players, BlackjackGame blackjackGame) {
+        cardSettingBeforeGameStart(players, blackjackGame);
+        printCardSetting(blackjackGame.getDealer(), blackjackGame.getPlayers());
+    }
+
     private void cardSettingBeforeGameStart(Players players, BlackjackGame blackjackGame) {
         List<Card> generatedCards = new ArrayList<>();
-        for (int i = 0; i < (players.getPlayers().size() + 1) * CARD_COUNT_FOR_SETTING; i++) {
+        for (int i = 0; i < (players.getPlayers().size() + DEALER_COUNT) * CARD_COUNT_FOR_SETTING; i++) {
             generatedCards.add(new Card(CardDispenser.generateCardNumber(), CardDispenser.generateCardShape()));
         }
-        Cards cards = new Cards(generatedCards);
-        blackjackGame.distributeCardsForSetting(cards);
+        blackjackGame.distributeCardsForSetting(new Cards(generatedCards));
     }
 
     private void printCardSetting(Dealer dealer, Players players) {
@@ -77,6 +72,17 @@ public class BlackjackGameController {
                 Collections.singletonList(captureCardType(dealer).get(0)));
         players.getPlayers()
                 .forEach(player -> outputView.printCardsStock(player.getName(), captureCardType(player)));
+    }
+
+    private Blackjack checkBlackjack(BlackjackGame blackjackGame) {
+        Blackjack blackjack = new Blackjack(blackjackGame.getDealer());
+        blackjack.playerBlackjackStatus(blackjackGame.getPlayers());
+        return blackjack;
+    }
+
+    private void turnHit(BlackjackGame blackjackGame) {
+        turnHitPlayers(blackjackGame.getPlayers(), blackjackGame);
+        turnHitDealer(blackjackGame);
     }
 
     private void turnHitPlayers(Players players, BlackjackGame blackjackGame) {
@@ -109,12 +115,23 @@ public class BlackjackGameController {
         outputView.printDealerHitStatus(dealerHit);
     }
 
+    private Result gameResult(BlackjackGame blackjackGame, Blackjack blackjack) {
+        printFinalCardStatus(blackjackGame.getDealer(), blackjackGame.getPlayers());
+        return new Result(blackjackGame.getDealer(), blackjackGame.getPlayers(), blackjack);
+    }
+
     private void printFinalCardStatus(Dealer dealer, Players players) {
         outputView.printFinalCardStatus(dealer.getName(), captureCardType(dealer), dealer.totalNumber());
         players.getPlayers()
                 .forEach(player ->
                         outputView.printFinalCardStatus(player.getName(), captureCardType(player),
                                 player.totalNumber()));
+    }
+
+    private Profit gameProfit(BlackjackGame blackjackGame, Bettings bettings, Result result) {
+        Profit profit = new Profit(bettings);
+        profit.createPlayersProfit(blackjackGame.getPlayers(), bettings, result);
+        return profit;
     }
 
     private <T> T repeatUntilSuccess(Supplier<T> supplier) {
