@@ -16,10 +16,6 @@ public class Profit {
         this.isPositive = isPositive;
     }
 
-    public static Profit sum(Profit profitA, Profit profitB) {
-        return new Profit(profitA.profit + profitB.profit);
-    }
-
     public Profit multiple(double ratio) {
         return new Profit((int) Math.floor(profit * ratio), isPositive);
     }
