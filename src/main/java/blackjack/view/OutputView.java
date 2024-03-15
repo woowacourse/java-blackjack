@@ -6,7 +6,7 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Round;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.result.BlackjackResult;
+import blackjack.domain.result.RoundResult;
 import blackjack.domain.result.HandResult;
 import java.util.List;
 import java.util.Map;
@@ -22,8 +22,8 @@ public class OutputView {
     private static final String HAND_WITH_SCORE_FORMAT = "%s - 결과: %d";
     private static final String GAME_RESULT_PREFIX = "## 최종 승패";
     private static final String DEALER_RESULTS_FORMAT = "딜러: %s";
-    private static final String DEALER_RESULT_FORMAT = "%d%s ";
-    private static final String PLAYER_RESULT_FORMAT = "%s: %s";
+    private static final String DEALER_RESULT_FORMAT = "%d%f ";
+    private static final String PLAYER_RESULT_FORMAT = "%s: %f";
 
     public void printInitialHand(Round round) {
         Dealer dealer = round.getDealer();
@@ -38,7 +38,7 @@ public class OutputView {
     }
 
     public void printDealerHitCount(int hitCount) {
-        printNewLine();
+        System.out.println(System.lineSeparator());
         if (hitCount == 0) {
             System.out.println(DEALER_NO_HIT);
             return;
@@ -48,7 +48,7 @@ public class OutputView {
     }
 
     public void printParticipantsHandWithScore(Round round) {
-        printNewLine();
+        System.out.println(System.lineSeparator());
         Dealer dealer = round.getDealer();
         printParticipantHandWithScore(dealer);
         round.getPlayers()
@@ -56,11 +56,10 @@ public class OutputView {
                 .forEach(this::printParticipantHandWithScore);
     }
 
-    public void printBlackjackResult(BlackjackResult blackjackResult) {
-        printNewLine();
-        System.out.println(GAME_RESULT_PREFIX);
-        printDealerResults(blackjackResult.getDealerResults());
-        printPlayersResult(blackjackResult.getPlayersResult());
+    public void printRoundResult(RoundResult roundResult) {
+        System.out.println(System.lineSeparator() + GAME_RESULT_PREFIX);
+        printDealerResults(roundResult.getDealerResults());
+        printPlayersResult(roundResult.getPlayersResult());
     }
 
     public void printException(IllegalArgumentException e) {
@@ -70,8 +69,7 @@ public class OutputView {
     private void printHandOutMessage(Dealer dealer, Players players) {
         String playersName = formatPlayersName(players);
         String handOutMessage = String.format(HAND_OUT_MESSAGE, dealer.getName(), playersName);
-        printNewLine();
-        System.out.println(handOutMessage);
+        System.out.println(System.lineSeparator() + handOutMessage);
     }
 
     private void printParticipantsHandWithScore(Dealer dealer, Players players) {
@@ -108,15 +106,14 @@ public class OutputView {
                 .filter((dealerResult) -> dealerResult.getValue() > 0)
                 .map(this::getFormattedDealerResult)
                 .collect(Collectors.joining());
-        System.out.printf(DEALER_RESULTS_FORMAT, formattedDealerResults);
-        printNewLine();
+        System.out.printf(DEALER_RESULTS_FORMAT + System.lineSeparator(), formattedDealerResults);
     }
 
     private void printPlayersResult(Map<Player, HandResult> playersResult) {
         for (Player player : playersResult.keySet()) {
             String playerName = player.getName();
             HandResult playerResult = playersResult.get(player);
-            String formattedPlayerResult = String.format(PLAYER_RESULT_FORMAT, playerName, playerResult.getName());
+            String formattedPlayerResult = String.format(PLAYER_RESULT_FORMAT, playerName, playerResult.getRatio());
             System.out.println(formattedPlayerResult);
         }
     }
@@ -137,10 +134,6 @@ public class OutputView {
     private String getFormattedDealerResult(Map.Entry<HandResult, Integer> dealerResult) {
         HandResult handResult = dealerResult.getKey();
         int resultCount = dealerResult.getValue();
-        return String.format(DEALER_RESULT_FORMAT, resultCount, handResult.getName());
-    }
-
-    private void printNewLine() {
-        System.out.println();
+        return String.format(DEALER_RESULT_FORMAT, resultCount, handResult.getRatio());
     }
 }

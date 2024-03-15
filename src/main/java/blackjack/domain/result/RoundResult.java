@@ -4,10 +4,10 @@ import blackjack.domain.participant.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class BlackjackResult {
+public class RoundResult {
     private final Map<Player, HandResult> playersResult;
 
-    public BlackjackResult(Map<Player, HandResult> playersResult) {
+    public RoundResult(Map<Player, HandResult> playersResult) {
         this.playersResult = playersResult;
     }
 

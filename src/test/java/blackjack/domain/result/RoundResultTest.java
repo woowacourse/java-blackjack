@@ -12,7 +12,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BlackjackResultTest {
+class RoundResultTest {
     @DisplayName("딜러의 승패 결과는 플레이어의 승패 결과를 반대로 반환한다.")
     @Test
     void getDealerResults() {
@@ -21,10 +21,10 @@ class BlackjackResultTest {
                 generatePlayer(), HandResult.WIN,
                 generatePlayer(), HandResult.DRAW,
                 generatePlayer(), HandResult.LOSE);
-        BlackjackResult blackjackResult = new BlackjackResult(playerResults);
+        RoundResult roundResult = new RoundResult(playerResults);
 
         //when
-        Map<HandResult, Integer> dealerResults = blackjackResult.getDealerResults();
+        Map<HandResult, Integer> dealerResults = roundResult.getDealerResults();
 
         //then
         assertThat(dealerResults).contains(Map.entry(HandResult.WIN, 1), Map.entry(HandResult.LOSE, 2),

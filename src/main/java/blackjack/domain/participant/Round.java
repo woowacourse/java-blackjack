@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.result.BlackjackResult;
+import blackjack.domain.result.RoundResult;
 import blackjack.domain.result.HandResult;
 import blackjack.domain.result.Pot;
 import blackjack.domain.result.Referee;
@@ -31,13 +31,13 @@ public class Round {
         return new Pot(pot);
     }
 
-    public BlackjackResult generateResult(Referee referee) {
+    public RoundResult generateResult(Referee referee) {
         Map<Player, HandResult> playerResults = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
             HandResult playerResult = referee.getPlayerResult(player, dealer);
             playerResults.put(player, playerResult);
         }
-        return new BlackjackResult(playerResults);
+        return new RoundResult(playerResults);
     }
 
     public Dealer getDealer() {

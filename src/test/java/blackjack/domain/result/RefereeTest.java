@@ -23,10 +23,10 @@ class RefereeTest {
         Referee referee = Referee.getInstance();
 
         //when
-        BlackjackResult blackjackResult = round.generateResult(referee);
+        RoundResult roundResult = round.generateResult(referee);
 
         //then
-        assertThat(blackjackResult.getPlayersResult().values()).containsExactly(HandResult.LOSE);
+        assertThat(roundResult.getPlayersResult().values()).containsExactly(HandResult.LOSE);
     }
 
     @DisplayName("점수 판단으로 플레이어가 이기는 게임의 최종 결과를 생성한다.")
@@ -40,10 +40,10 @@ class RefereeTest {
         Referee referee = Referee.getInstance();
 
         //when
-        BlackjackResult blackjackResult = round.generateResult(referee);
+        RoundResult roundResult = round.generateResult(referee);
 
         //then
-        assertThat(blackjackResult.getPlayersResult().values()).containsExactly(HandResult.WIN);
+        assertThat(roundResult.getPlayersResult().values()).containsExactly(HandResult.WIN);
     }
 
     @DisplayName("점수 판단으로 비기는 게임의 최종 결과를 생성한다.")
@@ -57,10 +57,10 @@ class RefereeTest {
         Referee referee = Referee.getInstance();
 
         //when
-        BlackjackResult blackjackResult = round.generateResult(referee);
+        RoundResult roundResult = round.generateResult(referee);
 
         //then
-        assertThat(blackjackResult.getPlayersResult().values()).containsExactly(HandResult.DRAW);
+        assertThat(roundResult.getPlayersResult().values()).containsExactly(HandResult.DRAW);
     }
 
     @DisplayName("블랙잭으로 플레이어가 이기는 게임의 최종 결과를 생성한다.")
@@ -75,10 +75,10 @@ class RefereeTest {
         Referee referee = Referee.getInstance();
 
         //when
-        BlackjackResult blackjackResult = round.generateResult(referee);
+        RoundResult roundResult = round.generateResult(referee);
 
         //then
-        assertThat(blackjackResult.getPlayersResult().values()).containsExactly(HandResult.BLACKJACK);
+        assertThat(roundResult.getPlayersResult().values()).containsExactly(HandResult.BLACKJACK);
     }
 
     @DisplayName("블랙잭으로 딜러가 이기는 게임의 최종 결과를 생성한다.")
@@ -93,10 +93,10 @@ class RefereeTest {
         Referee referee = Referee.getInstance();
 
         //when
-        BlackjackResult blackjackResult = round.generateResult(referee);
+        RoundResult roundResult = round.generateResult(referee);
 
         //then
-        assertThat(blackjackResult.getPlayersResult().values()).containsExactly(HandResult.LOSE);
+        assertThat(roundResult.getPlayersResult().values()).containsExactly(HandResult.LOSE);
     }
 
     @DisplayName("블랙잭으로 비기는 게임의 최종 결과를 생성한다.")
@@ -110,10 +110,10 @@ class RefereeTest {
         Referee referee = Referee.getInstance();
 
         //when
-        BlackjackResult blackjackResult = round.generateResult(referee);
+        RoundResult roundResult = round.generateResult(referee);
 
         //then
-        assertThat(blackjackResult.getPlayersResult().values()).containsExactly(HandResult.DRAW);
+        assertThat(roundResult.getPlayersResult().values()).containsExactly(HandResult.DRAW);
     }
 
     @DisplayName("버스트로 플레이어가 이기는 게임의 최종 결과를 생성한다.")
@@ -128,10 +128,10 @@ class RefereeTest {
         Referee referee = Referee.getInstance();
 
         //when
-        BlackjackResult blackjackResult = round.generateResult(referee);
+        RoundResult roundResult = round.generateResult(referee);
 
         //then
-        assertThat(blackjackResult.getPlayersResult().values()).containsExactly(HandResult.WIN);
+        assertThat(roundResult.getPlayersResult().values()).containsExactly(HandResult.WIN);
     }
 
     @DisplayName("버스트로 딜러가 이기는 게임의 최종 결과를 생성한다.")
@@ -146,9 +146,9 @@ class RefereeTest {
         Referee referee = Referee.getInstance();
 
         //when
-        BlackjackResult blackjackResult = round.generateResult(referee);
+        RoundResult roundResult = round.generateResult(referee);
 
         //then
-        assertThat(blackjackResult.getPlayersResult().values()).containsExactly(HandResult.LOSE);
+        assertThat(roundResult.getPlayersResult().values()).containsExactly(HandResult.LOSE);
     }
 }

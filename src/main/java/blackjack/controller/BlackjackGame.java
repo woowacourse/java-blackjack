@@ -9,7 +9,7 @@ import blackjack.domain.participant.Round;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.PlayerAction;
 import blackjack.domain.participant.Players;
-import blackjack.domain.result.BlackjackResult;
+import blackjack.domain.result.RoundResult;
 import blackjack.domain.result.Pot;
 import blackjack.domain.result.Referee;
 import blackjack.view.InputView;
@@ -27,7 +27,7 @@ public class BlackjackGame {
         outputView.printInitialHand(round);
         participantsHitCard(round);
         outputView.printParticipantsHandWithScore(round);
-        printBlackjackResult(round);
+        printRoundResult(round);
     }
 
     private Round createRoundWithDeck() {
@@ -97,10 +97,10 @@ public class BlackjackGame {
         outputView.printDealerHitCount(hitCount);
     }
 
-    private void printBlackjackResult(Round round) {
+    private void printRoundResult(Round round) {
         Referee referee = Referee.getInstance();
-        BlackjackResult blackjackResult = round.generateResult(referee);
-        outputView.printBlackjackResult(blackjackResult);
+        RoundResult roundResult = round.generateResult(referee);
+        outputView.printRoundResult(roundResult);
     }
 
     private <T> T retryOnException(Supplier<T> operation) {

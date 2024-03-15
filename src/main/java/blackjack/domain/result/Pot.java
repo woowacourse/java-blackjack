@@ -11,7 +11,7 @@ public class Pot {
         this.pot = pot;
     }
 
-    public Map<Player, BetAmount> getPot() {
-        return pot;
+    public BetAmount getBetAmount(Player player) {
+        return pot.get(player);
     }
 }
