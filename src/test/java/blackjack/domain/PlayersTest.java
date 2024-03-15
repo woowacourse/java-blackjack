@@ -58,7 +58,7 @@ class PlayersTest {
     @DisplayName("한 플레이어는 돈을 배팅한다.")
     void betOnePlayerMoneyTest() {
         players.betOnePlayerMoney(new GamblingMoney(3000), 0);
-        assertThat(siso.getMoney().equals(new GamblingMoney(3000))).isTrue();
+        assertThat(siso.getGamblingMoney().equals(new GamblingMoney(3000))).isTrue();
     }
 
 

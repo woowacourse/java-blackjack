@@ -8,9 +8,9 @@ import java.util.Map;
 public record BettingMoneyDto(Map<String, Integer> bettingMoneyResult) {
     public static BettingMoneyDto from(Dealer dealer, Players players) {
         Map<String, Integer> bettingMoneyResult = new LinkedHashMap<>();
-        bettingMoneyResult.put(dealer.getName().getValue(), dealer.getMoney().getValue());
+        bettingMoneyResult.put(dealer.getName().getValue(), dealer.getGamblingMoney().getValue());
         for (int i = 0; i < players.size(); i++) {
-            bettingMoneyResult.put(players.getOnePlayerName(i).getValue(), players.getOnePlayerMoney(i).getValue());
+            bettingMoneyResult.put(players.getOnePlayerName(i).getValue(), players.getOnePlayerGamblingMoney(i).getValue());
         }
         return new BettingMoneyDto(bettingMoneyResult);
     }

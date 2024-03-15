@@ -59,7 +59,7 @@ public class Hand {
         return cards.size();
     }
 
-    public List<Card> getCardsValue() {
+    public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 public record HandDto(List<String> cardNames) {
     public static HandDto from(Hand hand) {
-        List<String> cardNameList = hand.getCardsValue().stream()
+        List<String> cardNameList = hand.getCards().stream()
                 .map(CardDto::from)
                 .map(CardDto::cardName)
                 .toList();

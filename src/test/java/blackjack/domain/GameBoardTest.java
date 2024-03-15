@@ -130,8 +130,8 @@ public class GameBoardTest {
 
         gameBoard.calculateBettingMoney();
 
-        assertThat(takan.getMoney().getValue()).isEqualTo(1500);
-        assertThat(dealer.getMoney().getValue()).isEqualTo(-1500);
+        assertThat(takan.getGamblingMoney().getValue()).isEqualTo(1500);
+        assertThat(dealer.getGamblingMoney().getValue()).isEqualTo(-1500);
     }
 
     @Test
@@ -144,8 +144,8 @@ public class GameBoardTest {
 
         gameBoard.calculateBettingMoney();
 
-        assertThat(siso.getMoney().getValue()).isEqualTo(1000);
-        assertThat(dealer.getMoney().getValue()).isEqualTo(-1000);
+        assertThat(siso.getGamblingMoney().getValue()).isEqualTo(1000);
+        assertThat(dealer.getGamblingMoney().getValue()).isEqualTo(-1000);
     }
 
     @Test
@@ -158,8 +158,8 @@ public class GameBoardTest {
 
         gameBoard.calculateBettingMoney();
 
-        assertThat(siso.getMoney().getValue()).isEqualTo(0);
-        assertThat(dealer.getMoney().getValue()).isEqualTo(0);
+        assertThat(siso.getGamblingMoney().getValue()).isEqualTo(0);
+        assertThat(dealer.getGamblingMoney().getValue()).isEqualTo(0);
     }
 
     @Test
@@ -172,7 +172,7 @@ public class GameBoardTest {
 
         gameBoard.calculateBettingMoney();
 
-        assertThat(siso.getMoney().getValue()).isEqualTo(-1000);
-        assertThat(dealer.getMoney().getValue()).isEqualTo(1000);
+        assertThat(siso.getGamblingMoney().getValue()).isEqualTo(-1000);
+        assertThat(dealer.getGamblingMoney().getValue()).isEqualTo(1000);
     }
 }

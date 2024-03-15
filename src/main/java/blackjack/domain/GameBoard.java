@@ -80,13 +80,13 @@ public class GameBoard {
 
     private void calculateDealerGainMoney(Player onePlayer, Victory victory) {
         if (victory.equals(Victory.LOSE)) {
-            dealer.gainMoney(onePlayer.getMoney());
+            dealer.gainMoney(onePlayer.getGamblingMoney());
         }
     }
 
     private void calculateDealerLoseMoney(Player onePlayer, Victory victory) {
         if (victory.equals(Victory.BLACKJACK_WIN) || victory.equals(Victory.WIN)) {
-            dealer.loseMoney(onePlayer.getMoney());
+            dealer.loseMoney(onePlayer.getGamblingMoney());
         }
     }
 

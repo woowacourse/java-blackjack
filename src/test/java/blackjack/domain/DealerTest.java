@@ -29,6 +29,6 @@ public class DealerTest {
     void gainMoneyTest() {
         Dealer dealer = new Dealer();
         dealer.gainMoney(new GamblingMoney(3000));
-        assertThat(dealer.getMoney()).isEqualTo(new GamblingMoney(3000));
+        assertThat(dealer.getGamblingMoney()).isEqualTo(new GamblingMoney(3000));
     }
 }

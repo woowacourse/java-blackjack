@@ -151,7 +151,7 @@ public class PlayerTest {
 
         player.betMoney(new GamblingMoney(3000));
 
-        assertThat(player.getMoney()).isEqualTo(new GamblingMoney(3000));
+        assertThat(player.getGamblingMoney()).isEqualTo(new GamblingMoney(3000));
     }
 
     @Test
@@ -162,7 +162,7 @@ public class PlayerTest {
         player.betMoney(new GamblingMoney(3000));
         player.loseMoney(new GamblingMoney(2000));
 
-        assertThat(player.getMoney()).isEqualTo(new GamblingMoney(1000));
+        assertThat(player.getGamblingMoney()).isEqualTo(new GamblingMoney(1000));
     }
 
     @Test
@@ -173,7 +173,7 @@ public class PlayerTest {
         player.betMoney(new GamblingMoney(3000));
         player.checkBettingMoney(1);
 
-        assertThat(player.getMoney()).isEqualTo(new GamblingMoney(3000));
+        assertThat(player.getGamblingMoney()).isEqualTo(new GamblingMoney(3000));
     }
 
     @Test
@@ -184,6 +184,6 @@ public class PlayerTest {
         player.betMoney(new GamblingMoney(3000));
         player.checkBettingMoney(-1);
 
-        assertThat(player.getMoney().equals(new GamblingMoney(-3000))).isTrue();
+        assertThat(player.getGamblingMoney().equals(new GamblingMoney(-3000))).isTrue();
     }
 }

@@ -50,7 +50,7 @@ public class BlackjackGame {
         gameBoard.distributeInitialHand();
         PlayerDto dealerDto = PlayerDto.from(gameBoard.getDealer());
         List<PlayerDto> playersDto = gameBoard.getPlayers()
-                .getPlayersValue()
+                .getPlayers()
                 .stream()
                 .map(PlayerDto::from)
                 .toList();
@@ -87,7 +87,7 @@ public class BlackjackGame {
         Player dealer = gameBoard.getDealer();
         PlayerDto dealerDto = PlayerDto.from(dealer);
         List<PlayerDto> playersDto = gameBoard.getPlayers()
-                .getPlayersValue()
+                .getPlayers()
                 .stream()
                 .map(PlayerDto::from)
                 .toList();

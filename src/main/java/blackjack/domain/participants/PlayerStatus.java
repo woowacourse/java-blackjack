@@ -36,7 +36,7 @@ public class PlayerStatus {
         return hand.size();
     }
 
-    public GamblingMoney getMoney() {
+    public GamblingMoney getGamblingMoney() {
         return gamblingMoney;
     }
 

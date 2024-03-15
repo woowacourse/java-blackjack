@@ -90,7 +90,7 @@ public class Player {
         return playerStatus.getHand();
     }
 
-    public GamblingMoney getMoney() {
-        return playerStatus.getMoney();
+    public GamblingMoney getGamblingMoney() {
+        return playerStatus.getGamblingMoney();
     }
 }

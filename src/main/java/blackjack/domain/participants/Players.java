@@ -41,15 +41,15 @@ public class Players {
         return players.get(playerIndex).getName();
     }
 
-    public GamblingMoney getOnePlayerMoney(int playerIndex) {
-        return players.get(playerIndex).getMoney();
+    public GamblingMoney getOnePlayerGamblingMoney(int playerIndex) {
+        return players.get(playerIndex).getGamblingMoney();
     }
 
     public Player getOnePlayer(int playerIndex) {
         return players.get(playerIndex);
     }
 
-    public List<Player> getPlayersValue() {
+    public List<Player> getPlayers() {
         return players;
     }
 }

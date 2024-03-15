@@ -38,7 +38,7 @@ public class PlayerStatusTest {
         PlayerStatus playerStatus = new PlayerStatus();
         playerStatus.addMoney(new GamblingMoney(3000));
 
-        assertThat(playerStatus.getMoney()).isEqualTo(new GamblingMoney(3000));
+        assertThat(playerStatus.getGamblingMoney()).isEqualTo(new GamblingMoney(3000));
     }
 
     @Test
@@ -47,7 +47,7 @@ public class PlayerStatusTest {
         PlayerStatus playerStatus = new PlayerStatus();
         playerStatus.subtractMoney(new GamblingMoney(3000));
 
-        assertThat(playerStatus.getMoney()).isEqualTo(new GamblingMoney(-3000));
+        assertThat(playerStatus.getGamblingMoney()).isEqualTo(new GamblingMoney(-3000));
     }
 
     @Test
@@ -58,7 +58,7 @@ public class PlayerStatusTest {
 
         playerStatus.calculateBettingMoney(Victory.BLACKJACK_WIN.getBenefit());
 
-        Assertions.assertThat(playerStatus.getMoney().getValue()).isEqualTo(4500);
+        Assertions.assertThat(playerStatus.getGamblingMoney().getValue()).isEqualTo(4500);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class PlayerStatusTest {
 
         playerStatus.calculateBettingMoney(Victory.WIN.getBenefit());
 
-        Assertions.assertThat(playerStatus.getMoney().getValue()).isEqualTo(3000);
+        Assertions.assertThat(playerStatus.getGamblingMoney().getValue()).isEqualTo(3000);
     }
 
     @Test
@@ -80,7 +80,7 @@ public class PlayerStatusTest {
 
         playerStatus.calculateBettingMoney(Victory.TIE.getBenefit());
 
-        Assertions.assertThat(playerStatus.getMoney().getValue()).isEqualTo(0);
+        Assertions.assertThat(playerStatus.getGamblingMoney().getValue()).isEqualTo(0);
     }
 
     @Test
@@ -91,6 +91,6 @@ public class PlayerStatusTest {
 
         playerStatus.calculateBettingMoney(Victory.LOSE.getBenefit());
 
-        Assertions.assertThat(playerStatus.getMoney().getValue()).isEqualTo(-3000);
+        Assertions.assertThat(playerStatus.getGamblingMoney().getValue()).isEqualTo(-3000);
     }
 }
