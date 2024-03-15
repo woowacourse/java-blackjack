@@ -7,8 +7,10 @@ import domain.money.Money;
 import domain.money.PlayersMoney;
 import domain.user.Hand;
 import domain.user.Player;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import view.Command;
 import view.InputView;
 import view.OutputView;
 
@@ -20,7 +22,7 @@ public class BlackjackRunner {
         PlayersMoney playersMoney = new PlayersMoney(inputPlayersMoney(deck));
         Hand dealerHand = new Hand(deck.drawCard(), deck.drawCard());
         OutputView.printStartStatus(dealerHand, playersMoney.getPlayers());
-        playersMoney.doPlayerTurn(InputView::inputAddCommand, deck);
+        playersMoney.doPlayerTurn(this::getValidatedCommand, deck);
         doDealerTurn(dealerHand, deck);
         doResult(playersMoney, dealerHand);
     }
@@ -30,12 +32,18 @@ public class BlackjackRunner {
                 .stream()
                 .collect(Collectors.toMap(
                         name -> new Player(name, deck.drawCard(), deck.drawCard()),
-                        name -> getValidatedMoney(name.value())
+                        name -> getValidatedMoney(name.value()),
+                        (oldValue, newValue) -> newValue,
+                        LinkedHashMap::new
                 ));
     }
 
     private Money getValidatedMoney(String nameValue) {
         return ExceptionHandler.handle(() -> InputView.inputMoney(nameValue));
+    }
+
+    private Command getValidatedCommand(String nameValue) {
+        return ExceptionHandler.handle(() -> InputView.inputAddCommand(nameValue));
     }
 
     private void doDealerTurn(Hand dealerHand, Deck deck) {

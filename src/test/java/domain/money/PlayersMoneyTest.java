@@ -28,7 +28,7 @@ class PlayersMoneyTest {
         PlayersMoney playersMoney = new PlayersMoney(new HashMap<>(Map.of(player, new Money(1000))));
         PlayersMoney resultPlayersMoney = playersMoney.changeByGameResult(dealerHand);
 
-        assertThat(resultPlayersMoney.getPlayersMoney()).containsExactly(Map.entry(player, new Money(moneyValue)));
+        assertThat(resultPlayersMoney.calculateDealerMoney() * -1).isEqualTo(moneyValue);
     }
 
     @Test
@@ -39,7 +39,7 @@ class PlayersMoneyTest {
         PlayersMoney playersMoney = new PlayersMoney(new HashMap<>(Map.of(player, new Money(1000))));
         PlayersMoney resultPlayersMoney = playersMoney.changeByGameResult(dealerHand);
 
-        assertThat(resultPlayersMoney.getPlayersMoney()).containsExactly(Map.entry(player, new Money(1500)));
+        assertThat(resultPlayersMoney.calculateDealerMoney() * -1).isEqualTo(1500);
 
     }
 

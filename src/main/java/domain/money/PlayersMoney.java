@@ -3,10 +3,11 @@ package domain.money;
 import domain.Deck;
 import domain.user.Hand;
 import domain.user.Player;
-import java.util.Collections;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import view.Command;
@@ -30,7 +31,9 @@ public class PlayersMoney {
                 .stream()
                 .collect(Collectors.toMap(
                         Entry::getKey,
-                        entry -> moneyByGameResult(dealerHand, entry)
+                        entry -> moneyByGameResult(dealerHand, entry),
+                        (oldValue, newValue) -> newValue,
+                        LinkedHashMap::new
                 )));
     }
 
@@ -53,11 +56,11 @@ public class PlayersMoney {
                 .sum() * DEALER_MULTIPLIER;
     }
 
-    public List<Player> getPlayers() {
-        return playersMoney.keySet().stream().toList();
+    public Set<Player> getPlayers() {
+        return playersMoney.keySet();
     }
 
-    public Map<Player, Money> getPlayersMoney() {
-        return Collections.unmodifiableMap(playersMoney);
+    public void forEach(BiConsumer<Player, Money> biConsumer) {
+        playersMoney.forEach(biConsumer);
     }
 }
