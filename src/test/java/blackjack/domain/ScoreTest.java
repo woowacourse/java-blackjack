@@ -44,6 +44,6 @@ public class ScoreTest {
         Score zero = Score.from(0);
         Score one = Score.from(1);
 
-        assertThat(one.isBiggerThanOrEqual(zero)).isTrue();
+        assertThat(one.isBiggerThan(zero)).isTrue();
     }
 }

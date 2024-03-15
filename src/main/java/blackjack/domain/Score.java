@@ -51,8 +51,8 @@ public class Score {
         return value == BLACKJACK_SCORE;
     }
 
-    public boolean isBiggerThanOrEqual(Score other) {
-        return value >= other.value;
+    public boolean isBiggerThan(Score other) {
+        return value > other.value;
     }
 
     public int getValue() {
