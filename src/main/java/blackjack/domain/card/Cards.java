@@ -10,6 +10,10 @@ public class Cards {
     private static final int CHANGE_A_VALUE = 10;
     private final List<Card> value;
 
+    public Cards() {
+        this.value = new ArrayList<>();
+    }
+
     public Cards(final List<Card> cards) {
         this.value = new ArrayList<>(cards);
     }
@@ -51,6 +55,10 @@ public class Cards {
 
     public List<Card> toList() {
         return value;
+    }
+
+    public int size() {
+        return value.size();
     }
 
     @Override

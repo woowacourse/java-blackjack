@@ -20,8 +20,8 @@ public abstract class Participant implements CardReceivable {
         return cards.calculate();
     }
 
-    public void drawCard(final Card card) {
-        cards.add(card);
+    public Cards drawCard(final Card card) {
+        return cards.draw(card);
     }
 
     public boolean isBust() {
