@@ -25,9 +25,9 @@ public enum CardNumber {
         this.sign = sign;
     }
 
-    public static CardNumber find(int random) {
+    public static CardNumber find(int cardNumber) {
         CardNumber[] values = values();
-        return values[random - 1];
+        return values[cardNumber - 1];
     }
 
     public int getValue() {
