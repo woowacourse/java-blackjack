@@ -31,7 +31,6 @@ public class BlackjackMachine {
         playPlayersTurn(game);
         playDealerTurn(game);
         printCardsAndScores(game);
-//        printResult(game);
         printBettingResult(betting, game);
     }
 
@@ -90,11 +89,6 @@ public class BlackjackMachine {
 
     private void printCardsAndScores(BlackjackGame game) {
         outputView.printAllParticipantsCardsWithScore(game);
-    }
-
-    private void printResult(BlackjackGame game) {
-        Result result = Result.of(game.getPlayers(), game.getDealer());
-        outputView.printResult(game, result);
     }
 
     private void printBettingResult(Betting betting, BlackjackGame game) {
