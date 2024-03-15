@@ -2,16 +2,21 @@ package model.casino;
 
 import model.money.DividendPolicy;
 import model.participant.Dealer;
+import model.participant.Participant;
 import model.participant.Player;
 
 public class DividendPolicyFactory {
-    private final Dealer dealer;
 
-    public DividendPolicyFactory(Dealer dealer) {
-        this.dealer = dealer;
+    public static DividendPolicy findPolicy(Participant dealer, Participant player) {
+        DividendPolicy policyInProceed = findPolicyInProceed(player);
+        if (policyInProceed != DividendPolicy.UNCERTAIN) {
+            return policyInProceed;
+        }
+        return findPolicyAfterProceed((Dealer)dealer, (Player)player);
     }
 
-    public DividendPolicy findPolicyInProceed(Player player) {
+    private static DividendPolicy findPolicyInProceed(Participant participant) {
+        Player player = (Player) participant;
         if (player.isInitBlackjack()) {
             return DividendPolicy.INIT_BLACKJACK;
         }
@@ -21,9 +26,9 @@ public class DividendPolicyFactory {
         return DividendPolicy.UNCERTAIN;
     }
 
-    public DividendPolicy findPolicyAfterProceed(Player player) {
+    private static DividendPolicy findPolicyAfterProceed(Dealer dealer, Player player) {
         if (!dealer.isBustHand() && !player.isBustHand()) {
-            return getDividendPolicyHasNoBust(player);
+            return getDividendPolicyHasNoBust(dealer, player);
         }
         if (dealer.isBustHand() && player.isBustHand()) {
             return DividendPolicy.NORMAL_DRAW;
@@ -34,7 +39,7 @@ public class DividendPolicyFactory {
         throw new IllegalStateException();
     }
 
-    private DividendPolicy getDividendPolicyHasNoBust(Player player) {
+    private static DividendPolicy getDividendPolicyHasNoBust(Dealer dealer, Player player) {
         if (dealer.getHand() > player.getHand()) {
             return DividendPolicy.NORMAL_LOSE;
         }
@@ -43,6 +48,4 @@ public class DividendPolicyFactory {
         }
         return DividendPolicy.NORMAL_WIN;
     }
-
-
 }
