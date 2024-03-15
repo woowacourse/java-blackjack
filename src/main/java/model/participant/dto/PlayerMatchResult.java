@@ -1,6 +1,6 @@
 package model.participant.dto;
 
-import model.casino.MatchResult;
+import model.participant.MatchResult;
 import model.participant.Name;
 
 public record PlayerMatchResult(Name name, MatchResult matchResult) {

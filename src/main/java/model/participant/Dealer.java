@@ -1,11 +1,10 @@
 package model.participant;
 
-import static model.casino.MatchResult.DRAW;
-import static model.casino.MatchResult.LOSE;
-import static model.casino.MatchResult.WIN;
+import static model.participant.MatchResult.DRAW;
+import static model.participant.MatchResult.LOSE;
+import static model.participant.MatchResult.WIN;
 
 import model.card.Card;
-import model.casino.MatchResult;
 
 public class Dealer extends Participant {
     private static final int HIT_THRESHOLD = 16;

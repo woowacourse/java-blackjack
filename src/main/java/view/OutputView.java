@@ -5,7 +5,7 @@ import model.participant.dto.DealerFaceUpResult;
 import model.participant.dto.DealerMatchResult;
 import model.participant.dto.FaceUpResult;
 import model.participant.dto.PlayerMatchResult;
-import model.casino.MatchResult;
+import model.participant.MatchResult;
 
 public class OutputView {
     private static final int HOLE_CARD_INDEX = 0;

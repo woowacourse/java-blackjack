@@ -1,9 +1,9 @@
 package model.participant;
 
 import static java.util.Collections.frequency;
-import static model.casino.MatchResult.DRAW;
-import static model.casino.MatchResult.LOSE;
-import static model.casino.MatchResult.WIN;
+import static model.participant.MatchResult.DRAW;
+import static model.participant.MatchResult.LOSE;
+import static model.participant.MatchResult.WIN;
 
 import java.util.EnumMap;
 import java.util.LinkedList;
@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
 import model.card.Card;
-import model.casino.MatchResult;
 import model.participant.dto.DealerFaceUpResult;
 import model.participant.dto.FaceUpResult;
 import model.participant.dto.PlayerMatchResult;

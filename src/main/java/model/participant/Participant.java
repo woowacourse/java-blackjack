@@ -2,7 +2,6 @@ package model.participant;
 
 import model.card.Card;
 import model.card.CardDeck;
-import model.casino.MatchResult;
 
 public abstract class Participant {
 
