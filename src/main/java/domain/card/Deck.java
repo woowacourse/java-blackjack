@@ -18,7 +18,7 @@ public class Deck {
     }
 
     public static Deck fullDeck() {
-        List<Card> cards = Card.allCards();
+        List<Card> cards = CardPool.allCards();
         return new Deck(cards);
     }
 
