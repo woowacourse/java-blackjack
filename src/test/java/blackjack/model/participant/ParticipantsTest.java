@@ -8,7 +8,6 @@ import static blackjack.model.deck.Shape.CLOVER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.model.deck.Card;
 import java.util.LinkedHashMap;

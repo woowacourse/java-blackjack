@@ -1,5 +1,7 @@
 package blackjack.model.participant;
 
+import static blackjack.model.HandFixture.OVER_16_UNDER_21_HAND;
+import static blackjack.model.HandFixture.UNDER_16_HAND;
 import static blackjack.model.deck.Score.FIVE;
 import static blackjack.model.deck.Score.SEVEN;
 import static blackjack.model.deck.Score.SIX;
@@ -17,16 +19,14 @@ class DealerTest {
     @Test
     @DisplayName("딜러는 16이하이면 카드를 추가로 받는다.")
     void canReceive() {
-        Hand hand = new Hand(List.of(new Card(CLOVER, TEN), new Card(CLOVER, SIX)));
-        Dealer dealer = new Dealer(hand);
+        Dealer dealer = new Dealer(UNDER_16_HAND.getHand());
         assertThat(dealer.canHit()).isTrue();
     }
 
     @Test
     @DisplayName("딜러는 16 초과면 카드를 추가로 받을 수 없다.")
     void canNotReceive() {
-        Hand hand = new Hand(List.of(new Card(CLOVER, TEN), new Card(CLOVER, SEVEN)));
-        Dealer dealer = new Dealer(hand);
+        Dealer dealer = new Dealer(OVER_16_UNDER_21_HAND.getHand());
         assertThat(dealer.canHit()).isFalse();
     }
 

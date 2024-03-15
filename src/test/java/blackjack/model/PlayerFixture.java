@@ -1,22 +1,18 @@
 package blackjack.model;
 
-import blackjack.model.deck.Card;
-import blackjack.model.deck.Score;
-import blackjack.model.deck.Shape;
-import blackjack.model.participant.Hand;
+import static blackjack.model.HandFixture.BLACKJACK_HAND;
+import static blackjack.model.HandFixture.BUST_HAND;
+import static blackjack.model.HandFixture.NOT_BLACKJACK_BUT_21_HAND;
+import static blackjack.model.HandFixture.UNDER_16_HAND;
+
 import blackjack.model.participant.Player;
-import java.util.List;
 
 public enum PlayerFixture {
 
-    BLACKJACK_PLAYER(Player.of("몰리",
-            new Hand(List.of(new Card(Shape.DIA, Score.TEN), new Card(Shape.DIA, Score.ACE))))),
-    BUST_PLAYER(Player.of("몰리",
-            new Hand(List.of(new Card(Shape.DIA, Score.TEN), new Card(Shape.DIA, Score.ACE), new Card(Shape.DIA, Score.JACK))))),
-    NOT_BLACKJACK_21_PLAYER(Player.of("몰리",
-            new Hand(List.of(new Card(Shape.DIA, Score.TEN), new Card(Shape.DIA, Score.SIX), new Card(Shape.DIA, Score.FIVE))))),
-    UNDER_21_PLAYER(Player.of("몰리",
-            new Hand(List.of(new Card(Shape.DIA, Score.TEN), new Card(Shape.DIA, Score.JACK))))),
+    BLACKJACK_PLAYER(Player.of("블랙잭 플레이어", BLACKJACK_HAND.getHand())),
+    BUST_PLAYER(Player.of("버스트 플레이어", BUST_HAND.getHand())),
+    NOT_BLACKJACK_21_PLAYER(Player.of("블랙잭 아닌 21인 플레이어", NOT_BLACKJACK_BUT_21_HAND.getHand())),
+    UNDER_21_PLAYER(Player.of("21 미만인 플레이어", UNDER_16_HAND.getHand())),
     ;
 
     private final Player player;
