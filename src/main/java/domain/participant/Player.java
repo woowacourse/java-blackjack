@@ -11,17 +11,16 @@ public class Player extends Participant {
 
     private final BetAmount betAmount;
 
-    protected Player(final Name name, final Hands hands, final BetAmount betAmount) {
+    Player(final Name name, final Hands hands, final BetAmount betAmount) {
         super(name, hands);
         this.betAmount = betAmount;
     }
 
-    protected Player(final Name name, final Hands hands) {
+    Player(final Name name, final Hands hands) {
         super(name, hands);
         validate(name);
         this.betAmount = new BetAmount(10);
     }
-
 
     public Player(final Name name, final BetAmount betAmount) {
         super(name, Hands.createEmptyHands());
