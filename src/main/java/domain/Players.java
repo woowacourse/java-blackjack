@@ -5,9 +5,10 @@ import java.util.List;
 
 public class Players {
 
-    static final String NAME_DUPLICATE_MESSAGE = "중복된 이름은 허용하지 않습니다.";
     private static final int MINIMUM_NAMES_SIZE = 1;
     private static final int MAXIMUM_NAMES_SIZE = 10;
+
+    static final String NAME_DUPLICATE_MESSAGE = "중복된 이름은 허용하지 않습니다.";
     static final String NAMES_SIZE_INVALID_MESSAGE
             = String.format("참가자는 %d명 이상 %d명 이하 입니다.", MINIMUM_NAMES_SIZE, MAXIMUM_NAMES_SIZE);
 
