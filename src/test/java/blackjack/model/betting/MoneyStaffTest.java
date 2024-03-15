@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.participant.Dealer;
 import blackjack.model.result.ResultCommand;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,8 +37,7 @@ class MoneyStaffTest {
                 BLACKJACK_PLAYER.getPlayer(), new Money(1_000),
                 NOT_BLACKJACK_21_PLAYER.getPlayer(), new Money(2_000)));
 
-        assertThat(moneyStaff.calculateDealerProfitAmount(Map.of(BLACKJACK_PLAYER.getPlayer(), new Money(1_500),
-                NOT_BLACKJACK_21_PLAYER.getPlayer(), new Money(0)))).isEqualTo(
+        assertThat(moneyStaff.calculateDealerProfitAmount(List.of(new Money(1_500), new Money(0)))).isEqualTo(
                 new Money(-1_500));
     }
 }

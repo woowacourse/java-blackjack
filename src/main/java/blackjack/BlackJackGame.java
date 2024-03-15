@@ -1,18 +1,21 @@
 package blackjack;
 
 import blackjack.dto.NameCardsScore;
-import blackjack.model.participant.Dealer;
+import blackjack.model.betting.BettingRule;
+import blackjack.model.betting.Money;
+import blackjack.model.betting.MoneyStaff;
 import blackjack.model.deck.Deck;
-import blackjack.model.participant.Name;
+import blackjack.model.participant.Dealer;
+import blackjack.model.participant.Participants;
 import blackjack.model.participant.Playable;
 import blackjack.model.participant.Player;
-import blackjack.model.participant.Participants;
 import blackjack.model.result.Referee;
 import blackjack.model.result.ResultCommand;
 import blackjack.model.result.Rule;
 import blackjack.util.ConsoleReader;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,18 +24,31 @@ public class BlackJackGame {
 
     public void run() {
         final Deck deck = Deck.createByRandomOrder();
-        final Participants participants = initPlayers(InputView.readPlayerNames(consoleReader), deck);
         final Dealer dealer = new Dealer(deck.distributeInitialCard());
+        final Participants participants = initPlayers(InputView.readPlayerNames(consoleReader), deck);
         final Referee referee = new Referee(new Rule(dealer), participants);
+        final MoneyStaff moneyStaff = initMoneyStaff(new BettingRule(dealer), participants);
 
         announceInitialCards(dealer, participants);
-        play(dealer, participants.getPlayers(), deck);
-        announceResult(dealer, participants, referee);
+        play(dealer, participants, deck);
+        Map<Player, ResultCommand> nameResults = announceResult(dealer, participants, referee);
+        announceProfitMoney(moneyStaff, nameResults);
     }
 
     private Participants initPlayers(final List<String> names, final Deck deck) {
         return Participants.of(names, deck.distributeInitialCard(names.size()));
     }
+
+    private MoneyStaff initMoneyStaff(final BettingRule bettingRule, final Participants participants) {
+        Map<Player, Money> playerBettingMoneys = new LinkedHashMap<>();
+        for (Player player : participants.getPlayers()) {
+            Money bettingAmount = new Money(InputView.readBettingAmount(player.getName(), consoleReader));
+            playerBettingMoneys.put(player, bettingAmount);
+        }
+
+        return new MoneyStaff(bettingRule, playerBettingMoneys);
+    }
+
 
     private void announceInitialCards(final Dealer dealer, final Participants participants) {
         OutputView.printDistributionSubject(participants.getNames());
@@ -42,8 +58,8 @@ public class BlackJackGame {
         OutputView.println();
     }
 
-    private void play(final Dealer dealer, final List<Player> players, final Deck deck) {
-        players.forEach(player -> playPlayerTurn(player, deck));
+    private void play(final Dealer dealer, final Participants players, final Deck deck) {
+        players.getPlayers().forEach(player -> playPlayerTurn(player, deck));
         playDealerTurn(dealer, deck);
     }
 
@@ -73,9 +89,10 @@ public class BlackJackGame {
         playable.receiveCard(deck.distribute());
     }
 
-    private void announceResult(final Dealer dealer, final Participants participants, final Referee referee) {
+    private Map<Player, ResultCommand> announceResult(final Dealer dealer, final Participants participants,
+                                                      final Referee referee) {
         printFinalCardsAndScores(dealer, participants);
-        printFinalResultCommand(referee);
+        return referee.judgePlayerResult();
     }
 
     private void printFinalCardsAndScores(final Dealer dealer, final Participants participants) {
@@ -92,10 +109,11 @@ public class BlackJackGame {
                 .toList();
     }
 
-    private void printFinalResultCommand(final Referee referee) {
-        Map<ResultCommand, Integer> dealerResults = referee.judgeDealerResult();
-        OutputView.printDealerFinalResult(dealerResults);
-        Map<Name, ResultCommand> playerResults = referee.judgePlayerResult();
-        OutputView.printFinalResult(playerResults);
+    private void announceProfitMoney(final MoneyStaff moneyStaff, Map<Player, ResultCommand> playerResults) {
+        final Map<Player, Money> playerAndBettingMoney = moneyStaff.calculateProfitMoneys(playerResults);
+        final Money dealerProfit = moneyStaff.calculateDealerProfitAmount(
+                playerAndBettingMoney.values().stream().toList());
+        OutputView.printDealerProfit(dealerProfit);
+        OutputView.printPlayerProfit(playerAndBettingMoney);
     }
 }
