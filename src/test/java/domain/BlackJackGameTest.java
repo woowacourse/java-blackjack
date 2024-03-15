@@ -36,7 +36,7 @@ public class BlackJackGameTest {
         Card card8 = new Card(Symbol.DIAMOND, Rank.THREE);
 
         List<Card> cards = List.of(card1, card2, card3, card4, card5, card6, card7, card8);
-        Deck deck = Deck.from(cards);
+        Deck deck = Deck.combine(cards);
         BetAmounts betAmounts = new BetAmounts();
         blackJackGame = new BlackJackGame(deck, betAmounts);
         dealer = new Dealer();

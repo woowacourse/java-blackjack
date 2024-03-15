@@ -11,7 +11,7 @@ public class Deck {
         this.cards = cards;
     }
 
-    public static Deck from(final List<Card> cards) {
+    public static Deck combine(final List<Card> cards) {
         return new Deck(new ArrayDeque<>(cards));
     }
 

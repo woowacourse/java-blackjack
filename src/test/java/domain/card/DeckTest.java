@@ -17,7 +17,7 @@ public class DeckTest {
         Card card3 = new Card(Symbol.SPADE, Rank.KING);
 
         List<Card> cards = List.of(card1, card2, card3);
-        Deck deck = Deck.from(cards);
+        Deck deck = Deck.combine(cards);
 
         // when
         Card drawedCard = deck.draw();
