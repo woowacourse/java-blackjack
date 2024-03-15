@@ -10,6 +10,12 @@ class BetAmountTest {
     @Test
     @DisplayName("배팅 금액이 백만원을 초과하면 예외가 발생한다")
     void betMaxRange() {
-        Assertions.assertThatCode(()->new BetAmount(1000001)).isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThatCode(() -> new BetAmount(1000001)).isInstanceOf(IllegalArgumentException.class);
+    }
 
+    @Test
+    @DisplayName("배팅 금액이 음수면 예외가 발생한다")
+    void negativeNumber() {
+        Assertions.assertThatCode(() -> new BetAmount(-1)).isInstanceOf(IllegalArgumentException.class);
+    }
 }
