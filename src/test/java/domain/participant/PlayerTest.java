@@ -16,7 +16,7 @@ class PlayerTest {
     @DisplayName("카드를 저장한다.")
     @Test
     void saveCard() {
-        Player player = new Player("pobi", bettingMoney);
+        Player player = new Player("pobi");
         player.pickCard(new Deck(List.of(new Card(Denomination.ACE, Suit.CLOVER))), 1);
         int totalSize = player.getCardSize();
         assertThat(totalSize).isEqualTo(1);
@@ -28,7 +28,7 @@ class PlayerTest {
         @DisplayName("플레이어의 카드가 이미 21을 초과하였고, 더 받으려 하는 경우 false를 반환한다.")
         @Test
         void hitWhenAlreadyBusted() {
-            Player player = new Player("pobi", bettingMoney);
+            Player player = new Player("pobi");
             Deck deck = new Deck(List.of(
                     new Card(Denomination.TEN, Suit.CLOVER),
                     new Card(Denomination.TEN, Suit.DIAMOND),
@@ -43,7 +43,7 @@ class PlayerTest {
         @DisplayName("플레이어의 카드가 이미 21을 초과하였고, 더 받지 않겠다고 한 경우 false를 반환한다.")
         @Test
         void standWhenAlreadyBusted() {
-            Player player = new Player("pobi", bettingMoney);
+            Player player = new Player("pobi");
             Deck deck = new Deck(List.of(
                     new Card(Denomination.TEN, Suit.CLOVER),
                     new Card(Denomination.TEN, Suit.DIAMOND),
@@ -58,7 +58,7 @@ class PlayerTest {
         @DisplayName("플레이어의 카드가 21을 초과하지 않았고, 더 받으려 하는 경우 true를 반환한다.")
         @Test
         void hitWhenDoesNotBusted() {
-            Player player = new Player("pobi", bettingMoney);
+            Player player = new Player("pobi");
             Deck deck = new Deck(List.of(
                     new Card(Denomination.TEN, Suit.CLOVER),
                     new Card(Denomination.TEN, Suit.DIAMOND)
@@ -72,7 +72,7 @@ class PlayerTest {
         @DisplayName("플레이어의 카드가 21을 초과하지 않았고, 더 받으려 하는 경우 true를 반환한다.")
         @Test
         void standWhenDoesNotBusted() {
-            Player player = new Player("pobi", bettingMoney);
+            Player player = new Player("pobi");
             Deck deck = new Deck(List.of(
                     new Card(Denomination.TEN, Suit.CLOVER),
                     new Card(Denomination.TEN, Suit.DIAMOND)

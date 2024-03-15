@@ -14,7 +14,7 @@ public final class ParticipantSupplier {
     }
 
     public static Player createPlayer(final String name, final List<Card> cards) {
-        Player player = new Player(name, bettingMoney);
+        Player player = new Player(name);
         player.pickCard(new Deck(cards), cards.size());
         return player;
     }
