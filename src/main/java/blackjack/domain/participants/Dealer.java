@@ -29,6 +29,4 @@ public class Dealer extends Player {
     public void gainMoney(GamblingMoney gamblingMoney) {
         betMoney(gamblingMoney);
     }
-
-
 }
