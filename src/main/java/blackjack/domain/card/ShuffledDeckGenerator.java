@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ShuffledDeckGenerator {
@@ -14,17 +15,16 @@ public class ShuffledDeckGenerator {
 	}
 
 	public Deck generate() {
-		Deck deck = new Deck(createCards());
-		deck.shuffle();
-		return deck;
+		return new Deck(createShuffledCards());
 	}
 
-	private List<Card> createCards() {
+	private List<Card> createShuffledCards() {
 		List<Card> cards = new ArrayList<>();
 		for (Suit suit : Suit.values()) {
 			cards.addAll(createCardsOfSuit(suit));
 		}
 
+		Collections.shuffle(cards);
 		return cards;
 	}
 

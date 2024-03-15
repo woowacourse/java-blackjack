@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -89,6 +90,7 @@ class DeckTest {
 
 		// when & then
 		assertThatThrownBy(deck::drawCard)
-			.isInstanceOf(IndexOutOfBoundsException.class);
+			.isInstanceOf(NoSuchElementException.class)
+			.hasMessage("덱에 카드가 존재하지 않습니다.");
 	}
 }

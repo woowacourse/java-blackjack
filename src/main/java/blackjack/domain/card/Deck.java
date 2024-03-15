@@ -1,27 +1,28 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class Deck {
 	static final int INIT_SIZE = 52;
 
-	private final List<Card> cards;
+	private final Deque<Card> cards;
 
 	public Deck(final List<Card> cards) {
-		List<Card> copyDeck = new ArrayList<>(cards);
+		Deque<Card> copyDeck = new ArrayDeque<>(cards);
 		validate(copyDeck);
 		this.cards = copyDeck;
 	}
 
-	private void validate(final List<Card> cards) {
+	private void validate(final Deque<Card> cards) {
 		validateDuplicate(cards);
 		validateSize(cards);
 	}
 
-	private void validateDuplicate(final List<Card> cards) {
+	private void validateDuplicate(final Deque<Card> cards) {
 		int distinctSize = new HashSet<>(cards).size();
 
 		if (cards.size() != distinctSize) {
@@ -29,7 +30,7 @@ public class Deck {
 		}
 	}
 
-	private void validateSize(final List<Card> deck) {
+	private void validateSize(final Deque<Card> deck) {
 		if (deck.size() != INIT_SIZE) {
 			throw new IllegalArgumentException(String.format("덱의 사이즈가 %d장이 아닙니다.", INIT_SIZE));
 		}
@@ -40,11 +41,10 @@ public class Deck {
 	}
 
 	public Card drawCard() {
-		return cards.remove(0);
-	}
-
-	public void shuffle() {
-		Collections.shuffle(cards);
+		if (!cards.isEmpty()) {
+			return cards.poll();
+		}
+		throw new NoSuchElementException("덱에 카드가 존재하지 않습니다.");
 	}
 
 	public int size() {
