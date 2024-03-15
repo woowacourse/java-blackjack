@@ -35,7 +35,7 @@ class DealerTest {
 
         final Card card = dealer.pickCard();
 
-        assertThat(card).isNotNull();
+        assertThat(card).isEqualTo(new Card(Suit.HEART, ACE));
     }
 
     @Test

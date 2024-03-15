@@ -1,10 +1,9 @@
 package blackjack.domain.game;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.CardHand;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -17,6 +16,7 @@ import static blackjack.fixture.CardFixture.카드;
 import static blackjack.fixture.DealerFixture.딜러;
 import static blackjack.fixture.PlayerFixture.플레이어들;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class BlackjackGameTest {
     private Dealer dealer;
@@ -36,27 +36,31 @@ class BlackjackGameTest {
     void 블랙잭_게임을_시작하면_참가자들은_카드를_2장씩_받는다() {
         blackjackGame.start();
 
-        assertThat(dealer.getCardHand())
-                .extracting("cards", InstanceOfAssertFactories.list(Card.class))
-                .hasSize(2);
+        final CardHand dealerCardHand = dealer.getCardHand();
+        final CardHand playerCardHand = player.getCardHand();
+
+        assertSoftly(softly -> {
+            softly.assertThat(dealerCardHand.getCards()).hasSize(2);
+            softly.assertThat(playerCardHand.getCards()).hasSize(2);
+        });
     }
 
     @Test
     void 플레이어에게_카드를_추가로_지급할_수_있다() {
         blackjackGame.dealCardTo(player);
 
-        assertThat(player.getCardHand())
-                .extracting("cards", InstanceOfAssertFactories.list(Card.class))
-                .hasSize(1);
+        final CardHand cardHand = player.getCardHand();
+
+        assertThat(cardHand.getCards()).hasSize(1);
     }
 
     @Test
     void 딜러에게_카드를_추가로_지급할_수_있다() {
         blackjackGame.dealCardToDealer();
 
-        assertThat(dealer.getCardHand())
-                .extracting("cards", InstanceOfAssertFactories.list(Card.class))
-                .hasSize(1);
+        final CardHand cardHand = dealer.getCardHand();
+
+        assertThat(cardHand.getCards()).hasSize(1);
     }
 
     @Nested

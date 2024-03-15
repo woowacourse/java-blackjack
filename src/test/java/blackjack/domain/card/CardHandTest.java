@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -24,8 +23,7 @@ class CardHandTest {
         final Card card = 카드(KING);
         cardHand.receiveCard(card);
 
-        assertThat(cardHand).extracting("cards", InstanceOfAssertFactories.list(Card.class))
-                .containsExactly(card);
+        assertThat(cardHand.getCards()).containsExactly(card);
     }
 
     @Test
