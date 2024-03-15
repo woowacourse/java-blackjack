@@ -18,7 +18,7 @@ public class BetAmount {
     }
 
     public Profit multiply() {
-        return new Profit((int) (1.5 * amount));
+        return new Profit((long) (1.5 * amount));
     }
 
     public Profit lose() {

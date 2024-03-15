@@ -2,18 +2,18 @@ package domain;
 
 public class Profit {
 
-    private final int profit;
+    private final long profit;
 
-    public Profit(final int profit) {
+    public Profit(final long profit) {
         validateMultiplesOfTen(profit);
         this.profit = profit;
     }
 
-    public int getProfit() {
+    public long getProfit() {
         return profit;
     }
 
-    private static void validateMultiplesOfTen(final int profit) {
+    private static void validateMultiplesOfTen(final long profit) {
         if (profit % 10 != 0) {
             throw new UnsupportedOperationException("[ERROR] 금액은 10의 배수만 가능합니다.");
         }
