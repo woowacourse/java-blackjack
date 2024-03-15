@@ -3,15 +3,17 @@ package blackjack.domain.result;
 import blackjack.domain.ParticipantScoreStatus;
 
 public enum WinStatus {
-    LOSE("패"),
-    DRAW("무"),
-    WIN("승"),
-    WIN_BLACKJACK("블랙잭승");
+    LOSE("패", -1),
+    DRAW("무", 0),
+    WIN("승", 1),
+    WIN_BLACKJACK("블랙잭승", 1.5);
 
     private final String name;
+    private final double betMultiplier;
 
-    WinStatus(final String name) {
+    WinStatus(final String name, final double betMultiplier) {
         this.name = name;
+        this.betMultiplier = betMultiplier;
     }
 
     public static WinStatus of(final ParticipantScoreStatus dealerScoreStatus, final ParticipantScoreStatus playerScoreStatus) {
@@ -58,5 +60,9 @@ public enum WinStatus {
 
     public String getName() {
         return name;
+    }
+
+    public double getBetMultiplier() {
+        return betMultiplier;
     }
 }

@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.dealer.Dealer;
 
 public class Player extends Participant {
-    protected Player(final String name) {
+    public Player(final String name) {
         super(name);
         validateNotDealerName(name);
     }

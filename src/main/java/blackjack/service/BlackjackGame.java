@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackjackGame {
-    private final Deck deck;
+    private Deck deck; // TODOL not final
     private final Participants participants;
 
     public BlackjackGame(final List<String> playersName, final Deck deck) {
@@ -22,8 +22,14 @@ public class BlackjackGame {
         this.deck = deck;
     }
 
+    public BlackjackGame(final List<String> playersName) {
+        this.participants = new Participants(Players.from(playersName), new Dealer());
+        this.deck = Deck.empty();
+    }
+
     public void divideCard() {
-        deck.shuffle();
+        deck = deck.generate();
+        deck.shuffle(); // TODO
         participants.addStartCards(deck);
     }
 

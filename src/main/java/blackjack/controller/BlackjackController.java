@@ -1,6 +1,5 @@
 package blackjack.controller;
 
-import blackjack.domain.dealer.Deck;
 import blackjack.domain.result.WinningResult;
 import blackjack.dto.CardDto;
 import blackjack.dto.ParticipantCardsDto;
@@ -32,7 +31,7 @@ public class BlackjackController {
 
     private BlackjackGame readyGame() {
         try {
-            final BlackjackGame blackjackGame = new BlackjackGame(inputView.readPlayerNames(), Deck.create());
+            final BlackjackGame blackjackGame = new BlackjackGame(inputView.readPlayerNames());
             blackjackGame.divideCard();
             final List<ParticipantCardsDto> participantCardsDtos = blackjackGame.getStartCards();
 
