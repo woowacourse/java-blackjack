@@ -28,18 +28,6 @@ public class GameController {
         printGameResults(blackjackGame, bettingMoneyStore);
     }
 
-    private BlackjackGame initGame(final PlayerNames playerNames) {
-        BlackjackGame blackjackGame = BlackjackGame.init(playerNames);
-        PlayingCardDto dealerCardDto = PlayingCardDto.of(blackjackGame.getDealer().getFirstPlayingCard());
-        List<PlayerHandStatusDto> playerHandStatusDtos = blackjackGame.getPlayers()
-                .stream()
-                .map(PlayerHandStatusDto::of)
-                .toList();
-
-        OutputView.printFirstDrawStatus(dealerCardDto, playerHandStatusDtos);
-        return blackjackGame;
-    }
-
     private PlayerNames inputPlayerNames() {
         try {
             List<String> inputPlayerNames = InputView.inputPlayerNames();
@@ -70,6 +58,18 @@ public class GameController {
             System.out.println(e.getMessage());
             return inputBettingMoney(playerName);
         }
+    }
+
+    private BlackjackGame initGame(final PlayerNames playerNames) {
+        BlackjackGame blackjackGame = BlackjackGame.init(playerNames);
+        PlayingCardDto dealerCardDto = PlayingCardDto.of(blackjackGame.getDealer().getFirstPlayingCard());
+        List<PlayerHandStatusDto> playerHandStatusDtos = blackjackGame.getPlayers()
+                .stream()
+                .map(PlayerHandStatusDto::of)
+                .toList();
+
+        OutputView.printFirstDrawStatus(dealerCardDto, playerHandStatusDtos);
+        return blackjackGame;
     }
 
     private void playGame(final BlackjackGame blackjackGame) {
