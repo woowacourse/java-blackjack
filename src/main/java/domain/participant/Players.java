@@ -1,11 +1,13 @@
 package domain.participant;
 
-import domain.amount.Amount;
 import domain.GameResult;
+import domain.amount.Amount;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public class Players {
 
@@ -17,6 +19,10 @@ public class Players {
 
     public void forEach(Consumer<? super Player> action) {
         names.forEach(action);
+    }
+
+    public Stream<Player> filter(Predicate<? super Player> predicate) {
+        return names.stream().filter(predicate);
     }
 
     public boolean isAllBust() {

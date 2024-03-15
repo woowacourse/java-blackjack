@@ -1,23 +1,19 @@
 package controller;
 
+import domain.Game;
 import domain.amount.Amount;
 import domain.amount.BetAmount;
-import domain.participant.Answer;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Names;
 import domain.participant.Player;
 import domain.participant.Players;
-import dto.DealerHandsDto;
-import dto.ParticipantDto;
 import dto.ParticipantsDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import view.OutputView;
 
-//TODO 컨트롤러가 하는 일이 좀 많은듯...?
-// GAME이라는 객체를 만들어 보는 것은 어떨까?
 public class BlackJackController {
 
     private final InputController inputController;
@@ -33,19 +29,17 @@ public class BlackJackController {
         final Dealer dealer = new Dealer();
         final Players players = registerPlayers(names);
 
-        initHands(players, dealer);
-        dealWithPlayers(players, dealer);
-        dealerTurn(players, dealer);
+        final Game game = new Game(dealer, players);
+
+        initHands(game);
+        dealWithPlayers(game);
+        dealerTurn(game);
 
         printFinalResult(players, dealer);
     }
 
-    private void dealerTurn(final Players players, final Dealer dealer) {
-        if (players.isAllBust()) {
-            return;
-        }
-        dealer.deal();
-        printDealerTurnMessage(dealer.countAddedHands());
+    private void dealerTurn(final Game game) {
+        game.dealerTurn(outputView::printDealerTurnMessage);
     }
 
     private Players registerPlayers(final Names names) {
@@ -57,24 +51,20 @@ public class BlackJackController {
         return new Players(playerList);
     }
 
-    private void printDealerTurnMessage(final int turn) {
-        for (int i = 0; i < turn; i++) {
-            outputView.printDealerTurnMessage();
-        }
-    }
-
-    private void dealWithPlayers(final Players players, final Dealer dealer) {
-        if (dealer.isBlackJack()) {
+    private void dealWithPlayers(final Game game) {
+        if (game.isAlreadyEnd()) {
             outputView.printDealerBlackJack();
             return;
         }
-        players.getPlayers()
-                .forEach(player -> deal(player, dealer));
+        game.checkingPlayersBlackJack(outputView::printBlackJack);
+        game.dealWithPlayers(
+                inputController::getAnswer,
+                outputView::printHands,
+                outputView::printPlayerEndMessage);
     }
 
-    private void initHands(final Players players, final Dealer dealer) {
-        dealer.initHands(players);
-        outputView.printStartDeal(DealerHandsDto.from(dealer), ParticipantsDto.of(players));
+    private void initHands(final Game game) {
+        game.initHands(outputView::printStartDeal);
     }
 
     private void printFinalResult(final Players players, final Dealer dealer) {
@@ -82,49 +72,5 @@ public class BlackJackController {
         final Map<Player, Amount> finalResult = players.calculateResult(dealer);
         final Amount dealerAmount = dealer.calculateRevenue(finalResult);
         outputView.printGameResult(finalResult, dealerAmount);
-    }
-
-    private void deal(final Player player, final Dealer dealer) {
-        if (isBlackJack(player)) {
-            return;
-        }
-        boolean handsChanged = false;
-        boolean turnEnded = false;
-
-        while (!turnEnded) {
-            final Answer answer = inputController.getAnswer(player.getName());
-            dealer.deal(player, answer);
-
-            printHandsIfRequired(player, handsChanged, answer);
-
-            handsChanged = true;
-            turnEnded = isTurnEnded(player, answer);
-        }
-    }
-
-    private boolean isBlackJack(final Player player) {
-        if (player.isBlackJack()) {
-            outputView.printBlackJack(player.getName());
-            return true;
-        }
-        return false;
-    }
-
-    private void printHandsIfRequired(final Player player, final boolean handsChanged, final Answer answer) {
-        if (shouldShowHands(handsChanged, answer)) {
-            outputView.printHands(ParticipantDto.from(player));
-        }
-    }
-
-    private boolean isTurnEnded(final Player player, final Answer answer) {
-        if (player.canDeal()) {
-            return !answer.isHit();
-        }
-        outputView.printPlayerEndMessage(player.isBust());
-        return true;
-    }
-
-    private boolean shouldShowHands(final boolean handsChanged, final Answer answer) {
-        return answer.isHit() || !handsChanged;
     }
 }
