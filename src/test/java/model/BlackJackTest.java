@@ -153,7 +153,7 @@ class BlackJackTest {
         Participant bustParticipant = new Participant(name,
                 List.of(new Card(CardShape.SPACE, CardNumber.NINE),
                         new Card(CardShape.DIAMOND, CardNumber.NINE)), bettingMoney);
-        bustParticipant.addCard(new Card(CardShape.HEART, CardNumber.NINE));
+        bustParticipant.addCards(new Card(CardShape.HEART, CardNumber.NINE));
         return bustParticipant;
     }
 
@@ -173,7 +173,7 @@ class BlackJackTest {
         Dealer bustDealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
                 List.of(new Card(CardShape.SPACE, CardNumber.KING),
                         new Card(CardShape.CLOVER, CardNumber.KING)));
-        bustDealer.addCard(new Card(CardShape.SPACE, CardNumber.FIVE));
+        bustDealer.addCards(new Card(CardShape.SPACE, CardNumber.FIVE));
         return bustDealer;
     }
 }

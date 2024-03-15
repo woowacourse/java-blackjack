@@ -16,12 +16,12 @@ public abstract class User {
         this.cards = new Cards(cards);
     }
 
-    public void addCards(List<Card> card) { //TODO Card...를 사용해서 리팩토링 해보기
-        cards.addCards(card);
+    public void addCards(Card... card) {
+        this.cards.addCards(List.of(card));
     }
 
-    public void addCard(Card card) {
-        cards.addCard(card);
+    public void addCards(List<Card> card) { //TODO Card...를 사용해서 리팩토링 해보기
+        cards.addCards(card);
     }
 
     public int calculateScore() {

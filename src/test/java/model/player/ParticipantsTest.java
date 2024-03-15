@@ -70,7 +70,7 @@ class ParticipantsTest {
                 List.of(new Card(CardShape.SPACE, CardNumber.TEN),
                         new Card(CardShape.SPACE, CardNumber.KING)),
                 new BettingMoney(100));
-        bustParticipant.addCard(new Card(CardShape.SPACE, CardNumber.NINE));
+        bustParticipant.addCards(new Card(CardShape.SPACE, CardNumber.NINE));
         Participant participantScore21 = new Participant(new Name("켬미"),
                 List.of(new Card(CardShape.CLOVER, CardNumber.KING),
                         new Card(CardShape.CLOVER, CardNumber.TEN)),

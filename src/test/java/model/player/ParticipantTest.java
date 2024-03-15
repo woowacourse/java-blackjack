@@ -156,7 +156,7 @@ class ParticipantTest {
         Dealer dealer = new Dealer(new CardDeck(CardDeck.createCards()), () ->
                 List.of(new Card(CardShape.SPACE, CardNumber.EIGHT),
                         new Card(CardShape.CLOVER, CardNumber.NINE)));
-        dealer.addCard(new Card(CardShape.CLOVER, CardNumber.TEN));
+        dealer.addCards(new Card(CardShape.CLOVER, CardNumber.TEN));
         return dealer;
     }
 
@@ -171,7 +171,7 @@ class ParticipantTest {
                 List.of(new Card(CardShape.HEART, CardNumber.NINE),
                         new Card(CardShape.HEART, CardNumber.FIVE)),
                 new BettingMoney(100));
-        bustParticipant.addCard(new Card(CardShape.HEART, CardNumber.EIGHT));
+        bustParticipant.addCards(new Card(CardShape.HEART, CardNumber.EIGHT));
         return bustParticipant;
     }
 

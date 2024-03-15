@@ -26,10 +26,6 @@ public class Cards {
         cards.addAll(card);
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
-    }
-
     public int calculateScore() {
         int sum = cards.stream()
                 .mapToInt(Card::minimumNumber)
