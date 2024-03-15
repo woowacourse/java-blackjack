@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class Card {
 
 	// 52장의 Card를 미리 Pool에 생성
-	private static final Map<String, Card> pool = Arrays.stream(Suit.values())
+	private static final Map<String, Card> CARD_POOL = Arrays.stream(Suit.values())
 		.flatMap(suit -> Arrays.stream(Rank.values())
 			.map(rank -> new Card(suit, rank)))
 		.collect(Collectors.toMap(card ->
@@ -24,7 +24,7 @@ public class Card {
 	}
 
 	public static Card of(final Suit suit, final Rank rank) {
-		return pool.get(toKey(suit, rank));
+		return CARD_POOL.get(toKey(suit, rank));
 	}
 
 	private static String toKey(final Suit suit, final Rank rank) {
