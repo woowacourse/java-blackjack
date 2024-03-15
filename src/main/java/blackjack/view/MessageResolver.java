@@ -13,8 +13,6 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.result.BetResult;
-import blackjack.domain.result.BetResults;
 import blackjack.domain.result.PlayerProfitResult;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -70,21 +68,6 @@ public class MessageResolver {
         return String.format("%s - 결과: %d", handMessage, score.getValue());
     }
 
-    public String resolveBetResultMessage(BetResult betResult) {
-        return String.format("%s: %d", betResult.getName(), betResult.getProfit());
-    }
-
-    public String resolveBetResultsMessage(int dealerEarned, BetResults betResults) {
-        return new StringBuilder(LINE_SEPARATOR)
-                .append("##최종 수익")
-                .append(LINE_SEPARATOR)
-                .append(resolveDealerProfitMessage(dealerEarned))
-                .append(LINE_SEPARATOR)
-                .append(betResults.getBetResults().stream()
-                        .map(this::resolveBetResultMessage)
-                        .collect(Collectors.joining(LINE_SEPARATOR))).toString();
-    }
-
     public String resolveProfitResultMessage(PlayerProfitResult playerProfitResult, Profit dealerProfit) {
         return new StringBuilder(LINE_SEPARATOR)
                 .append("##최종 수익")
@@ -96,10 +79,6 @@ public class MessageResolver {
 
     public String resolveDealerProfitMessage(Profit dealerProfit) {
         return String.format("딜러: %d", dealerProfit.getValue());
-    }
-
-    public String resolveDealerProfitMessage(int dealerProfit) {
-        return String.format("딜러: %d", dealerProfit);
     }
 
     public String resolvePlayerProfitMessage(PlayerProfitResult playerProfitResult) {

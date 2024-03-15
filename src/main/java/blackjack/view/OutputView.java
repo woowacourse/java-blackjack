@@ -6,8 +6,6 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.result.BetResult;
-import blackjack.domain.result.BetResults;
 import blackjack.domain.result.PlayerProfitResult;
 
 public class OutputView {
@@ -38,16 +36,7 @@ public class OutputView {
         System.out.println(messageResolver.resolveDealerHandMessage(dealer));
     }
 
-    public void printBetResults(int dealerEarned, BetResults betResults) {
-        System.out.println(messageResolver.resolveBetResultsMessage(dealerEarned, betResults));
-    }
-
     public void printProfitResults(PlayerProfitResult playerProfitResult, Profit dealerProfit) {
         System.out.println(messageResolver.resolveProfitResultMessage(playerProfitResult, dealerProfit));
     }
-
-    public void printBetResult(BetResult betResult) {
-        System.out.println(messageResolver.resolveBetResultMessage(betResult));
-    }
-
 }
