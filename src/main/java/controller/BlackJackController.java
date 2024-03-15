@@ -15,12 +15,10 @@ public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final CardShuffleStrategy cardShuffleStrategy;
 
-    public BlackJackController(InputView inputView, OutputView outputView, CardShuffleStrategy cardShuffleStrategy) {
+    public BlackJackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.cardShuffleStrategy = cardShuffleStrategy;
     }
 
     public void run() {
@@ -56,7 +54,7 @@ public class BlackJackController {
     }
 
     private BlackJackGame initBlackJackGame(Players players) {
-        CardDeck cardDeck = CardDeck.of(cardShuffleStrategy);
+        CardDeck cardDeck = CardDeck.of();
         Dealer dealer = new Dealer(cardDeck);
 
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer);
