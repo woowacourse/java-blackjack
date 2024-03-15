@@ -47,4 +47,18 @@ public class HandTest {
 
         assertEquals(21, score);
     }
+
+
+    @DisplayName("점수를 계산한다(KING,ACE -> 21).")
+    @Test
+    void score4() {
+        final Hand hand = new Hand(
+                new Card(Denomination.KING, Suit.CLUBS),
+                new Card(Denomination.ACE, Suit.CLUBS)
+        );
+
+        final int score = hand.score().toInt();
+
+        assertEquals(21, score);
+    }
 }

@@ -16,6 +16,9 @@ public class Ready implements State {
     @Override
     public State draw(final Card card) {
         hand.add(card);
+        if (hand.size() < 2) {
+            return new Ready(hand);
+        }
         if (hand.score().equals(new Score(21))) {
             return new Blackjack(hand);
         }

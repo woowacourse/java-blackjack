@@ -1,5 +1,8 @@
 package domain;
 
+import domain.state.Blackjack;
+import domain.state.Bust;
+import domain.state.Hit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -41,6 +44,40 @@ class PlayerTest {
         player.drawCard(new Card(Denomination.QUEEN, Suit.CLUBS));
 
         assertThat(player.isBust()).isEqualTo(true);
+    }
+
+    @DisplayName("합계 점수가 21을 초과하면 버스트")
+    @Test
+    void bustState() {
+        final Player player = new Player(new Name("지쳐버린종이"), new BetAmount(100));
+
+        player.drawCard(new Card(Denomination.KING, Suit.CLUBS));
+        player.drawCard(new Card(Denomination.JACK, Suit.CLUBS));
+        player.drawCard(new Card(Denomination.QUEEN, Suit.CLUBS));
+
+        assertThat(player.state).isInstanceOf(Bust.class);
+    }
+
+    @DisplayName("합계 점수가 21을 초과하면 버스트")
+    @Test
+    void hitState() {
+        final Player player = new Player(new Name("지쳐버린종이"), new BetAmount(100));
+
+        player.drawCard(new Card(Denomination.KING, Suit.CLUBS));
+        player.drawCard(new Card(Denomination.JACK, Suit.CLUBS));
+
+        assertThat(player.state).isInstanceOf(Hit.class);
+    }
+
+    @DisplayName("합계 점수가 21을 초과하면 버스트")
+    @Test
+    void blackjackState() {
+        final Player player = new Player(new Name("지쳐버린종이"), new BetAmount(100));
+
+        player.drawCard(new Card(Denomination.KING, Suit.CLUBS));
+        player.drawCard(new Card(Denomination.ACE, Suit.CLUBS));
+
+        assertThat(player.state).isInstanceOf(Blackjack.class);
     }
 
     @DisplayName("플레이어는 [딜러] 이름을 사용할 수 없다.")

@@ -51,4 +51,11 @@ public class Hand {
     public List<Card> cards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public int size() {
+        if (cards == null) {
+            throw new IllegalStateException("손패가 초기화되지 않았습니다.");
+        }
+        return cards.size();
+    }
 }
