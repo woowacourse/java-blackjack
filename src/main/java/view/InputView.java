@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class InputView {
-    
+
     private static final String DELIMITER = ",";
     private static final String COMMAND_YES = "y";
     private static final String COMMAND_NO = "n";
@@ -54,10 +54,19 @@ public class InputView {
         }
     }
 
-    public static String readBettingMoney(Supplier<String> input, String name) {
+    public static double readBettingMoney(Supplier<String> input, String name) {
         System.out.printf("%s의 배팅 금액은?%n", name);
         String result = input.get();
         validateEmpty(result);
-        return result;
+        validateNumeric(result);
+        return Double.parseDouble(result);
+    }
+
+    private static void validateNumeric(String amount) {
+        try {
+            Double.parseDouble(amount);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("금액과 관련된 연산은 숫자만 입력 가능합니다.");
+        }
     }
 }

@@ -41,7 +41,7 @@ public class BlackJackGame {
     }
 
     private static Player setBettingMoney(Name name) {
-        String input = InputView.readBettingMoney(CONSOLE_READER, name.name());
+        double input = InputView.readBettingMoney(CONSOLE_READER, name.name());
         OutputView.printNewLine();
         return new Player(name, new Money(input));
     }

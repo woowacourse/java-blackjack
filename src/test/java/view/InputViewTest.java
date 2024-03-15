@@ -81,5 +81,13 @@ class InputViewTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("입력값에 공백이나 null을 넣을 수 없습니다.");
         }
+
+        @Test
+        @DisplayName("숫자가 아닌 값이 나타날 경우 예외가 발생한다.")
+        void validateNumeric() {
+            Assertions.assertThatThrownBy(() -> InputView.readBettingMoney(() -> "abc", "test"))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("금액과 관련된 연산은 숫자만 입력 가능합니다.");
+        }
     }
 }

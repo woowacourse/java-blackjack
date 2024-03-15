@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
-    
+
     @Test
     @DisplayName("플레이어는 자신의 패를 반환할 수 있다.")
     void getHand() {
@@ -89,7 +89,7 @@ class PlayerTest {
     @Test
     @DisplayName("Player가 배팅할 때 승리일 경우 걸었던 돈 그대로 받는다.")
     void betWinNormalCase() {
-        Player player = new Player(new Name("test"), new Money("100.0"));
+        Player player = new Player(new Name("test"), new Money(100));
         Dealer dealer = new Dealer();
         Deck deck = Deck.withCustomCards(
                 new Card(CardType.SPADE, CardNumber.THREE),
@@ -98,13 +98,13 @@ class PlayerTest {
                 new Card(CardType.DIAMOND, CardNumber.TEN));
         player.pickCards(deck, 2);
         dealer.pickCards(deck, 2);
-        Assertions.assertThat(player.bet(dealer)).isEqualTo(new Money("100.0"));
+        Assertions.assertThat(player.bet(dealer)).isEqualTo(new Money(100));
     }
 
     @Test
     @DisplayName("Player가 배팅할 때 패배일 경우 걸었던 돈이 마이너스로 변환다.")
     void betLoseNormalCase() {
-        Player player = new Player(new Name("test"), new Money("100.0"));
+        Player player = new Player(new Name("test"), new Money(100));
         Dealer dealer = new Dealer();
         Deck deck = Deck.withCustomCards(
                 new Card(CardType.DIAMOND, CardNumber.TEN),
@@ -114,13 +114,13 @@ class PlayerTest {
         );
         player.pickCards(deck, 2);
         dealer.pickCards(deck, 2);
-        Assertions.assertThat(player.bet(dealer)).isEqualTo(new Money("-100.0"));
+        Assertions.assertThat(player.bet(dealer)).isEqualTo(new Money(-100));
     }
 
     @Test
     @DisplayName("Player가 배팅할 때 승리이고 블랙잭 일 경우 걸었던 돈의 1.5배를 반환한다.")
     void betWinBlackJackCase() {
-        Player player = new Player(new Name("test"), new Money("100"));
+        Player player = new Player(new Name("test"), new Money(100));
         Dealer dealer = new Dealer();
         Deck deck = Deck.withCustomCards(
                 new Card(CardType.DIAMOND, CardNumber.TEN),
@@ -130,13 +130,13 @@ class PlayerTest {
         );
         player.pickCards(deck, 2);
         dealer.pickCards(deck, 2);
-        Assertions.assertThat(player.bet(dealer)).isEqualTo(new Money("150.0"));
+        Assertions.assertThat(player.bet(dealer)).isEqualTo(new Money(150));
     }
 
     @Test
     @DisplayName("Player가 배팅할 때 패배이고 딜러가 블랙잭일 경우 걸었던 돈이 마이너스로 변한다.")
     void betLoseBlackJackCase() {
-        Player player = new Player(new Name("test"), new Money("100.0"));
+        Player player = new Player(new Name("test"), new Money(100));
         Dealer dealer = new Dealer();
         Deck deck = Deck.withCustomCards(
                 new Card(CardType.DIAMOND, CardNumber.ACE),
@@ -146,13 +146,13 @@ class PlayerTest {
         );
         player.pickCards(deck, 2);
         dealer.pickCards(deck, 2);
-        Assertions.assertThat(player.bet(dealer)).isEqualTo(new Money("-100.0"));
+        Assertions.assertThat(player.bet(dealer)).isEqualTo(new Money(-100));
     }
 
     @Test
     @DisplayName("Player가 배팅할 때 둘 다 블랙잭일 경우 걸었던 걸었던 돈 그대로 반환한다.")
     void betBothBlackJackCase() {
-        Player player = new Player(new Name("test"), new Money("100"));
+        Player player = new Player(new Name("test"), new Money(100));
         Dealer dealer = new Dealer();
         Deck deck = Deck.withCustomCards(
                 new Card(CardType.DIAMOND, CardNumber.ACE),
@@ -162,13 +162,13 @@ class PlayerTest {
         );
         player.pickCards(deck, 2);
         dealer.pickCards(deck, 2);
-        Assertions.assertThat(player.bet(dealer)).isEqualTo(new Money("100"));
+        Assertions.assertThat(player.bet(dealer)).isEqualTo(new Money(100));
     }
 
     @Test
     @DisplayName("Player가 배팅할 때 점수가 동일 할 경우 걸었던 걸었던 돈 그대로 반환한다.")
     void betSameScoreCase() {
-        Player player = new Player(new Name("test"), new Money("100"));
+        Player player = new Player(new Name("test"), new Money(100));
         Dealer dealer = new Dealer();
         Deck deck = Deck.withCustomCards(
                 new Card(CardType.DIAMOND, CardNumber.KING),
@@ -178,6 +178,6 @@ class PlayerTest {
         );
         player.pickCards(deck, 2);
         dealer.pickCards(deck, 2);
-        Assertions.assertThat(player.bet(dealer)).isEqualTo(new Money("100"));
+        Assertions.assertThat(player.bet(dealer)).isEqualTo(new Money(100));
     }
 }

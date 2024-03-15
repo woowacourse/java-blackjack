@@ -13,28 +13,8 @@ public class Money {
         this.amount = amount;
     }
 
-    public Money(String amount) {
-        validate(amount);
+    public Money(double amount) {
         this.amount = new BigDecimal(amount);
-    }
-
-    private void validate(String amount) {
-        validateNull(amount);
-        validateNumeric(amount);
-    }
-
-    private void validateNull(String amount) {
-        if (amount == null) {
-            throw new IllegalArgumentException("금액 문자열은 null이 될 수 없습니다.");
-        }
-    }
-
-    private void validateNumeric(String amount) {
-        try {
-            Double.parseDouble(amount);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("금액과 관련된 연산은 숫자만 입력 가능합니다.");
-        }
     }
 
     public Money add(Money money) {
@@ -45,8 +25,7 @@ public class Money {
         return new Money(this.amount.subtract(money.amount));
     }
 
-    public Money multiply(String ratio) {
-        validate(ratio);
+    public Money multiply(double ratio) {
         return new Money(this.amount.multiply(new BigDecimal(ratio)));
     }
 
