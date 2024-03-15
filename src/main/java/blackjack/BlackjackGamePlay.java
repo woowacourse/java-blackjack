@@ -1,6 +1,5 @@
 package blackjack;
 
-import blackjack.domain.result.GameBettingManager;
 import blackjack.domain.card.Card;
 import blackjack.domain.deck.DeckGenerator;
 import blackjack.domain.deck.PlayingDeck;
@@ -12,6 +11,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class BlackjackGamePlay {
 
@@ -19,7 +19,7 @@ public class BlackjackGamePlay {
     private final GameBettingManager gameBettingManager = new GameBettingManager();
 
     public void run() {
-        List<Player> players = registerPlayer();
+        List<Player> players = retryUntilSuccess(this::registerPlayer);
         registerPlayersBatting(players);
         playBlackJack(new Dealer(), players);
     }
@@ -33,7 +33,8 @@ public class BlackjackGamePlay {
 
     private void registerPlayersBatting(List<Player> players) {
         for (Player player : players) {
-            gameBettingManager.registerPlayerBetting(player, InputView.askPlayerForBatting(player));
+            Betting bettingMoney = retryUntilSuccess(() -> new Betting(InputView.askPlayerForBatting(player)));
+            gameBettingManager.registerPlayerBetting(player, bettingMoney);
         }
     }
 
@@ -54,8 +55,7 @@ public class BlackjackGamePlay {
         Card firstDealerCard = playingDeck.drawCard();
         Card secondDealerCard = playingDeck.drawCard();
 
-        dealer.receiveCard(firstDealerCard);
-        dealer.receiveCard(secondDealerCard);
+        dealer.initialDraw(List.of(firstDealerCard, secondDealerCard));
     }
 
     private void drawCardToPlayer(List<Player> players) {
@@ -63,8 +63,7 @@ public class BlackjackGamePlay {
             Card firstPlayerCard = playingDeck.drawCard();
             Card secondPlayerCard = playingDeck.drawCard();
 
-            player.receiveCard(firstPlayerCard);
-            player.receiveCard(secondPlayerCard);
+            player.initialDraw(List.of(firstPlayerCard, secondPlayerCard));
         }
     }
 
@@ -75,7 +74,7 @@ public class BlackjackGamePlay {
     }
 
     private void hitOrStand(Player player) {
-        while (player.canHit() && InputView.askPlayerForCard(player)) {
+        while (player.canHit() && retryUntilSuccess(() -> InputView.askPlayerForCard(player))) {
             executeHit(player);
         }
         if (player.canHit()) {
@@ -104,5 +103,14 @@ public class BlackjackGamePlay {
 
         OutputView.printCardScore(dealer, players);
         OutputView.printResult(gameBettingManager);
+    }
+
+    private <T> T retryUntilSuccess(Supplier<T> supplier) {
+        try {
+            return supplier.get();
+        } catch (IllegalArgumentException e) {
+            OutputView.printMessage(e.getMessage());
+            return retryUntilSuccess(supplier);
+        }
     }
 }

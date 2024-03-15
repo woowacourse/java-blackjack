@@ -19,7 +19,7 @@ public class OutputView {
     private OutputView() {
     }
 
-    private static void printMessage(String message) {
+    public static void printMessage(String message) {
         System.out.println(message);
     }
 
