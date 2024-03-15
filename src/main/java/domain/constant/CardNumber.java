@@ -1,6 +1,7 @@
 package domain.constant;
 
 public enum CardNumber {
+    
     ACE(1, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
@@ -14,7 +15,7 @@ public enum CardNumber {
     JACK(10, "J"),
     QUEEN(10, "Q"),
     KING(10, "K");
-    
+
     private final int score;
     private final String symbol;
 

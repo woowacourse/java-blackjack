@@ -3,8 +3,9 @@ package domain;
 import domain.constant.GamerResult;
 
 public class Player extends Gamer {
-    
+
     private static final String BLACKJACK_BONUS_RATIO = "1.5";
+
     private final Name name;
     private final Money money;
 
