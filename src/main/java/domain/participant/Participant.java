@@ -11,7 +11,7 @@ public abstract class Participant {
 
     private static final int BLACK_JACK_COUNT = 21;
 
-    protected Hands hands;
+    private final Hands hands;
     private final Name name;
 
     protected Participant(final Name name) {
@@ -19,7 +19,11 @@ public abstract class Participant {
         this.hands = new Hands();
     }
 
-    abstract boolean canHit();
+    public boolean canHit() {
+        return hands.calculateScore() < getThreshold();
+    }
+
+    abstract int getThreshold();
 
     public void receiveCard(Card card) {
         hands.receive(card);

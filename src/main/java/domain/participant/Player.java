@@ -23,7 +23,7 @@ public class Player extends Participant {
     }
 
     @Override
-    boolean canHit() {
-        return hands.calculateScore() <= BLACK_JACK_COUNT;
+    public int getThreshold() {
+        return BLACK_JACK_COUNT;
     }
 }

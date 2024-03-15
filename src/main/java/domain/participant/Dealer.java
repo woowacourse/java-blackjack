@@ -42,8 +42,8 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean canHit() {
-        return hands.calculateScore() <= DEALER_HIT_COUNT;
+    public int getThreshold() {
+        return DEALER_HIT_COUNT;
     }
 
     public Card draw() {
