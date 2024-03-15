@@ -39,7 +39,7 @@ public class DealerTest {
 
     @Test
     @DisplayName("성공: 딜러의 공개 카드를 가져올 수 있다.(첫번째 카드)")
-    void findShowingCard() {
+    void findShowingCard_NoException_HaveOneOrTwoCards() {
         Dealer dealer = new Dealer();
         Card givenCard = new Card(Rank.KING, Symbol.CLUB);
         dealer.receive(givenCard);
@@ -47,6 +47,20 @@ public class DealerTest {
 
         assertThat(showingCards).contains(givenCard)
                 .hasSize(1);
+    }
+
+    @Test
+    @DisplayName("성공: 딜러의 공개 카드를 가져올 수 있다.(전체 카드)")
+    void findShowingCard_NoException_HaveMoreThanTwoCards() {
+        Dealer dealer = new Dealer();
+        dealer.receive(List.of(
+                new Card(Rank.KING, Symbol.CLUB),
+                new Card(Rank.ACE, Symbol.CLUB),
+                new Card(Rank.TWO, Symbol.CLUB)
+        ));
+        List<Card> showingCards = dealer.findShowingCards();
+
+        assertThat(showingCards).hasSize(3);
     }
 
     @Test
