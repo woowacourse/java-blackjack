@@ -7,7 +7,6 @@ import java.util.Map;
 public class BettingProfit {
 
     private static final double BLACKJACK_RATIO = 1.5;
-    private static final int INVERSE_VALUE = -1;
 
     private final Map<Player, Profit> profitResult;
 
@@ -39,10 +38,12 @@ public class BettingProfit {
         if (profitResult.isEmpty()) {
             throw new IllegalArgumentException("베팅을 하지 않았습니다.");
         }
-        return INVERSE_VALUE * profitResult.values().stream()
-                .map(Profit::getProfit)
+        return new Profit(profitResult.values().stream()
+                .mapToInt(Profit::getProfit)
                 .reduce(Integer::sum)
-                .get();
+                .getAsInt())
+                .inverse()
+                .getProfit();
     }
 
     public Profit getProfit(Player player) {
