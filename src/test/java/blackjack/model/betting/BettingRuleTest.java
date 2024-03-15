@@ -1,8 +1,8 @@
 package blackjack.model.betting;
 
 
-import static blackjack.model.PlayerFixture.BLACKJACK_PLAYER;
-import static blackjack.model.PlayerFixture.NOT_BLACKJACK_21_PLAYER;
+import static blackjack.model.fixture.PlayerFixture.BLACKJACK_PLAYER;
+import static blackjack.model.fixture.PlayerFixture.NOT_BLACKJACK_21_PLAYER;
 import static blackjack.model.betting.ProfitRate.MINUS_100_PERCENT;
 import static blackjack.model.betting.ProfitRate.PLUS_100_PERCENT;
 import static blackjack.model.betting.ProfitRate.PLUS_150_PERCENT;

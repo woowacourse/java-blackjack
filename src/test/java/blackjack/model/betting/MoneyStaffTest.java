@@ -1,7 +1,7 @@
 package blackjack.model.betting;
 
-import static blackjack.model.PlayerFixture.BLACKJACK_PLAYER;
-import static blackjack.model.PlayerFixture.NOT_BLACKJACK_21_PLAYER;
+import static blackjack.model.fixture.PlayerFixture.BLACKJACK_PLAYER;
+import static blackjack.model.fixture.PlayerFixture.NOT_BLACKJACK_21_PLAYER;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.result.ResultCommand;

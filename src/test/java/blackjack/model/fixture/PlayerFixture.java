@@ -1,9 +1,9 @@
-package blackjack.model;
+package blackjack.model.fixture;
 
-import static blackjack.model.HandFixture.BLACKJACK_HAND;
-import static blackjack.model.HandFixture.BUST_HAND;
-import static blackjack.model.HandFixture.NOT_BLACKJACK_BUT_21_HAND;
-import static blackjack.model.HandFixture.UNDER_16_HAND;
+import static blackjack.model.fixture.HandFixture.BLACKJACK_HAND;
+import static blackjack.model.fixture.HandFixture.BUST_HAND;
+import static blackjack.model.fixture.HandFixture.NOT_BLACKJACK_BUT_21_HAND;
+import static blackjack.model.fixture.HandFixture.UNDER_16_HAND;
 
 import blackjack.model.participant.Player;
 

@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.fixture;
 
 import blackjack.model.deck.Card;
 import blackjack.model.deck.Score;

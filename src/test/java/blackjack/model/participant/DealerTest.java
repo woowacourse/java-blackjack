@@ -1,7 +1,7 @@
 package blackjack.model.participant;
 
-import static blackjack.model.HandFixture.OVER_16_UNDER_21_HAND;
-import static blackjack.model.HandFixture.UNDER_16_HAND;
+import static blackjack.model.fixture.HandFixture.OVER_16_UNDER_21_HAND;
+import static blackjack.model.fixture.HandFixture.UNDER_16_HAND;
 import static blackjack.model.deck.Score.ACE;
 import static blackjack.model.deck.Score.FIVE;
 import static blackjack.model.deck.Score.TEN;
