@@ -41,10 +41,10 @@ public class Score {
     }
 
     public Score addBonusScoreIfNotBust() {
-        int sumWithBonusScore = score + BONUS_SCORE_OF_ACE;
+        final int addedScore = score + BONUS_SCORE_OF_ACE;
 
-        if (sumWithBonusScore <= BLACKJACK_SCORE) {
-            return valueOf(sumWithBonusScore);
+        if (addedScore <= BLACKJACK_SCORE) {
+            return valueOf(addedScore);
         }
         return this;
     }

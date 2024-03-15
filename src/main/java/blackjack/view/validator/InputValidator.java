@@ -13,9 +13,9 @@ public class InputValidator {
             EXPRESSION_OF_YES,
             EXPRESSION_OF_NO);
     private static final Pattern ONLY_DIGIT_PATTERN = Pattern.compile("-?[0-9]+");
-    private static final Pattern VALID_EXPRESSION_PATTERN = Pattern.compile(generateValidExpressionPattern());
+    private static final Pattern VALID_EXPRESSION_PATTERN = Pattern.compile(validExpressionPattern());
 
-    private static String generateValidExpressionPattern() {
+    private static String validExpressionPattern() {
         return "[" + EXPRESSION_OF_YES + "|" + EXPRESSION_OF_NO + "]";
     }
 
