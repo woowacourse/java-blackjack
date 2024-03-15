@@ -1,7 +1,5 @@
 package domain.game;
 
-import static domain.constants.Outcome.WIN;
-
 import controller.dto.InitialCardStatus;
 import controller.dto.ParticipantHandStatus;
 import controller.dto.ParticipantProfitResponse;
@@ -9,11 +7,13 @@ import controller.dto.PlayerOutcome;
 import domain.constants.Outcome;
 import domain.game.deck.Deck;
 import domain.game.deck.DeckGenerator;
+import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class BlackJackGame {
     public static final int BLACKJACK_SCORE = 21;
@@ -75,24 +75,35 @@ public class BlackJackGame {
         Referee referee = new Referee(participants);
         List<PlayerOutcome> outcomes = referee.judge();
 
+        return getParticipantProfitResponses(outcomes);
+    }
+
+    private List<ParticipantProfitResponse> getParticipantProfitResponses(final List<PlayerOutcome> outcomes) {
+        return Stream.concat(
+                Stream.of(generateDealerProfitResponse(outcomes)),
+                generatePlayersProfitResponse(outcomes)
+        ).toList();
+    }
+
+    private ParticipantProfitResponse generateDealerProfitResponse(final List<PlayerOutcome> outcomes) {
+        int dealerProfit = outcomes.stream()
+                .mapToInt(outcome -> calculateProfit(outcome.player(), outcome.outcome()))
+                .sum();
+        return new ParticipantProfitResponse(Dealer.DEALER_NAME, dealerProfit);
+    }
+
+    private Stream<ParticipantProfitResponse> generatePlayersProfitResponse(final List<PlayerOutcome> outcomes) {
         return outcomes.stream()
                 .map(outcome -> new ParticipantProfitResponse(
                         outcome.player().getName(),
                         calculateProfit(outcome.player(), outcome.outcome()))
-                )
-                .toList();
+                );
     }
 
     private int calculateProfit(final Player player, final Outcome outcome) {
         double rates = outcome.earningRates();
         int currentProfit = player.totalProfit();
         return (int) Math.ceil(currentProfit * rates);
-    }
-
-    private int countWinner(List<PlayerOutcome> results) {
-        return (int) results.stream()
-                .filter(result -> WIN.equals(result.outcome()))
-                .count();
     }
 
     public List<Participant> getParticipants() {
