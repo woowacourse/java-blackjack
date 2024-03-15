@@ -9,8 +9,8 @@ public class BetMoney {
         this.betMoney = betMoney;
     }
 
-    public BetMoney multiply(final double multiplier) {
-        return new BetMoney((int) (betMoney * multiplier));
+    public int multiply(final double multiplier) {
+        return (int) (betMoney * multiplier);
     }
 
     public int getBetMoney() {

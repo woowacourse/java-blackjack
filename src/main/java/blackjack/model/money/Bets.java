@@ -23,8 +23,8 @@ public class Bets {
         }
     }
 
-    public Map<Player, BetMoney> calculatePlayersProfit(final Map<Player, ResultCommand> result) {
-        final Map<Player, BetMoney> playersProfit = new LinkedHashMap<>();
+    public Map<Player, Profit> calculatePlayersProfit(final Map<Player, ResultCommand> result) {
+        final Map<Player, Profit> playersProfit = new LinkedHashMap<>();
         for (Player player : result.keySet()) {
             final double rate = result.get(player).getRate();
             playersProfit.put(player, calculatePlayerProfit(rate, player));
@@ -32,15 +32,16 @@ public class Bets {
         return playersProfit;
     }
 
-    private BetMoney calculatePlayerProfit(final double rate, final Player player) {
-        return bets.get(player).multiply(rate);
+    private Profit calculatePlayerProfit(final double rate, final Player player) {
+        int profitMoney = bets.get(player).multiply(rate);
+        return new Profit(profitMoney);
     }
 
-    public BetMoney calculateDealerProfit(final Map<Player, ResultCommand> result) {
-        final Map<Player, BetMoney> playersProfit = calculatePlayersProfit(result);
+    public Profit calculateDealerProfit(final Map<Player, ResultCommand> result) {
+        final Map<Player, Profit> playersProfit = calculatePlayersProfit(result);
         final int playerTotalProfit = playersProfit.values().stream()
-                .mapToInt(BetMoney::getBetMoney)
+                .mapToInt(Profit::getProfit)
                 .sum();
-        return new BetMoney(playerTotalProfit).multiply(-1);
+        return new Profit(playerTotalProfit * -1);
     }
 }

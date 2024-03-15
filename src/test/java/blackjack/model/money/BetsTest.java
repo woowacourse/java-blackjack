@@ -47,7 +47,7 @@ public class BetsTest {
             bets.addBet(player, 10_000);
             Map<Player, ResultCommand> playerResultCommand = new LinkedHashMap<>(Map.of(player, resultCommand));
             assertThat(bets.calculatePlayersProfit(playerResultCommand))
-                    .contains(entry(player, new BetMoney(expected)));
+                    .contains(entry(player, new Profit(expected)));
         }
 
         @ParameterizedTest
@@ -56,7 +56,7 @@ public class BetsTest {
         void calculateDealerProfit(ResultCommand resultCommand, int expected) {
             bets.addBet(player, 10_000);
             Map<Player, ResultCommand> playerResultCommand = new LinkedHashMap<>(Map.of(player, resultCommand));
-            assertThat(bets.calculateDealerProfit(playerResultCommand)).isEqualTo(new BetMoney(expected));
+            assertThat(bets.calculateDealerProfit(playerResultCommand)).isEqualTo(new Profit(expected));
         }
     }
 }
