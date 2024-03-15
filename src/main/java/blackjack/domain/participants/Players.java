@@ -13,8 +13,8 @@ public class Players {
         this.players = players;
     }
 
-    public Map<Player, Result> calculateResult(int dealerScore, boolean isDealerBlackjack) {
-        Map<Player, Result> result = new LinkedHashMap<>();
+    public Map<Player, Outcome> calculateOutcome(int dealerScore, boolean isDealerBlackjack) {
+        Map<Player, Outcome> result = new LinkedHashMap<>();
         players.forEach(player -> result.put(player, player.checkResult(dealerScore, isDealerBlackjack)));
         return result;
     }

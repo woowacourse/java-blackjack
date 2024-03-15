@@ -9,7 +9,7 @@ import blackjack.domain.participants.GamblingMoney;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
-import blackjack.domain.participants.Result;
+import blackjack.domain.participants.Outcome;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,17 +41,17 @@ class PlayersTest {
     @Test
     @DisplayName("딜러보다 점수가 낮은 플레이어는 패배한다.")
     void calculateVictoryFailTest() {
-        Map<Player, Result> result = players.calculateResult(20, false);
+        Map<Player, Outcome> result = players.calculateOutcome(20, false);
 
-        assertThat(result.get(siso)).isEqualTo(Result.LOSE);
+        assertThat(result.get(siso)).isEqualTo(Outcome.LOSE);
     }
 
     @Test
     @DisplayName("딜러보다 점수가 높은 플레이어는 승리한다.")
     void calculateResultSuccessTest() {
-        Map<Player, Result> result = players.calculateResult(20, false);
+        Map<Player, Outcome> result = players.calculateOutcome(20, false);
 
-        assertThat(result.get(takan)).isEqualTo(Result.BLACKJACK_WIN);
+        assertThat(result.get(takan)).isEqualTo(Outcome.BLACKJACK_WIN);
     }
 
     @Test

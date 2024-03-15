@@ -9,7 +9,7 @@ import blackjack.domain.cards.Shape;
 import blackjack.domain.participants.GamblingMoney;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
-import blackjack.domain.participants.Result;
+import blackjack.domain.participants.Outcome;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -49,7 +49,7 @@ public class PlayerTest {
         player.receiveCard(new Card(Shape.HEART, Rank.TWO));
         player.receiveCard(new Card(Shape.DIAMOND, Rank.TEN));
 
-        assertThat(player.checkResult(20, false)).isEqualTo(Result.LOSE);
+        assertThat(player.checkResult(20, false)).isEqualTo(Outcome.LOSE);
     }
 
     @Test
@@ -59,7 +59,7 @@ public class PlayerTest {
         player.receiveCard(new Card(Shape.HEART, Rank.TEN));
         player.receiveCard(new Card(Shape.HEART, Rank.TWO));
 
-        assertThat(player.checkResult(25, false)).isEqualTo(Result.WIN);
+        assertThat(player.checkResult(25, false)).isEqualTo(Outcome.WIN);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class PlayerTest {
         player.receiveCard(new Card(Shape.HEART, Rank.TEN));
         player.receiveCard(new Card(Shape.HEART, Rank.ACE));
 
-        assertThat(player.checkResult(20, false)).isEqualTo(Result.BLACKJACK_WIN);
+        assertThat(player.checkResult(20, false)).isEqualTo(Outcome.BLACKJACK_WIN);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class PlayerTest {
         player.receiveCard(new Card(Shape.HEART, Rank.TEN));
         player.receiveCard(new Card(Shape.DIAMOND, Rank.TEN));
 
-        assertThat(player.checkResult(18, false)).isEqualTo(Result.WIN);
+        assertThat(player.checkResult(18, false)).isEqualTo(Outcome.WIN);
     }
 
     @Test
@@ -89,7 +89,7 @@ public class PlayerTest {
         player.receiveCard(new Card(Shape.HEART, Rank.TEN));
         player.receiveCard(new Card(Shape.DIAMOND, Rank.ACE));
 
-        assertThat(player.checkResult(21, true)).isEqualTo(Result.TIE);
+        assertThat(player.checkResult(21, true)).isEqualTo(Outcome.TIE);
     }
 
     @Test
@@ -98,7 +98,7 @@ public class PlayerTest {
         Player player = new Player(new Name("이름"));
         player.receiveCard(new Card(Shape.HEART, Rank.TEN));
 
-        assertThat(player.checkResult(20, false)).isEqualTo(Result.LOSE);
+        assertThat(player.checkResult(20, false)).isEqualTo(Outcome.LOSE);
     }
 
     @Test

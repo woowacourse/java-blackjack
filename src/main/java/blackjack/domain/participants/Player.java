@@ -5,38 +5,38 @@ public class Player extends Gamer {
         super(name);
     }
 
-    public Result checkResult(int dealerScore, boolean isDealerBlackjack) {
+    public Outcome checkResult(int dealerScore, boolean isDealerBlackjack) {
         return checkResultWhenBust(dealerScore, isDealerBlackjack);
     }
 
-    private Result checkResultWhenBust(int dealerScore, boolean isDealerBlackjack) {
+    private Outcome checkResultWhenBust(int dealerScore, boolean isDealerBlackjack) {
         if (calculateScore() > BLACKJACK_SCORE) {
-            return Result.LOSE;
+            return Outcome.LOSE;
         }
         if (dealerScore > BLACKJACK_SCORE) {
-            return Result.WIN;
+            return Outcome.WIN;
         }
         return checkResultWhenBlackjack(dealerScore, isDealerBlackjack);
     }
 
-    private Result checkResultWhenBlackjack(int dealerScore, boolean isDealerBlackjack) {
+    private Outcome checkResultWhenBlackjack(int dealerScore, boolean isDealerBlackjack) {
         if (isBlackjack() && isDealerBlackjack) {
-            return Result.TIE;
+            return Outcome.TIE;
         }
         if (isBlackjack()) {
-            return Result.BLACKJACK_WIN;
+            return Outcome.BLACKJACK_WIN;
         }
         return checkResultWhenNormal(dealerScore);
     }
 
-    private Result checkResultWhenNormal(int dealerScore) {
+    private Outcome checkResultWhenNormal(int dealerScore) {
         if (calculateScore() < dealerScore) {
-            return Result.LOSE;
+            return Outcome.LOSE;
         }
         if (calculateScore() > dealerScore) {
-            return Result.WIN;
+            return Outcome.WIN;
         }
-        return Result.TIE;
+        return Outcome.TIE;
     }
 
     public void betMoney(GamblingMoney gamblingMoney) {

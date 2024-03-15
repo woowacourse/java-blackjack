@@ -4,7 +4,7 @@ import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
-import blackjack.domain.participants.Result;
+import blackjack.domain.participants.Outcome;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -53,39 +53,39 @@ public class GameBoard {
     }
 
     public void calculateBettingMoney() {
-        Map<Player, Result> victory = calculateResult();
-        for (Player onePlayer : victory.keySet()) {
-            calculateOnePlayerBettingMoney(onePlayer, victory.get(onePlayer));
+            Map<Player, Outcome> outcome = calculateOutcome();
+        for (Player onePlayer : outcome.keySet()) {
+            calculatePlayerBettingMoney(onePlayer, outcome.get(onePlayer));
         }
     }
 
-    private Map<Player, Result> calculateResult() {
-        return players.calculateResult(dealer.calculateScore(), dealer.isBlackjack());
+    private Map<Player, Outcome> calculateOutcome() {
+        return players.calculateOutcome(dealer.calculateScore(), dealer.isBlackjack());
     }
 
-    private void calculateOnePlayerBettingMoney(Player onePlayer, Result result) {
-        float benefit = calculateBenefit(result);
-        calculateDealerGainMoney(onePlayer, result);
+    private void calculatePlayerBettingMoney(Player onePlayer, Outcome outcome) {
+        float benefit = calculateBenefit(outcome);
+        calculateDealerGainMoney(onePlayer, outcome);
         onePlayer.checkBettingMoney(benefit);
-        calculateDealerLoseMoney(onePlayer, result);
+        calculateDealerLoseMoney(onePlayer, outcome);
     }
 
-    private float calculateBenefit(Result result) {
-        return Stream.of(Result.BLACKJACK_WIN, Result.WIN, Result.TIE)
-                .filter(targetVictory -> targetVictory.equals(result))
+    private float calculateBenefit(Outcome outcome) {
+        return Stream.of(Outcome.BLACKJACK_WIN, Outcome.WIN, Outcome.TIE)
+                .filter(targetVictory -> targetVictory.equals(outcome))
                 .findFirst()
-                .map(Result::getBenefit)
-                .orElse(Result.LOSE.getBenefit());
+                .map(Outcome::getBenefit)
+                .orElse(Outcome.LOSE.getBenefit());
     }
 
-    private void calculateDealerGainMoney(Player onePlayer, Result result) {
-        if (result.equals(Result.LOSE)) {
+    private void calculateDealerGainMoney(Player onePlayer, Outcome outcome) {
+        if (outcome.equals(Outcome.LOSE)) {
             dealer.gainMoney(onePlayer.getGamblingMoney());
         }
     }
 
-    private void calculateDealerLoseMoney(Player onePlayer, Result result) {
-        if (result.equals(Result.BLACKJACK_WIN) || result.equals(Result.WIN)) {
+    private void calculateDealerLoseMoney(Player onePlayer, Outcome outcome) {
+        if (outcome.equals(Outcome.BLACKJACK_WIN) || outcome.equals(Outcome.WIN)) {
             dealer.loseMoney(onePlayer.getGamblingMoney());
         }
     }
