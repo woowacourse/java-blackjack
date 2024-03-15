@@ -2,5 +2,5 @@ package view.dto.participant;
 
 import view.dto.card.CardsDto;
 
-public record ParticipantDto(String name, CardsDto cards) {
+public record ParticipantDto(NameDto nameDto, CardsDto cardsDto) {
 }

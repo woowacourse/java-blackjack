@@ -1,6 +1,6 @@
 package view;
 
-import mapper.ParticipantMapper;
+import view.dto.participant.NameDto;
 import view.dto.participant.ParticipantDto;
 
 import java.io.BufferedReader;
@@ -14,11 +14,11 @@ import static view.ResultView.DELIMITER;
 public class InputView {
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
 
-    public List<ParticipantDto> askPlayerNames() {
+    public List<NameDto> askPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = requireNotBlank(readLine());
         return Arrays.stream(input.split(DELIMITER))
-                     .map(name -> ParticipantMapper.nameToParticipantDto(name.trim()))
+                     .map(name -> new NameDto(name.trim()))
                      .toList();
     }
 
@@ -30,7 +30,7 @@ public class InputView {
     }
 
     public BlackJackGameCommand askMoreCard(final ParticipantDto player) {
-        System.out.printf("%n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", player.name());
+        System.out.printf("%n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", player.nameDto());
         return requireYesOrNo(readLine());
     }
 

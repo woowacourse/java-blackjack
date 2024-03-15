@@ -3,6 +3,7 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Hand;
+import domain.name.Name;
 
 import java.util.Objects;
 

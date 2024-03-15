@@ -2,14 +2,19 @@ package controller;
 
 import domain.BlackjackGame;
 import domain.card.Cards;
+import domain.name.Names;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import mapper.GameResultMapper;
+import mapper.NameMapper;
 import mapper.ParticipantMapper;
 import view.BlackJackGameCommand;
 import view.InputView;
 import view.ResultView;
+import vo.BettingMoney;
+
+import java.util.List;
 
 public class Casino {
 
@@ -22,8 +27,11 @@ public class Casino {
     }
 
     public void open() {
+        Names names = NameMapper.namesDtoToNames(inputView.askPlayerNames());
+        // TODO
+        List<BettingMoney> bettingMoneyList = List.of();
         BlackjackGame game = new BlackjackGame(new Dealer(Cards.deck()),
-                ParticipantMapper.participantsDtoToPlayers(inputView.askPlayerNames()));
+                ParticipantMapper.namesAndBettingMoneyToPlayer(names, bettingMoneyList));
         game.setUp();
         playOf(game);
         resultOf(game);

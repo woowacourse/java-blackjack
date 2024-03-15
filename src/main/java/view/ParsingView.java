@@ -1,5 +1,6 @@
 package view;
 
+import domain.name.Name;
 import view.dto.card.CardsDto;
 import view.dto.participant.ParticipantDto;
 
@@ -12,7 +13,7 @@ import static view.ResultView.*;
 public class ParsingView {
     public String playerNames(final List<ParticipantDto> players) {
         return players.stream()
-                      .map(ParticipantDto::name)
+                      .map(participantDto -> participantDto.nameDto().name())
                       .collect(Collectors.joining(DELIMITER + SPACING));
     }
     public String playerResult(final Map<String, String> playerResults) {
@@ -30,7 +31,7 @@ public class ParsingView {
     }
 
     public String cards(CardsDto cardsDto) {
-        return cardsDto.cards()
+        return cardsDto.cardsDto()
                        .stream()
                        .map(card -> card.cardNumber() + card.cardShape())
                        .collect(Collectors.joining(SPACING));

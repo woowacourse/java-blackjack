@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Cards;
+import domain.name.Name;
 
 import static domain.BlackjackGame.DEALER_HIT_THRESHOLD;
 

@@ -5,7 +5,7 @@ import domain.card.CardNumber;
 import domain.card.CardShape;
 import domain.card.Cards;
 import domain.participant.Dealer;
-import domain.participant.Name;
+import domain.name.Name;
 import domain.participant.Player;
 import domain.participant.Players;
 import org.junit.jupiter.api.DisplayName;

@@ -1,5 +1,6 @@
-package domain.participant;
+package domain.name;
 
+import domain.name.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

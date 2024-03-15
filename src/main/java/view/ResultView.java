@@ -24,7 +24,7 @@ public class ResultView {
 
     private void printInitialDealMessage(final ParticipantDto dealer, final List<ParticipantDto> players) {
         System.out.printf(System.lineSeparator() + "%s와 %s에게 %d장을 나누었습니다.",
-                dealer.name(),
+                dealer.nameDto(),
                 PARSING.playerNames(players),
                 INITIAL_CARD_COUNT
         );
@@ -36,14 +36,14 @@ public class ResultView {
     }
 
     public void printParticipantHand(final ParticipantDto participantDto) {
-        CardsDto cards = participantDto.cards();
+        CardsDto cards = participantDto.cardsDto();
         System.out.printf(System.lineSeparator() + "%s: %s" + System.lineSeparator(),
-                participantDto.name(), PARSING.cards(cards));
+                participantDto.nameDto(), PARSING.cards(cards));
     }
 
     public void printDealerCardMessage(final ParticipantDto dealer) {
         System.out.printf(System.lineSeparator() + "%s는 %s이하라 한장의 카드를 더 받습니다." + System.lineSeparator(),
-                dealer.name(),
+                dealer.nameDto(),
                 DEALER_HIT_THRESHOLD
         );
     }
@@ -55,9 +55,9 @@ public class ResultView {
     }
 
     private void printCardAndSum(final ParticipantDto participantDto) {
-        CardsDto cards = participantDto.cards();
+        CardsDto cards = participantDto.cardsDto();
         System.out.printf(System.lineSeparator() + "%s" + CONNECT + "%s - 결과" + CONNECT + "%d" + System.lineSeparator(),
-                participantDto.name(),
+                participantDto.nameDto(),
                 PARSING.cards(cards),
                 cards.score()
         );
@@ -65,9 +65,9 @@ public class ResultView {
 
     private void printGameResults(final ParticipantDto dealer, final GameResultDto gameResultDto) {
         Map<String, Integer> dealerResult = gameResultDto.dealerResult();
-        Map<String, String> playerResults = gameResultDto.gameResult();
+        Map<String, String> playerResults = gameResultDto.playerResult();
         System.out.println(System.lineSeparator() + "## 최종 승패");
-        System.out.print(dealer.name() + CONNECT + PARSING.dealerResult(dealerResult) + System.lineSeparator());
+        System.out.print(dealer.nameDto() + CONNECT + PARSING.dealerResult(dealerResult) + System.lineSeparator());
         System.out.println(PARSING.playerResult(playerResults));
     }
 }
