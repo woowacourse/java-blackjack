@@ -48,7 +48,7 @@ class PlayersTest {
         );
     }
 
-    @DisplayName("1명 이상 10명 이하면 예외를 발생하지 않는다.")
+    @DisplayName("1명 미만 10명 초과이면 예외가 발생한다.")
     @ParameterizedTest
     @MethodSource("createInValidNames")
     void validateNamesSizeFail(List<String> names) {
@@ -60,7 +60,7 @@ class PlayersTest {
     static Stream<List<String>> createInValidNames() {
         return Stream.of(
                 List.of(),
-                List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J")
+                List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K")
         );
     }
 }
