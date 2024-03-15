@@ -2,11 +2,9 @@ package blackjack;
 
 import blackjack.domain.Judge;
 import blackjack.domain.bet.BettingBank;
-import blackjack.domain.bet.Profit;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
@@ -32,19 +30,15 @@ public class BlackJackGame {
         BettingBank bettingBank = inputView.readBetInformation(players);
         Dealer dealer = new Dealer(Hand.createHandFrom(cardDeck));
         Judge judge = new Judge();
-        printPlayersInformation(players, dealer);
+        outputView.printParticipantInitialHand(dealer, players);
 
         completePlayersHand(players, cardDeck);
         dealer.completeHand(cardDeck);
-        outputView.printDealerPopCount(Dealer.HIT_THRESHOLD, dealer.countDraw());
-
-        printParticipantScore(dealer);
-        printPlayersScore(players);
+        outputView.printCompletedHandsStatus(dealer, players);
 
         PlayerGameResult playerGameResult = judge.calculatePlayerGameResult(dealer, players);
         PlayerProfitResult playerProfitResult = bettingBank.calculateProfitResult(playerGameResult);
-        Profit profit = playerProfitResult.calculateDealerProfit();
-        outputView.printProfitResults(playerProfitResult, profit);
+        outputView.printProfitResults(playerProfitResult);
     }
 
     private Players initPlayers(CardDeck cardDeck) {
@@ -52,12 +46,6 @@ public class BlackJackGame {
         return new Players(playerNames.stream()
                 .map(playerName -> new Player(playerName, Hand.createHandFrom(cardDeck)))
                 .toList());
-    }
-
-    private void printPlayersInformation(Players players, Dealer dealer) {
-        outputView.printHandOutEvent(players, Hand.INITIAL_HAND_SIZE);
-        outputView.printDealerInitialHand(dealer);
-        players.getPlayers().forEach(outputView::printPlayerHand);
     }
 
     private void completePlayersHand(Players players, CardDeck cardDeck) {
@@ -69,13 +57,5 @@ public class BlackJackGame {
             participant.appendCard(cardDeck.popCard());
             outputView.printPlayerHand(participant);
         }
-    }
-
-    private void printPlayersScore(Players players) {
-        players.getPlayers().forEach(this::printParticipantScore);
-    }
-
-    private void printParticipantScore(Participant participant) {
-        outputView.printParticipantScore(participant, participant.calculateHandScore());
     }
 }
