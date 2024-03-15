@@ -29,8 +29,6 @@ class ParticipantTest {
         participant.receive(new Card(Rank.TEN, Symbol.DIAMOND));
         participant.receive(new Card(Rank.TEN, Symbol.HEART));
 
-        System.out.println(participant.isReceivable());
-
         assertThatCode(() -> participant.receive(new Card(Rank.TEN, Symbol.SPADE)))
                 .isInstanceOf(IllegalStateException.class);
     }
