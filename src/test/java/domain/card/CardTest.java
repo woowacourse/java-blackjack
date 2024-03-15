@@ -19,17 +19,27 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class CardTest {
 
+    @Test
+    @DisplayName("성공: 인스턴스 캐싱 정상 작동")
+    void cache() {
+        Card card1 = Card.of(KING, DIAMOND);
+        Card card2 = Card.of(KING, DIAMOND);
+
+        assertThat(card1).isSameAs(card2);
+    }
+
     @ParameterizedTest
     @MethodSource("rankScoreStream")
     @DisplayName("성공: Card 객체는 올바른 점수를 가지고 있다")
     void score_NoException_WithMethodSource(Rank rank, Score score) {
-        Card card = new Card(rank, DIAMOND);
+        Card card = Card.of(rank, DIAMOND);
         assertThat(card.score()).isEqualTo(score);
     }
 
