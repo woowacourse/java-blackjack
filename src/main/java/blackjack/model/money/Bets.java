@@ -26,14 +26,14 @@ public class Bets {
     public Map<Player, BetMoney> calculatePlayersProfit(final Map<Player, ResultCommand> result) {
         final Map<Player, BetMoney> playersProfit = new LinkedHashMap<>();
         for (Player player : result.keySet()) {
-            playersProfit.put(player, calculatePlayerProfit(result, player));
+            final double rate = result.get(player).getRate();
+            playersProfit.put(player, calculatePlayerProfit(rate, player));
         }
         return playersProfit;
     }
 
-    private BetMoney calculatePlayerProfit(final Map<Player, ResultCommand> result, final Player player) {
-        final double multiplier = result.get(player).getRate();
-        return bets.get(player).multiply(multiplier);
+    private BetMoney calculatePlayerProfit(final double rate, final Player player) {
+        return bets.get(player).multiply(rate);
     }
 
     public BetMoney calculateDealerProfit(final Map<Player, ResultCommand> result) {
