@@ -3,9 +3,6 @@ package model.player;
 import model.card.Card;
 import model.card.Cards;
 
-import java.awt.*;
-import java.util.Objects;
-
 public abstract class User {
 
     protected final Cards cards;

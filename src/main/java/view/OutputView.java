@@ -14,10 +14,10 @@ import java.util.Map.Entry;
 public class OutputView {
 
     private static final String DEALER_NAME = "딜러";
-    private static final String DIVIDE_CARD_MESSAGE = DEALER_NAME+"와 %s에게 2장을 나누었습니다.";
+    private static final String DIVIDE_CARD_MESSAGE = DEALER_NAME + "와 %s에게 2장을 나누었습니다.";
     private static final String RECEIVED_CARD_MESSAGE = "%s 카드 : %s";
     private static final String PLAYER_CARD_SUM_MESSAGE = " - 결과: %d";
-    private static final String DEALER_ADD_CARD_MESSAGE = DEALER_NAME+"는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String DEALER_ADD_CARD_MESSAGE = DEALER_NAME + "는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String GAME_RESULT_PROMPT_MESSAGE = "## 최종 수익";
     private static final String GAME_RESULT_REVENUE_MESSAGE = "%s : %d";
 
