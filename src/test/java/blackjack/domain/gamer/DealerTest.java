@@ -26,37 +26,24 @@ public class DealerTest {
 		deck = deckGenerator.generate();
 	}
 
-	@DisplayName("딜러는 생성 시에 중복되지 않은 52장의 덱을 갖는다.")
+	@DisplayName("딜러는 0장의 카드를 갖고 생성 된다.")
 	@Test
 	void hasDeckTest() {
 		// given & when
-		Dealer dealer = Dealer.newInstance(deck);
+		Dealer dealer = new Dealer();
 
 		// then
-		assertThat(dealer.deckSize()).isEqualTo(52);
+		assertThat(dealer.getCards()).hasSize(0);
 	}
 
-	@DisplayName("딜러는 플레이어들에게 초기 카드를 배분한다.")
+	@DisplayName("딜러는 초기 카드를 2장 받는다")
 	@Test
 	void dealInitCardsTest() {
 		// given
-		Dealer dealer = Dealer.newInstance(deck);
+		Dealer dealer = new Dealer();
 
 		// when
-		List<Card> cards = dealer.dealInitCards();
-
-		// then
-		assertThat(cards).hasSize(2);
-	}
-
-	@DisplayName("딜러는 자신에게 초기 카드를 배분한다.")
-	@Test
-	void dealInitCardsSelfTest() {
-		// given
-		Dealer dealer = Dealer.newInstance(deck);
-
-		// when
-		dealer.receiveInitCards(dealer.dealInitCards());
+		dealer.receiveInitCards(deck.drawInitCards());
 
 		// then
 		assertThat(dealer.getCards()).hasSize(2);
@@ -66,23 +53,20 @@ public class DealerTest {
 	@Test
 	void dealCardTest() {
 		// given
-		Dealer dealer = Dealer.newInstance(deck);
+		Dealer dealer = new Dealer();
 
 		// when
-		Card card = dealer.dealCard();
+		dealer.receiveCard(deck.drawCard());
 
 		// then
-		assertThat(dealer)
-			.extracting("deck")
-			.extracting("cards")
-			.isNotIn(card);
+		assertThat(dealer.getCards()).hasSize(1);
 	}
 
 	@DisplayName("딜러 카드 패의 총 합이 16 이하라면 Hit 한다.")
 	@Test
 	void dealerHitTest() {
 		// given
-		Dealer dealer = Dealer.of(deck,
+		Dealer dealer = Dealer.of(
 			new ArrayList<>(List.of(Card.of(Suit.HEART, Rank.TEN), Card.of(Suit.HEART, Rank.SIX))));
 
 		// then
@@ -96,7 +80,7 @@ public class DealerTest {
 	@Test
 	void dealerStandTest() {
 		// given
-		Dealer dealer = Dealer.of(deck,
+		Dealer dealer = Dealer.of(
 			new ArrayList<>(List.of(Card.of(Suit.HEART, Rank.TEN), Card.of(Suit.HEART, Rank.SEVEN))));
 
 		// then

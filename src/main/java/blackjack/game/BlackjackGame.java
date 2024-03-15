@@ -28,10 +28,11 @@ public class BlackjackGame {
 
 	public void start() {
 		Players players = Players.fromNames(inputView.readPlayerNames());
-		Dealer dealer = Dealer.newInstance(createDeck());
+		Dealer dealer = new Dealer();
+		Deck deck = createDeck();
 
-		dealInitCards(dealer, players);
-		receiveAdditionalCard(dealer, players);
+		dealInitCards(deck, dealer, players);
+		receiveAdditionalCard(deck, dealer, players);
 		printResult(dealer, players);
 	}
 
@@ -40,25 +41,25 @@ public class BlackjackGame {
 		return deckGenerator.generate();
 	}
 
-	private void dealInitCards(final Dealer dealer, final Players players) {
+	private void dealInitCards(final Deck deck, final Dealer dealer, final Players players) {
 		for (Player player : players.getPlayers()) {
-			player.receiveInitCards(dealer.dealInitCards());
+			player.receiveInitCards(deck.drawInitCards());
 		}
-		dealer.receiveInitCards(dealer.dealInitCards());
+		dealer.receiveInitCards(deck.drawInitCards());
 
 		outputView.printInitCardStatus(dealer.getFirstCard(), PlayerInfos.from(players));
 	}
 
-	private void receiveAdditionalCard(final Dealer dealer, final Players players) {
+	private void receiveAdditionalCard(final Deck deck, final Dealer dealer, final Players players) {
 		for (Player player : players.getPlayers()) {
-			receivePlayerAdditionalCard(dealer, player);
+			receivePlayerAdditionalCard(deck, player);
 		}
-		receiveDealerAdditionalCard(dealer);
+		receiveDealerAdditionalCard(deck, dealer);
 	}
 
-	private void receivePlayerAdditionalCard(final Dealer dealer, final Player player) {
+	private void receivePlayerAdditionalCard(final Deck deck, final Player player) {
 		while (!player.isBust() && isPlayerInputHit(player)) {
-			player.receiveCard(dealer.dealCard());
+			player.receiveCard(deck.drawCard());
 			outputView.printCardsStatus(PlayerInfo.from(player));
 		}
 	}
@@ -67,9 +68,9 @@ public class BlackjackGame {
 		return inputView.readHitOrStand(player).equals(Command.YES);
 	}
 
-	private void receiveDealerAdditionalCard(final Dealer dealer) {
+	private void receiveDealerAdditionalCard(final Deck deck, final Dealer dealer) {
 		while (dealer.hasHitScore()) {
-			dealer.receiveCard(dealer.dealCard());
+			dealer.receiveCard(deck.drawCard());
 			outputView.printDealerHitMessage();
 		}
 	}
