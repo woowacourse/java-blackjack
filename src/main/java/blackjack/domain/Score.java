@@ -51,6 +51,14 @@ public class Score {
         return value == BLACKJACK_SCORE;
     }
 
+    public boolean isBiggerThanOrEqual(Score other) {
+        return value >= other.value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

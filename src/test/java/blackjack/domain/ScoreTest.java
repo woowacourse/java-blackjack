@@ -37,4 +37,13 @@ public class ScoreTest {
         assertThat(blackJackScore.isBlackJackScore()).isTrue();
         assertThat(nonBlackJackScore.isBlackJackScore()).isFalse();
     }
+
+    @DisplayName("점수가 크거나 같은지 반환한다")
+    @Test
+    public void isBiggerThanOrEqual() {
+        Score zero = Score.from(0);
+        Score one = Score.from(1);
+
+        assertThat(one.isBiggerThanOrEqual(zero)).isTrue();
+    }
 }
