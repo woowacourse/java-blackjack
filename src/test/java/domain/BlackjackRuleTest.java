@@ -15,12 +15,12 @@ class BlackjackRuleTest {
     @Test
     void calculate() {
         final Player tebah = new Player(new Name("tebah"));
-        tebah.dealCard(new Card(Denomination.KING, Suit.CLUBS));
+        tebah.drawCard(new Card(Denomination.KING, Suit.CLUBS));
         final Player pobi = new Player(new Name("pobi"));
-        pobi.dealCard(new Card(Denomination.FIVE, Suit.CLUBS));
+        pobi.drawCard(new Card(Denomination.FIVE, Suit.CLUBS));
         final Players players = new Players(List.of(tebah, pobi));
         final Dealer dealer = new Dealer(new Deck());
-        dealer.dealCard(new Card(Denomination.SIX, Suit.CLUBS));
+        dealer.drawCard(new Card(Denomination.SIX, Suit.CLUBS));
         final BlackjackRule blackjackRule = new BlackjackRule();
 
         final GameResult gameResult = blackjackRule.calculate(players, dealer);

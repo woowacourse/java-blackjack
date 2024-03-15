@@ -2,29 +2,25 @@ package domain.state;
 
 import domain.Card;
 import domain.Hand;
-import domain.Score;
 
 import java.util.List;
 
-public class Ready implements State {
-    protected final Hand hand;
+public class Finished implements State {
+    private final Hand hand;
 
-    public Ready(final Hand hand) {
+    public Finished(final Hand hand) {
         this.hand = hand;
     }
 
+
     @Override
     public State draw(final Card card) {
-        hand.add(card);
-        if (hand.score().equals(new Score(21))) {
-            return new Blackjack(hand);
-        }
-        return new Hit(hand);
+        return null;
     }
 
     @Override
     public State stand() {
-        throw new UnsupportedOperationException("준비 상태에서는 스탠드 할 수 없습니다.");
+        return null;
     }
 
     @Override

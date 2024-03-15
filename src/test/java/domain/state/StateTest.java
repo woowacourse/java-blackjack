@@ -1,6 +1,9 @@
-package domain;
+package domain.state;
 
-import domain.state.*;
+import domain.Card;
+import domain.Denomination;
+import domain.Hand;
+import domain.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

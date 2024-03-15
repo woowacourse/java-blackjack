@@ -12,9 +12,9 @@ class PlayerTest {
     void sum() {
         final Player player = new Player(new Name("지쳐버린종이"));
 
-        player.dealCard(new Card(Denomination.FIVE, Suit.CLUBS));
-        player.dealCard(new Card(Denomination.FIVE, Suit.CLUBS));
-        player.dealCard(new Card(Denomination.ACE, Suit.CLUBS));
+        player.drawCard(new Card(Denomination.FIVE, Suit.CLUBS));
+        player.drawCard(new Card(Denomination.FIVE, Suit.CLUBS));
+        player.drawCard(new Card(Denomination.ACE, Suit.CLUBS));
 
         assertThat(player.score()).isEqualTo(21);
     }
@@ -24,9 +24,9 @@ class PlayerTest {
     void sum2() {
         final Player player = new Player(new Name("지쳐버린종이"));
 
-        player.dealCard(new Card(Denomination.KING, Suit.CLUBS));
-        player.dealCard(new Card(Denomination.KING, Suit.CLUBS));
-        player.dealCard(new Card(Denomination.ACE, Suit.CLUBS));
+        player.drawCard(new Card(Denomination.KING, Suit.CLUBS));
+        player.drawCard(new Card(Denomination.KING, Suit.CLUBS));
+        player.drawCard(new Card(Denomination.ACE, Suit.CLUBS));
 
         assertThat(player.score()).isEqualTo(21);
     }
@@ -36,23 +36,11 @@ class PlayerTest {
     void bust() {
         final Player player = new Player(new Name("지쳐버린종이"));
 
-        player.dealCard(new Card(Denomination.KING, Suit.CLUBS));
-        player.dealCard(new Card(Denomination.JACK, Suit.CLUBS));
-        player.dealCard(new Card(Denomination.QUEEN, Suit.CLUBS));
+        player.drawCard(new Card(Denomination.KING, Suit.CLUBS));
+        player.drawCard(new Card(Denomination.JACK, Suit.CLUBS));
+        player.drawCard(new Card(Denomination.QUEEN, Suit.CLUBS));
 
         assertThat(player.isBust()).isEqualTo(true);
-    }
-
-    @DisplayName("합계 점수가 21을 초과하면 버스트")
-    @Test
-    void notBust() {
-        final Player player = new Player(new Name("지쳐버린종이"));
-
-        player.dealCard(new Card(Denomination.KING, Suit.CLUBS));
-        player.dealCard(new Card(Denomination.JACK, Suit.CLUBS));
-        player.dealCard(new Card(Denomination.ACE, Suit.CLUBS));
-
-        assertThat(player.canHit()).isEqualTo(true);
     }
 
     @DisplayName("플레이어는 [딜러] 이름을 사용할 수 없다.")

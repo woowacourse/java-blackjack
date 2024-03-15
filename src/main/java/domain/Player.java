@@ -1,13 +1,17 @@
 package domain;
 
+import domain.state.Hit;
+import domain.state.Ready;
+import domain.state.State;
+
 public class Player extends Participant {
-    public Player(final Name name, final Hand hand) {
-        super(name, hand);
+    public Player(final Name name, final State state) {
+        super(name, state);
         validateName(name);
     }
 
     public Player(final Name name) {
-        this(name, new Hand());
+        this(name, new Ready(new Hand()));
     }
 
     private void validateName(final Name name) {
@@ -18,6 +22,6 @@ public class Player extends Participant {
 
     @Override
     public boolean canHit() {
-        return hand.isNotBust();
+        return state instanceof Hit;
     }
 }

@@ -23,16 +23,16 @@ public class BlackjackGame {
 
     private void initPlayers() {
         for (final Player player : players.getPlayers()) {
-            player.dealCards(dealer.drawCards(INITIAL_HAND_SIZE));
+            player.drawCards(dealer.drawCards(INITIAL_HAND_SIZE));
         }
     }
 
     private void initDealer() {
-        dealer.dealCards(dealer.drawCards(INITIAL_HAND_SIZE));
+        dealer.drawCards(dealer.drawCards(INITIAL_HAND_SIZE));
     }
 
     public void dealCard(final Participant participant) {
-        participant.dealCard(dealer.drawSingleCard());
+        participant.drawCard(dealer.drawSingleCard());
     }
 
     public GameResult finishGame() {

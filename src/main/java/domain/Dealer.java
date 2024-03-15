@@ -1,5 +1,7 @@
 package domain;
 
+import domain.state.Ready;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +12,7 @@ public class Dealer extends Participant {
     private final Deck deck;
 
     public Dealer(final Deck deck) {
-        super(new Name(DEALER_NAME), new Hand());
+        super(new Name(DEALER_NAME), new Ready(new Hand()));
         this.deck = deck;
     }
 

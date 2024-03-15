@@ -1,31 +1,35 @@
 package domain;
 
+import domain.state.State;
+
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
-    protected final Hand hand;
+    protected final State state;
     private final Name name;
 
-    Participant(final Name name, final Hand hand) {
+    Participant(final Name name, final State state) {
         this.name = name;
-        this.hand = hand;
+        this.state = state;
     }
 
-    public void dealCards(final List<Card> cards) {
-        hand.addAll(cards);
+    public void drawCards(final List<Card> cards) {
+        for (final Card card : cards) {
+            state.draw(card);
+        }
     }
 
-    public void dealCard(final Card card) {
-        hand.add(card);
+    public void drawCard(final Card card) {
+        state.draw(card);
     }
 
     public int score() {
-        return hand.score().toInt();
+        return state.score();
     }
 
     public boolean isBust() {
-        return hand.isBust();
+        return state.score() > 21;
     }
 
     public abstract boolean canHit();
@@ -35,7 +39,7 @@ public abstract class Participant {
     }
 
     public List<Card> hand() {
-        return hand.cards();
+        return state.hand();
     }
 
     @Override

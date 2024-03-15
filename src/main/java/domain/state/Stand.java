@@ -3,11 +3,9 @@ package domain.state;
 import domain.Card;
 import domain.Hand;
 
-public class Stand implements State {
-    private final Hand hand;
-
+public class Stand extends Finished {
     public Stand(final Hand hand) {
-        this.hand = hand;
+        super(hand);
     }
 
     @Override
