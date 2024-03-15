@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,10 +17,14 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(List<Name> playerNames) {
+    public static Players createInitialPlayers(List<Name> playerNames) {
         return playerNames.stream()
                 .map(Player::createInitialStatePlayer)
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Players::new));
+    }
+
+    public static Players updatePlayers(List<Player> players) {
+        return new Players(players);
     }
 
     private void validatePlayersSize(List<Player> players) {
@@ -33,5 +39,17 @@ public class Players {
         if (players.stream().distinct().count() != players.size()) {
             throw new IllegalArgumentException("플레이어의 이름은 중복될 수 없습니다.");
         }
+    }
+
+    public Players initializePlayersHands(Deck deck) {
+        List<Player> newPlayers = new ArrayList<>();
+        for (Player player : players) {
+            newPlayers.add(player.draw(deck));
+        }
+        return new Players(newPlayers);
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }
