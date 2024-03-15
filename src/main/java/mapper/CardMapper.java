@@ -12,7 +12,7 @@ public class CardMapper {
     }
 
     private static String convertToPhrase(final CardNumber cardNumber) {
-        if (cardNumber.phrase() != CardPhrase.UN_DETERMINE){
+        if (cardNumber.phrase() != CardPhrase.UN_DETERMINE) {
             return cardNumber.phrase().getPhrase();
         }
         return String.valueOf(cardNumber.value());
@@ -22,7 +22,7 @@ public class CardMapper {
         return new CardsDto(convertToCardDtos(cards), score);
     }
 
-    public static CardsDto handToCardsDto(final Hand hand, final int score){
+    public static CardsDto handToCardsDto(final Hand hand, final int score) {
         return new CardsDto(convertToCardDtos(hand.getCards()), score);
     }
 

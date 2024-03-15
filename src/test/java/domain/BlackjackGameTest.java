@@ -36,7 +36,7 @@ class BlackjackGameTest {
                         new Card(CardShape.SPADE, CardNumber.EIGHT),
                         new Card(CardShape.SPADE, CardNumber.EIGHT),
                         new Card(CardShape.CLOVER, CardNumber.SEVEN)
-                        )
+                )
         );
         return cards;
     }
@@ -58,7 +58,7 @@ class BlackjackGameTest {
 
     @DisplayName("딜러와 플레이어의 수익을 알 수 있다.")
     @Test
-    void blackjackGame() {
+    void resultsOfParticipants() {
         Player hotea = Player.register(new Name("hotea"), new BettingMoney(5000));
         Player tobi = Player.register(new Name("tobi"), new BettingMoney(3000));
         Player pobi = Player.register(new Name("pobi"), new BettingMoney(10000));

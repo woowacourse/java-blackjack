@@ -31,11 +31,11 @@ public class BlackjackGame {
     }
 
     private void checkBlackjack() {
-        List<Player> winners =  players.getPlayers()
-               .stream()
-               .filter(player -> player.isBlackjack() && !dealer.isBlackjack())
-               .toList();
-        for(Player player : winners){
+        List<Player> winners = players.getPlayers()
+                                      .stream()
+                                      .filter(player -> player.isBlackjack() && !dealer.isBlackjack())
+                                      .toList();
+        for (Player player : winners) {
             player.revenue(ResultProfitRatio.BLACKJACK);
         }
     }

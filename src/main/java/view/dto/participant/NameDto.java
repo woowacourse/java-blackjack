@@ -1,4 +1,4 @@
 package view.dto.participant;
 
-public record NameDto (String name){
+public record NameDto(String name) {
 }

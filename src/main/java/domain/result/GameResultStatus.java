@@ -25,7 +25,7 @@ public enum GameResultStatus {
         this.resultProfitRatio = resultProfitRatio;
     }
 
-    public static GameResultStatus comparedTo(final Integer standardTarget,final Integer comparisonTarget) {
+    public static GameResultStatus comparedTo(final Integer standardTarget, final Integer comparisonTarget) {
         return Arrays.stream(values())
                      .filter(status -> status.match.apply(standardTarget, comparisonTarget))
                      .findFirst()

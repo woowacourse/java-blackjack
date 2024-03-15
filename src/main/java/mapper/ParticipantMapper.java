@@ -31,7 +31,7 @@ public class ParticipantMapper {
                       .toList();
     }
 
-    public static Players namesAndBettingMoneyToPlayers(final Names names, final List<BettingMoney> bettingMoneys){
+    public static Players namesAndBettingMoneyToPlayers(final Names names, final List<BettingMoney> bettingMoneys) {
         List<Name> playerNames = names.playerNames();
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < playerNames.size(); i++) {

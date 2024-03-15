@@ -1,7 +1,5 @@
 package domain.name;
 
-import domain.participant.Player;
-
 import java.util.HashSet;
 import java.util.List;
 
