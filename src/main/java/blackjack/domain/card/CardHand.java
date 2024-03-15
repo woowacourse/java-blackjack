@@ -48,4 +48,8 @@ public class CardHand {
         final Score score = sumAllScore();
         return score.isGreaterThan(Score.getBlackjackScore());
     }
+
+    public List<Card> getCards() {
+        return cards;
+    }
 }
