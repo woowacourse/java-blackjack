@@ -10,11 +10,6 @@ public enum Shape {
         this.shape = shape;
     }
 
-    public static Shape getShapeByIndex(int random) {
-        Shape[] values = values();
-        return values[random];
-    }
-
     public String getShape() {
         return shape;
     }
