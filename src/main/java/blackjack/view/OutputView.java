@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.dto.NameCards;
 import blackjack.dto.NameCardsScore;
-import blackjack.dto.NameProfit;
+import blackjack.dto.ProfitStatement;
 import blackjack.model.deck.Card;
 import blackjack.view.display.ScoreDisplay;
 import blackjack.view.display.ShapeDisplay;
@@ -55,17 +55,17 @@ public class OutputView {
         System.out.println(DEALER_NAME + ": " + profit);
     }
 
-    public void printPlayersProfit(final List<NameProfit> nameProfits) {
-        System.out.println(formatPlayersProfit(nameProfits));
+    public void printPlayersProfit(final List<ProfitStatement> profitStatements) {
+        System.out.println(formatPlayersProfit(profitStatements));
     }
 
-    private String formatPlayersProfit(final List<NameProfit> nameProfits) {
-        return nameProfits.stream()
+    private String formatPlayersProfit(final List<ProfitStatement> profitStatements) {
+        return profitStatements.stream()
                 .map(this::formatPlayerProfit)
                 .collect(Collectors.joining(System.lineSeparator()));
     }
 
-    private String formatPlayerProfit(NameProfit nameProfit) {
-        return nameProfit.name() + ": " + nameProfit.profit();
+    private String formatPlayerProfit(ProfitStatement profitStatement) {
+        return profitStatement.name() + ": " + profitStatement.profit();
     }
 }

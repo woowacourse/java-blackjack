@@ -2,7 +2,7 @@ package blackjack;
 
 import blackjack.dto.NameCards;
 import blackjack.dto.NameCardsScore;
-import blackjack.dto.NameProfit;
+import blackjack.dto.ProfitStatement;
 import blackjack.model.deck.Deck;
 import blackjack.model.money.Bets;
 import blackjack.model.money.BetMoney;
@@ -161,7 +161,7 @@ public class BlackJackGame {
 
     private void printPlayersResultProfit(final Map<Player, ResultCommand> playerResultCommands, final Bets bets) {
         final Map<Player, BetMoney> playerProfits = bets.calculatePlayersProfit(playerResultCommands);
-        final List<NameProfit> nameProfits = NameProfit.createNameProfits(playerProfits);
-        outputView.printPlayersProfit(nameProfits);
+        final List<ProfitStatement> profitStatements = ProfitStatement.createNameProfits(playerProfits);
+        outputView.printPlayersProfit(profitStatements);
     }
 }
