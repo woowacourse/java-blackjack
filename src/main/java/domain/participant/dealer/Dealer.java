@@ -5,6 +5,7 @@ import static game.BlackjackGame.BLACKJACK_SCORE;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.participant.Participant;
+import domain.participant.attributes.Name;
 import domain.participant.player.Players;
 
 public class Dealer extends Participant {
@@ -12,7 +13,7 @@ public class Dealer extends Participant {
     public static final int INITIAL_CARD_COUNT = 2;
     public static final int DEALER_HIT_THRESHOLD = 16;
 
-    private static final String DEFAULT_DEALER_NAME = "딜러";
+    private static final Name DEFAULT_DEALER_NAME = new Name("딜러");
 
     private final Cards deck;
     private boolean hasSoftAce;

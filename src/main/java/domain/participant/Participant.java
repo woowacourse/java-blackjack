@@ -15,8 +15,8 @@ public abstract class Participant {
     protected final Name name;
     protected final Cards hand;
 
-    public Participant(final String name) {
-        this.name = new Name(name);
+    public Participant(final Name name) {
+        this.name = name;
         hand = Cards.emptyCards();
     }
 

@@ -35,6 +35,7 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.participant.Participant;
 import domain.participant.player.Player;
+import domain.participant.player.PlayerFixture;
 import domain.participant.player.Players;
 
 class DealerTest {
@@ -43,7 +44,7 @@ class DealerTest {
     class DealTest {
         static Stream<Arguments> deal() {
             return Stream.of(
-                    Arguments.of(cardOf(ACE), new Player("Zeus")),
+                    Arguments.of(cardOf(ACE), PlayerFixture.from("Zeus")),
                     Arguments.of(cardOf(TWO), new Dealer(Cards.emptyCards()))
             );
         }
@@ -63,8 +64,8 @@ class DealerTest {
         @DisplayName("딜러는 게임을 시작할 때 본인과 플레이어에게 카드를 나누어준다.")
         @Test
         void dealInitialCards() {
-            Player player1 = new Player("제우스");
-            Player player2 = new Player("조이썬");
+            Player player1 = PlayerFixture.from("제우스");
+            Player player2 = PlayerFixture.from("조이썬");
             Cards cards = Cards.from(List.of(
                     cardOf(ACE), cardOf(THREE), cardOf(FIVE), cardOf(SEVEN), cardOf(NINE), cardOf(ACE)));
             Dealer dealer = new Dealer(cards);
@@ -168,7 +169,7 @@ class DealerTest {
     @ParameterizedTest
     void resultStatusOf(Cards dealerCards, Cards playerCards, BlackjackResultStatus expected) {
         Dealer dealer = new Dealer(Cards.emptyCards());
-        Player player = new Player("hotea");
+        Player player = PlayerFixture.from("hotea");
         receiveCards(dealer, dealerCards);
         receiveCards(player, playerCards);
         BlackjackResultStatus status = dealer.resultStatusAgainst(player);

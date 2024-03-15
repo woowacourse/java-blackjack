@@ -19,14 +19,16 @@ class PlayersTest {
                         "플레이어의 수는 최소 1명 최대 8명입니다 : 현재 0명"),
                 Arguments.of(
                         List.of(
-                                new Player("1"), new Player("2"), new Player("3"), new Player("4"),
-                                new Player("5"), new Player("6"), new Player("7"), new Player("8"),
-                                new Player("9")),
+                                PlayerFixture.of("1", 1000), PlayerFixture.of("2", 1000),
+                                PlayerFixture.of("3", 1000), PlayerFixture.of("4", 1000),
+                                PlayerFixture.of("5", 1000), PlayerFixture.of("6", 1000),
+                                PlayerFixture.of("7", 1000), PlayerFixture.of("8", 1000),
+                                PlayerFixture.of("9", 1000)),
                         "플레이어의 수는 최소 1명 최대 8명입니다 : 현재 9명"
-        ));
+                ));
     }
 
-    @DisplayName("플레이어의 수가 최소 1명 최대 8명으로 이루어져 있지 않은 경우 예외가 발생한다.")
+    @DisplayName("플레이어의 수가 1~8명이 아닌 경우 예외를 던진다.")
     @MethodSource
     @ParameterizedTest
     void validateSize(List<Player> players, String message) {

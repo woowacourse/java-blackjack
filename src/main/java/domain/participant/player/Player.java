@@ -4,19 +4,15 @@ import static game.BlackjackGame.BLACKJACK_SCORE;
 
 import domain.participant.Participant;
 import domain.participant.attributes.Bet;
+import domain.participant.attributes.Name;
 
 public class Player extends Participant {
 
     private final Bet bet;
 
-    public Player(final String name) {
+    public Player(final Name name, final Bet bet) {
         super(name);
-        this.bet = new Bet(0);
-    }
-
-    public Player(final String name, final int bet) {
-        super(name);
-        this.bet = new Bet(bet);
+        this.bet = bet;
     }
 
     @Override
