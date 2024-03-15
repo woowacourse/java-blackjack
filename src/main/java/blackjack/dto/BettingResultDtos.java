@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 
 public record BettingResultDtos(List<BettingResultDto> bettingResultDtos) {
     public static BettingResultDtos of(final PlayerBettings bettingResults) {
-        List<BettingResultDto> bettingResultDtos = bettingResults.getPlayerBettings().stream().
-                map(BettingResultDto::from)
+        List<BettingResultDto> bettingResultDtos = bettingResults.getPlayerBettings().stream()
+                .map(BettingResultDto::from)
                 .collect(Collectors.toList());
 
         bettingResultDtos.add(BettingResultDto.from(bettingResults.getDealerResult()));

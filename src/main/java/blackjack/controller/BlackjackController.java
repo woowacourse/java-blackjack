@@ -108,7 +108,6 @@ public class BlackjackController {
                 blackjackGame.getScoreResult());
 
         final PlayerBettings bettingResults = playerBettings.applyWinStatus(blackjackGame.getWinningResult());
-//        final PlayerBetting bettingResults = PlayerBetting.of(playerBettings, blackjackGame.getWinningResult());
         final BettingResultDtos bettingResultDtos = BettingResultDtos.of(bettingResults);
 
         outputView.printFinalResult(participantScoresDto, bettingResultDtos);

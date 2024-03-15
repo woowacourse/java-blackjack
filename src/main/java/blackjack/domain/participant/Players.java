@@ -46,20 +46,12 @@ public class Players {
         findedPlayer.addCard(card);
     }
 
-//    public Map<ParticipantName, WinStatus> determineWinStatus(final Score dealerScore) {
-//        final Map<ParticipantName, WinStatus> playersWinStatus = new LinkedHashMap<>();
-//
-//        for (Player player : players) {
-//            playersWinStatus.put(player.getName(), WinStatus.of(dealerScore, player.calculate(), player.getStatus()));
-//        }
-//
-//        return playersWinStatus;
-//    }
     public Map<ParticipantName, WinStatus> determineWinStatus(final ParticipantScoreStatus dealerScoreStatus) {
         final Map<ParticipantName, WinStatus> playersWinStatus = new LinkedHashMap<>();
 
         for (Player player : players) {
-            playersWinStatus.put(player.getName(), WinStatus.of(dealerScoreStatus, new ParticipantScoreStatus( player.isBlackjack(), player.calculate())));
+            playersWinStatus.put(player.getName(), WinStatus.of(dealerScoreStatus,
+                    new ParticipantScoreStatus(player.isBlackjack(), player.calculate())));
         }
 
         return playersWinStatus;
