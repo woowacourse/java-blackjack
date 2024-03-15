@@ -1,19 +1,19 @@
 package domain.game;
 
+import domain.card.Cards;
 import domain.card.DealerCards;
 import domain.card.PlayerCards;
+import domain.score.Outcome;
 import domain.score.ScoreBoard;
-import domain.score.Status;
 
 import java.util.List;
-import java.util.function.Consumer;
 
-import static domain.score.Status.LOSE;
-import static domain.score.Status.WIN;
+import static domain.score.Outcome.*;
 
 public class Referee {
 
-    private final Rule rule = new Rule();
+    private static final int STANDARD = 21;
+
     private final ScoreBoard scoreBoard;
 
     public Referee(ScoreBoard scoreBoard) {
@@ -21,44 +21,50 @@ public class Referee {
     }
 
     public void decideResult(DealerCards dealer, List<PlayerCards> players) {
-        Status dealerStatus = rule.decideDealerStatus(dealer);
-        checkBlackjackPlayers(players, dealerStatus);
-        checkBustPlayers(players);
-        checkRemainPlayers(dealer, players, dealerStatus);
-    }
-
-    private void checkBlackjackPlayers(List<PlayerCards> players, Status dealerStatus) {
-        Status playerStatus = rule.decidePlayerBlackjackStatus(dealerStatus);
-        players.stream()
-                .filter(rule::isBlackJack)
-                .forEach(updatePlayerScore(playerStatus));
-    }
-
-    private void checkBustPlayers(List<PlayerCards> players) {
-        players.stream()
-                .filter(rule::isBust)
-                .forEach(updatePlayerScore(LOSE));
-    }
-
-    private void checkRemainPlayers(DealerCards dealer, List<PlayerCards> players, Status dealerStatus) {
-        players.stream()
-                .filter(player -> !rule.isBlackJack(player) && !rule.isBust(player))
-                .forEach(getWinConsumer(dealerStatus, dealer));
-    }
-
-    private Consumer<PlayerCards> getWinConsumer(Status dealerStatus, DealerCards dealer) {
-        if (dealerStatus == LOSE) {
-            return updatePlayerScore(WIN);
+        for (PlayerCards player : players) {
+            Outcome outcome = judgeOutcome(dealer, player);
+            scoreBoard.updatePlayerScore(player.getPlayerName(), outcome);
         }
-        return player -> compareToDealer(dealer, player);
     }
 
-    private Consumer<PlayerCards> updatePlayerScore(Status status) {
-        return player -> scoreBoard.updatePlayerScore(player.getPlayerName(), status);
+    private Outcome judgeOutcome(DealerCards dealer, PlayerCards player) {
+        if (isBust(player)) {
+            return LOSE;
+        }
+        if (isBlackJack(player)) {
+            return decidePlayerBlackjack(dealer);
+        }
+        if (isBust(dealer)) {
+            return WIN;
+        }
+        return compare(dealer, player);
     }
 
-    private void compareToDealer(DealerCards dealer, PlayerCards player) {
-        Status status = rule.decidePlayerStatus(dealer.bestSum(), player);
-        scoreBoard.updatePlayerScore(player.getPlayerName(), status);
+    private Outcome decidePlayerBlackjack(DealerCards dealer) {
+        if (isBlackJack(dealer)) {
+            return TIE;
+        }
+        return BLACKJACK;
+    }
+
+    private Outcome compare(DealerCards dealer, PlayerCards playerCards) {
+        int dealerSum = dealer.bestSum();
+        int playerSum = playerCards.bestSum();
+
+        if (dealerSum < playerSum) {
+            return Outcome.WIN;
+        }
+        if (dealerSum > playerSum) {
+            return Outcome.LOSE;
+        }
+        return Outcome.TIE;
+    }
+
+    private boolean isBlackJack(Cards cards) {
+        return cards.sumInitCards() == STANDARD;
+    }
+
+    private boolean isBust(Cards cards) {
+        return cards.bestSum() > STANDARD;
     }
 }

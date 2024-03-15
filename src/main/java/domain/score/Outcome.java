@@ -1,6 +1,6 @@
 package domain.score;
 
-public enum Status {
+public enum Outcome {
 
     WIN(RevenueCalculator.EARN),
     TIE(RevenueCalculator.RETURN),
@@ -9,7 +9,7 @@ public enum Status {
 
     private final RevenueCalculator revenueCalculator;
 
-    Status(RevenueCalculator revenueCalculator) {
+    Outcome(RevenueCalculator revenueCalculator) {
         this.revenueCalculator = revenueCalculator;
     }
 

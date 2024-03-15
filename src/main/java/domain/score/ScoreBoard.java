@@ -15,9 +15,9 @@ public class ScoreBoard {
         this.playersRevenues = new HashMap<>();
     }
 
-    public void updatePlayerScore(Name name, Status status) {
+    public void updatePlayerScore(Name name, Outcome outcome) {
         Bet bet = playersBets.get(name);
-        RevenueCalculator revenueCalculator = status.getRevenueCalculator();
+        RevenueCalculator revenueCalculator = outcome.getRevenueCalculator();
         Revenue revenue = revenueCalculator.calculate(bet);
         playersRevenues.put(name, revenue);
     }

@@ -3,12 +3,12 @@ package domain.score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static domain.score.Outcome.LOSE;
+import static domain.score.Outcome.*;
 import static domain.score.RevenueCalculator.*;
-import static domain.score.Status.LOSE;
-import static domain.score.Status.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class StatusTest {
+class OutcomeTest {
 
     @Test
     @DisplayName("이기면 돈을 번다.")
