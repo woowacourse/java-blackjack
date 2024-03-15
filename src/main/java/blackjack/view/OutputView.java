@@ -6,122 +6,64 @@ import blackjack.dto.ParticipantsDto;
 import blackjack.dto.ProfitResultDto;
 
 import java.util.List;
-import java.util.Map;
 
 import static blackjack.utils.Constants.*;
 
 public class OutputView {
     private static final String NEWLINE = System.lineSeparator();
-    private static final String COMMA_DELIMITER = ", ";
     private static final String ERROR_SUFFIX = "[ERROR]";
+
+    private final MessageGenerator messageGenerator;
+
+    public OutputView(MessageGenerator messageGenerator) {
+        this.messageGenerator = messageGenerator;
+    }
 
     public void printInitialSettingMessage(ParticipantDto dealer, ParticipantsDto players) {
         String dealerName = dealer.name();
-        List<String> playerNames = getPlayerNames(players.participants());
-        String playerNamesMessage = joinWithComma(playerNames);
+        String playerNames = messageGenerator.generatePlayerNames(players.participants());
 
-        System.out.printf("%n%s와 %s에게 %d장을 나누었습니다.%n", dealerName, playerNamesMessage, INITIAL_CARD_COUNT);
-    }
-
-    private List<String> getPlayerNames(List<ParticipantDto> participants) {
-        return participants.stream()
-                .map(ParticipantDto::name)
-                .toList();
-    }
-
-    private String joinWithComma(List<String> source) {
-        return String.join(COMMA_DELIMITER, source);
+        System.out.printf("%n%s와 %s에게 %d장을 나누었습니다.%n", dealerName, playerNames, INITIAL_CARD_COUNT);
     }
 
     public void printFirstCardOfDealer(ParticipantDto dealer) {
         String dealerName = dealer.name();
         List<CardDto> cards = dealer.cards();
         List<CardDto> firstCardOfDealer = List.of(cards.get(0));
-        String cardsInfoMessage = generateCardsInfoMessage(firstCardOfDealer);
+        String cardsInfo = messageGenerator.generateCardsInfo(firstCardOfDealer);
 
-        System.out.printf("%s: %s%n", dealerName, cardsInfoMessage);
+        System.out.printf("%s: %s%n", dealerName, cardsInfo);
     }
 
-    private String generateCardsInfoMessage(List<CardDto> cards) {
-        List<String> cardInfoMessages = generateCardInfoMessages(cards);
-
-        return joinWithComma(cardInfoMessages);
-    }
-
-    private List<String> generateCardInfoMessages(List<CardDto> cards) {
-        return cards.stream()
-                .map(cardDto -> cardDto.denomination() + cardDto.suit())
-                .toList();
-    }
-
-    public void printParticipantsCards(ParticipantsDto participants) {
+    public void printCardsOfAllParticipant(ParticipantsDto participants) {
         List<ParticipantDto> participantDtos = participants.participants();
-        List<String> participantsCardsMessage = generateParticipantCardsMessages(participantDtos);
+        String cardsOfAllParticipant = messageGenerator.generateCardsOfAllParticipant(participantDtos);
 
-        System.out.println(joinWithBlankLine(participantsCardsMessage) + NEWLINE);
+        System.out.println(cardsOfAllParticipant + NEWLINE);
     }
 
-    private String joinWithBlankLine(List<String> source) {
-        return String.join(NEWLINE, source);
+    public void printCardsOfParticipant(ParticipantDto participant) {
+        String cardsOfParticipant = messageGenerator.generateCardsOfParticipant(participant);
+        System.out.println(cardsOfParticipant);
     }
 
-    private List<String> generateParticipantCardsMessages(List<ParticipantDto> participantDtos) {
-        return participantDtos.stream()
-                .map(this::generateParticipantCardsMessage)
-                .toList();
-    }
-
-    private String generateParticipantCardsMessage(ParticipantDto participant) {
-        String name = participant.name();
-        String cardsInfoMessage = generateCardsInfoMessage(participant.cards());
-
-        return String.format("%s카드: %s", name, cardsInfoMessage);
-    }
-
-    public void printParticipantCards(ParticipantDto participant) {
-        String participantCardsMessage = generateParticipantCardsMessage(participant);
-        System.out.println(participantCardsMessage);
-    }
-
-    public void printDealerReceiveCardMessage() {
+    public void printDealerReceiveCard() {
         String message = String.format("%n%s는 %d이하라 한장의 카드를 더 받았습니다.", DEFAULT_NAME_OF_DEALER, DEALER_MIN_SCORE_POLICY);
         System.out.println(message);
     }
 
-    public void printParticipantsCardsWithScore(ParticipantsDto participantsDto) {
+    public void printCardsWithScore(ParticipantsDto participantsDto) {
         List<ParticipantDto> participants = participantsDto.participants();
-        List<String> cardsWithScoreMessages = generateCardsWithScoreMessages(participants);
+        String cardsWithScore = messageGenerator.generateCardsWithScore(participants);
 
-        System.out.println(NEWLINE + joinWithBlankLine(cardsWithScoreMessages));
-    }
-
-    private List<String> generateCardsWithScoreMessages(List<ParticipantDto> participants) {
-        return participants.stream()
-                .map(this::generateCardsWithScoreMessage)
-                .toList();
-    }
-
-    private String generateCardsWithScoreMessage(ParticipantDto participant) {
-        String participantCardsMessage = generateParticipantCardsMessage(participant);
-        int score = participant.score();
-
-        return String.format("%s - 결과: %d", participantCardsMessage, score);
+        System.out.println(NEWLINE + cardsWithScore);
     }
 
     public void printProfits(ProfitResultDto profitResult) {
         System.out.println(NEWLINE + "## 최종 수익");
 
-        List<String> profitsMessages = generateProfitMessages(profitResult);
-        System.out.println(joinWithBlankLine(profitsMessages));
-    }
-
-    private List<String> generateProfitMessages(final ProfitResultDto profitResult) {
-        Map<String, Integer> result = profitResult.result();
-
-        return result.keySet()
-                .stream()
-                .map(name -> String.format("%s: %d", name, result.get(name)))
-                .toList();
+        String profits = messageGenerator.generateProfits(profitResult);
+        System.out.println(profits);
     }
 
     public void printErrorMessage(String errorMessage) {

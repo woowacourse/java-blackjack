@@ -93,7 +93,7 @@ public class BlackjackController {
 
         outputView.printInitialSettingMessage(dealerDto, playersDto);
         outputView.printFirstCardOfDealer(dealerDto);
-        outputView.printParticipantsCards(playersDto);
+        outputView.printCardsOfAllParticipant(playersDto);
     }
 
     private void dealToParticipants(Players players, Dealer dealer, BlackjackGame blackjackGame) {
@@ -113,7 +113,7 @@ public class BlackjackController {
             receiveCardUntilStay(player, blackjackGame);
 
             ParticipantDto participantDto = ParticipantDto.from(player);
-            outputView.printParticipantCards(participantDto);
+            outputView.printCardsOfParticipant(participantDto);
         }
     }
 
@@ -138,13 +138,13 @@ public class BlackjackController {
     private void dealToDealer(Dealer dealer, BlackjackGame blackjackGame) {
         while (dealer.canReceiveCard()) {
             blackjackGame.dealCardToDealer();
-            outputView.printDealerReceiveCardMessage();
+            outputView.printDealerReceiveCard();
         }
     }
 
     private void showParticipantsCardsWithScore(Dealer dealer, Players players) {
         ParticipantsDto participantsDto = ParticipantsDto.toDtoWithDealer(dealer, players);
-        outputView.printParticipantsCardsWithScore(participantsDto);
+        outputView.printCardsWithScore(participantsDto);
     }
 
     private void showParticipantsProfit(Dealer dealer, BattingAmountRepository repository, Map<Player, ResultStatus> gameResult) {
