@@ -1,6 +1,7 @@
 package view;
 
 import java.util.List;
+import model.dto.FinalOddsResult;
 import model.dto.GameCompletionResult;
 
 public class OutputView {
@@ -15,7 +16,8 @@ public class OutputView {
         System.out.println(toBePrint);
     }
 
-    public static void printInitialCardSetting(GameCompletionResult dealerResult, List<GameCompletionResult> playersResult) {
+    public static void printInitialCardSetting(GameCompletionResult dealerResult,
+                                               List<GameCompletionResult> playersResult) {
         System.out.print(System.lineSeparator());
         List<String> playerNameTexts = playersResult.stream()
                 .map(GameCompletionResult::getPartipantNameAsString)
@@ -29,7 +31,8 @@ public class OutputView {
     }
 
     private static void printDealerHoleCard(GameCompletionResult gameCompletionResult) {
-        print(gameCompletionResult.getPartipantNameAsString() + NAME_CARD_DELIMITER + gameCompletionResult.getCardsAsStrings()
+        print(gameCompletionResult.getPartipantNameAsString() + NAME_CARD_DELIMITER
+                + gameCompletionResult.getCardsAsStrings()
                 .get(HOLE_CARD_INDEX));
     }
 
@@ -42,7 +45,8 @@ public class OutputView {
                 result.getCardsAsStrings()));
     }
 
-    public static void printFinalFaceUpResult(GameCompletionResult dealerGameCompletionResult, List<GameCompletionResult> playerGameCompletionResults) {
+    public static void printFinalFaceUpResult(GameCompletionResult dealerGameCompletionResult,
+                                              List<GameCompletionResult> playerGameCompletionResults) {
         System.out.print(System.lineSeparator());
         printSinglePlayerFinalFaceUp(dealerGameCompletionResult);
         playerGameCompletionResults.forEach(OutputView::printSinglePlayerFinalFaceUp);
@@ -55,6 +59,17 @@ public class OutputView {
 
     public static void printRetryMessage() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printFinalGameResult(FinalOddsResult dealerResult, List<FinalOddsResult> playerResults) {
+        System.out.println("##최종수익");
+        printEachFinalGameResult(dealerResult);
+        playerResults.forEach(OutputView::printEachFinalGameResult);
+
+    }
+
+    private static void printEachFinalGameResult(FinalOddsResult result) {
+        System.out.println(result.getParticipantNameAsString() + ": " + result.getParticipantMoneyAsInteger());
     }
 
 }

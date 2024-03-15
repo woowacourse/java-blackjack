@@ -1,8 +1,10 @@
 package model.money;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import model.dto.FinalOddsResult;
 import model.participant.Name;
 
 public class BetTable {
@@ -12,7 +14,7 @@ public class BetTable {
     private final Map<Name, Money> table;
 
     private BetTable() {
-        table = new HashMap<>();
+        table = new ConcurrentHashMap<>();
     }
 
     public static BetTable getInstance() {
@@ -27,12 +29,12 @@ public class BetTable {
     }
 
     public void remittanceByPolicy(Name name, DividendPolicy policy) {
-        Money appliedMoney = policy.apply(table.get(name));
+        Money appliedMoney = policy.apply(findMoneyByName(name));
         remittance(name, appliedMoney);
     }
 
     private void remittance(Name name, Money money) {
-        table.put(name, findMoneyByName(name).increase(money));
+        table.put(name, money);
         table.put(DEALER_NAME, findMoneyByName(DEALER_NAME).decrease(money));
     }
 
@@ -44,4 +46,16 @@ public class BetTable {
         return table.keySet();
     }
 
+    public FinalOddsResult getDealerFinalOddsResult() {
+        Money dealerOdds = findMoneyByName(DEALER_NAME);
+        return new FinalOddsResult(DEALER_NAME, dealerOdds);
+    }
+
+    public List<FinalOddsResult> getPlayerFinalOddsResults() {
+        return table.keySet()
+                .stream()
+                .filter(name -> !name.equals(DEALER_NAME))
+                .map(name -> new FinalOddsResult(name, findMoneyByName(name)))
+                .toList();
+    }
 }
