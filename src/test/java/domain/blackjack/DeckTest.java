@@ -10,6 +10,7 @@ class DeckTest {
     @Test
     void initDeck() {
         Deck deck = new Deck();
+
         Assertions.assertThat(deck.getCardCount())
                 .isEqualTo(52);
     }

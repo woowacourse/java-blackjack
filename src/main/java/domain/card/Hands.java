@@ -8,6 +8,7 @@ public class Hands {
 
     private static final int ADDITIONAL_SCORE = 10;
     private static final int BLACK_JACK_COUNT = 21;
+    private static final int MIN_CARD_COUNT = 2;
 
     private final List<Card> value;
 
@@ -37,6 +38,10 @@ public class Hands {
             totalScore = totalScore + ADDITIONAL_SCORE;
         }
         return totalScore;
+    }
+
+    public boolean isBlackJack() {
+        return (calculateScore() == BLACK_JACK_COUNT) && (getCardCount() == MIN_CARD_COUNT);
     }
 
     public void receive(Card card) {

@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.blackjack.Deck;
+import domain.blackjack.WinStatus;
 import domain.card.Card;
 
 public class Dealer extends Participant {
@@ -11,11 +12,38 @@ public class Dealer extends Participant {
 
     public Dealer() {
         super(new Name("딜러"));
-        deck = new Deck();
+        this.deck = new Deck();
     }
 
-    public boolean shouldHit() {
-        return hands.calculateScore() <= DEALER_HIT_COUNT;
+    public boolean isNotBlackJack() {
+        return !isBlackJack();
+    }
+
+    public WinStatus calculatePlayerWinStatus(Player player) {
+        if (player.isBust()) {
+            return WinStatus.LOSE;
+        }
+        if (isBust()) {
+            return WinStatus.WIN;
+        }
+        return calculatePlayerWinStatusWhenNotBust(player);
+    }
+
+    private WinStatus calculatePlayerWinStatusWhenNotBust(Player player) {
+        int playerScore = player.getScore();
+        int dealerScore = getScore();
+        if (playerScore == dealerScore) {
+            return WinStatus.PUSH;
+        }
+        if (playerScore > dealerScore) {
+            return WinStatus.WIN;
+        }
+        return WinStatus.LOSE;
+    }
+
+    @Override
+    public int getThreshold() {
+        return DEALER_HIT_COUNT;
     }
 
     public Card draw() {

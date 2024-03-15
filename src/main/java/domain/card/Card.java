@@ -22,7 +22,7 @@ public class Card {
     }
 
     public static List<Card> getCache() {
-        return CACHE;
+        return new ArrayList<>(CACHE);
     }
 
     public boolean isAce() {
