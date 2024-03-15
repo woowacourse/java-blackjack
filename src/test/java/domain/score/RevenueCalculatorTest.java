@@ -1,6 +1,6 @@
 package domain.score;
 
-import domain.player.Bet;
+import domain.game.Bet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

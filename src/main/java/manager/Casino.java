@@ -1,7 +1,7 @@
 package manager;
 
+import domain.game.Bet;
 import domain.game.BlackjackGame;
-import domain.player.Bet;
 import domain.player.Name;
 import domain.player.Names;
 import domain.score.ScoreBoard;
