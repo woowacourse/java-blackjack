@@ -25,13 +25,23 @@ public class BlackjackMachine {
     }
 
     public void run() {
-        BlackjackGame game = initializeGame();
-        Betting betting = takeBet(game);
-        distributeStartingCards(game);
-        playPlayersTurn(game);
-        playDealerTurn(game);
-        printCardsAndScores(game);
-        printBettingResult(betting, game);
+        try {
+            BlackjackGame game = initializeGame();
+            Betting betting = takeBet(game);
+            playGame(game);
+            printCardsAndScores(game);
+            printBettingResult(betting, game);
+        } catch (IllegalArgumentException | IllegalStateException | UnsupportedOperationException e) {
+            outputView.printErrorMessage(e.getMessage());
+        }
+    }
+
+    private BlackjackGame initializeGame() {
+        List<String> names = inputView.readNames();
+        List<Player> players = names.stream()
+                .map(Player::nameOf)
+                .toList();
+        return new BlackjackGame(Participants.createWithDealer(players), new RandomCardGenerator());
     }
 
     private Betting takeBet(BlackjackGame game) {
@@ -42,18 +52,16 @@ public class BlackjackMachine {
         return betting.unmodifiableBetting();
     }
 
+    private void playGame(BlackjackGame game) {
+        distributeStartingCards(game);
+        playPlayersTurn(game);
+        playDealerTurn(game);
+    }
+
     private void distributeStartingCards(BlackjackGame game) {
         game.distributeStartingCards();
         outputView.printDistributionMessage(game);
         outputView.printAllParticipantsCards(game);
-    }
-
-    private BlackjackGame initializeGame() {
-        List<String> names = inputView.readNames();
-        List<Player> players = names.stream()
-                .map(Player::nameOf)
-                .toList();
-        return new BlackjackGame(Participants.createWithDealer(players), new RandomCardGenerator());
     }
 
     private void playPlayersTurn(BlackjackGame game) {

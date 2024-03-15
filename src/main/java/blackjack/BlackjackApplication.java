@@ -9,11 +9,7 @@ public class BlackjackApplication {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
 
-        try {
-            BlackjackMachine machine = new BlackjackMachine(inputView, outputView);
-            machine.run();
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            outputView.printErrorMessage(e.getMessage());
-        }
+        BlackjackMachine machine = new BlackjackMachine(inputView, outputView);
+        machine.run();
     }
 }
