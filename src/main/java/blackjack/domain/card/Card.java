@@ -32,11 +32,7 @@ public class Card {
 	}
 
 	public boolean isAce() {
-		return isRank(Rank.ACE);
-	}
-
-	private boolean isRank(final Rank rank) {
-		return this.rank == rank;
+		return this.rank == Rank.ACE;
 	}
 
 	public int getScore() {
