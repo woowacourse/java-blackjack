@@ -1,24 +1,18 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Deck;
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.strategy.shuffle.ShuffleStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
-import java.math.BigDecimal;
-
+import static blackjack.fixture.CardFixture.threeSpadeCard;
 import static blackjack.fixture.PlayerFixture.playerChoco;
 import static blackjack.fixture.PlayerFixture.playerClover;
-import static blackjack.fixture.CardFixture.threeSpadeCard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("플레이어")
 public class PlayerTest {
@@ -44,16 +38,7 @@ public class PlayerTest {
         String name = "noValidName123";
 
         //when & then
-        assertThatThrownBy(() -> new Player(name, dealer, "1000"))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @DisplayName("배팅 금액이 형식에 맞지 않으면 예외가 발생한다.")
-    @ParameterizedTest
-    @ValueSource(strings = {"-1", "0", "1000a"})
-    void validateBetting(String betting) {
-        //when & then
-        assertThatThrownBy(() -> new Player("name", dealer, betting))
+        assertThatThrownBy(() -> new Player(name, dealer))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -90,15 +75,5 @@ public class PlayerTest {
 
         //then
         assertThat(choco.getHandCards()).contains(card);
-    }
-
-    @DisplayName("플레이어는 배팅 금액과 결과를 토대로 수익률을 계산한다.")
-    @Test
-    void calculateProfit() {
-        //when & then
-        assertAll(
-                () -> assertThat(clover.calculateProfit(GameResult.WIN)).isEqualTo(BigDecimal.valueOf(1000)),
-                () -> assertThat(choco.calculateProfit(GameResult.LOSE)).isEqualTo(BigDecimal.valueOf(-1000))
-        );
     }
 }

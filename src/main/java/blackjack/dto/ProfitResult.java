@@ -1,6 +1,5 @@
 package blackjack.dto;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.participant.Player;
 
 import java.math.BigDecimal;
@@ -18,8 +17,8 @@ public class ProfitResult {
         this.profitResult = new HashMap<>();
     }
 
-    public void addProfitResult(final Player player, final GameResult gameResult) {
-        profitResult.put(player, player.calculateProfit(gameResult));
+    public void addProfitResult(final Player player, final BigDecimal profit) {
+        profitResult.put(player, profit);
     }
 
     public BigDecimal sumAllProfit() {

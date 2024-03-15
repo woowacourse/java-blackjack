@@ -3,91 +3,65 @@ package blackjack.util;
 import blackjack.domain.GameResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.ProfitResult;
 
 public class JudgeUtil {
 
     private JudgeUtil() {
     }
 
-    public static void judge(final ProfitResult profitResult, final Dealer dealer, final Player player) {
+    public static GameResult judge(final Dealer dealer, final Player player) {
         if (dealer.isBust()) {
-            judgeWhenDealerBust(profitResult, player);
-            return;
+            return judgeWhenDealerBust(player);
         }
 
         if (dealer.isBlackjack()) {
-            judgeWhenDealerBlackjack(profitResult, player);
-            return;
+            return judgeWhenDealerBlackjack(player);
         }
 
-        judgeWhenDealerNormal(profitResult, dealer, player);
+        return judgeWhenDealerNormal(dealer, player);
     }
 
-    public static void judgeWhenDealerBust(final ProfitResult profitResult, final Player player) {
+    public static GameResult judgeWhenDealerBust(final Player player) {
         if (player.isBust()) {
-            draw(profitResult, player);
-            return;
+            return GameResult.DRAW;
         }
 
         if (player.isBlackjack()) {
-            playerBlackjackWin(profitResult, player);
-            return;
+            return GameResult.BLACKJACK;
         }
 
-        playerWin(profitResult, player);
+        return GameResult.WIN;
     }
 
-    public static void judgeWhenDealerBlackjack(final ProfitResult profitResult, Player player) {
+    public static GameResult judgeWhenDealerBlackjack(Player player) {
         if (player.isBlackjack()) {
-            draw(profitResult, player);
-            return;
+            return GameResult.DRAW;
         }
 
-        playerLose(profitResult, player);
+        return GameResult.LOSE;
     }
 
-    public static void judgeWhenDealerNormal(final ProfitResult profitResult, Dealer dealer, final Player player) {
+    public static GameResult judgeWhenDealerNormal(Dealer dealer, final Player player) {
         if (player.isBust()) {
-            playerLose(profitResult, player);
-            return;
+            return GameResult.LOSE;
         }
 
         if (player.isBlackjack()) {
-            playerBlackjackWin(profitResult, player);
-            return;
+            return GameResult.BLACKJACK;
         }
 
-        judgeWhenNormalTogether(profitResult, dealer, player);
+        return judgeWhenNormalTogether(dealer, player);
     }
 
-    private static void judgeWhenNormalTogether(final ProfitResult profitResult, final Dealer dealer, final Player player) {
+    private static GameResult judgeWhenNormalTogether(final Dealer dealer, final Player player) {
         if (dealer.isSameScore(player.getScore())) {
-            draw(profitResult, player);
-            return;
+            return GameResult.DRAW;
         }
 
         if (dealer.getScore() > player.getScore()) {
-            playerLose(profitResult, player);
-            return;
+            return GameResult.LOSE;
         }
 
-        playerWin(profitResult, player);
-    }
-
-    private static void playerLose(final ProfitResult profitResult, final Player player) {
-        profitResult.addProfitResult(player, GameResult.LOSE);
-    }
-
-    private static void playerBlackjackWin(final ProfitResult profitResult, final Player player) {
-        profitResult.addProfitResult(player, GameResult.BLACKJACK);
-    }
-
-    private static void playerWin(final ProfitResult profitResult, final Player player) {
-        profitResult.addProfitResult(player, GameResult.WIN);
-    }
-
-    private static void draw(final ProfitResult profitResult, final Player player) {
-        profitResult.addProfitResult(player, GameResult.DRAW);
+        return GameResult.WIN;
     }
 }

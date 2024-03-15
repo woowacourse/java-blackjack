@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Betting;
+import blackjack.domain.BettingTable;
 import blackjack.domain.Deck;
 import blackjack.domain.Players;
 import blackjack.domain.card.Card;
@@ -12,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static blackjack.fixture.CardFixture.aceSpadeCard;
@@ -68,14 +71,15 @@ public class DealerTest {
     @Test
     void calculateProfit() {
         //given
-        Map<String, String> playersBetting = new HashMap<>();
-        playersBetting.put("choco", "500000");
-        playersBetting.put("clover", "100000");
-
-        Players players = Players.of(playersBetting, dealer);
+        Players players = Players.of(List.of("choco", "clover"), dealer);
         players.getPlayers().get(1).draw(dealer);
 
-        ProfitResult profitResult = players.createProfitResult(dealer);
+        Map<Player, Betting> betting = new HashMap<>();
+        betting.put(players.getPlayers().get(0), new Betting("500000"));
+        betting.put(players.getPlayers().get(1), new Betting("100000"));
+
+        BettingTable bettingTable = new BettingTable(betting);
+        ProfitResult profitResult = players.createProfitResult(dealer, bettingTable);
 
         //when & then
         assertThat(dealer.calculateProfit(profitResult)).isEqualTo(BigDecimal.valueOf(400000));

@@ -1,5 +1,7 @@
 package blackjack;
 
+import blackjack.domain.Betting;
+import blackjack.domain.BettingTable;
 import blackjack.domain.Deck;
 import blackjack.domain.Players;
 import blackjack.domain.card.Card;
@@ -12,9 +14,9 @@ import blackjack.view.OutputView;
 import blackjack.view.RankView;
 import blackjack.view.SuitView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
@@ -30,33 +32,26 @@ public class BlackjackGame {
         Deck deck = new Deck(new RandomShuffleStrategy());
         Dealer dealer = new Dealer(deck);
 
-        List<String> names = readPlayersName();
-        Players players = preparePlayers(names, dealer);
+        List<String> names = inputView.readPlayersName();
+        Players players = Players.of(names, dealer);
+        BettingTable bettingTable = betting(players);
 
         printCardDistribute(names, players, dealer);
         extraCardRequest(dealer, players);
 
-        ProfitResult profitResult = players.createProfitResult(dealer);
+        ProfitResult profitResult = players.createProfitResult(dealer, bettingTable);
         outputView.printFinalProfit(dealer.calculateProfit(profitResult), profitResult);
     }
 
-    private Players preparePlayers(final List<String> names, final Dealer dealer) {
-        Map<String, String> playersBetting = readPlayersBetting(names);
+    private BettingTable betting(final Players players) {
+        Map<Player, Betting> bettingTable = new HashMap<>();
 
-        return Players.of(playersBetting, dealer);
-    }
+        for (Player player : players.getPlayers()) {
+            String betting = inputView.readPlayerBetting(player.getName());
+            bettingTable.put(player, new Betting(betting));
+        }
 
-    private List<String> readPlayersName() {
-        List<String> playersName =  inputView.readPlayersName();
-
-        Players.validate(playersName);
-
-        return playersName;
-    }
-
-    private Map<String, String> readPlayersBetting(final List<String> names) {
-        return names.stream()
-                .collect(Collectors.toMap(name -> name, inputView::readPlayerBetting));
+        return new BettingTable(bettingTable);
     }
 
     private void printCardDistribute(final List<String> names, final Players players, final Dealer dealer) {

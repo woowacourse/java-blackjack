@@ -5,7 +5,10 @@ import blackjack.domain.participant.Player;
 import blackjack.dto.ProfitResult;
 import blackjack.util.JudgeUtil;
 
-import java.util.*;
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 public class Players {
 
@@ -17,12 +20,12 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(final Map<String, String> playersName, final Dealer dealer) {
-        List<Player> players = new ArrayList<>();
+    public static Players of(final List<String> names, final Dealer dealer) {
+        validate(names);
 
-        for (String name : playersName.keySet()) {
-            players.add(new Player(name, dealer, playersName.get(name)));
-        }
+        List<Player> players = names.stream()
+                .map(name -> new Player(name, dealer))
+                .toList();
 
         return new Players(players);
     }
@@ -37,11 +40,13 @@ public class Players {
         return names.size() != Set.copyOf(names).size();
     }
 
-    public ProfitResult createProfitResult(final Dealer dealer) {
+    public ProfitResult createProfitResult(final Dealer dealer, final BettingTable bettingTable) {
         ProfitResult profitResult = new ProfitResult();
 
         for (Player player : players) {
-            JudgeUtil.judge(profitResult, dealer, player);
+            GameResult gameResult = JudgeUtil.judge(dealer, player);
+            BigDecimal profit = bettingTable.calculateProfitByPlayer(player, gameResult);
+            profitResult.addProfitResult(player, profit);
         }
 
         return profitResult;

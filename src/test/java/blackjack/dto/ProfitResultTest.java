@@ -1,7 +1,6 @@
 package blackjack.dto;
 
 import blackjack.domain.Deck;
-import blackjack.domain.GameResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.stategy.NoShuffleStrategy;
@@ -35,11 +34,11 @@ class ProfitResultTest {
     void sumProfits() {
         //given
         ProfitResult profitResult = new ProfitResult();
-        profitResult.addProfitResult(choco, GameResult.WIN);
-        profitResult.addProfitResult(clover, GameResult.WIN);
+        profitResult.addProfitResult(choco, new BigDecimal(1000));
+        profitResult.addProfitResult(clover, new BigDecimal(1000));
 
         //when & then
-        assertThat(profitResult.sumAllProfit()).isEqualTo(BigDecimal.valueOf(2000));
+        assertThat(profitResult.sumAllProfit()).isEqualTo(new BigDecimal(2000));
     }
 
     @DisplayName("존재하지 않는 사용자로 조회하면 예외가 발생한다.")
@@ -47,11 +46,11 @@ class ProfitResultTest {
     void findByPlayer() {
         //given
         ProfitResult profitResult = new ProfitResult();
-        profitResult.addProfitResult(choco, GameResult.WIN);
-        profitResult.addProfitResult(clover, GameResult.WIN);
+        profitResult.addProfitResult(choco, new BigDecimal(1000));
+        profitResult.addProfitResult(clover, new BigDecimal(1000));
 
         //when & then
-        assertThatThrownBy(() -> profitResult.findByPlayer(new Player("nope", dealer, "1000")))
+        assertThatThrownBy(() -> profitResult.findByPlayer(new Player("nope", dealer)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -3,7 +3,6 @@ package blackjack.domain;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.stategy.NoShuffleStrategy;
-import blackjack.dto.ProfitResult;
 import blackjack.strategy.shuffle.ShuffleStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("플레이어들")
@@ -27,18 +27,13 @@ public class PlayersTest {
     private Players players;
     private final String nameA = "choco";
     private final String nameB = "clover";
-    private final String betting = "1000";
+    private final String bettingAmount = "1000";
 
     @BeforeEach
     void setUp() {
         deck = new Deck(shuffleStrategy);
         dealer = new Dealer(deck);
-
-        Map<String, String> playersBetting = new HashMap<>();
-        playersBetting.put(nameA, betting);
-        playersBetting.put(nameB, betting);
-
-        players = Players.of(playersBetting, dealer);
+        players = Players.of(List.of(nameA, nameB), dealer);
     }
 
     @DisplayName("플레이어 이름이 중복되면 예외가 발생한다.")
@@ -60,14 +55,15 @@ public class PlayersTest {
         choco.draw(dealer);
         Player clover = players.getPlayers().get(1);
 
-        ProfitResult profitResult = new ProfitResult();
-        profitResult.addProfitResult(choco, GameResult.WIN);
-        profitResult.addProfitResult(clover, GameResult.LOSE);
+        Map<Player, Betting> betting = new HashMap<>();
+        betting.put(players.getPlayers().get(0), new Betting(bettingAmount));
+        betting.put(players.getPlayers().get(1), new Betting(bettingAmount));
+        BettingTable bettingTable = new BettingTable(betting);
 
         //when & then
         assertAll(
-                () -> assertThat(players.createProfitResult(dealer).findByPlayer(choco)).isEqualTo(BigDecimal.valueOf(1000)),
-                () -> assertThat(players.createProfitResult(dealer).findByPlayer(clover)).isEqualTo(BigDecimal.valueOf(-1000))
+                () -> assertThat(players.createProfitResult(dealer, bettingTable).findByPlayer(choco)).isEqualTo(BigDecimal.valueOf(1000)),
+                () -> assertThat(players.createProfitResult(dealer, bettingTable).findByPlayer(clover)).isEqualTo(BigDecimal.valueOf(-1000))
         );
     }
 }
