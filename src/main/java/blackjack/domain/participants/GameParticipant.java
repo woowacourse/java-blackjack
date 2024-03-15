@@ -16,6 +16,15 @@ public abstract class GameParticipant {
 
     public abstract boolean canHit();
 
+    public abstract Result takeOn(GameParticipant participant);
+
+    protected boolean isTie(GameParticipant participant) {
+        if (isBust() || participant.isBust()) {
+            return false;
+        }
+        return isBlackjack() && participant.isBlackjack();
+    }
+
     public void receiveHands(Hands newHands) {
         this.hands.receiveHands(newHands);
     }
@@ -43,4 +52,5 @@ public abstract class GameParticipant {
     public Hands getHands() {
         return hands;
     }
+
 }

@@ -15,30 +15,7 @@ public class BlackJackGameResult {
     }
 
     private Result resolveResult(Player player, Dealer dealer) {
-        if (isWin(player, dealer)) {
-            return Result.WIN;
-        }
-        if (isTie(player, dealer)) {
-            return Result.TIE;
-        }
-        return Result.LOSE;
-    }
-
-    private boolean isWin(Player player, Dealer dealer) {
-        if (player.isBust()) {
-            return false;
-        }
-        if (dealer.isBust()) {
-            return true;
-        }
-        return player.calculateScore() > dealer.calculateScore();
-    }
-
-    private boolean isTie(Player player, Dealer dealer) {
-        if (player.isBust() || dealer.isBust()) {
-            return false;
-        }
-        return player.isBlackjack() && dealer.isBlackjack();
+        return player.takeOn(dealer);
     }
 
     public Result getResult(Player player) {

@@ -11,6 +11,27 @@ public class Dealer extends GameParticipant {
     }
 
     @Override
+    public Result takeOn(GameParticipant participant) {
+        if (isTie(participant)) {
+            return Result.TIE;
+        }
+        if (isWin(participant)) {
+            return Result.WIN;
+        }
+        return Result.LOSE;
+    }
+
+    private boolean isWin(GameParticipant participant) {
+        if (participant.isBust()) {
+            return true;
+        }
+        if (isBust()) {
+            return false;
+        }
+        return calculateScore() >= participant.calculateScore();
+    }
+
+    @Override
     public boolean canHit() {
         return calculateScore() < MAX_RECEIVE_SCORE;
     }
