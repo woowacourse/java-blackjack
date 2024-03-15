@@ -20,7 +20,7 @@ public abstract class User {
         this.cards.addCards(List.of(card));
     }
 
-    public void addCards(List<Card> card) { //TODO Card...를 사용해서 리팩토링 해보기
+    public void addCards(List<Card> card) {
         cards.addCards(card);
     }
 
