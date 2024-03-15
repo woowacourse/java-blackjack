@@ -1,9 +1,9 @@
 package blackjack.model.betting;
 
-import static blackjack.model.betting.ProfitRate.MINUS_100_PERCENT;
-import static blackjack.model.betting.ProfitRate.PLUS_100_PERCENT;
-import static blackjack.model.betting.ProfitRate.PLUS_150_PERCENT;
-import static blackjack.model.betting.ProfitRate.ZERO;
+import static blackjack.model.betting.ProfitRate.LOSE_RATE;
+import static blackjack.model.betting.ProfitRate.NOT_BLACKJACK_BUT_WIN_RATE;
+import static blackjack.model.betting.ProfitRate.BLACKJACK_RATE;
+import static blackjack.model.betting.ProfitRate.DRAW_RATE;
 import static blackjack.model.result.ResultCommand.DRAW;
 import static blackjack.model.result.ResultCommand.WIN;
 
@@ -22,16 +22,16 @@ public class BettingRule {
 
     private ProfitRate calculateProfitRateWhenPlayerWin(final Player player) {
         if (player.isBlackJack()) {
-            return PLUS_150_PERCENT;
+            return BLACKJACK_RATE;
         }
 
-        return PLUS_100_PERCENT;
+        return NOT_BLACKJACK_BUT_WIN_RATE;
     }
 
     private ProfitRate calculateProfitRateWhenPlayerNotWin(final ResultCommand resultCommand) {
         if (resultCommand.equals(DRAW)) {
-            return ZERO;
+            return DRAW_RATE;
         }
-        return MINUS_100_PERCENT;
+        return LOSE_RATE;
     }
 }

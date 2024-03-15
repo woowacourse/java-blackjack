@@ -9,8 +9,8 @@ import java.util.function.Predicate;
 public enum HandStatus {
     BUST((score -> score > BLACKJACK_SCORE), (cardSize -> cardSize >= BLACKJACK_CARD_SIZE)),
     BLACKJACK((score -> score == BLACKJACK_SCORE), (cardSize -> cardSize == BLACKJACK_CARD_SIZE)),
-    NOT_BLACKJACK_BUT_21((score -> score == BLACKJACK_SCORE), (cardSize -> cardSize > BLACKJACK_CARD_SIZE)),
-    UNDER_21((score -> score < BLACKJACK_SCORE), (cardSize -> cardSize >= BLACKJACK_CARD_SIZE));
+    NOT_BLACKJACK_BUT_MAX_SCORE((score -> score == BLACKJACK_SCORE), (cardSize -> cardSize > BLACKJACK_CARD_SIZE)),
+    UNDER_MAX_SCORE((score -> score < BLACKJACK_SCORE), (cardSize -> cardSize >= BLACKJACK_CARD_SIZE));
 
     private final Predicate<Integer> scoreCondition;
     private final Predicate<Integer> cardSizeCondition;

@@ -78,8 +78,8 @@ public class Hand {
         return getHandStatus().equals(HandStatus.BLACKJACK);
     }
 
-    public boolean isUnder21() {
-        return getHandStatus().equals(HandStatus.UNDER_21);
+    public boolean isUnderMaxScore() {
+        return getHandStatus().equals(HandStatus.UNDER_MAX_SCORE);
     }
 
     public HandStatus getHandStatus() {

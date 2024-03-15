@@ -28,7 +28,7 @@ class HandStatusTest {
     void getHandStatusWhenNotBlackJackBut21() {
         int blackJackScore = 21;
         int notBlackJackCardSize = 3;
-        assertThat(HandStatus.of(blackJackScore, notBlackJackCardSize)).isEqualTo(HandStatus.NOT_BLACKJACK_BUT_21);
+        assertThat(HandStatus.of(blackJackScore, notBlackJackCardSize)).isEqualTo(HandStatus.NOT_BLACKJACK_BUT_MAX_SCORE);
     }
 
     @Test
@@ -36,6 +36,6 @@ class HandStatusTest {
     void getHandStatusWhenUnder21() {
         int under21Score = 20;
         int cardSize = 3;
-        assertThat(HandStatus.of(under21Score, cardSize)).isEqualTo(HandStatus.UNDER_21);
+        assertThat(HandStatus.of(under21Score, cardSize)).isEqualTo(HandStatus.UNDER_MAX_SCORE);
     }
 }

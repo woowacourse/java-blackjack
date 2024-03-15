@@ -12,6 +12,6 @@ public class Player extends Gamer {
 
     @Override
     public boolean canHit() {
-        return hand.isUnder21();
+        return hand.isUnderMaxScore();
     }
 }
