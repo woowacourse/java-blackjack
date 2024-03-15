@@ -1,9 +1,13 @@
 package domain;
 
 import static domain.HandsTestFixture.sum10Size2;
+import static domain.HandsTestFixture.sum17Size3One;
 import static domain.HandsTestFixture.sum18Size2;
+import static domain.HandsTestFixture.sum20Size2;
+import static domain.HandsTestFixture.sum21Size2;
 
 import domain.card.CardDeck;
+import domain.participant.BetAmount;
 import domain.participant.Dealer;
 import domain.participant.Hands;
 import domain.participant.Name;
@@ -79,5 +83,26 @@ class DealerTest {
         //then
         Assertions.assertThat(dealer.countAddedHands()).isZero();
         Assertions.assertThat(dealer.handsSum()).isGreaterThanOrEqualTo(17);
+    }
+
+    @DisplayName("딜러의 수익을 계산한다.")
+    @Test
+    void calculateDealerProfit() {
+        // given
+        final Dealer dealer = new Dealer(CardDeck.generate(), sum20Size2);
+
+        final BetAmount betAmount1 = new BetAmount(10_000);
+        final Player blackJackPlayer = new Player(new Name("제제"), sum21Size2, betAmount1);
+
+        final BetAmount betAmount2 = new BetAmount(20_000);
+        final Player losePlayer = new Player(new Name("레디"), sum17Size3One, betAmount2);
+
+        final BetAmount betAmount3 = new BetAmount(15_000);
+        final Player tiePlayer = new Player(new Name("피케이"), sum20Size2, betAmount3);
+
+        final Players players = new Players(List.of(blackJackPlayer, losePlayer, tiePlayer));
+
+        // when && then
+        Assertions.assertThat(dealer.calculateProfitBy(players).getProfit()).isEqualTo(5_000);
     }
 }

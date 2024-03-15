@@ -41,14 +41,14 @@ class PlayerTest {
     void winBlackJack() {
         // given
         final Dealer dealer = new Dealer(CardDeck.generate(), sum20Size2);
-        final BetAmount betAmount = BetAmount.from(10_000);
+        final BetAmount betAmount = new BetAmount(10_000);
         final Player player = new Player(new Name("제제"), blackJack, betAmount);
 
         // when
         final Profit profit = player.calculateProfitBy(dealer);
 
         // then
-        Assertions.assertThat(profit.getProfit()).isEqualTo((int) (10_000 * 1.5)); //TODO int 괜찮은지 확인하기 ??
+        Assertions.assertThat(profit.getProfit()).isEqualTo((int) (10_000 * 1.5));
     }
 
     @DisplayName("참여자가 블랙잭이 아니면서 승리하면 배팅 금액의 1배를 받는다.")
@@ -56,7 +56,7 @@ class PlayerTest {
     void win() {
         // given
         final Dealer dealer = new Dealer(CardDeck.generate(), sum18Size2);
-        final BetAmount betAmount = BetAmount.from(10_000);
+        final BetAmount betAmount = new BetAmount(10_000);
         final Player player = new Player(new Name("제제"), sum20Size3, betAmount);
 
         // when
@@ -71,7 +71,7 @@ class PlayerTest {
     void lose() {
         // given
         final Dealer dealer = new Dealer(CardDeck.generate(), sum20Size2);
-        final BetAmount betAmount = BetAmount.from(10_000);
+        final BetAmount betAmount = new BetAmount(10_000);
         final Player player = new Player(new Name("제제"), bustHands, betAmount);
 
         // when
@@ -85,7 +85,7 @@ class PlayerTest {
     @Test
     void tie() {
         final Dealer dealer = new Dealer(CardDeck.generate(), sum21Size2);
-        final BetAmount betAmount = BetAmount.from(10_000);
+        final BetAmount betAmount = new BetAmount(10_000);
         final Player player = new Player(new Name("제제"), sum21Size2, betAmount);
 
         // when
@@ -94,34 +94,4 @@ class PlayerTest {
         // then
         Assertions.assertThat(profit.getProfit()).isEqualTo(0);
     }
-
-//    @DisplayName("딜러의 수익을 계산한다.")
-//    @Test
-//    void calculateDealerProfit() {
-//        // given
-//        final Dealer dealer = new Dealer(CardDeck.generate(), sum20Size2);
-//
-//        final Player blackJackPlayer = new Player(new Name("제제"), sum21Size2);
-//        final BetAmount betAmount1 = BetAmount.from(10_000);
-//
-//        final Player losePlayer = new Player(new Name("레디"), sum17Size3One);
-//        final BetAmount betAmount2 = BetAmount.from(20_000);
-//
-//        final Player tiePlayer = new Player(new Name("피케이"), sum20Size2);
-//        final BetAmount betAmount3 = BetAmount.from(15_000);
-//
-//        bettings.save(blackJackPlayer, betAmount1);
-//        bettings.save(losePlayer, betAmount2);
-//        bettings.save(tiePlayer, betAmount3);
-//
-//        bettings.calculatePlayerProfitBy(blackJackPlayer, dealer);
-//        bettings.calculatePlayerProfitBy(losePlayer, dealer);
-//        bettings.calculatePlayerProfitBy(tiePlayer, dealer);
-//
-//        // when
-//        final int profit = bettings.calculateDealerProfit();
-//
-//        // then
-//        Assertions.assertThat(profit).isEqualTo(5_000);
-//    }
 }
