@@ -5,15 +5,11 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public abstract class Gamer {
-    
+
     private final Hand hand;
 
     public Gamer() {
         this.hand = new Hand();
-    }
-
-    public List<Card> getCards() {
-        return hand.getCards();
     }
 
     public void pickCards(Deck deck, int count) {
@@ -28,10 +24,6 @@ public abstract class Gamer {
         return 1;
     }
 
-    public int getTotalScore() {
-        return hand.getResultScore();
-    }
-
     public boolean isBust() {
         return hand.isBust();
     }
@@ -42,5 +34,13 @@ public abstract class Gamer {
 
     public GamerResult judge(Gamer opponent) {
         return this.hand.judge(opponent.hand);
+    }
+
+    public List<Card> getCards() {
+        return hand.getCards();
+    }
+
+    public int getTotalScore() {
+        return hand.getResultScore();
     }
 }

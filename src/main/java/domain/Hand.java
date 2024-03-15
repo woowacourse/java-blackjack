@@ -22,32 +22,12 @@ public class Hand {
         cards.add(card);
     }
 
-    public int getResultScore() {
-        int total = getTotalScore();
-        if (total <= BUST_THRESHOLD - ACE_VALUE_GAP && containsAce()) {
-            return total + ACE_VALUE_GAP;
-        }
-        return total;
-    }
-
-    private int getTotalScore() {
-        return cards.stream()
-                .map(Card::getCardNumber)
-                .map(CardNumber::getScore)
-                .reduce(Integer::sum)
-                .orElse(0);
-    }
-
     private boolean containsAce() {
         return cards.stream().anyMatch(Card::isAce);
     }
 
     public boolean isBust() {
         return getResultScore() > BUST_THRESHOLD;
-    }
-
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
     }
 
     public GamerResult judge(Hand opponent) {
@@ -89,5 +69,25 @@ public class Hand {
             return GamerResult.LOSE;
         }
         return GamerResult.DRAW;
+    }
+
+    public int getResultScore() {
+        int total = getTotalScore();
+        if (total <= BUST_THRESHOLD - ACE_VALUE_GAP && containsAce()) {
+            return total + ACE_VALUE_GAP;
+        }
+        return total;
+    }
+
+    private int getTotalScore() {
+        return cards.stream()
+                .map(Card::getCardNumber)
+                .map(CardNumber::getScore)
+                .reduce(Integer::sum)
+                .orElse(0);
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }
