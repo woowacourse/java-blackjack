@@ -39,15 +39,15 @@ public class CardHand {
     }
 
     public boolean isBlackjack() {
-        final int cardSize = cards.size();
+        final int cardSize = countCards();
         final Score score = sumAllScore();
 
-        return cardSize == Constants.INITIAL_CARD_COUNT && score.equals(Score.getBlackjackScore());
+        return cardSize == Constants.INITIAL_CARD_COUNT && score.equals(Score.blackjackScore());
     }
 
     public boolean isBust() {
         final Score score = sumAllScore();
-        return score.isGreaterThan(Score.getBlackjackScore());
+        return score.isGreaterThan(Score.blackjackScore());
     }
 
     public int countCards() {
