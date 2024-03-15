@@ -16,7 +16,7 @@ public class InputView {
     public static List<String> readPlayerNames(Supplier<String> reader) {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String names = reader.get();
-        System.out.println();
+        OutputView.println();
         return parsePlayerNames(names);
     }
 
@@ -40,6 +40,7 @@ public class InputView {
 
     public static int readBettingAmount(final Name playerName, final Supplier<String> reader) {
         System.out.println(playerName.getRawName() + "의 배팅 금액은?");
+        OutputView.println();
         try {
             return Integer.parseInt(reader.get());
         } catch (NumberFormatException e) {
