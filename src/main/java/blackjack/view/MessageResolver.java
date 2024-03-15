@@ -4,10 +4,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import blackjack.domain.game.PlayersResult;
 import blackjack.domain.game.Result2;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Dealer2;
 import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Player2;
 import blackjack.domain.participant.PlayerName;
@@ -63,41 +61,12 @@ public class MessageResolver {
         return String.format(HAND_FORMAT, player.getName().value(), resolveHandMessage(player.revealHand()));
     }
 
-    private String resolveDealToOneMessage(Participant participant) {
-        if (participant instanceof Dealer) {
-            return resolveDealerFirstCardMessage(participant.getHand());
-        }
-        if (participant instanceof Player) {
-            return resolveParticipantHandMessage(participant);
-        }
-        throw new IllegalArgumentException();
-    }
-
-    private String resolveDealerFirstCardMessage(Hand hand) {
-        return String.format(HAND_FORMAT, DEALER_NAME, resolveCardMessage(hand.getCards().get(0)));
-    }
-
-    public String resolveParticipantHandMessage(Participant participant) {
-        return String.format(HAND_FORMAT, resolveNameMessage(participant),
-                resolveHandMessage(participant.getHand()));
-    }
-
     public String resolveDrawToPlayerMessage(Player2 player) {
         return String.format(HAND_FORMAT, player.getName().value(), resolveHandMessage(player.getHand()));
     }
 
     public String temp(Dealer2 dealer) {
         return String.format(HAND_FORMAT, DEALER_NAME, resolveHandMessage(dealer.getHand()));
-    }
-
-    private String resolveNameMessage(Participant participant) {
-        if (participant instanceof Dealer) {
-            return DEALER_NAME;
-        }
-        if (participant instanceof Player) {
-            return ((Player) participant).getPlayerName().getValue();
-        }
-        throw new IllegalArgumentException();
     }
 
     private String resolveHandMessage(Hand hand) {
@@ -114,11 +83,6 @@ public class MessageResolver {
 
     public String resolveDrawToDealerMessage() {
         return String.format("%s는 16이하라 한장의 카드를 더 받았습니다.", DEALER_NAME);
-    }
-
-    private String resolveParticipantHandScoreMessage(Participant participant) {
-        return String.format("%s - 결과: %d", resolveParticipantHandMessage(participant),
-                participant.getHandScore().getValue());
     }
 
     public String resolveResultDescriptionMessage() {

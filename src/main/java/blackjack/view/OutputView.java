@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.game.PlayersResult;
 import blackjack.domain.participant.Dealer2;
-import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Player2;
 import blackjack.domain.participant.Players2;
 
@@ -26,10 +25,6 @@ public class OutputView {
 
     public void printDrawToDealer() {
         System.out.println(messageResolver.resolveDrawToDealerMessage());
-    }
-
-    public void printDrawToPlayer(Player player) {
-        System.out.println(messageResolver.resolveParticipantHandMessage(player));
     }
 
     public void printLineSeparator() {
