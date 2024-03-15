@@ -38,7 +38,7 @@ public class Hand {
     public Score calculateHandScore() {
         Score score = sumCardScore();
         if (hasAce()) {
-            return score.adjustAceScore();
+            return CardRank.adjustAceScore(score);
         }
         return score;
     }
@@ -51,6 +51,18 @@ public class Hand {
 
     private boolean hasAce() {
         return cards.stream().anyMatch(Card::isAce);
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == INITIAL_APPEND_COUNT && calculateHandScore().isBlackjack();
+    }
+
+    public boolean isBust() {
+        return calculateHandScore().isBust();
+    }
+
+    public boolean isPlayerHit() {
+        return calculateHandScore().isPlayerHit();
     }
 
     public List<Card> getCards() {

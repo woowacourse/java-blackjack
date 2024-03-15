@@ -71,7 +71,7 @@ class HandTest {
         Score score = hand.calculateHandScore();
 
         // then
-        assertThat(score).extracting("value").isEqualTo(21);
+        assertThat(score).isEqualTo(new Score(21));
     }
 
     @DisplayName("핸드에 Ace가 있을 때 합이 21을 초과하면 Ace는 11로 계산하지 않는다.")
@@ -88,7 +88,7 @@ class HandTest {
         Score score = hand.calculateHandScore();
 
         // then
-        assertThat(score).extracting("value").isEqualTo(12);
+        assertThat(score).isEqualTo(new Score(12));
     }
 
     @DisplayName("핸드에 Ace가 없으면 합을 변경하지 않는다.")
@@ -104,6 +104,52 @@ class HandTest {
         Score score = hand.calculateHandScore();
 
         // then
-        assertThat(score).extracting("value").isEqualTo(11);
+        assertThat(score).isEqualTo(new Score(11));
+    }
+
+    @DisplayName("처음 두 장의 카드 합이 21일 경우 블랙잭이다.")
+    @Test
+    void testIsBlackjack() {
+        // given
+        Hand hand = new Hand();
+        hand.append(new Card(CardRank.ACE, CardSuit.HEART));
+        hand.append(new Card(CardRank.KING, CardSuit.HEART));
+
+        // when
+        boolean actual = hand.isBlackjack();
+
+        // then
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("카드 합이 21이나 처음 두 장이 아니면 블랙잭이 아니다.")
+    @Test
+    void testIsNotBlackjackWithNonInitialHand() {
+        // given
+        Hand hand = new Hand();
+        hand.append(new Card(CardRank.ACE, CardSuit.HEART));
+        hand.append(new Card(CardRank.TWO, CardSuit.HEART));
+        hand.append(new Card(CardRank.EIGHT, CardSuit.HEART));
+
+        // when
+        boolean actual = hand.isBlackjack();
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
+    @DisplayName("카드 합이 21이 아니면 블랙잭이 아니다.")
+    @Test
+    void testIsNotBlackjackWithDifferentHandScore() {
+        // given
+        Hand hand = new Hand();
+        hand.append(new Card(CardRank.ACE, CardSuit.HEART));
+        hand.append(new Card(CardRank.NINE, CardSuit.HEART));
+
+        // when
+        boolean actual = hand.isBlackjack();
+
+        // then
+        assertThat(actual).isFalse();
     }
 }
