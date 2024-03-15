@@ -2,7 +2,6 @@ package domain.user;
 
 import domain.card.Card;
 import domain.deck.TotalDeck;
-import domain.game.Index;
 import domain.game.Result;
 
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class Users {
 
     private void validateDuplicatedName(List<Player> players) {
         long count = players.stream()
-                .map(player -> player.getName())
+                .map(User::getName)
                 .distinct()
                 .count();
         if (players.size() != count) {
@@ -43,14 +42,6 @@ public class Users {
             user.addCard(totalDeck.getNewCard());
             user.addCard(totalDeck.getNewCard());
         }
-    }
-
-    public Index makeIndex() {
-        return new Index(users.size());
-    }
-
-    public void addCardOfCurrentUser(Card newCard, Index index) {
-        users.get(index.getCurrent()).addCard(newCard);
     }
 
     public boolean isDealerCardAddCondition() {
@@ -69,10 +60,6 @@ public class Users {
             return WIN;
         }
         return Result.compare(player.sumUserDeck(), getDealer().sumUserDeck());
-    }
-
-    public boolean currentUserBusted(Index index) {
-        return users.get(index.getCurrent()).isBust();
     }
 
     public List<User> getUsers() {

@@ -12,7 +12,7 @@ public class UserTest {
         Name name = new Name("poby");
         Player player = new Player(name);
 
-        assertThat(player.getName()).isEqualTo(name);
+        assertThat(player.getName()).isEqualTo("poby");
     }
 
 }
