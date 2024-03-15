@@ -1,5 +1,7 @@
 package vo;
 
+import domain.result.ResultProfitRatio;
+
 public class Profit {
     private final BettingMoney bettingMoney;
     private int profit;
@@ -9,8 +11,8 @@ public class Profit {
         this.profit = bettingMoney.value();
     }
 
-    public void apply(double ratio) {
-        profit *= ratio;
+    public void apply(ResultProfitRatio ratio) {
+        profit *= ratio.getRatio();
     }
 
     public int getProfit() {

@@ -1,5 +1,6 @@
 package vo;
 
+import domain.result.ResultProfitRatio;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -13,7 +14,7 @@ class ProfitTest {
     @CsvSource(value = {"1, 5000", "0, 0", "-1, -5000", "1.5, 7500"})
     void apply(double ratio, int expected) {
         Profit profit = new Profit(new BettingMoney(5000));
-        profit.apply(ratio);
+        profit.apply(ResultProfitRatio.match(ratio));
         assertThat(profit.getProfit()).isEqualTo(expected);
     }
 

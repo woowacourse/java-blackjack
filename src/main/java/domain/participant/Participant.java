@@ -39,9 +39,8 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        Cards cards = hand.getCards();
-        return cards.toList().size() == INITIAL_CARD_COUNT
-                && cards.sum() == BLACKJACK_SCORE;
+        return hand.getCards().toList().size() == INITIAL_CARD_COUNT
+                && hand.score() == BLACKJACK_SCORE;
     }
 
     public Name name() {

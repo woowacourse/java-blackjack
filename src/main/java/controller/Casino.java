@@ -45,7 +45,7 @@ public class Casino {
         players.forEach(player -> askReceiveMoreCard(dealer, player));
         if (dealer.canReceiveMoreCard()) {
             resultView.printDealerCardMessage(ParticipantMapper.participantToParticipantDto(dealer));
-            game.handOutCards(dealer, dealer, 1);
+            game.handOutCards(dealer, 1);
         }
     }
 

@@ -3,10 +3,11 @@ package domain.result;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.participant.Dealer;
-import domain.participant.Name;
+import domain.name.Name;
 import domain.participant.Participant;
 import domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -21,6 +22,7 @@ import static domain.result.GameResultStatus.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GameResultStatusTest {
+
     @DisplayName("참가자들의 카드를 비교해 승패무를 정한다.")
     @MethodSource
     @ParameterizedTest

@@ -31,11 +31,9 @@ class ParticipantTest {
     void isBlackjack() {
         Card cardAce = new Card(CardShape.SPADE, CardNumber.ACE);
         Card cardKing = new Card(HEART, CardNumber.KING);
-        Card cardQueen = new Card(HEART, CardNumber.QUEEN);
         Player player = new Player(new Name("hotea"), new BettingMoney(5000));
         player.receive(cardAce);
         player.receive(cardKing);
-        player.receive(cardQueen);
         assertThat(player.isBlackjack()).isTrue();
     }
 }

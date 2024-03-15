@@ -2,9 +2,11 @@ package domain;
 
 import domain.participant.Dealer;
 import domain.participant.Participant;
+import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.GameResult;
 import domain.result.GameResultStatus;
+import domain.result.ResultProfitRatio;
 
 public class BlackjackGame {
 
@@ -22,11 +24,20 @@ public class BlackjackGame {
 
     public void setUp() {
         dealer.shuffleCards();
-        handOutCards(dealer, dealer, INITIAL_CARD_COUNT);
-        players.forEach(player -> handOutCards(dealer, player, INITIAL_CARD_COUNT));
+        handOutCards(dealer, INITIAL_CARD_COUNT);
+        players.forEach(player -> handOutCards(player, INITIAL_CARD_COUNT));
+        checkBlackjack();
     }
 
-    public void handOutCards(final Dealer dealer, final Participant participant, final int count) {
+    private void checkBlackjack() {
+        for (Player player : players.getPlayers()) {
+            if (player.isBlackjack() && !dealer.isBlackjack()) {
+                player.revenue(ResultProfitRatio.BLACKJACK);
+            }
+        }
+    }
+
+    public void handOutCards(final Participant participant, final int count) {
         for (int i = 0; i < count; i++) {
             dealer.deal(participant);
         }
@@ -34,13 +45,13 @@ public class BlackjackGame {
 
     public GameResult resultsOfPlayerPosition() {
         GameResult gameResult = new GameResult();
-        players.forEach(player -> gameResult.put(player, getResultOf(dealer, player)));
+        players.forEach(player -> gameResult.put(player, getResultOf(player, dealer)));
         return gameResult;
     }
 
     public GameResult resultsOfDealerPosition() {
         GameResult gameResult = new GameResult();
-        players.forEach(player -> gameResult.put(player, getResultOf(player, dealer)));
+        players.forEach(player -> gameResult.put(player, getResultOf(dealer, player)));
         return gameResult;
     }
 

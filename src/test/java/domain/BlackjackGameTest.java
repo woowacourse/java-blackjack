@@ -28,8 +28,8 @@ class BlackjackGameTest {
     @Test
     void handOutCards() {
         BlackjackGame game = new BlackjackGame(dealer, players);
-        game.handOutCards(dealer, dealer, 2);
-        game.handOutCards(dealer, player, 2);
+        game.handOutCards(dealer, 2);
+        game.handOutCards(player, 2);
         assertAll(
                 () -> assertThat(dealer.score()).isEqualTo(15),
                 () -> assertThat(player.score()).isEqualTo(5)
@@ -40,8 +40,8 @@ class BlackjackGameTest {
     @Test
     void resultOf() {
         BlackjackGame game = new BlackjackGame(dealer, players);
-        game.handOutCards(dealer, dealer, 2);
-        game.handOutCards(dealer, player, 2);
+        game.handOutCards(dealer, 2);
+        game.handOutCards(player, 2);
         assertAll(
                 () -> assertThat(game.resultsOfPlayerPosition()
                                      .getResult()
