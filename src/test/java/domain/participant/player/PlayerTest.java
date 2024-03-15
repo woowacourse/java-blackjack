@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
-import domain.participant.player.Player;
 
 class PlayerTest {
 

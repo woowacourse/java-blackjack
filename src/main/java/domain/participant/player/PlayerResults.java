@@ -14,7 +14,7 @@ public class PlayerResults {
     }
 
     public Players getPlayers() {
-        return Players.from(results.keySet());
+        return new Players(results.keySet());
     }
 
     public void put(final Player player, final BlackjackResultStatus resultStatus) {

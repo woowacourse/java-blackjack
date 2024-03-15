@@ -13,19 +13,9 @@ public class Players {
 
     private final List<Player> players;
 
-    private Players(final Collection<Player> players) {
+    public Players(final Collection<Player> players) {
         validateSize(players);
         this.players = List.copyOf(players);
-    }
-
-    public static Players from(final List<String> playerNames) {
-        return new Players(playerNames.stream()
-                .map(Player::new)
-                .toList());
-    }
-
-    public static Players from(final Set<Player> players) {
-        return new Players(players);
     }
 
     private void validateSize(final Collection<Player> players) {

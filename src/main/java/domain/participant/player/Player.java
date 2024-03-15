@@ -3,11 +3,20 @@ package domain.participant.player;
 import static game.BlackjackGame.BLACKJACK_SCORE;
 
 import domain.participant.Participant;
+import domain.participant.attributes.Bet;
 
 public class Player extends Participant {
 
+    private final Bet bet;
+
     public Player(final String name) {
         super(name);
+        this.bet = new Bet(0);
+    }
+
+    public Player(final String name, final int bet) {
+        super(name);
+        this.bet = new Bet(bet);
     }
 
     @Override
@@ -17,5 +26,9 @@ public class Player extends Participant {
             return hand.score(false);
         }
         return softScore;
+    }
+
+    public Bet getBet() {
+        return bet;
     }
 }
