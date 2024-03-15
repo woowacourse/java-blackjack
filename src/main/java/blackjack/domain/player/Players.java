@@ -13,16 +13,6 @@ public class Players {
         this.players = players;
     }
 
-    public int countPlayer() {
-        return players.size();
-    }
-
-    public List<String> getPlayerNames() {
-        return players.stream()
-                .map(Player::getName)
-                .toList();
-    }
-
     private void validate(List<Player> participants) {
         validateEachPlayerNameUnique(participants);
         validateEntryNotEmpty(participants);
