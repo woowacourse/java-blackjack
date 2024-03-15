@@ -8,14 +8,14 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.TestPlayerCreator;
 import blackjack.domain.result.GameResult;
-import blackjack.domain.result.PlayerProfitResult;
+import blackjack.domain.result.PlayerProfits;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("베팅 관리자 도메인 테스트")
-class BettingBankTest {
+class PlayerBetsTest {
 
     @DisplayName("플레이어들의 통합 수익을 계산할 수 있다")
     @Test
@@ -27,14 +27,14 @@ class BettingBankTest {
         Map<Player, BetAmout> playerMoneyMap = new HashMap<>();
         playerMoneyMap.put(player1, new BetAmout(1000));
         playerMoneyMap.put(player2, new BetAmout(1000));
-        BettingBank bettingBank = new BettingBank(playerMoneyMap);
+        PlayerBets playerBets = new PlayerBets(playerMoneyMap);
 
-        PlayerProfitResult playerProfitResult = bettingBank.calculateProfitResult(dealer);
+        PlayerProfits playerProfits = playerBets.calculateProfitResult(dealer);
 
         assertThat(GameResult.of(dealer, player2)).isEqualTo(GameResult.PLAYER_LOSE);
         assertAll(
-                () -> assertThat(playerProfitResult.findProfitOfPlayer(player1).getValue()).isEqualTo(1500),
-                () -> assertThat(playerProfitResult.findProfitOfPlayer(player2).getValue()).isEqualTo(-1000)
+                () -> assertThat(playerProfits.findProfitOfPlayer(player1).getValue()).isEqualTo(1500),
+                () -> assertThat(playerProfits.findProfitOfPlayer(player2).getValue()).isEqualTo(-1000)
         );
     }
 }

@@ -1,13 +1,13 @@
 package blackjack;
 
-import blackjack.domain.bet.BettingBank;
+import blackjack.domain.bet.PlayerBets;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
-import blackjack.domain.result.PlayerProfitResult;
+import blackjack.domain.result.PlayerProfits;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -25,7 +25,7 @@ public class BlackJackGame {
     public void run() {
         CardDeck cardDeck = CardDeck.createShuffledDeck();
         Players players = initPlayers(cardDeck);
-        BettingBank bettingBank = inputView.readBetInformation(players);
+        PlayerBets playerBets = inputView.readBetInformation(players);
         Dealer dealer = new Dealer(Hand.createHandFrom(cardDeck));
         outputView.printParticipantInitialHand(dealer, players);
 
@@ -33,8 +33,8 @@ public class BlackJackGame {
         dealer.completeHand(cardDeck);
         outputView.printCompletedHandsStatus(dealer, players);
 
-        PlayerProfitResult playerProfitResult = bettingBank.calculateProfitResult(dealer);
-        outputView.printProfitResults(playerProfitResult);
+        PlayerProfits playerProfits = playerBets.calculateProfitResult(dealer);
+        outputView.printProfitResults(playerProfits);
     }
 
     private Players initPlayers(CardDeck cardDeck) {

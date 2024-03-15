@@ -13,7 +13,7 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.result.PlayerProfitResult;
+import blackjack.domain.result.PlayerProfits;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -45,14 +45,14 @@ public class MessageResolver {
                 .toString();
     }
 
-    public String resolveProfitResultMessage(PlayerProfitResult playerProfitResult) {
+    public String resolveProfitResultMessage(PlayerProfits playerProfits) {
         return new StringBuilder()
                 .append(LINE_SEPARATOR)
                 .append("##최종 수익")
                 .append(LINE_SEPARATOR)
-                .append(resolveParticipantProfitMessage(playerProfitResult.calculateDealerProfit()))
+                .append(resolveParticipantProfitMessage(playerProfits.calculateDealerProfit()))
                 .append(LINE_SEPARATOR)
-                .append(resolvePlayerProfitMessage(playerProfitResult))
+                .append(resolvePlayerProfitMessage(playerProfits))
                 .toString();
     }
 
@@ -114,8 +114,8 @@ public class MessageResolver {
         return String.format("딜러: %d", dealerProfit.getValue());
     }
 
-    private String resolvePlayerProfitMessage(PlayerProfitResult playerProfitResult) {
-        Map<Player, Profit> playerProfitMap = playerProfitResult.getPlayerProfitMap();
+    private String resolvePlayerProfitMessage(PlayerProfits playerProfits) {
+        Map<Player, Profit> playerProfitMap = playerProfits.getPlayerProfitMap();
         return playerProfitMap.entrySet().stream()
                 .map(this::resolveSingleProfitMessage)
                 .collect(Collectors.joining(LINE_SEPARATOR));

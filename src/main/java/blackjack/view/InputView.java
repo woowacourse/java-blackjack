@@ -3,7 +3,7 @@ package blackjack.view;
 import blackjack.InputMapper;
 import blackjack.domain.DrawDecision;
 import blackjack.domain.bet.BetAmout;
-import blackjack.domain.bet.BettingBank;
+import blackjack.domain.bet.PlayerBets;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
@@ -33,8 +33,8 @@ public class InputView {
         return inputMapper.mapToDrawDecision(scanner.nextLine());
     }
 
-    public BettingBank readBetInformation(Players players) {
-        return new BettingBank(players.getPlayers().stream()
+    public PlayerBets readBetInformation(Players players) {
+        return new PlayerBets(players.getPlayers().stream()
                 .collect(Collectors.toMap(player -> player, this::readBetAmount)));
     }
 

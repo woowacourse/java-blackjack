@@ -3,7 +3,7 @@ package blackjack.view;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.result.PlayerProfitResult;
+import blackjack.domain.result.PlayerProfits;
 
 public class OutputView {
 
@@ -25,7 +25,7 @@ public class OutputView {
         System.out.println(messageResolver.resolveCompletedHandsMessage(dealer, players));
     }
 
-    public void printProfitResults(PlayerProfitResult playerProfitResult) {
-        System.out.println(messageResolver.resolveProfitResultMessage(playerProfitResult));
+    public void printProfitResults(PlayerProfits playerProfits) {
+        System.out.println(messageResolver.resolveProfitResultMessage(playerProfits));
     }
 }
