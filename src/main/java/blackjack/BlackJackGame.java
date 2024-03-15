@@ -8,7 +8,7 @@ import blackjack.model.betting.MoneyStaff;
 import blackjack.model.deck.Deck;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Players;
-import blackjack.model.participant.Playable;
+import blackjack.model.participant.Gamer;
 import blackjack.model.participant.Player;
 import blackjack.model.result.Referee;
 import blackjack.model.result.ResultCommand;
@@ -86,8 +86,8 @@ public class BlackJackGame {
         }
     }
 
-    private void distributeNewCard(final Playable playable, final Deck deck) {
-        playable.receiveCard(deck.distribute());
+    private void distributeNewCard(final Gamer gamer, final Deck deck) {
+        gamer.receiveCard(deck.distribute());
     }
 
     private Map<Player, ResultCommand> announceResult(final Dealer dealer, final Players players,
