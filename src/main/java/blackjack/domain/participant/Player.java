@@ -5,18 +5,18 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.game.Score;
 import java.util.Objects;
 
-public class Player2 {
+public class Player {
 
     private static final int REVEAL_COUNT = 2;
 
     private final Name name;
     private final Hand hand;
 
-    public Player2(Name name) {
+    public Player(Name name) {
         this(name, new Hand());
     }
 
-    public Player2(Name name, Hand hand) {
+    public Player(Name name, Hand hand) {
         this.name = name;
         this.hand = hand;
     }
@@ -67,8 +67,8 @@ public class Player2 {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Player2 player2 = (Player2) o;
-        return Objects.equals(name, player2.name);
+        Player player = (Player) o;
+        return Objects.equals(name, player.name);
     }
 
     @Override

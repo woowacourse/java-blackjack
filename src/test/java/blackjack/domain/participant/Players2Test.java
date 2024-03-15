@@ -27,20 +27,20 @@ class Players2Test {
     @DisplayName("참가자들 중 이름이 중복되는 경우는 예외가 발생한다.")
     @Test
     void testCreatePlayersWithDuplicateNames() {
-        Player2 player1 = new Player2(new Name("pobi"));
-        Player2 player2 = new Player2(new Name("pobi"));
+        Player player1 = new Player(new Name("pobi"));
+        Player player = new Player(new Name("pobi"));
 
-        assertThatThrownBy(() -> new Players2(List.of(player1, player2)))
+        assertThatThrownBy(() -> new Players2(List.of(player1, player)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("생성 검증을 모두 통과하면 생성에 성공한다.")
     @Test
     void testCreateWithValidPlayers() {
-        Player2 player1 = new Player2(new Name("pobi"));
-        Player2 player2 = new Player2(new Name("jason"));
+        Player player1 = new Player(new Name("pobi"));
+        Player player = new Player(new Name("jason"));
 
-        assertThatCode(() -> new Players2(List.of(player1, player2)))
+        assertThatCode(() -> new Players2(List.of(player1, player)))
                 .doesNotThrowAnyException();
     }
 
@@ -55,8 +55,8 @@ class Players2Test {
 
         // then
         assertThat(players.getPlayers()).containsExactly(
-                new Player2(new Name("pobi")),
-                new Player2(new Name("jason"))
+                new Player(new Name("pobi")),
+                new Player(new Name("jason"))
         );
     }
 
@@ -76,13 +76,13 @@ class Players2Test {
                 new Card(CardRank.EIGHT, CardSuit.SPADE),
                 new Card(CardRank.ACE, CardSuit.CLUB)
         ));
-        Player2 pobi = new Player2(new Name("pobi"), pobiHand);
+        Player pobi = new Player(new Name("pobi"), pobiHand);
 
         Hand jasonHand = new Hand(List.of(
                 new Card(CardRank.SEVEN, CardSuit.CLUB),
                 new Card(CardRank.KING, CardSuit.SPADE)
         ));
-        Player2 jason = new Player2(new Name("jason"), jasonHand);
+        Player jason = new Player(new Name("jason"), jasonHand);
 
         Players2 players = new Players2(List.of(pobi, jason));
 

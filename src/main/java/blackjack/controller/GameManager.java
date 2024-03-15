@@ -3,7 +3,7 @@ package blackjack.controller;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.game.PlayersResult;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player2;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players2;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -46,14 +46,14 @@ public class GameManager {
         outputView.printLineSeparator();
     }
 
-    private void drawToPlayer(Player2 player, CardDeck cardDeck) {
+    private void drawToPlayer(Player player, CardDeck cardDeck) {
         while (canPlayerHit(player)) {
             player.draw(cardDeck);
             outputView.printDrawToPlayer(player);
         }
     }
 
-    private boolean canPlayerHit(Player2 player) {
+    private boolean canPlayerHit(Player player) {
         return player.canHit() && inputView.readDrawDecision(player.getName()).isHit();
     }
 

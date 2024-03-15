@@ -6,7 +6,7 @@ import blackjack.domain.game.PlayersResult;
 import blackjack.domain.game.Result;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Player2;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players2;
 import blackjack.view.mapper.CardRankMapper;
 import blackjack.view.mapper.CardSuitMapper;
@@ -27,7 +27,7 @@ public class MessageResolver {
 
     private String resolveNamesMessage(Players2 players) {
         return players.getPlayers().stream()
-                .map(Player2::getName)
+                .map(Player::getName)
                 .map(Name::value)
                 .collect(Collectors.joining(SEPARATOR));
     }
@@ -42,11 +42,11 @@ public class MessageResolver {
                 .collect(Collectors.joining(LINE_SEPARATOR));
     }
 
-    private String resolveDealToPlayerMessage(Player2 player) {
+    private String resolveDealToPlayerMessage(Player player) {
         return String.format(HAND_FORMAT, player.getName().value(), resolveHandMessage(player.revealHand()));
     }
 
-    public String resolveDrawToPlayerMessage(Player2 player) {
+    public String resolveDrawToPlayerMessage(Player player) {
         return String.format(HAND_FORMAT, player.getName().value(), resolveHandMessage(player.getHand()));
     }
 
@@ -85,7 +85,7 @@ public class MessageResolver {
                 .collect(Collectors.joining(LINE_SEPARATOR));
     }
 
-    private String resolvePlayerResultMessage(Player2 player, Result result) {
+    private String resolvePlayerResultMessage(Player player, Result result) {
         return String.format("%s: %s", player.getName().value(), ResultStateMapper.toSymbol(result));
     }
 
@@ -100,7 +100,7 @@ public class MessageResolver {
                 .collect(Collectors.joining(LINE_SEPARATOR));
     }
 
-    public String resolvePlayerHandScoreMessage(Player2 player) {
+    public String resolvePlayerHandScoreMessage(Player player) {
         return String.format("%s - 결과: %d", resolveDrawToPlayerMessage(player), player.handScore().getValue());
     }
 }

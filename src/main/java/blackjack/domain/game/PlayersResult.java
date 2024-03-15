@@ -1,13 +1,13 @@
 package blackjack.domain.game;
 
-import blackjack.domain.participant.Player2;
+import blackjack.domain.participant.Player;
 import java.util.Map;
 
 public class PlayersResult {
 
-    private final Map<Player2, Result> results;
+    private final Map<Player, Result> results;
 
-    public PlayersResult(Map<Player2, Result> results) {
+    public PlayersResult(Map<Player, Result> results) {
         this.results = results;
     }
 
@@ -29,7 +29,7 @@ public class PlayersResult {
                 .count();
     }
 
-    public Map<Player2, Result> getResults() {
+    public Map<Player, Result> getResults() {
         return Map.copyOf(results);
     }
 }

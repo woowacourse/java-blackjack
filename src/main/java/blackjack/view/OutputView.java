@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.game.PlayersResult;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player2;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players2;
 
 public class OutputView {
@@ -19,7 +19,7 @@ public class OutputView {
         System.out.println(messageResolver.resolveDealToPlayersMessage(players));
     }
 
-    public void printDrawToPlayer(Player2 player) {
+    public void printDrawToPlayer(Player player) {
         System.out.println(messageResolver.resolveDrawToPlayerMessage(player));
     }
 
