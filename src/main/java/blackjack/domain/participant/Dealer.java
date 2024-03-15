@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 public class Dealer extends Gamer {
 
     public static final int DEALER_BOUND = 16;
+    private static final int DEALER_PROFIT_WEIGHT = -1;
 
     private final Deck deck;
 
@@ -49,6 +50,6 @@ public class Dealer extends Gamer {
     }
 
     public BigDecimal calculateProfit(final ProfitResult profitResult) {
-        return profitResult.sumAllProfit().multiply(BigDecimal.valueOf(-1));
+        return profitResult.sumAllProfit().multiply(BigDecimal.valueOf(DEALER_PROFIT_WEIGHT));
     }
 }
