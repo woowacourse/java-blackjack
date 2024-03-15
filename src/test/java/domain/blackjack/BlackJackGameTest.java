@@ -20,7 +20,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("플레이어들의 드로우를 했을 때 제대로 드로우 되는지 검증")
     void playersDraw() {
-        BlackJackGame blackJackGame = new BlackJackGame(List.of("player", "robin"));
+        BlackJackGame blackJackGame = new BlackJackGame(List.of("player", "robin"), List.of(1, 1));
         List<Boolean> fixedYesOrNo = new ArrayList<>(List.of(true, false, true, false));
         blackJackGame.playersDraw(Deck.of(FIVE_HEART, SIX_HEART), BlackJackGameTest::doNothing,
                 playerName -> fixedYesOrNo.remove(0));
@@ -35,7 +35,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("딜러가 드로우를 했을 때 제대로 드로우 되는지 검증")
     void dealerDraw() {
-        BlackJackGame blackJackGame = new BlackJackGame(List.of("player", "robin"));
+        BlackJackGame blackJackGame = new BlackJackGame(List.of("player", "robin"), List.of(1, 1));
         blackJackGame.dealerTryDraw(Deck.of(FIVE_HEART));
         Dealer dealer = blackJackGame.getDealer();
 

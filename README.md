@@ -98,7 +98,7 @@
 - [ ] BattingMoney 클래스 분리
 - [ ] BlackJackController의 메서드 네이밍 수정
 - [ ] DealerOutputView, PlayerOutputView 통합
-- [ ] BlackJackGame 의 테스트 코드에서만 사용하는 생성자 삭제
+- [x] BlackJackGame 의 테스트 코드에서만 사용하는 생성자 삭제
 - [ ] 메서드 선언 순서 변경
 - [x] enum 활용해 if문 제거
 - [ ] 함수형 인터페이스 감싸서 클래스에 의미 부여
