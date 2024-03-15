@@ -10,22 +10,22 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class CardShufflerTest {
+class CardDeckTest {
 
     @DisplayName("생성 시 사용하는 덱 개수가 1 이상이면 객체 생성 성공")
     @ParameterizedTest
     @ValueSource(ints = {1, 4, 5, 10, 20})
-    void testValidCreateCardShuffler(int dequeCount) {
+    void testValidCreateCardDeck(int dequeCount) {
         int dequeSize = 52;
-        CardShuffler cardShuffler = CardShuffler.of(dequeCount);
-        assertThat(cardShuffler.cardsSize()).isEqualTo(dequeCount * dequeSize);
+        CardDeck cardDeck = CardDeck.createShuffledDeck(dequeCount);
+        assertThat(cardDeck.size()).isEqualTo(dequeCount * dequeSize);
     }
 
     @DisplayName("생성 시 사용하는 덱 개수가 1 미만이면 예외 발생")
     @ParameterizedTest
     @ValueSource(ints = {0, -1, -2, -5, -200})
-    void testInvalidCreateCardShuffler(int dequeCount) {
-        assertThatThrownBy(() -> CardShuffler.of(dequeCount))
+    void testInvalidCreateCardDeck(int dequeCount) {
+        assertThatThrownBy(() -> CardDeck.createShuffledDeck(dequeCount))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -33,21 +33,19 @@ class CardShufflerTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 4, 5, 10, 20})
     void testDrawCard(int dequeCount) {
-        CardShuffler cardShuffler = CardShuffler.of(dequeCount);
-        int previousSize = cardShuffler.cardsSize();
-        cardShuffler.drawCard();
-        assertThat(cardShuffler.cardsSize()).isEqualTo(previousSize - 1);
+        CardDeck cardDeck = CardDeck.createShuffledDeck(dequeCount);
+        int previousSize = cardDeck.size();
+        cardDeck.drawCard();
+        assertThat(cardDeck.size()).isEqualTo(previousSize - 1);
     }
 
     @DisplayName("뽑을 카드가 없으면 예외 발생")
     @Test
-    void testDrawCardFromEmptyCards() {
-        CardShuffler cardShuffler = CardShuffler.of(1);
-
-        IntStream.range(0, cardShuffler.cardsSize())
-            .forEach(count -> cardShuffler.drawCard());
-
-        assertThatThrownBy(cardShuffler::drawCard)
+    void testDrawCardFromEmptyDeck() {
+        CardDeck cardDeck = CardDeck.createShuffledDeck(1);
+        IntStream.range(0, cardDeck.size())
+            .forEach(count -> cardDeck.drawCard());
+        assertThatThrownBy(cardDeck::drawCard)
             .isInstanceOf(NoSuchElementException.class);
     }
 }
