@@ -24,19 +24,19 @@ public class OutputView {
     }
 
     public void printDrawToDealer() {
-        System.out.println(messageResolver.resolveDrawToDealerMessage());
+        System.out.println(messageResolver.resolveDrawToDealerDescriptionMessage());
     }
 
     public void printLineSeparator() {
         System.out.println();
     }
 
-    public void printParticipantsHandScore(Dealer dealer, Players players) {
+    public void printAllHandScore(Dealer dealer, Players players) {
         System.out.println(messageResolver.resolveDealerHandScoreMessage(dealer));
         System.out.println(messageResolver.resolvePlayersHandScoreMessage(players));
     }
 
-    public void printResult(PlayersResult playersResult) {
+    public void printAllResult(PlayersResult playersResult) {
         System.out.println(messageResolver.resolveResultDescriptionMessage());
         System.out.println(messageResolver.resolveDealerResultMessage(playersResult));
         System.out.println(messageResolver.resolvePlayersResultMessage(playersResult));

@@ -21,7 +21,6 @@ public class GameManager {
     public void start() {
         Players players = Players.create(inputView.readNames());
         Dealer dealer = new Dealer();
-
         CardDeck cardDeck = CardDeck.createShuffledFullCardDeck();
 
         deal(players, dealer, cardDeck);
@@ -38,7 +37,7 @@ public class GameManager {
     private void draw(Players players, Dealer dealer, CardDeck cardDeck) {
         drawToPlayers(players, cardDeck);
         drawToDealer(dealer, cardDeck);
-        outputView.printParticipantsHandScore(dealer, players);
+        outputView.printAllHandScore(dealer, players);
     }
 
     private void drawToPlayers(Players players, CardDeck cardDeck) {
@@ -66,6 +65,6 @@ public class GameManager {
 
     private void judge(Players players, Dealer dealer) {
         PlayersResult playersResult = players.judge(dealer);
-        outputView.printResult(playersResult);
+        outputView.printAllResult(playersResult);
     }
 }

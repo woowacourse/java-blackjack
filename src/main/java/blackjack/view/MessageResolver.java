@@ -19,6 +19,7 @@ public class MessageResolver {
     private static final String SEPARATOR = ", ";
     private static final String DEALER_NAME = "딜러";
     private static final String HAND_FORMAT = "%s 카드: %s";
+    private static final String HAND_SCORE_FORMAT = "%s - 결과: %d";
 
     public MessageResolver() {
     }
@@ -53,10 +54,6 @@ public class MessageResolver {
         return String.format(HAND_FORMAT, player.getName().value(), resolveHandMessage(player.getHand()));
     }
 
-    public String temp(Dealer dealer) {
-        return String.format(HAND_FORMAT, DEALER_NAME, resolveHandMessage(dealer.getHand()));
-    }
-
     private String resolveHandMessage(Hand hand) {
         return hand.getCards().stream()
                 .map(this::resolveCardMessage)
@@ -69,8 +66,27 @@ public class MessageResolver {
         return String.format("%s%s", rankSymbol, suitSymbol);
     }
 
-    public String resolveDrawToDealerMessage() {
+    public String resolveDrawToDealerDescriptionMessage() {
         return String.format("%s는 16이하라 한장의 카드를 더 받았습니다.", DEALER_NAME);
+    }
+
+    public String resolveDealerHandScoreMessage(Dealer dealer) {
+        String message = String.format(HAND_SCORE_FORMAT, resolveDrawToDealerMessage(dealer), dealer.handScore().getValue());
+        return String.join("", LINE_SEPARATOR, message);
+    }
+
+    private String resolveDrawToDealerMessage(Dealer dealer) {
+        return String.format(HAND_FORMAT, DEALER_NAME, resolveHandMessage(dealer.getHand()));
+    }
+
+    public String resolvePlayersHandScoreMessage(Players players) {
+        return players.getPlayers().stream()
+                .map(this::resolvePlayerHandScoreMessage)
+                .collect(Collectors.joining(LINE_SEPARATOR));
+    }
+
+    private String resolvePlayerHandScoreMessage(Player player) {
+        return String.format(HAND_SCORE_FORMAT, resolveDrawToPlayerMessage(player), player.handScore().getValue());
     }
 
     public String resolveResultDescriptionMessage() {
@@ -90,20 +106,5 @@ public class MessageResolver {
 
     private String resolvePlayerResultMessage(Player player, Result result) {
         return String.format("%s: %s", player.getName().value(), ResultStateMapper.toSymbol(result));
-    }
-
-    public String resolveDealerHandScoreMessage(Dealer dealer) {
-        String message = String.format("%s - 결과: %d", temp(dealer), dealer.handScore().getValue());
-        return String.join("", LINE_SEPARATOR, message);
-    }
-
-    public String resolvePlayersHandScoreMessage(Players players) {
-        return players.getPlayers().stream()
-                .map(this::resolvePlayerHandScoreMessage)
-                .collect(Collectors.joining(LINE_SEPARATOR));
-    }
-
-    public String resolvePlayerHandScoreMessage(Player player) {
-        return String.format("%s - 결과: %d", resolveDrawToPlayerMessage(player), player.handScore().getValue());
     }
 }

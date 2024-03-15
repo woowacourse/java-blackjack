@@ -11,6 +11,7 @@ public class InputView {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String DELIMITER = ",";
+    
     private final Scanner scanner = new Scanner(System.in);
 
     public InputView() {
