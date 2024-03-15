@@ -9,27 +9,27 @@ import java.util.List;
 public class OutputView {
     private final MessageResolver messageResolver;
 
-    public OutputView(final MessageResolver messageResolver) {
+    public OutputView(MessageResolver messageResolver) {
         this.messageResolver = messageResolver;
     }
 
-    public void printInitialHandOfEachPlayer(final Dealer dealer, final List<Player> players) {
+    public void printInitialHandOfEachPlayer(Dealer dealer, List<Player> players) {
         System.out.println(messageResolver.resolveInitialHandOfEachPlayer(dealer, players));
     }
 
-    public void printPlayerCard(final Player player) {
+    public void printPlayerCard(Player player) {
         System.out.println(messageResolver.resolvePlayerCard(player));
     }
 
-    public void printDealerHitMessage(final Dealer dealer) {
+    public void printDealerHitMessage(Dealer dealer) {
         System.out.println(messageResolver.resolveDealerHitMessage(dealer));
     }
 
-    public void printPlayerCardWithScore(final Player player) {
+    public void printPlayerCardWithScore(Player player) {
         System.out.println(messageResolver.resolvePlayerCardWithScore(player));
     }
 
-    public void printPlayerProfit(final ProfitDetails profits) {
+    public void printPlayerProfit(ProfitDetails profits) {
         System.out.println(messageResolver.resolvePlayersProfitDetail(profits));
     }
 }

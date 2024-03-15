@@ -22,7 +22,7 @@ public enum PlayerChoice {
         throw new IllegalArgumentException(errorMessage);
     }
 
-    public String getMessage() {
+    String getMessage() {
         return message;
     }
 }

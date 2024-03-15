@@ -40,82 +40,88 @@ public class MessageResolver {
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String PLAYERS_NAME_DELIMITER = ", ";
 
-    public String resolveInitialHandOfEachPlayer(final Dealer dealer, final List<Player> players) {
-        final String initialDistributionMessage = resolveInitialDistributionMessage(dealer, players);
-        final String dealerCardMessage = resolveDealerCard(dealer);
-        final String playersCardMessage = players.stream()
+    public String resolveInitialHandOfEachPlayer(Dealer dealer, List<Player> players) {
+        String initialDistributionMessage = resolveInitialDistributionMessage(dealer, players);
+        String dealerCardMessage = resolveDealerCard(dealer);
+        String playersCardMessage = players.stream()
                 .map(this::resolvePlayerCard)
                 .collect(Collectors.joining(LINE_SEPARATOR));
         return String.join(LINE_SEPARATOR, initialDistributionMessage, dealerCardMessage, playersCardMessage);
     }
 
-    private String resolveInitialDistributionMessage(final Dealer dealer, final List<Player> players) {
-        final String playerNames = resolvePlayerNames(players);
-        final String message = String.format("%s와 %s에게 2장을 나누었습니다.", resolveName(dealer), playerNames);
+    private String resolveInitialDistributionMessage(Dealer dealer, List<Player> players) {
+        String playerNames = resolvePlayerNames(players);
+        String message = String.format("%s와 %s에게 2장을 나누었습니다.", resolveName(dealer), playerNames);
         return String.join("", LINE_SEPARATOR, message);
     }
 
-    private String resolvePlayerNames(final List<Player> players) {
+    private String resolvePlayerNames(List<Player> players) {
         return players.stream()
                 .map(this::resolveName)
                 .collect(Collectors.joining(PLAYERS_NAME_DELIMITER));
     }
 
-    private String resolveDealerCard(final Dealer dealer) {
-        final Card card = dealer.getFirstCard();
+    private String resolveDealerCard(Dealer dealer) {
+        Card card = dealer.getFirstCard();
         return String.join(": ", resolveName(dealer), resolveCardInfo(card));
     }
 
-    public String resolvePlayerCard(final Player player) {
+    public String resolvePlayerCard(Player player) {
         return resolvePlayerCardInfo(player);
     }
 
-    public String resolveDealerHitMessage(final Dealer dealer) {
-        final String dealerHitMessage = String.format("%s는 16이하라 한장의 카드를 더 받았습니다.", resolveName(dealer));
-        return String.join("", dealerHitMessage, LINE_SEPARATOR);
+    public String resolveDealerHitMessage(Dealer dealer) {
+        String dealerHitMessage = String.format("%s는 16이하라 한장의 카드를 더 받았습니다.", resolveName(dealer));
+        return String.join("", LINE_SEPARATOR, dealerHitMessage, LINE_SEPARATOR);
     }
 
-    public String resolvePlayerCardWithScore(final Player player) {
+    public String resolvePlayerCardWithScore(Player player) {
         return String.format("%s - 결과: %d", resolvePlayerCardInfo(player), player.getScore());
     }
 
-    // TODO: getKey, getValue 를 개선할 수 없을까?
-    // TODO: 첫 줄 LINE_SEPARATOR 제거
     // TODO: 딜러라는 이름의 의존성
-    public String resolvePlayersProfitDetail(final ProfitDetails profits) {
-        final String prefixMessage = LINE_SEPARATOR + "## 최종 수익";
-        final String dealerProfitDetailsMessage = resolvePlayerProfitDetail(new Name("딜러"), profits.getDealerProfit());
-        final String playersProfitDetailsMessage = profits.details().entrySet().stream()
-                .map(nameAndProfit -> resolvePlayerProfitDetail(nameAndProfit.getKey(), nameAndProfit.getValue()))
+    public String resolvePlayersProfitDetail(ProfitDetails profits) {
+        String prefixMessage = LINE_SEPARATOR + "## 최종 수익";
+        String dealerProfitDetailsMessage = resolvePlayerProfitDetail(new Name("딜러"), profits.getDealerProfit());
+        String playersProfitDetailsMessage = profits.details().entrySet().stream()
+                .map(nameAndProfit -> resolvePlayerProfitDetail(extractName(nameAndProfit), extractProfit(nameAndProfit)))
                 .collect(Collectors.joining(LINE_SEPARATOR));
         return String.join(LINE_SEPARATOR, prefixMessage, dealerProfitDetailsMessage, playersProfitDetailsMessage);
     }
 
-    private String resolvePlayerProfitDetail(final Name name, final Profit profit) {
-        return String.join("", resolveName(name), ": ", resolveProfit(profit));
-    }
-
-    private String resolvePlayerCardInfo(final Player player) {
-        final String cardsInfo = player.getCards()
+    private String resolvePlayerCardInfo(Player player) {
+        String cardsInfo = player.getCards()
                 .stream()
                 .map(this::resolveCardInfo)
                 .collect(Collectors.joining(", "));
         return String.format("%s카드: %s", resolveName(player), cardsInfo);
     }
 
-    private String resolveCardInfo(final Card card) {
+    private String resolvePlayerProfitDetail(Name name, Profit profit) {
+        return String.join("", resolveName(name), ": ", resolveProfit(profit));
+    }
+
+    private String resolveCardInfo(Card card) {
         return CARD_NUMBER_NAME_MAP.get(card.getNumber()) + CARD_SHAPE_NAME_MAP.get(card.getShape());
     }
 
-    private String resolveName(final Name name) {
-        return name.getValue();
+    private Name extractName(final Map.Entry<Name, Profit> nameAndProfit) {
+        return nameAndProfit.getKey();
     }
 
-    private String resolveName(final Player player) {
-        return player.getName().getValue();
+    private Profit extractProfit(final Map.Entry<Name, Profit> nameAndProfit) {
+        return nameAndProfit.getValue();
     }
 
-    private String resolveProfit(final Profit profit) {
+    private String resolveName(Name name) {
+        return name.value();
+    }
+
+    private String resolveName(Player player) {
+        return player.getName().value();
+    }
+
+    private String resolveProfit(Profit profit) {
         return String.valueOf(profit.value());
     }
 }

@@ -16,31 +16,31 @@ public class InputView {
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
     public List<Name> askPlayerNames() {
-        printPlayerNamesInputMessage();
+        printAskingPlayerNamesInputMessage();
         String rawInput = scanner.nextLine();
         return Arrays.stream(rawInput.split(",", -1))
                 .map(Name::new)
                 .collect(Collectors.toList());
     }
 
-    public boolean askForMoreCard(final Name name) {
+    public boolean askForMoreCard(Name name) {
         printAskingForAnotherCardMessage(name);
-        final String rawInput = scanner.nextLine();
+        String rawInput = scanner.nextLine();
         return PlayerChoice.isDrawable(rawInput);
     }
 
-    private void printPlayerNamesInputMessage() {
-        final String askingMessage = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private void printAskingPlayerNamesInputMessage() {
+        String askingMessage = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
         System.out.println(askingMessage);
     }
 
-    private void printAskingForAnotherCardMessage(final Name name) {
-        final String askingMessage = String.join("", name.getValue(), "는 한장의 카드를 더 받겠습니까?");
-        final String exampleMessage = String.join("(예는 " + HIT.getMessage() + ", 아니오는 " + STAND.getMessage() + ")");
+    private void printAskingForAnotherCardMessage(Name name) {
+        String askingMessage = String.format("%s는 한장의 카드를 더 받겠습니까?", name.value());
+        String exampleMessage = String.format("(예는 %s, 아니오는 %s)", HIT.getMessage(), STAND.getMessage());
         System.out.println(String.join("", LINE_SEPARATOR, askingMessage, exampleMessage));
     }
 
-    public Money askBettingMoney(final Name name) {
+    public Money askBettingMoney(Name name) {
         printAskingBettingMoneyMessage(name);
         try {
             return new Money(Integer.parseInt(scanner.nextLine()));
@@ -49,8 +49,8 @@ public class InputView {
         }
     }
 
-    private void printAskingBettingMoneyMessage(final Name name) {
-        final String askingMessage = name.getValue() + "의 베팅 금액은?";
+    private void printAskingBettingMoneyMessage(Name name) {
+        String askingMessage = String.format("%s의 베팅 금액은?", name.value());
         System.out.println(String.join("", LINE_SEPARATOR, askingMessage));
     }
 }
