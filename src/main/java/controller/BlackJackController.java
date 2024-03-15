@@ -1,7 +1,7 @@
 package controller;
 
 import domain.*;
-import domain.dto.BettingResult;
+import domain.dto.BettingResultDto;
 import domain.dto.DealerHandStatusDto;
 import domain.dto.PlayerHandStatusDto;
 import domain.dto.PlayingCardDto;
@@ -137,9 +137,9 @@ public class BlackJackController {
     private void finish(final BlackJackGame blackJackGame, final Betting betting,
                         final Dealer dealer, final List<Player> players) {
         GameResults gameResults = blackJackGame.getGameResults(dealer, players, betting);
-        BettingResult bettingResult = new BettingResult(
+        BettingResultDto bettingResultDto = new BettingResultDto(
                 gameResults.getResult(), gameResults.getDealerBettingResult());
-        OutputView.printDealerBettingResult(bettingResult.DealerResult());
-        OutputView.printPlayerBettingResult(bettingResult);
+        OutputView.printDealerBettingResult(bettingResultDto.DealerBettingResult());
+        OutputView.printPlayerBettingResult(bettingResultDto);
     }
 }
