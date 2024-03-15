@@ -25,16 +25,6 @@ public class Player extends Participant {
     public Profit profit() {
         return new Profit(account.getProfit());
     }
-
-    @Override
-    public boolean isBust() {
-        if (super.isBust()) {
-            account.applyProfit(ResultProfitRatio.LOSE);
-            return true;
-        }
-        return false;
-    }
-
     @Override
     public boolean canReceiveMoreCard() {
         return !isBust() && !isBlackjack();

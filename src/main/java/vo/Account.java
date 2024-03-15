@@ -16,10 +16,10 @@ public class Account {
     }
 
     public void applyProfit(final ResultProfitRatio ratio) {
-        profit = new Profit((int) (profit.value() * ratio.getRatio()));
+        profit = new Profit(profit.value() * ratio.getRatio());
     }
 
-    public int getProfit() {
+    public double getProfit() {
         return profit.value();
     }
 }

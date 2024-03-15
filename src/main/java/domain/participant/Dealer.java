@@ -31,10 +31,10 @@ public class Dealer extends Participant {
     }
 
     public Profit calculateProfit(final Players players) {
-        int totalPlayersProfit = players.getPlayers()
+        double totalPlayersProfit = players.getPlayers()
                                         .stream()
                                         .map(player -> player.profit().value())
-                                        .reduce(0, Integer::sum);
+                                        .reduce(0.0, Double::sum);
         return new Profit(-totalPlayersProfit);
     }
 
