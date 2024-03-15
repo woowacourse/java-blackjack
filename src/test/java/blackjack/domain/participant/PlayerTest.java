@@ -67,7 +67,7 @@ public class PlayerTest {
 
         //then
         assertThat(choco.getProfit()).isEqualTo("10000");
-        assertThat(dealer.getDealerProfit().toString()).isEqualTo("-20000");
+        assertThat(dealer.getDealerProfit().toString()).isEqualTo("-10000");
     }
 
     @DisplayName("패배 시, 배팅 금액을 잃는다.")

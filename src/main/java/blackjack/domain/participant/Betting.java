@@ -37,6 +37,10 @@ public class Betting {
         return amount.multiply(winMultiplier);
     }
 
+    public BigDecimal getDealerBlackjackAmount() {
+        return getBlackjackAmount().subtract(amount);
+    }
+
     public BigDecimal getAmount() {
         return amount;
     }
