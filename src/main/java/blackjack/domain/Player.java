@@ -12,6 +12,16 @@ public class Player extends Gamer {
     private final Name name;
     private final Money bettingMoney;
 
+    private Player(final Name name, final Hand hand) {
+        super(hand);
+        this.name = name;
+        bettingMoney = null;
+    }
+
+    public static Player from(final String name) {
+        return new Player(new Name(name), new Hand());
+    }
+
     private Player(final Name name, final Hand hand, final Money bettingMoney) {
         super(hand);
         this.name = name;
