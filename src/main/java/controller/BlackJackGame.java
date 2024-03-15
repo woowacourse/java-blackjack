@@ -4,7 +4,10 @@ import domain.Referee;
 import domain.Result;
 import domain.card.Card;
 import domain.deck.Deck;
-import domain.gamer.*;
+import domain.gamer.Dealer;
+import domain.gamer.Gamer;
+import domain.gamer.Player;
+import domain.gamer.Players;
 import dto.DealerResult;
 import dto.PlayerResults;
 import dto.TotalResult;
@@ -32,14 +35,7 @@ public class BlackJackGame {
 
     private Players readPlayers() {
         List<String> names = InputView.readPlayerNames();
-        return createPlayers(names);
-    }
-
-    private Players createPlayers(final List<String> names) {
-        List<Player> players = names.stream()
-                .map(name -> new Player(new Name(name)))
-                .toList();
-        return new Players(players);
+        return new Players(names);
     }
 
     private void prepareCards(final Deck deck, final Dealer dealer, final Players players) {

@@ -10,21 +10,23 @@ public class Players {
     private static final String DUPLICATED_PLAYER_NAME = "플레이어의 이름은 중복될 수 없습니다.";
     private final List<Player> players;
 
-    public Players(final List<Player> players) {
-        validatePlayerCount(players);
-        validateDuplicatedPlayer(players);
-        this.players = List.copyOf(players);
+    public Players(final List<String> names) {
+        validatePlayerCount(names);
+        validateDuplicatedPlayer(names);
+        this.players = names.stream()
+                .map(name -> new Player(new Name(name)))
+                .toList();
     }
 
-    private void validatePlayerCount(final List<Player> players) {
-        if (players.size() < MINIMUM_PLAYER_COUNT || players.size() > MAXIMUM_PLAYER_COUNT) {
+    private void validatePlayerCount(final List<String> names) {
+        if (names.size() < MINIMUM_PLAYER_COUNT || names.size() > MAXIMUM_PLAYER_COUNT) {
             throw new IllegalArgumentException(INVALID_PLAYER_COUNT);
         }
     }
 
-    private void validateDuplicatedPlayer(final List<Player> players) {
-        int deduplicatedCount = (int) players.stream().map(Gamer::getName).distinct().count();
-        if (players.size() != deduplicatedCount) {
+    private void validateDuplicatedPlayer(final List<String> names) {
+        int deduplicatedCount = (int) names.stream().distinct().count();
+        if (names.size() != deduplicatedCount) {
             throw new IllegalArgumentException(DUPLICATED_PLAYER_NAME);
         }
     }

@@ -27,19 +27,15 @@ class RefereeTest {
     Deck deck;
     Dealer dealer;
     Players players;
-    Player pobi;
-    Player neo;
+    Name pobi;
+    Name neo;
 
     @BeforeEach
     void init() {
         dealer = new Dealer();
-
-        Name name1 = new Name("pobi");
-        pobi = new Player(name1);
-        Name name2 = new Name("neo");
-        neo = new Player(name2);
-
-        players = new Players(List.of(pobi, neo));
+        pobi = new Name("pobi");
+        neo = new Name("neo");
+        players = new Players(List.of("pobi", "neo"));
     }
 
     private void prepareCards(final Dealer dealer, final Players players) {
@@ -81,8 +77,8 @@ class RefereeTest {
         @Test
         void playerNotBust() {
             // when
-            Result result1 = Referee.judgeBasedOnDealer(dealer, pobi);
-            Result result2 = Referee.judgeBasedOnDealer(dealer, neo);
+            Result result1 = Referee.judgeBasedOnDealer(dealer, findPobi(players));
+            Result result2 = Referee.judgeBasedOnDealer(dealer, findNeo(players));
 
             // then
             assertAll(
@@ -95,12 +91,12 @@ class RefereeTest {
         @Test
         void playerIsBust() {
             // given
-            pobi.hit(deck.draw());
-            pobi.hit(deck.draw());
+            findPobi(players).hit(deck.draw());
+            findPobi(players).hit(deck.draw());
 
             // when
-            Result result1 = Referee.judgeBasedOnDealer(dealer, pobi);
-            Result result2 = Referee.judgeBasedOnDealer(dealer, neo);
+            Result result1 = Referee.judgeBasedOnDealer(dealer, findPobi(players));
+            Result result2 = Referee.judgeBasedOnDealer(dealer, findNeo(players));
 
             // then
             assertAll(
@@ -136,8 +132,8 @@ class RefereeTest {
         @Test
         void playerIsBlackJack() {
             // when
-            Result result1 = Referee.judgeBasedOnDealer(dealer, pobi);
-            Result result2 = Referee.judgeBasedOnDealer(dealer, neo);
+            Result result1 = Referee.judgeBasedOnDealer(dealer, findPobi(players));
+            Result result2 = Referee.judgeBasedOnDealer(dealer, findNeo(players));
 
             // then
             assertAll(
@@ -150,11 +146,11 @@ class RefereeTest {
         @Test
         void playerIsNotBlackJack() {
             // given
-            neo.hit(deck.draw());
+            findNeo(players).hit(deck.draw());
 
             // when
-            Result result1 = Referee.judgeBasedOnDealer(dealer, pobi);
-            Result result2 = Referee.judgeBasedOnDealer(dealer, neo);
+            Result result1 = Referee.judgeBasedOnDealer(dealer, findPobi(players));
+            Result result2 = Referee.judgeBasedOnDealer(dealer, findNeo(players));
 
             // then
             assertAll(
@@ -162,7 +158,6 @@ class RefereeTest {
                     () -> assertThat(result2).isEqualTo(Result.WIN)
             );
         }
-
     }
 
     @DisplayName("딜러가 일반 숫자(버스트도 아니고, 블랙잭도 아닌)인 경우")
@@ -191,8 +186,8 @@ class RefereeTest {
         @Test
         void playerIsBlackJack() {
             // when
-            Result result1 = Referee.judgeBasedOnDealer(dealer, pobi);
-            Result result2 = Referee.judgeBasedOnDealer(dealer, neo);
+            Result result1 = Referee.judgeBasedOnDealer(dealer, findPobi(players));
+            Result result2 = Referee.judgeBasedOnDealer(dealer, findNeo(players));
 
             // then
             assertAll(
@@ -205,13 +200,13 @@ class RefereeTest {
         @Test
         void playerIsBust() {
             // given
-            neo.hit(deck.draw());
-            neo.hit(deck.draw());
-            neo.hit(deck.draw());
+            findNeo(players).hit(deck.draw());
+            findNeo(players).hit(deck.draw());
+            findNeo(players).hit(deck.draw());
 
             // when
-            Result result1 = Referee.judgeBasedOnDealer(dealer, pobi);
-            Result result2 = Referee.judgeBasedOnDealer(dealer, neo);
+            Result result1 = Referee.judgeBasedOnDealer(dealer, findPobi(players));
+            Result result2 = Referee.judgeBasedOnDealer(dealer, findNeo(players));
 
             // then
             assertAll(
@@ -224,11 +219,11 @@ class RefereeTest {
         @Test
         void playerIsSameNormalScoreAndSame() {
             // given
-            neo.hit(deck.draw());
+            findNeo(players).hit(deck.draw());
 
             // when
-            Result result1 = Referee.judgeBasedOnDealer(dealer, pobi);
-            Result result2 = Referee.judgeBasedOnDealer(dealer, neo);
+            Result result1 = Referee.judgeBasedOnDealer(dealer, findPobi(players));
+            Result result2 = Referee.judgeBasedOnDealer(dealer, findNeo(players));
 
             // then
             assertAll(
@@ -241,12 +236,12 @@ class RefereeTest {
         @Test
         void playerIsSameNormalScoreAndSmaller() {
             // given
-            neo.hit(deck.draw());
-            neo.hit(deck.draw());
+            findNeo(players).hit(deck.draw());
+            findNeo(players).hit(deck.draw());
 
             // when
-            Result result1 = Referee.judgeBasedOnDealer(dealer, pobi);
-            Result result2 = Referee.judgeBasedOnDealer(dealer, neo);
+            Result result1 = Referee.judgeBasedOnDealer(dealer, findPobi(players));
+            Result result2 = Referee.judgeBasedOnDealer(dealer, findNeo(players));
 
             // then
             assertAll(
@@ -254,6 +249,19 @@ class RefereeTest {
                     () -> assertThat(result2).isEqualTo(Result.LOSE)
             );
         }
+    }
 
+    private Player findPobi(final Players players) {
+        return players.getPlayers().stream()
+                .filter(player -> player.getName().equals(pobi))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 테스트용 이름"));
+    }
+
+    private Player findNeo(final Players players) {
+        return players.getPlayers().stream()
+                .filter(player -> player.getName().equals(neo))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 테스트용 이름"));
     }
 }
