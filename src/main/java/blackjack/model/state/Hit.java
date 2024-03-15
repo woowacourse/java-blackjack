@@ -5,16 +5,15 @@ import blackjack.model.cards.Cards;
 import blackjack.vo.Money;
 import java.util.List;
 
-public class Hit implements State {
-    private final Cards cards;
+public class Hit extends InProgress {
 
     public Hit(Cards cards) {
-        this.cards = cards;
+        super(cards);
     }
 
     @Override
     public State draw(Card card) {
-        Cards newCards = new Cards(cards.getCards());
+        Cards newCards = new Cards(cards().getCards());
         newCards.add(card);
         if (newCards.isBust()) {
             return new Bust(newCards);
@@ -29,16 +28,11 @@ public class Hit implements State {
 
     @Override
     public State stand() {
-        return new Stand(cards);
+        return new Stand(cards());
     }
 
     @Override
     public Money calculateProfit(Money betMoney) {
         throw new UnsupportedOperationException("hit 상태에서는 수익을 계산할 수 없다");
-    }
-
-    @Override
-    public Cards cards() {
-        return cards;
     }
 }

@@ -5,8 +5,10 @@ import blackjack.model.cards.Cards;
 import blackjack.vo.Money;
 import java.util.List;
 
-public class InitialState implements State {
-    private final Cards cards = new Cards();
+public class InitialState extends InProgress {
+    public InitialState() {
+        super(new Cards());
+    }
 
     @Override
     public State drawCards(List<Card> cardToAdd) {
@@ -30,10 +32,5 @@ public class InitialState implements State {
     @Override
     public Money calculateProfit(Money betMoney) {
         throw new UnsupportedOperationException("게임 시작 전에는 수익을 계산할 수 없습니다.");
-    }
-
-    @Override
-    public Cards cards() {
-        return cards;
     }
 }

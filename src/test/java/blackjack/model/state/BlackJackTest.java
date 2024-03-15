@@ -1,7 +1,6 @@
 package blackjack.model.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.model.cards.Card;
@@ -26,12 +25,13 @@ class BlackJackTest {
         blackJack = new BlackJack(blackJackCards);
     }
 
-    @DisplayName("블랙잭 상태일 때 추가 카드를 뽑을 수 있다")
+    @DisplayName("블랙잭 상태일 때 추가 카드를 뽑을 수 없다")
     @Test
     void draw() {
         Card card = new Card(CardNumber.THREE, CardShape.CLOVER);
 
-        assertThatCode(() -> blackJack.draw(card)).doesNotThrowAnyException();
+        assertThatThrownBy(() -> blackJack.draw(card))
+                .isInstanceOf(UnsupportedOperationException.class);
     }
 
     @DisplayName("블랙잭 상태에서는 카드 여러장을 뽑을 수 없다")
@@ -44,10 +44,11 @@ class BlackJackTest {
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 
-    @DisplayName("블랙잭 상태에서 카드뽑기를 멈추면 블랙잭 상태가 된다")
+    @DisplayName("블랙잭 상태는 게임이 종료된 상태로 stand할 수 없다")
     @Test
     void stand() {
-        assertThat(blackJack.stand()).isInstanceOf(BlackJack.class);
+        assertThatThrownBy(() -> blackJack.stand())
+                .isInstanceOf(UnsupportedOperationException.class);
     }
 
     @DisplayName("블랙잭 상태로 승리하면 베팅금액의 1.5배를 받는다")
