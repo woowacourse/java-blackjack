@@ -22,4 +22,11 @@ class BetTest {
                 .hasMessage(BET_RANGE_MESSAGE)
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("금액의 단위를 만족해야 한다.")
+    @Test
+    void validateUnit() {
+        assertThatCode(() -> new Bet(10))
+                .doesNotThrowAnyException();
+    }
 }
