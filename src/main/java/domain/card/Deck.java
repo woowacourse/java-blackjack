@@ -30,7 +30,7 @@ public class Deck {
     }
 
     public Card draw() {
-        if(deck.isEmpty()){
+        if (deck.isEmpty()) {
             throw new NoSuchElementException("덱에 남아있는 카드가 없습니다.");
         }
         Card card = deck.get(DECK_TOP);

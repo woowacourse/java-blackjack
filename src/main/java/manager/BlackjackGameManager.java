@@ -3,8 +3,8 @@ package manager;
 import domain.BetAmount;
 import domain.Name;
 import domain.Rule;
-import domain.participant.Dealer;
 import domain.card.Deck;
+import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.result.Income;
 

@@ -1,10 +1,10 @@
 package view;
 
-import domain.result.Income;
 import domain.Name;
 import domain.card.Cards;
 import domain.participant.Dealer;
 import domain.participant.Player;
+import domain.result.Income;
 
 import java.util.List;
 import java.util.Map;

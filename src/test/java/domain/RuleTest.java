@@ -1,9 +1,9 @@
 package domain;
 
 import domain.card.Card;
+import domain.card.Shape;
 import domain.participant.Dealer;
 import domain.participant.Player;
-import domain.card.Shape;
 import domain.result.Status;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
