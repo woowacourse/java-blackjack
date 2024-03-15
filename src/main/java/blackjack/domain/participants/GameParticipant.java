@@ -29,7 +29,7 @@ public abstract class GameParticipant {
         return hands.calculateScore();
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return calculateScore() > MAX_SCORE;
     }
 

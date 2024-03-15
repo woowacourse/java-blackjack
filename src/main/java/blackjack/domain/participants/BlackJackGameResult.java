@@ -25,17 +25,17 @@ public class BlackJackGameResult {
     }
 
     private boolean isWin(Player player, Dealer dealer) {
-        if (player.isBurst()) {
+        if (player.isBust()) {
             return false;
         }
-        if (dealer.isBurst()) {
+        if (dealer.isBust()) {
             return true;
         }
         return player.calculateScore() > dealer.calculateScore();
     }
 
     private boolean isTie(Player player, Dealer dealer) {
-        if (player.isBurst() || dealer.isBurst()) {
+        if (player.isBust() || dealer.isBust()) {
             return false;
         }
         return player.isBlackjack() && dealer.isBlackjack();
