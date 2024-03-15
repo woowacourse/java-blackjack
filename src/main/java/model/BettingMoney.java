@@ -1,6 +1,6 @@
 package model;
 
-public class BettingMoney { // todo 불변객체 + 캐싱
+public class BettingMoney {
 
     private final int value;
 

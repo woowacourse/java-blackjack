@@ -15,7 +15,7 @@ public class Participant extends User {
         this.bettingMoney = bettingMoney;
     }
 
-    public Double calculateProfit(Dealer dealer) { //todo 조건문을 Outcome 이넘 클래스에 넣는다면?
+    public Double calculateProfit(Dealer dealer) {
         if (dealer.isBust()) {
             return Outcome.WIN.calculateProfit(bettingMoney);
         }
