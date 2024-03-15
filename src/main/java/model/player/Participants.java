@@ -1,6 +1,5 @@
 package model.player;
 
-import model.Outcome;
 import model.card.Card;
 import model.card.Cards;
 
@@ -36,36 +35,28 @@ public class Participants {
             String duplicatedName = duplicates.stream()
                     .map(user -> user.getName().getName())
                     .collect(Collectors.joining(","));
-            throw new IllegalArgumentException("중복된 이름(" + duplicatedName + ")가 있습니다, 참가자들의 이름은 중복되면 안됩니다.");
+            throw new IllegalArgumentException
+                    ("중복된 이름(" + duplicatedName + ")가 있습니다, 참가자들의 이름은 중복되면 안됩니다.");
         }
     }
 
     private void validateParticipantSize(List<Participant> participants) {
         if (participants.size() < MINIMUM_PARTICIPANT_SIZE || participants.size() > MAXIMUM_PARTICIPANT_SIZE) {
-            throw new IllegalArgumentException("참가자의 수는 2~8명이어야 합니다.");
+            throw new IllegalArgumentException
+                    ("참가자의 수는 " + MINIMUM_PARTICIPANT_SIZE + " ~ " + MAXIMUM_PARTICIPANT_SIZE + "8명이어야 합니다.");
         }
     }
 
-    public void offerCardToParticipants(Predicate<Name> inputForMoreCard, BiConsumer<Name, Cards> printParticipantsCard, Supplier<Card> selectCard) {
+    public void offerCardToParticipants(Predicate<Name> inputForMoreCard,
+                                        BiConsumer<Name, Cards> printParticipantsCard, Supplier<Card> selectCard) {
         for (Participant participant : participants) {
-            while (participant.isHit() && inputForMoreCard.test(participant.getName())) {
-                participant.addCard(selectCard.get());
-                printParticipantsCard.accept(participant.getName(), participant.getCards());
-            }
+            participant.offerCard(inputForMoreCard, printParticipantsCard, selectCard);
         }
     }
 
     public List<Name> findParticipantsName() {
         return participants.stream()
                 .map(Participant::getName).toList();
-    }
-
-    public Map<Participant, Outcome> matchParticipantsOutcome(Dealer dealer) {
-        return participants.stream().collect(
-                toMap(
-                        participant -> participant,
-                        participant -> participant.findOutcome(dealer)
-                ));
     }
 
     public Map<Name, Cards> matchParticipantNameAndCards() {

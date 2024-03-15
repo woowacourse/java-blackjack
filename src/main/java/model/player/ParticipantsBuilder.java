@@ -36,13 +36,15 @@ public class ParticipantsBuilder {
 
         if (!duplicates.isEmpty()) {
             String duplicatedName = String.join(",", duplicates);
-            throw new IllegalArgumentException("중복된 이름(" + duplicatedName + ")가 있습니다, 참가자들의 이름은 중복되면 안됩니다.");
+            throw new IllegalArgumentException
+                    ("중복된 이름(" + duplicatedName + ")가 있습니다, 참가자들의 이름은 중복되면 안됩니다.");
         }
     }
 
-    private void validateParticipantSize(List<Name> names) {
-        if (names.size() < MINIMUM_PARTICIPANT_SIZE || names.size() > MAXIMUM_PARTICIPANT_SIZE) {
-            throw new IllegalArgumentException("참가자의 수는 2~8명이어야 합니다.");
+    private void validateParticipantSize(List<Name> participants) {
+        if (participants.size() < MINIMUM_PARTICIPANT_SIZE || participants.size() > MAXIMUM_PARTICIPANT_SIZE) {
+            throw new IllegalArgumentException
+                    ("참가자의 수는 " + MINIMUM_PARTICIPANT_SIZE + " ~ " + MAXIMUM_PARTICIPANT_SIZE + "8명이어야 합니다.");
         }
     }
 

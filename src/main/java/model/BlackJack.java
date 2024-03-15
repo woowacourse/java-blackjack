@@ -38,7 +38,8 @@ public class BlackJack {
         }
     }
 
-    public void decideParticipantsPlay(Predicate<Name> inputForMoreCard, BiConsumer<Name, Cards> printParticipantsCard) {
+    public void decideParticipantsPlay(Predicate<Name> inputForMoreCard,
+                                       BiConsumer<Name, Cards> printParticipantsCard) {
         participants.offerCardToParticipants(inputForMoreCard, printParticipantsCard, cardDeck::selectRandomCard);
     }
 

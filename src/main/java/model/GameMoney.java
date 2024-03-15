@@ -1,6 +1,7 @@
 package model;
 
 public class GameMoney {
+    private static final int MINIMUM_GAME_MONEY = 1;
     private static final double LOSE_RATE = -1;
     private static final double DRAW_RATE = 0;
 
@@ -12,8 +13,8 @@ public class GameMoney {
     }
 
     private void validateGameMoneyOverZero(int value) {
-        if (value < 1) {
-            throw new IllegalArgumentException("게임 배팅 금액은 0보다 커야 합니다.");
+        if (value < MINIMUM_GAME_MONEY) {
+            throw new IllegalArgumentException("게임 배팅 금액은 " + MINIMUM_GAME_MONEY + "이상이어야 합니다.");
         }
     }
 

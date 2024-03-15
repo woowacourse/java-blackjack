@@ -34,6 +34,7 @@ public class OutputView {
         for (Entry<Name, Cards> entry : usersNameAndCards.entrySet()) {
             System.out.println(cardsToString(entry));
         }
+        System.out.println();
     }
 
     public void printPlayerCardMessage(Name name, Cards cards) {
@@ -41,7 +42,7 @@ public class OutputView {
     }
 
     public void printBlackJackScore(Cards dealerCards, Map<Name, Cards> usersNameAndCards) {
-        System.out.println(cardsToString(new Name(DEALER_NAME), dealerCards, 1));
+        System.out.println(System.lineSeparator() + cardsToString(new Name(DEALER_NAME), dealerCards, 1));
         for (Entry<Name, Cards> participant : usersNameAndCards.entrySet()) {
             System.out.println(cardsToString(participant) + PLAYER_CARD_SUM_MESSAGE.formatted(
                     participant.getValue().calculateScore()));
@@ -110,16 +111,6 @@ public class OutputView {
             return "하트";
         }
         return "다이아몬드";
-    }
-
-    private String gameResultToString(Outcome outcome) {
-        if (outcome == Outcome.WIN) {
-            return "승 ";
-        }
-        if (outcome == Outcome.LOSE) {
-            return "패 ";
-        }
-        return "무 ";
     }
 
 }

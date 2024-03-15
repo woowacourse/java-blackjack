@@ -2,9 +2,13 @@ package model.player;
 
 import model.GameMoney;
 import model.Outcome;
+import model.card.Card;
 import model.card.Cards;
 
 import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class Participant extends User {
 
@@ -15,6 +19,14 @@ public class Participant extends User {
         super(cards);
         this.name = name;
         this.gameMoney = gameMoney;
+    }
+
+    public void offerCard(Predicate<Name> inputForMoreCard,
+                          BiConsumer<Name, Cards> printParticipantsCard, Supplier<Card> selectCard) {
+        while (isHit() && inputForMoreCard.test(getName())) {
+            addCard(selectCard.get());
+            printParticipantsCard.accept(getName(), getCards());
+        }
     }
 
     public int calculateRevenue(Dealer dealer) {

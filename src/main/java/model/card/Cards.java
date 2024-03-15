@@ -8,6 +8,7 @@ import java.util.List;
 
 public record Cards(List<Card> cards) {
 
+    private final static int INITIAL_CARD_SIZE = 2;
     private final static int MAXIMUM_SUM = 21;
 
     public Cards(List<Card> cards) {
@@ -16,8 +17,8 @@ public record Cards(List<Card> cards) {
     }
 
     private void validateCardSize(List<Card> cards) {
-        if (cards.size() != 2) {
-            throw new IllegalArgumentException("참가자의 초기 카드는 2장입니다.");
+        if (cards.size() != INITIAL_CARD_SIZE) {
+            throw new IllegalArgumentException("참가자의 초기 카드는 " + INITIAL_CARD_SIZE + "장입니다.");
         }
     }
 
@@ -34,11 +35,6 @@ public record Cards(List<Card> cards) {
         return differenceNumbers.stream()
                 .reduce(sum, this::changeToBestNumber);
     }
-
-    // TODO : 삭제 혹은 최고로 다음 로직 구현
-    //  ( 1, 11이 되는 ace / 1, 10이 되는 newAce
-    //  -> 현재 값(ace와 newAce를 1로 취급한 값)이 11일 때,
-    //  ace를 11로 하면 21 / newAce를 10으로 하면 20이 된다. 이걸 결정하는 로직 구현 )
 
     private List<Integer> mapDifferenceNumber() {
         return cards.stream()

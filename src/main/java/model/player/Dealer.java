@@ -10,6 +10,7 @@ public class Dealer extends User {
         super(cards);
     }
 
+    @Override
     public boolean isHit() {
         return calculateScore() <= NUMBER_THRESHOLD;
     }

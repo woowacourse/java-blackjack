@@ -19,7 +19,8 @@ public class InputView {
     }
 
     public Integer requestParticipantMoney(Name name) {
-        System.out.println(REQUEST_PARTICIPANT_MONEY_MESSAGE.formatted(name.getName()));
+        System.out.println(System.lineSeparator() +
+                REQUEST_PARTICIPANT_MONEY_MESSAGE.formatted(name.getName()));
 
         String input = in.nextLine();
 
