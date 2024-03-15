@@ -15,10 +15,10 @@ class ScoreTest {
         assertThat(Score.calculateAceScore(0, 10)).isZero();
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "[{index}] ACE 개수가 {0}개이고 다른 카드의 총 점수가 {1}일 때 총 점수는 {2}점이다.")
     @CsvSource(value = {"1,10,11", "1,11,1", "2,9,12", "2,10,2", "3,8,13", "3,9,3"})
     @DisplayName("ACE의 개수와 ACE를 제외한 다른 카드의 점수에 따라 모든 ACE의 점수를 다르게 계산한다.")
-    void calculateTotalAceScore(int aceCount, int otherCardsScore, int expected) {
+    void calculateTotalAceScoreByAceCountAndTotalScoreOfOtherCards(int aceCount, int otherCardsScore, int expected) {
         assertThat(Score.calculateAceScore(aceCount, otherCardsScore)).isEqualTo(expected);
     }
 }

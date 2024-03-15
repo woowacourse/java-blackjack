@@ -16,17 +16,16 @@ class PlayersTest {
     @Test
     @DisplayName("플레이어의 이름으로 플레이어 그룹을 생성한다.")
     void createPlayers() {
-        List<String> names = List.of("리브", "몰리");
-        Players players = Players.from(names);
+        Players players = Fixtures.createPlayersWithNames(List.of("리브", "몰리"));
+
         assertThat(players.getNames()).containsExactly("리브", "몰리");
     }
 
     @Test
     @DisplayName("플레이어의 이름이 중복되는 경우 예외를 던진다.")
     void createPlayersByDuplicatedName() {
-        List<String> names = List.of("몰리", "몰리");
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> Players.from(names))
+                .isThrownBy(() -> Players.from(List.of("몰리", "몰리")))
                 .withMessage("중복되는 이름을 입력할 수 없습니다.");
     }
 
@@ -44,5 +43,11 @@ class PlayersTest {
                 Arguments.arguments(List.of()),
                 Arguments.arguments(List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"))
         );
+    }
+
+    static class Fixtures {
+        static Players createPlayersWithNames(List<String> names) {
+            return Players.from(names);
+        }
     }
 }

@@ -14,10 +14,11 @@ public class BetMoneyTest {
     @DisplayName("전달 받은 금액으로 Money를 생성한다.")
     void createMoney() {
         int money = 1_000;
+
         assertThat(new BetMoney(money).getBetMoney()).isEqualTo(1_000);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "[{index}] 베팅 금액이 {0}원이면 예외가 발생한다.")
     @ValueSource(ints = {0, -1, 100_000_001})
     @DisplayName("1원 미만, 1억원 초과 금액을 베팅할 수 없다.")
     void createMoneyByInvalidBetMoneyAmount(int betMoney) {
@@ -27,7 +28,7 @@ public class BetMoneyTest {
     }
 
     @Test
-    @DisplayName("현재 금액에 전달 받은 숫자를 곱한다.")
+    @DisplayName("현재 금액에 전달 받은 숫자를 곱한 값을 반환한다.")
     void multiply() {
         BetMoney betMoney = new BetMoney(1_000);
         int newBetMoney = betMoney.multiply(1.5);
