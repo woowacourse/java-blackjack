@@ -23,7 +23,7 @@ public abstract class User {
     }
 
     public void addCard(Card card) {
-        this.cards.addCard(card);
+        this.cards.add(card);
     }
 
     public int calculateScore() {

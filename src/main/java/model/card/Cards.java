@@ -21,7 +21,7 @@ public record Cards(List<Card> cards) {
         }
     }
 
-    public void addCard(Card card) {
+    public void add(Card card) {
         cards.add(card);
     }
 
@@ -34,6 +34,11 @@ public record Cards(List<Card> cards) {
         return differenceNumbers.stream()
                 .reduce(sum, this::changeToBestNumber);
     }
+
+    // TODO : 삭제 혹은 최고로 다음 로직 구현
+    //  ( 1, 11이 되는 ace / 1, 10이 되는 newAce
+    //  -> 현재 값(ace와 newAce를 1로 취급한 값)이 11일 때,
+    //  ace를 11로 하면 21 / newAce를 10으로 하면 20이 된다. 이걸 결정하는 로직 구현 )
 
     private List<Integer> mapDifferenceNumber() {
         return cards.stream()
