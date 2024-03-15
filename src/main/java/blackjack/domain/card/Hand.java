@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Set;
 
 public class Hand {
+    public static final int DEFAULT_DRAW_COUNT = 1;
     private static final int MAX_SCORE = 21;
-
     private final Deck deck;
     private final List<Card> cards;
 
@@ -17,7 +17,7 @@ public class Hand {
     }
 
     public void draw() {
-        draw(1);
+        draw(DEFAULT_DRAW_COUNT);
     }
 
     public void draw(int count) {
