@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameRule {
-    public static final int TWO_CARDS_IN_HAND = 2;
+    private static final int TWO_CARDS_IN_HAND = 2;
 
     private final Dealer dealer;
     private final Gamers gamers;

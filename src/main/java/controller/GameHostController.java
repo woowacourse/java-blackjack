@@ -14,10 +14,7 @@ import view.InputView;
 import view.OutputView;
 
 public class GameHostController {
-    private static final InputView inputView = new InputView();
-    private static final OutputView outputView = new OutputView();
-
-    private final GameHost gameHost = new GameHost(inputView.enterPlayerNames());
+    private final GameHost gameHost = new GameHost(InputView.enterPlayerNames());
 
     public GameHost initGame() {
         gameHost.readyGame();
@@ -32,13 +29,13 @@ public class GameHostController {
 
     private void printInitiateGameResult() {
         List<String> gamerNames = gameHost.getGamerNames();
-        outputView.printNoticeAfterStartGame(gamerNames);
+        OutputView.printNoticeAfterStartGame(gamerNames);
 
         DealerHand dealerHandWithHiddenCard = getDealerHandWithHiddenCard(gameHost.getDealerHand());
-        outputView.printDealerStatus(dealerHandWithHiddenCard);
+        OutputView.printDealerStatus(dealerHandWithHiddenCard);
 
         List<GamerHand> gamerHandStatus = getGamerHandStatus(gamerNames, gameHost.getGamerHands());
-        outputView.printPlayerStatus(gamerNames, gamerHandStatus);
+        OutputView.printPlayerStatus(gamerNames, gamerHandStatus);
     }
 
     private void startCardDraw() {
@@ -57,7 +54,7 @@ public class GameHostController {
             currentHand = getStatusAfterDraw(gamer);
             command = getCommandAfterDraw(gamer);
         }
-        outputView.printCardStatus(gamer.getName(), currentHand);
+        OutputView.printCardStatus(gamer.getName(), currentHand);
     }
 
     private GamerHand getStatusAfterDraw(final Gamer gamer) {
@@ -68,17 +65,17 @@ public class GameHostController {
         if (gamer.isNotAbleToDrawCard()) {
             return GameCommand.STAND;
         }
-        outputView.printCardStatus(gamer.getName(),
+        OutputView.printCardStatus(gamer.getName(),
                 new GamerHand(gamer.getName(), getHandStatusAsString(gamer.getHand())));
         return inputCommand(gamer.getName());
     }
 
     private GameCommand inputCommand(final String name) {
-        return GameCommand.valueOf(inputView.decideToGetMoreCard(name));
+        return GameCommand.valueOf(InputView.decideToGetMoreCard(name));
     }
 
     private void printDealerDrawMessage() {
         int count = gameHost.cardDrawCountOfDealer();
-        outputView.printDealerPickMessage(count);
+        OutputView.printDealerPickMessage(count);
     }
 }

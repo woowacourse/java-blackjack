@@ -9,7 +9,10 @@ import controller.dto.gamer.GamerScore;
 import java.util.List;
 
 public class OutputView {
-    public void printNoticeAfterStartGame(final List<String> names) {
+    private OutputView() {
+    }
+
+    public static void printNoticeAfterStartGame(final List<String> names) {
         System.out.println();
         String builder = "딜러와 "
                 + String.join(", ", names)
@@ -17,11 +20,11 @@ public class OutputView {
         System.out.println(builder);
     }
 
-    public void printDealerStatus(final DealerHand dealerHand) {
+    public static void printDealerStatus(final DealerHand dealerHand) {
         System.out.println("딜러카드: " + dealerHand.hands());
     }
 
-    public void printPlayerStatus(final List<String> names, final List<GamerHand> statuses) {
+    public static void printPlayerStatus(final List<String> names, final List<GamerHand> statuses) {
         for (int i = 0; i < names.size(); i++) {
             GamerHand status = statuses.get(i);
             System.out.println(names.get(i) + "카드: " + status.hands());
@@ -29,20 +32,20 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printCardStatus(final String name, final GamerHand status) {
+    public static void printCardStatus(final String name, final GamerHand status) {
         System.out.println(name + "카드: " + status.hands());
     }
 
-    public void printDealerPickMessage(final int count) {
+    public static void printDealerPickMessage(final int count) {
         System.out.println();
         for (int index = 0; index < count; index++) {
             System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
         }
     }
 
-    public void printHandStatusWithScore(final DealerScore dealerScore,
-                                         final List<GamerScore> gamerGamerScores,
-                                         final List<String> gamerNames) {
+    public static void printHandStatusWithScore(final DealerScore dealerScore,
+                                                final List<GamerScore> gamerGamerScores,
+                                                final List<String> gamerNames) {
         System.out.println();
         System.out.println(createDealerHandScoreMessage(dealerScore));
         for (int i = 0; i < gamerGamerScores.size(); i++) {
@@ -50,7 +53,7 @@ public class OutputView {
         }
     }
 
-    private String createDealerHandScoreMessage(final DealerScore dealerScore) {
+    private static String createDealerHandScoreMessage(final DealerScore dealerScore) {
         DealerHand dealerHand = dealerScore.dealerHand();
         return "딜러카드: "
                 + dealerHand.hands()
@@ -58,7 +61,7 @@ public class OutputView {
                 + dealerScore.score();
     }
 
-    private String createGamerHandScoreMessage(final String name, final GamerScore gamerScore) {
+    private static String createGamerHandScoreMessage(final String name, final GamerScore gamerScore) {
         GamerHand gamerHandStatus = gamerScore.gamerHandStatus();
         return name + "카드: "
                 + gamerHandStatus.hands()
@@ -66,7 +69,7 @@ public class OutputView {
                 + gamerScore.score();
     }
 
-    public void printGameResult(final GameResult results) {
+    public static void printGameResult(final GameResult results) {
         System.out.println();
         System.out.println("## 최종 수익");
         List<PlayerResult> playerResults = results.results();

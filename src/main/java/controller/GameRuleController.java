@@ -20,9 +20,6 @@ import view.InputView;
 import view.OutputView;
 
 public class GameRuleController {
-    private static final InputView inputView = new InputView();
-    private static final OutputView outputView = new OutputView();
-
     private final BetAmount betAmount = new BetAmount();
     private final GameHost gameHost;
 
@@ -33,7 +30,7 @@ public class GameRuleController {
     public void betting() {
         Gamers gamers = gameHost.findPlayingGamers();
         for (Gamer gamer : gamers.listOf()) {
-            betAmount.saveAmount(gamer, inputView.enterGamerBettingAmounts(gamer.getName()));
+            betAmount.saveAmount(gamer, InputView.enterGamerBettingAmounts(gamer.getName()));
         }
     }
 
@@ -41,11 +38,11 @@ public class GameRuleController {
         Gamers gamers = gameHost.findPlayingGamers();
 
         printCardStatusAndScores(gamers);
-        outputView.printGameResult(getResultsOfGame(gamers));
+        OutputView.printGameResult(getResultsOfGame(gamers));
     }
 
     private void printCardStatusAndScores(final Gamers gamers) {
-        outputView.printHandStatusWithScore(
+        OutputView.printHandStatusWithScore(
                 getCurrentDealerHandScore(),
                 getCurrentGamerHandScore(gamers),
                 gamers.getNames()
