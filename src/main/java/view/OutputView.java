@@ -3,7 +3,6 @@ package view;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import model.Outcome;
 import model.card.Card;
 import model.card.CardNumber;
 import model.card.CardShape;

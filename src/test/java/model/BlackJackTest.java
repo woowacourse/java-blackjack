@@ -32,9 +32,9 @@ class BlackJackTest {
         List<Card> participantCards = List.of(new Card(CardShape.SPACE, CardNumber.NINE),
                 new Card(CardShape.SPACE, CardNumber.FIVE));
         Assertions.assertThatThrownBy(() -> new BlackJack(new Participants(
-                List.of(new Participant(new Name("배키"), participantCards, new BettingMoney(100)),
-                        new Participant(new Name("켬미"), participantCards, new BettingMoney(200)))),
-                                null))
+                        List.of(new Participant(new Name("배키"), participantCards, new BettingMoney(100)),
+                                new Participant(new Name("켬미"), participantCards, new BettingMoney(200)))),
+                        null))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -143,7 +143,6 @@ class BlackJackTest {
         BlackJack blackJack = new BlackJack(participants, bustDealer);
 
         Double dealerProfit = blackJack.getDealerProfit();
-
 
         assertThat(dealerProfit).isEqualTo(-300.0);
     }

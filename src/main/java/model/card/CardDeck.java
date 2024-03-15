@@ -39,6 +39,7 @@ public class CardDeck {
             cards.add(new Card(cardShape, cardNumber));
         }
     }
+
     private Card selectRandomCard() {
         validateCardDeckNotEmpty();
         int removeIndex = new Random().nextInt(cards.size());

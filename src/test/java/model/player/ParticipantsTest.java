@@ -42,17 +42,27 @@ class ParticipantsTest {
         CardDeck cardDeck = new CardDeck(CardDeck.createCards());
 
         return Stream.of(Arguments.of(
-                List.of(new Participant(new Name("배키"), cardDeck.selectRandomCards(CardSize.TWO), new BettingMoney(100))),
+                List.of(new Participant(new Name("배키"), cardDeck.selectRandomCards(CardSize.TWO),
+                        new BettingMoney(100))),
                 List.of(
-                        new Participant(new Name("도비"), cardDeck.selectRandomCards(CardSize.TWO), new BettingMoney(100)),
-                        new Participant(new Name("리사"), cardDeck.selectRandomCards(CardSize.TWO), new BettingMoney(100)),
-                        new Participant(new Name("명오"), cardDeck.selectRandomCards(CardSize.TWO), new BettingMoney(100)),
-                        new Participant(new Name("제우스"), cardDeck.selectRandomCards(CardSize.TWO), new BettingMoney(100)),
-                        new Participant(new Name("호티"), cardDeck.selectRandomCards(CardSize.TWO), new BettingMoney(100)),
-                        new Participant(new Name("초롱"), cardDeck.selectRandomCards(CardSize.TWO), new BettingMoney(100)),
-                        new Participant(new Name("조이썬"), cardDeck.selectRandomCards(CardSize.TWO), new BettingMoney(100)),
-                        new Participant(new Name("프람"), cardDeck.selectRandomCards(CardSize.TWO), new BettingMoney(100)),
-                        new Participant(new Name("폰드"), cardDeck.selectRandomCards(CardSize.TWO), new BettingMoney(100)))));
+                        new Participant(new Name("도비"), cardDeck.selectRandomCards(CardSize.TWO),
+                                new BettingMoney(100)),
+                        new Participant(new Name("리사"), cardDeck.selectRandomCards(CardSize.TWO),
+                                new BettingMoney(100)),
+                        new Participant(new Name("명오"), cardDeck.selectRandomCards(CardSize.TWO),
+                                new BettingMoney(100)),
+                        new Participant(new Name("제우스"), cardDeck.selectRandomCards(CardSize.TWO),
+                                new BettingMoney(100)),
+                        new Participant(new Name("호티"), cardDeck.selectRandomCards(CardSize.TWO),
+                                new BettingMoney(100)),
+                        new Participant(new Name("초롱"), cardDeck.selectRandomCards(CardSize.TWO),
+                                new BettingMoney(100)),
+                        new Participant(new Name("조이썬"), cardDeck.selectRandomCards(CardSize.TWO),
+                                new BettingMoney(100)),
+                        new Participant(new Name("프람"), cardDeck.selectRandomCards(CardSize.TWO),
+                                new BettingMoney(100)),
+                        new Participant(new Name("폰드"), cardDeck.selectRandomCards(CardSize.TWO),
+                                new BettingMoney(100)))));
     }
 
     @DisplayName("참가자가 2명보다 작거나 8명보다 크면 예외가 발생한다.")
