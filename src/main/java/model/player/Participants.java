@@ -44,9 +44,10 @@ public class Participants {
                 .anyMatch(player -> player.getName().equals(receiver.getName())); //todo equals 오버라이딩
     }
 
-    public List<String> findParticipantsName() {
+    public List<Name> findParticipantsName() {
         return participants.stream()
-                .map(participant -> participant.getName().getValue()).toList();
+                .map(User::getName)
+                .toList();
     }
 
     public Double sumAllParticipantProfit(Dealer dealer) {

@@ -20,8 +20,12 @@ public class OutputView {
     private static final String DEALER_ADD_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String GAME_RESULT_PROMPT_MESSAGE = "## 최종 승패";
 
-    public void printPlayerNames(List<String> names) {
-        System.out.println(System.lineSeparator() + DIVIDE_CARD_MESSAGE.formatted(String.join(", ", names)));
+    public void printPlayerNames(List<Name> names) {
+        String playerNames = names.stream().map(Name::getValue)
+                .reduce((join, next) -> join + ", " + next)
+                .orElseThrow();
+
+        System.out.println(System.lineSeparator() + DIVIDE_CARD_MESSAGE.formatted(playerNames));
     }
 
     public void printPlayerCards(Map<Name, Cards> usersNameAndCards, Map<Name, Cards> dealerNameAndCards) {

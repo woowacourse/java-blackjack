@@ -96,9 +96,9 @@ public class BlackJack {
                 ));
     }
 
-    public List<String> findParticipantsName() {
+    public List<Name> findParticipantsName() {
         return participants.findParticipantsName();
-    }//todo Name클래스로 분리
+    }
 
     public Map<Name, Cards> mapToDealerNameAndCards() {
         return Map.of(dealer.getName(), dealer.getCards());
