@@ -35,7 +35,7 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return hand.getCards().sum() > BLACKJACK_SCORE;
+        return hand.score() > BLACKJACK_SCORE;
     }
 
     public boolean isBlackjack() {
