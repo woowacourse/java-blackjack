@@ -1,7 +1,8 @@
 package controller;
 
-import controller.dto.ParticipantHandStatus;
-import controller.dto.ParticipantProfitResponse;
+import controller.dto.request.PlayerBettingMoney;
+import controller.dto.response.ParticipantHandStatus;
+import controller.dto.response.ParticipantProfitResponse;
 import domain.constants.CardCommand;
 import domain.game.ActionAfterPick;
 import domain.game.BlackJackGame;
@@ -29,12 +30,23 @@ public class GameManager {
     }
 
     private BlackJackGame start() {
+
         BlackJackGame blackJackGame = BlackJackGame.from(
-                inputView.enterPlayerNames(),
+                generatePlayerBettingMoney(),
                 new RandomDeckGenerator()
         );
         outputView.printInitialHandStatus(blackJackGame.initialize());
         return blackJackGame;
+    }
+
+    private List<PlayerBettingMoney> generatePlayerBettingMoney() {
+        List<String> playerNames = inputView.enterPlayerNames();
+        return playerNames.stream()
+                .map(playerName -> new PlayerBettingMoney(
+                        playerName,
+                        inputView.enterBettingMoney(playerName))
+                )
+                .toList();
     }
 
     private void rotate(final BlackJackGame blackJackGame) {
@@ -48,6 +60,7 @@ public class GameManager {
         }
     }
 
+    // TODO : 이 부분 어떻게 수정할 수 있을까?
     private ActionAfterPick getActionAfterPick(final Participant participant) {
         if (participant instanceof Player) {
             return outputView::printHandStatus;

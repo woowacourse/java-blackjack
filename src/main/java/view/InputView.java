@@ -7,17 +7,30 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class InputView {
+    private static final String REQUEST_BETTING_MONEY_MESSAGE = "%n%s의 배팅 금액은?";
     private static final String INVALID_DELIMITER_MESSAGE = "잘못된 구분자 입력입니다.";
     private static final String REQUEST_WHETHER_GET_MORE_CARD = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n";
-
     private final Scanner scanner = new Scanner(System.in);
 
+
+    // TODO: 여기서 dto를 만드는 게 맞는지?
     public List<String> enterPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = scanner.nextLine();
         validateBlankInput(input);
         validatePlayerNames(input);
         return Arrays.asList(input.split(","));
+    }
+
+    public int enterBettingMoney(final String playerName) {
+        System.out.printf(REQUEST_BETTING_MONEY_MESSAGE, playerName);
+        String input = scanner.nextLine();
+        validateBlankInput(input);
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException("숫자를 입력해주세요.");
+        }
     }
 
     private static void validateBlankInput(final String input) {

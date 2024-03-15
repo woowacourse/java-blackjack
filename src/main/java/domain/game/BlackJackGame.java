@@ -1,9 +1,10 @@
 package domain.game;
 
-import controller.dto.InitialCardStatus;
-import controller.dto.ParticipantHandStatus;
-import controller.dto.ParticipantProfitResponse;
-import controller.dto.PlayerOutcome;
+import controller.dto.request.PlayerBettingMoney;
+import controller.dto.response.InitialCardStatus;
+import controller.dto.response.ParticipantHandStatus;
+import controller.dto.response.ParticipantProfitResponse;
+import controller.dto.response.PlayerOutcome;
 import domain.constants.Outcome;
 import domain.game.deck.Deck;
 import domain.game.deck.DeckGenerator;
@@ -29,8 +30,9 @@ public class BlackJackGame {
         this.deck = deck;
     }
 
-    public static BlackJackGame from(final List<String> playerNames, final DeckGenerator deckGenerator) {
-        return new BlackJackGame(Participants.from(playerNames), deckGenerator.generate());
+    public static BlackJackGame from(final List<PlayerBettingMoney> requests,
+                                     final DeckGenerator deckGenerator) {
+        return new BlackJackGame(Participants.from(requests), deckGenerator.generate());
     }
 
     public InitialCardStatus initialize() {
