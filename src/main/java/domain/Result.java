@@ -3,18 +3,39 @@ package domain;
 public enum Result {
     DEALER_WIN,
     PLAYER_WIN,
-    PUSH;
+    PLAYER_BLACK_JACK_WIN,
+    PUSH,
+    ;
 
     public static Result of(Dealer dealer, Player player) {
-        int playerTotalScore = player.getTotalScore();
-        int dealerTotalScore = dealer.getTotalScore();
-
-        if (player.isBust() || !dealer.isBust() && dealerTotalScore > playerTotalScore) {
-            return DEALER_WIN;
+        if (player.isBlackJack()) {
+            return getResultWhenPlayerBlackJack(dealer);
+        }
+        if (player.isBust()) {
+            return getResultWhenPlayerBust();
         }
 
-        if (dealer.isBust() || !player.isBust() && dealerTotalScore < playerTotalScore) {
+        return getResultWhenPlayerNotBustAndNotBlackJack(player, dealer);
+    }
+
+    private static Result getResultWhenPlayerBlackJack(Dealer dealer) {
+        if (dealer.isBlackJack()) {
+            return PUSH;
+        }
+
+        return PLAYER_BLACK_JACK_WIN;
+    }
+
+    private static Result getResultWhenPlayerBust() {
+        return DEALER_WIN;
+    }
+
+    private static Result getResultWhenPlayerNotBustAndNotBlackJack(Player player, Dealer dealer) {
+        if (dealer.isBust() || player.getTotalScore() > dealer.getTotalScore()) {
             return PLAYER_WIN;
+        }
+        if (dealer.isBlackJack() || player.getTotalScore() < dealer.getTotalScore()) {
+            return DEALER_WIN;
         }
 
         return PUSH;
