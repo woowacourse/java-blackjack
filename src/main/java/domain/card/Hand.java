@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Hand {
 
+    public static final int BLACKJACK_SCORE = 21;
+
     private final List<Card> cards;
 
     public Hand() {

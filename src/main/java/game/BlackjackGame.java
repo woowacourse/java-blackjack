@@ -12,8 +12,6 @@ import view.ResultView;
 
 public class BlackjackGame {
 
-    public static final int BLACKJACK_SCORE = 21;
-
     private final InputView inputView;
     private final ResultView resultView;
 

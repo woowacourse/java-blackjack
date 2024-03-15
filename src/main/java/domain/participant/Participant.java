@@ -3,7 +3,7 @@ package domain.participant;
 import static domain.BlackjackResultStatus.LOSE;
 import static domain.BlackjackResultStatus.PUSH;
 import static domain.BlackjackResultStatus.WIN;
-import static game.BlackjackGame.BLACKJACK_SCORE;
+import static domain.card.Hand.BLACKJACK_SCORE;
 
 import domain.BlackjackResultStatus;
 import domain.card.Card;
@@ -12,8 +12,8 @@ import domain.participant.attributes.Name;
 
 public abstract class Participant {
 
-    protected final Name name;
-    protected final Hand hand;
+    private final Name name;
+    private final Hand hand;
 
     public Participant(final Name name) {
         this.name = name;

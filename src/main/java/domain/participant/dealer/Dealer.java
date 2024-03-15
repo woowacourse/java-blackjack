@@ -1,6 +1,6 @@
 package domain.participant.dealer;
 
-import static game.BlackjackGame.BLACKJACK_SCORE;
+import static domain.card.Hand.BLACKJACK_SCORE;
 
 import java.util.List;
 
@@ -50,12 +50,12 @@ public class Dealer extends Participant {
 
     private void setHasSoftAce() {
         if (!hasSoftAce) {
-            hasSoftAce = hand.hasAce() && (hand.score(true) <= BLACKJACK_SCORE);
+            hasSoftAce = hand().hasAce() && (hand().score(true) <= BLACKJACK_SCORE);
         }
     }
 
     public Card peek() {
-        List<Card> cards = hand.toList();
+        List<Card> cards = hand().toList();
         return cards.get(0);
     }
 
@@ -65,6 +65,6 @@ public class Dealer extends Participant {
 
     @Override
     public int score() {
-        return hand.score(hasSoftAce);
+        return hand().score(hasSoftAce);
     }
 }

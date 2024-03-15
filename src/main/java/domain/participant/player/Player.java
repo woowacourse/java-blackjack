@@ -1,6 +1,6 @@
 package domain.participant.player;
 
-import static game.BlackjackGame.BLACKJACK_SCORE;
+import static domain.card.Hand.BLACKJACK_SCORE;
 
 import domain.participant.Participant;
 import domain.participant.attributes.Bet;
@@ -17,9 +17,9 @@ public class Player extends Participant {
 
     @Override
     public int score() {
-        int softScore = hand.score(true);
+        int softScore = hand().score(true);
         if (softScore > BLACKJACK_SCORE) {
-            return hand.score(false);
+            return hand().score(false);
         }
         return softScore;
     }
