@@ -27,20 +27,20 @@ public class Cards {
     }
 
     public Score calculateCardsTotalScore() {
-        Score totalScore = sumAllScores();
-        if (hasAce() && canBeAdjusted(totalScore)) {
+        Score totalScore = sumScores(cards);
+        if (hasAce(cards) && canBeAdjusted(totalScore)) {
             return adjustScoreForAce(totalScore);
         }
         return totalScore;
     }
 
-    private Score sumAllScores() {
+    private Score sumScores(final List<Card> cards) {
         return cards.stream()
                 .map(Card::getScore)
                 .reduce(Score.from(0), Score::plus);
     }
 
-    private boolean hasAce() {
+    private boolean hasAce(final List<Card> cards) {
         return cards.stream()
                 .anyMatch(Card::isAce);
     }
@@ -55,21 +55,16 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        Score sum = sumFrontTwoCards();
-        if (hasAceInFrontTwoCards()) {
+        List<Card> frontTwoCards = getFrontTwoCards();
+        Score sum = sumScores(frontTwoCards);
+        if (hasAce(frontTwoCards)) {
             return adjustScoreForAce(sum).equals(MAX_CARDS_TOTAL);
         }
         return sum.equals(MAX_CARDS_TOTAL);
     }
 
-    private Score sumFrontTwoCards() {
-        Score firstCardScore = get(0).getScore();
-        Score secondCardScore = get(1).getScore();
-        return firstCardScore.plus(secondCardScore);
-    }
-
-    private boolean hasAceInFrontTwoCards() {
-        return get(0).isAce() || get(1).isAce();
+    private List<Card> getFrontTwoCards() {
+        return List.of(get(0), get(1));
     }
 
     public boolean isBust() {
