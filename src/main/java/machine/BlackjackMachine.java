@@ -34,6 +34,11 @@ public class BlackjackMachine {
         printProfits(game);
     }
 
+    private BlackjackGame initializeGame() {
+        List<String> names = inputView.readNames();
+        return BlackjackGame.of(Players.withNames(names), new RandomCardGenerator());
+    }
+
     private void readBetAmount(BlackjackGame game) {
         for (Player player : game.getPlayers()) {
             int rawBetMoney = inputView.readBetAmount(player.getName());
@@ -46,11 +51,6 @@ public class BlackjackMachine {
         game.distributeStartingCards();
         outputView.printDistributionMessage(game);
         outputView.printStartingCardsOfAllParticipants(game);
-    }
-
-    private BlackjackGame initializeGame() {
-        List<String> names = inputView.readNames();
-        return BlackjackGame.of(Players.withNames(names), new RandomCardGenerator());
     }
 
     private void playPlayerTurns(BlackjackGame game) {
