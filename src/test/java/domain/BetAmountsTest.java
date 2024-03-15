@@ -45,7 +45,7 @@ public class BetAmountsTest {
 
         @DisplayName("배팅은 금액이 1,000원 미만이거나 1,000,000원을 초과할 경우 예외가 발생한다.")
         @ParameterizedTest
-        @ValueSource(ints = {900, 9999900})
+        @ValueSource(ints = {900, 1_000_100})
         void createFailWithAmountRange(int amount) {
 
             assertThatThrownBy(() -> betAmounts.addBetAmount(pobi, amount))
