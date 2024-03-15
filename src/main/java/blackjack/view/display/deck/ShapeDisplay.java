@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public enum ShapeDisplay {
     SPADE(Shape.SPADE, "스페이드"),
-    DIA(Shape.DIA, "다이아"),
+    DIA(Shape.DIA, "다이아몬드"),
     CLOVER(Shape.CLOVER, "클로버"),
     HEART(Shape.HEART, "하트"),
     ;

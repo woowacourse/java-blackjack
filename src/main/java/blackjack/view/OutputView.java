@@ -6,7 +6,7 @@ import blackjack.model.betting.Money;
 import blackjack.model.deck.Card;
 import blackjack.model.participant.Name;
 import blackjack.view.formatter.CardsFormatter;
-import blackjack.view.formatter.NameFinalProfitFormat;
+import blackjack.view.formatter.NameProfitFormat;
 import blackjack.view.formatter.PlayerNameFormatter;
 import blackjack.view.formatter.ScoreFormatter;
 import java.util.List;
@@ -30,7 +30,7 @@ public class OutputView {
     }
 
     public static void printNameAndCards(final Name name, final List<Card> cards) {
-        System.out.println(PlayerNameFormatter.format(name) + CardsFormatter.format(cards));
+        System.out.println(PlayerNameFormatter.formatWithCardComment(name) + CardsFormatter.format(cards));
     }
 
     public static void printDealerHit() {
@@ -42,7 +42,7 @@ public class OutputView {
     }
 
     public static void printFinalCardsAndScore(final NameCardsScore nameCardsScore) {
-        System.out.println(PlayerNameFormatter.format(nameCardsScore.name())
+        System.out.println(PlayerNameFormatter.formatWithCardComment(nameCardsScore.name())
                 + CardsFormatter.format(nameCardsScore.cards())
                 + ScoreFormatter.format(nameCardsScore.score()));
     }
@@ -58,6 +58,6 @@ public class OutputView {
     }
 
     private static String formatFinalResult(final NameProfit nameProfit) {
-        return NameFinalProfitFormat.format(nameProfit);
+        return NameProfitFormat.format(nameProfit);
     }
 }

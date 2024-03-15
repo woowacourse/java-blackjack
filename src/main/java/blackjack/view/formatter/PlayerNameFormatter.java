@@ -8,6 +8,6 @@ public class PlayerNameFormatter {
     }
 
     public static String format(Name name) {
-        return name.getRawName() + ": ";
+        return name.getRawName() + " : ";
     }
 }
