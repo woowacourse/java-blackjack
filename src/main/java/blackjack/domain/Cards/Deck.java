@@ -1,7 +1,7 @@
 package blackjack.domain.cards;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -11,8 +11,7 @@ public class Deck {
     private final List<Card> cards;
 
     public Deck() {
-        this.cards = new LinkedList<>();
-        addAllCard();
+        this.cards = addAllCard();
     }
 
     public Card pickRandomCard() {
@@ -21,14 +20,19 @@ public class Deck {
         return cards.remove(pickCardIndex);
     }
 
-    private void addAllCard() {
+    private List<Card> addAllCard() {
+        List<Card> allCards = new ArrayList<>();
         Arrays.stream(Rank.values())
-                .forEach(this::addAllShape);
+                .forEach(rank -> allCards.addAll(addAllShape(rank)));
+        return allCards;
     }
 
-    private void addAllShape(Rank rank) {
+    private List<Card> addAllShape(Rank rank) {
+        List<Card> shapeCards = new ArrayList<>();
         Arrays.stream(Shape.values())
-                .forEach((shape) -> cards.add(new Card(shape, rank)));
+                .map(shape -> new Card(shape, rank))
+                .forEach(shapeCards::add);
+        return shapeCards;
     }
 
     private void validateDeck() {
