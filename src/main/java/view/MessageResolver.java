@@ -4,8 +4,6 @@ import domain.betting.Money;
 import domain.card.Card;
 import domain.card.Score;
 import domain.card.Symbol;
-import domain.game.PlayerResult;
-import domain.game.PlayerResults;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.List;
@@ -61,42 +59,6 @@ public class MessageResolver {
 
     public String scoreText(Score score) {
         return String.valueOf(score.toInt());
-    }
-
-    public String dealerResultText(PlayerResults playerResults) {
-        return String.format("%s: %s%s%s",
-            DEALER_NAME,
-            dealerSingleResultText(playerResults.dealerWinCount(), WIN_TEXT),
-            dealerSingleResultText(playerResults.dealerTieCount(), TIE_TEXT),
-            dealerSingleResultText(playerResults.dealerLoseCount(), LOSE_TEXT)
-        );
-    }
-
-    private String dealerSingleResultText(long count, String suffix) {
-        if (count == 0) {
-            return "";
-        }
-        return count + suffix;
-    }
-
-    public String playerResultText(Player player, PlayerResults playerResults) {
-        return String.format("%s: %s", player.getName(), playerResultText(playerResults.resultBy(player)));
-    }
-
-    private String playerResultText(PlayerResult playerResult) {
-        if (playerResult == PlayerResult.WIN) {
-            return WIN_TEXT;
-        }
-        if (playerResult == PlayerResult.TIE) {
-            return TIE_TEXT;
-        }
-        if (playerResult == PlayerResult.LOSE) {
-            return LOSE_TEXT;
-        }
-        if (playerResult == PlayerResult.BLACKJACK) {
-            return "블랙잭";
-        }
-        throw new IllegalArgumentException("[ERROR] 존재하지 않는 WinLose입니다.");
     }
 
     public String moneyText(Money money) {

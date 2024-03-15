@@ -104,7 +104,7 @@ public class BlackjackMachine {
     private void distributeMoney(Players players, PlayerResults results, BetInfo betInfo, ProfitInfo profitInfo) {
         for (Player player : players.getPlayers()) {
             Money money = betInfo.findBetAmountBy(player);
-            Money profitMoney = money.calculateProfit(results.resultBy(player));
+            Money profitMoney = money.calculateProfit(results.resultOf(player));
             profitInfo.add(player, profitMoney);
         }
     }

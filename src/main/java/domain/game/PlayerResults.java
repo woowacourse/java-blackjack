@@ -3,9 +3,7 @@ package domain.game;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class PlayerResults {
 
@@ -23,30 +21,21 @@ public class PlayerResults {
         resultMap.put(player, decideResult(player, dealer));
     }
 
-    public static PlayerResults of(List<Player> players, Dealer dealer) {
-        return new PlayerResults(
-            players.stream()
-                .collect(Collectors.toMap(
-                    player -> player,
-                    player -> decideResult(player, dealer)))
-        );
-    }
-
-    public static PlayerResult decideResult(Player player, Dealer dealer) {
+    public PlayerResult decideResult(Player player, Dealer dealer) {
         if (player.isBust()) {
             return PlayerResult.LOSE;
         }
         return decideResultByBlackjack(player, dealer);
     }
 
-    private static PlayerResult decideResultByBlackjack(Player player, Dealer dealer) {
+    private PlayerResult decideResultByBlackjack(Player player, Dealer dealer) {
         if (player.isBlackjack() && dealer.isNotBlackjack()) {
             return PlayerResult.BLACKJACK;
         }
         return decideResultByScore(player, dealer);
     }
 
-    private static PlayerResult decideResultByScore(Player player, Dealer dealer) {
+    private PlayerResult decideResultByScore(Player player, Dealer dealer) {
         if (dealer.isBust()) {
             return PlayerResult.WIN;
         }
@@ -59,25 +48,7 @@ public class PlayerResults {
         return PlayerResult.TIE;
     }
 
-    public long dealerWinCount() {
-        return resultMap.values().stream()
-            .filter(value -> value == PlayerResult.LOSE)
-            .count();
-    }
-
-    public long dealerLoseCount() {
-        return resultMap.values().stream()
-            .filter(value -> value == PlayerResult.WIN)
-            .count();
-    }
-
-    public long dealerTieCount() {
-        return resultMap.values().stream()
-            .filter(value -> value == PlayerResult.TIE)
-            .count();
-    }
-
-    public PlayerResult resultBy(Player player) {
+    public PlayerResult resultOf(Player player) {
         return resultMap.get(player);
     }
 }

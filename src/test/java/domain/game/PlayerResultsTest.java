@@ -15,11 +15,13 @@ class PlayerResultsTest {
 
     private Player player;
     private Dealer dealer;
+    private PlayerResults playerResults;
 
     @BeforeEach
     void beforeEach() {
         player = Player.withName("name");
         dealer = Dealer.withNoCards();
+        playerResults = PlayerResults.withNoEntry();
     }
 
     @Test
@@ -27,10 +29,9 @@ class PlayerResultsTest {
     void tie_PlayerScoreIsEqualToDealerScore() {
         player.tryReceive(new Card(Rank.EIGHT, Symbol.DIAMOND));
         dealer.tryReceive(new Card(Rank.EIGHT, Symbol.HEART));
+        playerResults.addResultOf(player, dealer);
 
-        PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
-
-        Assertions.assertThat(playerResults.resultBy(player)).isEqualTo(PlayerResult.TIE);
+        Assertions.assertThat(playerResults.resultOf(player)).isEqualTo(PlayerResult.TIE);
     }
 
     @Test
@@ -45,9 +46,9 @@ class PlayerResultsTest {
             new Card(Rank.ACE, Symbol.CLUB)
         ));
 
-        PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
+        playerResults.addResultOf(player, dealer);
 
-        Assertions.assertThat(playerResults.resultBy(player)).isEqualTo(PlayerResult.TIE);
+        Assertions.assertThat(playerResults.resultOf(player)).isEqualTo(PlayerResult.TIE);
     }
 
     @Test
@@ -63,9 +64,9 @@ class PlayerResultsTest {
             new Card(Rank.THREE, Symbol.CLUB)
         ));
 
-        PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
+        playerResults.addResultOf(player, dealer);
 
-        Assertions.assertThat(playerResults.resultBy(player)).isEqualTo(PlayerResult.BLACKJACK);
+        Assertions.assertThat(playerResults.resultOf(player)).isEqualTo(PlayerResult.BLACKJACK);
     }
 
     @Test
@@ -74,9 +75,9 @@ class PlayerResultsTest {
         player.tryReceive(new Card(Rank.EIGHT, Symbol.DIAMOND));
         dealer.tryReceive(new Card(Rank.NINE, Symbol.HEART));
 
-        PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
+        playerResults.addResultOf(player, dealer);
 
-        Assertions.assertThat(playerResults.resultBy(player)).isEqualTo(PlayerResult.LOSE);
+        Assertions.assertThat(playerResults.resultOf(player)).isEqualTo(PlayerResult.LOSE);
     }
 
     @Test
@@ -85,9 +86,9 @@ class PlayerResultsTest {
         player.tryReceive(new Card(Rank.NINE, Symbol.DIAMOND));
         dealer.tryReceive(new Card(Rank.EIGHT, Symbol.HEART));
 
-        PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
+        playerResults.addResultOf(player, dealer);
 
-        Assertions.assertThat(playerResults.resultBy(player)).isEqualTo(PlayerResult.WIN);
+        Assertions.assertThat(playerResults.resultOf(player)).isEqualTo(PlayerResult.WIN);
     }
 
     @Test
@@ -98,9 +99,9 @@ class PlayerResultsTest {
         player.tryReceive(new Card(Rank.TWO, Symbol.HEART));
         dealer.tryReceive(new Card(Rank.KING, Symbol.HEART));
 
-        PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
+        playerResults.addResultOf(player, dealer);
 
-        Assertions.assertThat(playerResults.resultBy(player)).isEqualTo(PlayerResult.LOSE);
+        Assertions.assertThat(playerResults.resultOf(player)).isEqualTo(PlayerResult.LOSE);
     }
 
     @Test
@@ -111,9 +112,9 @@ class PlayerResultsTest {
         dealer.tryReceive(new Card(Rank.SIX, Symbol.HEART));
         player.tryReceive(new Card(Rank.KING, Symbol.HEART));
 
-        PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
+        playerResults.addResultOf(player, dealer);
 
-        Assertions.assertThat(playerResults.resultBy(player)).isEqualTo(PlayerResult.WIN);
+        Assertions.assertThat(playerResults.resultOf(player)).isEqualTo(PlayerResult.WIN);
     }
 
     @Test
@@ -127,53 +128,8 @@ class PlayerResultsTest {
         player.tryReceive(new Card(Rank.KING, Symbol.CLUB));
         player.tryReceive(new Card(Rank.TWO, Symbol.HEART));
 
-        PlayerResults playerResults = PlayerResults.of(List.of(player), dealer);
+        playerResults.addResultOf(player, dealer);
 
-        Assertions.assertThat(playerResults.resultBy(player)).isEqualTo(PlayerResult.LOSE);
-    }
-
-    @Test
-    @DisplayName("딜러의 승리 횟수를 셀 수 있다.")
-    void dealerWinCount() {
-        Player player1 = Player.withName("user1");
-        Player player2 = Player.withName("user2");
-        Dealer dealer = Dealer.withNoCards();
-
-        player1.tryReceive(new Card(Rank.TWO, Symbol.DIAMOND));
-        player2.tryReceive(new Card(Rank.TWO, Symbol.SPADE));
-        dealer.tryReceive(new Card(Rank.KING, Symbol.HEART));
-        PlayerResults playerResults = PlayerResults.of(List.of(player1, player2), dealer);
-
-        Assertions.assertThat(playerResults.dealerWinCount()).isEqualTo(2);
-    }
-
-    @Test
-    @DisplayName("딜러의 패배 횟수를 셀 수 있다.")
-    void dealerLoseCount() {
-        Player player1 = Player.withName("user1");
-        Player player2 = Player.withName("user2");
-        Dealer dealer = Dealer.withNoCards();
-
-        player1.tryReceive(new Card(Rank.KING, Symbol.DIAMOND));
-        player2.tryReceive(new Card(Rank.KING, Symbol.SPADE));
-        dealer.tryReceive(new Card(Rank.TWO, Symbol.HEART));
-        PlayerResults playerResults = PlayerResults.of(List.of(player1, player2), dealer);
-
-        Assertions.assertThat(playerResults.dealerLoseCount()).isEqualTo(2);
-    }
-
-    @Test
-    @DisplayName("딜러의 무승부 횟수를 셀 수 있다.")
-    void dealerTieCount() {
-        Player player1 = Player.withName("user1");
-        Player player2 = Player.withName("user2");
-        Dealer dealer = Dealer.withNoCards();
-
-        player1.tryReceive(new Card(Rank.KING, Symbol.DIAMOND));
-        player2.tryReceive(new Card(Rank.KING, Symbol.SPADE));
-        dealer.tryReceive(new Card(Rank.KING, Symbol.HEART));
-        PlayerResults playerResults = PlayerResults.of(List.of(player1, player2), dealer);
-
-        Assertions.assertThat(playerResults.dealerTieCount()).isEqualTo(2);
+        Assertions.assertThat(playerResults.resultOf(player)).isEqualTo(PlayerResult.LOSE);
     }
 }
