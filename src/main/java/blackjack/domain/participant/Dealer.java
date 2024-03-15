@@ -8,8 +8,6 @@ import blackjack.domain.strategy.CardShuffleStrategy;
 import blackjack.utils.Constants;
 
 public class Dealer extends Participant {
-    private static final int DEALER_MIN_SCORE_POLICY = 16;
-
     private final CardDeck cardDeck;
     private final CardShuffleStrategy cardShuffleStrategy;
 
@@ -34,7 +32,7 @@ public class Dealer extends Participant {
     @Override
     public boolean canReceiveCard() {
         final Score score = calculateScore();
-        final Score standardScore = Score.valueOf(DEALER_MIN_SCORE_POLICY);
+        final Score standardScore = Score.valueOf(Constants.DEALER_MIN_SCORE_POLICY);
 
         return score.isLessThan(standardScore) || score.equals(standardScore);
     }

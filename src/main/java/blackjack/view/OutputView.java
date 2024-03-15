@@ -3,9 +3,10 @@ package blackjack.view;
 import blackjack.dto.CardDto;
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.ParticipantsDto;
-import blackjack.utils.Constants;
 
 import java.util.List;
+
+import static blackjack.utils.Constants.*;
 
 public class OutputView {
     private static final String DELIMITER = ", ";
@@ -15,7 +16,7 @@ public class OutputView {
         final List<String> playerNames = getParticipantNames(players.participants());
         final String playerNamesMessage = joinWithComma(playerNames);
 
-        System.out.printf("%n%s와 %s에게 %d장을 나누었습니다.%n", dealerName, playerNamesMessage, Constants.INITIAL_CARD_COUNT);
+        System.out.printf("%n%s와 %s에게 %d장을 나누었습니다.%n", dealerName, playerNamesMessage, INITIAL_CARD_COUNT);
     }
 
     private List<String> getParticipantNames(final List<ParticipantDto> participants) {
@@ -67,5 +68,10 @@ public class OutputView {
     public void printParticipantCards(final ParticipantDto participant) {
         final String participantCardsMessage = generateParticipantCardsMessage(participant);
         System.out.println(participantCardsMessage);
+    }
+
+    public void printDealerReceiveCardMessage() {
+        final String message = String.format("%n%s는 %d이하라 한장의 카드를 더 받았습니다.%n", DEFAULT_NAME_OF_DEALER, DEALER_MIN_SCORE_POLICY);
+        System.out.println(message);
     }
 }
