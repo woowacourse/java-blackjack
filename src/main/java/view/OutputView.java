@@ -1,7 +1,10 @@
 package view;
 
 import domain.Dealer;
-import dto.*;
+import dto.ParticipantHandDto;
+import dto.ParticipantSettlementDto;
+import dto.ParticipantsHandDto;
+import dto.PlayersNameDto;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +14,7 @@ public class OutputView {
     public void printInitialDealMessage(PlayersNameDto playersNameDto) {
         List<String> playerNames = playersNameDto.names();
         String joinedPlayerNames = String.join(", ", playerNames);
-        String message = String.format("%s와 %s에게 2장을 나누었습니다.", Dealer.DEALER_NAME, joinedPlayerNames);
+        String message = String.format("%s와 %s에게 2장을 나누었습니다.%n", Dealer.DEALER_NAME, joinedPlayerNames);
         System.out.println(message);
     }
 
@@ -61,29 +64,13 @@ public class OutputView {
                 buildPlayerHands(participantHandDto), participantHandDto.score());
     }
 
-    public void printWinLoss(DealerWinLossDto dealerWinLossDto, PlayersWinLossDto playersWinLossDto) {
-        System.out.println("\n## 최종 승패");
-        printDealerWinLoss(dealerWinLossDto);
-        printPlayerWinLoss(playersWinLossDto);
-    }
+    public void printSettlement(ParticipantSettlementDto participantSettlementDto) {
+        StringBuilder stringBuilder = new StringBuilder("\n##최종 수익\n");
+        Map<String, Integer> participantSettlements = participantSettlementDto.result();
 
-    private void printDealerWinLoss(DealerWinLossDto dealerWinLossDto) {
-        String dealerWinLoss = String.format("%s: %d승 %d패 ",
-                Dealer.DEALER_NAME, dealerWinLossDto.winCount(), dealerWinLossDto.lossCount());
-
-        StringBuilder stringBuilder = new StringBuilder(dealerWinLoss);
-        if (dealerWinLossDto.pushCount() != 0) {
-            String pushCount = String.format("%d무", dealerWinLossDto.pushCount());
-            stringBuilder.append(pushCount);
-        }
-        System.out.println(stringBuilder);
-    }
-
-    private void printPlayerWinLoss(PlayersWinLossDto playersWinLossDto) {
-        StringBuilder stringBuilder = new StringBuilder();
-        Map<String, String> playerResults = playersWinLossDto.playerResults();
-        for (Map.Entry<String, String> playerResult : playerResults.entrySet()) {
-            stringBuilder.append(String.format("%s: %s%n", playerResult.getKey(), playerResult.getValue()));
+        for (Map.Entry<String, Integer> participantSettlement : participantSettlements.entrySet()) {
+            stringBuilder.append(String.format("%s: %d%n",
+                    participantSettlement.getKey(), participantSettlement.getValue()));
         }
         System.out.println(stringBuilder);
     }
