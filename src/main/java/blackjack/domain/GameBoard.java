@@ -28,7 +28,7 @@ public class GameBoard {
     }
 
     public boolean isDealerNotOver() {
-        return dealer.isNotOver(Dealer.DEALER_BOUNDARY_SCORE);
+        return dealer.isNotOver();
     }
 
     public void distributeInitialHand() {

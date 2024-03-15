@@ -1,12 +1,13 @@
 package blackjack.controller;
 
 import blackjack.domain.GameBoard;
+import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.GamblingMoney;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
 import blackjack.dto.BettingMoneyDto;
-import blackjack.dto.PlayerDto;
+import blackjack.dto.GamerDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -48,11 +49,11 @@ public class BlackjackGame {
 
     private void startSetting(GameBoard gameBoard) {
         gameBoard.distributeInitialHand();
-        PlayerDto dealerDto = PlayerDto.from(gameBoard.getDealer());
-        List<PlayerDto> playersDto = gameBoard.getPlayers()
+        GamerDto dealerDto = GamerDto.from(gameBoard.getDealer());
+        List<GamerDto> playersDto = gameBoard.getPlayers()
                 .getPlayers()
                 .stream()
-                .map(PlayerDto::from)
+                .map(GamerDto::from)
                 .toList();
         outputView.printSetting(dealerDto, playersDto);
         outputView.printNewLine();
@@ -78,18 +79,18 @@ public class BlackjackGame {
                 inputView.readCommand(gameBoard.getPlayerName(playerIndex).getValue())) {
             gameBoard.addCardToPlayer(playerIndex);
             Player player = gameBoard.getPlayer(playerIndex);
-            outputView.printCurrentCard(PlayerDto.from(player));
+            outputView.printCurrentCard(GamerDto.from(player));
             outputView.printNewLine();
         }
     }
 
     private void handleResult(GameBoard gameBoard) {
-        Player dealer = gameBoard.getDealer();
-        PlayerDto dealerDto = PlayerDto.from(dealer);
-        List<PlayerDto> playersDto = gameBoard.getPlayers()
+        Dealer dealer = gameBoard.getDealer();
+        GamerDto dealerDto = GamerDto.from(dealer);
+        List<GamerDto> playersDto = gameBoard.getPlayers()
                 .getPlayers()
                 .stream()
-                .map(PlayerDto::from)
+                .map(GamerDto::from)
                 .toList();
         outputView.printScoreResult(dealerDto, playersDto);
     }

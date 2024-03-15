@@ -5,7 +5,7 @@ import static blackjack.domain.GameBoard.INITIAL_CARD_COUNT;
 import blackjack.domain.cards.Card;
 import blackjack.domain.cards.Deck;
 
-public class Dealer extends Player {
+public class Dealer extends Gamer {
     public static final int DEALER_BOUNDARY_SCORE = 17;
     private static final Name dealerName = new Name("딜러");
 
@@ -27,6 +27,11 @@ public class Dealer extends Player {
     }
 
     public void gainMoney(GamblingMoney gamblingMoney) {
-        betMoney(gamblingMoney);
+        playerStatus.addMoney(gamblingMoney);
+    }
+
+    @Override
+    public boolean isNotOver() {
+        return playerStatus.calculateScore() < DEALER_BOUNDARY_SCORE;
     }
 }

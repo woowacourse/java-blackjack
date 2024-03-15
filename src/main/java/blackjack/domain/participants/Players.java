@@ -1,8 +1,6 @@
 package blackjack.domain.participants;
 
 
-import static blackjack.domain.participants.Player.BLACKJACK_SCORE;
-
 import blackjack.domain.cards.Card;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -30,7 +28,7 @@ public class Players {
     }
 
     public boolean isPlayerNotOver(int playerIndex) {
-        return players.get(playerIndex).isNotOver(BLACKJACK_SCORE);
+        return players.get(playerIndex).isNotOver();
     }
 
     public int size() {
