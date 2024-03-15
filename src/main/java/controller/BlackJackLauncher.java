@@ -38,11 +38,11 @@ public class BlackJackLauncher {
 
     private void proceedPlayersTurn(Casino casino) {
         while (casino.hasAvailablePlayer()) {
-            PlayerFaceUpResult currentPlayerFaceUpInfo = casino.getNextPlayerFaceUpInfo();
+            PlayerFaceUpResult nextPlayerFaceUpInfo = casino.getNextPlayerFaceUpInfo();
             Choice playerChoice = inputRetryHelper(() -> Choice.from(
-                    inputPlayerHitChoice(currentPlayerFaceUpInfo.getPartipantNameAsString())));
+                    inputPlayerHitChoice(nextPlayerFaceUpInfo.getPartipantNameAsString())));
             casino.distinctPlayerChoice(playerChoice);
-            showPlayerChoiceResult(playerChoice, currentPlayerFaceUpInfo);
+            showPlayerChoiceResult(playerChoice, nextPlayerFaceUpInfo);
         }
     }
 
@@ -67,8 +67,6 @@ public class BlackJackLauncher {
     }
 
     private void showFinalMatchResults(Casino casino) {
-
-        List<PlayerMatchResult> playerMatchResults = casino.calculatePlayerMatchResults();
         OutputView.printScoreResults();
     }
 }
