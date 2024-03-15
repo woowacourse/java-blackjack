@@ -45,6 +45,10 @@ public class Score {
         return largeAceScore;
     }
 
+    public boolean isBlackJack() {
+        return score == BLACKJACK;
+    }
+
     public int getScore() {
         return score;
     }

@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Hand {
 
+    private static final int BLACKJACK_COUNT = 2;
+
     private final List<Card> cards;
 
     Hand(List<Card> cards) {
@@ -38,6 +40,10 @@ public class Hand {
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public boolean isBlackJack() {
+        return calculateScore().isBlackJack() && getCards().size() == BLACKJACK_COUNT;
     }
 
     public List<Card> getCards() {
