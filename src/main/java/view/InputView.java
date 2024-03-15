@@ -37,11 +37,19 @@ public class InputView {
         }
     }
 
-    public static String readBetting(Supplier<String> input, String playerName) {
+    public static int readBetting(Supplier<String> input, String playerName) {
         System.out.printf("%n%s의 배팅 금액은?%n", playerName);
         String inputBetting = input.get();
         validateEmpty(inputBetting);
-        return inputBetting;
+        return getAndValidateNumber(inputBetting);
+    }
+
+    private static int getAndValidateNumber(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("베팅 금액은 양의 정수여야 합니다");
+        }
     }
 
     public static boolean readAnswer(Supplier<String> input, String name) {
