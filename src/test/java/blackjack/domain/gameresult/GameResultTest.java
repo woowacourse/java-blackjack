@@ -31,14 +31,14 @@ class GameResultTest {
         return Stream.of(arguments(players, new Dealer()));
     }
 
-    @DisplayName("GameResult는 게임 베팅의 전체 수익 합산을 반환한다")
+    @DisplayName("GameResult는 딜러의 수익 합산을 반환한다")
     @ParameterizedTest
     @MethodSource("makeWinningPlayersAndTestDealer")
-    void should_returnSumOfProfit(Players players, Dealer dealer) {
+    void should_returnDealerProfit(Players players, Dealer dealer) {
         GameResult gameResult = GameResult.of(dealer, players);
 
-        double expectedProfit = 150.0;
-        double actualProfit = gameResult.getSumOfProfit();
+        double expectedProfit = -150.0;
+        double actualProfit = gameResult.getDealerProfit();
 
         assertThat(actualProfit).isEqualTo(expectedProfit);
     }

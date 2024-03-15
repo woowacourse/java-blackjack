@@ -87,11 +87,8 @@ public class OutputView {
                 handsScore.toInt());
     }
 
-    // TODO -1 곱하는 로직 도메인으로 넣기
     private static void printDealerProfitResult(String dealerName, GameResult gameResult) {
-        Double dealerProfit = -1 * gameResult.getSumOfProfit();
-
-        System.out.printf(FINAL_RESULT_FORMAT, dealerName, dealerProfit);
+        System.out.printf(FINAL_RESULT_FORMAT, dealerName, gameResult.getDealerProfit());
     }
 
     private static void printPlayerProfitResult(Map<Player, Profit> gameResult) {

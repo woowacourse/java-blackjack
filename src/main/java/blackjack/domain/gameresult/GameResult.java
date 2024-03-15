@@ -33,8 +33,8 @@ public class GameResult {
         return Profit.from(profit);
     }
 
-    public double getSumOfProfit() {
-        return profitResult.values()
+    public double getDealerProfit() {
+        return -1 * profitResult.values()
                 .stream()
                 .mapToDouble(Profit::getProfit)
                 .sum();
