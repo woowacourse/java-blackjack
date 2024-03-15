@@ -1,12 +1,10 @@
 package model;
 
 import model.card.CardDeck;
-import model.card.CardSize;
 import model.card.Cards;
 import model.player.Dealer;
 import model.player.Participant;
 import model.player.Participants;
-import model.player.User;
 
 import java.util.List;
 import java.util.Map;
@@ -60,30 +58,23 @@ public class BlackJack {
     }
 
     public Map<Participant, Outcome> matchParticipantsOutcome() {
-        List<Participant> sumPlayers = participants.participants();
-        return sumPlayers.stream().collect(
-                toMap(
-                        participant -> participant,
-                        participant -> participant.findOutcome(dealer.isNotHit(), dealer.findPlayerDifference())
-                ));
+        return participants.matchParticipantsOutcome(dealer.isNotHit(), dealer.findPlayerDifference());
     }
 
-    public Map<String, Cards> mapToUsersNameAndCards() {
-        return participants.participants()
-                .stream()
-                .collect(toMap(User::getName, User::getCards));
+    public Map<String, Cards> matchUsersNameAndCards() {
+        return participants.matchUsersNameAndCards();
     }
 
     public int findDealerRevenue() {
-        return participants.mapToNameAndRevenues(dealer.isNotHit(), dealer.findPlayerDifference())
+        return matchNameAndRevenues()
                 .values()
                 .stream()
                 .mapToInt(money -> money)
                 .sum() * -1;
     }
 
-    public Map<String, Integer> mapToNameAndRevenues() {
-        return participants.mapToNameAndRevenues(dealer.isNotHit(), dealer.findPlayerDifference());
+    public Map<String, Integer> matchNameAndRevenues() {
+        return participants.matchNameAndRevenues(dealer.isNotHit(), dealer.findPlayerDifference());
     }
 
     public List<String> findParticipantsName() {

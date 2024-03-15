@@ -13,7 +13,6 @@ import view.OutputView;
 
 import java.util.List;
 import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 public class BlackJackController {
 
@@ -29,13 +28,13 @@ public class BlackJackController {
         BlackJack blackJack = createBlackJack();
 
         outputView.printPlayerNames(blackJack.findParticipantsName());
-        outputView.printPlayerCards(blackJack.mapToUsersNameAndCards(), blackJack.mapToDealerNameAndCards());
+        outputView.printPlayerCards(blackJack.matchUsersNameAndCards(), blackJack.mapToDealerNameAndCards());
 
         offerMoreCards(blackJack);
 
-        outputView.printBlackJackScore(blackJack.mapToUsersNameAndCards(), blackJack.mapToDealerNameAndCards());
+        outputView.printBlackJackScore(blackJack.matchUsersNameAndCards(), blackJack.mapToDealerNameAndCards());
         //outputView.printPlayersOutcome(blackJack.getDealerOutCome(), blackJack.matchParticipantsOutcome());
-        outputView.printParticipantsRevenue(blackJack.findDealerRevenue(), blackJack.mapToNameAndRevenues());
+        outputView.printParticipantsRevenue(blackJack.findDealerRevenue(), blackJack.matchNameAndRevenues());
     }
 
     private BlackJack createBlackJack() {

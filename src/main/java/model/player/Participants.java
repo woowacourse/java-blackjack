@@ -1,5 +1,6 @@
 package model.player;
 
+import model.Outcome;
 import model.card.Card;
 import model.card.Cards;
 
@@ -56,7 +57,20 @@ public record Participants(List<Participant> participants) {
                 .map(participant -> participant.name).toList();
     }
 
-    public Map<String, Integer> mapToNameAndRevenues(boolean isOtherNotHit, int otherDifference) {
+    public Map<Participant, Outcome> matchParticipantsOutcome(boolean isOtherNotHit, int otherDifference) {
+        return participants.stream().collect(
+                toMap(
+                        participant -> participant,
+                        participant -> participant.findOutcome(isOtherNotHit, otherDifference)
+                ));
+    }
+
+    public Map<String, Cards> matchUsersNameAndCards() {
+        return participants.stream()
+                .collect(toMap(User::getName, User::getCards));
+    }
+
+    public Map<String, Integer> matchNameAndRevenues(boolean isOtherNotHit, int otherDifference) {
         return participants.stream()
                 .collect(toMap(
                         User::getName,
