@@ -8,13 +8,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class MoneyTest {
+public class ProfitTest {
     @Test
     @DisplayName("승리 시, 베팅 금액만큼 금액을 얻는다.")
     void betAmountTimesTest() {
-        Money money = new Money(10000);
+        Profit profit = new Profit(10000);
 
-        Money newAmount = money.change(WIN);
+        Profit newAmount = profit.change(WIN);
 
         assertThat(newAmount.value()).isEqualTo(10000);
     }
@@ -22,9 +22,9 @@ public class MoneyTest {
     @Test
     @DisplayName("무승부 시, 0원이 된다.")
     void betAmountDrawTest() {
-        Money money = new Money(10000);
+        Profit profit = new Profit(10000);
 
-        Money newAmount = money.change(DRAW);
+        Profit newAmount = profit.change(DRAW);
 
         assertThat(newAmount.value()).isEqualTo(0);
     }
@@ -32,9 +32,9 @@ public class MoneyTest {
     @Test
     @DisplayName("패배 시, 베팅 금액을 잃는다.")
     void betAmountLoseTest() {
-        Money money = new Money(10000);
+        Profit profit = new Profit(10000);
 
-        Money newAmount = money.change(LOSE);
+        Profit newAmount = profit.change(LOSE);
 
         assertThat(newAmount.value()).isEqualTo(-10000);
     }
@@ -42,9 +42,9 @@ public class MoneyTest {
     @Test
     @DisplayName("블랙잭 배수만큼 곱한다.")
     void changeByBlackJackTest() {
-        Money money = new Money(10000);
+        Profit profit = new Profit(10000);
 
-        Money newAmount = money.changeByBlackjack();
+        Profit newAmount = profit.changeByBlackjack();
 
         assertThat(newAmount.value()).isEqualTo(15000);
     }

@@ -7,18 +7,23 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public class Players {
+public class PlayerProfits {
     public static final int DEALER_MULTIPLIER = -1;
-    private final Map<Player, Money> playersMoney;
+    private final Map<Player, Profit> playersMoney;
 
-    public Players(Map<Player, Money> playersMoney) {
+    public PlayerProfits(Map<Player, Profit> playersMoney) {
         this.playersMoney = playersMoney;
     }
 
-    public Players generateMoneyResult(Dealer dealer) {
-        return new Players(playersMoney.entrySet()
+    public void forEachPlayer(Consumer<Player> consumer) {
+        playersMoney.keySet().forEach(consumer);
+    }
+
+    public PlayerProfits generateMoneyResult(Dealer dealer) {
+        return new PlayerProfits(playersMoney.entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         Entry::getKey,
@@ -28,12 +33,12 @@ public class Players {
                 )));
     }
 
-    private Money moneyByGameResult(Dealer dealer, Entry<Player, Money> entry) {
-        Money money = changeMoneyIfBlackjack(entry);
-        return money.change(entry.getKey().generateResult(dealer));
+    private Profit moneyByGameResult(Dealer dealer, Entry<Player, Profit> entry) {
+        Profit profit = changeMoneyIfBlackjack(entry);
+        return profit.change(entry.getKey().generateResult(dealer));
     }
 
-    private Money changeMoneyIfBlackjack(Entry<Player, Money> entry) {
+    private Profit changeMoneyIfBlackjack(Entry<Player, Profit> entry) {
         if (entry.getKey().isBlackjack()) {
             return entry.getValue().changeByBlackjack();
         }
@@ -43,15 +48,15 @@ public class Players {
     public int calculateDealerMoney() {
         return playersMoney.values()
                 .stream()
-                .mapToInt(Money::value)
+                .mapToInt(Profit::value)
                 .sum() * DEALER_MULTIPLIER;
     }
 
-    public Set<Player> keySet() {
+    public Set<Player> getPlayers() {
         return playersMoney.keySet();
     }
 
-    public void forEach(BiConsumer<Player, Money> biConsumer) {
+    public void forEach(BiConsumer<Player, Profit> biConsumer) {
         playersMoney.forEach(biConsumer);
     }
 }

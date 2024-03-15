@@ -5,14 +5,13 @@ import static view.Command.YES;
 import domain.Deck;
 import domain.DeckGenerator;
 import domain.ExceptionHandler;
-import domain.money.Money;
-import domain.money.Players;
+import domain.money.PlayerProfits;
+import domain.money.Profit;
 import domain.user.Dealer;
 import domain.user.Hand;
 import domain.user.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 import view.Command;
 import view.InputView;
@@ -21,15 +20,15 @@ import view.OutputView;
 public class BlackjackRunner {
     public void play() {
         Deck deck = new Deck(new DeckGenerator().generate());
-        Players players = new Players(inputPlayersMoney(deck));
+        PlayerProfits playerProfits = new PlayerProfits(inputPlayersMoney(deck));
         Dealer dealer = new Dealer(new Hand(deck.drawCard(), deck.drawCard()));
-        OutputView.printStartStatus(dealer.getHand(), players.keySet());
-        doPlayersTurn(players.keySet(), deck);
+        OutputView.printStartStatus(dealer.getHand(), playerProfits.getPlayers());
+        doPlayersTurn(playerProfits, deck);
         doDealersTurn(dealer, deck);
-        doResult(players, dealer);
+        doResult(playerProfits, dealer);
     }
 
-    private Map<Player, Money> inputPlayersMoney(Deck deck) {
+    private Map<Player, Profit> inputPlayersMoney(Deck deck) {
         return ExceptionHandler.handle(InputView::inputNames)
                 .stream()
                 .collect(Collectors.toMap(
@@ -40,14 +39,12 @@ public class BlackjackRunner {
                 ));
     }
 
-    private Money getValidatedMoney(String nameValue) {
+    private Profit getValidatedMoney(String nameValue) {
         return ExceptionHandler.handle(() -> InputView.inputMoney(nameValue));
     }
 
-    private void doPlayersTurn(Set<Player> players, Deck deck) {
-        for (Player player : players) {
-            doPlayerTurn(deck, player);
-        }
+    private void doPlayersTurn(PlayerProfits playerProfits, Deck deck) {
+        playerProfits.forEachPlayer(player -> doPlayerTurn(deck, player));
     }
 
     private void doPlayerTurn(Deck deck, Player player) {
@@ -78,13 +75,13 @@ public class BlackjackRunner {
         return ExceptionHandler.handle(() -> InputView.inputAddCommand(nameValue));
     }
 
-    private void doResult(Players players, Dealer dealer) {
-        Players resultPlayers = players.generateMoneyResult(dealer);
-        printGameResult(dealer, resultPlayers);
+    private void doResult(PlayerProfits playerProfits, Dealer dealer) {
+        PlayerProfits resultPlayerProfits = playerProfits.generateMoneyResult(dealer);
+        printGameResult(dealer, resultPlayerProfits);
     }
 
-    private void printGameResult(Dealer dealer, Players players) {
-        OutputView.printAllUserCardsAndSum(dealer.getHand(), players.keySet());
-        OutputView.printFinalResult(players);
+    private void printGameResult(Dealer dealer, PlayerProfits playerProfits) {
+        OutputView.printAllUserCardsAndSum(dealer.getHand(), playerProfits.getPlayers());
+        OutputView.printFinalResult(playerProfits);
     }
 }

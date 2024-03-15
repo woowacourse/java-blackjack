@@ -19,17 +19,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class PlayersTest {
+class PlayersProfitTest {
     @ParameterizedTest(name = "{2}")
     @CsvSource(value = {"SEVEN,1000,win", "SIX,0,draw", "FIVE,-1000,lose"})
     @DisplayName("플레이 결과에 따라 플레이어의 돈을 바꾼다.")
     void changeByPlayerResultsWinTest(Number number, int moneyValue, String result) {
         Player player = new Player(new Name("aa"), new Hand(new Card(SPADE, number)));
         Dealer dealer = new Dealer(new Hand(new Card(SPADE, SIX)));
-        Players players = new Players(new HashMap<>(Map.of(player, new Money(1000))));
-        Players resultPlayers = players.generateMoneyResult(dealer);
+        PlayerProfits playerProfits = new PlayerProfits(new HashMap<>(Map.of(player, new Profit(1000))));
+        PlayerProfits resultPlayerProfits = playerProfits.generateMoneyResult(dealer);
 
-        assertThat(resultPlayers.calculateDealerMoney() * -1).isEqualTo(moneyValue);
+        assertThat(resultPlayerProfits.calculateDealerMoney() * -1).isEqualTo(moneyValue);
     }
 
     @Test
@@ -37,10 +37,10 @@ class PlayersTest {
     void earn150PercentMoneyWhenBlackjackAndWin() {
         Player player = new Player(new Name("aa"), new Hand(new Card(SPADE, ACE), new Card(SPADE, TEN)));
         Dealer dealer = new Dealer(new Hand(new Card(SPADE, SIX)));
-        Players players = new Players(new HashMap<>(Map.of(player, new Money(1000))));
-        Players resultPlayers = players.generateMoneyResult(dealer);
+        PlayerProfits playerProfits = new PlayerProfits(new HashMap<>(Map.of(player, new Profit(1000))));
+        PlayerProfits resultPlayerProfits = playerProfits.generateMoneyResult(dealer);
 
-        assertThat(resultPlayers.calculateDealerMoney() * -1).isEqualTo(1500);
+        assertThat(resultPlayerProfits.calculateDealerMoney() * -1).isEqualTo(1500);
 
     }
 
@@ -48,8 +48,8 @@ class PlayersTest {
     @DisplayName("딜러의 금액은 플레이어가 잃은 금액이다.")
     void calculateDealerMoneyTest() {
         Player player = new Player(new Name("aa"), new Hand());
-        Players players = new Players(new HashMap<>(Map.of(player, new Money(1000))));
+        PlayerProfits playerProfits = new PlayerProfits(new HashMap<>(Map.of(player, new Profit(1000))));
 
-        assertThat(players.calculateDealerMoney()).isEqualTo(-1000);
+        assertThat(playerProfits.calculateDealerMoney()).isEqualTo(-1000);
     }
 }

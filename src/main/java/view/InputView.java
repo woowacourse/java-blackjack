@@ -1,7 +1,7 @@
 package view;
 
 import domain.money.BetAmount;
-import domain.money.Money;
+import domain.money.Profit;
 import domain.user.Name;
 import domain.user.PlayerNames;
 import java.util.List;
@@ -22,9 +22,9 @@ public class InputView {
         return new PlayerNames(playerNames);
     }
 
-    public static Money inputMoney(String name) {
+    public static Profit inputMoney(String name) {
         System.out.println("\n" + name + "의 베팅 금액은?");
-        return new Money(new BetAmount(inputInteger()).value());
+        return new Profit(new BetAmount(inputInteger()).value());
     }
 
     public static Command inputAddCommand(String name) {
