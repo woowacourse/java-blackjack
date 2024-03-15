@@ -4,15 +4,13 @@ import domain.BettingResult;
 import domain.Card;
 import domain.Money;
 import domain.Name;
-import domain.constant.GamerResult;
 import java.text.DecimalFormat;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    
+
     private static final String DELIMITER = ", ";
     private static final DecimalFormat MONEY_FORMAT = new DecimalFormat("###########");
 
@@ -67,7 +65,6 @@ public class OutputView {
         System.out.printf("딜러 카드: %s - %s%n", buildCardsString(dealerCards), buildTotalScore(dealerScore));
     }
 
-
     public static void printPlayerStatus(Name playerName, List<Card> cards, int playerScore) {
         System.out.printf("%s - %s%n", buildNameCards(playerName.name(), cards), buildTotalScore(playerScore));
     }
@@ -84,12 +81,5 @@ public class OutputView {
         System.out.printf("딜러: %s%n", MONEY_FORMAT.format(dealerGameResult.getAmount()));
         playersGameResult.forEach((name, result) ->
                 System.out.printf("%s: %s%n", name.name(), MONEY_FORMAT.format(result.getAmount())));
-    }
-
-    private static String buildDealerResult(Map<GamerResult, Integer> dealerGameResult) {
-        return Arrays.stream(GamerResult.values())
-                .filter(dealerGameResult::containsKey)
-                .map(result -> "%d%s".formatted(dealerGameResult.get(result), result.getResult()))
-                .collect(Collectors.joining(" "));
     }
 }

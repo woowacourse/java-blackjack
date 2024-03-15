@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BettingResult {
-    
+
     private final Map<Name, Money> playersResult;
     private final Money dealerResult;
 
@@ -30,11 +30,11 @@ public class BettingResult {
                         player -> player.bet(dealer)));
     }
 
-    public Map<Name, Money> getPlayersResult() {
-        return Collections.unmodifiableMap(playersResult);
-    }
-
     public Money getDealerResult() {
         return dealerResult;
+    }
+
+    public Map<Name, Money> getPlayersResult() {
+        return Collections.unmodifiableMap(playersResult);
     }
 }

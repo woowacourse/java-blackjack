@@ -4,7 +4,7 @@ import domain.constant.CardNumber;
 import domain.constant.CardType;
 
 public class Card {
-    
+
     private final CardType cardType;
     private final CardNumber cardNumber;
 
@@ -30,10 +30,5 @@ public class Card {
 
     public CardNumber getCardNumber() {
         return cardNumber;
-    }
-
-    @Override
-    public String toString() {
-        return cardNumber.getSymbol() + cardType.getType();
     }
 }
