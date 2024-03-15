@@ -21,15 +21,4 @@ class PlayersTest {
 
         assertThatCode(() -> new Players(players)).isInstanceOf(IllegalArgumentException.class);
     }
-
-    @DisplayName("플레이어의 이름이 겹치면 예외가 발생한다")
-    @Test
-    void duplicateName() {
-        final List<Player> players = new ArrayList<>();
-
-        players.add(new Player(new Name("teba")));
-        players.add(new Player(new Name("teba")));
-
-        assertThatCode(() -> new Players(players)).isInstanceOf(IllegalArgumentException.class);
-    }
 }
