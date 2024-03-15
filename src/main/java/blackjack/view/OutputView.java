@@ -7,7 +7,7 @@ import blackjack.model.cards.CardShape;
 import blackjack.model.cards.Cards;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
-import blackjack.model.results.PlayerProfit;
+import blackjack.model.results.PlayerProfits;
 import blackjack.view.symbol.CardNumberSymbol;
 import blackjack.view.symbol.CardShapeSymbol;
 import blackjack.vo.Money;
@@ -52,11 +52,11 @@ public class OutputView {
                         player.getCards().getScore())));
     }
 
-    public void printGameResults(PlayerProfit playerProfit, Money dealerResult) {
+    public void printGameResults(PlayerProfits playerProfits, Money dealerResult) {
         System.out.println();
         System.out.println("### 최종 수익");
         System.out.printf("%s: %d%n", DEALER_NAME, dealerResult.value());
-        Map<Player, Money> gameResult = playerProfit.getProfits();
+        Map<Player, Money> gameResult = playerProfits.getProfits();
         printPlayerResultsFormat(gameResult);
     }
 

@@ -7,15 +7,34 @@ import blackjack.model.cards.Card;
 import blackjack.model.cards.CardNumber;
 import blackjack.model.cards.CardShape;
 import blackjack.model.cards.Cards;
-import blackjack.model.results.Result;
 import blackjack.vo.Money;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class PlayerTest {
+    private Player player;
+    private Cards comparisonCards;
+
+    @BeforeEach
+    void setUp() {
+        player = new Player("ella");
+        List<Card> initialPlayerCards = List.of(
+                new Card(CardNumber.SIX, CardShape.HEART),
+                new Card(CardNumber.SIX, CardShape.CLOVER)
+        );
+        player.addCards(initialPlayerCards);
+        player.betMoney(new Money(1000));
+
+        comparisonCards = new Cards(List.of(
+                new Card(CardNumber.SIX, CardShape.HEART),
+                new Card(CardNumber.SIX, CardShape.CLOVER)
+        ));
+    }
+
     @DisplayName("플레이어 이름은 공백일 수 없다")
     @Test
     void validateName() {
@@ -24,163 +43,115 @@ class PlayerTest {
         assertThatThrownBy(() -> new Player(emptyName)).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("플레이어가 카드 한장을 지급받는다")
-    @Test
-    void addCard() {
-        List<Card> given = List.of(
-                new Card(CardNumber.SIX, CardShape.HEART),
-                new Card(CardNumber.TEN, CardShape.CLOVER)
-        );
-
-        Player player = new Player("daon");
-        player.addCards(given);
-        Card cardToAdd = new Card(CardNumber.FIVE, CardShape.DIAMOND);
-
-        player.addCard(cardToAdd);
-        assertThat(player.getCards().getCards()).hasSize(3);
-    }
-
-    @DisplayName("카드를 추가로 받을 수 있는지 확인한다")
-    @Test
-    void checkDrawCardState() {
-        List<Card> given = List.of(
-                new Card(CardNumber.SIX, CardShape.HEART),
-                new Card(CardNumber.TEN, CardShape.CLOVER)
-        );
-        Player player = new Player("daon");
-        player.addCards(given);
-
-        assertThat(player.canHit()).isTrue();
-    }
-
-    @DisplayName("카드를 추가로 받을 수 있는지 확인한다")
-    @Test
-    void checkDrawCardStateOverWinningScore() {
-        List<Card> given = List.of(
-                new Card(CardNumber.SIX, CardShape.HEART),
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TEN, CardShape.SPADE)
-        );
-        Player player = new Player("daon");
-        player.addCards(given);
-
-        assertThat(player.canHit()).isFalse();
-    }
-
-    @DisplayName("플레이어 카드가 기준 점수보다 크면 진다")
-    @Test
-    void compareScore() {
-        List<Card> given = List.of(
-                new Card(CardNumber.SEVEN, CardShape.HEART),
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TEN, CardShape.SPADE)
-        );
-        List<Card> comparison = List.of(
-                new Card(CardNumber.ACE, CardShape.HEART),
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TEN, CardShape.SPADE)
-        );
-        Cards comparisonCards = new Cards();
-        comparisonCards.add(comparison);
-
-        Player player = new Player("daon");
-        player.addCards(given);
-        Result playerResultStatus = player.evaluateResult(comparisonCards);
-        assertThat(playerResultStatus).isEqualTo(Result.LOSE);
-    }
-
-    @DisplayName("플레이어 카드가 기준 점수보다 낮고 비교 카드 점수가 기준 점수보다 크면 이긴다")
-    @Test
-    void compareScore2() {
-        List<Card> given = List.of(
-                new Card(CardNumber.ACE, CardShape.HEART),
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TEN, CardShape.SPADE)
-        );
-        List<Card> comparison = List.of(
-                new Card(CardNumber.TWO, CardShape.HEART),
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TEN, CardShape.SPADE)
-        );
-        Cards comparisonCards = new Cards();
-        comparisonCards.add(comparison);
-
-        Player player = new Player("daon");
-        player.addCards(given);
-        Result playerResultStatus = player.evaluateResult(comparisonCards);
-        assertThat(playerResultStatus).isEqualTo(Result.WIN);
-    }
-
-    @DisplayName("플레이어 카드와 비교 카드 점수가 기준 점수보다 낮으면 두 점수의 대소관계로 결과를 낸다")
-    @ParameterizedTest
-    @CsvSource(value = {"ACE,TWO,LOSE", "THREE,TWO,WIN", "FOUR,FOUR,PUSH"})
-    void compareScore3(CardNumber cardNumber, CardNumber otherNumber, Result expected) {
-        List<Card> given = List.of(
-                new Card(cardNumber, CardShape.HEART),
-                new Card(CardNumber.TWO, CardShape.CLOVER),
-                new Card(CardNumber.TEN, CardShape.SPADE)
-        );
-        List<Card> comparison = List.of(
-                new Card(otherNumber, CardShape.HEART),
-                new Card(CardNumber.TWO, CardShape.CLOVER),
-                new Card(CardNumber.TEN, CardShape.SPADE)
-        );
-        Cards comparisonCards = new Cards();
-        comparisonCards.add(comparison);
-
-        Player player = new Player("daon");
-        player.addCards(given);
-        Result playerResultStatus = player.evaluateResult(comparisonCards);
-        assertThat(playerResultStatus).isEqualTo(expected);
-    }
-
     @DisplayName("플레이어는 베팅을 할 수 있다")
     @Test
     void betMoney() {
-        Player player = new Player("ella");
+        Player player = new Player("daon");
         player.betMoney(new Money(3000));
 
         assertThat(player).extracting("betAmount").isEqualTo(new Money(3000));
     }
 
-    @DisplayName("플레이어만 블랙잭이면 블랙잭으로 승리한다")
+    @DisplayName("플레이어가 카드 한장을 지급받는다")
+    @Test
+    void addCard() {
+        player.addCard(new Card(CardNumber.FIVE, CardShape.DIAMOND));
+
+        assertThat(player.getCards().getCards()).hasSize(3);
+    }
+
+    @DisplayName("카드 점수가 기준 점수보다 낮으면 카드를 추가로 받을 수 있다")
+    @Test
+    void checkDrawCardState() {
+        assertThat(player.canHit()).isTrue();
+    }
+
+    @DisplayName("카드 점수가 기준점수보다 크면 카드를 추가로 받을 수 없다")
+    @Test
+    void checkDrawCardStateOverWinningScore() {
+        player.addCard(new Card(CardNumber.TEN, CardShape.SPADE));
+
+        assertThat(player.canHit()).isFalse();
+    }
+
+    @DisplayName("플레이어 상태가 bust이면 베팅 금액을 잃는다")
+    @Test
+    void evaluateProfitBust() {
+        Card card = new Card(CardNumber.TEN, CardShape.SPADE);
+        player.addCard(card);
+
+        Money profit = player.evaluateProfit(comparisonCards);
+
+        assertThat(profit).isEqualTo(new Money(-1000));
+    }
+
+    @DisplayName("플레이어 카드가 기준 점수보다 낮고 비교 카드가 bust이면 베팅 금액만큼 얻는다")
+    @Test
+    void compareScore2() {
+        Card card = new Card(CardNumber.TEN, CardShape.DIAMOND);
+        comparisonCards.add(card);
+        player.finishTurn();
+
+        Money profit = player.evaluateProfit(comparisonCards);
+
+        assertThat(profit).isEqualTo(new Money(1000));
+    }
+
+    @DisplayName("플레이어 카드와 비교 카드 점수가 기준 점수보다 낮으면 두 점수의 대소관계로 수익이 정해진다")
+    @ParameterizedTest
+    @CsvSource(value = {"ACE,TWO,-1000", "THREE,TWO,1000", "FOUR,FOUR,0"})
+    void compareScore3(CardNumber cardNumber, CardNumber otherNumber, int expected) {
+        player.addCard(new Card(cardNumber, CardShape.HEART));
+        player.finishTurn();
+        comparisonCards.add(new Card(otherNumber, CardShape.HEART));
+
+        Money profit = player.evaluateProfit(comparisonCards);
+
+        assertThat(profit).isEqualTo(new Money(expected));
+    }
+
+    @DisplayName("플레이어만 블랙잭이면 베팅 금액의 1.5배를 얻는다")
     @Test
     void winBlackJack() {
-        List<Card> given = List.of(
-                new Card(CardNumber.ACE, CardShape.HEART),
-                new Card(CardNumber.TEN, CardShape.SPADE)
-        );
         List<Card> comparison = List.of(
                 new Card(CardNumber.ACE, CardShape.HEART),
                 new Card(CardNumber.TWO, CardShape.CLOVER),
                 new Card(CardNumber.EIGHT, CardShape.SPADE)
         );
-        Cards comparisonCards = new Cards();
-        comparisonCards.add(comparison);
+        Cards comparisonCards = new Cards(comparison);
 
         Player player = new Player("ella");
-        player.addCards(given);
-        Result playerResult = player.evaluateResult(comparisonCards);
-        assertThat(playerResult).isEqualTo(Result.WIN_BY_BLACKJACK);
-    }
-
-    @DisplayName("플레이어와 딜러가 모두 블랙잭이면 무승부이다")
-    @Test
-    void pushWithBlackJack() {
         List<Card> given = List.of(
                 new Card(CardNumber.ACE, CardShape.HEART),
                 new Card(CardNumber.TEN, CardShape.SPADE)
         );
+        player.addCards(given);
+        player.betMoney(new Money(1000));
+
+        Money profit = player.evaluateProfit(comparisonCards);
+
+        assertThat(profit).isEqualTo(new Money(1500));
+    }
+
+    @DisplayName("플레이어와 딜러가 모두 블랙잭이면 베팅 금액을 돌려받는다")
+    @Test
+    void pushWithBlackJack() {
         List<Card> comparison = List.of(
                 new Card(CardNumber.ACE, CardShape.HEART),
                 new Card(CardNumber.TEN, CardShape.SPADE)
         );
-        Cards comparisonCards = new Cards();
-        comparisonCards.add(comparison);
+        Cards comparisonCards = new Cards(comparison);
 
-        Player player = new Player("ella");
+        Player player = new Player("daon");
+        List<Card> given = List.of(
+                new Card(CardNumber.ACE, CardShape.HEART),
+                new Card(CardNumber.TEN, CardShape.SPADE)
+        );
         player.addCards(given);
-        Result playerResult = player.evaluateResult(comparisonCards);
-        assertThat(playerResult).isEqualTo(Result.PUSH);
+        player.betMoney(new Money(1000));
+
+        Money profit = player.evaluateProfit(comparisonCards);
+
+        assertThat(profit).isEqualTo(new Money(0));
     }
 }

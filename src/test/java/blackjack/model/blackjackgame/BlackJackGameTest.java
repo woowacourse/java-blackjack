@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.model.cards.Card;
+import blackjack.model.cards.CardNumber;
+import blackjack.model.cards.CardShape;
 import blackjack.model.cards.Cards;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
@@ -41,16 +43,17 @@ class BlackJackGameTest {
     @Test
     void update() {
         Dealer dealer = new Dealer();
-        Player player = new Player("daon");
-        List<Player> players = List.of(
-                player,
-                new Player("ella")
-        );
+        List<Player> players = List.of(new Player("daon"));
         BlackJackGame blackJackGame = new BlackJackGame(dealer, players);
 
-        blackJackGame.update(0);
         Player findPlayer = blackJackGame.getPlayers().get(0);
+        List<Card> initialCards = List.of(
+                new Card(CardNumber.TWO, CardShape.SPADE),
+                new Card(CardNumber.THREE, CardShape.CLOVER));
+        findPlayer.addCards(initialCards);
 
-        assertThat(findPlayer.getCards().getCards()).hasSize(1);
+        blackJackGame.update(0);
+
+        assertThat(findPlayer.getCards().getCards()).hasSize(3);
     }
 }

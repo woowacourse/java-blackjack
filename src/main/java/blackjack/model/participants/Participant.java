@@ -2,26 +2,36 @@ package blackjack.model.participants;
 
 import blackjack.model.cards.Card;
 import blackjack.model.cards.Cards;
+import blackjack.model.state.InitialState;
+import blackjack.model.state.State;
 import java.util.List;
 
 public abstract class Participant {
-    protected final Cards cards;
+    protected State state;
 
     protected Participant() {
-        this.cards = new Cards();
+        this.state = new InitialState();
     }
 
     public abstract boolean canHit();
 
     public void addCard(Card card) {
-        cards.add(card);
+        state = state.draw(card);
     }
 
     public void addCards(List<Card> cardToAdd) {
-        cards.add(cardToAdd);
+        state = state.drawCards(cardToAdd);
     }
 
     public Cards getCards() {
-        return cards;
+        return state.cards();
+    }
+
+    public int getScore() {
+        return getCards().getScore();
+    }
+
+    public void finishTurn() {
+        state = state.stand();
     }
 }

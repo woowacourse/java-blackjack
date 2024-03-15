@@ -3,8 +3,7 @@ package blackjack.controller;
 import blackjack.model.blackjackgame.BlackJackGame;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
-import blackjack.model.results.PlayerProfit;
-import blackjack.model.results.PlayerResult;
+import blackjack.model.results.PlayerProfits;
 import blackjack.view.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -66,6 +65,13 @@ public class BlackJackController {
             blackJackGame.update(index);
             outputView.printPlayerCardsInfo(blackJackGame, index);
         }
+        finishTurnWithCommandNo(player, blackJackGame);
+    }
+
+    private void finishTurnWithCommandNo(Player player, BlackJackGame blackJackGame) {
+        if (player.canHit()) {
+            blackJackGame.finishTurn(player);
+        }
     }
 
     private boolean checkDrawCardState(Player player) {
@@ -76,9 +82,8 @@ public class BlackJackController {
     }
 
     private void printGameResults(BlackJackGame blackJackGame) {
-        PlayerResult playerResult = blackJackGame.calculatePlayerResults();
-        PlayerProfit playerProfit = playerResult.calclatePlayerProfit();
-        Money dealerProfit = blackJackGame.calculateDealerProfit(playerResult);
-        outputView.printGameResults(playerProfit, dealerProfit);
+        PlayerProfits playerProfits = blackJackGame.calculatePlayerProfits();
+        Money dealerProfit = blackJackGame.calculateDealerProfit(playerProfits);
+        outputView.printGameResults(playerProfits, dealerProfit);
     }
 }

@@ -8,16 +8,20 @@ public class Cards {
     private static final int EXTRA_SCORE = 10;
     private static final int WINNING_SCORE = 21;
 
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
     private int score = 0;
 
-    public void add(Card card) {
-        cards.add(card);
+    public Cards() {
+        this(new ArrayList<>());
+    }
+
+    public Cards(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
         updateCardsScore();
     }
 
-    public void add(List<Card> cardsToAdd) {
-        cards.addAll(cardsToAdd);
+    public void add(Card card) {
+        cards.add(card);
         updateCardsScore();
     }
 

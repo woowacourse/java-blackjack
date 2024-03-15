@@ -5,8 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.model.cards.Card;
 import blackjack.model.cards.CardNumber;
 import blackjack.model.cards.CardShape;
-import blackjack.model.results.PlayerResult;
-import blackjack.model.results.Result;
+import blackjack.model.results.PlayerProfits;
 import blackjack.vo.Money;
 import java.util.HashMap;
 import java.util.List;
@@ -49,39 +48,20 @@ class DealerTest {
         AssertionsForClassTypes.assertThat(dealer.canHit()).isEqualTo(expected);
     }
 
-    @DisplayName("플레이어 결과와 베팅 금액으로 딜러의 수익을 계산한다")
+    @DisplayName("플레이어 결과로 딜러의 수익을 계산한다")
     @ParameterizedTest
-    @CsvSource(value = {"1,1,1,1,-3500", "1,0,0,0,-4500", "0,1,0,0,-4000", "0,0,1,0,5000", "0,0,0,1,0"})
-    void calculateFinalBetAmount(int winByBlackJack, int winCount, int loseCount, int pushCount, int result) {
-        PlayerResult playerResult = new PlayerResult(
-                createResultsForBet(winByBlackJack, winCount, loseCount, pushCount));
+    @CsvSource(value = {"1000,2000,3000,-6000", "-1000,-2000,-3000,6000", "1000,1500,-2000,-500", "1000,-1000,0,0"})
+    void calculateFinalBetAmount(int profit1, int profit2, int profit3, int expected) {
+        Map<Player, Money> profits = new HashMap<>();
+        profits.put(new Player("ella"), new Money(profit1));
+        profits.put(new Player("daon"), new Money(profit2));
+        profits.put(new Player("lily"), new Money(profit3));
+
+        PlayerProfits playerProfits = new PlayerProfits(profits);
         Dealer dealer = new Dealer();
 
-        Money dealerProfit = dealer.calculateDealerProfit(playerResult);
+        Money dealerProfit = dealer.calculateDealerProfit(playerProfits);
 
-        assertThat(dealerProfit).isEqualTo(new Money(result));
-    }
-
-    private Map<Player, Result> createResultsForBet(int winByBlackJack, int win, int lose, int push) {
-        Map<Player, Result> map = new HashMap<>();
-        for (int i = 0; i < winByBlackJack; i++) {
-            map.put(getPlayer("ella", new Money(3000)), Result.WIN_BY_BLACKJACK);
-        }
-        for (int i = 0; i < win; i++) {
-            map.put(getPlayer("daon", new Money(4000)), Result.WIN);
-        }
-        for (int i = 0; i < lose; i++) {
-            map.put(getPlayer("lily", new Money(5000)), Result.LOSE);
-        }
-        for (int i = 0; i < push; i++) {
-            map.put(getPlayer("pobi", new Money(6000)), Result.PUSH);
-        }
-        return map;
-    }
-
-    private Player getPlayer(String name, Money betAmount) {
-        Player player = new Player(name);
-        player.betMoney(betAmount);
-        return player;
+        assertThat(dealerProfit).isEqualTo(new Money(expected));
     }
 }

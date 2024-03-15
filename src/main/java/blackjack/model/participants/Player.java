@@ -1,7 +1,9 @@
 package blackjack.model.participants;
 
 import blackjack.model.cards.Cards;
-import blackjack.model.results.Result;
+import blackjack.model.state.BlackJack;
+import blackjack.model.state.Hit;
+import blackjack.model.state.Stand;
 import blackjack.vo.Money;
 import blackjack.vo.Name;
 
@@ -15,44 +17,36 @@ public class Player extends Participant {
 
     @Override
     public boolean canHit() {
-        return !cards.isBust();
+        return state.getClass().equals(Hit.class) || state.getClass().equals(BlackJack.class);
     }
 
     public void betMoney(Money betMoney) {
         betAmount = betMoney;
     }
 
-    public Result evaluateResult(Cards otherCards) {
-        if (cards.isBust()) {
-            return Result.LOSE;
+    public Money evaluateProfit(Cards otherCards) {
+        if (state.getClass().equals(BlackJack.class) && otherCards.isBlackJack()) {
+            return new Money();
         }
-        if (cards.isBlackJack() && !otherCards.isBlackJack()) {
-            return Result.WIN_BY_BLACKJACK;
+        if (state.getClass().equals(Stand.class) && !otherCards.isBust()) {
+            return compareScore(otherCards, betAmount);
         }
-        if (otherCards.isBust()) {
-            return Result.WIN;
-        }
-        return compareScore(otherCards);
+        return state.calculateProfit(betAmount);
     }
 
-    private Result compareScore(Cards otherCards) {
-        int calculatedScore = cards.getScore();
-        int otherScore = otherCards.getScore();
-
-        if (calculatedScore > otherScore) {
-            return Result.WIN;
+    private Money compareScore(Cards otherCards, Money betAmount) {
+        Stand stand = (Stand) state;
+        int score = stand.getScore();
+        if (score > otherCards.getScore()) {
+            return state.calculateProfit(betAmount);
         }
-        if (calculatedScore < otherScore) {
-            return Result.LOSE;
+        if (score < otherCards.getScore()) {
+            return state.calculateProfit(new Money(-betAmount.value()));
         }
-        return Result.PUSH;
+        return new Money();
     }
 
     public String getName() {
         return name.value();
-    }
-
-    public Money getBetAmount() {
-        return betAmount;
     }
 }

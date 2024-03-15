@@ -15,8 +15,7 @@ class CardsTest {
                 new Card(CardNumber.TWO, CardShape.HEART),
                 new Card(CardNumber.FIVE, CardShape.CLOVER)
         );
-        Cards given = new Cards();
-        given.add(cards);
+        Cards given = new Cards(cards);
 
         int score = given.getScore();
 
@@ -31,8 +30,8 @@ class CardsTest {
                 new Card(CardNumber.FIVE, CardShape.CLOVER),
                 new Card(CardNumber.FIVE, CardShape.CLOVER)
         );
-        Cards given = new Cards();
-        given.add(cards);
+        Cards given = new Cards(cards);
+
         int score = given.getScore();
 
         assertThat(score).isEqualTo(12);
@@ -47,8 +46,7 @@ class CardsTest {
                 new Card(CardNumber.TEN, CardShape.CLOVER)
         );
 
-        Cards given = new Cards();
-        given.add(cards);
+        Cards given = new Cards(cards);
 
         boolean result = given.isBust();
 
@@ -62,8 +60,7 @@ class CardsTest {
                 new Card(CardNumber.TWO, CardShape.HEART),
                 new Card(CardNumber.FIVE, CardShape.CLOVER)
         );
-        Cards given = new Cards();
-        given.add(cards);
+        Cards given = new Cards(cards);
         Card card = new Card(CardNumber.ACE, CardShape.SPADE);
 
         given.add(card);
@@ -78,8 +75,7 @@ class CardsTest {
                 new Card(CardNumber.ACE, CardShape.HEART),
                 new Card(CardNumber.TEN, CardShape.CLOVER)
         );
-        Cards given = new Cards();
-        given.add(cards);
+        Cards given = new Cards(cards);
 
         assertThat(given.isBlackJack()).isTrue();
     }
@@ -92,8 +88,7 @@ class CardsTest {
                 new Card(CardNumber.TWO, CardShape.CLOVER),
                 new Card(CardNumber.EIGHT, CardShape.CLOVER)
         );
-        Cards given = new Cards();
-        given.add(cards);
+        Cards given = new Cards(cards);
 
         assertThat(given.isBlackJack()).isFalse();
     }
