@@ -1,7 +1,6 @@
 package model.card;
 
 public enum CardSize {
-    ONE(1),
     TWO(2),
     ;
 

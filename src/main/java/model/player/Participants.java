@@ -43,11 +43,11 @@ public record Participants(List<Participant> participants) {
         }
     }
 
-    public void offerCardToParticipants(Predicate<String> stringForMoreCard, BiConsumer<String, Cards> callback, Supplier<Card> selectCard) {
+    public void offerCardToParticipants(Predicate<String> inputForMoreCard, BiConsumer<String, Cards> printParticipantsCard, Supplier<Card> selectCard) {
         for (Participant participant : participants) {
-            while (participant.isHit() && stringForMoreCard.test(participant.getName())) {
+            while (participant.isHit() && inputForMoreCard.test(participant.getName())) {
                 participant.addCard(selectCard.get());
-                callback.accept(participant.getName(), participant.getCards());
+                printParticipantsCard.accept(participant.getName(), participant.getCards());
             }
         }
     }
