@@ -1,11 +1,8 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.Cards;
 import domain.card.Hand;
 import domain.name.Name;
-
-import java.util.Objects;
 
 import static domain.BlackjackGame.BLACKJACK_SCORE;
 import static domain.BlackjackGame.INITIAL_CARD_COUNT;
@@ -39,7 +36,9 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return hand.getCards().toList().size() == INITIAL_CARD_COUNT
+        return hand.getCards()
+                   .toList()
+                   .size() == INITIAL_CARD_COUNT
                 && hand.score() == BLACKJACK_SCORE;
     }
 
@@ -49,18 +48,5 @@ public abstract class Participant {
 
     public Hand hand() {
         return new Hand(hand);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Participant that = (Participant) o;
-        return Objects.equals(name, that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
     }
 }
