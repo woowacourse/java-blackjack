@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.deck.DeckGenerator;
 import blackjack.domain.deck.PlayingDeck;
 import blackjack.domain.betting.Betting;
+import blackjack.domain.deck.shuffle.RandomShuffle;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.betting.GameBettingManager;
@@ -15,7 +16,7 @@ import java.util.function.Supplier;
 
 public class BlackjackGamePlay {
 
-    private final PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck());
+    private final PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck(), new RandomShuffle());
     private final GameBettingManager gameBettingManager = new GameBettingManager();
 
     public void run() {
