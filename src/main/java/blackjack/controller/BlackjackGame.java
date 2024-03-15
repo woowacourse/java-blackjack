@@ -27,7 +27,7 @@ public class BlackjackGame {
         outputView.printInitialHand(round);
         participantsHitCard(round);
         outputView.printParticipantsHandWithScore(round);
-        printRoundResult(round);
+        printPotResult(round);
     }
 
     private Round createRoundWithDeck() {
@@ -97,7 +97,7 @@ public class BlackjackGame {
         outputView.printDealerHitCount(hitCount);
     }
 
-    private void printRoundResult(Round round) {
+    private void printPotResult(Round round) {
         Referee referee = Referee.getInstance();
         RoundResult roundResult = round.generateResult(referee);
         outputView.printRoundResult(roundResult);
