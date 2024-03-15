@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.result.GameBattingManager;
+import blackjack.domain.result.GameBettingManager;
 import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
@@ -56,10 +56,10 @@ public class OutputView {
         }
     }
 
-    public static void printResult(GameBattingManager gameBattingManager) {
+    public static void printResult(GameBettingManager gameBettingManager) {
         System.out.println(NEW_LINE + "## 최종 수익");
-        printDealerResult(gameBattingManager);
-        printPlayerResult(gameBattingManager);
+        printDealerResult(gameBettingManager);
+        printPlayerResult(gameBettingManager);
     }
 
     private static String dealerCardMessage(List<Card> cards) {
@@ -73,16 +73,16 @@ public class OutputView {
     }
 
 
-    private static void printDealerResult(GameBattingManager gameBattingManager) {
+    private static void printDealerResult(GameBettingManager gameBettingManager) {
         NumberFormat formatter = new DecimalFormat("0");
-        double dealerResult = gameBattingManager.getDealerResult();
+        double dealerResult = gameBettingManager.getDealerResult();
 
         System.out.printf("딜러 : %s" + NEW_LINE, formatter.format(dealerResult));
     }
 
-    private static void printPlayerResult(GameBattingManager gameBattingManager) {
+    private static void printPlayerResult(GameBettingManager gameBettingManager) {
         NumberFormat formatter = new DecimalFormat("0");
-        Map<Player, Double> playersResult = gameBattingManager.getPlayersResult();
+        Map<Player, Double> playersResult = gameBettingManager.getPlayersResult();
 
         for (Player player : playersResult.keySet()) {
             String playerName = player.getPlayerName();

@@ -1,6 +1,6 @@
 package blackjack;
 
-import blackjack.domain.result.GameBattingManager;
+import blackjack.domain.result.GameBettingManager;
 import blackjack.domain.card.Card;
 import blackjack.domain.deck.DeckGenerator;
 import blackjack.domain.deck.PlayingDeck;
@@ -14,7 +14,7 @@ import java.util.List;
 public class BlackjackGamePlay {
 
     private final PlayingDeck playingDeck = new PlayingDeck(DeckGenerator.generateDeck());
-    private final GameBattingManager gameBattingManager = new GameBattingManager();
+    private final GameBettingManager gameBettingManager = new GameBettingManager();
 
     public void run() {
         List<Player> players = registerPlayer();
@@ -31,7 +31,7 @@ public class BlackjackGamePlay {
 
     private void registerPlayersBatting(List<Player> players) {
         for (Player player : players) {
-            gameBattingManager.registerPlayerBatting(player, InputView.askPlayerForBatting(player));
+            gameBettingManager.registerPlayerBetting(player, InputView.askPlayerForBatting(player));
         }
     }
 
@@ -97,10 +97,10 @@ public class BlackjackGamePlay {
 
     private void calculateResult(Dealer dealer, List<Player> players) {
         for (Player player : players) {
-            gameBattingManager.decideWinner(dealer, player);
+            gameBettingManager.calculatePlayerProfit(dealer, player);
         }
 
         OutputView.printCardScore(dealer, players);
-        OutputView.printResult(gameBattingManager);
+        OutputView.printResult(gameBettingManager);
     }
 }
