@@ -21,7 +21,8 @@ class PlayerTest {
     @DisplayName("이름으로 참여자를 생성한다.")
     @Test
     void createPlayerWithName() {
-        Assertions.assertThatCode(() -> new Player(new Name("pobi"), Hands.createEmptyHands()))
+        final Hands hands = Hands.createEmptyHands();
+        Assertions.assertThatCode(() -> new Player(new Name("pobi"), hands))
                 .doesNotThrowAnyException();
     }
 
