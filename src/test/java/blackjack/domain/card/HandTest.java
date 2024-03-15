@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -29,6 +30,17 @@ class HandTest {
     void isNotHandBlackjack() {
         //given
         List<Card> cards = createCards(List.of(Number.NINE, Number.FIVE, Number.KING));
+        Hand hand = new Hand(cards);
+
+        //when & then
+        assertThat(hand.isBlackjack()).isEqualTo(false);
+    }
+
+    @DisplayName("블랙잭의 점수를 달성했지만 블랙잭이 아닌 패의 블랙잭 여부를 판단한다.")
+    @Test
+    void isBlackJackScoreButNot() {
+        //given
+        List<Card> cards = createCards(List.of(Number.ACE, Number.TWO, Number.EIGHT));
         Hand hand = new Hand(cards);
 
         //when & then
