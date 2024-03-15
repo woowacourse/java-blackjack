@@ -8,12 +8,8 @@ public class Hand {
 
     private final List<Card> myCards;
 
-    public Hand(List<Card> myCards) {
-        this.myCards = new ArrayList<>(myCards);
-    }
-
-    public Hand copy() {
-        return new Hand(myCards);
+    public Hand() {
+        this.myCards = new ArrayList<>();
     }
 
     public void add(List<Card> cards) {
