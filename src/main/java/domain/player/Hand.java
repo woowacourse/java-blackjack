@@ -51,12 +51,12 @@ public class Hand {
         if (opponent.busted() || isCurrentBlackjackOnly(opponent)) {
             return WIN;
         }
-        return compare(sumCard(), opponent.sumCard());
+        return compare(opponent.sumCard());
     }
 
-    private GameResult compare(int current, int opponent) {
+    private GameResult compare(int opponent) {
         return Arrays.stream(GameResult.values())
-                .filter(result -> result.getCondition().test(current, opponent))
+                .filter(result -> result.getCondition().test(sumCard(), opponent))
                 .findFirst()
                 .orElseThrow(() ->
                         new IllegalStateException("입력에 따른 결과가 존재하지 않습니다."));
