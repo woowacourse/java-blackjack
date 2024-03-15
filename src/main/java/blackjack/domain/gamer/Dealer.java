@@ -1,6 +1,8 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.supplies.Card;
+import blackjack.domain.supplies.Chip;
+import blackjack.domain.supplies.Hand;
 
 import java.util.List;
 
@@ -10,8 +12,8 @@ public class Dealer {
 
     private final Gamer gamer;
 
-    public Dealer(Gamer gamer) {
-        this.gamer = gamer;
+    public Dealer(Chip chip) {
+        this.gamer = new Gamer(new Hand(), chip);
     }
 
     public boolean isScoreUnderBound() {

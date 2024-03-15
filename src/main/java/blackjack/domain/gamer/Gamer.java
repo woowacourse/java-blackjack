@@ -1,6 +1,7 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.supplies.Card;
+import blackjack.domain.supplies.Chip;
 import blackjack.domain.supplies.Hand;
 
 import java.util.List;
@@ -9,9 +10,11 @@ public class Gamer {
     private static final int BLACKJACK_CARDS_COUNT = 2;
 
     private final Hand hand;
+    private final Chip chip;
 
-    public Gamer(Hand hand) {
+    public Gamer(Hand hand, Chip chip) {
         this.hand = hand;
+        this.chip = chip;
     }
 
     public void draw(List<Card> cards) {

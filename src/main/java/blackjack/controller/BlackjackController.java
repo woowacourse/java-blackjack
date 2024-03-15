@@ -3,22 +3,33 @@ package blackjack.controller;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.Referee;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamer;
+import blackjack.domain.gamer.Name;
+import blackjack.domain.gamer.Names;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import blackjack.domain.supplies.Chip;
 import blackjack.domain.supplies.Deck;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayerCommand;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class BlackjackController {
 
     public void run() {
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
-        Dealer dealer = new Dealer(new Gamer(blackjackGame.makeInitialHand()));
-        Players players = Players.from(InputView.readPlayersName(), blackjackGame.makeInitialHand());
+        Dealer dealer = new Dealer(new Chip(0));
+        Names names = new Names(InputView.readPlayersName());
+
+        List<Player> makePlayers = new ArrayList<>();
+        for (Name name : names.names()) {
+            Chip chip = new Chip(InputView.readBettingChip(name.name()));
+            makePlayers.add(new Player(name, chip));
+        }
+        Players players = new Players(makePlayers);
 
         dealAndPrintResult(blackjackGame, dealer, players);
 
@@ -101,10 +112,6 @@ public class BlackjackController {
 
     private void calculateGameResultAndPrint(Dealer dealer, Players players) {
         Referee referee = new Referee();
-        referee.calculatePlayersResults(players, dealer);
-
-        OutputView.printWinAnnounce();
-        OutputView.printDealerWinStatus(referee.getDealerResult());
-        referee.getPlayersNameAndResults().forEach(OutputView::printPlayerWinStatus);
+        //referee.calculatePlayersResults(players, dealer);
     }
 }

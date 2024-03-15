@@ -1,20 +1,20 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.supplies.Card;
+import blackjack.domain.supplies.Chip;
+import blackjack.domain.supplies.Hand;
 
 import java.util.List;
 
 public class Player {
-    private static final String NAME_EMPTY_ERROR = "공백이 아닌 플레이어를 입력해 주세요.";
     private static final int ONLY_DEAL_CARD_COUNT = 2;
 
+    private final Name name;
     private final Gamer gamer;
-    private final String name;
 
-    public Player(Gamer gamer, String name) {
-        validateNameIsBlank(name);
-        this.gamer = gamer;
+    public Player(Name name, Chip chip) {
         this.name = name;
+        this.gamer = new Gamer(new Hand(), chip);
     }
 
     public void draw(List<Card> cards) {
@@ -42,7 +42,7 @@ public class Player {
     }
 
     public String getName() {
-        return name;
+        return name.name();
     }
 
     public List<Card> getCards() {
@@ -51,11 +51,5 @@ public class Player {
 
     public int getScore() {
         return gamer.getScore();
-    }
-
-    private void validateNameIsBlank(String name) {
-        if (name.isBlank()) {
-            throw new IllegalArgumentException(NAME_EMPTY_ERROR);
-        }
     }
 }

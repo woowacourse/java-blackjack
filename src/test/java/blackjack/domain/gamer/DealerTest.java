@@ -1,7 +1,7 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.supplies.Card;
-import blackjack.domain.supplies.Hand;
+import blackjack.domain.supplies.Chip;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +20,7 @@ class DealerTest {
     @DisplayName("딜러의 첫 카드를 반환한다.")
     void getFirstCardTest() {
         // given
-        Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
+        Dealer dealer = new Dealer(new Chip(0));
         Card expectedCard = new Card(NINE, SPADE);
 
         // when
@@ -34,7 +34,7 @@ class DealerTest {
     @DisplayName("딜러의 카드의 합이 16 이하이면 true를 반환한다.")
     void dealerHitUpperBoundTest() {
         // given
-        Dealer dealer = new Dealer(new Gamer(new Hand(List.of())));
+        Dealer dealer = new Dealer(new Chip(0));
 
         // when
         dealer.draw(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB)));
