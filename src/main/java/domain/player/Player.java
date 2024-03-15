@@ -6,7 +6,6 @@ import domain.game.Score;
 import java.util.List;
 
 public class Player {
-    private static final int HITTABLE_MAX_SCORE = 21;
     private final PlayerName playerName;
     private final Hand hand;
 
@@ -29,7 +28,7 @@ public class Player {
     }
 
     public boolean isHittable() {
-        return getScore().compareTo(Score.from(HITTABLE_MAX_SCORE)) < 0;
+        return !getScore().isBlackJack() && !getScore().isBust();
     }
 
     public boolean isBlackJack() {
