@@ -1,18 +1,36 @@
 package blackjack.domain.card;
 
-import fixture.CardFixture;
-import java.util.stream.IntStream;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import fixture.CardFixture;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 class CardDeckTest {
+
+    @DisplayName("모든 카드 랭크와 모양의 조합으로 카드 덱을 생성한다.")
+    @Test
+    void testCreateFullCardDeck() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        Arrays.stream(CardRank.values()).forEach(
+                rank -> Arrays.stream(CardSuit.values()).forEach(
+                        suit -> cards.add(new Card(rank, suit))
+                )
+        );
+        CardDeck expected = new CardDeck(cards);
+
+        // when
+        CardDeck actual = CardDeck.createShuffledFullCardDeck();
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
 
     @DisplayName("카드 덱이 비었는데 카드를 빼내서 반환하려고 하면 예외가 발생한다.")
     @Test
@@ -45,20 +63,23 @@ class CardDeckTest {
         );
     }
 
-    @DisplayName("모든 카드 랭크와 모양의 조합으로 이루어진 52장의 카드를 가지고 카드 덱을 생성한다.")
+    @DisplayName("동일한 카드를 포함하고 있다면 같은 카드 덱이다.")
     @Test
-    void testCreateFullCardDeck() {
+    void testEquals() {
         // given
-        CardDeck shuffledFullCardDeck = CardDeck.createShuffledFullCardDeck();
+        CardDeck cardDeck1 = new CardDeck(List.of(
+                new Card(CardRank.ACE, CardSuit.HEART),
+                new Card(CardRank.TWO, CardSuit.HEART),
+                new Card(CardRank.THREE, CardSuit.HEART)
+        ));
 
-        // when
-        List<Card> cards = IntStream.range(0, 52)
-                .mapToObj(i -> shuffledFullCardDeck.popCard())
-                .toList();
+        CardDeck cardDeck2 = new CardDeck(List.of(
+                new Card(CardRank.THREE, CardSuit.HEART),
+                new Card(CardRank.TWO, CardSuit.HEART),
+                new Card(CardRank.ACE, CardSuit.HEART)
+        ));
 
-        // then
-        assertThat(cards)
-                .doesNotHaveDuplicates()
-                .hasSize(52);
+        // when & then
+        assertThat(cardDeck1).isEqualTo(cardDeck2);
     }
 }
