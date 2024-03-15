@@ -6,18 +6,18 @@ import java.util.Map;
 
 public class PlayerProfits {
 
-    private final Map<Player, Profit> playerProfitMap;
+    private final Map<Player, Profit> playerProfits;
 
-    public PlayerProfits(Map<Player, Profit> playerProfitMap) {
-        this.playerProfitMap = playerProfitMap;
+    public PlayerProfits(Map<Player, Profit> playerProfits) {
+        this.playerProfits = playerProfits;
     }
 
     public Profit findProfitOfPlayer(Player player) {
-        return playerProfitMap.get(player);
+        return playerProfits.get(player);
     }
 
     public Profit calculateTotalProfit() {
-        return playerProfitMap.values().stream()
+        return playerProfits.values().stream()
                 .reduce(new Profit(0), Profit::add);
     }
 
@@ -25,7 +25,7 @@ public class PlayerProfits {
         return calculateTotalProfit().inverse();
     }
 
-    public Map<Player, Profit> getPlayerProfitMap() {
-        return playerProfitMap;
+    public Map<Player, Profit> getPlayerProfits() {
+        return playerProfits;
     }
 }

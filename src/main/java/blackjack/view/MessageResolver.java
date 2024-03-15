@@ -115,7 +115,7 @@ public class MessageResolver {
     }
 
     private String resolvePlayerProfitMessage(PlayerProfits playerProfits) {
-        Map<Player, Profit> playerProfitMap = playerProfits.getPlayerProfitMap();
+        Map<Player, Profit> playerProfitMap = playerProfits.getPlayerProfits();
         return playerProfitMap.entrySet().stream()
                 .map(this::resolveSingleProfitMessage)
                 .collect(Collectors.joining(LINE_SEPARATOR));

@@ -9,14 +9,14 @@ import java.util.stream.Collectors;
 
 public class PlayerBets {
 
-    private final Map<Player, BetAmout> playerMoneyMap;
+    private final Map<Player, BetAmout> playerBets;
 
-    public PlayerBets(Map<Player, BetAmout> playerMoneyMap) {
-        this.playerMoneyMap = playerMoneyMap;
+    public PlayerBets(Map<Player, BetAmout> playerBets) {
+        this.playerBets = playerBets;
     }
 
     public PlayerProfits calculateProfitResult(Dealer dealer) {
-        return new PlayerProfits(playerMoneyMap.keySet().stream()
+        return new PlayerProfits(playerBets.keySet().stream()
                 .collect(Collectors.toMap(
                         player -> player,
                         player -> (calculatePlayerProfit(player, dealer)))));
@@ -24,7 +24,7 @@ public class PlayerBets {
 
     private Profit calculatePlayerProfit(Player player, Dealer dealer) {
         GameResult gameResult = GameResult.of(dealer, player);
-        BetAmout betAmout = playerMoneyMap.get(player);
+        BetAmout betAmout = playerBets.get(player);
         return betAmout.calculateProfit(gameResult.getProfitLeverage());
     }
 }
