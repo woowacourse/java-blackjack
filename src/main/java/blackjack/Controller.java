@@ -1,16 +1,13 @@
 package blackjack;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.common.Money;
-import blackjack.domain.judgement.Judgement;
-import blackjack.domain.judgement.JudgementResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.domain.profit.Profit;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -91,21 +88,8 @@ class Controller {
     }
 
     private void showProfit(Participants participants) {
-        Map<String, Double> resultMap = new LinkedHashMap<>();
-        Judgement judgement = new Judgement();
-        Dealer dealer = participants.getDealer();
-        double dealerProfit = 0;
-        resultMap.put(dealer.getName(), dealerProfit);
+        Profit profit = new Profit(participants);
 
-        for (Player player : participants.getPlayers()) {
-            JudgementResult result = judgement.judgePlayer(dealer, player);
-            double playerProfit = result.calculateProfit(player.getMoney()).getAmount();
-            dealerProfit -= playerProfit;
-            resultMap.put(player.getName(), playerProfit);
-        }
-
-        resultMap.put(dealer.getName(), dealerProfit);
-
-        outputView.printProfit(resultMap);
+        outputView.printProfit(profit.createAllProfit());
     }
 }
