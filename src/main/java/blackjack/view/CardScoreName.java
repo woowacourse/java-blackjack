@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.card.Rank;
+import blackjack.domain.supplies.Rank;
 
 public enum CardScoreName {
     TWO("2"),

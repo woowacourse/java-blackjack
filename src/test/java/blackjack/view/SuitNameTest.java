@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.card.Suit;
+import blackjack.domain.supplies.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

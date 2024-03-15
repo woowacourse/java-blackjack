@@ -1,6 +1,6 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.card.Hand;
+import blackjack.domain.supplies.Hand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

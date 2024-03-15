@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.supplies.Card;
 import blackjack.domain.game.PlayerWinStatus;
 
 import java.util.List;

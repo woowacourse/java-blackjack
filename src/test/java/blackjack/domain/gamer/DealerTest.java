@@ -1,17 +1,17 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Hand;
+import blackjack.domain.supplies.Card;
+import blackjack.domain.supplies.Hand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static blackjack.domain.card.Rank.NINE;
-import static blackjack.domain.card.Rank.QUEEN;
-import static blackjack.domain.card.Rank.SEVEN;
-import static blackjack.domain.card.Suit.CLUB;
-import static blackjack.domain.card.Suit.SPADE;
+import static blackjack.domain.supplies.Rank.NINE;
+import static blackjack.domain.supplies.Rank.QUEEN;
+import static blackjack.domain.supplies.Rank.SEVEN;
+import static blackjack.domain.supplies.Suit.CLUB;
+import static blackjack.domain.supplies.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("딜러")

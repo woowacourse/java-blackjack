@@ -1,7 +1,7 @@
 package blackjack.domain.game;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Hand;
+import blackjack.domain.supplies.Card;
+import blackjack.domain.supplies.Hand;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Players;
@@ -12,18 +12,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static blackjack.domain.card.Rank.ACE;
-import static blackjack.domain.card.Rank.EIGHT;
-import static blackjack.domain.card.Rank.FIVE;
-import static blackjack.domain.card.Rank.JACK;
-import static blackjack.domain.card.Rank.KING;
-import static blackjack.domain.card.Rank.NINE;
-import static blackjack.domain.card.Rank.QUEEN;
-import static blackjack.domain.card.Rank.SEVEN;
-import static blackjack.domain.card.Rank.THREE;
-import static blackjack.domain.card.Rank.TWO;
-import static blackjack.domain.card.Suit.CLUB;
-import static blackjack.domain.card.Suit.SPADE;
+import static blackjack.domain.supplies.Rank.ACE;
+import static blackjack.domain.supplies.Rank.EIGHT;
+import static blackjack.domain.supplies.Rank.FIVE;
+import static blackjack.domain.supplies.Rank.JACK;
+import static blackjack.domain.supplies.Rank.KING;
+import static blackjack.domain.supplies.Rank.NINE;
+import static blackjack.domain.supplies.Rank.QUEEN;
+import static blackjack.domain.supplies.Rank.SEVEN;
+import static blackjack.domain.supplies.Rank.THREE;
+import static blackjack.domain.supplies.Rank.TWO;
+import static blackjack.domain.supplies.Suit.CLUB;
+import static blackjack.domain.supplies.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("심판")

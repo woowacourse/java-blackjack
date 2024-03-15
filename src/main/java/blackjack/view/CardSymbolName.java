@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.card.Suit;
+import blackjack.domain.supplies.Suit;
 
 public enum CardSymbolName {
     SPADE("스페이드"),

@@ -1,7 +1,7 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Hand;
+import blackjack.domain.supplies.Card;
+import blackjack.domain.supplies.Hand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,12 +9,12 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
-import static blackjack.domain.card.Rank.ACE;
-import static blackjack.domain.card.Rank.KING;
-import static blackjack.domain.card.Rank.NINE;
-import static blackjack.domain.card.Rank.TEN;
-import static blackjack.domain.card.Suit.CLUB;
-import static blackjack.domain.card.Suit.DIAMOND;
+import static blackjack.domain.supplies.Rank.ACE;
+import static blackjack.domain.supplies.Rank.KING;
+import static blackjack.domain.supplies.Rank.NINE;
+import static blackjack.domain.supplies.Rank.TEN;
+import static blackjack.domain.supplies.Suit.CLUB;
+import static blackjack.domain.supplies.Suit.DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 

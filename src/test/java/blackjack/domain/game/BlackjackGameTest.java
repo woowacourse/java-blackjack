@@ -1,8 +1,8 @@
 package blackjack.domain.game;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.Hand;
+import blackjack.domain.supplies.Card;
+import blackjack.domain.supplies.Deck;
+import blackjack.domain.supplies.Hand;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
@@ -13,13 +13,13 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static blackjack.domain.card.Rank.ACE;
-import static blackjack.domain.card.Rank.NINE;
-import static blackjack.domain.card.Rank.SEVEN;
-import static blackjack.domain.card.Rank.TEN;
-import static blackjack.domain.card.Suit.CLUB;
-import static blackjack.domain.card.Suit.DIAMOND;
-import static blackjack.domain.card.Suit.SPADE;
+import static blackjack.domain.supplies.Rank.ACE;
+import static blackjack.domain.supplies.Rank.NINE;
+import static blackjack.domain.supplies.Rank.SEVEN;
+import static blackjack.domain.supplies.Rank.TEN;
+import static blackjack.domain.supplies.Suit.CLUB;
+import static blackjack.domain.supplies.Suit.DIAMOND;
+import static blackjack.domain.supplies.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("블랙잭 게임")

@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.card.Rank;
+import blackjack.domain.supplies.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
