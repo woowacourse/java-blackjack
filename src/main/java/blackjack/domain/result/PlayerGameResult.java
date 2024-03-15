@@ -11,10 +11,6 @@ public class PlayerGameResult {
         this.playerGameResultMap = playerGameResultMap;
     }
 
-    public Map<Player, GameResult> getPlayerGameResultMap() {
-        return playerGameResultMap;
-    }
-
     public GameResult findGameResultOfPlayer(Player player) {
         return playerGameResultMap.get(player);
     }
