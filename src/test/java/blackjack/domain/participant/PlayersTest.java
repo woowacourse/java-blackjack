@@ -15,7 +15,7 @@ class PlayersTest {
 
         assertThat(players).extracting("players", InstanceOfAssertFactories.list(Player.class))
                 .extracting("name")
-                .containsExactly(new Name("pobi"), new Name("jason"));
+                .containsExactly("pobi", "jason");
     }
 
     @Test

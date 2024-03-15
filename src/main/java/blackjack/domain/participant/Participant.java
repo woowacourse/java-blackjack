@@ -50,6 +50,10 @@ public abstract class Participant {
         return state.calculateEarningRate(resultStatus);
     }
 
+    public String getName() {
+        return name.getValue();
+    }
+
     public CardHand getCardHand() {
         return state.getCardHand();
     }

@@ -15,6 +15,10 @@ public class Card {
         return denomination.isAce();
     }
 
+    public Suit getSuit() {
+        return suit;
+    }
+
     public Denomination getDenomination() {
         return denomination;
     }
