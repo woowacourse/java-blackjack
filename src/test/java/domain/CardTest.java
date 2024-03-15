@@ -12,7 +12,7 @@ class CardTest {
     @Test
     @DisplayName("중복없는 52장의 카드를 생성한다.")
     void generate() {
-        List<Card> values = Card.values();
+        final List<Card> values = Card.values();
 
         Assertions.assertThat(values).hasSize(52);
         Assertions.assertThat(Set.copyOf(values)).hasSize(52);

@@ -90,16 +90,16 @@ class DealerTest {
     @Test
     void dealerResult() {
         // given
-        Player loser1 = new Player(new Name("레디"), sum18Size2);
-        Player loser2 = new Player(new Name("피케이"), sum18Size2);
-        Player winner = new Player(new Name("제제"), sum21Size3);
-        Player tier = new Player(new Name("브라운"), sum20Size3);
+        final Player loser1 = new Player(new Name("레디"), sum18Size2);
+        final Player loser2 = new Player(new Name("피케이"), sum18Size2);
+        final Player winner = new Player(new Name("제제"), sum21Size3);
+        final Player tier = new Player(new Name("브라운"), sum20Size3);
 
-        Players players = new Players(List.of(loser1, loser2, winner, tier));
-        Dealer dealer = new Dealer(sum20Size3);
+        final Players players = new Players(List.of(loser1, loser2, winner, tier));
+        final Dealer dealer = new Dealer(sum20Size3);
 
         // when
-        Map<GameResult, Integer> expected = Map.of(WIN, 2, LOSE, 1, TIE, 1);
+        final Map<GameResult, Integer> expected = Map.of(WIN, 2, LOSE, 1, TIE, 1);
 
         // then
         Assertions.assertThat(dealer.getDealerResult(players)).isEqualTo(expected);
@@ -109,9 +109,9 @@ class DealerTest {
     @DisplayName("처음 나눠준 카드 두장의 합이 21이라면 블랙잭이다.")
     void checkingBlackJack() {
         //given
-        Dealer dealer = new Dealer(sum20Size2);
-        Player blackJackPlayer = new Player(new Name("수달"), blackJack);
-        Player noBlackJackPlayer = new Player(new Name("레디"), sum18Size2);
+        final Dealer dealer = new Dealer(sum20Size2);
+        final Player blackJackPlayer = new Player(new Name("수달"), blackJack);
+        final Player noBlackJackPlayer = new Player(new Name("레디"), sum18Size2);
 
         //when && then
         assertAll(() -> Assertions.assertThat(dealer.isBlackJack()).isFalse(),

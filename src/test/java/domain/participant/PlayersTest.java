@@ -41,12 +41,12 @@ class PlayersTest {
     @DisplayName("모든 참가자가 버스트되면 isAllBust가 True를 반환한다.")
     void isAllBustTrue() {
         //given
-        Player player1 = new Player(new Name("레디"), bustHands);
-        Player player2 = new Player(new Name("제제"), bustHands);
-        Player player3 = new Player(new Name("수달"), bustHands);
-        Player player4 = new Player(new Name("피케이"), bustHands);
+        final Player player1 = new Player(new Name("레디"), bustHands);
+        final Player player2 = new Player(new Name("제제"), bustHands);
+        final Player player3 = new Player(new Name("수달"), bustHands);
+        final Player player4 = new Player(new Name("피케이"), bustHands);
 
-        Players players = new Players(List.of(player1, player2, player3, player4));
+        final Players players = new Players(List.of(player1, player2, player3, player4));
 
         //when && then
         Assertions.assertThat(players.isAllBust()).isTrue();
@@ -56,15 +56,15 @@ class PlayersTest {
     @DisplayName("참여자의 승패무를 판단한다.")
     void playerResult() {
         //given
-        Player loser = new Player(new Name("레디"), sum18Size2);
-        Player winner = new Player(new Name("제제"), sum21Size3);
-        Player tier = new Player(new Name("수달"), sum20Size3);
+        final Player loser = new Player(new Name("레디"), sum18Size2);
+        final Player winner = new Player(new Name("제제"), sum21Size3);
+        final Player tier = new Player(new Name("수달"), sum20Size3);
 
-        Players players = new Players(List.of(loser, winner, tier));
-        Dealer dealer = new Dealer(sum20Size3);
+        final Players players = new Players(List.of(loser, winner, tier));
+        final Dealer dealer = new Dealer(sum20Size3);
 
         //when & then
-        Map<Player, GameResult> expected = Map.of(loser, LOSE, winner, WIN, tier, TIE);
+        final Map<Player, GameResult> expected = Map.of(loser, LOSE, winner, WIN, tier, TIE);
         Assertions.assertThat(players.getPlayersResult(dealer)).isEqualTo(expected);
     }
 
@@ -72,16 +72,16 @@ class PlayersTest {
     @DisplayName("딜러가 버스트일때 참여자가 버스트가 아니면 WIN")
     void all() {
         //given
-        Dealer bustDealer = new Dealer(bustHands);
-        Player winner1 = new Player(new Name("레디"), sum18Size2);
-        Player winner2 = new Player(new Name("브라운"), sum20Size2);
-        Player loser = new Player(new Name("제제"), bustHands);
+        final Dealer bustDealer = new Dealer(bustHands);
+        final Player winner1 = new Player(new Name("레디"), sum18Size2);
+        final Player winner2 = new Player(new Name("브라운"), sum20Size2);
+        final Player loser = new Player(new Name("제제"), bustHands);
 
-        Players players = new Players(List.of(winner1, winner2, loser));
+        final Players players = new Players(List.of(winner1, winner2, loser));
 
         //when
-        Map<Player, GameResult> expectedPlayerResult = Map.of(winner1, WIN, winner2, WIN, loser, LOSE);
-        Map<GameResult, Integer> expectedDealerResult = Map.of(WIN, 1, LOSE, 2);
+        final Map<Player, GameResult> expectedPlayerResult = Map.of(winner1, WIN, winner2, WIN, loser, LOSE);
+        final Map<GameResult, Integer> expectedDealerResult = Map.of(WIN, 1, LOSE, 2);
 
         //then
         Assertions.assertThat(players.getPlayersResult(bustDealer)).isEqualTo(expectedPlayerResult);
