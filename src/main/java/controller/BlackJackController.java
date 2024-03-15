@@ -1,15 +1,19 @@
 package controller;
 
 import domain.Answer;
-import domain.bet.BetAmount;
-import domain.bet.Bettings;
 import domain.card.CardDeck;
+import domain.participant.BetAmount;
 import domain.participant.Dealer;
+import domain.participant.Hands;
+import domain.participant.Name;
+import domain.participant.Names;
 import domain.participant.Player;
 import domain.participant.Players;
 import dto.DealerHandsDto;
 import dto.ParticipantDto;
 import dto.ParticipantsDto;
+import java.util.ArrayList;
+import java.util.List;
 import view.InputView;
 import view.OutputView;
 
@@ -24,25 +28,39 @@ public class BlackJackController {
     }
 
     public void run() {
-        final Players players = Players.from(inputView.readNames());
-        final Dealer dealer = Dealer.from(CardDeck.generate());
-
-        final Bettings bettings = new Bettings();
-        initBettings(bettings, players);
+        final Players players = createPlayers(readNames());
+        final Dealer dealer = createDealer();
 
         initHands(players, dealer);
         dealToPlayers(players, dealer);
         dealToDealerIfPossible(players, dealer);
 
         printHandsResult(players, dealer);
-        printFinalProfit(bettings, players, dealer);
+        printFinalProfit(players, dealer);
     }
 
-    private void initBettings(final Bettings bettings, final Players players) {
-        for (Player player : players.getPlayers()) {
-            final BetAmount betAmount = BetAmount.from(inputView.readBetAmount(player.getName()));
-            bettings.save(player, betAmount);
+    private Players createPlayers(final Names names) {
+        final List<Player> players = new ArrayList<>();
+
+        for (Name name : names.getNames()) {
+            final Hands hands = Hands.createEmptyHands();
+            final BetAmount betAmount = readBetAmountBy(name);
+            players.add(new Player(name, hands, betAmount));
         }
+
+        return new Players(players);
+    }
+
+    private Names readNames() {
+        return Names.from(inputView.readNames());
+    }
+
+    private BetAmount readBetAmountBy(final Name name) {
+        return BetAmount.from(inputView.readBetAmount(name.getValue()));
+    }
+
+    private Dealer createDealer() {
+        return Dealer.from(CardDeck.generate());
     }
 
     private void initHands(final Players players, final Dealer dealer) {
@@ -75,9 +93,9 @@ public class BlackJackController {
         outputView.printGameResultMessage();
     }
 
-    private void printFinalProfit(final Bettings bettings, final Players players, final Dealer dealer) {
+    private void printFinalProfit(final Players players, final Dealer dealer) {
         for (Player player : players.getPlayers()) {
-            final BetAmount betAmount = bettings.calculatePlayerProfitBy(player, dealer);
+            final BetAmount betAmount = player.calculateProfitBy(dealer);
             outputView.printGameResult(player, betAmount);
         }
     }
