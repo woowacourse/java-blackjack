@@ -1,4 +1,4 @@
-package domain.player;
+package domain.state;
 
 import domain.card.Card;
 import domain.card.Rank;
@@ -13,7 +13,7 @@ public class Hands {
         this.value = value;
     }
 
-    public void hit(final Card card) {
+    public void add(final Card card) {
         value.add(card);
     }
 

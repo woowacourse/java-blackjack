@@ -6,7 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
-import domain.player.Hands;
+import domain.state.Hands;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ class FinishedTest {
     @Test
     @DisplayName("게임이 끝난 상태에서 카드를 뽑으면 예외가 발생한다")
     void draw() {
-        assertThatCode(() -> bust.draw(new Card(Rank.TEN, Suit.CLUBS))).isInstanceOf(
+        assertThatCode(() -> bust.add(new Card(Rank.TEN, Suit.CLUBS))).isInstanceOf(
                 UnsupportedOperationException.class);
     }
 

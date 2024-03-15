@@ -1,8 +1,8 @@
 package domain.state.fininsh;
 
-import domain.player.Hands;
+import domain.state.Hands;
 
-public class Stand extends Finished {
+public final class Stand extends Finished {
     public Stand(final Hands hands) {
         super(hands);
     }

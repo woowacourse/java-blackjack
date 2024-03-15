@@ -1,7 +1,7 @@
 package domain.player;
 
+import domain.card.Card;
 import dto.PlayerResponse;
-import dto.PlayerResult;
 import java.util.Objects;
 
 public class Player extends Participant {
@@ -10,7 +10,6 @@ public class Player extends Participant {
     private final Name name;
 
     public Player(final Name name) {
-        super();
         this.name = name;
     }
 
@@ -19,15 +18,13 @@ public class Player extends Participant {
     }
 
     public PlayerResponse toPlayerResponse() {
-//        return new PlayerResponse(getName(), getHands().stream().map(Card::toCardResponse).toList(),
-//                calculateScore());
-        return null;
+        return new PlayerResponse(getName(), getHands().stream().map(Card::toCardResponse).toList(),
+                getScore());
     }
 
-//    @Override
+    @Override
     public boolean canHit() {
-//        return calculateScore() < HIT_UPPER_BOUND;
-        return false;
+        return state.canHit(HIT_UPPER_BOUND);
     }
 
     public String getName() {

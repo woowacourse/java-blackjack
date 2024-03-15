@@ -6,7 +6,7 @@ import view.OutputView;
 public class Application {
     public static void main(final String[] args) {
         final List<String> names = InputView.inputPlayers();
-        final Blackjack blackjack = Blackjack.fromPlayerNamesWithInitialization(names);
+        final Blackjack blackjack = Blackjack.fromNames(names);
         OutputView.printInitialStatus(blackjack.toParticipantsResponse());
 
         playGame(blackjack, names);
