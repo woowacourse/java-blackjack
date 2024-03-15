@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class BettingProfit {
 
+    private static final double BLACKJACK_RATIO = 1.5;
     private static final int INVERSE_VALUE = -1;
 
     private final Map<Player, Profit> profitResult;
@@ -28,7 +29,7 @@ public class BettingProfit {
 
     private void handleWin(Player player, Profit bettingProfit) {
         if (player.isBlackjack()) {
-            profitResult.put(player, bettingProfit.multiple(1.5));
+            profitResult.put(player, bettingProfit.multiple(BLACKJACK_RATIO));
             return;
         }
         profitResult.put(player, bettingProfit);
