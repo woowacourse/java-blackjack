@@ -12,8 +12,8 @@ public class Money {
         return new Money(amount * multiplier);
     }
 
-    public boolean isNegative() {
-        return amount < 0;
+    public boolean isGreaterEqualThan(double target) {
+        return amount >= target;
     }
 
     public double getAmount() {

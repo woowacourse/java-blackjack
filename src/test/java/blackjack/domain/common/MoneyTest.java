@@ -3,6 +3,7 @@ package blackjack.domain.common;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,13 +26,15 @@ class MoneyTest {
         assertThat(result.getAmount()).isEqualTo(1500);
     }
 
-    @DisplayName("음수인지 확인할 수 있다.")
+    @DisplayName("주어진 값보다 크거나 같은지 검사할 수 있다.")
     @Test
-    void isNegative() {
-        Money money = new Money(-100);
+    void isGreaterEqual() {
+        Money money = new Money(100);
 
-        boolean result = money.isNegative();
-
-        assertThat(result).isTrue();
+        Assertions.assertAll(
+                () -> Assertions.assertFalse(money.isGreaterEqualThan(101)),
+                () -> Assertions.assertTrue(money.isGreaterEqualThan(100)),
+                () -> Assertions.assertTrue(money.isGreaterEqualThan(99))
+        );
     }
 }

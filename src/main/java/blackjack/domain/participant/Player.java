@@ -4,13 +4,17 @@ import blackjack.domain.common.Money;
 
 public class Player extends Participant {
 
+    private static final int MIN_PLAYER_MONEY_AMOUNT = 1;
+
     private final Money money;
 
     public Player(String name, Money money) {
         super(name);
 
-        if (money.isNegative()) {
-            throw new IllegalArgumentException("사용자의 초기 돈은 음수가 될 수 없습니다.");
+        if (!money.isGreaterEqualThan(MIN_PLAYER_MONEY_AMOUNT)) {
+            String message = String.format("사용자의 초기 돈은 최소 %d 이상입니다.", MIN_PLAYER_MONEY_AMOUNT);
+
+            throw new IllegalArgumentException(message);
         }
 
         this.money = money;

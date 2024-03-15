@@ -16,14 +16,14 @@ class PlayerTest {
     @DisplayName("생성 테스트")
     @Test
     void create() {
-        assertThatCode(() -> new Player("atom", new Money(1000)))
+        assertThatCode(() -> new Player("atom", new Money(1)))
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("플레이어의 초기 돈은 음수가 될 수 없다.")
+    @DisplayName("사용자의 초기 돈은 최소 1 이상이어야 한다.")
     @Test
-    void validateNegativeMoney() {
-        Money negativeMoney = new Money(-1000);
+    void validatePositiveMoney() {
+        Money negativeMoney = new Money(0.9);
 
         assertThatThrownBy(() -> new Player("atom", negativeMoney))
                 .isInstanceOf(IllegalArgumentException.class);
