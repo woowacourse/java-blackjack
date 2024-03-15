@@ -7,21 +7,21 @@ import static domain.card.CardSuit.SPADE;
 
 import java.util.List;
 
-public interface CardFixture {
+public class CardFixture {
 
-    static Card cardOf(CardRank rank) {
+    public static Card cardOf(CardRank rank) {
         return new Card(SPADE, rank);
     }
 
-    static Cards cardsOf22() {
+    public static Cards cardsOf22() {
         return Cards.from(List.of(cardOf(KING), cardOf(KING), cardOf(TWO)));
     }
 
-    static Cards cardsOf20() {
+    public static Cards cardsOf20() {
         return Cards.from(List.of(cardOf(KING), cardOf(KING)));
     }
 
-    static Cards cardsOf15() {
+    public static Cards cardsOf15() {
         return Cards.from(List.of(cardOf(KING), cardOf(FIVE)));
     }
 }
