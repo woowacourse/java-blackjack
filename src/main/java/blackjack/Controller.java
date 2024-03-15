@@ -68,12 +68,12 @@ class Controller {
         boolean wannaHit = inputView.readCommand(player.getName());
         if (wannaHit) {
             player.hit(cardDeck.draw());
-            outputView.printCards(player);
+            outputView.printPlayerCards(player);
             playerTurn(player, cardDeck);
             return;
         }
 
-        outputView.printCards(player);
+        outputView.printPlayerCards(player);
     }
 
     private void dealerTurn(Dealer dealer, CardDeck cardDeck) {

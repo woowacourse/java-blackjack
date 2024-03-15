@@ -11,21 +11,34 @@ import blackjack.domain.participant.Player;
 public class OutputView {
 
     public void printInitialDeal(Dealer dealer, List<Player> players) {
-        System.out.println();
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), buildPlayerNameMessage(players));
-        System.out.printf("%s카드: %s%n", dealer.getName(), buildCardsMessage(dealer.getOpenCards()));
-        players.forEach(this::printCards);
-        System.out.println();
+        StringBuilder sb = new StringBuilder();
+        sb.append(initialHitMessage(dealer, players));
+        sb.append(dealerCardsMessage(dealer));
+        players.forEach(player -> sb.append(playerCardsMessage(player)));
+
+        System.out.println(sb);
     }
 
-    private String buildPlayerNameMessage(List<Player> players) {
+    private String initialHitMessage(Dealer dealer, List<Player> players) {
+        return String.format("%n%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), playersNameMessage(players));
+    }
+
+    private String playersNameMessage(List<Player> players) {
         return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
     }
 
-    public void printCards(Player player) {
-        System.out.printf("%s카드: %s%n", player.getName(), buildCardsMessage(player.getCards()));
+    private String dealerCardsMessage(Dealer dealer) {
+        return String.format("%s카드: %s%n", dealer.getName(), cardsMessage(dealer.getOpenCards()));
+    }
+
+    public void printPlayerCards(Player player) {
+        System.out.println(playerCardsMessage(player));
+    }
+
+    public String playerCardsMessage(Player player) {
+        return String.format("%s카드: %s%n", player.getName(), cardsMessage(player.getCards()));
     }
 
     public void printDealerHitMessage() {
@@ -33,26 +46,35 @@ public class OutputView {
     }
 
     public void printAllCardsWithScore(List<Participant> participants) {
-        System.out.println();
-        participants.forEach(participant -> System.out.println(buildCardsWithScoreMessage(participant)));
+        StringBuilder sb = new StringBuilder(System.lineSeparator());
+        participants.forEach(participant -> sb.append(cardsWithScoreMessage(participant)));
+
+        System.out.println(sb);
     }
 
-    private String buildCardsWithScoreMessage(Participant participant) {
-        return String.format("%s카드: %s - 결과: %d",
+    private String cardsWithScoreMessage(Participant participant) {
+        return String.format("%s카드: %s - 결과: %d%n",
                 participant.getName(),
-                buildCardsMessage(participant.getCards()),
+                cardsMessage(participant.getCards()),
                 participant.calculateScore());
     }
 
-    private String buildCardsMessage(List<Card> cards) {
+    private String cardsMessage(List<Card> cards) {
         return cards.stream()
                 .map(Card::getName)
                 .collect(Collectors.joining(", "));
     }
 
     public void printProfit(Map<String, Double> profitResults) {
-        System.out.println();
-        System.out.println("## 최종 수익");
-        profitResults.forEach((name, profit) -> System.out.printf("%s: %.0f%n", name, profit));
+        StringBuilder sb = new StringBuilder();
+        sb.append("## 최종 수익");
+        sb.append(System.lineSeparator());
+        profitResults.forEach((name, profit) -> sb.append(profitMessage(name, profit)));
+
+        System.out.println(sb);
+    }
+
+    private String profitMessage(String name, Double profit) {
+        return String.format("%s: %.0f%n", name, profit);
     }
 }
