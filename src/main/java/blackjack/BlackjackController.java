@@ -52,7 +52,7 @@ public class BlackjackController {
                                 Collectors.toMap(
                                         name -> name,
                                         inputView::askBettingMoney,
-                                        (name, money) -> name,
+                                        (x, y) -> x,
                                         LinkedHashMap::new
                                 ), BetDetails::new));
     }

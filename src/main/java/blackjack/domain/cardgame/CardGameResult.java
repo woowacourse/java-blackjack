@@ -22,7 +22,7 @@ public record CardGameResult(Map<Name, WinningStatus> totalResult) {
                                 Collectors.toMap(
                                         Player::name,
                                         player -> WinningStatus.doesPlayerWin(dealer, player),
-                                        (name, status) -> name,
+                                        (x, y) -> x,
                                         LinkedHashMap::new
                                 ), CardGameResult::new));
     }
