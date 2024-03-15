@@ -45,7 +45,7 @@ public class PlayersTest {
         String expectedProfitSum = String.valueOf(Integer.parseInt(bettingAmountA) + Integer.parseInt(bettingAmountB));
 
         //when
-        new Judge().judge(dealer, players);
+        new Referee().determinePlayersResult(dealer, players);
 
         //then
         assertThat(BlackjackResult.of(dealer, players).playerProfits().get(0).profit()).isEqualTo("-" + bettingAmountA);
@@ -67,7 +67,7 @@ public class PlayersTest {
         bustedDealer.draw();
 
         //then
-        new Judge().judge(dealer, players);
+        new Referee().determinePlayersResult(dealer, players);
         assertThat(Double.parseDouble(BlackjackResult.of(dealer, players).playerProfits().get(0).profit()))
                 .isEqualTo(Double.parseDouble(bettingAmountA));
     }

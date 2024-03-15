@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("결과 판단")
-class JudgeTest {
+class RefereeTest {
 
     private final ShuffleStrategy shuffleStrategy = new NoShuffleStrategy();
 
@@ -50,7 +50,7 @@ class JudgeTest {
 
             //when
             bustPlayerChoco();
-            new Judge().judge(dealer, players);
+            new Referee().determinePlayersResult(dealer, players);
 
             //then
             assertThat(isDealerDraw(BlackjackResult.of(dealer, players)))
@@ -68,7 +68,7 @@ class JudgeTest {
                     .forEach(i -> choco.draw(dealer.draw()));
 
             //when
-            new Judge().judge(dealer, players);
+            new Referee().determinePlayersResult(dealer, players);
 
             //then
             assertThat(isDealerLoseByBlackjack(BlackjackResult.of(dealer, players)))
@@ -85,7 +85,7 @@ class JudgeTest {
                     .forEach(i -> choco.draw(dealer.draw()));
 
             //when
-            new Judge().judge(dealer, players);
+            new Referee().determinePlayersResult(dealer, players);
 
             //then
             assertThat(isDealerLose(BlackjackResult.of(dealer, players)))
@@ -114,7 +114,7 @@ class JudgeTest {
 
             //when
             bustPlayerChoco();
-            new Judge().judge(dealer, players);
+            new Referee().determinePlayersResult(dealer, players);
 
             //then
             assertThat(isDealerWin(BlackjackResult.of(dealer, players)))
@@ -133,7 +133,7 @@ class JudgeTest {
                     .forEach(i -> choco.draw(dealer.draw()));
 
             //when
-            new Judge().judge(dealer, players);
+            new Referee().determinePlayersResult(dealer, players);
 
             //then
             assertThat(isDealerDraw(BlackjackResult.of(dealer, players)))
@@ -150,7 +150,7 @@ class JudgeTest {
                     .forEach(i -> choco.draw(dealer.draw()));
 
             //when
-            new Judge().judge(dealer, players);
+            new Referee().determinePlayersResult(dealer, players);
 
             //then
             assertThat(isDealerWin(BlackjackResult.of(dealer, players)))
@@ -178,7 +178,7 @@ class JudgeTest {
 
             //when
             bustPlayerChoco();
-            new Judge().judge(dealer, players);
+            new Referee().determinePlayersResult(dealer, players);
 
             //then
             assertThat(isDealerWin(BlackjackResult.of(dealer, players)))
@@ -197,7 +197,7 @@ class JudgeTest {
                     .forEach(i -> choco.draw(dealer.draw()));
 
             //when
-            new Judge().judge(dealer, players);
+            new Referee().determinePlayersResult(dealer, players);
 
             //then
             assertThat(isDealerLoseByBlackjack(BlackjackResult.of(dealer, players)))
@@ -214,7 +214,7 @@ class JudgeTest {
                     .forEach(i -> choco.draw(dealer.draw()));
 
             //when
-            new Judge().judge(dealer, players);
+            new Referee().determinePlayersResult(dealer, players);
 
             //then
             assertThat(isDealerWin(BlackjackResult.of(dealer, players)))
@@ -232,7 +232,7 @@ class JudgeTest {
                     .forEach(i -> choco.draw(dealer.draw()));
 
             //when
-            new Judge().judge(dealer, players);
+            new Referee().determinePlayersResult(dealer, players);
 
             //then
             assertThat(isDealerLose(BlackjackResult.of(dealer, players)))
@@ -250,7 +250,7 @@ class JudgeTest {
                     .forEach(i -> choco.draw(dealer.draw()));
 
             //when
-            new Judge().judge(dealer, players);
+            new Referee().determinePlayersResult(dealer, players);
 
             //then
             assertThat(isDealerDraw(BlackjackResult.of(dealer, players)))

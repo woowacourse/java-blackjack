@@ -3,16 +3,16 @@ package blackjack.domain;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
-public final class Judge {
+public final class Referee {
 
-    public Judge() {}
+    public Referee() {}
 
-    public void judge(final Dealer dealer, final Players players) {
+    public void determinePlayersResult(final Dealer dealer, final Players players) {
         players.getPlayers()
-                .forEach(player -> judge(dealer, player));
+                .forEach(player -> determinePlayerResult(dealer, player));
     }
 
-    private void judge(final Dealer dealer, final Player player) {
+    private void determinePlayerResult(final Dealer dealer, final Player player) {
         if (dealer.isBust()) {
             judgeWhenDealerBust(dealer, player);
             return;
@@ -32,16 +32,16 @@ public final class Judge {
         }
 
         if (player.isBlackjack()) {
-            dealerLose(dealer, player);
+            loseForDealer(dealer, player);
             return;
         }
 
-        dealerLose(dealer, player);
+        loseForDealer(dealer, player);
     }
 
     private void judgeWhenDealerBlackjack(final Dealer dealer, final Player player) {
         if (player.isBust()) {
-            dealerWins(dealer, player);
+            winForDealer(dealer, player);
             return;
         }
 
@@ -49,17 +49,17 @@ public final class Judge {
             return;
         }
 
-        dealerWins(dealer, player);
+        winForDealer(dealer, player);
     }
 
     private void judgeWhenDealerNormal(final Dealer dealer, final Player player) {
         if (player.isBust()) {
-            dealerWins(dealer, player);
+            winForDealer(dealer, player);
             return;
         }
 
         if (player.isBlackjack()) {
-            dealerLose(dealer, player);
+            loseForDealer(dealer, player);
             return;
         }
 
@@ -72,18 +72,18 @@ public final class Judge {
         }
 
         if (dealer.getScore() > player.getScore()) {
-            dealerWins(dealer, player);
+            winForDealer(dealer, player);
             return;
         }
 
-        dealerLose(dealer, player);
+        loseForDealer(dealer, player);
     }
 
-    private void dealerWins(final Dealer dealer, final Player player) {
+    private void winForDealer(final Dealer dealer, final Player player) {
         player.lose(dealer.getDealerProfit());
     }
 
-    private void dealerLose(final Dealer dealer, final Player player) {
+    private void loseForDealer(final Dealer dealer, final Player player) {
         player.win(dealer.getDealerProfit());
     }
 }
