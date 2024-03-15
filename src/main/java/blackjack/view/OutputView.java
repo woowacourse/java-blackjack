@@ -1,10 +1,8 @@
 package blackjack.view;
 
 import blackjack.domain.supplies.Card;
-import blackjack.domain.game.PlayerWinStatus;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static blackjack.domain.gamer.Dealer.HIT_UPPER_BOUND;
@@ -18,8 +16,6 @@ public class OutputView {
     private static final String DEALER_HIT_FORMAT = String.format("%s는 %d 이하라 한장의 카드를 더 받았습니다.", DEALER_NAME, HIT_UPPER_BOUND);
     private static final String CARD_FORMAT = "%s 카드 : %s";
     private static final String RESULT_SCORES_FORMAT = " - 결과: %d";
-    private static final String WIN_STATUS_FORMAT = "%s: %s";
-    private static final String WIN_ANNOUNCE = "## 최종 승패";
 
     public static void printDealAnnounce(List<String> playersName) {
         String nameFormat = String.join(DELIMITER, playersName);
@@ -58,20 +54,5 @@ public class OutputView {
 
     public static void printPlayerCards(String name, List<Card> cards, int totalScore) {
         System.out.printf(CARD_FORMAT + RESULT_SCORES_FORMAT + LINE_SEPARATOR, name, formatCards(cards), totalScore);
-    }
-
-    public static void printWinAnnounce() {
-        System.out.println(LINE_SEPARATOR + WIN_ANNOUNCE);
-    }
-
-    public static void printDealerWinStatus(Map<PlayerWinStatus, Integer> gameResults) {
-        String gameResultsFormat = gameResults.keySet().stream()
-                .map(key -> gameResults.get(key) + GameResultName.convert(key))
-                .collect(Collectors.joining(" "));
-        System.out.printf(WIN_STATUS_FORMAT + LINE_SEPARATOR, DEALER_NAME, gameResultsFormat);
-    }
-
-    public static void printPlayerWinStatus(String name, PlayerWinStatus playerWinStatus) {
-        System.out.printf(WIN_STATUS_FORMAT + LINE_SEPARATOR, name, GameResultName.convert(playerWinStatus));
     }
 }

@@ -2,24 +2,22 @@ package blackjack.domain.game;
 
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.gamer.Players;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Referee {
-    private final PlayersGameResult result;
+    private final Map<Player, PlayerWinStatus> playersWinStatus;
 
     public Referee() {
-        this.result = new PlayersGameResult();
+        this.playersWinStatus = new LinkedHashMap<>();
     }
 
-    public void calculatePlayersResults(Players players, Dealer dealer) {
-        for (Player player : players.getPlayers()) {
-            result.put(player, judgeGameResult(dealer, player));
-        }
+    public void calculatePlayerResult(Dealer dealer, Player player) {
+        playersWinStatus.put(player, judgePlayerResult(dealer, player));
     }
 
-    private PlayerWinStatus judgeGameResult(Dealer dealer, Player player) {
+    public PlayerWinStatus judgePlayerResult(Dealer dealer, Player player) {
         if (player.isBust() || dealer.isBlackjack()) {
             return PlayerWinStatus.LOSE;
         }
@@ -38,11 +36,7 @@ public class Referee {
                 dealer.isBust();
     }
 
-    public Map<String, PlayerWinStatus> getPlayersNameAndResults() {
-        return result.getPlayersNameAndResults();
-    }
-
-    public Map<PlayerWinStatus, Integer> getDealerResult() {
-        return result.getDealerResult();
+    public PlayerWinStatus findPlayerResult(Player player) {
+        return playersWinStatus.get(player);
     }
 }
