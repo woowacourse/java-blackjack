@@ -1,8 +1,10 @@
 package blackjack.view;
 
+import blackjack.domain.game.PlayersResult;
 import blackjack.domain.game.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
+import blackjack.domain.game.Result2;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Dealer2;
 import blackjack.domain.participant.Name;
@@ -17,6 +19,7 @@ import blackjack.domain.game.Judge;
 import blackjack.domain.participant.Players2;
 import blackjack.view.mapper.CardRankMapper;
 import blackjack.view.mapper.CardSuitMapper;
+import blackjack.view.mapper.ResultStateMapper;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
@@ -94,6 +97,10 @@ public class MessageResolver {
         return String.format(HAND_FORMAT, player.getName().getValue(), resolveHandMessage(player.getHand()));
     }
 
+    public String temp(Dealer2 dealer) {
+        return String.format(HAND_FORMAT, DEALER_NAME, resolveHandMessage(dealer.getHand()));
+    }
+
     private String resolveNameMessage(Participant participant) {
         if (participant instanceof Dealer) {
             return DEALER_NAME;
@@ -145,6 +152,11 @@ public class MessageResolver {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
+    public String resolveDealerResultMessage(PlayersResult playersResult) {
+        return String.format("%s: %d승 %d패 %d무", DEALER_NAME, playersResult.dealerWins(),
+                playersResult.dealerLosses(), playersResult.dealerTies());
+    }
+
     public String resolvePlayersResultMessage(Judge judge) {
         return judge.getResults().entrySet().stream()
                 .filter(entry -> entry.getKey() instanceof Player)
@@ -152,10 +164,35 @@ public class MessageResolver {
                 .collect(Collectors.joining(LINE_SEPARATOR));
     }
 
+    public String resolvePlayersResultMessage(PlayersResult results) {
+        return results.getResults().entrySet().stream()
+                .map(entry -> resolvePlayerResultMessage(entry.getKey(), entry.getValue()))
+                .collect(Collectors.joining(LINE_SEPARATOR));
+    }
+
+    private String resolvePlayerResultMessage(Player2 player, Result2 result2) {
+        return String.format("%s: %s", player.getName().getValue(), ResultStateMapper.toSymbol(result2));
+    }
+
     private String resolvePlayerResult(Player player, Result result) {
         if (result.getWinCount() == 1) {
             return String.format("%s: 승", player.getPlayerName().getValue());
         }
         return String.format("%s: 패", player.getPlayerName().getValue());
+    }
+
+    public String resolveDealerHandScoreMessage(Dealer2 dealer) {
+        String message = String.format("%s - 결과: %d", temp(dealer), dealer.handScore().getValue());
+        return String.join("", LINE_SEPARATOR, message);
+    }
+
+    public String resolvePlayersHandScoreMessage(Players2 players) {
+        return players.getPlayers().stream()
+                .map(this::resolvePlayerHandScoreMessage)
+                .collect(Collectors.joining(LINE_SEPARATOR));
+    }
+
+    public String resolvePlayerHandScoreMessage(Player2 player) {
+        return String.format("%s - 결과: %d", resolveDrawToPlayerMessage(player), player.handScore().getValue());
     }
 }

@@ -1,10 +1,11 @@
 package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.game.Judge;
+import blackjack.domain.card.Hand;
+import blackjack.domain.game.PlayersResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Dealer2;
-import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Player2;
 import blackjack.domain.participant.Players;
@@ -12,6 +13,7 @@ import blackjack.domain.participant.Players2;
 import blackjack.view.InputView;
 import blackjack.view.MessageResolver;
 import blackjack.view.OutputView;
+import java.util.List;
 
 public class GameManager {
 
@@ -22,16 +24,24 @@ public class GameManager {
     }
 
     public void start() {
-        Participants participants = Participants.create(inputView.readNames());
+        List<String> strings = inputView.readNames();
+        List<Player2> players = strings.stream()
+                .map(Name::new)
+                .map(name -> new Player2(name, new Hand()))
+                .toList();
+
+//        Participants participants = Participants.create(inputView.readNames());
         CardDeck cardDeck = CardDeck.createShuffledFullCardDeck();
 
-        participants.deal(cardDeck);
-        outputView.printDealToAll(participants);
+        start2(cardDeck, new Dealer2(new Hand()), new Players2(players));
 
-        drawToPlayers(participants.getPlayers(), cardDeck);
-        drawToDealer(participants.getDealer(), cardDeck);
-        outputView.printParticipantsHandScore(participants);
-        outputView.printParticipantsResult(new Judge(participants));
+//        participants.deal(cardDeck);
+//        outputView.printDealToAll(participants);
+//
+//        drawToPlayers(participants.getPlayers(), cardDeck);
+//        drawToDealer(participants.getDealer(), cardDeck);
+//        outputView.printParticipantsHandScore(participants);
+//        outputView.printParticipantsResult(new Judge(participants));
     }
 
     public void start2(CardDeck cardDeck, Dealer2 dealer, Players2 players) {
@@ -41,7 +51,10 @@ public class GameManager {
 
         drawToPlayers(players, cardDeck);
         drawToDealer(dealer, cardDeck);
+        outputView.printParticipantsHandScore(dealer, players);
 
+        PlayersResult playersResult = players.judge(dealer);
+        outputView.printResult(playersResult);
     }
 
     private void drawToPlayers(Players2 players, CardDeck cardDeck) {
