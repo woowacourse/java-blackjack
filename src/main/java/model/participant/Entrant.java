@@ -14,6 +14,7 @@ import model.card.Card;
 import model.participant.dto.DealerFaceUpResult;
 import model.participant.dto.FaceUpResult;
 import model.participant.dto.PlayerMatchResult;
+import util.ResultMapper;
 
 public class Entrant {
     private final Dealer dealer;
@@ -68,9 +69,7 @@ public class Entrant {
     }
 
     public List<FaceUpResult> getPlayerFaceUpResults() {
-        return players.stream()
-                .map(Player::generateFaceUpResult)
-                .toList();
+        return ResultMapper.toPlayerFaceUpResult((List<Player>) players);
     }
 
     public EnumMap<MatchResult, Integer> calculateDealerMatchResult() {
@@ -94,13 +93,5 @@ public class Entrant {
         return players.stream()
                 .map(player -> new PlayerMatchResult(player.getName(), player.calculateMatchResult(dealerHand)))
                 .toList();
-    }
-
-    public int getPlayerSize() {
-        return players.size();
-    }
-
-    Queue<Player> getPlayers() {
-        return players;
     }
 }
