@@ -64,7 +64,7 @@ public class OutputView {
                 .skip(cardCountNotToPrint)
                 .map(this::cardToString)
                 .toList());
-        return RECEIVED_CARD_MESSAGE.formatted(name, cardNames);
+        return RECEIVED_CARD_MESSAGE.formatted(name.getValue(), cardNames);
     }
 
     private String cardToString(Card card) {
