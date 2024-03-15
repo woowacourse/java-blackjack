@@ -15,14 +15,4 @@ public enum HandResult {
     public double getRatio() {
         return this.ratio;
     }
-
-    public HandResult getOpposite() {
-        if (WIN.equals(this) || BLACKJACK.equals(this)) {
-            return LOSE;
-        }
-        if (LOSE.equals(this)) {
-            return WIN;
-        }
-        return DRAW;
-    }
 }
