@@ -76,12 +76,5 @@ class MoneyTest {
         Money addedMoney = money.add(Money.betValueOf(1000));
         assertThat(addedMoney.toInt()).isEqualTo(2000);
     }
-
-    @Test
-    @DisplayName("돈을 뺄 수 있다")
-    void subtract() {
-        Money money = Money.betValueOf(1000);
-        Money subtractedMoney = money.subtract(Money.betValueOf(1000));
-        assertThat(subtractedMoney.toInt()).isEqualTo(0);
-    }
 }
+

@@ -43,10 +43,6 @@ public final class Money {
         return new Money(value + amount.value);
     }
 
-    public Money subtract(Money amount) {
-        return new Money(value - amount.value);
-    }
-
     public Money calculateProfit(PlayerResult playerResult) {
         return new Money((int) (value * playerResult.getProfitRate()));
     }
