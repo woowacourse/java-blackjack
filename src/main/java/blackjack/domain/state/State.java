@@ -5,7 +5,7 @@ import blackjack.domain.Hand;
 import blackjack.domain.Score;
 
 public abstract class State {
-    final Hand hand;
+    private final Hand hand;
 
     public State(Hand hand) {
         this.hand = hand;

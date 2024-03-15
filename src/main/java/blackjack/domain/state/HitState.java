@@ -13,7 +13,7 @@ public class HitState extends State {
     @Override
     public State draw(Deck deck) {
         Card card = deck.draw();
-        Hand newHand = hand.add(card);
+        Hand newHand = getHand().add(card);
         if (newHand.isBust()) {
             return new BustState(newHand);
         }
@@ -22,7 +22,7 @@ public class HitState extends State {
 
     @Override
     public State stand() {
-        return new StandState(hand);
+        return new StandState(getHand());
     }
 
     @Override

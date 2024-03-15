@@ -2,7 +2,6 @@ package blackjack.domain.state;
 
 import blackjack.domain.Deck;
 import blackjack.domain.Hand;
-import blackjack.domain.Score;
 
 public class InitialState extends State {
 
@@ -27,11 +26,6 @@ public class InitialState extends State {
     @Override
     public boolean isFinished() {
         return false;
-    }
-
-    @Override
-    public Score calculateHand() {
-        throw new UnsupportedOperationException("초기 상태에서는 할 수 없습니다.");
     }
 
     @Override
