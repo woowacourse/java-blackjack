@@ -29,9 +29,4 @@ public final class HitState extends PlayingState {
     public State copy() {
         return new HitState(hands());
     }
-
-    @Override
-    public boolean isHit() {
-        return true;
-    }
 }

@@ -1,9 +1,9 @@
 package blackjack.dto;
 
 import blackjack.domain.bet.BetRevenue;
-import blackjack.domain.player.PlayerName;
+import blackjack.domain.player.UserName;
 
-public record PlayerBetResultDto(PlayerName name, BetRevenue revenue) {
+public record PlayerBetResultDto(UserName name, BetRevenue revenue) {
 
     public String getName() {
         return name.getName();

@@ -5,10 +5,12 @@ import blackjack.domain.BlackjackGame;
 import blackjack.domain.bet.BetAmount;
 import blackjack.domain.bet.BetLeverage;
 import blackjack.domain.card.Hands;
-import blackjack.domain.player.PlayerName;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.UserName;
 import blackjack.domain.player.PlayerNames;
 import blackjack.dto.BetRevenueResultDto;
 import blackjack.dto.FinalHandsScoreDto;
+import blackjack.dto.StartCardsDto;
 import blackjack.exception.NeedRetryException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -28,7 +30,7 @@ public class BlackjackController {
     public void run() {
         final PlayerNames playerNames = createPlayerNames();
 
-        final BlackjackGame blackjackGame = BlackjackGame.from(playerNames);
+        final BlackjackGame blackjackGame = BlackjackGame.of(playerNames, new Dealer());
         final BetAmountRepository betAmountRepository = saveBetAmount(playerNames);
 
         playGame(blackjackGame);
@@ -45,7 +47,7 @@ public class BlackjackController {
     }
 
     private BetAmountRepository saveBetAmount(final PlayerNames playerNames) {
-        final Map<PlayerName, BetAmount> playerBetAmounts = new LinkedHashMap<>();
+        final Map<UserName, BetAmount> playerBetAmounts = new LinkedHashMap<>();
 
         playerNames.getNames().forEach(name -> playerBetAmounts.put(name, inputView.readBetAmount(name)));
 
@@ -53,12 +55,17 @@ public class BlackjackController {
     }
 
     private void playGame(final BlackjackGame blackjackGame) {
-        outputView.printStartCards(blackjackGame.giveInitCards());
+        blackjackGame.giveStartCards();
+
+        final StartCardsDto startCardsDto = StartCardsDto.of(blackjackGame.getPlayersOpenedHands(),
+                blackjackGame.getDealerOpenedHands());
+
+        outputView.printStartCards(startCardsDto);
 
         blackjackGame.playGame(this::wantToHit, this::printPlayerCard, this::printDealerMoreCard);
     }
 
-    private boolean wantToHit(final PlayerName name) {
+    private boolean wantToHit(final UserName name) {
         try {
             return inputView.readNeedMoreCard(name);
         } catch (final NeedRetryException e) {
@@ -67,7 +74,7 @@ public class BlackjackController {
         }
     }
 
-    private void printPlayerCard(final PlayerName name, final Hands hands) {
+    private void printPlayerCard(final UserName name, final Hands hands) {
         outputView.printPlayerCard(name, hands);
     }
 
@@ -76,11 +83,11 @@ public class BlackjackController {
     }
 
     private void finishGame(final BlackjackGame blackjackGame, final BetAmountRepository betAmountRepository) {
-        final Map<PlayerName, Hands> playersHands = blackjackGame.getPlayerHands();
+        final Map<UserName, Hands> playersHands = blackjackGame.getPlayerHands();
         final Hands dealerHands = blackjackGame.getDealerHands();
         final FinalHandsScoreDto finalHandsScore = FinalHandsScoreDto.of(playersHands, dealerHands);
 
-        final Map<PlayerName, BetLeverage> playersBetLeverage = blackjackGame.getPlayersBetLeverage();
+        final Map<UserName, BetLeverage> playersBetLeverage = blackjackGame.getPlayersBetLeverage();
         final BetRevenueResultDto betRevenueResult = betAmountRepository.calculateBetRevenue(playersBetLeverage);
 
         outputView.printFinalResult(finalHandsScore, betRevenueResult);

@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.bet.BetAmount;
-import blackjack.domain.player.PlayerName;
+import blackjack.domain.player.UserName;
 import blackjack.domain.player.PlayerNames;
 import blackjack.exception.NeedRetryException;
 import blackjack.view.format.CardRequestFormat;
@@ -20,7 +20,7 @@ public class InputView {
         validateDelimiter(input);
 
         return new PlayerNames(Arrays.stream(input.split(DELIMITER))
-                .map(PlayerName::new)
+                .map(UserName::new)
                 .toList());
     }
 
@@ -30,7 +30,7 @@ public class InputView {
         }
     }
 
-    public BetAmount readBetAmount(final PlayerName name) {
+    public BetAmount readBetAmount(final UserName name) {
         try {
             System.out.println(name.getName() + "의 배팅 금액은?");
             return new BetAmount(readInt());
@@ -48,7 +48,7 @@ public class InputView {
         }
     }
 
-    public boolean readNeedMoreCard(final PlayerName name) {
+    public boolean readNeedMoreCard(final UserName name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", name.getName(),
                 CardRequestFormat.YES.getFormat(),
                 CardRequestFormat.NO.getFormat());

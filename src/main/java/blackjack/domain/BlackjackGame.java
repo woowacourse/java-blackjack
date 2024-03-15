@@ -6,13 +6,11 @@ import blackjack.domain.bet.BetLeverage;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hands;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Player;
-import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.PlayerNames;
 import blackjack.domain.player.Players;
+import blackjack.domain.player.User;
+import blackjack.domain.player.UserName;
 import blackjack.domain.rule.state.InitState;
-import blackjack.dto.StartCardsDto;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.IntConsumer;
@@ -21,41 +19,46 @@ import java.util.function.Predicate;
 public class BlackjackGame {
 
     private final Players players;
-    private final Dealer dealer;
+    private final User dealer;
     private final Deck deck;
 
-    private BlackjackGame(final Players players, final Dealer dealer, final Deck deck) {
+    private BlackjackGame(final Players players, final User dealer, final Deck deck) {
         this.players = players;
         this.dealer = dealer;
         this.deck = deck;
     }
 
-    public static BlackjackGame from(final PlayerNames playerNames) {
+    public static BlackjackGame of(final PlayerNames playerNames, final User dealer) {
         final Deck deck = Deck.create();
-        final Dealer dealer = new Dealer();
         final Players players = Players.from(playerNames);
 
         return new BlackjackGame(players, dealer, deck);
     }
 
-    public StartCardsDto giveInitCards() {
+    public void giveStartCards() {
         for (int i = 0; i < InitState.START_CARD_COUNT; i++) {
             dealer.draw(deck.pick());
             playersDraw();
         }
+    }
 
-        return StartCardsDto.of(players.getPlayersHands(), dealer.getOpenedHands());
+    public Map<UserName, Hands> getPlayersOpenedHands() {
+        return players.getPlayersOpendHands();
+    }
+
+    public Hands getDealerOpenedHands() {
+        return dealer.getOpenedHands();
     }
 
     private void playersDraw() {
-        for (final Player player : players.getPlayers()) {
+        for (final User player : players.getPlayers()) {
             player.draw(deck.pick());
         }
     }
 
     public void playGame(
-            final Predicate<PlayerName> userWantToHit,
-            final BiConsumer<PlayerName, Hands> playerCallAfter,
+            final Predicate<UserName> userWantToHit,
+            final BiConsumer<UserName, Hands> playerCallAfter,
             final IntConsumer dealerCallAfter
     ) {
         runPlayersTurn(userWantToHit, playerCallAfter);
@@ -63,18 +66,18 @@ public class BlackjackGame {
     }
 
     private void runPlayersTurn(
-            final Predicate<PlayerName> userWantToHit,
-            final BiConsumer<PlayerName, Hands> playerCallAfter
+            final Predicate<UserName> userWantToHit,
+            final BiConsumer<UserName, Hands> playerCallAfter
     ) {
-        for (final Player player : players.getPlayers()) {
-            runPlayerTurn(userWantToHit, playerCallAfter, player);
+        for (final User player : players.getPlayers()) {
+            runPlayerTurn(player, userWantToHit, playerCallAfter);
         }
     }
 
     private void runPlayerTurn(
-            final Predicate<PlayerName> userWantToHit,
-            final BiConsumer<PlayerName, Hands> playerCallAfter,
-            final Player player
+            final User player,
+            final Predicate<UserName> userWantToHit,
+            final BiConsumer<UserName, Hands> playerCallAfter
     ) {
         if (dealer.isFinished()) {
             player.stand();
@@ -87,8 +90,8 @@ public class BlackjackGame {
     }
 
     private void runHitOrStandByUser(
-            final Player player,
-            final Predicate<PlayerName> userWantToHit
+            final User player,
+            final Predicate<UserName> userWantToHit
     ) {
         if (userWantToHit.test(player.getPlayerName())) {
             final Card card = deck.pick();
@@ -115,17 +118,17 @@ public class BlackjackGame {
         dealerHitConsumer.accept(count);
     }
 
-    public Map<PlayerName, Hands> getPlayerHands() {
-        return players.getPlayersHands();
+    public Map<UserName, Hands> getPlayerHands() {
+        return players.getPlayersOpendHands();
     }
 
     public Hands getDealerHands() {
         return dealer.getHands();
     }
 
-    public Map<PlayerName, BetLeverage> getPlayersBetLeverage() {
+    public Map<UserName, BetLeverage> getPlayersBetLeverage() {
         return players.getPlayers().stream()
-                .collect(toMap(Player::getPlayerName,
+                .collect(toMap(User::getPlayerName,
                         player -> BetLeverage.of(player.getState(), dealer.getState())));
     }
 }

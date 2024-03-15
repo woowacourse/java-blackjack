@@ -1,9 +1,9 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Hands;
-import blackjack.domain.player.PlayerName;
+import blackjack.domain.player.UserName;
 
-public record PlayerHandsScoreDto(PlayerName name, Hands hands) {
+public record PlayerHandsScoreDto(UserName name, Hands hands) {
 
     public int handsScore() {
         return hands.calculateScore().toInt();

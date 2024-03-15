@@ -4,7 +4,7 @@ import blackjack.domain.bet.BetRevenue;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.PlayerName;
+import blackjack.domain.player.UserName;
 import blackjack.domain.rule.state.InitState;
 import blackjack.dto.BetRevenueResultDto;
 import blackjack.dto.FinalHandsScoreDto;
@@ -42,7 +42,7 @@ public class OutputView {
         return String.join(DELIMITER, hands.getCards().stream().map(this::convertToCardFormat).toList());
     }
 
-    public void printPlayerCard(final PlayerName name, final Hands hands) {
+    public void printPlayerCard(final UserName name, final Hands hands) {
         System.out.printf("%s카드: %s%n", name.getName(), convertToCardsFormat(hands));
     }
 

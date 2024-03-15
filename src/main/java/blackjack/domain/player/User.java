@@ -7,11 +7,11 @@ import blackjack.domain.rule.state.State;
 
 public abstract class User {
 
-    private final PlayerName playerName;
+    private final UserName userName;
     private State state;
 
-    protected User(final PlayerName playerName) {
-        this.playerName = playerName;
+    protected User(final UserName userName) {
+        this.userName = userName;
         this.state = new InitState();
     }
 
@@ -44,8 +44,8 @@ public abstract class User {
         return state.hands();
     }
 
-    public PlayerName getPlayerName() {
-        return playerName;
+    public UserName getPlayerName() {
+        return userName;
     }
 
     public State getState() {

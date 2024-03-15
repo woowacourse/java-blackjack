@@ -2,8 +2,8 @@ package blackjack.domain.player;
 
 public class Player extends User {
 
-    public Player(final PlayerName playerName) {
-        super(playerName);
+    public Player(final UserName userName) {
+        super(userName);
     }
 
     @Override
