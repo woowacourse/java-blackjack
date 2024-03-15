@@ -26,9 +26,9 @@ class ScoreTest {
     void totalScoreOf_KingSevenFour() {
         Hand hand = new Hand();
         hand.add(List.of(
-            new Card(Rank.KING, Symbol.DIAMOND),
-            new Card(Rank.SEVEN, Symbol.HEART),
-            new Card(Rank.FOUR, Symbol.CLUB)
+            Card.of(Rank.KING, Symbol.DIAMOND),
+            Card.of(Rank.SEVEN, Symbol.HEART),
+            Card.of(Rank.FOUR, Symbol.CLUB)
         ));
         assertThat(Score.totalScoreOf(hand)).isEqualTo(Score.valueOf(21));
     }
@@ -38,9 +38,9 @@ class ScoreTest {
     void totalScoreOf_KingKingAce() {
         Hand hand = new Hand();
         hand.add(List.of(
-            new Card(Rank.KING, Symbol.DIAMOND),
-            new Card(Rank.KING, Symbol.HEART),
-            new Card(Rank.ACE, Symbol.CLUB)
+            Card.of(Rank.KING, Symbol.DIAMOND),
+            Card.of(Rank.KING, Symbol.HEART),
+            Card.of(Rank.ACE, Symbol.CLUB)
         ));
         assertThat(Score.totalScoreOf(hand)).isEqualTo(Score.valueOf(21));
     }
@@ -50,10 +50,10 @@ class ScoreTest {
     void totalScoreOf_AceAceAceAce() {
         Hand hand = new Hand();
         hand.add(List.of(
-            new Card(Rank.ACE, Symbol.DIAMOND),
-            new Card(Rank.ACE, Symbol.HEART),
-            new Card(Rank.ACE, Symbol.CLUB),
-            new Card(Rank.ACE, Symbol.SPADE)
+            Card.of(Rank.ACE, Symbol.DIAMOND),
+            Card.of(Rank.ACE, Symbol.HEART),
+            Card.of(Rank.ACE, Symbol.CLUB),
+            Card.of(Rank.ACE, Symbol.SPADE)
         ));
         assertThat(Score.totalScoreOf(hand)).isEqualTo(Score.valueOf(14));
     }
@@ -63,10 +63,10 @@ class ScoreTest {
     void totalScoreOf_AceAceKingKing() {
         Hand hand = new Hand();
         hand.add(List.of(
-            new Card(Rank.ACE, Symbol.DIAMOND),
-            new Card(Rank.ACE, Symbol.HEART),
-            new Card(Rank.KING, Symbol.CLUB),
-            new Card(Rank.KING, Symbol.SPADE)
+            Card.of(Rank.ACE, Symbol.DIAMOND),
+            Card.of(Rank.ACE, Symbol.HEART),
+            Card.of(Rank.KING, Symbol.CLUB),
+            Card.of(Rank.KING, Symbol.SPADE)
         ));
         assertThat(Score.totalScoreOf(hand)).isEqualTo(Score.valueOf(22));
     }

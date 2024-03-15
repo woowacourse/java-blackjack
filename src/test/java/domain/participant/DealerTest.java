@@ -15,10 +15,10 @@ public class DealerTest {
     @DisplayName("16점에서 카드받기 시도하면 카드를 받는다")
     void tryReceive_WhenScoreIsSixteen() {
         Dealer dealer = Dealer.withNoCards();
-        Card newCard = new Card(Rank.QUEEN, Symbol.DIAMOND);
+        Card newCard = Card.of(Rank.QUEEN, Symbol.DIAMOND);
         dealer.tryReceive(List.of(
-            new Card(Rank.KING, Symbol.CLUB),
-            new Card(Rank.SIX, Symbol.SPADE)
+            Card.of(Rank.KING, Symbol.CLUB),
+            Card.of(Rank.SIX, Symbol.SPADE)
         ));
 
         dealer.tryReceive(newCard);
@@ -30,10 +30,10 @@ public class DealerTest {
     @DisplayName("17점에서 카드받기 시도해도 카드를 못 받는다")
     void tryReceive_WhenScoreIsSeventeen() {
         Dealer dealer = Dealer.withNoCards();
-        Card newCard = new Card(Rank.QUEEN, Symbol.DIAMOND);
+        Card newCard = Card.of(Rank.QUEEN, Symbol.DIAMOND);
         dealer.tryReceive(List.of(
-            new Card(Rank.KING, Symbol.CLUB),
-            new Card(Rank.SEVEN, Symbol.HEART)
+            Card.of(Rank.KING, Symbol.CLUB),
+            Card.of(Rank.SEVEN, Symbol.HEART)
         ));
 
         dealer.tryReceive(newCard);
@@ -46,9 +46,9 @@ public class DealerTest {
     void isBust_True() {
         Dealer dealer = Dealer.withNoCards();
         dealer.tryReceive(List.of(
-            new Card(Rank.KING, Symbol.CLUB),
-            new Card(Rank.QUEEN, Symbol.CLUB),
-            new Card(Rank.TWO, Symbol.CLUB)
+            Card.of(Rank.KING, Symbol.CLUB),
+            Card.of(Rank.QUEEN, Symbol.CLUB),
+            Card.of(Rank.TWO, Symbol.CLUB)
         ));
 
         assertThat(dealer.isBust()).isTrue();
@@ -59,9 +59,9 @@ public class DealerTest {
     void isBust_False() {
         Dealer dealer = Dealer.withNoCards();
         dealer.tryReceive(List.of(
-            new Card(Rank.KING, Symbol.CLUB),
-            new Card(Rank.NINE, Symbol.CLUB),
-            new Card(Rank.TWO, Symbol.CLUB)
+            Card.of(Rank.KING, Symbol.CLUB),
+            Card.of(Rank.NINE, Symbol.CLUB),
+            Card.of(Rank.TWO, Symbol.CLUB)
         ));
 
         assertThat(dealer.isBust()).isFalse();
@@ -72,9 +72,9 @@ public class DealerTest {
     void score() {
         Dealer dealer = Dealer.withNoCards();
         dealer.tryReceive(List.of(
-            new Card(Rank.KING, Symbol.CLUB),
-            new Card(Rank.NINE, Symbol.CLUB),
-            new Card(Rank.TWO, Symbol.CLUB)
+            Card.of(Rank.KING, Symbol.CLUB),
+            Card.of(Rank.NINE, Symbol.CLUB),
+            Card.of(Rank.TWO, Symbol.CLUB)
         ));
 
         assertThat(dealer.score().toInt()).isEqualTo(21);
@@ -84,8 +84,8 @@ public class DealerTest {
     @DisplayName("첫번째 카드 받아올 수 있다.")
     void firstCard() {
         Dealer dealer = Dealer.withNoCards();
-        Card card1 = new Card(Rank.KING, Symbol.CLUB);
-        Card card2 = new Card(Rank.NINE, Symbol.CLUB);
+        Card card1 = Card.of(Rank.KING, Symbol.CLUB);
+        Card card2 = Card.of(Rank.NINE, Symbol.CLUB);
         dealer.tryReceive(List.of(card1, card2));
 
         assertThat(dealer.firstCard()).isEqualTo(card1);
@@ -96,8 +96,8 @@ public class DealerTest {
     void isReceivable_True() {
         Dealer dealer = Dealer.withNoCards();
         dealer.tryReceive(List.of(
-            new Card(Rank.KING, Symbol.CLUB),
-            new Card(Rank.SIX, Symbol.CLUB)
+            Card.of(Rank.KING, Symbol.CLUB),
+            Card.of(Rank.SIX, Symbol.CLUB)
         ));
 
         assertThat(dealer.isReceivable()).isTrue();
@@ -108,8 +108,8 @@ public class DealerTest {
     void isReceivable_False() {
         Dealer dealer = Dealer.withNoCards();
         dealer.tryReceive(List.of(
-            new Card(Rank.KING, Symbol.CLUB),
-            new Card(Rank.SEVEN, Symbol.CLUB)
+            Card.of(Rank.KING, Symbol.CLUB),
+            Card.of(Rank.SEVEN, Symbol.CLUB)
         ));
 
         assertThat(dealer.isReceivable()).isFalse();

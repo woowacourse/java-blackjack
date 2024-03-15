@@ -16,11 +16,11 @@ public class PlayerTest {
     void tryReceive_NotBusted() {
         Player player = Player.withName("name");
         player.tryReceive(List.of(
-            new Card(Rank.KING, Symbol.CLUB),
-            new Card(Rank.NINE, Symbol.HEART),
-            new Card(Rank.TWO, Symbol.SPADE)
+            Card.of(Rank.KING, Symbol.CLUB),
+            Card.of(Rank.NINE, Symbol.HEART),
+            Card.of(Rank.TWO, Symbol.SPADE)
         ));
-        player.tryReceive(new Card(Rank.KING, Symbol.HEART));
+        player.tryReceive(Card.of(Rank.KING, Symbol.HEART));
         assertThat(player.getCards()).hasSize(4);
     }
 
@@ -29,11 +29,11 @@ public class PlayerTest {
     void tryReceive_Busted() {
         Player player = Player.withName("name");
         player.tryReceive(List.of(
-            new Card(Rank.KING, Symbol.CLUB),
-            new Card(Rank.TEN, Symbol.HEART),
-            new Card(Rank.TWO, Symbol.SPADE)
+            Card.of(Rank.KING, Symbol.CLUB),
+            Card.of(Rank.TEN, Symbol.HEART),
+            Card.of(Rank.TWO, Symbol.SPADE)
         ));
-        player.tryReceive(new Card(Rank.KING, Symbol.HEART));
+        player.tryReceive(Card.of(Rank.KING, Symbol.HEART));
         assertThat(player.getCards()).hasSize(3);
     }
 }

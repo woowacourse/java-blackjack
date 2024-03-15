@@ -27,8 +27,8 @@ class PlayerResultsTest {
     @Test
     @DisplayName("무승부: 플레이어 점수(8점) == 딜러 점수(8점)")
     void tie_PlayerScoreIsEqualToDealerScore() {
-        player.tryReceive(new Card(Rank.EIGHT, Symbol.DIAMOND));
-        dealer.tryReceive(new Card(Rank.EIGHT, Symbol.HEART));
+        player.tryReceive(Card.of(Rank.EIGHT, Symbol.DIAMOND));
+        dealer.tryReceive(Card.of(Rank.EIGHT, Symbol.HEART));
         playerResults.addResultOf(player, dealer);
 
         Assertions.assertThat(playerResults.resultOf(player)).isEqualTo(PlayerResult.TIE);
@@ -38,12 +38,12 @@ class PlayerResultsTest {
     @DisplayName("무승부: 플레이어 점수(블랙잭) == 딜러 점수(블랙잭)")
     void tie_PlayerBlackjack_DealerBlackjack() {
         player.tryReceive(List.of(
-            new Card(Rank.TEN, Symbol.HEART),
-            new Card(Rank.ACE, Symbol.HEART)
+            Card.of(Rank.TEN, Symbol.HEART),
+            Card.of(Rank.ACE, Symbol.HEART)
         ));
         dealer.tryReceive(List.of(
-            new Card(Rank.TEN, Symbol.CLUB),
-            new Card(Rank.ACE, Symbol.CLUB)
+            Card.of(Rank.TEN, Symbol.CLUB),
+            Card.of(Rank.ACE, Symbol.CLUB)
         ));
 
         playerResults.addResultOf(player, dealer);
@@ -55,13 +55,13 @@ class PlayerResultsTest {
     @DisplayName("플레이어 BLACKJACK: 플레이어 블랙잭, 딜러 블랙잭 아닌 21점")
     void tie_PlayerBlackjack_DealerTwentyOne() {
         player.tryReceive(List.of(
-            new Card(Rank.TEN, Symbol.HEART),
-            new Card(Rank.ACE, Symbol.HEART)
+            Card.of(Rank.TEN, Symbol.HEART),
+            Card.of(Rank.ACE, Symbol.HEART)
         ));
         dealer.tryReceive(List.of(
-            new Card(Rank.TEN, Symbol.CLUB),
-            new Card(Rank.NINE, Symbol.CLUB),
-            new Card(Rank.THREE, Symbol.CLUB)
+            Card.of(Rank.TEN, Symbol.CLUB),
+            Card.of(Rank.NINE, Symbol.CLUB),
+            Card.of(Rank.THREE, Symbol.CLUB)
         ));
 
         playerResults.addResultOf(player, dealer);
@@ -72,8 +72,8 @@ class PlayerResultsTest {
     @Test
     @DisplayName("플레이어 패배: 플레이어 점수 < 딜러 점수")
     void playerLose_PlayerScoreIsLessThanDealerScore() {
-        player.tryReceive(new Card(Rank.EIGHT, Symbol.DIAMOND));
-        dealer.tryReceive(new Card(Rank.NINE, Symbol.HEART));
+        player.tryReceive(Card.of(Rank.EIGHT, Symbol.DIAMOND));
+        dealer.tryReceive(Card.of(Rank.NINE, Symbol.HEART));
 
         playerResults.addResultOf(player, dealer);
 
@@ -83,8 +83,8 @@ class PlayerResultsTest {
     @Test
     @DisplayName("플레이어 승리: 플레이어 점수 > 딜러 점수")
     void playerWin_PlayerScoreIsGreaterThanDealerScore() {
-        player.tryReceive(new Card(Rank.NINE, Symbol.DIAMOND));
-        dealer.tryReceive(new Card(Rank.EIGHT, Symbol.HEART));
+        player.tryReceive(Card.of(Rank.NINE, Symbol.DIAMOND));
+        dealer.tryReceive(Card.of(Rank.EIGHT, Symbol.HEART));
 
         playerResults.addResultOf(player, dealer);
 
@@ -94,10 +94,10 @@ class PlayerResultsTest {
     @Test
     @DisplayName("플레이어 패배: 플레이어 버스트(경계값 22점)")
     void playerLose_PlayerIsBusted() {
-        player.tryReceive(new Card(Rank.KING, Symbol.DIAMOND));
-        player.tryReceive(new Card(Rank.QUEEN, Symbol.CLUB));
-        player.tryReceive(new Card(Rank.TWO, Symbol.HEART));
-        dealer.tryReceive(new Card(Rank.KING, Symbol.HEART));
+        player.tryReceive(Card.of(Rank.KING, Symbol.DIAMOND));
+        player.tryReceive(Card.of(Rank.QUEEN, Symbol.CLUB));
+        player.tryReceive(Card.of(Rank.TWO, Symbol.HEART));
+        dealer.tryReceive(Card.of(Rank.KING, Symbol.HEART));
 
         playerResults.addResultOf(player, dealer);
 
@@ -107,10 +107,10 @@ class PlayerResultsTest {
     @Test
     @DisplayName("플레이어 승리: 딜러 버스트(경계값 22점), 플레이어 생존")
     void playerWin_DealerIsBustedAndPlayerIsNotBusted() {
-        dealer.tryReceive(new Card(Rank.KING, Symbol.DIAMOND));
-        dealer.tryReceive(new Card(Rank.SIX, Symbol.CLUB));
-        dealer.tryReceive(new Card(Rank.SIX, Symbol.HEART));
-        player.tryReceive(new Card(Rank.KING, Symbol.HEART));
+        dealer.tryReceive(Card.of(Rank.KING, Symbol.DIAMOND));
+        dealer.tryReceive(Card.of(Rank.SIX, Symbol.CLUB));
+        dealer.tryReceive(Card.of(Rank.SIX, Symbol.HEART));
+        player.tryReceive(Card.of(Rank.KING, Symbol.HEART));
 
         playerResults.addResultOf(player, dealer);
 
@@ -120,13 +120,13 @@ class PlayerResultsTest {
     @Test
     @DisplayName("플레이어 패배: 딜러 버스트(22점), 플레이어 버스트(22점)")
     void playerLose_DealerIsBustedAndPlayerIsBusted() {
-        dealer.tryReceive(new Card(Rank.KING, Symbol.DIAMOND));
-        dealer.tryReceive(new Card(Rank.SIX, Symbol.CLUB));
-        dealer.tryReceive(new Card(Rank.SIX, Symbol.HEART));
+        dealer.tryReceive(Card.of(Rank.KING, Symbol.DIAMOND));
+        dealer.tryReceive(Card.of(Rank.SIX, Symbol.CLUB));
+        dealer.tryReceive(Card.of(Rank.SIX, Symbol.HEART));
 
-        player.tryReceive(new Card(Rank.KING, Symbol.HEART));
-        player.tryReceive(new Card(Rank.KING, Symbol.CLUB));
-        player.tryReceive(new Card(Rank.TWO, Symbol.HEART));
+        player.tryReceive(Card.of(Rank.KING, Symbol.HEART));
+        player.tryReceive(Card.of(Rank.KING, Symbol.CLUB));
+        player.tryReceive(Card.of(Rank.TWO, Symbol.HEART));
 
         playerResults.addResultOf(player, dealer);
 

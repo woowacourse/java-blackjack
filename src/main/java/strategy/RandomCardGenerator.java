@@ -29,7 +29,7 @@ public class RandomCardGenerator implements CardGenerator {
 
     private List<Card> allCardsWithSameSymbol(Symbol symbol) {
         return Arrays.stream(Rank.values())
-            .map(rank -> new Card(rank, symbol))
+            .map(rank -> Card.of(rank, symbol))
             .collect(Collectors.toList());
     }
 }

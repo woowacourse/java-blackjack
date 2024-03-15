@@ -12,7 +12,7 @@ class HandTest {
     @DisplayName("성공: 패에 카드를 한 장 추가")
     void add_NoException() {
         Hand hand = new Hand();
-        hand.add(new Card(Rank.KING, Symbol.DIAMOND));
+        hand.add(Card.of(Rank.KING, Symbol.DIAMOND));
         assertThat(hand.getCards()).hasSize(1);
     }
 
@@ -21,8 +21,8 @@ class HandTest {
     void add_NoException_SeveralCards() {
         Hand hand = new Hand();
         hand.add(List.of(
-            new Card(Rank.KING, Symbol.DIAMOND),
-            new Card(Rank.KING, Symbol.HEART)
+            Card.of(Rank.KING, Symbol.DIAMOND),
+            Card.of(Rank.KING, Symbol.HEART)
         ));
         assertThat(hand.getCards()).hasSize(2);
     }
@@ -32,8 +32,8 @@ class HandTest {
     void hasAce_True() {
         Hand hand = new Hand();
         hand.add(List.of(
-            new Card(Rank.ACE, Symbol.HEART),
-            new Card(Rank.KING, Symbol.CLUB)
+            Card.of(Rank.ACE, Symbol.HEART),
+            Card.of(Rank.KING, Symbol.CLUB)
         ));
         assertThat(hand.hasAce()).isTrue();
     }
@@ -43,8 +43,8 @@ class HandTest {
     void hasAce_False() {
         Hand hand = new Hand();
         hand.add(List.of(
-            new Card(Rank.TWO, Symbol.HEART),
-            new Card(Rank.KING, Symbol.CLUB)
+            Card.of(Rank.TWO, Symbol.HEART),
+            Card.of(Rank.KING, Symbol.CLUB)
         ));
         assertThat(hand.hasAce()).isFalse();
     }
@@ -54,8 +54,8 @@ class HandTest {
     void isBlackjack_True() {
         Hand hand = new Hand();
         hand.add(List.of(
-            new Card(Rank.KING, Symbol.HEART),
-            new Card(Rank.ACE, Symbol.HEART)
+            Card.of(Rank.KING, Symbol.HEART),
+            Card.of(Rank.ACE, Symbol.HEART)
         ));
         assertThat(hand.isBlackjack()).isTrue();
     }
@@ -65,9 +65,9 @@ class HandTest {
     void isBlackjack_False() {
         Hand hand = new Hand();
         hand.add(List.of(
-            new Card(Rank.KING, Symbol.HEART),
-            new Card(Rank.NINE, Symbol.HEART),
-            new Card(Rank.TWO, Symbol.HEART)
+            Card.of(Rank.KING, Symbol.HEART),
+            Card.of(Rank.NINE, Symbol.HEART),
+            Card.of(Rank.TWO, Symbol.HEART)
         ));
         assertThat(hand.isBlackjack()).isFalse();
     }
@@ -77,9 +77,9 @@ class HandTest {
     void calculateScore_NoException_OneKingOneSevenOneFour() {
         Hand hand = new Hand();
         hand.add(List.of(
-            new Card(Rank.KING, Symbol.DIAMOND),
-            new Card(Rank.SEVEN, Symbol.HEART),
-            new Card(Rank.FOUR, Symbol.CLUB)
+            Card.of(Rank.KING, Symbol.DIAMOND),
+            Card.of(Rank.SEVEN, Symbol.HEART),
+            Card.of(Rank.FOUR, Symbol.CLUB)
         ));
         assertThat(hand.totalScore()).isEqualTo(Score.valueOf(21));
     }
@@ -89,9 +89,9 @@ class HandTest {
     void calculateScore_NoException_OneKingOneSevenOneFive() {
         Hand hand = new Hand();
         hand.add(List.of(
-            new Card(Rank.KING, Symbol.DIAMOND),
-            new Card(Rank.SEVEN, Symbol.HEART),
-            new Card(Rank.FIVE, Symbol.CLUB)
+            Card.of(Rank.KING, Symbol.DIAMOND),
+            Card.of(Rank.SEVEN, Symbol.HEART),
+            Card.of(Rank.FIVE, Symbol.CLUB)
         ));
         assertThat(hand.totalScore()).isEqualTo(Score.valueOf(22));
     }
@@ -102,8 +102,8 @@ class HandTest {
     void calculateScore_NoException_TwoAces() {
         Hand hand = new Hand();
         hand.add(List.of(
-            new Card(Rank.ACE, Symbol.DIAMOND),
-            new Card(Rank.ACE, Symbol.HEART)
+            Card.of(Rank.ACE, Symbol.DIAMOND),
+            Card.of(Rank.ACE, Symbol.HEART)
         ));
         assertThat(hand.totalScore()).isEqualTo(Score.valueOf(12));
     }
@@ -114,9 +114,9 @@ class HandTest {
     void calculateScore_NoException_TwoAcesOneNine() {
         Hand hand = new Hand();
         hand.add(List.of(
-            new Card(Rank.ACE, Symbol.DIAMOND),
-            new Card(Rank.ACE, Symbol.HEART),
-            new Card(Rank.NINE, Symbol.CLUB)
+            Card.of(Rank.ACE, Symbol.DIAMOND),
+            Card.of(Rank.ACE, Symbol.HEART),
+            Card.of(Rank.NINE, Symbol.CLUB)
         ));
         assertThat(hand.totalScore()).isEqualTo(Score.valueOf(21));
     }

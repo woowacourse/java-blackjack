@@ -21,7 +21,7 @@ class DeckTest {
     @DisplayName("성공: 덱에서 카드 한 장 빼기")
     void draw_NoException() {
         Deck deck = Deck.generatedBy(new SequentialCardGenerator());
-        assertThat(deck.drawCard()).isEqualTo(new Card(Rank.KING, Symbol.CLUB));
+        assertThat(deck.drawCard()).isEqualTo(Card.of(Rank.KING, Symbol.CLUB));
     }
 
     @Test
