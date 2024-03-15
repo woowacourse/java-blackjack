@@ -1,8 +1,8 @@
 package controller;
 
 import domain.amount.Amount;
-import domain.participant.Answer;
 import domain.amount.BetAmount;
+import domain.participant.Answer;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Names;
@@ -31,24 +31,30 @@ public class BlackJackController {
     public void run() {
         final Names names = inputController.getNames();
         final Dealer dealer = new Dealer();
+        final Players players = registerPlayers(names);
 
+        initHands(players, dealer);
+        dealWithPlayers(players, dealer);
+        dealerTurn(players, dealer);
+
+        printFinalResult(players, dealer);
+    }
+
+    private void dealerTurn(final Players players, final Dealer dealer) {
+        if (players.isAllBust()) {
+            return;
+        }
+        dealer.deal();
+        printDealerTurnMessage(dealer.countAddedHands());
+    }
+
+    private Players registerPlayers(final Names names) {
         final List<Player> playerList = new ArrayList<>();
         for (final Name name : names.getPlayerNames()) {
             final BetAmount betAmount = inputController.getBetAmount(name.getValue());
             playerList.add(new Player(name, betAmount));
         }
-
-        final Players players = new Players(playerList);
-
-        initHands(players, dealer);
-        dealWithPlayers(players, dealer);
-
-        if (!players.isAllBust()) {
-            dealer.deal();
-            printDealerTurnMessage(dealer.countAddedHands());
-        }
-
-        printFinalResult(players, dealer);
+        return new Players(playerList);
     }
 
     private void printDealerTurnMessage(final int turn) {
