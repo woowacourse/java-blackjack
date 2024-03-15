@@ -1,14 +1,15 @@
 package blackjack.view;
 
 import blackjack.dto.NameCardsScore;
+import blackjack.dto.NameProfit;
 import blackjack.model.betting.Money;
 import blackjack.model.deck.Card;
 import blackjack.model.participant.Name;
-import blackjack.model.participant.Player;
-import blackjack.view.display.deck.ScoreDisplay;
-import blackjack.view.display.deck.ShapeDisplay;
+import blackjack.view.formatter.CardsFormatter;
+import blackjack.view.formatter.NameFinalProfitFormat;
+import blackjack.view.formatter.PlayerNameFormatter;
+import blackjack.view.formatter.ScoreFormatter;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -29,13 +30,7 @@ public class OutputView {
     }
 
     public static void printNameAndCards(final Name name, final List<Card> cards) {
-        System.out.println(name.getRawName() + ": " + convert(cards));
-    }
-
-    private static String convert(final List<Card> cards) {
-        return cards.stream()
-                .map(card -> ScoreDisplay.getValue(card.getScore()) + ShapeDisplay.getValue(card.getShape()))
-                .collect(Collectors.joining(", "));
+        System.out.println(PlayerNameFormatter.format(name) + CardsFormatter.format(cards));
     }
 
     public static void printDealerHit() {
@@ -47,22 +42,22 @@ public class OutputView {
     }
 
     public static void printFinalCardsAndScore(final NameCardsScore nameCardsScore) {
-        System.out.println(
-                nameCardsScore.name().getRawName() + ": " + convert(nameCardsScore.cards()) + " - 결과: " + nameCardsScore.score());
+        System.out.println(PlayerNameFormatter.format(nameCardsScore.name())
+                + CardsFormatter.format(nameCardsScore.cards())
+                + ScoreFormatter.format(nameCardsScore.score()));
     }
 
-    public static void printDealerProfit(final Money dealerProfit) {
+    public static void printDealerProfit(final Name dealerName, final Money dealerProfit) {
         System.out.println();
         System.out.println("## 최종 수익");
-        System.out.println("딜러: " + dealerProfit.getValue());
+        System.out.println(formatFinalResult(new NameProfit(dealerName, dealerProfit)));
     }
 
-    // TODO: DTO etc
-    public static void printPlayerProfit(final Map<Player, Money> playerProfits) {
-        playerProfits.forEach((player, profitMoney) -> System.out.println(formatFinalResult(player.getName(), profitMoney)));
+    public static void printPlayerProfit(final List<NameProfit> playerProfits) {
+        playerProfits.forEach(nameProfit -> System.out.println(formatFinalResult(nameProfit)));
     }
 
-    private static String formatFinalResult(final Name name, final Money money) {
-        return name.getRawName() + ": " + money.getValue();
+    private static String formatFinalResult(final NameProfit nameProfit) {
+        return NameFinalProfitFormat.format(nameProfit);
     }
 }
