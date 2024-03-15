@@ -8,7 +8,6 @@ import blackjack.domain.result.Referee;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Round {
@@ -22,12 +21,9 @@ public class Round {
 
     public Pot generatePot(List<BetAmount> betAmounts) {
         List<Player> players = this.players.getPlayers();
-        Map<Player, BetAmount> pot = IntStream.range(0, betAmounts.size())
-                .boxed()
-                .collect(Collectors.toMap(
-                        players::get,
-                        betAmounts::get
-                ));
+        Map<Player, BetAmount> pot = new LinkedHashMap<>();
+        IntStream.range(0, players.size())
+                .forEach(i -> pot.put(players.get(i), betAmounts.get(i)));
         return new Pot(pot);
     }
 
