@@ -5,7 +5,6 @@ import model.card.Card;
 import model.card.Cards;
 import model.card.Denomination;
 import model.card.Suit;
-import model.player.Participant;
 
 import java.util.List;
 import java.util.Map;
@@ -25,28 +24,21 @@ public class OutputView {
         System.out.println(System.lineSeparator() + DIVIDE_CARD_MESSAGE.formatted(String.join(", ", names)));
     }
 
-    public void printPlayerCards(Map<String, Cards> usersNameAndCards, Map<String, Cards> dealerNameAndCards) {
-        Entry<String, Cards> dealer = mapToDealerEntry(dealerNameAndCards);
-        System.out.println(cardsToString(dealer.getKey(), dealer.getValue(), 1));
+    public void printPlayerCards(Map<String, Cards> usersNameAndCards) {
+        Cards dealerCards = usersNameAndCards.remove("딜러");
+        System.out.println(cardsToString("딜러", dealerCards, 1));
+
         for (Entry<String, Cards> entry : usersNameAndCards.entrySet()) {
             System.out.println(cardsToString(entry));
         }
-    }
-
-    private Entry<String, Cards> mapToDealerEntry(Map<String, Cards> dealerNameAndCards) {
-        return dealerNameAndCards.entrySet().stream()
-                .findFirst()
-                .orElseThrow();
     }
 
     public void printPlayerCardMessage(String name, Cards cards) {
         System.out.println(cardsToString(name, cards, cards.cards().size()));
     }
 
-    public void printBlackJackScore(Map<String, Cards> usersNameAndCards, Map<String, Cards> dealerNameAndCards) {
-        Entry<String, Cards> dealer = mapToDealerEntry(dealerNameAndCards);
-        System.out.println(System.lineSeparator() +
-                cardsToString(dealer) + PLAYER_CARD_SUM_MESSAGE.formatted(dealer.getValue().calculateScore()));
+    public void printBlackJackScore(Map<String, Cards> usersNameAndCards) {
+        System.out.println(System.lineSeparator());
         for (Entry<String, Cards> participant : usersNameAndCards.entrySet()) {
             System.out.println(cardsToString(participant) + PLAYER_CARD_SUM_MESSAGE.formatted(
                     participant.getValue().calculateScore()));

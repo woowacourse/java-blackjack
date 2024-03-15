@@ -40,8 +40,8 @@ public class BlackJack {
         }
     }
 
-    public void decideParticipantsPlay(Predicate<String> stringForMoreCard, BiConsumer<String, Cards> callback) {
-        participants.offerCardToParticipants(stringForMoreCard, callback, cardDeck::selectRandomCard);
+    public void decideParticipantsPlay(Predicate<String> inputForMoreCard, BiConsumer<String, Cards> printParticipantsCard) {
+        participants.offerCardToParticipants(inputForMoreCard, printParticipantsCard, cardDeck::selectRandomCard);
     }
 
     public void decideDealerPlay(Runnable runnable) {
@@ -63,6 +63,16 @@ public class BlackJack {
     }
 
     public Map<String, Cards> matchUsersNameAndCards() {
+        Map<String, Cards> matchUser = matchDealerNameAndCards();
+        matchUser.putAll(matchDealerNameAndCards());
+        return matchUser;
+    }
+
+    private Map<String, Cards> matchDealerNameAndCards() {
+        return Map.of(dealer.getName(), dealer.getCards());
+    }
+
+    private Map<String, Cards> matchParticipantNameAndCards() {
         return participants.matchUsersNameAndCards();
     }
 
@@ -80,9 +90,5 @@ public class BlackJack {
 
     public List<String> findParticipantsName() {
         return participants.findParticipantsName();
-    }
-
-    public Map<String, Cards> mapToDealerNameAndCards() {
-        return Map.of(dealer.getName(), dealer.getCards());
     }
 }
