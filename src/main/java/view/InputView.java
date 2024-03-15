@@ -31,7 +31,7 @@ public class InputView {
     }
 
     public int askBettingMoney(final NameDto nameDto) {
-        System.out.printf("%s의 배팅 금액은?", nameDto.name());
+        System.out.printf(System.lineSeparator() + "%s의 배팅 금액은?" + System.lineSeparator(), nameDto.name());
         String input = requireNotBlank(readLine());
         validateNumeric(input);
         return Integer.parseInt(input);

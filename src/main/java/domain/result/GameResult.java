@@ -11,11 +11,7 @@ public class GameResult {
     private final Map<Participant, Profit> result;
 
     public GameResult() {
-        this(new LinkedHashMap<>());
-    }
-
-    public GameResult(final Map<Participant, Profit> result) {
-        this.result = new LinkedHashMap<>(result);
+        this.result = new LinkedHashMap<>();
     }
 
     public void put(final Participant participant, final Profit profit) {
@@ -23,6 +19,6 @@ public class GameResult {
     }
 
     public Map<Participant, Profit> getResult() {
-        return Map.copyOf(result);
+        return new LinkedHashMap<>(result);
     }
 }

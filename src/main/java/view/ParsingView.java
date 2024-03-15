@@ -1,6 +1,5 @@
 package view;
 
-import domain.name.Name;
 import view.dto.card.CardsDto;
 import view.dto.participant.ParticipantDto;
 
@@ -16,18 +15,12 @@ public class ParsingView {
                       .map(participantDto -> participantDto.nameDto().name())
                       .collect(Collectors.joining(DELIMITER + SPACING));
     }
+
     public String playerResult(final Map<String, Integer> playerResults) {
         return playerResults.keySet()
                             .stream()
                             .map(player -> player + CONNECT + playerResults.get(player))
                             .collect(Collectors.joining(System.lineSeparator()));
-    }
-
-    public String dealerResult(final Map<String, Integer> dealerResult) {
-        return dealerResult.entrySet()
-                           .stream()
-                           .map(entry -> entry.getValue() + entry.getKey())
-                           .collect(Collectors.joining(SPACING));
     }
 
     public String cards(CardsDto cardsDto) {
