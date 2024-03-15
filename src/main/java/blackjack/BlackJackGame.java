@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class BlackJackGame {
@@ -53,7 +54,18 @@ public class BlackJackGame {
     }
 
     private Bets registerBets(final Players players) {
-        return players.createBets(this::readBetMoney);
+        final Bets bets = new Bets();
+        final Map<Player, Integer> playersBetMoney = readPlayersBetMoney(players);
+        for (Player player: playersBetMoney.keySet()) {
+            int money = playersBetMoney.get(player);
+            bets.addBet(player, money);
+        }
+        return bets;
+    }
+
+    private Map<Player, Integer> readPlayersBetMoney(final Players players) {
+        return players.stream()
+                .collect(Collectors.toMap(player -> player, player -> readBetMoney(player.getName())));
     }
 
     private int readBetMoney(final String name) {

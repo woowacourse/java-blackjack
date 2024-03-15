@@ -64,15 +64,6 @@ public class Players {
         }
     }
 
-    public Bets createBets(Function<String, Integer> readBetMoney) {
-        final Bets bets = new Bets();
-        for (Player player : players) {
-            final int money = readBetMoney.apply(player.getName());
-            bets.addBet(player, money);
-        }
-        return bets;
-    }
-
     public Map<Player, ResultCommand> matchPlayerResultCommands(final Referee referee) {
         final Map<Player, ResultCommand> playerResultCommands = new LinkedHashMap<>();
         for (Player player : players) {
@@ -89,9 +80,5 @@ public class Players {
         return players.stream()
                 .map(Player::getName)
                 .toList();
-    }
-
-    public List<Player> getPlayers() {
-        return players;
     }
 }
