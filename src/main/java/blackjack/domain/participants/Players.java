@@ -2,6 +2,8 @@ package blackjack.domain.participants;
 
 
 import blackjack.domain.cards.Card;
+import blackjack.domain.participants.GamerInformation.GamblingMoney;
+import blackjack.domain.participants.GamerInformation.Name;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

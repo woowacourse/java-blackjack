@@ -2,7 +2,7 @@ package blackjack.dto;
 
 import blackjack.domain.cards.Hand;
 import blackjack.domain.participants.Gamer;
-import blackjack.domain.participants.Name;
+import blackjack.domain.participants.GamerInformation.Name;
 import java.util.List;
 
 public record GamerDto(String GamerName, List<String> hand, int score) {

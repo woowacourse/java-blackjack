@@ -1,4 +1,4 @@
-package blackjack.domain.participants;
+package blackjack.domain.participants.GamerInformation;
 
 public class Name {
     private final String value;

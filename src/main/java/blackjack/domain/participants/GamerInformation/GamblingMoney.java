@@ -1,4 +1,4 @@
-package blackjack.domain.participants;
+package blackjack.domain.participants.GamerInformation;
 
 import java.util.Objects;
 

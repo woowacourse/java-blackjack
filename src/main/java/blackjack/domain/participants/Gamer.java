@@ -2,6 +2,9 @@ package blackjack.domain.participants;
 
 import blackjack.domain.cards.Card;
 import blackjack.domain.cards.Hand;
+import blackjack.domain.participants.GamerInformation.GamblingMoney;
+import blackjack.domain.participants.GamerInformation.Name;
+import blackjack.domain.participants.GamerInformation.PlayerStatus;
 
 public abstract class Gamer {
     public static final int BLACKJACK_SCORE = 21;

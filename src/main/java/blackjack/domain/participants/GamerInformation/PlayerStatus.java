@@ -1,7 +1,8 @@
-package blackjack.domain.participants;
+package blackjack.domain.participants.GamerInformation;
 
 import blackjack.domain.cards.Card;
 import blackjack.domain.cards.Hand;
+import blackjack.domain.participants.GamerInformation.GamblingMoney;
 
 public class PlayerStatus {
     private final Hand hand;

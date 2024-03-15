@@ -1,5 +1,8 @@
 package blackjack.domain.participants;
 
+import blackjack.domain.participants.GamerInformation.GamblingMoney;
+import blackjack.domain.participants.GamerInformation.Name;
+
 public class Player extends Gamer {
     public Player(Name name) {
         super(name);

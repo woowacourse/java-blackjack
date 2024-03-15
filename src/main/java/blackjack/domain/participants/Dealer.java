@@ -4,6 +4,8 @@ import static blackjack.domain.GameBoard.INITIAL_CARD_COUNT;
 
 import blackjack.domain.cards.Card;
 import blackjack.domain.cards.Deck;
+import blackjack.domain.participants.GamerInformation.GamblingMoney;
+import blackjack.domain.participants.GamerInformation.Name;
 
 public class Dealer extends Gamer {
     public static final int DEALER_BOUNDARY_SCORE = 17;
