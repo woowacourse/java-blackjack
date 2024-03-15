@@ -36,7 +36,7 @@ class ScoreTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {0, 32})
+    @ValueSource(ints = {0, 42})
     void 점수가_범위를_벗어날_경우_예외가_발생한다(int score) {
         assertThatThrownBy(() -> Score.get(score))
                 .isInstanceOf(IllegalArgumentException.class);

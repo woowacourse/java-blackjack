@@ -145,14 +145,12 @@ class BlackjackGameTest {
         @Test
         void 딜러가_bust이면_이긴다() {
             CardDeck cardDeck = new CardDeck(
-                    카드들(카드(Denomination.KING), 카드(Denomination.KING), 카드(Denomination.QUEEN), 카드(Denomination.TEN),
+                    카드들(카드(Denomination.KING), 카드(Denomination.QUEEN), 카드(Denomination.TEN),
                             카드(Denomination.JACK), 카드(Denomination.TEN)));
             BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
             Dealer dealer = new Dealer();
             Players players = 플레이어들("프린");
             blackjackGame.initGame(dealer, players);
-            blackjackGame.dealCardTo(players.getPlayers().get(0));
-            blackjackGame.dealCardTo(dealer);
             blackjackGame.dealCardTo(dealer);
 
             GameResult result = blackjackGame.createGameResult(dealer, players);
@@ -162,14 +160,11 @@ class BlackjackGameTest {
         @Test
         void 딜러가_blackjack이면_진다() {
             CardDeck cardDeck = new CardDeck(
-                    카드들(카드(Denomination.THREE), 카드(Denomination.QUEEN), 카드(Denomination.TEN), 카드(Denomination.ACE),
-                            카드(Denomination.TEN)));
+                    카드들(카드(Denomination.QUEEN), 카드(Denomination.TEN), 카드(Denomination.ACE), 카드(Denomination.TEN)));
             BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
             Dealer dealer = new Dealer();
             Players players = 플레이어들("프린");
             blackjackGame.initGame(dealer, players);
-            blackjackGame.dealCardTo(players.getPlayers().get(0));
-            blackjackGame.dealCardTo(dealer);
 
             GameResult result = blackjackGame.createGameResult(dealer, players);
             assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), ResultStatus.LOSE);

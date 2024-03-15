@@ -2,7 +2,6 @@ package domain.card;
 
 import static fixture.CardFixture.카드;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,17 +12,6 @@ class CardsTest {
         cards.addCard(카드());
 
         assertThat(cards.getCards()).hasSize(1);
-    }
-
-    @Test
-    void Bust에_카드를_받으면_예외가_발생한다() {
-        Cards cards = new Cards();
-        cards.addCard(카드(Denomination.TEN));
-        cards.addCard(카드(Denomination.JACK));
-        cards.addCard(카드(Denomination.QUEEN));
-
-        assertThatThrownBy(() -> cards.addCard(카드(Denomination.KING)))
-                .isInstanceOf(IllegalStateException.class);
     }
 
     @Test
