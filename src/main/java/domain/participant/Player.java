@@ -2,23 +2,23 @@ package domain.participant;
 
 import domain.name.Name;
 import domain.result.ResultProfitRatio;
-import vo.BettingMoney;
 import vo.Account;
+import vo.BettingMoney;
 import vo.Profit;
 
 public class Player extends Participant {
     private final Account account;
 
-    public Player(Name name, Account account) {
+    public Player(final Name name, final Account account) {
         super(name);
         this.account = account;
     }
 
-    public static Player register(final Name name, final BettingMoney bettingMoney){
+    public static Player register(final Name name, final BettingMoney bettingMoney) {
         return new Player(name, new Account(bettingMoney));
     }
 
-    public void revenue(ResultProfitRatio ratio){
+    public void revenue(final ResultProfitRatio ratio) {
         account.applyProfit(ratio);
     }
 

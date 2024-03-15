@@ -19,13 +19,13 @@ public enum GameResultStatus {
     private final BiFunction<Integer, Integer, Boolean> match;
     private final ResultProfitRatio resultProfitRatio;
 
-    GameResultStatus(String value, BiFunction<Integer, Integer, Boolean> match, ResultProfitRatio resultProfitRatio) {
+    GameResultStatus(final String value, final BiFunction<Integer, Integer, Boolean> match, final ResultProfitRatio resultProfitRatio) {
         this.value = value;
         this.match = match;
         this.resultProfitRatio = resultProfitRatio;
     }
 
-    public static GameResultStatus comparedTo(Integer standardTarget, Integer comparisonTarget) {
+    public static GameResultStatus comparedTo(final Integer standardTarget,final Integer comparisonTarget) {
         return Arrays.stream(values())
                      .filter(status -> status.match.apply(standardTarget, comparisonTarget))
                      .findFirst()

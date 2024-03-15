@@ -10,15 +10,15 @@ public class Hand {
         this(new Cards());
     }
 
-    public Hand(Cards cards) {
+    public Hand(final Cards cards) {
         this.cards = cards;
     }
 
-    public Hand(Hand hand) {
+    public Hand(final Hand hand) {
         this(hand.cards);
     }
 
-    public void add(Card card) {
+    public void add(final Card card) {
         cards.add(card);
     }
 

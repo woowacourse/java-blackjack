@@ -70,7 +70,7 @@ class BlackjackGameTest {
                 pobi, new Profit(0),
                 zeus, new Profit(-7000));
         BlackjackGame blackjackGame = new BlackjackGame(dealer, new Players(List.of(hotea, tobi, pobi, zeus)));
-        blackjackGame.setUp();
+        blackjackGame.prepare();
         assertThat(blackjackGame.resultsOfParticipants().getResult()).isEqualTo(expected);
     }
 

@@ -38,7 +38,7 @@ public class Casino {
         resultOf(game);
     }
 
-    private List<BettingMoney> askBettingMoney(Names names) {
+    private List<BettingMoney> askBettingMoney(final Names names) {
         return names.playerNames()
                     .stream()
                     .map(name -> new BettingMoney(inputView.askBettingMoney(new NameDto(name.value()))))

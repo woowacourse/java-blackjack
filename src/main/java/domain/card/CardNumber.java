@@ -18,7 +18,7 @@ public enum CardNumber {
     private final int value;
     private final CardPhrase phrase;
 
-    CardNumber(int value, CardPhrase phrase) {
+    CardNumber(final int value, final CardPhrase phrase) {
         this.value = value;
         this.phrase = phrase;
     }

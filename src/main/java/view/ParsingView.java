@@ -23,7 +23,7 @@ public class ParsingView {
                             .collect(Collectors.joining(System.lineSeparator()));
     }
 
-    public String cards(CardsDto cardsDto) {
+    public String cards(final CardsDto cardsDto) {
         return cardsDto.cardsDto()
                        .stream()
                        .map(card -> card.cardNumber() + card.cardShape())

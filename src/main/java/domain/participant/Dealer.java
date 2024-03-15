@@ -30,7 +30,7 @@ public class Dealer extends Participant {
         participant.receive(deck.draw());
     }
 
-    public Profit calculateProfit(Players players) {
+    public Profit calculateProfit(final Players players) {
         int totalPlayersProfit = players.getPlayers()
                                    .stream()
                                    .map(player -> player.profit().value())

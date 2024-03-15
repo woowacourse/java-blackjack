@@ -10,11 +10,11 @@ public enum ResultProfitRatio {
 
     private final double ratio;
 
-    ResultProfitRatio(double ratio) {
+    ResultProfitRatio(final double ratio) {
         this.ratio = ratio;
     }
 
-    public static ResultProfitRatio match(double ratio) {
+    public static ResultProfitRatio match(final double ratio) {
         return Arrays.stream(ResultProfitRatio.values())
                      .filter(profitRatio -> profitRatio.ratio == ratio)
                      .findFirst()

@@ -50,7 +50,7 @@ public class BlackjackGame {
         return gameResult;
     }
 
-    private ResultProfitRatio getResultOf(Participant standardTarget, Participant comparisonTarget) {
+    private ResultProfitRatio getResultOf(final Participant standardTarget, final Participant comparisonTarget) {
         return GameResultStatus.comparedTo(standardTarget.score(), comparisonTarget.score())
                                .getResultProfitRatio();
     }

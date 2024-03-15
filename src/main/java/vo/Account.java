@@ -6,16 +6,16 @@ public class Account {
     private final BettingMoney bettingMoney;
     private Profit profit;
 
-    public Account(BettingMoney bettingMoney, Profit profit) {
+    public Account(final BettingMoney bettingMoney, final Profit profit) {
         this.bettingMoney = bettingMoney;
         this.profit = profit;
     }
 
-    public Account(BettingMoney bettingMoney) {
+    public Account(final BettingMoney bettingMoney) {
         this(bettingMoney, new Profit(bettingMoney.value()));
     }
 
-    public void applyProfit(ResultProfitRatio ratio) {
+    public void applyProfit(final ResultProfitRatio ratio) {
         profit = new Profit((int) (profit.value() * ratio.getRatio()));
     }
 
