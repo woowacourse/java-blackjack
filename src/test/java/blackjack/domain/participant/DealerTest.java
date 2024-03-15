@@ -9,13 +9,13 @@ import fixture.HandFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class Dealer2Test {
+class DealerTest {
 
     @DisplayName("한 장의 지급받은 카드를 공개한다.")
     @Test
     void testRevealHand() {
         // given
-        Dealer2 dealer = new Dealer2(new Hand());
+        Dealer dealer = new Dealer(new Hand());
         CardDeck cardDeck = CardDeck.createShuffledFullCardDeck();
 
         dealer.deal(cardDeck);
@@ -34,7 +34,7 @@ class Dealer2Test {
         Hand hand = HandFixture.createHandWithScoreTotal16();
         int beforeHandSize = hand.getCards().size();
 
-        Dealer2 dealer = new Dealer2(hand);
+        Dealer dealer = new Dealer(hand);
 
         CardDeck cardDeck = CardDeck.createShuffledFullCardDeck();
 
@@ -53,7 +53,7 @@ class Dealer2Test {
         hand.append(CardFixture.createAHeart());
         int beforeHandSize = hand.getCards().size();
 
-        Dealer2 dealer = new Dealer2(hand);
+        Dealer dealer = new Dealer(hand);
 
         CardDeck cardDeck = CardDeck.createShuffledFullCardDeck();
 

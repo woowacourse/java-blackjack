@@ -2,7 +2,7 @@ package blackjack.domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.participant.Dealer2;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player2;
 import blackjack.domain.participant.Players2;
 import fixture.DealerFixture;
@@ -17,7 +17,7 @@ class PlayersResultTest {
     @Test
     void testDealerWins() {
         // given
-        Dealer2 dealer = DealerFixture.createDealer2();
+        Dealer dealer = DealerFixture.createDealer2();
 
         Player2 pobi = PlayerFixture.createPobi2();
         Player2 jason = PlayerFixture.createJason2();
@@ -35,7 +35,7 @@ class PlayersResultTest {
     @Test
     void testDealerLosses() {
         // given
-        Dealer2 dealer = DealerFixture.createDealer2();
+        Dealer dealer = DealerFixture.createDealer2();
 
         Player2 pobi = PlayerFixture.createPobi2();
         Player2 jason = PlayerFixture.createJason2();
@@ -53,7 +53,7 @@ class PlayersResultTest {
     @Test
     void dealerTies() {
         // given
-        Dealer2 dealer = DealerFixture.createDealer2();
+        Dealer dealer = DealerFixture.createDealer2();
 
         Player2 pobi = PlayerFixture.createPobi2();
         Player2 jason = PlayerFixture.createJason2();

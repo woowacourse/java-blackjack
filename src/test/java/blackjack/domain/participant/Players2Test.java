@@ -69,7 +69,7 @@ class Players2Test {
                 new Card(CardRank.NINE, CardSuit.CLUB),
                 new Card(CardRank.EIGHT, CardSuit.DIAMOND)
         ));
-        Dealer2 dealer = new Dealer2(dealerHand);
+        Dealer dealer = new Dealer(dealerHand);
 
         Hand pobiHand = new Hand(List.of(
                 new Card(CardRank.TWO, CardSuit.HEART),

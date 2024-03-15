@@ -4,17 +4,17 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.game.Score;
 
-public class Dealer2 {
+public class Dealer {
 
     private static final int REVEAL_COUNT = 1;
 
     private final Hand hand;
 
-    public Dealer2() {
+    public Dealer() {
         this(new Hand());
     }
 
-    public Dealer2(Hand hand) {
+    public Dealer(Hand hand) {
         this.hand = hand;
     }
 

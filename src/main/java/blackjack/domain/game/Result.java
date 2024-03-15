@@ -1,6 +1,6 @@
 package blackjack.domain.game;
 
-import blackjack.domain.participant.Dealer2;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player2;
 
 public enum Result {
@@ -25,7 +25,7 @@ public enum Result {
         return this == TIE;
     }
 
-    public static Result determineResult(Player2 player, Dealer2 dealer) {
+    public static Result determineResult(Player2 player, Dealer dealer) {
         if (player.isBust()) {
             return Result.LOSE;
         }
@@ -38,7 +38,7 @@ public enum Result {
         return compareScore(player, dealer);
     }
 
-    private static Result compareScore(Player2 player, Dealer2 dealer) {
+    private static Result compareScore(Player2 player, Dealer dealer) {
         Score playerScore = player.handScore();
         Score dealerScore = dealer.handScore();
 

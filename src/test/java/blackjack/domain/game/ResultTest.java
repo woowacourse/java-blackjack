@@ -6,7 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
 import blackjack.domain.card.Hand;
-import blackjack.domain.participant.Dealer2;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player2;
 import fixture.HandFixture;
@@ -23,7 +23,7 @@ class ResultTest {
         playerHand.append(new Card(CardRank.ACE, CardSuit.HEART));
         Player2 player = new Player2(new Name("pobi"), playerHand);
 
-        Dealer2 dealer = new Dealer2(new Hand());
+        Dealer dealer = new Dealer(new Hand());
 
         // when
         Result result = Result.determineResult(player, dealer);
@@ -41,7 +41,7 @@ class ResultTest {
         playerHand.append(new Card(CardRank.KING, CardSuit.HEART));
         Player2 player = new Player2(new Name("pobi"), playerHand);
 
-        Dealer2 dealer = new Dealer2(new Hand());
+        Dealer dealer = new Dealer(new Hand());
 
         // when
         Result result = Result.determineResult(player, dealer);
@@ -59,7 +59,7 @@ class ResultTest {
         hand.append(new Card(CardRank.KING, CardSuit.HEART));
 
         Player2 player = new Player2(new Name("pobi"), hand);
-        Dealer2 dealer = new Dealer2(hand);
+        Dealer dealer = new Dealer(hand);
 
         // when
         Result result = Result.determineResult(player, dealer);
@@ -76,7 +76,7 @@ class ResultTest {
 
         Hand dealerHand = HandFixture.createHandWithScoreTotal21();
         dealerHand.append(new Card(CardRank.ACE, CardSuit.HEART));
-        Dealer2 dealer = new Dealer2(dealerHand);
+        Dealer dealer = new Dealer(dealerHand);
 
         // when
         Result result = Result.determineResult(player, dealer);
@@ -95,7 +95,7 @@ class ResultTest {
 
         Hand dealerHand = new Hand();
         dealerHand.append(new Card(CardRank.TWO, CardSuit.HEART));
-        Dealer2 dealer = new Dealer2(dealerHand);
+        Dealer dealer = new Dealer(dealerHand);
 
         // when
         Result result = Result.determineResult(player, dealer);
@@ -114,7 +114,7 @@ class ResultTest {
 
         Hand dealerHand = new Hand();
         dealerHand.append(new Card(CardRank.THREE, CardSuit.HEART));
-        Dealer2 dealer = new Dealer2(dealerHand);
+        Dealer dealer = new Dealer(dealerHand);
 
         // when
         Result result = Result.determineResult(player, dealer);
@@ -133,7 +133,7 @@ class ResultTest {
 
         Hand dealerHand = new Hand();
         dealerHand.append(new Card(CardRank.TWO, CardSuit.HEART));
-        Dealer2 dealer = new Dealer2(dealerHand);
+        Dealer dealer = new Dealer(dealerHand);
 
         // when
         Result result = Result.determineResult(player, dealer);

@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import blackjack.domain.game.PlayersResult;
 import blackjack.domain.game.Result;
-import blackjack.domain.participant.Dealer2;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player2;
 import blackjack.domain.participant.Players2;
@@ -32,7 +32,7 @@ public class MessageResolver {
                 .collect(Collectors.joining(SEPARATOR));
     }
 
-    public String resolveDealToDealerMessage(Dealer2 dealer) {
+    public String resolveDealToDealerMessage(Dealer dealer) {
         return String.format(HAND_FORMAT, DEALER_NAME, resolveHandMessage(dealer.revealHand()));
     }
 
@@ -50,7 +50,7 @@ public class MessageResolver {
         return String.format(HAND_FORMAT, player.getName().value(), resolveHandMessage(player.getHand()));
     }
 
-    public String temp(Dealer2 dealer) {
+    public String temp(Dealer dealer) {
         return String.format(HAND_FORMAT, DEALER_NAME, resolveHandMessage(dealer.getHand()));
     }
 
@@ -89,7 +89,7 @@ public class MessageResolver {
         return String.format("%s: %s", player.getName().value(), ResultStateMapper.toSymbol(result));
     }
 
-    public String resolveDealerHandScoreMessage(Dealer2 dealer) {
+    public String resolveDealerHandScoreMessage(Dealer dealer) {
         String message = String.format("%s - 결과: %d", temp(dealer), dealer.handScore().getValue());
         return String.join("", LINE_SEPARATOR, message);
     }

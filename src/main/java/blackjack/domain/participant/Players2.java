@@ -57,7 +57,7 @@ public class Players2 {
         players.forEach(drawToPlayer);
     }
 
-    public PlayersResult judge(Dealer2 dealer) {
+    public PlayersResult judge(Dealer dealer) {
         Map<Player2, Result> results = players.stream()
                 .collect(Collectors.toMap(
                         player -> player,
