@@ -16,16 +16,16 @@ class GameResultStatusTest {
     @ParameterizedTest
     @MethodSource
     void resultOf(int standardTarget, int comparisonTarget, GameResultStatus expected) {
-        assertThat(GameResultStatus.comparedTo(comparisonTarget, standardTarget)).isEqualTo(expected);
+        assertThat(GameResultStatus.comparedTo(standardTarget, comparisonTarget)).isEqualTo(expected);
     }
 
     static Stream<Arguments> resultOf() {
         return Stream.of(
                 Arguments.of(22, 22, PUSH),
-                Arguments.of(22, 20, WIN),
-                Arguments.of(20, 22, LOSE),
-                Arguments.of(20, 15, LOSE),
-                Arguments.of(15, 20, WIN),
+                Arguments.of(20, 22, WIN),
+                Arguments.of(22, 20, LOSE),
+                Arguments.of(15, 20, LOSE),
+                Arguments.of(20, 15, WIN),
                 Arguments.of(20, 20, PUSH)
         );
     }

@@ -11,7 +11,8 @@ public enum GameResultStatus {
             && (comparisonTarget > BLACKJACK_SCORE || (comparisonTarget < standardTarget)), ResultProfitRatio.WIN),
     PUSH("무", (standardTarget, comparisonTarget) -> (comparisonTarget > BLACKJACK_SCORE
             && standardTarget > BLACKJACK_SCORE) || (comparisonTarget == standardTarget), ResultProfitRatio.PUSH),
-    LOSE("패", (standardTarget, comparisonTarget) -> comparisonTarget > standardTarget, ResultProfitRatio.LOSE);
+    LOSE("패", (standardTarget, comparisonTarget) -> comparisonTarget <= BLACKJACK_SCORE
+            && (standardTarget > BLACKJACK_SCORE || (comparisonTarget > standardTarget)), ResultProfitRatio.LOSE);
 
 
     private final String value;
