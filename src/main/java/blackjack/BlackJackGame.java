@@ -136,7 +136,7 @@ public class BlackJackGame {
     }
 
     private void printResultProfits(final Referee referee, final Players players, final Bets bets) {
-        final Map<Player, ResultCommand> playerResultCommands = players.matchPlayerResultCommands(referee, players);
+        final Map<Player, ResultCommand> playerResultCommands = players.matchPlayerResultCommands(referee);
         printDealerResultProfit(playerResultCommands, bets);
         printPlayersResultProfit(playerResultCommands, bets);
     }

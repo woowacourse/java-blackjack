@@ -73,9 +73,9 @@ public class Players {
         return bets;
     }
 
-    public Map<Player, ResultCommand> matchPlayerResultCommands(final Referee referee, final Players players) {
+    public Map<Player, ResultCommand> matchPlayerResultCommands(final Referee referee) {
         final Map<Player, ResultCommand> playerResultCommands = new LinkedHashMap<>();
-        for (Player player : players.getPlayers()) {
+        for (Player player : players) {
             playerResultCommands.put(player, referee.judgePlayerResult(player));
         }
         return playerResultCommands;
