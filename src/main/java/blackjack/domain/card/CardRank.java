@@ -1,11 +1,12 @@
 package blackjack.domain.card;
 
+import blackjack.domain.game.Score;
 import java.util.Arrays;
 import java.util.List;
 
 public enum CardRank {
 
-    ACE(1, 11),
+    ACE(1),
     TWO(2),
     THREE(3),
     FOUR(4),
@@ -20,21 +21,24 @@ public enum CardRank {
     KING(10),
     ;
 
+    private static final int ACE_WEIGHT = 10;
+
     private final int score;
-    private final int specialScore;
 
     CardRank(int score) {
         this.score = score;
-        this.specialScore = score;
     }
 
-    CardRank(int score, int specialScore) {
-        this.score = score;
-        this.specialScore = specialScore;
+    public static List<CardRank> allCardRanks() {
+        return Arrays.asList(values());
     }
 
-    public static List<CardRank> getAllCardRanks() {
-        return Arrays.stream(values()).toList();
+    public static Score adjustAceScore(Score score) {
+        Score newScore = score.add(ACE_WEIGHT);
+        if (newScore.isBust()) {
+            return score;
+        }
+        return newScore;
     }
 
     public boolean isAce() {
@@ -43,9 +47,5 @@ public enum CardRank {
 
     public int getScore() {
         return score;
-    }
-
-    public int getSpecialScore() {
-        return specialScore;
     }
 }
