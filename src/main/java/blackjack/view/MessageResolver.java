@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.game.Judge;
 import blackjack.domain.game.PlayersResult;
 import blackjack.domain.game.Result;
 import blackjack.domain.game.Result2;
@@ -19,7 +18,6 @@ import blackjack.domain.participant.Players2;
 import blackjack.view.mapper.CardRankMapper;
 import blackjack.view.mapper.CardSuitMapper;
 import blackjack.view.mapper.ResultStateMapper;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class MessageResolver {
@@ -142,25 +140,9 @@ public class MessageResolver {
         return String.join("", LINE_SEPARATOR, "## 최종 승패");
     }
 
-    public String resolveDealerResultMessage(Judge judge) {
-        return judge.getResults().entrySet().stream()
-                .filter(entry -> entry.getKey() instanceof Dealer)
-                .findFirst()
-                .map(Entry::getValue)
-                .map(dealer -> String.format("%s: %d승 %d패", DEALER_NAME, dealer.getWinCount(), dealer.getLoseCount()))
-                .orElseThrow(IllegalArgumentException::new);
-    }
-
     public String resolveDealerResultMessage(PlayersResult playersResult) {
         return String.format("%s: %d승 %d패 %d무", DEALER_NAME, playersResult.dealerWins(),
                 playersResult.dealerLosses(), playersResult.dealerTies());
-    }
-
-    public String resolvePlayersResultMessage(Judge judge) {
-        return judge.getResults().entrySet().stream()
-                .filter(entry -> entry.getKey() instanceof Player)
-                .map(entry -> resolvePlayerResult((Player) entry.getKey(), entry.getValue()))
-                .collect(Collectors.joining(LINE_SEPARATOR));
     }
 
     public String resolvePlayersResultMessage(PlayersResult results) {
