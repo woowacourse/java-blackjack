@@ -4,6 +4,7 @@ import static blackjack.view.CardDescription.NUMBER_NAME;
 import static blackjack.view.CardDescription.SHAPE_NAME;
 
 import blackjack.domain.Score;
+import blackjack.domain.bet.Profit;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
@@ -14,6 +15,8 @@ import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.result.BetResult;
 import blackjack.domain.result.BetResults;
+import blackjack.domain.result.PlayerProfitResult;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MessageResolver {
@@ -82,7 +85,33 @@ public class MessageResolver {
                         .collect(Collectors.joining(LINE_SEPARATOR))).toString();
     }
 
-    public String resolveDealerProfitMessage(int dealerEarned) {
-        return String.format("딜러: %d", dealerEarned);
+    public String resolveProfitResultMessage(PlayerProfitResult playerProfitResult, Profit dealerProfit) {
+        return new StringBuilder(LINE_SEPARATOR)
+                .append("##최종 수익")
+                .append(LINE_SEPARATOR)
+                .append(resolveDealerProfitMessage(dealerProfit))
+                .append(LINE_SEPARATOR)
+                .append(resolvePlayerProfitMessage(playerProfitResult)).toString();
+    }
+
+    public String resolveDealerProfitMessage(Profit dealerProfit) {
+        return String.format("딜러: %d", dealerProfit.getValue());
+    }
+
+    public String resolveDealerProfitMessage(int dealerProfit) {
+        return String.format("딜러: %d", dealerProfit);
+    }
+
+    public String resolvePlayerProfitMessage(PlayerProfitResult playerProfitResult) {
+        Map<Player, Profit> playerProfitMap = playerProfitResult.getPlayerProfitMap();
+        return playerProfitMap.entrySet().stream()
+                .map(this::resolveSingleProfitMessage)
+                .collect(Collectors.joining(LINE_SEPARATOR));
+    }
+
+    public String resolveSingleProfitMessage(Map.Entry<Player, Profit> playerProfit) {
+        String playerName = playerProfit.getKey().getName();
+        int profit = playerProfit.getValue().getValue();
+        return String.format("%s: %d", playerName, profit);
     }
 }

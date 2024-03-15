@@ -1,12 +1,14 @@
 package blackjack.view;
 
 import blackjack.domain.Score;
+import blackjack.domain.bet.Profit;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.result.BetResult;
 import blackjack.domain.result.BetResults;
+import blackjack.domain.result.PlayerProfitResult;
 
 public class OutputView {
 
@@ -38,6 +40,10 @@ public class OutputView {
 
     public void printBetResults(int dealerEarned, BetResults betResults) {
         System.out.println(messageResolver.resolveBetResultsMessage(dealerEarned, betResults));
+    }
+
+    public void printProfitResults(PlayerProfitResult playerProfitResult, Profit dealerProfit) {
+        System.out.println(messageResolver.resolveProfitResultMessage(playerProfitResult, dealerProfit));
     }
 
     public void printBetResult(BetResult betResult) {

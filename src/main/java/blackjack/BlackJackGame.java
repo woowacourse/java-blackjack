@@ -1,7 +1,8 @@
 package blackjack;
 
 import blackjack.domain.Judge;
-import blackjack.domain.bet.Bets;
+import blackjack.domain.bet.BettingBank;
+import blackjack.domain.bet.Profit;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.player.Dealer;
@@ -9,8 +10,8 @@ import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.PlayerName;
 import blackjack.domain.player.Players;
-import blackjack.domain.result.BetResults;
-import blackjack.domain.result.PlayerResults;
+import blackjack.domain.result.PlayerGameResult;
+import blackjack.domain.result.PlayerProfitResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -28,7 +29,7 @@ public class BlackJackGame {
     public void run() {
         CardDeck cardDeck = CardDeck.createShuffledDeck();
         Players players = initPlayers(cardDeck);
-        Bets bets = inputView.readBets(players);
+        BettingBank bettingBank = inputView.readBetInformation(players);
         Dealer dealer = new Dealer(Hand.createHandFrom(cardDeck));
         Judge judge = new Judge();
         printPlayersInformation(players, dealer);
@@ -40,15 +41,10 @@ public class BlackJackGame {
         printParticipantScore(dealer);
         printPlayersScore(players);
 
-        PlayerResults playerResults = judge.calculatePlayerResults(dealer, players);
-        List<String> playerNames = players.getPlayerNames();
-
-        BetResults betResults = new BetResults(playerNames.stream()
-                .map(bets::findBetByPlayerName)
-                .map(bet -> bet.calculateBetResult(playerResults.findResultByName(bet.getPlayerName())))
-                .toList());
-
-        outputView.printBetResults(betResults.calculateDealerProfit().getAmount(), betResults);
+        PlayerGameResult playerGameResult = judge.calculatePlayerGameResult(dealer, players);
+        PlayerProfitResult playerProfitResult = bettingBank.calculateProfitResult(playerGameResult);
+        Profit profit = playerProfitResult.calculateDealerProfit();
+        outputView.printProfitResults(playerProfitResult, profit);
     }
 
     private Players initPlayers(CardDeck cardDeck) {
