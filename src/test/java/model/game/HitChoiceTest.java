@@ -1,9 +1,11 @@
 package model.game;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -22,5 +24,17 @@ class HitChoiceTest {
     void testInvalidHitChoice(String hitChoice) {
         assertThatThrownBy(() -> HitChoice.findHitChoice(hitChoice))
             .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("y이면 isHit true를 반환한다")
+    @Test
+    void isHitTrueWhenY() {
+        assertThat(HitChoice.findHitChoice("y").isHit()).isTrue();
+    }
+
+    @DisplayName("n이면 isHit false를 반환한다")
+    @Test
+    void isHitFalseWhenN() {
+        assertThat(HitChoice.findHitChoice("n").isHit()).isFalse();
     }
 }
