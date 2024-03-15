@@ -74,7 +74,6 @@ public class BlackJackController {
         for (Player player : blackJackGame.getPlayers()) {
             repeatHitUntilPlayerStand(blackJackGame, player);
         }
-
         repeatHitUntilDealerStand(blackJackGame);
     }
 

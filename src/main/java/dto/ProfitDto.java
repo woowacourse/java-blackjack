@@ -14,11 +14,12 @@ public record ProfitDto(Map<String, Integer> playerProfits, Entry<String, Intege
     private static Map<String, Integer> makePlayerProfits(final Map<Player, Profit> playerProfits) {
         Map<String, Integer> playerProfitsInformation = new LinkedHashMap<>();
 
-        for (Map.Entry<Player, Profit> entry : playerProfits.entrySet()) {
-            String playerName = entry.getKey().getName().name();
-            Integer profit = entry.getValue().getMoney();
+        playerProfits.forEach((key, value) -> {
+            String playerName = key.getName().name();
+            Integer profit = value.getMoney();
             playerProfitsInformation.put(playerName, profit);
-        }
+        });
+
         return playerProfitsInformation;
     }
 

@@ -24,11 +24,12 @@ public class BlackJackGame {
         this.dealer = dealer;
 
         List<String> names = playerNames.names();
-        for (String name : names) {
-            PlayerName Playername = new PlayerName(name);
-            Player player = new Player(Playername, dealer.dealHand());
+
+        names.forEach(name -> {
+            PlayerName playerName = new PlayerName(name);
+            Player player = new Player(playerName, dealer.dealHand());
             this.players.add(player);
-        }
+        });
     }
 
     public void hitPlayer(final Player targetPlayer) {
@@ -49,20 +50,19 @@ public class BlackJackGame {
         Map<Player, Profit> playerProfits = new LinkedHashMap<>();
         Map<Player, Result> playerResults = getGameResults();
 
-        for (Map.Entry<Player, Result> entry : playerResults.entrySet()) {
-            Player player = entry.getKey();
-            Result result = entry.getValue();
-            playerProfits.put(player, Profit.of(bets.get(player.getName()), ProfitRate.from(result)));
-        }
+        playerResults.forEach((player, result) ->
+                playerProfits.put(player, Profit.of(bets.get(player.getName()), ProfitRate.from(result)))
+        );
 
         return playerProfits;
     }
 
     private Map<Player, Result> getGameResults() {
         Map<Player, Result> results = new LinkedHashMap<>();
-        for (Player player : players) {
-            results.put(player, Result.of(dealer, player));
-        }
+
+        players.forEach(player ->
+                results.put(player, Result.of(dealer, player))
+        );
         return results;
     }
 
@@ -75,9 +75,11 @@ public class BlackJackGame {
 
     public Map<Player, Score> getScores() {
         Map<Player, Score> scores = new LinkedHashMap<>();
-        for (Player player : getEveryParticipants()) {
-            scores.put(player, player.getScore());
-        }
+
+        getEveryParticipants().forEach(player ->
+                scores.put(player, player.getScore())
+        );
+
         return scores;
     }
 
