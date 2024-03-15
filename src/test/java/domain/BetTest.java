@@ -3,7 +3,7 @@ package domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static domain.Bet.BET_RANGE_MESSAGE;
+import static domain.Bet.*;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 class BetTest {
@@ -11,14 +11,14 @@ class BetTest {
     @DisplayName("최소 금액 이상만 허용한다.")
     @Test
     void validateRangeSuccess() {
-        assertThatCode(() -> new Bet(Bet.MIN_BET))
+        assertThatCode(() -> new Bet(MIN_BET))
                 .doesNotThrowAnyException();
     }
 
     @DisplayName("최소 금액보다 작은 경우 예외가 발생한다.")
     @Test
     void validateRangeFail() {
-        assertThatCode(() -> new Bet(Bet.MIN_BET - 1))
+        assertThatCode(() -> new Bet(MIN_BET - 1))
                 .hasMessage(BET_RANGE_MESSAGE)
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -26,7 +26,7 @@ class BetTest {
     @DisplayName("금액의 단위를 만족해야 한다.")
     @Test
     void validateUnit() {
-        assertThatCode(() -> new Bet(10))
+        assertThatCode(() -> new Bet(BET_UNIT))
                 .doesNotThrowAnyException();
     }
 }

@@ -26,7 +26,7 @@ class BettingPotTest {
 
     @DisplayName("결과에 따라 사용자의 수익을 정산한다.")
     @ParameterizedTest
-    @CsvSource(value = {"DEALER_WIN:10:-10", "PLAYER_WIN:10:10", "PLAYER_BLACK_JACK_WIN:10:15", "PUSH:10:0"}, delimiter = ':')
+    @CsvSource(value = {"LOSE:10:-10", "WIN:10:10", "BLACKJACK_WIN:10:15", "PUSH:10:0"}, delimiter = ':')
     void settlePlayer(PlayerGameResult playerGameResult, int betAmount, int expectedSettlement) {
         BettingPot bettingPot = new BettingPot();
         Player player = new Player("산초");
@@ -43,7 +43,7 @@ class BettingPotTest {
 
     @DisplayName("결과에 따라 딜러의 수익을 정산한다.")
     @ParameterizedTest
-    @CsvSource(value = {"DEALER_WIN:10:-10", "PLAYER_WIN:10:10", "PLAYER_BLACK_JACK_WIN:10:15", "PUSH:10:0"}, delimiter = ':')
+    @CsvSource(value = {"LOSE:10:-10", "WIN:10:10", "BLACKJACK_WIN:10:15", "PUSH:10:0"}, delimiter = ':')
     void settleDealer(PlayerGameResult playerGameResult, int betAmount, int expectedPlayerSettlement) {
         BettingPot bettingPot = new BettingPot();
         Player player = new Player("산초");
