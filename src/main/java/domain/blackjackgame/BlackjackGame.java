@@ -5,8 +5,8 @@ import domain.card.CardShuffleStrategy;
 import domain.card.Score;
 import domain.participant.Dealer;
 import domain.participant.Participant;
+import domain.participant.Participants;
 import domain.participant.Player;
-import domain.participant.Players;
 
 public class BlackjackGame {
     private final CardDeck cardDeck;
@@ -17,12 +17,11 @@ public class BlackjackGame {
         this.cardShuffleStrategy = cardShuffleStrategy;
     }
 
-    public void initGame(Dealer dealer, Players players) {
+    public void initGame(Participants participants) {
         cardDeck.shuffle(cardShuffleStrategy);
 
-        dealer.receiveInitialCards(cardDeck.draw(), cardDeck.draw());
-        for (Player player : players.getPlayers()) {
-            player.receiveInitialCards(cardDeck.draw(), cardDeck.draw());
+        for (Participant participant : participants.getParticipants()) {
+            participant.receiveInitialCards(cardDeck.draw(), cardDeck.draw());
         }
     }
 
@@ -30,12 +29,10 @@ public class BlackjackGame {
         participant.receiveAdditionalCard(cardDeck.draw());
     }
 
-    public GameResult createGameResult(Dealer dealer, Players players) {
-        Score dealerScore = dealer.calculateScore();
-
+    public GameResult createGameResult(Participants participants) {
+        Dealer dealer = participants.getDealer();
         GameResult gameResult = new GameResult();
-        for (Player player : players.getPlayers()) {
-            Score playerScore = player.calculateScore();
+        for (Player player : participants.getPlayers()) {
             ResultStatus status = getResultStatusByScore(dealer, player);
             gameResult.record(player, status);
         }

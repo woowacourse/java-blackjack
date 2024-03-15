@@ -5,8 +5,8 @@ import domain.blackjackgame.GameResult;
 import domain.blackjackgame.ResultStatus;
 import domain.card.CardFactory;
 import domain.participant.Dealer;
+import domain.participant.Participants;
 import domain.participant.Player;
-import domain.participant.Players;
 import java.util.Collections;
 import java.util.Map;
 import ui.InputView;
@@ -22,24 +22,23 @@ public class BlackjackController {
     }
 
     public void start() {
-        Dealer dealer = new Dealer();
-        Players players = new Players(inputView.readPlayerNames());
+        Participants participants = Participants.createPlayers(inputView.readPlayerNames());
         BlackjackGame blackjackGame = new BlackjackGame(CardFactory.createCardDeck(), Collections::shuffle);
 
-        GameResult gameResult = playBlackjackGame(dealer, players, blackjackGame);
+        GameResult gameResult = playBlackjackGame(participants, blackjackGame);
         showGameResult(gameResult);
     }
 
-    private GameResult playBlackjackGame(Dealer dealer, Players players, BlackjackGame blackjackGame) {
-        blackjackGame.initGame(dealer, players);
-        outputView.printCards(dealer, players);
+    private GameResult playBlackjackGame(Participants participants, BlackjackGame blackjackGame) {
+        blackjackGame.initGame(participants);
+        outputView.printCards(participants);
 
-        for (Player player : players.getPlayers()) {
+        for (Player player : participants.getPlayers()) {
             dealToPlayer(player, blackjackGame);
         }
-        dealToDealer(dealer, blackjackGame);
-        outputView.printCardsWithScore(dealer, players);
-        return blackjackGame.createGameResult(dealer, players);
+        dealToDealer(participants.getDealer(), blackjackGame);
+        outputView.printCardsWithScore(participants);
+        return blackjackGame.createGameResult(participants);
     }
 
     private void dealToPlayer(Player player, BlackjackGame blackjackGame) {

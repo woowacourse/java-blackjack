@@ -4,21 +4,20 @@ import domain.blackjackgame.ResultStatus;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Participant;
+import domain.participant.Participants;
 import domain.participant.Player;
-import domain.participant.Players;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-
-    public void printCards(Dealer dealer, Players players) {
-        String result = String.join(", ", players.getPlayerNames());
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), result);
+    public void printCards(Participants participants) {
+        String playerNames = String.join(", ", participants.getPlayerNames());
+        Dealer dealer = participants.getDealer();
+        System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), playerNames);
 
         System.out.println(formatCardsMessage(dealer, generateCardMessage(dealer.getFirstCard())));
-        for (int i = 0; i < players.count(); i++) {
-            Player player = players.findPlayerByIndex(i);
+        for (Player player : participants.getPlayers()) {
             System.out.println(generateCardMessage(player));
         }
         System.out.println();
@@ -50,15 +49,15 @@ public class OutputView {
     public void printDealerReceiveCardMessage() {
         System.out.println();
         System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
-        System.out.println();
+        System.out.println(); // todo 개행 삭제
     }
 
-    public void printCardsWithScore(Dealer dealer, Players players) {
+    public void printCardsWithScore(Participants participants) {
+        Dealer dealer = participants.getDealer();
         String dealerCardsMessage = generateCardMessage(dealer);
         System.out.println(formatScoreMessage(dealerCardsMessage, dealer.calculateScore().getValue()));
 
-        for (int i = 0; i < players.count(); i++) {
-            Player player = players.findPlayerByIndex(i);
+        for (Player player : participants.getPlayers()) {
             String playerCardsMessage = generateCardMessage(player);
             System.out.println(formatScoreMessage(playerCardsMessage, player.calculateScore().getValue()));
         }

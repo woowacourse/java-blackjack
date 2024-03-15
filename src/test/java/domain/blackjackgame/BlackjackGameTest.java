@@ -2,8 +2,8 @@ package domain.blackjackgame;
 
 import static fixture.CardFixture.카드;
 import static fixture.CardFixture.카드들;
-import static fixture.PlayersFixture.플레이어;
-import static fixture.PlayersFixture.플레이어들;
+import static fixture.ParticipantFixture.참가자들;
+import static fixture.ParticipantFixture.플레이어;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -13,8 +13,8 @@ import domain.card.CardFactory;
 import domain.card.CardShuffleStrategy;
 import domain.card.Denomination;
 import domain.participant.Dealer;
+import domain.participant.Participants;
 import domain.participant.Player;
-import domain.participant.Players;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;
@@ -32,16 +32,17 @@ class BlackjackGameTest {
     @Test
     void 게임을_시작하면_딜러와_플레이어들에게_카드를_두_장씩_나눠준다() {
         BlackjackGame blackjackGame = new BlackjackGame(CardFactory.createCardDeck(), cardNoShuffleStrategy);
-        Dealer dealer = new Dealer();
-        Players players = 플레이어들("뽀로로", "프린", "포비");
+        Participants participants = 참가자들("뽀로로", "프린", "포비");
 
-        blackjackGame.initGame(dealer, players);
-        List<Player> playerList = players.getPlayers();
+        blackjackGame.initGame(participants);
+
+        Dealer dealer = participants.getDealer();
+        List<Player> players = participants.getPlayers();
         assertAll(
                 () -> assertThat(dealer.getAllCards()).hasSize(2),
-                () -> assertThat(playerList.get(0).getAllCards()).hasSize(2),
-                () -> assertThat(playerList.get(1).getAllCards()).hasSize(2),
-                () -> assertThat(playerList.get(2).getAllCards()).hasSize(2)
+                () -> assertThat(players.get(0).getAllCards()).hasSize(2),
+                () -> assertThat(players.get(1).getAllCards()).hasSize(2),
+                () -> assertThat(players.get(2).getAllCards()).hasSize(2)
         );
     }
 
@@ -53,13 +54,12 @@ class BlackjackGameTest {
                     카드들(카드(Denomination.KING), 카드(Denomination.KING), 카드(Denomination.QUEEN), 카드(Denomination.TEN),
                             카드(Denomination.JACK), 카드(Denomination.TEN)));
             BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
-            Dealer dealer = new Dealer();
-            Players players = 플레이어들("프린");
-            blackjackGame.initGame(dealer, players);
-            blackjackGame.dealCardTo(players.getPlayers().get(0));
-            blackjackGame.dealCardTo(dealer);
+            Participants participants = 참가자들("프린");
+            blackjackGame.initGame(participants);
+            blackjackGame.dealCardTo(participants.getPlayers().get(0));
+            blackjackGame.dealCardTo(participants.getDealer());
 
-            GameResult result = blackjackGame.createGameResult(dealer, players);
+            GameResult result = blackjackGame.createGameResult(participants);
             assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), ResultStatus.LOSE);
         }
 
@@ -69,12 +69,11 @@ class BlackjackGameTest {
                     카드들(카드(Denomination.THREE), 카드(Denomination.QUEEN), 카드(Denomination.TEN), 카드(Denomination.ACE),
                             카드(Denomination.TEN)));
             BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
-            Dealer dealer = new Dealer();
-            Players players = 플레이어들("프린");
-            blackjackGame.initGame(dealer, players);
-            blackjackGame.dealCardTo(players.getPlayers().get(0));
+            Participants participants = 참가자들("프린");
+            blackjackGame.initGame(participants);
+            blackjackGame.dealCardTo(participants.getPlayers().get(0));
 
-            GameResult result = blackjackGame.createGameResult(dealer, players);
+            GameResult result = blackjackGame.createGameResult(participants);
             assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), ResultStatus.LOSE);
         }
 
@@ -84,12 +83,11 @@ class BlackjackGameTest {
                     카드들(카드(Denomination.THREE), 카드(Denomination.QUEEN), 카드(Denomination.TEN), 카드(Denomination.KING),
                             카드(Denomination.SEVEN)));
             BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
-            Dealer dealer = new Dealer();
-            Players players = 플레이어들("프린");
-            blackjackGame.initGame(dealer, players);
-            blackjackGame.dealCardTo(players.getPlayers().get(0));
+            Participants participants = 참가자들("프린");
+            blackjackGame.initGame(participants);
+            blackjackGame.dealCardTo(participants.getPlayers().get(0));
 
-            GameResult result = blackjackGame.createGameResult(dealer, players);
+            GameResult result = blackjackGame.createGameResult(participants);
             assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), ResultStatus.LOSE);
         }
     }
@@ -102,12 +100,11 @@ class BlackjackGameTest {
                     카드들(카드(Denomination.KING), 카드(Denomination.ACE), 카드(Denomination.TEN),
                             카드(Denomination.JACK), 카드(Denomination.TEN)));
             BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
-            Dealer dealer = new Dealer();
-            Players players = 플레이어들("프린");
-            blackjackGame.initGame(dealer, players);
-            blackjackGame.dealCardTo(dealer);
+            Participants participants = 참가자들("프린");
+            blackjackGame.initGame(participants);
+            blackjackGame.dealCardTo(participants.getDealer());
 
-            GameResult result = blackjackGame.createGameResult(dealer, players);
+            GameResult result = blackjackGame.createGameResult(participants);
             assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), ResultStatus.WIN);
         }
 
@@ -117,11 +114,10 @@ class BlackjackGameTest {
                     카드들(카드(Denomination.ACE), 카드(Denomination.TEN), 카드(Denomination.ACE),
                             카드(Denomination.TEN)));
             BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
-            Dealer dealer = new Dealer();
-            Players players = 플레이어들("프린");
-            blackjackGame.initGame(dealer, players);
+            Participants participants = 참가자들("프린");
+            blackjackGame.initGame(participants);
 
-            GameResult result = blackjackGame.createGameResult(dealer, players);
+            GameResult result = blackjackGame.createGameResult(participants);
             assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), ResultStatus.DRAW);
         }
 
@@ -130,11 +126,10 @@ class BlackjackGameTest {
             CardDeck cardDeck = new CardDeck(
                     카드들(카드(Denomination.ACE), 카드(Denomination.TEN), 카드(Denomination.JACK), 카드(Denomination.TEN)));
             BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
-            Dealer dealer = new Dealer();
-            Players players = 플레이어들("프린");
-            blackjackGame.initGame(dealer, players);
+            Participants participants = 참가자들("프린");
+            blackjackGame.initGame(participants);
 
-            GameResult result = blackjackGame.createGameResult(dealer, players);
+            GameResult result = blackjackGame.createGameResult(participants);
             assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), ResultStatus.WIN);
         }
 
@@ -144,12 +139,11 @@ class BlackjackGameTest {
                     카드들(카드(Denomination.SIX), 카드(Denomination.ACE), 카드(Denomination.TEN), 카드(Denomination.FIVE),
                             카드(Denomination.QUEEN)));
             BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
-            Dealer dealer = new Dealer();
-            Players players = 플레이어들("프린");
-            blackjackGame.initGame(dealer, players);
-            blackjackGame.dealCardTo(dealer);
+            Participants participants = 참가자들("프린");
+            blackjackGame.initGame(participants);
+            blackjackGame.dealCardTo(participants.getDealer());
 
-            GameResult result = blackjackGame.createGameResult(dealer, players);
+            GameResult result = blackjackGame.createGameResult(participants);
             assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), ResultStatus.WIN);
         }
     }
@@ -163,12 +157,11 @@ class BlackjackGameTest {
                     카드들(카드(Denomination.KING), 카드(Denomination.QUEEN), 카드(Denomination.TEN),
                             카드(Denomination.JACK), 카드(Denomination.TEN)));
             BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
-            Dealer dealer = new Dealer();
-            Players players = 플레이어들("프린");
-            blackjackGame.initGame(dealer, players);
-            blackjackGame.dealCardTo(dealer);
+            Participants participants = 참가자들("프린");
+            blackjackGame.initGame(participants);
+            blackjackGame.dealCardTo(participants.getDealer());
 
-            GameResult result = blackjackGame.createGameResult(dealer, players);
+            GameResult result = blackjackGame.createGameResult(participants);
             assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), ResultStatus.WIN);
         }
 
@@ -177,11 +170,10 @@ class BlackjackGameTest {
             CardDeck cardDeck = new CardDeck(
                     카드들(카드(Denomination.QUEEN), 카드(Denomination.TEN), 카드(Denomination.ACE), 카드(Denomination.TEN)));
             BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
-            Dealer dealer = new Dealer();
-            Players players = 플레이어들("프린");
-            blackjackGame.initGame(dealer, players);
+            Participants participants = 참가자들("프린");
+            blackjackGame.initGame(participants);
 
-            GameResult result = blackjackGame.createGameResult(dealer, players);
+            GameResult result = blackjackGame.createGameResult(participants);
             assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), ResultStatus.LOSE);
         }
 
@@ -190,12 +182,10 @@ class BlackjackGameTest {
         void 딜러가_일반_점수이면_점수가_높은_쪽이_이긴다(List<Card> cards, ResultStatus expected) {
             CardDeck cardDeck = new CardDeck(cards);
             BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
-            Dealer dealer = new Dealer();
+            Participants participants = 참가자들("프린");
+            blackjackGame.initGame(participants);
 
-            Players players = 플레이어들("프린");
-            blackjackGame.initGame(dealer, players);
-
-            GameResult result = blackjackGame.createGameResult(dealer, players);
+            GameResult result = blackjackGame.createGameResult(participants);
             assertThat(result.getPlayerResult()).containsEntry(플레이어("프린"), expected);
         }
 
