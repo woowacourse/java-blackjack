@@ -18,11 +18,11 @@ public class CardMachineTest {
         List<Card> cardList = cards.stream().toList();
         assertThat(cardList).hasSize(312);
         assertThat(cardList).containsSequence(
-                cardOf(CardRank.ACE), cardOf(CardRank.TWO), cardOf(CardRank.THREE),
-                cardOf(CardRank.FOUR), cardOf(CardRank.FIVE), cardOf(CardRank.SIX),
-                cardOf(CardRank.SEVEN), cardOf(CardRank.EIGHT), cardOf(CardRank.NINE),
-                cardOf(CardRank.TEN), cardOf(CardRank.JACK), cardOf(CardRank.QUEEN),
-                cardOf(CardRank.KING)
+                cardOf(Rank.ACE), cardOf(Rank.TWO), cardOf(Rank.THREE),
+                cardOf(Rank.FOUR), cardOf(Rank.FIVE), cardOf(Rank.SIX),
+                cardOf(Rank.SEVEN), cardOf(Rank.EIGHT), cardOf(Rank.NINE),
+                cardOf(Rank.TEN), cardOf(Rank.JACK), cardOf(Rank.QUEEN),
+                cardOf(Rank.KING)
         );
     }
 }

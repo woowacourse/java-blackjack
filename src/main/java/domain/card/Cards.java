@@ -1,6 +1,6 @@
 package domain.card;
 
-import static domain.card.CardRank.SOFT_ADDITION_SCORE;
+import static domain.card.Rank.SOFT_ADDITION_SCORE;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,7 +51,7 @@ public class Cards {
 
     public boolean hasAce() {
         validateNotEmpty();
-        return cards.stream().anyMatch(card -> card.rank() == CardRank.ACE);
+        return cards.stream().anyMatch(card -> card.rank() == Rank.ACE);
     }
 
     public int score(final boolean isSoft) {

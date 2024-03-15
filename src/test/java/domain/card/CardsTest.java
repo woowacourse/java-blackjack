@@ -5,11 +5,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import static domain.card.CardFixture.cardOf;
-import static domain.card.CardRank.ACE;
-import static domain.card.CardRank.FIVE;
-import static domain.card.CardRank.FOUR;
-import static domain.card.CardRank.THREE;
-import static domain.card.CardSuit.SPADE;
+import static domain.card.Rank.ACE;
+import static domain.card.Rank.FIVE;
+import static domain.card.Rank.FOUR;
+import static domain.card.Rank.THREE;
+import static domain.card.Suit.SPADE;
 
 import java.util.List;
 import java.util.stream.Stream;

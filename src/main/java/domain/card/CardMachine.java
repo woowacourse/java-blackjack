@@ -21,14 +21,14 @@ public class CardMachine {
     }
 
     private static List<Card> createCardDeck() {
-        return Arrays.stream(CardSuit.values())
+        return Arrays.stream(Suit.values())
                 .flatMap(CardMachine::addCard)
                 .toList();
     }
 
-    private static Stream<Card> addCard(final CardSuit cardSuit) {
-        return EnumSet.allOf(CardRank.class)
+    private static Stream<Card> addCard(final Suit suit) {
+        return EnumSet.allOf(Rank.class)
                 .stream()
-                .map(cardNumber -> new Card(cardSuit, cardNumber));
+                .map(cardNumber -> new Card(suit, cardNumber));
     }
 }

@@ -2,8 +2,8 @@ package view;
 
 import domain.BlackjackResultStatus;
 import domain.card.Card;
-import domain.card.CardRank;
-import domain.card.CardSuit;
+import domain.card.Rank;
+import domain.card.Suit;
 import domain.card.Cards;
 import domain.participant.attributes.Name;
 import domain.participant.player.Players;
@@ -29,8 +29,8 @@ public interface BlackjackViewParser {
     }
 
     default String parseCard(final Card card) {
-        CardRank number = card.rank();
-        CardSuit suit = card.suit();
+        Rank number = card.rank();
+        Suit suit = card.suit();
         return number.getName() + suit.getName();
     }
 

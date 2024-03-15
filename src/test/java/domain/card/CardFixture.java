@@ -1,15 +1,15 @@
 package domain.card;
 
-import static domain.card.CardRank.FIVE;
-import static domain.card.CardRank.KING;
-import static domain.card.CardRank.TWO;
-import static domain.card.CardSuit.SPADE;
+import static domain.card.Rank.FIVE;
+import static domain.card.Rank.KING;
+import static domain.card.Rank.TWO;
+import static domain.card.Suit.SPADE;
 
 import java.util.List;
 
 public class CardFixture {
 
-    public static Card cardOf(CardRank rank) {
+    public static Card cardOf(Rank rank) {
         return new Card(SPADE, rank);
     }
 
