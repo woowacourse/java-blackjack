@@ -14,6 +14,7 @@ public class Referee {
         this.participants = participants;
     }
 
+    // TODO : 메서드 길이 10라인으로 줄이기
     public List<PlayerOutcome> judge() {
         if (participants.getDealer().isBlackJack()) {
             return participants.getPlayersOutcomeIf(

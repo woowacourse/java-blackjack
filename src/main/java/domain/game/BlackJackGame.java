@@ -3,9 +3,10 @@ package domain.game;
 import static domain.constants.Outcome.WIN;
 
 import controller.dto.InitialCardStatus;
-import controller.dto.JudgeResult;
 import controller.dto.ParticipantHandStatus;
+import controller.dto.ParticipantProfitResponse;
 import controller.dto.PlayerOutcome;
+import domain.constants.Outcome;
 import domain.game.deck.Deck;
 import domain.game.deck.DeckGenerator;
 import domain.participant.Participant;
@@ -70,11 +71,22 @@ public class BlackJackGame {
         }
     }
 
-    public JudgeResult judge() {
+    public List<ParticipantProfitResponse> judge() {
         Referee referee = new Referee(participants);
         List<PlayerOutcome> outcomes = referee.judge();
 
-        return new JudgeResult(outcomes, countWinner(outcomes));
+        return outcomes.stream()
+                .map(outcome -> new ParticipantProfitResponse(
+                        outcome.player().getName(),
+                        calculateProfit(outcome.player(), outcome.outcome()))
+                )
+                .toList();
+    }
+
+    private int calculateProfit(final Player player, final Outcome outcome) {
+        double rates = outcome.earningRates();
+        int currentProfit = player.totalProfit();
+        return (int) Math.ceil(currentProfit * rates);
     }
 
     private int countWinner(List<PlayerOutcome> results) {

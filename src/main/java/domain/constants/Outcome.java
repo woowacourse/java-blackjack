@@ -11,4 +11,8 @@ public enum Outcome {
     Outcome(final double earningRates) {
         this.earningRates = earningRates;
     }
+
+    public double earningRates() {
+        return earningRates;
+    }
 }
