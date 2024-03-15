@@ -14,17 +14,17 @@ class BetAmoutTest {
 
     @DisplayName("생성 시 범위를 지키지 못하면 생성 검증에 실패한다")
     @ParameterizedTest
-    @ValueSource(ints = {-1_000_000_001, 1_000_000_001})
+    @ValueSource(ints = {-1, -2, 998, 888, 1_000_000_001})
     void testCreateMoneyWithInvalidRange(int amount) {
         assertThatThrownBy(() -> new BetAmout(amount))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 금액은 -1000000000부터 1000000000이하까지 가능합니다.");
+                .hasMessage("[ERROR] 베팅 금액은 1000부터 1000000000이하까지 가능합니다.");
     }
 
 
     @DisplayName("생성 검증을 통과하면 생성에 성공한다")
     @ParameterizedTest
-    @ValueSource(ints = {0, 1000, 2000, 30000})
+    @ValueSource(ints = {1000, 2000, 30000})
     void testCreateMoneyWithValidData(int amount) {
         assertThatCode(() -> new BetAmout(amount))
                 .doesNotThrowAnyException();
