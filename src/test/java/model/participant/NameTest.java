@@ -18,6 +18,13 @@ class NameTest {
             .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("플레이어 이름이 빈 값이면 예외 발생")
+    @Test
+    void createPlayerNameWithEmptyName() {
+        assertThatThrownBy(() -> Name.createPlayerName(""))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
     @DisplayName("딜러 이름 생성 성공")
     @Test
     void createDealerName() {

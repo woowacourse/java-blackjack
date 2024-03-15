@@ -18,8 +18,15 @@ public class Name {
     }
 
     public static Name createPlayerName(String value) {
+        validateEmptyName(value);
         validateNotDealerName(value);
         return new Name(value);
+    }
+
+    private static void validateEmptyName(String value) {
+        if (value.isEmpty()) {
+            throw new IllegalArgumentException("플레이어 이름은 빈 값일 수 없습니다.");
+        }
     }
 
     private static void validateNotDealerName(String value) {
