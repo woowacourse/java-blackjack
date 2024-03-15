@@ -11,24 +11,23 @@ public class BetAmount {
     private static final int MIN_RANGE = 10;
     private static final int MAX_RANGE = 100_000_000;
 
-    private final long amount;
+    private final long value;
 
-    public BetAmount(final long amount) {
-        validate(amount);
-        this.amount = amount;
+    public BetAmount(final long value) {
+        validate(value);
+        this.value = value;
     }
 
-
     public Amount loseAmount() {
-        return new Amount(-amount);
+        return new Amount(-value);
     }
 
     public Amount blackJackWinAmount() {
-        return new Amount(amount + (amount / 2));
+        return new Amount(value + (value / 2));
     }
 
     public Amount winAmount() {
-        return new Amount(amount);
+        return new Amount(value);
     }
 
     public Amount tieAmount() {
@@ -60,16 +59,16 @@ public class BetAmount {
         if (!(target instanceof BetAmount betAmount)) {
             return false;
         }
-        return Objects.equals(amount, betAmount.amount);
+        return Objects.equals(value, betAmount.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(amount);
+        return Objects.hashCode(value);
     }
 
     @Override
     public String toString() {
-        return String.valueOf(amount);
+        return String.valueOf(value);
     }
 }
