@@ -1,5 +1,7 @@
 package game;
 
+import java.util.List;
+
 import domain.BlackjackResult;
 import domain.card.CardMachine;
 import domain.participant.dealer.Dealer;
@@ -22,12 +24,20 @@ public class BlackjackGame {
     }
 
     public void play() {
-        Dealer dealer = Dealer.from(CardMachine.cardDecks());
-        Players players = inputView.askPlayers();
+        Players players = createPlayers();
+        Dealer dealer = new Dealer(CardMachine.cardDecks());
         initialize(dealer, players);
         askAndDealMoreCards(dealer, players);
         dealAndPrintIfHit(dealer);
         printTotalAndResultOf(dealer, players);
+    }
+
+    private Players createPlayers() {
+        List<String> playerNames = inputView.askPlayerNames();
+        List<Player> players = playerNames.stream()
+                .map(name -> new Player(name, inputView.askPlayerBet(name)))
+                .toList();
+        return new Players(players);
     }
 
     private void initialize(final Dealer dealer, final Players players) {
