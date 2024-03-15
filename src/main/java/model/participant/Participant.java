@@ -32,4 +32,8 @@ public abstract class Participant {
         return cardDeck.isBust();
     }
 
+    public boolean isSameName(Name name) {
+        return this.name.equals(name);
+    }
+
 }

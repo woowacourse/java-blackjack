@@ -1,15 +1,24 @@
 package controller;
 
+import static model.money.BetTable.DEALER_NAME;
+import static model.money.BetTable.getInstance;
 import static util.InputRetryHelper.inputRetryHelper;
+import static view.InputView.inputBetAmount;
 import static view.InputView.inputChoiceCommand;
 import static view.InputView.inputNames;
 
 import java.util.List;
 import model.Choice;
 import model.casino.CardDispenser;
+import model.casino.DividendPolicyFactory;
 import model.casino.RandomCardShuffleMachine;
 import model.dto.GameCompletionResult;
+import model.money.BetTable;
+import model.money.DividendPolicy;
+import model.money.Money;
+import model.participant.Name;
 import model.participant.Names;
+import model.participant.Participant;
 import view.OutputView;
 import model.participant.Participants;
 
@@ -20,15 +29,27 @@ public class Casino {
     public Casino() {
         Names names = inputRetryHelper(() -> new Names(inputNames()));
         this.participants = new Participants(names);
-        this.cardDispenser =  new CardDispenser(new RandomCardShuffleMachine());
+        this.cardDispenser = new CardDispenser(new RandomCardShuffleMachine());
     }
 
     public void execute() {
+        insertAllBetAmount();
         hitCardTwice();
         showInitialFaceUpResults();
         proceedPlayersTurn();
         proceedDealerTurn();
         showFinalFaceUpResults();
+    }
+
+    private void insertAllBetAmount() {
+        participants.getPlayerCompletionResults().forEach(this::insertBetAmount);
+    }
+
+    private void insertBetAmount(GameCompletionResult result) {
+        Money money = inputRetryHelper(() ->
+                Money.createBettingAmount(inputBetAmount(result.getPartipantNameAsString())));
+
+        BetTable.getInstance().add(result.name(), money);
     }
 
     private void showInitialFaceUpResults() {
@@ -39,7 +60,7 @@ public class Casino {
 
     private void proceedPlayersTurn() {
         while (participants.hasAvailablePlayer()) {
-            GameCompletionResult currentPlayerCompletionResult =  participants.getNextAvailablePlayerName();
+            GameCompletionResult currentPlayerCompletionResult = participants.getNextAvailablePlayerName();
             Choice playerChoice = inputRetryHelper(() -> Choice.from(
                     inputChoiceCommand(currentPlayerCompletionResult)));
             distinctPlayerChoice(playerChoice);
@@ -82,6 +103,18 @@ public class Casino {
             return;
         }
         participants.turnOverPlayer();
+    }
+
+    private void distributeAllMoneyInProceed() {
+        getInstance().findAllParticipantNames()
+                .forEach(this::distributeMoneyInProceed);
+    }
+
+    private void distributeMoneyInProceed(Name name) {
+        Participant dealer = participants.findParticipantByName(DEALER_NAME);
+        Participant player = participants.findParticipantByName(name);
+        DividendPolicy policyInProceed = DividendPolicyFactory.findPolicy(dealer, player);
+        BetTable.getInstance().remittanceByPolicy(name, policyInProceed);
     }
 
 }

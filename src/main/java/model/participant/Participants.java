@@ -75,6 +75,18 @@ public class Participants {
         return getNextAvailablePlayerName();
     }
 
+    public Participant findParticipantByName(Name name) {
+        if (dealer.isSameName(name)) {
+            return dealer;
+        }
+        Queue<Player> newPlayers = new LinkedList<>(players);
+
+        return newPlayers.stream()
+                .filter(player -> player.isSameName(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 참가자를 찾을 수 없습니다."));
+    }
+
     public boolean hasAvailablePlayer() {
         return players.stream()
                 .anyMatch(Player::canHit);
@@ -83,4 +95,5 @@ public class Participants {
     public boolean canHitDealer() {
         return dealer.canHit();
     }
+
 }
