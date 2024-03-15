@@ -2,8 +2,6 @@ package blackjack.view;
 
 import blackjack.InputMapper;
 import blackjack.domain.DrawDecision;
-import blackjack.domain.bet.Bet;
-import blackjack.domain.bet.Bets;
 import blackjack.domain.bet.BettingBank;
 import blackjack.domain.bet.Money;
 import blackjack.domain.player.Player;
@@ -35,13 +33,6 @@ public class InputView {
         return inputMapper.mapToDrawDecision(scanner.nextLine());
     }
 
-    public Bets readBets(Players players) {
-        return new Bets(players.getPlayers().stream()
-                .map(Player::getName)
-                .map(this::readBet)
-                .toList());
-    }
-
     public BettingBank readBetInformation(Players players) {
         return new BettingBank(players.getPlayers().stream()
                 .collect(Collectors.toMap(player -> player, this::readBetAmount)));
@@ -50,10 +41,5 @@ public class InputView {
     public Money readBetAmount(Player player) {
         System.out.println(String.format("%s의 배팅 금액은?", player.getName()));
         return new Money(Integer.parseInt(scanner.nextLine()));
-    }
-
-    public Bet readBet(String playerName) {
-        System.out.println(String.format("%s의 배팅 금액은?", playerName));
-        return inputMapper.mapToBet(playerName, Integer.parseInt(scanner.nextLine()));
     }
 }
