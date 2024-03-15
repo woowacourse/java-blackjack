@@ -116,6 +116,6 @@ public class MessageResolver {
     }
 
     private String resolveProfit(final Profit profit) {
-        return String.valueOf(profit.getValue());
+        return String.valueOf(profit.value());
     }
 }

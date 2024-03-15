@@ -13,7 +13,7 @@ public class ProfitDetails {
     }
 
     public Profit getDealerProfit() {
-        int sum = profits.values().stream().mapToInt(Profit::getValue).sum();
+        int sum = profits.values().stream().mapToInt(Profit::value).sum();
         return new Profit(-sum);
     }
 
