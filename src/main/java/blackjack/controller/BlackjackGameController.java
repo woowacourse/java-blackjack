@@ -1,4 +1,4 @@
-package blackjack.game;
+package blackjack.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,11 +17,11 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.command.Command;
 
-public class BlackjackGame {
+public class BlackjackGameController {
 	private final InputView inputView;
 	private final OutputView outputView;
 
-	public BlackjackGame(final InputView inputView, final OutputView outputView) {
+	public BlackjackGameController(final InputView inputView, final OutputView outputView) {
 		this.inputView = inputView;
 		this.outputView = outputView;
 	}
