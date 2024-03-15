@@ -31,8 +31,8 @@ public class InputView {
         }
     }
 
-    public int readBettingPrice(String name) {
+    public long readBettingPrice(String name) {
         System.out.printf("%s의 배팅 금액은?\n", name);
-        return Integer.parseInt(SCANNER.nextLine());
+        return Long.parseLong(SCANNER.nextLine());
     }
 }

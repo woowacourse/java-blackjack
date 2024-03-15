@@ -35,15 +35,15 @@ public class BettingProfit {
         profitResult.put(player, bettingProfit);
     }
 
-    public int getDealerProfit() {
+    public long getDealerProfit() {
         if (profitResult.isEmpty()) {
             throw new IllegalArgumentException("베팅을 하지 않았습니다.");
         }
         return profitResult.values().stream()
                 .map(Profit::inverse)
-                .mapToInt(Profit::getProfit)
-                .reduce(Integer::sum)
-                .getAsInt();
+                .mapToLong(Profit::getProfit)
+                .reduce(Long::sum)
+                .getAsLong();
     }
 
     public Profit getProfit(Player player) {

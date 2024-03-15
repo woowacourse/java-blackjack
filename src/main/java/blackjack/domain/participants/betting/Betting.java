@@ -30,7 +30,7 @@ public class Betting {
         return bettingProfit.getProfitResult();
     }
 
-    public int getDealerProfit() {
+    public long getDealerProfit() {
         return bettingProfit.getDealerProfit();
     }
 }

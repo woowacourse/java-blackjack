@@ -4,14 +4,14 @@ import java.util.Objects;
 
 public class Profit {
 
-    private final int profit;
+    private final long profit;
     private final boolean isPositive;
 
-    public Profit(int profit) {
+    public Profit(long profit) {
         this(profit, true);
     }
 
-    private Profit(int profit, boolean isPositive) {
+    private Profit(long profit, boolean isPositive) {
         this.profit = profit;
         this.isPositive = isPositive;
     }
@@ -45,7 +45,7 @@ public class Profit {
         return Objects.hash(profit, isPositive);
     }
 
-    public int getProfit() {
+    public long getProfit() {
         if (isPositive) {
             return profit;
         }
