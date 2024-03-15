@@ -3,11 +3,12 @@ package blackjack.domain.game;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Symbol;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackjackHandTest {
 
@@ -16,7 +17,7 @@ class BlackjackHandTest {
     void receive_NoException() {
         BlackjackHand blackjackHand = new BlackjackHand();
         blackjackHand.receive(new Card(Rank.KING, Symbol.DIAMOND));
-        Assertions.assertThat(blackjackHand.getCards()).hasSize(1);
+        assertThat(blackjackHand.getCards()).hasSize(1);
     }
 
     @Test
@@ -27,7 +28,7 @@ class BlackjackHandTest {
                 new Card(Rank.KING, Symbol.DIAMOND),
                 new Card(Rank.KING, Symbol.HEART)
         ));
-        Assertions.assertThat(blackjackHand.getCards()).hasSize(2);
+        assertThat(blackjackHand.getCards()).hasSize(2);
     }
 
     @Test
@@ -39,7 +40,7 @@ class BlackjackHandTest {
                 new Card(Rank.SEVEN, Symbol.HEART),
                 new Card(Rank.FOUR, Symbol.CLUB)
         ));
-        Assertions.assertThat(blackjackHand.calculateScore())
+        assertThat(blackjackHand.calculateScore())
                 .isEqualTo(21);
     }
 
@@ -52,7 +53,7 @@ class BlackjackHandTest {
                 new Card(Rank.SEVEN, Symbol.HEART),
                 new Card(Rank.FIVE, Symbol.CLUB)
         ));
-        Assertions.assertThat(blackjackHand.calculateScore())
+        assertThat(blackjackHand.calculateScore())
                 .isEqualTo(22);
     }
 
@@ -65,7 +66,7 @@ class BlackjackHandTest {
                 new Card(Rank.ACE, Symbol.DIAMOND),
                 new Card(Rank.ACE, Symbol.HEART)
         ));
-        Assertions.assertThat(blackjackHand.calculateScore())
+        assertThat(blackjackHand.calculateScore())
                 .isEqualTo(12);
     }
 
@@ -79,7 +80,36 @@ class BlackjackHandTest {
                 new Card(Rank.ACE, Symbol.HEART),
                 new Card(Rank.NINE, Symbol.CLUB)
         ));
-        Assertions.assertThat(blackjackHand.calculateScore())
+        assertThat(blackjackHand.calculateScore())
                 .isEqualTo(21);
+    }
+
+    @Test
+    @DisplayName("성공: 블랙잭 여부 반환")
+    void isBlackjack() {
+        BlackjackHand hand = new BlackjackHand();
+        BlackjackHand blackjackHand = new BlackjackHand();
+        blackjackHand.receive(List.of(
+                new Card(Rank.ACE, Symbol.DIAMOND),
+                new Card(Rank.KING, Symbol.HEART)
+        ));
+
+        assertThat(hand.isBlackjack()).isFalse();
+        assertThat(blackjackHand.isBlackjack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("성공: 블랙잭 점수를 넘는지 여부 반환")
+    void isOverBlackjack() {
+        BlackjackHand hand = new BlackjackHand();
+        BlackjackHand overBlackjackHand = new BlackjackHand();
+        overBlackjackHand.receive(List.of(
+                new Card(Rank.KING, Symbol.DIAMOND),
+                new Card(Rank.KING, Symbol.HEART),
+                new Card(Rank.KING, Symbol.CLUB)
+        ));
+
+        assertThat(hand.isOverBlackjackScore()).isFalse();
+        assertThat(overBlackjackHand.isOverBlackjackScore()).isTrue();
     }
 }
