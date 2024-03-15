@@ -24,4 +24,12 @@ public enum GameCommand {
     private boolean isExpressionMatch(final String expression) {
         return this.expression.equals(expression);
     }
+
+    public boolean isYes() {
+        return this == YES;
+    }
+
+    public boolean isNo() {
+        return this == NO;
+    }
 }
