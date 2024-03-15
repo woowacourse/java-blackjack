@@ -110,5 +110,5 @@
 - [x] Cards 정적 팩토리 메서드 개선
 - [ ] 블랙잭 여부 판단 로직 이동 Particiapnt -> Cards
 - [ ] Cards 클래스 분리 -> Deck, Hand
-  - [X] Deck
-  - [ ] Hand
+  - [x] Deck
+  - [x] Hand
