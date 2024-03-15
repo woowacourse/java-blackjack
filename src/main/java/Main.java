@@ -1,4 +1,4 @@
-import blackjack.controller.BlackJackGameBoard;
+import blackjack.BlackJackGameBoard;
 
 public class Main {
     public static void main(String[] args) {
