@@ -89,6 +89,7 @@ public class BetAmountsTest {
     @Nested
     class BetProfitTest {
         static Dealer dealer;
+
         @BeforeAll
         static void set() {
             dealer = new Dealer();

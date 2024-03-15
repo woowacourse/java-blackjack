@@ -1,7 +1,6 @@
 package domain.gamer;
 
 import domain.card.Card;
-import exception.CardReceiveException;
 import java.util.List;
 
 public abstract class Gamer {
