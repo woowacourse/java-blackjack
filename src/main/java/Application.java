@@ -50,8 +50,12 @@ public class Application {
     }
 
     private static void drawCardDuringPlayerTurn(final Player player, final BlackjackGame blackjack) {
-        while (player.canHit() && wantToHit(player)) {
-            blackjack.dealCard(player);
+        while (player.canHit()) {
+            if (wantToHit(player)) {
+                blackjack.dealCard(player);
+                continue;
+            }
+            player.stand();
         }
         OutputView.printPlayerInfo(PlayerInfo.from(player));
     }

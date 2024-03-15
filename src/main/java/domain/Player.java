@@ -27,4 +27,8 @@ public class Player extends Participant {
     public boolean canHit() {
         return state instanceof Hit;
     }
+
+    public void stand() {
+        state = state.stand();
+    }
 }
