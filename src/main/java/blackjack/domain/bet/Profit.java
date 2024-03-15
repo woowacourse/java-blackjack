@@ -24,7 +24,6 @@ public class Profit {
 
     @Override
     public boolean equals(Object o) {
-
         if (this == o) {
             return true;
         }
