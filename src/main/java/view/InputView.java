@@ -2,8 +2,8 @@ package view;
 
 import domain.money.BetAmount;
 import domain.money.Money;
-import domain.player.Name;
-import domain.player.PlayerNames;
+import domain.user.Name;
+import domain.user.PlayerNames;
 import java.util.List;
 import java.util.Scanner;
 

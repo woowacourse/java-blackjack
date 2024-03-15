@@ -4,9 +4,10 @@ import domain.Deck;
 import domain.DeckGenerator;
 import domain.ExceptionHandler;
 import domain.money.Money;
-import domain.money.PlayersMoney;
-import domain.player.Hand;
-import domain.player.Player;
+import domain.money.Players;
+import domain.user.Dealer;
+import domain.user.Hand;
+import domain.user.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -15,23 +16,21 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackjackRunner {
-    private static final int RECEIVABLE_THRESHOLD = 16;
-
     public void play() {
         Deck deck = new Deck(new DeckGenerator().generate());
-        PlayersMoney playersMoney = new PlayersMoney(inputPlayersMoney(deck));
-        Hand dealerHand = new Hand(deck.drawCard(), deck.drawCard());
-        OutputView.printStartStatus(dealerHand, playersMoney.getPlayers());
-        playersMoney.doPlayerTurn(this::getValidatedCommand, deck);
-        doDealerTurn(dealerHand, deck);
-        doResult(playersMoney, dealerHand);
+        Players players = new Players(inputPlayersMoney(deck));
+        Dealer dealer = new Dealer(new Hand(deck.drawCard(), deck.drawCard()));
+        OutputView.printStartStatus(dealer.getHand(), players.keySet());
+        players.play(this::getValidatedCommand, deck);
+        dealer.play(deck);
+        doResult(players, dealer);
     }
 
     private Map<Player, Money> inputPlayersMoney(Deck deck) {
         return ExceptionHandler.handle(InputView::inputNames)
                 .stream()
                 .collect(Collectors.toMap(
-                        name -> new Player(name, deck.drawCard(), deck.drawCard()),
+                        name -> new Player(name, new Hand(deck.drawCard(), deck.drawCard())),
                         name -> getValidatedMoney(name.value()),
                         (oldValue, newValue) -> newValue,
                         LinkedHashMap::new
@@ -46,24 +45,13 @@ public class BlackjackRunner {
         return ExceptionHandler.handle(() -> InputView.inputAddCommand(nameValue));
     }
 
-    private void doDealerTurn(Hand dealerHand, Deck deck) {
-        while (isReceivable(dealerHand)) {
-            dealerHand.receiveCard(deck.drawCard());
-            OutputView.printDealerHitMessage();
-        }
+    private void doResult(Players players, Dealer dealer) {
+        Players resultPlayers = players.generateMoneyResult(dealer);
+        printGameResult(dealer, resultPlayers);
     }
 
-    private boolean isReceivable(Hand dealerHand) {
-        return dealerHand.sumCard() <= RECEIVABLE_THRESHOLD;
-    }
-
-    private void doResult(PlayersMoney playersMoney, Hand dealerHand) {
-        PlayersMoney resultPlayersMoney = playersMoney.changeByGameResult(dealerHand);
-        printGameResult(dealerHand, resultPlayersMoney);
-    }
-
-    private void printGameResult(Hand dealerHand, PlayersMoney playersMoney) {
-        OutputView.printAllUserCardsAndSum(dealerHand, playersMoney.getPlayers());
-        OutputView.printFinalResult(playersMoney);
+    private void printGameResult(Dealer dealer, Players players) {
+        OutputView.printAllUserCardsAndSum(dealer.getHand(), players.keySet());
+        OutputView.printFinalResult(players);
     }
 }

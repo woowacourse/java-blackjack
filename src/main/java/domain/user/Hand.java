@@ -1,13 +1,8 @@
-package domain.player;
-
-import static domain.money.GameResult.LOSE;
-import static domain.money.GameResult.WIN;
+package domain.user;
 
 import domain.card.Card;
 import domain.card.Number;
-import domain.money.GameResult;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,37 +39,11 @@ public class Hand {
                 .anyMatch(Card::isAce);
     }
 
-    public GameResult generateResult(Hand opponent) {
-        if (busted() || isOpponentBlackjackOnly(opponent)) {
-            return LOSE;
-        }
-        if (opponent.busted() || isCurrentBlackjackOnly(opponent)) {
-            return WIN;
-        }
-        return compare(opponent.sumCard());
-    }
-
-    private GameResult compare(int opponent) {
-        return Arrays.stream(GameResult.values())
-                .filter(result -> result.getCondition().test(sumCard(), opponent))
-                .findFirst()
-                .orElseThrow(() ->
-                        new IllegalStateException("입력에 따른 결과가 존재하지 않습니다."));
-    }
-
-    private boolean isOpponentBlackjackOnly(Hand opponent) {
-        return !isBlackjack() && opponent.isBlackjack();
-    }
-
-    private boolean isCurrentBlackjackOnly(Hand opponent) {
-        return isBlackjack() && !opponent.isBlackjack();
-    }
-
     public boolean isBlackjack() {
         return cards.size() == START_CARDS_COUNT && sumCard() == BLACK_JACK_CONDITION;
     }
 
-    public boolean busted() {
+    public boolean isBusted() {
         return sumCard() > BLACK_JACK_CONDITION;
     }
 

@@ -1,10 +1,13 @@
-package domain.player;
+package domain.user;
 
+import static domain.money.GameResult.LOSE;
+import static domain.money.GameResult.WIN;
 import static view.Command.YES;
 
 import domain.Deck;
 import domain.card.Card;
 import domain.money.GameResult;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import view.Command;
@@ -15,13 +18,13 @@ public class Player {
     private final Name name;
     private final Hand hand;
 
-    public Player(Name name, Card... cards) {
+    public Player(Name name, Hand hand) {
         this.name = name;
-        this.hand = new Hand(cards);
+        this.hand = hand;
     }
 
     public void receiveCard(Function<String, Command> commandFunction, Deck deck) {
-        if (hand.isBlackjack()) {
+        if (isBlackjack()) {
             OutputView.printBlackjack(name.value());
             return;
         }
@@ -33,7 +36,7 @@ public class Player {
 
     private void printByState() {
         OutputView.printUserAndCards(name.value(), hand.getCards());
-        if (hand.busted()) {
+        if (hand.isBusted()) {
             OutputView.printBust();
         }
     }
@@ -50,8 +53,30 @@ public class Player {
         return hand.sumCard() < RECEIVABLE_THRESHOLD;
     }
 
-    public GameResult generatePlayerResult(Hand dealerHand) {
-        return hand.generateResult(dealerHand);
+    public GameResult generateResult(Dealer dealer) {
+        if (hand.isBusted() || isDealerBlackjackOnly(dealer)) {
+            return LOSE;
+        }
+        if (dealer.isBusted() || isPlayerBlackjackOnly(dealer)) {
+            return WIN;
+        }
+        return compare(dealer.sumCard());
+    }
+
+    private GameResult compare(int opponent) {
+        return Arrays.stream(GameResult.values())
+                .filter(result -> result.getCondition().test(hand.sumCard(), opponent))
+                .findFirst()
+                .orElseThrow(() ->
+                        new IllegalStateException("입력에 따른 결과가 존재하지 않습니다."));
+    }
+
+    private boolean isDealerBlackjackOnly(Dealer dealer) {
+        return !isBlackjack() && dealer.isBlackjack();
+    }
+
+    private boolean isPlayerBlackjackOnly(Dealer dealer) {
+        return isBlackjack() && !dealer.isBlackjack();
     }
 
     public List<Card> getAllCards() {

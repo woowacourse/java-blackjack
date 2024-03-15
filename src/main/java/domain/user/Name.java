@@ -1,4 +1,4 @@
-package domain.player;
+package domain.user;
 
 public record Name(String value) {
     private static final int MAX_NAME_SIZE = 5;

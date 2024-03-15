@@ -1,9 +1,9 @@
 package view;
 
 import domain.card.Card;
-import domain.money.PlayersMoney;
-import domain.player.Hand;
-import domain.player.Player;
+import domain.money.Players;
+import domain.user.Hand;
+import domain.user.Player;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -62,10 +62,10 @@ public class OutputView {
                 player.getNameValue(), player.getAllCards()) + " - 결과: " + player.sumHand()));
     }
 
-    public static void printFinalResult(PlayersMoney playersMoney) {
+    public static void printFinalResult(Players players) {
         System.out.println("\n## 최종 수익");
-        System.out.println(DEALER_NAME_VALUE + ": " + playersMoney.calculateDealerMoney());
-        playersMoney.forEach(((player, money) ->
+        System.out.println(DEALER_NAME_VALUE + ": " + players.calculateDealerMoney());
+        players.forEach(((player, money) ->
                 System.out.println(player.getNameValue() + ": " + money.value())));
     }
 }
