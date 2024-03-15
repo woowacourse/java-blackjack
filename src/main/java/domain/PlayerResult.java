@@ -15,24 +15,6 @@ public enum PlayerResult {
         this.calculate = calculate;
     }
 
-    public PlayerResult reverse() {
-        if (this==WIN) {
-            return LOSE;
-        }
-        if (this==LOSE) {
-            return WIN;
-        }
-        return TIE;
-    }
-
-    public boolean won() {
-        return this == WIN;
-    }
-
-    public boolean lost() {
-        return this == LOSE;
-    }
-
     public BigDecimal earn(final Money money) {
         return this.calculate.apply(money.getValue());
     }
