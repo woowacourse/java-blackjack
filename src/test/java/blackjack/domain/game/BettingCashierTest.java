@@ -41,8 +41,7 @@ class BettingCashierTest {
     @DisplayName("승자는 해당 금액만큼의 수익을 얻는다")
     void findProfitOf_Winner() {
         Player winner = players.get(0);
-        Betting betting = new Betting();
-        betting.bet(winner, 10_000);
+        Betting betting = Betting.of(List.of(winner), player -> 10_000);
 
         BettingCashier cashier = BettingCashier.of(betting, Result.of(players, dealer));
         assertThat(cashier.findProfitOf(winner).getAmount()).isEqualTo(10_000);
@@ -56,8 +55,7 @@ class BettingCashierTest {
                 new Card(Rank.KING, Symbol.CLUB),
                 new Card(Rank.ACE, Symbol.CLUB)));
 
-        Betting betting = new Betting();
-        betting.bet(blackjackWinner, 10_000);
+        Betting betting = Betting.of(List.of(blackjackWinner), player -> 10_000);
 
         BettingCashier cashier = BettingCashier.of(betting, Result.of(List.of(blackjackWinner), new Dealer()));
         assertThat(cashier.findProfitOf(blackjackWinner).getAmount()).isEqualTo(15_000);
@@ -67,8 +65,7 @@ class BettingCashierTest {
     @DisplayName("패자는 해당 금액만큼의 수익을 잃는다")
     void findProfitOf_Loser() {
         Player loser = players.get(1);
-        Betting betting = new Betting();
-        betting.bet(loser, 10_000);
+        Betting betting = Betting.of(List.of(loser), player -> 10_000);
 
         BettingCashier cashier = BettingCashier.of(betting, Result.of(players, dealer));
         assertThat(cashier.findProfitOf(loser).getAmount()).isEqualTo(-10_000);
@@ -78,8 +75,7 @@ class BettingCashierTest {
     @DisplayName("무승부는 수익이 없다(0원 이다)")
     void findProfitOf_Tier() {
         Player tier = players.get(2);
-        Betting betting = new Betting();
-        betting.bet(tier, 10_000);
+        Betting betting = Betting.of(List.of(tier), player -> 10_000);
 
         BettingCashier cashier = BettingCashier.of(betting, Result.of(players, dealer));
         assertThat(cashier.findProfitOf(tier).getAmount()).isEqualTo(0);
@@ -91,10 +87,11 @@ class BettingCashierTest {
         Player winner = players.get(0);
         Player loser = players.get(1);
         Player tier = players.get(2);
-        Betting betting = new Betting();
-        betting.bet(winner, 10_000);
-        betting.bet(loser, 5_000);
-        betting.bet(tier, 100);
+        List<Integer> moneys = List.of(10_000, 5_000, 100);
+
+        Betting betting = Betting.of(List.of(winner, loser, tier),
+                player -> moneys.get(players.indexOf(player)
+                ));
 
         BettingCashier cashier = BettingCashier.of(betting, Result.of(players, dealer));
         assertThat(cashier.findProfitOfDealer().getAmount()).isEqualTo(-5_000);

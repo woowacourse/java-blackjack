@@ -45,11 +45,7 @@ public class BlackjackMachine {
     }
 
     private Betting takeBet(BlackjackGame game) {
-        Betting betting = new Betting();
-        for (Player player : game.getPlayers()) {
-            betting.bet(player, inputView.readMoney(player));
-        }
-        return betting.unmodifiableBetting();
+        return Betting.of(game.getPlayers(), inputView::readMoney);
     }
 
     private void playGame(BlackjackGame game) {
