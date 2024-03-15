@@ -18,12 +18,10 @@ public class BettingCashier {
     public static BettingCashier of(Betting betting, Result result) {
         Map<Player, BlackjackMoney> moneyMap = new HashMap<>();
 
-        for (Player player : betting.getPlayers()) {
-            BlackjackMoney money = betting.findMoneyOf(player);
-            BlackjackMoney multipleMoney = money.applyMultiple(result.getMultiple(player));
+        betting.getBettingMap().forEach((key, value) ->
+                moneyMap.put(key, value.applyMultiple(result.getMultiple(key)))
+        );
 
-            moneyMap.put(player, multipleMoney);
-        }
         return new BettingCashier(moneyMap, calculateProfitOfDealer(moneyMap));
     }
 

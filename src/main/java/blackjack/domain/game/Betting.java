@@ -25,14 +25,7 @@ public class Betting {
         return new Betting(bettingMap);
     }
 
-    public BlackjackMoney findMoneyOf(Player player) {
-        if (bettingMap.containsKey(player)) {
-            return bettingMap.get(player);
-        }
-        throw new IllegalArgumentException("존재하지 않는 플레이어입니다.");
-    }
-
-    public Set<Player> getPlayers() {
-        return Collections.unmodifiableSet(bettingMap.keySet());
+    public Map<Player, BlackjackMoney> getBettingMap() {
+        return Collections.unmodifiableMap(bettingMap);
     }
 }
