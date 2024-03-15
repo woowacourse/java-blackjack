@@ -35,7 +35,7 @@ public class Application {
          */
         OutputView.printFinalState(
                 createDealerDto(gameBoard.getDealer().getHand()), createPlayerDtos(gameBoard.getPlayers()));
-        OutputView.printFinalProfits(gameBoard.getDealerProfit(), gameBoard.getPlayerProfits());
+        OutputView.printFinalProfits(gameBoard.calculateDealerProfit(), gameBoard.calculatePlayerProfits());
     }
 
     private static GameBoard createGameBoard() {
@@ -49,7 +49,7 @@ public class Application {
         gameBoard.drawInitialPlayersHand();
         gameBoard.drawInitialDealerHand();
 
-        final DealerDto dealerDto = createDealerDto(gameBoard.getDealerFirstCard());
+        final DealerDto dealerDto = createDealerDto(gameBoard.openDealerFirstCard());
         final List<PlayerDto> playerDtos = createPlayerDtos(gameBoard.getPlayers());
         OutputView.printInitialState(dealerDto, playerDtos);
     }

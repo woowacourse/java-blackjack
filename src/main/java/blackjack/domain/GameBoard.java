@@ -29,8 +29,7 @@ public class GameBoard {
         players.drawInitialHand(dealer);
     }
 
-    //TODO: get은 필드에 대한 getter 느낌을 주기 때문에 메서드 명 더 적절하게 변경하기
-    public Card getDealerFirstCard() {
+    public Card openDealerFirstCard() {
         return dealer.openFirstCard();
     }
 
@@ -50,14 +49,12 @@ public class GameBoard {
         return player.canDraw();
     }
 
-    //TODO: get은 필드에 대한 getter 느낌을 주기 때문에 메서드 명 더 적절하게 변경하기
-    public Money getDealerProfit() {
-        final List<Money> playerProfits = new ArrayList<>(getPlayerProfits().values());
+    public Money calculateDealerProfit() {
+        final List<Money> playerProfits = new ArrayList<>(calculatePlayerProfits().values());
         return Outcome.calculateDealerProfit(playerProfits);
     }
 
-    //TODO: get은 필드에 대한 getter 느낌을 주기 때문에 메서드 명 더 적절하게 변경하기
-    public Map<Name, Money> getPlayerProfits() {
+    public Map<Name, Money> calculatePlayerProfits() {
         final Map<Name, Money> playerProfits = new LinkedHashMap<>();
         //TODO: 일급 컬렉션인 Players에게 직접 시키는 방향으로 변경하기
         for (final Player player : players.getPlayers()) {

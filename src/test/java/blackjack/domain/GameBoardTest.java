@@ -32,7 +32,7 @@ class GameBoardTest {
         gameBoard.drawInitialPlayersHand();
         gameBoard.drawInitialDealerHand();
 
-        final Money dealerProfit = gameBoard.getDealerProfit();
+        final Money dealerProfit = gameBoard.calculateDealerProfit();
 
         assertThat(dealerProfit.value()).isEqualTo(0);
     }
@@ -51,7 +51,7 @@ class GameBoardTest {
         gameBoard.drawInitialDealerHand();
         gameBoard.drawInitialPlayersHand();
 
-        final Map<Name, Money> playerProfits = gameBoard.getPlayerProfits();
+        final Map<Name, Money> playerProfits = gameBoard.calculatePlayerProfits();
 
         assertAll(
                 () -> assertThat(playerProfits.size()).isEqualTo(players.getPlayers().size()),
