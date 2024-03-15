@@ -14,11 +14,11 @@ public abstract class Gamer {
 
     public abstract boolean canHit();
 
-    public boolean isBusted() {
+    public final boolean isBusted() {
         return handDeck.isBusted();
     }
 
-    public boolean isBlackJack() {
+    public final boolean isBlackJack() {
         return handDeck.isBlackJack();
     }
 
