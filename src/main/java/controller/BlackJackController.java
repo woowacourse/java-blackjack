@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackJackController {
+
     private final InputView inputView;
     private final OutputView outputView;
     private final CardShuffleStrategy cardShuffleStrategy;
@@ -48,7 +49,7 @@ public class BlackJackController {
         for (Player player : everyPlayers) {
             int betAmount = inputView.readBetAmount(player.getName());
             Bet bet = new Bet(betAmount);
-            bettingPot.collect(player, bet);
+            bettingPot.put(player, bet);
         }
 
         return bettingPot;
@@ -104,9 +105,9 @@ public class BlackJackController {
     }
 
     private void printSettlement(BlackJackGame blackJackGame, BettingPot bettingPot) {
-        Map<Player, Result> gameResults = blackJackGame.getGameResults();
-        Map<Player, Integer> playerSettlement = bettingPot.settlePlayer(gameResults);
-        int dealerSettlement = bettingPot.settleDealer(gameResults);
+        Map<Player, PlayerGameResult> gameResults = blackJackGame.getPlayerGameResult();
+        Map<Player, Integer> playerSettlement = bettingPot.settlePlayerBet(gameResults);
+        int dealerSettlement = bettingPot.settleDealerBet(gameResults);
 
         ParticipantSettlementDto participantSettlementDto
                 = ParticipantSettlementDto.of(Dealer.DEALER_NAME, dealerSettlement, playerSettlement);
