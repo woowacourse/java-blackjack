@@ -80,7 +80,7 @@ public class BlackJackController {
         return new BetAmount(inputView.readBetAmount(name.getValue()));
     }
 
-    private void dealToDealer(Players players, Dealer dealer) {
+    private void dealToDealer(final Players players, final Dealer dealer) {
         if (players.isAllBust()) {
             return;
         }
