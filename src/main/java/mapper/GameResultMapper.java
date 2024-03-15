@@ -13,8 +13,7 @@ public class GameResultMapper {
 
     private static Map<String, Integer> convertToParticipantResult(final GameResult gameResult) {
         Map<String, Integer> resultDto = new LinkedHashMap<>();
-        gameResult.getResult()
-                  .forEach((playerName, profit) -> resultDto.put(playerName.name().value(), profit.value()));
+        gameResult.getResult().forEach((playerName, profit) -> resultDto.put(playerName.name().value(), profit.value()));
         return resultDto;
     }
 }

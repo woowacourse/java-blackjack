@@ -21,8 +21,7 @@ public class ParticipantMapper {
     }
 
     public static ParticipantDto participantAndCardToParticipantDto(final Participant participant, final Card card) {
-        return new ParticipantDto(new NameDto(participant.name()
-                                                         .value()), CardMapper.cardsToCardsDto(new Cards(List.of(card)), participant.score()));
+        return new ParticipantDto(new NameDto(participant.name().value()), CardMapper.cardsToCardsDto(new Cards(List.of(card)), participant.score()));
     }
 
     public static List<ParticipantDto> playersToParticipantsDto(final Players players) {
@@ -33,10 +32,10 @@ public class ParticipantMapper {
     }
 
     public static Players namesAndBettingMoneyToPlayers(final Names names, final List<BettingMoney> bettingMoneys){
-        List<Name> nameList = names.playerNames();
+        List<Name> playerNames = names.playerNames();
         List<Player> players = new ArrayList<>();
-        for (int i = 0; i < nameList.size(); i++) {
-            players.add(Player.register(nameList.get(i), bettingMoneys.get(i)));
+        for (int i = 0; i < playerNames.size(); i++) {
+            players.add(Player.register(playerNames.get(i), bettingMoneys.get(i)));
         }
         return new Players(players);
     }

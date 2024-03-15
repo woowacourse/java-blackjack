@@ -38,14 +38,14 @@ public class InputView {
     }
 
     private void validateNumeric(final String input) {
-        if (!NUMERIC_PATTERN.matcher(input)
-                            .matches()) {
+        if (!NUMERIC_PATTERN.matcher(input).matches()) {
             throw new IllegalArgumentException("숫자로만 구성되게 입력해야 합니다.");
         }
     }
 
     public BlackJackGameCommand askMoreCard(final NameDto nameDto) {
-        System.out.printf("%n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", nameDto.name());
+        System.out.printf(System.lineSeparator() + "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + System.lineSeparator()
+                , nameDto.name());
         return requireYesOrNo(readLine());
     }
 

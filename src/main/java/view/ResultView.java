@@ -35,10 +35,10 @@ public class ResultView {
         players.forEach(this::printParticipantHand);
     }
 
-    public void printParticipantHand(final ParticipantDto participantDto) {
-        CardsDto cards = participantDto.cardsDto();
+    public void printParticipantHand(final ParticipantDto participant) {
+        CardsDto cards = participant.cardsDto();
         System.out.printf(System.lineSeparator() + "%s: %s" + System.lineSeparator(),
-                participantDto.nameDto().name(), PARSING.cards(cards));
+                participant.nameDto().name(), PARSING.cards(cards));
     }
 
     public void printDealerCardMessage(final ParticipantDto dealer) {
