@@ -50,6 +50,10 @@ public class CardHand {
         return score.isGreaterThan(Score.getBlackjackScore());
     }
 
+    public int countCards() {
+        return cards.size();
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

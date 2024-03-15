@@ -6,7 +6,7 @@ import blackjack.domain.card.Score;
 import blackjack.domain.game.ResultStatus;
 import blackjack.domain.state.Blackjack;
 import blackjack.domain.state.Bust;
-import blackjack.domain.state.Hit;
+import blackjack.domain.state.Ready;
 import blackjack.domain.state.State;
 
 import java.util.Objects;
@@ -17,7 +17,7 @@ public abstract class Participant {
 
     public Participant(final String name) {
         this.name = new Name(name);
-        this.state = new Hit(new CardHand());
+        this.state = new Ready(new CardHand());
     }
 
     public abstract boolean canReceiveCard();

@@ -1,5 +1,6 @@
 package blackjack.domain.state;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
 import blackjack.domain.card.Score;
 
@@ -8,6 +9,11 @@ public abstract class Started implements State {
 
     public Started(final CardHand cardHand) {
         this.cardHand = cardHand;
+    }
+
+    public CardHand receiveCard(Card card) {
+        cardHand.receiveCard(card);
+        return cardHand;
     }
 
     @Override

@@ -65,8 +65,10 @@ class ProfitCalculatorTest {
 
     @Test
     void 플레이어가_이겼다면_배팅_금액을_얻는다() {
+        dealer.receiveCard(카드(NINE));
         dealer.receiveCard(카드(SIX));
         player.receiveCard(카드(TEN));
+        player.receiveCard(카드(SIX));
         player.stay();
         final Map<Player, ResultStatus> gameResult = blackjackGame.judgeGameResult();
 
@@ -80,7 +82,9 @@ class ProfitCalculatorTest {
     @Test
     void 플레이어가_졌다면_배팅_금액을_잃는다() {
         dealer.receiveCard(카드(TEN));
-        player.receiveCard(카드(SIX));
+        dealer.receiveCard(카드(SIX));
+        player.receiveCard(카드(FIVE));
+        player.receiveCard(카드(FOUR));
         player.stay();
         final Map<Player, ResultStatus> gameResult = blackjackGame.judgeGameResult();
 
@@ -94,7 +98,9 @@ class ProfitCalculatorTest {
     @Test
     void 플레이어가_딜러와_비겼다면_배팅_금액을_돌려받는다() {
         dealer.receiveCard(카드(TEN));
+        dealer.receiveCard(카드(JACK));
         player.receiveCard(카드(KING));
+        player.receiveCard(카드(QUEEN));
         player.stay();
         final Map<Player, ResultStatus> gameResult = blackjackGame.judgeGameResult();
 
