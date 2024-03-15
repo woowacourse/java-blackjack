@@ -1,8 +1,6 @@
 package domain;
 
-import domain.state.Bust;
-import domain.state.Hit;
-import domain.state.Stand;
+import domain.state.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,11 +12,11 @@ class StateTest {
     @Test
     void hitToHit() {
         // given
-        domain.state.State state = new Hit(new Hand(
+        State state = new Hit(new Hand(
                 new Card(Denomination.FOUR, Suit.CLUBS),
                 new Card(Denomination.FOUR, Suit.DIAMOND)));
         // when
-        state = state.hit(new Card(Denomination.ACE, Suit.DIAMOND));
+        state = state.draw(new Card(Denomination.ACE, Suit.DIAMOND));
         //then
         assertThat(state).isInstanceOf(Hit.class);
     }
@@ -27,12 +25,12 @@ class StateTest {
     @Test
     void hitToBust() {
         // given
-        domain.state.State state = new Hit(new Hand(
+        State state = new Hit(new Hand(
                 new Card(Denomination.KING, Suit.CLUBS),
                 new Card(Denomination.FOUR, Suit.CLUBS)
         ));
         // when
-        state = state.hit(new Card(Denomination.KING, Suit.DIAMOND));
+        state = state.draw(new Card(Denomination.KING, Suit.DIAMOND));
         //then
         assertThat(state).isInstanceOf(Bust.class);
     }
@@ -41,13 +39,13 @@ class StateTest {
     @Test
     void bustHit() {
         // given
-        final domain.state.State state = new Bust(new Hand(
+        final State state = new Bust(new Hand(
                 new Card(Denomination.KING, Suit.CLUBS),
                 new Card(Denomination.FOUR, Suit.CLUBS)
         ));
 
         //then
-        assertThatThrownBy(() -> state.hit(new Card(Denomination.KING, Suit.DIAMOND)))
+        assertThatThrownBy(() -> state.draw(new Card(Denomination.KING, Suit.DIAMOND)))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 
@@ -55,7 +53,7 @@ class StateTest {
     @Test
     void hitToStand() {
         // given
-        domain.state.State state = new Hit(new Hand(
+        State state = new Hit(new Hand(
                 new Card(Denomination.KING, Suit.CLUBS),
                 new Card(Denomination.FOUR, Suit.CLUBS)
         ));
@@ -63,5 +61,33 @@ class StateTest {
         state = state.stand();
         //then
         assertThat(state).isInstanceOf(Stand.class);
+    }
+
+    @DisplayName("Ready 상태에서 두장을 뽑아 21보다 작으면 Hit")
+    @Test
+    void readyToHit() {
+        // given
+        State state = new Ready(new Hand(
+                new Card(Denomination.KING, Suit.CLUBS),
+                new Card(Denomination.FOUR, Suit.CLUBS)
+        ));
+        // when
+        state = state.draw(new Card(Denomination.ACE, Suit.CLUBS));
+        //then
+        assertThat(state).isInstanceOf(Hit.class);
+    }
+
+    @DisplayName("Ready 상태에서 두장을 뽑아 21이면 Blackjack")
+    @Test
+    void readyToBlackjack() {
+        // given
+        State state = new Ready(new Hand(
+                new Card(Denomination.KING, Suit.CLUBS),
+                new Card(Denomination.FOUR, Suit.CLUBS)
+        ));
+        // when
+        state = state.draw(new Card(Denomination.SEVEN, Suit.CLUBS));
+        //then
+        assertThat(state).isInstanceOf(Blackjack.class);
     }
 }

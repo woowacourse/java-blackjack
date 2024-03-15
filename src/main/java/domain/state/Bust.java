@@ -11,7 +11,7 @@ public class Bust implements State {
     }
 
     @Override
-    public State hit(final Card card) {
+    public State draw(final Card card) {
         throw new UnsupportedOperationException("버스트 된 플레이어는 카드를 뽑을 수 없습니다.");
     }
 
