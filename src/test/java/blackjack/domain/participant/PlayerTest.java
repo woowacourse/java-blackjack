@@ -22,10 +22,10 @@ class PlayerTest {
 
     @DisplayName("사용자의 초기 돈은 최소 1 이상이어야 한다.")
     @Test
-    void validatePositiveMoney() {
-        Money negativeMoney = new Money(0.9);
+    void validatePlayerMoney() {
+        Money invalidPlayerMoney = new Money(0.9);
 
-        assertThatThrownBy(() -> new Player("atom", negativeMoney))
+        assertThatThrownBy(() -> new Player("atom", invalidPlayerMoney))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
