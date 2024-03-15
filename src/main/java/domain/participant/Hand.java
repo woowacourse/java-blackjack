@@ -57,7 +57,7 @@ public class Hand {
         PlayingCard firstCard = playingCards.get(0);
         PlayingCard secondCard = playingCards.get(1);
         return (firstCard.isAce() && secondCard.isTenValueCard())
-                || (firstCard.isTenValueCard() || secondCard.isAce());
+                || (firstCard.isTenValueCard() && secondCard.isAce());
     }
 
     public boolean isBust() {
