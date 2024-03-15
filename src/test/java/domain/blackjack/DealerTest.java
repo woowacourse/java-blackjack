@@ -59,8 +59,7 @@ class DealerTest {
         BlackJackGameMachine blackJackGameMachine = new BlackJackGameMachine(
                 HoldingCards.of(FIVE_HEART, QUEEN_HEART));
         Dealer dealer = new Dealer(blackJackGameMachine);
-        List<Card> rawHoldingCardsWithoutFirstCard = dealer.getRawHoldingCards(
-                allCards -> allCards.subList(1, allCards.size()));
+        List<Card> rawHoldingCardsWithoutFirstCard = dealer.getRawHoldingCards(WithOutFirstCardShowStrategy.INSTANCE);
         Assertions.assertThat(rawHoldingCardsWithoutFirstCard)
                 .containsExactly(QUEEN_HEART);
         Assertions.assertThat(dealer.getRawHoldingCards())

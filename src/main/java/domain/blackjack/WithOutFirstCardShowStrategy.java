@@ -11,6 +11,6 @@ public class WithOutFirstCardShowStrategy implements CardShowStrategy {
 
     @Override
     public List<Card> show(List<Card> allCards) {
-        return null;
+        return allCards.subList(1, allCards.size());
     }
 }
