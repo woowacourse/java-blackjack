@@ -19,7 +19,7 @@ public class Players {
 	}
 
 	public static Players fromNames(final List<String> playerNames) {
-		ArrayList<String> copyPlayerNames = new ArrayList<>(playerNames);
+		List<String> copyPlayerNames = new ArrayList<>(playerNames);
 		validate(copyPlayerNames);
 
 		List<Player> players = copyPlayerNames.stream()
