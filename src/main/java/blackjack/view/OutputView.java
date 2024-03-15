@@ -1,13 +1,13 @@
 package blackjack.view;
 
+import blackjack.domain.BettingResultDtos;
 import blackjack.domain.dealer.Dealer;
+import blackjack.dto.BettingResultDto;
 import blackjack.dto.CardDto;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantScoreDto;
 import blackjack.dto.ParticipantScoresDto;
-import blackjack.dto.PlayerWinningResultDto;
 import blackjack.dto.WinningCountDto;
-import blackjack.dto.WinningResultDto;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -18,12 +18,11 @@ public class OutputView {
         final List<ParticipantCardsDto> playersCard = getExceptDealer(participantCardsDtos,
                 participantCardsDto -> participantCardsDto.name().equals(Dealer.DEALER_NAME));
 
-        System.out.printf("%n%s와 %s에게 2장을 나누었습니다.%n", Dealer.DEALER_NAME,
-                String.join(", ", convertToNames(playersCard)));
+        System.out.printf("%n%s와 %s에게 2장을 나누었습니다.%n", Dealer.DEALER_NAME, String.join(", ", convertToNames(playersCard)));
 
-        printDealerCardScore(getOnlyDealer(participantCardsDtos,
-                participantCardsDto -> participantCardsDto.name().equals(Dealer.DEALER_NAME)));
+        printDealerCardScore(getOnlyDealer(participantCardsDtos, participantCardsDto -> participantCardsDto.name().equals(Dealer.DEALER_NAME)));
         playersCard.forEach(this::printPlayerCard);
+        System.out.println();
     }
 
     private List<String> convertToNames(final List<ParticipantCardsDto> playersCard) {
@@ -56,9 +55,10 @@ public class OutputView {
     }
 
     public void printFinalResult(final ParticipantScoresDto participantScoreDtos,
-                                 final WinningResultDto winningResultDto) {
+                                 final BettingResultDtos bettingResultDtos) {
         printCardScore(participantScoreDtos);
-        printWinningResult(winningResultDto);
+        printBettingResult(bettingResultDtos);
+//        printWinningResult(winningResultDto);
     }
 
     private void printCardScore(final ParticipantScoresDto participantScoreDtos) {
@@ -69,6 +69,7 @@ public class OutputView {
 
         printPlayersCardScore(getExceptDealer(participantScores,
                 participantScore -> participantScore.participantCards().name().equals(Dealer.DEALER_NAME)));
+        System.out.println();
     }
 
     private void printDealerCardScore(final ParticipantScoreDto dealerCardScore) {
@@ -89,16 +90,34 @@ public class OutputView {
                 playersCardScore.score());
     }
 
-    private void printWinningResult(final WinningResultDto winningResultDto) {
-        System.out.printf("%n## 최종 승패%n");
-        printDealerWinningResult(winningResultDto.dealerWinningResult());
-        printPlayersWinningResult(winningResultDto.playersWinningResult());
+    private void printBettingResult(final BettingResultDtos rawBettingResultDtos) {
+        System.out.println("## 최종 수익");
+        List<BettingResultDto> bettingResultDtos = rawBettingResultDtos.bettingResultDtos();
+        printDealerBettingResult(getOnlyDealer(bettingResultDtos, bettingResultDto -> bettingResultDto.name().equals(Dealer.DEALER_NAME)));
+        printPlayerBettingResults(getExceptDealer(bettingResultDtos, bettingResultDto -> bettingResultDto.name().equals(Dealer.DEALER_NAME)));
     }
 
-    private void printDealerWinningResult(final List<WinningCountDto> dealerWinningResult) {
-        System.out.printf("%s: %s%n", Dealer.DEALER_NAME, convertToWinningResult(dealerWinningResult));
+    private void printDealerBettingResult(final BettingResultDto dealerBettingResult) {
+        System.out.printf("%s: %d%n", dealerBettingResult.name(), dealerBettingResult.betting());
 
     }
+
+    private void printPlayerBettingResults(final List<BettingResultDto> playerBettingResults) {
+        playerBettingResults.forEach(playerBettingResult ->
+                System.out.printf("%s: %d%n", playerBettingResult.name(), playerBettingResult.betting()));
+
+    }
+
+//    private void printWinningResult(final WinningResultDto winningResultDto) {
+//        System.out.printf("%n## 최종 승패%n");
+//        printDealerWinningResult(winningResultDto.dealerWinningResult());
+//        printPlayersWinningResult(winningResultDto.playersWinningResult());
+//    }
+
+//    private void printDealerWinningResult(final List<WinningCountDto> dealerWinningResult) {
+//        System.out.printf("%s: %s%n", Dealer.DEALER_NAME, convertToWinningResult(dealerWinningResult));
+//
+//    }
 
     private String convertToWinningResult(final List<WinningCountDto> winningResult) {
         return winningResult.stream()
@@ -106,11 +125,11 @@ public class OutputView {
                 .collect(Collectors.joining(" "));
     }
 
-    private void printPlayersWinningResult(final List<PlayerWinningResultDto> playersWinningResult) {
-        playersWinningResult.forEach(playerWinningResultDto ->
-                System.out.printf("%s: %s%n", playerWinningResultDto.name(), playerWinningResultDto.winStatus()));
-
-    }
+//    private void printPlayersWinningResult(final List<PlayerWinningResultDto> playersWinningResult) {
+//        playersWinningResult.forEach(playerWinningResultDto ->
+//                System.out.printf("%s: %s%n", playerWinningResultDto.name(), playerWinningResultDto.winStatus()));
+//
+//    }
 
     public void printError(final String message) {
         System.out.println("[ERROR] " + message);
