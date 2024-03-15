@@ -20,22 +20,22 @@ class BettingPotTest {
         Player player = new Player("산초");
         Bet bet = new Bet(100);
 
-        assertThatCode(() -> bettingPot.collect(player, bet))
+        assertThatCode(() -> bettingPot.put(player, bet))
                 .doesNotThrowAnyException();
     }
 
     @DisplayName("결과에 따라 사용자의 수익을 정산한다.")
     @ParameterizedTest
     @CsvSource(value = {"DEALER_WIN:10:-10", "PLAYER_WIN:10:10", "PLAYER_BLACK_JACK_WIN:10:15", "PUSH:10:0"}, delimiter = ':')
-    void settlePlayer(Result result, int betAmount, int expectedSettlement) {
+    void settlePlayer(PlayerGameResult playerGameResult, int betAmount, int expectedSettlement) {
         BettingPot bettingPot = new BettingPot();
         Player player = new Player("산초");
         Bet bet = new Bet(betAmount);
-        bettingPot.collect(player, bet);
-        Map<Player, Result> playerResult = new HashMap<>();
-        playerResult.put(player, result);
+        bettingPot.put(player, bet);
+        Map<Player, PlayerGameResult> playerResult = new HashMap<>();
+        playerResult.put(player, playerGameResult);
 
-        Map<Player, Integer> settlement = bettingPot.settlePlayer(playerResult);
+        Map<Player, Integer> settlement = bettingPot.settlePlayerBet(playerResult);
         float actualSettlement = settlement.get(player);
 
         Assertions.assertThat(actualSettlement).isEqualTo(expectedSettlement);
@@ -44,15 +44,15 @@ class BettingPotTest {
     @DisplayName("결과에 따라 딜러의 수익을 정산한다.")
     @ParameterizedTest
     @CsvSource(value = {"DEALER_WIN:10:-10", "PLAYER_WIN:10:10", "PLAYER_BLACK_JACK_WIN:10:15", "PUSH:10:0"}, delimiter = ':')
-    void settleDealer(Result result, int betAmount, int expectedPlayerSettlement) {
+    void settleDealer(PlayerGameResult playerGameResult, int betAmount, int expectedPlayerSettlement) {
         BettingPot bettingPot = new BettingPot();
         Player player = new Player("산초");
         Bet bet = new Bet(betAmount);
-        bettingPot.collect(player, bet);
-        Map<Player, Result> playerResult = new HashMap<>();
-        playerResult.put(player, result);
+        bettingPot.put(player, bet);
+        Map<Player, PlayerGameResult> playerResult = new HashMap<>();
+        playerResult.put(player, playerGameResult);
 
-        int actualDealerSettlement = bettingPot.settleDealer(playerResult);
+        int actualDealerSettlement = bettingPot.settleDealerBet(playerResult);
         int expectedDealerSettlement = expectedPlayerSettlement * -1;
 
         Assertions.assertThat(actualDealerSettlement).isEqualTo(expectedDealerSettlement);
