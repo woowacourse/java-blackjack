@@ -29,7 +29,7 @@ class PlayerTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("플레이어는 카드를 한 장 받을 수 있다.")
+    @DisplayName("사용자는 카드를 한 장 받을 수 있다.")
     @Test
     void hitOneCard() {
         Player player = new Player("atom", new Money(1000));
@@ -40,7 +40,7 @@ class PlayerTest {
         assertThat(player.getCards()).containsExactly(givenCard);
     }
 
-    @DisplayName("플레이어가 버스트 상태면 더 이상 카드를 받을 수 없다")
+    @DisplayName("사용자가 버스트 상태면 더 이상 카드를 받을 수 없다")
     @Test
     void hitWhenBust() {
         Player player = new Player("atom", new Money(1000));
@@ -57,7 +57,7 @@ class PlayerTest {
                 .isInstanceOf(IllegalStateException.class);
     }
 
-    @DisplayName("플레이어가 21점에 도달하면 더 이상 카드를 받을 수 없다")
+    @DisplayName("사용자가 21점에 도달하면 더 이상 카드를 받을 수 없다")
     @Test
     void hitWhenBlackJackScore() {
         Player player = new Player("atom", new Money(1000));
@@ -74,7 +74,7 @@ class PlayerTest {
                 .isInstanceOf(IllegalStateException.class);
     }
 
-    @DisplayName("플레이어는 카드를 더 받을 수 있는지 확인할 수 있다.")
+    @DisplayName("사용자는 카드를 더 받을 수 있는지 확인할 수 있다.")
     @Test
     void isPlayable() {
         Player player = new Player("atom", new Money(1000));
