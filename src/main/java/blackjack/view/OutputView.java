@@ -13,6 +13,7 @@ import static blackjack.utils.Constants.*;
 public class OutputView {
     private static final String NEWLINE = System.lineSeparator();
     private static final String DELIMITER = ", ";
+    private static final String ERROR_SUFFIX = "[ERROR]";
 
     public void printInitialSettingMessage(final ParticipantDto dealer, final ParticipantsDto players) {
         final String dealerName = dealer.name();
@@ -116,5 +117,9 @@ public class OutputView {
             final String profitMessage = String.format("%s: %d", name, profit);
             System.out.println(profitMessage);
         });
+    }
+
+    public void printErrorMessage(final String errorMessage) {
+        System.out.printf("%s %s%n", ERROR_SUFFIX, errorMessage);
     }
 }
