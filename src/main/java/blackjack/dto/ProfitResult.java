@@ -10,6 +10,8 @@ import java.util.Map;
 
 public class ProfitResult {
 
+    private static final String NONEXISTENT_PLAYER_EXCEPTION = "존재하지 않는 사용자입니다.";
+
     private final Map<Player, BigDecimal> profitResult;
 
     public ProfitResult() {
@@ -27,7 +29,7 @@ public class ProfitResult {
 
     public BigDecimal findByPlayer(final Player player) {
         if (!getProfitResult().containsKey(player)) {
-           throw new IllegalArgumentException();
+           throw new IllegalArgumentException(NONEXISTENT_PLAYER_EXCEPTION);
         }
 
         return profitResult.get(player);
