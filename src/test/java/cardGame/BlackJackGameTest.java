@@ -33,21 +33,6 @@ class BlackJackGameTest {
                 new Card(CardNumber.TEN, CardPattern.SPADE_PATTERN));
     }
 
-    @DisplayName("카드 2개씩 가진 플레이어를 만들다")
-    @Test
-    void makePlayerCardSetting() {
-        List<String> names = List.of("pola", "jazz");
-        CardDeck cardDeck = new CardDeck();
-
-        BlackJackGame blackJackGame = new BlackJackGame(cardDeck, cardDeck.firstCardSettings());
-        Players players = blackJackGame.initGamePlayer(names);
-        List<Player> playerList = players.getPlayers();
-
-        assertAll(
-                () -> assertEquals(playerList.get(0).getCards().countCard(), 2),
-                () -> assertEquals(playerList.get(1).getCards().countCard(), 2)
-        );
-    }
 
     @DisplayName("딜러의 카드 정보를 가져온다.")
     @Test
@@ -87,8 +72,8 @@ class BlackJackGameTest {
         List<Card> sameCards = List.of(new Card(CardNumber.JACK, CardPattern.CLOVER_PATTERN),
                 new Card(CardNumber.FIVE, CardPattern.SPADE_PATTERN));
 
-        List<Player> pushPlayers = List.of(Player.joinGame("pola", sameCards),
-                Player.joinGame("ato", sameCards));
+        List<Player> pushPlayers = List.of(Player.joinGame("pola", sameCards, 100),
+                Player.joinGame("ato", sameCards, 100));
         Players playersGroup = new Players(pushPlayers);
 
         assertAll(
@@ -107,7 +92,8 @@ class BlackJackGameTest {
 
         BlackJackGame blackJackGame = new BlackJackGame(new CardDeck(), dealerCards);
 
-        List<Player> bustPlayers = List.of(Player.joinGame("pola", bustCards), Player.joinGame("ato", bustCards));
+        List<Player> bustPlayers = List.of(Player.joinGame("pola", bustCards, 100),
+                Player.joinGame("ato", bustCards, 100));
         Players playersGroup = new Players(bustPlayers);
 
         assertAll(
@@ -126,8 +112,8 @@ class BlackJackGameTest {
 
         BlackJackGame blackJackGame = new BlackJackGame(new CardDeck(), dealerCards);
 
-        List<Player> blackJackPlayer = List.of(Player.joinGame("pola", blackJackCards),
-                Player.joinGame("ato", blackJackCards));
+        List<Player> blackJackPlayer = List.of(Player.joinGame("pola", blackJackCards, 100),
+                Player.joinGame("ato", blackJackCards, 100));
         Players playersGroup = new Players(blackJackPlayer);
 
         assertAll(
@@ -142,8 +128,8 @@ class BlackJackGameTest {
     void bothBlackJack() {
         BlackJackGame blackJackGame = new BlackJackGame(new CardDeck(), blackJackCards);
 
-        List<Player> blackJackPlayer = List.of(Player.joinGame("pola", blackJackCards),
-                Player.joinGame("ato", blackJackCards));
+        List<Player> blackJackPlayer = List.of(Player.joinGame("pola", blackJackCards, 100),
+                Player.joinGame("ato", blackJackCards, 100));
         Players playersGroup = new Players(blackJackPlayer);
 
         assertAll(
@@ -162,9 +148,9 @@ class BlackJackGameTest {
 
         List<Player> blackJackPlayer = List.of(
                 Player.joinGame("pola", List.of(new Card(CardNumber.JACK, CardPattern.CLOVER_PATTERN),
-                        new Card(CardNumber.EIGHT, CardPattern.SPADE_PATTERN))),
+                        new Card(CardNumber.EIGHT, CardPattern.SPADE_PATTERN)), 100),
                 Player.joinGame("ato", List.of(new Card(CardNumber.JACK, CardPattern.CLOVER_PATTERN),
-                        new Card(CardNumber.FIVE, CardPattern.SPADE_PATTERN))));
+                        new Card(CardNumber.FIVE, CardPattern.SPADE_PATTERN)), 100));
         Players playersGroup = new Players(blackJackPlayer);
 
         assertAll(

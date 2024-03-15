@@ -10,6 +10,7 @@ import player.Players;
 import view.InputView;
 import view.OutputView;
 
+// Todo: 클래식하게 짜기
 public class BlackJackController {
 
     private final InputView inputView;
@@ -25,10 +26,16 @@ public class BlackJackController {
         Dealer dealer = new Dealer(cardDeck.firstCardSettings());
 
         BlackJackGame blackJackGame = new BlackJackGame(cardDeck, cardDeck.firstCardSettings());
-        Players players = blackJackGame.initGamePlayer(inputView.inputPlayerNames());
+        Players players = new Players(startBetting(inputView.inputPlayerNames(), cardDeck));
 
         runBlackJackGame(blackJackGame, players, cardDeck, dealer);
         showResult(blackJackGame, players);
+    }
+
+    public List<Player> startBetting(List<String> names, CardDeck cardDeck) {
+        return names.stream()
+                .map(name -> Player.joinGame(name, cardDeck.firstCardSettings(), inputView.inputBettingMoney(name)))
+                .toList();
     }
 
     private void runBlackJackGame(BlackJackGame blackJackGame, Players players, CardDeck cardDeck, Dealer dealer) {

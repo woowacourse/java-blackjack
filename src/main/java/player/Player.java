@@ -10,14 +10,16 @@ import player.dto.CardsStatus;
 public class Player extends GameParticipantCards {
 
     private final Name name;
+    private final BetMoney betMoney;
 
-    private Player(List<Card> cardDeck, Name name) {
+    private Player(List<Card> cardDeck, Name name, int money) {
         super(cardDeck);
         this.name = name;
+        this.betMoney = new BetMoney(money);
     }
 
-    public static Player joinGame(String name, List<Card> cards) {
-        return new Player(cards, new Name(name));
+    public static Player joinGame(String name, List<Card> cards, int money) {
+        return new Player(cards, new Name(name), money);
     }
 
     public CardsStatus play(BiConsumer<Player, CardDeck> playMatch, CardDeck cardDeck) {

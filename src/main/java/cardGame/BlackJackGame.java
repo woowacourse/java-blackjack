@@ -23,15 +23,7 @@ public class BlackJackGame {
         this.cardDeck = cardDeck;
         this.dealer = new Dealer(cards);
     }
-
-    public Players initGamePlayer(List<String> names) {
-        List<Player> players = names.stream()
-                .map(name -> Player.joinGame(name, cardDeck.firstCardSettings()))
-                .toList();
-
-        return new Players(players);
-    }
-
+    
     public Card getDealerFirstCard() {
         return dealer.getCards().getFirstCard();
     }

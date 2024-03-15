@@ -1,10 +1,10 @@
 package player;
 
-public class Money {
+public class BetMoney {
 
     private int betAmount;
 
-    public Money(int money) {
+    public BetMoney(int money) {
         validateCanBetMoney(money);
         this.betAmount = money;
     }
