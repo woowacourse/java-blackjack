@@ -9,8 +9,8 @@ public class Hand {
 
     private final List<Card> cards;
 
-    public Hand(final List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
+    public Hand() {
+        this.cards = new ArrayList<>();
     }
 
     public void add(final Card card) {
