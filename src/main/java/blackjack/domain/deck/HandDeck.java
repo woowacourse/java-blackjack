@@ -9,6 +9,7 @@ public class HandDeck {
 
     private static final int ACE_VALUE_ADJUSTING = 10;
     private static final int BLACKJACK = 21;
+    private static final int BLACKJACK_SIZE = 2;
     private static final int BUST_STANDARD = 21;
 
     private final List<Card> cards = new ArrayList<>();
@@ -21,15 +22,7 @@ public class HandDeck {
     }
 
     public boolean isBlackJack() {
-        Card firstCard = cards.get(0);
-        Card secondCard = cards.get(1);
-
-        int sum = firstCard.getCardScore() + secondCard.getCardScore();
-
-        if (firstCard.isAce() || secondCard.isAce()) {
-            sum += 10;
-        }
-        return sum == BLACKJACK;
+        return calculateTotalScore() == BLACKJACK && cards.size() == BLACKJACK_SIZE;
     }
 
     public void addCard(Card card) {
