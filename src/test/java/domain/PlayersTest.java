@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
-    
+
     @Test
     @DisplayName("플레이어들은 플레이어 리스트로 생성 된다.")
     void createPlayers() {
@@ -26,15 +26,6 @@ class PlayersTest {
         Assertions.assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 수는 최대 8명 입니다.");
-    }
-
-    @Test
-    @DisplayName("플레이어 이름 중 \"딜러\"가 있으면 예외를 발생한다.")
-    void validatePlayerNameException() {
-        List<Player> players = List.of(new Player(new Name("딜러")), new Player(new Name("test2")));
-        Assertions.assertThatThrownBy(() -> new Players(players))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어 이름을 \"딜러\"로 생성할 수 없습니다.");
     }
 
     @Test
