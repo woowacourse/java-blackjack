@@ -79,7 +79,7 @@ public class BlackJackController {
 
     private void repeatHitUntilPlayerStand(final BlackJackGame blackJackGame, Player player) throws IOException {
         boolean hitting = false;
-        while (player.isHittable() && Command.from(inputView.readCommand(player.getName().name())).isProceed()) {
+        while (isHitProceed(player)) {
             blackJackGame.hitPlayer(player);
             outputView.printHandAfterHit(PlayerDto.from(player));
             hitting = true;
@@ -87,6 +87,10 @@ public class BlackJackController {
         if (!hitting) {
             outputView.printInitialHand(PlayerDto.from(player));
         }
+    }
+
+    private boolean isHitProceed(final Player player) throws IOException {
+        return player.isHittable() && Command.from(inputView.readCommand(player.getName().name())).isProceed();
     }
 
     private void repeatHitUntilDealerStand(final BlackJackGame blackJackGame) {
