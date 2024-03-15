@@ -2,10 +2,7 @@ package domain.participant;
 
 import domain.Answer;
 import domain.Profit;
-import domain.Result;
 import domain.card.CardDeck;
-import java.util.EnumMap;
-import java.util.Map;
 
 public class Dealer extends Participant {
 
@@ -45,17 +42,6 @@ public class Dealer extends Participant {
 
     public int countAddedHands() {
         return handsSize() - INIT_HANDS_SIZE;
-    }
-
-    public Map<Result, Integer> calculateResultBy(final Players players) {
-        final Map<Result, Integer> result = new EnumMap<>(Result.class);
-
-        for (Result value : players.calculateResultBy(this).values()) {
-            Result reversed = value.reverse();
-            result.put(reversed, result.getOrDefault(reversed, 0) + 1);
-        }
-
-        return result;
     }
 
     public Profit calculateProfitBy(final Players players) {

@@ -2,11 +2,6 @@ package domain;
 
 import static domain.HandsTestFixture.sum10Size2;
 import static domain.HandsTestFixture.sum18Size2;
-import static domain.HandsTestFixture.sum20Size3;
-import static domain.HandsTestFixture.sum21Size2;
-import static domain.Result.LOSE;
-import static domain.Result.TIE;
-import static domain.Result.WIN;
 
 import domain.card.CardDeck;
 import domain.participant.Dealer;
@@ -15,7 +10,6 @@ import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.List;
-import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -85,24 +79,5 @@ class DealerTest {
         //then
         Assertions.assertThat(dealer.countAddedHands()).isZero();
         Assertions.assertThat(dealer.handsSum()).isGreaterThanOrEqualTo(17);
-    }
-
-    @DisplayName("딜러의 승패무를 판단한다.")
-    @Test
-    void dealerResult() {
-        // given
-        final Player loser1 = new Player(new Name("레디"), sum18Size2);
-        final Player loser2 = new Player(new Name("피케이"), sum18Size2);
-        final Player winner = new Player(new Name("제제"), sum21Size2);
-        final Player tier = new Player(new Name("브라운"), sum20Size3);
-
-        Players players = new Players(List.of(loser1, loser2, winner, tier));
-        Dealer dealer = new Dealer(CardDeck.generate(), sum20Size3);
-
-        // when
-        Map<Result, Integer> expected = Map.of(WIN, 2, LOSE, 1, TIE, 1);
-
-        // then
-        Assertions.assertThat(dealer.calculateResultBy(players)).isEqualTo(expected);
     }
 }

@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.Profit;
-import domain.Result;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,16 +25,6 @@ public class Players {
     public boolean isAllBust() {
         return players.stream()
                 .allMatch(Player::isBust);
-    }
-
-    public Map<Player, Result> calculateResultBy(final Dealer dealer) {
-        final Map<Player, Result> result = new LinkedHashMap<>();
-
-        for (Player name : players) {
-            result.put(name, name.calculateResultBy(dealer));
-        }
-
-        return result;
     }
 
     public Map<Player, Profit> calculateProfits(final Dealer dealer) {
