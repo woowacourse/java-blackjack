@@ -4,12 +4,16 @@ import model.GameMoney;
 import model.Outcome;
 import model.card.Cards;
 
+import java.util.Objects;
+
 public class Participant extends User {
 
+    private final Name name;
     private final GameMoney gameMoney;
 
-    public Participant(Name name, Cards cards, GameMoney gameMoney) {
-        super(name, cards);
+    public Participant(Cards cards, Name name, GameMoney gameMoney) {
+        super(cards);
+        this.name = name;
         this.gameMoney = gameMoney;
     }
 
@@ -38,5 +42,22 @@ public class Participant extends User {
             return Outcome.LOSE;
         }
         return Outcome.DRAW;
+    }
+
+    public Name getName() {
+        return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Participant that = (Participant) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

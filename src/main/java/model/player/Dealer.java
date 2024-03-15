@@ -5,10 +5,9 @@ import model.card.Cards;
 public class Dealer extends User {
 
     private static final int NUMBER_THRESHOLD = 16;
-    private static final String DEALER_NAME = "딜러";
 
     public Dealer(Cards cards) {
-        super(new Name(DEALER_NAME), cards);
+        super(cards);
     }
 
     public boolean isHit() {

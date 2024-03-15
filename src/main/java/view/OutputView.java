@@ -28,8 +28,7 @@ public class OutputView {
         System.out.println(System.lineSeparator() + DIVIDE_CARD_MESSAGE.formatted(String.join(", ", stringNames)));
     }
 
-    public void printPlayerCards(Map<Name, Cards> usersNameAndCards) {
-        Cards dealerCards = usersNameAndCards.remove(new Name(DEALER_NAME));
+    public void printPlayerCards(Cards dealerCards, Map<Name, Cards> usersNameAndCards) {
         System.out.println(cardsToString(new Name(DEALER_NAME), dealerCards, 1));
 
         for (Entry<Name, Cards> entry : usersNameAndCards.entrySet()) {
@@ -41,8 +40,8 @@ public class OutputView {
         System.out.println(cardsToString(name, cards, cards.cards().size()));
     }
 
-    public void printBlackJackScore(Map<Name, Cards> usersNameAndCards) {
-        System.out.println();
+    public void printBlackJackScore(Cards dealerCards, Map<Name, Cards> usersNameAndCards) {
+        System.out.println(cardsToString(new Name(DEALER_NAME), dealerCards, 1));
         for (Entry<Name, Cards> participant : usersNameAndCards.entrySet()) {
             System.out.println(cardsToString(participant) + PLAYER_CARD_SUM_MESSAGE.formatted(
                     participant.getValue().calculateScore()));

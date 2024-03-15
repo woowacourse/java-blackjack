@@ -30,15 +30,14 @@ class UserTest {
     @ParameterizedTest
     @MethodSource("createCard")
     void validateCardSize(List<Card> cards) {
-        Assertions.assertThatThrownBy(() -> new User(new Name("켬미"), new Cards(cards)) {
+        Assertions.assertThatThrownBy(() -> new User(new Cards(cards)) {
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("카드를 추가할 수 있다.")
     @Test
     void addCard() {
-        User user = new User(new Name("켬미"),
-                new Cards(List.of(
+        User user = new User(new Cards(List.of(
                         Card.of(Suit.SPACE, Denomination.NINE),
                         Card.of(Suit.SPACE, Denomination.FIVE)))) {
         };
@@ -50,8 +49,7 @@ class UserTest {
     @DisplayName("카드 여러 개를 추가할 수 있다.")
     @Test
     void addCards() {
-        User user = new User(new Name("켬미"),
-                new Cards(List.of(
+        User user = new User(new Cards(List.of(
                         Card.of(Suit.SPACE, Denomination.NINE),
                         Card.of(Suit.SPACE, Denomination.FIVE)))) {
         };
@@ -64,8 +62,7 @@ class UserTest {
     @DisplayName("카드의 합을 계산한다.")
     @Test
     void calculateScore() {
-        User user = new User(new Name("켬미"),
-                new Cards(List.of(
+        User user = new User(new Cards(List.of(
                         Card.of(Suit.SPACE, Denomination.NINE),
                         Card.of(Suit.SPACE, Denomination.FIVE)))) {
         };
@@ -76,8 +73,7 @@ class UserTest {
     @DisplayName("Ace가 나왔을 때는 21을 초과하지 않으며 21과 가까운 수가 되도록 11이나 1을 고른다.")
     @Test
     void calculateScoreWithAce() {
-        User user = new User(new Name("켬미"),
-                new Cards(List.of(
+        User user = new User(new Cards(List.of(
                         Card.of(Suit.SPACE, Denomination.NINE),
                         Card.of(Suit.SPACE, Denomination.FIVE)))) {
         };

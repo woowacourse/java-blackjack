@@ -30,11 +30,11 @@ public class BlackJackController {
         BlackJack blackJack = createBlackJack();
 
         outputView.printPlayerNames(blackJack.findParticipantsName());
-        outputView.printPlayerCards(blackJack.matchUsersNameAndCards());
+        outputView.printPlayerCards(blackJack.findDealerCards(), blackJack.matchParticipantsNameAndCards());
 
         offerMoreCards(blackJack);
 
-        outputView.printBlackJackScore(blackJack.matchUsersNameAndCards());
+        outputView.printBlackJackScore(blackJack.findDealerCards(), blackJack.matchParticipantsNameAndCards());
         outputView.printParticipantsRevenue(blackJack.findDealerRevenue(), blackJack.matchNameAndRevenues());
     }
 

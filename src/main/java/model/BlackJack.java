@@ -50,17 +50,7 @@ public class BlackJack {
         }
     }
 
-    public Map<Name, Cards> matchUsersNameAndCards() {
-        Map<Name, Cards> matchUser = new LinkedHashMap<>(matchDealerNameAndCards());
-        matchUser.putAll(matchParticipantsNameAndCards());
-        return matchUser;
-    }
-
-    private Map<Name, Cards> matchDealerNameAndCards() {
-        return Map.of(dealer.getName(), dealer.getCards());
-    }
-
-    private Map<Name, Cards> matchParticipantsNameAndCards() {
+    public Map<Name, Cards> matchParticipantsNameAndCards() {
         return participants.matchParticipantNameAndCards();
     }
 
@@ -78,5 +68,9 @@ public class BlackJack {
 
     public List<Name> findParticipantsName() {
         return participants.findParticipantsName();
+    }
+
+    public Cards findDealerCards() {
+        return dealer.getCards();
     }
 }

@@ -8,11 +8,9 @@ import java.util.Objects;
 
 public abstract class User {
 
-    protected final Name name;
     protected final Cards cards;
 
-    public User(Name name, Cards cards) {
-        this.name = name;
+    public User(Cards cards) {
         this.cards = cards;
     }
 
@@ -36,28 +34,7 @@ public abstract class User {
         return cards.isHit();
     }
 
-    public Name getName() {
-        return name;
-    }
-
     public Cards getCards() {
         return cards;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        User user = (User) o;
-        return Objects.equals(name, user.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
     }
 }

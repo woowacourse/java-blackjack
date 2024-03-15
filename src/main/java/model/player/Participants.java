@@ -28,7 +28,7 @@ public class Participants {
     }
 
     private void validateNotDuplicatedParticipant(List<Participant> participants) {
-        Set<User> duplicates = participants.stream()
+        Set<Participant> duplicates = participants.stream()
                 .filter(n -> Collections.frequency(participants, n) > 1)
                 .collect(Collectors.toSet());
 
@@ -57,7 +57,7 @@ public class Participants {
 
     public List<Name> findParticipantsName() {
         return participants.stream()
-                .map(User::getName).toList();
+                .map(Participant::getName).toList();
     }
 
     public Map<Participant, Outcome> matchParticipantsOutcome(Dealer dealer) {
@@ -71,7 +71,7 @@ public class Participants {
     public Map<Name, Cards> matchParticipantNameAndCards() {
         return participants.stream()
                 .collect(toMap(
-                        User::getName,
+                        Participant::getName,
                         User::getCards
                 ));
     }
@@ -79,7 +79,7 @@ public class Participants {
     public Map<Name, Integer> matchNameAndRevenues(Dealer dealer) {
         return participants.stream()
                 .collect(toMap(
-                        User::getName,
+                        Participant::getName,
                         participant -> participant.calculateRevenue(dealer)
                 ));
     }
