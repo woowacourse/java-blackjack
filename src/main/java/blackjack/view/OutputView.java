@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.cardgame.CardGameResult;
+import blackjack.domain.betting.ProfitDetails;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 
@@ -29,7 +29,7 @@ public class OutputView {
         System.out.println(messageResolver.resolvePlayerCardWithScore(player));
     }
 
-    public void printResult(final CardGameResult cardGameResult) {
-        System.out.println(messageResolver.resolveResult(cardGameResult));
+    public void printPlayerProfit(final ProfitDetails profits) {
+        System.out.println(messageResolver.resolvePlayersProfitDetail(profits));
     }
 }
