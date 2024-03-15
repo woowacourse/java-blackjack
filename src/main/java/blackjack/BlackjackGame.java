@@ -4,6 +4,7 @@ import blackjack.domain.Judge;
 import blackjack.domain.Players;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.dto.BlackjackResult;
 import blackjack.strategy.RandomShuffleStrategy;
 import blackjack.view.CardView;
 import blackjack.view.InputView;
@@ -26,7 +27,8 @@ public class BlackjackGame {
         initializeGame(dealer, players);
         printCardDistribute(dealer, players);
         requestExtraCard(dealer, players);
-        outputView.printTotalProfit(Judge.judge(dealer, players));
+        Judge.judge(dealer, players);
+        outputView.printTotalProfit(BlackjackResult.of(dealer, players));
     }
 
     private void initializeGame(final Dealer dealer, final Players players) {

@@ -48,10 +48,10 @@ class JudgeTest {
 
             //when
             bustPlayerChoco();
-            BlackjackResult result = Judge.judge(dealer, players);
+            Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerDraw(result))
+            assertThat(isDealerDraw(BlackjackResult.of(dealer, players)))
                     .isTrue();
         }
 
@@ -66,10 +66,10 @@ class JudgeTest {
                     .forEach(i -> choco.draw(dealer.draw()));
 
             //when
-            BlackjackResult result = Judge.judge(dealer, players);
+            Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerLoseByBlackjack(result))
+            assertThat(isDealerLoseByBlackjack(BlackjackResult.of(dealer, players)))
                     .isTrue();
         }
 
@@ -83,10 +83,10 @@ class JudgeTest {
                     .forEach(i -> choco.draw(dealer.draw()));
 
             //when
-            BlackjackResult result = Judge.judge(dealer, players);
+            Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerLose(result))
+            assertThat(isDealerLose(BlackjackResult.of(dealer, players)))
                     .isTrue();
         }
     }
@@ -112,10 +112,10 @@ class JudgeTest {
 
             //when
             bustPlayerChoco();
-            BlackjackResult result = Judge.judge(dealer, players);
+            Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerWin(result))
+            assertThat(isDealerWin(BlackjackResult.of(dealer, players)))
                     .isTrue();
         }
 
@@ -131,10 +131,10 @@ class JudgeTest {
                     .forEach(i -> choco.draw(dealer.draw()));
 
             //when
-            BlackjackResult result = Judge.judge(dealer, players);
+            Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerDraw(result))
+            assertThat(isDealerDraw(BlackjackResult.of(dealer, players)))
                     .isTrue();
         }
 
@@ -148,10 +148,10 @@ class JudgeTest {
                     .forEach(i -> choco.draw(dealer.draw()));
 
             //when
-            BlackjackResult result = Judge.judge(dealer, players);
+            Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerWin(result))
+            assertThat(isDealerWin(BlackjackResult.of(dealer, players)))
                     .isTrue();
         }
     }
@@ -176,10 +176,10 @@ class JudgeTest {
 
             //when
             bustPlayerChoco();
-            BlackjackResult result = Judge.judge(dealer, players);
+            Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerWin(result))
+            assertThat(isDealerWin(BlackjackResult.of(dealer, players)))
                     .isTrue();
         }
 
@@ -195,10 +195,10 @@ class JudgeTest {
                     .forEach(i -> choco.draw(dealer.draw()));
 
             //when
-            BlackjackResult result = Judge.judge(dealer, players);
+            Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerLoseByBlackjack(result))
+            assertThat(isDealerLoseByBlackjack(BlackjackResult.of(dealer, players)))
                     .isTrue();
         }
 
@@ -212,10 +212,10 @@ class JudgeTest {
                     .forEach(i -> choco.draw(dealer.draw()));
 
             //when
-            BlackjackResult result = Judge.judge(dealer, players);
+            Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerWin(result))
+            assertThat(isDealerWin(BlackjackResult.of(dealer, players)))
                     .isTrue();
         }
 
@@ -230,10 +230,10 @@ class JudgeTest {
                     .forEach(i -> choco.draw(dealer.draw()));
 
             //when
-            BlackjackResult result = Judge.judge(dealer, players);
+            Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerLose(result))
+            assertThat(isDealerLose(BlackjackResult.of(dealer, players)))
                     .isTrue();
         }
 
@@ -248,10 +248,10 @@ class JudgeTest {
                     .forEach(i -> choco.draw(dealer.draw()));
 
             //when
-            BlackjackResult result = Judge.judge(dealer, players);
+            Judge.judge(dealer, players);
 
             //then
-            assertThat(isDealerDraw(result))
+            assertThat(isDealerDraw(BlackjackResult.of(dealer, players)))
                     .isTrue();
         }
     }

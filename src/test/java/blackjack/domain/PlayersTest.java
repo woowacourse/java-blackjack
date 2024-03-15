@@ -56,12 +56,12 @@ public class PlayersTest {
         String expectedProfitSum = String.valueOf(Integer.parseInt(bettingAmountA) + Integer.parseInt(bettingAmountB));
 
         //when
-        BlackjackResult blackjackResult = Judge.judge(dealer, players);
+       Judge.judge(dealer, players);
 
         //then
-        assertThat(blackjackResult.playerProfits().get(0).profit()).isEqualTo("-" + bettingAmountA);
-        assertThat(blackjackResult.playerProfits().get(1).profit()).isEqualTo("-" + bettingAmountB);
-        assertThat(blackjackResult.dealerProfit()).isEqualTo(expectedProfitSum);
+        assertThat(BlackjackResult.of(dealer, players).playerProfits().get(0).profit()).isEqualTo("-" + bettingAmountA);
+        assertThat(BlackjackResult.of(dealer, players).playerProfits().get(1).profit()).isEqualTo("-" + bettingAmountB);
+        assertThat(BlackjackResult.of(dealer, players).dealerProfit()).isEqualTo(expectedProfitSum);
     }
 
     @DisplayName("딜러가 버스트된 경우 버스트 안된 참가자는 승리한다.")
@@ -78,8 +78,8 @@ public class PlayersTest {
         bustedDealer.draw();
 
         //then
-        BlackjackResult blackjackResult = Judge.judge(bustedDealer, players);
-        assertThat(Double.parseDouble(blackjackResult.playerProfits().get(0).profit()))
+        Judge.judge(bustedDealer, players);
+        assertThat(Double.parseDouble(BlackjackResult.of(dealer, players).playerProfits().get(0).profit()))
                 .isEqualTo(Double.parseDouble(bettingAmountA));
     }
 }
