@@ -31,9 +31,13 @@ public class Cards {
 
     private void updateCardsScore() {
         score = calculateScore(cards);
-        if (hasAce() && score + EXTRA_SCORE <= WINNING_SCORE) {
+        if (hasAce() && lessThanWinningScoreWithExtraScore()) {
             score += EXTRA_SCORE;
         }
+    }
+
+    private boolean lessThanWinningScoreWithExtraScore() {
+        return score + EXTRA_SCORE <= WINNING_SCORE;
     }
 
     private boolean hasAce() {
