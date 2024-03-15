@@ -43,7 +43,7 @@ class BlackjackGameTest {
 
     @Test
     void 플레이어에게_카드를_추가로_지급할_수_있다() {
-        blackjackGame.distributeCardToPlayer(0);
+        blackjackGame.distributeCardTo(player);
 
         assertThat(player.getCardHand())
                 .extracting("cards", InstanceOfAssertFactories.list(Card.class))

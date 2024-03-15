@@ -38,13 +38,12 @@ public class BlackjackGame {
 
     private void distributeCardToPlayers() {
         for (int playerIndex = 0; playerIndex < players.count(); playerIndex++) {
-            distributeCardToPlayer(playerIndex);
+            final Player player = players.findPlayerByIndex(playerIndex);
+            distributeCardTo(player);
         }
     }
 
-    public void distributeCardToPlayer(final int playerIndex) {
-        final Player player = players.findPlayerByIndex(playerIndex);
-
+    public void distributeCardTo(final Player player) {
         final Card card = pickCard();
         player.receiveCard(card);
     }
