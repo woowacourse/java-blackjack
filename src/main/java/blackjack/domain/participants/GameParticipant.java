@@ -16,7 +16,17 @@ public abstract class GameParticipant {
 
     public abstract boolean canHit();
 
-    public abstract Result takeOn(GameParticipant participant);
+    protected abstract boolean isWin(GameParticipant participant);
+
+    public Result takeOn(GameParticipant participant) {
+        if (isTie(participant)) {
+            return Result.TIE;
+        }
+        if (isWin(participant)) {
+            return Result.WIN;
+        }
+        return Result.LOSE;
+    }
 
     protected boolean isTie(GameParticipant participant) {
         if (isBust() || participant.isBust()) {
@@ -52,5 +62,4 @@ public abstract class GameParticipant {
     public Hands getHands() {
         return hands;
     }
-
 }

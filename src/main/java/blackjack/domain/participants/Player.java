@@ -10,17 +10,7 @@ public class Player extends GameParticipant {
     }
 
     @Override
-    public Result takeOn(GameParticipant participant) {
-        if (isTie(participant)) {
-            return Result.TIE;
-        }
-        if (isWin(participant)) {
-            return Result.WIN;
-        }
-        return Result.LOSE;
-    }
-
-    private boolean isWin(GameParticipant participant) {
+    protected boolean isWin(GameParticipant participant) {
         if (isBust()) {
             return false;
         }
