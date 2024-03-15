@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import blackjack.domain.game.Score;
 import java.util.Objects;
 
 public class Card {
@@ -14,6 +15,10 @@ public class Card {
 
     public boolean isAce() {
         return cardRank.isAce();
+    }
+
+    public Score score() {
+        return new Score(cardRank.getScore());
     }
 
     public CardRank getCardRank() {

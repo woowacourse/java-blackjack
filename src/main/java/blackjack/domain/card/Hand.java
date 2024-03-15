@@ -45,7 +45,7 @@ public class Hand {
 
     private Score sumCardScore() {
         return cards.stream()
-                .map(card -> new Score(card.getCardRank().getScore()))
+                .map(Card::score)
                 .reduce(new Score(0), Score::add);
     }
 
