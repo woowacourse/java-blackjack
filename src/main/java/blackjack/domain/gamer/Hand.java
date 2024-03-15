@@ -16,7 +16,7 @@ public class Hand {
         cards.add(card);
     }
 
-    public HandValue getValue() {
+    public HandValue generateValue() {
         return new HandValue(cards);
     }
 

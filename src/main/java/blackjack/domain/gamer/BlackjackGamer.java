@@ -32,7 +32,7 @@ public abstract class BlackjackGamer {
     }
 
     public HandValue getHandValue() {
-        return hand.getValue();
+        return hand.generateValue();
     }
 
     public int getScore() {
