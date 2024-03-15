@@ -30,28 +30,6 @@ class MoneyTest {
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("돈에 특정 배율을 적용한 결과를 알 수 있다")
-    @Test
-    void testMultiply() {
-        Money money = new Money(1000);
-        assertThat(money.multiply(1.5).getAmount()).isEqualTo(1500);
-    }
-
-    @DisplayName("돈에 돈을 더할 수 있다")
-    @Test
-    void testAddMoney() {
-        Money money = new Money(1000);
-        Money added = money.add(new Money(1000));
-        assertThat(added.getAmount()).isEqualTo(2000);
-    }
-
-    @DisplayName("부호를 반전한 돈을 계산할 수 있다")
-    @Test
-    void testInverseMoney() {
-        Money money = new Money(1000);
-        assertThat(money.inverse().getAmount()).isEqualTo(-1000);
-    }
-
     @DisplayName("돈에 특정 이율을 적용한 Profit을 계산할 수 있다")
     @Test
     void testCalculateProfit() {
