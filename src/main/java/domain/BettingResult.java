@@ -25,9 +25,7 @@ public class BettingResult {
 
     private Map<Name, Money> calculatePlayersResult(Dealer dealer, Players players) {
         return players.getPlayers().stream()
-                .collect(Collectors.toMap(
-                        Player::getName,
-                        player -> player.bet(dealer)));
+                .collect(Collectors.toMap(Player::getName, player -> player.bet(dealer)));
     }
 
     public Money getDealerResult() {
