@@ -53,6 +53,14 @@ public abstract class Participant {
         return this.calculateHandScore().equals(other.calculateHandScore());
     }
 
+    public String getName() {
+        return name.getValue();
+    }
+
+    public Hand getHand() {
+        return hand;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -68,13 +76,5 @@ public abstract class Participant {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    public String getName() {
-        return name.getValue();
-    }
-
-    public Hand getHand() {
-        return hand;
     }
 }

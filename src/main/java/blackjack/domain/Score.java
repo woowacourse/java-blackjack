@@ -24,6 +24,10 @@ public class Score {
         return value > MAX_SCORE;
     }
 
+    public int getValue() {
+        return value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -39,9 +43,5 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(value);
-    }
-
-    public int getValue() {
-        return value;
     }
 }
