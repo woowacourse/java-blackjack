@@ -1,13 +1,13 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.participant.BetAmount;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Round;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.result.RoundResult;
-import blackjack.domain.result.HandResult;
+import blackjack.domain.result.Pot;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,10 +20,10 @@ public class OutputView {
     private static final String DEALER_HIT_COUNT = "딜러는 16이하라 %d장의 카드를 더 받았습니다.";
     private static final String DEALER_NO_HIT = "딜러는 17이상이라 카드를 더 받지 않았습니다.";
     private static final String HAND_WITH_SCORE_FORMAT = "%s - 결과: %d";
-    private static final String GAME_RESULT_PREFIX = "## 최종 승패";
-    private static final String DEALER_RESULTS_FORMAT = "딜러: %s";
-    private static final String DEALER_RESULT_FORMAT = "%d%f ";
-    private static final String PLAYER_RESULT_FORMAT = "%s: %f";
+    private static final String GAME_RESULT_PREFIX = "## 최종 수익";
+    private static final String DEALER_RESULTS_FORMAT = "딜러: %,d";
+    private static final String DEALER_RESULT_FORMAT = "%d%,d ";
+    private static final String PLAYER_RESULT_FORMAT = "%s: %,d";
 
     public void printInitialHand(Round round) {
         Dealer dealer = round.getDealer();
@@ -56,10 +56,10 @@ public class OutputView {
                 .forEach(this::printParticipantHandWithScore);
     }
 
-    public void printRoundResult(RoundResult roundResult) {
+    public void printRoundResult(Pot pot) {
         System.out.println(System.lineSeparator() + GAME_RESULT_PREFIX);
-        printDealerResults(roundResult.getDealerResults());
-        printPlayersResult(roundResult.getPlayersResult());
+        printDealerResults(pot);
+        printPlayersResult(pot);
     }
 
     public void printException(IllegalArgumentException e) {
@@ -100,20 +100,17 @@ public class OutputView {
         System.out.println(participantHandWithScore);
     }
 
-    private void printDealerResults(Map<HandResult, Integer> dealerResults) {
-        String formattedDealerResults = dealerResults.entrySet()
-                .stream()
-                .filter((dealerResult) -> dealerResult.getValue() > 0)
-                .map(this::getFormattedDealerResult)
-                .collect(Collectors.joining());
-        System.out.printf(DEALER_RESULTS_FORMAT + System.lineSeparator(), formattedDealerResults);
+    private void printDealerResults(Pot pot) {
+        int dealerPot = pot.calculateDealerPot();
+        System.out.printf(DEALER_RESULTS_FORMAT + System.lineSeparator(), dealerPot);
     }
 
-    private void printPlayersResult(Map<Player, HandResult> playersResult) {
-        for (Player player : playersResult.keySet()) {
+    private void printPlayersResult(Pot pot) {
+        Map<Player, BetAmount> playersPot = pot.getPot();
+        for (Player player : playersPot.keySet()) {
             String playerName = player.getName();
-            HandResult playerResult = playersResult.get(player);
-            String formattedPlayerResult = String.format(PLAYER_RESULT_FORMAT, playerName, playerResult.getRatio());
+            BetAmount betAmount = playersPot.get(player);
+            String formattedPlayerResult = String.format(PLAYER_RESULT_FORMAT, playerName, betAmount.amount());
             System.out.println(formattedPlayerResult);
         }
     }
@@ -129,11 +126,5 @@ public class OutputView {
         return cards.stream()
                 .map(card -> card.getSymbol() + card.getShape())
                 .collect(Collectors.joining(DELIMITER));
-    }
-
-    private String getFormattedDealerResult(Map.Entry<HandResult, Integer> dealerResult) {
-        HandResult handResult = dealerResult.getKey();
-        int resultCount = dealerResult.getValue();
-        return String.format(DEALER_RESULT_FORMAT, resultCount, handResult.getRatio());
     }
 }

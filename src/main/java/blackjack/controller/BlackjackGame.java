@@ -27,7 +27,7 @@ public class BlackjackGame {
         outputView.printInitialHand(round);
         participantsHitCard(round);
         outputView.printParticipantsHandWithScore(round);
-        printPotResult(round);
+        printPotResult(round, pot);
     }
 
     private Round createRoundWithDeck() {
@@ -49,7 +49,7 @@ public class BlackjackGame {
     }
 
     private BetAmount createBetAmount(String playerName) {
-        String amount = inputView.readPlayerBetAmount(playerName);
+        int amount = inputView.readPlayerBetAmount(playerName);
         return new BetAmount(amount);
     }
 
@@ -97,10 +97,11 @@ public class BlackjackGame {
         outputView.printDealerHitCount(hitCount);
     }
 
-    private void printPotResult(Round round) {
+    private void printPotResult(Round round, Pot pot) {
         Referee referee = Referee.getInstance();
         RoundResult roundResult = round.generateResult(referee);
-        outputView.printRoundResult(roundResult);
+        pot = pot.calculatePlayerPot(roundResult);
+        outputView.printRoundResult(pot);
     }
 
     private <T> T retryOnException(Supplier<T> operation) {
