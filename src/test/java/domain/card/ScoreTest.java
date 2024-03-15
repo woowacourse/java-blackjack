@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class ScoreTest {
@@ -68,5 +69,23 @@ class ScoreTest {
         Score result = first.plusBonusScore();
 
         assertThat(result).isEqualTo(Score.get(20));
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"19:true", "21:false"}, delimiter = ':')
+    void 현재_점수가_다른_점수보다_큰지_확인한다(int otherValue, boolean expected) {
+        Score score = Score.get(20);
+        Score other = Score.get(otherValue);
+
+        assertThat(score.isGreaterThan(other)).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"19:false", "21:true"}, delimiter = ':')
+    void 현재_점수가_다른_점수보다_작은지_확인한다(int otherValue, boolean expected) {
+        Score score = Score.get(20);
+        Score other = Score.get(otherValue);
+
+        assertThat(score.isLessThan(other)).isEqualTo(expected);
     }
 }
