@@ -13,9 +13,6 @@ public class MessageResolver {
 
     private static final String DEALER_NAME = "딜러";
     private static final String DELIMITER = ", ";
-    private static final String WIN_TEXT = "승";
-    private static final String TIE_TEXT = "무";
-    private static final String LOSE_TEXT = "패";
 
     public String playerNamesText(List<Player> players) {
         return players.stream()
