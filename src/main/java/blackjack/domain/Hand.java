@@ -8,11 +8,12 @@ public class Hand {
 
     private static final int ACE_ADDITIONAL_VALUE = 10;
     private static final int BLACKJACK_SCORE = 21;
+    private static final int INITIAL_SIZE = 2;
 
-    private final List<Card> hand;
+    private final List<Card> cards;
 
     public Hand() {
-        this.hand = new ArrayList<>();
+        this.cards = new ArrayList<>();
     }
 
     public int calculate() {
@@ -26,25 +27,29 @@ public class Hand {
     }
 
     public void put(Card card) {
-        hand.add(card);
+        cards.add(card);
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(hand);
+        return Collections.unmodifiableList(cards);
     }
 
     private int calculateWithDefaultAceNumber() {
-        return hand.stream()
+        return cards.stream()
                 .mapToInt(card -> card.getNumber().getValue())
                 .sum();
     }
 
     private boolean hasAce() {
-        return hand.stream()
+        return cards.stream()
                 .anyMatch(Card::isAce);
     }
 
     private boolean isAceAdditionalValueAddable(int sum) {
         return sum + ACE_ADDITIONAL_VALUE <= BLACKJACK_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == INITIAL_SIZE && calculate() == BLACKJACK_SCORE;
     }
 }

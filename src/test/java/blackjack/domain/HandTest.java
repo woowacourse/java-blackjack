@@ -48,4 +48,27 @@ class HandTest {
 
         assertThat(hand.calculate()).isEqualTo(14);
     }
+
+    @DisplayName("플레이어의 카드가 두 장이고 21점 이라면 블랙잭이다")
+    @Test
+    void testIsBlackJack1() {
+        Hand hand = new Hand();
+
+        hand.put(CardFixture.heartJack());
+        hand.put(CardFixture.cloverAce());
+
+        assertThat(hand.isBlackjack()).isTrue();
+    }
+
+    @DisplayName("플레이어의 카드가 2 장을 넘으면 21점이더라도 블랙잭이 아니다")
+    @Test
+    void testIsBlackJack2() {
+        Hand hand = new Hand();
+
+        hand.put(CardFixture.heartJack());
+        hand.put(CardFixture.heartJack());
+        hand.put(CardFixture.cloverAce());
+
+        assertThat(hand.isBlackjack()).isFalse();
+    }
 }
