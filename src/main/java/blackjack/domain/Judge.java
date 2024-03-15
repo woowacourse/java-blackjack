@@ -10,17 +10,9 @@ import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.PlayerGameResult;
-import blackjack.domain.result.PlayerResult;
-import blackjack.domain.result.PlayerResults;
 import java.util.stream.Collectors;
 
 public class Judge {
-
-    public PlayerResults calculatePlayerResults(Dealer dealer, Players players) {
-        return new PlayerResults(players.getPlayers().stream()
-                .map(player -> new PlayerResult(player.getName(), calculatePlayerResult(dealer, player)))
-                .toList());
-    }
 
     public PlayerGameResult calculatePlayerGameResult(Dealer dealer, Players players) {
         return new PlayerGameResult(players.getPlayers().stream()
