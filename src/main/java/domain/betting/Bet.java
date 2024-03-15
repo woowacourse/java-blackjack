@@ -3,9 +3,8 @@ package domain.betting;
 import java.util.Objects;
 
 public class Bet {
-    private static final int MAXIMUM_BETTING_MONEY = 1_000_000;
-    private static final int MINIMUM_BETTING_MONEY = 1_000;
-    static final String INVALID_BETTING_MESSAGE = "베팅액은 최소 천원, 최대 백만원입니다.";
+    private static final int MINIMUM_BETTING_MONEY = 1;
+    static final String INVALID_BETTING_MESSAGE = "게임에 참가하기 위해 베팅은 반드시 해주세요";
 
     private final int money;
 
@@ -15,7 +14,7 @@ public class Bet {
     }
 
     public void validateRange(final int money) {
-        if (money < MINIMUM_BETTING_MONEY || MAXIMUM_BETTING_MONEY < money) {
+        if (money < MINIMUM_BETTING_MONEY) {
             throw new IllegalArgumentException(INVALID_BETTING_MESSAGE);
         }
     }
