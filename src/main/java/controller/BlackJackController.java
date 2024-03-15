@@ -36,10 +36,10 @@ public class BlackJackController {
 
         initHands(players, dealer);
         dealToPlayers(players, dealer);
-        dealToDealerIfPossible(players, dealer);
+        dealToDealer(players, dealer);
 
         printHandsResult(players, dealer);
-        printFinalProfit(players, dealer);
+        printProfits(players, dealer);
     }
 
     private Players createPlayers(final Names names) {
@@ -54,14 +54,6 @@ public class BlackJackController {
         return new Players(players);
     }
 
-    private Names readNames() {
-        return Names.from(inputView.readNames());
-    }
-
-    private BetAmount readBetAmountBy(final Name name) {
-        return BetAmount.from(inputView.readBetAmount(name.getValue()));
-    }
-
     private Dealer createDealer() {
         return Dealer.from(CardDeck.generate());
     }
@@ -72,17 +64,23 @@ public class BlackJackController {
     }
 
     private void dealToPlayers(final Players players, final Dealer dealer) {
-        for (Player player : players.getPlayers()) {
-            if (player.isBlackJack()) {
-                outputView.printBlackJack();
-                return;
-            }
-
-            deal(player, dealer);
-        }
+        players.getPlayers().forEach(player -> deal(player, dealer));
     }
 
-    private void dealToDealerIfPossible(Players players, Dealer dealer) {
+    private void printProfits(final Players players, final Dealer dealer) {
+        printDealerProfit(players, dealer);
+        printPlayersProfits(players, dealer);
+    }
+
+    private Names readNames() {
+        return Names.from(inputView.readNames());
+    }
+
+    private BetAmount readBetAmountBy(final Name name) {
+        return BetAmount.from(inputView.readBetAmount(name.getValue()));
+    }
+
+    private void dealToDealer(Players players, Dealer dealer) {
         if (players.isAllBust()) {
             return;
         }
@@ -96,13 +94,15 @@ public class BlackJackController {
         outputView.printGameResultMessage();
     }
 
-    private void printFinalProfit(final Players players, final Dealer dealer) {
-        final Profit dealerProfit = dealer.calculateProfitBy(players);
-        outputView.printGameResult(dealer, dealerProfit);
+    private void printDealerProfit(final Players players, final Dealer dealer) {
+        final Profit profit = dealer.calculateProfitBy(players);
+        outputView.printGameResult(dealer, profit);
+    }
 
-        final Map<Player, Profit> playersProfits = players.calculateProfits(dealer);
-        for (Entry<Player, Profit> entry : playersProfits.entrySet()) {
-            outputView.printGameResult(entry.getKey(), entry.getValue());
+    private void printPlayersProfits(final Players players, final Dealer dealer) {
+        final Map<Player, Profit> profits = players.calculateProfits(dealer);
+        for (Entry<Player, Profit> playerProfit : profits.entrySet()) {
+            outputView.printGameResult(playerProfit.getKey(), playerProfit.getValue());
         }
     }
 
@@ -113,6 +113,11 @@ public class BlackJackController {
     }
 
     private void deal(final Player player, final Dealer dealer) {
+        if (player.isBlackJack()) {
+            outputView.printBlackJack();
+            return;
+        }
+
         boolean handsChanged = false;
         boolean turnEnded = false;
 
@@ -120,14 +125,14 @@ public class BlackJackController {
             final Answer answer = inputView.readAnswer(player.getName());
             dealer.deal(player, answer);
 
-            printHandsIfRequired(player, handsChanged, answer);
+            printHands(player, handsChanged, answer);
 
             handsChanged = true;
             turnEnded = isTurnEnded(player, answer);
         }
     }
 
-    private void printHandsIfRequired(final Player player, final boolean handsChanged, final Answer answer) {
+    private void printHands(final Player player, final boolean handsChanged, final Answer answer) {
         if (shouldShowHands(handsChanged, answer)) {
             outputView.printHands(ParticipantDto.from(player));
         }
