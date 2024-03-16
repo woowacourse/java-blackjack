@@ -13,8 +13,8 @@ public enum GameCommand {
         this.command = command;
     }
 
-    public static boolean isGetCardCommand(String inputCommand) {
+    public static boolean isStandCommand(String inputCommand) {
         return Arrays.stream(values())
-                .anyMatch(gameCommand -> GET_CARD.command.equals(inputCommand));
+                .anyMatch(gameCommand -> REFUSE_CARD.command.equals(inputCommand));
     }
 }

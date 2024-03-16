@@ -78,7 +78,7 @@ public class BlackJackController {
     }
 
     private boolean isHit(Player player) {
-        return !player.isBust() && inputView.inputPlayerCommand(
+        return !player.isBust() && !inputView.isStand(
                 player.getName());
     }
 }

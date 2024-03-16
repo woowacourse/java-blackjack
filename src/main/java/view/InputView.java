@@ -25,13 +25,13 @@ public class InputView {
         return Integer.parseInt(scanner.nextLine());
     }
 
-    public boolean inputPlayerCommand(Name name) {
+    public boolean isStand(Name name) {
         System.out.println(
                 name.getValue() + "는 한장의 카드를 더 받겠습니까?(예는 " + GameCommand.GET_CARD.command + ", 아니오는 "
                         + GameCommand.REFUSE_CARD.command
                         + ")");
         String inputCommand = scanner.nextLine();
 
-        return GameCommand.isGetCardCommand(inputCommand);
+        return GameCommand.isStandCommand(inputCommand);
     }
 }
