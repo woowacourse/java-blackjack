@@ -7,6 +7,7 @@ import blackjack.model.betting.Money;
 import blackjack.model.betting.MoneyStaff;
 import blackjack.model.deck.Deck;
 import blackjack.model.participant.Dealer;
+import blackjack.model.participant.Name;
 import blackjack.model.participant.Players;
 import blackjack.model.participant.Gamer;
 import blackjack.model.participant.Player;
@@ -16,6 +17,7 @@ import blackjack.model.result.ResultRule;
 import blackjack.view.reader.ConsoleReader;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,17 +112,22 @@ public class BlackJackGame {
                 .toList();
     }
 
-    private void announceProfitMoney(final Dealer dealer, final MoneyStaff moneyStaff, Map<Player, ResultCommand> playerResults) {
+    private void announceProfitMoney(final Dealer dealer, final MoneyStaff moneyStaff,
+                                     Map<Player, ResultCommand> playerResults) {
         final Map<Player, Money> playerAndBettingMoney = moneyStaff.calculateProfitMoneys(playerResults);
-        final Money dealerProfit = moneyStaff.calculateDealerProfitAmount(
+        Money dealerProfit = moneyStaff.calculateDealerProfitAmount(
                 playerAndBettingMoney.values().stream().toList());
-        OutputView.printDealerProfit(dealer.getName(), dealerProfit);
-        OutputView.printPlayerProfit(collectNameProfit(playerAndBettingMoney));
+        OutputView.printProfits(collectNameProfit(dealer.getName(), dealerProfit, playerAndBettingMoney));
     }
 
-    private List<NameProfit> collectNameProfit(final Map<Player, Money> playerAndBettingMoney) {
-        return playerAndBettingMoney.keySet().stream()
+    private List<NameProfit> collectNameProfit(final Name dealerName, final Money dealerProfit,
+                                               final Map<Player, Money> playerAndBettingMoney) {
+        List<NameProfit> nameProfits = new ArrayList<>();
+        nameProfits.add(new NameProfit(dealerName, dealerProfit));
+        playerAndBettingMoney.keySet().stream()
                 .map(player -> new NameProfit(player.getName(), playerAndBettingMoney.get(player)))
-                .toList();
+                .forEach(nameProfits::add);
+
+        return nameProfits;
     }
 }

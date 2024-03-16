@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.dto.NameCardsScore;
 import blackjack.dto.NameProfit;
-import blackjack.model.betting.Money;
 import blackjack.model.deck.Card;
 import blackjack.model.participant.Name;
 import blackjack.view.formatter.CardsFormatter;
@@ -47,13 +46,9 @@ public class OutputView {
                 + ScoreFormatter.format(nameCardsScore.score()));
     }
 
-    public static void printDealerProfit(final Name dealerName, final Money dealerProfit) {
+    public static void printProfits(final List<NameProfit> playerProfits) {
         System.out.println();
         System.out.println("## 최종 수익");
-        System.out.println(formatFinalResult(new NameProfit(dealerName, dealerProfit)));
-    }
-
-    public static void printPlayerProfit(final List<NameProfit> playerProfits) {
         playerProfits.forEach(nameProfit -> System.out.println(formatFinalResult(nameProfit)));
     }
 
