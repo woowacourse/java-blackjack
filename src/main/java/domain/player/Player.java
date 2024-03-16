@@ -1,8 +1,12 @@
 package domain.player;
 
 import domain.card.Card;
+import dto.CardResponse;
 import dto.PlayerResponse;
+import java.util.List;
 import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 public class Player extends Participant {
     private final Name name;
@@ -23,14 +27,14 @@ public class Player extends Participant {
     }
 
     public double calculateProfit(final Dealer dealer) {
-        final double result = state.earningRate() * betAmount.getValue();
+        final Profit profit = new Profit(state.earningRate(), betAmount.getValue());
         if (dealer.compareHandsWith(this) == Result.WIN) {
-            return -1 * result;
+            return profit.lose();
         }
         if (dealer.compareHandsWith(this) == Result.LOSE) {
-            return result;
+            return profit.win();
         }
-        return 0;
+        return profit.tie();
     }
 
     @Override
@@ -57,5 +61,16 @@ public class Player extends Participant {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public void hit(final Dealer dealer, final Function<String, Boolean> tryHit,
+                    final BiConsumer<String, List<CardResponse>> printStatus) {
+        final Boolean apply = tryHit.apply(name.getValue());
+        if (!apply || state.isFinished()) {
+            return;
+        }
+        add(dealer.draw());
+        printStatus.accept(name.getValue(), getHands().stream().map(Card::toCardResponse).toList());
+        hit(dealer, tryHit, printStatus);
     }
 }

@@ -1,15 +1,17 @@
 package domain;
 
-import domain.card.Card;
 import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.Players;
+import dto.CardResponse;
 import dto.GameResult;
 import dto.ParticipantsResponse;
 import dto.PlayerResponse;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Blackjack {
@@ -29,7 +31,7 @@ public class Blackjack {
 //    public static Blackjack of(final Players players) {
 //        final Dealer dealer1 = new Dealer();
 
-//        init(players, dealer1);
+    //        init(players, dealer1);
 //        return new Blackjack(players, dealer1);
     //    }
     public static Blackjack fromNames(final List<String> names) {
@@ -63,21 +65,12 @@ public class Blackjack {
         player.stand();
     }
 
-    public void dealerHit() {
-        final Card nextCard = dealer.draw();
-        dealer.add(nextCard);
-    }
-
     public void dealerHit(final Runnable runnable) {
         dealer.hit(runnable);
     }
 
     public void dealerStand() {
         dealer.stand();
-    }
-
-    public boolean canDealerHit() {
-        return dealer.canHit();
     }
 
     public GameResult toGameResult() {
@@ -109,5 +102,12 @@ public class Blackjack {
 
     public Dealer getDealer() {
         return dealer;
+    }
+
+    public void playerHit(final String name, final Function<String, Boolean> tryHit,
+                          final BiConsumer<String, List<CardResponse>> printStatus) {
+        final Player player = players.findPlayerByName(name);
+        player.hit(dealer, tryHit, printStatus);
+
     }
 }

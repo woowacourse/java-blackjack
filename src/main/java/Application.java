@@ -25,14 +25,16 @@ public class Application {
     }
 
     private static void tryHit(final Blackjack blackjack, final String name) {
-        while (blackjack.canPlayerHit(name)) {
-            if (InputView.tryHit(name)) {
-                blackjack.playerHit(name);
-                OutputView.printStatus(name, blackjack.toPlayerResponse(name).cardResponse());
-                System.out.println();
-                continue;
-            }
-            blackjack.playerStand(name);
-        }
+//        while (blackjack.canPlayerHit(name)) {
+//            if (InputView.tryHit(name)) {
+//                blackjack.playerHit(name);
+//                OutputView.printStatus(name, blackjack.toPlayerResponse(name).cardResponse());
+//                System.out.println();
+//                continue;
+//            }
+//            blackjack.playerStand(name);
+//        }
+        blackjack.playerHit(name, InputView::tryHit, OutputView::printStatusWithNewLine);
+        blackjack.playerStand(name);
     }
 }
