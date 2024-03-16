@@ -34,9 +34,7 @@ public class BlackjackController {
         initializeHand(deck, dealer, players);
         giveMoreCards(deck, players, dealer);
         printHandsOfEachParticipant(dealer, players);
-        final CardGameResult result = CardGameResult.of(dealer, players);
-        final ProfitDetails profits = betting.calculateProfit(result);
-        printProfitOfEachParticipant(profits);
+        printCameResult(players, betting, dealer);
     }
 
     private List<Player> createPlayers(final List<Name> playerNames) {
@@ -93,7 +91,9 @@ public class BlackjackController {
         }
     }
 
-    private void printProfitOfEachParticipant(final ProfitDetails profits) {
+    private void printCameResult(final List<Player> players, final BetDetails betting, final Dealer dealer) {
+        CardGameResult result = CardGameResult.of(dealer, players);
+        ProfitDetails profits = betting.calculateProfit(result);
         outputView.printPlayerProfit(profits);
     }
 }
