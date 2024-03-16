@@ -19,7 +19,7 @@ public class BlackJackGame {
         final int initialDrawCount = 2;
         IntStream.range(0, initialDrawCount).forEach(index -> {
             players.drawOnce(deck);
-            dealer.drawRandom(deck);
+            dealer.draw(deck);
         });
     }
 
@@ -29,7 +29,7 @@ public class BlackJackGame {
     }
 
     public boolean dealerTryDraw(Deck deck) {
-        DrawResult drawResult = dealer.drawRandom(deck);
+        DrawResult drawResult = dealer.draw(deck);
         return drawResult.isSuccess();
     }
 

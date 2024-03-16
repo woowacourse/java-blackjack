@@ -48,7 +48,7 @@ public class Players {
 
     void drawOnce(Deck deck) {
         for (Player player : players) {
-            player.drawRandom(deck);
+            player.draw(deck);
         }
     }
 
@@ -65,7 +65,7 @@ public class Players {
         boolean needToDraw = playerWantDraw.apply(player.getRawName());
         DrawResult drawResult = null;
         if (needToDraw) {
-            drawResult = player.drawRandom(deck);
+            drawResult = player.draw(deck);
         }
         if (drawResult == null) {
             return false;

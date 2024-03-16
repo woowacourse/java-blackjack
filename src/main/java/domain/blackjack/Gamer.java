@@ -1,9 +1,7 @@
 package domain.blackjack;
 
 import domain.card.Card;
-import domain.card.CardSelectStrategy;
 import domain.card.Deck;
-import domain.card.RandomCardSelectStrategy;
 import java.util.List;
 
 abstract class Gamer {
@@ -18,11 +16,7 @@ abstract class Gamer {
         this.bettingMoney = bettingMoney;
     }
 
-    abstract DrawResult draw(Deck deck, CardSelectStrategy cardSelectStrategy);
-
-    final DrawResult drawRandom(Deck deck) {
-        return draw(deck, RandomCardSelectStrategy.INSTANCE);
-    }
+    abstract DrawResult draw(Deck deck);
 
     public final int calculateSummationCardPointAsInt() {
         return blackJackGameMachine.calculateSummationCardPointAsInt();

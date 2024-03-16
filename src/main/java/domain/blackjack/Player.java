@@ -1,7 +1,7 @@
 package domain.blackjack;
 
-import domain.card.CardSelectStrategy;
 import domain.card.Deck;
+import domain.card.RandomCardSelectStrategy;
 
 public class Player extends Gamer {
     private final String name;
@@ -20,8 +20,9 @@ public class Player extends Gamer {
     }
 
     @Override
-    DrawResult draw(Deck deck, CardSelectStrategy cardSelectStrategy) {
-        return blackJackGameMachine.draw(deck, cardSelectStrategy, new PlayerCardDrawCondition(blackJackGameMachine));
+    DrawResult draw(Deck deck) {
+        return blackJackGameMachine.draw(deck, RandomCardSelectStrategy.INSTANCE,
+                new PlayerCardDrawCondition(blackJackGameMachine));
     }
 
     public String getRawName() {
