@@ -13,6 +13,7 @@ public interface State {
     boolean canHit(int hitUpperBound);
 
     boolean isFinished();
+
     boolean isRunning();
 
     boolean isBust();
