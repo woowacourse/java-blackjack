@@ -2,11 +2,12 @@ package domain.blackjack;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Bet.BetResult;
+import domain.bet.BetResult;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Shape;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.List;
@@ -33,14 +34,14 @@ class BlackJackTest {
         dealer.receiveCard(new Card(Shape.DIAMONDS, Rank.THREE));
         dealer.receiveCard(new Card(Shape.DIAMONDS, Rank.FOUR));
         /*
-         * one 참가자의 점수: 10점
-         * two 참가자의 점수: 5점
+         * one 참가자의 점수: 10점, WIN
+         * two 참가자의 점수: 5점, LOSE
          * 딜러의 점수: 7점인 상황
          */
         BetResult betResult = blackJack.makeBetResult();
         Assertions.assertAll(
-                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(one, 1000.),
-                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(two, -1000.)
+                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(new Name("one"), 1000.),
+                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(new Name("two"), -1000.)
 
         );
     }
@@ -64,14 +65,14 @@ class BlackJackTest {
         dealer.receiveCard(new Card(Shape.DIAMONDS, Rank.THREE));
 
         /*
-         * one 참가자의 점수: 5점
-         * two 참가자의 점수: 5점
+         * one 참가자의 점수: 5점, PUSH
+         * two 참가자의 점수: 5점, PUSH
          * 딜러의 점수: 5점인
          */
         BetResult betResult = blackJack.makeBetResult();
         Assertions.assertAll(
-                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(one, 0.),
-                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(two, 0.)
+                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(new Name("one"), 0.),
+                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(new Name("two"), 0.)
         );
     }
 
@@ -92,14 +93,14 @@ class BlackJackTest {
 
         dealer.receiveCard(new Card(Shape.DIAMONDS, Rank.QUEEN));
         /*
-         * one 참가자의 점수: 블랙잭
-         * two 참가자의 점수: 13점
+         * one 참가자의 점수: 블랙잭, BLACKJACK
+         * two 참가자의 점수: 13점, WIN
          * 딜러의 점수: 10점인
          */
         BetResult betResult = blackJack.makeBetResult();
         Assertions.assertAll(
-                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(one, 1500.),
-                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(two, 1000.)
+                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(new Name("one"), 1500.),
+                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(new Name("two"), 1000.)
         );
     }
 
@@ -121,14 +122,14 @@ class BlackJackTest {
         dealer.receiveCard(new Card(Shape.CLUBS, Rank.KING));
         dealer.receiveCard(new Card(Shape.CLUBS, Rank.ACE));
         /*
-         * one 참가자의 점수: 블랙잭
-         * two 참가자의 점수: 13점
+         * one 참가자의 점수: 블랙잭, PUSH
+         * two 참가자의 점수: 13점, LOSE
          * 딜러의 점수: 블랙잭
          */
         BetResult betResult = blackJack.makeBetResult();
         Assertions.assertAll(
-                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(one, 0.),
-                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(two, -1000.)
+                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(new Name("one"), 0.),
+                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(new Name("two"), -1000.)
         );
     }
 
@@ -151,14 +152,14 @@ class BlackJackTest {
         dealer.receiveCard(new Card(Shape.CLUBS, Rank.QUEEN));
         dealer.receiveCard(new Card(Shape.CLUBS, Rank.JACK));
         /*
-         * one 참가자의 점수: 5점
-         * two 참가자의 점수: 5점
+         * one 참가자의 점수: 5점, LOSE
+         * two 참가자의 점수: 5점, LOSE
          * 딜러의 점수: 버스트
          */
         BetResult betResult = blackJack.makeBetResult();
         Assertions.assertAll(
-                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(one, 1000.),
-                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(two, 1000.)
+                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(new Name("one"), 1000.),
+                () -> assertThat(betResult.getBetAmountByParticipant()).containsEntry(new Name("two"), 1000.)
         );
     }
 }

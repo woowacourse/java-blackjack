@@ -1,6 +1,6 @@
 package domain.blackjack;
 
-import domain.Bet.BetResult;
+import domain.bet.BetResult;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -38,7 +38,6 @@ public class BlackJack {
     public BetResult makeBetResult() {
         return BetResult.of(players, dealer);
     }
-
 
     public Dealer getDealer() {
         return dealer;

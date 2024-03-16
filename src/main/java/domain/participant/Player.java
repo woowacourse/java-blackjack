@@ -1,7 +1,9 @@
 package domain.participant;
 
-import domain.Bet.BetAmount;
+import domain.bet.BetAmount;
 import domain.blackjack.WinStatus;
+import domain.card.Card;
+import java.util.List;
 
 public class Player extends Participant {
 
@@ -15,7 +17,7 @@ public class Player extends Participant {
     }
 
     public Player(String name, double betAmount) {
-        this(new Name(name), BetAmount.from(betAmount));
+        this(new Name(name), new BetAmount(betAmount));
     }
 
     public double profit(WinStatus winStatus) {
@@ -27,5 +29,8 @@ public class Player extends Participant {
         return hands.calculateScore() <= BLACK_JACK_COUNT;
     }
 
-
+    @Override
+    public List<Card> revealCardOnInitDeal() {
+        return hands.getValue(2);
+    }
 }

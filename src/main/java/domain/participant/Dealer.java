@@ -21,6 +21,11 @@ public class Dealer extends Participant {
         return hands.calculateScore() <= DEALER_HIT_COUNT;
     }
 
+    @Override
+    public List<Card> revealCardOnInitDeal() {
+        return hands.getValue(1);
+    }
+
     public Card draw() {
         return deck.draw();
     }

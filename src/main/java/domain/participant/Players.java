@@ -4,24 +4,24 @@ import java.util.List;
 
 public class Players {
 
-    private final List<Player> value;
+    private static final int MIN_PLAYER_COUNT = 2;
+    private static final int MAX_PLAYER_COUNT = 8;
 
+    private final List<Player> value;
 
     public Players(List<Player> players) {
         validate(players);
         this.value = players;
     }
 
-    private static final int MIN_PARTICIPANT_COUNT = 2;
-    private static final int MAX_PARTICIPANT_COUNT = 8;
-
     private void validate(List<Player> players) {
-        checkParticipantCount(players);
-        checkDuplicateParticipant(players);
+        checkPlayerCount(players);
+        checkDuplicatePlayer(players);
     }
 
-    private void checkDuplicateParticipant(List<Player> players) {
+    private void checkDuplicatePlayer(List<Player> players) {
         long distinctNamesCount = players.stream()
+                .map(Player::getName)
                 .distinct()
                 .count();
 
@@ -30,10 +30,10 @@ public class Players {
         }
     }
 
-    private void checkParticipantCount(List<Player> players) {
-        if (players.size() < MIN_PARTICIPANT_COUNT || players.size() > MAX_PARTICIPANT_COUNT) {
+    private void checkPlayerCount(List<Player> players) {
+        if (players.size() < MIN_PLAYER_COUNT || players.size() > MAX_PLAYER_COUNT) {
             throw new IllegalArgumentException(
-                    String.format("최소 %d명 최대 %d명까지 입력받을 수 있습니다.", MIN_PARTICIPANT_COUNT, MAX_PARTICIPANT_COUNT));
+                    String.format("최소 %d명 최대 %d명까지 입력받을 수 있습니다.", MIN_PLAYER_COUNT, MAX_PLAYER_COUNT));
         }
     }
 

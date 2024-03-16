@@ -22,7 +22,7 @@ class PlayersTest {
     @DisplayName("사람은 최소 2명")
     @Test
     void validateMinSize() {
-        List<String> names = List.of("one", "two", "three", "four", "five", "six", "seven", "eight", "nine");
+        List<String> names = List.of("one");
         List<Player> players = names.stream()
                 .map(name -> new Player(name, 1000))
                 .toList();
@@ -33,7 +33,7 @@ class PlayersTest {
     @DisplayName("사람 이름은 중복이 될 수 없다.")
     @Test
     void validateDuplicateNames() {
-        List<String> names = List.of("one", "two", "three", "four", "five", "six", "seven", "eight", "nine");
+        List<String> names = List.of("one", "one");
         List<Player> players = names.stream()
                 .map(name -> new Player(name, 1000))
                 .toList();

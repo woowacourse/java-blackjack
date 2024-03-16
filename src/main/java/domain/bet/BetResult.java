@@ -1,7 +1,8 @@
-package domain.Bet;
+package domain.bet;
 
 import domain.blackjack.WinStatus;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.LinkedHashMap;
@@ -9,17 +10,17 @@ import java.util.Map;
 
 public class BetResult {
 
-    private final Map<Player, Double> betAmountByParticipant;
+    private final Map<Name, Double> betAmountByParticipant;
 
-    private BetResult(final Map<Player, Double> result) {
+    private BetResult(final Map<Name, Double> result) {
         betAmountByParticipant = result;
     }
 
     public static BetResult of(Players players, Dealer dealer) {
-        Map<Player, Double> result = new LinkedHashMap<>();
+        Map<Name, Double> result = new LinkedHashMap<>();
         for (Player player : players.getValue()) {
-            WinStatus winStatus = WinStatus.winStatusByPlayer(player, dealer);
-            result.put(player, player.profit(winStatus));
+            WinStatus winStatus = WinStatus.winStatusOfPlayer(player, dealer);
+            result.put(player.getName(), player.profit(winStatus));
         }
         return new BetResult(result);
     }
@@ -32,7 +33,7 @@ public class BetResult {
         return -participantTotalProfit;
     }
 
-    public Map<Player, Double> getBetAmountByParticipant() {
+    public Map<Name, Double> getBetAmountByParticipant() {
         return betAmountByParticipant;
     }
 }

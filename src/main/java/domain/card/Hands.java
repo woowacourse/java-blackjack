@@ -26,7 +26,7 @@ public class Hands {
         return totalScore;
     }
 
-    public boolean hasAce() {
+    private boolean hasAce() {
         return value.stream()
                 .anyMatch(Card::isAce);
     }
@@ -52,5 +52,9 @@ public class Hands {
 
     public List<Card> getValue() {
         return Collections.unmodifiableList(value);
+    }
+
+    public List<Card> getValue(int cardCount) {
+        return value.subList(0, cardCount);
     }
 }
