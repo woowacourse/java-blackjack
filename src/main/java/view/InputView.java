@@ -1,6 +1,7 @@
 package view;
 
 import domain.gamer.Name;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -30,5 +31,16 @@ public class InputView {
         String inputCommand = scanner.nextLine();
 
         return GameCommand.isGetCardCommand(inputCommand);
+    }
+
+    public List<Integer> inputMoney(List<String> playersName) {
+        List<Integer> moneys = new ArrayList<>();
+        for (String playerName : playersName) {
+            System.out.println(playerName + "의 배팅 금액은?");
+            String inputMoney = scanner.nextLine();
+            moneys.add(Integer.parseInt(inputMoney));
+        }
+
+        return moneys;
     }
 }

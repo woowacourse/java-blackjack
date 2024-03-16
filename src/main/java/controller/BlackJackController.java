@@ -8,6 +8,7 @@ import dto.AllPlayerResultDto;
 import dto.DealerResultDto;
 import dto.InitCardDto;
 import dto.PlayerCardStateDto;
+import java.util.List;
 import view.InputView;
 import view.OutputView;
 
@@ -22,7 +23,9 @@ public class BlackJackController {
     }
 
     public void run() {
-        Players players = new PlayersCreator().create(inputView.inputPlayerNames());
+        List<String> inputPlayerNames = inputView.inputPlayerNames();
+        List<Integer> inputMoneys = inputView.inputMoney(inputPlayerNames);
+        Players players = new PlayersCreator().create(inputPlayerNames, inputMoneys);
         Dealer dealer = new Dealer();
 
         players.initCard(dealer);

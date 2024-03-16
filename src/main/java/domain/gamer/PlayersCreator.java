@@ -10,7 +10,7 @@ public class PlayersCreator {
     private static final int MINIMUM_PLAYER_RANGE = 2;
     private static final int MAXIMUM_PLAYER_RANGE = 8;
 
-    public Players create(List<String> playerNames) {
+    public Players create(List<String> playerNames, List<Integer> moneys) {
         validate(playerNames);
         return new Players(playerNames.stream()
                 .map(Name::new)
