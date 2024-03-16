@@ -14,4 +14,8 @@ public class Money {
         }
     }
 
+    public int getResultMoney(PlayerResult playerResult) {
+        double ratio = playerResult.getRatio();
+        return (int) (ratio * money);
+    }
 }
