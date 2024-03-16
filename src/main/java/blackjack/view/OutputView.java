@@ -5,6 +5,7 @@ import blackjack.model.dealer.Dealer;
 import blackjack.model.player.MatchResult;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
+import blackjack.view.dto.BettingProfitOutcome;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
 import blackjack.view.dto.PlayerMatchResultOutcome;
@@ -108,6 +109,20 @@ public class OutputView {
             return LOSE_MESSAGE;
         }
         return PUSH_MESSAGE;
+    }
+
+    public void printBettingProfits(final List<BettingProfitOutcome> bettingProfitOutcomes) {
+        System.out.println(formatBettingProfits(bettingProfitOutcomes));
+    }
+
+    private String formatBettingProfits(final List<BettingProfitOutcome> bettingProfitOutcomes) {
+        return bettingProfitOutcomes.stream()
+                .map(this::formatBettingProfit)
+                .collect(Collectors.joining("\n"));
+    }
+
+    private String formatBettingProfit(final BettingProfitOutcome bettingProfitOutcome) {
+        return bettingProfitOutcome.name() + ": " + bettingProfitOutcome.profit();
     }
 
     public void printException(final String errorMessage) {
