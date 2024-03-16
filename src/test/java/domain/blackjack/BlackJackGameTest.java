@@ -27,7 +27,7 @@ class BlackJackGameTest {
         blackJackGame.dealerTryDraw(Deck.of(FIVE_HEART));
         Dealer dealer = blackJackGame.getDealer();
 
-        Player player = Player.from("플레이어", HoldingCards.of(TWO_HEART));
+        Player player = Player.from("플레이어", HoldingCards.of(TWO_HEART), 1000);
         GameResult gameResult = GameResultCalculator.calculate(player, dealer);
         Assertions.assertThat(gameResult)
                 .isEqualTo(GameResult.LOSE);

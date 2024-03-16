@@ -13,10 +13,6 @@ public class Player extends Gamer {
         this.bettingMoney = new BettingMoney(bettingMoney);
     }
 
-    static Player from(String name, HoldingCards holdingCards) {
-        return new Player(name, new BlackJackGameMachine(holdingCards), 0);
-    }
-
     static Player from(String name, HoldingCards holdingCards, int bettingMoney) {
         return new Player(name, new BlackJackGameMachine(holdingCards), bettingMoney);
     }

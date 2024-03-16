@@ -41,7 +41,7 @@ class GameResultCalculatorTest {
     @MethodSource("getGameResultParameters")
     @DisplayName("승부가 잘 결정되는지 검증")
     void calculate(HoldingCards holdingCards1, HoldingCards holdingCards2, GameResult expected) {
-        Player player = Player.from("플레이어", holdingCards1);
+        Player player = Player.from("플레이어", holdingCards1, 1000);
         Dealer dealer = Dealer.of(holdingCards2);
         Assertions.assertThat(GameResultCalculator.calculate(player, dealer))
                 .isEqualTo(expected);
