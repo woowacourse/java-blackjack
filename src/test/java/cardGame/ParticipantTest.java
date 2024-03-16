@@ -11,7 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import player.Player;
 
-class GameParticipantCardsTest {
+class ParticipantTest {
 
     @DisplayName("해당하는 유저가 Bust일 경우 true를 리턴한다.")
     @Test
@@ -37,22 +37,22 @@ class GameParticipantCardsTest {
     void receiveOneCard() {
         List<Card> cards = new ArrayList<>();
 
-        GameParticipantCards gameParticipantCards = new GameParticipantCards(cards);
+        Participant participant = new Participant(cards);
 
         Card card = new Card(CardNumber.ACE, CardPattern.SPADE_PATTERN);
 
-        gameParticipantCards.receiveCard(card);
+        participant.receiveCard(card);
 
-        Assertions.assertThat(gameParticipantCards.getCards().countCard()).isEqualTo(1);
+        Assertions.assertThat(participant.getCards().countCard()).isEqualTo(1);
     }
 
     @DisplayName("최대 카드 점수를 가져온다")
     @Test
     void getMaxCardScore() {
-        GameParticipantCards gameParticipantCards = new GameParticipantCards(
+        Participant participant = new Participant(
                 List.of(new Card(CardNumber.ACE, CardPattern.SPADE_PATTERN),
                         new Card(CardNumber.FOUR, CardPattern.SPADE_PATTERN)));
 
-        Assertions.assertThat(gameParticipantCards.getCardScore()).isEqualTo(15);
+        Assertions.assertThat(participant.getCardScore()).isEqualTo(15);
     }
 }

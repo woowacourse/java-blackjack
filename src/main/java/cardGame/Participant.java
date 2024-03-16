@@ -4,14 +4,14 @@ import card.Card;
 import card.Cards;
 import java.util.List;
 
-public class GameParticipantCards {
+public class Participant {
 
     private static final int MAX_BLACK_JACK_SCORE = 21;
     private static final int INIT_CARD_SETTING_COUNT = 2;
 
     private final Cards cards;
 
-    public GameParticipantCards(List<Card> cardDeck) {
+    public Participant(List<Card> cardDeck) {
         this.cards = new Cards(cardDeck);
     }
 

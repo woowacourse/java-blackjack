@@ -2,10 +2,10 @@ package dealer;
 
 import card.Card;
 import card.CardDeck;
-import cardGame.GameParticipantCards;
+import cardGame.Participant;
 import java.util.List;
 
-public class Dealer extends GameParticipantCards {
+public class Dealer extends Participant {
 
     private static final int MIN_DEALER_SCORE = 16;
 

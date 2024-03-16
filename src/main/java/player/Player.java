@@ -1,10 +1,10 @@
 package player;
 
 import card.Card;
-import cardGame.GameParticipantCards;
+import cardGame.Participant;
 import java.util.List;
 
-public class Player extends GameParticipantCards {
+public class Player extends Participant {
 
     private final Name name;
     private final BetMoney betMoney;
