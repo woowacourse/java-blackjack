@@ -1,4 +1,4 @@
-package model.casino.dto;
+package controller.dto;
 
 import java.util.Collections;
 import java.util.List;

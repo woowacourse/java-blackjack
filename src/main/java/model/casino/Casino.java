@@ -2,7 +2,7 @@ package model.casino;
 
 import java.util.List;
 import model.card.Card;
-import model.casino.dto.BettingInfos;
+import controller.dto.BettingInfos;
 import model.participant.Dealer;
 import model.participant.Entrant;
 import model.participant.Player;
