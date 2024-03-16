@@ -1,4 +1,4 @@
-package blackjack.dto;
+package blackjack.dto.delete;
 
 public record DealerNetProfitDto(
         int netProfit) {
