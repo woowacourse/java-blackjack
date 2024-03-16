@@ -50,4 +50,8 @@ public class BlackJackGame {
     public Dealer getDealer() {
         return players.getDealer();
     }
+
+    public Deck getDeck() {
+        return deck;
+    }
 }

@@ -3,6 +3,7 @@ package blackjack;
 import blackjack.domain.betting.Bets;
 import blackjack.domain.betting.Money;
 import blackjack.domain.betting.OwnedMoney;
+import blackjack.domain.card.Deck;
 import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -20,8 +21,9 @@ public class BlackJackGameController {
         BlackJackGame game = createBlackjackGame();
         Bets bets = betting(game);
         drawStartCards(game);
-        drawAdditionalCard(game);
-        printResult(game.getDealer(), game.getPlayers());
+        drawPlayersAdditionalCard(game);
+        drawDealersAdditionalCard(game);
+        printResult(game);
         printPrize(bets, game);
     }
 
@@ -49,15 +51,31 @@ public class BlackJackGameController {
         outputView.printStartStatus(game.getDealer(), game.getPlayers());
     }
 
-    private void drawAdditionalCard(BlackJackGame game) {
-        game.drawAdditionalCard();
-        while (game.isDealerDrawable()) {
-            game.drawDealerCard();
+    private void drawPlayersAdditionalCard(BlackJackGame game) {
+        Players players = game.getPlayers();
+        for (Player player : players.getPlayers()) {
+            drawEachPlayerAdditionalCard(player, game.getDeck());
+        }
+    }
+
+    private void drawEachPlayerAdditionalCard(Player player, Deck deck) {
+        if (player.isDrawable() && inputView.isPlayerWantDraw(player.getName())) {
+            player.drawAdditionalCard(deck);
+            outputView.printPlayerCards(player);
+        }
+    }
+
+    private void drawDealersAdditionalCard(BlackJackGame game) {
+        Dealer dealer = game.getDealer();
+        while (dealer.isDrawable()) {
+            dealer.drawAdditionalCard(game.getDeck());
             outputView.printDealerDraw();
         }
     }
 
-    private void printResult(Dealer dealer, Players players) {
+    private void printResult(BlackJackGame game) {
+        Dealer dealer = game.getDealer();
+        Players players = game.getPlayers();
         outputView.printEndingStatus(dealer, players);
     }
 

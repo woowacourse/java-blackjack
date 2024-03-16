@@ -3,7 +3,6 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
-import blackjack.domain.participant.rule.DrawRule;
 import java.util.List;
 
 public abstract class Participant {
@@ -21,8 +20,6 @@ public abstract class Participant {
 
     protected abstract int getStartCardSize();
 
-    protected abstract DrawRule getRules();
-
     public final void drawStartCards(Deck deck) {
         if (!hand.isEmpty()) {
             throw new IllegalStateException("이미 시작 카드를 뽑았습니다.");
@@ -32,16 +29,15 @@ public abstract class Participant {
         }
     }
 
-    public final void add(Card card) {
+    public void drawAdditionalCard(Deck deck) {
+        add(deck.draw());
+    }
+
+    protected final void add(Card card) {
         if (!isDrawable()) {
             throw new IllegalStateException("더 이상 카드를 추가할 수 없습니다.");
         }
         hand.add(card);
-    }
-
-    public void drawAdditionalCard(Deck deck) {
-        DrawRule rule = getRules();
-        rule.draw(this, deck);
     }
 
     public final boolean isDrawable() {
