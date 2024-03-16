@@ -4,10 +4,10 @@ import blackjack.model.betting.BettingMoney;
 import blackjack.model.dealer.Dealer;
 
 public enum MatchResult {
-    BLACKJACK_WIN(2.5),
-    WIN(2),
-    LOSE(0),
-    PUSH(1);
+    BLACKJACK_WIN(1.5),
+    WIN(1),
+    LOSE(-1),
+    PUSH(0);
 
     private final double profitRate;
 

@@ -10,8 +10,8 @@ import blackjack.model.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.DealerFinalCardsOutcome;
+import blackjack.view.dto.PlayerBettingProfitOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
-import blackjack.view.dto.PlayerMatchResultOutcome;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -33,7 +33,7 @@ public class BlackjackGame {
 
         dealCards(players, dealer, cardGenerator);
         drawCards(players, dealer, cardGenerator);
-        showResult(players, dealer);
+        showResult(players, dealer, betting);
     }
 
     private Players createPlayers() {
@@ -91,21 +91,21 @@ public class BlackjackGame {
         outputView.printDealerDrawingCards(dealer);
     }
 
-    private void showResult(final Players players, final Dealer dealer) {
-        showCardsOutcome(players, dealer);
-        showMatchResult(players, dealer);
+    private void showResult(final Players players, final Dealer dealer, final Betting betting) {
+        showFinalCardsOutcome(players, dealer);
+        showBettingProfitOutcome(players, dealer, betting);
     }
 
-    private void showCardsOutcome(final Players players, final Dealer dealer) {
+    private void showFinalCardsOutcome(final Players players, final Dealer dealer) {
         DealerFinalCardsOutcome dealerFinalCardsOutcome = DealerFinalCardsOutcome.from(dealer);
         List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes = players.captureFinalCardsOutcomes();
-        outputView.printDealerFinalCards(dealerFinalCardsOutcome);
+        outputView.printDealerFinalCards(dealerFinalCardsOutcome); // TODO: 합치기
         outputView.printPlayersFinalCards(playerFinalCardsOutcomes);
     }
 
-    private void showMatchResult(final Players players, final Dealer dealer) {
-        List<PlayerMatchResultOutcome> playerMatchResultOutcomes = players.determineMatchResults(dealer);
-        outputView.printMatchResult(playerMatchResultOutcomes);
+    private void showBettingProfitOutcome(final Players players, final Dealer dealer, final Betting betting) {
+        List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes = players.calculateBettingProfits(betting, dealer);
+        outputView.printBettingProfit(playerBettingProfitOutcomes);
     }
 
     public <T> T retryOnException(final Supplier<T> retryOperation) {

@@ -4,7 +4,6 @@ import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.dealer.Dealer;
-import blackjack.view.dto.PlayerMatchResultOutcome;
 import java.util.List;
 
 public class Player {
@@ -43,8 +42,8 @@ public class Player {
         return cards.calculateScore();
     }
 
-    public PlayerMatchResultOutcome determineMatchResult(final Dealer dealer) {
-        return new PlayerMatchResultOutcome(name, MatchResult.determine(dealer, this));
+    public MatchResult determineMatchResult(final Dealer dealer) {
+        return MatchResult.determine(dealer, this);
     }
 
     public boolean isBlackjack() {

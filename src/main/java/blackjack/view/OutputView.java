@@ -2,15 +2,12 @@ package blackjack.view;
 
 import blackjack.model.card.Card;
 import blackjack.model.dealer.Dealer;
-import blackjack.model.player.MatchResult;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
 import blackjack.view.dto.DealerFinalCardsOutcome;
 import blackjack.view.dto.PlayerBettingProfitOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
-import blackjack.view.dto.PlayerMatchResultOutcome;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -19,12 +16,8 @@ public class OutputView {
     private static final String DEALER_DRAWING_FORM = "\n딜러는 16이하라 1장의 카드를 더 받았습니다.";
     private static final String DEALER_CARDS_FORM = "\n딜러카드: %s";
     private static final String TOTAL_SCORE_FORM = " - 결과: %s\n";
-    private static final String MATCH_RESULT_INTRO = "\n## 최종 승패";
-    private static final String DEALER_MATCH_RESULT_PREFIX = "딜러: ";
-    private static final String WIN_MESSAGE = "승";
-    private static final String LOSE_MESSAGE = "패";
-    private static final String PUSH_MESSAGE = "무";
-    private static final String DEALER_MATCH_RESULT_FORM = "%s승 %s패 %s무";
+    private static final String BETTING_PROFIT_INTRO = "\n## 최종 수익";
+    private static final String DEALER_BETTING_PROFIT_PREFIX = "딜러: ";
     private static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
 
     public void printDealingCards(final Players players, final Dealer dealer) {
@@ -79,49 +72,26 @@ public class OutputView {
         }
     }
 
-    public void printMatchResult(final List<PlayerMatchResultOutcome> playerMatchResultOutcomes) {
-        System.out.println(MATCH_RESULT_INTRO);
-        System.out.println(formatDealerMatchResult(playerMatchResultOutcomes));
-        for (PlayerMatchResultOutcome playerMatchResultOutcome : playerMatchResultOutcomes) {
-            System.out.println(formatPlayerMatchResult(playerMatchResultOutcome));
-        }
+    public void printBettingProfit(final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
+        System.out.println(BETTING_PROFIT_INTRO);
+        System.out.println(formatDealerBettingProfit(playerBettingProfitOutcomes));
+        System.out.println(formatPlayerBettingProfits(playerBettingProfitOutcomes));
     }
 
-    private String formatDealerMatchResult(final List<PlayerMatchResultOutcome> playerMatchResultOutcomes) {
-        Map<MatchResult, Long> outcomeCounts = playerMatchResultOutcomes.stream()
-                .collect(Collectors.groupingBy(PlayerMatchResultOutcome::matchResult, Collectors.counting()));
-        long winCount = outcomeCounts.getOrDefault(MatchResult.LOSE, 0L);
-        long loseCount = outcomeCounts.getOrDefault(MatchResult.WIN, 0L);
-        loseCount += outcomeCounts.getOrDefault(MatchResult.BLACKJACK_WIN, 0L);
-        long pushCount = outcomeCounts.getOrDefault(MatchResult.PUSH, 0L);
-        return DEALER_MATCH_RESULT_PREFIX + String.format(DEALER_MATCH_RESULT_FORM, winCount, loseCount, pushCount);
+    private String formatDealerBettingProfit(final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
+        int profit = playerBettingProfitOutcomes.stream()
+                .mapToInt(PlayerBettingProfitOutcome::profit)
+                .sum(); // TODO: betting에서 딜러 수익 계산하게 로직 옮기기
+        return DEALER_BETTING_PROFIT_PREFIX + (-1) * profit;
     }
 
-    private String formatPlayerMatchResult(final PlayerMatchResultOutcome playerMatchResultOutcome) {
-        return playerMatchResultOutcome.name() + ": " + formatMatchResult(playerMatchResultOutcome.matchResult());
-    }
-
-    private String formatMatchResult(final MatchResult matchResult) {
-        if (matchResult == MatchResult.WIN || matchResult == MatchResult.BLACKJACK_WIN) {
-            return WIN_MESSAGE;
-        }
-        if (matchResult == MatchResult.LOSE) {
-            return LOSE_MESSAGE;
-        }
-        return PUSH_MESSAGE;
-    }
-
-    public void printPlayerBettingProfits(final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
-        System.out.println(formatBettingProfits(playerBettingProfitOutcomes));
-    }
-
-    private String formatBettingProfits(final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
+    private String formatPlayerBettingProfits(final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
         return playerBettingProfitOutcomes.stream()
-                .map(this::formatBettingProfit)
+                .map(this::formatPlayerBettingProfit)
                 .collect(Collectors.joining("\n"));
     }
 
-    private String formatBettingProfit(final PlayerBettingProfitOutcome playerBettingProfitOutcome) {
+    private String formatPlayerBettingProfit(final PlayerBettingProfitOutcome playerBettingProfitOutcome) {
         return playerBettingProfitOutcome.name() + ": " + playerBettingProfitOutcome.profit();
     }
 

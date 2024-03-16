@@ -1,9 +1,10 @@
 package blackjack.model.player;
 
+import blackjack.model.betting.Betting;
 import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.dealer.Dealer;
+import blackjack.view.dto.PlayerBettingProfitOutcome;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
-import blackjack.view.dto.PlayerMatchResultOutcome;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,9 +50,11 @@ public class Players {
                 .toList();
     }
 
-    public List<PlayerMatchResultOutcome> determineMatchResults(Dealer dealer) {
+    public List<PlayerBettingProfitOutcome> calculateBettingProfits(final Betting betting, final Dealer dealer) {
         return players.stream()
-                .map(player -> player.determineMatchResult(dealer))
+                .map(player -> betting.calculatePlayerBettingProfit(
+                        player.getName(),
+                        player.determineMatchResult(dealer)))
                 .toList();
     }
 

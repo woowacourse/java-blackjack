@@ -8,7 +8,6 @@ import blackjack.model.card.Denomination;
 import blackjack.model.card.Suit;
 import blackjack.model.cardgenerator.SequentialCardGenerator;
 import blackjack.model.dealer.Dealer;
-import blackjack.view.dto.PlayerMatchResultOutcome;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -83,11 +82,8 @@ class PlayerTest {
                 new Card(Suit.HEART, Denomination.TWO)
         )));
 
-        // when
-        PlayerMatchResultOutcome playerMatchResultOutcome = player.determineMatchResult(dealer);
-
-        // then
-        assertThat(playerMatchResultOutcome.matchResult()).isEqualTo(MatchResult.BLACKJACK_WIN);
+        // when & then
+        assertThat(player.determineMatchResult(dealer)).isEqualTo(MatchResult.BLACKJACK_WIN);
     }
 
     @Test
@@ -106,11 +102,8 @@ class PlayerTest {
                 new Card(Suit.HEART, Denomination.KING)
         )));
 
-        // when
-        PlayerMatchResultOutcome playerMatchResultOutcome = player.determineMatchResult(dealer);
-
-        // then
-        assertThat(playerMatchResultOutcome.matchResult()).isEqualTo(MatchResult.LOSE);
+        // when & then
+        assertThat(player.determineMatchResult(dealer)).isEqualTo(MatchResult.LOSE);
     }
 
     @Test
@@ -129,11 +122,8 @@ class PlayerTest {
                 new Card(Suit.HEART, Denomination.KING)
         )));
 
-        // when
-        PlayerMatchResultOutcome playerMatchResultOutcome = player.determineMatchResult(dealer);
-
-        // then
-        assertThat(playerMatchResultOutcome.matchResult()).isEqualTo(MatchResult.PUSH);
+        // when & then
+        assertThat(player.determineMatchResult(dealer)).isEqualTo(MatchResult.PUSH);
     }
 
     @Test
@@ -153,11 +143,8 @@ class PlayerTest {
                 new Card(Suit.HEART, Denomination.KING)
         )));
 
-        // when
-        PlayerMatchResultOutcome playerMatchResultOutcome = player.determineMatchResult(dealer);
-
-        // then
-        assertThat(playerMatchResultOutcome.matchResult()).isEqualTo(MatchResult.LOSE);
+        // when & then
+        assertThat(player.determineMatchResult(dealer)).isEqualTo(MatchResult.LOSE);
     }
 
     @Test
@@ -177,11 +164,8 @@ class PlayerTest {
         )));
         dealer.drawCards(() -> new Card(Suit.HEART, Denomination.KING));
 
-        // when
-        PlayerMatchResultOutcome playerMatchResultOutcome = player.determineMatchResult(dealer);
-
-        // then
-        assertThat(playerMatchResultOutcome.matchResult()).isEqualTo(MatchResult.WIN);
+        // when & then
+        assertThat(player.determineMatchResult(dealer)).isEqualTo(MatchResult.WIN);
     }
 
     @Test
@@ -202,11 +186,8 @@ class PlayerTest {
         )));
         dealer.drawCards(() -> new Card(Suit.HEART, Denomination.KING));
 
-        // when
-        PlayerMatchResultOutcome playerMatchResultOutcome = player.determineMatchResult(dealer);
-
-        // then
-        assertThat(playerMatchResultOutcome.matchResult()).isEqualTo(MatchResult.LOSE);
+        // when & then
+        assertThat(player.determineMatchResult(dealer)).isEqualTo(MatchResult.LOSE);
     }
 
     @Test
@@ -227,10 +208,7 @@ class PlayerTest {
         )));
         dealer.drawCards(() -> new Card(Suit.HEART, Denomination.FOUR));
 
-        // when
-        PlayerMatchResultOutcome playerMatchResultOutcome = player.determineMatchResult(dealer);
-
-        // then
-        assertThat(playerMatchResultOutcome.matchResult()).isEqualTo(MatchResult.WIN);
+        // when & then
+        assertThat(player.determineMatchResult(dealer)).isEqualTo(MatchResult.WIN);
     }
 }
