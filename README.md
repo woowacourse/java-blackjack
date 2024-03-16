@@ -96,7 +96,7 @@
 ## 2단계 피드백 반영 예정 목록
 
 - [x] BattingMoney 클래스 분리
-- [ ] BlackJackController의 메서드 네이밍 수정
+- [x] BlackJackController의 메서드 네이밍 수정
 - [x] DealerOutputView, PlayerOutputView 통합
 - [x] BlackJackGame 의 테스트 코드에서만 사용하는 생성자 삭제
 - [x] 메서드 선언 순서 변경

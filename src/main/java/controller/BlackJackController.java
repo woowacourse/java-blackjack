@@ -23,7 +23,7 @@ public class BlackJackController {
         Deck deck = Deck.fullDeck();
         BlackJackGame blackJackGame = generateBlackJackGame();
         initBlackJackGame(deck, blackJackGame);
-        printPlayersAndDealerBeforeRunGame(blackJackGame);
+        printAllGamerBeforeRunGame(blackJackGame);
         runGame(deck, blackJackGame);
         printBlackJackGameResults(blackJackGame);
     }
@@ -41,7 +41,7 @@ public class BlackJackController {
         OutputView.printInitGameDoneMessage(playerNames);
     }
 
-    private void printPlayersAndDealerBeforeRunGame(BlackJackGame blackJackGame) {
+    private void printAllGamerBeforeRunGame(BlackJackGame blackJackGame) {
         Players players = blackJackGame.getPlayers();
         printPlayers(players);
         Dealer dealer = blackJackGame.getDealer();
