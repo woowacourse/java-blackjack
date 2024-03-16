@@ -1,6 +1,5 @@
 package blackjack.domain.betting;
 
-import blackjack.domain.dealer.Dealer;
 import blackjack.domain.result.WinningResult;
 import java.util.List;
 import java.util.Map;
@@ -22,19 +21,11 @@ public class PlayerBettings {
     public PlayerBettings applyWinStatus(final WinningResult winningResult) {
         List<PlayerBetting> bettingResults = winningResult.getParticipantsResult().entrySet().stream()
                 .flatMap(entry -> playerBettings.stream()
-                        .filter(playerBetting -> playerBetting.isName(entry.getKey()))
+                        .filter(playerBetting -> playerBetting.equalsName(entry.getKey()))
                         .map(playerBetting -> playerBetting.applyWinStatus(entry.getValue())))
                 .toList();
 
         return new PlayerBettings(bettingResults);
-    }
-
-    public PlayerBetting getDealerResult() {
-        int dealerProfit = playerBettings.stream()
-                .mapToInt(PlayerBetting::getBetting)
-                .sum();
-
-        return new PlayerBetting(Dealer.DEALER_NAME, -dealerProfit);
     }
 
     public List<PlayerBetting> getPlayerBettings() {

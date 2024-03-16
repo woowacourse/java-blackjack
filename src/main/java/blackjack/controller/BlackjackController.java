@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.betting.DealerBetting;
 import blackjack.domain.betting.PlayerBettings;
 import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.participant.Player;
@@ -121,7 +122,9 @@ public class BlackjackController {
                 blackjackGame.getScoreResult());
 
         final PlayerBettings bettingResults = playerBettings.applyWinStatus(blackjackGame.getWinningResult());
-        final BettingResultDtos bettingResultDtos = BettingResultDtos.of(bettingResults);
+        final DealerBetting dealerBetting = DealerBetting.of(bettingResults, blackjackGame.getDealer());
+//        final DealerBetting dealerBetting = playerBettings.getDealerResult(blackjackGame.getWinningResult());
+        final BettingResultDtos bettingResultDtos = BettingResultDtos.of(bettingResults, dealerBetting);
 
         outputView.printFinalResult(participantScoresDto, bettingResultDtos);
     }

@@ -5,20 +5,20 @@ import blackjack.domain.result.WinStatus;
 
 public class PlayerBetting {
     private final ParticipantName name;
-    private final int betting;
+    private final BettingMoney bettingMoney;
 
-    private PlayerBetting(final ParticipantName name, final int betting) {
+    private PlayerBetting(final ParticipantName name, final BettingMoney bettingMoney) {
         this.name = name;
-        this.betting = betting;
+        this.bettingMoney = bettingMoney;
     }
 
-    PlayerBetting(final String name, final int betting) {
-        this(new ParticipantName(name), betting);
+    PlayerBetting(final String name, final int bettingMoney) {
+        this(new ParticipantName(name), new BettingMoney(bettingMoney));
     }
 
     public static PlayerBetting create(final String name, final int betting) {
         validateInitialBetting(betting);
-        return new PlayerBetting(new ParticipantName(name), betting);
+        return new PlayerBetting(name, betting);
     }
 
     private static void validateInitialBetting(final int betting) {
@@ -28,11 +28,11 @@ public class PlayerBetting {
     }
 
     public PlayerBetting applyWinStatus(final WinStatus winStatus) {
-        int bettingResult = (int) (this.betting * winStatus.getBetMultiplier());
-        return new PlayerBetting(this.name, bettingResult);
+        BettingMoney bettingMoney = this.bettingMoney.multiplyWith(winStatus.getBetMultiplier());
+        return new PlayerBetting(this.name, bettingMoney);
     }
 
-    public boolean isName(final ParticipantName otherName) {
+    public boolean equalsName(final ParticipantName otherName) {
         return this.name.equals(otherName);
     }
 
@@ -41,6 +41,6 @@ public class PlayerBetting {
     }
 
     public int getBetting() {
-        return betting;
+        return bettingMoney.getMoeney();
     }
 }

@@ -84,4 +84,8 @@ public class Participants {
     public List<Player> getPlayers() {
         return players.getPlayers();
     }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
 }

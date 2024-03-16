@@ -2,8 +2,10 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.betting.DealerBetting;
 import blackjack.domain.betting.PlayerBetting;
 import blackjack.domain.betting.PlayerBettings;
+import blackjack.domain.dealer.Dealer;
 import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.result.WinStatus;
 import blackjack.domain.result.WinningResult;
@@ -58,9 +60,9 @@ public class BettingsTest {
         PlayerBettings bettingResults = playerBettings.applyWinStatus(winningResult);
 
         // when
-        PlayerBetting dealerResult = bettingResults.getDealerResult();
+        DealerBetting dealerResult = DealerBetting.of(bettingResults, new Dealer());
 
         // then
-        assertThat(dealerResult.getBetting()).isEqualTo(expeted);
+        assertThat(dealerResult.getBettingMoney().getMoeney()).isEqualTo(expeted);
     }
 }
