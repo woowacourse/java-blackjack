@@ -42,7 +42,7 @@ public class BlackJackController {
 
     private BlackJackGame createBlackJackGame() {
         ShuffledCardsGenerator shuffledCardsGenerator = new ShuffledCardsGenerator();
-        Deck deck = Deck.combine(shuffledCardsGenerator.generate());
+        Deck deck = new Deck(shuffledCardsGenerator.generate());
         BetAmounts betAmounts = new BetAmounts();
         return new BlackJackGame(deck, betAmounts);
     }

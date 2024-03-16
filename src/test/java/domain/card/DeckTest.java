@@ -16,7 +16,7 @@ public class DeckTest {
         Card card2 = new Card(Symbol.CLOVER, Rank.ACE);
 
         List<Card> cards = List.of(card1, card2);
-        Deck deck = Deck.combine(cards);
+        Deck deck = new Deck(cards);
 
         // when
         Card drawedCard = deck.draw();
