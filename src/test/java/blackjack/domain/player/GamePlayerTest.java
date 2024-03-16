@@ -46,7 +46,7 @@ public class GamePlayerTest {
         dealer.drawCard(new Card(CardValue.JACK, CardSymbol.HEART));
         var sut = PlayerFixture.게임_플레이어_생성(List.of(CardValue.EIGHT, CardValue.THREE));
 
-        var result = sut.confirmProfit(dealer);
+        var result = sut.getProfit(dealer);
 
         assertThat(result).isEqualTo(new Profit(10000));
     }
@@ -60,7 +60,7 @@ public class GamePlayerTest {
         var sut = PlayerFixture.게임_플레이어_생성(List.of(CardValue.EIGHT, CardValue.FIVE));
         sut.drawCard(new Card(CardValue.JACK, CardSymbol.CLOVER));
 
-        var result = sut.confirmProfit(dealer);
+        var result = sut.getProfit(dealer);
 
         assertThat(result).isEqualTo(new Profit(-10000));
     }
@@ -83,7 +83,7 @@ public class GamePlayerTest {
         Dealer dealer = new Dealer(name, cards);
         var sut = PlayerFixture.게임_플레이어_생성(List.of(playerCard1, playerCard2));
 
-        var result = sut.confirmProfit(dealer);
+        var result = sut.getProfit(dealer);
 
         assertThat(result).isEqualTo(new Profit(profit));
     }
@@ -96,7 +96,7 @@ public class GamePlayerTest {
         Dealer dealer = new Dealer(name, cards);
         var sut = PlayerFixture.게임_플레이어_생성(List.of(CardValue.TWO, CardValue.TEN, CardValue.NINE));
 
-        var result = sut.confirmProfit(dealer);
+        var result = sut.getProfit(dealer);
 
         assertThat(result).isEqualTo(new Profit(-10000));
     }
@@ -109,7 +109,7 @@ public class GamePlayerTest {
         Dealer dealer = new Dealer(name, cards);
         var sut = PlayerFixture.게임_플레이어_생성(List.of(CardValue.ACE, CardValue.QUEEN));
 
-        var result = sut.confirmProfit(dealer);
+        var result = sut.getProfit(dealer);
 
         assertThat(result).isEqualTo(new Profit(0));
     }
@@ -122,7 +122,7 @@ public class GamePlayerTest {
         Dealer dealer = new Dealer(name, cards);
         var sut = PlayerFixture.게임_플레이어_생성(List.of(CardValue.ACE, CardValue.QUEEN));
 
-        var result = sut.confirmProfit(dealer);
+        var result = sut.getProfit(dealer);
 
         assertThat(result).isEqualTo(new Profit(15000));
     }

@@ -16,12 +16,12 @@ public class GamePlayer extends Player {
         this.battingAmount = battingAmount;
     }
 
-    public Profit confirmProfit(Dealer dealer) {
-        ResultStatus resultStatus = confirmResult(dealer);
+    public Profit getProfit(Dealer dealer) {
+        ResultStatus resultStatus = getResult(dealer);
         return battingAmount.calculateProfit(resultStatus);
     }
 
-    private ResultStatus confirmResult(Dealer dealer) {
+    private ResultStatus getResult(Dealer dealer) {
         int playerScore = calculateScore();
         int dealerScore = dealer.calculateScore();
 
