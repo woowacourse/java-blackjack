@@ -5,6 +5,7 @@ import static fixture.CardFixture.카드들;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.card.deck.CardDeck;
 import org.junit.jupiter.api.Test;
 
 class CardDeckTest {

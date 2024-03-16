@@ -1,7 +1,10 @@
-package domain.card;
+package domain.card.deck;
 
 import static java.util.stream.Collectors.toList;
 
+import domain.card.Card;
+import domain.card.Denomination;
+import domain.card.Suit;
 import java.util.Arrays;
 import java.util.List;
 

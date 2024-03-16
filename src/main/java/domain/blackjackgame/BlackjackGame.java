@@ -1,7 +1,7 @@
 package domain.blackjackgame;
 
-import domain.card.CardDeck;
 import domain.card.Score;
+import domain.card.deck.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;

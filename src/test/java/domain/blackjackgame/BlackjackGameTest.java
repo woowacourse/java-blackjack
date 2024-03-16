@@ -8,8 +8,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.card.Card;
-import domain.card.CardDeck;
 import domain.card.Denomination;
+import domain.card.deck.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;

@@ -2,8 +2,8 @@ package controller;
 
 import domain.blackjackgame.BlackjackGame;
 import domain.blackjackgame.GameResult;
-import domain.card.CardDeck;
-import domain.card.CardDeckFactory;
+import domain.card.deck.CardDeck;
+import domain.card.deck.CardDeckFactory;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
