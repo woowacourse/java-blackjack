@@ -44,7 +44,8 @@ public class BlackJackGame {
     }
 
     public EarningMoney calculateDealerEarningMoney() {
-        int dealerRawEarningMoney = -players.calculatePlayersEarningMoney(dealer).stream()
+        final int reverseSigner = -1;
+        int dealerRawEarningMoney = reverseSigner * players.calculatePlayersEarningMoney(dealer).stream()
                 .mapToInt(EarningMoney::rawEarningMoney)
                 .sum();
         return new EarningMoney(dealerRawEarningMoney);
