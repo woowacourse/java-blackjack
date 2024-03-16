@@ -9,4 +9,14 @@ public class Referee {
         }
         return false;
     }
+
+    public PlayerResult judgeResult(Cards playerCards, Cards dealerCards) {
+        if (isBlackJack(playerCards)) {
+            if (!isBlackJack(dealerCards)) {
+                return PlayerResult.BLACKJACKWIN;
+            }
+            return PlayerResult.DRAW;
+        }
+        return PlayerResult.DRAW;
+    }
 }
