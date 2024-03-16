@@ -6,6 +6,7 @@ import blackjack.model.cards.Card;
 import blackjack.model.cards.CardNumber;
 import blackjack.model.cards.CardShape;
 import blackjack.model.cards.Cards;
+import blackjack.model.results.Result;
 import blackjack.model.state.BlackJack;
 import blackjack.model.state.Bust;
 import blackjack.model.state.Stand;
@@ -30,7 +31,6 @@ class PlayerTest {
                 new Card(CardNumber.SIX, CardShape.CLOVER)
         );
         player.addCards(initialPlayerCards);
-        player.betMoney(new Money(1000));
 
         comparisonCards = new Cards(List.of(
                 new Card(CardNumber.SIX, CardShape.HEART),
@@ -69,19 +69,19 @@ class PlayerTest {
         assertThat(player.canHit()).isFalse();
     }
 
-    @DisplayName("플레이어 상태가 bust이면 베팅 금액을 잃는다")
+    @DisplayName("플레이어 상태가 bust이면 진다")
     @Test
     void evaluateProfitBust() {
         Card card = new Card(CardNumber.TEN, CardShape.SPADE);
         player.addCard(card);
-        State comparisonState = new Bust(comparisonCards);
+        State comparisonState = new Stand(comparisonCards);
 
-        Money profit = player.evaluateProfit(comparisonState);
+        Result result = player.evaluateResult(comparisonState);
 
-        assertThat(profit).isEqualTo(new Money(-1000));
+        assertThat(result).isEqualTo(Result.LOSE);
     }
 
-    @DisplayName("플레이어 카드가 기준 점수보다 낮고 비교 카드가 bust이면 베팅 금액만큼 얻는다")
+    @DisplayName("플레이어 카드가 기준 점수보다 낮고 비교 카드가 bust이면 이긴다")
     @Test
     void compareScore2() {
         Card card = new Card(CardNumber.TEN, CardShape.DIAMOND);
@@ -89,26 +89,26 @@ class PlayerTest {
         player.finishTurn();
         State comparisonState = new Bust(comparisonCards);
 
-        Money profit = player.evaluateProfit(comparisonState);
+        Result result = player.evaluateResult(comparisonState);
 
-        assertThat(profit).isEqualTo(new Money(1000));
+        assertThat(result).isEqualTo(Result.WIN);
     }
 
-    @DisplayName("플레이어 카드와 비교 카드 점수가 기준 점수보다 낮으면 두 점수의 대소관계로 수익이 정해진다")
+    @DisplayName("플레이어 카드와 비교 카드 점수가 기준 점수보다 낮으면 두 점수의 대소관계로 승패가 정해진다")
     @ParameterizedTest
-    @CsvSource(value = {"ACE,TWO,-1000", "THREE,TWO,1000", "FOUR,FOUR,0"})
-    void compareScore3(CardNumber cardNumber, CardNumber otherNumber, int expected) {
+    @CsvSource(value = {"ACE,TWO,LOSE", "THREE,TWO,WIN", "FOUR,FOUR,PUSH"})
+    void compareScore3(CardNumber cardNumber, CardNumber otherNumber, Result expected) {
         player.addCard(new Card(cardNumber, CardShape.HEART));
         player.finishTurn();
         comparisonCards.add(new Card(otherNumber, CardShape.HEART));
         State comparisionState = new Stand(comparisonCards);
 
-        Money profit = player.evaluateProfit(comparisionState);
+        Result result = player.evaluateResult(comparisionState);
 
-        assertThat(profit).isEqualTo(new Money(expected));
+        assertThat(result).isEqualTo(expected);
     }
 
-    @DisplayName("플레이어만 블랙잭이면 베팅 금액의 1.5배를 얻는다")
+    @DisplayName("플레이어만 블랙잭이면 블랙잭 상태로 이긴다")
     @Test
     void winBlackJack() {
         List<Card> comparison = List.of(
@@ -127,12 +127,12 @@ class PlayerTest {
         player.betMoney(new Money(1000));
         State comparisionState = new Stand(comparisonCards);
 
-        Money profit = player.evaluateProfit(comparisionState);
+        Result result = player.evaluateResult(comparisionState);
 
-        assertThat(profit).isEqualTo(new Money(1500));
+        assertThat(result).isEqualTo(Result.WIN_BY_BLACKJACK);
     }
 
-    @DisplayName("플레이어와 딜러가 모두 블랙잭이면 베팅 금액을 돌려받는다")
+    @DisplayName("플레이어와 딜러가 모두 블랙잭이면 무승부이다")
     @Test
     void pushWithBlackJack() {
         List<Card> comparison = List.of(
@@ -150,8 +150,8 @@ class PlayerTest {
         player.betMoney(new Money(1000));
         State comparisionState = new BlackJack(comparisonCards);
 
-        Money profit = player.evaluateProfit(comparisionState);
+        Result result = player.evaluateResult(comparisionState);
 
-        assertThat(profit).isEqualTo(new Money(0));
+        assertThat(result).isEqualTo(Result.PUSH);
     }
 }

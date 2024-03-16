@@ -2,7 +2,6 @@ package blackjack.model.state;
 
 import blackjack.model.cards.Card;
 import blackjack.model.cards.Cards;
-import blackjack.vo.Money;
 import java.util.List;
 
 public class Hit extends InProgress {
@@ -29,10 +28,5 @@ public class Hit extends InProgress {
     @Override
     public State stand() {
         return new Stand(cards());
-    }
-
-    @Override
-    public Money calculateProfit(Money betMoney) {
-        throw new UnsupportedOperationException("hit 상태에서는 수익을 계산할 수 없다");
     }
 }

@@ -1,9 +1,6 @@
 package blackjack.model.participants;
 
-import blackjack.model.state.BlackJack;
-import blackjack.model.state.Bust;
-import blackjack.model.state.Hit;
-import blackjack.model.state.Stand;
+import blackjack.model.results.Result;
 import blackjack.model.state.State;
 import blackjack.vo.Money;
 import blackjack.vo.Name;
@@ -18,44 +15,19 @@ public class Player extends Participant {
 
     @Override
     public boolean canHit() {
-        return getState() instanceof Hit;
+        return getState().isHit();
     }
 
     public void betMoney(Money betMoney) {
         betAmount = betMoney;
     }
 
-    public Money evaluateProfit(State otherState) {
-        if (isBlackJack(getState()) && isBlackJack(otherState)) {
-            return new Money();
-        }
-        if (isStand(getState()) && isNotBust(otherState)) {
-            return compareState(otherState, betAmount);
-        }
-        return getState().calculateProfit(betAmount);
+    public Money calculateProfit(Result result) {
+        return result.calculateProfit(betAmount);
     }
 
-    private boolean isStand(State state) {
-        return state instanceof Stand;
-    }
-
-    private boolean isNotBust(State otherState) {
-        return !(otherState instanceof Bust);
-    }
-
-    private boolean isBlackJack(State state) {
-        return state instanceof BlackJack;
-    }
-
-    private Money compareState(State otherState, Money betAmount) {
-        int score = getScore();
-        if (score > otherState.getScore()) {
-            return getState().calculateProfit(betAmount);
-        }
-        if (score < otherState.getScore()) {
-            return getState().calculateProfit(new Money(-betAmount.value()));
-        }
-        return new Money();
+    public Result evaluateResult(State otherState) {
+        return getState().determineResult(otherState);
     }
 
     public String getName() {

@@ -7,7 +7,7 @@ import blackjack.model.cards.Card;
 import blackjack.model.cards.CardNumber;
 import blackjack.model.cards.CardShape;
 import blackjack.model.cards.Cards;
-import blackjack.vo.Money;
+import blackjack.model.results.Result;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -51,12 +51,23 @@ class BlackJackTest {
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 
-    @DisplayName("블랙잭 상태로 승리하면 베팅금액의 1.5배를 받는다")
+    @DisplayName("블랙잭 상태일때 상대방이 블랙잭이 아니면 승리한다")
     @Test
-    void calculateProfit() {
-        Money betAmount = new Money(1000);
+    void evaluateResult() {
+        State otherState = new Stand(new Cards());
 
-        assertThat(blackJack.calculateProfit(betAmount)).isEqualTo(new Money(1500));
+        assertThat(blackJack.determineResult(otherState)).isEqualTo(Result.WIN_BY_BLACKJACK);
+    }
+
+    @DisplayName("블랙잭 상태일때 상대방도 블랙잭이면 비긴다")
+    @Test
+    void evaluateResultBothBlackJack() {
+        State otherState = new BlackJack(new Cards(
+                List.of(new Card(CardNumber.ACE, CardShape.SPADE),
+                        new Card(CardNumber.JACK, CardShape.HEART))
+        ));
+
+        assertThat(blackJack.determineResult(otherState)).isEqualTo(Result.PUSH);
     }
 
 }

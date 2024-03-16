@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.model.cards.Card;
 import blackjack.model.cards.CardNumber;
 import blackjack.model.cards.CardShape;
-import blackjack.vo.Money;
+import blackjack.model.cards.Cards;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -46,11 +46,12 @@ class InitialStateTest {
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 
-    @DisplayName("initialState 상태에서는 수익을 계산할 수 없다")
+    @DisplayName("initialState 상태에서는 승패를 계산할 수 없다")
     @Test
     void calculateProfit() {
-        Money betAmount = new Money(1000);
-        assertThatThrownBy(() -> initialState.calculateProfit(betAmount))
+        State state = new Stand(new Cards());
+
+        assertThatThrownBy(() -> initialState.determineResult(state))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 }

@@ -7,11 +7,13 @@ import blackjack.model.cards.Card;
 import blackjack.model.cards.CardNumber;
 import blackjack.model.cards.CardShape;
 import blackjack.model.cards.Cards;
-import blackjack.vo.Money;
+import blackjack.model.results.Result;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class StandTest {
     private Stand stand;
@@ -19,8 +21,8 @@ class StandTest {
     @BeforeEach
     void setUp() {
         Cards standCards = new Cards(
-                List.of(new Card(CardNumber.TWO, CardShape.SPADE),
-                        new Card(CardNumber.EIGHT, CardShape.HEART))
+                List.of(new Card(CardNumber.THREE, CardShape.SPADE),
+                        new Card(CardNumber.TEN, CardShape.HEART))
         );
         stand = new Stand(standCards);
     }
@@ -51,16 +53,40 @@ class StandTest {
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 
-    @DisplayName("stand 상태로 승리하면 베팅금액의 1배를 받는다")
+    @DisplayName("stand 상태일때 상대방이 bust이면 이긴다")
     @Test
-    void calculateProfit() {
-        Money betAmount = new Money(1000);
-        assertThat(stand.calculateProfit(betAmount)).isEqualTo(new Money(1000));
+    void evaluateResultOtherBust() {
+        State otherState = new Bust(new Cards());
+        assertThat(stand.determineResult(otherState)).isEqualTo(Result.WIN);
+    }
+
+    @DisplayName("stand 상태일때 상대방이 블랙잭이면 진다")
+    @Test
+    void evaluateResultOtherBlackJack() {
+        State otherState = new BlackJack(new Cards(List.of(
+                new Card(CardNumber.ACE, CardShape.SPADE),
+                new Card(CardNumber.TEN, CardShape.HEART)))
+        );
+
+        assertThat(stand.determineResult(otherState)).isEqualTo(Result.LOSE);
+    }
+
+    @DisplayName("stand 상태일때 상대방의 상태도 stand인 경우 점수에 따라 승패가 결정된다")
+    @ParameterizedTest
+    @CsvSource(value = {"TWO,WIN", "THREE,PUSH", "FOUR,LOSE"})
+    void evaluateResultOtherStand(CardNumber cardNumber, Result expected) {
+        Cards otherCards = new Cards(List.of(
+                new Card(cardNumber, CardShape.SPADE),
+                new Card(CardNumber.TEN, CardShape.HEART))
+        );
+        State otherState = new Stand(otherCards);
+
+        assertThat(stand.determineResult(otherState)).isEqualTo(expected);
     }
 
     @DisplayName("stand 상태의 카드 점수를 계산한다")
     @Test
     void getScore() {
-        assertThat(stand.getScore()).isEqualTo(10);
+        assertThat(stand.getScore()).isEqualTo(13);
     }
 }

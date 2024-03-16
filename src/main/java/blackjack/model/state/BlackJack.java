@@ -1,7 +1,7 @@
 package blackjack.model.state;
 
 import blackjack.model.cards.Cards;
-import blackjack.vo.Money;
+import blackjack.model.results.Result;
 
 public class BlackJack extends Finished {
     public BlackJack(Cards cards) {
@@ -9,7 +9,10 @@ public class BlackJack extends Finished {
     }
 
     @Override
-    public Money calculateProfit(Money betMoney) {
-        return new Money((int) ((betMoney.value()) * 1.5));
+    public Result determineResult(State otherState) {
+        if (otherState.isBlackJack()) {
+            return Result.PUSH;
+        }
+        return Result.WIN_BY_BLACKJACK;
     }
 }

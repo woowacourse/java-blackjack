@@ -2,19 +2,31 @@ package blackjack.model.state;
 
 import blackjack.model.cards.Card;
 import blackjack.model.cards.Cards;
-import blackjack.vo.Money;
+import blackjack.model.results.Result;
 import java.util.List;
 
 public interface State {
-    public State draw(Card card);
+    State draw(Card card);
 
-    public State drawCards(List<Card> cardsToAdd);
+    State drawCards(List<Card> cardsToAdd);
 
-    public State stand();
+    State stand();
 
-    Money calculateProfit(Money betMoney);
+    Result determineResult(State otherState);
 
-    public Cards cards();
-    
-    public int getScore();
+    Cards cards();
+
+    int getScore();
+
+    default boolean isBlackJack() {
+        return this instanceof BlackJack;
+    }
+
+    default boolean isBust() {
+        return this instanceof Bust;
+    }
+
+    default boolean isHit() {
+        return this instanceof Hit;
+    }
 }

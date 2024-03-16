@@ -7,7 +7,7 @@ import blackjack.model.cards.Card;
 import blackjack.model.cards.CardNumber;
 import blackjack.model.cards.CardShape;
 import blackjack.model.cards.Cards;
-import blackjack.vo.Money;
+import blackjack.model.results.Result;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -52,11 +52,14 @@ class BustTest {
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 
-    @DisplayName("bust 상태가 되면 베팅 금액을 잃는다")
+    @DisplayName("bust 상태가 되면 진다")
     @Test
     void calculateProfit() {
-        Money betAmount = new Money(1000);
+        State otherState = new Stand(new Cards(List.of(
+                new Card(CardNumber.TWO, CardShape.SPADE),
+                new Card(CardNumber.THREE, CardShape.HEART)))
+        );
 
-        assertThat(bust.calculateProfit(betAmount)).isEqualTo(new Money(-1000));
+        assertThat(bust.determineResult(otherState)).isEqualTo(Result.LOSE);
     }
 }

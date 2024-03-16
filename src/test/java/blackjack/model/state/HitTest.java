@@ -7,7 +7,6 @@ import blackjack.model.cards.Card;
 import blackjack.model.cards.CardNumber;
 import blackjack.model.cards.CardShape;
 import blackjack.model.cards.Cards;
-import blackjack.vo.Money;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -57,11 +56,12 @@ class HitTest {
         assertThat(hit.stand()).isInstanceOf(Stand.class);
     }
 
-    @DisplayName("hit 상태에서는 수익을 계산할 수 없다")
+    @DisplayName("hit 상태에서는 승패를 계산할 수 없다")
     @Test
     void calculateProfit() {
-        Money betAmount = new Money(1000);
-        assertThatThrownBy(() -> hit.calculateProfit(betAmount))
+        State state = new Stand(new Cards());
+
+        assertThatThrownBy(() -> hit.determineResult(state))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 }

@@ -4,6 +4,7 @@ import blackjack.model.deck.CardDeck;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
 import blackjack.model.results.PlayerProfits;
+import blackjack.model.results.Result;
 import blackjack.vo.Money;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -38,9 +39,12 @@ public class BlackJackGame {
     }
 
     public PlayerProfits calculatePlayerProfits() {
-        Map<Player, Money> result = new LinkedHashMap<>();
-        players.forEach(player -> result.put(player, player.evaluateProfit(dealer.getState())));
-        return new PlayerProfits(result);
+        Map<Player, Money> profits = new LinkedHashMap<>();
+        players.forEach(player -> {
+            Result result = player.evaluateResult(dealer.getState());
+            profits.put(player, player.calculateProfit(result));
+        });
+        return new PlayerProfits(profits);
     }
 
     public Money calculateDealerProfit(PlayerProfits playerProfits) {
