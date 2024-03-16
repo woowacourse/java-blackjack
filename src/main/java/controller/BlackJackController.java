@@ -71,7 +71,7 @@ public class BlackJackController {
 
         for (Player player : players.getPlayers()) {
             GameResult gameResult = referee.judge(player, dealer);
-            playerResult.put(player.getName(), player.betMoneyResult(gameResult.returnRate()));
+            playerResult.put(player.getName(), gameResult.profitMoney(player.getBetMoney()));
         }
 
         outputView.printBlackJackResult(playerResult, dealer.getName());
