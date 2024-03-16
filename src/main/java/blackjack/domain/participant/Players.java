@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.game.PlayerResult;
 import blackjack.domain.game.GameResult;
+import blackjack.domain.game.PlayerResult;
 import java.util.List;
 
 public class Players {

@@ -5,7 +5,6 @@ import blackjack.domain.betting.Money;
 import blackjack.domain.betting.OwnedMoney;
 import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
