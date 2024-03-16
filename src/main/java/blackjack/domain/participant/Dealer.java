@@ -7,13 +7,13 @@ import blackjack.domain.card.strategy.CardShuffleStrategy;
 import blackjack.utils.Constants;
 
 public class Dealer extends Participant {
-    private final CardDeck cardDeck;
     private final CardShuffleStrategy cardShuffleStrategy;
+    private final CardDeck cardDeck;
 
-    public Dealer(final CardDeck cardDeck, final CardShuffleStrategy cardShuffleStrategy) {
+    public Dealer(final CardShuffleStrategy cardShuffleStrategy) {
         super(Constants.DEFAULT_NAME_OF_DEALER);
-        this.cardDeck = cardDeck;
         this.cardShuffleStrategy = cardShuffleStrategy;
+        this.cardDeck = new CardDeck();
     }
 
     public void shuffleCards() {
