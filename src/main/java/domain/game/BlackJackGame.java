@@ -36,18 +36,14 @@ public class BlackJackGame {
     }
 
     public InitialCardStatus initialize() {
-        List<ParticipantHandStatus> status = new ArrayList<>();
-        status.add(createInitialHandStatusAfterPick(participants.getDealer()));
-
-        for (Player player : participants.getPlayers()) {
-            status.add(createInitialHandStatusAfterPick(player));
-        }
-        return new InitialCardStatus(INITIAL_CARD_SIZE, status);
-    }
-
-    private ParticipantHandStatus createInitialHandStatusAfterPick(final Participant participant) {
-        participant.pickCard(deck, INITIAL_CARD_SIZE);
-        return participant.createInitialHandStatus();
+        List<ParticipantHandStatus> handStatuses = participants.getParticipants()
+                .stream()
+                .map(participant -> {
+                    participant.pickCard(deck, INITIAL_CARD_SIZE);
+                    return participant.createInitialHandStatus();
+                })
+                .toList();
+        return new InitialCardStatus(INITIAL_CARD_SIZE, handStatuses);
     }
 
     public List<ParticipantHandStatus> createHandStatuses() {
