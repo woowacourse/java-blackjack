@@ -1,28 +1,28 @@
 package domain.card;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Stream;
 
 public class CardPool {
-    static final Map<CardType, Map<CardName, Card>> pool = new ConcurrentHashMap<>();
+    private static final List<Card> POOL = Arrays.stream(CardType.values())
+            .flatMap(CardPool::makeCardsWith)
+            .toList();
 
-    static {
-        for (CardType cardType : CardType.values()) {
-            pool.put(cardType, new ConcurrentHashMap<>());
-            for (CardName cardName : CardName.values()) {
-                pool.get(cardType).put(cardName, new Card(cardName, cardType));
-            }
-        }
+
+    private static Stream<Card> makeCardsWith(CardType cardType) {
+        return Arrays.stream(CardName.values()).map(cardName -> new Card(cardName, cardType));
     }
 
     static List<Card> allCards() {
-        return pool.keySet().stream()
-                .flatMap(cardType -> pool.get(cardType).values().stream())
-                .toList();
+        return POOL;
     }
 
     public static Card get(CardType cardType, CardName cardName) {
-        return pool.get(cardType).get(cardName);
+        return POOL.stream()
+                .filter(card -> card.cardName() == cardName)
+                .filter(card -> card.cardType() == cardType)
+                .findFirst()
+                .orElseThrow();
     }
 }
