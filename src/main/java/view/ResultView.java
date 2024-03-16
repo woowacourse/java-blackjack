@@ -8,10 +8,7 @@ import domain.gamer.Gamers;
 import domain.gamer.Player;
 import domain.manager.GameManager;
 import domain.manager.Profit;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import view.mapper.CardNumberMapper;
 import view.mapper.CardShapeMapper;
@@ -88,29 +85,17 @@ public class ResultView {
         System.out.println(stringBuilder);
     }
 
-    public void printFinalProfit(Dealer dealer, GameManager gameManager) {
+    public void printFinalProfit(Gamers gamers, GameManager gameManager) {
         System.out.println("## 최종 수익");
         Profit dealerProfit = gameManager.getDealerProfit();
-        Map<Player, Profit> playersProfit = gameManager.getPlayersProfit();
-        System.out.println(resolveDealerProfit(dealer, dealerProfit));
-        System.out.println(resolvePlayersProfit(playersProfit));
-    }
-
-    private String resolveDealerProfit(Dealer dealer, Profit profit) {
-        return String.format("%s: %.1f", dealer.getPlayerName(), profit.getValue());
-    }
-
-    private String resolvePlayersProfit(Map<Player, Profit> profitResult) {
-        List<String> resolvedProfits = new ArrayList<>();
-        for (Entry<Player, Profit> playerWinState : profitResult.entrySet()) {
-            resolvedProfits.add(resolvePlayerProfit(playerWinState));
+        System.out.println(resolveGamerProfit(gamers.getDealer(), dealerProfit));
+        for (Player player : gamers.getPlayers()) {
+            Profit playerProfit = gameManager.findProfitOfPlayer(player);
+            System.out.println(resolveGamerProfit(player, playerProfit));
         }
-        return String.join(LINE_SEPARATOR, resolvedProfits);
     }
 
-    private String resolvePlayerProfit(Entry<Player, Profit> playerWinState) {
-        Player player = playerWinState.getKey();
-        Profit profit = playerWinState.getValue();
+    private String resolveGamerProfit(Player player, Profit profit) {
         return String.format("%s: %.1f", player.getPlayerName(), profit.getValue());
     }
 }

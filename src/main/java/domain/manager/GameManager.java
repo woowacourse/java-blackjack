@@ -44,6 +44,10 @@ public class GameManager {
         return playersWallet.getPlayersProfit();
     }
 
+    public Profit findProfitOfPlayer(Player player) {
+        return playersWallet.findProfitOfPlayer(player);
+    }
+
     public Profit getDealerProfit() {
         return dealerWallet.getProfit();
     }

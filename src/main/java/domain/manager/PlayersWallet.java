@@ -22,6 +22,10 @@ public class PlayersWallet {
         playersProfit.replace(player, profit);
     }
 
+    public Profit findProfitOfPlayer(Player player) {
+        return playersProfit.get(player);
+    }
+
     public Map<Player, Profit> getPlayersProfit() {
         return Collections.unmodifiableMap(playersProfit);
     }
