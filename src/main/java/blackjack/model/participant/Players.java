@@ -1,6 +1,7 @@
 package blackjack.model.participant;
 
 import blackjack.model.deck.Card;
+import blackjack.model.deck.Deck;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,18 +20,11 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(final List<String> rawNames, final List<Hand> cards) {
+    public static Players of(final List<String> rawNames, final Deck deck) {
         validateNotDuplicateName(rawNames);
-        validateNamesInitialCardsSize(rawNames, cards);
         return IntStream.range(0, rawNames.size())
-                .mapToObj(index -> new Player(new Name(rawNames.get(index)), cards.get(index)))
+                .mapToObj(index -> new Player(new Name(rawNames.get(index)), deck.distributeInitialCard()))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Players::new));
-    }
-
-    private static void validateNamesInitialCardsSize(final List<String> rawNames, final List<Hand> cards) {
-        if (rawNames.size() != cards.size()) {
-            throw new IllegalArgumentException("플레이어 인원과 초기 카드 목록의 사이즈가 다릅니다.");
-        }
     }
 
     private static void validateNotDuplicateName(final List<String> names) {

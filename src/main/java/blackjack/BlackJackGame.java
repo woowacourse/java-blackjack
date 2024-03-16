@@ -37,7 +37,7 @@ public class BlackJackGame {
     }
 
     private Players initPlayers(final List<String> names, final Deck deck) {
-        return Players.of(names, deck.distributeInitialCard(names.size()));
+        return Players.of(names, deck);
     }
 
     private MoneyStaff initMoneyStaff(final BettingRule bettingRule, final Players players) {

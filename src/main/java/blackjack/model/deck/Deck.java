@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 public class Deck {
     private final Deque<Card> deck;
 
-    private Deck(final Deque<Card> deck) {
+    public Deck(final Deque<Card> deck) {
         this.deck = deck;
     }
 
@@ -41,12 +41,6 @@ public class Deck {
 
     public Hand distributeInitialCard() {
         return new Hand(List.of(distribute(), distribute()));
-    }
-
-    public List<Hand> distributeInitialCard(final int playerCount) {
-        return IntStream.range(0, playerCount)
-                .mapToObj(i -> distributeInitialCard())
-                .toList();
     }
 
     public Card distribute() {
