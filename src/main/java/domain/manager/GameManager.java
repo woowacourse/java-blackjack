@@ -32,32 +32,8 @@ public class GameManager {
     }
 
     private void decidePlayerResult(Player player, Dealer dealer) {
-        if (player.isBlackJack()) {
-            playersWallet.calculateProfit(player, GameResult.BLACKJACK);
-            return;
-        }
-        if (player.isBust()) {
-            playersWallet.calculateProfit(player, GameResult.LOSE);
-            return;
-        }
-        if (dealer.isBust()) {
-            playersWallet.calculateProfit(player, GameResult.WIN);
-            return;
-        }
-        GameResult playerGameResult = decidePlayerWinState(player, dealer);
-        playersWallet.calculateProfit(player, playerGameResult);
-    }
-
-    private GameResult decidePlayerWinState(Player player, Dealer dealer) {
-        int playerScore = player.finalizeCardsScore();
-        int dealerScore = dealer.finalizeCardsScore();
-        if (playerScore > dealerScore) {
-            return GameResult.WIN;
-        }
-        if (playerScore < dealerScore) {
-            return GameResult.LOSE;
-        }
-        return GameResult.DRAW;
+        GameResult gameResult = GameResult.decide(player, dealer);
+        playersWallet.calculateProfit(player, gameResult);
     }
 
     private void decideDealerResult() {
