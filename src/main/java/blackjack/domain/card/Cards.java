@@ -19,23 +19,16 @@ public class Cards {
     }
 
     public int calculate() {
-        if (containAce() && isNotBust()) {
-            return sum() + CHANGE_A_VALUE;
+        final var totalValue = sum();
+        if (containAce() && totalValue + CHANGE_A_VALUE <= BUST_SIZE) {
+            return totalValue + CHANGE_A_VALUE;
         }
-        return sum();
+        return totalValue;
     }
 
     private boolean containAce() {
         return value.stream()
                     .anyMatch(Card::isAce);
-    }
-
-    private boolean isNotBust() {
-        return sum() + CHANGE_A_VALUE <= BUST_SIZE;
-    }
-
-    public boolean isBust() {
-        return calculate() > BUST_SIZE;
     }
 
     public Cards draw(final Card card) {
