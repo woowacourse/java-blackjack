@@ -1,4 +1,4 @@
-package cardGame;
+package participant;
 
 import card.Card;
 import card.CardDeck;
@@ -9,7 +9,7 @@ import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import player.Player;
+import participant.player.Player;
 
 class ParticipantTest {
 

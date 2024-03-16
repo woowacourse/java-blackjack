@@ -3,7 +3,7 @@ package referee;
 import card.Card;
 import card.CardNumber;
 import card.CardPattern;
-import dealer.Dealer;
+import participant.dealer.Dealer;
 import gameResult.GameResult;
 import gameResult.PlayerBlackJack;
 import gameResult.PlayerBust;
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import player.Player;
+import participant.player.Player;
 
 public class RefereeTest {
 

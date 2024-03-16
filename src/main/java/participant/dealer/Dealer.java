@@ -1,9 +1,9 @@
-package dealer;
+package participant.dealer;
 
 import card.Card;
 import card.CardDeck;
-import cardGame.Participant;
 import java.util.List;
+import participant.Participant;
 
 public class Dealer extends Participant {
 

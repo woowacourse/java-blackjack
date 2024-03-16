@@ -1,14 +1,14 @@
 package controller;
 
 import card.CardDeck;
-import dealer.Dealer;
+import participant.dealer.Dealer;
 import gameResult.GameResult;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import player.Name;
-import player.Player;
-import player.Players;
+import participant.player.Name;
+import participant.player.Player;
+import participant.player.Players;
 import referee.Referee;
 import view.InputView;
 import view.OutputView;

@@ -2,14 +2,14 @@ package view;
 
 import card.Card;
 import card.Cards;
-import dealer.Dealer;
+import participant.dealer.Dealer;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import player.Name;
-import player.Player;
-import player.Players;
+import participant.player.Name;
+import participant.player.Player;
+import participant.player.Players;
 
 public class OutputView {
 

@@ -1,4 +1,4 @@
-package player;
+package participant.player;
 
 import card.Card;
 import card.CardDeck;

@@ -1,7 +1,7 @@
 package gameResult;
 
-import dealer.Dealer;
-import player.Player;
+import participant.dealer.Dealer;
+import participant.player.Player;
 
 public interface GameResult {
 

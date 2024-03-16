@@ -1,4 +1,4 @@
-package player;
+package participant.player;
 
 import java.util.ArrayList;
 import java.util.List;

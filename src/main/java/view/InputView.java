@@ -2,7 +2,7 @@ package view;
 
 import java.util.List;
 import java.util.Scanner;
-import player.Name;
+import participant.player.Name;
 
 public class InputView {
 

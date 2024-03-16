@@ -1,4 +1,4 @@
-package cardGame;
+package participant;
 
 import card.Card;
 import card.Cards;

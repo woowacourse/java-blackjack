@@ -1,4 +1,4 @@
-package dealer;
+package participant.dealer;
 
 import card.CardDeck;
 import org.junit.jupiter.api.Assertions;

@@ -1,4 +1,4 @@
-package player;
+package participant.player;
 
 import java.util.Collections;
 import java.util.List;

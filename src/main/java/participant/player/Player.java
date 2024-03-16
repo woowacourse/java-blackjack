@@ -1,8 +1,8 @@
-package player;
+package participant.player;
 
 import card.Card;
-import cardGame.Participant;
 import java.util.List;
+import participant.Participant;
 
 public class Player extends Participant {
 

@@ -1,6 +1,6 @@
 package referee;
 
-import dealer.Dealer;
+import participant.dealer.Dealer;
 import gameResult.GameResult;
 import gameResult.PlayerBlackJack;
 import gameResult.PlayerBust;
@@ -8,7 +8,7 @@ import gameResult.PlayerLose;
 import gameResult.PlayerPush;
 import gameResult.PlayerWin;
 import java.util.List;
-import player.Player;
+import participant.player.Player;
 
 public class Referee {
 
