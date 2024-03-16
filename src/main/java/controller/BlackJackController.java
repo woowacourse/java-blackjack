@@ -24,15 +24,19 @@ public class BlackJackController {
     public void run() {
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer(cardDeck.firstCardSettings());
+        Players players = playersBetting(cardDeck);
 
         BlackJackGame blackJackGame = new BlackJackGame(cardDeck, cardDeck.firstCardSettings());
-        Players players = new Players(startBetting(inputView.inputPlayerNames(), cardDeck));
-
         runBlackJackGame(blackJackGame, players, cardDeck, dealer);
         showResult(blackJackGame, players);
     }
 
-    public List<Player> startBetting(List<String> names, CardDeck cardDeck) {
+    private Players playersBetting(CardDeck cardDeck) {
+        List<Player> players = startBetting(inputView.inputPlayerNames(), cardDeck);
+        return new Players(players);
+    }
+
+    private List<Player> startBetting(List<String> names, CardDeck cardDeck) {
         return names.stream()
                 .map(name -> Player.joinGame(name, cardDeck.firstCardSettings(), inputView.inputBettingMoney(name)))
                 .toList();
@@ -58,7 +62,6 @@ public class BlackJackController {
             outputView.printPlayerCardStatus(player);
         }
     }
-
 
     private void showResult(BlackJackGame blackJackGame, Players players) {
         List<WinningResult> result = blackJackGame.getPlayersResult(players);
