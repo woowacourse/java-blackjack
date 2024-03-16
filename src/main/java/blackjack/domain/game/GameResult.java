@@ -1,21 +1,21 @@
 package blackjack.domain.game;
 
-import blackjack.domain.betting.Money;
+import blackjack.domain.betting.OwnedMoney;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.function.Function;
 
 public enum GameResult {
 
-    PLAYER_BLACKJACK((Money bet) -> bet.multiply(1.5)),
-    PLAYER_WIN((Money bet) -> bet.multiply(1)),
-    PUSH((Money bet) -> Money.ZERO),
-    PLAYER_LOSE((Money bet) -> bet.multiply(-1)),
+    PLAYER_BLACKJACK((OwnedMoney bet) -> bet.multiply(1.5)),
+    PLAYER_WIN((OwnedMoney bet) -> bet.multiply(1)),
+    PUSH((OwnedMoney bet) -> bet.multiply(0)),
+    PLAYER_LOSE((OwnedMoney bet) -> bet.multiply(-1)),
     ;
 
-    private final Function<Money, Money> calculatePrize;
+    private final Function<OwnedMoney, OwnedMoney> calculatePrize;
 
-    GameResult(Function<Money, Money> calculatePrize) {
+    GameResult(Function<OwnedMoney, OwnedMoney> calculatePrize) {
         this.calculatePrize = calculatePrize;
     }
 
@@ -58,7 +58,7 @@ public enum GameResult {
         return PLAYER_WIN;
     }
 
-    public Money calculatePrize(Money bet) {
+    public OwnedMoney calculatePrize(OwnedMoney bet) {
         return calculatePrize.apply(bet);
     }
 }

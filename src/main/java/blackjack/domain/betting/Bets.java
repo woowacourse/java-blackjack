@@ -21,8 +21,7 @@ public class Bets {
 
     public OwnedMoney getPrize(PlayerResult gameResult) {
         OwnedMoney bet = getOwnedMoney(gameResult);
-        Money prize = gameResult.calculatePrize(bet);
-        return new OwnedMoney(gameResult.getOwner(), prize);
+        return gameResult.calculatePrize(bet);
     }
 
     private OwnedMoney getOwnedMoney(PlayerResult playerResult) {

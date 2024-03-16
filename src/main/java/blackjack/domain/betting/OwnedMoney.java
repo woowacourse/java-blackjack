@@ -18,6 +18,10 @@ public class OwnedMoney implements Ownable<Player> {
         this(owner, new Money(betAmount));
     }
 
+    public OwnedMoney multiply(double multipleAmounts) {
+        return new OwnedMoney(owner, money.multiply(multipleAmounts));
+    }
+
     public Money getMoney() {
         return money;
     }
