@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.model.betting.Betting;
 import blackjack.model.betting.Money;
 import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.cardgenerator.RandomCardGenerator;
@@ -28,7 +29,7 @@ public class BlackjackGame {
         Players players = retryOnException(this::createPlayers);
         Dealer dealer = new Dealer();
         CardGenerator cardGenerator = new RandomCardGenerator();
-        createBetting(players); // TODO: betting 반환하게 수정
+        Betting betting = createBetting(players);
 
         dealCards(players, dealer, cardGenerator);
         drawCards(players, dealer, cardGenerator);
@@ -40,10 +41,13 @@ public class BlackjackGame {
         return new Players(playerNames);
     }
 
-    private void createBetting(Players players) {
+    private Betting createBetting(Players players) {
+        Betting betting = new Betting();
         for (String playerName : players.getNames()) {
             Money money = retryOnException(() -> inputView.askBettingMoneyToPlayer(playerName));
+            betting.addPlayerBettingMoney(playerName, money);
         }
+        return betting;
     }
 
     private void dealCards(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
