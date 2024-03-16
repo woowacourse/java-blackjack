@@ -24,7 +24,7 @@ public class CardHolder {
     }
 
     public void draw(Deck deck, CardDrawStrategy cardDrawStrategy, int executionCount) {
-        for(int count = 1; count <= executionCount; count++) {
+        for (int count = 1; count <= executionCount; count++) {
             draw(deck, cardDrawStrategy);
         }
     }

@@ -34,8 +34,8 @@ public class Gamer {
         cardHolder.draw(deck, new DealerRandomCardDrawStrategy(cardHolder));
     }
 
-    public void cardHolderDraw(Deck deck, int execution_count) {
-        cardHolder.draw(deck, new DealerRandomCardDrawStrategy(cardHolder), execution_count);
+    public void cardHolderDraw(Deck deck, int executionCount) {
+        cardHolder.draw(deck, new DealerRandomCardDrawStrategy(cardHolder), executionCount);
     }
 
     public Double getGameProfit(Gamer otherGamer) {
