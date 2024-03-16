@@ -22,12 +22,12 @@ public enum CardNumberFormat {
     private final CardNumber number;
     private final String format;
 
-    CardNumberFormat(final CardNumber number, final String format) {
+    CardNumberFormat(CardNumber number, String format) {
         this.number = number;
         this.format = format;
     }
 
-    public static CardNumberFormat from(final CardNumber number) {
+    public static CardNumberFormat from(CardNumber number) {
         return Arrays.stream(values())
                 .filter(cardNumberFormat -> cardNumberFormat.number == number)
                 .findFirst()

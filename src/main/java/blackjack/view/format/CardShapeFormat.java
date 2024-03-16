@@ -12,12 +12,12 @@ public enum CardShapeFormat {
     private final CardShape shape;
     private final String format;
 
-    CardShapeFormat(final CardShape shape, final String format) {
+    CardShapeFormat(CardShape shape, String format) {
         this.shape = shape;
         this.format = format;
     }
 
-    public static CardShapeFormat from(final CardShape shape) {
+    public static CardShapeFormat from(CardShape shape) {
         return Arrays.stream(values())
                 .filter(cardShapeFormat -> cardShapeFormat.shape == shape)
                 .findFirst()

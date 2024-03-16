@@ -14,19 +14,13 @@ public class Dealer extends User {
     }
 
     @Override
-    protected boolean wantToHit() {
-        final Score score = getHands().calculateScore();
+    public boolean canHit() {
+        Score score = getHands().calculateScore();
 
         return score.compareTo(NEED_CARD_SCORE_MAX) <= 0;
     }
 
-    @Override
-    public boolean isDealer() {
-        return true;
-    }
-
-    @Override
-    public Hands openedHands() {
+    public Hands getOpenedHands() {
         return new Hands(List.of(getHands().getFirstCard()));
     }
 }

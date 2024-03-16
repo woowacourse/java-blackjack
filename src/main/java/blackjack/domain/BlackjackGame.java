@@ -3,65 +3,95 @@ package blackjack.domain;
 import blackjack.domain.bet.BetLeverage;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hands;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
 import blackjack.domain.user.PlayerNames;
-import blackjack.domain.user.User;
+import blackjack.domain.user.Players;
 import blackjack.domain.user.UserName;
-import blackjack.domain.user.Users;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Predicate;
 
 public class BlackjackGame {
 
-    private final Users users;
+    public static final int START_CARD_COUNT = 2;
+
+    private final Players players;
+    private final Dealer dealer;
     private final Deck deck;
 
-    private BlackjackGame(final Users users, final Deck deck) {
-        this.users = users;
-        this.deck = deck;
-    }
-
-    public static BlackjackGame of(final PlayerNames playerNames, final Predicate<UserName> playerWantToHit) {
-        final Users users = Users.of(playerNames, playerWantToHit);
-        final Deck deck = Deck.create();
-
-        return new BlackjackGame(users, deck);
+    public BlackjackGame(PlayerNames playerNames) {
+        this.players = new Players(playerNames);
+        this.dealer = new Dealer();
+        this.deck = Deck.create();
     }
 
     public void giveStartCards() {
-        users.drawStartCard(deck);
-    }
-
-    public void playGame(final BiConsumer<UserName, Hands> userTurnCallback) {
-        for (final User user : users.getUsers()) {
-            runUserTurn(user, userTurnCallback);
+        for (int i = 0; i < START_CARD_COUNT; i++) {
+            giveCardToPlayers();
+            dealer.draw(deck.pick());
         }
     }
 
-    private void runUserTurn(final User user, final BiConsumer<UserName, Hands> userTurnCallback) {
-        if (users.isAllPlayerBust()) {
-            return;
+    private void giveCardToPlayers() {
+        for (Player player : players.getPlayer()) {
+            player.draw(deck.pick());
+        }
+    }
+
+    public void playerDraw(UserName name) {
+        players.find(name).draw(deck.pick());
+    }
+
+    public int runDealerTurn() {
+        if (players.isAllBust()) {
+            return 0;
         }
 
-        while (user.isNotFinished()) {
-            user.playTurn(deck);
-            userTurnCallback.accept(user.getUserName(), user.getHands());
+        int count = 0;
+
+        while (dealer.canHit()) {
+            dealer.draw(deck.pick());
+            count++;
         }
+        return count;
+    }
+
+    public boolean isPlayerCanHit(UserName name) {
+        return players.find(name).canHit();
+    }
+
+    public Hands playerHands(UserName name) {
+        return players.find(name).getHands();
     }
 
     public Map<UserName, BetLeverage> getPlayersBetLeverage() {
-        return users.getPlayersBetLeverage();
+        Map<UserName, BetLeverage> playersBetLeverage = new LinkedHashMap<>();
+        Hands dealerHands = dealer.getHands();
+
+        for (Player player : players.getPlayer()) {
+            Hands playerHands = player.getHands();
+            BetLeverage betLeverage = BetLeverage.of(playerHands, dealerHands);
+
+            playersBetLeverage.put(player.getUserName(), betLeverage);
+        }
+
+        return playersBetLeverage;
     }
 
     public Map<UserName, Hands> getPlayersHands() {
-        return users.getPlayersOpenedHands();
+        return players.getHands();
     }
 
     public Hands getDealerOpenedHands() {
-        return users.getDealerOpenedHands();
+        return dealer.getOpenedHands();
     }
 
     public Hands getDealerHands() {
-        return users.getDealerHands();
+        return dealer.getHands();
+    }
+
+    public List<UserName> getPlayersName() {
+        return players.getPlayerNames();
     }
 }

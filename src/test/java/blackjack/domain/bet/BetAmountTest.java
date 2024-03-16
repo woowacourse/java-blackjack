@@ -3,7 +3,6 @@ package blackjack.domain.bet;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.exception.NeedRetryException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -15,7 +14,7 @@ class BetAmountTest {
     @ValueSource(ints = {-1, -10, -999})
     void validateNegative(int betAmount) {
         assertThatThrownBy(() -> new BetAmount(betAmount))
-                .isInstanceOf(NeedRetryException.class)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("배팅 금액은 0이상만 가능합니다.");
     }
 

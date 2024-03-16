@@ -30,12 +30,12 @@ public final class Score implements Comparable<Score> {
     private static final Score BLACKJACK_VALUE = Score.from(21);
     private final int value;
 
-    public Score(final int score) {
+    public Score(int score) {
         validateRange(score);
         this.value = score;
     }
 
-    public static Score from(final int value) {
+    public static Score from(int value) {
         if (value >= ScoreCache.low && value <= ScoreCache.high) {
             return ScoreCache.archivedCache[value];
         }
@@ -43,18 +43,22 @@ public final class Score implements Comparable<Score> {
         return new Score(value);
     }
 
-    private void validateRange(final int value) {
+    private void validateRange(int value) {
         if (value < 0) {
             throw new IllegalStateException("점수가 음수일 수 없습니다.");
         }
     }
 
-    public Score plus(final Score other) {
+    public Score plus(Score other) {
         return Score.from(value + other.value);
     }
 
-    public Score minus(final Score other) {
+    public Score minus(Score other) {
         return Score.from(value - other.value);
+    }
+
+    public boolean isHit() {
+        return this.compareTo(BLACKJACK_VALUE) < 0;
     }
 
     public boolean isBlackjack() {
@@ -70,19 +74,19 @@ public final class Score implements Comparable<Score> {
     }
 
     @Override
-    public int compareTo(final Score o) {
+    public int compareTo(Score o) {
         return Integer.compare(value, o.value);
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        final Score score = (Score) o;
+        Score score = (Score) o;
         return value == score.value;
     }
 

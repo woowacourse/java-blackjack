@@ -1,20 +1,19 @@
 package blackjack.domain.user;
 
-import blackjack.exception.NeedRetryException;
 import java.util.Objects;
 
 public final class UserName {
 
     private final String name;
 
-    public UserName(final String input) {
+    public UserName(String input) {
         validateBlank(input);
         this.name = input.trim();
     }
 
-    private void validateBlank(final String input) {
+    private void validateBlank(String input) {
         if (input == null || input.isBlank()) {
-            throw new NeedRetryException("참여자 이름에 공백을 입력할 수 없습니다.");
+            throw new IllegalArgumentException("참여자 이름에 공백을 입력할 수 없습니다.");
         }
     }
 
@@ -23,11 +22,11 @@ public final class UserName {
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof final UserName userName)) {
+        if (!(o instanceof UserName userName)) {
             return false;
         }
         return Objects.equals(getName(), userName.getName());

@@ -1,8 +1,6 @@
 package blackjack.domain.card;
 
 import blackjack.domain.rule.Score;
-import java.util.Arrays;
-import java.util.stream.Stream;
 
 public enum CardNumber {
     TWO(2),
@@ -22,15 +20,11 @@ public enum CardNumber {
     static final Score ACE_BONUS_NUMBER = Score.from(1);
     private final Score score;
 
-    CardNumber(final int score) {
+    CardNumber(int score) {
         this.score = Score.from(score);
     }
 
     public Score getScore() {
         return score;
-    }
-
-    public static Stream<CardNumber> stream() {
-        return Arrays.stream(values());
     }
 }

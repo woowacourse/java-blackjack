@@ -2,7 +2,6 @@ package blackjack.domain.user;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.exception.NeedRetryException;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,7 @@ class UserNamesTest {
         final List<UserName> userNames = List.of(new UserName(name), new UserName(name));
 
         assertThatThrownBy(() -> new PlayerNames(userNames))
-                .isInstanceOf(NeedRetryException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("딜러 이름으로 참여자를 생성할 수 없다.")
@@ -25,6 +24,6 @@ class UserNamesTest {
         final List<UserName> userNames = List.of(new UserName("pobi"), new UserName("딜러"));
 
         assertThatThrownBy(() -> new PlayerNames(userNames))
-                .isInstanceOf(NeedRetryException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

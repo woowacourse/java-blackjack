@@ -12,8 +12,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.rule.state.InitState;
-import blackjack.domain.rule.state.State;
+import blackjack.domain.card.Hands;
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,19 +23,19 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class BetLeverageTest {
 
-    static final State score19count2 = new InitState().draw(Card.of(TEN, DIA)).draw(Card.of(NINE, DIA)).stand();
-    static final State score20count2 = new InitState().draw(Card.of(TEN, DIA)).draw(Card.of(JACK, DIA)).stand();
-    static final State score21count2 = new InitState().draw(Card.of(ACE, DIA)).draw(Card.of(JACK, DIA));
-    static final State score21count3 = new InitState().draw(Card.of(QUEEN, DIA)).draw(Card.of(JACK, DIA)).draw(Card.of(ACE, DIA)).stand();
-    static final State score22count3 = new InitState().draw(Card.of(TEN, DIA)).draw(Card.of(JACK, DIA)).draw(Card.of(TWO, DIA));
-    static final State score23count3 = new InitState().draw(Card.of(TEN, DIA)).draw(Card.of(JACK, DIA)).draw(Card.of(THREE, DIA));
+    static final Hands score19count2 = new Hands(List.of(Card.of(TEN, DIA), Card.of(NINE, DIA)));
+    static final Hands score20count2 = new Hands(List.of(Card.of(TEN, DIA), Card.of(JACK, DIA)));
+    static final Hands score21count2 = new Hands(List.of(Card.of(ACE, DIA), Card.of(JACK, DIA)));
+    static final Hands score21count3 = new Hands(List.of(Card.of(QUEEN, DIA), Card.of(JACK, DIA), Card.of(ACE, DIA)));
+    static final Hands score22count3 = new Hands(List.of(Card.of(TEN, DIA), Card.of(JACK, DIA), Card.of(TWO, DIA)));
+    static final Hands score23count3 = new Hands(List.of(Card.of(TEN, DIA), Card.of(JACK, DIA), Card.of(THREE, DIA)));
 
 
     @DisplayName("딜러와 참여자의 상태로 배팅결과를 계산한다.")
     @ParameterizedTest
     @MethodSource("handsAndWinStatus")
-    void of(State dealerState, State playerState, BetLeverage expected) {
-        final BetLeverage betLeverage = BetLeverage.of(playerState, dealerState);
+    void of(Hands dealerHands, Hands playerHands, BetLeverage expected) {
+        final BetLeverage betLeverage = BetLeverage.of(playerHands, dealerHands);
 
         assertThat(betLeverage).isEqualTo(expected);
     }

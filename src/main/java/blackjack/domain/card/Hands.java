@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public final class Hands {
+public class Hands {
 
     private static final Score ACE_SCORE_GAP = CardNumber.ACE.getScore().minus(CardNumber.ACE_BONUS_NUMBER);
 
@@ -15,12 +15,12 @@ public final class Hands {
         this.cards = new ArrayList<>();
     }
 
-    public Hands(final List<Card> cards) {
+    public Hands(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
 
-    public Hands addCard(final Card card) {
-        final List<Card> newCards = new ArrayList<>(cards);
+    public Hands addCard(Card card) {
+        List<Card> newCards = new ArrayList<>(cards);
         newCards.add(card);
 
         return new Hands(newCards);
@@ -46,14 +46,6 @@ public final class Hands {
 
     private int countAce() {
         return (int) cards.stream().filter(Card::isAce).count();
-    }
-
-    public boolean isBustScore() {
-        return calculateScore().isBust();
-    }
-
-    public boolean isBlackjackScore() {
-        return calculateScore().isBlackjack();
     }
 
     public int size() {

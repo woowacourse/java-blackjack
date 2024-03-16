@@ -1,6 +1,7 @@
 package blackjack.domain.bet;
 
-import blackjack.domain.rule.state.State;
+import blackjack.domain.BlackjackGame;
+import blackjack.domain.card.Hands;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
@@ -11,53 +12,62 @@ public enum BetLeverage {
     PUSH(0, BetLeverage::isPush);
 
     private final double leverage;
-    private final BiPredicate<State, State> condition;
+    private final BiPredicate<Hands, Hands> condition;
 
-    BetLeverage(final double leverage, final BiPredicate<State, State> condition) {
+    BetLeverage(double leverage, BiPredicate<Hands, Hands> condition) {
         this.leverage = leverage;
         this.condition = condition;
     }
 
-    public static BetLeverage of(final State playerState, final State dealerState) {
-        validateState(playerState, dealerState);
+    public static BetLeverage of(Hands playerHands, Hands dealerHands) {
         return Arrays.stream(values())
-                .filter(betStatus -> betStatus.condition.test(playerState, dealerState))
+                .filter(betLeverage -> betLeverage.condition.test(playerHands, dealerHands))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("잘못된 점수입니다."));
     }
 
-    private static boolean isBlackjackWin(final State playerState, final State dealerState) {
-        return playerState.isBlackjack() && !dealerState.isBlackjack();
+    private static boolean isBlackjackWin(Hands playerHands, Hands dealerHands) {
+        return isBlackjack(playerHands) && isNotBlackjack(dealerHands);
     }
 
-    private static boolean isWin(final State playerState, final State dealerState) {
-        return playerState.isNotBust() && (dealerState.isBust() || isScoreBigger(playerState, dealerState));
+    private static boolean isWin(Hands playerHands, Hands dealerHands) {
+        return isNotBust(playerHands) && (isBust(dealerHands) || isScoreBigger(playerHands, dealerHands));
     }
 
-    private static boolean isLose(final State playerState, final State dealerState) {
-        return playerState.isBust() || (dealerState.isBlackjack() && !playerState.isBlackjack())
-                || (!dealerState.isBust() && isScoreBigger(dealerState, playerState));
+    private static boolean isLose(Hands playerHands, Hands dealerHands) {
+        return isBust(playerHands) || (isBlackjack(dealerHands) && isNotBlackjack(playerHands))
+                || (isNotBust(dealerHands) && isScoreBigger(dealerHands, playerHands));
     }
 
-    private static boolean isPush(final State playerState, final State dealerState) {
-        return !dealerState.isBust() && !playerState.isBust() && isScoreSame(playerState, dealerState);
+    private static boolean isPush(Hands playerHands, Hands dealerHands) {
+        return isNotBust(dealerHands) && isNotBust(playerHands) && isScoreSame(playerHands, dealerHands);
     }
 
-    private static void validateState(final State playerState, final State dealerState) {
-        if (playerState.isNotFinish() || dealerState.isNotFinish()) {
-            throw new IllegalStateException("종료되지 않은 상태에서 결과를 계산할 수 없습니다.");
-        }
+    private static boolean isBlackjack(Hands hands) {
+        return hands.calculateScore().isBlackjack() && hands.size() == BlackjackGame.START_CARD_COUNT;
     }
 
-    private static boolean isScoreBigger(final State first, final State second) {
-        return first.hands().calculateScore().compareTo(second.hands().calculateScore()) > 0;
+    private static boolean isNotBlackjack(Hands hands) {
+        return !isBlackjack(hands);
     }
 
-    private static boolean isScoreSame(final State first, final State second) {
-        return first.hands().calculateScore().equals(second.hands().calculateScore());
+    private static boolean isBust(Hands hands) {
+        return hands.calculateScore().isBust();
     }
 
-    public BetRevenue applyLeverage(final BetAmount betAmount) {
+    private static boolean isNotBust(Hands hands) {
+        return !isBust(hands);
+    }
+
+    private static boolean isScoreBigger(Hands first, Hands second) {
+        return first.calculateScore().compareTo(second.calculateScore()) > 0;
+    }
+
+    private static boolean isScoreSame(Hands first, Hands second) {
+        return first.calculateScore().equals(second.calculateScore());
+    }
+
+    public BetRevenue applyLeverage(BetAmount betAmount) {
         return new BetRevenue(betAmount.multiply(leverage));
     }
 }

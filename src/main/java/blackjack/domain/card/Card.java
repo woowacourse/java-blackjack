@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.rule.Score;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -13,12 +14,12 @@ public record Card(CardNumber number, CardShape shape) {
         static final Map<String, Card> cache;
 
         static {
-            cache = CardShape.stream()
-                    .flatMap(shape -> CardNumber.stream().map(number -> new Card(number, shape)))
+            cache = Arrays.stream(CardShape.values())
+                    .flatMap(shape -> Arrays.stream(CardNumber.values()).map(number -> new Card(number, shape)))
                     .collect(toMap(card -> toKey(card.number(), card.shape()), Function.identity()));
         }
 
-        private static String toKey(final CardNumber number, final CardShape shape) {
+        private static String toKey(CardNumber number, CardShape shape) {
             return number.name() + shape.name();
         }
 
@@ -26,7 +27,7 @@ public record Card(CardNumber number, CardShape shape) {
         }
     }
 
-    public static Card of(final CardNumber number, final CardShape shape) {
+    public static Card of(CardNumber number, CardShape shape) {
         return CardCache.cache.get(CardCache.toKey(number, shape));
     }
 
