@@ -1,5 +1,3 @@
-package controller;
-
 import domain.BlackJackGame;
 import domain.HitState;
 import domain.cards.Card;
@@ -17,12 +15,12 @@ import view.ResultView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlackJackGameController {
+public class GameAndViewConnector {
 
     private final InputView inputView;
     private final ResultView resultView;
 
-    public BlackJackGameController(InputView inputView, ResultView resultView) {
+    public GameAndViewConnector(InputView inputView, ResultView resultView) {
         this.inputView = inputView;
         this.resultView = resultView;
     }
