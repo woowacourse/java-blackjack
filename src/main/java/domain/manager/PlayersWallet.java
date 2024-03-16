@@ -26,6 +26,12 @@ public class PlayersWallet {
         return playersProfit.get(player);
     }
 
+    public double sumAllProfits() {
+        return playersProfit.values().stream()
+                .mapToDouble(Profit::getValue)
+                .sum();
+    }
+
     public Map<Player, Profit> getPlayersProfit() {
         return Collections.unmodifiableMap(playersProfit);
     }

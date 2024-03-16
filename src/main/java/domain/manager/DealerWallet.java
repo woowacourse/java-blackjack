@@ -1,8 +1,5 @@
 package domain.manager;
 
-import domain.gamer.Player;
-import java.util.Map;
-
 public class DealerWallet {
 
     private Profit profit;
@@ -12,11 +9,8 @@ public class DealerWallet {
     }
 
     public void calculateProfit(PlayersWallet playersWallet) {
-        Map<Player, Profit> playersProfit = playersWallet.getPlayersProfit();
-        double playersProfitSum = playersProfit.values().stream()
-                .mapToDouble(Profit::getValue)
-                .sum();
-        profit = new Profit(-playersProfitSum);
+        double profitOfAllPlayers = playersWallet.sumAllProfits();
+        profit = new Profit(-profitOfAllPlayers);
     }
 
     public Profit getProfit() {
