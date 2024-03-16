@@ -37,4 +37,9 @@ public final class InitState extends PlayingState {
     public State copy() {
         return new InitState(hands());
     }
+
+    @Override
+    public boolean isInit() {
+        return true;
+    }
 }

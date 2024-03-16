@@ -27,15 +27,14 @@ public final class UserName {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof final UserName userName)) {
             return false;
         }
-        final UserName that = (UserName) o;
-        return Objects.equals(name, that.name);
+        return Objects.equals(getName(), userName.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(getName());
     }
 }

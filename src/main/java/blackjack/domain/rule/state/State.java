@@ -21,16 +21,16 @@ public interface State {
         return !isBlackjack();
     }
 
-    default boolean isStand() {
-        return false;
-    }
-
     default boolean isBust() {
         return false;
     }
 
     default boolean isNotBust() {
         return !isBust();
+    }
+
+    default boolean isInit() {
+        return false;
     }
 
     default boolean isFinished() {

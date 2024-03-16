@@ -14,7 +14,7 @@ public class Dealer extends User {
     }
 
     @Override
-    public boolean canHit() {
+    protected boolean wantToHit() {
         final Score score = getHands().calculateScore();
 
         return score.compareTo(NEED_CARD_SCORE_MAX) <= 0;

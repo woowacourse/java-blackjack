@@ -85,10 +85,8 @@ public class OutputView {
                 playerWinningResult.revenue().value()));
     }
 
-    public void printDealerMoreCard(int count) {
-        while (count-- > 0) {
-            System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.%n", Dealer.DEALER_NAME, Dealer.NEED_CARD_SCORE_MAX.toInt());
-        }
+    public void printDealerMoreCard() {
+        System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.%n", Dealer.DEALER_NAME, Dealer.NEED_CARD_SCORE_MAX.toInt());
     }
 
     public void printError(final String message) {

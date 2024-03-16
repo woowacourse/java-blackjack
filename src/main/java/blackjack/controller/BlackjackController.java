@@ -30,7 +30,7 @@ public class BlackjackController {
     public void run() {
         final PlayerNames playerNames = createPlayerNames();
 
-        final BlackjackGame blackjackGame = BlackjackGame.of(playerNames, new Dealer());
+        final BlackjackGame blackjackGame = BlackjackGame.of(playerNames, this::playerWantToHit);
         final BetAmountRepository betAmountRepository = saveBetAmount(playerNames);
 
         playGame(blackjackGame);
@@ -46,6 +46,15 @@ public class BlackjackController {
         }
     }
 
+    private boolean playerWantToHit(final UserName name) {
+        try {
+            return inputView.readNeedMoreCard(name);
+        } catch (final NeedRetryException e) {
+            outputView.printError(e.getMessage());
+            return playerWantToHit(name);
+        }
+    }
+
     private BetAmountRepository saveBetAmount(final PlayerNames playerNames) {
         final Map<UserName, BetAmount> playerBetAmounts = new LinkedHashMap<>();
 
@@ -57,33 +66,24 @@ public class BlackjackController {
     private void playGame(final BlackjackGame blackjackGame) {
         blackjackGame.giveStartCards();
 
-        final StartCardsDto startCardsDto = StartCardsDto.of(blackjackGame.getPlayersOpenedHands(),
+        final StartCardsDto startCardsDto = StartCardsDto.of(blackjackGame.getPlayersHands(),
                 blackjackGame.getDealerOpenedHands());
 
         outputView.printStartCards(startCardsDto);
 
-        blackjackGame.playGame(this::wantToHit, this::printPlayerCard, this::printDealerMoreCard);
-    }
-
-    private boolean wantToHit(final UserName name) {
-        try {
-            return inputView.readNeedMoreCard(name);
-        } catch (final NeedRetryException e) {
-            outputView.printError(e.getMessage());
-            return wantToHit(name);
-        }
+        blackjackGame.playGame(this::printPlayerCard);
     }
 
     private void printPlayerCard(final UserName name, final Hands hands) {
+        if (name.equals(new UserName(Dealer.DEALER_NAME))) {
+            outputView.printDealerMoreCard();
+            return;
+        }
         outputView.printPlayerCard(name, hands);
     }
 
-    private void printDealerMoreCard(final int count) {
-        outputView.printDealerMoreCard(count);
-    }
-
     private void finishGame(final BlackjackGame blackjackGame, final BetAmountRepository betAmountRepository) {
-        final Map<UserName, Hands> playersHands = blackjackGame.getPlayerHands();
+        final Map<UserName, Hands> playersHands = blackjackGame.getPlayersHands();
         final Hands dealerHands = blackjackGame.getDealerHands();
         final FinalHandsScoreDto finalHandsScore = FinalHandsScoreDto.of(playersHands, dealerHands);
 

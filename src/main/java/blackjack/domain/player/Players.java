@@ -3,33 +3,33 @@ package blackjack.domain.player;
 import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.card.Hands;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public class Players {
 
-    private final List<Player> players;
+    private final List<User> players;
 
-    private Players(final List<Player> players) {
+    private Players(final List<User> players) {
         this.players = players;
     }
 
-    public static Players from(final PlayerNames playerNames) {
-        return new Players(playerNames.getNames().stream().map(Player::new).toList());
-    }
+    public static Players of(final PlayerNames playerNames, final Predicate<UserName> userWantToHit) {
+        final List<User> players = new ArrayList<>();
+        playerNames.getNames().forEach(name -> players.add(Player.of(name, userWantToHit)));
 
-    public boolean hasStandPlayer() {
-        return players.stream().anyMatch(User::isStand);
+        return new Players(players);
     }
 
     public Map<UserName, Hands> getPlayersOpendHands() {
         return players.stream()
-                .collect(toMap(User::getPlayerName, User::getOpenedHands, (v1, v2) -> v1, LinkedHashMap::new));
+                .collect(toMap(User::getUserName, User::getOpenedHands, (v1, v2) -> v1, LinkedHashMap::new));
     }
 
     public List<User> getPlayers() {
-        return Collections.unmodifiableList(players);
+        return players;
     }
 }

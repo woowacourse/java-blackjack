@@ -12,9 +12,4 @@ public final class StandState extends FinishState {
     public State copy() {
         return new StandState(hands());
     }
-
-    @Override
-    public boolean isStand() {
-        return true;
-    }
 }

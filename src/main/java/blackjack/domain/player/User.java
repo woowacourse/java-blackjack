@@ -1,6 +1,6 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hands;
 import blackjack.domain.rule.state.InitState;
 import blackjack.domain.rule.state.State;
@@ -15,12 +15,13 @@ public abstract class User {
         this.state = new InitState();
     }
 
-    public abstract boolean canHit();
-    public void draw(final Card card) {
-        state = state.draw(card);
-    }
+    protected abstract boolean wantToHit();
 
-    public void stand() {
+    public void playTurn(final Deck deck) {
+        if (state.isInit() || wantToHit()) {
+            state = state.draw(deck.pick());
+            return;
+        }
         state = state.stand();
     }
 
@@ -32,8 +33,8 @@ public abstract class User {
         return !isFinished();
     }
 
-    public boolean isStand() {
-        return state.isStand();
+    public boolean isInitState() {
+        return state.isInit();
     }
 
     public Hands getOpenedHands() {
@@ -44,7 +45,7 @@ public abstract class User {
         return state.hands();
     }
 
-    public UserName getPlayerName() {
+    public UserName getUserName() {
         return userName;
     }
 

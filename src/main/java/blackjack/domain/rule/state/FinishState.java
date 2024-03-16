@@ -20,7 +20,7 @@ public abstract class FinishState extends PlayingState {
     }
 
     @Override
-    public boolean isFinished() {
+    public final boolean isFinished() {
         return true;
     }
 }
