@@ -16,6 +16,20 @@ public class InputView {
         return Arrays.stream(names).toList();
     }
 
+    public int readBattingAmount() {
+        String input = scanner.nextLine();
+        validateInteger(input);
+        return Integer.parseInt(input);
+    }
+
+    private void validateInteger(String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (IllegalArgumentException e) {
+            System.out.println("[ERROR] 정수가 아닙니다.");
+        }
+    }
+
     public String readCommand() {
         return scanner.nextLine();
     }

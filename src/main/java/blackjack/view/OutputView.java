@@ -1,11 +1,9 @@
 package blackjack.view;
 
 import blackjack.card.Card;
-import blackjack.game.MatchResult;
 import blackjack.player.Score;
 import blackjack.view.display.CardRankDisplay;
 import blackjack.view.display.CardShapeDisplay;
-import blackjack.view.display.PlayerResultDisplay;
 import java.util.List;
 
 public class OutputView {
@@ -15,6 +13,10 @@ public class OutputView {
 
     public void printNamesRequest() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+    }
+
+    public void printBettingRequestMessage(String name) {
+        System.out.println(name + "의 배팅 금액은?");
     }
 
     public void printInitializeBlackJack(List<String> names) {
@@ -46,16 +48,15 @@ public class OutputView {
     }
 
     public void printResultStart() {
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
     }
 
-    public void printDealerResult(int winCount, int tieCount, int loseCount) {
-        System.out.println("딜러: " + winCount + "승 " + tieCount + "무 " + loseCount + "패");
+    public void printDealerResult(int dealerResult) {
+        System.out.println("딜러: " + dealerResult + "원");
     }
 
-    public void printPlayerResult(String name, MatchResult result) {
-        String resultDisplay = PlayerResultDisplay.getDisplayByResult(result).getDisplay();
-        System.out.println(name + ": " + resultDisplay);
+    public void printPlayerResult(String name, int result) {
+        System.out.println(name + ": " + result + "원");
     }
 
     public void printNewLine() {
