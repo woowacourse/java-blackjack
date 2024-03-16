@@ -2,8 +2,9 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import blackjack.domain.gamers.Player;
+import blackjack.domain.gamers.Players;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,10 +13,7 @@ class PlayersTest {
     @DisplayName("플레이어의 이름을 보고 해당 플레이어를 찾는다.")
     @Test
     void findPlayerByName() {
-        final Map<String, Double> bettings = new LinkedHashMap<>();
-        bettings.put("pobi", (double) 10000);
-        bettings.put("jason", (double) 20000);
-        final Players players = Players.from(bettings);
+        final Players players = Players.from(List.of("pobi", "jason"));
 
         final Player foundPlayer = players.findBy("pobi");
 

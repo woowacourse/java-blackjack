@@ -2,6 +2,10 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.gamers.Dealer;
+import blackjack.domain.gamers.Player;
+import blackjack.domain.result.Judge;
+import blackjack.domain.result.PlayerOutcome;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

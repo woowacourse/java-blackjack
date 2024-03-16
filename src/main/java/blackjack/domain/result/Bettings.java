@@ -1,5 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
+import blackjack.domain.gamers.Name;
+import blackjack.domain.gamers.Player;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -19,11 +22,13 @@ public class Bettings {
         return bettings.entrySet().stream()
                 .collect(Collectors.toMap(
                         entry -> entry.getKey().getName(),
-                        entry -> calculateProfit(entry.getValue(), judge.calculatePlayerOutcome(entry.getKey()))
+                        entry -> calculateProfit(entry.getValue(), judge.calculatePlayerOutcome(entry.getKey())),
+                        (oldValue, newValue) -> oldValue,
+                        LinkedHashMap::new
                 ));
     }
 
-    private Money calculateProfit(final Money betting, PlayerOutcome playerOutcome) {
+    private Money calculateProfit(final Money betting, final PlayerOutcome playerOutcome) {
         if (playerOutcome == PlayerOutcome.BLACKJACK_WIN) {
             return betting.multiply(BLACKJACK_WIN_PROFIT_MULTIPLIER);
         }
@@ -34,5 +39,13 @@ public class Bettings {
             return betting.multiply(PUSH_PROFIT_MULTIPLIER);
         }
         return betting.toNegative();
+    }
+
+    public Money calculateDealerProfit(final Judge judge) {
+        final double playerProfitsSum = calculatePlayerProfits(judge).values()
+                .stream()
+                .mapToDouble(Money::value)
+                .sum();
+        return new Money(playerProfitsSum).toNegative();
     }
 }

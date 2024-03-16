@@ -1,14 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.gamers;
 
-import java.util.ArrayList;
+import blackjack.domain.card.Card;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class Players {
-
-    public static final int INITIAL_CARD_COUNT = 2;
 
     private final List<Player> players;
 
@@ -16,22 +13,25 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(final Map<String, Double> bettings) {
-        final List<Player> players = new ArrayList<>();
-        bettings.forEach((name, bettingMoney) -> players.add(Player.of(name, bettingMoney)));
+    public static Players from(final List<String> playerNames) {
+        final List<Player> players = playerNames.stream()
+                .map(Player::from)
+                .toList();
         return new Players(players);
     }
 
     public void drawInitialHand(final Dealer dealer) {
         for (final Player player : players) {
-            drawInitialHand(dealer, player);
+            player.drawInitialHand(dealer);
         }
     }
 
-    private void drawInitialHand(final Dealer dealer, final Player player) {
-        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
-            player.draw(dealer.drawPlayerCard());
-        }
+    public boolean canDraw(final Name name) {
+        return findBy(name).canDraw();
+    }
+
+    public void draw(final Card card, final Name name) {
+        findBy(name).draw(card);
     }
 
     public Player findBy(final String name) {
@@ -42,6 +42,16 @@ public class Players {
             throw new IllegalStateException("찾으려는 이름의 플레이어가 중복하여 존재합니다.");
         }
         return foundPlayer.get(0);
+    }
+
+    public Player findBy(final Name name) {
+        return findBy(name.value());
+    }
+
+    public List<Name> names() {
+        return players.stream()
+                .map(Player::getName)
+                .toList();
     }
 
     public List<Player> getPlayers() {

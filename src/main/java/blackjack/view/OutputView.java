@@ -1,7 +1,7 @@
 package blackjack.view;
 
-import blackjack.domain.Money;
-import blackjack.domain.Name;
+import blackjack.domain.result.Money;
+import blackjack.domain.gamers.Name;
 import blackjack.domain.card.Card;
 import blackjack.dto.DealerDto;
 import blackjack.dto.PlayerDto;
@@ -77,7 +77,7 @@ public class OutputView {
         return formattedMoney;
     }
 
-    public static void printLineSeparator(){
+    public static void printLineSeparator() {
         System.out.println();
     }
 }

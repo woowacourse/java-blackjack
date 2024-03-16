@@ -1,4 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.result;
+
+import blackjack.domain.gamers.Dealer;
+import blackjack.domain.gamers.Player;
 
 public class Judge {
 

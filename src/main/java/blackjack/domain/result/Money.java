@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 public record Money(double value) {
     public Money toNegative() {
