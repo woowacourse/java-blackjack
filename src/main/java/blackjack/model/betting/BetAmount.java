@@ -1,29 +1,16 @@
-package blackjack.model.wallet;
+package blackjack.model.betting;
 
-import blackjack.model.gameRule.Result;
-
-public class PlayerBetWallet {
+public class BetAmount {
 
     private static final int MIN_BET_AMOUNT = 100;
     private static final int BET_AMOUNT_UNIT = 10;
 
     private final int betAmount;
-    private int profitAmount;
 
-    public PlayerBetWallet(int betAmount) {
+    public BetAmount(int betAmount) {
         validateMinimumBetAmount(betAmount);
         validateBetAmountUnit(betAmount);
         this.betAmount = betAmount;
-        this.profitAmount = 0;
-    }
-
-    public void registerProfitAmount(Result result) {
-        validateAlreadySet();
-        profitAmount = (int) (betAmount * result.getPayoutRate());
-    }
-
-    public int calculateNetProfit() {
-        return profitAmount - betAmount;
     }
 
     private void validateMinimumBetAmount(int betAmount) {
@@ -38,17 +25,7 @@ public class PlayerBetWallet {
         }
     }
 
-    private void validateAlreadySet() {
-        if (profitAmount != 0) {
-            throw new IllegalArgumentException("[ERROR] 이미 수익금이 등록되어 있습니다.");
-        }
-    }
-
     public int getBetAmount() {
         return betAmount;
-    }
-
-    public int getProfitAmount() {
-        return profitAmount;
     }
 }
