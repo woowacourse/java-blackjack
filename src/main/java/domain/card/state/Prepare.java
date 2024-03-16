@@ -3,21 +3,20 @@ package domain.card.state;
 import domain.card.Card;
 import domain.card.Cards;
 
-public class Prepare implements CardState {
-    private final Cards cards;
+public class Prepare extends Initial {
     private static final int INIT_CARD_COUNT = 2;
 
     public Prepare(Cards cards) {
-        this.cards = cards;
+        super(cards);
     }
 
     @Override
     public CardState receive(Card card) {
-        cards.addCard(card);
-        if (cards.isBlackjack()) {
-            return new Blackjack(cards);
+        cards().addCard(card);
+        if (cards().isBlackjack()) {
+            return new Blackjack(cards());
         }
-        if (cards.size() >= INIT_CARD_COUNT) {
+        if (cards().size() >= INIT_CARD_COUNT) {
             return new Hit(cards());
         }
         return this;

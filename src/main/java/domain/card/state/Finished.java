@@ -3,11 +3,9 @@ package domain.card.state;
 import domain.card.Card;
 import domain.card.Cards;
 
-public abstract class Finished implements CardState {
-    private final Cards cards;
-
-    public Finished(Cards cards) {
-        this.cards = cards;
+public abstract class Finished extends Initial {
+    protected Finished(Cards cards) {
+        super(cards);
     }
 
     @Override

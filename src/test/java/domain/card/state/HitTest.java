@@ -21,17 +21,6 @@ class HitTest {
     }
 
     @Test
-    void 카드를_추가했을_때_blackjack이_되면_blackjack_상태를_리턴한다() {
-        Cards cards = new Cards();
-        cards.addCard(카드(Denomination.ACE));
-        CardState hit = new Hit(cards);
-
-        CardState blackjack = hit.receive(카드(Denomination.TEN));
-
-        assertThat(blackjack).isExactlyInstanceOf(Blackjack.class);
-    }
-
-    @Test
     void 카드를_추가했을_때_더_추가할_수_있으면_현재_상태를_리턴한다() {
         Cards cards = new Cards();
         cards.addCard(카드(Denomination.JACK));

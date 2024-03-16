@@ -3,27 +3,22 @@ package domain.card.state;
 import domain.card.Card;
 import domain.card.Cards;
 
-public class Hit implements CardState {
-    private final Cards cards;
-
-    public Hit(Cards cards) {
-        this.cards = cards;
+public class Hit extends Initial {
+    protected Hit(Cards cards) {
+        super(cards);
     }
 
     @Override
     public CardState receive(Card card) {
-        cards.addCard(card);
-        if (cards.isBust()) {
-            return new Bust(cards);
-        }
-        if (cards.isBlackjack()) {
-            return new Blackjack(cards);
+        cards().addCard(card);
+        if (cards().isBust()) {
+            return new Bust(cards());
         }
         return this;
     }
 
     @Override
     public CardState finish() {
-        return new Stay(cards);
+        return new Stay(cards());
     }
 }
