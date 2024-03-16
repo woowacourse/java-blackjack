@@ -12,7 +12,7 @@ class BetMakerTest {
     @DisplayName("이름과 배팅금액을 갖는 게이머 클래스의 생성자를 만들 수 있다.")
     void createGamerWithNameAndBetMoneyConstructorTest() {
         Assertions.assertThatCode(() ->
-                new BetMaker("게이머", INITIAL_MONEY)
+                new BetMaker(INITIAL_MONEY)
         ).doesNotThrowAnyException();
     }
 }

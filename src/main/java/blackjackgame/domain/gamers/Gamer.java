@@ -20,12 +20,12 @@ public class Gamer {
 
     public static Gamer dealer() {
         return new Gamer(new CardHolder(DEALER_NAME, HoldingCards.of()),
-                new BetMaker(DEALER_NAME, DEALER_BET_MONEY));
+                new BetMaker(DEALER_BET_MONEY));
     }
 
     public static Gamer createByNameAndBetMoney(String name, Double betMoney) {
         CardHolder cardHolder = new CardHolder(name, HoldingCards.of());
-        BetMaker betMaker = new BetMaker(name, betMoney);
+        BetMaker betMaker = new BetMaker(betMoney);
 
         return new Gamer(cardHolder, betMaker);
     }
