@@ -1,17 +1,16 @@
 package blackjack.controller;
 
-import static blackjack.view.InputView.DEALER_NAME;
-
 import blackjack.domain.GameBoard;
-import blackjack.domain.participants.Name;
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.GamerInformation.GamblingMoney;
+import blackjack.domain.participants.GamerInformation.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
-import blackjack.dto.PlayerDto;
+import blackjack.dto.BettingMoneyDto;
+import blackjack.dto.GamerDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackGame {
     private final InputView inputView = new InputView();
@@ -19,8 +18,7 @@ public class BlackjackGame {
 
     public void run() {
         Players players = createPlayers();
-        Player dealer = new Player(new Name(DEALER_NAME));
-        GameBoard gameBoard = new GameBoard(dealer, players);
+        GameBoard gameBoard = new GameBoard(players);
         play(gameBoard);
     }
 
@@ -33,21 +31,29 @@ public class BlackjackGame {
     }
 
     private void play(GameBoard gameBoard) {
+        startBetting(gameBoard);
         startSetting(gameBoard);
         proceedPlayerTurn(gameBoard);
         proceedDealerTurn(gameBoard);
         handleResult(gameBoard);
-        handleVictory(gameBoard);
+        handleBettingMoney(gameBoard);
+    }
+
+    private void startBetting(GameBoard gameBoard) {
+        Players players = gameBoard.getPlayers();
+        for (int i = 0; i < players.size(); i++) {
+            int money = inputView.readMoney(players.getPlayerName(i).getValue());
+            players.betPlayerMoney(new GamblingMoney(money), i);
+        }
     }
 
     private void startSetting(GameBoard gameBoard) {
-        gameBoard.distributeInitialDecks();
-        Player dealer = gameBoard.getDealer();
-        PlayerDto dealerDto = PlayerDto.from(dealer);
-        List<PlayerDto> playersDto = gameBoard.getPlayers()
+        gameBoard.distributeInitialHand();
+        GamerDto dealerDto = GamerDto.from(gameBoard.getDealer());
+        List<GamerDto> playersDto = gameBoard.getPlayers()
                 .getPlayers()
                 .stream()
-                .map(PlayerDto::from)
+                .map(GamerDto::from)
                 .toList();
         outputView.printSetting(dealerDto, playersDto);
         outputView.printNewLine();
@@ -70,30 +76,28 @@ public class BlackjackGame {
 
     private void proceedOnePlayerTurn(GameBoard gameBoard, int playerIndex) {
         while (gameBoard.isPlayerNotOver(playerIndex) &&
-                inputView.readCommand(gameBoard.getPlayerName(playerIndex).getName())) {
+                inputView.readCommand(gameBoard.getPlayerName(playerIndex).getValue())) {
             gameBoard.addCardToPlayer(playerIndex);
             Player player = gameBoard.getPlayer(playerIndex);
-            outputView.printCurrentCard(PlayerDto.from(player));
+            outputView.printCurrentCard(GamerDto.from(player));
             outputView.printNewLine();
         }
     }
 
     private void handleResult(GameBoard gameBoard) {
-        Player dealer = gameBoard.getDealer();
-        PlayerDto dealerDto = PlayerDto.from(dealer);
-        List<PlayerDto> playersDto = gameBoard.getPlayers()
+        Dealer dealer = gameBoard.getDealer();
+        GamerDto dealerDto = GamerDto.from(dealer);
+        List<GamerDto> playersDto = gameBoard.getPlayers()
                 .getPlayers()
                 .stream()
-                .map(PlayerDto::from)
+                .map(GamerDto::from)
                 .toList();
         outputView.printScoreResult(dealerDto, playersDto);
     }
 
-    private void handleVictory(GameBoard gameBoard) {
-        Map<Player, Boolean> playerVictory = gameBoard.calculateVictory();
-        Map<String, Boolean> playerNameVictory = new LinkedHashMap<>();
-        playerVictory.forEach(
-                (key, value) -> playerNameVictory.put(key.getName().getName(), playerVictory.get(key)));
-        outputView.printResult(playerNameVictory);
+    private void handleBettingMoney(GameBoard gameBoard) {
+        gameBoard.calculateBettingMoney();
+        BettingMoneyDto bettingMoneyResult = BettingMoneyDto.from(gameBoard.getDealer(), gameBoard.getPlayers());
+        outputView.printMoneyResult(bettingMoneyResult);
     }
 }

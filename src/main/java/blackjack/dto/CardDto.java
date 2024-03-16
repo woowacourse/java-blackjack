@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.domain.Cards.Card;
+import blackjack.domain.cards.Card;
 
 public record CardDto(String cardName) {
     public static CardDto from(Card card) {

@@ -1,43 +1,31 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 
-import blackjack.domain.Cards.Card;
-import blackjack.domain.Cards.Deck;
-import blackjack.domain.Cards.Rank;
-import blackjack.domain.Cards.Shape;
-import blackjack.domain.participants.Name;
+import blackjack.domain.cards.Card;
+import blackjack.domain.cards.Rank;
+import blackjack.domain.cards.Shape;
+import blackjack.domain.participants.GamerInformation.GamblingMoney;
+import blackjack.domain.participants.GamerInformation.Name;
 import blackjack.domain.participants.Player;
-import org.assertj.core.api.Assertions;
+import blackjack.domain.participants.Outcome;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
-
     @Test
     @DisplayName("플레이어가 잘 생성된다.")
     void playerConstructSuccessTest() {
-        Assertions.assertThatNoException()
+        assertThatNoException()
                 .isThrownBy(() -> new Player(new Name("이름")));
-    }
-
-    @Test
-    @DisplayName("플레이어가 덱을 받는다.")
-    void receiveDeckTest() {
-        Player player = new Player(new Name("이름"));
-        Deck deck = new Deck();
-        deck.addCard(new Card(Shape.HEART, Rank.ACE));
-        deck.addCard(new Card(Shape.HEART, Rank.TWO));
-        player.receiveDeck(deck);
-
-        assertThat(player.getHand().size()).isEqualTo(2);
     }
 
     @Test
     @DisplayName("플레이어가 카드를 잘 받는다.")
     void playerReceiveCardTest() {
         Player player = new Player(new Name("이름"));
-        Assertions.assertThatNoException()
+        assertThatNoException()
                 .isThrownBy(() -> player.receiveCard(new Card(Shape.HEART, Rank.ACE)));
     }
 
@@ -45,14 +33,92 @@ public class PlayerTest {
     @DisplayName("플레이어 점수를 계산한다.")
     void calculateScoreTest() {
         Player player = new Player(new Name("이름"));
-        Deck deck = new Deck();
-        deck.addCard(new Card(Shape.HEART, Rank.TEN));
-        deck.addCard(new Card(Shape.HEART, Rank.TWO));
+        player.receiveCard(new Card(Shape.HEART, Rank.TEN));
+        player.receiveCard(new Card(Shape.HEART, Rank.TWO));
 
-        player.receiveDeck(deck);
         int result = player.calculateScore();
 
         assertThat(result).isEqualTo(12);
+    }
+
+    @Test
+    @DisplayName("플레이어가 버스트일 때 진다.")
+    void checkVictoryWhenPlayerBust() {
+        Player player = new Player(new Name("이름"));
+        player.receiveCard(new Card(Shape.HEART, Rank.TEN));
+        player.receiveCard(new Card(Shape.HEART, Rank.TWO));
+        player.receiveCard(new Card(Shape.DIAMOND, Rank.TEN));
+
+        assertThat(player.checkOutcome(20, false)).isEqualTo(Outcome.LOSE);
+    }
+
+    @Test
+    @DisplayName("딜러가 버스트일 때 이긴다.")
+    void checkVictoryWhenDealerBust() {
+        Player player = new Player(new Name("이름"));
+        player.receiveCard(new Card(Shape.HEART, Rank.TEN));
+        player.receiveCard(new Card(Shape.HEART, Rank.TWO));
+
+        assertThat(player.checkOutcome(25, false)).isEqualTo(Outcome.WIN);
+    }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭으로 이긴다.")
+    void checkVictoryWhenBlackjackWin() {
+        Player player = new Player(new Name("이름"));
+        player.receiveCard(new Card(Shape.HEART, Rank.TEN));
+        player.receiveCard(new Card(Shape.HEART, Rank.ACE));
+
+        assertThat(player.checkOutcome(20, false)).isEqualTo(Outcome.BLACKJACK_WIN);
+    }
+
+    @Test
+    @DisplayName("플레이어가 이긴다.")
+    void checkVictoryWhenWin() {
+        Player player = new Player(new Name("이름"));
+        player.receiveCard(new Card(Shape.HEART, Rank.TEN));
+        player.receiveCard(new Card(Shape.DIAMOND, Rank.TEN));
+
+        assertThat(player.checkOutcome(18, false)).isEqualTo(Outcome.WIN);
+    }
+
+    @Test
+    @DisplayName("플레이어가 비긴다.")
+    void checkVictoryWhenTie() {
+        Player player = new Player(new Name("이름"));
+        player.receiveCard(new Card(Shape.HEART, Rank.TEN));
+        player.receiveCard(new Card(Shape.DIAMOND, Rank.ACE));
+
+        assertThat(player.checkOutcome(21, true)).isEqualTo(Outcome.TIE);
+    }
+
+    @Test
+    @DisplayName("플레이어가 진다.")
+    void checkVictoryWhenLose() {
+        Player player = new Player(new Name("이름"));
+        player.receiveCard(new Card(Shape.HEART, Rank.TEN));
+
+        assertThat(player.checkOutcome(20, false)).isEqualTo(Outcome.LOSE);
+    }
+
+    @Test
+    @DisplayName("블랙잭이 맞음을 확인한다.")
+    void isBlackjackTrueTest() {
+        Player player = new Player(new Name("이름"));
+        player.receiveCard(new Card(Shape.HEART, Rank.TEN));
+        player.receiveCard(new Card(Shape.DIAMOND, Rank.ACE));
+
+        assertThat(player.isBlackjack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("블랙잭이 아님을 확인한다.")
+    void isBlackjackFalseTest() {
+        Player player = new Player(new Name("이름"));
+        player.receiveCard(new Card(Shape.HEART, Rank.TEN));
+        player.receiveCard(new Card(Shape.DIAMOND, Rank.TEN));
+
+        assertThat(player.isBlackjack()).isFalse();
     }
 
     @Test
@@ -63,7 +129,7 @@ public class PlayerTest {
         player.receiveCard(new Card(Shape.HEART, Rank.ACE));
         player.receiveCard(new Card(Shape.HEART, Rank.NINE));
 
-        assertThat(player.isNotOver(21)).isTrue();
+        assertThat(player.isNotOver()).isTrue();
     }
 
     @Test
@@ -75,6 +141,49 @@ public class PlayerTest {
         player.receiveCard(new Card(Shape.SPADE, Rank.NINE));
         player.receiveCard(new Card(Shape.DIAMOND, Rank.FOUR));
 
-        assertThat(player.isNotOver(21)).isFalse();
+        assertThat(player.isNotOver()).isFalse();
+    }
+
+    @Test
+    @DisplayName("플레이어가 돈을 배팅한다.")
+    void betMoneyTest() {
+        Player player = new Player(new Name("이름"));
+
+        player.betMoney(new GamblingMoney(3000));
+
+        assertThat(player.getGamblingMoney()).isEqualTo(new GamblingMoney(3000));
+    }
+
+    @Test
+    @DisplayName("플레이어가 돈을 잃었다.")
+    void loseMoneyTest() {
+        Player player = new Player(new Name("이름"));
+
+        player.betMoney(new GamblingMoney(3000));
+        player.loseMoney(new GamblingMoney(2000));
+
+        assertThat(player.getGamblingMoney()).isEqualTo(new GamblingMoney(1000));
+    }
+
+    @Test
+    @DisplayName("플레이어가 배팅에 성공했다.")
+    void earnBetSuccessMoneyTest() {
+        Player player = new Player(new Name("이름"));
+
+        player.betMoney(new GamblingMoney(3000));
+        player.checkBettingMoney(1);
+
+        assertThat(player.getGamblingMoney()).isEqualTo(new GamblingMoney(3000));
+    }
+
+    @Test
+    @DisplayName("플레이어가 배팅에 실패했다.")
+    void payBetFailMoneyTest() {
+        Player player = new Player(new Name("이름"));
+
+        player.betMoney(new GamblingMoney(3000));
+        player.checkBettingMoney(-1);
+
+        assertThat(player.getGamblingMoney().equals(new GamblingMoney(-3000))).isTrue();
     }
 }

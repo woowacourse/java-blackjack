@@ -2,15 +2,23 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.Cards.Card;
-import blackjack.domain.Cards.Hand;
-import blackjack.domain.Cards.Rank;
-import blackjack.domain.Cards.Shape;
+import blackjack.domain.cards.Card;
+import blackjack.domain.cards.Hand;
+import blackjack.domain.cards.Rank;
+import blackjack.domain.cards.Shape;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class HandTest {
+    @Test
+    @DisplayName("카드를 잘 추가한다")
+    void addCardTest() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(Shape.HEART, Rank.SEVEN));
+
+        assertThat(hand.size()).isEqualTo(1);
+    }
 
     @Test
     @DisplayName("카드의 합을 계산한다.")

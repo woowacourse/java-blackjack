@@ -2,9 +2,9 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.Cards.Card;
-import blackjack.domain.Cards.Rank;
-import blackjack.domain.Cards.Shape;
+import blackjack.domain.cards.Card;
+import blackjack.domain.cards.Rank;
+import blackjack.domain.cards.Shape;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

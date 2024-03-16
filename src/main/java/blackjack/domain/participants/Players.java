@@ -1,58 +1,51 @@
 package blackjack.domain.participants;
 
 
-import blackjack.domain.Cards.Card;
-import blackjack.domain.Cards.Deck;
+import blackjack.domain.cards.Card;
+import blackjack.domain.participants.GamerInformation.GamblingMoney;
+import blackjack.domain.participants.GamerInformation.Name;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Players {
-    public static final int MAX_SCORE = 21;
-
     private final List<Player> players;
 
     public Players(List<Player> players) {
         this.players = players;
     }
 
-    public Map<Player, Boolean> calculateVictory(int dealerScore) {
-        Map<Player, Boolean> result = new LinkedHashMap<>();
-        players.forEach(player -> result.put(player, isPlayerWin(player, dealerScore)));
+    public Map<Player, Outcome> calculateOutcome(int dealerScore, boolean isDealerBlackjack) {
+        Map<Player, Outcome> result = new LinkedHashMap<>();
+        players.forEach(player -> result.put(player, player.checkOutcome(dealerScore, isDealerBlackjack)));
         return result;
     }
 
-    private boolean isPlayerWin(Player player, int dealerScore) {
-        if (player.calculateScore() > MAX_SCORE) {
-            return false;
-        }
-        if (dealerScore > MAX_SCORE) {
-            return true;
-        }
-        return dealerScore < player.calculateScore();
+    public void betPlayerMoney(GamblingMoney gamblingMoney, int playerIndex) {
+        players.get(playerIndex).betMoney(gamblingMoney);
     }
 
-    public void receiveOnePlayerCard(Card card, int playerIndex) {
+    public void receivePlayerCard(Card card, int playerIndex) {
         players.get(playerIndex).receiveCard(card);
     }
 
-    public void receiveOnePlayerDeck(Deck deck, int playerIndex) {
-        players.get(playerIndex).receiveDeck(deck);
-    }
-
-    public boolean isOnePlayerNotOver(int playerIndex) {
-        return players.get(playerIndex).isNotOver(MAX_SCORE);
+    public boolean isPlayerNotOver(int playerIndex) {
+        return players.get(playerIndex).isNotOver();
     }
 
     public int size() {
         return players.size();
     }
 
-    public Name getOnePlayerName(int playerIndex) {
+    public Name getPlayerName(int playerIndex) {
         return players.get(playerIndex).getName();
     }
 
-    public Player getOnePlayer(int playerIndex) {
+    public GamblingMoney getPlayerGamblingMoney(int playerIndex) {
+        return players.get(playerIndex).getGamblingMoney();
+    }
+
+    public Player getPlayer(int playerIndex) {
         return players.get(playerIndex);
     }
 

@@ -1,12 +1,11 @@
-package blackjack.domain.Cards;
+package blackjack.domain.cards;
 
-import blackjack.domain.participants.Players;
+import blackjack.domain.participants.Gamer;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Hand {
-
     private static final int ACE_BONUS_SCORE = 10;
     private static final int NO_BONUS_SCORE = 0;
 
@@ -40,14 +39,15 @@ public class Hand {
         return NO_BONUS_SCORE;
     }
 
-    private static boolean canAddAceBonusScore(int totalScore) {
-        return totalScore + ACE_BONUS_SCORE <= Players.MAX_SCORE;
-    }
-
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
     }
+
+    private boolean canAddAceBonusScore(int totalScore) {
+        return totalScore + ACE_BONUS_SCORE <= Gamer.BLACKJACK_SCORE;
+    }
+
 
     private void validateDeck() {
         if (cards.isEmpty()) {

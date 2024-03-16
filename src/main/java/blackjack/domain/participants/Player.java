@@ -1,43 +1,57 @@
 package blackjack.domain.participants;
 
+import blackjack.domain.participants.GamerInformation.GamblingMoney;
+import blackjack.domain.participants.GamerInformation.Name;
 
-import blackjack.domain.Cards.Card;
-import blackjack.domain.Cards.Deck;
-import blackjack.domain.Cards.Hand;
-
-public class Player {
-    private final Name name;
-    private final Hand hand;
-
+public class Player extends Gamer {
     public Player(Name name) {
-        this.name = name;
-        this.hand = new Hand();
+        super(name);
     }
 
-    public void receiveDeck(Deck tempDeck) {
-        int tempDeckSize = tempDeck.size();
-        for (int i = 0; i < tempDeckSize; i++) {
-            hand.addCard(tempDeck.pickRandomCard());
+    public Outcome checkOutcome(int dealerScore, boolean isDealerBlackjack) {
+        return checkOutcomeWhenBust(dealerScore, isDealerBlackjack);
+    }
+
+    private Outcome checkOutcomeWhenBust(int dealerScore, boolean isDealerBlackjack) {
+        if (calculateScore() > BLACKJACK_SCORE) {
+            return Outcome.LOSE;
         }
+        if (dealerScore > BLACKJACK_SCORE) {
+            return Outcome.WIN;
+        }
+        return checkOutcomeWhenBlackjack(dealerScore, isDealerBlackjack);
     }
 
-    public void receiveCard(Card card) {
-        hand.addCard(card);
+    private Outcome checkOutcomeWhenBlackjack(int dealerScore, boolean isDealerBlackjack) {
+        if (isBlackjack() && isDealerBlackjack) {
+            return Outcome.TIE;
+        }
+        if (isBlackjack()) {
+            return Outcome.BLACKJACK_WIN;
+        }
+        return checkOutcomeWhenNormal(dealerScore);
     }
 
-    public int calculateScore() {
-        return hand.calculateTotalScore();
+    private Outcome checkOutcomeWhenNormal(int dealerScore) {
+        if (calculateScore() < dealerScore) {
+            return Outcome.LOSE;
+        }
+        if (calculateScore() > dealerScore) {
+            return Outcome.WIN;
+        }
+        return Outcome.TIE;
     }
 
-    public boolean isNotOver(int boundaryScore) {
-        return hand.calculateTotalScore() < boundaryScore;
+    public void betMoney(GamblingMoney gamblingMoney) {
+        playerStatus.addMoney(gamblingMoney);
     }
 
-    public Name getName() {
-        return name;
+    public void checkBettingMoney(float benefit) {
+        playerStatus.calculateBettingMoney(benefit);
     }
 
-    public Hand getHand() {
-        return hand;
+    @Override
+    public boolean isNotOver() {
+        return playerStatus.calculateScore() < BLACKJACK_SCORE;
     }
 }

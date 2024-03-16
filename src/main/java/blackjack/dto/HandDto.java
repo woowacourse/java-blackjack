@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.domain.Cards.Hand;
+import blackjack.domain.cards.Hand;
 import java.util.List;
 
 public record HandDto(List<String> cardNames) {

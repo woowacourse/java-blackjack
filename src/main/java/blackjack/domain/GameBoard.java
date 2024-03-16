@@ -1,102 +1,108 @@
 package blackjack.domain;
 
-import blackjack.domain.Cards.Card;
-import blackjack.domain.Cards.Deck;
-import blackjack.domain.Cards.Rank;
-import blackjack.domain.Cards.Shape;
-import blackjack.domain.participants.Name;
-import blackjack.domain.participants.Participants;
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.GamerInformation.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import blackjack.domain.participants.Outcome;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class GameBoard {
     public static final int INITIAL_CARD_COUNT = 2;
 
-    private final Participants participants;
-    private final Deck allCardDeck;
+    private final Dealer dealer;
+    private final Players players;
 
-    public GameBoard(Player dealer, Players players) {
-        this.participants = new Participants(dealer, players);
-        this.allCardDeck = new Deck();
-        addAllCard();
-    }
-
-    private void addAllCard() {
-        Arrays.stream(Rank.values())
-                .forEach(this::addAllShape);
-    }
-
-    private void addAllShape(Rank rank) {
-        Arrays.stream(Shape.values())
-                .forEach((shape) -> allCardDeck.addCard(new Card(shape, rank)));
+    public GameBoard(Players players) {
+        this.dealer = new Dealer();
+        this.players = players;
     }
 
     public int countPlayers() {
-        return participants.countPlayers();
+        return players.size();
     }
 
     public boolean isPlayerNotOver(int playerIndex) {
-        return participants.isPlayerNotOver(playerIndex);
+        return players.isPlayerNotOver(playerIndex);
     }
 
     public boolean isDealerNotOver() {
-        return participants.isDealerNotOver();
+        return dealer.isNotOver();
     }
 
-    public void distributeInitialDecks() {
-        List<Deck> initialDecks = makeInitialDecks();
-        participants.receiveInitialDecks(initialDecks);
-    }
-
-    private List<Deck> makeInitialDecks() {
-        List<Deck> initialDecks = new ArrayList<>();
-        for (int participantsCount = 0; participantsCount < participants.count(); participantsCount++) {
-            initialDecks.add(makeInitialDeck());
+    public void distributeInitialHand() {
+        dealer.setInitialHand();
+        for (int playerIndex = 0; playerIndex < players.size(); playerIndex++) {
+            distributePlayerInitialHand(playerIndex);
         }
-        return initialDecks;
     }
 
-    private Deck makeInitialDeck() {
-        Deck tempDeck = new Deck();
+    private void distributePlayerInitialHand(int playerIndex) {
         for (int cardCount = 0; cardCount < INITIAL_CARD_COUNT; cardCount++) {
-            tempDeck.addCard(this.allCardDeck.pickRandomCard());
+            players.receivePlayerCard(dealer.drawCard(), playerIndex);
         }
-        return tempDeck;
     }
 
     public void addCardToPlayer(int playerIndex) {
-        participants.receivePlayerCard(allCardDeck.pickRandomCard(), playerIndex);
+        players.receivePlayerCard(dealer.drawCard(), playerIndex);
     }
 
     public void addCardToDealer() {
-        participants.receiveDealerCard(allCardDeck.pickRandomCard());
+        dealer.receiveCard(dealer.drawCard());
     }
 
-    public Map<Player, Boolean> calculateVictory() {
-        return participants.calculateVictory();
+    public void calculateBettingMoney() {
+            Map<Player, Outcome> outcome = calculateOutcome();
+        for (Player player : outcome.keySet()) {
+            calculatePlayerBettingMoney(player, outcome.get(player));
+        }
     }
 
-    public Deck getAllCardDeck() {
-        return allCardDeck;
+    private Map<Player, Outcome> calculateOutcome() {
+        return players.calculateOutcome(dealer.calculateScore(), dealer.isBlackjack());
+    }
+
+    private void calculatePlayerBettingMoney(Player player, Outcome outcome) {
+        float benefit = calculateBenefit(outcome);
+        calculateDealerGainMoney(player, outcome);
+        player.checkBettingMoney(benefit);
+        calculateDealerLoseMoney(player, outcome);
+    }
+
+    private float calculateBenefit(Outcome outcome) {
+        return Stream.of(Outcome.BLACKJACK_WIN, Outcome.WIN, Outcome.TIE)
+                .filter(targetVictory -> targetVictory.equals(outcome))
+                .findFirst()
+                .map(Outcome::getBenefit)
+                .orElse(Outcome.LOSE.getBenefit());
+    }
+
+    private void calculateDealerGainMoney(Player player, Outcome outcome) {
+        if (outcome.equals(Outcome.LOSE)) {
+            dealer.gainMoney(player.getGamblingMoney());
+        }
+    }
+
+    private void calculateDealerLoseMoney(Player player, Outcome outcome) {
+        if (outcome.equals(Outcome.BLACKJACK_WIN) || outcome.equals(Outcome.WIN)) {
+            dealer.loseMoney(player.getGamblingMoney());
+        }
     }
 
     public Name getPlayerName(int playerIndex) {
-        return participants.getOnePlayerName(playerIndex);
+        return players.getPlayerName(playerIndex);
     }
 
     public Players getPlayers() {
-        return participants.getPlayers();
+        return players;
     }
 
     public Player getPlayer(int playerIndex) {
-        return participants.getOnePlayer(playerIndex);
+        return players.getPlayer(playerIndex);
     }
 
-    public Player getDealer() {
-        return participants.getDealer();
+    public Dealer getDealer() {
+        return dealer;
     }
 }
