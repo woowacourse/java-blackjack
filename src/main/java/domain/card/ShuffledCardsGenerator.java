@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class ShuffledCardsGenerator {
+    public static final int DECK_COUNT = 6;
     private static final List<Card> cachedCards;
 
     static {
@@ -24,7 +25,7 @@ public class ShuffledCardsGenerator {
 
     private List<Card> generateBlackJackCards() {
         List<Card> blackJackCards = new ArrayList<>();
-        for (int count = 0; count < Deck.DECK_COUNT; count++) {
+        for (int count = 0; count < DECK_COUNT; count++) {
             blackJackCards.addAll(new ArrayList<>(cachedCards));
         }
         return blackJackCards;
