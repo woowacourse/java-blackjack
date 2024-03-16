@@ -52,4 +52,8 @@ public class Player {
     public int getScore() {
         return gamer.getScore();
     }
+
+    public int getChip() {
+        return gamer.getChip();
+    }
 }
