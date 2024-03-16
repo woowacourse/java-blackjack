@@ -7,7 +7,7 @@ public class Score {
     private static final int BLACKJACK = 21;
     private static final int ADDITIONAL_ACE = 10;
 
-    private int score;
+    private final int score;
 
     public Score(int score) {
         this.score = score;
