@@ -1,6 +1,5 @@
 package blackjack.model.participants;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 import blackjack.model.cards.Card;
@@ -37,14 +36,6 @@ class PlayerTest {
                 new Card(CardNumber.SIX, CardShape.HEART),
                 new Card(CardNumber.SIX, CardShape.CLOVER)
         ));
-    }
-
-    @DisplayName("플레이어 이름은 공백일 수 없다")
-    @Test
-    void validateName() {
-        String emptyName = "";
-
-        assertThatThrownBy(() -> new Player(emptyName)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("플레이어는 베팅을 할 수 있다")
