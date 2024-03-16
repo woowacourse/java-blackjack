@@ -4,6 +4,7 @@ import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.Players;
 import domain.gamer.PlayersCreator;
+import domain.gamer.Referee;
 import dto.AllPlayerResultDto;
 import dto.DealerResultDto;
 import dto.InitCardDto;
@@ -54,8 +55,9 @@ public class BlackJackController {
     }
 
     private void showResult(Players players, Dealer dealer) {
+        Referee referee = new Referee();
         outputView.printDealerScore(DealerResultDto.makeDealerResultDto(dealer));
         outputView.printPlayersScore(AllPlayerResultDto.makeAllPlayerResultDto(players));
-        outputView.printResult(players.getResult(dealer.getMaxGameScore()));
+        outputView.printResult(players.makeResult(dealer, referee));
     }
 }

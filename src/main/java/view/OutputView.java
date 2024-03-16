@@ -1,8 +1,9 @@
 package view;
 
-import domain.GameResult;
+import domain.gamer.Player;
 import dto.AllPlayerResultDto;
 import dto.DealerResultDto;
+import dto.GameResultDto;
 import dto.InitCardDto;
 import dto.PlayerCardStateDto;
 import java.util.List;
@@ -57,14 +58,16 @@ public class OutputView {
         }
     }
 
-    public void printResult(GameResult gameResult) {
-        System.out.println("\n## 최종 승패");
-        System.out.printf("딜러: %d승 %d패\n", gameResult.countDealerWin(), gameResult.countDealerLose());
+    public void printResult(GameResultDto gameResultDto) {
+        System.out.println("\n## 최종 수익");
 
-        Map<String, String> result = gameResult.getResult();
-        for (String playerName : result.keySet()) {
-            String winOrLose = "패";
-            System.out.printf("%s: %s\n", playerName, result.get(playerName));
+        Map<Player, Integer> result = gameResultDto.gameResult();
+        for (Player player : result.keySet()) {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(player.getName().getValue());
+            stringBuilder.append(": ");
+            stringBuilder.append((int) result.get(player));
+            System.out.println(stringBuilder.toString());
         }
     }
 }
