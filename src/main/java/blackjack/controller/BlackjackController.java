@@ -43,16 +43,18 @@ public class BlackjackController {
         List<UserName> playersName = blackjackGame.getPlayersName();
         for (UserName name : playersName) {
             runPlayerTurn(blackjackGame, name);
-
         }
+
         int count = blackjackGame.runDealerTurn();
         OutputView.printDealerMoreCard(count);
     }
 
     private void runPlayerTurn(BlackjackGame blackjackGame, UserName name) {
-        while (blackjackGame.isPlayerCanHit(name) && InputView.readHitDesire(name)) {
-            blackjackGame.playerDraw(name);
-            OutputView.printPlayerCard(name, blackjackGame.playerHands(name));
+        while (blackjackGame.canPlayerHit(name) && InputView.readWantToHit(name)) {
+            blackjackGame.drawPlayerCard(name);
+
+            Hands hands = blackjackGame.getPlayerHands(name);
+            OutputView.printPlayerCard(name, hands);
         }
     }
 
@@ -75,7 +77,7 @@ public class BlackjackController {
         Map<UserName, BetRevenue> playersBetRevenue = playersBetAmount.calculateBetRevenue(playersBetLeverage);
 
         BetRevenue dealerRevenue = playersBetRevenue.values().stream()
-                .reduce(BetRevenue::plus)
+                .reduce(BetRevenue::add)
                 .orElse(new BetRevenue(0F))
                 .negate();
 

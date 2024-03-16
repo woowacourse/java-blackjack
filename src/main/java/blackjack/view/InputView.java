@@ -42,7 +42,7 @@ public class InputView {
         }
     }
 
-    public static boolean readHitDesire(UserName name) {
+    public static boolean readWantToHit(UserName name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", name.getName(),
                 CardRequestFormat.YES.getFormat(),
                 CardRequestFormat.NO.getFormat());

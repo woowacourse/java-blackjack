@@ -14,7 +14,7 @@ class ScoreTest {
         Score one = Score.from(1);
         Score two = Score.from(2);
 
-        final Score result = one.plus(two);
+        final Score result = one.add(two);
 
         assertThat(result).isEqualTo(Score.from(3));
     }
@@ -25,7 +25,7 @@ class ScoreTest {
         Score one = Score.from(1);
         Score two = Score.from(2);
 
-        final Score result = two.minus(one);
+        final Score result = two.subtract(one);
 
         assertThat(result).isEqualTo(Score.from(1));
     }

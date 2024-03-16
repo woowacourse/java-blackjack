@@ -39,7 +39,7 @@ public class BlackjackGame {
         }
     }
 
-    public void playerDraw(UserName name) {
+    public void drawPlayerCard(UserName name) {
         players.find(name).draw(deck.pick());
     }
 
@@ -57,11 +57,11 @@ public class BlackjackGame {
         return count;
     }
 
-    public boolean isPlayerCanHit(UserName name) {
-        return players.find(name).canHit();
+    public boolean canPlayerHit(UserName name) {
+        return !dealer.getHands().calculateScore().isBlackjack() && players.find(name).canHit();
     }
 
-    public Hands playerHands(UserName name) {
+    public Hands getPlayerHands(UserName name) {
         return players.find(name).getHands();
     }
 

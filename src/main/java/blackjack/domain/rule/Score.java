@@ -49,11 +49,11 @@ public final class Score implements Comparable<Score> {
         }
     }
 
-    public Score plus(Score other) {
+    public Score add(Score other) {
         return Score.from(value + other.value);
     }
 
-    public Score minus(Score other) {
+    public Score subtract(Score other) {
         return Score.from(value - other.value);
     }
 

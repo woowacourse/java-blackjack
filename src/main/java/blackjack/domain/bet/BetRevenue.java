@@ -2,7 +2,7 @@ package blackjack.domain.bet;
 
 public record BetRevenue(double value) {
 
-    public BetRevenue plus(BetRevenue other) {
+    public BetRevenue add(BetRevenue other) {
         return new BetRevenue(value + other.value);
     }
 

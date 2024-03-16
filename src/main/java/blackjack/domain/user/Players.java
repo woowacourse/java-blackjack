@@ -11,10 +11,10 @@ import java.util.function.Function;
 
 public class Players {
 
-    private final Map<UserName, Player> players;
+    private final Map<UserName, Player> playerContainer;
 
     public Players(PlayerNames playerNames) {
-        this.players = playerNames.getNames().stream()
+        this.playerContainer = playerNames.getNames().stream()
                 .collect(toMap(Function.identity(),
                         Player::new,
                         (v1, v2) -> v1,
@@ -22,17 +22,17 @@ public class Players {
     }
 
     public Player find(UserName name) {
-        return players.get(name);
+        return playerContainer.get(name);
     }
 
 
     public boolean isAllBust() {
-        return players.values().stream()
+        return playerContainer.values().stream()
                 .allMatch(player -> player.getHands().calculateScore().isBust());
     }
 
     public Map<UserName, Hands> getHands() {
-        return players.entrySet().stream()
+        return playerContainer.entrySet().stream()
                 .collect(toMap(Entry::getKey,
                         entry -> entry.getValue().getHands(),
                         (v1, v2) -> v1,
@@ -40,10 +40,10 @@ public class Players {
     }
 
     public List<UserName> getPlayerNames() {
-        return players.keySet().stream().toList();
+        return playerContainer.keySet().stream().toList();
     }
 
     public List<Player> getPlayer() {
-        return players.values().stream().toList();
+        return playerContainer.values().stream().toList();
     }
 }

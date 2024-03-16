@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Hands {
 
-    private static final Score ACE_SCORE_GAP = CardNumber.ACE.getScore().minus(CardNumber.ACE_BONUS_NUMBER);
+    private static final Score ACE_SCORE_GAP = CardNumber.ACE.getScore().subtract(CardNumber.ACE_BONUS_NUMBER);
 
     private final List<Card> cards;
 
@@ -31,7 +31,7 @@ public class Hands {
         int aceCount = countAce();
 
         while (sum.isBust() && aceCount-- > 0) {
-            sum = sum.minus(ACE_SCORE_GAP);
+            sum = sum.subtract(ACE_SCORE_GAP);
         }
 
         return sum;
@@ -40,7 +40,7 @@ public class Hands {
     private Score sum() {
         return cards.stream()
                 .map(Card::getScore)
-                .reduce(Score::plus)
+                .reduce(Score::add)
                 .orElseThrow(() -> new IllegalStateException("카드가 없습니다."));
     }
 
