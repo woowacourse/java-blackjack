@@ -17,7 +17,8 @@ public class Deck {
     private final Stack<Card> cards;
 
     public Deck(ShuffleStrategy shuffleStrategy) {
-        List<Card> cards = Stream.generate(CardFactory::createCardPack)
+        CardFactory cardFactory = new CardFactory();
+        List<Card> cards = Stream.generate(cardFactory::createCardPack)
                 .limit(DECKS_COUNT)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
