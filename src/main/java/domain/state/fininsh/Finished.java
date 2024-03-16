@@ -25,4 +25,12 @@ public abstract class Finished extends Started {
     public final boolean isFinished() {
         return true;
     }
+
+    protected boolean isBust() {
+        return false;
+    }
+
+    protected boolean isBlackjack() {
+        return false;
+    }
 }
