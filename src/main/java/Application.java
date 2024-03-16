@@ -1,8 +1,6 @@
-package model;
-
-import model.controller.BlackjackGameController;
-import model.view.InputView;
-import model.view.OutputView;
+import controller.BlackjackGameController;
+import view.InputView;
+import view.OutputView;
 
 public class Application {
     public static void main(String[] args) {

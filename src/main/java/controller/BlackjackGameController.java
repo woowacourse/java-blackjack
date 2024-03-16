@@ -1,4 +1,4 @@
-package model.controller;
+package controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,8 +20,8 @@ import model.participants.dealer.Dealer;
 import model.participants.player.Player;
 import model.participants.player.Players;
 import model.participants.player.UpdatedPlayer;
-import model.view.InputView;
-import model.view.OutputView;
+import view.InputView;
+import view.OutputView;
 
 public class BlackjackGameController {
 
