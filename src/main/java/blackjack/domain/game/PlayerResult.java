@@ -14,7 +14,6 @@ public class PlayerResult implements Ownable<Player> {
         this.gameResult = gameResult;
     }
 
-    //TODO TDA
     public OwnedMoney calculatePrize(OwnedMoney bet) {
         return gameResult.calculatePrize(bet);
     }

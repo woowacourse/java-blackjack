@@ -2,7 +2,6 @@ package blackjack.domain.card;
 
 import java.util.Objects;
 
-// TODO 메서드 정렬
 public class Card {
 
     private final Value value;
