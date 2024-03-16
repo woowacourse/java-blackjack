@@ -7,20 +7,25 @@ import java.util.List;
 
 public class Deck {
 
+    private static final List<Card> FULL_CARDS = Deck.setFullCards();
     private final List<Card> cards;
 
     protected Deck(List<Card> cards) {
         this.cards = cards;
     }
 
-    public static Deck withFullCards() {
+    private static List<Card> setFullCards() {
         List<Card> cards = new ArrayList<>();
         for (CardType type : CardType.values()) {
             Arrays.stream(CardNumber.values())
                     .forEach(number -> cards.add(new Card(type, number)));
         }
         Collections.shuffle(cards);
-        return new Deck(cards);
+        return Collections.unmodifiableList(cards);
+    }
+
+    public static Deck withFullCards() {
+        return new Deck(new ArrayList<>(FULL_CARDS));
     }
 
     protected static Deck withCustomCards(Card... cards) {
