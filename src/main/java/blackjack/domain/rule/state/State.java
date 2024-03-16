@@ -17,10 +17,6 @@ public interface State {
         return false;
     }
 
-    default boolean isNotBlackjack() {
-        return !isBlackjack();
-    }
-
     default boolean isBust() {
         return false;
     }
