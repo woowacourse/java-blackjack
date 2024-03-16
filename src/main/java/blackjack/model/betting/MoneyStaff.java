@@ -5,6 +5,7 @@ import blackjack.model.result.ResultCommand;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class MoneyStaff {
     public static final int ABSOLUTE_RATE = -1;
@@ -19,9 +20,9 @@ public class MoneyStaff {
 
     public Map<Player, Money> calculateProfitMoneys(final Map<Player, ResultCommand> playerGameResult) {
         Map<Player, Money> playerProfitMoneys = new LinkedHashMap<>();
-        for (Player player : playerGameResult.keySet()) {
-            Money profitMoney = calculateProfitMoney(player, playerGameResult.get(player));
-            playerProfitMoneys.put(player, profitMoney);
+        for (Entry<Player, ResultCommand> entry : playerGameResult.entrySet()) {
+            Money profitMoney = calculateProfitMoney(entry.getKey(), entry.getValue());
+            playerProfitMoneys.put(entry.getKey(), profitMoney);
         }
         return playerProfitMoneys;
     }
