@@ -27,10 +27,6 @@ public class Players {
                 .toList();
     }
 
-    public int getSize() {
-        return players.size();
-    }
-
     private static void validate(List<Player> players) {
         validatePlayerCountRange(players);
         validateHasDuplicateName(players);

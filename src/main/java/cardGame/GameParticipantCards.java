@@ -19,16 +19,6 @@ public class GameParticipantCards {
         cards.addCard(card);
     }
 
-    public boolean isWinner(GameParticipantCards participantCards) {
-        if (isBust()) {
-            return false;
-        }
-        if (isBlackJack()) {
-            return true;
-        }
-        return getCardScore() > participantCards.getCardScore();
-    }
-
     public boolean isBlackJack() {
         return cards.countMaxScore() == MAX_BLACK_JACK_SCORE && cards.countCard() == INIT_CARD_SETTING_COUNT;
     }
