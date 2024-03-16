@@ -4,7 +4,6 @@ import domain.card.Deck;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class Players {
     private final List<Player> players;
@@ -23,10 +22,6 @@ public class Players {
         return players.stream()
                 .map(player -> GameResultCalculator.calculate(player, dealer))
                 .toList();
-    }
-
-    public void forEach(Consumer<Player> consumer) {
-        players.forEach(consumer);
     }
 
     public List<String> getPlayerNames() {
@@ -74,5 +69,9 @@ public class Players {
                     return player.calculateEarningMoney(gameResult);
                 })
                 .toList();
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }

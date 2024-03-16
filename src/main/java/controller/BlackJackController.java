@@ -49,7 +49,9 @@ public class BlackJackController {
     }
 
     private void printPlayers(Players players) {
-        players.forEach(this::printPlayer);
+        for (Player player : players.getPlayers()) {
+            printPlayer(player);
+        }
     }
 
     private void printPlayer(Player player) {
@@ -100,10 +102,10 @@ public class BlackJackController {
     }
 
     private void printPlayersWithPoint(Players players) {
-        players.forEach(player -> {
+        for (Player player : players.getPlayers()) {
             GamerDTO playerDTO = GamerDTO.playerDTO(player.getRawName(), player.getRawHoldingCards(),
                     player.calculateSummationCardPointAsInt());
             GamerOutputView.print(playerDTO);
-        });
+        }
     }
 }
