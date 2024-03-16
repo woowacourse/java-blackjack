@@ -78,9 +78,10 @@ class MatchResultTest {
 
     static Stream<Arguments> dealerWinCases() {
         return Stream.of(
-                Arguments.of(hand21, handBlackJack),
                 Arguments.of(hand22, hand20),
-                Arguments.of(hand20, hand21)
+                Arguments.of(hand22, hand22),
+                Arguments.of(hand20, hand21),
+                Arguments.of(hand21, handBlackJack)
         );
     }
 
