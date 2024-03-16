@@ -1,6 +1,6 @@
 package view;
 
-import domain.player.PlayerResult;
+import domain.player.Result;
 import dto.CardResponse;
 import dto.DealerResponse;
 import dto.GameResult;
@@ -69,25 +69,30 @@ public class OutputView {
         System.out.print(stringBuilder);
     }
 
-    public static void printWinOrLose(final GameResult blackjackResult) {
-        System.out.println("## 최종 승패");
-        final Set<Entry<String, PlayerResult>> playerEntries = blackjackResult.playerResult().entrySet();
-        printDealerWinOrLose(blackjackResult);
-        printPlayerWinOrLose(playerEntries);
+    public static void printProfit(final GameResult blackjackResult) {
+        System.out.println("## 최종 수익");
+
+        final Double dealerResult = blackjackResult.dealerResult();
+        final Set<Entry<String, Double>> playerEntries = blackjackResult.playerResult().entrySet();
+//        printDealerWinOrLose(blackjackResult);
+//        printPlayerWinOrLose(playerEntries);
+
+        System.out.printf("딜러: %.1f\n", dealerResult);
+        playerEntries.forEach(r -> System.out.printf("%s: %.1f\n", r.getKey(), r.getValue()));
         System.out.println();
     }
 
-    private static void printDealerWinOrLose(final GameResult blackjackResult) {
-        System.out.print(DEALER_DISPLAY_NAME + ": ");
-        final List<Integer> printOrder = List.of(blackjackResult.dealerWin(), blackjackResult.dealerLose(),
-                blackjackResult.dealerTie());
-        final List<String> suffix = List.of(WIN, LOSE, TIE);
-
-        for (int order = 0; order < printOrder.size(); order++) {
-            printResultWithCounter(printOrder.get(order), suffix.get(order));
-        }
-        System.out.println();
-    }
+//    private static void printDealerWinOrLose(final GameResult blackjackResult) {
+//        System.out.print(DEALER_DISPLAY_NAME + ": ");
+//        final List<Integer> printOrder = List.of(blackjackResult.dealerWin(), blackjackResult.dealerLose(),
+//                blackjackResult.dealerTie());
+//        final List<String> suffix = List.of(WIN, LOSE, TIE);
+//
+//        for (int order = 0; order < printOrder.size(); order++) {
+//            printResultWithCounter(printOrder.get(order), suffix.get(order));
+//        }
+//        System.out.println();
+//    }
 
     private static void printResultWithCounter(final int resultCount, final String suffix) {
         if (resultCount <= 0) {
@@ -96,17 +101,17 @@ public class OutputView {
         System.out.print(resultCount + " " + suffix + " ");
     }
 
-    private static void printPlayerWinOrLose(final Set<Entry<String, PlayerResult>> playerEntries) {
+    private static void printPlayerWinOrLose(final Set<Entry<String, Result>> playerEntries) {
         for (final var entry : playerEntries) {
             final String name = entry.getKey();
-            final PlayerResult playerResult = entry.getValue();
-            printPlayerResult(name, playerResult);
+            final Result result = entry.getValue();
+            printPlayerResult(name, result);
         }
     }
 
 
-    private static void printPlayerResult(final String name, final PlayerResult playerResult) {
-        System.out.println(name + ": " + determineWinOrLose(playerResult));
+    private static void printPlayerResult(final String name, final Result result) {
+        System.out.println(name + ": " + determineWinOrLose(result));
     }
 
     public static void printDealerHitMessage() {
@@ -114,11 +119,11 @@ public class OutputView {
         System.out.println();
     }
 
-    private static String determineWinOrLose(final PlayerResult playerResult) {
-        if (playerResult == PlayerResult.WIN) {
+    private static String determineWinOrLose(final Result result) {
+        if (result == Result.WIN) {
             return WIN;
         }
-        if (playerResult == PlayerResult.LOSE) {
+        if (result == Result.LOSE) {
             return LOSE;
         }
         return TIE;

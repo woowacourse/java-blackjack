@@ -1,8 +1,14 @@
 package domain.player;
 
+import static domain.card.Rank.FOUR;
+import static domain.card.Rank.SEVEN;
+import static domain.card.Rank.SIX;
+import static domain.card.Rank.TEN;
+import static domain.card.Rank.THREE;
+import static domain.card.Rank.TWO;
+import static domain.card.Suit.CLUBS;
+
 import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Suit;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +19,7 @@ public class DealerTest {
     @DisplayName("딜러는 카드의 합이 17 미만이라면 히트할 수 있다")
     void canHit() {
         final Dealer dealer = new Dealer();
-        dealer.init(new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.SIX, Suit.CLUBS));
+        dealer.init(new Card(TEN, CLUBS), new Card(SIX, CLUBS));
 
         Assertions.assertThat(dealer.canHit()).isTrue();
     }
@@ -22,7 +28,7 @@ public class DealerTest {
     @DisplayName("딜러는 카드의 합이 17 이상이면 히트할 수 없다")
     void canNotHit() {
         final Dealer dealer = new Dealer();
-        dealer.init(new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.SEVEN, Suit.CLUBS));
+        dealer.init(new Card(TEN, CLUBS), new Card(SEVEN, CLUBS));
 
         Assertions.assertThat(dealer.canHit()).isFalse();
     }
@@ -35,15 +41,19 @@ public class DealerTest {
         final Player playerLose = new Player(new Name("lose"));
         final Player playerTie = new Player(new Name("tie"));
 
-        dealer.init(new Card(Rank.THREE, Suit.CLUBS), new Card(Rank.THREE, Suit.CLUBS));
+        dealer.init(new Card(THREE, CLUBS), new Card(THREE, CLUBS));
 
-        playerWin.init(new Card(Rank.FOUR, Suit.CLUBS), new Card(Rank.FOUR, Suit.CLUBS));
-        playerLose.init(new Card(Rank.TWO, Suit.CLUBS), new Card(Rank.TWO, Suit.CLUBS));
-        playerTie.init(new Card(Rank.THREE, Suit.CLUBS), new Card(Rank.THREE, Suit.CLUBS));
+        playerWin.init(new Card(FOUR, CLUBS), new Card(FOUR, CLUBS));
+        playerLose.init(new Card(TWO, CLUBS), new Card(TWO, CLUBS));
+        playerTie.init(new Card(THREE, CLUBS), new Card(THREE, CLUBS));
+        dealer.stand();
+        playerWin.stand();
+        playerLose.stand();
+        playerTie.stand();
 
-        Assertions.assertThat(dealer.compareHandsWith(playerWin)).isSameAs(PlayerResult.LOSE);
-        Assertions.assertThat(dealer.compareHandsWith(playerLose)).isSameAs(PlayerResult.WIN);
-        Assertions.assertThat(dealer.compareHandsWith(playerTie)).isSameAs(PlayerResult.TIE);
+        Assertions.assertThat(dealer.compareHandsWith(playerWin)).isSameAs(Result.LOSE);
+        Assertions.assertThat(dealer.compareHandsWith(playerLose)).isSameAs(Result.WIN);
+        Assertions.assertThat(dealer.compareHandsWith(playerTie)).isSameAs(Result.TIE);
     }
 
 }

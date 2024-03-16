@@ -38,7 +38,7 @@ public class Deck {
 
     public Card draw() {
         if (value.isEmpty()) {
-            throw new IllegalStateException("카드가 모두 소진되었습니다.");
+            throw new IllegalStateException("카드가 모두 소진되어 더이상 카드를 뽑을 수 없습니다");
         }
         return value.remove(value.size() - 1);
     }

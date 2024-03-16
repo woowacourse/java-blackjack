@@ -8,9 +8,8 @@ public class Name {
 
     public Name(final String name) {
         validate(name);
-        this.value = name;
+        value = name;
     }
-
 
     private void validate(final String name) {
         validateEmptiness(name);

@@ -1,7 +1,7 @@
 package domain.state.run;
 
 import domain.card.Card;
-import domain.state.Hands;
+import domain.card.Hands;
 import domain.state.State;
 import domain.state.fininsh.Bust;
 import domain.state.fininsh.Stand;
@@ -15,12 +15,17 @@ public final class Hit extends Running {
     public State add(final Card card) {
         getHands().add(card);
 
-        if (getHands().calculateScore() > 21) {
+        if (isBusted()) {
             return new Bust(getHands());
         }
 
         return new Hit(getHands());
     }
+
+    private boolean isBusted() {
+        return getHands().calculateScore() > PERFECT_SCORE;
+    }
+
 
     @Override
     public State stand() {

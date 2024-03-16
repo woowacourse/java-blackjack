@@ -7,6 +7,23 @@ import java.util.Scanner;
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 
+
+    public static int inputBettingAmount(final String name) {
+        System.out.printf("%s의 배팅 금액은?", name);
+        System.out.println();
+        final String bettingAmount = scanner.nextLine();
+        validateBettingAmount(bettingAmount);
+        return Integer.parseInt(bettingAmount);
+    }
+
+    private static void validateBettingAmount(final String bettingAmount) {
+        try {
+            Integer.parseInt(bettingAmount);
+        } catch (final NumberFormatException e) {
+            throw new IllegalArgumentException("정수 범위의 수만 입력해주세요");
+        }
+    }
+
     public static List<String> inputPlayers() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         final String input = scanner.nextLine();

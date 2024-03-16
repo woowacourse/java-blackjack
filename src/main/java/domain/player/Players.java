@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Players {
@@ -19,6 +20,12 @@ public class Players {
         return new Players(names.stream()
                 .map(name -> new Player(new Name(name)))
                 .collect(Collectors.toList()));
+    }
+
+    public static Players of(final List<String> names, final List<Integer> betAmounts) {
+        return new Players(IntStream.range(0, names.size())
+                .mapToObj(index -> new Player(new Name(names.get(index)), new BetAmount(betAmounts.get(index))))
+                .toList());
     }
 
     private void validate(final List<Player> players) {
@@ -47,14 +54,14 @@ public class Players {
     }
 
     public Player findPlayerByName(final String name) {
-        return this.value.stream()
+        return value.stream()
                 .filter(r -> r.getName().equals(name))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("플레이어가 존재하지 않습니다."));
     }
 
     public Stream<Player> stream() {
-        return this.value.stream();
+        return value.stream();
     }
 
     public List<Player> getValue() {
