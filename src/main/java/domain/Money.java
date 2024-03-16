@@ -14,7 +14,7 @@ public class Money {
 
     private void validate() {
         if (value <= 0) {
-            throw new IllegalArgumentException("양의 정수만 입력하세요.");
+            throw new NumberFormatException("양의 정수만 입력하세요.");
         }
     }
 
