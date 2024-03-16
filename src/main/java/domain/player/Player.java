@@ -5,16 +5,16 @@ import dto.PlayerResponse;
 import java.util.Objects;
 
 public class Player extends Participant {
-    private static final int HIT_UPPER_BOUND = 21;
-
     private final Name name;
+    private BetAmount betAmount;
 
     public Player(final Name name) {
         this.name = name;
     }
 
-    public PlayerResult obtainResultBy(final Dealer dealer) {
-        return PlayerResult.reverse(dealer.compareHandsWith(this));
+    public Player(final Name name, final BetAmount betAmount) {
+        this.name = name;
+        this.betAmount = betAmount;
     }
 
     public PlayerResponse toPlayerResponse() {
@@ -22,9 +22,20 @@ public class Player extends Participant {
                 getScore());
     }
 
+    public double calculateProfit(final Dealer dealer) {
+        final double result = state.earningRate() * betAmount.getValue();
+        if (dealer.compareHandsWith(this) == Result.WIN) {
+            return -1 * result;
+        }
+        if (dealer.compareHandsWith(this) == Result.LOSE) {
+            return result;
+        }
+        return 0;
+    }
+
     @Override
     public boolean canHit() {
-        return state.canHit(HIT_UPPER_BOUND);
+        return state.isRunning();
     }
 
     public String getName() {

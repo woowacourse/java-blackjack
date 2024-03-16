@@ -12,32 +12,36 @@ public abstract class Participant {
 
 
     public final void init(final Card cardA, final Card cardB) {
-        this.state = Started.ofTwoCard(cardA, cardB);
+        state = Started.ofTwoCard(cardA, cardB);
     }
 
-    public final boolean isFinished() {
-        return this.state.isFinished();
-    }
-
-    public final boolean isNotFinished() {
-        return !isFinished();
-    }
-
-
-    public int getScore() {
-        return this.state.getScore();
+    public boolean isBlackjack() {
+        return state.isBlackjack();
     }
 
     public final boolean isBust() {
-        return this.state.isBust();
+        return state.isBust();
+    }
+
+    public final boolean isStand() {
+        return state.isStand();
     }
 
     public final void add(final Card card) {
-        this.state = this.state.add(card);
+        state = state.add(card);
     }
 
     public abstract boolean canHit();
 
+    public void stand() {
+        if (!state.isFinished()) {
+            state = state.stand();
+        }
+    }
+
+    public int getScore() {
+        return state.getScore();
+    }
 
     public String getName() {
         throw new IllegalCallerException("참여자의 이름이 정해지지 않았습니다");

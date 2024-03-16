@@ -1,6 +1,6 @@
 package domain.state.fininsh;
 
-import domain.state.Hands;
+import domain.card.Hands;
 
 public final class Bust extends Finished {
     public Bust(final Hands hands) {
@@ -10,10 +10,5 @@ public final class Bust extends Finished {
     @Override
     public boolean isBust() {
         return true;
-    }
-
-    @Override
-    public double earningRate() {
-        return 0;
     }
 }

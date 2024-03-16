@@ -1,9 +1,8 @@
-package domain.blackjack;
+package domain;
 
 import domain.card.Card;
 import domain.player.Dealer;
 import domain.player.Player;
-import domain.player.PlayerResult;
 import domain.player.Players;
 import dto.GameResult;
 import dto.ParticipantsResponse;
@@ -27,22 +26,28 @@ public class Blackjack {
         players.stream().forEach(r -> r.init(dealer.draw(), dealer.draw()));
     }
 
-    public static Blackjack of(final Players players) {
-        final Dealer dealer1 = new Dealer();
-        init(players, dealer1);
-        return new Blackjack(players, dealer1);
-    }
+//    public static Blackjack of(final Players players) {
+//        final Dealer dealer1 = new Dealer();
+//        init(players, dealer1);
+//        return new Blackjack(players, dealer1);
 
+    //    }
     public static Blackjack fromNames(final List<String> names) {
         final Dealer dealer1 = new Dealer();
         final Players players1 = Players.fromNames(names);
-        init(players1,dealer1);
+        init(players1, dealer1);
         return new Blackjack(players1, dealer1);
 
     }
 
-    public boolean canPlayerHit(final String name) {
+    public static Blackjack of(final List<String> names, final List<Integer> betAmounts) {
+        final Dealer dealer1 = new Dealer();
+        final Players players1 = Players.of(names, betAmounts);
+        init(players1, dealer1);
+        return new Blackjack(players1, dealer1);
+    }
 
+    public boolean canPlayerHit(final String name) {
         return getPlayers().stream()
                 .filter(player -> player.getName().equals(name))
                 .anyMatch(Player::canHit);
@@ -53,8 +58,9 @@ public class Blackjack {
         player.add(dealer.draw());
     }
 
-    public boolean canDealerHit() {
-        return dealer.canHit();
+    public void playerStand(final String name) {
+        final Player player = players.findPlayerByName(name);
+        player.stand();
     }
 
     public void dealerHit() {
@@ -62,14 +68,22 @@ public class Blackjack {
         dealer.add(nextCard);
     }
 
+    public void dealerStand() {
+        dealer.stand();
+    }
+
+    public boolean canDealerHit() {
+        return dealer.canHit();
+    }
+
     public GameResult toGameResult() {
-        final Map<String, PlayerResult> playerResult = players.getValue()
+        final Map<String, Double> playerResult = players.getValue()
                 .stream()
-                .collect(Collectors.toMap(Player::getName, player -> player.obtainResultBy(dealer),
+                .collect(Collectors.toMap(Player::getName, player -> player.calculateProfit(dealer),
                         (a, b) -> a,
                         LinkedHashMap::new));
-        final Map<PlayerResult, Integer> dealerResult = dealer.wrapUp(players);
-        return new GameResult(dealerResult, playerResult);
+        final double sum = players.stream().map(player -> player.calculateProfit(dealer)).mapToDouble(r -> -r).sum();
+        return new GameResult(sum, playerResult);
     }
 
     public ParticipantsResponse toParticipantsResponse() {

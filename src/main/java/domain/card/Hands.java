@@ -1,12 +1,11 @@
-package domain.state;
+package domain.card;
 
-import domain.card.Card;
-import domain.card.Rank;
 import java.util.List;
 
 public class Hands {
     private static final int ACE_HIGH = 11;
     static final int PERFECT_SCORE = 21;
+
     private final List<Card> value;
 
     public Hands(final List<Card> value) {

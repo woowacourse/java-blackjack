@@ -3,9 +3,9 @@ package domain.state.run;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
+import domain.card.Hands;
 import domain.card.Rank;
 import domain.card.Suit;
-import domain.state.Hands;
 import domain.state.State;
 import domain.state.fininsh.Bust;
 import java.util.ArrayList;

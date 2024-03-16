@@ -1,8 +1,8 @@
-package domain.bet;
+package domain.player;
 
 public class BetAmount {
+    private static final int MAX_AMOUNT = 1_000_000;
 
-    private final static int MAX_AMOUNT = 1_000_000;
     private final int value;
 
     public BetAmount(final int value) {
@@ -16,7 +16,7 @@ public class BetAmount {
     }
 
     private void validateNegativeNumber(final int value) {
-        if(value < 0){
+        if (value < 0) {
             throw new IllegalArgumentException(String.format("배팅 금액: %d, 배팅 금액은 음수가 될 수 없습니다", value));
         }
     }
@@ -27,4 +27,7 @@ public class BetAmount {
         }
     }
 
+    public int getValue() {
+        return value;
+    }
 }

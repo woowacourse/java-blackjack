@@ -3,46 +3,44 @@ package domain.player;
 import domain.card.Card;
 import domain.card.Deck;
 import dto.DealerResponse;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class Dealer extends Participant {
     private static final int HIT_UPPER_BOUND = 17;
+
     private final Deck decks = Deck.makeDecks();
+
+    public Result compareHandsWith(final Player player) {
+        if (isStand() && player.isStand()) {
+            return compareScore(player);
+        }
+        return getPlayerResult(player);
+    }
+
+    private Result getPlayerResult(final Player player) {
+        if ((isBlackjack() && (player.isStand() || player.isBust())) ||
+                (isStand() && player.isBust()) ||
+                (isBust()  && player.isBust())) {
+            return Result.WIN;
+        }
+        if (isBlackjack() && player.isBlackjack()) {
+            return Result.TIE;
+        }
+        return Result.LOSE;
+    }
 
     public Card draw() {
         return decks.draw();
     }
 
 
-    public PlayerResult compareHandsWith(final Player player) {
-        if (isBust()) {
-            return PlayerResult.LOSE;
+    private Result compareScore(final Player player) {
+        if (getScore() == player.getScore()) {
+            return Result.TIE;
         }
-
-        if (player.isBust()) {
-            return PlayerResult.WIN;
+        if (getScore() < player.getScore()) {
+            return Result.LOSE;
         }
-
-        return compareScore(player);
-    }
-
-    private PlayerResult compareScore(final Player player) {
-        if (this.getScore() == player.getScore()) {
-            return PlayerResult.TIE;
-        }
-        if (this.getScore() < player.getScore()) {
-            return PlayerResult.LOSE;
-        }
-        return PlayerResult.WIN;
-    }
-
-    public Map<PlayerResult, Integer> wrapUp(final Players players) {
-        final Map<PlayerResult, Integer> result = new LinkedHashMap<>();
-        players.stream()
-                .forEach(player -> result.merge(compareHandsWith(player), 1, Integer::sum));
-        return Collections.unmodifiableMap(result);
+        return Result.WIN;
     }
 
     @Override
@@ -51,9 +49,7 @@ public class Dealer extends Participant {
     }
 
     public DealerResponse toDealerResponse() {
-        return new DealerResponse(getHands().stream().
-                map(Card::toCardResponse)
-                .toList(), state.getHands().calculateScore());
+        return new DealerResponse(getHands().stream().map(Card::toCardResponse).toList(),
+                state.getHands().calculateScore());
     }
 }
-

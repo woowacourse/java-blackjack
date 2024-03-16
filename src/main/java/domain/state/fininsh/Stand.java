@@ -1,6 +1,6 @@
 package domain.state.fininsh;
 
-import domain.state.Hands;
+import domain.card.Hands;
 
 public final class Stand extends Finished {
     public Stand(final Hands hands) {
@@ -8,7 +8,7 @@ public final class Stand extends Finished {
     }
 
     @Override
-    public double earningRate() {
-        return 0;
+    public boolean isStand() {
+        return true;
     }
 }
