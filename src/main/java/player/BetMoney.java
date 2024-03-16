@@ -17,4 +17,8 @@ public class BetMoney {
             throw new IllegalArgumentException("베팅 금액은 " + MIN_BET_MONEY + "원 에서 " + MAX_BET_MONEY + "까지만 가능합니다.");
         }
     }
+
+    public double betMoneyResult(double percent) {
+        return betAmount * percent;
+    }
 }
