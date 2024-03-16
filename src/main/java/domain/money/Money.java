@@ -3,15 +3,17 @@ package domain.money;
 import java.util.Objects;
 
 public class Money {
-    private static final int INITIAL_MONEY = 0;
     private final int value;
 
-    public Money() {
-        this.value = INITIAL_MONEY;
+    public Money(final int value) {
+        validate(value);
+        this.value = value;
     }
 
-    public Money(final int value) {
-        this.value = value;
+    private void validate(final int value) {
+        if (value <= 0) {
+            throw new IllegalArgumentException("1 이상의 돈을 입력해주세요.");
+        }
     }
 
     public Money add(final Money money) {
