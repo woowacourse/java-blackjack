@@ -1,5 +1,6 @@
 package view;
 
+import domain.HitState;
 import domain.gamer.Player;
 
 import java.util.Arrays;
@@ -10,6 +11,7 @@ import java.util.regex.Pattern;
 public class InputView {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
+    private static final String HIT = "y";
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -32,8 +34,12 @@ public class InputView {
         }
     }
 
-    public String readHitOrNot(Player player) {
+    public HitState readHitOrStay(Player player) {
         System.out.println(player.getPlayerName() + "은/는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return scanner.nextLine();
+        String hitOrStay = scanner.nextLine();
+        if (hitOrStay.equals(HIT)) {
+            return HitState.HIT;
+        }
+        return HitState.STAY;
     }
 }
