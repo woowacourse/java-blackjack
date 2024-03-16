@@ -1,6 +1,7 @@
 package view;
 
 import domain.card.Card;
+import domain.gamer.Gamer;
 import domain.gamer.Name;
 import domain.money.Money;
 import domain.result.BettingResult;
@@ -24,11 +25,11 @@ public class OutputView {
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    public static void printDealerInitialCards(List<Card> cards) {
-        System.out.printf("딜러: %s%n", buildDealerCards(cards));
+    public static void printGamerHiddenCards(Gamer gamer) {
+        System.out.printf("%s: %s%n", gamer.getName().name(), buildHiddenCards(gamer.getCards()));
     }
 
-    private static String buildDealerCards(List<Card> cards) {
+    private static String buildHiddenCards(List<Card> cards) {
         return buildCardString(cards.get(0));
     }
 
@@ -36,12 +37,12 @@ public class OutputView {
         return card.getCardNumber().getSymbol() + card.getCardType().getType();
     }
 
-    public static void printPlayerCards(Name name, List<Card> cards) {
-        System.out.println(buildNameCards(name.name(), cards));
-    }
-
     public static void printNewLine() {
         System.out.println();
+    }
+
+    public static void printGamerCards(Gamer gamer) {
+        System.out.println(buildNameCards(gamer.getName().name(), gamer.getCards()));
     }
 
     private static String buildNameCards(String name, List<Card> cards) {
@@ -61,16 +62,13 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printDealerStatus(List<Card> dealerCards, int dealerScore) {
-        System.out.printf("딜러 카드: %s - %s%n", buildCardsString(dealerCards), buildTotalScore(dealerScore));
+    public static void printGamerStatus(Gamer gamer) {
+        System.out.printf("%-3s카드: %s%n", gamer.getName().name(),
+                buildCardsWithScore(gamer.getCards(), gamer.getTotalScore()));
     }
 
-    public static void printPlayerStatus(Name playerName, List<Card> cards, int playerScore) {
-        System.out.printf("%s - %s%n", buildNameCards(playerName.name(), cards), buildTotalScore(playerScore));
-    }
-
-    private static String buildTotalScore(int totalScore) {
-        return "결과: %d".formatted(totalScore);
+    private static String buildCardsWithScore(List<Card> cards, int totalScore) {
+        return "%s - 결과: %d".formatted(buildCardsString(cards), totalScore);
     }
 
     public static void printBettingResult(BettingResult gameResult) {

@@ -8,9 +8,11 @@ import java.util.stream.IntStream;
 
 public abstract class Gamer {
 
+    private final Name name;
     private final Hand hand;
 
-    public Gamer() {
+    public Gamer(Name name) {
+        this.name = name;
         this.hand = new Hand();
     }
 
@@ -32,6 +34,10 @@ public abstract class Gamer {
 
     public boolean isBlackJack() {
         return hand.isBlackJack();
+    }
+
+    public Name getName() {
+        return name;
     }
 
     public List<Card> getCards() {

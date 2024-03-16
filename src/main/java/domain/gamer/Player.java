@@ -7,17 +7,16 @@ public class Player extends Gamer {
 
     private static final double BLACKJACK_BONUS_RATIO = 1.5;
 
-    private final Name name;
     private final Money money;
 
     Player(Name name) {
+        super(name);
         this.money = new Money(0);
-        this.name = name;
     }
 
     public Player(Name name, Money money) {
+        super(name);
         this.money = money;
-        this.name = name;
     }
 
     @Override
@@ -82,13 +81,5 @@ public class Player extends Gamer {
 
     private Money loseMoney() {
         return money.negative();
-    }
-
-    public boolean hasName(Name comparedName) {
-        return name.equals(comparedName);
-    }
-
-    public Name getName() {
-        return name;
     }
 }

@@ -45,14 +45,7 @@ class PlayerTest {
         List<Card> cards = player.getCards();
         Assertions.assertThat(cards).isEqualTo(List.of(card));
     }
-
-    @Test
-    @DisplayName("이름 객체로 플레이어의 이름을 검증할 수 있다.")
-    void createName() {
-        Player player = new Player(new Name("test"));
-        Assertions.assertThat(player.hasName(new Name("test"))).isTrue();
-    }
-
+    
     @Test
     @DisplayName("게이머의 점수 합계를 반환한다.")
     void getTotalScore() {

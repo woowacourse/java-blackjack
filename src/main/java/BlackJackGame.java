@@ -51,13 +51,13 @@ public class BlackJackGame {
             player.pickCards(deck, INITIAL_CARD_COUNT);
         }
         dealer.pickCards(deck, INITIAL_CARD_COUNT);
-        OutputView.printDealerInitialCards(dealer.getCards());
+        OutputView.printGamerHiddenCards(dealer);
         printInitialPlayersCards(players);
     }
 
     private static void printInitialPlayersCards(Players players) {
         for (Player player : players.getPlayers()) {
-            OutputView.printPlayerCards(player.getName(), player.getCards());
+            OutputView.printGamerCards(player);
         }
         OutputView.printNewLine();
     }
@@ -92,7 +92,7 @@ public class BlackJackGame {
 
     private static void printPlayerHitResult(String answer, Player player, boolean isFirstTurn) {
         if (isFirstTurn || COMMAND_YES.equals(answer)) {
-            OutputView.printPlayerCards(player.getName(), player.getCards());
+            OutputView.printGamerCards(player);
         }
     }
 
@@ -105,18 +105,10 @@ public class BlackJackGame {
     }
 
     private static void playFinalStep(Dealer dealer, Players players) {
-        printDealerStatus(dealer);
-        printPlayersStatus(players);
-        OutputView.printBettingResult(new BettingResult(dealer, players));
-    }
-
-    private static void printDealerStatus(Dealer dealer) {
-        OutputView.printDealerStatus(dealer.getCards(), dealer.getTotalScore());
-    }
-
-    private static void printPlayersStatus(Players players) {
+        OutputView.printGamerStatus(dealer);
         for (Player player : players.getPlayers()) {
-            OutputView.printPlayerStatus(player.getName(), player.getCards(), player.getTotalScore());
+            OutputView.printGamerStatus(player);
         }
+        OutputView.printBettingResult(new BettingResult(dealer, players));
     }
 }
