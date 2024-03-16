@@ -10,8 +10,6 @@ import model.card.Emblem;
 import model.card.Number;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
 
 class DealerTest {
 
@@ -45,9 +43,9 @@ class DealerTest {
         Dealer dealer = new Dealer(card1, card2);
 
         assertAll(()->{
-            assertEquals(MatchResult.WIN, dealer.determineMatchResult(MatchResult.LOSE));
-            assertEquals(MatchResult.DRAW, dealer.determineMatchResult(MatchResult.DRAW));
-            assertEquals(MatchResult.LOSE, dealer.determineMatchResult(MatchResult.WIN));
+            assertEquals(MatchState.WIN, dealer.determineMatchResult(MatchState.LOSE));
+            assertEquals(MatchState.DRAW, dealer.determineMatchResult(MatchState.DRAW));
+            assertEquals(MatchState.LOSE, dealer.determineMatchResult(MatchState.WIN));
         });
     }
 

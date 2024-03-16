@@ -1,8 +1,8 @@
 package model.participant;
 
-import static model.participant.MatchResult.DRAW;
-import static model.participant.MatchResult.LOSE;
-import static model.participant.MatchResult.WIN;
+import static model.participant.MatchState.DRAW;
+import static model.participant.MatchState.LOSE;
+import static model.participant.MatchState.WIN;
 
 import model.card.Card;
 
@@ -21,7 +21,7 @@ public class Player extends Participant {
         return !cardDeck.isBust() && !isTurnOver;
     }
 
-    public MatchResult calculateMatchResult(int dealerHand) {
+    public MatchState calculateMatchResult(int dealerHand) {
         int playerHand = cardDeck.calculateHand();
         if (playerHand >= BUST_THRESHOLD || (dealerHand < BUST_THRESHOLD) && (playerHand < dealerHand)) {
             return LOSE;

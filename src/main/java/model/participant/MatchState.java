@@ -1,6 +1,8 @@
 package model.participant;
 
-public enum MatchResult {
+public enum MatchState {
+    PLAYING,
+    TURNOVER,
     WIN,
     DRAW,
     LOSE,

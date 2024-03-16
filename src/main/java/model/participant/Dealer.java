@@ -1,8 +1,8 @@
 package model.participant;
 
-import static model.participant.MatchResult.DRAW;
-import static model.participant.MatchResult.LOSE;
-import static model.participant.MatchResult.WIN;
+import static model.participant.MatchState.DRAW;
+import static model.participant.MatchState.LOSE;
+import static model.participant.MatchState.WIN;
 
 import model.card.Card;
 
@@ -18,11 +18,11 @@ public final class Dealer extends Participant {
         return cardDeck.calculateHand() <= HIT_THRESHOLD;
     }
 
-    public MatchResult determineMatchResult(MatchResult matchResult) {
-        if (matchResult == LOSE) {
+    public MatchState determineMatchResult(MatchState matchState) {
+        if (matchState == LOSE) {
             return WIN;
         }
-        if (matchResult == WIN) {
+        if (matchState == WIN) {
             return LOSE;
         }
         return DRAW;
