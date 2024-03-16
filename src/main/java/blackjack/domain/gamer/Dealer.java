@@ -26,6 +26,6 @@ public class Dealer extends Gamer {
 	}
 
 	public Card getFirstCard() {
-		return cards.indexOf(0);
+		return cards.getFirst();
 	}
 }

@@ -52,8 +52,8 @@ public class Cards {
 		return calculateScore() > BLACKJACK_SCORE;
 	}
 
-	public Card indexOf(int index) {
-		return cards.get(index);
+	public Card getFirst() {
+		return cards.get(0);
 	}
 
 	public boolean isScoreLessOrEqual(final int value) {
