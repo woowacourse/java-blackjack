@@ -14,7 +14,7 @@ public class Dealer extends Gamer {
     }
 
     @Override
-    DrawResult draw(Deck deck) {
+    public DrawResult draw(Deck deck) {
         return blackJackGameMachine.draw(deck, RandomCardSelectStrategy.INSTANCE,
                 new DealerCardDrawCondition(blackJackGameMachine));
     }

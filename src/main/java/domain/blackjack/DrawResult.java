@@ -1,6 +1,6 @@
 package domain.blackjack;
 
-class DrawResult {
+public class DrawResult {
     private final String failCause;
     private final boolean hasNextChance;
 
@@ -21,11 +21,11 @@ class DrawResult {
         return new DrawResult("카드를 더이상 뽑을 수 없습니다.", false);
     }
 
-    boolean hasNextChance() {
+    public boolean hasNextChance() {
         return hasNextChance;
     }
 
-    boolean isSuccess() {
+    public boolean isSuccess() {
         return failCause == null;
     }
 

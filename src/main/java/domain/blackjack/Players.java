@@ -18,40 +18,6 @@ public class Players {
         this.players = Collections.unmodifiableList(players);
     }
 
-    List<GameResult> calculateGameResultsWith(Dealer dealer) {
-        return players.stream()
-                .map(player -> GameResultCalculator.calculate(player, dealer))
-                .toList();
-    }
-
-    void draw(Deck deck, PlayerDrawAfterCallBack playerDrawAfterCallBack, DrawConfirmation drawConfirmation) {
-        for (Player player : players) {
-            playerDraw(deck, playerDrawAfterCallBack, drawConfirmation, player);
-        }
-    }
-
-    private void playerDraw(Deck deck, PlayerDrawAfterCallBack playerDrawAfterCallBack,
-                            DrawConfirmation drawConfirmation,
-                            Player player) {
-        boolean hasNextDrawChance = true;
-        while (hasNextDrawChance) {
-            hasNextDrawChance = playerTryDrawOnce(deck, player, drawConfirmation);
-            playerDrawAfterCallBack.afterDrawProcess(player);
-        }
-    }
-
-    private boolean playerTryDrawOnce(Deck deck, Player player, DrawConfirmation drawConfirmation) {
-        boolean needToDraw = drawConfirmation.isDrawDesired(player.getRawName());
-        DrawResult drawResult = null;
-        if (needToDraw) {
-            drawResult = player.draw(deck);
-        }
-        if (drawResult == null) {
-            return false;
-        }
-        return drawResult.hasNextChance();
-    }
-
     void drawOnce(Deck deck) {
         for (Player player : players) {
             player.draw(deck);

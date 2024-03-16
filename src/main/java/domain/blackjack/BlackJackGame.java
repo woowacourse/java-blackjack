@@ -21,11 +21,6 @@ public class BlackJackGame {
         });
     }
 
-    public void playersDraw(Deck deck, PlayerDrawAfterCallBack playerDrawAfterCallBack,
-                            DrawConfirmation drawConfirmation) {
-        players.draw(deck, playerDrawAfterCallBack, drawConfirmation);
-    }
-
     public boolean dealerTryDraw(Deck deck) {
         DrawResult drawResult = dealer.draw(deck);
         return drawResult.isSuccess();

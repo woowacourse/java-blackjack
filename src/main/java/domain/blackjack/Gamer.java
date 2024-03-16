@@ -11,7 +11,7 @@ abstract class Gamer {
         this.blackJackGameMachine = blackJackGameMachine;
     }
 
-    abstract DrawResult draw(Deck deck);
+    public abstract DrawResult draw(Deck deck);
 
     public final int calculateSummationCardPointAsInt() {
         return blackJackGameMachine.calculateSummationCardPointAsInt();

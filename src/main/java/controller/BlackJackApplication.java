@@ -2,6 +2,7 @@ package controller;
 
 import domain.blackjack.BlackJackGame;
 import domain.blackjack.Dealer;
+import domain.blackjack.DrawResult;
 import domain.blackjack.EarningMoney;
 import domain.blackjack.Player;
 import domain.blackjack.Players;
@@ -18,7 +19,7 @@ import view.YesOrNoInputView;
 import view.gamer.GamerOutputView;
 import view.gameresult.GameResultOutputView;
 
-public class BlackJackController {
+public class BlackJackApplication {
     public void start() {
         Deck deck = Deck.fullDeck();
         BlackJackGame blackJackGame = generateBlackJackGame();
@@ -72,7 +73,30 @@ public class BlackJackController {
     }
 
     private void playersTryDraw(Deck deck, BlackJackGame blackJackGame) {
-        blackJackGame.playersDraw(deck, this::printPlayer, YesOrNoInputView::getYNAsBoolean);
+        Players players = blackJackGame.getPlayers();
+        for (Player player : players.getPlayers()) {
+            playerDraw(deck, player);
+        }
+    }
+
+    private void playerDraw(Deck deck, Player player) {
+        boolean hasNextDrawChance = true;
+        while (hasNextDrawChance) {
+            hasNextDrawChance = playerTryDrawOnce(deck, player);
+            printPlayer(player);
+        }
+    }
+
+    private boolean playerTryDrawOnce(Deck deck, Player player) {
+        boolean needToDraw = YesOrNoInputView.getYNAsBoolean(player.getRawName());
+        DrawResult drawResult = null;
+        if (needToDraw) {
+            drawResult = player.draw(deck);
+        }
+        if (drawResult == null) {
+            return false;
+        }
+        return drawResult.hasNextChance();
     }
 
     private void dealerTryDraw(Deck deck, BlackJackGame blackJackGame) {
