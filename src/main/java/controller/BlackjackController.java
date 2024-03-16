@@ -1,11 +1,16 @@
 package controller;
 
+import static java.util.stream.Collectors.toMap;
+
 import dto.ParticipantCard;
 import dto.ParticipantCards;
 import dto.ParticipantResults;
 import dto.ParticipantScores;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
+import model.betting.Bet;
+import model.betting.PlayerBets;
 import model.game.BlackjackGame;
 import model.game.HitChoice;
 import model.participant.Player;
@@ -17,6 +22,7 @@ public class BlackjackController {
 
     public void run() {
         Players players = preparePlayers();
+        PlayerBets bets = prepareBets(players);
         BlackjackGame blackjackGame = new BlackjackGame();
 
         ParticipantCards participantCards = blackjackGame.dealInitialCards(players);
@@ -36,6 +42,20 @@ public class BlackjackController {
         return retryOnException(() -> {
             List<String> playerNames = InputView.askPlayerNames();
             return Players.from(playerNames);
+        });
+    }
+
+    private PlayerBets prepareBets(Players players) {
+        Map<String, Bet> betMoneys = players.getPlayers()
+            .stream()
+            .collect(toMap(Player::getName, this::prepareBet));
+        return new PlayerBets(betMoneys);
+    }
+
+    private Bet prepareBet(Player player) {
+        return retryOnException(() -> {
+            int amount = InputView.askBet(player);
+            return new Bet(amount);
         });
     }
 

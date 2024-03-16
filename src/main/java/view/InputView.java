@@ -10,6 +10,7 @@ public class InputView {
     private static final String NEWLINE = System.lineSeparator();
     private static final String SPLIT_DELIMITER = ",";
     private static final String ASK_PLAYER_NAMES = NEWLINE + "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String ASK_BET_MONEY = NEWLINE + "%s의 배팅 금액은?" + NEWLINE;
     private static final String SUBJECT_FOR_VOWEL = "%s는 ";
     private static final String SUBJECT_FOR_CONSONANT = "%s은 ";
     private static final String ASK_HIT_ANSWER = "한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEWLINE;
@@ -30,6 +31,20 @@ public class InputView {
         return Arrays.stream(input.split(SPLIT_DELIMITER))
             .map(String::strip)
             .toList();
+    }
+
+    public static int askBet(Player player) {
+        System.out.printf(ASK_BET_MONEY, player.getName());
+        String amount = Console.readLine().strip();
+        return convertNumber(amount);
+    }
+
+    private static int convertNumber(String amount) {
+        try {
+            return Integer.parseInt(amount);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("정수만 입력 가능합니다.");
+        }
     }
 
     public static String askHitChoice(Player player) {
