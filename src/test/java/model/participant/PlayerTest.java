@@ -20,7 +20,7 @@ class PlayerTest {
     void canHit_ShouldReturnTrue_WhenCardDeckIsNotBust() {
         Card card1 = Card.from(Number.TEN, Emblem.SPADE);
         Card card2 = Card.from(Number.NINE, Emblem.HEART);
-        Player player = new Player(new Name("name"), card1, card2);
+        Player player = new Player(new Name("name"),0, card1, card2);
 
         player.hitCard(Card.from(Number.TWO, Emblem.HEART));
 
@@ -32,7 +32,7 @@ class PlayerTest {
     void canHit_ShouldReturnFalse_WhenCardDeckIsBust() {
         Card card1 = Card.from(Number.TEN, Emblem.SPADE);
         Card card2 = Card.from(Number.NINE, Emblem.HEART);
-        Player player = new Player(new Name("name"), card1, card2);
+        Player player = new Player(new Name("name"),0, card1, card2);
 
         player.hitCard(Card.from(Number.THREE, Emblem.HEART));
 
@@ -45,7 +45,7 @@ class PlayerTest {
         // Given
         Card card1 = Card.from(Number.TEN, Emblem.SPADE);
         Card card2 = Card.from(Number.SEVEN, Emblem.HEART);
-        Player player = new Player(new Name("name"), card1, card2);
+        Player player = new Player(new Name("name"),0, card1, card2);
 
         // When
         int dealerHand = 18;
@@ -60,7 +60,7 @@ class PlayerTest {
         // Given
         Card card1 = Card.from(Number.EIGHT, Emblem.SPADE);
         Card card2 = Card.from(Number.EIGHT, Emblem.HEART);
-        Player player = new Player(new Name("name"), card1, card2);
+        Player player = new Player(new Name("name"),0, card1, card2);
 
         player.hitCard(Card.from(Number.EIGHT, Emblem.DIAMOND));
 
@@ -79,7 +79,7 @@ class PlayerTest {
         Card card1 = Card.from(number, Emblem.HEART);
         Card card2 = Card.from(number, Emblem.SPADE);
         Dealer dealer = new Dealer(card1, card2);
-        Player player = new Player(new Name("도비"), card1, card2);
+        Player player = new Player(new Name("도비"),0, card1, card2);
 
         // When
         int dealerHand = dealer.cardDeck.calculateHand();
@@ -98,7 +98,7 @@ class PlayerTest {
         Dealer dealer = new Dealer(card1, card2);
         dealer.hitCard(Card.from(Number.TWO, Emblem.SPADE));
 
-        Player player = new Player(new Name("도비"), card1, card2);
+        Player player = new Player(new Name("도비"),0, card1, card2);
 
         // When
         int dealerHand = dealer.cardDeck.calculateHand();
@@ -116,7 +116,7 @@ class PlayerTest {
         Card card2 = Card.from(Number.TWO, Emblem.SPADE);
         Card card3 = Card.from(Number.THREE, Emblem.SPADE);
         Dealer dealer = new Dealer(card1, card2);
-        Player player = new Player(new Name("도비"), card1, card3);
+        Player player = new Player(new Name("도비"),0, card1, card3);
 
         // When
         int dealerHand = dealer.cardDeck.calculateHand();

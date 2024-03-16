@@ -21,8 +21,8 @@ class EntrantTest {
         // Given
         Card card1 = Card.from(Number.ACE, Emblem.SPADE);
         Card card2 = Card.from(Number.TWO, Emblem.SPADE);
-        Names names = new Names(List.of("프람"));
-        entrant = generateEntrant(names, card1, card2);
+        NameInfos nameInfos = new NameInfos(List.of("프람"));
+        entrant = generateEntrant(nameInfos, card1, card2);
 
         // When
 
@@ -30,10 +30,10 @@ class EntrantTest {
         entrant.hitPlayer(Card.from(Number.THREE, Emblem.HEART));
     }
 
-    private Entrant generateEntrant(Names names, Card card1, Card card2) {
-        List<Player> players = names.getPlayerNames()
+    private Entrant generateEntrant(NameInfos nameInfos, Card card1, Card card2) {
+        List<Player> players = nameInfos.getPlayerNames()
                 .stream()
-                .map(name -> new Player(name, card1, card2))
+                .map(name -> new Player(name, nameInfos.getBettingAmount(name), card1, card2))
                 .toList();
         Dealer dealer = new Dealer(card1, card2);
         return new Entrant(dealer, players);

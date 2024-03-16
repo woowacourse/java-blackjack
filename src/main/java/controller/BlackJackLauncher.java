@@ -7,7 +7,7 @@ import static view.InputView.inputPlayerHitChoice;
 import java.util.List;
 import model.casino.Casino;
 import model.casino.RandomCardShuffleMachine;
-import model.participant.Names;
+import model.participant.NameInfos;
 import model.participant.dto.DealerFaceUpResult;
 import model.participant.dto.PlayerFaceUpResult;
 import view.OutputView;
@@ -24,8 +24,8 @@ public class BlackJackLauncher {
     }
 
     private Casino initCasino() {
-        Names names = inputRetryHelper(() -> new Names(inputNames()));
-        return new Casino(names, new RandomCardShuffleMachine());
+        NameInfos nameInfos = inputRetryHelper(() -> new NameInfos(inputNames()));
+        return new Casino(nameInfos, new RandomCardShuffleMachine());
     }
 
     private void showInitialFaceUpResults(Casino casino) {

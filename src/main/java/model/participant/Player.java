@@ -9,11 +9,14 @@ import model.participant.state.MatchState;
 
 public final class Player extends Participant {
     private final Name name;
+    private final int bettingAmount;
 
-    public Player(Name name, Card card1, Card card2) {
-        super(card1, card2);
+    public Player(Name name, int bettingAmount, Card firstCard, Card secondCard) {
+        super(firstCard, secondCard);
         this.name = name;
+        this.bettingAmount = bettingAmount;
     }
+
 
     @Override
     public boolean canHit() {

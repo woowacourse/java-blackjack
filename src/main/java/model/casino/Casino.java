@@ -3,7 +3,7 @@ package model.casino;
 import java.util.List;
 import model.participant.Dealer;
 import model.participant.Entrant;
-import model.participant.Names;
+import model.participant.NameInfos;
 import model.participant.Player;
 import model.participant.dto.DealerFaceUpResult;
 import model.participant.dto.PlayerFaceUpResult;
@@ -14,15 +14,15 @@ public class Casino {
     private final Entrant entrant;
     private final CardDispenser cardDispenser;
 
-    public Casino(Names names, CardShuffleMachine cardShuffleMachine) {
+    public Casino(NameInfos nameInfos, CardShuffleMachine cardShuffleMachine) {
         this.cardDispenser = new CardDispenser(cardShuffleMachine);
-        this.entrant = generateEntrant(names);
+        this.entrant = generateEntrant(nameInfos);
     }
 
-    private Entrant generateEntrant(Names names) {
-        List<Player> players = names.getPlayerNames()
+    private Entrant generateEntrant(NameInfos nameInfos) {
+        List<Player> players = nameInfos.getPlayerNames()
                 .stream()
-                .map(name -> new Player(name, cardDispenser.dispenseCard(), cardDispenser.dispenseCard()))
+                .map(name -> new Player(name, nameInfos.getBettingAmount(name), cardDispenser.dispenseCard(), cardDispenser.dispenseCard()))
                 .toList();
         Dealer dealer = new Dealer(cardDispenser.dispenseCard(), cardDispenser.dispenseCard());
         return new Entrant(dealer, players);
