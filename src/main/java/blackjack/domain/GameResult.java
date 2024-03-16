@@ -11,8 +11,7 @@ public enum GameResult {
     WIN(1, GameResult::isWinCondition),
     LOSE(-1, GameResult::isLoseCondition),
     PUSH(0, GameResult::isPushCondition);
-
-
+    
     private final double profitRate;
     private final BiPredicate<Dealer, Player> condition;
 
