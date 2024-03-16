@@ -1,35 +1,29 @@
 package blackjack.domain.profit;
 
-import blackjack.domain.batting.BattingAmount;
-import blackjack.domain.batting.BattingAmountRepository;
-import blackjack.domain.participant.ResultStatus;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.*;
 
 import java.util.Map;
 
 public class ProfitCalculator {
-    private final BattingAmountRepository battingAmountRepository;
 
-    public ProfitCalculator(final BattingAmountRepository battingAmountRepository) {
-        this.battingAmountRepository = battingAmountRepository;
+    private ProfitCalculator() {
     }
 
-    public ProfitResult calculate(final Dealer dealer, final Map<Player, ResultStatus> gameResult) {
+    public static ProfitResult calculate(final Dealer dealer, final Map<Player, ResultStatus> playersResult) {
         final ProfitResult profitResult = new ProfitResult();
 
-        for (final Player player : gameResult.keySet()) {
-            final int profit = calculateProfitOf(player, gameResult);
+        for (final Player player : playersResult.keySet()) {
+            final int profit = calculateProfitOf(player, playersResult);
             profitResult.recordParticipantsProfit(dealer, player, profit);
         }
 
         return profitResult;
     }
 
-    private int calculateProfitOf(final Player player, final Map<Player, ResultStatus> gameResult) {
-        final BattingAmount battingAmount = battingAmountRepository.findByPlayer(player);
+    private static int calculateProfitOf(final Player player, final Map<Player, ResultStatus> playersResult) {
+        final BattingAmount battingAmount = player.getBattingAmount();
 
-        final ResultStatus resultStatus = gameResult.get(player);
+        final ResultStatus resultStatus = playersResult.get(player);
         final double earningRate = player.calculateEarningRate(resultStatus);
 
         return battingAmount.multiply(earningRate);
