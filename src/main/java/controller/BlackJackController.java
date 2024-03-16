@@ -48,7 +48,7 @@ public class BlackJackController {
         outputView.printInitCardStatus(players, dealer.getFirstCard());
 
         for (Player player : players.getPlayers()) {
-            playSingleMatch(player, cardDeck);
+            playGame(player, cardDeck);
         }
 
         dealer.getExtraCard(cardDeck);
@@ -58,7 +58,7 @@ public class BlackJackController {
         outputView.printPlayerHand(players);
     }
 
-    private void playSingleMatch(Player player, CardDeck cardDeck) {
+    private void playGame(Player player, CardDeck cardDeck) {
         while (isCanPlayPlayer(player)) {
             player.receiveCard(cardDeck.pickCard());
             outputView.printPlayerCardStatus(player);
