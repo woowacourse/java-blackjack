@@ -14,18 +14,18 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PotTest {
+class PlayersPotsTest {
     @DisplayName("승패 결과로 베팅 수익을 계산한다.")
     @Test
-    void calculatePot() {
+    void calculatePlayersPots() {
         //given
         Player player = generatePlayer();
         RoundResult roundResult = generateRoundResult(player);
-        Pot roundPot = generatePot(player);
+        PlayersPots roundPlayersPots = generatePlayersPots(player);
 
         //when
-        roundPot = roundPot.calculatePlayerPot(roundResult);
-        BetAmount calculatedAmount = roundPot.getBetAmount(player);
+        roundPlayersPots = roundPlayersPots.calculatePlayersPots(roundResult);
+        BetAmount calculatedAmount = roundPlayersPots.getBetAmount(player);
 
         //then
         assertThat(calculatedAmount.amount()).isEqualTo(15000);
@@ -42,9 +42,9 @@ class PotTest {
         return new RoundResult(playersResult);
     }
 
-    private Pot generatePot(Player player) {
-        Map<Player, BetAmount> pot = new LinkedHashMap<>();
-        pot.put(player, new BetAmount(10000));
-        return new Pot(pot);
+    private PlayersPots generatePlayersPots(Player player) {
+        Map<Player, BetAmount> playersPots = new LinkedHashMap<>();
+        playersPots.put(player, new BetAmount(10000));
+        return new PlayersPots(playersPots);
     }
 }

@@ -7,7 +7,7 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.participant.Round;
-import blackjack.domain.result.Pot;
+import blackjack.domain.result.PlayersPots;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -55,10 +55,10 @@ public class OutputView {
                 .forEach(this::printParticipantHandWithScore);
     }
 
-    public void printRoundResult(Pot pot) {
+    public void printRoundResult(PlayersPots playersPots) {
         System.out.println(System.lineSeparator() + GAME_RESULT_PREFIX);
-        printDealerResults(pot);
-        printPlayersResult(pot);
+        printDealerResults(playersPots);
+        printPlayersResult(playersPots);
     }
 
     public void printException(IllegalArgumentException e) {
@@ -99,13 +99,13 @@ public class OutputView {
         System.out.println(participantHandWithScore);
     }
 
-    private void printDealerResults(Pot pot) {
-        BetAmount dealerPot = pot.calculateDealerBetAmount();
+    private void printDealerResults(PlayersPots playersPots) {
+        BetAmount dealerPot = playersPots.calculateDealerBetAmount();
         System.out.printf(DEALER_RESULTS_FORMAT + System.lineSeparator(), dealerPot.amount());
     }
 
-    private void printPlayersResult(Pot pot) {
-        Map<Player, BetAmount> playersPot = pot.getPot();
+    private void printPlayersResult(PlayersPots playersPots) {
+        Map<Player, BetAmount> playersPot = playersPots.getPlayersPots();
         for (Player player : playersPot.keySet()) {
             String playerName = player.getName();
             BetAmount betAmount = playersPot.get(player);

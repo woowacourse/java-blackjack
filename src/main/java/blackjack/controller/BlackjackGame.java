@@ -9,7 +9,7 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.PlayerAction;
 import blackjack.domain.participant.Players;
 import blackjack.domain.participant.Round;
-import blackjack.domain.result.Pot;
+import blackjack.domain.result.PlayersPots;
 import blackjack.domain.result.Referee;
 import blackjack.domain.result.RoundResult;
 import blackjack.view.InputView;
@@ -23,11 +23,11 @@ public class BlackjackGame {
 
     public void run() {
         Round round = createRoundWithDeck();
-        Pot pot = createPot(round);
+        PlayersPots playersPots = createPlayersPots(round);
         outputView.printInitialHand(round);
         participantsHitCard(round);
         outputView.printParticipantsHandWithScore(round);
-        printPotResult(round, pot);
+        printPlayersPotsResult(round, playersPots);
     }
 
     private Round createRoundWithDeck() {
@@ -40,12 +40,12 @@ public class BlackjackGame {
         return new Round(playersName, deck);
     }
 
-    private Pot createPot(Round round) {
+    private PlayersPots createPlayersPots(Round round) {
         Players players = round.getPlayers();
         List<BetAmount> betAmounts = players.getPlayers().stream()
                 .map(player -> retryOnException(() -> createBetAmount(player.getName())))
                 .toList();
-        return round.generatePot(betAmounts);
+        return round.generatePlayersPots(betAmounts);
     }
 
     private BetAmount createBetAmount(String playerName) {
@@ -97,11 +97,11 @@ public class BlackjackGame {
         outputView.printDealerHitCount(hitCount);
     }
 
-    private void printPotResult(Round round, Pot pot) {
+    private void printPlayersPotsResult(Round round, PlayersPots playersPots) {
         Referee referee = Referee.getInstance();
         RoundResult roundResult = round.generateResult(referee);
-        pot = pot.calculatePlayerPot(roundResult);
-        outputView.printRoundResult(pot);
+        playersPots = playersPots.calculatePlayersPots(roundResult);
+        outputView.printRoundResult(playersPots);
     }
 
     private <T> T retryOnException(Supplier<T> operation) {

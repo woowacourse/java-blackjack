@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.HandResult;
-import blackjack.domain.result.Pot;
+import blackjack.domain.result.PlayersPots;
 import blackjack.domain.result.Referee;
 import blackjack.domain.result.RoundResult;
 import java.util.LinkedHashMap;
@@ -19,12 +19,12 @@ public class Round {
         this.dealer = new Dealer(deck);
     }
 
-    public Pot generatePot(List<BetAmount> betAmounts) {
+    public PlayersPots generatePlayersPots(List<BetAmount> betAmounts) {
         List<Player> players = this.players.getPlayers();
-        Map<Player, BetAmount> pot = new LinkedHashMap<>();
+        Map<Player, BetAmount> playersPots = new LinkedHashMap<>();
         IntStream.range(0, players.size())
-                .forEach(i -> pot.put(players.get(i), betAmounts.get(i)));
-        return new Pot(pot);
+                .forEach(i -> playersPots.put(players.get(i), betAmounts.get(i)));
+        return new PlayersPots(playersPots);
     }
 
     public RoundResult generateResult(Referee referee) {
