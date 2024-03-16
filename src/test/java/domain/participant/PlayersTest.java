@@ -13,6 +13,7 @@ import static domain.HandsTestFixture.sum19Size3Ace1;
 import static domain.HandsTestFixture.sum20Size2;
 import static domain.HandsTestFixture.sum20Size3;
 import static domain.HandsTestFixture.sum21Size3;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.GameResult;
@@ -20,7 +21,6 @@ import domain.amount.Amount;
 import domain.amount.BetAmount;
 import java.util.List;
 import java.util.Map;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -35,7 +35,7 @@ class PlayersTest {
         final Players players = new Players(List.of(bustPlayer, noBustPlayer));
 
         //when && then
-        Assertions.assertThat(players.isAllBust()).isFalse();
+        assertThat(players.isAllBust()).isFalse();
     }
 
     @Test
@@ -50,7 +50,7 @@ class PlayersTest {
         final Players players = new Players(List.of(player1, player2, player3, player4));
 
         //when && then
-        Assertions.assertThat(players.isAllBust()).isTrue();
+        assertThat(players.isAllBust()).isTrue();
     }
 
     @Test
@@ -66,7 +66,7 @@ class PlayersTest {
 
         //when & then
         final Map<Player, GameResult> expected = Map.of(loser, LOSE, winner, WIN, tier, TIE);
-        Assertions.assertThat(players.getPlayersResult(dealer)).isEqualTo(expected);
+        assertThat(players.getPlayersResult(dealer)).isEqualTo(expected);
     }
 
     @Test
@@ -86,8 +86,8 @@ class PlayersTest {
 
         //then
         assertAll(
-                () -> Assertions.assertThat(players.getPlayersResult(bustDealer)).isEqualTo(expectedPlayerResult),
-                () -> Assertions.assertThat(bustDealer.getDealerResult(players)).isEqualTo(expectedDealerResult));
+                () -> assertThat(players.getPlayersResult(bustDealer)).isEqualTo(expectedPlayerResult),
+                () -> assertThat(bustDealer.getDealerResult(players)).isEqualTo(expectedDealerResult));
     }
 
 
@@ -105,7 +105,7 @@ class PlayersTest {
         final Map<Player, Amount> result = players.calculateResult(dealer);
 
         //then
-        Assertions.assertThat(result).isEqualTo(expected);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -122,7 +122,7 @@ class PlayersTest {
         final Map<Player, Amount> result = players.calculateResult(dealer);
 
         //then
-        Assertions.assertThat(result).isEqualTo(expected);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -138,7 +138,7 @@ class PlayersTest {
         final Map<Player, Amount> result = players.calculateResult(dealer);
 
         //then
-        Assertions.assertThat(result).isEqualTo(expected);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
@@ -157,6 +157,6 @@ class PlayersTest {
         final Amount expected = new Amount(460_000);
 
         //then
-        Assertions.assertThat(amount).isEqualTo(expected);
+        assertThat(amount).isEqualTo(expected);
     }
 }

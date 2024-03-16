@@ -1,10 +1,12 @@
 package domain.participant;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import exception.DuplicatePlayerNameException;
 import exception.InvalidPlayersSizeException;
 import java.util.List;
 import java.util.stream.Stream;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +22,7 @@ class NamesTest {
         final List<String> names = List.of("redy", "redy");
 
         //when & then
-        Assertions.assertThatThrownBy(() -> Names.from(names))
+        assertThatThrownBy(() -> Names.from(names))
                 .isInstanceOf(DuplicatePlayerNameException.class);
     }
 
@@ -28,7 +30,7 @@ class NamesTest {
     @DisplayName("참여자 이름에 공백이 있는 경우 제거하여 중복을 판단한다.")
     @MethodSource("duplicateBlankNameParameterProvider")
     void duplicateBlankName(final List<String> names) {
-        Assertions.assertThatThrownBy(() -> Names.from(names))
+        assertThatThrownBy(() -> Names.from(names))
                 .isInstanceOf(DuplicatePlayerNameException.class);
     }
 
@@ -36,7 +38,7 @@ class NamesTest {
     @ParameterizedTest
     @MethodSource("validPlayersSizeParameterProvider")
     void validPlayersSize(final List<String> names) {
-        Assertions.assertThatCode(() -> Names.from(names))
+        assertThatCode(() -> Names.from(names))
                 .doesNotThrowAnyException();
     }
 
@@ -44,7 +46,7 @@ class NamesTest {
     @ParameterizedTest
     @MethodSource("invalidPlayersSizeParameterProvider")
     void invalidPlayersSize(final List<String> names) {
-        Assertions.assertThatThrownBy(() -> Names.from(names))
+        assertThatThrownBy(() -> Names.from(names))
                 .isInstanceOf(InvalidPlayersSizeException.class);
     }
 

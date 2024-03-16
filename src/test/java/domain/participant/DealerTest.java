@@ -9,13 +9,13 @@ import static domain.HandsTestFixture.sum18Size2;
 import static domain.HandsTestFixture.sum20Size2;
 import static domain.HandsTestFixture.sum20Size3;
 import static domain.HandsTestFixture.sum21Size3;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.GameResult;
 import domain.amount.BetAmount;
 import java.util.List;
 import java.util.Map;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +34,7 @@ class DealerTest {
         dealer.initHands(players);
 
         //then
-        Assertions.assertThat(players.getPlayers()).allMatch(player -> player.handsSize() == 2);
+        assertThat(players.getPlayers()).allMatch(player -> player.handsSize() == 2);
     }
 
     @Test
@@ -55,8 +55,8 @@ class DealerTest {
 
         //then
         assertAll(
-                () -> Assertions.assertThat(hitPlayer.handsSize()).isEqualTo(3),
-                () -> Assertions.assertThat(stayPlayer.handsSize()).isEqualTo(2));
+                () -> assertThat(hitPlayer.handsSize()).isEqualTo(3),
+                () -> assertThat(stayPlayer.handsSize()).isEqualTo(2));
     }
 
     @Test
@@ -70,8 +70,8 @@ class DealerTest {
 
         //then
         assertAll(
-                () -> Assertions.assertThat(dealer.countAddedHands()).isPositive(),
-                () -> Assertions.assertThat(dealer.handsSum()).isGreaterThanOrEqualTo(17));
+                () -> assertThat(dealer.countAddedHands()).isPositive(),
+                () -> assertThat(dealer.handsSum()).isGreaterThanOrEqualTo(17));
     }
 
     @DisplayName("딜러의 카드의 합이 17이상이라면 카드를 추가하지 않는다")
@@ -85,8 +85,8 @@ class DealerTest {
 
         //then
         assertAll(
-                () -> Assertions.assertThat(dealer.countAddedHands()).isZero(),
-                () -> Assertions.assertThat(dealer.handsSum()).isGreaterThanOrEqualTo(17));
+                () -> assertThat(dealer.countAddedHands()).isZero(),
+                () -> assertThat(dealer.handsSum()).isGreaterThanOrEqualTo(17));
     }
 
     @DisplayName("딜러의 승패무를 판단한다.")
@@ -105,7 +105,7 @@ class DealerTest {
         final Map<GameResult, Integer> expected = Map.of(WIN, 2, LOSE, 1, TIE, 1);
 
         // then
-        Assertions.assertThat(dealer.getDealerResult(players)).isEqualTo(expected);
+        assertThat(dealer.getDealerResult(players)).isEqualTo(expected);
     }
 
     @Test
@@ -117,8 +117,8 @@ class DealerTest {
         final Player noBlackJackPlayer = new Player(new Name("레디"), sum18Size2);
 
         //when && then
-        assertAll(() -> Assertions.assertThat(dealer.isBlackJack()).isFalse(),
-                () -> Assertions.assertThat(blackJackPlayer.isBlackJack()).isTrue(),
-                () -> Assertions.assertThat(noBlackJackPlayer.isBlackJack()).isFalse());
+        assertAll(() -> assertThat(dealer.isBlackJack()).isFalse(),
+                () -> assertThat(blackJackPlayer.isBlackJack()).isTrue(),
+                () -> assertThat(noBlackJackPlayer.isBlackJack()).isFalse());
     }
 }

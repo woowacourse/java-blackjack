@@ -29,8 +29,7 @@ class GameResultTest {
     void isWin() {
         assertAll(
                 () -> assertThat(sum21Size3.calculateResult(sum20Size2)).isEqualTo(GameResult.WIN),
-                () -> assertThat(sum20Size2.calculateResult(sum21Size3)).isEqualTo(GameResult.LOSE)
-        );
+                () -> assertThat(sum20Size2.calculateResult(sum21Size3)).isEqualTo(GameResult.LOSE));
     }
 
     @Test
@@ -38,8 +37,7 @@ class GameResultTest {
     void isLoseWhenCardSumGreater21() {
         assertAll(
                 () -> assertThat(bustHands.calculateResult(sum20Size2)).isEqualTo(GameResult.LOSE),
-                () -> assertThat(sum20Size2.calculateResult(bustHands)).isEqualTo(GameResult.WIN)
-        );
+                () -> assertThat(sum20Size2.calculateResult(bustHands)).isEqualTo(GameResult.WIN));
     }
 
     @Test
@@ -47,7 +45,6 @@ class GameResultTest {
     void isWinBlackJack() {
         assertAll(
                 () -> assertThat(blackJack.calculateResult(sum20Size2)).isEqualTo(GameResult.BLACK_JACK_WIN),
-                () -> assertThat(sum20Size2.calculateResult(blackJack)).isEqualTo(GameResult.LOSE)
-        );
+                () -> assertThat(sum20Size2.calculateResult(blackJack)).isEqualTo(GameResult.LOSE));
     }
 }

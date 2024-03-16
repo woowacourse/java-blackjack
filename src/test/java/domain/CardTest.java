@@ -1,9 +1,11 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 import domain.card.Card;
 import java.util.List;
 import java.util.Set;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,8 +16,8 @@ class CardTest {
     void generate() {
         final List<Card> values = Card.values();
 
-        org.junit.jupiter.api.Assertions.assertAll(
-                () -> Assertions.assertThat(values).hasSize(52),
-                () -> Assertions.assertThat(Set.copyOf(values)).hasSize(52));
+        assertAll(
+                () -> assertThat(values).hasSize(52),
+                () -> assertThat(Set.copyOf(values)).hasSize(52));
     }
 }

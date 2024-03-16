@@ -1,9 +1,10 @@
 package domain.card;
 
 import static domain.participant.Dealer.DECK_SIZE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import exception.NoMoreCardException;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,7 @@ class CardDeckTest {
         final CardDeck cardDeck = CardDeck.generate(DECK_SIZE);
 
         // when && then
-        Assertions.assertThat(cardDeck.size()).isEqualTo(52 * 6);
+        assertThat(cardDeck.size()).isEqualTo(52 * 6);
     }
 
     @Test
@@ -33,7 +34,7 @@ class CardDeckTest {
         }
 
         //then
-        Assertions.assertThatThrownBy(cardDeck::pop)
+        assertThatThrownBy(cardDeck::pop)
                 .isInstanceOf(NoMoreCardException.class);
     }
 }

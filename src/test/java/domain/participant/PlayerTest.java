@@ -4,10 +4,12 @@ import static domain.HandsTestFixture.bustHands;
 import static domain.HandsTestFixture.sum18Size2;
 import static domain.HandsTestFixture.sum20Size2;
 import static domain.HandsTestFixture.sum21Size3Ace11;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import exception.ReservedPlayerNameException;
 import java.util.stream.Stream;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,7 +21,7 @@ class PlayerTest {
     @DisplayName("이름으로 참여자를 생성한다.")
     @Test
     void createPlayerWithName() {
-        Assertions.assertThatCode(() -> new Player(new Name("pobi"), Hands.createEmptyHands()))
+        assertThatCode(() -> new Player(new Name("pobi"), Hands.createEmptyHands()))
                 .doesNotThrowAnyException();
     }
 
@@ -29,7 +31,7 @@ class PlayerTest {
         final Name name = new Name("딜러");
         final Hands hands = Hands.createEmptyHands();
 
-        Assertions.assertThatThrownBy(() -> new Player(name, hands))
+        assertThatThrownBy(() -> new Player(name, hands))
                 .isInstanceOf(ReservedPlayerNameException.class);
     }
 
@@ -39,7 +41,7 @@ class PlayerTest {
     void canNotDeal(Hands hands) {
         final Name name = new Name("레디");
         final Player player = new Player(name, hands);
-        Assertions.assertThat(player.canDeal()).isFalse();
+        assertThat(player.canDeal()).isFalse();
     }
 
     @ParameterizedTest
@@ -48,7 +50,7 @@ class PlayerTest {
     void canDeal(Hands hands) {
         final Name name = new Name("레디");
         final Player player = new Player(name, hands);
-        Assertions.assertThat(player.canDeal()).isTrue();
+        assertThat(player.canDeal()).isTrue();
     }
 
     static Stream<Arguments> canNotDealParameterProvider() {
