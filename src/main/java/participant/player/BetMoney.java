@@ -18,7 +18,7 @@ public class BetMoney {
         }
     }
 
-    public double betMoneyResult(double percent) {
-        return betAmount * percent;
+    public int betMoneyResult(double percent) {
+        return (int) (betAmount * percent);
     }
 }

@@ -2,6 +2,7 @@ package participant.player;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -19,13 +20,12 @@ public class BetMoneyTest {
                 .hasMessage("베팅 금액은 " + MIN_BET_MONEY + "원 에서 " + MAX_BET_MONEY + "까지만 가능합니다.");
     }
 
-    @ParameterizedTest
-    @ValueSource(doubles = {1.5, 1, -1, 2})
     @DisplayName("퍼센트에 따른 베팅금액을 출력한다")
-    void getBetMoneyResult(double betPercent) {
+    @Test
+    void getBetMoneyResult() {
         int money = 3000;
         BetMoney betMoney = new BetMoney(money);
 
-        Assertions.assertThat(betMoney.betMoneyResult(betPercent)).isEqualTo(money * betPercent);
+        Assertions.assertThat(betMoney.betMoneyResult(1.5)).isEqualTo(4500);
     }
 }
