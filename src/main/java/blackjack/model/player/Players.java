@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Set;
 
 public class Players {
-    private static final String INVALID_NAMES_COUNT = "참여자 수는 1명 이상이다";
-    private static final String DUPLICATED_NAMES = "참여자 이름은 중복될 수 없다";
+    private static final String INVALID_NAMES_COUNT = "참여자 수는 1명 이상이어야 합니다.";
+    private static final String DUPLICATED_NAMES = "참여자 이름은 중복될 수 없습니다.";
 
     private final List<Player> players;
 

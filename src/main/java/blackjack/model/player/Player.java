@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Player {
     private static final int MAX_DRAWABLE_SCORE = 21;
-    private static final String INVALID_NAME_LENGTH = "참여자 이름은 한 글자 이상이다";
+    private static final String INVALID_NAME_LENGTH = "참여자 이름은 한 글자 이상이어야 합니다.";
 
     private final String name;
     private final Cards cards;
