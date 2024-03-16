@@ -6,21 +6,16 @@ import blackjack.domain.card.state.Ready;
 import blackjack.domain.card.state.State;
 
 import java.util.List;
-import java.util.Objects;
 
 public abstract class Participant implements CardReceivable {
 
-    protected final PlayerInfo playerInfo;
     protected State state;
-    private static final BettingMoney DEFAULT_BETTING_MONEY = new BettingMoney(1000);
 
-    protected Participant(final PlayerInfo playerInfo) {
-        this.playerInfo = playerInfo;
+    protected Participant() {
         this.state = new Ready();
     }
 
-    protected Participant(final Name name, final Cards cards) {
-        this.playerInfo = new PlayerInfo(name, DEFAULT_BETTING_MONEY);
+    protected Participant(final Cards cards) {
         this.state = initializeState(cards.toList());
     }
 
@@ -56,33 +51,10 @@ public abstract class Participant implements CardReceivable {
         return this.state.isBust();
     }
 
+    public abstract String getNameAsString();
+
+
     public boolean isStand() {
         return this.state.isStand();
-    }
-
-    public String getNameAsString() {
-        return this.playerInfo.name()
-                              .asString();
-    }
-
-    public int getBettingMoney() {
-        return this.playerInfo.bettingMoney()
-                              .value();
-    }
-
-    public Name getName() {
-        return this.playerInfo.name();
-    }
-
-    @Override
-    public boolean equals(final Object object) {
-        if (this == object) return true;
-        if (!(object instanceof final Participant that)) return false;
-        return Objects.equals(this.playerInfo.name(), that.playerInfo.name());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.playerInfo.name());
     }
 }

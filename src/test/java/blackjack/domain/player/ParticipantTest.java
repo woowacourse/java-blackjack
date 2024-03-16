@@ -23,22 +23,17 @@ class ParticipantTest {
     @Test
     @DisplayName("이름과 카드 일급 컬렉션을 통해서 플레이어를 생성 한다.")
     void create_with_name_and_cards() {
-        Name name = new Name("초롱");
-        Cards cards = new Cards(List.of(new Card(CardValue.EIGHT, CardSymbol.CLOVER),
+        final Cards cards = new Cards(List.of(new Card(CardValue.EIGHT, CardSymbol.CLOVER),
                 new Card(CardValue.ACE, CardSymbol.DIAMOND)));
 
-        assertThatCode(() -> new ParticipantImpl(name, cards))
+        assertThatCode(() -> new ParticipantImpl(cards))
                 .doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("플레이어 정보를 통해서 플레이어를 생성 한다.")
     void create_with_player_info() {
-        final Name name = new Name("조이썬");
-        final BettingMoney bettingMoney = new BettingMoney(10000);
-        final PlayerInfo playerInfo = new PlayerInfo(name, bettingMoney);
-
-        final var sut = new ParticipantImpl(playerInfo);
+        final var sut = new ParticipantImpl();
 
         assertThat(sut.state).isInstanceOf(Ready.class);
     }

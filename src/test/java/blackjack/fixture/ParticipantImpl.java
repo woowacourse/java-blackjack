@@ -6,12 +6,17 @@ import blackjack.domain.player.Participant;
 import blackjack.domain.player.PlayerInfo;
 
 public class ParticipantImpl extends Participant {
-    public ParticipantImpl(final Name name, final Cards cards) {
-        super(name, cards);
+    @Override
+    public String getNameAsString() {
+        return null;
     }
 
-    public ParticipantImpl(final PlayerInfo playerInfo) {
-        super(playerInfo);
+    public ParticipantImpl(final Cards cards) {
+        super(cards);
+    }
+
+    public ParticipantImpl() {
+        super();
     }
 
     @Override
