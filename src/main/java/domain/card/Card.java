@@ -9,8 +9,8 @@ public class Card {
     private static final List<Card> CARDS;
     static {
         CARDS = Arrays.stream(CardType.values())
-                .flatMap(suit -> Arrays.stream(CardNumber.values())
-                        .map(denomination -> new Card(suit, denomination)))
+                .flatMap(cardType -> Arrays.stream(CardNumber.values())
+                        .map(cardNumber -> new Card(cardType, cardNumber)))
                 .collect(Collectors.toUnmodifiableList());
     }
     private final CardType cardType;
