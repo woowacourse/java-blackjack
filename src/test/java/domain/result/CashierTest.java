@@ -1,5 +1,8 @@
 package domain.result;
 
+import domain.cards.Card;
+import domain.cards.cardinfo.CardNumber;
+import domain.cards.cardinfo.CardShape;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.bet.GamerWallet;
@@ -10,7 +13,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,15 +28,17 @@ public class CashierTest {
         player = new Player("player");
         dealer = new Dealer();
         money = new Money(10000);
+        dealer.hit(Card.valueOf(CardNumber.FIVE, CardShape.HEART));
         List<GamerWallet> gamerWallets = List.of(new GamerWallet(player, money),
                 new GamerWallet(dealer, new Money(0)));
-        cashier = new Cashier(new GamersWallet(gamerWallets));
+        cashier = new Cashier(new GamersWallet(gamerWallets), new Judge());
     }
 
     @DisplayName("승리하면 베팅액의 1배를 준다.")
     @Test
     void testCashierCalculateWinProfit() {
-        cashier.calculatePlayersProfit(Map.of(player, WinState.WIN));
+        player.hit(Card.valueOf(CardNumber.SIX, CardShape.HEART));
+        cashier.calculateBetResult(List.of(player), dealer);
         GamersWallet gamersWallet = cashier.getGamersWallet();
         assertThat(gamersWallet.findMoneyByPlayer(player))
                 .isEqualTo(10000);
@@ -43,7 +47,8 @@ public class CashierTest {
     @DisplayName("패배하면 베팅액의 -1배를 준다.")
     @Test
     void testCashierCalculateLoseProfit() {
-        cashier.calculatePlayersProfit(Map.of(player, WinState.LOSE));
+        player.hit(Card.valueOf(CardNumber.FOUR, CardShape.HEART));
+        cashier.calculateBetResult(List.of(player), dealer);
         GamersWallet gamersWallet = cashier.getGamersWallet();
         assertThat(gamersWallet.findMoneyByPlayer(player))
                 .isEqualTo(-10000);
@@ -52,7 +57,8 @@ public class CashierTest {
     @DisplayName("무승부하면 0을 준다.")
     @Test
     void testCashierCalculateDrawProfit() {
-        cashier.calculatePlayersProfit(Map.of(player, WinState.DRAW));
+        player.hit(Card.valueOf(CardNumber.FIVE, CardShape.HEART));
+        cashier.calculateBetResult(List.of(player), dealer);
         GamersWallet gamersWallet = cashier.getGamersWallet();
         assertThat(gamersWallet.findMoneyByPlayer(player))
                 .isEqualTo(0);
@@ -61,7 +67,9 @@ public class CashierTest {
     @DisplayName("블랙잭이면 베팅액의 1.5배를 준다.")
     @Test
     void testCashierCalculateBlackJackProfit() {
-        cashier.calculatePlayersProfit(Map.of(player, WinState.BLACK_JACK));
+        player.hit(Card.valueOf(CardNumber.ACE, CardShape.HEART));
+        player.hit(Card.valueOf(CardNumber.KING, CardShape.HEART));
+        cashier.calculateBetResult(List.of(player), dealer);
         GamersWallet gamersWallet = cashier.getGamersWallet();
         assertThat(gamersWallet.findMoneyByPlayer(player))
                 .isEqualTo(15000);
@@ -75,14 +83,17 @@ public class CashierTest {
         Player player2 = new Player("player2");
         Money money2 = new Money(20000);
 
+        player1.hit(Card.valueOf(CardNumber.FOUR, CardShape.HEART));
+        player2.hit(Card.valueOf(CardNumber.SIX, CardShape.HEART));
+
         List<GamerWallet> gamerWallets = List.of(new GamerWallet(player1, money1),
                 new GamerWallet(player2, money2),
                 new GamerWallet(dealer, new Money(0)));
+        Cashier cashier = new Cashier(new GamersWallet(gamerWallets), new Judge());
 
-        Cashier cashier = new Cashier(new GamersWallet(gamerWallets));
         GamersWallet gamersWallet = cashier.getGamersWallet();
-        cashier.calculatePlayersProfit(Map.of(player1, WinState.WIN, player2, WinState.DRAW));
-        cashier.calculateDealerProfit(dealer);
+        cashier.calculateBetResult(List.of(player1, player2), dealer);
+
         assertThat(gamersWallet.findMoneyByPlayer(dealer)).isEqualTo(-10000);
     }
 }
