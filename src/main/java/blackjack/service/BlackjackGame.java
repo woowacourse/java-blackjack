@@ -1,14 +1,14 @@
 package blackjack.service;
 
-import blackjack.domain.participant.Participants;
 import blackjack.domain.card.Hands;
 import blackjack.domain.dealer.Dealer;
 import blackjack.domain.dealer.Deck;
 import blackjack.domain.participant.ParticipantName;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.Score;
 import blackjack.domain.result.WinningResult;
-import blackjack.dto.CardDto;
 import blackjack.dto.ParticipantCardsDto;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +37,8 @@ public class BlackjackGame {
         return participants.getStartCards();
     }
 
-    public boolean addCardToPlayers(final String name) {
-        return participants.addCardToPlayers(name, deck);
+    public boolean addCardToPlayer(final Player player) {
+        return participants.addCardToPlayer(player, deck);
     }
 
     public int giveDealerMoreCards() {
@@ -59,14 +59,9 @@ public class BlackjackGame {
 
     public boolean isNotDealerBlackjack() {
         return participants.isDealerNotBlackjack();
-
     }
 
-    public List<CardDto> getCardsOf(final String name) {
-        return participants.getCardsOf(name);
-    }
-
-    public List<String> getPlayersNames() {
-        return participants.getPlayersNames();
+    public List<Player> getPlayers() {
+        return participants.getPlayers();
     }
 }

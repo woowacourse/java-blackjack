@@ -13,8 +13,4 @@ public class Player extends Participant {
             throw new IllegalArgumentException(Dealer.DEALER_NAME + " 라는 이름을 사용할 수 없습니다.");
         }
     }
-
-    public boolean isName(final String otherName) {
-        return name.isSame(otherName);
-    }
 }

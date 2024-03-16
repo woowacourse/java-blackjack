@@ -31,6 +31,7 @@ public class Participant {
     public void addCard(final Card card) {
         hands.add(card);
     }
+
     public void addCard(final List<Card> cards) {
         cards.forEach(hands::add);
     }
@@ -39,16 +40,16 @@ public class Participant {
         return BlackjackStatus.of(calculate(), hands.count());
     }
 
+    public boolean isAlive() {
+        return getStatus() == BlackjackStatus.ALIVE;
+    }
+
     public boolean isBlackjack() {
         return getStatus() == BlackjackStatus.BLACKJACK;
     }
 
     public boolean isNotBlackjack() {
         return getStatus() != BlackjackStatus.BLACKJACK;
-    }
-
-    public boolean isNotDead() {
-        return getStatus() != BlackjackStatus.DEAD;
     }
 
     public Hands getHands() {

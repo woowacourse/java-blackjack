@@ -33,21 +33,22 @@ public class BlackjackController {
         finishGame(blackjackGame, playerBettings);
     }
 
-    private PlayerBettings createBettings(final Players players) {
-        try {
-            return PlayerBettings.from(inputView.readBettings(players.getNames()));
-        } catch (final IllegalArgumentException e) {
-            outputView.printError(e.getMessage());
-            return createBettings(players);
-        }
-    }
-
     private Players createPlayers() {
         try {
             return Players.from(inputView.readPlayerNames());
         } catch (final IllegalArgumentException e) {
             outputView.printError(e.getMessage());
             return createPlayers();
+        }
+    }
+
+    private PlayerBettings createBettings(final Players players) {
+        try {
+            final Map<String, Integer> playerBettings = inputView.readBettings(players.getNames());
+            return PlayerBettings.from(playerBettings);
+        } catch (final IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return createBettings(players);
         }
     }
 
@@ -65,33 +66,26 @@ public class BlackjackController {
         }
     }
 
-    private void playGame(final BlackjackGame blackjackGame) {
-        final List<String> playerNames = blackjackGame.getPlayersNames();
-
-        for (String name : playerNames) {
-            runPlayerTurn(blackjackGame, name);
+    private void playGame(final BlackjackGame blackjackGame) { // name -> player 방식 고민 마저
+        for (Player player : blackjackGame.getPlayers()) {
+            runPlayerTurn(blackjackGame, player);
         }
 
-        final int count = blackjackGame.giveDealerMoreCards();
+        int count = blackjackGame.giveDealerMoreCards();
         outputView.printDealerMoreCard(count);
     }
 
-    private void runPlayerTurn(final BlackjackGame blackjackGame, final String name) {
+    private void runPlayerTurn(final BlackjackGame blackjackGame, final Player player) {
         boolean isFirst = true;
 
-        while (blackjackGame.addCardToPlayers(name) && needMoreCard(name)) {
-            printPlayerCards(blackjackGame, name);
+        while (blackjackGame.addCardToPlayer(player) && needMoreCard(player)) {
+            printPlayerCards(player);
             isFirst = false;
         }
 
         if (isFirst) {
-            printPlayerCards(blackjackGame, name);
+            printPlayerCards(player);
         }
-    }
-
-    private void printPlayerCards(final BlackjackGame blackjackGame, final String name) {
-        final List<CardDto> cards = blackjackGame.getCardsOf(name);
-        outputView.printPlayerCard(new ParticipantCardsDto(name, cards));
     }
 
     private boolean needMoreCard(final String name) {
@@ -101,6 +95,22 @@ public class BlackjackController {
             outputView.printError(e.getMessage());
             return needMoreCard(name);
         }
+    }
+
+    private boolean needMoreCard(final Player player) {
+        ParticipantName rawName = player.getName();
+        String name = rawName.getName();
+
+        try {
+            return inputView.readNeedMoreCard(name);
+        } catch (final IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return needMoreCard(name);
+        }
+    }
+
+    private void printPlayerCards(final Player player) {
+        outputView.printPlayerCard(ParticipantCardsDto.from(player));
     }
 
     private void finishGame(final BlackjackGame blackjackGame, final PlayerBettings playerBettings) {

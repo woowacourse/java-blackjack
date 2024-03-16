@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.dealer.Deck;
+import blackjack.domain.participant.Player;
 import blackjack.dto.ParticipantCardsDto;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 class BlackjackGameTest {
     private final String kirby = "kirby";
+    private final Player playerKirby = new Player("kirby");
 
     @DisplayName("모든 참가자들이 이름을 세팅하고 플레이어는 2장씩, 딜러는 공개용 카드 1장을 가졌는지 확인한다. ")
     @Test
@@ -41,7 +43,7 @@ class BlackjackGameTest {
         blackjackGame.divideCard();
 
         // when
-        boolean addCardAvailable = blackjackGame.addCardToPlayers(kirby);
+        boolean addCardAvailable = blackjackGame.addCardToPlayer(playerKirby);
 
         // then
         assertAll(() -> assertThat(addCardAvailable).isTrue(),
@@ -57,9 +59,9 @@ class BlackjackGameTest {
 
         // when
         for (int i = 0; i < 20; i++) {
-            blackjackGame.addCardToPlayers(kirby);
+            blackjackGame.addCardToPlayer(playerKirby);
         }
-        boolean addCardAvailable = blackjackGame.addCardToPlayers(kirby);
+        boolean addCardAvailable = blackjackGame.addCardToPlayer(playerKirby);
 
         // then
         assertThat(addCardAvailable).isFalse();

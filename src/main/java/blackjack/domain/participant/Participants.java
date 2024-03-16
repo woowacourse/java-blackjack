@@ -5,11 +5,9 @@ import blackjack.domain.dealer.Dealer;
 import blackjack.domain.dealer.Deck;
 import blackjack.domain.result.Score;
 import blackjack.domain.result.WinningResult;
-import blackjack.dto.CardDto;
 import blackjack.dto.ParticipantCardsDto;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Participants {
     public static final int INT_CARD_COUNT = 2;
@@ -30,28 +28,20 @@ public class Participants {
     }
 
     public List<ParticipantCardsDto> getStartCards() {
-        final Map<ParticipantName, Hands> playersCard = players.getPlayerHands();
-
-        List<ParticipantCardsDto> participantCardsDtos = playersCard.entrySet().stream()
-                .map(entry -> ParticipantCardsDto.of(entry.getKey(), entry.getValue()))
-                .collect(Collectors.toList());
-
+        List<ParticipantCardsDto> participantCardsDtos = players.getStartCards();
         participantCardsDtos.add(ParticipantCardsDto.of(dealer.getName(), dealer.getOpenedCards()));
+
         return participantCardsDtos;
     }
 
-    public boolean addCardToPlayers(final String name, final Deck deck) {
-        if (!isPlayerAliveByName(name)) {
+    public boolean addCardToPlayer(final Player player, final Deck deck) {
+        if (!player.isAlive()) {
             return false;
         }
 
-        players.addCardTo(name, deck.pick());
+        players.addCardTo(player, deck.pick());
 
         return true;
-    }
-
-    private boolean isPlayerAliveByName(final String name) {
-        return players.isNotDead(name);
     }
 
     public int giveDealerMoreCards(final Deck deck) {
@@ -91,15 +81,7 @@ public class Participants {
         return dealer.isNotBlackjack();
     }
 
-    public List<CardDto> getCardsOf(final String name) {
-        return players.getCardsOf(name).getCards().stream()
-                .map(CardDto::from)
-                .toList();
-    }
-
-    public List<String> getPlayersNames() {
-        return players.getNames().stream()
-                .map(ParticipantName::getName)
-                .toList();
+    public List<Player> getPlayers() {
+        return players.getPlayers();
     }
 }

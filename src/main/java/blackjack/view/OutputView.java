@@ -1,8 +1,9 @@
 package blackjack.view;
 
-import blackjack.dto.BettingResultDtos;
 import blackjack.domain.dealer.Dealer;
+import blackjack.domain.participant.Participants;
 import blackjack.dto.BettingResultDto;
+import blackjack.dto.BettingResultDtos;
 import blackjack.dto.CardDto;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantScoreDto;
