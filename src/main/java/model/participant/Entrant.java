@@ -36,13 +36,13 @@ public class Entrant {
         moveToNextPlayer();
     }
 
-    public PlayerFaceUpResult getNextAvailablePlayerName() {
+    public Player getNextAvailablePlayer() {
         Player currentPlayer = getCurrentPlayer();
         if (currentPlayer.canHit()) {
-            return ResultMapper.toPlayerFaceUpResult(currentPlayer);
+            return currentPlayer;
         }
         moveToNextPlayer();
-        return getNextAvailablePlayerName();
+        return getNextAvailablePlayer();
     }
 
     private void moveToNextPlayer() {

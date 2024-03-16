@@ -8,6 +8,7 @@ import model.participant.Player;
 import model.participant.dto.DealerFaceUpResult;
 import model.participant.dto.PlayerFaceUpResult;
 import model.participant.dto.PlayerMatchResult;
+import util.ResultMapper;
 
 public class Casino {
     private final Entrant entrant;
@@ -60,7 +61,7 @@ public class Casino {
     }
 
     public PlayerFaceUpResult getNextPlayerFaceUpInfo() {
-        return entrant.getNextAvailablePlayerName();
+        return ResultMapper.toPlayerFaceUpResult(entrant.getNextAvailablePlayer());
     }
 
     public List<PlayerMatchResult> calculatePlayerMatchResults() {
