@@ -1,5 +1,6 @@
 package domain.game;
 
+import static domain.participant.Participants.CACHED_DEALER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static util.CardsSupplier.createBlackJackCards;
 import static util.CardsSupplier.createBustedCards;
@@ -18,11 +19,18 @@ import domain.participant.Participants;
 import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class RefereeTest {
+
+    @AfterEach
+    void tearDown() {
+        CACHED_DEALER.clear();
+    }
+
     @DisplayName("참가자의 점수가 21을 초과한 경우")
     @Nested
     class PlayerBusted {
@@ -38,7 +46,7 @@ class RefereeTest {
 
             assertThat(outcomes)
                     .hasSize(1)
-                    .containsExactly(new PlayerOutcome(new Player("pobi"), Outcome.LOSE));
+                    .containsExactly(new PlayerOutcome(new Player("pobi", 1), Outcome.LOSE));
         }
 
         @DisplayName("딜러가 블랙잭이면 패배한다.")
@@ -53,7 +61,7 @@ class RefereeTest {
 
             assertThat(outcomes)
                     .hasSize(1)
-                    .containsExactly(new PlayerOutcome(new Player("pobi"), Outcome.LOSE));
+                    .containsExactly(new PlayerOutcome(new Player("pobi", 1), Outcome.LOSE));
         }
 
         @DisplayName("딜러가 21 미만이면 패배한다.")
@@ -68,7 +76,7 @@ class RefereeTest {
 
             assertThat(outcomes)
                     .hasSize(1)
-                    .containsExactly(new PlayerOutcome(new Player("pobi"), Outcome.LOSE));
+                    .containsExactly(new PlayerOutcome(new Player("pobi", 1), Outcome.LOSE));
         }
     }
 
@@ -87,10 +95,10 @@ class RefereeTest {
 
             assertThat(outcomes)
                     .hasSize(1)
-                    .containsExactly(new PlayerOutcome(new Player("pobi"), Outcome.WIN));
+                    .containsExactly(new PlayerOutcome(new Player("pobi", 1), Outcome.WIN));
         }
 
-        @DisplayName("딜러가 블랙잭인 경우 딜러가 승리한다.")
+        @DisplayName("딜러의 점수가 21인 경우 딜러가 승리한다.")
         @Test
         void dealerBlackJack() {
             Dealer dealer = createDealer(createBlackJackCards());
@@ -102,7 +110,7 @@ class RefereeTest {
 
             assertThat(outcomes)
                     .hasSize(1)
-                    .containsExactly(new PlayerOutcome(new Player("pobi"), Outcome.LOSE));
+                    .containsExactly(new PlayerOutcome(new Player("pobi", 1), Outcome.LOSE));
         }
 
         @DisplayName("딜러의 점수가 21 미만이고 참가자보다 작은 경우 참가자가 승리한다.")
@@ -117,7 +125,7 @@ class RefereeTest {
 
             assertThat(outcomes)
                     .hasSize(1)
-                    .containsExactly(new PlayerOutcome(new Player("pobi"), Outcome.WIN));
+                    .containsExactly(new PlayerOutcome(new Player("pobi", 1), Outcome.WIN));
         }
 
         @DisplayName("딜러의 점수가 21 미만이고 참가자보다 큰 경우 딜러가 승리한다.")
@@ -132,7 +140,7 @@ class RefereeTest {
 
             assertThat(outcomes)
                     .hasSize(1)
-                    .containsExactly(new PlayerOutcome(new Player("pobi"), Outcome.LOSE));
+                    .containsExactly(new PlayerOutcome(new Player("pobi", 1), Outcome.LOSE));
         }
 
         @DisplayName("참가자와 딜러의 점수가 같은 경우 카드 개수가 적은 사람이 승리한다.")
@@ -147,7 +155,7 @@ class RefereeTest {
 
             assertThat(outcomes)
                     .hasSize(1)
-                    .containsExactly(new PlayerOutcome(new Player("pobi"), Outcome.WIN));
+                    .containsExactly(new PlayerOutcome(new Player("pobi", 1), Outcome.WIN));
         }
     }
 
@@ -167,7 +175,7 @@ class RefereeTest {
 
             assertThat(outcomes)
                     .hasSize(1)
-                    .containsExactly(new PlayerOutcome(new Player("pobi"), Outcome.BLACKJACK));
+                    .containsExactly(new PlayerOutcome(new Player("pobi", 1), Outcome.BLACKJACK));
         }
 
         @DisplayName("딜러의 카드의 합이 21이면서 카드가 2개인 경우 무승부이다.")
@@ -182,7 +190,7 @@ class RefereeTest {
 
             assertThat(outcomes)
                     .hasSize(1)
-                    .containsExactly(new PlayerOutcome(new Player("pobi"), Outcome.TIE));
+                    .containsExactly(new PlayerOutcome(new Player("pobi", 1), Outcome.TIE));
         }
 
         @DisplayName("딜러의 카드의 합이 21이지만 카드가 3개인 경우 참가자가 블랙잭으로 승리한다.")
@@ -197,7 +205,7 @@ class RefereeTest {
 
             assertThat(outcomes)
                     .hasSize(1)
-                    .containsExactly(new PlayerOutcome(new Player("pobi"), Outcome.BLACKJACK));
+                    .containsExactly(new PlayerOutcome(new Player("pobi", 1), Outcome.BLACKJACK));
         }
 
         @DisplayName("딜러의 카드의 합이 21을 초과한 경우 참가자가 블랙잭으로 승리한다.")
@@ -212,7 +220,7 @@ class RefereeTest {
 
             assertThat(outcomes)
                     .hasSize(1)
-                    .containsExactly(new PlayerOutcome(new Player("pobi"), Outcome.BLACKJACK));
+                    .containsExactly(new PlayerOutcome(new Player("pobi", 1), Outcome.BLACKJACK));
         }
     }
 
@@ -231,7 +239,7 @@ class RefereeTest {
 
             assertThat(outcomes)
                     .hasSize(1)
-                    .containsExactly(new PlayerOutcome(new Player("pobi"), Outcome.WIN));
+                    .containsExactly(new PlayerOutcome(new Player("pobi", 1), Outcome.WIN));
         }
 
         @DisplayName("딜러의 카드의 합이 21이면서 카드가 2개인 경우 패배한다.")
@@ -246,7 +254,7 @@ class RefereeTest {
 
             assertThat(outcomes)
                     .hasSize(1)
-                    .containsExactly(new PlayerOutcome(new Player("pobi"), Outcome.LOSE));
+                    .containsExactly(new PlayerOutcome(new Player("pobi", 1), Outcome.LOSE));
         }
 
         @DisplayName("딜러의 카드의 합이 21이지만 카드가 3개인 경우 카드가 적은 사람이 승리한다.")
@@ -261,7 +269,7 @@ class RefereeTest {
 
             assertThat(outcomes)
                     .hasSize(1)
-                    .containsExactly(new PlayerOutcome(new Player("pobi"), Outcome.WIN));
+                    .containsExactly(new PlayerOutcome(new Player("pobi", 1), Outcome.WIN));
         }
 
         @DisplayName("딜러의 카드의 합이 21을 초과한 경우 참가자가 승리한다.")
@@ -276,7 +284,7 @@ class RefereeTest {
 
             assertThat(outcomes)
                     .hasSize(1)
-                    .containsExactly(new PlayerOutcome(new Player("pobi"), Outcome.WIN));
+                    .containsExactly(new PlayerOutcome(new Player("pobi", 1), Outcome.WIN));
         }
     }
 

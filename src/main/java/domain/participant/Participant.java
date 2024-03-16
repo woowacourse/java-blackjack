@@ -88,7 +88,7 @@ public abstract class Participant {
         return Objects.hash(name);
     }
 
-    abstract public boolean canPickCard(final DecisionToContinue decision);
+    public abstract boolean canPickCard(final DecisionToContinue decision);
 
-    abstract public ParticipantHandStatus createInitialHandStatus();
+    public abstract ParticipantHandStatus createInitialHandStatus();
 }

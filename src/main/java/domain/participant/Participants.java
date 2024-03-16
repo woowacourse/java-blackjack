@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 public class Participants {
     public static final Dealer CACHED_DEALER = new Dealer();
-    protected static final List<Player> CACHED_PLAYERS = new ArrayList<>();
+    private static final List<Player> CACHED_PLAYERS = new ArrayList<>();
 
     private final List<Participant> participants;
 
@@ -38,7 +38,7 @@ public class Participants {
     }
 
     public List<PlayerOutcome> getPlayersOutcomeIf(final PlayerOutcomeFunction function) {
-        return CACHED_PLAYERS.stream()
+        return getPlayers().stream()
                 .map(player -> new PlayerOutcome(player, function.apply(player)))
                 .toList();
     }
@@ -50,7 +50,17 @@ public class Participants {
     public List<Participant> getParticipantsStartsWithDealer() {
         return Stream.concat(
                 Stream.of(CACHED_DEALER),
-                CACHED_PLAYERS.stream()
+                getPlayers().stream()
         ).toList();
+    }
+
+    public List<Player> getPlayers() {
+        if (CACHED_PLAYERS.isEmpty()) {
+            return participants.stream()
+                    .filter(Player.class::isInstance)
+                    .map(Player.class::cast)
+                    .toList();
+        }
+        return CACHED_PLAYERS;
     }
 }

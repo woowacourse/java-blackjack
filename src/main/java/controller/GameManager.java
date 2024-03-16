@@ -59,7 +59,6 @@ public class GameManager {
         }
     }
 
-    // TODO : 이 부분 어떻게 수정할 수 있을까?
     private ActionAfterPick getActionAfterPick(final Participant participant) {
         if (participant instanceof Player) {
             return outputView::printHandStatus;

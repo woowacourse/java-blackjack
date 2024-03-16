@@ -16,7 +16,6 @@ public class Referee {
         this.participants = participants;
     }
 
-    // TODO : 메서드 길이 10라인으로 줄이기
     public List<PlayerOutcome> judge() {
         if (CACHED_DEALER.isBlackJack()) {
             return participants.getPlayersOutcomeIf(
@@ -27,13 +26,11 @@ public class Referee {
         if (CACHED_DEALER.isBusted()) {
             return participants.getPlayersOutcomeIf(
                     this::judgeWhenDealerIsBusted
-                    // TODO: 두 장이고 21이면 BLACKJACK / 그냥 isNotBusted 이면 WIN / 그 외 BUST면 LOSE / 여기서 참가자가 블랙잭이면 BLACKJACK
             );
         }
 
         return participants.getPlayersOutcomeIf(
                 this::judgeWhenDealerIsNotBustedAndNotBlackJack
-                // TODO: 딜러가 블랙잭이고 플레이어도 블랙잭이면 TIE / 딜러만 블랙잭이면 LOSE / 참가자만 블랙잭이면 BLACKJACK / 딜러도 플레이어도 블랙잭이 아니면 isWinner 함수 호출
         );
     }
 
@@ -67,7 +64,6 @@ public class Referee {
         return verifyHasLessOrSameCardThanDealer(player, CACHED_DEALER);
     }
 
-    // TODO : 아래 두 함수를 개선할 수 없나? Outcome에서 하고 싶은데 true, false를 넘기기도 애매하고 ................
     private Outcome verifyHasMoreScoreThanDealer(final Player player, final Dealer dealer) {
         if (player.hasMoreScoreThan(dealer)) {
             return Outcome.WIN;

@@ -37,4 +37,8 @@ public class Dealer extends Participant {
     private int toDealerProfit(final int playerProfit) {
         return (-1) * playerProfit;
     }
+
+    public void clear() {
+        hand.clear();
+    }
 }
