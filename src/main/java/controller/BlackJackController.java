@@ -1,7 +1,6 @@
 package controller;
 
 import card.CardDeck;
-import cardGame.BlackJackGame;
 import dealer.Dealer;
 import gameResult.GameResult;
 import java.util.LinkedHashMap;
@@ -30,8 +29,7 @@ public class BlackJackController {
         Dealer dealer = new Dealer(cardDeck.firstCardSettings());
         Players players = playersBetting(cardDeck);
 
-        BlackJackGame blackJackGame = new BlackJackGame(cardDeck, cardDeck.firstCardSettings());
-        runBlackJackGame(blackJackGame, players, cardDeck, dealer);
+        runBlackJackGame(players, cardDeck, dealer);
         showResult(players, dealer);
     }
 
@@ -46,8 +44,8 @@ public class BlackJackController {
                 .toList();
     }
 
-    private void runBlackJackGame(BlackJackGame blackJackGame, Players players, CardDeck cardDeck, Dealer dealer) {
-        outputView.printInitCardStatus(players, blackJackGame.getDealerFirstCard());
+    private void runBlackJackGame(Players players, CardDeck cardDeck, Dealer dealer) {
+        outputView.printInitCardStatus(players, dealer.getFirstCard());
 
         for (Player player : players.getPlayers()) {
             playSingleMatch(player, cardDeck);

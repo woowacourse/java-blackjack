@@ -13,6 +13,10 @@ public class Dealer extends GameParticipantCards {
         super(initCards);
     }
 
+    public Card getFirstCard() {
+        return getCards().getFirstCard();
+    }
+
     public void getExtraCard(CardDeck cardDeck) {
         while (isNotOverMinScore()) {
             receiveCard(cardDeck.pickCard());
