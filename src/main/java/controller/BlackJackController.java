@@ -13,7 +13,6 @@ import referee.Referee;
 import view.InputView;
 import view.OutputView;
 
-// Todo: 클래식하게 짜기
 public class BlackJackController {
 
     private final InputView inputView;
