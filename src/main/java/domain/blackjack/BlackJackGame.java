@@ -31,14 +31,6 @@ public class BlackJackGame {
         return drawResult.isSuccess();
     }
 
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    public Players getPlayers() {
-        return players;
-    }
-
     public List<EarningMoney> calculatePlayersEarningMoney() {
         return players.calculatePlayersEarningMoney(dealer);
     }
@@ -49,5 +41,13 @@ public class BlackJackGame {
                 .mapToInt(EarningMoney::rawEarningMoney)
                 .sum();
         return new EarningMoney(dealerRawEarningMoney);
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public Players getPlayers() {
+        return players;
     }
 }

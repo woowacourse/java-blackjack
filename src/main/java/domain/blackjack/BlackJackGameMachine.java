@@ -33,11 +33,6 @@ class BlackJackGameMachine {
         return isBust() || !cardDrawCondition.canDraw() || deck.isEmpty();
     }
 
-    List<Card> getRawHoldingCards(CardShowStrategy cardShowStrategy) {
-        List<Card> allCards = holdingCards.getHoldingCards();
-        return List.copyOf(cardShowStrategy.showSub(allCards));
-    }
-
     int calculateSummationCardPointAsInt() {
         return calculateSummationCardPoint().summationCardPoint();
     }
@@ -77,4 +72,10 @@ class BlackJackGameMachine {
     List<Card> getRawHoldingCards() {
         return List.copyOf(holdingCards.getHoldingCards());
     }
+
+    List<Card> getRawHoldingCards(CardShowStrategy cardShowStrategy) {
+        List<Card> allCards = holdingCards.getHoldingCards();
+        return List.copyOf(cardShowStrategy.showSub(allCards));
+    }
+
 }

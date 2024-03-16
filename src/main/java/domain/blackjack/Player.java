@@ -27,11 +27,11 @@ public class Player extends Gamer {
                 new PlayerCardDrawCondition(blackJackGameMachine));
     }
 
-    public String getRawName() {
-        return name;
-    }
-
     final EarningMoney calculateEarningMoney(GameResult gameResult) {
         return bettingMoney.calculateEarningMoney(gameResult);
+    }
+
+    public String getRawName() {
+        return name;
     }
 }

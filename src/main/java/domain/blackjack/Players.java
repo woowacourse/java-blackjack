@@ -24,10 +24,6 @@ public class Players {
                 .toList();
     }
 
-    public List<String> getPlayerNames() {
-        return players.stream().map(Player::getRawName).toList();
-    }
-
     void draw(Deck deck, PlayerDrawAfterCallBack playerDrawAfterCallBack, DrawConfirmation drawConfirmation) {
         for (Player player : players) {
             playerDraw(deck, playerDrawAfterCallBack, drawConfirmation, player);
@@ -69,6 +65,10 @@ public class Players {
                     return player.calculateEarningMoney(gameResult);
                 })
                 .toList();
+    }
+
+    public List<String> getPlayerNames() {
+        return players.stream().map(Player::getRawName).toList();
     }
 
     public List<Player> getPlayers() {

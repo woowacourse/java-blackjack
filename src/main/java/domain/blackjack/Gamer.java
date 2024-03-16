@@ -21,19 +21,19 @@ abstract class Gamer {
         return blackJackGameMachine.calculateSummationCardPoint();
     }
 
-    public final List<Card> getRawHoldingCards() {
-        return getRawHoldingCards(AllCardShowStrategy.INSTANCE);
-    }
-
-    public final List<Card> getRawHoldingCards(CardShowStrategy cardShowStrategy) {
-        return blackJackGameMachine.getRawHoldingCards(cardShowStrategy);
-    }
-
     final boolean isBust() {
         return blackJackGameMachine.isBust();
     }
 
     final boolean isBlackJack() {
         return blackJackGameMachine.isBlackJack();
+    }
+
+    public final List<Card> getRawHoldingCards() {
+        return getRawHoldingCards(AllCardShowStrategy.INSTANCE);
+    }
+
+    public final List<Card> getRawHoldingCards(CardShowStrategy cardShowStrategy) {
+        return blackJackGameMachine.getRawHoldingCards(cardShowStrategy);
     }
 }
