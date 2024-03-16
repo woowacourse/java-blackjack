@@ -23,10 +23,10 @@ public enum PrizeChecker {
         this.profitRate = profitRate;
     }
 
-    public static final int check(final GamePlayer gamePlayer, final Dealer dealer) {
+    public static final PrizeMoney check(final Dealer dealer, final GamePlayer gamePlayer) {
         for (final var checker : PrizeChecker.values()) {
             if (checker.predicate.test(gamePlayer, dealer)) {
-                return (int) (gamePlayer.getBettingMoney() * checker.profitRate);
+                return new PrizeMoney(gamePlayer.getBettingMoney() * checker.profitRate);
             }
         }
         throw new IllegalStateException("조건에 맞지 않는 계산입니다");

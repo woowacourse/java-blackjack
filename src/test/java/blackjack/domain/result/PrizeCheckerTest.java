@@ -3,6 +3,7 @@ package blackjack.domain.result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardValue;
+import blackjack.domain.card.Cards;
 import blackjack.domain.player.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,9 +20,9 @@ class PrizeCheckerTest {
 
         final Dealer dealer = 딜러_생성(List.of(CardValue.EIGHT, CardValue.EIGHT));
 
-        final var prize = PrizeChecker.check(gamePlayer, dealer);
+        final var prize = PrizeChecker.check(dealer, gamePlayer);
 
-        assertThat(prize).isEqualTo(1500);
+        assertPrizeMoney(prize, 1500);
     }
 
     @Test
@@ -31,9 +32,9 @@ class PrizeCheckerTest {
 
         final Dealer dealer = 딜러_생성(List.of(CardValue.ACE, CardValue.JACK));
 
-        final var prize = PrizeChecker.check(gamePlayer, dealer);
+        final var prize = PrizeChecker.check(dealer, gamePlayer);
 
-        assertThat(prize).isZero();
+        assertPrizeMoney(prize, 0);
     }
 
     @Test
@@ -43,9 +44,9 @@ class PrizeCheckerTest {
 
         final Dealer dealer = 딜러_생성(List.of(CardValue.TWO, CardValue.JACK, CardValue.JACK));
 
-        final var prize = PrizeChecker.check(gamePlayer, dealer);
+        final var prize = PrizeChecker.check(dealer, gamePlayer);
 
-        assertThat(prize).isEqualTo(-1000);
+        assertPrizeMoney(prize, -1000);
     }
 
     @Test
@@ -55,9 +56,9 @@ class PrizeCheckerTest {
 
         final Dealer dealer = 딜러_생성(List.of(CardValue.TWO, CardValue.JACK));
 
-        final var prize = PrizeChecker.check(gamePlayer, dealer);
+        final var prize = PrizeChecker.check(dealer, gamePlayer);
 
-        assertThat(prize).isEqualTo(-1000);
+        assertPrizeMoney(prize, -1000);
     }
 
     @Test
@@ -66,9 +67,9 @@ class PrizeCheckerTest {
         final GamePlayer gamePlayer = 플레이어_생성(1000, List.of(CardValue.JACK, CardValue.JACK));
         final Dealer dealer = 딜러_생성(List.of(CardValue.TWO, CardValue.JACK, CardValue.JACK));
 
-        final var prize = PrizeChecker.check(gamePlayer, dealer);
+        final var prize = PrizeChecker.check(dealer, gamePlayer);
 
-        assertThat(prize).isEqualTo(1000);
+        assertPrizeMoney(prize, 1000);
     }
 
     @Test
@@ -79,9 +80,9 @@ class PrizeCheckerTest {
         final Dealer dealer = 딜러_생성(List.of(CardValue.TWO, CardValue.JACK));
         dealer.stand();
 
-        final var prize = PrizeChecker.check(gamePlayer, dealer);
+        final var prize = PrizeChecker.check(dealer, gamePlayer);
 
-        assertThat(prize).isEqualTo(1000);
+        assertPrizeMoney(prize, 1000);
     }
 
     @Test
@@ -92,9 +93,9 @@ class PrizeCheckerTest {
         final Dealer dealer = 딜러_생성(List.of(CardValue.JACK, CardValue.JACK));
         dealer.stand();
 
-        final var prize = PrizeChecker.check(gamePlayer, dealer);
+        final var prize = PrizeChecker.check(dealer, gamePlayer);
 
-        assertThat(prize).isZero();
+        assertPrizeMoney(prize, 0);
     }
 
     @Test
@@ -105,9 +106,9 @@ class PrizeCheckerTest {
         final Dealer dealer = 딜러_생성(List.of(CardValue.JACK, CardValue.JACK));
         dealer.stand();
 
-        final var prize = PrizeChecker.check(gamePlayer, dealer);
+        final var prize = PrizeChecker.check(dealer, gamePlayer);
 
-        assertThat(prize).isEqualTo(-1000);
+        assertPrizeMoney(prize, -1000);
     }
 
 
@@ -120,10 +121,14 @@ class PrizeCheckerTest {
     }
 
     private Dealer 딜러_생성(final List<CardValue> cardValues) {
-        final PlayerInfo playerInfo = new PlayerInfo(new Name("조이썬"), new BettingMoney(1000));
-        final Dealer dealer = new Dealer(playerInfo);
-        cardValues.stream()
-                  .forEach(cardValue -> dealer.drawCard(new Card(cardValue, CardSymbol.DIAMOND)));
+        final Cards cards = new Cards(cardValues.stream()
+                                                .map(cardValue -> new Card(cardValue, CardSymbol.CLOVER))
+                                                .toList());
+        final Dealer dealer = Dealer.createDefaultDealer(cards);
         return dealer;
+    }
+
+    private void assertPrizeMoney(final PrizeMoney prizeMoney, final int value) {
+        assertThat(prizeMoney.value()).isEqualTo(value);
     }
 }
