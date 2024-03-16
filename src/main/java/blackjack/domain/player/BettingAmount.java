@@ -21,6 +21,6 @@ public class BettingAmount {
     }
 
     public Profit calculateProfit(ResultStatus resultStatus) {
-        return new Profit((int) resultStatus.calculateProfit(value));
+        return resultStatus.calculateProfit(value);
     }
 }

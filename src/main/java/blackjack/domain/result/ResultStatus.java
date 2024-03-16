@@ -1,5 +1,7 @@
 package blackjack.domain.result;
 
+import blackjack.domain.player.Profit;
+
 public enum ResultStatus {
     WIN(1),
     LOSE(-1),
@@ -13,7 +15,7 @@ public enum ResultStatus {
     }
 
 
-    public double calculateProfit(int battingAmount) {
-        return rate * battingAmount;
+    public Profit calculateProfit(int bettingAmount) {
+        return new Profit(rate * bettingAmount);
     }
 }

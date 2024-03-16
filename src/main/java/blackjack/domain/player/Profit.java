@@ -5,8 +5,8 @@ import java.util.Objects;
 public class Profit {
     private final int value;
 
-    public Profit(int value) {
-        this.value = value;
+    public Profit(double value) {
+        this.value = (int) value;
     }
 
     public Profit subtract(Profit playerProfit) {

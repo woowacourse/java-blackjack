@@ -1,7 +1,13 @@
 package blackjack.domain.player;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import blackjack.domain.Blackjack;
+import blackjack.domain.card.CardValue;
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
+import blackjack.fixture.CardFixture;
 import blackjack.fixture.PlayerFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -18,5 +24,22 @@ class PlayersTest {
         assertThatCode(() -> {
             new Players(dealer, List.of(player1, player2));
         }).doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("게임 결과를 종합한다.")
+    public void Dealer_Count_result() {
+        GamePlayer gamePlayer = PlayerFixture.게임_플레이어_생성(List.of(CardValue.EIGHT, CardValue.THREE));
+        Name name = new Name("딜러");
+        Cards cards = CardFixture.카드_목록_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
+        Dealer dealer = new Dealer(name, cards);
+        var sut = new Players(dealer, List.of(gamePlayer));
+
+        var result = sut.compareResults();
+
+        assertThat(result.getResult()
+                .get(gamePlayer.getName())).isEqualTo(new Profit(-10000));
+        assertThat(result.getResult()
+                .get(name)).isEqualTo(new Profit(10000));
     }
 }

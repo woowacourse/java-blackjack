@@ -40,11 +40,6 @@ public class BlackjackController {
         PlayerView.printPlayersWithScore(players);
     }
 
-    private void printGameResult(Players players) {
-        Result result = blackjack.compareResults(players.getDealer(), players.getGamePlayers());
-        ResultView.printResult(result);
-    }
-
     private void processGamePlayer(Blackjack blackjack, GamePlayer gamePlayer) {
         while (gamePlayer.isReceivable() && isHit(gamePlayer)) {
             Card card = blackjack.draw();
@@ -65,5 +60,10 @@ public class BlackjackController {
             dealer.drawCard(card);
         }
         PlayerView.printDealerNotDrawMessage();
+    }
+
+    private void printGameResult(Players players) {
+        Result result = players.compareResults();
+        ResultView.printResult(result);
     }
 }

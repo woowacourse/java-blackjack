@@ -30,20 +30,20 @@ public class Blackjack {
         return new Players(dealer, gamePlayers);
     }
 
-    public Result compareResults(Dealer dealer, List<GamePlayer> gamePlayers) {
-        Map<Name, Profit> playerResults = new LinkedHashMap<>();
-        Profit dealerProfit = new Profit(0);
-        playerResults.put(dealer.getName(), dealerProfit);
-
-        for (GamePlayer gamePlayer : gamePlayers) {
-            Profit playerProfit = gamePlayer.getProfit(dealer);
-            playerResults.put(gamePlayer.getName(), playerProfit);
-            dealerProfit = dealerProfit.subtract(playerProfit);
-        }
-        playerResults.put(dealer.getName(), dealerProfit);
-
-        return new Result(playerResults);
-    }
+//    public Result compareResults(Dealer dealer, List<GamePlayer> gamePlayers) {
+//        Map<Name, Profit> playerResults = new LinkedHashMap<>();
+//        Profit dealerProfit = new Profit(0);
+//        playerResults.put(dealer.getName(), dealerProfit);
+//
+//        for (GamePlayer gamePlayer : gamePlayers) {
+//            Profit playerProfit = gamePlayer.getProfit(dealer);
+//            playerResults.put(gamePlayer.getName(), playerProfit);
+//            dealerProfit = dealerProfit.subtract(playerProfit);
+//        }
+//        playerResults.put(dealer.getName(), dealerProfit);
+//
+//        return new Result(playerResults);
+//    }
 
     private Cards drawTwo() {
         return new Cards(List.of(deck.draw(), deck.draw()));
