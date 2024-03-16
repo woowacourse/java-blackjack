@@ -1,13 +1,13 @@
 package blackjack.domain.bet;
 
-public class BetAmout {
+public class BetAmount {
 
     private static final int MAX = 1_000_000_000;
     private static final int MIN = 1_000;
 
     private final int amount;
 
-    public BetAmout(int amount) {
+    public BetAmount(int amount) {
         validateRange(amount);
         this.amount = amount;
     }

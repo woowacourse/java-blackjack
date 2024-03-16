@@ -23,9 +23,9 @@ class PlayerBetsTest {
         Player player2 = TestPlayerCreator.of("썬", 3, 4);
         Dealer dealer = new Dealer(TestHandCreator.of(3, 4, 5));
 
-        Map<Player, BetAmout> playerMoneyMap = new HashMap<>();
-        playerMoneyMap.put(player1, new BetAmout(1000));
-        playerMoneyMap.put(player2, new BetAmout(1000));
+        Map<Player, BetAmount> playerMoneyMap = new HashMap<>();
+        playerMoneyMap.put(player1, new BetAmount(1000));
+        playerMoneyMap.put(player2, new BetAmount(1000));
         PlayerBets playerBets = new PlayerBets(playerMoneyMap);
 
         PlayerProfits playerProfits = playerBets.calculateProfitResult(dealer);

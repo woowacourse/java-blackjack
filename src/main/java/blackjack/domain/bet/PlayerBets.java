@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 
 public class PlayerBets {
 
-    private final Map<Player, BetAmout> playerBets;
+    private final Map<Player, BetAmount> playerBets;
 
-    public PlayerBets(Map<Player, BetAmout> playerBets) {
+    public PlayerBets(Map<Player, BetAmount> playerBets) {
         this.playerBets = playerBets;
     }
 
@@ -24,7 +24,7 @@ public class PlayerBets {
 
     private Profit calculatePlayerProfit(Player player, Dealer dealer) {
         GameResult gameResult = GameResult.of(dealer, player);
-        BetAmout betAmout = playerBets.get(player);
-        return betAmout.calculateProfit(gameResult.getProfitLeverage());
+        BetAmount betAmount = playerBets.get(player);
+        return betAmount.calculateProfit(gameResult.getProfitLeverage());
     }
 }
