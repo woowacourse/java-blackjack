@@ -9,12 +9,6 @@ import java.util.function.Consumer;
 public class Players {
     private final List<Player> players;
 
-    Players(List<String> playerNames) {
-        this.players = playerNames.stream()
-                .map(playerName -> Player.from(playerName, HoldingCards.of()))
-                .toList();
-    }
-
     public Players(List<String> playersName, List<Integer> battingMoneys) {
         List<Player> players = new ArrayList<>();
         for (int index = 0; index < playersName.size(); index++) {
