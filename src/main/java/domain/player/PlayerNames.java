@@ -2,7 +2,6 @@ package domain.player;
 
 import static domain.player.Dealer.DEALER_NAME;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -51,7 +50,7 @@ public class PlayerNames {
     }
 
     public List<PlayerName> names() {
-        return Collections.unmodifiableList(names);
+        return names;
     }
 
     @Override
@@ -69,12 +68,6 @@ public class PlayerNames {
     @Override
     public int hashCode() {
         return Objects.hash(names);
-    }
-
-    @Override
-    public String toString() {
-        return "PlayerNames[" +
-                "names=" + names + ']';
     }
 
 }
