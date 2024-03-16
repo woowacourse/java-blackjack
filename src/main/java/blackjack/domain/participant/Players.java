@@ -26,7 +26,7 @@ public class Players {
     }
 
     public void increaseOrder(PlayerAction playerAction) {
-        if (playerAction == PlayerAction.STAND || !getPlayerAtOrder().canHit()) {
+        if (playerAction.isStand() || getPlayerAtOrder().cannotHit()) {
             order++;
         }
     }

@@ -18,6 +18,10 @@ public abstract class Participant {
 
     public abstract boolean canHit();
 
+    public boolean cannotHit() {
+        return !canHit();
+    }
+
     public String getName() {
         return name.getName();
     }

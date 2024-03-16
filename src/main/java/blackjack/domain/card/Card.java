@@ -22,6 +22,6 @@ public class Card {
     }
 
     public boolean isAce() {
-        return number.equals(Number.ACE);
+        return number == Number.ACE;
     }
 }
