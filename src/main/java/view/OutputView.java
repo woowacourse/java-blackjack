@@ -33,8 +33,8 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printPlayerCardStatus(Player player) {
-        System.out.println(makeCardsStatus(player.getName(), player.getCards()));
+    public void printPlayerCardStatus(Name playerName, Cards playerCards) {
+        System.out.println(makeCardsStatus(playerName, playerCards));
     }
 
     public void printExtraCardInfo(Cards dealerCards, Name dealerName) {

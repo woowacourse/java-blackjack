@@ -61,7 +61,7 @@ public class BlackJackController {
     private void playGame(Player player, CardDeck cardDeck) {
         while (isHit(player)) {
             player.hit(cardDeck.pickCard());
-            outputView.printPlayerCardStatus(player);
+            outputView.printPlayerCardStatus(player.getName(), player.getCards());
         }
     }
 
