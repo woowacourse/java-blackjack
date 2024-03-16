@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.model.betting.Betting;
-import blackjack.model.betting.Money;
+import blackjack.model.betting.BettingMoney;
 import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.cardgenerator.RandomCardGenerator;
 import blackjack.model.dealer.Dealer;
@@ -44,8 +44,8 @@ public class BlackjackGame {
     private Betting createBetting(Players players) {
         Betting betting = new Betting();
         for (String playerName : players.getNames()) {
-            Money money = retryOnException(() -> inputView.askBettingMoneyToPlayer(playerName));
-            betting.addPlayerBettingMoney(playerName, money);
+            BettingMoney bettingMoney = retryOnException(() -> inputView.askBettingMoneyToPlayer(playerName));
+            betting.addPlayerBettingMoney(playerName, bettingMoney);
         }
         return betting;
     }

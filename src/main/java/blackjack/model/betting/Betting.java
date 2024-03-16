@@ -6,17 +6,17 @@ import java.util.Map;
 public class Betting {
     private static final String NOT_FOUND_BETTING_PLAYER = "배팅 정보가 없는 플레이어입니다.";
 
-    private final Map<String, Money> playerBettingMoney;
+    private final Map<String, BettingMoney> playerBettingMoney;
 
     public Betting() {
         this.playerBettingMoney = new HashMap<>();
     }
 
-    public void addPlayerBettingMoney(String playerName, Money money) {
-        playerBettingMoney.put(playerName, money);
+    public void addPlayerBettingMoney(String playerName, BettingMoney bettingMoney) {
+        playerBettingMoney.put(playerName, bettingMoney);
     }
 
-    public Money findBettingMoneyByPlayerName(String playerName) {
+    public BettingMoney findBettingMoneyByPlayerName(String playerName) {
         if (!playerBettingMoney.containsKey(playerName)) {
             throw new IllegalArgumentException(NOT_FOUND_BETTING_PLAYER);
         }

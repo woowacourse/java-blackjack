@@ -12,12 +12,12 @@ public class BettingTest {
         // given
         Betting betting = new Betting();
         String playerName = "dora";
-        Money money = new Money(1000);
+        BettingMoney bettingMoney = new BettingMoney(1000);
 
         // when
-        betting.addPlayerBettingMoney(playerName, money);
+        betting.addPlayerBettingMoney(playerName, bettingMoney);
 
         // then
-        assertThat(betting.findBettingMoneyByPlayerName(playerName)).isEqualTo(money);
+        assertThat(betting.findBettingMoneyByPlayerName(playerName)).isEqualTo(bettingMoney);
     }
 }
