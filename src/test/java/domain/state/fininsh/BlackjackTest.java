@@ -29,8 +29,7 @@ class BlackjackTest {
     void win() {
         final State dealer = Started.ofTwoCard(new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.ACE, Suit.CLUBS));
         State player = Started.ofTwoCard(new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.TEN, Suit.CLUBS));
-        player.add(new Card(Rank.TEN, Suit.CLUBS));
-        player = player.stand();
+        player = player.add(new Card(Rank.TEN, Suit.CLUBS));
 
         assertThat(dealer.isFinished()).isTrue();
         assertThat(player.isFinished()).isTrue();
