@@ -2,11 +2,11 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Hands;
-
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-public class Participant {
+public abstract class Participant {
 
     private static final int BLACK_JACK_COUNT = 21;
     public static final int BLACKJACK_HAND_COUNT = 2;
@@ -14,7 +14,7 @@ public class Participant {
     protected Hands hands;
     private final Name name;
 
-    public Participant(final Name name) {
+    protected Participant(final Name name) {
         this.hands = new Hands();
         this.name = name;
     }
@@ -27,9 +27,7 @@ public class Participant {
         hands.receive(cards);
     }
 
-    public boolean canHit() {
-        return hands.calculateScore() <= BLACK_JACK_COUNT;
-    }
+    public abstract boolean canHit();
 
     public boolean isBust() {
         return hands.calculateScore() > BLACK_JACK_COUNT;
@@ -49,5 +47,22 @@ public class Participant {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(hands.getValue());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Participant that = (Participant) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

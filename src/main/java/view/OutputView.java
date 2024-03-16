@@ -1,10 +1,12 @@
 package view;
 
-import domain.Bet.BetAmount;
 import domain.Bet.BetResult;
 import domain.card.Card;
-import domain.participant.*;
-
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Participant;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 import java.util.Map;
 
@@ -16,9 +18,9 @@ public class OutputView {
 
     }
 
-    public static void printBeginDealingInformation(Participants participants) {
+    public static void printBeginDealingInformation(Players players) {
         System.out.println();
-        System.out.printf(outputFormat.formatParticipantNames(participants));
+        System.out.printf(outputFormat.formatParticipantNames(players));
         System.out.println();
     }
 
@@ -53,8 +55,8 @@ public class OutputView {
         System.out.printf(outputFormat.formatDealerResult(betResult));
         System.out.println();
 
-        Map<Participant, BetAmount> betAmountByParticipant = betResult.getBetAmountByParticipant();
-        for (Map.Entry<Participant, BetAmount> entry : betAmountByParticipant.entrySet()) {
+        Map<Player, Double> betAmountByParticipant = betResult.getBetAmountByParticipant();
+        for (Map.Entry<Player, Double> entry : betAmountByParticipant.entrySet()) {
             System.out.println(outputFormat.formatBetResult(entry));
         }
     }

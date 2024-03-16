@@ -2,7 +2,6 @@ package domain.participant;
 
 import domain.blackjack.Deck;
 import domain.card.Card;
-
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -17,7 +16,8 @@ public class Dealer extends Participant {
         deck = new Deck();
     }
 
-    public boolean shouldHit() {
+    @Override
+    public boolean canHit() {
         return hands.calculateScore() <= DEALER_HIT_COUNT;
     }
 

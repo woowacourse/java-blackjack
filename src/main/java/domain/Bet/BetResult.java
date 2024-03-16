@@ -1,42 +1,38 @@
 package domain.Bet;
 
 import domain.blackjack.WinStatus;
-import domain.participant.Participant;
-
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BetResult {
 
-    private final Map<Participant, BetAmount> betAmountByParticipant;
+    private final Map<Player, Double> betAmountByParticipant;
 
-    public BetResult(final Map<Participant, BetAmount> result) {
+    private BetResult(final Map<Player, Double> result) {
         betAmountByParticipant = result;
     }
 
-    public BetAmount findByParticipant(Participant participant) {
-        return betAmountByParticipant.get(participant);
-    }
-
-    public void updateToProfit(Map<Participant, WinStatus> winStatusByParticipant) {
-        for (Map.Entry<Participant, WinStatus> winStatusEntry : winStatusByParticipant.entrySet()) {
-            Participant participant = winStatusEntry.getKey();
-            WinStatus winStatus = winStatusEntry.getValue();
-            BetAmount betAmount = betAmountByParticipant.get(participant);
-
-            BetAmount profit = betAmount.multiply(winStatus.getProfitMultiplier());
-            betAmountByParticipant.replace(participant, profit);
+    public static BetResult of(Players players, Dealer dealer) {
+        Map<Player, Double> result = new LinkedHashMap<>();
+        for (Player player : players.getValue()) {
+            WinStatus winStatus = WinStatus.winStatusByPlayer(player, dealer);
+            result.put(player, player.profit(winStatus));
         }
+        return new BetResult(result);
     }
 
     public double calculateDealerProfit() {
         double participantTotalProfit = betAmountByParticipant.values()
                 .stream()
-                .mapToDouble(BetAmount::getValue)
+                .mapToDouble(Double::doubleValue)
                 .sum();
         return -participantTotalProfit;
     }
 
-    public Map<Participant, BetAmount> getBetAmountByParticipant() {
+    public Map<Player, Double> getBetAmountByParticipant() {
         return betAmountByParticipant;
     }
 }

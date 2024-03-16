@@ -15,6 +15,6 @@ class DealerTest {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Shape.HEARTS, Rank.KING));
 
-        Assertions.assertThat(dealer.shouldHit()).isTrue();
+        Assertions.assertThat(dealer.canHit()).isTrue();
     }
 }

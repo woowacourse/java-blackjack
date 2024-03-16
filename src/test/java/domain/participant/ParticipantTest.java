@@ -13,12 +13,12 @@ class ParticipantTest {
     @DisplayName("사용자의 점수가 21이하인지 확인한다.")
     @Test
     void canHit() {
-        Participant participant = new Participant(new Name("user"));
-        participant.receiveCard(new Card(Shape.HEARTS, Rank.KING));
-        participant.receiveCard(new Card(Shape.DIAMONDS, Rank.KING));
-        participant.receiveCard(new Card(Shape.HEARTS, Rank.TWO));
+        Player player = new Player("user", 1000);
+        player.receiveCard(new Card(Shape.HEARTS, Rank.KING));
+        player.receiveCard(new Card(Shape.DIAMONDS, Rank.KING));
+        player.receiveCard(new Card(Shape.HEARTS, Rank.TWO));
 
-        boolean canHit = participant.canHit();
+        boolean canHit = player.canHit();
 
         assertThat(canHit).isFalse();
     }
@@ -26,11 +26,11 @@ class ParticipantTest {
     @DisplayName("사용자가 블랙잭인지 확인한다.")
     @Test
     void isBlackJack() {
-        Participant participant = new Participant(new Name("user"));
-        participant.receiveCard(new Card(Shape.HEARTS, Rank.KING));
-        participant.receiveCard(new Card(Shape.DIAMONDS, Rank.ACE));
+        Player player = new Player("user", 1000);
+        player.receiveCard(new Card(Shape.HEARTS, Rank.KING));
+        player.receiveCard(new Card(Shape.DIAMONDS, Rank.ACE));
 
-        boolean canHit = participant.isBlackJack();
+        boolean canHit = player.isBlackJack();
 
         assertThat(canHit).isTrue();
     }

@@ -1,14 +1,13 @@
 package controller;
 
-import domain.Bet.BetAmount;
 import domain.Bet.BetResult;
 import domain.blackjack.BlackJack;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Participant;
-import domain.participant.Participants;
-import java.util.LinkedHashMap;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
-import java.util.Map;
 import view.HitOption;
 import view.InputView;
 import view.OutputView;
@@ -16,11 +15,7 @@ import view.OutputView;
 public class BlackJackController {
 
     public void run() {
-        Participants participants = makeParticipants();
-        Dealer dealer = new Dealer();
-        BlackJack blackJack = new BlackJack(dealer, participants);
-
-        BetResult betResult = startBet(participants);
+        BlackJack blackJack = initBlackJack();
 
         blackJack.beginDealing();
         printParticipantsCards(blackJack);
@@ -28,51 +23,50 @@ public class BlackJackController {
         startParticipantHit(blackJack);
         dealerHit(blackJack);
 
-        betResult.updateToProfit(blackJack.makeResult());
+        BetResult betResult = blackJack.makeBetResult();
 
         printScoreAndResult(blackJack, betResult);
     }
 
-    private Participants makeParticipants() {
-        List<String> names = InputView.inputParticipantName();
-        return new Participants(names);
+    private BlackJack initBlackJack() {
+        Players players = makeParticipants();
+        return new BlackJack(new Dealer(), players);
     }
 
-    private BetResult startBet(Participants participants) {
-        Map<Participant, BetAmount> betAmountByParticipant = new LinkedHashMap<>();
-        for (Participant participant : participants.getValue()) {
-            int betAmount = InputView.inputBetAmount(participant);
-            betAmountByParticipant.put(participant, BetAmount.from(betAmount));
-        }
-        return new BetResult(betAmountByParticipant);
+    private Players makeParticipants() {
+        List<String> names = InputView.inputParticipantName();
+        List<Player> players = names.stream()
+                .map(name -> new Player(name, InputView.inputBetAmount(new Name(name))))
+                .toList();
+        return new Players(players);
     }
 
     private void printParticipantsCards(BlackJack blackJack) {
-        Participants participants = blackJack.getParticipants();
-        OutputView.printBeginDealingInformation(participants);
+        Players players = blackJack.getPlayers();
+        OutputView.printBeginDealingInformation(players);
         OutputView.printDealerHands(blackJack.getDealer());
-        for (Participant participant : participants.getValue()) {
+        for (Participant participant : players.getValue()) {
             OutputView.printParticipantHands(participant);
         }
     }
 
     public void startParticipantHit(BlackJack blackJack) {
-        Participants participants = blackJack.getParticipants();
+        Players players = blackJack.getPlayers();
         Dealer dealer = blackJack.getDealer();
-        for (Participant participant : participants.getValue()) {
-            participantHit(participant, dealer);
+        for (Player player : players.getValue()) {
+            participantHit(player, dealer);
         }
     }
 
-    private void participantHit(Participant participant, Dealer dealer) {
-        while (participant.canHit()) {
-            String option = InputView.inputHitOption(participant.getName());
+    private void participantHit(Player player, Dealer dealer) {
+        while (player.canHit()) {
+            String option = InputView.inputHitOption(player.getName());
             HitOption hitOption = HitOption.from(option);
             if (hitOption.isStayOption()) {
                 break;
             }
-            participant.receiveCard(dealer.draw());
-            OutputView.printParticipantHands(participant);
+            player.receiveCard(dealer.draw());
+            OutputView.printParticipantHands(player);
         }
     }
 
@@ -82,8 +76,8 @@ public class BlackJackController {
 
     private void printScoreAndResult(BlackJack blackJack, BetResult betResult) {
         OutputView.printParticipantResult(blackJack.getDealer());
-        Participants participants = blackJack.getParticipants();
-        for (Participant participant : participants.getValue()) {
+        Players players = blackJack.getPlayers();
+        for (Participant participant : players.getValue()) {
             OutputView.printParticipantResult(participant);
         }
         OutputView.printBetResult(betResult);

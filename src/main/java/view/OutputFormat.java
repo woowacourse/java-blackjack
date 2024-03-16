@@ -1,10 +1,11 @@
 package view;
 
-import domain.Bet.BetAmount;
 import domain.Bet.BetResult;
 import domain.card.Card;
-import domain.participant.*;
-
+import domain.participant.Name;
+import domain.participant.Participant;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,8 +14,8 @@ public class OutputFormat {
 
     private static final String DELIMITER = ", ";
 
-    public String formatParticipantNames(Participants participants) {
-        List<String> participantNames = participants.getNames()
+    public String formatParticipantNames(Players players) {
+        List<String> participantNames = players.getNames()
                 .stream()
                 .map(Name::getValue)
                 .toList();
@@ -44,8 +45,8 @@ public class OutputFormat {
         return String.format("%s - 결과: %d", formatHands(participant), participant.getScore());
     }
 
-    public String formatBetResult(Map.Entry<Participant, BetAmount> winStatusEntry) {
+    public String formatBetResult(Map.Entry<Player, Double> winStatusEntry) {
         return String.format("%s: %d", winStatusEntry.getKey().getName().getValue(),
-                (int) winStatusEntry.getValue().getValue());
+                winStatusEntry.getValue().intValue());
     }
 }

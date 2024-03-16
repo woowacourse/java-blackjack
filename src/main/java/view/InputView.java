@@ -1,8 +1,6 @@
 package view;
 
 import domain.participant.Name;
-import domain.participant.Participant;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -22,9 +20,9 @@ public class InputView {
         return parseName(input);
     }
 
-    public static int inputBetAmount(Participant participant) {
+    public static int inputBetAmount(Name name) {
         System.out.println();
-        System.out.printf("%s의 배팅 금액은?", participant.getName().getValue());
+        System.out.printf("%s의 배팅 금액은?", name.getValue());
         System.out.println();
         String betAmount = SCANNER.nextLine();
         validateIsNumeric(betAmount);
