@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.cardgame.CardGame;
+import blackjack.domain.cardgame.BlackjackGame;
 import blackjack.domain.cardgame.CardGameJudge;
 import blackjack.domain.cardgame.CardGameResult;
 import blackjack.domain.player.Dealer;
@@ -14,13 +14,13 @@ public class BlackjackController {
         final List<String> names = InputView.askPlayerNames();
         final List<Player> players = createPlayersByNames(names);
         final Dealer dealer = new Dealer();
-        final CardGame cardGame = new CardGame();
+        final BlackjackGame blackjackGame = new BlackjackGame();
 
-        cardGame.initializeHand(dealer, players);
+        blackjackGame.initializeHand(dealer, players);
         OutputView.printInitialHandOfEachPlayer(dealer, players);
 
-        givePlayersMoreCardsIfWanted(cardGame, players);
-        giveDealerMoreCardsIfNeeded(cardGame, dealer);
+        givePlayersMoreCardsIfWanted(blackjackGame, players);
+        giveDealerMoreCardsIfNeeded(blackjackGame, dealer);
 
         printHandStatusOfEachPlayer(dealer, players);
         printCardGameResult(dealer, players);
@@ -32,23 +32,23 @@ public class BlackjackController {
                 .toList();
     }
 
-    private void givePlayersMoreCardsIfWanted(final CardGame cardGame, final List<Player> players) {
+    private void givePlayersMoreCardsIfWanted(final BlackjackGame blackjackGame, final List<Player> players) {
         for (final Player player : players) {
-            givePlayerMoreCardsIfWanted(cardGame, player);
+            givePlayerMoreCardsIfWanted(blackjackGame, player);
         }
     }
 
-    private void givePlayerMoreCardsIfWanted(final CardGame cardGame, final Player player) {
+    private void givePlayerMoreCardsIfWanted(final BlackjackGame blackjackGame, final Player player) {
         final String playerName = player.getName();
         while (!player.isBust() && InputView.askForMoreCard(playerName)) {
-            cardGame.giveCard(player);
+            blackjackGame.giveCard(player);
             OutputView.printPlayerCard(player);
         }
     }
 
-    private void giveDealerMoreCardsIfNeeded(final CardGame cardGame, final Dealer dealer) {
+    private void giveDealerMoreCardsIfNeeded(final BlackjackGame blackjackGame, final Dealer dealer) {
         while (dealer.isMoreCardNeeded()) {
-            cardGame.giveCard(dealer);
+            blackjackGame.giveCard(dealer);
             OutputView.printDealerHitMessage(dealer);
         }
     }

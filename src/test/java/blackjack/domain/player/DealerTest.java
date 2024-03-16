@@ -62,12 +62,12 @@ public class DealerTest {
                 new Card(CardNumber.KING, CardShape.CLOVER));
 
         // when
-        int bettingMoney = 10000;
-        playerBetting.put(player, bettingMoney);
+        int bettingAmount = 10000;
+        playerBetting.put(player, bettingAmount);
         Map<Player, Integer> playerProfits = dealer.findPlayerProfits(playerBetting);
 
         // then
-        assertThat(playerProfits.get(player)).isEqualTo(-bettingMoney);
+        assertThat(playerProfits.get(player)).isEqualTo(-bettingAmount);
     }
 
     @Test
@@ -83,12 +83,12 @@ public class DealerTest {
         Player player = player(new Card(CardNumber.JACK, CardShape.CLOVER));
 
         // when
-        int bettingMoney = 10000;
-        playerBetting.put(player, bettingMoney);
+        int bettingAmount = 10000;
+        playerBetting.put(player, bettingAmount);
         Map<Player, Integer> playerProfits = dealer.findPlayerProfits(playerBetting);
 
         // then
-        assertThat(playerProfits.get(player)).isEqualTo(bettingMoney);
+        assertThat(playerProfits.get(player)).isEqualTo(bettingAmount);
     }
 
     @Test
@@ -105,8 +105,8 @@ public class DealerTest {
                 new Card(CardNumber.ACE, CardShape.CLOVER));
 
         // when
-        int bettingMoney = 10000;
-        playerBetting.put(player, bettingMoney);
+        int bettingAmount = 10000;
+        playerBetting.put(player, bettingAmount);
         Map<Player, Integer> playerProfits = dealer.findPlayerProfits(playerBetting);
 
         // then
@@ -126,8 +126,8 @@ public class DealerTest {
                 new Card(CardNumber.ACE, CardShape.CLOVER));
 
         // when
-        int bettingMoney = 10000;
-        playerBetting.put(player, bettingMoney);
+        int bettingAmount = 10000;
+        playerBetting.put(player, bettingAmount);
         Map<Player, Integer> playerProfits = dealer.findPlayerProfits(playerBetting);
 
         // then
@@ -145,8 +145,8 @@ public class DealerTest {
         Player player = player(new Card(CardNumber.TEN, CardShape.CLOVER));
 
         // when
-        int bettingMoney = 10000;
-        playerBetting.put(player, bettingMoney);
+        int bettingAmount = 10000;
+        playerBetting.put(player, bettingAmount);
         Map<Player, Integer> playerProfits = dealer.findPlayerProfits(playerBetting);
 
         // then
@@ -164,8 +164,8 @@ public class DealerTest {
         Player player = player(new Card(CardNumber.NINE, CardShape.CLOVER));
 
         // when
-        int bettingMoney = 10000;
-        playerBetting.put(player, bettingMoney);
+        int bettingAmount = 10000;
+        playerBetting.put(player, bettingAmount);
         Map<Player, Integer> playerProfits = dealer.findPlayerProfits(playerBetting);
 
         // then
@@ -183,8 +183,8 @@ public class DealerTest {
         Player player = player(new Card(CardNumber.TEN, CardShape.CLOVER));
 
         // when
-        int bettingMoney = 10000;
-        playerBetting.put(player, bettingMoney);
+        int bettingAmount = 10000;
+        playerBetting.put(player, bettingAmount);
         Map<Player, Integer> playerProfits = dealer.findPlayerProfits(playerBetting);
 
         // then

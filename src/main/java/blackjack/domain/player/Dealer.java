@@ -35,20 +35,20 @@ public class Dealer extends Player {
                 ));
     }
 
-    private int findBettingResult(final Player player, final int bettingMoney) {
+    private int findBettingResult(final Player player, final int bettingAmount) {
         final Status status = judgePlayerStatus(player);
 
         if (Status.WIN.equals(status)) {
-            return bettingMoney;
+            return bettingAmount;
         }
         if (Status.PUSH.equals(status)) {
             return 0;
         }
         if (Status.LOSE.equals(status)) {
-            return -bettingMoney;
+            return -bettingAmount;
         }
         if (Status.BLACKJACK.equals(status)) {
-            return bettingMoney + bettingMoney / 2;
+            return bettingAmount + bettingAmount / 2;
         }
 
         throw new IllegalStateException("[ERROR] 유효하지 않은 경우의 수 입니다.");
