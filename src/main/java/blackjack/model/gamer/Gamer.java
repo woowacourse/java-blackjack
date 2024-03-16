@@ -1,39 +1,39 @@
 package blackjack.model.gamer;
 
 import blackjack.model.card.Card;
-import blackjack.model.deck.Deck;
+import blackjack.model.deck.HandDeck;
 import blackjack.model.gameRule.GameRule;
 import java.util.List;
 
 public abstract class Gamer {
 
-    private final Deck deck = new Deck();
+    private final HandDeck handDeck = new HandDeck();
 
     public abstract boolean canHit();
 
     public final void receiveCard(Card card) {
-        deck.add(card);
+        handDeck.add(card);
     }
 
     public final Score calculateScore() {
         cardScoring();
-        return new Score(deck.calculateCardScore());
+        return new Score(handDeck.calculateCardScore());
     }
 
     public final int deckSize() {
-        return deck.size();
+        return handDeck.size();
     }
 
     private void cardScoring() {
-        int aceCount = deck.countElevenAce();
+        int aceCount = handDeck.countElevenAce();
 
-        while (aceCount > 0 && deck.calculateCardScore() >= GameRule.BUST_STANDARD_SCORE) {
-            deck.switchAceValueInRow();
+        while (aceCount > 0 && handDeck.calculateCardScore() >= GameRule.BUST_STANDARD_SCORE) {
+            handDeck.switchAceValueInRow();
             aceCount--;
         }
     }
 
     public final List<Card> getCards() {
-        return deck.cards();
+        return handDeck.cards();
     }
 }
