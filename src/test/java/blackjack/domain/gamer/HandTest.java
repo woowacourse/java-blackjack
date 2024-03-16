@@ -34,6 +34,6 @@ class HandTest {
     @Test
     @DisplayName("핸드의 밸류를 정상적으로 생성한다.")
     void createHandValueTest() {
-        assertThatNoException().isThrownBy(() -> hand.generateValue());
+        assertThatNoException().isThrownBy(() -> hand.score());
     }
 }

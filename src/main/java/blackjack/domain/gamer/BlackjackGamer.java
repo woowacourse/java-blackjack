@@ -31,11 +31,11 @@ public abstract class BlackjackGamer {
         return hand;
     }
 
-    public HandValue getHandValue() {
-        return hand.generateValue();
+    public Score getScore() {
+        return hand.score();
     }
 
-    public int getScore() {
-        return getHandValue().getScore();
+    public int getValue() {
+        return getScore().getValue();
     }
 }

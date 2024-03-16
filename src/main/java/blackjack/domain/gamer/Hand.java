@@ -16,8 +16,8 @@ public class Hand {
         cards.add(card);
     }
 
-    public HandValue generateValue() {
-        return new HandValue(cards);
+    public Score score() {
+        return new Score(cards);
     }
 
     public Card getFirstCard() {

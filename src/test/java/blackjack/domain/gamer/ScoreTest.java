@@ -11,7 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-public class HandValueTest {
+public class ScoreTest {
 
     @Nested
     @DisplayName("핸드 점수 계산 테스트")
@@ -25,9 +25,9 @@ public class HandValueTest {
                     new Card(CardShape.HEART, CardNumber.FIVE)
             ));
 
-            HandValue handValue = new HandValue(cards);
+            Score score = new Score(cards);
 
-            assertThat(handValue.getScore()).isEqualTo(15);
+            assertThat(score.getValue()).isEqualTo(15);
         }
 
         @Test
@@ -39,9 +39,9 @@ public class HandValueTest {
                     new Card(CardShape.DIAMOND, CardNumber.KING)
             ));
 
-            HandValue handValue = new HandValue(cards);
+            Score score = new Score(cards);
 
-            assertThat(handValue.getScore()).isEqualTo(21);
+            assertThat(score.getValue()).isEqualTo(21);
         }
 
         @Test
@@ -52,9 +52,9 @@ public class HandValueTest {
                     new Card(CardShape.CLOVER, CardNumber.KING)
             ));
 
-            HandValue handValue = new HandValue(cards);
+            Score score = new Score(cards);
 
-            assertThat(handValue.getScore()).isEqualTo(21);
+            assertThat(score.getValue()).isEqualTo(21);
         }
     }
 
@@ -70,9 +70,9 @@ public class HandValueTest {
                     new Card(CardShape.CLOVER, CardNumber.KING)
             ));
 
-            HandValue handValue = new HandValue(cards);
+            Score score = new Score(cards);
 
-            assertThat(handValue.isBlackjack()).isTrue();
+            assertThat(score.isBlackjack()).isTrue();
         }
 
         @Test
@@ -84,9 +84,9 @@ public class HandValueTest {
                     new Card(CardShape.HEART, CardNumber.TWO)
             ));
 
-            HandValue handValue = new HandValue(cards);
+            Score score = new Score(cards);
 
-            assertThat(handValue.isBlackjack()).isFalse();
+            assertThat(score.isBlackjack()).isFalse();
         }
 
         @Test
@@ -97,9 +97,9 @@ public class HandValueTest {
                     new Card(CardShape.CLOVER, CardNumber.NINE)
             ));
 
-            HandValue handValue = new HandValue(cards);
+            Score score = new Score(cards);
 
-            assertThat(handValue.isBlackjack()).isFalse();
+            assertThat(score.isBlackjack()).isFalse();
         }
     }
 
@@ -118,9 +118,9 @@ public class HandValueTest {
                     new Card(CardShape.DIAMOND, CardNumber.NINE)
             ));
 
-            HandValue handValue = new HandValue(cards);
+            Score score = new Score(cards);
 
-            assertThat(handValue.isBust()).isTrue();
+            assertThat(score.isBust()).isTrue();
         }
 
         @Test
@@ -132,9 +132,9 @@ public class HandValueTest {
                     new Card(CardShape.DIAMOND, CardNumber.NINE)
             ));
 
-            HandValue handValue = new HandValue(cards);
+            Score score = new Score(cards);
 
-            assertThat(handValue.isBust()).isFalse();
+            assertThat(score.isBust()).isFalse();
         }
     }
 }

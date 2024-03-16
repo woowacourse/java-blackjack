@@ -65,9 +65,9 @@ class PlayerTest {
         @DisplayName("점수가 21을 초과하면 딜러의 점수와 무관하게 패배한다")
         void playerBustTest() {
             Player player = new Player(bustHand, new Name("ready"));
-            HandValue dealerHandValue = new HandValue(22, 3);
+            Score dealerScore = new Score(22, 3);
 
-            GameResult gameResult = player.compete(dealerHandValue);
+            GameResult gameResult = player.compete(dealerScore);
 
             assertThat(gameResult).isEqualTo(GameResult.LOSE);
         }
@@ -76,18 +76,18 @@ class PlayerTest {
         @DisplayName("플레이어와 딜러의 점수가 모두 21 이하이면서, 딜러의 점수보다 낮으면 패배한다.")
         void playerHandValueLowerThanDealer() {
             Player player = new Player(score14Hand, new Name("jazz"));
-            HandValue dealerHandValue = new HandValue(21, 3);
+            Score dealerScore = new Score(21, 3);
 
-            assertThat(player.compete(dealerHandValue)).isEqualTo(GameResult.LOSE);
+            assertThat(player.compete(dealerScore)).isEqualTo(GameResult.LOSE);
         }
 
         @Test
         @DisplayName("딜러가 블랙잭일 때, 플레이어가 블랙잭이 아니면 패배한다.")
         void playerLoseWhenDealerBlackjack() {
             Player player = new Player(score14Hand, new Name("jazz"));
-            HandValue dealerHandValue = new HandValue(21, 2);
+            Score dealerScore = new Score(21, 2);
 
-            assertThat(player.compete(dealerHandValue)).isEqualTo(GameResult.LOSE);
+            assertThat(player.compete(dealerScore)).isEqualTo(GameResult.LOSE);
         }
     }
 
@@ -99,18 +99,18 @@ class PlayerTest {
         @DisplayName("플레이어 점수가 21 이하일 때, 딜러의 점수가 21을 초과하면 승리한다.")
         void dealerBustTest() {
             Player player = new Player(score21Hand, new Name("jazz"));
-            HandValue dealerHandValue = new HandValue(22, 4);
+            Score dealerScore = new Score(22, 4);
 
-            assertThat(player.compete(dealerHandValue)).isEqualTo(GameResult.WIN);
+            assertThat(player.compete(dealerScore)).isEqualTo(GameResult.WIN);
         }
 
         @Test
         @DisplayName("플레이어 점수가 21 이하이고, 딜러의 점수보다 큰 경우 승리한다.")
         void playerHandValueHigherThanDealer() {
             Player player = new Player(score21Hand, new Name("jazz"));
-            HandValue dealerHandValue = new HandValue(14, 2);
+            Score dealerScore = new Score(14, 2);
 
-            assertThat(player.compete(dealerHandValue)).isEqualTo(GameResult.WIN);
+            assertThat(player.compete(dealerScore)).isEqualTo(GameResult.WIN);
         }
     }
 
@@ -122,10 +122,10 @@ class PlayerTest {
         @DisplayName("플레이어가 블랙잭일 때, 딜러가 블랙잭이 아니면 블랙잭 승리한다.")
         void dealerBustTest() {
             Player player = new Player(blackjackHand, new Name("jazz"));
-            HandValue dealerHandValue21 = new HandValue(21, 3);
-            HandValue dealerBustHand = new HandValue(22, 3);
+            Score dealerScore21 = new Score(21, 3);
+            Score dealerBustHand = new Score(22, 3);
 
-            assertThat(player.compete(dealerHandValue21)).isEqualTo(GameResult.BLACKJACK_WIN);
+            assertThat(player.compete(dealerScore21)).isEqualTo(GameResult.BLACKJACK_WIN);
             assertThat(player.compete(dealerBustHand)).isEqualTo(GameResult.BLACKJACK_WIN);
         }
     }
@@ -138,18 +138,18 @@ class PlayerTest {
         @DisplayName("플레이어가 블랙잭일 때, 딜러가 블랙잭이면 무승부.")
         void allBlackjackTest() {
             Player player = new Player(blackjackHand, new Name("jazz"));
-            HandValue dealerHandValue = new HandValue(21, 2);
+            Score dealerScore = new Score(21, 2);
 
-            assertThat(player.compete(dealerHandValue)).isEqualTo(GameResult.DRAW);
+            assertThat(player.compete(dealerScore)).isEqualTo(GameResult.DRAW);
         }
 
         @Test
         @DisplayName("플레이어가 블랙잭일 때, 딜러가 블랙잭이면 무승부.")
         void tieScoreTest() {
             Player player = new Player(score21Hand, new Name("jazz"));
-            HandValue dealerHandValue = new HandValue(21, 4);
+            Score dealerScore = new Score(21, 4);
 
-            assertThat(player.compete(dealerHandValue)).isEqualTo(GameResult.DRAW);
+            assertThat(player.compete(dealerScore)).isEqualTo(GameResult.DRAW);
         }
     }
 }

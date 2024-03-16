@@ -50,7 +50,7 @@ public class BlackjackGame {
     }
 
     private void applyResultToBetMoney(Players players, Dealer dealer) {
-        Map<Player, GameResult> playerGameResults = players.collectPlayerGameResults(dealer.getHandValue());
+        Map<Player, GameResult> playerGameResults = players.collectPlayerGameResults(dealer.getScore());
         gameAccount.applyGameResults(playerGameResults);
     }
 

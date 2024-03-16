@@ -12,7 +12,7 @@ public class Dealer extends BlackjackGamer {
 
     @Override
     public boolean canReceiveCard() {
-        return getScore() <= DEALER_DRAW_THRESHOLD;
+        return getValue() <= DEALER_DRAW_THRESHOLD;
     }
 
     public Card getFirstCard() {
