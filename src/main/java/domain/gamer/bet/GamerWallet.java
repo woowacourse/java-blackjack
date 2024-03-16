@@ -2,21 +2,29 @@ package domain.gamer.bet;
 
 import domain.gamer.Player;
 
-public class PlayerBet {
+public class GamerWallet {
 
     private final Player player;
-    private final BetAmount betAmount;
+    private Money money;
 
-    public PlayerBet(Player player, BetAmount betAmount) {
+    public GamerWallet(Player player, Money money) {
         this.player = player;
-        this.betAmount = betAmount;
+        this.money = money;
+    }
+
+    public String playerName() {
+        return player.getPlayerName();
+    }
+
+    public int getMoney() {
+        return money.getMoney();
     }
 
     public Player getPlayer() {
         return player;
     }
 
-    public BetAmount getBetAmount() {
-        return betAmount;
+    public void applyBetProfit(Money money) {
+        this.money = money;
     }
 }

@@ -1,14 +1,14 @@
 package domain.gamer.bet;
 
-public class BetAmount {
+public class Money {
 
-    private final int betAmount;
+    private final int money;
 
-    public BetAmount(int value) {
-        this.betAmount = value;
+    public Money(int value) {
+        this.money = value;
     }
 
-    public int getBetAmount() {
-        return betAmount;
+    public int getMoney() {
+        return money;
     }
 }
