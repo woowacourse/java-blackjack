@@ -1,19 +1,11 @@
 package blackjack.controller;
 
-import blackjack.domain.batting.BattingAmount;
-import blackjack.domain.batting.BattingAmountRepository;
-import blackjack.domain.card.CardDeck;
-import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.card.strategy.RandomCardShuffleStrategy;
 import blackjack.domain.game.BlackjackAction;
-import blackjack.domain.game.GameResult;
-import blackjack.domain.participant.ResultStatus;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
+import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.participant.*;
 import blackjack.domain.profit.ProfitCalculator;
 import blackjack.domain.profit.ProfitResult;
-import blackjack.domain.card.strategy.CardShuffleStrategy;
-import blackjack.domain.card.strategy.RandomCardShuffleStrategy;
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.ParticipantsDto;
 import blackjack.dto.ProfitResultDto;
@@ -24,6 +16,9 @@ import blackjack.view.OutputView;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
 
 public class BlackjackController {
     private final InputView inputView;
@@ -36,47 +31,33 @@ public class BlackjackController {
 
     public void run() {
         Dealer dealer = generateDealer();
-        Players players = replyOnException(this::generatePlayers);
-        BattingAmountRepository repository = initBattingAmountRepository(players);
-
+        Players players = generatePlayers();
         BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
 
         playBlackjackGame(blackjackGame, dealer, players);
-
-        showParticipantsCardsWithScore(dealer, players);
-        final Map<Player, ResultStatus> result = blackjackGame.compareDealerAndPlayers();
-        showParticipantsProfit(dealer, repository, result);
+        showGameResult(blackjackGame, dealer, players);
     }
 
     private Dealer generateDealer() {
-        CardDeck cardDeck = new CardDeck();
-        CardShuffleStrategy cardShuffleStrategy = new RandomCardShuffleStrategy();
-
-        return new Dealer(cardDeck, cardShuffleStrategy);
+        return new Dealer(new RandomCardShuffleStrategy());
     }
 
     private Players generatePlayers() {
-        String readPlayerNames = inputView.readPlayerNames();
+        String readPlayerNames = replyOnException(inputView::readPlayerNames);
         List<String> playerNames = Converter.stringToList(readPlayerNames);
 
-        return new Players(playerNames);
+        return playerNames.stream()
+                .map(this::generatePlayer)
+                .collect(collectingAndThen(toList(), Players::new));
     }
 
-    private BattingAmountRepository initBattingAmountRepository(Players players) {
-        BattingAmountRepository repository = new BattingAmountRepository();
-
-        for (int index = 0; index < players.count(); index++) {
-            Player player = players.findPlayerByIndex(index);
-            BattingAmount battingAmount = replyOnException(() -> readBattingAmount(player));
-
-            repository.save(player, battingAmount);
-        }
-        return repository;
+    private Player generatePlayer(final String name) {
+        BattingAmount battingAmount = replyOnException(() -> readBattingAmount(name));
+        return new Player(name, battingAmount);
     }
 
-    private BattingAmount readBattingAmount(Player player) {
-        int readBattingAmount = inputView.readBattingAmount(player.getName());
-
+    private BattingAmount readBattingAmount(String playerName) {
+        int readBattingAmount = inputView.readBattingAmount(playerName);
         return new BattingAmount(readBattingAmount);
     }
 
@@ -117,7 +98,6 @@ public class BlackjackController {
 
     private BlackjackAction readBlackjackAction(Player player) {
         String expression = inputView.readReceiveMoreCardOrNot(player.getName());
-
         return BlackjackAction.from(expression);
     }
 
@@ -128,15 +108,18 @@ public class BlackjackController {
         }
     }
 
+    private void showGameResult(BlackjackGame blackjackGame, Dealer dealer, Players players) {
+        showParticipantsCardsWithScore(dealer, players);
+        showParticipantsProfit(dealer, blackjackGame.compareDealerAndPlayers());
+    }
+
     private void showParticipantsCardsWithScore(Dealer dealer, Players players) {
         ParticipantsDto participantsDto = ParticipantsDto.toDtoWithDealer(dealer, players);
         outputView.printCardsWithScore(participantsDto);
     }
 
-    private void showParticipantsProfit(Dealer dealer, BattingAmountRepository repository, Map<Player, ResultStatus> gameResult) {
-        ProfitCalculator profitCalculator = new ProfitCalculator(repository);
-        ProfitResult profitResult = profitCalculator.calculate(dealer, gameResult);
-
+    private void showParticipantsProfit(Dealer dealer, Map<Player, ResultStatus> playersResult) {
+        ProfitResult profitResult = ProfitCalculator.calculate(dealer, playersResult);
         outputView.printProfits(ProfitResultDto.from(profitResult));
     }
 
