@@ -1,5 +1,6 @@
 package domain;
 
+import domain.state.Blackjack;
 import domain.state.State;
 
 import java.util.List;
@@ -34,6 +35,10 @@ public abstract class Participant {
     }
 
     public abstract boolean canHit();
+
+    public boolean isBlackjack() {
+        return state instanceof Blackjack;
+    }
 
     public String name() {
         return name.getName();

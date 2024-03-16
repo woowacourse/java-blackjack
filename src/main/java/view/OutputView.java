@@ -46,12 +46,12 @@ public class OutputView {
 
     public static void printBlackjackGameResults(final GameResult gameResult) {
         System.out.println();
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
 
-        System.out.println(gameResult.dealerResult().name() + ": " + gameResult.dealerResult().winCount() + "승" + gameResult.dealerResult().loseCount() + "패");
+        System.out.println(gameResult.dealerResult().name() + ": " + gameResult.dealerResult().profit());
 
-        for (final PlayerResult playerResult : gameResult.playerResults()) {
-            System.out.println(playerResult.name() + ": " + (playerResult.winLose() == WinLose.WIN ? "승" : "패"));
+        for (final PlayerResult playerProfit : gameResult.playerResults()) {
+            System.out.println(playerProfit.name() + ": " + playerProfit.profit());
         }
     }
 

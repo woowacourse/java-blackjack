@@ -31,4 +31,8 @@ public class Player extends Participant {
     public void stand() {
         state = state.stand();
     }
+
+    public int betAmount() {
+        return betAmount.toInt();
+    }
 }

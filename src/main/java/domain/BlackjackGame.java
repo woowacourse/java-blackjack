@@ -36,8 +36,8 @@ public class BlackjackGame {
     }
 
     public GameResult finishGame() {
-        final BlackjackRule blackjackRule = new BlackjackRule();
-        return blackjackRule.calculate(players, dealer);
+        final Rule rule = new Rule();
+        return rule.calculateProfits(players, dealer);
     }
 
     public List<Player> getPlayers() {
