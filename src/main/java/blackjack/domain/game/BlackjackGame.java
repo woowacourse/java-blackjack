@@ -29,20 +29,15 @@ public class BlackjackGame {
     }
 
     public void dealCardToDealer() {
-        final Card card = pickCard();
-        dealer.receiveCard(card);
+        dealer.receiveCard(pickCard());
     }
 
     private void dealCardToPlayers() {
-        for (int playerIndex = 0; playerIndex < players.count(); playerIndex++) {
-            final Player player = players.findPlayerByIndex(playerIndex);
-            dealCardTo(player);
-        }
+        players.receiveCardFrom(dealer);
     }
 
     public void dealCardTo(final Player player) {
-        final Card card = pickCard();
-        player.receiveCard(card);
+        player.receiveCard(pickCard());
     }
 
     private Card pickCard() {
