@@ -2,6 +2,7 @@ package blackjack.model.gamer;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.model.card.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

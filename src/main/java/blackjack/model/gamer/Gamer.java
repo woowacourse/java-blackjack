@@ -1,6 +1,7 @@
 package blackjack.model.gamer;
 
 import blackjack.model.card.Card;
+import blackjack.model.card.Score;
 import blackjack.model.deck.HandDeck;
 import blackjack.model.gameRule.GameRule;
 import java.util.List;
