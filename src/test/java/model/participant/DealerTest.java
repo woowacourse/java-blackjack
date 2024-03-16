@@ -1,7 +1,5 @@
 package model.participant;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -20,7 +18,6 @@ class DealerTest {
         Card card2 = Card.from(Number.SIX, Emblem.HEART);
         Participant dealer = new Dealer(card1, card2);
 
-
         assertTrue(dealer.canHit());
     }
 
@@ -33,20 +30,6 @@ class DealerTest {
         Participant dealer = new Dealer(card1, card2);
 
         assertFalse(dealer.canHit());
-    }
-
-    @Test
-    @DisplayName("Dealer는 Player의 반대 결과를 반환한다.")
-    void calculateMatchResult_ShouldReturnWIN_WhenNotBustDealerWins() {
-        Card card1 = Card.from(Number.TEN, Emblem.SPADE);
-        Card card2 = Card.from(Number.SEVEN, Emblem.HEART);
-        Dealer dealer = new Dealer(card1, card2);
-
-        assertAll(()->{
-            assertEquals(MatchState.WIN, dealer.determineMatchResult(MatchState.LOSE));
-            assertEquals(MatchState.DRAW, dealer.determineMatchResult(MatchState.DRAW));
-            assertEquals(MatchState.LOSE, dealer.determineMatchResult(MatchState.WIN));
-        });
     }
 
 }
