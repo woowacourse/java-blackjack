@@ -5,6 +5,7 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import blackjack.domain.money.Betting;
 import blackjack.domain.result.GameResult;
 
 import java.util.HashMap;
@@ -32,6 +33,11 @@ public class BlackjackGame {
 
     public Players createPlayers(List<String> playerNames) {
         return new Players(playerNames);
+    }
+
+    public void updateBettingBoard(Map<Player, Betting> bettingBoard, Player player, long bettingAmount) {
+        Betting betting = new Betting(bettingAmount);
+        bettingBoard.put(player, betting);
     }
 
     public void dealInitCards(Dealer dealer, Players players) {

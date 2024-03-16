@@ -5,7 +5,8 @@ import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.money.Money;
+import blackjack.domain.money.Betting;
+import blackjack.domain.money.Profit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -164,8 +165,8 @@ public class GameResultTest {
     void blackjackWinProfitTest() {
         // given
         GameResult gameResult = GameResult.BLACKJACK_WIN;
-        Money bettingAmount = new Money(1_000L);
-        Money profitAmount = new Money(1_500L);
+        Betting bettingAmount = new Betting(1_000L);
+        Profit profitAmount = new Profit(1_500L);
 
         // when & then
         assertThat(gameResult.calculateProfit(bettingAmount))
@@ -177,8 +178,8 @@ public class GameResultTest {
     void winProfitTest() {
         // given
         GameResult gameResult = GameResult.WIN;
-        Money bettingAmount = new Money(1_000L);
-        Money profitAmount = new Money(1_000L);
+        Betting bettingAmount = new Betting(1_000L);
+        Profit profitAmount = new Profit(1_000L);
 
         // when & then
         assertThat(gameResult.calculateProfit(bettingAmount))
@@ -190,8 +191,8 @@ public class GameResultTest {
     void loseProfitTest() {
         // given
         GameResult gameResult = GameResult.LOSE;
-        Money bettingAmount = new Money(1_000L);
-        Money profitAmount = new Money(-1_000L);
+        Betting bettingAmount = new Betting(1_000L);
+        Profit profitAmount = new Profit(-1_000L);
 
         // when & then
         assertThat(gameResult.calculateProfit(bettingAmount))
@@ -203,8 +204,8 @@ public class GameResultTest {
     void drawProfitTest() {
         // given
         GameResult gameResult = GameResult.DRAW;
-        Money bettingAmount = new Money(1_000L);
-        Money profitAmount = new Money(0L);
+        Betting bettingAmount = new Betting(1_000L);
+        Profit profitAmount = new Profit(0L);
 
         // when & then
         assertThat(gameResult.calculateProfit(bettingAmount))

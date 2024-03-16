@@ -2,7 +2,8 @@ package blackjack.domain.result;
 
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.money.Money;
+import blackjack.domain.money.Betting;
+import blackjack.domain.money.Profit;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;
@@ -44,7 +45,7 @@ public enum GameResult {
         return DRAW;
     }
 
-    public Money calculateProfit(Money bettingAmount) {
+    public Profit calculateProfit(Betting bettingAmount) {
         return bettingAmount.multiply(multiplier);
     }
 

@@ -2,15 +2,11 @@ package blackjack.domain.money;
 
 import java.util.Objects;
 
-public class Money {
+public class Profit {
     private final long amount;
 
-    public Money(long amount) {
+    public Profit(long amount) {
         this.amount = amount;
-    }
-
-    public Money multiply(double multiplier) {
-        return new Money(Math.round(amount * multiplier));
     }
 
     @Override
@@ -18,11 +14,11 @@ public class Money {
         if (this == object) {
             return true;
         }
-        if (!(object instanceof Money money)) {
+        if (!(object instanceof Profit profit)) {
             return false;
         }
 
-        return amount == money.amount;
+        return amount == profit.amount;
     }
 
     @Override

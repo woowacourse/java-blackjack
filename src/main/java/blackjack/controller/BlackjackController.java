@@ -4,10 +4,12 @@ import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import blackjack.domain.money.Betting;
 import blackjack.domain.result.GameResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class BlackjackController {
@@ -23,10 +25,21 @@ public class BlackjackController {
         BlackjackGame blackjackGame = BlackjackGame.create();
         Dealer dealer = blackjackGame.createDealer();
         Players players = blackjackGame.createPlayers(inputView.readPlayerNames());
+        Map<Player, Betting> bettingBoard = bet(players, blackjackGame);
 
         dealInitCards(dealer, players, blackjackGame);
         receiveAdditionalCard(dealer, players, blackjackGame);
         printResult(dealer, players, blackjackGame);
+    }
+
+    private Map<Player, Betting> bet(Players players, BlackjackGame blackjackGame) {
+        Map<Player, Betting> bettingBoard = new HashMap<>();
+
+        for (Player player : players.getPlayers()) {
+            blackjackGame.updateBettingBoard(bettingBoard, player, inputView.readBettingAmount(player));
+        }
+
+        return bettingBoard;
     }
 
     private void dealInitCards(Dealer dealer, Players players, BlackjackGame blackjackGame) {
