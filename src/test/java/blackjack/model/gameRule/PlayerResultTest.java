@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.model.gamer.Player;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,7 +12,12 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 class PlayerResultTest {
 
-    PlayerResult playerResult = new PlayerResult();
+    PlayerResult playerResult;
+
+    @BeforeEach
+    void beforeEach() {
+        playerResult = new PlayerResult();
+    }
 
     @DisplayName("플레이어 결과를 추가한다.")
     @ParameterizedTest

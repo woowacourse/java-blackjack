@@ -11,12 +11,18 @@ import blackjack.model.gamer.Dealer;
 import blackjack.model.gamer.Gamers;
 import blackjack.model.gamer.Player;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GameRuleTest {
 
-    GameRule gameRule = new GameRule();
+    GameRule gameRule;
+
+    @BeforeEach
+    void beforeEach() {
+        gameRule = new GameRule();
+    }
 
     @DisplayName("첫 두장의 카드에서 블랙잭인 플레이어는 히트/스테이 대상으로 포함되지 않는다.")
     @Test

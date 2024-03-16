@@ -8,12 +8,18 @@ import blackjack.model.card.Card;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.CardPattern;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class HandDeckTest {
 
-    HandDeck handDeck = new HandDeck();
+    HandDeck handDeck;
+
+    @BeforeEach
+    void beforeEach() {
+        handDeck = new HandDeck();
+    }
 
     @DisplayName("덱에 카드를 추가한다.")
     @Test

@@ -4,12 +4,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.gameRule.Result;
 import blackjack.model.gamer.Player;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BettingInfoTest {
 
-    BettingInfo bettingInfo = new BettingInfo();
+    BettingInfo bettingInfo;
+
+    @BeforeEach
+    void beforeEach() {
+        bettingInfo = new BettingInfo();
+    }
 
     @DisplayName("플레이어의 배팅 금액을 등록한다.")
     @Test
