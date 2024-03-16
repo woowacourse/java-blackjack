@@ -20,6 +20,10 @@ public class Player {
         return hand.isBust();
     }
 
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
     public int getScore() {
         return hand.calculateScore();
     }

@@ -6,8 +6,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Hand {
-    public static final int ACE_ADDITIONAL_SCORE = 10;
-    public static final int BUST_THRESHOLD = 21;
+    private static final int ACE_ADDITIONAL_SCORE = 10;
+    private static final int BUST_THRESHOLD = 21;
+    private static final int BLACKJACK_SIZE = 2;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -40,7 +41,12 @@ public class Hand {
         return calculateScore() > BUST_THRESHOLD;
     }
 
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_SIZE && calculateScore() == BUST_THRESHOLD;
+    }
+
     public List<Card> getAllCards() {
         return Collections.unmodifiableList(cards);
     }
+
 }
