@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.model.blackjackgame.PlayersResults;
+import blackjack.model.blackjackgame.PlayersBlackjackResults;
 import blackjack.model.cards.Card;
 import blackjack.model.cards.CardNumber;
 import blackjack.model.cards.CardShape;
@@ -103,10 +103,9 @@ class PlayersTest {
         Players players = new Players(getPlayers());
         Dealer dealer = new Dealer();
 
-        players.calculatePlayersResults(dealer);
+        PlayersBlackjackResults playersBlackjackResults = players.calculatePlayersResults(dealer);
 
-        PlayersResults playersResults = players.getPlayersResults();
-        assertThat(playersResults.getResults()).hasSize(players.getSize());
+        assertThat(playersBlackjackResults.getResults()).hasSize(players.getSize());
     }
 
     private List<Player> getPlayers() {

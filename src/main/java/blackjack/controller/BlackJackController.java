@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.model.blackjackgame.PlayersBlackjackResults;
 import blackjack.model.generator.CardGenerator;
 import blackjack.model.generator.RandomIndexGenerator;
 import blackjack.model.participants.Dealer;
@@ -71,7 +72,7 @@ public class BlackJackController {
     }
 
     private void printParticipantsProfits(final Players players, final Dealer dealer) {
-        players.calculatePlayersResults(dealer);
-        outputView.printGameResults(players);
+        PlayersBlackjackResults playersBlackjackResults = players.calculatePlayersResults(dealer);
+        outputView.printGameResults(playersBlackjackResults);
     }
 }

@@ -1,14 +1,16 @@
 package blackjack.model.participants;
 
-import blackjack.model.blackjackgame.PlayersResults;
+import blackjack.model.blackjackgame.PlayersBlackjackResults;
+import blackjack.model.blackjackgame.Profit;
 import blackjack.model.generator.CardGenerator;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class Players {
     private final List<Player> players;
-    private final PlayersResults playersResults = new PlayersResults();
 
     public Players(final List<Player> players) {
         this.players = new ArrayList<>(players);
@@ -38,8 +40,10 @@ public final class Players {
         findPlayer.addCard(cardGenerator.drawCard());
     }
 
-    public void calculatePlayersResults(final Dealer dealer) {
-        players.forEach(player -> playersResults.add(player, player.calculateGameOutcomeProfit(dealer)));
+    public PlayersBlackjackResults calculatePlayersResults(final Dealer dealer) {
+        Map<Player, Profit> results = new LinkedHashMap<>();
+        players.forEach(player -> results.put(player, player.calculateGameOutcomeProfit(dealer)));
+        return new PlayersBlackjackResults(results);
     }
 
     private void validateIndex(final int index) {
@@ -50,9 +54,5 @@ public final class Players {
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
-    }
-
-    public PlayersResults getPlayersResults() {
-        return playersResults;
     }
 }

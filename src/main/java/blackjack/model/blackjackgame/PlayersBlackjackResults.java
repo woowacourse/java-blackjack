@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public final class PlayersResults {
-    private final Map<Player, Profit> results = new LinkedHashMap<>();
+public final class PlayersBlackjackResults {
+    private final Map<Player, Profit> results;
 
-    public void add(final Player player, final Profit profit) {
-        results.put(player, profit);
+    public PlayersBlackjackResults(final Map<Player, Profit> results) {
+        this.results = new LinkedHashMap<>(results);
     }
 
     public Profit getDealerProfit() {

@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.model.blackjackgame.PlayersResults;
+import blackjack.model.blackjackgame.PlayersBlackjackResults;
 import blackjack.model.blackjackgame.Profit;
 import blackjack.model.cards.Card;
 import blackjack.model.participants.Dealer;
@@ -44,12 +44,11 @@ public class OutputView {
         System.out.println(getParticipantsScoresInOneLine(players));
     }
 
-    public void printGameResults(final Players players) {
+    public void printGameResults(final PlayersBlackjackResults playersBlackjackResults) {
         System.out.println();
         System.out.println("### 최종 수익");
-        PlayersResults playersResults = players.getPlayersResults();
-        System.out.println(getNameAndInformationFormat(DEALER_NAME, playersResults.getDealerProfit()));
-        System.out.println(getPlayerResultsInOneLine(playersResults.getResults()));
+        System.out.println(getNameAndInformationFormat(DEALER_NAME, playersBlackjackResults.getDealerProfit()));
+        System.out.println(getPlayerResultsInOneLine(playersBlackjackResults.getResults()));
     }
 
     public void printInvalidDrawCardState() {
@@ -77,10 +76,10 @@ public class OutputView {
                 .collect(Collectors.joining(System.lineSeparator()));
     }
 
-    private String getPlayerResultsInOneLine(final Map<Player, Profit> gameResult) {
-        return gameResult.entrySet()
+    private String getPlayerResultsInOneLine(final Map<Player, Profit> results) {
+        return results.entrySet()
                 .stream()
-                .map(entry -> getNameAndInformationFormat(getPlayerName(entry.getKey()), entry.getValue()))
+                .map(result -> getNameAndInformationFormat(getPlayerName(result.getKey()), result.getValue()))
                 .collect(Collectors.joining(System.lineSeparator()));
     }
 
