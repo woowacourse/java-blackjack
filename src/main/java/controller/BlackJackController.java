@@ -2,11 +2,15 @@ package controller;
 
 import card.CardDeck;
 import cardGame.BlackJackGame;
-import controller.dto.WinningResult;
 import dealer.Dealer;
+import gameResult.GameResult;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import player.Name;
 import player.Player;
 import player.Players;
+import referee.Referee;
 import view.InputView;
 import view.OutputView;
 
@@ -28,7 +32,7 @@ public class BlackJackController {
 
         BlackJackGame blackJackGame = new BlackJackGame(cardDeck, cardDeck.firstCardSettings());
         runBlackJackGame(blackJackGame, players, cardDeck, dealer);
-        showResult(blackJackGame, players);
+        showResult(players, dealer);
     }
 
     private Players playersBetting(CardDeck cardDeck) {
@@ -63,10 +67,16 @@ public class BlackJackController {
         }
     }
 
-    private void showResult(BlackJackGame blackJackGame, Players players) {
-        List<WinningResult> result = blackJackGame.getPlayersResult(players);
-        outputView.printDealerResult(blackJackGame.getDealerResult(players));
-        outputView.printPlayersResult(result);
+    private void showResult(Players players, Dealer dealer) {
+        Map<Name, Integer> playerResult = new LinkedHashMap<>();
+        Referee referee = new Referee();
+
+        for (Player player : players.getPlayers()) {
+            GameResult gameResult = referee.judge(player, dealer);
+            playerResult.put(player.getName(), player.betMoneyResult(gameResult.returnRate()));
+        }
+
+        outputView.printBlackJackResult(playerResult);
     }
 
     private boolean isCanPlayPlayer(Player player) {

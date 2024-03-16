@@ -2,11 +2,10 @@ package view;
 
 import card.Card;
 import card.Cards;
-import controller.dto.WinningResult;
 import dealer.Dealer;
-import dealer.dto.DealerWinningResult;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import player.Name;
 import player.Player;
@@ -48,26 +47,22 @@ public class OutputView {
         }
     }
 
-    public void printPlayersResult(List<WinningResult> playerResult) {
-        Collections.reverse(playerResult);
-
-        for (WinningResult result : playerResult) {
-            printSinglePlayerResult(result);
+    public void printBlackJackResult(Map<Name, Integer> playerResult) {
+        System.out.println("\n## 최종 수익");
+        printDealerResult(playerResult.values());
+        for (Name name : playerResult.keySet()) {
+            System.out.println(name.getValue() + ": " + playerResult.get(name));
         }
     }
 
-    public void printDealerResult(DealerWinningResult dealerWinningResult) {
-        System.out.println("\n## 최종 승패");
-        System.out.println(
-                DEALER_NAME_SYMBOL + dealerWinningResult.winningCount() + GameResultSymbol.WINNING_SYMBOL.symbolName
-                        + " "
-                        + dealerWinningResult.failCount()
-                        + GameResultSymbol.LOSE_SYMBOL.symbolName);
+    private void printDealerResult(Collection<Integer> playerEarnMoney) {
+        System.out.println("딜러: " + -calculateDealerMoney(playerEarnMoney));
     }
 
-    private void printSinglePlayerResult(WinningResult playerResult) {
-        System.out.println(playerResult.name().getValue() + PARTICIPANT_RESULT_SYMBOL + GameResultSymbol.changeToSymbol(
-                playerResult.isWinner()).symbolName);
+    private int calculateDealerMoney(Collection<Integer> playerEarnMoney) {
+        return playerEarnMoney.stream()
+                .mapToInt(money -> money)
+                .sum();
     }
 
     public String formatCardsStatus(Cards cards) {

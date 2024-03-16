@@ -30,4 +30,8 @@ public class Player extends GameParticipantCards {
     public Name getName() {
         return name;
     }
+
+    public int betMoneyResult(double percent) {
+        return (int) betMoney.betMoneyResult(percent);
+    }
 }
