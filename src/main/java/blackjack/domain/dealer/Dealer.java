@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer extends Participant {
-    private static final Score NEED_CARD_CRITERION = new Score(17);
+    public static final int CARD_REQUEST_CRITERION = 16;
     public static final String DEALER_NAME = "딜러";
 
     public Dealer() {
@@ -16,7 +16,7 @@ public class Dealer extends Participant {
     }
 
     public boolean needMoreCard() {
-        return NEED_CARD_CRITERION.isBiggerThan(calculate());
+        return new Score(CARD_REQUEST_CRITERION).isMoreOrEqualThan(calculate());
     }
 
     public Hands getOpenedCards() {

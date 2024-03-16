@@ -17,9 +17,11 @@ public class OutputView {
         final List<ParticipantCardsDto> playersCard = getExceptDealer(participantCardsDtos,
                 participantCardsDto -> participantCardsDto.name().equals(Dealer.DEALER_NAME));
 
-        System.out.printf("%n%s와 %s에게 2장을 나누었습니다.%n", Dealer.DEALER_NAME, String.join(", ", convertToNames(playersCard)));
+        System.out.printf("%n%s와 %s에게 %d장을 나누었습니다.%n", Dealer.DEALER_NAME,
+                String.join(", ", convertToNames(playersCard)), Participants.INT_CARD_COUNT);
 
-        printDealerCardScore(getOnlyDealer(participantCardsDtos, participantCardsDto -> participantCardsDto.name().equals(Dealer.DEALER_NAME)));
+        printDealerCardScore(getOnlyDealer(participantCardsDtos,
+                participantCardsDto -> participantCardsDto.name().equals(Dealer.DEALER_NAME)));
         playersCard.forEach(this::printPlayerCard);
         System.out.println();
     }
@@ -46,10 +48,9 @@ public class OutputView {
                         .map(cardDto -> cardDto.number() + cardDto.shape())
                         .toList());
     }
-
     public void printDealerMoreCard(int count) {
-        while (count-- > 0) {
-            System.out.printf("%s는 16이하라 한장의 카드를 더 받았습니다.%n", Dealer.DEALER_NAME);
+        for (int i = 0; i < count; i++) {
+            System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.%n", Dealer.DEALER_NAME, Dealer.CARD_REQUEST_CRITERION);
         }
     }
 
@@ -92,8 +93,10 @@ public class OutputView {
         System.out.println("## 최종 수익");
 
         List<BettingResultDto> bettingResultDtos = rawBettingResultDtos.bettingResultDtos();
-        printDealerBettingResult(getOnlyDealer(bettingResultDtos, bettingResultDto -> bettingResultDto.name().equals(Dealer.DEALER_NAME)));
-        printPlayerBettingResults(getExceptDealer(bettingResultDtos, bettingResultDto -> bettingResultDto.name().equals(Dealer.DEALER_NAME)));
+        printDealerBettingResult(getOnlyDealer(bettingResultDtos,
+                bettingResultDto -> bettingResultDto.name().equals(Dealer.DEALER_NAME)));
+        printPlayerBettingResults(getExceptDealer(bettingResultDtos,
+                bettingResultDto -> bettingResultDto.name().equals(Dealer.DEALER_NAME)));
     }
 
     private void printDealerBettingResult(final BettingResultDto dealerBettingResult) {
