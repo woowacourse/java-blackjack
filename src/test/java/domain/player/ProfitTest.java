@@ -2,7 +2,6 @@ package domain.player;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -26,7 +25,12 @@ class ProfitTest {
         Assertions.assertThat(profit.lose()).isEqualTo(expected);
     }
 
-    @Test
-    void tie() {
+    @ParameterizedTest
+    @CsvSource(value = {"1.0, 1, 0", "1.5, 1,  0"})
+    @DisplayName("게임에서 비겼을 때 수익은 없다")
+    void tie(final double earningRate, final int betAmount, final double expected) {
+        final Profit profit = new Profit(earningRate, betAmount);
+
+        Assertions.assertThat(profit.tie()).isEqualTo(expected);
     }
 }
