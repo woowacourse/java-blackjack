@@ -6,6 +6,7 @@ import blackjack.domain.result.BlackjackStatus;
 import blackjack.domain.result.Score;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Participant {
     protected final ParticipantName name;
@@ -56,5 +57,22 @@ public class Participant {
 
     public ParticipantName getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Participant that = (Participant) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

@@ -13,8 +13,8 @@ public class PlayerBettings {
     }
 
     public static PlayerBettings from(final Map<String, Integer> rawPlayerBettings) {
-        List<PlayerBetting> playerBettings = rawPlayerBettings.entrySet().stream().
-                map(entry -> PlayerBetting.create(entry.getKey(), entry.getValue()))
+        List<PlayerBetting> playerBettings = rawPlayerBettings.entrySet().stream()
+                .map(entry -> PlayerBetting.create(entry.getKey(), entry.getValue()))
                 .toList();
         return new PlayerBettings(playerBettings);
     }

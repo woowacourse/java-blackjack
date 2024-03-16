@@ -15,7 +15,7 @@ import java.util.Set;
 public class Players {
     private final List<Player> players;
 
-    public Players(final List<Player> players) {
+    private Players(final List<Player> players) {
         validateDuplicate(players);
         this.players = players;
     }
@@ -35,9 +35,9 @@ public class Players {
     }
 
     public void divideCard(final List<Card> cards) {
-        for (int i = 0; i < cards.size(); i++) {
-            Player player = players.get(i / 2);
-            player.addCard(cards.get(i));
+        for (int index = 0; index < cards.size(); index++) {
+            Player player = players.get(index / 2);
+            player.addCard(cards.get(index));
         }
     }
 

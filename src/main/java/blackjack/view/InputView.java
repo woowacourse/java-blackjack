@@ -19,8 +19,7 @@ public class InputView {
         final String input = SCANNER.nextLine();
 
         validateDelimiter(input);
-        final List<String> names = Arrays.asList(input.split(DELIMITER));
-        return names;
+        return Arrays.asList(input.split(DELIMITER));
     }
 
     private void validateDelimiter(final String input) {

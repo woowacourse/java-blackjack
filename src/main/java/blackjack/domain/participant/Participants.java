@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants {
+    public static final int INT_CARD_COUNT = 2;
+
     private final Players players;
     private final Dealer dealer;
 
@@ -21,10 +23,10 @@ public class Participants {
     }
 
     public void addStartCards(final Deck deck) {
-        final int playersCardCount = players.count() * 2;
+        final int playersCardCount = players.count() * INT_CARD_COUNT;
         players.divideCard(deck.pick(playersCardCount));
 
-        dealer.addCard(deck.pick(2));
+        dealer.addCard(deck.pick(INT_CARD_COUNT));
     }
 
     public List<ParticipantCardsDto> getStartCards() {

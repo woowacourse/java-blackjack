@@ -17,14 +17,14 @@ public class BlackjackGame {
     private Deck deck;
     private final Participants participants;
 
-    public BlackjackGame(final List<String> playersName, final Deck deck) {
-        this.participants = new Participants(Players.from(playersName), new Dealer());
-        this.deck = deck;
-    }
-
     public BlackjackGame(final Players players) {
         this.participants = new Participants(players, new Dealer());
         this.deck = Deck.empty();
+    }
+
+    BlackjackGame(final List<String> playersName, final Deck deck) {
+        this.participants = new Participants(Players.from(playersName), new Dealer());
+        this.deck = deck;
     }
 
     public void divideCard() {

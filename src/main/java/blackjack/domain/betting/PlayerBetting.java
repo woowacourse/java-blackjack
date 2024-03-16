@@ -8,16 +8,13 @@ public class PlayerBetting {
     private final int betting;
 
     private PlayerBetting(final ParticipantName name, final int betting) {
-        this.name =name;
+        this.name = name;
         this.betting = betting;
-    }
-    public PlayerBetting(final String name, final int betting) {
-        this(new ParticipantName(name), betting);
     }
 
     public static PlayerBetting create(final String name, final int betting) {
         validateInitialBetting(betting);
-        return new PlayerBetting(name, betting);
+        return new PlayerBetting(new ParticipantName(name), betting);
     }
 
     private static void validateInitialBetting(final int betting) {
