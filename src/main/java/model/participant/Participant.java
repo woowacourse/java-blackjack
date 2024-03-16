@@ -9,11 +9,20 @@ public abstract class Participant {
 
     protected static final int BUST_THRESHOLD = 22;
     protected final CardDeck cardDeck;
+    protected MatchState matchState;
 
     protected Participant(final Card firstCard, final Card secondCard) {
         this.cardDeck = new CardDeck();
         cardDeck.addCard(firstCard);
         cardDeck.addCard(secondCard);
+        this.matchState = initMatchState();
+    }
+
+    protected MatchState initMatchState() {
+        if (cardDeck.isBlackJack()) {
+            return MatchState.BLACK_JACK;
+        }
+        return MatchState.PLAYING;
     }
 
     public abstract boolean canHit();
@@ -26,7 +35,7 @@ public abstract class Participant {
         return Collections.unmodifiableList(cardDeck.getCards());
     }
 
-    public int getHand(){
+    public int getHand() {
         return cardDeck.calculateHand();
     }
 }

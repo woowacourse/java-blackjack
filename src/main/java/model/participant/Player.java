@@ -6,19 +6,17 @@ import static model.participant.MatchState.WIN;
 
 import model.card.Card;
 
-public class Player extends Participant {
+public final class Player extends Participant {
     private final Name name;
-    private boolean isTurnOver;
 
     public Player(Name name, Card card1, Card card2) {
         super(card1, card2);
         this.name = name;
-        this.isTurnOver = false;
     }
 
     @Override
     public boolean canHit() {
-        return !cardDeck.isBust() && !isTurnOver;
+        return !cardDeck.isBust() && matchState == MatchState.PLAYING;
     }
 
     public MatchState calculateMatchResult(int dealerHand) {
@@ -33,7 +31,10 @@ public class Player extends Participant {
     }
 
     public void turnOver() {
-        isTurnOver = true;
+        if (matchState == MatchState.PLAYING) {
+            matchState = MatchState.TURNOVER;
+        }
+        throw new IllegalStateException("Only Playing State Player can be turned over");
     }
 
     public Name getName() {
