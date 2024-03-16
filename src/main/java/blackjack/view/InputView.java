@@ -26,7 +26,7 @@ public class InputView {
         try {
             Integer.parseInt(input);
         } catch (IllegalArgumentException e) {
-            System.out.println("[ERROR] 정수가 아닙니다.");
+            throw new IllegalArgumentException("[ERROR] 정수가 아닙니다.");
         }
     }
 
