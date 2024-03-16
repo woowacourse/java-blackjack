@@ -11,7 +11,6 @@ import java.util.Map;
 import model.card.Card;
 import model.card.Cards;
 import model.game.CardsScore;
-import model.participant.Player;
 import model.result.DealerResult;
 import model.result.GameResult;
 import model.result.PlayerResults;
@@ -47,7 +46,7 @@ public class OutputView {
         System.out.printf(INIT_CARDS_INTRO, participantCards.dealerName(), playerNames);
     }
 
-    private static void printCards(ParticipantCard participantCard) {
+    public static void printCards(ParticipantCard participantCard) {
         String cards = String.join(CARDS_DELIMITER, participantCard.getCards());
         System.out.printf(CARDS_FORMAT, participantCard.getName(), cards);
     }
@@ -55,11 +54,6 @@ public class OutputView {
     private static void printAllPlayerCards(List<ParticipantCard> playerCards) {
         playerCards.forEach(OutputView::printCards);
         System.out.println();
-    }
-
-    public static void printPlayerCards(Player player) {
-        String cardsMessage = createCardsMessage(player.getCards());
-        System.out.printf(CARDS_FORMAT, player.getName(), cardsMessage);
     }
 
     private static String createCardsMessage(Cards cards) {

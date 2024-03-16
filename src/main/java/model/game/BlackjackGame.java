@@ -1,5 +1,6 @@
 package model.game;
 
+import dto.ParticipantCard;
 import dto.ParticipantCards;
 import model.card.Card;
 import model.card.CardDeck;
@@ -36,9 +37,10 @@ public class BlackjackGame {
         }
     }
 
-    public void dealCard(Player player) {
+    public ParticipantCard dealCard(Player player) {
         Card card = cardDeck.drawCard();
         player.hit(card);
+        return ParticipantCard.createWithAllCard(player);
     }
 
     public boolean dealerHitTurn() {

@@ -1,5 +1,6 @@
 package controller;
 
+import dto.ParticipantCard;
 import dto.ParticipantCards;
 import java.util.List;
 import java.util.function.Supplier;
@@ -43,8 +44,8 @@ public class BlackjackController {
 
     private void askHitAndPrintCards(Player player, BlackjackGame blackjackGame) {
         while (player.isPossibleHit() && prepareHitChoice(player).isHit()) {
-            blackjackGame.dealCard(player);
-            OutputView.printPlayerCards(player);
+            ParticipantCard playerCard = blackjackGame.dealCard(player);
+            OutputView.printCards(playerCard);
         }
     }
 
