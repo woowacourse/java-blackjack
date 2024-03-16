@@ -1,5 +1,7 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.game.Money;
+
 public enum GameResult {
 
     WIN(1.0),
@@ -13,7 +15,7 @@ public enum GameResult {
         this.ratio = ratio;
     }
 
-    public double getRatio() {
-        return ratio;
+    public Money calculateBetResult(Money betMoney) {
+        return betMoney.multipleRatio(ratio);
     }
 }

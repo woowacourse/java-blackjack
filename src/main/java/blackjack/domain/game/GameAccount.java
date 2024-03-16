@@ -19,10 +19,9 @@ public class GameAccount {
 
     public void applyGameResults(Map<Player, GameResult> gameResults) {
         for (Player player : gameResults.keySet()) {
-            Money money = store.get(player);
+            Money betMoney = store.get(player);
             GameResult gameResult = gameResults.get(player);
-            Money gameResultMoney = money.multipleRatio(gameResult.getRatio());
-            store.put(player, gameResultMoney);
+            store.put(player, gameResult.calculateBetResult(betMoney));
         }
     }
 
