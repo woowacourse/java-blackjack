@@ -24,9 +24,6 @@ public class Referee {
     }
 
     private HandResult getPlayerResultWithBlackjack(Player player, Dealer dealer) {
-        if (player.isBlackjack() && dealer.isBlackjack()) {
-            return HandResult.DRAW;
-        }
         if (player.isBlackjack() && !dealer.isBlackjack()) {
             return HandResult.BLACKJACK;
         }
