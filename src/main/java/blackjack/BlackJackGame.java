@@ -13,7 +13,7 @@ import blackjack.model.participant.Player;
 import blackjack.model.result.Referee;
 import blackjack.model.result.ResultCommand;
 import blackjack.model.result.ResultRule;
-import blackjack.util.ConsoleReader;
+import blackjack.view.reader.ConsoleReader;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.LinkedHashMap;
