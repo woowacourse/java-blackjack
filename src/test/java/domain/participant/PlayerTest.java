@@ -36,10 +36,10 @@ public class PlayerTest {
         Player player = new Player(new PlayerName("kelly"), hand);
 
         // When
-        Boolean isBurst = player.isDrawable();
+        Boolean isBust = player.isDrawable();
 
         // Then
-        assertThat(isBurst).isTrue();
+        assertThat(isBust).isTrue();
     }
 
     @DisplayName("플레이어는 덱으로부터 카드를 한 장 뽑는다.")
@@ -48,13 +48,13 @@ public class PlayerTest {
         // Given
         Deck deck = Deck.init();
         Hand initHand = Hand.init();
-        int initCardNumberSum = initHand.getCardsNumberSum();
+        int initCardNumberSum = initHand.getHandSum();
         Player player = new Player(new PlayerName("kelly"), initHand);
 
         // When
         player.draw(deck);
 
         // Then
-        assertThat(initCardNumberSum).isNotEqualTo(initHand.getCardsNumberSum());
+        assertThat(initCardNumberSum).isNotEqualTo(initHand.getHandSum());
     }
 }

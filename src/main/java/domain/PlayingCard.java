@@ -1,8 +1,11 @@
 package domain;
 
 public record PlayingCard(PlayingCardShape playingCardShape, PlayingCardValue playingCardValue) {
+    public int getValue() {
+        return playingCardValue.getValue();
+    }
 
-    public int getValue(final int inputValue) {
-        return playingCardValue.getValue(inputValue);
+    public boolean isAce() {
+        return playingCardValue.isAce();
     }
 }

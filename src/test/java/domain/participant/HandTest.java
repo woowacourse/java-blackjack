@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.PlayingCard;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +31,7 @@ public class HandTest {
         playingCards.forEach(hand::addCard);
 
         // When
-        int result = hand.getCardsNumberSum();
+        int result = hand.getHandSum();
 
         // Then
         assertThat(result).isEqualTo(11);
@@ -40,17 +39,17 @@ public class HandTest {
 
     @DisplayName("손패에 있는 카드의 합이 21을 넘으면 true반환한다.")
     @Test
-    void isBurstTest() {
+    void isBustTest() {
         // Given
         List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING), new PlayingCard(CLOVER, QUEEN), new PlayingCard(SPADE, NINE));
         Hand hand = Hand.init();
         playingCards.forEach(hand::addCard);
 
         // When
-        boolean isBurst = !hand.isNotBurst();
+        boolean isBust = !hand.isNotBust();
 
         // Then
-        assertThat(isBurst).isTrue();
+        assertThat(isBust).isTrue();
     }
 
     @DisplayName("손패에 새로운 카드를 추가한다.")
@@ -58,28 +57,46 @@ public class HandTest {
     void addCardTest() {
         // Given
         Hand hand = Hand.init();
-        int initCardNumberSum = hand.getCardsNumberSum();
+        int initCardNumberSum = hand.getHandSum();
         PlayingCard card = new PlayingCard(DIAMOND, NINE);
 
         // When
         hand.addCard(card);
 
         // Then
-        assertThat(initCardNumberSum).isNotEqualTo(hand.getCardsNumberSum());
+        assertThat(initCardNumberSum).isNotEqualTo(hand.getHandSum());
+    }
+
+    @DisplayName("손패가 21이면 true를 반환한다.")
+    @Test
+    void isMaximumTest() {
+        // Given
+        List<PlayingCard> playingCards = List.of(
+                new PlayingCard(DIAMOND, KING),
+                new PlayingCard(CLOVER, QUEEN),
+                new PlayingCard(SPADE, ACE));
+        Hand hand = Hand.init();
+        playingCards.forEach(hand::addCard);
+
+        // When
+        boolean isMaximum = !hand.isNotMaximum();
+
+        // Then
+        assertThat(isMaximum).isTrue();
     }
 
     @DisplayName("손패가 블랙잭이면 true를 반환한다.")
     @Test
     void isBlackJackTest() {
         // Given
-        List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING), new PlayingCard(CLOVER, QUEEN), new PlayingCard(SPADE, ACE));
+        List<PlayingCard> playingCards = List.of(new PlayingCard(DIAMOND, KING), new PlayingCard(SPADE, ACE));
         Hand hand = Hand.init();
         playingCards.forEach(hand::addCard);
 
         // When
-        boolean isBlackJack = !hand.isNotBlackJack();
+        boolean isBlackJack = hand.isBlackJack();
 
         // Then
-        Assertions.assertThat(isBlackJack).isTrue();
+        assertThat(isBlackJack).isTrue();
     }
 }

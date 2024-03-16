@@ -7,6 +7,7 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 public record PlayerNames(List<PlayerName> values) {
+    private static final int MAX_PLAYER_NUMBER = 10;
 
     public PlayerNames {
         validateSize(values);
@@ -27,8 +28,9 @@ public record PlayerNames(List<PlayerName> values) {
     }
 
     private void validateSize(final List<PlayerName> playerNames) {
-        if (playerNames.size() > 10) {
-            throw new IllegalArgumentException(String.format("%d는 올바른 참여 인원수가 아닙니다. 게임에 참여할 사람은 10명 이하여야 합니다.", playerNames.size()));
+        if (playerNames.size() > MAX_PLAYER_NUMBER) {
+            throw new IllegalArgumentException(String.format(
+                    "%d는 올바른 참여 인원수가 아닙니다. 게임에 참여할 사람은 %d명 이하여야 합니다.", playerNames.size(), MAX_PLAYER_NUMBER));
         }
     }
 }

@@ -37,7 +37,7 @@ public class PlayerNamesTest {
     @Test
     void validateSizeTest() {
         // Given
-        List<String> inputPlayerNames = List.of("kelly", "kelly", "kelly", "kelly", "kelly", "kelly", "kelly", "kelly", "kelly", "kelly", "kelly");
+        List<String> inputPlayerNames = List.of("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k");
 
         // When & Then
         Assertions.assertThatThrownBy(() -> PlayerNames.of(inputPlayerNames))
