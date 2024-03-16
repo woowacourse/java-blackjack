@@ -1,12 +1,10 @@
 package blackjackgame.domain.gamers;
 
 public class BetMaker {
-    private final String name;
     private final Double betMoney;
 
-    public BetMaker(String name, Double betMoney) {
+    public BetMaker(Double betMoney) {
         validateBetMoneyBiggerThanZero(betMoney);
-        this.name = name;
         this.betMoney = betMoney;
     }
 
