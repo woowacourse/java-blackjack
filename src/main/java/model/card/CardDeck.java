@@ -37,6 +37,13 @@ public class CardDeck {
                 .orElse(0);
     }
 
+    public boolean isBlackJack() {
+        if (cards.size() == 2 && calculateHand() == HIT_THRESHOLD) {
+            return true;
+        }
+        return false;
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

@@ -66,7 +66,6 @@ class CardDeckTest {
         assertTrue(cardDeck.isBust());
     }
 
-
     @Test
     @DisplayName("카드 덱의 hand가 21이하였을 때 false를 반환한다.")
     void isBust_ShouldReturnFalse_WhenHandIsLessThen22() {
@@ -105,5 +104,36 @@ class CardDeckTest {
         deck.addCard(Card.from(Number.JACK, Emblem.DIAMOND));
 
         assertEquals(30, deck.calculateHand());
+    }
+
+    @Test
+    @DisplayName("카드 덱에 카드가 2장 존재할 때의 hand가 21이면 true를 반환한다.")
+    void isBlackJack_ShouldReturnTrue_WhenHandIs21WithTwoCards() {
+        CardDeck cardDeck = new CardDeck();
+        cardDeck.addCard(Card.from(Number.TEN, Emblem.CLUB));
+        cardDeck.addCard(Card.from(Number.ACE, Emblem.DIAMOND));
+
+        assertTrue(cardDeck.isBlackJack());
+    }
+
+    @Test
+    @DisplayName("카드 덱에 카드가 2장 존재할 하지 않을때 hand가 21이면 false를 반환한다.")
+    void isBlackJack_ShouldReturnFalse_WhenHandIs21WithMoreThanTwoCards() {
+        CardDeck cardDeck = new CardDeck();
+        cardDeck.addCard(Card.from(Number.TEN, Emblem.CLUB));
+        cardDeck.addCard(Card.from(Number.NINE, Emblem.CLUB));
+        cardDeck.addCard(Card.from(Number.TWO, Emblem.DIAMOND));
+
+        assertFalse(cardDeck.isBlackJack());
+    }
+
+    @Test
+    @DisplayName("카드 덱에 카드가 2장 존재할때 hand가 21이 아니면 false를 반환한다.")
+    void isBlackJack_ShouldReturnFalse_WhenHandIsNot21WithTwoCards() {
+        CardDeck cardDeck = new CardDeck();
+        cardDeck.addCard(Card.from(Number.TEN, Emblem.CLUB));
+        cardDeck.addCard(Card.from(Number.NINE, Emblem.CLUB));
+
+        assertFalse(cardDeck.isBlackJack());
     }
 }
