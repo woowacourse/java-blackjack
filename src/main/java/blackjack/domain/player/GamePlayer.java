@@ -8,6 +8,10 @@ public class GamePlayer extends Participant {
         super(name, cards);
     }
 
+    public GamePlayer(final PlayerInfo playerInfo) {
+        super(playerInfo);
+    }
+
     @Override
     public boolean isReceivable() {
         return this.state.isHit();

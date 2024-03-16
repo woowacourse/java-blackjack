@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.state.Ready;
 import blackjack.fixture.ParticipantImpl;
 import blackjack.fixture.PlayerFixture;
 
@@ -17,11 +18,11 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ParticipantTest {
+class ParticipantTest {
 
     @Test
     @DisplayName("이름과 카드 일급 컬렉션을 통해서 플레이어를 생성 한다.")
-    public void create_with_name_and_cards() {
+    void create_with_name_and_cards() {
         Name name = new Name("초롱");
         Cards cards = new Cards(List.of(new Card(CardValue.EIGHT, CardSymbol.CLOVER),
                 new Card(CardValue.ACE, CardSymbol.DIAMOND)));
@@ -31,8 +32,20 @@ public class ParticipantTest {
     }
 
     @Test
+    @DisplayName("플레이어 정보를 통해서 플레이어를 생성 한다.")
+    void create_with_player_info() {
+        final Name name = new Name("조이썬");
+        final BettingMoney bettingMoney = new BettingMoney(10000);
+        final PlayerInfo playerInfo = new PlayerInfo(name, bettingMoney);
+
+        final var sut = new ParticipantImpl(playerInfo);
+
+        assertThat(sut.state).isInstanceOf(Ready.class);
+    }
+
+    @Test
     @DisplayName("플레이어는 카드들 숫자 합 중 최대값을 결정한다.")
-    public void determine_max_number_sum_of_cards() {
+    void determine_max_number_sum_of_cards() {
         var sut = PlayerFixture.참가자_생성(List.of(CardValue.EIGHT, CardValue.FOUR));
 
         var result = sut.calculateScore();
@@ -42,7 +55,7 @@ public class ParticipantTest {
 
     @Test
     @DisplayName("숫자 합이 21을 넘으면 버스트다.")
-    public void GamePlayer_Bust_if_exceed_21() {
+    void GamePlayer_Bust_if_exceed_21() {
         var sut = PlayerFixture.참가자_생성(
                 List.of(CardValue.EIGHT, CardValue.TEN, CardValue.SEVEN));
 
@@ -53,7 +66,7 @@ public class ParticipantTest {
 
     @Test
     @DisplayName("숫자 합이 21을 넘지 않으면 버스트가 아니다.")
-    public void GamePlayer_Not_bust_if_under_21() {
+    void GamePlayer_Not_bust_if_under_21() {
         var sut = PlayerFixture.참가자_생성(
                 List.of(CardValue.EIGHT, CardValue.SEVEN));
 

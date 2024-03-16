@@ -11,6 +11,10 @@ public class Dealer extends Participant {
         super(name, cards);
     }
 
+    public Dealer(final PlayerInfo playerInfo) {
+        super(playerInfo);
+    }
+
     public static Dealer createDefaultDealer(final Cards cards) {
         return new Dealer(new Name(DEFAULT_DEALER_NAME), cards);
     }
