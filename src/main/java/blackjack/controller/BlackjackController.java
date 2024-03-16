@@ -30,8 +30,8 @@ public class BlackjackController {
     public void run() {
         final PlayerNames playerNames = createPlayerNames();
 
-        final BlackjackGame blackjackGame = BlackjackGame.of(playerNames, this::playerWantToHit);
-        final BetAmountRepository betAmountRepository = saveBetAmount(playerNames);
+        final BlackjackGame blackjackGame = BlackjackGame.of(playerNames, this::hitDesireChecker);
+        final BetAmountRepository betAmountRepository = saveBetAmounts(playerNames);
 
         playGame(blackjackGame);
         finishGame(blackjackGame, betAmountRepository);
@@ -46,16 +46,16 @@ public class BlackjackController {
         }
     }
 
-    private boolean playerWantToHit(final UserName name) {
+    private boolean hitDesireChecker(final UserName name) {
         try {
-            return inputView.readNeedMoreCard(name);
+            return inputView.readHitDesire(name);
         } catch (final NeedRetryException e) {
             outputView.printError(e.getMessage());
-            return playerWantToHit(name);
+            return hitDesireChecker(name);
         }
     }
 
-    private BetAmountRepository saveBetAmount(final PlayerNames playerNames) {
+    private BetAmountRepository saveBetAmounts(final PlayerNames playerNames) {
         final Map<UserName, BetAmount> playerBetAmounts = new LinkedHashMap<>();
 
         playerNames.getNames().forEach(name -> playerBetAmounts.put(name, inputView.readBetAmount(name)));
@@ -71,10 +71,10 @@ public class BlackjackController {
 
         outputView.printStartCards(startCardsDto);
 
-        blackjackGame.playGame(this::printPlayerCard);
+        blackjackGame.playGame(this::playerTurnCallback);
     }
 
-    private void printPlayerCard(final UserName name, final Hands hands) {
+    private void playerTurnCallback(final UserName name, final Hands hands) {
         if (name.equals(new UserName(Dealer.DEALER_NAME))) {
             outputView.printDealerMoreCard();
             return;

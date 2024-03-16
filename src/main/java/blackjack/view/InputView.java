@@ -48,7 +48,7 @@ public class InputView {
         }
     }
 
-    public boolean readNeedMoreCard(final UserName name) {
+    public boolean readHitDesire(final UserName name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", name.getName(),
                 CardRequestFormat.YES.getFormat(),
                 CardRequestFormat.NO.getFormat());

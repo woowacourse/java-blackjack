@@ -20,9 +20,9 @@ public class Users {
         this.users = users;
     }
 
-    public static Users of(final PlayerNames playerNames, final Predicate<UserName> userWantToHit) {
+    public static Users of(final PlayerNames playerNames, final Predicate<UserName> hitDesireChecker) {
         final List<User> users = new ArrayList<>();
-        playerNames.getNames().forEach(name -> users.add(new Player(name, userWantToHit)));
+        playerNames.getNames().forEach(name -> users.add(new Player(name, hitDesireChecker)));
 
         users.add(new Dealer());
 
@@ -63,14 +63,14 @@ public class Users {
         return users.stream()
                 .filter(User::isPlayer)
                 .collect(toMap(User::getUserName,
-                        User::getOpenedHands,
+                        User::openedHands,
                         (v1, v2) -> v1,
                         LinkedHashMap::new));
     }
 
     public Hands getDealerOpenedHands() {
         final User dealer = findDealer();
-        return dealer.getOpenedHands();
+        return dealer.openedHands();
     }
 
     public Hands getDealerHands() {

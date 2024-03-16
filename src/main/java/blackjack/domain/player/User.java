@@ -25,16 +25,16 @@ public abstract class User {
         state = state.stand();
     }
 
+    public Hands openedHands() {
+        return getHands();
+    }
+
     public boolean isPlayer() {
         return false;
     }
 
     public boolean isDealer() {
         return false;
-    }
-
-    public Hands getOpenedHands() {
-        return getHands();
     }
 
     public final boolean isInitState() {

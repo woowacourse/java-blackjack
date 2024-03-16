@@ -38,14 +38,14 @@ public class BlackjackGame {
         }
     }
 
-    private void runUserTurn(final User user, final BiConsumer<UserName, Hands> playerCallAfter) {
+    private void runUserTurn(final User user, final BiConsumer<UserName, Hands> playerTurnCallback) {
         if (users.isAllPlayerBust()) {
             return;
         }
 
         while (user.isNotFinished()) {
             user.playTurn(deck);
-            playerCallAfter.accept(user.getUserName(), user.getHands());
+            playerTurnCallback.accept(user.getUserName(), user.getHands());
         }
     }
 

@@ -26,7 +26,7 @@ public class Dealer extends User {
     }
 
     @Override
-    public Hands getOpenedHands() {
+    public Hands openedHands() {
         return new Hands(List.of(getHands().getFirstCard()));
     }
 }

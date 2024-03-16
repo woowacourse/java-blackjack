@@ -4,16 +4,16 @@ import java.util.function.Predicate;
 
 public class Player extends User {
 
-    private final Predicate<UserName> userWantToHit;
+    private final Predicate<UserName> hitDesireChecker;
 
-    public Player(final UserName userName, final Predicate<UserName> userWantToHit) {
+    public Player(final UserName userName, final Predicate<UserName> hitDesireChecker) {
         super(userName);
-        this.userWantToHit = userWantToHit;
+        this.hitDesireChecker = hitDesireChecker;
     }
 
     @Override
     protected boolean wantToHit() {
-        return isNotFinished() && userWantToHit.test(getUserName());
+        return isNotFinished() && hitDesireChecker.test(getUserName());
     }
 
     @Override
