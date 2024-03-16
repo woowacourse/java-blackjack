@@ -18,6 +18,9 @@ public class Referee {
     }
 
     private static PlayerResult notBlackJackResult(Cards playerCards, Cards dealerCards) {
+        if (playerCards.countMaxScore() == 0) {
+            return PlayerResult.LOSE;
+        }
         if (playerCards.countMaxScore() > dealerCards.countMaxScore()) {
             return PlayerResult.WIN;
         }
