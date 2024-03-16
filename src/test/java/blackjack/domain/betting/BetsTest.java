@@ -3,10 +3,7 @@ package blackjack.domain.betting;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.game.PlayerResult;
-import blackjack.domain.game.result.PlayerBlackjack;
-import blackjack.domain.game.result.PlayerLose;
-import blackjack.domain.game.result.PlayerWin;
-import blackjack.domain.game.result.Push;
+import blackjack.domain.game.GameResult;
 import blackjack.domain.participant.Name;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -28,7 +25,7 @@ public class BetsTest {
         void playerBlackjackTest() {
             //given
             PlayerResult result = new PlayerResult(DEFAULT_NAME,
-                    PlayerBlackjack.getInstance());
+                    GameResult.PLAYER_BLACKJACK);
 
             //when
             OwnedMoney prize = bets.getPrize(result);
@@ -42,7 +39,7 @@ public class BetsTest {
         void playerWinTest() {
             //given
             PlayerResult result = new PlayerResult(DEFAULT_NAME,
-                    PlayerWin.getInstance());
+                    GameResult.PLAYER_WIN);
 
             //when
             OwnedMoney prize = bets.getPrize(result);
@@ -56,7 +53,7 @@ public class BetsTest {
         void pushTest() {
             //given
             PlayerResult result = new PlayerResult(DEFAULT_NAME,
-                    Push.getInstance());
+                    GameResult.PUSH);
 
             //when
             OwnedMoney prize = bets.getPrize(result);
@@ -70,7 +67,7 @@ public class BetsTest {
         void playerLoseTest() {
             //given
             PlayerResult result = new PlayerResult(DEFAULT_NAME,
-                    PlayerLose.getInstance());
+                    GameResult.PLAYER_LOSE);
 
             //when
             OwnedMoney prize = bets.getPrize(result);

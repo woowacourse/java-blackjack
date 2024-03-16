@@ -1,9 +1,9 @@
 package blackjack.domain.game;
 
-import blackjack.domain.game.result.GameResult;
 import blackjack.domain.participant.Name;
 
 public class PlayerResult {
+
     private final Name name;
     private final GameResult gameResult;
 

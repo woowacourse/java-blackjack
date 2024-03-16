@@ -22,6 +22,10 @@ public class CardsFixture {
             new Card(Value.JACK, Shape.HEART),
             new Card(Value.SEVEN, Shape.HEART)
     );
+    public static final List<Card> CARDS_SCORE_18 = List.of(
+            new Card(Value.JACK, Shape.HEART),
+            new Card(Value.EIGHT, Shape.HEART)
+    );
     public static final List<Card> CARDS_SCORE_21 = List.of(
             new Card(Value.JACK, Shape.HEART),
             new Card(Value.EIGHT, Shape.HEART),

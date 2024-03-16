@@ -2,8 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.game.PlayerResult;
-import blackjack.domain.game.Referee;
-import blackjack.domain.game.result.GameResult;
+import blackjack.domain.game.GameResult;
 import java.util.List;
 
 public class Players {
@@ -75,7 +74,7 @@ public class Players {
     }
 
     private PlayerResult getPlayerResult(Player player) {
-        GameResult gameResult = Referee.getGameResult(dealer, player);
+        GameResult gameResult = GameResult.of(dealer, player);
         return new PlayerResult(player.getName(), gameResult);
     }
 
