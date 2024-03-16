@@ -5,7 +5,7 @@ import participant.player.Player;
 
 public interface GameResult {
 
-    boolean isCorrespondent(Player player, Dealer dealer);
+    boolean isCorrespondentResult(Player player, Dealer dealer);
 
     double returnRate();
 }

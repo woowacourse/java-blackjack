@@ -1,6 +1,5 @@
 package referee;
 
-import participant.dealer.Dealer;
 import gameResult.GameResult;
 import gameResult.PlayerBlackJack;
 import gameResult.PlayerBust;
@@ -8,6 +7,7 @@ import gameResult.PlayerLose;
 import gameResult.PlayerPush;
 import gameResult.PlayerWin;
 import java.util.List;
+import participant.dealer.Dealer;
 import participant.player.Player;
 
 public class Referee {
@@ -21,7 +21,7 @@ public class Referee {
 
     public GameResult judge(Player player, Dealer dealer) {
         return orderedGameResults.stream()
-                .filter(result -> result.isCorrespondent(player, dealer))
+                .filter(result -> result.isCorrespondentResult(player, dealer))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 상태가 없습니다."));
     }

@@ -6,7 +6,7 @@ import participant.player.Player;
 public class PlayerWin implements GameResult {
 
     @Override
-    public boolean isCorrespondent(Player player, Dealer dealer) {
+    public boolean isCorrespondentResult(Player player, Dealer dealer) {
         return player.getCardScore() > dealer.getCardScore();
     }
 
