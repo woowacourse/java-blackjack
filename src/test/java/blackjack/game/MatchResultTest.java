@@ -15,21 +15,21 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class MatchResultTest {
 
-    static Hand handBlackJack = new Hand(List.of(
+    private static final Hand handBlackJack = new Hand(List.of(
             new Card(Shape.CLOVER, Rank.ACE),
             new Card(Shape.DIAMOND, Rank.TEN)
     ));
-    static Hand hand22 = new Hand(List.of(
+    private static final Hand hand22 = new Hand(List.of(
             new Card(Shape.HEART, Rank.TEN),
             new Card(Shape.CLOVER, Rank.TEN),
             new Card(Shape.DIAMOND, Rank.TWO)
     ));
-    static Hand hand21 = new Hand(List.of(
+    private static final Hand hand21 = new Hand(List.of(
             new Card(Shape.CLOVER, Rank.JACK),
             new Card(Shape.DIAMOND, Rank.TEN),
             new Card(Shape.HEART, Rank.ACE)
     ));
-    static Hand hand20 = new Hand(List.of(
+    private static final Hand hand20 = new Hand(List.of(
             new Card(Shape.CLOVER, Rank.JACK),
             new Card(Shape.DIAMOND, Rank.TEN)
     ));

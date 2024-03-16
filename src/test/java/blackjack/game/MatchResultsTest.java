@@ -15,17 +15,17 @@ import org.junit.jupiter.api.Test;
 
 class MatchResultsTest {
 
-    Hand dealerHand = new Hand(List.of(
+    private final Hand dealerHand = new Hand(List.of(
             new Card(Shape.DIAMOND, Rank.TEN),
             new Card(Shape.HEART, Rank.TEN
             )));
-    Hand playerHand = new Hand(List.of(
+    private final Hand playerHand = new Hand(List.of(
             new Card(Shape.CLOVER, Rank.TEN),
             new Card(Shape.DIAMOND, Rank.FIVE
             )));
-    Player player = new Player("atto", playerHand);
-    MatchResults matchResults = new MatchResults(dealerHand);
-    Money money = new Money(10000);
+    private final Player player = new Player("atto", playerHand);
+    private final MatchResults matchResults = new MatchResults(dealerHand);
+    private final Money money = new Money(10000);
 
     @BeforeEach
     void beforeEach() {
