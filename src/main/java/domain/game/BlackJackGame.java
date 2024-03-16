@@ -33,7 +33,6 @@ public class BlackJackGame {
         return new BlackJackGame(Participants.from(requests), deckGenerator.generate());
     }
 
-    // TODO: 딜러가 먼저 오게 하면서 순서를 바꾸는 방법?
     public InitialCardStatus initialize() {
         List<ParticipantHandStatus> handStatuses = participants.getParticipantsStartsWithDealer()
                 .stream()

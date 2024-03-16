@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 public class Participants {
     public static final Dealer CACHED_DEALER = new Dealer();
-    public static final List<Player> CACHED_PLAYERS = new ArrayList<>();
+    protected static final List<Player> CACHED_PLAYERS = new ArrayList<>();
 
     private final List<Participant> participants;
 
@@ -24,7 +24,7 @@ public class Participants {
     public static Participants from(final List<PlayerBettingMoney> requests) {
         return Stream.concat(
                 generatePlayers(requests),
-                Stream.of(CACHED_DEALER) // TODO: add 순서가 프로그램의 흐름에 영향을 끼친다.
+                Stream.of(CACHED_DEALER)
         ).collect(Collectors.collectingAndThen(toList(), Participants::new));
     }
 
@@ -39,10 +39,7 @@ public class Participants {
 
     public List<PlayerOutcome> getPlayersOutcomeIf(final PlayerOutcomeFunction function) {
         return CACHED_PLAYERS.stream()
-                .map(player -> new PlayerOutcome(
-                        player, // TODO: 어짜피 밖에서 NAME 조회해야해서 성능 상 그냥 Player를 바로 보냄.ㄱㅊ? // 이것도 캐싱하면 해결될 텐데 ..
-                        function.apply(player)
-                ))
+                .map(player -> new PlayerOutcome(player, function.apply(player)))
                 .toList();
     }
 
