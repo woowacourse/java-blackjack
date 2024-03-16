@@ -6,12 +6,12 @@ import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.domain.money.Betting;
+import blackjack.domain.money.PlayerProfits;
+import blackjack.domain.money.Profit;
 import blackjack.domain.result.GameResult;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class BlackjackGame {
@@ -59,23 +59,16 @@ public class BlackjackGame {
         gamer.receiveCard(deck.drawCard());
     }
 
-    public Map<Player, GameResult> getPlayerResults(Players players, Dealer dealer) {
-        Map<Player, GameResult> playerResults = new HashMap<>();
-        for (Player player : players.getPlayers()) {
-            playerResults.put(player, GameResult.createPlayerResult(dealer, player));
-        }
-
-        return playerResults;
+    public PlayerProfits calculateProfits(Map<Player, Betting> bettingBoard, Dealer dealer) {
+        return new PlayerProfits(bettingBoard.entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> calculateProfit(dealer, entry.getKey(), entry.getValue()))));
     }
 
-    public Map<GameResult, Long> getDealerResult(Map<Player, GameResult> playerResults) {
-        Map<GameResult, Long> dealerResult = playerResults.values().stream()
-                .map(GameResult::reverse)
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-        for (GameResult gameResult : GameResult.values()) {
-            dealerResult.merge(gameResult, 0L, Long::sum);
-        }
+    private Profit calculateProfit(Dealer dealer, Player player, Betting betting) {
+        GameResult gameResult = GameResult.createPlayerResult(dealer, player);
 
-        return dealerResult;
+        return gameResult.calculateProfit(betting);
     }
 }

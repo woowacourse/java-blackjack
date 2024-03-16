@@ -5,7 +5,7 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.domain.money.Betting;
-import blackjack.domain.result.GameResult;
+import blackjack.domain.money.PlayerProfits;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -29,7 +29,9 @@ public class BlackjackController {
 
         dealInitCards(dealer, players, blackjackGame);
         receiveAdditionalCard(dealer, players, blackjackGame);
-        printResult(dealer, players, blackjackGame);
+
+        outputView.printTotalCardHandStatus(dealer, players);
+        printResult(bettingBoard, dealer, blackjackGame);
     }
 
     private Map<Player, Betting> bet(Players players, BlackjackGame blackjackGame) {
@@ -72,14 +74,8 @@ public class BlackjackController {
         }
     }
 
-    public void printResult(Dealer dealer, Players players, BlackjackGame blackjackGame) {
-        outputView.printTotalCardHandStatus(dealer, players);
-        printGameResult(dealer, players, blackjackGame);
-    }
-
-    private void printGameResult(Dealer dealer, Players players, BlackjackGame blackjackGame) {
-        Map<Player, GameResult> playerResults = blackjackGame.getPlayerResults(players, dealer);
-        Map<GameResult, Long> dealerResult = blackjackGame.getDealerResult(playerResults);
-        outputView.printGameResult(dealerResult, playerResults);
+    public void printResult(Map<Player, Betting> bettingBoard, Dealer dealer, BlackjackGame blackjackGame) {
+        PlayerProfits playerProfits = blackjackGame.calculateProfits(bettingBoard, dealer);
+        outputView.printProfits(playerProfits);
     }
 }

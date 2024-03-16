@@ -48,11 +48,4 @@ public enum GameResult {
     public Profit calculateProfit(Betting bettingAmount) {
         return bettingAmount.multiply(multiplier);
     }
-
-    public GameResult reverse() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        return WIN;
-    }
 }
