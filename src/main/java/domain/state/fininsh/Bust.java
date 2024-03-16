@@ -17,7 +17,7 @@ public final class Bust extends Finished {
     @Override
     public Result compareWith(final State otherState) {
         if (!otherState.isFinished()) {
-            throw new IllegalStateException();
+            throw new ClassCastException("완료된 상태가 아닙니다");
         }
         final Finished otherFinished = (Finished) otherState;
 

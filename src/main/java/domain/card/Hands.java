@@ -20,9 +20,11 @@ public class Hands {
     public int calculateScore() {
         final boolean hasAce = value.stream().anyMatch(card -> card.rank() == Rank.ACE);
         final int score = value.stream().mapToInt(Card::getRankValue).sum();
+
         if (hasAce && score + ACE_SOFT_HARD_GAP <= PERFECT_SCORE) {
             return score + ACE_SOFT_HARD_GAP;
         }
+        
         return score;
     }
 
