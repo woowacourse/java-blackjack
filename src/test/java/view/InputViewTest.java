@@ -89,5 +89,13 @@ class InputViewTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("금액과 관련된 연산은 숫자만 입력 가능합니다.");
         }
+
+        @Test
+        @DisplayName("최소 금액보다 작은 금액일 경우 배팅할 수 없다.")
+        void validateAmount() {
+            Assertions.assertThatThrownBy(() -> InputView.readBettingMoney(() -> "10", "test"))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("최소 금액보다 작은 금액으로 배팅할 수 없습니다.");
+        }
     }
 }

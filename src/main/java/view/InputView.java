@@ -9,6 +9,7 @@ public class InputView {
     private static final String DELIMITER = ",";
     private static final String COMMAND_YES = "y";
     private static final String COMMAND_NO = "n";
+    private static final double MINIMUM_BETTING_AMOUNT = 1000;
 
     public static List<String> readNames(Supplier<String> input) {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
@@ -59,6 +60,8 @@ public class InputView {
         String result = input.get();
         validateEmpty(result);
         validateNumeric(result);
+        double amount = Double.parseDouble(result);
+        validateAmount(amount);
         return Double.parseDouble(result);
     }
 
@@ -67,6 +70,12 @@ public class InputView {
             Double.parseDouble(amount);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("금액과 관련된 연산은 숫자만 입력 가능합니다.");
+        }
+    }
+
+    private static void validateAmount(double amount) {
+        if (amount <= MINIMUM_BETTING_AMOUNT) {
+            throw new IllegalArgumentException("최소 금액보다 작은 금액으로 배팅할 수 없습니다.");
         }
     }
 }
