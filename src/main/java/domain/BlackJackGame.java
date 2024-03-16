@@ -3,57 +3,58 @@ package domain;
 import domain.cards.Card;
 import domain.cards.Deck;
 import domain.gamer.Dealer;
+import domain.gamer.Gamers;
 import domain.gamer.Player;
 import domain.gamer.Players;
-import domain.gamer.bet.BetAmount;
-import domain.result.Cashier;
-import domain.result.Judge;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class BlackJackGame {
 
     private static final int INIT_CARD_COUNT = 2;
 
-    private final Players players;
-    private final Dealer dealer;
+    Gamers gamers;
+    Deck deck;
 
-    public BlackJackGame(Players players, Dealer dealer) {
-        this.players = players;
-        this.dealer = dealer;
+    public BlackJackGame(Players players) {
+        this.gamers = new Gamers(players, new Dealer());
+        this.deck = Deck.createShuffledDeck();
     }
 
-    public void shareInitCards(Deck deck) {
-        List<Player> players = new ArrayList<>(this.players.getPlayers());
-        players.add(dealer);
-        players.forEach(player -> hitInitCards(player, deck));
+    public void shareInitCards() {
+        List<Player> allGamers = gamers.allGamers();
+        allGamers.forEach(this::hitInitCards);
     }
 
-    private void hitInitCards(Player player, Deck deck) {
+    private void hitInitCards(Player gamer) {
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
-            player.hit(deck.pickOneCard());
+            gamer.hit(deck.pickOneCard());
         }
     }
 
-    public boolean canPlayerMoreHit(Player player, HitOption hitOption) {
-        return player.canHit() && hitOption.doHit();
+    public boolean canPlayerHit(Player player) {
+        return player.canHit();
     }
 
-    public Card allowHit(Player player, Deck deck) {
+    public boolean canDealerMoreHit() {
+        return gamers.dealer().canHit();
+    }
+
+    public void allowHit(Player player) {
+        player.hit(deck.pickOneCard());
+    }
+
+    public Card dealerHit() {
         Card pickedCard = deck.pickOneCard();
-        player.hit(pickedCard);
+        dealer().hit(pickedCard);
         return pickedCard;
     }
 
-    public boolean canDealerMoreHit(Dealer dealer) {
-        return dealer.canHit();
+    public Dealer dealer() {
+        return gamers.dealer();
     }
 
-    public Map<Player, BetAmount> makeResultOfGame(Cashier cashier) {
-        Judge judge = new Judge();
-        judge.decideResult(players, dealer);
-        return cashier.calculatePlayersProfits(judge.getPlayerResult(), dealer);
+    public List<Player> players() {
+        return gamers.players();
     }
 }
