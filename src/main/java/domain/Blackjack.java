@@ -28,9 +28,9 @@ public class Blackjack {
 
 //    public static Blackjack of(final Players players) {
 //        final Dealer dealer1 = new Dealer();
+
 //        init(players, dealer1);
 //        return new Blackjack(players, dealer1);
-
     //    }
     public static Blackjack fromNames(final List<String> names) {
         final Dealer dealer1 = new Dealer();
@@ -66,6 +66,10 @@ public class Blackjack {
     public void dealerHit() {
         final Card nextCard = dealer.draw();
         dealer.add(nextCard);
+    }
+
+    public void dealerHit(final Runnable runnable) {
+        dealer.hit(runnable);
     }
 
     public void dealerStand() {

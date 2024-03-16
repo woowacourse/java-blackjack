@@ -19,7 +19,7 @@ public class Dealer extends Participant {
     private Result getPlayerResult(final Player player) {
         if ((isBlackjack() && (player.isStand() || player.isBust())) ||
                 (isStand() && player.isBust()) ||
-                (isBust()  && player.isBust())) {
+                (isBust() && player.isBust())) {
             return Result.WIN;
         }
         if (isBlackjack() && player.isBlackjack()) {
@@ -41,6 +41,14 @@ public class Dealer extends Participant {
             return Result.LOSE;
         }
         return Result.WIN;
+    }
+
+    public void hit(final Runnable runnable) {
+        while (getScore() < 17) {
+            final Card newCard = draw();
+            add(newCard);
+            runnable.run();
+        }
     }
 
     @Override
