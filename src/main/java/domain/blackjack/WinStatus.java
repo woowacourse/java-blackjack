@@ -36,10 +36,10 @@ public enum WinStatus {
         if (player.isBlackJack()) {
             return WinStatus.BLACKJACK;
         }
-        return WinStatus.winStatusWinOrLose(playerScore > dealerScore);
+        return winStatusWithScore(playerScore > dealerScore);
     }
 
-    private static WinStatus winStatusWinOrLose(boolean isPlayerScoreGreater) {
+    private static WinStatus winStatusWithScore(boolean isPlayerScoreGreater) {
         if (isPlayerScoreGreater) {
             return WIN;
         }
