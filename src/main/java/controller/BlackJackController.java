@@ -5,11 +5,9 @@ import domain.BlackJackGame;
 import domain.card.Deck;
 import domain.card.ShuffledCardsGenerator;
 import domain.gamer.Dealer;
-import domain.gamer.Gamer;
 import domain.gamer.Name;
 import domain.gamer.Player;
 import domain.gamer.Players;
-import exception.CardReceiveException;
 import handler.RetryHandler;
 import java.util.List;
 import java.util.Map;
@@ -68,33 +66,23 @@ public class BlackJackController {
     }
 
     private void askSelection(final BlackJackGame blackJackGame, final Player player) {
-        while (!player.isBust() && isRetry(blackJackGame, player)) {
+        while (player.canHit() && isRetryCommand(player)) {
+            blackJackGame.giveCard(player);
             OutputView.printAllCards(player);
         }
     }
 
-    private boolean isRetry(final BlackJackGame blackJackGame, final Player player) {
-        if (!retryHandler.retry(() -> InputView.readSelectionOf(player))) {
-            return false;
-        }
-        return canGive(blackJackGame, player);
+    private boolean isRetryCommand(final Player player) {
+        return retryHandler.retry(() -> InputView.readSelectionOf(player));
     }
 
     private void askDealerHit(final BlackJackGame blackJackGame, final Dealer dealer) {
         OutputView.printNewLine();
-        while (canGive(blackJackGame, dealer)) {
+        while (dealer.canHit()) {
+            blackJackGame.giveCard(dealer);
             OutputView.printDealerHit(dealer);
         }
         OutputView.printNewLine();
-    }
-
-    private boolean canGive(final BlackJackGame blackJackGame, final Gamer gamer) {
-        try {
-            blackJackGame.giveCard(gamer);
-            return true;
-        } catch (CardReceiveException exception) {
-            return false;
-        }
     }
 
     private void printFinalGameResult(final BlackJackGame blackJackGame, final Dealer dealer, final Players players) {

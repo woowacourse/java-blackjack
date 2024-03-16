@@ -1,7 +1,6 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.card.Card;
@@ -12,7 +11,6 @@ import domain.gamer.Dealer;
 import domain.gamer.Name;
 import domain.gamer.Player;
 import domain.gamer.Players;
-import exception.CardReceiveException;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -116,12 +114,7 @@ public class BlackJackGameTest {
         int expectedPlayerSize = 3;
 
         // then
-        assertAll(
-                () -> assertThatThrownBy(() -> blackJackGame.giveCard(dealer))
-                        .isInstanceOf(CardReceiveException.class)
-                        .hasMessage(CardReceiveException.CAN_NOT_RECEIVE_CARD),
-                () -> assertThat(dealer.getCardsInHand()).hasSize(expectedPlayerSize)
-        );
+        assertThat(dealer.getCardsInHand()).hasSize(expectedPlayerSize);
     }
 
     @DisplayName("플레이어의 버스트이면 카드 주기를 실패한다.")
@@ -141,12 +134,7 @@ public class BlackJackGameTest {
         int expectedPlayerSize = 5;
 
         // then
-        assertAll(
-                () -> assertThatThrownBy(() -> blackJackGame.giveCard(player))
-                        .isInstanceOf(CardReceiveException.class)
-                        .hasMessage(CardReceiveException.CAN_NOT_RECEIVE_CARD),
-                () -> assertThat(player.getCardsInHand()).hasSize(expectedPlayerSize)
-        );
+        assertThat(player.getCardsInHand()).hasSize(expectedPlayerSize);
     }
 
     @DisplayName("플레이어와 딜러의 배팅 결과를 반환한다.")
