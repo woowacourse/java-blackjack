@@ -41,7 +41,6 @@ class RefereeTest {
         dealerCards.addCard(new Card(CardNumber.TWO, CardPattern.CLOVER_PATTERN));
         dealerCards.addCard(new Card(CardNumber.KING, CardPattern.HEART_PATTERN));
 
-        referee.judgeResult(playerCards, dealerCards);
         assertThat(referee.judgeResult(playerCards, dealerCards)).isEqualTo(PlayerResult.BLACKJACKWIN);
     }
 
@@ -54,7 +53,18 @@ class RefereeTest {
         dealerCards.addCard(new Card(CardNumber.QUEEN, CardPattern.CLOVER_PATTERN));
         dealerCards.addCard(new Card(CardNumber.ACE, CardPattern.HEART_PATTERN));
 
-        referee.judgeResult(playerCards, dealerCards);
         assertThat(referee.judgeResult(playerCards, dealerCards)).isEqualTo(PlayerResult.DRAW);
+    }
+
+    @DisplayName("플레이어가 딜러보다 점수가 높으면 이긴다.")
+    @Test
+    void makeWinResult() {
+        playerCards.addCard(new Card(CardNumber.KING, CardPattern.CLOVER_PATTERN));
+        playerCards.addCard(new Card(CardNumber.NINE, CardPattern.SPADE_PATTERN));
+
+        dealerCards.addCard(new Card(CardNumber.QUEEN, CardPattern.CLOVER_PATTERN));
+        dealerCards.addCard(new Card(CardNumber.SEVEN, CardPattern.HEART_PATTERN));
+
+        assertThat(referee.judgeResult(playerCards, dealerCards)).isEqualTo(PlayerResult.WIN);
     }
 }

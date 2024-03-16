@@ -17,6 +17,9 @@ public class Referee {
             }
             return PlayerResult.DRAW;
         }
-        return PlayerResult.DRAW;
+        if (playerCards.countMaxScore() > dealerCards.countMaxScore()) {
+            return PlayerResult.WIN;
+        }
+        return null;
     }
 }
