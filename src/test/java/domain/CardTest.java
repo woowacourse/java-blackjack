@@ -14,7 +14,8 @@ class CardTest {
     void generate() {
         final List<Card> values = Card.values();
 
-        Assertions.assertThat(values).hasSize(52);
-        Assertions.assertThat(Set.copyOf(values)).hasSize(52);
+        org.junit.jupiter.api.Assertions.assertAll(
+                () -> Assertions.assertThat(values).hasSize(52),
+                () -> Assertions.assertThat(Set.copyOf(values)).hasSize(52));
     }
 }

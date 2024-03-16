@@ -1,5 +1,8 @@
 package domain.participant;
 
+import static domain.GameResult.LOSE;
+import static domain.GameResult.TIE;
+import static domain.GameResult.WIN;
 import static domain.HandsTestFixture.blackJack;
 import static domain.HandsTestFixture.bustHands;
 import static domain.HandsTestFixture.noBustHands;
@@ -10,13 +13,11 @@ import static domain.HandsTestFixture.sum19Size3Ace1;
 import static domain.HandsTestFixture.sum20Size2;
 import static domain.HandsTestFixture.sum20Size3;
 import static domain.HandsTestFixture.sum21Size3;
-import static domain.GameResult.LOSE;
-import static domain.GameResult.TIE;
-import static domain.GameResult.WIN;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
+import domain.GameResult;
 import domain.amount.Amount;
 import domain.amount.BetAmount;
-import domain.GameResult;
 import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -84,8 +85,9 @@ class PlayersTest {
         final Map<GameResult, Integer> expectedDealerResult = Map.of(WIN, 1, LOSE, 2);
 
         //then
-        Assertions.assertThat(players.getPlayersResult(bustDealer)).isEqualTo(expectedPlayerResult);
-        Assertions.assertThat(bustDealer.getDealerResult(players)).isEqualTo(expectedDealerResult);
+        assertAll(
+                () -> Assertions.assertThat(players.getPlayersResult(bustDealer)).isEqualTo(expectedPlayerResult),
+                () -> Assertions.assertThat(bustDealer.getDealerResult(players)).isEqualTo(expectedDealerResult));
     }
 
 
