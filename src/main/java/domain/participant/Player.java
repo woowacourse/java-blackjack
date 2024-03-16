@@ -1,24 +1,28 @@
 package domain.participant;
 
 import domain.constant.GameResult;
+import domain.game.BettingMoney;
 import domain.playingcard.Deck;
 
-import static domain.constant.GameResult.*;
+import static domain.constant.GameResult.DRAW;
+import static domain.constant.GameResult.LOSE;
 
 public class Player extends Participant {
     private static final int MAXIMUM_ENABLE_TOTAL_SCORE = 20;
 
     private final PlayerName playerName;
+    private final BettingMoney bettingMoney;
 
-    public Player(final PlayerName playerName, final Hand hand) {
+    public Player(final PlayerName playerName, final BettingMoney bettingMoney, final Hand hand) {
         super(hand);
         this.playerName = playerName;
+        this.bettingMoney = bettingMoney;
     }
 
-    public static Player of(final PlayerName playerName, final Deck deck) {
+    public static Player of(final PlayerName playerName, final BettingMoney bettingMoney, final Deck deck) {
         Hand hand = Hand.init();
         initDraw(deck, hand);
-        return new Player(playerName, hand);
+        return new Player(playerName, bettingMoney, hand);
     }
 
     @Override
@@ -26,7 +30,11 @@ public class Player extends Participant {
         return hand.isTotalScoreLessOrEqual(MAXIMUM_ENABLE_TOTAL_SCORE);
     }
 
-    public GameResult determineGameResult(final Dealer dealer) {
+    public int calculateRevenue(final Dealer dealer) {
+        return determineGameResult(dealer).calculateRevenue(bettingMoney);
+    }
+
+    private GameResult determineGameResult(final Dealer dealer) {
         if (isWin(dealer)) {
             return GameResult.getWinResult(isBlackJack());
         }

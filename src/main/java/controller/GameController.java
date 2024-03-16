@@ -1,6 +1,8 @@
 package controller;
 
-import domain.game.*;
+import domain.game.BettingMoney;
+import domain.game.BettingResults;
+import domain.game.BlackjackGame;
 import domain.participant.Player;
 import domain.participant.PlayerName;
 import domain.participant.PlayerNames;
@@ -10,22 +12,36 @@ import dto.PlayingCardDto;
 import view.InputView;
 import view.OutputView;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import static java.util.Collections.unmodifiableMap;
+import static java.util.stream.Collectors.toMap;
 
 public class GameController {
 
     public void run() {
-        PlayerNames playerNames = inputPlayerNames();
-        BettingMoneyStore bettingMoneyStore = initBettingMoney(playerNames);
-        BlackjackGame blackjackGame = initGame(playerNames);
+        BlackjackGame blackjackGame = initGame();
+        BettingResults bettingResults = playGame(blackjackGame);
+        OutputView.printBettingResults(bettingResults);
+    }
 
-        playGame(blackjackGame);
-        printGameResults(blackjackGame, bettingMoneyStore);
+    private BlackjackGame initGame() {
+        BlackjackGame blackjackGame = BlackjackGame.init(initPlayer());
+        PlayingCardDto dealerCardDto = PlayingCardDto.of(blackjackGame.getDealer().getFirstPlayingCard());
+        List<PlayerHandStatusDto> playerHandStatusDtos = blackjackGame.getPlayers()
+                .stream()
+                .map(PlayerHandStatusDto::of)
+                .toList();
+
+        OutputView.printFirstDrawStatus(dealerCardDto, playerHandStatusDtos);
+        return blackjackGame;
+    }
+
+    private Map<PlayerName, BettingMoney> initPlayer() {
+        PlayerNames playerNames = inputPlayerNames();
+        return playerNames.values()
+                .stream()
+                .collect(toMap(playerName -> playerName, this::inputBettingMoney));
     }
 
     private PlayerNames inputPlayerNames() {
@@ -38,18 +54,6 @@ public class GameController {
         }
     }
 
-    private BettingMoneyStore initBettingMoney(final PlayerNames playerNames) {
-        Map<PlayerName, BettingMoney> bettingMoneyStore = playerNames.values()
-                .stream()
-                .collect(Collectors.toMap(
-                        playerName -> playerName, this::inputBettingMoney,
-                        (key, value) -> key,
-                        HashMap::new
-                ));
-
-        return new BettingMoneyStore(unmodifiableMap(bettingMoneyStore));
-    }
-
     private BettingMoney inputBettingMoney(final PlayerName playerName) {
         try {
             int inputBettingMoney = InputView.inputBettingMoney(playerName);
@@ -60,22 +64,12 @@ public class GameController {
         }
     }
 
-    private BlackjackGame initGame(final PlayerNames playerNames) {
-        BlackjackGame blackjackGame = BlackjackGame.init(playerNames);
-        PlayingCardDto dealerCardDto = PlayingCardDto.of(blackjackGame.getDealer().getFirstPlayingCard());
-        List<PlayerHandStatusDto> playerHandStatusDtos = blackjackGame.getPlayers()
-                .stream()
-                .map(PlayerHandStatusDto::of)
-                .toList();
-
-        OutputView.printFirstDrawStatus(dealerCardDto, playerHandStatusDtos);
-        return blackjackGame;
-    }
-
-    private void playGame(final BlackjackGame blackjackGame) {
+    private BettingResults playGame(final BlackjackGame blackjackGame) {
         startPlayersTurn(blackjackGame);
         startDealerTurn(blackjackGame);
         printParticipantStatusesAfterDrawing(blackjackGame);
+
+        return BettingResults.of(blackjackGame);
     }
 
     private void startPlayersTurn(final BlackjackGame blackjackGame) {
@@ -116,11 +110,5 @@ public class GameController {
                 .toList();
 
         OutputView.printFinalHandStatus(dealerHandStatusDto, playerHandStatusDtos);
-    }
-
-    private void printGameResults(final BlackjackGame blackjackGame, final BettingMoneyStore bettingMoneyStore) {
-        BlackjackGameResults gameResults = BlackjackGameResults.of(blackjackGame);
-        BettingResults bettingResults = BettingResults.of(bettingMoneyStore, gameResults);
-        OutputView.printBettingResults(bettingResults);
     }
 }
