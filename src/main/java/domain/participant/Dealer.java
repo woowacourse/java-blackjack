@@ -1,6 +1,7 @@
 package domain.participant;
 
 import controller.dto.response.ParticipantHandStatus;
+import controller.dto.response.ParticipantProfitResponse;
 import domain.card.Card;
 import domain.game.DecisionToContinue;
 import java.util.ArrayList;
@@ -24,5 +25,16 @@ public class Dealer extends Participant {
         List<Card> cardsExceptLastOne = new ArrayList<>(hand.getCards());
         cardsExceptLastOne.remove(cardsExceptLastOne.size() - 1);
         return new ParticipantHandStatus(name, new Hand(cardsExceptLastOne));
+    }
+
+    public ParticipantProfitResponse createDealerProfitResponse(final List<ParticipantProfitResponse> playersProfit) {
+        int dealerProfit = playersProfit.stream()
+                .mapToInt(response -> toDealerProfit(response.profit()))
+                .sum();
+        return new ParticipantProfitResponse(name, dealerProfit);
+    }
+
+    private int toDealerProfit(final int playerProfit) {
+        return (-1) * playerProfit;
     }
 }

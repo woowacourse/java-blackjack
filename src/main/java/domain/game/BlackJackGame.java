@@ -1,17 +1,16 @@
 package domain.game;
 
+import static domain.participant.Participants.CACHED_DEALER;
+
 import controller.dto.request.PlayerBettingMoney;
 import controller.dto.response.InitialCardStatus;
 import controller.dto.response.ParticipantHandStatus;
 import controller.dto.response.ParticipantProfitResponse;
 import controller.dto.response.PlayerOutcome;
-import domain.constants.Outcome;
 import domain.game.deck.Deck;
 import domain.game.deck.DeckGenerator;
-import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
-import domain.participant.Player;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -59,7 +58,7 @@ public class BlackJackGame {
     }
 
     public List<ParticipantHandStatus> createHandStatuses() {
-        return participants.getParticipants()
+        return participants.getParticipantsStartsWithDealer()
                 .stream()
                 .map(Participant::createHandStatus)
                 .toList();
@@ -73,33 +72,15 @@ public class BlackJackGame {
     }
 
     private List<ParticipantProfitResponse> getParticipantProfitResponses(final List<PlayerOutcome> outcomes) {
+        List<ParticipantProfitResponse> playersProfit = outcomes.stream()
+                .map(outcome -> outcome.player().createPlayerProfitResponse(outcome.outcome()))
+                .toList();
+        ParticipantProfitResponse dealerProfit = CACHED_DEALER.createDealerProfitResponse(playersProfit);
+
         return Stream.concat(
-                Stream.of(generateDealerProfitResponse(outcomes)),
-                generatePlayersProfitResponse(outcomes)
+                Stream.of(dealerProfit),
+                playersProfit.stream()
         ).toList();
-    }
-
-    // TODO: 이건 다형성으로 못하나? 게임의 책임은 맞나?
-    private ParticipantProfitResponse generateDealerProfitResponse(final List<PlayerOutcome> outcomes) {
-        int sumOfPlayerProfit = outcomes.stream()
-                .mapToInt(outcome -> calculatePlayerProfit(outcome.player(), outcome.outcome()))
-                .sum();
-        int dealerProfit = (-1) * sumOfPlayerProfit;
-        return new ParticipantProfitResponse(Dealer.DEALER_NAME, dealerProfit);
-    }
-
-    private Stream<ParticipantProfitResponse> generatePlayersProfitResponse(final List<PlayerOutcome> outcomes) {
-        return outcomes.stream()
-                .map(outcome -> new ParticipantProfitResponse(
-                        outcome.player().getName(),
-                        calculatePlayerProfit(outcome.player(), outcome.outcome()))
-                );
-    }
-
-    private int calculatePlayerProfit(final Player player, final Outcome outcome) {
-        double rates = outcome.earningRates();
-        int bettingMoney = player.bettingMoney();
-        return (int) Math.ceil(bettingMoney * rates);
     }
 
     public List<Participant> getParticipants() {

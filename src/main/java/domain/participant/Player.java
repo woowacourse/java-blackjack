@@ -1,7 +1,9 @@
 package domain.participant;
 
 import controller.dto.response.ParticipantHandStatus;
+import controller.dto.response.ParticipantProfitResponse;
 import domain.constants.CardCommand;
+import domain.constants.Outcome;
 import domain.game.DecisionToContinue;
 import domain.money.BettingMoney;
 
@@ -17,6 +19,17 @@ public class Player extends Participant {
         super(name);
         this.bettingMoney = new BettingMoney(bettingAmount);
     }
+
+    public ParticipantProfitResponse createPlayerProfitResponse(final Outcome outcome) {
+        return new ParticipantProfitResponse(name, calculatePlayerProfit(outcome));
+    }
+
+    private int calculatePlayerProfit(final Outcome outcome) {
+        double rates = outcome.earningRates();
+        int bettingMoney = bettingMoney();
+        return (int) Math.ceil(bettingMoney * rates);
+    }
+
 
     @Override
     public boolean canPickCard(final DecisionToContinue decision) {
