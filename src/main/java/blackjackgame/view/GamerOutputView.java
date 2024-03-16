@@ -23,7 +23,7 @@ public class GamerOutputView {
                 .collect(Collectors.joining(JOIN_DELIMITER));
     }
 
-    private static String generateGamerOutputWithShowingCardCount(GamerDTO dealerDTO, int showingCardCount) {
+    private static String generateDealerOutputWithShowingCardCount(GamerDTO dealerDTO, int showingCardCount) {
         List<CardDTO> cardDTOS = dealerDTO.getHoldingCardsDto();
         return cardDTOS.stream()
                 .map(cardDTO -> getCardType(cardDTO.getCardType()) + getCardName(cardDTO.getCardName()))
@@ -36,7 +36,7 @@ public class GamerOutputView {
         String nameOutput = name + CARD_POSTFIX;
         String cardsOutput = generateGamerOutput(gamerDTO);
         if (name.equals(DEALER_NAME)) {
-            cardsOutput = generateGamerOutputWithShowingCardCount(gamerDTO, DEALER_FIRST_SHOW_CARD_COUNT);
+            cardsOutput = generateDealerOutputWithShowingCardCount(gamerDTO, DEALER_FIRST_SHOW_CARD_COUNT);
         }
         System.out.printf("%s: %s%n", nameOutput, cardsOutput);
     }

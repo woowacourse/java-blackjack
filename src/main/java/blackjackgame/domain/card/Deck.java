@@ -9,7 +9,7 @@ import java.util.Set;
 public class Deck {
     private final List<Card> cards;
 
-    Deck(List<Card> cards) {
+    private Deck(List<Card> cards) {
         validateDuplicateCard(cards);
         this.cards = new ArrayList<>(cards);
     }
