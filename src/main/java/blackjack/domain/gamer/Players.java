@@ -23,7 +23,7 @@ public class Players {
 		validate(copyPlayerNames);
 
 		List<Player> players = copyPlayerNames.stream()
-			.map(Player::newInstance)
+			.map(Player::new)
 			.toList();
 		return new Players(players);
 	}

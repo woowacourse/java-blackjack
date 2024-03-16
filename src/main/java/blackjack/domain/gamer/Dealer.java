@@ -10,15 +10,15 @@ public class Dealer extends Gamer {
 	public static final int MAX_HIT_SCORE = 16;
 
 	public Dealer() {
-		super(Cards.createEmpty());
+		this(Cards.createEmpty());
 	}
 
-	private Dealer(final Cards cards) {
+	public Dealer(final List<Card> cards) {
+		this(new Cards(cards));
+	}
+
+	public Dealer(final Cards cards) {
 		super(cards);
-	}
-
-	public static Dealer of(final List<Card> cards) {
-		return new Dealer(Cards.from(cards));
 	}
 
 	public boolean hasHitScore() {

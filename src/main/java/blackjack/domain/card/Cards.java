@@ -10,16 +10,12 @@ public class Cards {
 
 	private final List<Card> cards;
 
-	private Cards(final List<Card> cards) {
+	public Cards(final List<Card> cards) {
 		this.cards = new ArrayList<>(cards);
 	}
 
 	public static Cards createEmpty() {
 		return new Cards(new ArrayList<>());
-	}
-
-	public static Cards from(final List<Card> cards) {
-		return new Cards(cards);
 	}
 
 	public void add(final Card card) {

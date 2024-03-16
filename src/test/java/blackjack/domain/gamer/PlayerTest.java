@@ -21,7 +21,7 @@ public class PlayerTest {
 	@ParameterizedTest
 	@ValueSource(strings = {"a", "abcde"})
 	void playerNameLengthSuccessTest(String name) {
-		assertThatCode(() -> Player.newInstance(name))
+		assertThatCode(() -> new Player(name))
 			.doesNotThrowAnyException();
 	}
 
@@ -29,7 +29,7 @@ public class PlayerTest {
 	@ParameterizedTest
 	@ValueSource(strings = {"", "abcdef"})
 	void playerNameLengthErrorTest(String name) {
-		assertThatThrownBy(() -> Player.newInstance(name))
+		assertThatThrownBy(() -> new Player(name))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("이름의 길이는 1 이상 5 이하이어야 합니다.");
 	}
@@ -38,7 +38,7 @@ public class PlayerTest {
 	@Test
 	void receiveInitCardsTest() {
 		// given
-		Player player = Player.newInstance("a");
+		Player player = new Player("a");
 
 		// when
 		player.receiveInitCards(List.of(Card.of(Suit.HEART, Rank.ACE), Card.of(Suit.HEART, Rank.JACK)));
@@ -51,7 +51,7 @@ public class PlayerTest {
 	@Test
 	void receiveCardTest() {
 		// given
-		Player player = Player.newInstance("a");
+		Player player = new Player("a");
 
 		// when
 		player.receiveCard(Card.of(Suit.HEART, Rank.ACE));
@@ -64,7 +64,7 @@ public class PlayerTest {
 	@Test
 	void cardValueSumTest() {
 		// given
-		Player player = Player.newInstance("a");
+		Player player = new Player("a");
 		player.receiveCard(Card.of(Suit.HEART, Rank.KING));
 		player.receiveCard(Card.of(Suit.HEART, Rank.JACK));
 		player.receiveCard(Card.of(Suit.HEART, Rank.QUEEN));

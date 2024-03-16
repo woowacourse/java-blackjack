@@ -66,7 +66,7 @@ public class DealerTest {
 	@Test
 	void dealerHitTest() {
 		// given
-		Dealer dealer = Dealer.of(
+		Dealer dealer = new Dealer(
 			new ArrayList<>(List.of(Card.of(Suit.HEART, Rank.TEN), Card.of(Suit.HEART, Rank.SIX))));
 
 		// then
@@ -80,7 +80,7 @@ public class DealerTest {
 	@Test
 	void dealerStandTest() {
 		// given
-		Dealer dealer = Dealer.of(
+		Dealer dealer = new Dealer(
 			new ArrayList<>(List.of(Card.of(Suit.HEART, Rank.TEN), Card.of(Suit.HEART, Rank.SEVEN))));
 
 		// then

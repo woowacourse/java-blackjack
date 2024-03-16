@@ -5,13 +5,13 @@ import blackjack.domain.card.Cards;
 public class Player extends Gamer {
 	private final Name name;
 
-	private Player(final String name, final Cards cards) {
-		super(cards);
-		this.name = new Name(name);
+	public Player(final String name) {
+		this(new Name(name), Cards.createEmpty());
 	}
 
-	public static Player newInstance(final String name) {
-		return new Player(name, Cards.createEmpty());
+	public Player(final Name name, final Cards cards) {
+		super(cards);
+		this.name = name;
 	}
 
 	public boolean isBust() {
