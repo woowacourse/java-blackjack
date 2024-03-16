@@ -1,19 +1,16 @@
 package domain.player;
 
 import domain.card.Card;
-import dto.CardResponse;
 import dto.PlayerResponse;
-import java.util.List;
 import java.util.Objects;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 
-public class Player extends Participant {
+public final class Player extends Participant {
     private final Name name;
-    private BetAmount betAmount;
+    private final BetAmount betAmount;
 
     public Player(final Name name) {
         this.name = name;
+        betAmount = BetAmount.LOWEST;
     }
 
     public Player(final Name name, final BetAmount betAmount) {
@@ -21,25 +18,44 @@ public class Player extends Participant {
         this.betAmount = betAmount;
     }
 
-    public PlayerResponse toPlayerResponse() {
-        return new PlayerResponse(getName(), getHands().stream().map(Card::toCardResponse).toList(),
-                getScore());
-    }
-
     public double calculateProfit(final Dealer dealer) {
-        final Profit profit = new Profit(state.earningRate(), betAmount.getValue());
-        if (dealer.compareHandsWith(this) == Result.WIN) {
-            return profit.lose();
-        }
-        if (dealer.compareHandsWith(this) == Result.LOSE) {
+        final Profit profit = new Profit(getState().earningRate(), betAmount.getValue());
+        if (compareHandsWith(dealer) == Result.WIN) {
             return profit.win();
+        }
+        if (compareHandsWith(dealer) == Result.LOSE) {
+            return profit.lose();
         }
         return profit.tie();
     }
 
-    @Override
-    public boolean canHit() {
-        return state.isRunning();
+    private Result compareHandsWith(final Dealer dealer) {
+        return Result.reverse(dealer.compareHandsWith(this));
+    }
+
+    public void automaticHit(
+            final Dealer dealer,
+            final DecisionOfPlayer decisionOfPlayer,
+            final ActionAfterPlayerHit actionAfterPlayerHit
+    ) {
+        final boolean decisionToStop = !decisionOfPlayer.apply(name.getValue());
+        if (decisionToStop || getState().isFinished()) {
+            finish();
+            return;
+        }
+
+        hit(dealer);
+        actionAfterPlayerHit.accept(name.getValue(), getHands().stream().map(Card::toCardResponse).toList());
+
+        automaticHit(dealer, decisionOfPlayer, actionAfterPlayerHit);
+    }
+
+    private void hit(final Dealer dealer) {
+        add(dealer.draw());
+    }
+
+    public PlayerResponse toPlayerResponse() {
+        return new PlayerResponse(getName(), getHands().stream().map(Card::toCardResponse).toList(), getScore());
     }
 
     public String getName() {
@@ -61,16 +77,5 @@ public class Player extends Participant {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    public void hit(final Dealer dealer, final Function<String, Boolean> tryHit,
-                    final BiConsumer<String, List<CardResponse>> printStatus) {
-        final Boolean apply = tryHit.apply(name.getValue());
-        if (!apply || state.isFinished()) {
-            return;
-        }
-        add(dealer.draw());
-        printStatus.accept(name.getValue(), getHands().stream().map(Card::toCardResponse).toList());
-        hit(dealer, tryHit, printStatus);
     }
 }

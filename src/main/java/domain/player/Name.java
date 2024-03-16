@@ -3,7 +3,8 @@ package domain.player;
 import java.util.Objects;
 
 public class Name {
-    private static final int MAX_LENGTH = 5;
+    private static final int MAX_LENGTH = 10;
+
     private final String value;
 
     public Name(final String name) {
@@ -18,7 +19,7 @@ public class Name {
 
     private void validateLength(final String name) {
         if (name.length() > MAX_LENGTH) {
-            throw new IllegalArgumentException(String.format("이름 길이는 %d자 이하로 입력해주세요", MAX_LENGTH));
+            throw new IllegalArgumentException(String.format("이름은 %d자 이하로 입력해주세요", MAX_LENGTH));
         }
     }
 

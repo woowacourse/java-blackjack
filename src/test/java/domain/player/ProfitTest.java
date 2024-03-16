@@ -27,7 +27,7 @@ class ProfitTest {
 
     @ParameterizedTest
     @CsvSource(value = {"1.0, 1, 0", "1.5, 1,  0"})
-    @DisplayName("게임에서 비겼을 때 수익은 없다")
+    @DisplayName("게임에서 비겼을 때 얻을 수 있는 수익은 없다")
     void tie(final double earningRate, final int betAmount, final double expected) {
         final Profit profit = new Profit(earningRate, betAmount);
 

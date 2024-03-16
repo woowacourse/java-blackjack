@@ -14,7 +14,7 @@ public class PlayerTest {
     void canHit() {
         final Player player = new Player(new Name("종이"));
         player.init(new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.TEN, Suit.CLUBS));
-        Assertions.assertThat(player.canHit()).isTrue();
+        Assertions.assertThat(player.getState().isRunning()).isTrue();
     }
 
     @DisplayName("플레이어는 카드의 합이 21이상이면 히트할 수 없다")
@@ -22,6 +22,6 @@ public class PlayerTest {
     void canNotHit() {
         final Player player = new Player(new Name("종이"));
         player.init(new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.ACE, Suit.CLUBS));
-        Assertions.assertThat(player.canHit()).isFalse();
+        Assertions.assertThat(player.getState().isRunning()).isFalse();
     }
 }

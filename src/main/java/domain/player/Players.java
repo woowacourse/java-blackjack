@@ -3,7 +3,6 @@ package domain.player;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -14,12 +13,6 @@ public class Players {
     public Players(final List<Player> value) {
         validate(value);
         this.value = value;
-    }
-
-    public static Players fromNames(final List<String> names) {
-        return new Players(names.stream()
-                .map(name -> new Player(new Name(name)))
-                .collect(Collectors.toList()));
     }
 
     public static Players of(final List<String> names, final List<Integer> betAmounts) {
@@ -35,7 +28,7 @@ public class Players {
 
     private void validatePlayerNumbers(final List<Player> players) {
         if (isInvalidPlayersNumber(players)) {
-            throw new IllegalArgumentException("플레이어의 수는 8명을 초과할 수 없습니다.");
+            throw new IllegalArgumentException(String.format("플레이어의 수는 %d명을 초과할 수 없습니다.", MAX_PLAYER_NUMBER));
         }
     }
 
@@ -53,13 +46,6 @@ public class Players {
         return Set.copyOf(players).size() != players.size();
     }
 
-    public Player findPlayerByName(final String name) {
-        return value.stream()
-                .filter(r -> r.getName().equals(name))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("플레이어가 존재하지 않습니다."));
-    }
-
     public Stream<Player> stream() {
         return value.stream();
     }
@@ -67,5 +53,4 @@ public class Players {
     public List<Player> getValue() {
         return Collections.unmodifiableList(value);
     }
-
 }

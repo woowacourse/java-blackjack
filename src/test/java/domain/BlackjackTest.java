@@ -1,30 +1,17 @@
-//package domain.blackjack;
-//
-//import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-//import static org.junit.jupiter.api.Assertions.assertAll;
-//
-//import domain.card.Card;
-//import domain.card.Rank;
-//import domain.card.Suit;
-//import domain.player.Dealer;
-//import domain.player.Name;
-//import domain.player.Player;
-//import domain.player.PlayerResult;
-//import domain.player.Players;
-//import dto.GameResult;
-//import java.util.List;
-//import org.junit.jupiter.api.DisplayName;
-//import org.junit.jupiter.api.Test;
-//
-//class BlackjackTest {
-//    @Test
-//    @DisplayName("딜러에게 2장의 카드가 주어졌는지 확인한다")
-//    void initializeDealer() {
-////        final Blackjack blackjack = Blackjack.of(Players.fromNames(List.of("a", "b")));
-//
-////        assertThat(blackjack.getDealer().getHands().size()).isEqualTo(2);
-//    }
-//
+package domain;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+class BlackjackTest {
+    @Test
+    @DisplayName("딜러에게 2장의 카드가 주어졌는지 확인한다")
+    void initializeDealer() {
+//        final Blackjack blackjack = Blackjack.of(Players.fromNames(List.of("a", "b")));
+
+//        assertThat(blackjack.getDealer().getHands().size()).isEqualTo(2);
+    }
+
 //    @Test
 //    @DisplayName("플레이어가 블랙잭이 아닐 때 카드를 더 받을 수 있다")
 //    void playerCanHit() {
@@ -156,4 +143,4 @@
 //        assertThat(gameResult.dealerTie()).isEqualTo(1);
 //        assertThat(gameResult.playerResult(teba.getName())).isSameAs(PlayerResult.TIE);
 //    }
-//}
+}

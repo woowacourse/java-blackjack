@@ -1,6 +1,6 @@
 package domain.player;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +8,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
+    private final int MAX_PLAYER_NUMBER = 8;
 
     @Test
-    @DisplayName("플레이어 수가 8명 초과하면 예외를 발생한다")
+    @DisplayName("플레이어 수가 8명 초과하면 예외가 발생한다")
     void playerSize() {
         final List<Player> players = new ArrayList<>();
 
@@ -18,7 +19,9 @@ class PlayersTest {
             players.add(new Player(new Name("teba" + i)));
         }
 
-        assertThatCode(() -> new Players(players)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new Players(players))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(String.format("플레이어의 수는 %d명을 초과할 수 없습니다.", MAX_PLAYER_NUMBER));
     }
 
     @Test
@@ -29,14 +32,8 @@ class PlayersTest {
         players.add(new Player(new Name("teba")));
         players.add(new Player(new Name("teba")));
 
-        assertThatCode(() -> new Players(players)).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    @DisplayName("플레이어의 이름을 찾을 때 존재하지 않는 이름이라면 예외가 발생한다")
-    void nameNotExist() {
-        final Players players = Players.fromNames(List.of("a", "b", "c"));
-
-        assertThatCode(() -> players.findPlayerByName("d")).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new Players(players))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어의 이름은 중복될 수 없습니다");
     }
 }
