@@ -12,7 +12,7 @@ public final class PlayersBlackjackResults {
         this.results = new LinkedHashMap<>(results);
     }
 
-    public Profit getDealerProfit() {
+    public Profit calculateDealerProfit() {
         return results.values()
                 .stream()
                 .reduce(Profit.getDefaults(), Profit::sum)

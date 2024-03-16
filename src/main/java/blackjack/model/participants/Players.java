@@ -34,7 +34,7 @@ public final class Players {
         return player.checkCanGetMoreCard();
     }
 
-    public void updatePlayer(final int index, final CardGenerator cardGenerator) {
+    public void makePlayerDraw(final int index, final CardGenerator cardGenerator) {
         validateIndex(index);
         Player findPlayer = players.get(index);
         findPlayer.addCard(cardGenerator.drawCard());

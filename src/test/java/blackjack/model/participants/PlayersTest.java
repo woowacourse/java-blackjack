@@ -91,7 +91,7 @@ class PlayersTest {
         CardGenerator cardGenerator = new CardGenerator((range) -> 0);
         Players players = new Players(getPlayers());
 
-        players.updatePlayer(index, cardGenerator);
+        players.makePlayerDraw(index, cardGenerator);
         Player player = players.getPlayer(index);
 
         assertThat(player.getCards().getCards()).hasSize(1);

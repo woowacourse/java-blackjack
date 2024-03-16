@@ -47,7 +47,7 @@ public class OutputView {
     public void printGameResults(final PlayersBlackjackResults playersBlackjackResults) {
         System.out.println();
         System.out.println("### 최종 수익");
-        System.out.println(getNameAndInformationFormat(DEALER_NAME, playersBlackjackResults.getDealerProfit()));
+        System.out.println(getNameAndInformationFormat(DEALER_NAME, playersBlackjackResults.calculateDealerProfit()));
         System.out.println(getPlayerResultsInOneLine(playersBlackjackResults.getResults()));
     }
 

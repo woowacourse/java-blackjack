@@ -19,7 +19,7 @@ class PlayersBlackjackResultsTest {
     void getDealerProfit(int first, int second, int third) {
         int expected = -(first + second + third);
         var playersBlackjackResults = createPlayersResults(first, second, third);
-        Profit result = playersBlackjackResults.getDealerProfit();
+        Profit result = playersBlackjackResults.calculateDealerProfit();
 
         assertThat(result).isEqualTo(new Profit(expected));
     }

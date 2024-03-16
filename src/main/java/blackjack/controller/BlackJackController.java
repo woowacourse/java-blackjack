@@ -51,7 +51,7 @@ public class BlackJackController {
 
     private void drawCardWithCommand(final Players players, final int index, final CardGenerator cardGenerator) {
         while (checkCanGetMoreCard(players, index) && inputView.readCommand(players.getPlayer(index)) == Command.YES) {
-            players.updatePlayer(index, cardGenerator);
+            players.makePlayerDraw(index, cardGenerator);
             outputView.printPlayerCardsInfo(players, index);
         }
     }
