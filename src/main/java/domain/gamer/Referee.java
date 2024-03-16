@@ -11,12 +11,16 @@ public class Referee {
     }
 
     public PlayerResult judgeResult(Cards playerCards, Cards dealerCards) {
-        if (isBlackJack(playerCards)) {
-            if (!isBlackJack(dealerCards)) {
-                return PlayerResult.BLACKJACKWIN;
-            }
+        if (isBlackJack(playerCards) && isBlackJack(dealerCards)) {
             return PlayerResult.DRAW;
         }
+        if (isBlackJack(playerCards) && !isBlackJack(dealerCards)) {
+            return PlayerResult.BLACKJACKWIN;
+        }
+        return notBlackJackResult(playerCards, dealerCards);
+    }
+
+    private static PlayerResult notBlackJackResult(Cards playerCards, Cards dealerCards) {
         if (playerCards.countMaxScore() > dealerCards.countMaxScore()) {
             return PlayerResult.WIN;
         }
