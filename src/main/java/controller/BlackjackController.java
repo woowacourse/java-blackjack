@@ -2,15 +2,14 @@ package controller;
 
 import dto.ParticipantCard;
 import dto.ParticipantCards;
+import dto.ParticipantResults;
+import dto.ParticipantScores;
 import java.util.List;
 import java.util.function.Supplier;
 import model.game.BlackjackGame;
 import model.game.HitChoice;
 import model.participant.Player;
 import model.participant.Players;
-import model.result.DealerResult;
-import model.result.GameResult;
-import model.result.PlayerResults;
 import view.InputView;
 import view.OutputView;
 
@@ -26,8 +25,11 @@ public class BlackjackController {
         playersTurnAndPrintCards(players, blackjackGame);
         dealerTurnAndPrintCard(blackjackGame);
 
-        GameResult gameResult = blackjackGame.finish(players);
-        printGameResult(gameResult);
+        ParticipantScores participantScores = blackjackGame.finish(players);
+        OutputView.printScores(participantScores);
+
+        ParticipantResults participantResults = ParticipantResults.from(participantScores);
+        OutputView.printResult(participantResults);
     }
 
     private Players preparePlayers() {
@@ -61,12 +63,6 @@ public class BlackjackController {
         if (isDealerHit) {
             OutputView.printAfterDealerHit();
         }
-    }
-
-    private void printGameResult(GameResult gameResult) {
-        PlayerResults playerResults = PlayerResults.from(gameResult);
-        DealerResult dealerResult = DealerResult.from(playerResults);
-        OutputView.printGameResult(gameResult, dealerResult, playerResults);
     }
 
     private static <T> T retryOnException(Supplier<T> retryOperation) {

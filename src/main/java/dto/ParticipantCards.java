@@ -9,7 +9,7 @@ public class ParticipantCards {
     private final ParticipantCard dealerCard;
     private final List<ParticipantCard> playerCards;
 
-    public ParticipantCards(ParticipantCard dealerCard, List<ParticipantCard> playerCards) {
+    private ParticipantCards(ParticipantCard dealerCard, List<ParticipantCard> playerCards) {
         this.dealerCard = dealerCard;
         this.playerCards = playerCards;
     }

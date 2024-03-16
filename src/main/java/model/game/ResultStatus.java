@@ -1,4 +1,4 @@
-package model.result;
+package model.game;
 
 public enum ResultStatus {
     WIN("승"),

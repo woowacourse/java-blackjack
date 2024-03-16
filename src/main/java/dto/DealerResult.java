@@ -1,9 +1,10 @@
-package model.result;
+package dto;
 
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import model.game.ResultStatus;
 
 public class DealerResult {
 
@@ -15,10 +16,10 @@ public class DealerResult {
         this.result = result;
     }
 
-    public static DealerResult from(PlayerResults playerResults) {
+    public static DealerResult from(List<PlayerResult> playerResults) {
         Map<ResultStatus, Integer> result = new EnumMap<>(ResultStatus.class);
-        for (ResultStatus playerResult : playerResults.resultStatuses()) {
-            ResultStatus dealerResult = playerResult.oppositeStatus();
+        for (PlayerResult playerResult : playerResults) {
+            ResultStatus dealerResult = playerResult.getStatus().oppositeStatus();
             result.merge(dealerResult, INITIAL_COUNT, Integer::sum);
         }
         return new DealerResult(result);

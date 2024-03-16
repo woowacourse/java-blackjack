@@ -2,13 +2,13 @@ package model.game;
 
 import dto.ParticipantCard;
 import dto.ParticipantCards;
+import dto.ParticipantScores;
 import model.card.Card;
 import model.card.CardDeck;
 import model.participant.Dealer;
 import model.participant.Participant;
 import model.participant.Player;
 import model.participant.Players;
-import model.result.GameResult;
 
 public class BlackjackGame {
 
@@ -52,8 +52,8 @@ public class BlackjackGame {
         return false;
     }
 
-    public GameResult finish(Players players) {
-        return GameResult.of(dealer, players);
+    public ParticipantScores finish(Players players) {
+        return ParticipantScores.of(dealer, players);
     }
 
     public Dealer getDealer() {
