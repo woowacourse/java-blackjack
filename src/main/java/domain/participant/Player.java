@@ -7,6 +7,6 @@ public class Player extends Participant {
 
     @Override
     public boolean isNotFinished() {
-        return !calculateScore().isBustScore();
+        return !getCards().isBust();
     }
 }

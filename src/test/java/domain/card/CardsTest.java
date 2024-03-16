@@ -2,9 +2,10 @@ package domain.card;
 
 import static fixture.CardFixture.카드;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class CardsTest {
     @Test
@@ -21,18 +22,9 @@ class CardsTest {
         cards.addCard(카드(Denomination.TEN));
         cards.addCard(카드(Denomination.SIX));
 
-        Score score = cards.sumAllCards();
+        int score = cards.sumAllCards();
 
-        assertThat(score).isEqualTo(Score.get(16));
-    }
-
-    @Test
-    void 카드가_없을_때_합을_계산하면_예외가_발생한다() {
-        Cards cards = new Cards();
-
-        assertThatThrownBy(cards::sumAllCards)
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("카드가 존재하지 않습니다.");
+        assertThat(score).isEqualTo(16);
     }
 
     @Test
@@ -41,9 +33,9 @@ class CardsTest {
         cards.addCard(카드(Denomination.ACE));
         cards.addCard(카드(Denomination.SIX));
 
-        Score result = cards.sumAllCards();
+        int score = cards.sumAllCards();
 
-        assertThat(result).isEqualTo(Score.get(17));
+        assertThat(score).isEqualTo(17);
     }
 
     @Test
@@ -53,9 +45,9 @@ class CardsTest {
         cards.addCard(카드(Denomination.FOUR));
         cards.addCard(카드(Denomination.ACE));
 
-        Score result = cards.sumAllCards();
+        int score = cards.sumAllCards();
 
-        assertThat(result).isEqualTo(Score.get(14));
+        assertThat(score).isEqualTo(14);
     }
 
     @Test
@@ -64,9 +56,9 @@ class CardsTest {
         cards.addCard(카드(Denomination.ACE));
         cards.addCard(카드(Denomination.ACE));
 
-        Score result = cards.sumAllCards();
+        int score = cards.sumAllCards();
 
-        assertThat(result).isEqualTo(Score.get(12));
+        assertThat(score).isEqualTo(12);
     }
 
     @Test
@@ -76,9 +68,9 @@ class CardsTest {
         cards.addCard(카드(Denomination.JACK));
         cards.addCard(카드(Denomination.ACE));
 
-        Score result = cards.sumAllCards();
+        int result = cards.sumAllCards();
 
-        assertThat(result).isEqualTo(Score.get(21));
+        assertThat(result).isEqualTo(21);
         assertThat(cards.isBlackjack()).isFalse();
     }
 
@@ -109,5 +101,25 @@ class CardsTest {
         cards.addCard(카드(Denomination.TWO));
 
         assertThat(cards.isBust()).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"19:true", "21:false"}, delimiter = ':')
+    void 현재_점수가_다른_점수보다_큰지_확인한다(int otherScore, boolean expected) {
+        Cards cards = new Cards();
+        cards.addCard(카드(Denomination.TEN));
+        cards.addCard(카드(Denomination.KING));
+
+        assertThat(cards.isGreaterThan(otherScore)).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"19:false", "21:true"}, delimiter = ':')
+    void 현재_점수가_다른_점수보다_작은지_확인한다(int otherScore, boolean expected) {
+        Cards cards = new Cards();
+        cards.addCard(카드(Denomination.TEN));
+        cards.addCard(카드(Denomination.KING));
+
+        assertThat(cards.isLessThan(otherScore)).isEqualTo(expected);
     }
 }

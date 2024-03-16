@@ -4,7 +4,6 @@ import static fixture.CardFixture.카드;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Denomination;
-import domain.card.Score;
 import org.junit.jupiter.api.Test;
 
 class ParticipantTest {
@@ -32,7 +31,7 @@ class ParticipantTest {
 
         participant.receiveInitialCards(카드(Denomination.KING), 카드(Denomination.SIX));
 
-        Score result = participant.calculateScore();
-        assertThat(result).isEqualTo(Score.get(16));
+        int result = participant.calculateScore();
+        assertThat(result).isEqualTo(16);
     }
 }

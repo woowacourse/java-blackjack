@@ -2,7 +2,6 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Cards;
-import domain.card.Score;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,7 +23,7 @@ public abstract class Participant {
         cards.addCard(card);
     }
 
-    public Score calculateScore() {
+    public int calculateScore() {
         return cards.sumAllCards();
     }
 
@@ -44,6 +43,14 @@ public abstract class Participant {
 
     public List<Card> getAllCards() {
         return cards.getCards();
+    }
+
+    public boolean isGreaterThan(int score) {
+        return cards.isGreaterThan(score);
+    }
+
+    public boolean isLessThan(int score) {
+        return cards.isLessThan(score);
     }
 
     Cards getCards() {

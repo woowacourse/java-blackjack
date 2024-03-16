@@ -1,6 +1,5 @@
 package domain.blackjackgame;
 
-import domain.card.Score;
 import domain.card.deck.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
@@ -50,16 +49,16 @@ public class BlackjackGame {
         if (dealer.isBlackjack()) {
             return ResultStatus.LOSE;
         }
-        return getResultStatusByScore(player.calculateScore(), dealer.calculateScore());
+        return getResultStatusByScore(player, dealer);
     }
 
-    private ResultStatus getResultStatusByScore(Score playerScore, Score dealerScore) {
-        if (playerScore.isGreaterThan(dealerScore)) {
+    private ResultStatus getResultStatusByScore(Player player, Dealer dealer) {
+        if (player.isGreaterThan(dealer.calculateScore())) {
             return ResultStatus.WIN;
         }
-        if (playerScore.equals(dealerScore)) {
-            return ResultStatus.DRAW;
+        if (player.isLessThan(dealer.calculateScore())) {
+            return ResultStatus.LOSE;
         }
-        return ResultStatus.LOSE;
+        return ResultStatus.DRAW;
     }
 }

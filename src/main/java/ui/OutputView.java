@@ -56,7 +56,7 @@ public class OutputView {
     }
 
     private String formatScoreMessage(Participant participant) {
-        return formatCardsMessage(participant) + " - 결과: " + participant.calculateScore().getValue();
+        return formatCardsMessage(participant) + " - 결과: " + participant.calculateScore();
     }
 
     public void printGameResult(GameResult gameResult) {
