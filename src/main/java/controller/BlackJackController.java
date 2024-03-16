@@ -8,16 +8,14 @@ import domain.blackjack.Players;
 import domain.blackjack.WithOutFirstCardShowStrategy;
 import domain.card.Card;
 import domain.card.Deck;
-import dto.DealerDTO;
 import dto.GameResultDTO;
-import dto.PlayerDTO;
+import dto.GamerDTO;
 import java.util.List;
 import view.BattingMoneyInputView;
 import view.NameInputView;
 import view.OutputView;
 import view.YesOrNoInputView;
-import view.gamer.DealerOutputView;
-import view.gamer.PlayerOutputView;
+import view.gamer.GamerOutputView;
 import view.gameresult.GameResultOutputView;
 
 public class BlackJackController {
@@ -55,15 +53,15 @@ public class BlackJackController {
     }
 
     private void printPlayer(Player player) {
-        PlayerDTO playerDTO = new PlayerDTO(player.getRawName(), player.getRawHoldingCards(),
+        GamerDTO playerDTO = GamerDTO.playerDTO(player.getRawName(), player.getRawHoldingCards(),
                 player.calculateSummationCardPointAsInt());
-        PlayerOutputView.printWithoutSummationCardPoint(playerDTO);
+        GamerOutputView.printWithoutSummationCardPoint(playerDTO);
     }
 
     private void printDealerWithoutFirstCard(Dealer dealer) {
         List<Card> rawHoldingCards = dealer.getRawHoldingCards(WithOutFirstCardShowStrategy.INSTANCE);
-        DealerDTO dealerDTO = new DealerDTO(rawHoldingCards, dealer.calculateSummationCardPointAsInt());
-        DealerOutputView.printWithoutSummationCardPoint(dealerDTO);
+        GamerDTO dealerDTO = GamerDTO.dealerDTO(rawHoldingCards, dealer.calculateSummationCardPointAsInt());
+        GamerOutputView.printWithoutSummationCardPoint(dealerDTO);
     }
 
     private void runGame(Deck deck, BlackJackGame blackJackGame) {
@@ -96,16 +94,16 @@ public class BlackJackController {
     }
 
     private void printDealerWithPoint(Dealer dealer) {
-        DealerDTO dealerDTO = new DealerDTO(dealer.getRawHoldingCards(),
+        GamerDTO dealerDTO = GamerDTO.dealerDTO(dealer.getRawHoldingCards(),
                 dealer.calculateSummationCardPointAsInt());
-        DealerOutputView.print(dealerDTO);
+        GamerOutputView.print(dealerDTO);
     }
 
     private void printPlayersWithPoint(Players players) {
         players.forEach(player -> {
-            PlayerDTO playerDTO = new PlayerDTO(player.getRawName(), player.getRawHoldingCards(),
+            GamerDTO playerDTO = GamerDTO.playerDTO(player.getRawName(), player.getRawHoldingCards(),
                     player.calculateSummationCardPointAsInt());
-            PlayerOutputView.print(playerDTO);
+            GamerOutputView.print(playerDTO);
         });
     }
 }
