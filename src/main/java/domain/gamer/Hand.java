@@ -1,6 +1,7 @@
 package domain.gamer;
 
 import domain.card.Card;
+import domain.card.Rank;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,7 +9,8 @@ import java.util.List;
 public class Hand {
     private static final int MAX_SUM = 21;
     private static final int BLACKJACK_CARD_COUNT_COND = 2;
-    private static final int ANOTHER_ACE_SCORE = 1;
+    private static final int DETERMINING_ACE_VALUE_COND = 11;
+    private static final int ANOTHER_ACE_SCORE_DIFF = 10;
     private final List<Card> cards;
 
     public Hand() {
@@ -32,34 +34,22 @@ public class Hand {
     }
 
     public int sum() {
-        int totalScore = sumExceptAceCards();
-        List<Card> aceCards = filterAceCards();
-
-        for (Card aceCard : aceCards) {
-            totalScore = accumulateScore(aceCard, totalScore);
+        int totalCount = calculateTotalCount();
+        if (hasAce() && totalCount <= DETERMINING_ACE_VALUE_COND) {
+            return totalCount + ANOTHER_ACE_SCORE_DIFF;
         }
-        return totalScore;
+        return totalCount;
     }
 
-    private int sumExceptAceCards() {
+    private int calculateTotalCount() {
         return cards.stream()
-                .filter(card -> !card.isAce())
                 .mapToInt(Card::getScore)
                 .sum();
     }
 
-    private List<Card> filterAceCards() {
+    private boolean hasAce() {
         return cards.stream()
-                .filter(Card::isAce)
-                .toList();
-    }
-
-    private int accumulateScore(final Card aceCard, final int exceptAceScore) {
-        int aceScore = aceCard.getScore();
-        if (exceptAceScore + aceScore <= MAX_SUM) {
-            return exceptAceScore + aceScore;
-        }
-        return exceptAceScore + ANOTHER_ACE_SCORE;
+                .anyMatch(Card::isAce);
     }
 
     public List<Card> getCards() {

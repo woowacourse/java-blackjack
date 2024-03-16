@@ -1,6 +1,7 @@
 package domain.card;
 
 public enum Rank {
+    ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -12,8 +13,7 @@ public enum Rank {
     TEN("10", 10),
     JACK("J", 10),
     QUEEN("Q", 10),
-    KING("K", 10),
-    ACE("A", 11);
+    KING("K", 10);
 
     private final String value;
     private final int score;
