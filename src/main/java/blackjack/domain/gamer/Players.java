@@ -35,7 +35,7 @@ public class Players {
         return players.stream()
                 .filter(player -> Objects.equals(player.getName(), name))
                 .findAny()
-                .orElseThrow(() -> new IllegalStateException("해당 이름을 가진 플레이어가 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalStateException("[" + name + "] 이름을 가진 플레이어가 존재하지 않습니다."));
     }
 
     public List<Player> getPlayers() {

@@ -46,7 +46,7 @@ public enum GameResult {
         return Arrays.stream(GameResult.values())
                 .filter(gameResult -> gameResult.condition.test(dealer, player))
                 .findAny()
-                .orElseThrow(() -> new IllegalStateException(player.getName() + "에 해당하는 게임 결과가 없습니다."));
+                .orElseThrow(() -> new IllegalStateException("플레이어 [" + player.getName() + "]에 해당하는 게임 결과가 없습니다."));
     }
 
     public static long calculatePlayerProfit(final Dealer dealer, final Player player) {

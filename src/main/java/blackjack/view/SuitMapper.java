@@ -19,9 +19,9 @@ public enum SuitMapper {
 
     public static String mapToViewName(final Suit suit) {
         return Arrays.stream(SuitMapper.values())
-                .filter(suitTranslator -> suitTranslator.suit == suit)
+                .filter(suitMapper -> suitMapper.suit == suit)
                 .findAny()
-                .orElseThrow(() -> new IllegalStateException("매칭되는 슈트가 없습니다."))
+                .orElseThrow(() -> new IllegalStateException("[" + suit.name() + "]에 매칭되는 슈트가 없습니다."))
                 .viewName;
     }
 
