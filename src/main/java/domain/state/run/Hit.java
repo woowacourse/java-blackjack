@@ -1,5 +1,7 @@
 package domain.state.run;
 
+import static domain.Blackjack.PERFECT_SCORE;
+
 import domain.card.Card;
 import domain.card.Hands;
 import domain.state.State;
@@ -25,7 +27,6 @@ public final class Hit extends Running {
     private boolean isBusted() {
         return getHands().calculateScore() > PERFECT_SCORE;
     }
-
 
     @Override
     public State stand() {
