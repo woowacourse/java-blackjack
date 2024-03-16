@@ -1,5 +1,7 @@
 package domain.game;
 
+import static domain.participant.Participants.CACHED_DEALER;
+
 import controller.dto.response.PlayerOutcome;
 import domain.constants.Outcome;
 import domain.participant.Dealer;
@@ -16,13 +18,13 @@ public class Referee {
 
     // TODO : 메서드 길이 10라인으로 줄이기
     public List<PlayerOutcome> judge() {
-        if (participants.getDealer().isBlackJack()) {
+        if (CACHED_DEALER.isBlackJack()) {
             return participants.getPlayersOutcomeIf(
                     this::judgeWhenDealerIsBlackJack
             );
         }
 
-        if (participants.getDealer().isBusted()) {
+        if (CACHED_DEALER.isBusted()) {
             return participants.getPlayersOutcomeIf(
                     this::judgeWhenDealerIsBusted
                     // TODO: 두 장이고 21이면 BLACKJACK / 그냥 isNotBusted 이면 WIN / 그 외 BUST면 LOSE / 여기서 참가자가 블랙잭이면 BLACKJACK
@@ -59,10 +61,10 @@ public class Referee {
         if (player.isBusted()) {
             return Outcome.LOSE;
         }
-        if (player.isNotSameScoreAs(participants.getDealer())) {
-            return verifyHasMoreScoreThanDealer(player, participants.getDealer());
+        if (player.isNotSameScoreAs(CACHED_DEALER)) {
+            return verifyHasMoreScoreThanDealer(player, CACHED_DEALER);
         }
-        return verifyHasLessOrSameCardThanDealer(player, participants.getDealer());
+        return verifyHasLessOrSameCardThanDealer(player, CACHED_DEALER);
     }
 
     // TODO : 아래 두 함수를 개선할 수 없나? Outcome에서 하고 싶은데 true, false를 넘기기도 애매하고 ................

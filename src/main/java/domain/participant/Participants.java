@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Participants {
-    private static final Dealer CACHED_DEALER = new Dealer();
-    private static final List<Player> CACHED_PLAYERS = new ArrayList<>();
+    public static final Dealer CACHED_DEALER = new Dealer();
+    public static final List<Player> CACHED_PLAYERS = new ArrayList<>();
 
     private final List<Participant> participants;
 
@@ -38,7 +38,7 @@ public class Participants {
     }
 
     public List<PlayerOutcome> getPlayersOutcomeIf(final PlayerOutcomeFunction function) {
-        return getPlayers().stream()
+        return CACHED_PLAYERS.stream()
                 .map(player -> new PlayerOutcome(
                         player, // TODO: 어짜피 밖에서 NAME 조회해야해서 성능 상 그냥 Player를 바로 보냄.ㄱㅊ? // 이것도 캐싱하면 해결될 텐데 ..
                         function.apply(player)
@@ -50,19 +50,10 @@ public class Participants {
         return Collections.unmodifiableList(participants);
     }
 
-    // TODO: 캐싱 이렇게 하는 거 맞나?
-    public Dealer getDealer() {
-        return participants.stream()
-                .filter(Dealer.class::isInstance)
-                .map(Dealer.class::cast)
-                .findAny()
-                .orElseThrow(IllegalStateException::new);
-    }
-
-    public List<Player> getPlayers() {
-        return participants.stream()
-                .filter(Player.class::isInstance)
-                .map(Player.class::cast)
-                .toList();
+    public List<Participant> getParticipantsStartsWithDealer() {
+        return Stream.concat(
+                Stream.of(CACHED_DEALER),
+                CACHED_PLAYERS.stream()
+        ).toList();
     }
 }
