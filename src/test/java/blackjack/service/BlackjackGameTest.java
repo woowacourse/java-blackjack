@@ -43,11 +43,12 @@ class BlackjackGameTest {
         blackjackGame.divideCard();
 
         // when
-        boolean addCardAvailable = blackjackGame.addCardToPlayer(playerKirby);
+        blackjackGame.addCardToPlayer(playerKirby);
+        boolean playerAlive = blackjackGame.isPlayerAlive(playerKirby);
 
         // then
-        assertAll(() -> assertThat(addCardAvailable).isTrue(),
-                () -> assertThat(blackjackGame.getCardsOf(kirby)).hasSize(3));
+        assertAll(() -> assertThat(playerAlive).isTrue(),
+                () -> assertThat(blackjackGame.getPlayers().get(0).getHands().getCards()).hasSize(3));
     }
 
     @DisplayName("플레이어가 카드를 더 추가하면 안되는 때에 카드를 추가할 수 없는지 확인한다.")
@@ -61,9 +62,10 @@ class BlackjackGameTest {
         for (int i = 0; i < 20; i++) {
             blackjackGame.addCardToPlayer(playerKirby);
         }
-        boolean addCardAvailable = blackjackGame.addCardToPlayer(playerKirby);
+        blackjackGame.addCardToPlayer(playerKirby);
+        boolean playerAlive = blackjackGame.isPlayerAlive(playerKirby);
 
         // then
-        assertThat(addCardAvailable).isFalse();
+        assertThat(playerAlive).isFalse();
     }
 }

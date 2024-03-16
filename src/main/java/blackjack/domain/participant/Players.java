@@ -43,8 +43,7 @@ public class Players {
     }
 
     public void addCardTo(final Player player, final Card card) {
-        final Player findedPlayer = findPlayer(player);
-        findedPlayer.addCard(card);
+        player.addCard(card);
     }
 
     public Map<ParticipantName, WinStatus> determineWinStatus(final ParticipantScoreStatus dealerScoreStatus) {
@@ -63,7 +62,7 @@ public class Players {
         return players.size();
     }
 
-    private Player findPlayer(final Player inputPlayer) {
+    public Player findPlayer(final Player inputPlayer) {
         return players.stream()
                 .filter(player -> player.equals(inputPlayer))
                 .findAny()

@@ -37,8 +37,8 @@ public class BlackjackGame {
         return participants.getStartCards();
     }
 
-    public boolean addCardToPlayer(final Player player) {
-        return participants.addCardToPlayer(player, deck);
+    public void addCardToPlayer(final Player player) {
+        participants.addCardToPlayer(player, deck);
     }
 
     public int giveDealerMoreCards() {
@@ -55,6 +55,10 @@ public class BlackjackGame {
 
     public WinningResult getWinningResult() {
         return participants.getWinningResult();
+    }
+
+    public boolean isPlayerAlive(final Player player) {
+        return participants.isPlayerAlive(player);
     }
 
     public boolean isNotDealerBlackjack() {

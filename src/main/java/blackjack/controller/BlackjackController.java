@@ -80,7 +80,8 @@ public class BlackjackController {
     private void runPlayerTurn(final BlackjackGame blackjackGame, final Player player) {
         boolean isFirst = true;
 
-        while (blackjackGame.addCardToPlayer(player) && needMoreCard(player)) {
+        while (blackjackGame.isPlayerAlive(player) && needMoreCard(player)) {
+            blackjackGame.addCardToPlayer(player);
             printPlayerCards(player);
             isFirst = false;
         }

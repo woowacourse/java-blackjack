@@ -15,6 +15,10 @@ public record ParticipantCardsDto(String name, List<CardDto> cardDtos) {
         return new ParticipantCardsDto(name.getName(), convertToCardDto(cards.getCards()));
     }
 
+    public static ParticipantCardsDto of(final ParticipantName name, final List<Card> cards) {
+        return new ParticipantCardsDto(name.getName(), convertToCardDto(cards));
+    }
+
     private static List<CardDto> convertToCardDto(final List<Card> values) {
         return values.stream()
                 .map(CardDto::from)

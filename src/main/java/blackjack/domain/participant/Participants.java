@@ -34,14 +34,9 @@ public class Participants {
         return participantCardsDtos;
     }
 
-    public boolean addCardToPlayer(final Player player, final Deck deck) {
-        if (!player.isAlive()) {
-            return false;
-        }
-
+    public void addCardToPlayer(final Player rawPlayer, final Deck deck) {
+        final Player player = players.findPlayer(rawPlayer);
         players.addCardTo(player, deck.pick());
-
-        return true;
     }
 
     public int giveDealerMoreCards(final Deck deck) {
@@ -75,6 +70,11 @@ public class Participants {
 
     public WinningResult getWinningResult() {
         return WinningResult.of(players, dealer);
+    }
+
+    public boolean isPlayerAlive(final Player rawPlayer) {
+        final Player player = players.findPlayer(rawPlayer);
+        return player.isAlive();
     }
 
     public boolean isDealerNotBlackjack() {
