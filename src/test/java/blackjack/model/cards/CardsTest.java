@@ -2,6 +2,7 @@ package blackjack.model.cards;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.vo.Score;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ class CardsTest {
         );
         Cards given = new Cards(cards);
 
-        int score = given.getScore();
+        int score = given.getScoreValue();
 
         assertThat(score).isEqualTo(18);
     }
@@ -32,9 +33,9 @@ class CardsTest {
         );
         Cards given = new Cards(cards);
 
-        int score = given.getScore();
+        int scoreValue = given.getScoreValue();
 
-        assertThat(score).isEqualTo(12);
+        assertThat(new Score(scoreValue)).isEqualTo(new Score(12));
     }
 
     @DisplayName("점수 총합이 21점을 초과하는지 여부를 반환한다")

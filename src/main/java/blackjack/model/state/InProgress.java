@@ -16,6 +16,6 @@ public abstract class InProgress implements State {
 
     @Override
     public int getScore() {
-        return cards.getScore();
+        return cards.getScoreValue();
     }
 }

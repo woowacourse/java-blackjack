@@ -1,15 +1,14 @@
 package blackjack.model.cards;
 
+import blackjack.vo.Score;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
     public static final int INITIAL_CARD_SIZE = 2;
-    private static final int EXTRA_SCORE = 10;
-    private static final int WINNING_SCORE = 21;
 
     private final List<Card> cards;
-    private int score = 0;
+    private Score score = new Score();
 
     public Cards() {
         this(new ArrayList<>());
@@ -26,22 +25,20 @@ public class Cards {
     }
 
     public boolean isBust() {
-        return score > WINNING_SCORE;
+        return score.isBust();
     }
 
     public boolean isBlackJack() {
-        return cards.size() == INITIAL_CARD_SIZE && score == WINNING_SCORE;
+        return cards.size() == INITIAL_CARD_SIZE && score.isBlackJack();
     }
 
     private void updateCardsScore() {
-        score = calculateScore(cards);
-        if (hasAce() && lessThanWinningScoreWithExtraScore()) {
-            score += EXTRA_SCORE;
+        int calculatedScore = calculateScore(cards);
+        Score updatedScore = new Score(calculatedScore);
+        if (hasAce() && updatedScore.lessThanWinningScoreWithExtraScore()) {
+            updatedScore = Score.withExtraScore(calculatedScore);
         }
-    }
-
-    private boolean lessThanWinningScoreWithExtraScore() {
-        return score + EXTRA_SCORE <= WINNING_SCORE;
+        score = updatedScore;
     }
 
     private boolean hasAce() {
@@ -59,7 +56,7 @@ public class Cards {
         return cards;
     }
 
-    public int getScore() {
-        return score;
+    public int getScoreValue() {
+        return score.value();
     }
 }

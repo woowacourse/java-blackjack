@@ -28,7 +28,7 @@ public abstract class Participant {
     }
 
     public int getScore() {
-        return getCards().getScore();
+        return getCards().getScoreValue();
     }
 
     public void finishTurn() {
