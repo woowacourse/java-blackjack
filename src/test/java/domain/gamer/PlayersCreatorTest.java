@@ -15,7 +15,7 @@ public class PlayersCreatorTest {
     void isNotOverPossiblePlayerRange() {
         List<String> names = List.of("hogi");
 
-        Assertions.assertThatThrownBy(() -> new PlayersCreator().create(names))
+        Assertions.assertThatThrownBy(() -> new PlayersCreator().create(names, List.of(10000)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("참가자의 인원은 최소 " + MINIMUM_PLAYER_RANGE + "에서 최대 " + MAXIMUM_PLAYER_RANGE + "명 까지 가능합니다.");
     }
@@ -25,7 +25,7 @@ public class PlayersCreatorTest {
     void isOverPossiblePlayerRange() {
         List<String> names = List.of("pola", "ato", "kaki", "hogi", "pobi", "jazz", "lisz", "takan", "siso", "hoho");
 
-        Assertions.assertThatThrownBy(() -> new PlayersCreator().create(names))
+        Assertions.assertThatThrownBy(() -> new PlayersCreator().create(names, List.of(10000)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("참가자의 인원은 최소 " + MINIMUM_PLAYER_RANGE + "에서 최대 " + MAXIMUM_PLAYER_RANGE + "명 까지 가능합니다.");
     }
@@ -35,7 +35,7 @@ public class PlayersCreatorTest {
     void isPlayersHasDuplicateName() {
         List<String> names = List.of("pola", "pola", "hogi");
 
-        Assertions.assertThatThrownBy(() -> new PlayersCreator().create(names))
+        Assertions.assertThatThrownBy(() -> new PlayersCreator().create(names, List.of(10000)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("참가자는 중복된 이름을 가질 수 없습니다.");
     }

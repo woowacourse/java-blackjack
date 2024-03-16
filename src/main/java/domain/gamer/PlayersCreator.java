@@ -1,9 +1,9 @@
 package domain.gamer;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class PlayersCreator {
 
@@ -12,10 +12,13 @@ public class PlayersCreator {
 
     public Players create(List<String> playerNames, List<Integer> moneys) {
         validate(playerNames);
-        return new Players(playerNames.stream()
-                .map(Name::new)
-                .map(Player::new)
-                .collect(Collectors.toList()));
+        List<Player> playerList = new ArrayList<>();
+        for (int i = 0; i < playerNames.size(); i++) {
+            Name name = new Name(playerNames.get(i));
+            Money money = new Money(moneys.get(i));
+            playerList.add(new Player(name, money));
+        }
+        return new Players(playerList);
     }
 
     private void validate(List<String> players) {
