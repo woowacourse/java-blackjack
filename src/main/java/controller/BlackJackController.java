@@ -2,15 +2,22 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 import model.BlackJack;
 import model.card.CardDeck;
 import model.card.CardSize;
+import model.card.Cards;
 import model.player.Dealer;
 import model.player.Name;
 import model.player.Participant;
 import model.player.Participants;
 import view.InputView;
 import view.OutputView;
+import view.dto.ParticipantNamesDto;
+import view.dto.UserCardDto;
+import view.dto.UserProfitDto;
+import view.dto.UserResultDto;
 
 public class BlackJackController {
 
@@ -23,23 +30,44 @@ public class BlackJackController {
     }
 
     public void startGame() {
-        List<String> names = inputView.askParticipantNames();
-        BlackJack blackJack = createBlackJack(names);
-
-        outputView.printPlayerNames(blackJack.findParticipantsName());
-        outputView.printPlayerCards(blackJack.mapToUsersNameAndCards(), blackJack.mapToDealerNameAndCards());
-
+        BlackJack blackJack = createBlackJack(inputView.askParticipantNames());
+        outputView.printPlayerNames(new ParticipantNamesDto(blackJack.findParticipantsName()));
+        outputView.printPlayerCards(
+                new UserCardDto(blackJack.mapToUsersNameAndCards(), blackJack.mapToDealerNameAndCards()));
         offerMoreCards(blackJack);
+        outputView.printBlackJackScores(mapToUserResultDtos(blackJack));
+        outputView.printResults(mapToUserProfitDtos(blackJack));
+    }
 
-        outputView.printBlackJackScore(blackJack.mapToUsersNameAndCards(), blackJack.mapToDealerNameAndCards());
-        outputView.printResult(blackJack.getDealerProfit(), blackJack.getParticipantProfits());
+    private List<UserProfitDto> mapToUserProfitDtos(BlackJack blackJack) {//todo '딜러' 출력 부분 수정
+        List<UserProfitDto> userProfitDtos = mapToUserProfitDto(blackJack.getParticipantProfits());
+        userProfitDtos.add(0, new UserProfitDto("딜러", blackJack.getDealerProfit()));
+        return userProfitDtos;
+    }
+
+    private List<UserProfitDto> mapToUserProfitDto(Map<Participant, Double> participantProfits) {
+        return new ArrayList<>(participantProfits.entrySet().stream()
+                .map(participantProfit -> new UserProfitDto(participantProfit.getKey(), participantProfit.getValue()))
+                .toList());
+    }
+
+    private List<UserResultDto> mapToUserResultDtos(BlackJack blackJack) {
+        return Stream
+                .concat(mapToUserDto(blackJack.mapToDealerNameAndCards()).stream(),
+                        mapToUserDto(blackJack.mapToUsersNameAndCards()).stream())
+                .toList();
+    }
+
+    private List<UserResultDto> mapToUserDto(Map<Name, Cards> userResults) {
+        return userResults.entrySet().stream()
+                .map(userResult -> new UserResultDto(userResult.getKey(), userResult.getValue()))
+                .toList();
     }
 
     private BlackJack createBlackJack(List<String> names) {
         CardDeck cardDeck = new CardDeck(CardDeck.createCards());
         Participants participants = createParticipants(names, cardDeck);
         Dealer dealer = new Dealer(cardDeck, () -> cardDeck.selectRandomCards(CardSize.TWO));
-
         return new BlackJack(participants, dealer);
     }
 
