@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Card {
 
-    private static final List<Card> cache = new ArrayList<>();
+    private static final List<Card> CACHE = new ArrayList<>();
 
     static {
         for (CardShape cardShape : CardShape.values()) {
@@ -26,12 +26,12 @@ public class Card {
 
     private static void addCardToCacheWithShape(CardShape cardShape) {
         for (CardNumber cardNumber : CardNumber.values()) {
-            cache.add(new Card(cardNumber, cardShape));
+            CACHE.add(new Card(cardNumber, cardShape));
         }
     }
 
     public static Card valueOf(CardNumber cardNumber, CardShape cardShape) {
-        return cache.stream()
+        return CACHE.stream()
                 .filter(card -> card.getCardNumber() == cardNumber)
                 .filter(card -> card.getCardShape() == cardShape)
                 .findAny()
