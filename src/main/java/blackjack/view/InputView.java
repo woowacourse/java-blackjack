@@ -1,7 +1,5 @@
 package blackjack.view;
 
-import blackjack.model.gamer.Name;
-import blackjack.model.gamer.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -21,14 +19,14 @@ public class InputView {
         return Arrays.asList(input.split(SEPARATOR));
     }
 
-    public static int readPlayerBetAmount(Name playerName) {
-        System.out.printf(NEW_LINE + "%s의 배팅 금액은?" + NEW_LINE, playerName.getName());
+    public static int readPlayerBetAmount(String playerName) {
+        System.out.printf(NEW_LINE + "%s의 배팅 금액은?" + NEW_LINE, playerName);
         String input = SCANNER.nextLine();
         return parseInt(input);
     }
 
-    public static boolean askPlayerForCard(Player player) {
-        System.out.printf(NEW_LINE + "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEW_LINE, player.name());
+    public static boolean askPlayerForCard(String playerName) {
+        System.out.printf(NEW_LINE + "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEW_LINE, playerName);
         String input = SCANNER.nextLine();
 
         return isHit(input);

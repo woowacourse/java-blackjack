@@ -2,8 +2,6 @@ package blackjack.view;
 
 import blackjack.dto.CardDto;
 import blackjack.dto.DealerDto;
-import blackjack.dto.DealerNetProfitDto;
-import blackjack.dto.HandDeckDto;
 import blackjack.dto.PlayerDto;
 import java.util.List;
 
@@ -21,8 +19,8 @@ public class Formatter {
         return String.join(SEPARATOR, playerNames);
     }
 
-    public static String cardNamesFormat(HandDeckDto handDeckDto) {
-        List<String> cardNames = handDeckDto.cardDtos().stream()
+    public static String cardNamesFormat(List<CardDto> cardDtos) {
+        List<String> cardNames = cardDtos.stream()
                 .map(Formatter::cardNameFormat)
                 .toList();
 
@@ -30,28 +28,28 @@ public class Formatter {
     }
 
     public static String dealerCardInfoFormat(DealerDto dealerDto) {
-        String cardNames = cardNamesFormat(dealerDto.handDeckDto());
+        String cardNames = cardNamesFormat(dealerDto.cardDtos());
         return String.format("딜러 카드: %s", cardNames);
     }
 
     public static String playerCardInfoFormat(PlayerDto playerDto) {
         String playerName = playerDto.name();
-        String cardNames = cardNamesFormat(playerDto.handDeckDto());
+        String cardNames = cardNamesFormat(playerDto.cardDtos());
         return String.format("%s 카드: %s", playerName, cardNames);
     }
 
     public static String dealerCardAndScoreInfoFormat(DealerDto dealerDto) {
-        int dealerScore = dealerDto.handDeckDto().score();
+        int dealerScore = dealerDto.score();
         return dealerCardInfoFormat(dealerDto) + cardScoreFormat(dealerScore);
     }
 
     public static String playerCardAndScoreInfoFormat(PlayerDto playerDto) {
-        int playerScore = playerDto.handDeckDto().score();
+        int playerScore = playerDto.score();
         return playerCardInfoFormat(playerDto) + cardScoreFormat(playerScore);
     }
 
-    public static String dealerNetProfitFormat(DealerNetProfitDto dealerNetProfitDto) {
-        return String.format("딜러 : %d", dealerNetProfitDto.netProfit());
+    public static String dealerNetProfitFormat(int dealerNetProfit) {
+        return String.format("딜러 : %d", dealerNetProfit);
     }
 
     public static String playerNetProfitFormat(String playerName, int netProfit) {
