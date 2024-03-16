@@ -9,6 +9,7 @@ import view.InputView;
 import view.OutputView;
 
 public class MainGame implements GameStatus {
+    
     private static final ConsoleReader CONSOLE_READER = new ConsoleReader();
     private static final String COMMAND_YES = "y";
 

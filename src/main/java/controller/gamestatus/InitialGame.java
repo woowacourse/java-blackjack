@@ -7,6 +7,7 @@ import domain.gamer.Players;
 import view.OutputView;
 
 public class InitialGame implements GameStatus {
+
     private static final int INITIAL_CARD_COUNT = 2;
 
     @Override

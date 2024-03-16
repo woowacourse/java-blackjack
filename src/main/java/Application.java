@@ -12,6 +12,7 @@ import view.InputView;
 import view.OutputView;
 
 public class Application {
+    
     private static final ConsoleReader CONSOLE_READER = new ConsoleReader();
 
     public static void main(String[] args) {
