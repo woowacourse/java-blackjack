@@ -49,7 +49,7 @@ public class Participant {
     }
 
     public boolean isNotBlackjack() {
-        return getStatus() != BlackjackStatus.BLACKJACK;
+        return !isBlackjack();
     }
 
     public Hands getHands() {

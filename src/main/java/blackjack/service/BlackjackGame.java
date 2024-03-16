@@ -68,4 +68,8 @@ public class BlackjackGame {
     public List<Player> getPlayers() {
         return participants.getPlayers();
     }
+
+    public Dealer getDealer() {
+        return participants.getDealer();
+    }
 }

@@ -12,6 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Players {
     private final List<Player> players;
@@ -77,7 +78,7 @@ public class Players {
     public List<ParticipantCardsDto> getStartCards() {
         return players.stream()
                 .map(ParticipantCardsDto::from)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public Map<ParticipantName, Hands> getPlayerHands() {
