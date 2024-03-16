@@ -49,10 +49,6 @@ public class OutputView {
     public static void printProfits(final List<NameProfit> playerProfits) {
         System.out.println();
         System.out.println("## 최종 수익");
-        playerProfits.forEach(nameProfit -> System.out.println(formatFinalResult(nameProfit)));
-    }
-
-    private static String formatFinalResult(final NameProfit nameProfit) {
-        return NameProfitFormat.format(nameProfit);
+        playerProfits.forEach(nameProfit -> System.out.println(NameProfitFormat.format(nameProfit)));
     }
 }
