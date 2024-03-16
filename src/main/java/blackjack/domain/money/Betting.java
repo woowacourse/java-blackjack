@@ -38,4 +38,11 @@ public class Betting {
     public int hashCode() {
         return Objects.hash(amount);
     }
+
+    @Override
+    public String toString() {
+        return "Betting{" +
+                "amount=" + amount +
+                '}';
+    }
 }

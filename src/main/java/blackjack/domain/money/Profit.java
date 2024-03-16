@@ -30,6 +30,13 @@ public class Profit {
         return Objects.hash(amount);
     }
 
+    @Override
+    public String toString() {
+        return "Profit{" +
+                "amount=" + amount +
+                '}';
+    }
+
     public long getAmount() {
         return amount;
     }

@@ -21,6 +21,13 @@ public class PlayerProfits {
         return -totalProfitsAmount;
     }
 
+    @Override
+    public String toString() {
+        return "PlayerProfits{" +
+                "profits=" + profits +
+                '}';
+    }
+
     public Map<Player, Profit> getProfits() {
         return Collections.unmodifiableMap(profits);
     }
