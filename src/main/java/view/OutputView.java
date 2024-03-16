@@ -3,6 +3,7 @@ package view;
 import domain.card.Card;
 import domain.gamer.Gamer;
 import domain.gamer.Name;
+import domain.gamer.Players;
 import domain.money.Money;
 import domain.result.BettingResult;
 import java.text.DecimalFormat;
@@ -15,12 +16,14 @@ public class OutputView {
     private static final String DELIMITER = ", ";
     private static final DecimalFormat MONEY_FORMAT = new DecimalFormat("#");
 
-    public static void printInitialStep(List<Name> names) {
-        System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.%n", buildGamerNames(names));
+    public static void printInitialStep(Players players, int cardCount) {
+        System.out.printf("\n딜러와 %s에게 %d장을 나누었습니다.%n", buildGamerNames(players), cardCount);
     }
 
-    private static String buildGamerNames(List<Name> names) {
-        return names.stream()
+    private static String buildGamerNames(Players players) {
+        return players.getPlayers()
+                .stream()
+                .map(Gamer::getName)
                 .map(Name::name)
                 .collect(Collectors.joining(DELIMITER));
     }

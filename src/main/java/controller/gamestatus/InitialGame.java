@@ -16,6 +16,7 @@ public class InitialGame implements GameStatus {
 
     @Override
     public GameStatus play(Dealer dealer, Players players, Deck deck) {
+        OutputView.printInitialStep(players, INITIAL_CARD_COUNT);
         for (Player player : players.getPlayers()) {
             player.pickCards(deck, INITIAL_CARD_COUNT);
         }
