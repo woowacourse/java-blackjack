@@ -5,6 +5,7 @@ import blackjack.domain.card.CardHand;
 
 import java.util.List;
 
+// TODO : 딜러가 플레이어를 컴포지션하도록 변경
 public class Gamer {
     protected final CardHand cardHand;
 
@@ -25,11 +26,19 @@ public class Gamer {
     }
 
     public boolean isBust() {
-        return cardHand.isBurst();
+        return cardHand.isBust();
     }
 
     public boolean isNotBust() {
         return !isBust();
+    }
+
+    public boolean isBlackjack() {
+        return cardHand.isBlackjack();
+    }
+
+    public boolean isStand() {
+        return cardHand.isStand();
     }
 
     @Override
