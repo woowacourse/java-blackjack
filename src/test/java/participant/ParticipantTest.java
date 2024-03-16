@@ -9,6 +9,7 @@ import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import participant.player.Name;
 import participant.player.Player;
 
 class ParticipantTest {
@@ -37,7 +38,7 @@ class ParticipantTest {
     void receiveOneCard() {
         List<Card> cards = new ArrayList<>();
 
-        Participant participant = new Participant(cards);
+        Participant participant = new Participant(cards, new Name("pola"));
 
         Card card = new Card(CardNumber.ACE, CardPattern.SPADE_PATTERN);
 
@@ -51,7 +52,7 @@ class ParticipantTest {
     void getMaxCardScore() {
         Participant participant = new Participant(
                 List.of(new Card(CardNumber.ACE, CardPattern.SPADE_PATTERN),
-                        new Card(CardNumber.FOUR, CardPattern.SPADE_PATTERN)));
+                        new Card(CardNumber.FOUR, CardPattern.SPADE_PATTERN)), new Name("pola"));
 
         Assertions.assertThat(participant.getCardScore()).isEqualTo(15);
     }

@@ -1,11 +1,11 @@
 package controller;
 
 import card.CardDeck;
-import participant.dealer.Dealer;
 import gameResult.GameResult;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import participant.dealer.Dealer;
 import participant.player.Name;
 import participant.player.Player;
 import participant.player.Players;
@@ -45,7 +45,7 @@ public class BlackJackController {
     }
 
     private void runBlackJackGame(Players players, CardDeck cardDeck, Dealer dealer) {
-        outputView.printInitCardStatus(players, dealer.getFirstCard());
+        outputView.printInitCardStatus(players, dealer.getFirstCard(), dealer.getName());
 
         for (Player player : players.getPlayers()) {
             playGame(player, cardDeck);
@@ -74,7 +74,7 @@ public class BlackJackController {
             playerResult.put(player.getName(), player.betMoneyResult(gameResult.returnRate()));
         }
 
-        outputView.printBlackJackResult(playerResult);
+        outputView.printBlackJackResult(playerResult, dealer.getName());
     }
 
     private boolean isCanPlayPlayer(Player player) {

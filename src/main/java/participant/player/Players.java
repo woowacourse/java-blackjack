@@ -1,8 +1,8 @@
 package participant.player;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Players {
 
@@ -13,7 +13,6 @@ public class Players {
 
     public Players(List<Player> players) {
         validate(players);
-
         this.players = players;
     }
 
@@ -47,7 +46,7 @@ public class Players {
     }
 
     private static int countPlayerUniqueName(List<String> players) {
-        return Set.copyOf(players).size();
+        return new HashSet<>(players).size();
     }
 
     private static void validatePlayerCountRange(List<Player> players) {
