@@ -5,12 +5,15 @@ import static java.util.stream.Collectors.toList;
 import controller.dto.request.PlayerBettingMoney;
 import controller.dto.response.PlayerOutcome;
 import domain.game.deck.PlayerOutcomeFunction;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Participants {
+    private static final Dealer CACHED_DEALER = new Dealer();
+    private static final List<Player> CACHED_PLAYERS = new ArrayList<>();
 
     private final List<Participant> participants;
 
@@ -21,13 +24,17 @@ public class Participants {
     public static Participants from(final List<PlayerBettingMoney> requests) {
         return Stream.concat(
                 generatePlayers(requests),
-                Stream.of(new Dealer()) // TODO: add 순서가 프로그램의 흐름에 영향을 끼친다.
+                Stream.of(CACHED_DEALER) // TODO: add 순서가 프로그램의 흐름에 영향을 끼친다.
         ).collect(Collectors.collectingAndThen(toList(), Participants::new));
     }
 
     private static Stream<Player> generatePlayers(final List<PlayerBettingMoney> requests) {
         return requests.stream()
-                .map(request -> new Player(request.name(), request.bettingAmount()));
+                .map(request -> {
+                    Player player = new Player(request.name(), request.bettingAmount());
+                    CACHED_PLAYERS.add(player);
+                    return player;
+                });
     }
 
     public List<PlayerOutcome> getPlayersOutcomeIf(final PlayerOutcomeFunction function) {
