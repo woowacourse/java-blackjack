@@ -20,7 +20,7 @@ class DeckShuffleFactoryTest {
         final Stack<Card> expectedCards = new Stack<>();
         expectedCards.addAll(cards);
 
-        DeckFactory deckFactory = new DeckShuffleFactory();
+        DeckFactory deckFactory = new ShuffledDeckFactory();
         final Stack<Card> resultCards = deckFactory.generate();
 
         assertThat(resultCards).containsExactlyInAnyOrderElementsOf(expectedCards);

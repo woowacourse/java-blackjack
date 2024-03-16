@@ -2,7 +2,7 @@ package blackjack;
 
 import blackjack.domain.GameBoard;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.DeckShuffleFactory;
+import blackjack.domain.card.ShuffledDeckFactory;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamers;
 import blackjack.domain.gamer.Player;
@@ -28,7 +28,7 @@ public class Application {
     }
 
     private static GameBoard createGameBoard() {
-        final Deck deck = new Deck(new DeckShuffleFactory());
+        final Deck deck = new Deck(new ShuffledDeckFactory());
         final Dealer dealer = new Dealer();
 
         List<String> playerNames = InputView.readPlayerNames();
