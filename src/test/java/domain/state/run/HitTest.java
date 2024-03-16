@@ -28,12 +28,12 @@ class HitTest {
     @Test
     @DisplayName("카드를 뽑은 후 카드의 합이 21을 초과할 때 상태는 버스트다")
     void bust() {
-        final State hit = new Hit(new Hands(new ArrayList<>(List.of(new Card(Rank.ACE, Suit.CLUBS)))));
+        State hit = new Hit(new Hands(new ArrayList<>(List.of(new Card(Rank.TEN, Suit.CLUBS)))));
 
-        hit.add(new Card(Rank.TEN, Suit.CLUBS));
-        final State newState = hit.add(new Card(Rank.TEN, Suit.CLUBS));
+        hit = hit.add(new Card(Rank.TEN, Suit.CLUBS));
+        hit = hit.add(new Card(Rank.TEN, Suit.CLUBS));
 
-        assertThat(newState).isInstanceOf(Bust.class);
+        assertThat(hit).isInstanceOf(Bust.class);
     }
 
 }

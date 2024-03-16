@@ -10,8 +10,4 @@ public record Card(Rank rank, Suit suit) {
     public int getRankValue() {
         return rank.getValue();
     }
-
-    public Rank getRank() {
-        return rank;
-    }
 }
