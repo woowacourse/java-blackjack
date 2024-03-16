@@ -3,6 +3,7 @@ package blackjack.domain.result;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.function.BiPredicate;
 
 public enum GameResult {
@@ -25,7 +26,7 @@ public enum GameResult {
         return Arrays.stream(values())
                 .filter(gameResult -> gameResult.biPredicate.test(dealer, player))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[INTERNAL ERROR] 게임 결과를 판정할 수 없습니다"));
+                .orElseThrow(() -> new NoSuchElementException("[INTERNAL ERROR] 게임 결과를 판정할 수 없습니다"));
     }
 
     public double getProfitLeverage() {
