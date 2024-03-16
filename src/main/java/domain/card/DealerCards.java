@@ -16,6 +16,9 @@ public class DealerCards extends Cards implements Drawable {
     }
 
     public String getFirstCard() {
+        if (cards.isEmpty()) {
+            throw new UnsupportedOperationException("카드가 없습니다.");
+        }
         return cards.get(0).toString();
     }
 }

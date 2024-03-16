@@ -1,56 +1,56 @@
 package view;
 
-import domain.Name;
 import domain.card.Cards;
 import domain.card.DealerCards;
 import domain.card.PlayerCards;
-import domain.score.Score;
+import domain.game.BlackjackGame;
+import domain.player.Name;
+import domain.score.Revenue;
 import domain.score.ScoreBoard;
-import domain.score.Status;
 
 import java.util.List;
 import java.util.Map;
-import java.util.StringJoiner;
 
 public class OutputView {
 
-    public void printInitialCards(DealerCards dealerCards, List<PlayerCards> playerCards) {
-        List<String> names = playerCards.stream()
-                .map(playerCard -> playerCard.getPlayerName().toString())
-                .toList();
+    public void printInitialCards(BlackjackGame game) {
+        Map<Name, PlayerCards> players = game.players();
+        printDrawNotice(players);
 
-        System.out.println();
-        System.out.println("딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.");
-
-        String firstCard = dealerCards.getFirstCard();
+        String firstCard = game.dealer().getFirstCard();
         System.out.print("딜러: " + firstCard);
 
-        for (PlayerCards playerCard : playerCards) {
+        players.forEach((name, player) -> {
             System.out.println();
-            printPlayerCards(playerCard);
-        }
+            printPlayerCards(name, player);
+        });
         System.out.println();
     }
 
-    public void printPlayerCards(PlayerCards cards) {
-        Name playerName = cards.getPlayerName();
-        System.out.print(playerName + "카드: ");
-        System.out.print(formatCards(cards));
+    public void printPlayerCards(Name name, PlayerCards player) {
+        System.out.print(name + "카드: " + formatCards(player));
     }
 
-    private String formatCards(Cards playerCard) {
-        List<String> cards = playerCard.getCards();
-        return String.join(", ", cards);
-    }
-
-    public void printResults(DealerCards dealerCards, List<PlayerCards> playerCards) {
+    private void printDrawNotice(Map<Name, PlayerCards> players) {
+        List<String> names = players.keySet().stream()
+                .map(Name::toString)
+                .toList();
         System.out.println();
-        printDealerCards(dealerCards);
-        printSumOfCards(dealerCards);
-        for (PlayerCards playerCard : playerCards) {
-            printPlayerCards(playerCard);
-            printSumOfCards(playerCard);
-        }
+        System.out.println("딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.");
+    }
+
+    private String formatCards(Cards cards) {
+        return String.join(", ", cards.getCards());
+    }
+
+    public void printResults(BlackjackGame game) {
+        System.out.println();
+        printDealerCards(game.dealer());
+        printSumOfCards(game.dealer());
+        game.players().forEach((name, player) -> {
+            printPlayerCards(name, player);
+            printSumOfCards(player);
+        });
     }
 
     private void printDealerCards(DealerCards cards) {
@@ -66,21 +66,23 @@ public class OutputView {
         System.out.println();
         System.out.println("## 최종 승패");
         System.out.print("딜러: ");
-        Score dealerScore = scoreBoard.getDealerScore();
+        printDealerScore(scoreBoard);
 
-        StringJoiner stringJoiner = new StringJoiner(" ");
-        for (Status status : Status.values()) {
-            String score = dealerScore.getScore(status) + status.getStatus();
-            stringJoiner.add(score);
-        }
-        System.out.println(stringJoiner);
+        Map<Name, Revenue> playerScore = scoreBoard.getPlayersRevenues();
+        playerScore.forEach((name, revenue) -> System.out.println(name + ": " + revenue.getAmount()));
+    }
 
-        Map<Name, Status> playerStatus = scoreBoard.getPlayerScore();
-        playerStatus.forEach((name, status) -> System.out.println(name + ": " + status.getStatus()));
+    private void printDealerScore(ScoreBoard scoreBoard) {
+        Revenue dealerRevenue = scoreBoard.calculateDealerRevenue();
+        System.out.println(dealerRevenue.getAmount());
     }
 
     public void printDealerGivenCard() {
         System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public void printError(String message) {
+        System.out.println(message);
     }
 }

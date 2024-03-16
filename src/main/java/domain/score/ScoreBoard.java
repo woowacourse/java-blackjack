@@ -1,43 +1,36 @@
 package domain.score;
 
-import domain.Name;
+import domain.game.Bet;
+import domain.player.Name;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class ScoreBoard {
 
-    private final Score dealerScore = new Score();
-    private final Map<Name, Status> playerStatus;
+    private final Map<Name, Bet> playersBets;
+    private final Map<Name, Revenue> playersRevenues;
 
-    private ScoreBoard(Map<Name, Status> playerStatus) {
-        this.playerStatus = playerStatus;
+    public ScoreBoard(Map<Name, Bet> playersBets) {
+        this.playersBets = playersBets;
+        this.playersRevenues = new HashMap<>();
     }
 
-    public static ScoreBoard from(List<Name> names) {
-        Map<Name, Status> scoreBoard = names.stream()
-                .collect(Collectors.toMap(
-                        name -> name,
-                        name -> Status.TIE
-                ));
-        return new ScoreBoard(scoreBoard);
+    public void updatePlayerScore(Name name, Outcome outcome) {
+        Bet bet = playersBets.get(name);
+        RevenueCalculator revenueCalculator = outcome.getRevenueCalculator();
+        Revenue revenue = revenueCalculator.calculate(bet);
+        playersRevenues.put(name, revenue);
     }
 
-    public void updatePlayerScore(Name name, Status status) {
-        playerStatus.put(name, status);
+    public Revenue calculateDealerRevenue() {
+        List<Revenue> revenues = new ArrayList<>(playersRevenues.values());
+        int sum = revenues.stream()
+                .mapToInt(Revenue::getAmount)
+                .sum();
+        return new Revenue(sum * -1);
     }
 
-    public void updateDealerScore(Status status) {
-        dealerScore.increaseScore(status);
-    }
-
-    public Map<Name, Status> getPlayerScore() {
-        return Collections.unmodifiableMap(playerStatus);
-    }
-
-    public Score getDealerScore() {
-        return dealerScore;
+    public Map<Name, Revenue> getPlayersRevenues() {
+        return Collections.unmodifiableMap(playersRevenues);
     }
 }

@@ -1,5 +1,7 @@
 package domain.card;
 
+import java.util.List;
+
 public enum CardNumber {
 
     ACE(1, "A"),
@@ -26,8 +28,12 @@ public enum CardNumber {
     }
 
     public static CardNumber find(int random) {
-        CardNumber[] values = values();
-        return values[random - 1];
+        List<CardNumber> cardNumbers = List.of(values());
+        return cardNumbers.get(random - 1);
+    }
+
+    public boolean isAce() {
+        return this == CardNumber.ACE;
     }
 
     public int getValue() {

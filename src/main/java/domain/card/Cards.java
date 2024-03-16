@@ -1,6 +1,6 @@
 package domain.card;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Cards {
@@ -12,7 +12,7 @@ public class Cards {
 
     public Cards(List<Card> cards) {
         validate(cards);
-        this.cards = new ArrayList<>(cards);
+        this.cards = new LinkedList<>(cards);
     }
 
     private void validate(List<Card> cards) {
@@ -23,6 +23,11 @@ public class Cards {
 
     public void receive(Card card) {
         cards.add(card);
+    }
+
+    public int sumInitCards() {
+        Cards initCards = new Cards(cards.subList(0, 2));
+        return initCards.bestSum();
     }
 
     public int bestSum() {
