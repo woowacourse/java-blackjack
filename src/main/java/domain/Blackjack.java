@@ -50,14 +50,13 @@ public class Blackjack {
                 .stream()
                 .collect(Collectors.toMap(Player::getName, player -> player.calculateProfit(dealer), (a, b) -> a,
                         LinkedHashMap::new));
-        return new GameResult(calculateDealerProfit(), playerResult);
-    }
 
-    private double calculateDealerProfit() {
-        return -1.0 * players.stream()
+        final double dealerProfit = -1.0 * players.stream()
                 .map(player -> player.calculateProfit(dealer))
                 .mapToDouble(profit -> profit)
                 .sum();
+
+        return new GameResult(dealerProfit, playerResult);
     }
 
     public ParticipantsResponse toParticipantsResponse() {

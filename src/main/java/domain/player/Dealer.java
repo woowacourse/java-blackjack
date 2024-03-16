@@ -17,7 +17,6 @@ public final class Dealer extends Participant {
         return getState().compareWith(other.getState());
     }
 
-
     public Card draw() {
         return decks.draw();
     }
@@ -35,7 +34,6 @@ public final class Dealer extends Participant {
     }
 
     public DealerResponse toDealerResponse() {
-        return new DealerResponse(getHands().stream().map(Card::toCardResponse).toList(),
-                getScore());
+        return new DealerResponse(getHands().stream().map(Card::toCardResponse).toList(), getScore());
     }
 }
