@@ -1,8 +1,11 @@
 package blackjack.domain.betting;
 
+import blackjack.domain.Ownable;
 import blackjack.domain.participant.Name;
+import java.util.Objects;
 
-public class OwnedMoney {
+public class OwnedMoney implements Ownable<Name> {
+
     private final Name ownerName;
     private final Money money;
 
@@ -15,15 +18,30 @@ public class OwnedMoney {
         this(ownerName, new Money(betAmount));
     }
 
-    public boolean ownedBy(Name ownerName) {
-        return this.ownerName.equals(ownerName);
-    }
-
     public Money getMoney() {
         return money;
     }
 
-    public Name getOwnerName() {
-        return ownerName;
+    @Override
+    public Name getOwner() {
+        return this.ownerName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        OwnedMoney other = (OwnedMoney) o;
+        return Objects.equals(ownerName, other.ownerName)
+                && Objects.equals(money, other.money);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ownerName, money);
     }
 }

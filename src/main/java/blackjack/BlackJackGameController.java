@@ -6,6 +6,7 @@ import blackjack.domain.betting.OwnedMoney;
 import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -69,7 +70,7 @@ public class BlackJackGameController {
         Money dealerPrize = calculateDealerPrize(prizes);
         outputView.printDealerPrize(dealerPrize);
         for (OwnedMoney prize : prizes) {
-            outputView.printPlayerPrize(prize.getOwnerName(), prize.getMoney());
+            outputView.printPlayerPrize(prize.getOwner(), prize.getMoney());
         }
     }
 

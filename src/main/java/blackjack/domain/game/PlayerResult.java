@@ -1,8 +1,11 @@
 package blackjack.domain.game;
 
+import blackjack.domain.Ownable;
+import blackjack.domain.betting.Money;
+import blackjack.domain.betting.OwnedMoney;
 import blackjack.domain.participant.Name;
 
-public class PlayerResult {
+public class PlayerResult implements Ownable<Name> {
 
     private final Name name;
     private final GameResult gameResult;
@@ -12,11 +15,12 @@ public class PlayerResult {
         this.gameResult = gameResult;
     }
 
-    public Name getName() {
-        return name;
+    public Money calculatePrize(OwnedMoney bet) {
+        return gameResult.calculatePrize(bet.getMoney());
     }
 
-    public GameResult getResult() {
-        return gameResult;
+    @Override
+    public Name getOwner() {
+        return name;
     }
 }

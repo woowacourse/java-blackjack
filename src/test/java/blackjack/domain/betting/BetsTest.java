@@ -31,7 +31,8 @@ public class BetsTest {
             OwnedMoney prize = bets.getPrize(result);
 
             //then
-            assertThat(prize.getMoney()).isEqualTo(BETTING_MONEY.multiply(1.5));
+
+            assertThat(prize).isEqualTo(new OwnedMoney(DEFAULT_NAME, BETTING_MONEY.multiply(1.5)));
         }
 
         @DisplayName("베팅 결과가 플레이어 일반승 이라면 베팅 금액의 1.5배를 받는다.")
@@ -45,7 +46,8 @@ public class BetsTest {
             OwnedMoney prize = bets.getPrize(result);
 
             //then
-            assertThat(prize.getMoney()).isEqualTo(BETTING_MONEY.multiply(1));
+
+            assertThat(prize).isEqualTo(new OwnedMoney(DEFAULT_NAME, BETTING_MONEY.multiply(1)));
         }
 
         @DisplayName("게임 결과가 무승부(PUSH) 라면 베팅 금액을 돌려받는다.")
@@ -59,7 +61,7 @@ public class BetsTest {
             OwnedMoney prize = bets.getPrize(result);
 
             //then
-            assertThat(prize.getMoney()).isEqualTo(Money.ZERO);
+            assertThat(prize).isEqualTo(new OwnedMoney(DEFAULT_NAME, BETTING_MONEY.multiply(0)));
         }
 
         @DisplayName("게임 결과가 플레이어 패배라면 베팅 금액을 잃는다.")
@@ -73,7 +75,7 @@ public class BetsTest {
             OwnedMoney prize = bets.getPrize(result);
 
             //then
-            assertThat(prize.getMoney()).isEqualTo(BETTING_MONEY.multiply(-1));
+            assertThat(prize).isEqualTo(new OwnedMoney(DEFAULT_NAME, BETTING_MONEY.multiply(-1)));
         }
     }
 }
