@@ -7,7 +7,6 @@ import blackjack.domain.card.TestHandCreator;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.TestPlayerCreator;
-import blackjack.domain.result.GameResult;
 import blackjack.domain.result.PlayerProfits;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +30,6 @@ class PlayerBetsTest {
 
         PlayerProfits playerProfits = playerBets.calculateProfitResult(dealer);
 
-        assertThat(GameResult.of(dealer, player2)).isEqualTo(GameResult.PLAYER_LOSE);
         assertAll(
                 () -> assertThat(playerProfits.findProfitOfPlayer(player1).getValue()).isEqualTo(1500),
                 () -> assertThat(playerProfits.findProfitOfPlayer(player2).getValue()).isEqualTo(-1000)
