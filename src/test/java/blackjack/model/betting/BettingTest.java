@@ -3,7 +3,6 @@ package blackjack.model.betting;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.player.MatchResult;
-import blackjack.view.dto.PlayerBettingProfitOutcome;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,6 @@
-package blackjack.view.dto;
+package blackjack.model.dealer;
 
 import blackjack.model.card.Card;
-import blackjack.model.dealer.Dealer;
 import java.util.List;
 
 public record DealerFinalCardsOutcome(List<Card> cards, int totalScore) {
