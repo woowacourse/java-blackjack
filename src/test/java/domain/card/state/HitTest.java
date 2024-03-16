@@ -2,6 +2,7 @@ package domain.card.state;
 
 import static fixture.CardFixture.카드;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Cards;
 import domain.card.Denomination;
@@ -39,5 +40,24 @@ class HitTest {
         CardState stay = hit.finish();
 
         assertThat(stay).isExactlyInstanceOf(Stay.class);
+    }
+
+    @Test
+    void 종료되지_않은_상태이다() {
+        Cards cards = new Cards();
+        CardState hit = new Hit(cards);
+
+        boolean finished = hit.isFinished();
+
+        assertThat(finished).isFalse();
+    }
+
+    @Test
+    void 수익을_계산하면_예외가_발생한다() {
+        Cards cards = new Cards();
+        CardState hit = new Hit(cards);
+
+        assertThatThrownBy(() -> hit.calculateProfit(1))
+                .isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 }

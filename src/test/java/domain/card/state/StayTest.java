@@ -24,4 +24,22 @@ class StayTest {
 
         assertThat(finish).isExactlyInstanceOf(Stay.class);
     }
+
+    @Test
+    void 종료된_상태이다() {
+        CardState stay = new Stay(new Cards());
+
+        boolean finished = stay.isFinished();
+
+        assertThat(finished).isTrue();
+    }
+
+    @Test
+    void 스테이의_수익은_배팅_금액의_100퍼센트이다() {
+        CardState stay = new Stay(new Cards());
+
+        int profit = stay.calculateProfit(1000);
+
+        assertThat(profit).isEqualTo(1000);
+    }
 }

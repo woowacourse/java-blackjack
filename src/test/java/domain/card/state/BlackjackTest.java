@@ -24,4 +24,22 @@ class BlackjackTest {
 
         assertThat(finish).isExactlyInstanceOf(Blackjack.class);
     }
+
+    @Test
+    void 종료된_상태이다() {
+        CardState blackjack = new Blackjack(new Cards());
+
+        boolean finished = blackjack.isFinished();
+
+        assertThat(finished).isTrue();
+    }
+
+    @Test
+    void 블랙잭의_수익은_배팅_금액의_150퍼센트이다() {
+        CardState blackjack = new Blackjack(new Cards());
+
+        int profit = blackjack.calculateProfit(1000);
+
+        assertThat(profit).isEqualTo(1500);
+    }
 }

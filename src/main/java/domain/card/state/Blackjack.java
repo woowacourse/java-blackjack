@@ -6,4 +6,9 @@ public class Blackjack extends Finished {
     protected Blackjack(Cards cards) {
         super(cards);
     }
+
+    @Override
+    double earningRate() {
+        return 1.5;
+    }
 }

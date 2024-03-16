@@ -48,4 +48,23 @@ class PrepareTest {
         assertThatThrownBy(started::finish)
                 .isExactlyInstanceOf(UnsupportedOperationException.class);
     }
+
+    @Test
+    void 종료되지_않은_상태이다() {
+        Cards cards = new Cards();
+        CardState started = new Prepare(cards);
+
+        boolean finished = started.isFinished();
+
+        assertThat(finished).isFalse();
+    }
+
+    @Test
+    void 수익을_계산하면_예외가_발생한다() {
+        Cards cards = new Cards();
+        CardState started = new Prepare(cards);
+
+        assertThatThrownBy(() -> started.calculateProfit(1))
+                .isExactlyInstanceOf(UnsupportedOperationException.class);
+    }
 }

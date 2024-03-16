@@ -17,4 +17,16 @@ public abstract class Finished extends Initial {
     public CardState finish() {
         return this;
     }
+
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
+
+    @Override
+    public int calculateProfit(int bettingAmount) {
+        return (int) (bettingAmount * earningRate());
+    }
+
+    abstract double earningRate();
 }

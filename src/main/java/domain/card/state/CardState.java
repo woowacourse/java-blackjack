@@ -8,5 +8,9 @@ public interface CardState {
 
     CardState finish();
 
+    boolean isFinished();
+
+    int calculateProfit(int bettingAmount);
+
     Cards cards();
 }

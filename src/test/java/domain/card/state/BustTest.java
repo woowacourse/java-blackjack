@@ -24,4 +24,22 @@ class BustTest {
 
         assertThat(finish).isExactlyInstanceOf(Bust.class);
     }
+
+    @Test
+    void 종료된_상태이다() {
+        CardState bust = new Bust(new Cards());
+
+        boolean finished = bust.isFinished();
+
+        assertThat(finished).isTrue();
+    }
+
+    @Test
+    void 버스트의_수익은_배팅_금액을_모두_잃는다() {
+        CardState bust = new Bust(new Cards());
+
+        int profit = bust.calculateProfit(1000);
+
+        assertThat(profit).isEqualTo(-1000);
+    }
 }
