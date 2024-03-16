@@ -13,6 +13,10 @@ public final class Score {
         this.value = value;
     }
 
+    public static Score getDefaults() {
+        return new Score(0);
+    }
+
     public Score sum(final Score other) {
         return new Score(value + other.value);
     }

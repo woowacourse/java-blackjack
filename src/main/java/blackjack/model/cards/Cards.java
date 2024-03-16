@@ -9,20 +9,17 @@ public final class Cards {
     private static final int SIZE_WHEN_BLACKJACK = 2;
 
     private final List<Card> cards;
-    private Score score;
 
     public Cards() {
-        this(List.of(), new Score(0));
+        this(List.of());
     }
 
-    private Cards(final List<Card> cards, final Score score) {
+    private Cards(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
-        this.score = score;
     }
 
     public void add(final Card card) {
         cards.add(card);
-        score = score.sum(card.getScore());
     }
 
     public void add(final List<Card> cardsToAdd) {
@@ -34,6 +31,7 @@ public final class Cards {
     }
 
     public Score getCardsScore() {
+        Score score = calculateScore();
         if (hasAce()) {
             return score.getScoreWhenHasAce();
         }
@@ -56,11 +54,17 @@ public final class Cards {
     }
 
     private boolean isBusted() {
-        return score.isBusted();
+        return getCardsScore().isBusted();
     }
 
     private boolean isBlackJack() {
         return cards.size() == SIZE_WHEN_BLACKJACK && getCardsScore().isBlackJack();
+    }
+
+    private Score calculateScore() {
+        return cards.stream()
+                .map(Card::getScore)
+                .reduce(Score.getDefaults(), Score::sum);
     }
 
     public List<Card> getCards() {
