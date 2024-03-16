@@ -7,7 +7,6 @@ import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Name;
 import blackjack.model.participants.Participant;
 import blackjack.model.participants.Player;
-import blackjack.model.participants.PlayerInfo;
 import blackjack.model.participants.Players;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -27,7 +26,6 @@ public class OutputView {
         Card dealerCard = getDealerCard(dealer);
         System.out.println(getNameAndInformationFormat(DEALER_NAME, convertCardText(dealerCard)));
         System.out.println(getPlayersCardsInOneLine(allPlayers));
-        System.out.println();
     }
 
     public void printPlayerCardsInfo(final Players players, final int index) {
@@ -60,8 +58,7 @@ public class OutputView {
 
     private String getPlayersNamesInOneLine(final List<Player> players) {
         return players.stream()
-                .map(Player::getPlayerInfo)
-                .map(PlayerInfo::getName)
+                .map(Player::getName)
                 .map(Name::getValue)
                 .collect(Collectors.joining(MULTIPLE_OUTPUTS_DELIMITER));
     }
@@ -112,7 +109,7 @@ public class OutputView {
     }
 
     private String getPlayerName(final Player player) {
-        return player.getPlayerInfo().getName().getValue();
+        return player.getName().getValue();
     }
 
     private Card getDealerCard(final Dealer dealer) {

@@ -3,7 +3,6 @@ package blackjack.view;
 import blackjack.model.participants.Betting;
 import blackjack.model.participants.Name;
 import blackjack.model.participants.Player;
-import blackjack.model.participants.PlayerInfo;
 import blackjack.model.participants.Players;
 import java.util.Arrays;
 import java.util.List;
@@ -27,8 +26,7 @@ public class InputView {
         validateMultipleInputs(input);
         List<Name> names = getNames(input);
         return names.stream()
-                .map(name -> new PlayerInfo(name, readMoney(name)))
-                .map(Player::new)
+                .map(name -> new Player(name, readMoney(name)))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Players::new));
     }
 
@@ -64,7 +62,7 @@ public class InputView {
     }
 
     private String getPlayerName(final Player player) {
-        return player.getPlayerInfo().getName().getValue();
+        return player.getName().getValue();
     }
 
     private void validateMultipleInputs(final String input) {

@@ -4,10 +4,12 @@ import blackjack.model.blackjackgame.PlayerProfitCalculator;
 import blackjack.model.blackjackgame.Profit;
 
 public final class Player extends Participant {
-    private final PlayerInfo playerInfo;
+    private final Name name;
+    private final Betting betting;
 
-    public Player(PlayerInfo playerInfo) {
-        this.playerInfo = playerInfo;
+    public Player(Name name, Betting betting) {
+        this.name = name;
+        this.betting = betting;
     }
 
     @Override
@@ -16,14 +18,14 @@ public final class Player extends Participant {
     }
 
     public Profit getProfit(final Participant participant) {
-        return playerInfo.getProfit(getScoreStatus(participant));
+        return betting.getProfit(getScoreStatus(participant));
     }
 
     private PlayerProfitCalculator getScoreStatus(final Participant participant) {
         return cards.getPlayerResultStatus(participant.cards);
     }
 
-    public PlayerInfo getPlayerInfo() {
-        return playerInfo;
+    public Name getName() {
+        return name;
     }
 }

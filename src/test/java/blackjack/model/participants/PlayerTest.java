@@ -19,7 +19,7 @@ class PlayerTest {
                 new Card(CardNumber.TEN, CardShape.CLOVER)
         );
 
-        Player player = new Player(new PlayerInfo(new Name("daon"), new Betting(0)));
+        Player player = new Player(new Name("daon"), new Betting(0));
         player.addCards(given);
         CardGenerator cardGenerator = new CardGenerator(maxRange -> 3);
 
@@ -34,7 +34,7 @@ class PlayerTest {
                 new Card(CardNumber.SIX, CardShape.HEART),
                 new Card(CardNumber.TEN, CardShape.CLOVER)
         );
-        Player player = new Player(new PlayerInfo(new Name("daon"), new Betting(0)));
+        Player player = new Player(new Name("daon"), new Betting(0));
         player.addCards(given);
 
         assertThat(player.checkCanGetMoreCard()).isTrue();
@@ -47,7 +47,7 @@ class PlayerTest {
                 new Card(CardNumber.ACE, CardShape.HEART),
                 new Card(CardNumber.JACK, CardShape.CLOVER)
         );
-        Player player = new Player(new PlayerInfo(new Name("daon"), new Betting(0)));
+        Player player = new Player(new Name("daon"), new Betting(0));
         player.addCards(given);
 
         assertThat(player.checkCanGetMoreCard()).isFalse();
@@ -61,7 +61,7 @@ class PlayerTest {
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.SPADE)
         );
-        Player player = new Player(new PlayerInfo(new Name("daon"), new Betting(0)));
+        Player player = new Player(new Name("daon"), new Betting(0));
         player.addCards(given);
 
         assertThat(player.checkCanGetMoreCard()).isFalse();
