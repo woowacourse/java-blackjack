@@ -1,33 +1,38 @@
 package blackjack.game;
 
-import blackjack.player.Score;
+import blackjack.player.Hand;
+import blackjack.player.Player;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MatchResults {
 
-    private final Map<String, MatchResult> results;
+    private final Hand dealerHand;
+    private final Map<Player, Integer> results;
 
-    public MatchResults() {
+    public MatchResults(Hand dealerHand) {
+        this.dealerHand = dealerHand;
         this.results = new HashMap<>();
     }
 
-    public void addResult(String playerName, Score playerScore, Score dealerScore) {
-        MatchResult result = MatchResult.chooseWinner(playerScore, dealerScore);
-        results.put(playerName, result);
+    public void addResult(Player player, Money money) {
+        double rateOfPrize = MatchResult.calculateRateOfPrize(player.getHand(), dealerHand);
+        int prizeMoney = (int) (money.getMoney() * rateOfPrize);
+        results.put(player, prizeMoney);
     }
 
-    public MatchResult getResultByName(String playerName) {
-        if (!results.containsKey(playerName)) {
-            throw new IllegalArgumentException("[ERROR] 존재하지 않는 이름입니다.");
+    public int getResultOf(Player player) {
+        if (!results.containsKey(player)) {
+            throw new IllegalArgumentException("[ERROR] 존재하지 않는 플레이어입니다.");
         }
-        return results.get(playerName);
+        return results.get(player);
     }
 
-    public int getResultCount(MatchResult result) {
-        return (int) results.values()
-                .stream()
-                .filter(matchResult -> matchResult == result)
-                .count();
+    public int getDealerResult() {
+        int dealerResult = 0;
+        for (Map.Entry<Player, Integer> result : results.entrySet()) {
+            dealerResult -= result.getValue();
+        }
+        return dealerResult;
     }
 }
