@@ -21,14 +21,14 @@ public class BlackJackGame {
     public void play() {
         Deck deck = Deck.createShuffledFullDeck();
         Dealer dealer = new Dealer();
-
         Players players = createPlayers();
+        PlayerBettingMoney playerBettingMoney = decideBettingMoney(players);
         initializeGame(deck, dealer, players);
         proceedPlayersTurn(deck, players);
         proceedDealerTurn(deck, dealer);
 
         showCardsWithScore(dealer, players);
-        showMatchResult(dealer, players);
+        showMatchResult(dealer, players, playerBettingMoney);
     }
 
     private Players createPlayers() {
@@ -37,6 +37,17 @@ public class BlackJackGame {
         Players players = new Players(names);
         outputView.printNewLine();
         return players;
+    }
+
+    private PlayerBettingMoney decideBettingMoney(Players players) {
+        PlayerBettingMoney playerBettingMoney = new PlayerBettingMoney();
+        for (Player player : players.getPlayers()) {
+            outputView.printBettingRequestMessage(player.getName());
+            Money money = new Money(inputView.readBattingAmount());
+            playerBettingMoney.addBetting(player, money);
+            outputView.printNewLine();
+        }
+        return playerBettingMoney;
     }
 
     private void initializeGame(Deck deck, Dealer dealer, Players players) {
@@ -97,34 +108,29 @@ public class BlackJackGame {
         outputView.printNewLine();
     }
 
-    private void showMatchResult(Dealer dealer, Players players) {
-        MatchResults matchResults = calculateMatchResults(dealer, players);
+    private void showMatchResult(Dealer dealer, Players players, PlayerBettingMoney bettingResults) {
+        MatchResults matchResults = calculateMatchResults(dealer, players, bettingResults);
         outputView.printResultStart();
         showDealerResult(matchResults);
         showPlayersResult(players, matchResults);
     }
 
-    private MatchResults calculateMatchResults(Dealer dealer, Players players) {
-        MatchResults matchResults = new MatchResults();
+    private MatchResults calculateMatchResults(Dealer dealer, Players players, PlayerBettingMoney bettingResults) {
+        MatchResults matchResults = new MatchResults(dealer.getHand());
         for (Player player : players.getPlayers()) {
-            matchResults.addResult(player.getName(), player.getScore(), dealer.getScore());
+            matchResults.addResult(player, bettingResults.getBettingAmountOf(player));
         }
         return matchResults;
     }
 
     private void showDealerResult(MatchResults matchResults) {
-        outputView.printDealerResult(
-                matchResults.getResultCount(MatchResult.DEALER_WIN),
-                matchResults.getResultCount(MatchResult.TIE),
-                matchResults.getResultCount(MatchResult.PLAYER_WIN)
-        );
+        outputView.printDealerResult(matchResults.getDealerResult());
     }
 
     private void showPlayersResult(Players players, MatchResults matchResults) {
         for (Player player : players.getPlayers()) {
-            String playerName = player.getName();
-            MatchResult result = matchResults.getResultByName(playerName);
-            outputView.printPlayerResult(playerName, result);
+            int playerResult = matchResults.getResultOf(player);
+            outputView.printPlayerResult(player.getName(), playerResult);
         }
     }
 }
