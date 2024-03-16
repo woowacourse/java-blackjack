@@ -1,10 +1,11 @@
 package model.participant;
 
-import static model.participant.MatchState.DRAW;
-import static model.participant.MatchState.LOSE;
-import static model.participant.MatchState.WIN;
+import static model.participant.state.MatchState.DRAW;
+import static model.participant.state.MatchState.LOSE;
+import static model.participant.state.MatchState.WIN;
 
 import model.card.Card;
+import model.participant.state.MatchState;
 
 public final class Player extends Participant {
     private final Name name;

@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import model.card.Card;
 import model.card.CardDeck;
+import model.participant.state.MatchState;
 
 public abstract class Participant {
 
