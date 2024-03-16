@@ -8,8 +8,8 @@ import java.util.Objects;
 
 public abstract class BlackjackGamer {
 
-    private final Name name;
-    private final Hand hand;
+    final Name name;
+    final Hand hand;
 
     public BlackjackGamer(String name, List<Card> cards) {
         this.name = new Name(name);
