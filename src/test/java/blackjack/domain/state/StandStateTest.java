@@ -3,12 +3,12 @@ package blackjack.domain.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.CardFactory;
-import blackjack.domain.CardFixture;
-import blackjack.domain.Deck;
-import blackjack.domain.Denomination;
-import blackjack.domain.Hand;
-import blackjack.domain.Score;
+import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.CardFixture;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.participant.Hand;
+import blackjack.domain.participant.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -52,6 +52,36 @@ public class StandStateTest {
                 CardFixture.fromSuitCloverWith(Denomination.NINE)));
 
         assertThat(standState.calculateHand()).isEqualTo(Score.from(19));
+    }
+
+    @DisplayName("스탠드 상태에서 자신의 핸드가 다른 핸드보다 더 크면 1을 반환한다")
+    @Test
+    public void getProfitRateWhenBiggerScore() {
+        StandState standState = new StandState(Hand.of(CardFixture.fromSuitCloverWith(Denomination.TEN),
+                CardFixture.fromSuitCloverWith(Denomination.NINE)));
+
+        assertThat(standState.getProfitRate(Hand.of(CardFixture.fromSuitCloverWith(Denomination.NINE),
+                CardFixture.fromSuitCloverWith(Denomination.EIGHT)))).isEqualTo(1);
+    }
+
+    @DisplayName("스탠드 상태에서 자신의 핸드가 다른 핸드보다 더 작으면 -1을 반환한다")
+    @Test
+    public void getProfitRateWhenSmallerScore() {
+        StandState standState = new StandState(Hand.of(CardFixture.fromSuitCloverWith(Denomination.TEN),
+                CardFixture.fromSuitCloverWith(Denomination.NINE)));
+
+        assertThat(standState.getProfitRate(Hand.of(CardFixture.fromSuitCloverWith(Denomination.TEN),
+                CardFixture.fromSuitCloverWith(Denomination.JACK)))).isEqualTo(-1);
+    }
+
+    @DisplayName("스탠드 상태에서 자신의 핸드와 다른 핸드가 점수가 같으면 0을 반환한다")
+    @Test
+    public void getProfitRateWhenEqualScore() {
+        StandState standState = new StandState(Hand.of(CardFixture.fromSuitCloverWith(Denomination.TEN),
+                CardFixture.fromSuitCloverWith(Denomination.NINE)));
+
+        assertThat(standState.getProfitRate(Hand.of(CardFixture.fromSuitCloverWith(Denomination.TEN),
+                CardFixture.fromSuitCloverWith(Denomination.NINE)))).isEqualTo(0);
     }
 }
 

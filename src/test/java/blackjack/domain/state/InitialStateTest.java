@@ -4,9 +4,10 @@ package blackjack.domain.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.CardFactory;
-import blackjack.domain.Deck;
-import blackjack.domain.Denomination;
+import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.participant.Hand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -46,16 +47,6 @@ class InitialStateTest {
                 .hasMessage("초기 상태에서는 할 수 없습니다.");
     }
 
-    @DisplayName("초기 상태에서 핸드를 계산하면 에러가 발생한다")
-    @Test
-    public void calculateHandFail() {
-        InitialState initialState = new InitialState();
-
-        assertThatCode(initialState::calculateHand)
-                .isInstanceOf(UnsupportedOperationException.class)
-                .hasMessage("초기 상태에서는 할 수 없습니다.");
-    }
-
     @DisplayName("초기 상태에서 핸드 반환하면 에러가 발생한다")
     @Test
     public void getHandFail() {
@@ -72,5 +63,15 @@ class InitialStateTest {
         InitialState initialState = new InitialState();
 
         assertThat(initialState.isFinished()).isFalse();
+    }
+
+    @DisplayName("초기 상태에서 수익률을 구하려하면 에러가 발생한다")
+    @Test
+    public void getProfitRate() {
+        InitialState initialState = new InitialState();
+
+        assertThatCode(() -> initialState.getProfitRate(Hand.of()))
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("초기 상태에서는 할 수 없습니다.");
     }
 }

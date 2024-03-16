@@ -1,11 +1,11 @@
 package blackjack.domain.state;
 
-import blackjack.domain.Deck;
-import blackjack.domain.Hand;
+import blackjack.domain.card.Deck;
+import blackjack.domain.participant.Hand;
 
 public abstract class ClosedState extends State {
 
-    public ClosedState(Hand hand) {
+    ClosedState(Hand hand) {
         super(hand);
     }
 

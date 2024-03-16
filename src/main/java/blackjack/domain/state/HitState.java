@@ -1,12 +1,12 @@
 package blackjack.domain.state;
 
-import blackjack.domain.Card;
-import blackjack.domain.Deck;
-import blackjack.domain.Hand;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+import blackjack.domain.participant.Hand;
 
 public class HitState extends State {
 
-    public HitState(Hand hand) {
+    HitState(Hand hand) {
         super(hand);
     }
 
@@ -28,5 +28,10 @@ public class HitState extends State {
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public double getProfitRate(Hand other) {
+        throw new UnsupportedOperationException("현재 상태에서는 할 수 없습니다.");
     }
 }

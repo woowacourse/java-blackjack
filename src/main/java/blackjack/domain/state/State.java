@@ -1,8 +1,8 @@
 package blackjack.domain.state;
 
-import blackjack.domain.Deck;
-import blackjack.domain.Hand;
-import blackjack.domain.Score;
+import blackjack.domain.card.Deck;
+import blackjack.domain.participant.Hand;
+import blackjack.domain.participant.Score;
 
 public abstract class State {
     private final Hand hand;
@@ -20,6 +20,8 @@ public abstract class State {
     public Score calculateHand() {
         return hand.sumScores();
     }
+
+    public abstract double getProfitRate(Hand other);
 
     public Hand getHand() {
         return hand;

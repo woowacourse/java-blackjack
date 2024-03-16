@@ -3,12 +3,12 @@ package blackjack.domain.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.CardFactory;
-import blackjack.domain.CardFixture;
-import blackjack.domain.Deck;
-import blackjack.domain.Denomination;
-import blackjack.domain.Hand;
-import blackjack.domain.Score;
+import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.CardFixture;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.participant.Hand;
+import blackjack.domain.participant.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -52,5 +52,16 @@ public class BustStateTest {
                 CardFixture.fromSuitCloverWith(Denomination.KING), CardFixture.fromSuitCloverWith(Denomination.KING)));
 
         assertThat(bustState.calculateHand()).isEqualTo(Score.from(30));
+    }
+
+    @DisplayName("버스트 상태면 -1을 반환한다")
+    @Test
+    public void getProfitRate() {
+        BustState bustState = new BustState(Hand.of(CardFixture.fromSuitCloverWith(Denomination.KING),
+                CardFixture.fromSuitCloverWith(Denomination.KING), CardFixture.fromSuitCloverWith(Denomination.KING)));
+
+        assertThat(bustState.getProfitRate(Hand.of(CardFixture.fromSuitCloverWith(Denomination.KING),
+                CardFixture.fromSuitCloverWith(Denomination.KING),
+                CardFixture.fromSuitCloverWith(Denomination.KING)))).isEqualTo(-1);
     }
 }

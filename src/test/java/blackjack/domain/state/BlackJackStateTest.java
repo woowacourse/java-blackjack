@@ -3,12 +3,12 @@ package blackjack.domain.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.CardFactory;
-import blackjack.domain.CardFixture;
-import blackjack.domain.Deck;
-import blackjack.domain.Denomination;
-import blackjack.domain.Hand;
-import blackjack.domain.Score;
+import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.CardFixture;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.participant.Hand;
+import blackjack.domain.participant.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -52,5 +52,25 @@ public class BlackJackStateTest {
                 CardFixture.fromSuitCloverWith(Denomination.JACK)));
 
         assertThat(blackJackState.calculateHand()).isEqualTo(Score.from(21));
+    }
+
+    @DisplayName("플레이어가 블랙잭이고, 딜러가 블랙잭이 아니면 1.5를 반환한다")
+    @Test
+    public void getProfitRate() {
+        BlackJackState blackJackState = new BlackJackState(Hand.of(CardFixture.fromSuitCloverWith(Denomination.ACE),
+                CardFixture.fromSuitCloverWith(Denomination.JACK)));
+
+        assertThat(blackJackState.getProfitRate(Hand.of(CardFixture.fromSuitCloverWith(Denomination.ACE),
+                CardFixture.fromSuitCloverWith(Denomination.TWO)))).isEqualTo(1.5);
+    }
+
+    @DisplayName("플레이어와 딜러 모두 블랙잭이면 1을 반환한다")
+    @Test
+    public void getProfitRate2() {
+        BlackJackState blackJackState = new BlackJackState(Hand.of(CardFixture.fromSuitCloverWith(Denomination.ACE),
+                CardFixture.fromSuitCloverWith(Denomination.JACK)));
+
+        assertThat(blackJackState.getProfitRate(Hand.of(CardFixture.fromSuitCloverWith(Denomination.ACE),
+                CardFixture.fromSuitCloverWith(Denomination.KING)))).isEqualTo(1);
     }
 }
