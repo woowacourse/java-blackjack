@@ -27,9 +27,9 @@ public class PlayerTest {
         Card queenCard = new Card(CardNumber.QUEEN, CardPattern.CLOVER_PATTERN);
         Card jackCard = new Card(CardNumber.JACK, CardPattern.CLOVER_PATTERN);
 
-        player.receiveCard(kingCard);
-        player.receiveCard(queenCard);
-        player.receiveCard(jackCard);
+        player.hit(kingCard);
+        player.hit(queenCard);
+        player.hit(jackCard);
 
         Assertions.assertThat(player.isBust()).isTrue();
     }

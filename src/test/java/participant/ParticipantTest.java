@@ -19,8 +19,8 @@ class ParticipantTest {
     void isBustPlayer() {
         Player player = Player.joinGame("pola", new CardDeck().firstCardSettings(), 3000);
 
-        player.receiveCard(new Card(CardNumber.JACK, CardPattern.DIA_PATTERN));
-        player.receiveCard(new Card(CardNumber.JACK, CardPattern.SPADE_PATTERN));
+        player.hit(new Card(CardNumber.JACK, CardPattern.DIA_PATTERN));
+        player.hit(new Card(CardNumber.JACK, CardPattern.SPADE_PATTERN));
 
         Assertions.assertThat(player.isBust()).isTrue();
     }
@@ -42,7 +42,7 @@ class ParticipantTest {
 
         Card card = new Card(CardNumber.ACE, CardPattern.SPADE_PATTERN);
 
-        participant.receiveCard(card);
+        participant.hit(card);
 
         Assertions.assertThat(participant.getCards().countCard()).isEqualTo(1);
     }

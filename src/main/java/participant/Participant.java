@@ -18,17 +18,17 @@ public class Participant {
         this.name = name;
     }
 
-    public void receiveCard(Card card) {
-        cards.addCard(card);
-    }
-
     public boolean isBlackJack() {
-        return cards.countMaxScore() == MAX_BLACK_JACK_SCORE && cards.countCard() == INIT_CARD_SETTING_COUNT;
+        return getCardScore() == MAX_BLACK_JACK_SCORE
+                && cards.countCard() == INIT_CARD_SETTING_COUNT;
     }
 
     public boolean isBust() {
-        int totalCardScore = cards.countMaxScore();
-        return MAX_BLACK_JACK_SCORE < totalCardScore;
+        return getCardScore() > MAX_BLACK_JACK_SCORE;
+    }
+
+    public void hit(Card card) {
+        cards.addCard(card);
     }
 
     public Name getName() {

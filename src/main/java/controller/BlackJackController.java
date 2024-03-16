@@ -59,8 +59,8 @@ public class BlackJackController {
     }
 
     private void playGame(Player player, CardDeck cardDeck) {
-        while (isCanPlayPlayer(player)) {
-            player.receiveCard(cardDeck.pickCard());
+        while (isHit(player)) {
+            player.hit(cardDeck.pickCard());
             outputView.printPlayerCardStatus(player);
         }
     }
@@ -77,7 +77,7 @@ public class BlackJackController {
         outputView.printBlackJackResult(playerResult, dealer.getName());
     }
 
-    private boolean isCanPlayPlayer(Player player) {
+    private boolean isHit(Player player) {
         return !player.isBust() && inputView.inputPlayerCommand(
                 player.getName());
     }

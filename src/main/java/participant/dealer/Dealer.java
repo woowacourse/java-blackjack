@@ -21,7 +21,7 @@ public class Dealer extends Participant {
 
     public void playGame(CardDeck cardDeck) {
         while (isNotOverMinScore()) {
-            receiveCard(cardDeck.pickCard());
+            hit(cardDeck.pickCard());
         }
     }
 
