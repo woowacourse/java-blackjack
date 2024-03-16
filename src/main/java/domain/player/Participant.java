@@ -29,7 +29,6 @@ public abstract class Participant {
         return state;
     }
 
-
     public final int getScore() {
         return state.getScore();
     }

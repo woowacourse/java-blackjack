@@ -1,9 +1,6 @@
 package domain.player;
 
 import static domain.card.Rank.FOUR;
-import static domain.card.Rank.SEVEN;
-import static domain.card.Rank.SIX;
-import static domain.card.Rank.TEN;
 import static domain.card.Rank.THREE;
 import static domain.card.Rank.TWO;
 import static domain.card.Suit.CLUBS;
@@ -16,22 +13,15 @@ import org.junit.jupiter.api.Test;
 public class DealerTest {
 
     @Test
-    @DisplayName("딜러는 카드의 합이 17 미만이라면 히트할 수 있다")
+    @DisplayName("딜러는 히트 이후 카드의 합이 17을 초과한다")
     void canHit() {
         final Dealer dealer = new Dealer();
-        dealer.init(new Card(TEN, CLUBS), new Card(SIX, CLUBS));
-        dealer.finish();
 
-//        Assertions.assertThat(dealer.getState().isStand()).isTrue();
-    }
+        dealer.init(new Card(TWO, CLUBS), new Card(TWO, CLUBS));
+        dealer.automaticHit(() -> {
+        });
 
-    @Test
-    @DisplayName("딜러는 카드의 합이 17 이상이면 히트할 수 없다")
-    void canNotHit() {
-        final Dealer dealer = new Dealer();
-        dealer.init(new Card(TEN, CLUBS), new Card(SEVEN, CLUBS));
-        dealer.finish();
-        Assertions.assertThat(dealer.getState().isRunning()).isFalse();
+        Assertions.assertThat(dealer.getScore()).isGreaterThanOrEqualTo(17);
     }
 
     @Test
