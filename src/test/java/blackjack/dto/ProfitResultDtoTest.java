@@ -1,12 +1,12 @@
 package blackjack.dto;
 
-import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.strategy.ReverseCardShuffleStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.profit.ProfitResult;
 import org.junit.jupiter.api.Test;
 
+import static blackjack.fixture.DealerFixture.딜러;
+import static blackjack.fixture.PlayerFixture.플레이어;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 
@@ -14,8 +14,8 @@ class ProfitResultDtoTest {
 
     @Test
     void dto로_변환할_수_있다() {
-        final Dealer dealer = new Dealer(new CardDeck(), new ReverseCardShuffleStrategy());
-        final Player player = new Player("pobi");
+        final Dealer dealer = 딜러();
+        final Player player = 플레이어("pobi");
         final ProfitResult profitResult = new ProfitResult();
         profitResult.recordParticipantsProfit(dealer, player, 10000);
 

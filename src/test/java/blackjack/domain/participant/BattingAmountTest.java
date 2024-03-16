@@ -1,4 +1,4 @@
-package blackjack.domain.batting;
+package blackjack.domain.participant;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

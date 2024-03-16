@@ -8,13 +8,14 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static blackjack.fixture.PlayerFixture.플레이어;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class ParticipantDtoTest {
 
     @Test
     void dto로_변환할_수_있다() {
-        final Player player = new Player("pobi");
+        final Player player = 플레이어("pobi");
         player.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
         final ParticipantDto participantDto = ParticipantDto.from(player);
 

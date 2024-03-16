@@ -10,35 +10,29 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(final List<String> playerNames) {
-        validatePlayers(playerNames);
-        this.players = mapPlayer(playerNames);
+    public Players(final List<Player> players) {
+        validatePlayers(players);
+        this.players = new ArrayList<>(players);
     }
 
-    private void validatePlayers(final List<String> playerNames) {
-        validateDuplicatedName(playerNames);
-        validatePlayerSize(playerNames);
+    private void validatePlayers(final List<Player> players) {
+        validateDuplicatedName(players);
+        validatePlayerSize(players);
     }
 
-    private void validateDuplicatedName(final List<String> playerNames) {
-        if (playerNames.size() != new HashSet<>(playerNames).size()) {
+    private void validateDuplicatedName(final List<Player> players) {
+        if (players.size() != new HashSet<>(players).size()) {
             throw new IllegalArgumentException("플레이어 이름 중 중복된 이름이 존재할 수 없습니다.");
         }
     }
 
-    private void validatePlayerSize(final List<String> playerNames) {
-        final int size = playerNames.size();
+    private void validatePlayerSize(final List<Player> players) {
+        final int size = players.size();
 
         if (size < MINIMUM_PLAYER_SIZE || size > MAXIMUM_PLAYER_SIZE) {
             throw new IllegalArgumentException(
                     String.format("게임에 참여하는 플레이어는 %d ~ %d명이어야 합니다.", MINIMUM_PLAYER_SIZE, MAXIMUM_PLAYER_SIZE));
         }
-    }
-
-    private List<Player> mapPlayer(final List<String> playerNames) {
-        return playerNames.stream()
-                .map(Player::new)
-                .toList();
     }
 
     public int count() {
@@ -63,7 +57,7 @@ public class Players {
             result.put(player, ResultStatus.of(player, dealer));
         }
 
-        return result;
+        return Collections.unmodifiableMap(result);
     }
 
     public List<Player> getPlayers() {

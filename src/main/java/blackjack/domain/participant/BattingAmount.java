@@ -1,4 +1,4 @@
-package blackjack.domain.batting;
+package blackjack.domain.participant;
 
 import java.util.Objects;
 

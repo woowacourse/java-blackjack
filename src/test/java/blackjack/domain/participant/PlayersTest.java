@@ -3,6 +3,8 @@ package blackjack.domain.participant;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
+
 import static blackjack.fixture.PlayerFixture.플레이어들;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -27,7 +29,7 @@ class PlayersTest {
 
     @Test
     void 게임에_참여하는_플레이어의_수가_1보다_작으면_예외가_발생한다() {
-        assertThatThrownBy(() -> 플레이어들())
+        assertThatThrownBy(() -> new Players(Collections.emptyList()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("게임에 참여하는 플레이어는 1 ~ 6명이어야 합니다.");
     }
