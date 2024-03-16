@@ -31,7 +31,7 @@ public enum CardName {
         return cardName;
     }
 
-    public boolean isCardNumberSame(int cardNumber) {
-        return this.cardNumber == cardNumber;
+    public boolean isAce() {
+        return cardNumber == ACE.cardNumber;
     }
 }
