@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class Players {
     private final List<Player> players;
@@ -40,23 +39,24 @@ public class Players {
         return players.stream().map(Player::getRawName).toList();
     }
 
-    void draw(Deck deck, Consumer<Player> doAfterEachPlayerDraw, Function<String, Boolean> playerWantDraw) {
+    void draw(Deck deck, PlayerDrawAfterCallBack playerDrawAfterCallBack, DrawConfirmation drawConfirmation) {
         for (Player player : players) {
-            playerDraw(deck, doAfterEachPlayerDraw, playerWantDraw, player);
+            playerDraw(deck, playerDrawAfterCallBack, drawConfirmation, player);
         }
     }
 
-    private void playerDraw(Deck deck, Consumer<Player> doAfterEachPlayerDraw, Function<String, Boolean> playerWantDraw,
+    private void playerDraw(Deck deck, PlayerDrawAfterCallBack playerDrawAfterCallBack,
+                            DrawConfirmation drawConfirmation,
                             Player player) {
         boolean hasNextDrawChance = true;
         while (hasNextDrawChance) {
-            hasNextDrawChance = playerTryDrawOnce(deck, player, playerWantDraw);
-            doAfterEachPlayerDraw.accept(player);
+            hasNextDrawChance = playerTryDrawOnce(deck, player, drawConfirmation);
+            playerDrawAfterCallBack.afterDrawProcess(player);
         }
     }
 
-    private boolean playerTryDrawOnce(Deck deck, Player player, Function<String, Boolean> playerWantDraw) {
-        boolean needToDraw = playerWantDraw.apply(player.getRawName());
+    private boolean playerTryDrawOnce(Deck deck, Player player, DrawConfirmation drawConfirmation) {
+        boolean needToDraw = drawConfirmation.isDrawDesired(player.getRawName());
         DrawResult drawResult = null;
         if (needToDraw) {
             drawResult = player.draw(deck);

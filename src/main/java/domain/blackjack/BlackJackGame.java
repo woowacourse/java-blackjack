@@ -2,8 +2,6 @@ package domain.blackjack;
 
 import domain.card.Deck;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.stream.IntStream;
 
 public class BlackJackGame {
@@ -23,9 +21,9 @@ public class BlackJackGame {
         });
     }
 
-    public void playersDraw(Deck deck, Consumer<Player> doAfterEachPlayerDraw,
-                            Function<String, Boolean> playerWantDraw) {
-        players.draw(deck, doAfterEachPlayerDraw, playerWantDraw);
+    public void playersDraw(Deck deck, PlayerDrawAfterCallBack playerDrawAfterCallBack,
+                            DrawConfirmation drawConfirmation) {
+        players.draw(deck, playerDrawAfterCallBack, drawConfirmation);
     }
 
     public boolean dealerTryDraw(Deck deck) {
