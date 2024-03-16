@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Player extends Participant {
 
+    public static final int INITIAL_REVEAL_COUNT = 2;
     private static final int BLACK_JACK_COUNT = 21;
 
     private final BetAmount betAmount;
@@ -31,6 +32,6 @@ public class Player extends Participant {
 
     @Override
     public List<Card> revealCardOnInitDeal() {
-        return hands.getValue(2);
+        return hands.getValue(INITIAL_REVEAL_COUNT);
     }
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
+    public static final int INITIAL_REVEAL_COUNT = 1;
     private static final int DEALER_HIT_COUNT = 16;
     public static final String DEALER_NAME = "딜러";
 
@@ -23,7 +24,7 @@ public class Dealer extends Participant {
 
     @Override
     public List<Card> revealCardOnInitDeal() {
-        return hands.getValue(1);
+        return hands.getValue(INITIAL_REVEAL_COUNT);
     }
 
     public Card draw() {
