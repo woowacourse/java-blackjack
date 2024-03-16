@@ -1,5 +1,6 @@
 package controller;
 
+import dto.ParticipantCards;
 import java.util.List;
 import java.util.function.Supplier;
 import model.game.BlackjackGame;
@@ -18,8 +19,8 @@ public class BlackjackController {
         Players players = preparePlayers();
         BlackjackGame blackjackGame = new BlackjackGame();
 
-        blackjackGame.dealInitialCards(players);
-        OutputView.printInitialCards(blackjackGame, players);
+        ParticipantCards participantCards = blackjackGame.dealInitialCards(players);
+        OutputView.printInitialCards(participantCards);
 
         playersTurnAndPrintCards(players, blackjackGame);
         dealerTurnAndPrintCard(blackjackGame);

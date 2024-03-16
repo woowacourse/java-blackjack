@@ -1,5 +1,7 @@
 package model.participant;
 
+import java.util.Collections;
+import java.util.List;
 import model.card.Card;
 import model.card.Cards;
 import model.game.HitAction;
@@ -29,5 +31,9 @@ public abstract class Participant implements HitAction {
 
     public Cards getCards() {
         return cards;
+    }
+
+    public List<Card> getAllCard() {
+        return Collections.unmodifiableList(cards.getCards());
     }
 }

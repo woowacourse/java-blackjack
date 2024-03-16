@@ -1,5 +1,6 @@
 package model.game;
 
+import dto.ParticipantCards;
 import model.card.Card;
 import model.card.CardDeck;
 import model.participant.Dealer;
@@ -21,10 +22,11 @@ public class BlackjackGame {
         dealer = new Dealer();
     }
 
-    public void dealInitialCards(Players players) {
+    public ParticipantCards dealInitialCards(Players players) {
         dealCards(dealer);
         players.getPlayers()
             .forEach(this::dealCards);
+        return ParticipantCards.createWithInitialCards(dealer, players);
     }
 
     private void dealCards(Participant participant) {

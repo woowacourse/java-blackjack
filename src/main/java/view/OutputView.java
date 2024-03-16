@@ -4,14 +4,14 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
+import dto.ParticipantCard;
+import dto.ParticipantCards;
+import java.util.List;
 import java.util.Map;
 import model.card.Card;
 import model.card.Cards;
-import model.game.BlackjackGame;
 import model.game.CardsScore;
-import model.participant.Dealer;
 import model.participant.Player;
-import model.participant.Players;
 import model.result.DealerResult;
 import model.result.GameResult;
 import model.result.PlayerResults;
@@ -34,26 +34,26 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printInitialCards(BlackjackGame blackjackGame, Players players) {
-        Dealer dealer = blackjackGame.getDealer();
-        printInitCardsIntro(players);
-        printDealerFirstCard(dealer);
-        printAllPlayerCards(players);
+    public static void printInitialCards(ParticipantCards participantCards) {
+        ParticipantCard dealerCard = participantCards.getDealerCard();
+        List<ParticipantCard> playerCards = participantCards.getPlayerCards();
+        printInitCardsIntro(participantCards);
+        printCards(dealerCard);
+        printAllPlayerCards(playerCards);
     }
 
-    private static void printInitCardsIntro(Players players) {
-        String playerNames = String.join(CARDS_DELIMITER, players.names());
-        System.out.printf(INIT_CARDS_INTRO, DEALER_NAME, playerNames);
+    private static void printInitCardsIntro(ParticipantCards participantCards) {
+        String playerNames = String.join(CARDS_DELIMITER, participantCards.playerNames());
+        System.out.printf(INIT_CARDS_INTRO, participantCards.dealerName(), playerNames);
     }
 
-    private static void printDealerFirstCard(Dealer dealer) {
-        Card firstCard = dealer.getFirstCard();
-        System.out.printf(CARDS_FORMAT, DEALER_NAME, firstCard);
+    private static void printCards(ParticipantCard participantCard) {
+        String cards = String.join(CARDS_DELIMITER, participantCard.getCards());
+        System.out.printf(CARDS_FORMAT, participantCard.getName(), cards);
     }
 
-    private static void printAllPlayerCards(Players players) {
-        players.getPlayers()
-            .forEach(OutputView::printPlayerCards);
+    private static void printAllPlayerCards(List<ParticipantCard> playerCards) {
+        playerCards.forEach(OutputView::printCards);
         System.out.println();
     }
 
