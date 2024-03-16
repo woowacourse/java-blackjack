@@ -7,8 +7,8 @@ public class Application {
     public static void main(final String[] args) {
         final List<String> names = InputView.inputPlayers();
         final List<Integer> betAmounts = names.stream().map(InputView::inputBettingAmount).toList();
-
         final Blackjack blackjack = Blackjack.of(names, betAmounts);
+
         OutputView.printInitialStatus(blackjack.toParticipantsResponse());
 
         playGame(blackjack, names);
@@ -20,10 +20,7 @@ public class Application {
     private static void playGame(final Blackjack blackjack, final List<String> names) {
         names.forEach(name -> tryHit(blackjack, name));
 
-        while (blackjack.canDealerHit()) {
-            blackjack.dealerHit();
-            OutputView.printDealerHitMessage();
-        }
+        blackjack.dealerHit(OutputView::printDealerHitMessage);
         blackjack.dealerStand();
     }
 
