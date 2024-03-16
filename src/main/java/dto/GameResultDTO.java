@@ -1,21 +1,29 @@
 package dto;
 
+import domain.blackjack.EarningMoney;
 import java.util.List;
 
 public class GameResultDTO {
     private final List<String> playersName;
-    private final List<Integer> playersEarnMoney;
+    private final List<EarningMoney> playersEarningMoney;
+    private final EarningMoney dealerEarningMoney;
 
-    public GameResultDTO(List<String> playersName, List<Integer> playersEarnMoney) {
+    public GameResultDTO(List<String> playersName, List<EarningMoney> playersEarningMoney,
+                         EarningMoney dealerEarningMoney) {
         this.playersName = playersName;
-        this.playersEarnMoney = playersEarnMoney;
+        this.playersEarningMoney = playersEarningMoney;
+        this.dealerEarningMoney = dealerEarningMoney;
     }
 
     public List<String> getPlayersName() {
         return playersName;
     }
 
-    public List<Integer> getPlayersEarnMoney() {
-        return playersEarnMoney;
+    public List<EarningMoney> getPlayersEarnMoney() {
+        return playersEarningMoney;
+    }
+
+    public EarningMoney getDealerEarningMoney() {
+        return dealerEarningMoney;
     }
 }

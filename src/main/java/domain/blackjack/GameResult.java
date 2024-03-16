@@ -1,19 +1,17 @@
 package domain.blackjack;
 
-import java.util.function.Function;
-
 public enum GameResult {
-    LOSE(bettingMoney -> -bettingMoney),
-    WIN(bettingMoney -> bettingMoney),
-    TIE(bettingMoney -> 0),
-    WIN_BLACK_JACK(bettingMoney -> (int) (bettingMoney * 1.5));
-    private final Function<Integer, Integer> earnMoneyCalculator;
+    LOSE(-1),
+    WIN(1),
+    TIE(0),
+    WIN_BLACK_JACK(1.5);
+    private final double earnMoneyRate;
 
-    GameResult(Function<Integer, Integer> earnMoneyCalculator) {
-        this.earnMoneyCalculator = earnMoneyCalculator;
+    GameResult(double earnMoneyRate) {
+        this.earnMoneyRate = earnMoneyRate;
     }
 
-    int calculateEarnMoney(int bettingMoney) {
-        return earnMoneyCalculator.apply(bettingMoney);
+    public double getEarnMoneyRate() {
+        return earnMoneyRate;
     }
 }

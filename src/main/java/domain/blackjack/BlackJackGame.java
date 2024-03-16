@@ -41,7 +41,14 @@ public class BlackJackGame {
         return players;
     }
 
-    public List<Integer> calculatePlayersBettingMoney() {
-        return players.calculatePlayersEarnMoney(dealer);
+    public List<EarningMoney> calculatePlayersEarningMoney() {
+        return players.calculatePlayersEarningMoney(dealer);
+    }
+
+    public EarningMoney calculateDealerEarningMoney() {
+        int dealerRawEarningMoney = -players.calculatePlayersEarningMoney(dealer).stream()
+                .mapToInt(EarningMoney::rawEarningMoney)
+                .sum();
+        return new EarningMoney(dealerRawEarningMoney);
     }
 }

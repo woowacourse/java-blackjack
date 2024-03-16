@@ -6,14 +6,9 @@ import java.util.List;
 
 abstract class Gamer {
     protected final BlackJackGameMachine blackJackGameMachine;
-    private final int bettingMoney;
 
-    Gamer(BlackJackGameMachine blackJackGameMachine, int bettingMoney) {
+    Gamer(BlackJackGameMachine blackJackGameMachine) {
         this.blackJackGameMachine = blackJackGameMachine;
-        if (bettingMoney < 0) {
-            throw new IllegalArgumentException("배팅 금액은 음수일 수 없습니다.");
-        }
-        this.bettingMoney = bettingMoney;
     }
 
     abstract DrawResult draw(Deck deck);
@@ -40,9 +35,5 @@ abstract class Gamer {
 
     final boolean isBlackJack() {
         return blackJackGameMachine.isBlackJack();
-    }
-
-    final int getBettingMoney() {
-        return bettingMoney;
     }
 }

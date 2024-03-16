@@ -72,12 +72,12 @@ public class Players {
         }
         return drawResult.hasNextChance();
     }
-
-    List<Integer> calculatePlayersEarnMoney(Dealer dealer) {
+    
+    List<EarningMoney> calculatePlayersEarningMoney(Dealer dealer) {
         return players.stream()
                 .map(player -> {
                     GameResult gameResult = GameResultCalculator.calculate(player, dealer);
-                    return EarnMoneyCalculator.calculateEarnMoney(player.getBettingMoney(), gameResult);
+                    return player.calculateEarningMoney(gameResult);
                 })
                 .toList();
     }

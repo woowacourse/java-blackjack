@@ -10,7 +10,7 @@ public class Dealer extends Gamer {
     }
 
     Dealer(BlackJackGameMachine blackJackGameMachine) {
-        super(blackJackGameMachine, 0);
+        super(blackJackGameMachine);
     }
 
     @Override

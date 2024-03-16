@@ -2,6 +2,7 @@ package controller;
 
 import domain.blackjack.BlackJackGame;
 import domain.blackjack.Dealer;
+import domain.blackjack.EarningMoney;
 import domain.blackjack.Player;
 import domain.blackjack.Players;
 import domain.blackjack.WithOutFirstCardShowStrategy;
@@ -88,7 +89,9 @@ public class BlackJackController {
         printPlayersWithPoint(players);
 
         List<String> playerNames = players.getPlayerNames();
-        GameResultDTO gameResultDTO = new GameResultDTO(playerNames, blackJackGame.calculatePlayersBettingMoney());
+        List<EarningMoney> playersEarningMoney = blackJackGame.calculatePlayersEarningMoney();
+        EarningMoney dealerEarningMoney = blackJackGame.calculateDealerEarningMoney();
+        GameResultDTO gameResultDTO = new GameResultDTO(playerNames, playersEarningMoney, dealerEarningMoney);
         GameResultOutputView.print(gameResultDTO);
     }
 
