@@ -4,7 +4,6 @@ import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
 import java.util.List;
-import java.util.Map;
 
 public class GameManager {
 
@@ -38,10 +37,6 @@ public class GameManager {
 
     private void decideDealerResult() {
         dealerWallet.calculateProfit(playersWallet);
-    }
-
-    public Map<Player, Profit> getPlayersProfit() {
-        return playersWallet.getPlayersProfit();
     }
 
     public Profit findProfitOfPlayer(Player player) {

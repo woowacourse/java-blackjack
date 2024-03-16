@@ -38,7 +38,7 @@ class GameManagerTest {
 
         gameManager.decideResult(gamers);
 
-        assertThat(gameManager.getPlayersProfit().get(player).getValue()).isEqualTo(-10);
+        assertThat(gameManager.findProfitOfPlayer(player).getValue()).isEqualTo(-10);
     }
 
     @DisplayName("딜러가 bust 일 경우 플레이어의 승리로 판단한다.")
@@ -55,7 +55,7 @@ class GameManagerTest {
 
         gameManager.decideResult(gamers);
 
-        assertThat(gameManager.getPlayersProfit().get(player).getValue()).isEqualTo(10);
+        assertThat(gameManager.findProfitOfPlayer(player).getValue()).isEqualTo(10);
     }
 
     @DisplayName("플레이어와 딜러 모두 bust 가 아닌 경우 플레이어가 높은 점수를 가지면 플레이어의 승리로 판단한다.")
@@ -70,7 +70,7 @@ class GameManagerTest {
 
         gameManager.decideResult(gamers);
 
-        assertThat(gameManager.getPlayersProfit().get(player).getValue()).isEqualTo(10);
+        assertThat(gameManager.findProfitOfPlayer(player).getValue()).isEqualTo(10);
     }
 
     @DisplayName("플레이어와 딜러 모두 bust 가 아닌 경우 점수가 같다면 무승부로 판단한다.")
@@ -85,7 +85,7 @@ class GameManagerTest {
 
         gameManager.decideResult(gamers);
 
-        assertThat(gameManager.getPlayersProfit().get(player).getValue()).isEqualTo(0);
+        assertThat(gameManager.findProfitOfPlayer(player).getValue()).isEqualTo(0);
     }
 
     @DisplayName("플레이어와 딜러 모두 bust 가 아닌 경우 딜러가 높은 점수를 가지면 플레이어의 패배로 판단한다.")
@@ -100,7 +100,7 @@ class GameManagerTest {
 
         gameManager.decideResult(gamers);
 
-        assertThat(gameManager.getPlayersProfit().get(player).getValue()).isEqualTo(-10);
+        assertThat(gameManager.findProfitOfPlayer(player).getValue()).isEqualTo(-10);
     }
 
     @DisplayName("N명의 플레이어가 패배한 경우 딜러는 N번의 승리를 얻는다.")

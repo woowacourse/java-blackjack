@@ -1,7 +1,6 @@
 package domain.manager;
 
 import domain.gamer.Player;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -30,9 +29,5 @@ public class PlayersWallet {
         return playersProfit.values().stream()
                 .mapToDouble(Profit::getValue)
                 .sum();
-    }
-
-    public Map<Player, Profit> getPlayersProfit() {
-        return Collections.unmodifiableMap(playersProfit);
     }
 }

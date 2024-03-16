@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Hand;
 import domain.gamer.Player;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,10 +27,9 @@ class PlayersWalletTest {
         playersWallet.calculateProfit(player3, GameResult.BLACKJACK);
         playersWallet.calculateProfit(player4, GameResult.DRAW);
 
-        Map<Player, Profit> profitResult = playersWallet.getPlayersProfit();
-        assertThat(profitResult.get(player1).getValue()).isEqualTo(10);
-        assertThat(profitResult.get(player2).getValue()).isEqualTo(-10);
-        assertThat(profitResult.get(player3).getValue()).isEqualTo(15);
-        assertThat(profitResult.get(player4).getValue()).isEqualTo(0);
+        assertThat(playersWallet.findProfitOfPlayer(player1).getValue()).isEqualTo(10);
+        assertThat(playersWallet.findProfitOfPlayer(player2).getValue()).isEqualTo(-10);
+        assertThat(playersWallet.findProfitOfPlayer(player3).getValue()).isEqualTo(15);
+        assertThat(playersWallet.findProfitOfPlayer(player4).getValue()).isEqualTo(0);
     }
 }
