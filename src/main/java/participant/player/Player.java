@@ -17,7 +17,7 @@ public class Player extends Participant {
         return new Player(cards, new Name(name), money);
     }
 
-    public int betMoneyResult(double percent) {
-        return (int) betMoney.betMoneyResult(percent);
+    public BetMoney getBetMoney() {
+        return betMoney;
     }
 }

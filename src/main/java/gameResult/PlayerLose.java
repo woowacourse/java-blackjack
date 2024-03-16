@@ -1,9 +1,12 @@
 package gameResult;
 
 import participant.dealer.Dealer;
+import participant.player.BetMoney;
 import participant.player.Player;
 
 public class PlayerLose implements GameResult {
+
+    private static final double MONEY_RETURN_PERCENT = -1;
 
     @Override
     public boolean isCorrespondentResult(Player player, Dealer dealer) {
@@ -11,7 +14,7 @@ public class PlayerLose implements GameResult {
     }
 
     @Override
-    public double returnRate() {
-        return -1;
+    public int profitMoney(BetMoney betMoney) {
+        return betMoney.betMoneyResult(MONEY_RETURN_PERCENT);
     }
 }
