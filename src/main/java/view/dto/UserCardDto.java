@@ -1,29 +1,21 @@
 package view.dto;
 
-import static java.util.stream.Collectors.toMap;
-
 import java.util.List;
-import java.util.Map;
 import model.card.Card;
 import model.card.CardNumber;
 import model.card.CardShape;
 import model.card.Cards;
 import model.player.Name;
+import model.player.Participant;
 
 public class UserCardDto {
-    private final Map<String, List<String>> participantCards;
-    private final Map<String, List<String>> dealerCards;
 
-    public UserCardDto(Map<Name, Cards> participantCards, Map<Name, Cards> dealerCards) {
-        this.participantCards = convertUserCardsToString(participantCards);
-        this.dealerCards = convertUserCardsToString(dealerCards);
-    }
+    private final String name;
+    private final List<String> cards;
 
-    private Map<String, List<String>> convertUserCardsToString(Map<Name, Cards> usersNameAndCards) {
-        return usersNameAndCards.entrySet().stream()
-                .collect(toMap(
-                        userCard -> userCard.getKey().getValue(),
-                        userCard -> cardsToString(userCard.getValue())));
+    public UserCardDto(Name name, Cards cards) {
+        this.name = name.getValue();
+        this.cards = cardsToString(cards);
     }
 
     private List<String> cardsToString(Cards cards) {
@@ -65,11 +57,11 @@ public class UserCardDto {
         return "다이아몬드";
     }
 
-    public Map<String, List<String>> getParticipantCards() {
-        return participantCards;
+    public String getName() {
+        return name;
     }
 
-    public Map<String, List<String>> getDealerCards() {
-        return dealerCards;
+    public List<String> getCards() {
+        return cards;
     }
 }

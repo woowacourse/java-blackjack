@@ -1,13 +1,6 @@
 package view;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import model.card.Card;
-import model.card.CardNumber;
-import model.card.CardShape;
-import model.card.Cards;
-import model.player.Name;
 import view.dto.ParticipantNamesDto;
 import view.dto.UserCardDto;
 import view.dto.UserProfitDto;
@@ -27,21 +20,14 @@ public class OutputView {
                 DIVIDE_CARD_MESSAGE.formatted(String.join(", ",participantNamesDto.getNames())));
     }
 
-    public void printPlayerCards(UserCardDto userCardDto) {
-        Map<String, List<String>> dealerNameAndCards = userCardDto.getDealerCards();
-        Map<String, List<String>> usersNameAndCards = userCardDto.getParticipantCards();
-        for (Entry<String, List<String>> dealerNameAndCard : dealerNameAndCards.entrySet()) {
-            String name = dealerNameAndCard.getKey();
-            System.out.println(RECEIVED_CARD_MESSAGE.formatted(name, String.join(", ", dealerNameAndCard.getValue())));
-        }
-        for (Entry<String, List<String>> usersNameAndCard : usersNameAndCards.entrySet()) {
-            String name = usersNameAndCard.getKey();
-            System.out.println(RECEIVED_CARD_MESSAGE.formatted(name, String.join(", ", usersNameAndCard.getValue().get(0))));
-        }
+    public void printPlayerCards(List<UserCardDto> userCardDtos) {
+        userCardDtos.forEach(userCardDto -> System.out.println(RECEIVED_CARD_MESSAGE
+                        .formatted(userCardDto.getName(), String.join(", ", userCardDto.getCards()))));
     }
 
-    public void printPlayerCardMessage(Name name, Cards cards) {
-        System.out.println(cardsToString(name, cards, cards.getCards().size()));
+    public void printPlayerCardMessage(UserCardDto userCardDto) {
+        System.out.println(RECEIVED_CARD_MESSAGE
+                .formatted(userCardDto.getName(), String.join(", ", userCardDto.getCards())));
     }
 
 
@@ -55,22 +41,6 @@ public class OutputView {
         System.out.println(PLAYER_CARD_SUM_MESSAGE.formatted(userResultDto.getScore()));
     }
 
-    private String cardsToString(Name name, Cards userCards, int cardCountToPrint) {
-        List<Card> cards = userCards.getCards();
-        int cardCountNotToPrint = cards.size() - cardCountToPrint;
-        String cardNames = String.join(", ", cards.stream()
-                .skip(cardCountNotToPrint)
-                .map(this::cardToString)
-                .toList());
-        return RECEIVED_CARD_MESSAGE.formatted(name.getValue(), cardNames);
-    }
-
-    private String cardToString(Card card) {
-        String cardNumber = cardNumberToString(card.getNumber());
-        String cardShape = cardShapeToString(card.getShape());
-        return cardNumber + cardShape;
-    }
-
     public void printDealerAddCard() {
         System.out.println(System.lineSeparator() + DEALER_ADD_CARD_MESSAGE);
     }
@@ -79,34 +49,5 @@ public class OutputView {
         System.out.println(System.lineSeparator() + GAME_RESULT_PROMPT_MESSAGE);
         userProfitDtos
                 .forEach(dto -> System.out.println(GAME_RESULT_MESSAGE.formatted(dto.getName(), dto.getProfit())));
-    }
-
-    private String cardNumberToString(CardNumber cardNumber) {
-        if (cardNumber == CardNumber.ACE) {
-            return "A";
-        }
-        if (cardNumber == CardNumber.QUEEN) {
-            return "Q";
-        }
-        if (cardNumber == CardNumber.KING) {
-            return "K";
-        }
-        if (cardNumber == CardNumber.JACK) {
-            return "J";
-        }
-        return String.valueOf(cardNumber.minimumNumber());
-    }
-
-    private String cardShapeToString(CardShape cardShape) {
-        if (cardShape == CardShape.SPACE) {
-            return "스페이드";
-        }
-        if (cardShape == CardShape.CLOVER) {
-            return "클로버";
-        }
-        if (cardShape == CardShape.HEART) {
-            return "하트";
-        }
-        return "다이아몬드";
     }
 }

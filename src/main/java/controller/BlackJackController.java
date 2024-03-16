@@ -32,11 +32,23 @@ public class BlackJackController {
     public void startGame() {
         BlackJack blackJack = createBlackJack(inputView.askParticipantNames());
         outputView.printPlayerNames(new ParticipantNamesDto(blackJack.findParticipantsName()));
-        outputView.printPlayerCards(
-                new UserCardDto(blackJack.mapToUsersNameAndCards(), blackJack.mapToDealerNameAndCards()));
+        outputView.printPlayerCards(mapToUserCardDtos(blackJack));
         offerMoreCards(blackJack);
         outputView.printBlackJackScores(mapToUserResultDtos(blackJack));
         outputView.printResults(mapToUserProfitDtos(blackJack));
+    }
+
+    private List<UserCardDto> mapToUserCardDtos(BlackJack blackJack) {
+        return Stream
+                .concat(mapToUserCardDto(blackJack.mapToDealerNameAndCards()).stream(),
+                        mapToUserCardDto(blackJack.mapToUsersNameAndCards()).stream())
+                .toList();
+    }
+
+    private List<UserCardDto> mapToUserCardDto(Map<Name, Cards> userCardDto) {
+        return userCardDto.entrySet().stream()
+                .map(userResult -> new UserCardDto(userResult.getKey(), userResult.getValue()))
+                .toList();
     }
 
     private List<UserProfitDto> mapToUserProfitDtos(BlackJack blackJack) {//todo '딜러' 출력 부분 수정

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 import model.BettingMoney;
 import model.player.Name;
+import view.dto.NameDto;
 
 public class InputView {
     private static final String ASK_PARTICIPANT_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
@@ -18,8 +19,8 @@ public class InputView {
         return List.of(input.split(",", -1));
     }
 
-    public boolean isOneMoreCard(Name name) {
-        System.out.println(System.lineSeparator() + ASK_ONE_MORE_CARD_MESSAGE.formatted(name));
+    public boolean isOneMoreCard(NameDto nameDto) {
+        System.out.println(System.lineSeparator() + ASK_ONE_MORE_CARD_MESSAGE.formatted(nameDto.getName()));
 
         String input = in.nextLine();
         if (Command.YES.compareTo(input)) {
