@@ -19,7 +19,6 @@ public enum Rank {
     KING(10),
     BIG_ACE(11);
 
-    private static final int BLACK_JACK = 21;
     private final int score;
 
     Rank(final int score) {
@@ -32,15 +31,15 @@ public enum Rank {
                 .toList();
     }
 
-    public static int selectAceScore(int score) {
-        if (isHardHand(score)) {
+    public static int selectAceScore(int score, int blackJackNumber) {
+        if (isHardHand(score, blackJackNumber)) {
             return SMALL_ACE.score;
         }
         return BIG_ACE.score;
     }
 
-    private static boolean isHardHand(final int score) {
-        return score + BIG_ACE.score > BLACK_JACK;
+    private static boolean isHardHand(final int score, final int blackJackNumber) {
+        return score + BIG_ACE.score > blackJackNumber;
     }
 
     public boolean isAce() {

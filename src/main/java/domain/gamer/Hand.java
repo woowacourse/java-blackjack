@@ -33,7 +33,7 @@ public class Hand {
 
         int aceCardsCount = countAceCards();
         for (int count = 0; count < aceCardsCount; count++) {
-            totalScore = totalScore + Rank.selectAceScore(totalScore);
+            totalScore = totalScore + Rank.selectAceScore(totalScore, BLACK_JACK);
         }
 
         return totalScore;
