@@ -65,12 +65,7 @@ public class ScoreTest {
         @Test
         @DisplayName("카드가 2장이면서 핸드의 점수 합이 21점이면 블랙잭이다.")
         void isBlackjackTest() {
-            List<Card> cards = new ArrayList<>(List.of(
-                    new Card(CardShape.HEART, CardNumber.ACE),
-                    new Card(CardShape.CLOVER, CardNumber.KING)
-            ));
-
-            Score score = new Score(cards);
+            Score score = new Score(21, 2);
 
             assertThat(score.isBlackjack()).isTrue();
         }
@@ -78,13 +73,7 @@ public class ScoreTest {
         @Test
         @DisplayName("카드가 2장이 아니면 블랙잭이 아니다")
         void isNotBlackjackTest() {
-            List<Card> cards = new ArrayList<>(List.of(
-                    new Card(CardShape.HEART, CardNumber.JACK),
-                    new Card(CardShape.CLOVER, CardNumber.NINE),
-                    new Card(CardShape.HEART, CardNumber.TWO)
-            ));
-
-            Score score = new Score(cards);
+            Score score = new Score(21, 3);
 
             assertThat(score.isBlackjack()).isFalse();
         }
@@ -92,12 +81,7 @@ public class ScoreTest {
         @Test
         @DisplayName("핸드 점수 합이 21점이 아니면 블랙잭이 아니다")
         void isNotBlackjackTest2() {
-            List<Card> cards = new ArrayList<>(List.of(
-                    new Card(CardShape.HEART, CardNumber.JACK),
-                    new Card(CardShape.CLOVER, CardNumber.NINE)
-            ));
-
-            Score score = new Score(cards);
+            Score score = new Score(20, 2);
 
             assertThat(score.isBlackjack()).isFalse();
         }
@@ -110,15 +94,7 @@ public class ScoreTest {
         @Test
         @DisplayName("핸드 점수 합이 21점을 초과하면 버스트다.")
         void isBustTest() {
-            List<Card> cards = new ArrayList<>(List.of(
-                    new Card(CardShape.HEART, CardNumber.ACE),
-                    new Card(CardShape.CLOVER, CardNumber.ACE),
-                    new Card(CardShape.CLOVER, CardNumber.FIVE),
-                    new Card(CardShape.CLOVER, CardNumber.JACK),
-                    new Card(CardShape.DIAMOND, CardNumber.NINE)
-            ));
-
-            Score score = new Score(cards);
+            Score score = new Score(22, 3);
 
             assertThat(score.isBust()).isTrue();
         }
@@ -126,13 +102,7 @@ public class ScoreTest {
         @Test
         @DisplayName("핸드 점수 합이 21점을 초과하지 않으면 버스트가 아니다.")
         void isNotBustTest() {
-
-            List<Card> cards = new ArrayList<>(List.of(
-                    new Card(CardShape.HEART, CardNumber.ACE),
-                    new Card(CardShape.DIAMOND, CardNumber.NINE)
-            ));
-
-            Score score = new Score(cards);
+            Score score = new Score(20, 3);
 
             assertThat(score.isBust()).isFalse();
         }

@@ -24,9 +24,7 @@ public class Score {
 
     public int calculateScore(List<Card> cards) {
         int sum = sumScore(cards);
-        int aceCount = countAce(cards);
-
-        for (int i = 0; i < aceCount; i++) {
+        for (int i = 0; i < countAce(cards); i++) {
             sum = adjust(sum);
         }
         return sum;

@@ -10,9 +10,9 @@ public class Player extends BlackjackGamer {
         this.name = new Name(name);
     }
 
-    public Player(Hand hand, Name name) {
+    public Player(Hand hand, String name) {
         super(hand);
-        this.name = name;
+        this.name = new Name(name);
     }
 
     @Override
