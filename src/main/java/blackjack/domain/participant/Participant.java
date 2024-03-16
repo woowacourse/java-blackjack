@@ -52,10 +52,6 @@ public abstract class Participant {
         return hand.isBlackjack();
     }
 
-    protected boolean isBlackjackScore() {
-        return hand.isBlackjackScore();
-    }
-
     protected boolean isTotalScoreGreaterThan(int score) {
         return hand.isTotalScoreGreaterThan(score);
     }
