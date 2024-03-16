@@ -51,9 +51,9 @@ public class BlackjackController {
                 .collect(collectingAndThen(toList(), Players::new));
     }
 
-    private Player generatePlayer(final String name) {
-        BattingAmount battingAmount = replyOnException(() -> readBattingAmount(name));
-        return new Player(name, battingAmount);
+    private Player generatePlayer(String playerName) {
+        BattingAmount battingAmount = replyOnException(() -> readBattingAmount(playerName));
+        return new Player(playerName, battingAmount);
     }
 
     private BattingAmount readBattingAmount(String playerName) {
@@ -61,7 +61,7 @@ public class BlackjackController {
         return new BattingAmount(readBattingAmount);
     }
 
-    private void playBlackjackGame(final BlackjackGame blackjackGame, Dealer dealer, Players players) {
+    private void playBlackjackGame(BlackjackGame blackjackGame, Dealer dealer, Players players) {
         blackjackGame.start();
         showCardsAfterFirstDeal(dealer, players);
 

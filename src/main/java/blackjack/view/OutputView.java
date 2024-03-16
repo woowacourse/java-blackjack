@@ -19,7 +19,7 @@ public class OutputView {
         this.messageGenerator = messageGenerator;
     }
 
-    public void printCardsAfterFirstDeal(final ParticipantDto dealer, final ParticipantsDto players) {
+    public void printCardsAfterFirstDeal(ParticipantDto dealer, ParticipantsDto players) {
         printInitialSettingMessage(dealer, players);
         printFirstCardOfDealer(dealer);
         printCardsOfAllPlayer(players);
