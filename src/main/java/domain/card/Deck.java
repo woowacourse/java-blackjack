@@ -13,6 +13,13 @@ public class Deck {
         this.cards = new ArrayList<>(cards);
     }
 
+    private void validateDuplicateCard(List<Card> cards) {
+        Set<Card> cardSet = new HashSet<>(cards);
+        if (cardSet.size() != cards.size()) {
+            throw new IllegalArgumentException("중복되는 카드가 있습니다.");
+        }
+    }
+
     public static Deck of(Card... cards) {
         return new Deck(List.of(cards));
     }
@@ -20,13 +27,6 @@ public class Deck {
     public static Deck fullDeck() {
         List<Card> cards = CardPool.allCards();
         return new Deck(cards);
-    }
-
-    private void validateDuplicateCard(List<Card> cards) {
-        Set<Card> cardSet = new HashSet<>(cards);
-        if (cardSet.size() != cards.size()) {
-            throw new IllegalArgumentException("중복되는 카드가 있습니다.");
-        }
     }
 
     public Card draw(CardSelectStrategy cardSelectStrategy) {

@@ -46,12 +46,6 @@ public class Players {
         }
     }
 
-    void drawOnce(Deck deck) {
-        for (Player player : players) {
-            player.draw(deck);
-        }
-    }
-
     private void playerDraw(Deck deck, Consumer<Player> doAfterEachPlayerDraw, Function<String, Boolean> playerWantDraw,
                             Player player) {
         boolean hasNextDrawChance = true;
@@ -72,7 +66,13 @@ public class Players {
         }
         return drawResult.hasNextChance();
     }
-    
+
+    void drawOnce(Deck deck) {
+        for (Player player : players) {
+            player.draw(deck);
+        }
+    }
+
     List<EarningMoney> calculatePlayersEarningMoney(Dealer dealer) {
         return players.stream()
                 .map(player -> {

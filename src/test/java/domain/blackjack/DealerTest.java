@@ -20,6 +20,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class DealerTest {
 
+    static Stream<Arguments> validateDealerHasNextDrawChanceParameters() {
+        return Stream.of(
+                Arguments.of(TWO_HEART, false), Arguments.of(ACE_HEART, true)
+        );
+    }
+
     @Test
     @DisplayName("딜러는 총합이 16이 넘으면 카드를 뽑을 수 없는지 검증")
     void validateDealerDrawLimit() {
@@ -30,12 +36,6 @@ class DealerTest {
         DrawResult drawResult = dealer.draw(deck);
         Assertions.assertThat(drawResult.getFailCause())
                 .isEqualTo("카드를 더이상 뽑을 수 없습니다.");
-    }
-
-    static Stream<Arguments> validateDealerHasNextDrawChanceParameters() {
-        return Stream.of(
-                Arguments.of(TWO_HEART, false), Arguments.of(ACE_HEART, true)
-        );
     }
 
     @ParameterizedTest

@@ -10,11 +10,11 @@ public class OutputView {
         print("딜러와 %s에게 2장을 나누었습니다.".formatted(namesOutput));
     }
 
-    public static void printDealerDrawDone() {
-        print("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n".formatted(RAW_DEALER_DRAW_THRESHOLD_POINT));
-    }
-
     private static void print(String output) {
         System.out.println(output);
+    }
+
+    public static void printDealerDrawDone() {
+        print("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n".formatted(RAW_DEALER_DRAW_THRESHOLD_POINT));
     }
 }

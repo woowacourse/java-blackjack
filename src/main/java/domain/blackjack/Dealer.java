@@ -5,12 +5,12 @@ import domain.card.RandomCardSelectStrategy;
 
 public class Dealer extends Gamer {
 
-    static Dealer of(HoldingCards holdingCards) {
-        return new Dealer(new BlackJackGameMachine(holdingCards));
-    }
-
     Dealer(BlackJackGameMachine blackJackGameMachine) {
         super(blackJackGameMachine);
+    }
+
+    static Dealer of(HoldingCards holdingCards) {
+        return new Dealer(new BlackJackGameMachine(holdingCards));
     }
 
     @Override

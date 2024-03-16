@@ -22,9 +22,6 @@ import org.junit.jupiter.api.Test;
 
 class BlackJackGameTest {
 
-    private static void doNothing(Player player) {
-    }
-
     @Test
     @DisplayName("플레이어들의 드로우를 했을 때 제대로 드로우 되는지 검증")
     void playersDraw() {
@@ -38,6 +35,9 @@ class BlackJackGameTest {
         List<GameResult> gameResults = players.calculateGameResultsWith(bustedDealer);
         Assertions.assertThat(gameResults)
                 .containsExactly(GameResult.WIN, GameResult.WIN);
+    }
+
+    private static void doNothing(Player player) {
     }
 
     @Test

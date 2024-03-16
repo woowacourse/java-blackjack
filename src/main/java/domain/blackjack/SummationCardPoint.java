@@ -12,13 +12,13 @@ record SummationCardPoint(int summationCardPoint) {
         return new SummationCardPoint(summationCardPoint);
     }
 
+    boolean isDeadPoint() {
+        return this.isBiggerThan(new SummationCardPoint(DEAD_POINT_THRESHOLD));
+    }
+
     boolean isBiggerThan(SummationCardPoint other) {
         int otherPoint = other.summationCardPoint();
         return summationCardPoint > otherPoint;
-    }
-
-    boolean isDeadPoint() {
-        return this.isBiggerThan(new SummationCardPoint(DEAD_POINT_THRESHOLD));
     }
 
     boolean isBlackJackPoint() {

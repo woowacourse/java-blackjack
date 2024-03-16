@@ -32,37 +32,6 @@ class PlayerTest {
         );
     }
 
-    @Test
-    @DisplayName("플레이어는 총합이 21이 넘으면 카드를 뽑을 수 없는지 검증")
-    void validateDrawLimit() {
-        BlackJackGameMachine blackJackGameMachine = new BlackJackGameMachine(
-                HoldingCards.of(JACK_HEART, EIGHT_HEART, JACK_SPADE));
-        Deck deck = Deck.of(TWO_HEART);
-        DrawResult drawResult = blackJackGameMachine.draw(deck, FIRST_CARD_SELECT_STRATEGY, new PlayerCardDrawCondition(
-                blackJackGameMachine));
-        Assertions.assertThat(drawResult.getFailCause())
-                .isEqualTo("카드를 더이상 뽑을 수 없습니다.");
-    }
-
-    @ParameterizedTest
-    @MethodSource("validatePlayerHasNextDrawChanceParameters")
-    @DisplayName("플레이어의 다음 드로우 기회 유무를 제대로 판단하는지 검증")
-    void validatePlayerHasNextDrawChance(Card cardInDeck, boolean expected) {
-        BlackJackGameMachine blackJackGameMachine = new BlackJackGameMachine(HoldingCards.of(JACK_HEART, QUEEN_HEART));
-        DrawResult drawResult = blackJackGameMachine.draw(Deck.of(cardInDeck), FIRST_CARD_SELECT_STRATEGY,
-                new PlayerCardDrawCondition(blackJackGameMachine));
-        Assertions.assertThat(drawResult.hasNextChance())
-                .isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("배팅 금액이 0 이상의 정수인지 검증")
-    void validateBettingMoney() {
-        Assertions.assertThatThrownBy(() -> Player.from("플레이어", HoldingCards.of(), -1))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("배팅 금액은 음수일 수 없습니다.");
-    }
-
     static Stream<Arguments> calculateBettingMoneyWhenDealerBustParameters() {
         return Stream.of(
                 Arguments.of(BLACK_JACK, 10000, 15000),
@@ -92,6 +61,37 @@ class PlayerTest {
                 Arguments.of(TWO_SIX_CARDS, 10000, -10000),
                 Arguments.of(ONLY_SEVEN_HEART, 10000, -10000)
         );
+    }
+
+    @Test
+    @DisplayName("플레이어는 총합이 21이 넘으면 카드를 뽑을 수 없는지 검증")
+    void validateDrawLimit() {
+        BlackJackGameMachine blackJackGameMachine = new BlackJackGameMachine(
+                HoldingCards.of(JACK_HEART, EIGHT_HEART, JACK_SPADE));
+        Deck deck = Deck.of(TWO_HEART);
+        DrawResult drawResult = blackJackGameMachine.draw(deck, FIRST_CARD_SELECT_STRATEGY, new PlayerCardDrawCondition(
+                blackJackGameMachine));
+        Assertions.assertThat(drawResult.getFailCause())
+                .isEqualTo("카드를 더이상 뽑을 수 없습니다.");
+    }
+
+    @ParameterizedTest
+    @MethodSource("validatePlayerHasNextDrawChanceParameters")
+    @DisplayName("플레이어의 다음 드로우 기회 유무를 제대로 판단하는지 검증")
+    void validatePlayerHasNextDrawChance(Card cardInDeck, boolean expected) {
+        BlackJackGameMachine blackJackGameMachine = new BlackJackGameMachine(HoldingCards.of(JACK_HEART, QUEEN_HEART));
+        DrawResult drawResult = blackJackGameMachine.draw(Deck.of(cardInDeck), FIRST_CARD_SELECT_STRATEGY,
+                new PlayerCardDrawCondition(blackJackGameMachine));
+        Assertions.assertThat(drawResult.hasNextChance())
+                .isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("배팅 금액이 0 이상의 정수인지 검증")
+    void validateBettingMoney() {
+        Assertions.assertThatThrownBy(() -> Player.from("플레이어", HoldingCards.of(), -1))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("배팅 금액은 음수일 수 없습니다.");
     }
 
     @ParameterizedTest

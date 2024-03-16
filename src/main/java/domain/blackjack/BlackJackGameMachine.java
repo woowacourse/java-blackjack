@@ -33,6 +33,15 @@ class BlackJackGameMachine {
         return isBust() || !cardDrawCondition.canDraw() || deck.isEmpty();
     }
 
+    List<Card> getRawHoldingCards(CardShowStrategy cardShowStrategy) {
+        List<Card> allCards = holdingCards.getHoldingCards();
+        return List.copyOf(cardShowStrategy.show(allCards));
+    }
+
+    int calculateSummationCardPointAsInt() {
+        return calculateSummationCardPoint().summationCardPoint();
+    }
+
     SummationCardPoint calculateSummationCardPoint() {
         SummationCardPoint summationCardPoint = holdingCards.calculateTotalPoint();
         if (hasAceInHoldingCards()) {
@@ -54,19 +63,6 @@ class BlackJackGameMachine {
         return fixPoint.summationCardPoint();
     }
 
-    List<Card> getRawHoldingCards() {
-        return List.copyOf(holdingCards.getHoldingCards());
-    }
-
-    List<Card> getRawHoldingCards(CardShowStrategy cardShowStrategy) {
-        List<Card> allCards = holdingCards.getHoldingCards();
-        return List.copyOf(cardShowStrategy.show(allCards));
-    }
-
-    int calculateSummationCardPointAsInt() {
-        return calculateSummationCardPoint().summationCardPoint();
-    }
-
     boolean isBust() {
         return calculateSummationCardPoint().isDeadPoint();
     }
@@ -76,5 +72,9 @@ class BlackJackGameMachine {
         int holdingCardCount = rawHoldingCards.size();
         SummationCardPoint summationCardPoint = calculateSummationCardPoint();
         return holdingCardCount == INITIAL_CARD_COUNT && summationCardPoint.isBlackJackPoint();
+    }
+
+    List<Card> getRawHoldingCards() {
+        return List.copyOf(holdingCards.getHoldingCards());
     }
 }
