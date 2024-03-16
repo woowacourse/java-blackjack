@@ -25,6 +25,7 @@ public class PlayerBettings {
                         .filter(playerBetting -> playerBetting.isName(entry.getKey()))
                         .map(playerBetting -> playerBetting.applyWinStatus(entry.getValue())))
                 .toList();
+
         return new PlayerBettings(bettingResults);
     }
 
@@ -32,6 +33,7 @@ public class PlayerBettings {
         int dealerProfit = playerBettings.stream()
                 .mapToInt(PlayerBetting::getBetting)
                 .sum();
+
         return new PlayerBetting(Dealer.DEALER_NAME, -dealerProfit);
     }
 

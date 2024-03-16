@@ -50,8 +50,9 @@ public class Players {
         final Map<ParticipantName, WinStatus> playersWinStatus = new LinkedHashMap<>();
 
         for (Player player : players) {
-            playersWinStatus.put(player.getName(), WinStatus.of(dealerScoreStatus,
-                    new ParticipantScoreStatus(player.isBlackjack(), player.calculate())));
+            ParticipantScoreStatus playerScoreStatus = new ParticipantScoreStatus(player.isBlackjack(),
+                    player.calculate());
+            playersWinStatus.put(player.getName(), WinStatus.of(dealerScoreStatus, playerScoreStatus));
         }
 
         return playersWinStatus;

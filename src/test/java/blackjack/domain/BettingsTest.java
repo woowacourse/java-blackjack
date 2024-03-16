@@ -27,8 +27,8 @@ public class BettingsTest {
                 new ParticipantName("pobi"), winStatus,
                 new ParticipantName("jason"), winStatus));
 
-        PlayerBetting pobiBetting = new PlayerBetting("pobi", 10000);
-        PlayerBetting jasonBetting = new PlayerBetting("jason", 20000);
+        PlayerBetting pobiBetting = PlayerBetting.create("pobi", 10000);
+        PlayerBetting jasonBetting = PlayerBetting.create("jason", 20000);
         PlayerBettings playerBettings = new PlayerBettings(List.of(pobiBetting, jasonBetting));
 
         // when
@@ -52,8 +52,8 @@ public class BettingsTest {
                 new ParticipantName("pobi"), pobiWinStatus,
                 new ParticipantName("jason"), jasonWinStatus));
 
-        PlayerBetting pobiBetting = new PlayerBetting("pobi", 10000);
-        PlayerBetting jasonBetting = new PlayerBetting("jason", 20000);
+        PlayerBetting pobiBetting = PlayerBetting.create("pobi", 10000);
+        PlayerBetting jasonBetting = PlayerBetting.create("jason", 20000);
         PlayerBettings playerBettings = new PlayerBettings(List.of(pobiBetting, jasonBetting));
         PlayerBettings bettingResults = playerBettings.applyWinStatus(winningResult);
 

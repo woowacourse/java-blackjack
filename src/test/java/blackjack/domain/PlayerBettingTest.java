@@ -19,7 +19,7 @@ class PlayerBettingTest {
             "DRAW, 0",})
     void applyWinStatus(WinStatus winStatus, int expected) {
         // given
-        PlayerBetting playerBetting = new PlayerBetting("kirby", 1000);
+        PlayerBetting playerBetting = PlayerBetting.create("kirby", 1000);
 
         // when
         PlayerBetting bettingResult = playerBetting.applyWinStatus(winStatus);

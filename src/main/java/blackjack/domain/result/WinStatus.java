@@ -15,7 +15,7 @@ public enum WinStatus {
     }
 
     public static WinStatus of(final ParticipantScoreStatus dealerScoreStatus,
-                               final ParticipantScoreStatus playerScoreStatus) { // TODO: 라인수 정리
+                               final ParticipantScoreStatus playerScoreStatus) { // TODO: 라인수 정리, 순서 의존 해결
         if (BlackjackStatus.from(playerScoreStatus) == BlackjackStatus.DEAD) {
             return LOSE;
         }

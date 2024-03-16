@@ -8,7 +8,7 @@ public class ParticipantScoreStatus {
         this.isBlackjack = isBlackjack;
         this.score = score;
     }
-    public ParticipantScoreStatus(final boolean isBlackjack, final int score) {
+    ParticipantScoreStatus(final boolean isBlackjack, final int score) {
         this(isBlackjack, new Score(score));
     }
 

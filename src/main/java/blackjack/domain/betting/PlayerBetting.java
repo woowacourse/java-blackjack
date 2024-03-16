@@ -12,6 +12,10 @@ public class PlayerBetting {
         this.betting = betting;
     }
 
+    PlayerBetting(final String name, final int betting) {
+        this(new ParticipantName(name), betting);
+    }
+
     public static PlayerBetting create(final String name, final int betting) {
         validateInitialBetting(betting);
         return new PlayerBetting(new ParticipantName(name), betting);
