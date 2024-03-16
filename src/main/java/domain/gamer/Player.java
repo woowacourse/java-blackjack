@@ -16,6 +16,10 @@ public class Player extends Gamer {
         return cards.getScoreByAceToOne() <= MAX_BLACK_JACK_SCORE && cards.countMaxScore() != BUST;
     }
 
+    public int getProfit(PlayerResult playerResult) {
+        return money.getResultMoney(playerResult);
+    }
+
     public Name getName() {
         return name;
     }

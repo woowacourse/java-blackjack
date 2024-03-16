@@ -1,6 +1,6 @@
 package domain.gamer;
 
-import domain.GameResult;
+import dto.GameResultDto;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,14 +32,14 @@ public class Players {
                 .toList();
     }
 
-    public GameResult getResult(int dealerScore) {
-        Map<String, Boolean> result = new LinkedHashMap<>();
+    public GameResultDto makeResult(Dealer dealer, Referee referee) {
+        Map<Player, Integer> result = new LinkedHashMap<>();
         for (Player player : players) {
-            String playerName = player.getName().getValue();
-            Boolean winOrLose = player.getMaxGameScore() > dealerScore;
-            result.put(playerName, winOrLose);
+            PlayerResult playerResult = referee.judgeResult(player.cards, dealer.cards);
+            int profit = player.getProfit(playerResult);
+            result.put(player, profit);
         }
-        return new GameResult(result);
+        return new GameResultDto(result);
     }
 
     public List<Player> getPlayers() {
