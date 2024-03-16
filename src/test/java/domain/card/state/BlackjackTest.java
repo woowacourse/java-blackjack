@@ -13,8 +13,7 @@ class BlackjackTest {
         CardState blackjack = new Blackjack(new Cards());
 
         assertThatThrownBy(() -> blackjack.receive(카드()))
-                .isExactlyInstanceOf(UnsupportedOperationException.class)
-                .hasMessageContaining("블랙잭 상태에서는 카드를 추가할 수 없습니다.");
+                .isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test

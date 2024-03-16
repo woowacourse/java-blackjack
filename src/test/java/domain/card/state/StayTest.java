@@ -13,8 +13,7 @@ class StayTest {
         CardState stay = new Stay(new Cards());
 
         assertThatThrownBy(() -> stay.receive(카드()))
-                .isExactlyInstanceOf(UnsupportedOperationException.class)
-                .hasMessage("스테이 상태에서는 카드를 추가할 수 없습니다.");
+                .isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test

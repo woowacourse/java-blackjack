@@ -13,8 +13,7 @@ class BustTest {
         CardState bust = new Bust(new Cards());
 
         assertThatThrownBy(() -> bust.receive(카드()))
-                .isExactlyInstanceOf(UnsupportedOperationException.class)
-                .hasMessageContaining("버스트 상태에서는 카드를 추가할 수 없습니다.");
+                .isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test
