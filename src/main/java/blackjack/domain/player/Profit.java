@@ -9,7 +9,7 @@ public class Profit {
         this.value = value;
     }
 
-    public Profit subtractProfit(Profit playerProfit) {
+    public Profit subtract(Profit playerProfit) {
         return new Profit(value - playerProfit.value);
     }
 

@@ -3,7 +3,6 @@ package blackjack.domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.player.Profit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +22,7 @@ class ProfitTest {
         Profit profit = new Profit(10000);
         var sut = new Profit(0);
 
-        var result = sut.subtractProfit(profit);
+        var result = sut.subtract(profit);
 
         assertThat(result).isEqualTo(new Profit(-10000));
     }

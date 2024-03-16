@@ -38,7 +38,7 @@ public class Blackjack {
         for (GamePlayer gamePlayer : gamePlayers) {
             Profit playerProfit = gamePlayer.getProfit(dealer);
             playerResults.put(gamePlayer.getName(), playerProfit);
-            dealerProfit = dealerProfit.subtractProfit(playerProfit);
+            dealerProfit = dealerProfit.subtract(playerProfit);
         }
         playerResults.put(dealer.getName(), dealerProfit);
 
