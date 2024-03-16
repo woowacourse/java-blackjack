@@ -3,7 +3,7 @@ package domain.card.state;
 import domain.card.Card;
 import domain.card.Cards;
 
-public class Prepare extends Initial {
+public class Prepare extends Started {
     private static final int INIT_CARD_COUNT = 2;
 
     public Prepare(Cards cards) {
@@ -26,16 +26,4 @@ public class Prepare extends Initial {
     public CardState finish() {
         throw new UnsupportedOperationException(getClass().getSimpleName() + " 상태에서는 게임을 종료할 수 없습니다.");
     }
-
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
-
-    @Override
-    public int calculateProfit(int bettingAmount) {
-        throw new UnsupportedOperationException(getClass().getSimpleName() + " 상태에서는 수익을 계산할 수 없습니다.");
-    }
-
-
 }

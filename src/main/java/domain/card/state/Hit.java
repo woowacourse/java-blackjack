@@ -3,7 +3,7 @@ package domain.card.state;
 import domain.card.Card;
 import domain.card.Cards;
 
-public class Hit extends Initial {
+public class Hit extends Started {
     protected Hit(Cards cards) {
         super(cards);
     }
@@ -20,15 +20,5 @@ public class Hit extends Initial {
     @Override
     public CardState finish() {
         return new Stay(cards());
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
-
-    @Override
-    public int calculateProfit(int bettingAmount) {
-        throw new UnsupportedOperationException(getClass().getSimpleName() + " 상태에서는 수익을 계산할 수 없습니다.");
     }
 }
