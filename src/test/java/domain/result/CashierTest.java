@@ -2,8 +2,9 @@ package domain.result;
 
 import domain.gamer.Dealer;
 import domain.gamer.Player;
-import domain.gamer.bet.BetAmount;
-import domain.gamer.bet.PlayerBet;
+import domain.gamer.bet.GamerWallet;
+import domain.gamer.bet.GamersWallet;
+import domain.gamer.bet.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,46 +18,52 @@ public class CashierTest {
 
     Player player;
     Dealer dealer;
-    BetAmount betAmount;
+    Money money;
     Cashier cashier;
 
     @BeforeEach
     void setup() {
         player = new Player("player");
         dealer = new Dealer();
-        betAmount = new BetAmount(10000);
-        cashier = new Cashier(List.of(new PlayerBet(player, betAmount)));
+        money = new Money(10000);
+        List<GamerWallet> gamerWallets = List.of(new GamerWallet(player, money),
+                new GamerWallet(dealer, new Money(0)));
+        cashier = new Cashier(new GamersWallet(gamerWallets));
     }
 
     @DisplayName("승리하면 베팅액의 1배를 준다.")
     @Test
     void testCashierCalculateWinProfit() {
-        Map<Player, BetAmount> result = cashier.calculatePlayersProfits(Map.of(player, WinState.WIN), dealer);
-        assertThat(result.get(player).getBetAmount())
+        cashier.calculatePlayersProfit(Map.of(player, WinState.WIN));
+        GamersWallet gamersWallet = cashier.getGamersWallet();
+        assertThat(gamersWallet.findMoneyByPlayer(player))
                 .isEqualTo(10000);
     }
 
     @DisplayName("패배하면 베팅액의 -1배를 준다.")
     @Test
     void testCashierCalculateLoseProfit() {
-        Map<Player, BetAmount> result = cashier.calculatePlayersProfits(Map.of(player, WinState.LOSE), dealer);
-        assertThat(result.get(player).getBetAmount())
+        cashier.calculatePlayersProfit(Map.of(player, WinState.LOSE));
+        GamersWallet gamersWallet = cashier.getGamersWallet();
+        assertThat(gamersWallet.findMoneyByPlayer(player))
                 .isEqualTo(-10000);
     }
 
     @DisplayName("무승부하면 0을 준다.")
     @Test
     void testCashierCalculateDrawProfit() {
-        Map<Player, BetAmount> result = cashier.calculatePlayersProfits(Map.of(player, WinState.DRAW), dealer);
-        assertThat(result.get(player).getBetAmount())
+        cashier.calculatePlayersProfit(Map.of(player, WinState.DRAW));
+        GamersWallet gamersWallet = cashier.getGamersWallet();
+        assertThat(gamersWallet.findMoneyByPlayer(player))
                 .isEqualTo(0);
     }
 
     @DisplayName("블랙잭이면 베팅액의 1.5배를 준다.")
     @Test
     void testCashierCalculateBlackJackProfit() {
-        Map<Player, BetAmount> result = cashier.calculatePlayersProfits(Map.of(player, WinState.BLACK_JACK), dealer);
-        assertThat(result.get(player).getBetAmount())
+        cashier.calculatePlayersProfit(Map.of(player, WinState.BLACK_JACK));
+        GamersWallet gamersWallet = cashier.getGamersWallet();
+        assertThat(gamersWallet.findMoneyByPlayer(player))
                 .isEqualTo(15000);
     }
 
@@ -64,13 +71,18 @@ public class CashierTest {
     @Test
     void testCashierCalculateDealerProfit() {
         Player player1 = new Player("player1");
-        BetAmount betAmount1 = new BetAmount(10000);
+        Money money1 = new Money(10000);
         Player player2 = new Player("player2");
-        BetAmount betAmount2 = new BetAmount(20000);
+        Money money2 = new Money(20000);
 
-        Cashier cashier = new Cashier(List.of(new PlayerBet(player1, betAmount1), new PlayerBet(player2, betAmount2)));
+        List<GamerWallet> gamerWallets = List.of(new GamerWallet(player1, money1),
+                new GamerWallet(player2, money2),
+                new GamerWallet(dealer, new Money(0)));
 
-        Map<Player, BetAmount> result1 = cashier.calculatePlayersProfits(Map.of(player1, WinState.LOSE, player2, WinState.BLACK_JACK), dealer);
-        assertThat(result1.get(dealer).getBetAmount()).isEqualTo(-20000);
+        Cashier cashier = new Cashier(new GamersWallet(gamerWallets));
+        GamersWallet gamersWallet = cashier.getGamersWallet();
+        cashier.calculatePlayersProfit(Map.of(player1, WinState.WIN, player2, WinState.DRAW));
+        cashier.calculateDealerProfit(dealer);
+        assertThat(gamersWallet.findMoneyByPlayer(dealer)).isEqualTo(-10000);
     }
 }

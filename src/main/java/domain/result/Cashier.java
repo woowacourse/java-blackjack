@@ -2,57 +2,47 @@ package domain.result;
 
 import domain.gamer.Dealer;
 import domain.gamer.Player;
-import domain.gamer.bet.BetAmount;
-import domain.gamer.bet.PlayerBet;
+import domain.gamer.bet.GamersWallet;
+import domain.gamer.bet.Money;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Cashier {
 
-    private final List<PlayerBet> playerBets;
+    private final GamersWallet gamersWallet;
+    private final Judge judge;
 
-    public Cashier(List<PlayerBet> playerBets) {
-        this.playerBets = playerBets;
+    public Cashier(GamersWallet gamersWallet, Judge judge) {
+        this.gamersWallet = gamersWallet;
+        this.judge = judge;
     }
 
-    public Map<Player, BetAmount> calculatePlayersProfits(Map<Player, WinState> resultWithoutProfit, Dealer dealer) {
-        Map<Player, BetAmount> resultWithProfit = applyProfitByWinState(resultWithoutProfit);
-        int totalProfitAmount = calculateProfitAmount(resultWithProfit);
-        resultWithProfit.put(dealer, new BetAmount(-totalProfitAmount));
-        return Collections.unmodifiableMap(resultWithProfit);
+    public void calculateBetResult(List<Player> players, Dealer dealer) {
+        judge.decideResult(players, dealer);
+        Map<Player, WinState> playersResult = judge.getPlayersResult();
+        calculatePlayersProfit(playersResult);
+        calculateDealerProfit(dealer);
     }
 
-    private Map<Player, BetAmount> applyProfitByWinState(Map<Player, WinState> resultWithoutProfit) {
-        Map<Player, BetAmount> resultWithProfit = new LinkedHashMap<>();
-        for (Map.Entry<Player, WinState> playerWinState : resultWithoutProfit.entrySet()) {
-            Player player = playerWinState.getKey();
-            WinState winState = playerWinState.getValue();
-            BetAmount betAmount = findBetAmountByPlayer(player);
+    private int calculateProfitByWinState(WinState winState, int money) {
+        return (int) (money * winState.getProfitRate());
+    }
 
-            resultWithProfit.put(player, calculateProfitByWinState(winState, betAmount));
+    private void calculatePlayersProfit(Map<Player, WinState> playersResult) {
+        for (Player player : playersResult.keySet()) {
+            int playerMoney = gamersWallet.findMoneyByPlayer(player);
+            playerMoney = calculateProfitByWinState(playersResult.get(player), playerMoney);
+            gamersWallet.applyProfitToGamer(player, new Money(playerMoney));
         }
-        return resultWithProfit;
     }
 
-    private BetAmount findBetAmountByPlayer(Player player) {
-        return playerBets.stream()
-                .filter(playerBet -> playerBet.getPlayer().equals(player))
-                .map(PlayerBet::getBetAmount)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 플레이어의 베팅금액을 찾을 수 없습니다."));
+    private void calculateDealerProfit(Dealer dealer) {
+        int allProfit = gamersWallet.sumAllPlayerProfit();
+        gamersWallet.applyProfitToGamer(dealer, new Money(-allProfit));
     }
 
-    private BetAmount calculateProfitByWinState(WinState winState, BetAmount betAmount) {
-        int finalProfit = (int) (betAmount.getBetAmount() * winState.getProfitRate());
-        return new BetAmount(finalProfit);
-    }
-
-    private int calculateProfitAmount(Map<Player, BetAmount> resultWithProfit) {
-        return resultWithProfit.values().stream()
-                .mapToInt(BetAmount::getBetAmount)
-                .sum();
+    public GamersWallet getGamersWallet() {
+        return gamersWallet;
     }
 }

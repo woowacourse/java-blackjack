@@ -13,7 +13,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,8 +34,8 @@ class JudgeTest {
         Player player = new Player("player");
         player.hit(Card.valueOf(CardNumber.SIX, CardShape.HEART));
         Players players = new Players(List.of(player));
-        judge.decideResult(players, dealer);
-        assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.WIN);
+        judge.decideResult(players.getPlayers(), dealer);
+        assertThat(judge.getPlayersResult().get(player)).isEqualTo(WinState.WIN);
     }
 
     @DisplayName("플레이어가 딜러를 상대로 패배를 판단한다.")
@@ -45,8 +44,8 @@ class JudgeTest {
         Player player = new Player("player");
         player.hit(Card.valueOf(CardNumber.FOUR, CardShape.HEART));
         Players players = new Players(List.of(player));
-        judge.decideResult(players, dealer);
-        assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.LOSE);
+        judge.decideResult(players.getPlayers(), dealer);
+        assertThat(judge.getPlayersResult().get(player)).isEqualTo(WinState.LOSE);
     }
 
     @DisplayName("플레이어가 딜러를 상대로 무승부를 판단한다.")
@@ -55,8 +54,8 @@ class JudgeTest {
         Player player = new Player("player");
         player.hit(Card.valueOf(CardNumber.FIVE, CardShape.HEART));
         Players players = new Players(List.of(player));
-        judge.decideResult(players, dealer);
-        assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.DRAW);
+        judge.decideResult(players.getPlayers(), dealer);
+        assertThat(judge.getPlayersResult().get(player)).isEqualTo(WinState.DRAW);
     }
 
     @DisplayName("플레이어가 딜러를 상대로 승리하면서 블랙잭인지 판단한다.")
@@ -66,26 +65,7 @@ class JudgeTest {
         player.hit(Card.valueOf(CardNumber.ACE, CardShape.HEART));
         player.hit(Card.valueOf(CardNumber.KING, CardShape.HEART));
         Players players = new Players(List.of(player));
-        judge.decideResult(players, dealer);
-        assertThat(judge.getPlayerResult().get(player)).isEqualTo(WinState.BLACK_JACK);
-    }
-
-    @DisplayName("딜러의 모든 승리 패배 무승부 상태를 반환한다.")
-    @Test
-    void decideDealerResult() {
-        Player player1 = new Player("player1");
-        player1.hit(Card.valueOf(CardNumber.TEN, CardShape.HEART));
-        Player player2 = new Player("player2");
-        player2.hit(Card.valueOf(CardNumber.THREE, CardShape.HEART));
-        Player player3 = new Player("player3");
-        player3.hit(Card.valueOf(CardNumber.FIVE, CardShape.HEART));
-        Players players = new Players(List.of(player1, player2, player3));
-
-        judge.decideResult(players, dealer);
-        Map<WinState, Integer> dealerResult = judge.getDealerResult();
-
-        assertThat(dealerResult.get(WinState.WIN)).isEqualTo(1);
-        assertThat(dealerResult.get(WinState.LOSE)).isEqualTo(1);
-        assertThat(dealerResult.get(WinState.DRAW)).isEqualTo(1);
+        judge.decideResult(players.getPlayers(), dealer);
+        assertThat(judge.getPlayersResult().get(player)).isEqualTo(WinState.BLACK_JACK);
     }
 }
