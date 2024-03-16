@@ -15,7 +15,7 @@ class DealerTest {
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer(cardDeck.firstCardSettings());
 
-        dealer.getExtraCard(cardDeck);
+        dealer.playGame(cardDeck);
 
         Assertions.assertTrue(dealer.getCardScore() > MIN_DEALER_SCORE);
     }
