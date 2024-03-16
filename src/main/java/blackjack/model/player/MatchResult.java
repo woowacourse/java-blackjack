@@ -1,12 +1,19 @@
 package blackjack.model.player;
 
+import blackjack.model.betting.BettingMoney;
 import blackjack.model.dealer.Dealer;
 
 public enum MatchResult {
-    BLACKJACK_WIN,
-    WIN,
-    LOSE,
-    PUSH;
+    BLACKJACK_WIN(2.5),
+    WIN(2),
+    LOSE(0),
+    PUSH(1);
+
+    private final double profitRate;
+
+    MatchResult(final double profitRate) {
+        this.profitRate = profitRate;
+    }
 
     public static MatchResult determine(final Dealer dealer, final Player player) {
         if (dealer.isBlackjack() && player.isBlackjack()) {
@@ -34,5 +41,9 @@ public enum MatchResult {
             return MatchResult.PUSH;
         }
         return MatchResult.LOSE;
+    }
+
+    public int calculateProfit(BettingMoney bettingMoney) {
+        return (int) (bettingMoney.amount() * profitRate);
     }
 }

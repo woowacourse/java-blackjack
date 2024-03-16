@@ -1,5 +1,7 @@
 package blackjack.model.betting;
 
+import blackjack.model.player.MatchResult;
+import blackjack.view.dto.PlayerBettingProfitOutcome;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +18,12 @@ public class Betting {
         playerBettingMoney.put(playerName, bettingMoney);
     }
 
-    public BettingMoney findBettingMoneyByPlayerName(String playerName) {
+    public PlayerBettingProfitOutcome calculatePlayerBettingProfit(String playerName, MatchResult matchResult) {
+        BettingMoney bettingMoney = findBettingMoneyByPlayerName(playerName);
+        return new PlayerBettingProfitOutcome(playerName, matchResult.calculateProfit(bettingMoney));
+    }
+
+    public BettingMoney findBettingMoneyByPlayerName(String playerName) { // TODO: private으로 변경
         if (!playerBettingMoney.containsKey(playerName)) {
             throw new IllegalArgumentException(NOT_FOUND_BETTING_PLAYER);
         }

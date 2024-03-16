@@ -3,6 +3,7 @@ package blackjack.model.betting;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.player.MatchResult;
+import blackjack.view.dto.PlayerBettingProfitOutcome;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -53,7 +54,7 @@ public class BettingTest {
         // then
         assertThat(outcome.profit()).isEqualTo(0);
     }
-    
+
     @Test
     @DisplayName("무승부인 플레이어는 배팅 금액을 돌려받는다")
     void calculatePushPlayerProfitTest() {
