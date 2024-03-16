@@ -14,15 +14,7 @@ public class Gamers {
     }
 
     public void drawInitialGamersHand() {
-        drawInitialDealerHand();
-        drawInitialPlayersHand();
-    }
-
-    private void drawInitialDealerHand() {
         dealer.drawInitialHand();
-    }
-
-    private void drawInitialPlayersHand() {
         players.drawInitialHand(dealer);
     }
 
