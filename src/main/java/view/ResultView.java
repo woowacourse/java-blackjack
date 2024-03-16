@@ -5,15 +5,13 @@ import domain.cards.cardinfo.CardNumber;
 import domain.cards.cardinfo.CardShape;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
-import domain.gamer.Players;
-import domain.gamer.bet.BetAmount;
+import domain.gamer.bet.GamerWallet;
+import domain.gamer.bet.GamersWallet;
 import view.notations.CardNumberNotation;
 import view.notations.CardShapeNotation;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ResultView {
@@ -84,19 +82,19 @@ public class ResultView {
                 dealer.getPlayerName(), resolveCardExpression(card));
     }
 
-    public void printAllGamersCardsResult(Dealer dealer, Players players) {
-        List<Player> gamers = new ArrayList<>(players.getPlayers());
+    public void printAllGamersCardsResult(Dealer dealer, List<Player> players) {
+        List<Player> gamers = new ArrayList<>(players);
         gamers.add(0, dealer);
 
         StringBuilder allGamersCardsResult = new StringBuilder();
         allGamersCardsResult.append(LINE_SEPARATOR);
         for (Player player : gamers) {
-            allGamersCardsResult.append(reslovePlayerCardsAndScore(player));
+            allGamersCardsResult.append(resolvePlayerCardsAndScore(player));
         }
         System.out.println(allGamersCardsResult);
     }
 
-    private String reslovePlayerCardsAndScore(Player player) {
+    private String resolvePlayerCardsAndScore(Player player) {
         return String.format("%s카드: ", player.getPlayerName())
                 + resolvePlayerCards(player)
                 + " - 결과: "
@@ -104,23 +102,10 @@ public class ResultView {
                 + LINE_SEPARATOR;
     }
 
-    public void printFinalProfit(Map<Player, BetAmount> results, Dealer dealer) {
+    public void printFinalProfit(GamersWallet gamersWallet) {
         System.out.println("## 최종 수익");
-        LinkedHashMap<Player, BetAmount> copiedResults = new LinkedHashMap<>(results);
-        printDealerResult(copiedResults, dealer);
-        printPlayersResult(copiedResults);
-    }
-
-    private static void printPlayersResult(LinkedHashMap<Player, BetAmount> copiedResults) {
-        for (Map.Entry<Player, BetAmount> playerBetAmountEntry : copiedResults.entrySet()) {
-            Player player = playerBetAmountEntry.getKey();
-            BetAmount betAmount = playerBetAmountEntry.getValue();
-            System.out.println(player.getPlayerName() + ": " + betAmount.getBetAmount());
-        }
-    }
-
-    private void printDealerResult(Map<Player, BetAmount> results, Dealer dealer) {
-        System.out.println(dealer.getPlayerName() + ": " + results.get(dealer).getBetAmount());
-        results.remove(dealer);
+        List<GamerWallet> gamerWallets = gamersWallet.getGamerWallets();
+        gamerWallets.stream().map(gamerWallet -> gamerWallet.playerName() + ": " + gamerWallet.getMoney())
+                .forEach(System.out::println);
     }
 }
