@@ -16,36 +16,36 @@ public enum Result {
     }
 
     public static Result getPlayerResultWith(final Player player, final Dealer dealer) {
+        if (isPlayerLose(player, dealer)) {
+            return LOSE;
+        }
         if (player.isBlackJack() && !dealer.isBlackJack()) {
             return BlACK_JACK;
         }
         if (isPlayerWin(player, dealer)) {
             return WIN;
         }
-        if (isPlayerLose(player, dealer)) {
-            return LOSE;
-        }
         return TIE;
     }
 
-    private static boolean isPlayerWin(final Player player, final Dealer dealer) {
-        if (!player.isBust() && dealer.isBust()) {
-            return true;
-        }
-        if (player.calculateTotalScore() > dealer.calculateTotalScore() && !player.isBust()) {
-            return true;
-        }
-        return false;
-    }
-
     private static boolean isPlayerLose(final Player player, final Dealer dealer) {
-        if (player.isBust() && !dealer.isBust() || player.isBust() && dealer.isBust()) {
+        if (player.isBust()) {
             return true;
         }
         if (!player.isBlackJack() && dealer.isBlackJack()) {
             return true;
         }
         if (player.calculateTotalScore() < dealer.calculateTotalScore() && !dealer.isBust()) {
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean isPlayerWin(final Player player, final Dealer dealer) {
+        if (dealer.isBust()) {
+            return true;
+        }
+        if (player.calculateTotalScore() > dealer.calculateTotalScore() && !player.isBust()) {
             return true;
         }
         return false;
