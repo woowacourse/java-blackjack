@@ -31,33 +31,62 @@ class DealerTest {
     void deckSize() {
         //given
         Dealer dealer = new Dealer();
-        Card card1 = new Card(CardPattern.CLOVER, CardNumber.FIVE);
-        Card card2 = new Card(CardPattern.CLOVER, CardNumber.SEVEN);
+        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.FIVE));
+        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.SEVEN));
 
         //when
-        dealer.receiveCard(card1);
-        dealer.receiveCard(card2);
         int deckSize = dealer.deckSize();
 
         //then
         assertThat(deckSize).isEqualTo(2);
     }
 
-    @DisplayName("딜러의 카드합을 확인한다.")
+    @DisplayName("딜러의 점수를 계산한다.")
     @Test
-    void calculateTotalScore() {
+    void calculateScore() {
         //given
         Dealer dealer = new Dealer();
-        Card card1 = new Card(CardPattern.CLOVER, CardNumber.FIVE);
-        Card card2 = new Card(CardPattern.CLOVER, CardNumber.SEVEN);
+        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.FIVE));
+        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.SEVEN));
 
         //when
-        dealer.receiveCard(card1);
-        dealer.receiveCard(card2);
         int totalScore = dealer.calculateScore().getScore();
 
         //then
         assertThat(totalScore).isEqualTo(12);
+    }
+
+    @DisplayName("덱이 버스트인 경우 덱에 있는 Ace 카드의 값을 1로 계산한다.")
+    @Test
+    void calculateScoreByBust() {
+        //given
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.NINE));
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TWO));
+
+        //when
+        int score = dealer.calculateScore().getScore();
+
+        //then
+        assertThat(score).isEqualTo(12);
+    }
+
+    @DisplayName("덱이 버스트 이고 Ace 카드가 여러장일 때, 버스트가 아니게 되는 최소한의 Ace의 카드만 값을 1로 계산한다.")
+    @Test
+    void calculateScoreByTwoAce() {
+        //given
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.SEVEN));
+        dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TWO));
+
+        //when
+        int score = dealer.calculateScore().getScore();
+
+        //then
+        assertThat(score).isEqualTo(21);
     }
 
     @DisplayName("딜러의 스코어가 17 미만이라면 히트할 수 있다.")
@@ -65,12 +94,10 @@ class DealerTest {
     void canHitByExpectedTrue() {
         //given
         Dealer dealer = new Dealer();
-        Card card = new Card(CardPattern.CLOVER, CardNumber.FIVE);
+        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.SIX));
 
-        //when
-        dealer.receiveCard(card);
-
-        //then
+        //when, then
         assertThat(dealer.canHit()).isTrue();
     }
 
@@ -79,57 +106,10 @@ class DealerTest {
     void canHitByExpectedFalse() {
         //given
         Dealer dealer = new Dealer();
-        Card card1 = new Card(CardPattern.CLOVER, CardNumber.TEN);
-        Card card2 = new Card(CardPattern.SPADE, CardNumber.TEN);
-        Card card3 = new Card(CardPattern.CLOVER, CardNumber.ACE);
+        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.SEVEN));
 
-        //when
-        dealer.receiveCard(card1);
-        dealer.receiveCard(card2);
-        dealer.receiveCard(card3);
-
-        //then
+        //when, then
         assertThat(dealer.canHit()).isFalse();
     }
-//
-//    @DisplayName("플레이어에 게임 수익을 딜러의 지급금에 등록한다.")
-//    @ParameterizedTest
-//    @EnumSource(Result.class)
-//    void payPlayerProfit(Result gameResult) {
-//        //given
-//        int betAmount = 1000;
-//        Player player = new Player(new Name("ted"), betAmount);
-//        Dealer dealer = new Dealer(betAmount);
-//
-//        player.applyResult(gameResult);
-//        int expectedProfitAmount = (int) (betAmount * gameResult.getPayoutRate());
-//
-//        //when
-//        dealer.payPlayerProfit(player);
-//        int payoutAmount = dealer.payoutAmount();
-//
-//        //then
-//        assertThat(payoutAmount).isEqualTo(expectedProfitAmount);
-//    }
-//
-//    @DisplayName("플레이어에게 지급할 수익을 제외한 순수익을 확인한다.")
-//    @ParameterizedTest
-//    @EnumSource(Result.class)
-//    void netProfit(Result gameResult) {
-//        //given
-//        int betAmount = 1000;
-//        Player player = new Player(new Name("ted"), betAmount);
-//        Dealer dealer = new Dealer(betAmount);
-//
-//        player.applyResult(gameResult);
-//        int profitAmount = (int) (betAmount * gameResult.getPayoutRate());
-//        int expectedNetProfit = betAmount - profitAmount;
-//
-//        //when
-//        dealer.payPlayerProfit(player);
-//        int netProfit = dealer.netProfit();
-//
-//        //then
-//        assertThat(netProfit).isEqualTo(expectedNetProfit);
-//    }
 }

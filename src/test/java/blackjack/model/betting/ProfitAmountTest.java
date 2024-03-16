@@ -11,7 +11,7 @@ class ProfitAmountTest {
     @Test
     void createProfitAmount() {
         //given
-        int profitAmount = 10;
+        int profitAmount = -1;
 
         //when, then
         assertThatThrownBy(() -> new ProfitAmount(profitAmount))
