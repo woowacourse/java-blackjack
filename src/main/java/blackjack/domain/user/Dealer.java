@@ -1,4 +1,4 @@
-package blackjack.domain.player;
+package blackjack.domain.user;
 
 import blackjack.domain.card.Hands;
 import blackjack.domain.rule.Score;

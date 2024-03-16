@@ -1,7 +1,7 @@
 package blackjack.dto;
 
 import blackjack.domain.bet.BetRevenue;
-import blackjack.domain.player.UserName;
+import blackjack.domain.user.UserName;
 import java.util.List;
 import java.util.Map;
 

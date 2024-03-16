@@ -3,10 +3,10 @@ package blackjack.domain;
 import blackjack.domain.bet.BetLeverage;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hands;
-import blackjack.domain.player.PlayerNames;
-import blackjack.domain.player.User;
-import blackjack.domain.player.UserName;
-import blackjack.domain.player.Users;
+import blackjack.domain.user.PlayerNames;
+import blackjack.domain.user.User;
+import blackjack.domain.user.UserName;
+import blackjack.domain.user.Users;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
@@ -32,20 +32,20 @@ public class BlackjackGame {
         users.drawStartCard(deck);
     }
 
-    public void playGame(final BiConsumer<UserName, Hands> userCall) {
+    public void playGame(final BiConsumer<UserName, Hands> userTurnCallback) {
         for (final User user : users.getUsers()) {
-            runUserTurn(user, userCall);
+            runUserTurn(user, userTurnCallback);
         }
     }
 
-    private void runUserTurn(final User user, final BiConsumer<UserName, Hands> playerTurnCallback) {
+    private void runUserTurn(final User user, final BiConsumer<UserName, Hands> userTurnCallback) {
         if (users.isAllPlayerBust()) {
             return;
         }
 
         while (user.isNotFinished()) {
             user.playTurn(deck);
-            playerTurnCallback.accept(user.getUserName(), user.getHands());
+            userTurnCallback.accept(user.getUserName(), user.getHands());
         }
     }
 

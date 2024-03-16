@@ -1,8 +1,8 @@
 package blackjack.view;
 
 import blackjack.domain.bet.BetAmount;
-import blackjack.domain.player.UserName;
-import blackjack.domain.player.PlayerNames;
+import blackjack.domain.user.UserName;
+import blackjack.domain.user.PlayerNames;
 import blackjack.exception.NeedRetryException;
 import blackjack.view.format.CardRequestFormat;
 import java.util.Arrays;

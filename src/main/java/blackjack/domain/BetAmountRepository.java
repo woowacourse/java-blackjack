@@ -3,7 +3,7 @@ package blackjack.domain;
 import blackjack.domain.bet.BetAmount;
 import blackjack.domain.bet.BetLeverage;
 import blackjack.domain.bet.BetRevenue;
-import blackjack.domain.player.UserName;
+import blackjack.domain.user.UserName;
 import blackjack.dto.BetRevenueResultDto;
 import java.util.LinkedHashMap;
 import java.util.Map;

@@ -1,7 +1,7 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Hands;
-import blackjack.domain.player.UserName;
+import blackjack.domain.user.UserName;
 
 public record PlayerHandsScoreDto(UserName name, Hands hands) {
 

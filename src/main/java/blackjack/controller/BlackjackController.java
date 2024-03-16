@@ -5,9 +5,9 @@ import blackjack.domain.BlackjackGame;
 import blackjack.domain.bet.BetAmount;
 import blackjack.domain.bet.BetLeverage;
 import blackjack.domain.card.Hands;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.UserName;
-import blackjack.domain.player.PlayerNames;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.UserName;
+import blackjack.domain.user.PlayerNames;
 import blackjack.dto.BetRevenueResultDto;
 import blackjack.dto.FinalHandsScoreDto;
 import blackjack.dto.StartCardsDto;
@@ -71,10 +71,10 @@ public class BlackjackController {
 
         outputView.printStartCards(startCardsDto);
 
-        blackjackGame.playGame(this::playerTurnCallback);
+        blackjackGame.playGame(this::userTurnCallback);
     }
 
-    private void playerTurnCallback(final UserName name, final Hands hands) {
+    private void userTurnCallback(final UserName name, final Hands hands) {
         if (name.equals(new UserName(Dealer.DEALER_NAME))) {
             outputView.printDealerMoreCard();
             return;

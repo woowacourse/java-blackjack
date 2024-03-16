@@ -1,4 +1,4 @@
-package blackjack.domain.player;
+package blackjack.domain.user;
 
 import blackjack.exception.NeedRetryException;
 import java.util.Objects;
