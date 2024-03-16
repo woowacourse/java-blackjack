@@ -11,7 +11,7 @@ import domain.card.Deck;
 import dto.GameResultDTO;
 import dto.GamerDTO;
 import java.util.List;
-import view.BattingMoneyInputView;
+import view.BettingMoneyInputView;
 import view.NameInputView;
 import view.OutputView;
 import view.YesOrNoInputView;
@@ -30,7 +30,7 @@ public class BlackJackController {
 
     private BlackJackGame generateBlackJackGame() {
         List<String> playerNames = NameInputView.getNames();
-        List<Integer> playersBattingMoney = BattingMoneyInputView.getMoney(playerNames);
+        List<Integer> playersBattingMoney = BettingMoneyInputView.getMoney(playerNames);
         return new BlackJackGame(playerNames, playersBattingMoney);
     }
 
