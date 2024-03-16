@@ -2,6 +2,8 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.cardgame.Status;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Dealer extends Player {
     private static final String NAME = "딜러";
@@ -18,13 +20,23 @@ public class Dealer extends Player {
     public Card getFirstCard() {
         try {
             return hand.getAllCards().get(0);
-        } catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException entry) {
             throw new RuntimeException("[ERROR] 딜러가 카드를 갖고 있지 않습니다.");
         }
     }
 
-    public int findBettingResult(final Player player, final int bettingMoney) {
-        Status status = judgePlayerStatus(player);
+    // TODO: Dealer가 너무 많은 책임을 갖지는 않는지?
+    public Map<Player, Integer> findPlayerProfits(final Map<Player, Integer> playerBetting) {
+        return playerBetting.entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        entry -> entry.getKey(),
+                        entry -> findBettingResult(entry.getKey(), entry.getValue())
+                ));
+    }
+
+    private int findBettingResult(final Player player, final int bettingMoney) {
+        final Status status = judgePlayerStatus(player);
 
         if (Status.WIN.equals(status)) {
             return bettingMoney;
