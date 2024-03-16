@@ -13,7 +13,7 @@ public class Card {
 		.flatMap(suit -> Arrays.stream(Rank.values())
 			.map(rank -> new Card(suit, rank)))
 		.collect(Collectors.toMap(card ->
-			card.toKey(card.suit, card.rank), Function.identity()));
+			toKey(card.suit, card.rank), Function.identity()));
 
 	private final Suit suit;
 	private final Rank rank;
