@@ -57,7 +57,7 @@ public class Controller {
 
     private void printScoreAndResult(Dealer dealer, Players players) {
         OutputView.printHandsWithScore(dealer, players.getPlayers());
-        OutputView.printResult(dealer.getPlayersResult(players), dealer);
+        OutputView.printResult(dealer.judgePlayersResult(players), dealer);
     }
 
     private void hitOrStand(Dealer dealer, Player player) {

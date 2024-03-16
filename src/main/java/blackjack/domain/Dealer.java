@@ -26,7 +26,7 @@ public class Dealer extends Player {
         return deck.draw();
     }
 
-    public Result getPlayersResult(Players players) {
+    public Result judgePlayersResult(Players players) {
         int dealerScore = calculate();
         Map<Player, Integer> playersScores = players.calculate();
 
@@ -44,28 +44,20 @@ public class Dealer extends Player {
     }
 
     private ResultStatus getPlayerResult(int dealerScore, int playerScore) {
-        boolean isDealerBust = dealerScore > BLACKJACK_SCORE;
-        boolean isPlayerBust = playerScore > BLACKJACK_SCORE;
-        if (isDealerBust && isPlayerBust) {
-            return ResultStatus.DRAW;
-        }
-        if (isDealerBust) {
-            return ResultStatus.WIN;
-        }
-        if (isPlayerBust) {
+        if (isBustScore(playerScore)) {
             return ResultStatus.LOSE;
         }
-        return playerResultWhenBothAlive(dealerScore, playerScore);
-    }
-
-    private ResultStatus playerResultWhenBothAlive(int dealerScore, int playerScore) {
-        if (dealerScore < playerScore) {
+        // TODO: 블랙잭인 경우 처리 추리
+        if (isBustScore(dealerScore) || playerScore > dealerScore) {
             return ResultStatus.WIN;
         }
-        if (dealerScore > playerScore) {
+        if (playerScore < dealerScore) {
             return ResultStatus.LOSE;
         }
         return ResultStatus.DRAW;
     }
 
+    private boolean isBustScore(int score) {
+        return score > BLACKJACK_SCORE;
+    }
 }
