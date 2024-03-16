@@ -23,10 +23,10 @@ class PlayersWalletTest {
         playersWallet.addProfit(player3, new Profit(10));
         playersWallet.addProfit(player4, new Profit(10));
 
-        playersWallet.calculateProfit(player1, WinState.WIN);
-        playersWallet.calculateProfit(player2, WinState.LOSE);
-        playersWallet.calculateProfit(player3, WinState.BLACKJACK);
-        playersWallet.calculateProfit(player4, WinState.DRAW);
+        playersWallet.calculateProfit(player1, GameResult.WIN);
+        playersWallet.calculateProfit(player2, GameResult.LOSE);
+        playersWallet.calculateProfit(player3, GameResult.BLACKJACK);
+        playersWallet.calculateProfit(player4, GameResult.DRAW);
 
         Map<Player, Profit> profitResult = playersWallet.getPlayersProfit();
         assertThat(profitResult.get(player1).getValue()).isEqualTo(10);

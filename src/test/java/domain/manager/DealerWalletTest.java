@@ -21,10 +21,10 @@ class DealerWalletTest {
         playersWallet.addProfit(player2, new Profit(10));
         playersWallet.addProfit(player3, new Profit(10));
         playersWallet.addProfit(player4, new Profit(10));
-        playersWallet.calculateProfit(player1, WinState.WIN);
-        playersWallet.calculateProfit(player2, WinState.LOSE);
-        playersWallet.calculateProfit(player3, WinState.DRAW);
-        playersWallet.calculateProfit(player4, WinState.BLACKJACK);
+        playersWallet.calculateProfit(player1, GameResult.WIN);
+        playersWallet.calculateProfit(player2, GameResult.LOSE);
+        playersWallet.calculateProfit(player3, GameResult.DRAW);
+        playersWallet.calculateProfit(player4, GameResult.BLACKJACK);
 
         DealerWallet dealerWallet = new DealerWallet();
         dealerWallet.calculateProfit(playersWallet);

@@ -17,8 +17,8 @@ public class PlayersWallet {
         playersProfit.put(player, profit);
     }
 
-    public void calculateProfit(Player player, WinState winState) {
-        Profit profit = winState.calculateProfit(playersProfit.get(player));
+    public void calculateProfit(Player player, GameResult gameResult) {
+        Profit profit = gameResult.calculateProfit(playersProfit.get(player));
         playersProfit.replace(player, profit);
     }
 

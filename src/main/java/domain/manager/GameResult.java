@@ -1,6 +1,6 @@
 package domain.manager;
 
-public enum WinState {
+public enum GameResult {
 
     BLACKJACK(1.5),
     WIN(1),
@@ -9,7 +9,7 @@ public enum WinState {
 
     private final double profitMultiplier;
 
-    WinState(double profitMultiplier) {
+    GameResult(double profitMultiplier) {
         this.profitMultiplier = profitMultiplier;
     }
 
