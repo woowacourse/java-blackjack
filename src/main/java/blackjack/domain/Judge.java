@@ -1,27 +1,31 @@
-package blackjack.util;
+package blackjack.domain;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
-public class JudgeUtil {
+public class Judge {
 
-    private JudgeUtil() {
+    private final Dealer dealer;
+    private final Player player;
+
+    public Judge(Dealer dealer, Player player) {
+        this.dealer = dealer;
+        this.player = player;
     }
 
-    public static GameResult judge(final Dealer dealer, final Player player) {
+    public GameResult judge() {
         if (dealer.isBust()) {
-            return judgeWhenDealerBust(player);
+            return judgeWhenDealerBust();
         }
 
         if (dealer.isBlackjack()) {
-            return judgeWhenDealerBlackjack(player);
+            return judgeWhenDealerBlackjack();
         }
 
-        return judgeWhenDealerNormal(dealer, player);
+        return judgeWhenDealerNormal();
     }
 
-    public static GameResult judgeWhenDealerBust(final Player player) {
+    private GameResult judgeWhenDealerBust() {
         if (player.isBust()) {
             return GameResult.DRAW;
         }
@@ -33,7 +37,7 @@ public class JudgeUtil {
         return GameResult.WIN;
     }
 
-    public static GameResult judgeWhenDealerBlackjack(Player player) {
+    private GameResult judgeWhenDealerBlackjack() {
         if (player.isBlackjack()) {
             return GameResult.DRAW;
         }
@@ -41,7 +45,7 @@ public class JudgeUtil {
         return GameResult.LOSE;
     }
 
-    public static GameResult judgeWhenDealerNormal(Dealer dealer, final Player player) {
+    private GameResult judgeWhenDealerNormal() {
         if (player.isBust()) {
             return GameResult.LOSE;
         }
@@ -50,10 +54,10 @@ public class JudgeUtil {
             return GameResult.BLACKJACK;
         }
 
-        return judgeWhenNormalTogether(dealer, player);
+        return judgeWhenNormalTogether();
     }
 
-    private static GameResult judgeWhenNormalTogether(final Dealer dealer, final Player player) {
+    private GameResult judgeWhenNormalTogether() {
         if (dealer.isSameScore(player.getScore())) {
             return GameResult.DRAW;
         }

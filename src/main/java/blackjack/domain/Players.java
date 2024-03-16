@@ -3,7 +3,6 @@ package blackjack.domain;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.dto.ProfitResult;
-import blackjack.util.JudgeUtil;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -44,7 +43,7 @@ public class Players {
         ProfitResult profitResult = new ProfitResult();
 
         for (Player player : players) {
-            GameResult gameResult = JudgeUtil.judge(dealer, player);
+            GameResult gameResult = new Judge(dealer, player).judge();
             BigDecimal profit = bettingTable.calculateProfitByPlayer(player, gameResult);
             profitResult.addProfitResult(player, profit);
         }

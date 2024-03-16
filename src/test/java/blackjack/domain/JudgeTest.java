@@ -4,7 +4,6 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.stategy.NoShuffleStrategy;
 import blackjack.strategy.shuffle.ShuffleStrategy;
-import blackjack.util.JudgeUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -15,7 +14,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("결과 판단")
-class JudgeUtilTest {
+class JudgeTest {
 
     private final ShuffleStrategy shuffleStrategy = new NoShuffleStrategy();
 
@@ -47,7 +46,7 @@ class JudgeUtilTest {
 
             // when
             bustPlayerChoco(dealer);
-            GameResult gameResult = JudgeUtil.judge(dealer, choco);
+            GameResult gameResult = new Judge(dealer, choco).judge();
 
             // then
             assertThat(isDraw(gameResult))
@@ -64,7 +63,7 @@ class JudgeUtilTest {
             choco = players.getPlayers().get(0);
 
             // when
-            GameResult gameResult = JudgeUtil.judge(dealer, choco);
+            GameResult gameResult = new Judge(dealer, choco).judge();
 
             // then
             assertThat(isPlayerResultBlackjackWin(gameResult))
@@ -79,7 +78,7 @@ class JudgeUtilTest {
             choco = players.getPlayers().get(0);
 
             // when
-            GameResult gameResult = JudgeUtil.judge(dealer, choco);
+            GameResult gameResult = new Judge(dealer, choco).judge();
 
             // then
             assertThat(isPlayerResultWin(gameResult))
@@ -108,7 +107,7 @@ class JudgeUtilTest {
 
             // when
             bustPlayerChoco(dealer);
-            GameResult gameResult = JudgeUtil.judge(dealer, choco);
+            GameResult gameResult = new Judge(dealer, choco).judge();
 
             // then
             assertThat(isPlayerResultLose(gameResult))
@@ -125,7 +124,7 @@ class JudgeUtilTest {
             choco = players.getPlayers().get(0);
 
             //when
-            GameResult gameResult = JudgeUtil.judge(dealer, choco);
+            GameResult gameResult = new Judge(dealer, choco).judge();
 
             //then
             assertThat(isDraw(gameResult))
@@ -140,7 +139,7 @@ class JudgeUtilTest {
             choco = players.getPlayers().get(0);
 
             //when
-            GameResult gameResult = JudgeUtil.judge(dealer, choco);
+            GameResult gameResult = new Judge(dealer, choco).judge();
 
             //then
             assertThat(isPlayerResultLose(gameResult))
@@ -166,7 +165,7 @@ class JudgeUtilTest {
 
             // when
             bustPlayerChoco(dealer);
-            GameResult gameResult = JudgeUtil.judge(dealer, choco);
+            GameResult gameResult = new Judge(dealer, choco).judge();
 
             // then
             assertThat(isPlayerResultLose(gameResult))
@@ -183,7 +182,7 @@ class JudgeUtilTest {
             choco = players.getPlayers().get(0);
 
             // when
-            GameResult gameResult = JudgeUtil.judge(dealer, choco);
+            GameResult gameResult = new Judge(dealer, choco).judge();
 
             // then
             assertThat(isPlayerResultBlackjackWin(gameResult))
@@ -198,7 +197,7 @@ class JudgeUtilTest {
             choco = players.getPlayers().get(0);
 
             // when
-            GameResult gameResult = JudgeUtil.judge(dealer, choco);
+            GameResult gameResult = new Judge(dealer, choco).judge();
 
             // then
             assertThat(isPlayerResultLose(gameResult))
@@ -214,7 +213,7 @@ class JudgeUtilTest {
             choco = players.getPlayers().get(0);
 
             // when
-            GameResult gameResult = JudgeUtil.judge(dealer, choco);
+            GameResult gameResult = new Judge(dealer, choco).judge();
 
             // then
             assertThat(isPlayerResultWin(gameResult))
@@ -230,7 +229,7 @@ class JudgeUtilTest {
             choco = players.getPlayers().get(0);
 
             // when
-            GameResult gameResult = JudgeUtil.judge(dealer, choco);
+            GameResult gameResult = new Judge(dealer, choco).judge();
 
             // then
             assertThat(isDraw(gameResult))
