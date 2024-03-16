@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Hand;
 import domain.gamer.Player;
+import domain.manager.wallet.DealerWallet;
+import domain.manager.wallet.PlayersWallet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

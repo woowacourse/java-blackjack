@@ -1,4 +1,6 @@
-package domain.manager;
+package domain.manager.wallet;
+
+import domain.manager.Profit;
 
 public class DealerWallet {
 

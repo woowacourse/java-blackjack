@@ -1,6 +1,8 @@
-package domain.manager;
+package domain.manager.wallet;
 
 import domain.gamer.Player;
+import domain.manager.GameResult;
+import domain.manager.Profit;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

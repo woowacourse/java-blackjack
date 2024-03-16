@@ -3,6 +3,8 @@ package domain.manager;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
+import domain.manager.wallet.DealerWallet;
+import domain.manager.wallet.PlayersWallet;
 import java.util.List;
 
 public class GameManager {
