@@ -46,6 +46,10 @@ public class Cards {
         return sumAllCards().isBustScore();
     }
 
+    public int size() {
+        return cards.size();
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(this.cards);
     }
