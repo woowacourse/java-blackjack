@@ -23,7 +23,7 @@ public class Betting {
         return new PlayerBettingProfitOutcome(playerName, matchResult.calculateProfit(bettingMoney));
     }
 
-    public BettingMoney findBettingMoneyByPlayerName(String playerName) { // TODO: private으로 변경
+    private BettingMoney findBettingMoneyByPlayerName(String playerName) {
         if (!playerBettingMoney.containsKey(playerName)) {
             throw new IllegalArgumentException(NOT_FOUND_BETTING_PLAYER);
         }
