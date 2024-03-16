@@ -20,6 +20,9 @@ public class Referee {
         if (playerCards.countMaxScore() > dealerCards.countMaxScore()) {
             return PlayerResult.WIN;
         }
-        return null;
+        if (playerCards.countMaxScore() == dealerCards.countMaxScore()) {
+            return PlayerResult.DRAW;
+        }
+        return PlayerResult.LOSE;
     }
 }
