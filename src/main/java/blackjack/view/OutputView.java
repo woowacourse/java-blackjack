@@ -19,27 +19,32 @@ public class OutputView {
         this.messageGenerator = messageGenerator;
     }
 
-    public void printInitialSettingMessage(ParticipantDto dealer, ParticipantsDto players) {
+    public void printCardsAfterFirstDeal(final ParticipantDto dealer, final ParticipantsDto players) {
+        printInitialSettingMessage(dealer, players);
+        printFirstCardOfDealer(dealer);
+        printCardsOfAllPlayer(players);
+    }
+
+    private void printInitialSettingMessage(ParticipantDto dealer, ParticipantsDto players) {
         String dealerName = dealer.name();
         String playerNames = messageGenerator.generatePlayerNames(players.participants());
 
         System.out.printf("%n%s와 %s에게 %d장을 나누었습니다.%n", dealerName, playerNames, INITIAL_CARD_COUNT);
     }
 
-    public void printFirstCardOfDealer(ParticipantDto dealer) {
+    private void printFirstCardOfDealer(ParticipantDto dealer) {
         String dealerName = dealer.name();
         List<CardDto> cards = dealer.cards();
-        List<CardDto> firstCardOfDealer = List.of(cards.get(0));
-        String cardsInfo = messageGenerator.generateCardsInfo(firstCardOfDealer);
+        String cardsInfo = messageGenerator.generateCardsInfo(List.of(cards.get(0)));
 
         System.out.printf("%s: %s%n", dealerName, cardsInfo);
     }
 
-    public void printCardsOfAllParticipant(ParticipantsDto participants) {
-        List<ParticipantDto> participantDtos = participants.participants();
-        String cardsOfAllParticipant = messageGenerator.generateCardsOfAllParticipant(participantDtos);
+    private void printCardsOfAllPlayer(ParticipantsDto players) {
+        List<ParticipantDto> playersDto = players.participants();
+        String cardsOfAllPlayer = messageGenerator.generateCardsOfAllParticipant(playersDto);
 
-        System.out.println(cardsOfAllParticipant + NEWLINE);
+        System.out.println(cardsOfAllPlayer + NEWLINE);
     }
 
     public void printCardsOfParticipant(ParticipantDto participant) {
