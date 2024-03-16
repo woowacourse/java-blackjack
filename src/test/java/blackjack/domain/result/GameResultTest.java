@@ -5,6 +5,7 @@ import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.money.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -156,5 +157,57 @@ public class GameResultTest {
         // when & then
         assertThat(GameResult.createPlayerResult(dealer, player))
                 .isEqualTo(GameResult.LOSE);
+    }
+
+    @DisplayName("플레이어 결과가 '블랙잭 승'인 경우 베팅 금액의 1.5배를 수익으로 얻는다.")
+    @Test
+    void blackjackWinProfitTest() {
+        // given
+        GameResult gameResult = GameResult.BLACKJACK_WIN;
+        Money bettingAmount = new Money(1_000L);
+        Money profitAmount = new Money(1_500L);
+
+        // when & then
+        assertThat(gameResult.calculateProfit(bettingAmount))
+                .isEqualTo(profitAmount);
+    }
+
+    @DisplayName("플레이어 결과가 '승'인 경우 베팅 금액의 1배를 수익으로 얻는다.")
+    @Test
+    void winProfitTest() {
+        // given
+        GameResult gameResult = GameResult.WIN;
+        Money bettingAmount = new Money(1_000L);
+        Money profitAmount = new Money(1_000L);
+
+        // when & then
+        assertThat(gameResult.calculateProfit(bettingAmount))
+                .isEqualTo(profitAmount);
+    }
+
+    @DisplayName("플레이어 결과가 '패'인 경우 베팅 금액의 1배를 수익으로 잃는다.")
+    @Test
+    void loseProfitTest() {
+        // given
+        GameResult gameResult = GameResult.LOSE;
+        Money bettingAmount = new Money(1_000L);
+        Money profitAmount = new Money(-1_000L);
+
+        // when & then
+        assertThat(gameResult.calculateProfit(bettingAmount))
+                .isEqualTo(profitAmount);
+    }
+
+    @DisplayName("플레이어 결과가 '무'인 경우 수익은 없다.")
+    @Test
+    void drawProfitTest() {
+        // given
+        GameResult gameResult = GameResult.DRAW;
+        Money bettingAmount = new Money(1_000L);
+        Money profitAmount = new Money(0L);
+
+        // when & then
+        assertThat(gameResult.calculateProfit(bettingAmount))
+                .isEqualTo(profitAmount);
     }
 }
