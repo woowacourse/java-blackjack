@@ -22,7 +22,7 @@ public enum GameResult {
         this.biPredicate = biPredicate;
     }
 
-    public static GameResult of(Dealer dealer, Player player) {
+    public static GameResult judge(Dealer dealer, Player player) {
         return Arrays.stream(values())
                 .filter(gameResult -> gameResult.biPredicate.test(dealer, player))
                 .findFirst()

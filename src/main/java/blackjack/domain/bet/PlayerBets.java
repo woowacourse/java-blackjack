@@ -23,7 +23,7 @@ public class PlayerBets {
     }
 
     private Profit calculatePlayerProfit(Player player, Dealer dealer) {
-        GameResult gameResult = GameResult.of(dealer, player);
+        GameResult gameResult = GameResult.judge(dealer, player);
         BetAmount betAmount = playerBets.get(player);
         return betAmount.calculateProfit(gameResult.getProfitLeverage());
     }

@@ -21,7 +21,7 @@ class GameResultTest {
     void testPlayerBlackJackWin() {
         Player player = TestPlayerCreator.of("리비", 1, 10);
         Dealer dealer = new Dealer(TestHandCreator.of(3, 4));
-        assertThat(GameResult.of(dealer, player)).isEqualTo(BLACKJACK_WIN);
+        assertThat(GameResult.judge(dealer, player)).isEqualTo(BLACKJACK_WIN);
     }
 
     @DisplayName("딜러와 플레이어 모두 21점이더라도 블랙잭 핸드가 있다면 블랙잭쪽이 이긴다.")
@@ -29,7 +29,7 @@ class GameResultTest {
     void testPlayerBlackJackWinMaxScore() {
         Player player = TestPlayerCreator.of("리비", 1, 10);
         Dealer dealer = new Dealer(TestHandCreator.of(9, 2, 10));
-        assertThat(GameResult.of(dealer, player)).isEqualTo(BLACKJACK_WIN);
+        assertThat(GameResult.judge(dealer, player)).isEqualTo(BLACKJACK_WIN);
     }
 
     @DisplayName("딜러와 플레이어 모두 블랙잭인 경우 결과는 PUSH이다.")
@@ -37,7 +37,7 @@ class GameResultTest {
     void testPlayerAndDealerBlackJack() {
         Player player = TestPlayerCreator.of("리비", 1, 10);
         Dealer dealer = new Dealer(TestHandCreator.of(1, 10));
-        assertThat(GameResult.of(dealer, player)).isEqualTo(PUSH);
+        assertThat(GameResult.judge(dealer, player)).isEqualTo(PUSH);
     }
 
     @DisplayName("딜러가 버스트 되고 플레이어가 살아있다면 플레이어가 승리한다")
@@ -45,7 +45,7 @@ class GameResultTest {
     void testPlayerWin() {
         Player player = TestPlayerCreator.of("리비", 10, 10);
         Dealer dealer = new Dealer(TestHandCreator.of(2, 10));
-        assertThat(GameResult.of(dealer, player)).isEqualTo(PLAYER_WIN);
+        assertThat(GameResult.judge(dealer, player)).isEqualTo(PLAYER_WIN);
     }
 
     @DisplayName("딜러 플레이어 모두 버스트 되지 않은 경우 딜러의 점수보다 플레이어의 점수가 낮다면 플레이어가 패한다")
@@ -53,6 +53,6 @@ class GameResultTest {
     void testPlayerLose() {
         Player player = TestPlayerCreator.of("리비", 2, 10);
         Dealer dealer = new Dealer(TestHandCreator.of(10, 10));
-        assertThat(GameResult.of(dealer, player)).isEqualTo(PLAYER_LOSE);
+        assertThat(GameResult.judge(dealer, player)).isEqualTo(PLAYER_LOSE);
     }
 }
