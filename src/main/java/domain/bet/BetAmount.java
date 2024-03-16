@@ -5,6 +5,7 @@ import java.util.Objects;
 public final class BetAmount {
 
     public static final int MIN_BET_AMOUNT = 500;
+    
     private final double value;
 
     public BetAmount(final double value) {
