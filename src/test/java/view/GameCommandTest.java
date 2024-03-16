@@ -10,10 +10,10 @@ class GameCommandTest {
     @DisplayName("카드를 받는다는 표현에 따른 boolean 값을 return 한다.")
     @ParameterizedTest
     @CsvSource({
-            "Y, false",
-            "N, true"
+            "Y, true",
+            "N, false"
     })
     void getCardCommand(String command, boolean expectedReturn) {
-        Assertions.assertThat(GameCommand.isStandCommand(command)).isEqualTo(expectedReturn);
+        Assertions.assertThat(GameCommand.isHitCommand(command)).isEqualTo(expectedReturn);
     }
 }

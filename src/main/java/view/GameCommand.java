@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 public enum GameCommand {
 
-    GET_CARD("Y"),
-    REFUSE_CARD("N");
+    HIT("Y"),
+    STAND("N");
 
     final String command;
 
@@ -13,8 +13,8 @@ public enum GameCommand {
         this.command = command;
     }
 
-    public static boolean isStandCommand(String inputCommand) {
+    public static boolean isHitCommand(String inputCommand) {
         return Arrays.stream(values())
-                .anyMatch(gameCommand -> REFUSE_CARD.command.equals(inputCommand));
+                .anyMatch(gameCommand -> HIT.command.equals(inputCommand));
     }
 }
