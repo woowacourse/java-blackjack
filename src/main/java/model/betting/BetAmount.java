@@ -13,5 +13,8 @@ public class BetAmount {
         if (money <= 0) {
             throw new IllegalArgumentException("배팅금은 0보다 큰 정수만 가능합니다.");
         }
+        if (money % 10 != 0) {
+            throw new IllegalArgumentException("배팅금은 10원 단위만 가능합니다.");
+        }
     }
 }
