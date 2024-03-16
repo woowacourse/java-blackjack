@@ -72,17 +72,15 @@ public class OutputView {
         }
     }
 
-    public void printBettingProfit(final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
+    public void printBettingProfit(final int dealerBettingProfit,
+                                   final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
         System.out.println(BETTING_PROFIT_INTRO);
-        System.out.println(formatDealerBettingProfit(playerBettingProfitOutcomes));
+        System.out.println(formatDealerBettingProfit(dealerBettingProfit));
         System.out.println(formatPlayerBettingProfits(playerBettingProfitOutcomes));
     }
 
-    private String formatDealerBettingProfit(final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
-        int profit = playerBettingProfitOutcomes.stream()
-                .mapToInt(PlayerBettingProfitOutcome::profit)
-                .sum(); // TODO: betting에서 딜러 수익 계산하게 로직 옮기기
-        return DEALER_BETTING_PROFIT_PREFIX + (-1) * profit;
+    private String formatDealerBettingProfit(final int dealerBettingProfit) {
+        return DEALER_BETTING_PROFIT_PREFIX + dealerBettingProfit;
     }
 
     private String formatPlayerBettingProfits(final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {

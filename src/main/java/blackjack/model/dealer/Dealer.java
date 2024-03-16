@@ -3,6 +3,7 @@ package blackjack.model.dealer;
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 import blackjack.model.cardgenerator.CardGenerator;
+import blackjack.view.dto.PlayerBettingProfitOutcome;
 import java.util.List;
 
 public class Dealer {
@@ -32,6 +33,12 @@ public class Dealer {
 
     public int calculateCardsTotalScore() {
         return cards.calculateScore();
+    }
+
+    public int calculateBettingProfit(List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
+        return playerBettingProfitOutcomes.stream()
+                .mapToInt(PlayerBettingProfitOutcome::profit)
+                .sum() * -1;
     }
 
     public boolean isBlackjack() {

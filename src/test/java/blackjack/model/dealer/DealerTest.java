@@ -59,9 +59,9 @@ class DealerTest {
         );
 
         // when
-        int dealerProfit = dealer.calculateDealerBettingProfit(playerBettingProfitOutcomes);
+        int dealerProfit = dealer.calculateBettingProfit(playerBettingProfitOutcomes);
 
         // then
-        assertThat(dealerProfit).isEqualTo(-2000);
+        assertThat(dealerProfit).isEqualTo(2000);
     }
 }
