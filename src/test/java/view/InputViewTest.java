@@ -93,7 +93,7 @@ class InputViewTest {
         @Test
         @DisplayName("최소 금액보다 작은 금액일 경우 배팅할 수 없다.")
         void validateAmount() {
-            Assertions.assertThatThrownBy(() -> InputView.readBettingMoney(() -> "10", "test"))
+            Assertions.assertThatThrownBy(() -> InputView.readBettingMoney(() -> "-100", "test"))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("최소 금액보다 작은 금액으로 배팅할 수 없습니다.");
         }
