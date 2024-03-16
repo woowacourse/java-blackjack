@@ -12,6 +12,13 @@ public class Bets {
         this.bets = new ArrayList<>(bets);
     }
 
+    public Money calculateDealerPrize(List<PlayerResult> allGameResults) {
+        return allGameResults.stream()
+                .map(this::getPrize)
+                .map(OwnedMoney::getMoney)
+                .reduce(Money.ZERO, Money::subtract);
+    }
+
     public OwnedMoney getPrize(PlayerResult gameResult) {
         OwnedMoney bet = getOwnedMoney(gameResult);
         Money prize = gameResult.calculatePrize(bet);

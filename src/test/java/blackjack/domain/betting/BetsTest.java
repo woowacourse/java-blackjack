@@ -78,4 +78,23 @@ public class BetsTest {
             assertThat(prize).isEqualTo(new OwnedMoney(DEFAULT_PLAYER, BETTING_MONEY.multiply(-1)));
         }
     }
+
+    @DisplayName("딜러 수익 계산 테스트")
+    @Test
+    void dealerPrizeTest() {
+        Player first = Player.from("1");
+        Player second = Player.from("2");
+        Bets bets = new Bets(List.of(
+                new OwnedMoney(first, 100),
+                new OwnedMoney(second, 100)
+        ));
+
+        Money dealerPrize = bets.calculateDealerPrize(List.of(
+                new PlayerResult(first, GameResult.PLAYER_BLACKJACK),
+                new PlayerResult(second, GameResult.PLAYER_LOSE)
+        ));
+        System.out.println(dealerPrize.getAmount());
+
+        assertThat(dealerPrize).isEqualTo(new Money(-50));
+    }
 }

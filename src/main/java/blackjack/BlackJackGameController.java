@@ -5,6 +5,7 @@ import blackjack.domain.betting.Money;
 import blackjack.domain.betting.OwnedMoney;
 import blackjack.domain.card.Deck;
 import blackjack.domain.game.BlackJackGame;
+import blackjack.domain.game.PlayerResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -81,21 +82,22 @@ public class BlackJackGameController {
 
     private void printPrize(Bets bets, BlackJackGame game) {
         outputView.printPrizeTitle();
-        List<OwnedMoney> prizes = game.getAllGameResults().stream()
+        List<PlayerResult> allGameResults = game.getAllGameResults();
+        printDealerPrize(bets, allGameResults);
+        printPlayersPrize(bets, allGameResults);
+    }
+
+    private void printDealerPrize(Bets bets, List<PlayerResult> allGameResults) {
+        Money dealerPrize = bets.calculateDealerPrize(allGameResults);
+        outputView.printDealerPrize(dealerPrize);
+    }
+
+    private void printPlayersPrize(Bets bets, List<PlayerResult> allGameResults) {
+        List<OwnedMoney> prizes = allGameResults.stream()
                 .map(bets::getPrize)
                 .toList();
-        Money dealerPrize = calculateDealerPrize(prizes);
-        outputView.printDealerPrize(dealerPrize);
         for (OwnedMoney prize : prizes) {
             outputView.printPlayerPrize(prize.getOwner().getName(), prize.getMoney());
         }
-    }
-
-    private Money calculateDealerPrize(List<OwnedMoney> prizes) {
-        Money dealerPrize = Money.ZERO;
-        for (OwnedMoney prize : prizes) {
-            dealerPrize = dealerPrize.subtract(prize.getMoney());
-        }
-        return dealerPrize;
     }
 }
