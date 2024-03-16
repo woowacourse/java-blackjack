@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
+import blackjack.domain.player.BettingAmount;
 import blackjack.domain.player.BettingAmounts;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.GamePlayer;
@@ -23,12 +24,10 @@ public class Blackjack {
         this.deck = deck;
     }
 
-    public Players acceptPlayers(Names names, BettingAmounts battingAmounts) {
+    public Players acceptPlayers(List<Name> names, List<BettingAmount> bettingAmounts) {
         Dealer dealer = Dealer.createDefaultDealer(drawTwo());
         List<GamePlayer> gamePlayers = IntStream.range(0, names.size())
-                                                .mapToObj(i -> new GamePlayer(names.getName(i),
-                                                        drawTwo(),
-                                                        battingAmounts.getBattingAmount(i)))
+                                                .mapToObj(i -> new GamePlayer(names.get(i), drawTwo(), bettingAmounts.get(i)))
                                                 .toList();
         return new Players(dealer, gamePlayers);
     }

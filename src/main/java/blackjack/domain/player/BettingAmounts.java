@@ -1,12 +1,13 @@
 package blackjack.domain.player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BettingAmounts {
-    private final List<BettingAmount> battingAmounts;
+    private final List<BettingAmount> bettingAmounts;
 
     private BettingAmounts(List<BettingAmount> battingAmounts) {
-        this.battingAmounts = battingAmounts;
+        this.bettingAmounts = battingAmounts;
     }
 
     public static BettingAmounts from(List<String> battingAmounts) {
@@ -15,7 +16,7 @@ public class BettingAmounts {
                                                 .toList());
     }
 
-    public BettingAmount getBattingAmount(int index) {
-        return battingAmounts.get(index);
+    public List<BettingAmount> getBettingAmounts() {
+        return new ArrayList<>(bettingAmounts);
     }
 }

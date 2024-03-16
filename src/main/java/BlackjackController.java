@@ -26,9 +26,9 @@ public class BlackjackController {
 
     private Players joinPlayer() {
         Names names = Names.from(InputView.inputPlayerNames());
-        BettingAmounts battingAmounts = BettingAmounts.from(
+        BettingAmounts bettingAmounts = BettingAmounts.from(
                 InputView.inputPlayerBattingAmounts(names));
-        Players players = blackjack.acceptPlayers(names, battingAmounts);
+        Players players = blackjack.acceptPlayers(names.getNames(), bettingAmounts.getBettingAmounts());
         PlayerView.printPlayers(players);
         return players;
     }
