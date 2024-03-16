@@ -1,8 +1,10 @@
 package model.game;
 
 import static model.card.CardNumber.ACE;
-import static model.card.CardNumber.EIGHT;
 import static model.card.CardNumber.JACK;
+import static model.card.CardNumber.NINE;
+import static model.card.CardNumber.QUEEN;
+import static model.card.CardNumber.THREE;
 import static model.card.CardShape.HEART;
 import static model.card.CardShape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,7 +37,52 @@ class ScoreTest {
                 List.of(new Card(ACE, SPADE), new Card(ACE, SPADE), new Card(ACE, SPADE)), 13
             ),
             Arguments.of(
-                List.of(new Card(ACE, SPADE), new Card(ACE, SPADE), new Card(EIGHT, HEART)), 20
+                List.of(new Card(THREE, SPADE), new Card(NINE, SPADE), new Card(QUEEN, HEART)), 22
+            )
+        );
+    }
+
+    @DisplayName("카드 합이 21인지 여부를 반환한다")
+    @ParameterizedTest
+    @MethodSource("provideCardsAndExpectedIs21")
+    void testScoreIs21(List<Card> cards, boolean expected) {
+        Score score = Score.from(cards);
+        assertThat(score.is21()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideCardsAndExpectedIs21() {
+        return Stream.of(
+            Arguments.of(
+                List.of(new Card(ACE, SPADE), new Card(JACK, HEART)), true
+            ),
+            Arguments.of(
+                List.of(new Card(ACE, SPADE), new Card(ACE, SPADE), new Card(ACE, SPADE)), false
+            ),
+            Arguments.of(
+                List.of(new Card(THREE, SPADE), new Card(NINE, SPADE), new Card(QUEEN, HEART)),
+                false
+            )
+        );
+    }
+
+    @DisplayName("카드 합이 21초과 여부를 반환한다")
+    @ParameterizedTest
+    @MethodSource("provideCardsAndExpectedIsOver21")
+    void testScoreIsOver21(List<Card> cards, boolean expected) {
+        Score score = Score.from(cards);
+        assertThat(score.isOver21()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideCardsAndExpectedIsOver21() {
+        return Stream.of(
+            Arguments.of(
+                List.of(new Card(ACE, SPADE), new Card(JACK, HEART)), false
+            ),
+            Arguments.of(
+                List.of(new Card(ACE, SPADE), new Card(ACE, SPADE), new Card(ACE, SPADE)), false
+            ),
+            Arguments.of(
+                List.of(new Card(THREE, SPADE), new Card(NINE, SPADE), new Card(QUEEN, HEART)), true
             )
         );
     }
