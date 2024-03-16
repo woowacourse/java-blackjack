@@ -32,8 +32,8 @@ public class Participants {
         return hands.remove(hands.size() - 1);
     }
 
-    public WinOrLose calculateWinOrLose() {
-        return new WinOrLose(players.getPlayers(), dealer.calculateScore());
+    public BlackJackGameResult calculateGameResult() {
+        return new BlackJackGameResult(players.getPlayers(), dealer);
     }
 
     public boolean isDealerNotOver() {

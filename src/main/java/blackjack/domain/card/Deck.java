@@ -1,8 +1,5 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Rank;
-import blackjack.domain.card.Shape;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,14 +7,14 @@ import java.util.Random;
 
 public class Deck {
 
-    private static final Random RANDOM  = new Random();
+    private static final Random RANDOM = new Random();
 
     private final List<Card> deck;
 
     public Deck() {
         this.deck = initDeck();
     }
-    
+
     private List<Card> initDeck() {
         List<Card> result = new LinkedList<>();
         Arrays.stream(Rank.values())

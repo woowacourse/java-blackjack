@@ -32,7 +32,7 @@ public class PlayerTest {
         );
         player.receiveHands(hands);
 
-        assertThat(player.getHands().size()).isEqualTo(2);
+        assertThat(player.getHands().getCards().size()).isEqualTo(2);
     }
 
     @Test
@@ -68,56 +68,5 @@ public class PlayerTest {
         int result = player.calculateScore();
 
         assertThat(result).isEqualTo(13);
-    }
-
-    @Test
-    @DisplayName("딜러가 터지고 플레이어가 안 터진 경우 플레이어가 이긴다.")
-    void isWinWithDealerBurstTest() {
-        Player player = new Player(new Name("이름"));
-        player.hit(new Card(Shape.HEART, Rank.NINE));
-        player.hit(new Card(Shape.SPADE, Rank.NINE));
-
-        assertThat(player.isWin(25)).isTrue();
-    }
-
-    @Test
-    @DisplayName("딜러와 플레이어가 터진 경우 딜러가 이긴다.")
-    void isWinWithBothBurstTest() {
-        Player player = new Player(new Name("이름"));
-        player.hit(new Card(Shape.HEART, Rank.NINE));
-        player.hit(new Card(Shape.SPADE, Rank.NINE));
-        player.hit(new Card(Shape.SPADE, Rank.NINE));
-
-        assertThat(player.isWin(25)).isFalse();
-    }
-
-    @Test
-    @DisplayName("둘 다 터지지 않고 딜러 점수가 더 높은 경우 딜러가 이긴다.")
-    void isWinWithDealerWinTest() {
-        Player player = new Player(new Name("이름"));
-        player.hit(new Card(Shape.HEART, Rank.NINE));
-        player.hit(new Card(Shape.SPADE, Rank.NINE));
-
-        assertThat(player.isWin(21)).isFalse();
-    }
-
-    @Test
-    @DisplayName("딜러와 플레이어 점수가 같은 경우 딜러가 이긴다.")
-    void isWinWithSameScoreTest() {
-        Player player = new Player(new Name("이름"));
-        player.hit(new Card(Shape.HEART, Rank.TEN));
-        player.hit(new Card(Shape.SPADE, Rank.ACE));
-
-        assertThat(player.isWin(21)).isFalse();
-    }
-
-    @Test
-    @DisplayName("둘 다 터지지 않고 플레이어 점수가 더 높은 경우 플레이어가 이긴다.")
-    void isWinWithPlayerWinTest() {
-        Player player = new Player(new Name("이름"));
-        player.hit(new Card(Shape.HEART, Rank.KING));
-        player.hit(new Card(Shape.SPADE, Rank.ACE));
-
-        assertThat(player.isWin(20)).isTrue();
     }
 }

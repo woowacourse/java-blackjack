@@ -6,12 +6,12 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.GameBoard;
 import blackjack.domain.participants.Hands;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -82,7 +82,7 @@ public class GameBoardTest {
     void initialDistributeTest() {
         gameBoard.distributeInitialHands();
 
-        assertThat(dealer.getHands().size()).isEqualTo(2);
+        assertThat(dealer.getHands().getCards().size()).isEqualTo(2);
     }
 
     @Test
@@ -90,7 +90,7 @@ public class GameBoardTest {
     void addCardToPlayerTest() {
         gameBoard.addCardToPlayer(siso);
 
-        assertThat(siso.getHands().size()).isEqualTo(3);
+        assertThat(siso.getHands().getCards().size()).isEqualTo(3);
     }
 
     @Test
@@ -98,6 +98,6 @@ public class GameBoardTest {
     void addCardToDealerTest() {
         gameBoard.addCardToDealer();
 
-        assertThat(dealer.getHands().size()).isEqualTo(1);
+        assertThat(dealer.getHands().getCards().size()).isEqualTo(1);
     }
 }

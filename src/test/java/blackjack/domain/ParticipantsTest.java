@@ -11,10 +11,8 @@ import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
-import blackjack.domain.participants.WinOrLose;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,7 +38,7 @@ class ParticipantsTest {
 
         participants.receiveDealerCard(card);
 
-        assertThat(participants.getDealer().getHands().size()).isEqualTo(1);
+        assertThat(participants.getDealer().getHands().getCards().size()).isEqualTo(1);
     }
 
     @Test
@@ -65,33 +63,7 @@ class ParticipantsTest {
                 new ArrayList<>(List.of(hands1, hands2, hands3))
         );
 
-        assertThat(siso.getHands().size()).isEqualTo(2);
-    }
-
-    @Test
-    @DisplayName("참가자들의 결과를 계산한다.")
-    void calculateResultTest() {
-        Hands hands1 = new Hands(List.of(
-                new Card(Shape.HEART, Rank.ACE),
-                new Card(Shape.HEART, Rank.TWO))
-        );
-
-        Hands hands2 = new Hands(List.of(
-                new Card(Shape.SPADE, Rank.ACE),
-                new Card(Shape.SPADE, Rank.TWO))
-        );
-
-        Hands hands3 = new Hands(List.of(
-                new Card(Shape.DIAMOND, Rank.ACE),
-                new Card(Shape.DIAMOND, Rank.TWO))
-        );
-
-        participants.receiveInitialHands(
-                new ArrayList<>(List.of(hands1, hands2, hands3))
-        );
-
-        WinOrLose winOrLose = participants.calculateWinOrLose();
-        assertThat(winOrLose.getResult(siso)).isFalse();
+        assertThat(siso.getHands().getCards().size()).isEqualTo(2);
     }
 
     @Test

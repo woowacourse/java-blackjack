@@ -1,7 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.participants.Player;
-import blackjack.domain.participants.WinOrLose;
+import blackjack.domain.participants.betting.Betting;
+import blackjack.domain.participants.GameParticipant;
+import blackjack.domain.participants.betting.Profit;
 import blackjack.dto.ParticipantDto;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,20 +55,15 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printWinOrLose(WinOrLose winOrLose) {
-        System.out.println("## 최종 승패");
-        int dealerWinCount = winOrLose.countDealerWin();
-        int dealerLoseCount = winOrLose.size() - dealerWinCount;
-        System.out.printf("딜러: %d승 %d패\n", dealerWinCount, dealerLoseCount);
-        winOrLose.getWinOrLose().keySet().forEach(player -> printVictory(winOrLose, player));
+    public void printGameResult(Betting betting) {
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %d\n", betting.getDealerProfit());
+        betting.getProfitResult()
+                .forEach(this::printProfit);
     }
 
-    private static void printVictory(WinOrLose winOrLose, Player player) {
-        if (winOrLose.getResult(player)) {
-            System.out.println(player.getName().getName() + ": 승");
-            return;
-        }
-        System.out.println(player.getName().getName() + ": 패");
+    private void printProfit(GameParticipant participant, Profit profit) {
+        System.out.printf("%s: %d\n", participant.getName(), profit.getProfit());
     }
 
     public void printNewLine() {

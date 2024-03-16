@@ -24,7 +24,7 @@ public class HandsTest {
 
         hands.addCard(new Card(Shape.HEART, Rank.EIGHT));
 
-        Assertions.assertThat(hands.size()).isEqualTo(3);
+        Assertions.assertThat(hands.getCards().size()).isEqualTo(3);
     }
 
     @Test
@@ -96,9 +96,24 @@ public class HandsTest {
     }
 
     @Test
+    @DisplayName("에이스가 11인 경우 버스트이면, 에이스는 1로 계산된다.")
+    void calculateAceWithOneInBurstTest() {
+        Hands hands = new Hands(List.of(
+                new Card(Shape.HEART, Rank.ACE),
+                new Card(Shape.CLOVER, Rank.THREE),
+                new Card(Shape.DIAMOND, Rank.SEVEN),
+                new Card(Shape.DIAMOND, Rank.EIGHT)
+        ));
+
+        int result = hands.calculateScore();
+
+        assertThat(result).isEqualTo(19);
+    }
+
+    @Test
     @DisplayName("카드의 개수를 확인한다.")
     void sizeTest() {
         Hands hands = new Hands(new ArrayList<>());
-        assertThat(hands.size()).isEqualTo(0);
+        assertThat(hands.getCards().size()).isEqualTo(0);
     }
 }

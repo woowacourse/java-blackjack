@@ -1,12 +1,14 @@
 package blackjack.controller;
 
-import blackjack.domain.GameBoard;
+import blackjack.domain.participants.betting.Betting;
+import blackjack.domain.participants.GameBoard;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.GameParticipant;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
-import blackjack.domain.participants.WinOrLose;
+import blackjack.domain.participants.BlackJackGameResult;
+import blackjack.domain.participants.betting.Profit;
 import blackjack.dto.ParticipantDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -19,9 +21,10 @@ public class BlackjackGame {
 
     public void run() {
         Players players = createPlayers();
+        Betting betting = bet(players);
         Dealer dealer = new Dealer();
         GameBoard gameBoard = new GameBoard(dealer, players);
-        play(gameBoard);
+        play(gameBoard, betting);
     }
 
     private Players createPlayers() {
@@ -32,12 +35,21 @@ public class BlackjackGame {
         return new Players(playerList);
     }
 
-    private void play(GameBoard gameBoard) {
+    private Betting bet(Players players) {
+        Betting betting = new Betting();
+        for (Player player : players.getPlayers()) {
+            betting.bet(player, new Profit(inputView.readBettingPrice(player.getName())));
+            System.out.println();
+        }
+        return betting;
+    }
+
+    private void play(GameBoard gameBoard, Betting betting) {
         startSetting(gameBoard);
         proceedPlayerTurn(gameBoard);
         proceedDealerTurn(gameBoard);
-        handleResult(gameBoard);
-        handleWinOrLose(gameBoard);
+        handleScoreResult(gameBoard);
+        handleGameResult(gameBoard, betting);
     }
 
     private void startSetting(GameBoard gameBoard) {
@@ -71,14 +83,14 @@ public class BlackjackGame {
 
     private void proceedOnePlayerTurn(GameBoard gameBoard, Player player) {
         while (player.canHit() &&
-                inputView.readCommand(player.getName().getName())) {
+                inputView.readCommand(player.getName())) {
             gameBoard.addCardToPlayer(player);
             outputView.printCurrentCard(new ParticipantDto(player));
             outputView.printNewLine();
         }
     }
 
-    private void handleResult(GameBoard gameBoard) {
+    private void handleScoreResult(GameBoard gameBoard) {
         GameParticipant dealer = gameBoard.getDealer();
         ParticipantDto dealerDto = new ParticipantDto(dealer);
         List<ParticipantDto> playersDto = gameBoard.getPlayers()
@@ -89,8 +101,11 @@ public class BlackjackGame {
         outputView.printScoreResult(dealerDto, playersDto);
     }
 
-    private void handleWinOrLose(GameBoard gameBoard) {
-        WinOrLose winOrLose = gameBoard.calculateWinOrLose();
-        outputView.printWinOrLose(winOrLose);
+    private void handleGameResult(GameBoard gameBoard, Betting betting) {
+        BlackJackGameResult blackJackGameResult = gameBoard.calculateGameResult();
+        blackJackGameResult.getGameResult()
+                .keySet()
+                .forEach((player) -> betting.calculateProfit(player, blackJackGameResult.getResult(player)));
+        outputView.printGameResult(betting);
     }
 }

@@ -30,4 +30,9 @@ public class InputView {
             throw new IllegalArgumentException(YES + " 또는 " + NO + "만 입력 가능합니다.");
         }
     }
+
+    public long readBettingPrice(String name) {
+        System.out.printf("%s의 배팅 금액은?\n", name);
+        return Long.parseLong(SCANNER.nextLine());
+    }
 }
