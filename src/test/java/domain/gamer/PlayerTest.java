@@ -25,8 +25,8 @@ class PlayerTest {
     @DisplayName("플레이어는 설정한 개수만큼 카드를 받을 수 있다.")
     void pickCards() {
         Player player = new Player(new Name("test"));
-        Card one = new Card(CardType.CLOVER, CardNumber.ACE);
-        Card two = new Card(CardType.CLOVER, CardNumber.TWO);
+        Card one = Card.from(CardType.CLOVER, CardNumber.ACE);
+        Card two = Card.from(CardType.CLOVER, CardNumber.TWO);
         Deck deck = TestDeck.withCustomCards(one, two);
         player.pickCards(deck, 2);
         List<Card> cards = player.getCards();
@@ -39,19 +39,19 @@ class PlayerTest {
     @DisplayName("플레이어는 카드를 한 번만 뽑을 수 있다.")
     void takeCard() {
         Player player = new Player(new Name("test"));
-        Card card = new Card(CardType.SPADE, CardNumber.TEN);
+        Card card = Card.from(CardType.SPADE, CardNumber.TEN);
         Deck deck = TestDeck.withCustomCards(card);
         player.hit(deck);
         List<Card> cards = player.getCards();
         Assertions.assertThat(cards).isEqualTo(List.of(card));
     }
-    
+
     @Test
     @DisplayName("게이머의 점수 합계를 반환한다.")
     void getTotalScore() {
         Player player = new Player(new Name("test"));
         Deck deck = TestDeck.withCustomCards(
-                new Card(CardType.SPADE, CardNumber.TEN));
+                Card.from(CardType.SPADE, CardNumber.TEN));
         player.hit(deck);
         Assertions.assertThat(player.getTotalScore()).isEqualTo(10);
     }
@@ -61,9 +61,9 @@ class PlayerTest {
     void isBustTrue() {
         Player player = new Player(new Name("test"));
         Deck deck = TestDeck.withCustomCards(
-                new Card(CardType.SPADE, CardNumber.TEN),
-                new Card(CardType.SPADE, CardNumber.TEN),
-                new Card(CardType.SPADE, CardNumber.TEN));
+                Card.from(CardType.SPADE, CardNumber.TEN),
+                Card.from(CardType.SPADE, CardNumber.TEN),
+                Card.from(CardType.SPADE, CardNumber.TEN));
 
         player.hit(deck);
         player.hit(deck);
@@ -77,8 +77,8 @@ class PlayerTest {
     void isBustFalse() {
         Player player = new Player(new Name("test"));
         Deck deck = TestDeck.withCustomCards(
-                new Card(CardType.SPADE, CardNumber.TEN),
-                new Card(CardType.SPADE, CardNumber.TEN));
+                Card.from(CardType.SPADE, CardNumber.TEN),
+                Card.from(CardType.SPADE, CardNumber.TEN));
         player.pickCards(deck, 2);
         Assertions.assertThat(player.isBust()).isFalse();
     }
@@ -89,10 +89,10 @@ class PlayerTest {
         Player player = new Player(new Name("test"), new Money(100));
         Dealer dealer = new Dealer();
         Deck deck = TestDeck.withCustomCards(
-                new Card(CardType.SPADE, CardNumber.THREE),
-                new Card(CardType.SPADE, CardNumber.TWO),
-                new Card(CardType.DIAMOND, CardNumber.TEN),
-                new Card(CardType.DIAMOND, CardNumber.TEN));
+                Card.from(CardType.SPADE, CardNumber.THREE),
+                Card.from(CardType.SPADE, CardNumber.TWO),
+                Card.from(CardType.DIAMOND, CardNumber.TEN),
+                Card.from(CardType.DIAMOND, CardNumber.TEN));
         player.pickCards(deck, 2);
         dealer.pickCards(deck, 2);
         Assertions.assertThat(player.bet(dealer)).isEqualTo(new Money(100));
@@ -104,10 +104,10 @@ class PlayerTest {
         Player player = new Player(new Name("test"), new Money(100));
         Dealer dealer = new Dealer();
         Deck deck = TestDeck.withCustomCards(
-                new Card(CardType.DIAMOND, CardNumber.TEN),
-                new Card(CardType.DIAMOND, CardNumber.TEN),
-                new Card(CardType.SPADE, CardNumber.TWO),
-                new Card(CardType.SPADE, CardNumber.THREE)
+                Card.from(CardType.DIAMOND, CardNumber.TEN),
+                Card.from(CardType.DIAMOND, CardNumber.TEN),
+                Card.from(CardType.SPADE, CardNumber.TWO),
+                Card.from(CardType.SPADE, CardNumber.THREE)
         );
         player.pickCards(deck, 2);
         dealer.pickCards(deck, 2);
@@ -120,10 +120,10 @@ class PlayerTest {
         Player player = new Player(new Name("test"), new Money(100));
         Dealer dealer = new Dealer();
         Deck deck = TestDeck.withCustomCards(
-                new Card(CardType.DIAMOND, CardNumber.TEN),
-                new Card(CardType.DIAMOND, CardNumber.TEN),
-                new Card(CardType.SPADE, CardNumber.ACE),
-                new Card(CardType.SPADE, CardNumber.KING)
+                Card.from(CardType.DIAMOND, CardNumber.TEN),
+                Card.from(CardType.DIAMOND, CardNumber.TEN),
+                Card.from(CardType.SPADE, CardNumber.ACE),
+                Card.from(CardType.SPADE, CardNumber.KING)
         );
         player.pickCards(deck, 2);
         dealer.pickCards(deck, 2);
@@ -136,10 +136,10 @@ class PlayerTest {
         Player player = new Player(new Name("test"), new Money(100));
         Dealer dealer = new Dealer();
         Deck deck = TestDeck.withCustomCards(
-                new Card(CardType.DIAMOND, CardNumber.ACE),
-                new Card(CardType.DIAMOND, CardNumber.KING),
-                new Card(CardType.SPADE, CardNumber.KING),
-                new Card(CardType.SPADE, CardNumber.TEN)
+                Card.from(CardType.DIAMOND, CardNumber.ACE),
+                Card.from(CardType.DIAMOND, CardNumber.KING),
+                Card.from(CardType.SPADE, CardNumber.KING),
+                Card.from(CardType.SPADE, CardNumber.TEN)
         );
         player.pickCards(deck, 2);
         dealer.pickCards(deck, 2);
@@ -152,10 +152,10 @@ class PlayerTest {
         Player player = new Player(new Name("test"), new Money(100));
         Dealer dealer = new Dealer();
         Deck deck = TestDeck.withCustomCards(
-                new Card(CardType.DIAMOND, CardNumber.ACE),
-                new Card(CardType.DIAMOND, CardNumber.KING),
-                new Card(CardType.SPADE, CardNumber.ACE),
-                new Card(CardType.SPADE, CardNumber.KING)
+                Card.from(CardType.DIAMOND, CardNumber.ACE),
+                Card.from(CardType.DIAMOND, CardNumber.KING),
+                Card.from(CardType.SPADE, CardNumber.ACE),
+                Card.from(CardType.SPADE, CardNumber.KING)
         );
         player.pickCards(deck, 2);
         dealer.pickCards(deck, 2);
@@ -168,10 +168,10 @@ class PlayerTest {
         Player player = new Player(new Name("test"), new Money(100));
         Dealer dealer = new Dealer();
         Deck deck = TestDeck.withCustomCards(
-                new Card(CardType.DIAMOND, CardNumber.KING),
-                new Card(CardType.DIAMOND, CardNumber.JACK),
-                new Card(CardType.SPADE, CardNumber.KING),
-                new Card(CardType.SPADE, CardNumber.JACK)
+                Card.from(CardType.DIAMOND, CardNumber.KING),
+                Card.from(CardType.DIAMOND, CardNumber.JACK),
+                Card.from(CardType.SPADE, CardNumber.KING),
+                Card.from(CardType.SPADE, CardNumber.JACK)
         );
         player.pickCards(deck, 2);
         dealer.pickCards(deck, 2);

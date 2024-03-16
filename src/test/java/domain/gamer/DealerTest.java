@@ -24,8 +24,8 @@ class DealerTest {
     @DisplayName("딜러는 처음에 카드 2장을 받을 수 있다.")
     void pickTwoCard() {
         Dealer dealer = new Dealer();
-        Card one = new Card(CardType.CLOVER, CardNumber.ACE);
-        Card two = new Card(CardType.CLOVER, CardNumber.TWO);
+        Card one = Card.from(CardType.CLOVER, CardNumber.ACE);
+        Card two = Card.from(CardType.CLOVER, CardNumber.TWO);
         Deck deck = TestDeck.withCustomCards(one, two);
         dealer.pickCards(deck, 2);
         List<Card> cards = dealer.getCards();
@@ -39,10 +39,10 @@ class DealerTest {
     void takeCard() {
         Dealer dealer = new Dealer();
         Deck deck = TestDeck.withCustomCards(
-                new Card(CardType.SPADE, CardNumber.TEN),
-                new Card(CardType.SPADE, CardNumber.FIVE),
-                new Card(CardType.SPADE, CardNumber.ACE),
-                new Card(CardType.DIAMOND, CardNumber.ACE));
+                Card.from(CardType.SPADE, CardNumber.TEN),
+                Card.from(CardType.SPADE, CardNumber.FIVE),
+                Card.from(CardType.SPADE, CardNumber.ACE),
+                Card.from(CardType.DIAMOND, CardNumber.ACE));
         int drawCount = dealer.hit(deck);
         Assertions.assertThat(drawCount).isEqualTo(1);
     }
@@ -52,8 +52,8 @@ class DealerTest {
     void getTotalScore() {
         Dealer dealer = new Dealer();
         Deck deck = TestDeck.withCustomCards(
-                new Card(CardType.SPADE, CardNumber.TEN),
-                new Card(CardType.SPADE, CardNumber.ACE));
+                Card.from(CardType.SPADE, CardNumber.TEN),
+                Card.from(CardType.SPADE, CardNumber.ACE));
         dealer.hit(deck);
         dealer.hit(deck);
         Assertions.assertThat(dealer.getTotalScore())
@@ -65,9 +65,9 @@ class DealerTest {
     void isBustTrue() {
         Dealer dealer = new Dealer();
         Deck deck = TestDeck.withCustomCards(
-                new Card(CardType.SPADE, CardNumber.TEN),
-                new Card(CardType.SPADE, CardNumber.SIX),
-                new Card(CardType.SPADE, CardNumber.TEN));
+                Card.from(CardType.SPADE, CardNumber.TEN),
+                Card.from(CardType.SPADE, CardNumber.SIX),
+                Card.from(CardType.SPADE, CardNumber.TEN));
 
         dealer.hit(deck);
         dealer.hit(deck);
@@ -80,8 +80,8 @@ class DealerTest {
     void isBustFalse() {
         Dealer dealer = new Dealer();
         Deck deck = TestDeck.withCustomCards(
-                new Card(CardType.SPADE, CardNumber.TEN),
-                new Card(CardType.SPADE, CardNumber.TEN));
+                Card.from(CardType.SPADE, CardNumber.TEN),
+                Card.from(CardType.SPADE, CardNumber.TEN));
         dealer.hit(deck);
         Assertions.assertThat(dealer.isBust()).isFalse();
     }

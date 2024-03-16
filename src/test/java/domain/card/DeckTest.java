@@ -13,8 +13,8 @@ class DeckTest {
     @DisplayName("가장 마지막에 있는 카드를 반환한다.")
     void draw() {
         Deck deck = Deck.withCustomCards(
-                new Card(CardType.SPADE, CardNumber.ACE),
-                new Card(CardType.CLOVER, CardNumber.KING));
+                Card.from(CardType.SPADE, CardNumber.ACE),
+                Card.from(CardType.CLOVER, CardNumber.KING));
         Card card = deck.draw();
         Assertions.assertAll(
                 () -> assertThat(card.getCardType()).isEqualTo(CardType.CLOVER),

@@ -34,14 +34,14 @@ class BettingResultTest {
 
     private Deck setDeck() {
         return TestDeck.withCustomCards(
-                new Card(CardType.SPADE, CardNumber.TWO),
-                new Card(CardType.SPADE, CardNumber.THREE),
-                new Card(CardType.DIAMOND, CardNumber.ACE),
-                new Card(CardType.DIAMOND, CardNumber.ACE),
-                new Card(CardType.HEART, CardNumber.ACE),
-                new Card(CardType.HEART, CardNumber.KING),
-                new Card(CardType.CLOVER, CardNumber.ACE),
-                new Card(CardType.CLOVER, CardNumber.NINE)
+                Card.from(CardType.SPADE, CardNumber.TWO),
+                Card.from(CardType.SPADE, CardNumber.THREE),
+                Card.from(CardType.DIAMOND, CardNumber.ACE),
+                Card.from(CardType.DIAMOND, CardNumber.ACE),
+                Card.from(CardType.HEART, CardNumber.ACE),
+                Card.from(CardType.HEART, CardNumber.KING),
+                Card.from(CardType.CLOVER, CardNumber.ACE),
+                Card.from(CardType.CLOVER, CardNumber.NINE)
         );
     }
 
