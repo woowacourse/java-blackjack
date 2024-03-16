@@ -1,5 +1,7 @@
 package blackjack.model.betting;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +18,6 @@ public class BettingTest {
         betting.addPlayerBettingMoney(playerName, money);
 
         // then
-        assertThat(betting.getBettingMoneyByPlayerName(playerName)).isEqualTo(money);
+        assertThat(betting.findBettingMoneyByPlayerName(playerName)).isEqualTo(money);
     }
 }
