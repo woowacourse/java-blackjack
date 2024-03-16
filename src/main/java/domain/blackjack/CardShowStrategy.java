@@ -4,5 +4,5 @@ import domain.card.Card;
 import java.util.List;
 
 public interface CardShowStrategy {
-    List<Card> show(List<Card> allCards);
+    List<Card> showSub(List<Card> cards);
 }

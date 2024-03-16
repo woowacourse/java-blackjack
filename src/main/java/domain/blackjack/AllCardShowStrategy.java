@@ -10,7 +10,7 @@ public class AllCardShowStrategy implements CardShowStrategy {
     }
 
     @Override
-    public List<Card> show(List<Card> allCards) {
-        return List.copyOf(allCards);
+    public List<Card> showSub(List<Card> cards) {
+        return List.copyOf(cards);
     }
 }

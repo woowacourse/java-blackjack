@@ -35,7 +35,7 @@ class BlackJackGameMachine {
 
     List<Card> getRawHoldingCards(CardShowStrategy cardShowStrategy) {
         List<Card> allCards = holdingCards.getHoldingCards();
-        return List.copyOf(cardShowStrategy.show(allCards));
+        return List.copyOf(cardShowStrategy.showSub(allCards));
     }
 
     int calculateSummationCardPointAsInt() {
