@@ -9,15 +9,21 @@ import org.junit.jupiter.params.provider.CsvSource;
 class ProfitTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"1.0,1,1.0", "1.5,1,1.5"})
+    @CsvSource(value = {"1.0, 1, 1.0", "1.5, 1, 1.5"})
     @DisplayName("게임을 이겼을 때 수익은 수익률과 베팅한 금액의 곱이다")
     void win(final double earningRate, final int betAmount, final double expected) {
         final Profit profit = new Profit(earningRate, betAmount);
+
         Assertions.assertThat(profit.win()).isEqualTo(expected);
     }
 
-    @Test
-    void lose() {
+    @ParameterizedTest
+    @CsvSource(value = {"1.0, 1, -1.0", "1.5, 1,  -1.5"})
+    @DisplayName("게임에서 졌을 때는 걸었던 돈을 모두 잃는다")
+    void lose(final double earningRate, final int betAmount, final double expected) {
+        final Profit profit = new Profit(earningRate, betAmount);
+
+        Assertions.assertThat(profit.lose()).isEqualTo(expected);
     }
 
     @Test
