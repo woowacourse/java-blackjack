@@ -33,8 +33,8 @@ public class RefereeTest {
         Dealer dealer = new Dealer(new Chip(0));
         Referee referee = new Referee();
 
-        player.draw(List.of(new Card(NINE, SPADE), new Card(QUEEN, CLUB)));
-        dealer.draw(List.of(new Card(EIGHT, SPADE), (new Card(QUEEN, CLUB))));
+        player.draw(List.of(Card.of(NINE, SPADE), Card.of(QUEEN, CLUB)));
+        dealer.draw(List.of(Card.of(EIGHT, SPADE), Card.of(QUEEN, CLUB)));
         referee.calculatePlayerResult(dealer, player);
 
         assertThat(referee.findPlayerResult(player))
@@ -48,8 +48,8 @@ public class RefereeTest {
         Dealer dealer = new Dealer(new Chip(0));
         Referee referee = new Referee();
 
-        player.draw(List.of(new Card(NINE, SPADE), new Card(QUEEN, CLUB), new Card(THREE, CLUB)));
-        dealer.draw(List.of(new Card(EIGHT, SPADE), new Card(QUEEN, CLUB), new Card(TWO, SPADE)));
+        player.draw(List.of(Card.of(NINE, SPADE), Card.of(QUEEN, CLUB), Card.of(THREE, CLUB)));
+        dealer.draw(List.of(Card.of(EIGHT, SPADE), Card.of(QUEEN, CLUB), Card.of(TWO, SPADE)));
         referee.calculatePlayerResult(dealer, player);
 
         assertThat(referee.findPlayerResult(player))
@@ -63,8 +63,8 @@ public class RefereeTest {
         Dealer dealer = new Dealer(new Chip(0));
         Referee referee = new Referee();
 
-        player.draw(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB), new Card(THREE, CLUB)));
-        dealer.draw(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB), new Card(THREE, SPADE)));
+        player.draw(List.of(Card.of(NINE, SPADE), Card.of(SEVEN, CLUB), Card.of(THREE, CLUB)));
+        dealer.draw(List.of(Card.of(NINE, SPADE), Card.of(SEVEN, CLUB), Card.of(THREE, SPADE)));
         referee.calculatePlayerResult(dealer, player);
 
         assertThat(referee.findPlayerResult(player))
@@ -78,8 +78,8 @@ public class RefereeTest {
         Dealer dealer = new Dealer(new Chip(0));
         Referee referee = new Referee();
 
-        player.draw(List.of(new Card(ACE, CLUB), new Card(JACK, CLUB)));
-        dealer.draw(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB), new Card(FIVE, CLUB)));
+        player.draw(List.of(Card.of(ACE, CLUB), Card.of(JACK, CLUB)));
+        dealer.draw(List.of(Card.of(NINE, SPADE), Card.of(SEVEN, CLUB), Card.of(FIVE, CLUB)));
         referee.calculatePlayerResult(dealer, player);
 
         assertThat(referee.findPlayerResult(player))
@@ -93,8 +93,8 @@ public class RefereeTest {
         Dealer dealer = new Dealer(new Chip(0));
         Referee referee = new Referee();
 
-        player.draw(List.of(new Card(TWO, CLUB), new Card(JACK, CLUB)));
-        dealer.draw(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB), new Card(FIVE, CLUB)));
+        player.draw(List.of(Card.of(TWO, CLUB), Card.of(JACK, CLUB)));
+        dealer.draw(List.of(Card.of(NINE, SPADE), Card.of(SEVEN, CLUB), Card.of(FIVE, CLUB)));
         referee.calculatePlayerResult(dealer, player);
 
         assertThat(referee.findPlayerResult(player))
@@ -108,8 +108,8 @@ public class RefereeTest {
         Dealer dealer = new Dealer(new Chip(0));
         Referee referee = new Referee();
 
-        player.draw(List.of(new Card(KING, CLUB), new Card(JACK, CLUB), new Card(THREE, CLUB)));
-        dealer.draw(List.of(new Card(KING, CLUB), new Card(JACK, CLUB), new Card(THREE, CLUB)));
+        player.draw(List.of(Card.of(KING, CLUB), Card.of(JACK, CLUB), Card.of(THREE, CLUB)));
+        dealer.draw(List.of(Card.of(KING, CLUB), Card.of(JACK, CLUB), Card.of(THREE, CLUB)));
         referee.calculatePlayerResult(dealer, player);
 
         assertThat(referee.findPlayerResult(player))
@@ -123,8 +123,8 @@ public class RefereeTest {
         Dealer dealer = new Dealer(new Chip(0));
         Referee referee = new Referee();
 
-        player.draw(List.of(new Card(KING, CLUB), new Card(JACK, CLUB)));
-        dealer.draw(List.of(new Card(KING, CLUB), new Card(JACK, CLUB), new Card(THREE, CLUB)));
+        player.draw(List.of(Card.of(KING, CLUB), Card.of(JACK, CLUB)));
+        dealer.draw(List.of(Card.of(KING, CLUB), Card.of(JACK, CLUB), Card.of(THREE, CLUB)));
         referee.calculatePlayerResult(dealer, player);
 
         assertThat(referee.findPlayerResult(player))
@@ -138,8 +138,8 @@ public class RefereeTest {
         Dealer dealer = new Dealer(new Chip(0));
         Referee referee = new Referee();
 
-        player.draw(List.of(new Card(KING, CLUB), new Card(NINE, CLUB), new Card(TWO, CLUB)));
-        dealer.draw(List.of(new Card(ACE, CLUB), new Card(JACK, CLUB)));
+        player.draw(List.of(Card.of(KING, CLUB), Card.of(NINE, CLUB), Card.of(TWO, CLUB)));
+        dealer.draw(List.of(Card.of(ACE, CLUB), Card.of(JACK, CLUB)));
         referee.calculatePlayerResult(dealer, player);
 
         assertThat(referee.findPlayerResult(player))

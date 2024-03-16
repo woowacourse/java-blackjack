@@ -16,6 +16,8 @@ public class OutputView {
     private static final String DEALER_HIT_FORMAT = String.format("%s는 %d 이하라 한장의 카드를 더 받았습니다.", DEALER_NAME, HIT_UPPER_BOUND);
     private static final String CARD_FORMAT = "%s 카드 : %s";
     private static final String RESULT_SCORES_FORMAT = " - 결과: %d";
+    private static final String RESULT_FINAL_PROFIT = "## 최종 수익";
+    private static final String PROFIT_FORMAT = "%s: %d";
 
     public static void printDealAnnounce(List<String> playersName) {
         String nameFormat = String.join(DELIMITER, playersName);
@@ -54,5 +56,17 @@ public class OutputView {
 
     public static void printPlayerCards(String name, List<Card> cards, int totalScore) {
         System.out.printf(CARD_FORMAT + RESULT_SCORES_FORMAT + LINE_SEPARATOR, name, formatCards(cards), totalScore);
+    }
+
+    public static void printFinalProfitAnnounce() {
+        System.out.println(RESULT_FINAL_PROFIT);
+    }
+
+    public static void printDealerProfit(int profit) {
+        System.out.println(String.format(PROFIT_FORMAT, DEALER_NAME, profit));
+    }
+
+    public static void printPlayerProfit(String name, int profit) {
+        System.out.println(String.format(PROFIT_FORMAT, name, profit));
     }
 }

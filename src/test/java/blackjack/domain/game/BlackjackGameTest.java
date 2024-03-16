@@ -52,9 +52,9 @@ public class BlackjackGameTest {
         Player player = new Player(new Name("lemone"), new Chip(1000));
 
         // when
-        player.draw(List.of(new Card(NINE, CLUB),
-                new Card(TEN, SPADE),
-                new Card(TEN, DIAMOND)));
+        player.draw(List.of(Card.of(NINE, CLUB),
+                Card.of(TEN, SPADE),
+                Card.of(TEN, DIAMOND)));
 
         // then
         assertThat(blackjackGame.isPlayerCanHit(player))
@@ -69,7 +69,7 @@ public class BlackjackGameTest {
         Player player = new Player(new Name("lemone"), new Chip(1000));
 
         // when
-        player.draw(List.of(new Card(TEN, SPADE), new Card(ACE, DIAMOND)));
+        player.draw(List.of(Card.of(TEN, SPADE), Card.of(ACE, DIAMOND)));
 
         // then
         assertThat(blackjackGame.isPlayerCanHit(player))
@@ -84,7 +84,7 @@ public class BlackjackGameTest {
         Player player = new Player(new Name("lemone"), new Chip(1000));
 
         // when
-        player.draw(List.of(new Card(TEN, SPADE), new Card(ACE, DIAMOND), new Card(TEN, DIAMOND)));
+        player.draw(List.of(Card.of(TEN, SPADE), Card.of(ACE, DIAMOND), Card.of(TEN, DIAMOND)));
         blackjackGame.hit(player);
 
         // then
@@ -100,7 +100,7 @@ public class BlackjackGameTest {
         Player player = new Player(new Name("lemone"), new Chip(1000));
 
         // when
-        player.draw(List.of(new Card(TEN, SPADE), new Card(TEN, DIAMOND)));
+        player.draw(List.of(Card.of(TEN, SPADE), Card.of(TEN, DIAMOND)));
         blackjackGame.hit(player);
 
         // then
@@ -112,7 +112,7 @@ public class BlackjackGameTest {
     void dealerHitTest() {
         // given
         Dealer dealer = new Dealer(new Chip(0));
-        List<Card> cards = new ArrayList<>(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB)));
+        List<Card> cards = new ArrayList<>(List.of(Card.of(NINE, SPADE), Card.of(SEVEN, CLUB)));
         BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
 
         // when

@@ -26,20 +26,19 @@ public class Gamer {
     }
 
     public boolean isBlackjack() {
-        return hand.getNumberOfCards() == BLACKJACK_CARDS_COUNT
-                && hand.isLimitScore();
+        return hand.isBlackjack();
     }
 
     public boolean isBust() {
-        return hand.isOverLimitScore();
+        return hand.isBust();
     }
 
     public boolean isMaxScore() {
-        return hand.isLimitScore();
+        return hand.isMaxScore();
     }
 
     public int getScore() {
-        return hand.calculateScore();
+        return hand.score().toInt();
     }
 
     public Card getCardAt(int index) {
@@ -48,5 +47,9 @@ public class Gamer {
 
     public List<Card> getCards() {
         return hand.getMyCards();
+    }
+
+    public int getChip() {
+        return chip.getChip();
     }
 }

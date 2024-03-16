@@ -27,10 +27,10 @@ public class HandTest {
         int expectedScore = 9 + 5;
 
         // when
-        hand.add(List.of(new Card(NINE, DIAMOND), new Card(FIVE, DIAMOND)));
+        hand.add(List.of(Card.of(NINE, DIAMOND), Card.of(FIVE, DIAMOND)));
 
         // then
-        assertThat(hand.calculateScore()).isEqualTo(expectedScore);
+        assertThat(hand.score().toInt()).isEqualTo(expectedScore);
     }
 
     @Test
@@ -40,13 +40,13 @@ public class HandTest {
         Hand hand = new Hand();
 
         // when
-        hand.add(new Card(NINE, SPADE));
-        hand.add(new Card(QUEEN, CLUB));
-        hand.add(new Card(ACE, CLUB));
-        hand.add(new Card(ACE, HEART));
+        hand.add(Card.of(NINE, SPADE));
+        hand.add(Card.of(QUEEN, CLUB));
+        hand.add(Card.of(ACE, CLUB));
+        hand.add(Card.of(ACE, HEART));
 
         // then
-        assertThat(hand.calculateScore()).isEqualTo(21);
+        assertThat(hand.score().toInt()).isEqualTo(21);
     }
 
     @Test
@@ -56,12 +56,12 @@ public class HandTest {
         Hand hand = new Hand();
 
         // when
-        hand.add(new Card(NINE, SPADE));
-        hand.add(new Card(QUEEN, CLUB));
-        hand.add(new Card(ACE, CLUB));
+        hand.add(Card.of(NINE, SPADE));
+        hand.add(Card.of(QUEEN, CLUB));
+        hand.add(Card.of(ACE, CLUB));
 
         // then
-        assertThat(hand.calculateScore()).isEqualTo(20);
+        assertThat(hand.score().toInt()).isEqualTo(20);
     }
 
     @Test
@@ -71,11 +71,11 @@ public class HandTest {
         Hand hand = new Hand();
 
         // when
-        hand.add(new Card(TWO, SPADE));
-        hand.add(new Card(EIGHT, CLUB));
-        hand.add(new Card(ACE, CLUB));
+        hand.add(Card.of(TWO, SPADE));
+        hand.add(Card.of(EIGHT, CLUB));
+        hand.add(Card.of(ACE, CLUB));
 
         // then
-        assertThat(hand.calculateScore()).isEqualTo(21);
+        assertThat(hand.score().toInt()).isEqualTo(21);
     }
 }

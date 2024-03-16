@@ -25,7 +25,7 @@ public class PlayerTest {
         Player player = new Player(new Name("lemone"), new Chip(0));
 
         // when
-        player.draw(List.of(new Card(ACE, CLUB), new Card(NINE, CLUB)));
+        player.draw(List.of(Card.of(ACE, CLUB), Card.of(NINE, CLUB)));
 
         // then
         assertThat(player.getCards().size()).isEqualTo(2);
@@ -38,7 +38,7 @@ public class PlayerTest {
         Player player = new Player(new Name("lemone"), new Chip(0));
 
         // when
-        player.draw(new Card(KING, DIAMOND));
+        player.draw(Card.of(KING, DIAMOND));
 
         // then
         assertThat(player.getCards().size()).isEqualTo(1);
@@ -51,7 +51,7 @@ public class PlayerTest {
         Player player = new Player(new Name("lemone"), new Chip(0));
 
         // when
-        player.draw(List.of(new Card(TEN, DIAMOND), new Card(ACE, CLUB)));
+        player.draw(List.of(Card.of(TEN, DIAMOND), Card.of(ACE, CLUB)));
 
         // then
         assertThat(player.isBlackjack()).isEqualTo(true);

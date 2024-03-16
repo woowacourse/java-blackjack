@@ -21,10 +21,10 @@ class DealerTest {
     void getFirstCardTest() {
         // given
         Dealer dealer = new Dealer(new Chip(0));
-        Card expectedCard = new Card(NINE, SPADE);
+        Card expectedCard = Card.of(NINE, SPADE);
 
         // when
-        dealer.draw(List.of(new Card(NINE, SPADE), new Card(QUEEN, CLUB)));
+        dealer.draw(List.of(Card.of(NINE, SPADE), Card.of(QUEEN, CLUB)));
 
         // then
         assertThat(dealer.findPublicDealCard()).isEqualTo(expectedCard);
@@ -37,7 +37,7 @@ class DealerTest {
         Dealer dealer = new Dealer(new Chip(0));
 
         // when
-        dealer.draw(List.of(new Card(NINE, SPADE), new Card(SEVEN, CLUB)));
+        dealer.draw(List.of(Card.of(NINE, SPADE), Card.of(SEVEN, CLUB)));
 
         // then
         assertThat(dealer.isScoreUnderBound()).isEqualTo(true);
