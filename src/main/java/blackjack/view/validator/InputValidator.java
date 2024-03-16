@@ -10,13 +10,13 @@ import static blackjack.utils.Constants.*;
 public class InputValidator {
     private static final List<String> INVALID_PLAYER_NAMES = List.of(
             DEFAULT_NAME_OF_DEALER,
-            EXPRESSION_OF_YES,
-            EXPRESSION_OF_NO);
+            EXPRESSION_OF_HIT,
+            EXPRESSION_OF_STAY);
     private static final Pattern ONLY_DIGIT_PATTERN = Pattern.compile("-?[0-9]+");
     private static final Pattern VALID_EXPRESSION_PATTERN = Pattern.compile(validExpressionPattern());
 
     private static String validExpressionPattern() {
-        return "[" + EXPRESSION_OF_YES + "|" + EXPRESSION_OF_NO + "]";
+        return "[" + EXPRESSION_OF_HIT + "|" + EXPRESSION_OF_STAY + "]";
     }
 
     public void validatePlayerNames(final String input) {
@@ -52,7 +52,7 @@ public class InputValidator {
 
         if (isInvalidExpression(input)) {
             throw new IllegalArgumentException(
-                    String.format("카드 추가 지급 여부에 대한 입력은 %s 또는 %s으로만 가능합니다.", EXPRESSION_OF_YES, EXPRESSION_OF_NO));
+                    String.format("카드 추가 지급 여부에 대한 입력은 %s 또는 %s으로만 가능합니다.", EXPRESSION_OF_HIT, EXPRESSION_OF_STAY));
         }
     }
 

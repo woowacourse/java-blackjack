@@ -10,8 +10,8 @@ public abstract class Constants {
 
     public static final String DEFAULT_NAME_OF_DEALER = "딜러";
 
-    public static final String EXPRESSION_OF_YES = "y";
-    public static final String EXPRESSION_OF_NO = "n";
+    public static final String EXPRESSION_OF_HIT = "y";
+    public static final String EXPRESSION_OF_STAY = "n";
 
     public static final int DEALER_MIN_SCORE_POLICY = 16;
 }
