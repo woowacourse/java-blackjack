@@ -9,8 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.card.Card;
 import domain.card.CardDeck;
-import domain.card.CardFactory;
-import domain.card.CardShuffleStrategy;
 import domain.card.Denomination;
 import domain.participant.Dealer;
 import domain.participant.Participants;
@@ -25,13 +23,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class BlackjackGameTest {
-    private final CardShuffleStrategy cardNoShuffleStrategy = cards -> {
-    };
+class BlackjackGameTest { // todo 카드덱
 
     @Test
     void 게임을_시작하면_딜러와_플레이어들에게_카드를_두_장씩_나눠준다() {
-        BlackjackGame blackjackGame = new BlackjackGame(CardFactory.createCardDeck(), cardNoShuffleStrategy);
+        CardDeck cardDeck = new CardDeck(카드들(카드(), 카드(), 카드(), 카드(), 카드(), 카드(), 카드(), 카드()));
+        BlackjackGame blackjackGame = new BlackjackGame(cardDeck);
         Participants participants = 참가자들("뽀로로", "프린", "포비");
 
         blackjackGame.initGame(participants);
@@ -53,7 +50,7 @@ class BlackjackGameTest {
             CardDeck cardDeck = new CardDeck(
                     카드들(카드(Denomination.KING), 카드(Denomination.KING), 카드(Denomination.QUEEN), 카드(Denomination.TEN),
                             카드(Denomination.JACK), 카드(Denomination.TEN)));
-            BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
+            BlackjackGame blackjackGame = new BlackjackGame(cardDeck);
             Participants participants = 참가자들("프린");
             blackjackGame.initGame(participants);
             blackjackGame.dealCardTo(participants.getPlayers().get(0));
@@ -68,7 +65,7 @@ class BlackjackGameTest {
             CardDeck cardDeck = new CardDeck(
                     카드들(카드(Denomination.THREE), 카드(Denomination.QUEEN), 카드(Denomination.TEN), 카드(Denomination.ACE),
                             카드(Denomination.TEN)));
-            BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
+            BlackjackGame blackjackGame = new BlackjackGame(cardDeck);
             Participants participants = 참가자들("프린");
             blackjackGame.initGame(participants);
             blackjackGame.dealCardTo(participants.getPlayers().get(0));
@@ -82,7 +79,7 @@ class BlackjackGameTest {
             CardDeck cardDeck = new CardDeck(
                     카드들(카드(Denomination.THREE), 카드(Denomination.QUEEN), 카드(Denomination.TEN), 카드(Denomination.KING),
                             카드(Denomination.SEVEN)));
-            BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
+            BlackjackGame blackjackGame = new BlackjackGame(cardDeck);
             Participants participants = 참가자들("프린");
             blackjackGame.initGame(participants);
             blackjackGame.dealCardTo(participants.getPlayers().get(0));
@@ -99,7 +96,7 @@ class BlackjackGameTest {
             CardDeck cardDeck = new CardDeck(
                     카드들(카드(Denomination.KING), 카드(Denomination.ACE), 카드(Denomination.TEN),
                             카드(Denomination.JACK), 카드(Denomination.TEN)));
-            BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
+            BlackjackGame blackjackGame = new BlackjackGame(cardDeck);
             Participants participants = 참가자들("프린");
             blackjackGame.initGame(participants);
             blackjackGame.dealCardTo(participants.getDealer());
@@ -113,7 +110,7 @@ class BlackjackGameTest {
             CardDeck cardDeck = new CardDeck(
                     카드들(카드(Denomination.ACE), 카드(Denomination.TEN), 카드(Denomination.ACE),
                             카드(Denomination.TEN)));
-            BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
+            BlackjackGame blackjackGame = new BlackjackGame(cardDeck);
             Participants participants = 참가자들("프린");
             blackjackGame.initGame(participants);
 
@@ -125,7 +122,7 @@ class BlackjackGameTest {
         void 딜러가_일반_점수이면_이긴다() {
             CardDeck cardDeck = new CardDeck(
                     카드들(카드(Denomination.ACE), 카드(Denomination.TEN), 카드(Denomination.JACK), 카드(Denomination.TEN)));
-            BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
+            BlackjackGame blackjackGame = new BlackjackGame(cardDeck);
             Participants participants = 참가자들("프린");
             blackjackGame.initGame(participants);
 
@@ -138,7 +135,7 @@ class BlackjackGameTest {
             CardDeck cardDeck = new CardDeck(
                     카드들(카드(Denomination.SIX), 카드(Denomination.ACE), 카드(Denomination.TEN), 카드(Denomination.FIVE),
                             카드(Denomination.QUEEN)));
-            BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
+            BlackjackGame blackjackGame = new BlackjackGame(cardDeck);
             Participants participants = 참가자들("프린");
             blackjackGame.initGame(participants);
             blackjackGame.dealCardTo(participants.getDealer());
@@ -156,7 +153,7 @@ class BlackjackGameTest {
             CardDeck cardDeck = new CardDeck(
                     카드들(카드(Denomination.KING), 카드(Denomination.QUEEN), 카드(Denomination.TEN),
                             카드(Denomination.JACK), 카드(Denomination.TEN)));
-            BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
+            BlackjackGame blackjackGame = new BlackjackGame(cardDeck);
             Participants participants = 참가자들("프린");
             blackjackGame.initGame(participants);
             blackjackGame.dealCardTo(participants.getDealer());
@@ -169,7 +166,7 @@ class BlackjackGameTest {
         void 딜러가_blackjack이면_진다() {
             CardDeck cardDeck = new CardDeck(
                     카드들(카드(Denomination.QUEEN), 카드(Denomination.TEN), 카드(Denomination.ACE), 카드(Denomination.TEN)));
-            BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
+            BlackjackGame blackjackGame = new BlackjackGame(cardDeck);
             Participants participants = 참가자들("프린");
             blackjackGame.initGame(participants);
 
@@ -181,7 +178,7 @@ class BlackjackGameTest {
         @MethodSource("provideCardsAndResult")
         void 딜러가_일반_점수이면_점수가_높은_쪽이_이긴다(List<Card> cards, ResultStatus expected) {
             CardDeck cardDeck = new CardDeck(cards);
-            BlackjackGame blackjackGame = new BlackjackGame(cardDeck, cardNoShuffleStrategy);
+            BlackjackGame blackjackGame = new BlackjackGame(cardDeck);
             Participants participants = 참가자들("프린");
             blackjackGame.initGame(participants);
 

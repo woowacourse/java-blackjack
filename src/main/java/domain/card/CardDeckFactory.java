@@ -1,20 +1,21 @@
 package domain.card;
 
-import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class CardFactory {
-    private CardFactory() {
+public class CardDeckFactory {
+    private CardDeckFactory() {
     }
 
-    public static CardDeck createCardDeck() {
-        return Arrays.stream(Suit.values())
-                .map(CardFactory::createCards)
+    public static CardDeck createCardDeck(CardShuffleStrategy cardShuffleStrategy) {
+        List<Card> cards = Arrays.stream(Suit.values())
+                .map(CardDeckFactory::createCards)
                 .flatMap(List::stream)
-                .collect(collectingAndThen(toList(), CardDeck::new));
+                .collect(toList());
+        cardShuffleStrategy.shuffle(cards);
+        return new CardDeck(cards);
     }
 
     private static List<Card> createCards(Suit suit) {

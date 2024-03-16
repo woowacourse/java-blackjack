@@ -2,7 +2,8 @@ package controller;
 
 import domain.blackjackgame.BlackjackGame;
 import domain.blackjackgame.GameResult;
-import domain.card.CardFactory;
+import domain.card.CardDeck;
+import domain.card.CardDeckFactory;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
@@ -21,7 +22,8 @@ public class BlackjackController {
 
     public void start() {
         Participants participants = Participants.createPlayers(inputView.readPlayerNames());
-        BlackjackGame blackjackGame = new BlackjackGame(CardFactory.createCardDeck(), Collections::shuffle);
+        CardDeck cardDeck = CardDeckFactory.createCardDeck(Collections::shuffle);
+        BlackjackGame blackjackGame = new BlackjackGame(cardDeck);
         GameResult gameResult = playBlackjackGame(participants, blackjackGame);
         outputView.printGameResult(gameResult);
     }

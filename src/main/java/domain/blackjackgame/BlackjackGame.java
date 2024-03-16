@@ -1,7 +1,6 @@
 package domain.blackjackgame;
 
 import domain.card.CardDeck;
-import domain.card.CardShuffleStrategy;
 import domain.card.Score;
 import domain.participant.Dealer;
 import domain.participant.Participant;
@@ -10,16 +9,12 @@ import domain.participant.Player;
 
 public class BlackjackGame {
     private final CardDeck cardDeck;
-    private final CardShuffleStrategy cardShuffleStrategy;
 
-    public BlackjackGame(CardDeck cardDeck, CardShuffleStrategy cardShuffleStrategy) {
+    public BlackjackGame(CardDeck cardDeck) {
         this.cardDeck = cardDeck;
-        this.cardShuffleStrategy = cardShuffleStrategy;
     }
 
     public void initGame(Participants participants) {
-        cardDeck.shuffle(cardShuffleStrategy);
-
         for (Participant participant : participants.getParticipants()) {
             participant.receiveInitialCards(cardDeck.draw(), cardDeck.draw());
         }

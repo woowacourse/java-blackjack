@@ -10,10 +10,6 @@ public class CardDeck {
         this.cardDeck = new ArrayList<>(cards);
     }
 
-    public void shuffle(CardShuffleStrategy cardShuffleStrategy) {
-        cardShuffleStrategy.shuffle(cardDeck);
-    }
-
     public Card draw() {
         if (cardDeck.isEmpty()) {
             throw new IllegalStateException("카드덱의 카드를 모두 소진했습니다.");
