@@ -1,8 +1,8 @@
 package blackjack.player;
 
 import blackjack.card.Deck;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Players {
 
@@ -39,7 +39,7 @@ public class Players {
     }
 
     private void validateUniqueNames(List<String> playerNames) {
-        if (Set.copyOf(playerNames).size() != playerNames.size()) {
+        if (new HashSet<>(playerNames).size() != playerNames.size()) {
             throw new IllegalArgumentException("[ERROR] 이름은 중복될 수 없습니다.");
         }
     }
