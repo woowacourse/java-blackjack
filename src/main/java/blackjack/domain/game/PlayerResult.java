@@ -3,15 +3,15 @@ package blackjack.domain.game;
 import blackjack.domain.Ownable;
 import blackjack.domain.betting.Money;
 import blackjack.domain.betting.OwnedMoney;
-import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Player;
 
-public class PlayerResult implements Ownable<Name> {
+public class PlayerResult implements Ownable<Player> {
 
-    private final Name name;
+    private final Player player;
     private final GameResult gameResult;
 
-    public PlayerResult(Name name, GameResult gameResult) {
-        this.name = name;
+    public PlayerResult(Player player, GameResult gameResult) {
+        this.player = player;
         this.gameResult = gameResult;
     }
 
@@ -20,7 +20,7 @@ public class PlayerResult implements Ownable<Name> {
     }
 
     @Override
-    public Name getOwner() {
-        return name;
+    public Player getOwner() {
+        return player;
     }
 }

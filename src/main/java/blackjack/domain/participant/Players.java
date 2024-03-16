@@ -75,7 +75,7 @@ public class Players {
 
     private PlayerResult getPlayerResult(Player player) {
         GameResult gameResult = GameResult.of(dealer, player);
-        return new PlayerResult(player.getName(), gameResult);
+        return new PlayerResult(player, gameResult);
     }
 
     public List<Player> getPlayers() {

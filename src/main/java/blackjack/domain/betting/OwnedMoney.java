@@ -1,21 +1,21 @@
 package blackjack.domain.betting;
 
 import blackjack.domain.Ownable;
-import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Player;
 import java.util.Objects;
 
-public class OwnedMoney implements Ownable<Name> {
+public class OwnedMoney implements Ownable<Player> {
 
-    private final Name ownerName;
+    private final Player owner;
     private final Money money;
 
-    public OwnedMoney(Name ownerName, Money money) {
-        this.ownerName = ownerName;
+    public OwnedMoney(Player owner, Money money) {
+        this.owner = owner;
         this.money = money;
     }
 
-    public OwnedMoney(Name ownerName, int betAmount) {
-        this(ownerName, new Money(betAmount));
+    public OwnedMoney(Player owner, int betAmount) {
+        this(owner, new Money(betAmount));
     }
 
     public Money getMoney() {
@@ -23,8 +23,8 @@ public class OwnedMoney implements Ownable<Name> {
     }
 
     @Override
-    public Name getOwner() {
-        return this.ownerName;
+    public Player getOwner() {
+        return this.owner;
     }
 
     @Override
@@ -36,12 +36,12 @@ public class OwnedMoney implements Ownable<Name> {
             return false;
         }
         OwnedMoney other = (OwnedMoney) o;
-        return Objects.equals(ownerName, other.ownerName)
+        return Objects.equals(owner, other.owner)
                 && Objects.equals(money, other.money);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ownerName, money);
+        return Objects.hash(owner, money);
     }
 }

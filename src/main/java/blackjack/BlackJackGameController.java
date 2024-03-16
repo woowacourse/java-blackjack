@@ -33,16 +33,16 @@ public class BlackJackGameController {
     }
 
     private Bets betting(BlackJackGame game) {
-        List<Name> playerNames = game.getPlayerNames();
-        List<OwnedMoney> bets = playerNames.stream()
+        List<Player> players = game.getPlayers().getPlayers();
+        List<OwnedMoney> bets = players.stream()
                 .map(this::betEachPlayer)
                 .toList();
         return new Bets(bets);
     }
 
-    private OwnedMoney betEachPlayer(Name name) {
-        int bettingAmount = inputView.inputBettingAmount(name);
-        return new OwnedMoney(name, bettingAmount);
+    private OwnedMoney betEachPlayer(Player player) {
+        int bettingAmount = inputView.inputBettingAmount(player.getName());
+        return new OwnedMoney(player, bettingAmount);
     }
 
     private void drawStartCards(BlackJackGame game) {
@@ -70,7 +70,7 @@ public class BlackJackGameController {
         Money dealerPrize = calculateDealerPrize(prizes);
         outputView.printDealerPrize(dealerPrize);
         for (OwnedMoney prize : prizes) {
-            outputView.printPlayerPrize(prize.getOwner(), prize.getMoney());
+            outputView.printPlayerPrize(prize.getOwner().getName(), prize.getMoney());
         }
     }
 
