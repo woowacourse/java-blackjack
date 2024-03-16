@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Pot {
-    private final int DEALER_POT_COEFFICIENT = -1;
+    private static final int DEALER_POT_COEFFICIENT = -1;
 
     private final Map<Player, BetAmount> pot;
 
