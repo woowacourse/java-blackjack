@@ -1,7 +1,5 @@
 package blackjack.model.participants;
 
-import blackjack.model.blackjackgame.PlayerProfitCalculator;
-import blackjack.model.blackjackgame.Profit;
 import java.util.Objects;
 
 public final class Betting {
@@ -20,8 +18,8 @@ public final class Betting {
         }
     }
 
-    public Profit getProfit(final PlayerProfitCalculator playerProfitCalculator) {
-        return new Profit(playerProfitCalculator.calculate(amount));
+    public int getAmount() {
+        return amount;
     }
 
     @Override

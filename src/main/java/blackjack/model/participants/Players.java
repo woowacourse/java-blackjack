@@ -39,7 +39,7 @@ public final class Players {
     }
 
     public void calculatePlayersResults(final Dealer dealer) {
-        players.forEach(player -> playersResults.add(player, player.getProfit(dealer)));
+        players.forEach(player -> playersResults.add(player, player.calculateGameOutcomeProfit(dealer)));
     }
 
     private void validateIndex(final int index) {

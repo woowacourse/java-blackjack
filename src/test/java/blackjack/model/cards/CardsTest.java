@@ -2,7 +2,7 @@ package blackjack.model.cards;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.model.blackjackgame.PlayerProfitCalculator;
+import blackjack.model.blackjackgame.GameOutcomeStatus;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -69,8 +69,8 @@ class CardsTest {
                 new Card(CardNumber.ACE, CardShape.CLOVER)
         ));
 
-        PlayerProfitCalculator result = cards.getPlayerResultStatus(otherCards);
-        assertThat(result).isEqualTo(PlayerProfitCalculator.PUSH);
+        GameOutcomeStatus result = cards.compareCardsScore(otherCards);
+        assertThat(result).isEqualTo(GameOutcomeStatus.PUSH);
     }
 
     @DisplayName("내 카드만 블랙잭이면 블랙잭이다.")
@@ -87,7 +87,7 @@ class CardsTest {
                 new Card(CardNumber.QUEEN, CardShape.CLOVER)
         ));
 
-        PlayerProfitCalculator result = cards.getPlayerResultStatus(otherCards);
-        assertThat(result).isEqualTo(PlayerProfitCalculator.BLACKJACK);
+        GameOutcomeStatus result = cards.compareCardsScore(otherCards);
+        assertThat(result).isEqualTo(GameOutcomeStatus.BLACKJACK);
     }
 }

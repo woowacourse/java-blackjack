@@ -1,6 +1,6 @@
 package blackjack.model.participants;
 
-import blackjack.model.blackjackgame.PlayerProfitCalculator;
+import blackjack.model.blackjackgame.GameOutcomeStatus;
 import blackjack.model.blackjackgame.Profit;
 
 public final class Player extends Participant {
@@ -17,12 +17,9 @@ public final class Player extends Participant {
         return cards.canAddMore();
     }
 
-    public Profit getProfit(final Participant participant) {
-        return betting.getProfit(getScoreStatus(participant));
-    }
-
-    private PlayerProfitCalculator getScoreStatus(final Participant participant) {
-        return cards.getPlayerResultStatus(participant.cards);
+    public Profit calculateGameOutcomeProfit(final Participant participant) {
+        GameOutcomeStatus gameOutcomeStatus = cards.compareCardsScore(participant.cards);
+        return gameOutcomeStatus.calculate(betting);
     }
 
     public Name getName() {
