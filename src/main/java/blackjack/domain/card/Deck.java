@@ -18,8 +18,4 @@ public class Deck {
         }
         return deck.pop();
     }
-
-    Stack<Card> getDeck() {
-        return deck;
-    }
 }

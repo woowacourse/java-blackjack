@@ -26,14 +26,15 @@ class DeckTest {
     void occurExceptionWhenDeckIsEmpty() {
         final Stack<Card> cards = new Stack<>();
         cards.push(new Card(Number.KING, Suit.DIAMOND));
+        cards.push(new Card(Number.QUEEN, Suit.DIAMOND));
         final Deck deck = new Deck(new TestDeckFactory(cards));
 
-        int size = deck.getDeck().size();
+        int size = cards.size();
         for (int i=0; i<size; i++) {
             deck.pop();
         }
 
-        assertThatThrownBy(() -> deck.pop())
+        assertThatThrownBy(deck::pop)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage(Deck.ERROR_DECK_IS_EMPTY);
     }
