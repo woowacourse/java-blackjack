@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Participants {
+
     private final List<Participant> participants;
 
     public Participants(final List<Participant> participants) {
@@ -20,7 +21,7 @@ public class Participants {
     public static Participants from(final List<PlayerBettingMoney> requests) {
         return Stream.concat(
                 generatePlayers(requests),
-                Stream.of(new Dealer())
+                Stream.of(new Dealer()) // TODO: add 순서가 프로그램의 흐름에 영향을 끼친다.
         ).collect(Collectors.collectingAndThen(toList(), Participants::new));
     }
 
@@ -32,7 +33,7 @@ public class Participants {
     public List<PlayerOutcome> getPlayersOutcomeIf(final PlayerOutcomeFunction function) {
         return getPlayers().stream()
                 .map(player -> new PlayerOutcome(
-                        player, // TODO: 어짜피 밖에서 NAME 조회해야해서 성능 상 그냥 Player를 바로 보냄.ㄱㅊ?
+                        player, // TODO: 어짜피 밖에서 NAME 조회해야해서 성능 상 그냥 Player를 바로 보냄.ㄱㅊ? // 이것도 캐싱하면 해결될 텐데 ..
                         function.apply(player)
                 ))
                 .toList();
@@ -42,10 +43,12 @@ public class Participants {
         return Collections.unmodifiableList(participants);
     }
 
+    // TODO: 캐싱 이렇게 하는 거 맞나?
     public Dealer getDealer() {
-        return (Dealer) participants.stream()
+        return participants.stream()
                 .filter(Dealer.class::isInstance)
-                .findFirst()
+                .map(Dealer.class::cast)
+                .findAny()
                 .orElseThrow(IllegalStateException::new);
     }
 

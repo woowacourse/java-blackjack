@@ -12,7 +12,6 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -46,17 +45,6 @@ public class BlackJackGame {
         return new InitialCardStatus(INITIAL_CARD_SIZE, handStatuses);
     }
 
-    public List<ParticipantHandStatus> createHandStatuses() {
-        List<ParticipantHandStatus> status = new ArrayList<>();
-        status.add(participants.getDealer().createHandStatus());
-
-        for (Player player : participants.getPlayers()) {
-            status.add(player.createHandStatus());
-        }
-        return status;
-    }
-
-
     public void giveCard(
             final Participant participant,
             final ActionAfterPick action,
@@ -67,6 +55,13 @@ public class BlackJackGame {
             ParticipantHandStatus currentStatus = participant.createHandStatus();
             action.accept(currentStatus);
         }
+    }
+
+    public List<ParticipantHandStatus> createHandStatuses() {
+        return participants.getParticipants()
+                .stream()
+                .map(Participant::createHandStatus)
+                .toList();
     }
 
     public List<ParticipantProfitResponse> judge() {
@@ -83,6 +78,7 @@ public class BlackJackGame {
         ).toList();
     }
 
+    // TODO: 이건 다형성으로 못하나? 게임의 책임은 맞나?
     private ParticipantProfitResponse generateDealerProfitResponse(final List<PlayerOutcome> outcomes) {
         int sumOfPlayerProfit = outcomes.stream()
                 .mapToInt(outcome -> calculatePlayerProfit(outcome.player(), outcome.outcome()))
