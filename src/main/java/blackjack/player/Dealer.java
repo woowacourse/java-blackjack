@@ -16,7 +16,7 @@ public class Dealer extends Player {
     }
 
     public Card getFirstCard() {
-        List<Card> cards = super.getCards();
+        List<Card> cards = getCards();
         if (cards.isEmpty()) {
             throw new IllegalStateException("[ERROR] 딜러가 카드를 가지고 있지 않습니다.");
         }
