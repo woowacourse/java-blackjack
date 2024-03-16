@@ -41,4 +41,14 @@ class HitTest {
 
         assertThat(next).isExactlyInstanceOf(Hit.class);
     }
+
+    @Test
+    void 끝내면_stay_상태로_변경한다() {
+        Cards cards = new Cards();
+        CardState hit = new Hit(cards);
+
+        CardState stay = hit.finish();
+
+        assertThat(stay).isExactlyInstanceOf(Stay.class);
+    }
 }

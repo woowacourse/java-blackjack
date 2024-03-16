@@ -21,4 +21,9 @@ public class Hit implements CardState {
         }
         return this;
     }
+
+    @Override
+    public CardState finish() {
+        return new Stay(cards);
+    }
 }

@@ -1,6 +1,7 @@
 package domain.card.state;
 
 import static fixture.CardFixture.카드;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Cards;
@@ -14,5 +15,14 @@ class BlackjackTest {
         assertThatThrownBy(() -> blackjack.receive(카드()))
                 .isExactlyInstanceOf(UnsupportedOperationException.class)
                 .hasMessageContaining("블랙잭 상태에서는 카드를 추가할 수 없습니다.");
+    }
+
+    @Test
+    void 끝내면_현재_상태를_리턴한다() {
+        CardState blackjack = new Blackjack(new Cards());
+
+        CardState finish = blackjack.finish();
+
+        assertThat(finish).isExactlyInstanceOf(Blackjack.class);
     }
 }

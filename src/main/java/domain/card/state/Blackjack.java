@@ -14,4 +14,9 @@ public class Blackjack implements CardState {
     public CardState receive(Card card) {
         throw new UnsupportedOperationException("블랙잭 상태에서는 카드를 추가할 수 없습니다.");
     }
+
+    @Override
+    public CardState finish() {
+        return this;
+    }
 }
