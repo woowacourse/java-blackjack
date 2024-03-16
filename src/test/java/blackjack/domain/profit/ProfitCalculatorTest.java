@@ -40,8 +40,7 @@ class ProfitCalculatorTest {
         dealer.receiveCard(카드(TEN));
         player.receiveCard(카드(ACE));
         player.receiveCard(카드(JACK));
-        final GameResult gameResult = blackjackGame.compareDealerAndPlayers();
-        final Map<Player, ResultStatus> result = gameResult.getResult();
+        final Map<Player, ResultStatus> result = blackjackGame.compareDealerAndPlayers();
 
         final ProfitResult profitResult = profitCalculator.calculate(dealer, result);
 
@@ -56,8 +55,7 @@ class ProfitCalculatorTest {
         dealer.receiveCard(카드(TEN));
         player.receiveCard(카드(ACE));
         player.receiveCard(카드(JACK));
-        final GameResult gameResult = blackjackGame.compareDealerAndPlayers();
-        final Map<Player, ResultStatus> result = gameResult.getResult();
+        final Map<Player, ResultStatus> result = blackjackGame.compareDealerAndPlayers();
 
         final ProfitResult profitResult = profitCalculator.calculate(dealer, result);
 
@@ -73,8 +71,7 @@ class ProfitCalculatorTest {
         player.receiveCard(카드(TEN));
         player.receiveCard(카드(SIX));
         player.stay();
-        final GameResult gameResult = blackjackGame.compareDealerAndPlayers();
-        final Map<Player, ResultStatus> result = gameResult.getResult();
+        final Map<Player, ResultStatus> result = blackjackGame.compareDealerAndPlayers();
 
         final ProfitResult profitResult = profitCalculator.calculate(dealer, result);
 
@@ -90,8 +87,7 @@ class ProfitCalculatorTest {
         player.receiveCard(카드(FIVE));
         player.receiveCard(카드(FOUR));
         player.stay();
-        final GameResult gameResult = blackjackGame.compareDealerAndPlayers();
-        final Map<Player, ResultStatus> result = gameResult.getResult();
+        final Map<Player, ResultStatus> result = blackjackGame.compareDealerAndPlayers();
 
         final ProfitResult profitResult = profitCalculator.calculate(dealer, result);
 
@@ -107,8 +103,7 @@ class ProfitCalculatorTest {
         player.receiveCard(카드(KING));
         player.receiveCard(카드(QUEEN));
         player.stay();
-        final GameResult gameResult = blackjackGame.compareDealerAndPlayers();
-        final Map<Player, ResultStatus> result = gameResult.getResult();
+        final Map<Player, ResultStatus> result = blackjackGame.compareDealerAndPlayers();
 
         final ProfitResult profitResult = profitCalculator.calculate(dealer, result);
 

@@ -4,7 +4,10 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.domain.participant.ResultStatus;
 import blackjack.utils.Constants;
+
+import java.util.Map;
 
 public class BlackjackGame {
     private final Dealer dealer;
@@ -44,14 +47,15 @@ public class BlackjackGame {
         return dealer.pickCard();
     }
 
-    public GameResult compareDealerAndPlayers() {
-        final GameResult gameResult = new GameResult();
-
-        for (int playerIndex = 0; playerIndex < players.count(); playerIndex++) {
-            final Player player = players.findPlayerByIndex(playerIndex);
-            gameResult.compare(player, dealer);
+    public void dealToPlayerIfHit(final Player player, final BlackjackAction blackjackAction) {
+        if (blackjackAction.isHit()) {
+            dealCardTo(player);
+            return;
         }
+        player.stay();
+    }
 
-        return gameResult;
+    public Map<Player, ResultStatus> compareDealerAndPlayers() {
+        return players.compareTo(dealer);
     }
 }

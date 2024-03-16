@@ -73,8 +73,7 @@ class BlackjackGameTest {
             dealer.receiveCard(카드(TEN));
             player.receiveCard(카드(SIX));
 
-            final GameResult gameResult = blackjackGame.compareDealerAndPlayers();
-            final Map<Player, ResultStatus> result = gameResult.getResult();
+            final Map<Player, ResultStatus> result = blackjackGame.compareDealerAndPlayers();
 
             assertThat(result.get(player)).isEqualTo(ResultStatus.LOSE);
         }
@@ -86,8 +85,7 @@ class BlackjackGameTest {
             player.receiveCard(카드(QUEEN));
             player.receiveCard(카드(KING));
 
-            final GameResult gameResult = blackjackGame.compareDealerAndPlayers();
-            final Map<Player, ResultStatus> result = gameResult.getResult();
+            final Map<Player, ResultStatus> result = blackjackGame.compareDealerAndPlayers();
 
             assertThat(result.get(player)).isEqualTo(ResultStatus.LOSE);
         }
@@ -101,8 +99,7 @@ class BlackjackGameTest {
             player.receiveCard(카드(QUEEN));
             player.receiveCard(카드(KING));
 
-            final GameResult gameResult = blackjackGame.compareDealerAndPlayers();
-            final Map<Player, ResultStatus> result = gameResult.getResult();
+            final Map<Player, ResultStatus> result = blackjackGame.compareDealerAndPlayers();
 
             assertThat(result.get(player)).isEqualTo(ResultStatus.LOSE);
         }
@@ -115,8 +112,7 @@ class BlackjackGameTest {
             player.receiveCard(카드(NINE));
             player.receiveCard(카드(TWO));
 
-            final GameResult gameResult = blackjackGame.compareDealerAndPlayers();
-            final Map<Player, ResultStatus> result = gameResult.getResult();
+            final Map<Player, ResultStatus> result = blackjackGame.compareDealerAndPlayers();
 
             assertThat(result.get(player)).isEqualTo(ResultStatus.LOSE);
         }
@@ -131,8 +127,7 @@ class BlackjackGameTest {
             dealer.receiveCard(카드(SIX));
             player.receiveCard(카드(TEN));
 
-            final GameResult gameResult = blackjackGame.compareDealerAndPlayers();
-            final Map<Player, ResultStatus> result = gameResult.getResult();
+            final Map<Player, ResultStatus> result = blackjackGame.compareDealerAndPlayers();
 
             assertThat(result.get(player)).isEqualTo(ResultStatus.WIN);
         }
@@ -144,8 +139,7 @@ class BlackjackGameTest {
             dealer.receiveCard(카드(KING));
             player.receiveCard(카드(TEN));
 
-            final GameResult gameResult = blackjackGame.compareDealerAndPlayers();
-            final Map<Player, ResultStatus> result = gameResult.getResult();
+            final Map<Player, ResultStatus> result = blackjackGame.compareDealerAndPlayers();
 
             assertThat(result.get(player)).isEqualTo(ResultStatus.WIN);
         }
@@ -158,8 +152,7 @@ class BlackjackGameTest {
             player.receiveCard(카드(TEN));
             player.receiveCard(카드(ACE));
 
-            final GameResult gameResult = blackjackGame.compareDealerAndPlayers();
-            final Map<Player, ResultStatus> result = gameResult.getResult();
+            final Map<Player, ResultStatus> result = blackjackGame.compareDealerAndPlayers();
 
             assertThat(result.get(player)).isEqualTo(ResultStatus.WIN);
         }
@@ -174,8 +167,7 @@ class BlackjackGameTest {
             dealer.receiveCard(카드(TEN));
             player.receiveCard(카드(TEN));
 
-            final GameResult gameResult = blackjackGame.compareDealerAndPlayers();
-            final Map<Player, ResultStatus> result = gameResult.getResult();
+            final Map<Player, ResultStatus> result = blackjackGame.compareDealerAndPlayers();
 
             assertThat(result.get(player)).isEqualTo(ResultStatus.DRAW);
         }
@@ -187,8 +179,7 @@ class BlackjackGameTest {
             player.receiveCard(카드(TEN));
             player.receiveCard(카드(ACE));
 
-            final GameResult gameResult = blackjackGame.compareDealerAndPlayers();
-            final Map<Player, ResultStatus> result = gameResult.getResult();
+            final Map<Player, ResultStatus> result = blackjackGame.compareDealerAndPlayers();
 
             assertThat(result.get(player)).isEqualTo(ResultStatus.DRAW);
         }

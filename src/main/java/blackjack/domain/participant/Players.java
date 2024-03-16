@@ -2,9 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class Players {
     private static final int MINIMUM_PLAYER_SIZE = 1;
@@ -56,6 +54,16 @@ public class Players {
             final Card card = dealer.pickCard();
             player.receiveCard(card);
         }
+    }
+
+    public Map<Player, ResultStatus> compareTo(final Dealer dealer) {
+        final Map<Player, ResultStatus> result = new HashMap<>();
+
+        for (Player player : players) {
+            result.put(player, ResultStatus.of(player, dealer));
+        }
+
+        return result;
     }
 
     public List<Player> getPlayers() {
