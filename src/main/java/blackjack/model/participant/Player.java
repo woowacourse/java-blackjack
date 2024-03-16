@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Player extends Participant {
     private static final int HITTABLE_THRESHOLD = 21;
+    static final String CAN_NOT_BLANK_NAME = "이름에는 공백을 사용할 수 없습니다.";
 
     private final String name;
 
@@ -14,11 +15,10 @@ public class Player extends Participant {
 
     private void validateNullAndEmptyName(final String name) {
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("이름에는 공백을 사용할 수 없습니다.");
+            throw new IllegalArgumentException(CAN_NOT_BLANK_NAME);
         }
     }
 
-    @Override
     public boolean canHit() {
         return hand.calculateScore() < HITTABLE_THRESHOLD;
     }

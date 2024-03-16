@@ -5,14 +5,16 @@ import java.util.List;
 
 public abstract class Participant {
 
-    protected final Hand hand;
+    protected Hand hand;
 
     public Participant() {
         this.hand = new Hand();
     }
 
     public void receiveInitialCards(final List<Card> cards) {
-        hand.add(cards);
+        for (Card card : cards) {
+            hand.add(card);
+        }
     }
 
     public void draw(final Card card) {
@@ -27,10 +29,12 @@ public abstract class Participant {
         return hand.getCards();
     }
 
-    public abstract boolean canHit();
-
     public boolean isBust() {
         return hand.isBust();
+    }
+
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
     }
 
     public boolean hasManyCardsThan(Participant other) {

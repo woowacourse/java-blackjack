@@ -61,8 +61,4 @@ public class Hand {
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
-
-    public Card getFirstCard() {
-        return cards.get(0);
-    }
 }

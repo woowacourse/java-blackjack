@@ -1,20 +1,23 @@
 package blackjack;
 
-import blackjack.dto.DealerResultCount;
 import blackjack.dto.NameCards;
 import blackjack.dto.NameCardsScore;
-import blackjack.dto.PlayerNameFinalResult;
+import blackjack.dto.ProfitStatement;
 import blackjack.model.deck.Deck;
+import blackjack.model.money.Bets;
+import blackjack.model.money.Profit;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
 import blackjack.model.result.Referee;
-import blackjack.model.result.Rule;
+import blackjack.model.result.ResultCommand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class BlackJackGame {
@@ -29,16 +32,15 @@ public class BlackJackGame {
     public void run() {
         final Dealer dealer = new Dealer(new Deck());
         final Players players = registerPlayers();
-        final Referee referee = new Referee(new Rule(dealer));
+        final Referee referee = new Referee(dealer);
+        final Bets bets = registerBets(players);
 
         registerInitialCards(dealer, players);
-        outputView.printDistributionSubject(players.getNames());
         printInitialCards(dealer, players);
 
-        playPlayersTurn(players, dealer);
-        playDealerTurn(dealer);
-
-        printFinalResult(dealer, players, referee);
+        playParticipantsTurn(players, dealer);
+        printFinalCardsAndScores(dealer, players);
+        printResultProfits(referee, players, bets);
     }
 
     private Players registerPlayers() {
@@ -51,9 +53,34 @@ public class BlackJackGame {
         }
     }
 
+    private Bets registerBets(final Players players) {
+        final Bets bets = new Bets();
+        final Map<Player, Integer> playersBetMoney = readPlayersBetMoney(players);
+        for (Player player: playersBetMoney.keySet()) {
+            int money = playersBetMoney.get(player);
+            bets.addBet(player, money);
+        }
+        return bets;
+    }
+
+    private Map<Player, Integer> readPlayersBetMoney(final Players players) {
+        return players.stream()
+                .collect(Collectors.toMap(player -> player, player -> readBetMoney(player.getName())));
+    }
+
+    private int readBetMoney(final String name) {
+        try {
+            return inputView.readBetMoney(name);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return readBetMoney(name);
+        }
+    }
+
     private void registerInitialCards(final Dealer dealer, final Players players) {
         dealer.receiveInitialCards(dealer.distributeInitialCard());
         players.receiveInitialCards(dealer::distributeInitialCard);
+        outputView.printDistributionSubject(players.getNames());
     }
 
     private void printInitialCards(final Dealer dealer, final Players players) {
@@ -70,6 +97,11 @@ public class BlackJackGame {
         return Stream.of(dealerNameCards, playersNameCards)
                 .flatMap(Collection::stream)
                 .toList();
+    }
+
+    private void playParticipantsTurn(final Players players, final Dealer dealer) {
+        playPlayersTurn(players, dealer);
+        playDealerTurn(dealer);
     }
 
     private void playPlayersTurn(final Players players, final Dealer dealer) {
@@ -100,15 +132,10 @@ public class BlackJackGame {
     }
 
     private void playDealerTurn(final Dealer dealer) {
-        while (dealer.canHit()) {
+        while (dealer.shouldHit()) {
             outputView.printDealerHit();
             dealer.draw(dealer.distributeCard());
         }
-    }
-
-    private void printFinalResult(final Dealer dealer, final Players players, final Referee referee) {
-        printFinalCardsAndScores(dealer, players);
-        printFinalResultCommand(referee, players);
     }
 
     private void printFinalCardsAndScores(final Dealer dealer, final Players players) {
@@ -120,19 +147,21 @@ public class BlackJackGame {
         outputView.printFinalCardsAndScore(playerNameCardsScore);
     }
 
-    private void printFinalResultCommand(final Referee referee, final Players players) {
-        printDealerFinalResultCount(referee, players);
-        List<PlayerNameFinalResult> playerNameFinalResults = players.stream()
-                .map(player -> PlayerNameFinalResult.from(player, referee.judgePlayerResult(player)))
-                .toList();
-        outputView.printFinalResults(playerNameFinalResults);
+    private void printResultProfits(final Referee referee, final Players players, final Bets bets) {
+        final Map<Player, ResultCommand> playerResultCommands = players.matchPlayerResultCommands(referee);
+        printDealerResultProfit(playerResultCommands, bets);
+        printPlayersResultProfit(playerResultCommands, bets);
     }
 
-    private void printDealerFinalResultCount(final Referee referee, final Players players) {
-        List<DealerResultCount> dealerResults = referee.judgeDealerResult(players)
-                .entrySet().stream()
-                .map(dealerResult -> new DealerResultCount(dealerResult.getKey(), dealerResult.getValue()))
-                .toList();
-        outputView.printDealerFinalResult(dealerResults);
+    private void printDealerResultProfit(final Map<Player, ResultCommand> playerResultCommands,
+                                         final Bets bets) {
+        final Profit dealerProfit = bets.calculateDealerProfit(playerResultCommands);
+        outputView.printDealerProfit(dealerProfit.getProfit());
+    }
+
+    private void printPlayersResultProfit(final Map<Player, ResultCommand> playerResultCommands, final Bets bets) {
+        final Map<Player, Profit> playerProfits = bets.calculatePlayersProfit(playerResultCommands);
+        final List<ProfitStatement> profitStatements = ProfitStatement.createNameProfits(playerProfits);
+        outputView.printPlayersProfit(profitStatements);
     }
 }

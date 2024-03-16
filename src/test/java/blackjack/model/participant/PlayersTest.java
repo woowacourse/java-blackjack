@@ -1,5 +1,7 @@
 package blackjack.model.participant;
 
+import static blackjack.model.participant.Players.CAN_NOT_DUPLICATED_NAME;
+import static blackjack.model.participant.Players.OUT_OF_PLAYERS_SIZE_BOUND;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -16,18 +18,17 @@ class PlayersTest {
     @Test
     @DisplayName("플레이어의 이름으로 플레이어 그룹을 생성한다.")
     void createPlayers() {
-        List<String> names = List.of("리브", "몰리");
-        Players players = Players.from(names);
+        Players players = Fixtures.createPlayersWithNames(List.of("리브", "몰리"));
+
         assertThat(players.getNames()).containsExactly("리브", "몰리");
     }
 
     @Test
     @DisplayName("플레이어의 이름이 중복되는 경우 예외를 던진다.")
     void createPlayersByDuplicatedName() {
-        List<String> names = List.of("몰리", "몰리");
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> Players.from(names))
-                .withMessage("중복되는 이름을 입력할 수 없습니다.");
+                .isThrownBy(() -> Players.from(List.of("몰리", "몰리")))
+                .withMessage(CAN_NOT_DUPLICATED_NAME);
     }
 
     @ParameterizedTest
@@ -36,7 +37,7 @@ class PlayersTest {
     void createPlayersByOutBound(List<String> names) {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> Players.from(names))
-                .withMessage("참여할 인원의 수는 최소 1명 최대 10명이어야 합니다.");
+                .withMessage(OUT_OF_PLAYERS_SIZE_BOUND);
     }
 
     private static Stream<Arguments> InvalidNames() {
@@ -44,5 +45,11 @@ class PlayersTest {
                 Arguments.arguments(List.of()),
                 Arguments.arguments(List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"))
         );
+    }
+
+    static class Fixtures {
+        static Players createPlayersWithNames(List<String> names) {
+            return Players.from(names);
+        }
     }
 }

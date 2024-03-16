@@ -13,20 +13,20 @@ public class Dealer extends Participant {
         this.deck = deck.makeDeck();
     }
 
-    @Override
-    public boolean canHit() {
+    public boolean shouldHit() {
         return hand.calculateScore() <= HITTABLE_THRESHOLD;
     }
 
     public List<Card> distributeInitialCard() {
-        return List.of(deck.distribute(), deck.distribute());
+        return List.of(deck.drawn(), deck.drawn());
     }
 
     public Card distributeCard() {
-        return deck.distribute();
+        return deck.drawn();
     }
 
     public List<Card> openFirstCard() {
-        return List.of(hand.getFirstCard());
+        final List<Card> cards = hand.getCards();
+        return List.of(cards.get(0));
     }
 }
