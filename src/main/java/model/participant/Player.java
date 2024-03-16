@@ -9,9 +9,9 @@ import model.participant.state.MatchState;
 
 public final class Player extends Participant {
     private final Name name;
-    private final int bettingAmount;
+    private final long bettingAmount;
 
-    public Player(Name name, int bettingAmount, Card firstCard, Card secondCard) {
+    public Player(Name name, long bettingAmount, Card firstCard, Card secondCard) {
         super(firstCard, secondCard);
         this.name = name;
         this.bettingAmount = bettingAmount;
@@ -23,7 +23,7 @@ public final class Player extends Participant {
         return !cardDeck.isBust() && matchState == MatchState.PLAYING;
     }
 
-    public MatchState calculateMatchResult(int dealerHand) {
+    public MatchState determineMatchResult(int dealerHand) {
         int playerHand = cardDeck.calculateHand();
         if (playerHand >= BUST_THRESHOLD || (dealerHand < BUST_THRESHOLD) && (playerHand < dealerHand)) {
             return LOSE;
@@ -43,5 +43,9 @@ public final class Player extends Participant {
 
     public Name getName() {
         return name;
+    }
+
+    public long calculateEarning() {
+        return matchState.calculateEarnings(bettingAmount);
     }
 }

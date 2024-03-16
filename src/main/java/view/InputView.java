@@ -40,7 +40,7 @@ public class InputView {
         throw new IllegalArgumentException("[ERROR] y 혹은 n만 입력 가능합니다.");
     }
 
-    public static int inputBettingAmount(String targetName) {
+    public static long inputBettingAmount(String targetName) {
         System.out.println();
         String initialInput = input(targetName + "의 배팅 금액은?");
         validateBettingAmount(initialInput);

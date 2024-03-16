@@ -21,6 +21,6 @@ public class ResultMapper {
 
     public static PlayerMatchResult toPlayerMatchResult(Player player, Dealer dealer) {
         int dealerHand = dealer.getHand();
-        return new PlayerMatchResult(player.getName(), player.calculateMatchResult(dealerHand));
+        return new PlayerMatchResult(player.getName(), player.determineMatchResult(dealerHand));
     }
 }

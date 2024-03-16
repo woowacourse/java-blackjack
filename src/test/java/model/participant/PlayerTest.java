@@ -51,7 +51,7 @@ class PlayerTest {
         int dealerHand = 18;
 
         // Then
-        assertEquals(MatchState.LOSE, player.calculateMatchResult(dealerHand));
+        assertEquals(MatchState.LOSE, player.determineMatchResult(dealerHand));
     }
 
     @Test
@@ -68,7 +68,7 @@ class PlayerTest {
         int dealerHand = 22;
 
         // Then
-        assertEquals(MatchState.LOSE, player.calculateMatchResult(dealerHand));
+        assertEquals(MatchState.LOSE, player.determineMatchResult(dealerHand));
     }
 
     @ParameterizedTest
@@ -85,7 +85,7 @@ class PlayerTest {
         int dealerHand = dealer.cardDeck.calculateHand();
 
         // Then
-        assertEquals(MatchState.DRAW, player.calculateMatchResult(dealerHand));
+        assertEquals(MatchState.DRAW, player.determineMatchResult(dealerHand));
     }
 
     @ParameterizedTest
@@ -104,7 +104,7 @@ class PlayerTest {
         int dealerHand = dealer.cardDeck.calculateHand();
 
         // Then
-        assertEquals(MatchState.WIN, player.calculateMatchResult(dealerHand));
+        assertEquals(MatchState.WIN, player.determineMatchResult(dealerHand));
     }
 
     @ParameterizedTest
@@ -122,6 +122,6 @@ class PlayerTest {
         int dealerHand = dealer.cardDeck.calculateHand();
 
         // Then
-        assertEquals(MatchState.WIN, player.calculateMatchResult(dealerHand));
+        assertEquals(MatchState.WIN, player.determineMatchResult(dealerHand));
     }
 }

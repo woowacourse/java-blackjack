@@ -1,13 +1,16 @@
 package controller;
 
 import static util.InputRetryHelper.inputRetryHelper;
+import static view.InputView.inputBettingAmount;
 import static view.InputView.inputNames;
 import static view.InputView.inputPlayerHitChoice;
 
 import java.util.List;
 import model.casino.Casino;
 import model.casino.RandomCardShuffleMachine;
-import model.participant.NameInfos;
+import model.casino.dto.BettingInfo;
+import model.casino.dto.BettingInfos;
+import model.participant.Names;
 import model.participant.dto.DealerFaceUpResult;
 import model.participant.dto.PlayerFaceUpResult;
 import view.OutputView;
@@ -24,8 +27,12 @@ public class BlackJackLauncher {
     }
 
     private Casino initCasino() {
-        NameInfos nameInfos = inputRetryHelper(() -> new NameInfos(inputNames()));
-        return new Casino(nameInfos, new RandomCardShuffleMachine());
+        Names names = inputRetryHelper(() -> new Names(inputNames()));
+        BettingInfos bettingInfos = BettingInfos.from(names.getPlayerNames()
+                .stream()
+                .map(name -> new BettingInfo(name, inputRetryHelper(() -> inputBettingAmount(name.getValue()))))
+                .toList());
+        return new Casino(bettingInfos, new RandomCardShuffleMachine());
     }
 
     private void showInitialFaceUpResults(Casino casino) {
@@ -45,7 +52,8 @@ public class BlackJackLauncher {
     }
 
     private void showPlayerChoiceResult(boolean playerChoice, PlayerFaceUpResult currentPlayerFaceUpInfo) {
-        if (playerChoice || currentPlayerFaceUpInfo.cards().size() == 2) {
+        if (playerChoice || currentPlayerFaceUpInfo.cards()
+                .size() == 2) {
             OutputView.printSingleFaceUp(currentPlayerFaceUpInfo);
         }
     }

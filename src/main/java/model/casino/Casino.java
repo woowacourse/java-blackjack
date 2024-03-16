@@ -1,9 +1,10 @@
 package model.casino;
 
 import java.util.List;
+import model.card.Card;
+import model.casino.dto.BettingInfos;
 import model.participant.Dealer;
 import model.participant.Entrant;
-import model.participant.NameInfos;
 import model.participant.Player;
 import model.participant.dto.DealerFaceUpResult;
 import model.participant.dto.PlayerFaceUpResult;
@@ -14,17 +15,17 @@ public class Casino {
     private final Entrant entrant;
     private final CardDispenser cardDispenser;
 
-    public Casino(NameInfos nameInfos, CardShuffleMachine cardShuffleMachine) {
+    public Casino(BettingInfos bettingInfos, CardShuffleMachine cardShuffleMachine) {
         this.cardDispenser = new CardDispenser(cardShuffleMachine);
-        this.entrant = generateEntrant(nameInfos);
+        this.entrant = generateEntrant(bettingInfos);
     }
 
-    private Entrant generateEntrant(NameInfos nameInfos) {
-        List<Player> players = nameInfos.getPlayerNames()
+    private Entrant generateEntrant(BettingInfos bettingInfos) {
+        List<Player> players = bettingInfos.getBettingInfos()
                 .stream()
-                .map(name -> new Player(name, nameInfos.getBettingAmount(name), cardDispenser.dispenseCard(), cardDispenser.dispenseCard()))
+                .map(info -> new Player(info.name(), info.bettingAmount(), getDispensedCard(), getDispensedCard()))
                 .toList();
-        Dealer dealer = new Dealer(cardDispenser.dispenseCard(), cardDispenser.dispenseCard());
+        Dealer dealer = new Dealer(getDispensedCard(), getDispensedCard());
         return new Entrant(dealer, players);
     }
 
@@ -37,11 +38,15 @@ public class Casino {
     }
 
     private void hitCardToPlayer() {
-        entrant.hitPlayer(cardDispenser.dispenseCard());
+        entrant.hitPlayer(getDispensedCard());
     }
 
     public void hitCardToDealer() {
-        entrant.hitDealer(cardDispenser.dispenseCard());
+        entrant.hitDealer(getDispensedCard());
+    }
+
+    private Card getDispensedCard() {
+        return cardDispenser.dispenseCard();
     }
 
     public boolean hasAvailablePlayer() {

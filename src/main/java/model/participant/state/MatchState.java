@@ -14,7 +14,7 @@ public enum MatchState {
         this.earningCalculator = earningCalculator;
     }
 
-    public int calculateEarnings(int bettingAmount) {
+    public long calculateEarnings(long bettingAmount) {
         return earningCalculator.calculate(bettingAmount);
     }
 }
