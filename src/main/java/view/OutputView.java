@@ -37,10 +37,10 @@ public class OutputView {
         System.out.println(makeCardsStatus(player.getName(), player.getCards()));
     }
 
-    public void printExtraCardInfo(Dealer dealer) {
+    public void printExtraCardInfo(Cards dealerCards, Name dealerName) {
         System.out.println();
-        for (int i = 2; i <= dealer.getCards().countCard(); i++) {
-            System.out.println(dealer.getName().getValue() + "가 " + MIN_DEALER_SCORE + "이하라 한장의 카드를 더 받았습니다.\n");
+        for (int i = 2; i <= dealerCards.countCard(); i++) {
+            System.out.println(dealerName.getValue() + "가 " + MIN_DEALER_SCORE + "이하라 한장의 카드를 더 받았습니다.\n");
         }
     }
 

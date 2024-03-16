@@ -53,7 +53,7 @@ public class BlackJackController {
 
         dealer.playGame(cardDeck);
 
-        outputView.printExtraCardInfo(dealer);
+        outputView.printExtraCardInfo(dealer.getCards(), dealer.getName());
         outputView.printDealerHand(dealer);
         outputView.printPlayerHand(players);
     }
