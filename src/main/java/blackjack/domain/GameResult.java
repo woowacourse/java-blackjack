@@ -7,19 +7,10 @@ import java.util.function.BiPredicate;
 
 public enum GameResult {
 
-    BLACKJACK(1.5, ((dealer, player)
-            -> !dealer.isBlackJack() && player.isBlackJack())),
-    WIN(1, ((dealer, player)
-            -> (dealer.isBust()) ||
-            (!player.isBust() && player.calculateScore() > dealer.calculateScore()))),
-    LOSE(-1, ((dealer, player)
-            -> player.isBust() ||
-            (dealer.isBlackJack() && !player.isBlackJack()) ||
-            (player.calculateScore() < dealer.calculateScore()))),
-    PUSH(0, (dealer, player)
-            -> (dealer.isBust() && player.isBust()) ||
-            (dealer.isBlackJack() && player.isBlackJack()) ||
-            (!player.isBust() && player.calculateScore() == dealer.calculateScore()));
+    BLACKJACK(1.5, GameResult::isBlackJackCondition),
+    WIN(1, GameResult::isWinCondition),
+    LOSE(-1, GameResult::isLoseCondition),
+    PUSH(0, GameResult::isPushCondition);
 
 
     private final double profitRate;
@@ -30,11 +21,32 @@ public enum GameResult {
         this.condition = condition;
     }
 
+    private static boolean isBlackJackCondition(final Dealer dealer, final Player player) {
+        return !dealer.isBlackJack() && player.isBlackJack();
+    }
+
+    private static boolean isWinCondition(final Dealer dealer, final Player player) {
+        return (dealer.isBust()) ||
+                (!player.isBust() && player.calculateScore() > dealer.calculateScore());
+    }
+
+    private static boolean isLoseCondition(final Dealer dealer, final Player player) {
+        return player.isBust() ||
+                (dealer.isBlackJack() && !player.isBlackJack()) ||
+                (player.calculateScore() < dealer.calculateScore());
+    }
+
+    private static boolean isPushCondition(final Dealer dealer, final Player player) {
+        return (dealer.isBust() && player.isBust()) ||
+                (dealer.isBlackJack() && player.isBlackJack()) ||
+                (!player.isBust() && player.calculateScore() == dealer.calculateScore());
+    }
+
     public static GameResult findGameResult(final Dealer dealer, final Player player) {
         return Arrays.stream(GameResult.values())
                 .filter(gameResult -> gameResult.condition.test(dealer, player))
                 .findAny()
-                .orElseThrow(() -> new IllegalStateException("해당하는 게임 결과가 없습니다."));
+                .orElseThrow(() -> new IllegalStateException(player.getName() + "에 해당하는 게임 결과가 없습니다."));
     }
 
     public static long calculatePlayerProfit(final Dealer dealer, final Player player) {
