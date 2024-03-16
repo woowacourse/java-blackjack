@@ -27,7 +27,7 @@ class BlackjackTest {
         Names names = Names.from(List.of("초롱", "조이썬"));
         BettingAmounts battingAmounts = BettingAmounts.from(List.of("10000", "20000"));
 
-        var result = blackjack.acceptPlayers(names.getNames(), battingAmounts.getBettingAmounts());
+        var result = blackjack.createPlayers(names.getNames(), battingAmounts.getBettingAmounts());
 
         assertPlayer(result.getDealer(), 8);
 

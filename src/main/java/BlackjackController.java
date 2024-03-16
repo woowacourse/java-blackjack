@@ -28,7 +28,7 @@ public class BlackjackController {
         Names names = Names.from(InputView.inputPlayerNames());
         BettingAmounts bettingAmounts = BettingAmounts.from(
                 InputView.inputPlayerBattingAmounts(names));
-        Players players = blackjack.acceptPlayers(names.getNames(), bettingAmounts.getBettingAmounts());
+        Players players = blackjack.createPlayers(names.getNames(), bettingAmounts.getBettingAmounts());
         PlayerView.printPlayers(players);
         return players;
     }
