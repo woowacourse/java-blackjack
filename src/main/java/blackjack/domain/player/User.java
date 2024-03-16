@@ -17,7 +17,7 @@ public abstract class User {
 
     protected abstract boolean wantToHit();
 
-    public void playTurn(final Deck deck) {
+    public final void playTurn(final Deck deck) {
         if (state.isInit() || wantToHit()) {
             state = state.draw(deck.pick());
             return;
@@ -25,31 +25,43 @@ public abstract class User {
         state = state.stand();
     }
 
-    public boolean isFinished() {
-        return state.isFinished();
+    public boolean isPlayer() {
+        return false;
     }
 
-    public boolean isNotFinished() {
-        return !isFinished();
-    }
-
-    public boolean isInitState() {
-        return state.isInit();
+    public boolean isDealer() {
+        return false;
     }
 
     public Hands getOpenedHands() {
         return getHands();
     }
 
-    public Hands getHands() {
+    public final boolean isInitState() {
+        return state.isInit();
+    }
+
+    public final boolean isFinished() {
+        return state.isFinished();
+    }
+
+    public final boolean isNotFinished() {
+        return !isFinished();
+    }
+
+    public final boolean isBustState() {
+        return state.isBust();
+    }
+
+    public final Hands getHands() {
         return state.hands();
     }
 
-    public UserName getUserName() {
+    public final UserName getUserName() {
         return userName;
     }
 
-    public State getState() {
+    public final State getState() {
         return state.copy();
     }
 }

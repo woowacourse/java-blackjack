@@ -11,12 +11,13 @@ public class Player extends User {
         this.userWantToHit = userWantToHit;
     }
 
-    public static Player of(final UserName userName, final Predicate<UserName> userWantToHit) {
-        return new Player(userName, userWantToHit);
-    }
-
     @Override
     protected boolean wantToHit() {
         return isNotFinished() && userWantToHit.test(getUserName());
+    }
+
+    @Override
+    public boolean isPlayer() {
+        return true;
     }
 }
