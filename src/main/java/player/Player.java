@@ -1,11 +1,8 @@
 package player;
 
 import card.Card;
-import card.CardDeck;
 import cardGame.GameParticipantCards;
 import java.util.List;
-import java.util.function.BiConsumer;
-import player.dto.CardsStatus;
 
 public class Player extends GameParticipantCards {
 
@@ -20,11 +17,6 @@ public class Player extends GameParticipantCards {
 
     public static Player joinGame(String name, List<Card> cards, int money) {
         return new Player(cards, new Name(name), money);
-    }
-
-    public CardsStatus play(BiConsumer<Player, CardDeck> playMatch, CardDeck cardDeck) {
-        playMatch.accept(this, cardDeck);
-        return new CardsStatus(name, getCards());
     }
 
     public Name getName() {
