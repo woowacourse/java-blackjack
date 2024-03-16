@@ -2,6 +2,8 @@ package controller;
 
 import domain.Command;
 import domain.ExceptionHandler;
+import domain.Money;
+import domain.MoneyManager;
 import domain.deck.TotalDeckGenerator;
 import domain.game.Game;
 import domain.game.State;
@@ -12,8 +14,7 @@ import dto.UserDto;
 import view.InputView;
 import view.ResultView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static domain.game.State.BUST;
 import static domain.game.State.STAY;
@@ -22,6 +23,7 @@ public class GameController {
 
     public void play() {
         Users users = ExceptionHandler.handle(() -> new Users(InputView.inputNames()));
+        MoneyManager moneyManager = new MoneyManager(betting(users));
         Game game = new Game(TotalDeckGenerator.generate(), users);
         showStartStatus(users);
 
@@ -29,10 +31,18 @@ public class GameController {
         showGameResult(users, game);
     }
 
+    private Map<Player, Money> betting(Users users) {
+        Map<Player, Money> bettingManager = new LinkedHashMap<>();
+        for (Player player : users.getPlayers()) {
+            Money money = ExceptionHandler.handle(() -> new Money(InputView.inputBetting(player.getName())));
+            bettingManager.put(player, money);
+        }
+        return Collections.unmodifiableMap(bettingManager);
+    }
+
     private void showStartStatus(Users users) {
         List<UserDto> playerDtos = new ArrayList<>();
-        List<Player> players = users.getPlayers();
-        for (Player player : players) {
+        for (Player player : users.getPlayers()) {
             playerDtos.add(UserDto.from(player));
         }
         UserDto dealerDto = UserDto.from(users.getDealer());
@@ -40,8 +50,7 @@ public class GameController {
     }
 
     private void hitOrStay(Game game, Users users) {
-        List<Player> players = users.getPlayers();
-        for (Player player : players) {
+        for (Player player : users.getPlayers()) {
             hitOrStayOnce(game, player);
         }
         while (game.isDealerCardAddCondition()) {
