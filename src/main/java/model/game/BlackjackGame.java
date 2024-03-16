@@ -1,8 +1,10 @@
 package model.game;
 
-import dto.ParticipantCard;
-import dto.ParticipantCards;
-import dto.ParticipantScores;
+import model.result.ParticipantCard;
+import model.result.ParticipantCards;
+import model.result.ParticipantProfits;
+import model.result.ParticipantScores;
+import model.betting.PlayerBets;
 import model.card.Card;
 import model.card.CardDeck;
 import model.participant.Dealer;
@@ -56,7 +58,7 @@ public class BlackjackGame {
         return ParticipantScores.of(dealer, players);
     }
 
-    public Dealer getDealer() {
-        return dealer;
+    public ParticipantProfits calculateProfit(Players players, PlayerBets bets) {
+        return ParticipantProfits.of(players, dealer, bets);
     }
 }

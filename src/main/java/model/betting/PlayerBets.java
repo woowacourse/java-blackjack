@@ -2,6 +2,7 @@ package model.betting;
 
 import java.util.Collections;
 import java.util.Map;
+import model.participant.Player;
 
 public class PlayerBets {
 
@@ -9,5 +10,9 @@ public class PlayerBets {
 
     public PlayerBets(Map<String, Bet> bets) {
         this.bets = Collections.unmodifiableMap(bets);
+    }
+
+    public Bet findByPlayer(Player player) {
+        return bets.get(player.getName());
     }
 }

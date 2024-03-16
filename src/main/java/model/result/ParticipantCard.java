@@ -1,4 +1,4 @@
-package dto;
+package model.result;
 
 import java.util.List;
 import model.card.Card;
@@ -21,7 +21,7 @@ public class ParticipantCard {
     }
 
     public static ParticipantCard createWithAllCard(Participant participant) {
-        List<String> cards = participant.getAllCard()
+        List<String> cards = participant.getCards()
             .stream()
             .map(Card::toString)
             .toList();

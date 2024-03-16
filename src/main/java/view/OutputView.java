@@ -1,29 +1,24 @@
 package view;
 
-import static java.util.stream.Collectors.joining;
-
-import dto.DealerResult;
-import dto.ParticipantCard;
-import dto.ParticipantCards;
-import dto.ParticipantResults;
-import dto.ParticipantScore;
-import dto.ParticipantScores;
-import dto.PlayerResult;
 import java.util.List;
-import model.game.ResultStatus;
+import model.result.ParticipantCard;
+import model.result.ParticipantCards;
+import model.result.ParticipantProfit;
+import model.result.ParticipantProfits;
+import model.result.ParticipantScore;
+import model.result.ParticipantScores;
 
 public class OutputView {
 
     private static final String NEWLINE = System.lineSeparator();
     private static final String DEALER_NAME = "딜러";
     private static final String CARDS_DELIMITER = ", ";
-    private static final String GAME_RESULT_DELIMITER = " ";
     private static final String INIT_CARDS_INTRO = NEWLINE + "%s와 %s에게 2장을 나누었습니다." + NEWLINE;
     private static final String CARDS_FORMAT = "%s카드: %s" + NEWLINE;
     private static final String DEALER_HIT = NEWLINE + "%s는 16이하라 한장의 카드를 더 받았습니다." + NEWLINE;
     private static final String SCORE_FORMAT = NEWLINE + "%s카드: %s - 결과: %d";
-    private static final String GAME_RESULT_INTRO = NEWLINE + NEWLINE + "## 최종 승패";
-    private static final String GAMER_RESULT_FORMAT = NEWLINE + "%s: %s";
+    private static final String PROFIT_RESULT_INTRO = NEWLINE + NEWLINE + "## 최종 수익";
+    private static final String PROFIT_RESULT_FORMAT = NEWLINE + "%s: %d";
     private static final String EXCEPTION_PREFIX = "[ERROR] ";
 
     private OutputView() {
@@ -69,28 +64,16 @@ public class OutputView {
         System.out.printf(SCORE_FORMAT, participantCard.getName(), cards, participantScore.getScore());
     }
 
-    public static void printResult(ParticipantResults participantResults) {
-        DealerResult dealerResult = participantResults.getDealerResult();
-        List<PlayerResult> playerResults = participantResults.getPlayerResults();
-        System.out.print(GAME_RESULT_INTRO);
-        printDealerGameResult(dealerResult);
-        playerResults.forEach(OutputView::printPlayerGameResult);
-    }
-    private static void printDealerGameResult(DealerResult dealerResult) {
-        String result = dealerResult.allStatus()
-            .stream()
-            .map(resultStatus -> createResultMessage(resultStatus, dealerResult))
-            .collect(joining(GAME_RESULT_DELIMITER));
-        System.out.printf(GAMER_RESULT_FORMAT, DEALER_NAME, result);
+    public static void printProfits(ParticipantProfits participantProfits) {
+        ParticipantProfit dealerProfit = participantProfits.getDealerProfit();
+        List<ParticipantProfit> playerProfits = participantProfits.getPlayerProfits();
+        System.out.print(PROFIT_RESULT_INTRO);
+        printProfit(dealerProfit);
+        playerProfits.forEach(OutputView::printProfit);
     }
 
-    private static String createResultMessage(ResultStatus resultStatus,
-        DealerResult dealerResult) {
-        return dealerResult.statusCount(resultStatus) + resultStatus.getDisplayName();
-    }
-
-    private static void printPlayerGameResult(PlayerResult playerResult) {
-        System.out.printf(GAMER_RESULT_FORMAT, playerResult.getName(), playerResult.getStatus().getDisplayName());
+    private static void printProfit(ParticipantProfit dealerProfit) {
+        System.out.printf(PROFIT_RESULT_FORMAT, dealerProfit.getName(), dealerProfit.getProfit());
     }
 
     public static void printExceptionMessage(String message) {

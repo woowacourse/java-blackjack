@@ -37,7 +37,7 @@ class DealerTest {
         Dealer dealer = new Dealer();
         Card card = new Card(TWO, DIAMOND);
         dealer.hit(card);
-        assertThat(dealer.cardsSize()).isEqualTo(1);
+        assertThat(dealer.cardSize()).isEqualTo(1);
     }
 
     @DisplayName("딜러가 처음 획득한 카드 1장을 반환한다")

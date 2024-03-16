@@ -26,7 +26,6 @@ public class Player extends Participant {
 
     @Override
     public boolean isPossibleHit() {
-        int totalNumbers = cards.calculateTotalScore();
-        return totalNumbers < HIT_CONDITION;
+        return score() < HIT_CONDITION;
     }
 }

@@ -11,10 +11,8 @@ public class Cards {
         this.cards = List.copyOf(cards);
     }
 
-    public int calculateTotalScore() {
-        return cards.stream()
-            .mapToInt(Card::getScore)
-            .sum();
+    public Score score() {
+        return Score.from(cards);
     }
 
     public Cards add(Card card) {

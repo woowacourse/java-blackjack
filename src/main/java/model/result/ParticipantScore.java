@@ -1,7 +1,6 @@
-package dto;
+package model.result;
 
 import java.util.List;
-import model.game.Score;
 import model.participant.Participant;
 
 public class ParticipantScore {
@@ -17,7 +16,7 @@ public class ParticipantScore {
 
     public static ParticipantScore from(Participant participant) {
         ParticipantCard card = ParticipantCard.createWithAllCard(participant);
-        int score = Score.from(participant.getCards()).getValue();
+        int score = participant.score();
         return new ParticipantScore(card, score);
     }
 

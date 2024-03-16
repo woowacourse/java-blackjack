@@ -4,12 +4,14 @@ import java.util.Collections;
 import java.util.List;
 import model.card.Card;
 import model.card.Cards;
-import model.game.HitAction;
+import model.card.Score;
+import model.game.action.CheckAction;
+import model.game.action.HitAction;
 
-public abstract class Participant implements HitAction {
+public abstract class Participant implements HitAction, CheckAction {
 
-    protected Name name;
-    protected Cards cards;
+    private final Name name;
+    private Cards cards;
 
     protected Participant(Name name, Cards cards) {
         this.name = name;
@@ -21,19 +23,41 @@ public abstract class Participant implements HitAction {
         cards = cards.add(card);
     }
 
-    public int cardsSize() {
+    @Override
+    public boolean isNotBlackjack() {
+        return !isBlackjack();
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        Score score = cards.score();
+        return cardSize() == 2 && score.is21();
+    }
+
+    @Override
+    public boolean isNotBurst() {
+        return !isBurst();
+    }
+
+    @Override
+    public boolean isBurst() {
+        Score score = cards.score();
+        return score.isOver21();
+    }
+
+    public int cardSize() {
         return cards.size();
+    }
+
+    public int score() {
+        return cards.score().getValue();
     }
 
     public String getName() {
         return name.getValue();
     }
 
-    public Cards getCards() {
-        return cards;
-    }
-
-    public List<Card> getAllCard() {
+    public List<Card> getCards() {
         return Collections.unmodifiableList(cards.getCards());
     }
 }

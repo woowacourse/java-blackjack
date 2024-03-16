@@ -2,10 +2,10 @@ package controller;
 
 import static java.util.stream.Collectors.toMap;
 
-import dto.ParticipantCard;
-import dto.ParticipantCards;
-import dto.ParticipantResults;
-import dto.ParticipantScores;
+import model.result.ParticipantCard;
+import model.result.ParticipantCards;
+import model.result.ParticipantProfits;
+import model.result.ParticipantScores;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -34,8 +34,8 @@ public class BlackjackController {
         ParticipantScores participantScores = blackjackGame.finish(players);
         OutputView.printScores(participantScores);
 
-        ParticipantResults participantResults = ParticipantResults.from(participantScores);
-        OutputView.printResult(participantResults);
+        ParticipantProfits participantProfits = blackjackGame.calculateProfit(players, bets);
+        OutputView.printProfits(participantProfits);
     }
 
     private Players preparePlayers() {

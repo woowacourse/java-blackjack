@@ -17,4 +17,8 @@ public class Bet {
             throw new IllegalArgumentException("배팅금은 10원 단위만 가능합니다.");
         }
     }
+
+    public int getAmount() {
+        return amount;
+    }
 }

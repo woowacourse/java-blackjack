@@ -23,7 +23,7 @@ class CardsTest {
     @MethodSource("provideCardsAndExpectedTotal")
     void testCalculateTotalCardNumbers(List<Card> cardValues, int expectedTotal) {
         Cards cards = new Cards(cardValues);
-        assertThat(cards.calculateTotalScore()).isEqualTo(expectedTotal);
+        assertThat(cards.score().getValue()).isEqualTo(expectedTotal);
     }
 
     public static Stream<Arguments> provideCardsAndExpectedTotal() {
@@ -32,10 +32,10 @@ class CardsTest {
                 List.of(new Card(JACK, DIAMOND), new Card(FIVE, CLOVER), new Card(ACE, HEART)), 16
             ),
             Arguments.of(
-                List.of(new Card(ACE, DIAMOND), new Card(QUEEN, HEART)), 11
+                List.of(new Card(ACE, DIAMOND), new Card(QUEEN, HEART)), 21
             ),
             Arguments.of(
-                List.of(new Card(ACE, DIAMOND), new Card(ACE, HEART), new Card(ACE, CLOVER)), 3
+                List.of(new Card(ACE, DIAMOND), new Card(ACE, HEART), new Card(ACE, CLOVER)), 13
             )
         );
     }

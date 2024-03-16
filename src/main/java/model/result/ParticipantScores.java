@@ -1,4 +1,4 @@
-package dto;
+package model.result;
 
 import java.util.List;
 import model.participant.Dealer;
