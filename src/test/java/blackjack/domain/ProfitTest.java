@@ -7,19 +7,20 @@ import org.junit.jupiter.api.Test;
 
 public class ProfitTest {
 
-    @DisplayName("승리할 경우 배팅 금액만큼 양의 수익금으로 갖는다")
+    @DisplayName("수익은 더할 수 있다")
     @Test
-    public void fromWin() {
-        Profit profit = Profit.fromWin(new Money(1000));
+    public void add() {
+        Profit first = Profit.from(0);
+        Profit second = Profit.from(1);
 
-        assertThat(profit.getValue()).isEqualTo(1000);
+        assertThat(first.add(second).getValue()).isEqualTo(1);
     }
 
-    @DisplayName("패배할 경우 배팅 금액만큼 음의 수익금으로 갖는다")
+    @DisplayName("수익은 가지고 있는 값에 음수를 붙여 반환할 수 있다")
     @Test
-    public void fromLose() {
-        Profit profit = Profit.fromLose(new Money(1000));
+    public void inverse() {
+        Profit profit = Profit.from(1000);
 
-        assertThat(profit.getValue()).isEqualTo(-1000);
+        assertThat(profit.inverse().getValue()).isEqualTo(-1000);
     }
 }
