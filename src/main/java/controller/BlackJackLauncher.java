@@ -5,13 +5,11 @@ import static view.InputView.inputNames;
 import static view.InputView.inputPlayerHitChoice;
 
 import java.util.List;
-import model.Choice;
+import model.casino.Casino;
 import model.casino.RandomCardShuffleMachine;
 import model.participant.Names;
-import model.casino.Casino;
 import model.participant.dto.DealerFaceUpResult;
 import model.participant.dto.PlayerFaceUpResult;
-import model.participant.dto.PlayerMatchResult;
 import view.OutputView;
 
 public class BlackJackLauncher {
@@ -39,16 +37,15 @@ public class BlackJackLauncher {
     private void proceedPlayersTurn(Casino casino) {
         while (casino.hasAvailablePlayer()) {
             PlayerFaceUpResult nextPlayerFaceUpInfo = casino.getNextPlayerFaceUpInfo();
-            Choice playerChoice = inputRetryHelper(() -> Choice.from(
-                    inputPlayerHitChoice(nextPlayerFaceUpInfo.getPartipantNameAsString())));
+            boolean playerChoice = inputRetryHelper(
+                    () -> inputPlayerHitChoice(nextPlayerFaceUpInfo.getPartipantNameAsString()));
             casino.distinctPlayerChoice(playerChoice);
             showPlayerChoiceResult(playerChoice, nextPlayerFaceUpInfo);
         }
     }
 
-    private void showPlayerChoiceResult(Choice playerChoice, PlayerFaceUpResult currentPlayerFaceUpInfo) {
-        if (playerChoice.isHit() || (!playerChoice.isHit() && currentPlayerFaceUpInfo.cards()
-                .size() == 2)) {
+    private void showPlayerChoiceResult(boolean playerChoice, PlayerFaceUpResult currentPlayerFaceUpInfo) {
+        if (playerChoice || currentPlayerFaceUpInfo.cards().size() == 2) {
             OutputView.printSingleFaceUp(currentPlayerFaceUpInfo);
         }
     }

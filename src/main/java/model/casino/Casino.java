@@ -1,7 +1,6 @@
 package model.casino;
 
 import java.util.List;
-import model.Choice;
 import model.participant.Dealer;
 import model.participant.Entrant;
 import model.participant.Names;
@@ -28,8 +27,8 @@ public class Casino {
         return new Entrant(dealer, players);
     }
 
-    public void distinctPlayerChoice(Choice choice) {
-        if (choice.isHit()) {
+    public void distinctPlayerChoice(boolean choice) {
+        if (choice) {
             hitCardToPlayer();
             return;
         }
