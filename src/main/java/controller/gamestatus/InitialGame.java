@@ -6,14 +6,9 @@ import domain.gamer.Player;
 import domain.gamer.Players;
 import view.OutputView;
 
-public class InitialGame implements GameStatus {
+public class InitialGame extends Playable {
 
     private static final int INITIAL_CARD_COUNT = 2;
-
-    @Override
-    public boolean isPlayable() {
-        return true;
-    }
 
     @Override
     public GameStatus play(Dealer dealer, Players players, Deck deck) {

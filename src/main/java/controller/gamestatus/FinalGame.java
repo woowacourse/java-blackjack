@@ -7,12 +7,7 @@ import domain.gamer.Players;
 import domain.result.BettingResult;
 import view.OutputView;
 
-public class FinalGame implements GameStatus {
-
-    @Override
-    public boolean isPlayable() {
-        return true;
-    }
+public class FinalGame extends Playable {
 
     @Override
     public GameStatus play(Dealer dealer, Players players, Deck deck) {

@@ -8,15 +8,10 @@ import util.ConsoleReader;
 import view.InputView;
 import view.OutputView;
 
-public class MainGame implements GameStatus {
-    
+public class MainGame extends Playable {
+
     private static final ConsoleReader CONSOLE_READER = new ConsoleReader();
     private static final String COMMAND_YES = "y";
-
-    @Override
-    public boolean isPlayable() {
-        return true;
-    }
 
     @Override
     public GameStatus play(Dealer dealer, Players players, Deck deck) {
