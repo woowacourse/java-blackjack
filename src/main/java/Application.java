@@ -1,5 +1,5 @@
 import domain.BlackJackGame;
-import domain.cards.Card;
+import domain.card.Card;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;

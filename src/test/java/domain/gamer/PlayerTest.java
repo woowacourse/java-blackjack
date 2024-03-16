@@ -2,10 +2,10 @@ package domain.gamer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.cards.Card;
-import domain.cards.Hand;
-import domain.cards.cardinfo.CardNumber;
-import domain.cards.cardinfo.CardShape;
+import domain.card.Card;
+import domain.card.Hand;
+import domain.card.cardinfo.CardNumber;
+import domain.card.cardinfo.CardShape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

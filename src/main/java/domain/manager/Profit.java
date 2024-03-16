@@ -1,4 +1,4 @@
-package domain;
+package domain.manager;
 
 import java.util.Objects;
 

@@ -1,13 +1,13 @@
 package view;
 
-import domain.Profit;
-import domain.cards.Card;
-import domain.cards.cardinfo.CardNumber;
-import domain.cards.cardinfo.CardShape;
+import domain.card.Card;
+import domain.card.cardinfo.CardNumber;
+import domain.card.cardinfo.CardShape;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
-import domain.result.GameManager;
+import domain.manager.GameManager;
+import domain.manager.Profit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

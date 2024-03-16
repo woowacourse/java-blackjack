@@ -1,12 +1,14 @@
 package domain;
 
-import domain.cards.Card;
-import domain.cards.CardPack;
-import domain.cards.Hand;
+import domain.card.Card;
+import domain.card.CardPack;
+import domain.card.Hand;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
-import domain.result.GameManager;
+import domain.manager.Bet;
+import domain.manager.GameManager;
+import domain.manager.Profit;
 import java.util.List;
 
 public class BlackJackGame {

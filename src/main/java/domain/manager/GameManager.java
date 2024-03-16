@@ -1,7 +1,5 @@
-package domain.result;
+package domain.manager;
 
-import domain.Profit;
-import domain.WinState;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;

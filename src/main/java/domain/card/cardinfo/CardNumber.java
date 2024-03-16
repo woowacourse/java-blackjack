@@ -1,4 +1,4 @@
-package domain.cards.cardinfo;
+package domain.card.cardinfo;
 
 public enum CardNumber {
 

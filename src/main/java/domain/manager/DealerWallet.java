@@ -1,6 +1,5 @@
-package domain.result;
+package domain.manager;
 
-import domain.Profit;
 import domain.gamer.Player;
 import java.util.Map;
 

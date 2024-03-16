@@ -1,6 +1,6 @@
 package view.mapper;
 
-import domain.cards.cardinfo.CardShape;
+import domain.card.cardinfo.CardShape;
 import java.util.Arrays;
 
 public enum CardShapeMapper {

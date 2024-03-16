@@ -1,7 +1,7 @@
 package view;
 
-import domain.HitOption;
 import domain.gamer.Player;
+import domain.manager.HitOption;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;

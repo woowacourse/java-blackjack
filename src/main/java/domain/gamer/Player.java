@@ -1,8 +1,8 @@
 package domain.gamer;
 
-import domain.cards.Card;
-import domain.cards.CardPack;
-import domain.cards.Hand;
+import domain.card.Card;
+import domain.card.CardPack;
+import domain.card.Hand;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;

@@ -1,10 +1,8 @@
-package domain.result;
+package domain.manager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Profit;
-import domain.WinState;
-import domain.cards.Hand;
+import domain.card.Hand;
 import domain.gamer.Player;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;

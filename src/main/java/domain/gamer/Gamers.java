@@ -1,6 +1,6 @@
 package domain.gamer;
 
-import domain.cards.CardPack;
+import domain.card.CardPack;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

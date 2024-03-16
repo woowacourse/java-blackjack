@@ -1,7 +1,5 @@
-package domain.result;
+package domain.manager;
 
-import domain.Profit;
-import domain.WinState;
 import domain.gamer.Player;
 import java.util.Collections;
 import java.util.LinkedHashMap;

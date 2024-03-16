@@ -1,12 +1,11 @@
-package domain.result;
+package domain.manager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Profit;
-import domain.cards.Card;
-import domain.cards.Hand;
-import domain.cards.cardinfo.CardNumber;
-import domain.cards.cardinfo.CardShape;
+import domain.card.Card;
+import domain.card.Hand;
+import domain.card.cardinfo.CardNumber;
+import domain.card.cardinfo.CardShape;
 import domain.gamer.Dealer;
 import domain.gamer.Gamers;
 import domain.gamer.Player;
