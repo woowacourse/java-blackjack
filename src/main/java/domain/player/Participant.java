@@ -6,7 +6,7 @@ import domain.state.State;
 import java.util.Collections;
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
 
     private State state;
 

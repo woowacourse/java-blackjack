@@ -19,7 +19,7 @@ public final class Player extends Participant {
     }
 
     public double calculateProfit(final Dealer dealer) {
-        final Profit profit = new Profit(getState().earningRate(), betAmount.getValue());
+        final Profit profit = new Profit(getState().earningRate(), betAmount.value());
         if (compareHandsWith(dealer) == Result.WIN) {
             return profit.win();
         }
@@ -38,14 +38,14 @@ public final class Player extends Participant {
             final DecisionOfPlayer decisionOfPlayer,
             final ActionAfterPlayerHit actionAfterPlayerHit
     ) {
-        final boolean decisionToStop = !decisionOfPlayer.apply(name.getValue());
+        final boolean decisionToStop = !decisionOfPlayer.apply(name.value());
         if (decisionToStop || getState().isFinished()) {
             finish();
             return;
         }
 
         hit(dealer);
-        actionAfterPlayerHit.accept(name.getValue(), getHands().stream().map(Card::toCardResponse).toList());
+        actionAfterPlayerHit.accept(name.value(), getHands().stream().map(Card::toCardResponse).toList());
 
         automaticHit(dealer, decisionOfPlayer, actionAfterPlayerHit);
     }
@@ -59,7 +59,7 @@ public final class Player extends Participant {
     }
 
     public String getName() {
-        return name.getValue();
+        return name.value();
     }
 
     @Override
