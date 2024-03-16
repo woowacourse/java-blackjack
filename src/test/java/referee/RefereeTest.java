@@ -3,7 +3,6 @@ package referee;
 import card.Card;
 import card.CardNumber;
 import card.CardPattern;
-import participant.dealer.Dealer;
 import gameResult.GameResult;
 import gameResult.PlayerBlackJack;
 import gameResult.PlayerBust;
@@ -16,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import participant.dealer.Dealer;
 import participant.player.Player;
 
 public class RefereeTest {
@@ -132,6 +132,20 @@ public class RefereeTest {
 
             Assertions.assertThat(result)
                     .isInstanceOf(PlayerPush.class);
+        }
+
+        @DisplayName("딜러가 버스트인 경우 플레이어의 점수가 딜러보다 낮아도 우승이다")
+        @Test
+        void dealerIsBust() {
+            Dealer dealer = new Dealer(List.of(new Card(CardNumber.JACK, CardPattern.CLOVER_PATTERN),
+                    new Card(CardNumber.NINE, CardPattern.HEART_PATTERN),
+                    new Card(CardNumber.JACK, CardPattern.HEART_PATTERN)));
+
+            Referee referee = new Referee();
+            GameResult result = referee.judge(player, dealer);
+
+            Assertions.assertThat(result)
+                    .isInstanceOf(PlayerWin.class);
         }
     }
 }

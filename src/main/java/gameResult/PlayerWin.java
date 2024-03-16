@@ -10,11 +10,19 @@ public class PlayerWin implements GameResult {
 
     @Override
     public boolean isCorrespondentResult(Player player, Dealer dealer) {
-        return player.getCardScore() > dealer.getCardScore();
+        return isDealerBust(dealer) || isPlayerScoreOverDealerScore(player, dealer);
     }
 
     @Override
     public int profitMoney(BetMoney betMoney) {
         return betMoney.betMoneyResult(MONEY_RETURN_PERCENT);
+    }
+
+    private boolean isDealerBust(Dealer dealer) {
+        return dealer.isBust();
+    }
+
+    private boolean isPlayerScoreOverDealerScore(Player player, Dealer dealer) {
+        return player.getCardScore() > dealer.getCardScore();
     }
 }
