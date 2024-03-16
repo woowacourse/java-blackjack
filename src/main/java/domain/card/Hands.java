@@ -1,10 +1,11 @@
 package domain.card;
 
+import static domain.Blackjack.PERFECT_SCORE;
+
 import java.util.List;
 
 public class Hands {
     private static final int ACE_HIGH = 11;
-    static final int PERFECT_SCORE = 21;
 
     private final List<Card> value;
 

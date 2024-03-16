@@ -24,11 +24,6 @@ public class Deck {
         this.value = value;
     }
 
-    public static Deck makeEmptyDeck() {
-        return new Deck(new ArrayList<>());
-    }
-
-
     public static Deck makeDecks() {
         final List<Card> cards = new ArrayList<>();
         IntStream.range(0, DECK_SIZE).forEach(round -> cards.addAll(DEFAULT_PACK));
@@ -37,16 +32,23 @@ public class Deck {
     }
 
     public Card draw() {
+        validateEmptiness();
+        return value.remove(getLastIndex());
+    }
+
+    private void validateEmptiness() {
         if (value.isEmpty()) {
             throw new IllegalStateException("카드가 모두 소진되어 더이상 카드를 뽑을 수 없습니다");
         }
-        return value.remove(value.size() - 1);
+    }
+
+    private int getLastIndex() {
+        return value.size() - 1;
     }
 
     public void add(final Card card) {
         value.add(card);
     }
-
 
     public List<Card> getValue() {
         return Collections.unmodifiableList(value);

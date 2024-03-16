@@ -25,7 +25,7 @@ class DeckTest {
     }
 
     @Test
-    @DisplayName("정해진 수 이상의 카드를 뽑을 경우 예외를 발생한다.")
+    @DisplayName("정해진 수 이상의 카드를 뽑을 경우 예외가 발생한다.")
     void handsSize() {
         final Deck deck = Deck.makeDecks();
 
@@ -33,6 +33,8 @@ class DeckTest {
             deck.draw();
         }
 
-        Assertions.assertThatCode(deck::draw).isInstanceOf(IllegalStateException.class);
+        Assertions.assertThatThrownBy(deck::draw)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("카드가 모두 소진되어 더이상 카드를 뽑을 수 없습니다");
     }
 }

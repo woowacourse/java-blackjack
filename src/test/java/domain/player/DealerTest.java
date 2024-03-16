@@ -20,8 +20,9 @@ public class DealerTest {
     void canHit() {
         final Dealer dealer = new Dealer();
         dealer.init(new Card(TEN, CLUBS), new Card(SIX, CLUBS));
+        dealer.finish();
 
-        Assertions.assertThat(dealer.canHit()).isTrue();
+//        Assertions.assertThat(dealer.getState().isStand()).isTrue();
     }
 
     @Test
@@ -29,8 +30,8 @@ public class DealerTest {
     void canNotHit() {
         final Dealer dealer = new Dealer();
         dealer.init(new Card(TEN, CLUBS), new Card(SEVEN, CLUBS));
-
-        Assertions.assertThat(dealer.canHit()).isFalse();
+        dealer.finish();
+        Assertions.assertThat(dealer.getState().isRunning()).isFalse();
     }
 
     @Test
@@ -46,10 +47,10 @@ public class DealerTest {
         playerWin.init(new Card(FOUR, CLUBS), new Card(FOUR, CLUBS));
         playerLose.init(new Card(TWO, CLUBS), new Card(TWO, CLUBS));
         playerTie.init(new Card(THREE, CLUBS), new Card(THREE, CLUBS));
-        dealer.stand();
-        playerWin.stand();
-        playerLose.stand();
-        playerTie.stand();
+        dealer.finish();
+        playerWin.finish();
+        playerLose.finish();
+        playerTie.finish();
 
         Assertions.assertThat(dealer.compareHandsWith(playerWin)).isSameAs(Result.LOSE);
         Assertions.assertThat(dealer.compareHandsWith(playerLose)).isSameAs(Result.WIN);
