@@ -25,27 +25,27 @@ public class BlackjackController {
     }
 
     void run() {
-        final List<Name> names = inputView.askPlayerNames();
+        final List<Name> playerNames = inputView.askPlayerNames();
+        final List<Player> players = createPlayers(playerNames);
+        final BetDetails betting = readPlayersBettingMoney(playerNames);
         final Dealer dealer = new Dealer();
-        final List<Player> players = names.stream().map(Player::new).toList();
         final CardDeck deck = CardDeck.createShuffledDeck();
 
-        final BetDetails playersBetDetails = getPlayersBettingMoney(names);
         initializeHand(deck, dealer, players);
-        outputView.printInitialHandOfEachPlayer(dealer, players);
-
-        for (final Player player : players) {
-            givePlayerMoreCardsIfWanted(deck, player);
-        }
-        giveDealerMoreCardsIfNeeded(deck, dealer);
-
-        printHandStatusOfEachPlayer(dealer, players);
+        giveMoreCards(deck, players, dealer);
+        printHandsOfEachParticipant(dealer, players);
         final CardGameResult result = CardGameResult.of(dealer, players);
-        ProfitDetails profits = playersBetDetails.calculateProfit(result);
-        printProfit(profits);
+        final ProfitDetails profits = betting.calculateProfit(result);
+        printProfitOfEachParticipant(profits);
     }
 
-    private BetDetails getPlayersBettingMoney(final List<Name> playerNames) {
+    private List<Player> createPlayers(final List<Name> playerNames) {
+        return playerNames.stream()
+                .map(Player::new)
+                .toList();
+    }
+
+    private BetDetails readPlayersBettingMoney(final List<Name> playerNames) {
         return playerNames.stream()
                 .collect(
                         Collectors.collectingAndThen(
@@ -62,6 +62,14 @@ public class BlackjackController {
         for (final Participant player : players) {
             deck.giveInitialCards(player);
         }
+        outputView.printInitialHandOfEachPlayer(dealer, players);
+    }
+
+    private void giveMoreCards(final CardDeck deck, final List<Player> players, final Dealer dealer) {
+        for (Player player : players) {
+            givePlayerMoreCardsIfWanted(deck, player);
+        }
+        giveDealerMoreCardsIfNeeded(deck, dealer);
     }
 
     private void givePlayerMoreCardsIfWanted(final CardDeck deck, final Player player) {
@@ -78,14 +86,14 @@ public class BlackjackController {
         }
     }
 
-    private void printHandStatusOfEachPlayer(final Dealer dealer, final List<Player> players) {
+    private void printHandsOfEachParticipant(final Dealer dealer, final List<Player> players) {
         outputView.printParticipantCardWithScore(dealer);
         for (final Player player : players) {
             outputView.printParticipantCardWithScore(player);
         }
     }
 
-    private void printProfit(final ProfitDetails profits) {
+    private void printProfitOfEachParticipant(final ProfitDetails profits) {
         outputView.printPlayerProfit(profits);
     }
 }
