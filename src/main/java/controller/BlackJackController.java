@@ -27,13 +27,13 @@ public class BlackJackController {
     public void run() {
         CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer(cardDeck.firstCardSettings());
-        Players players = playersBetting(cardDeck);
+        Players players = readyPlayers(cardDeck);
 
         runBlackJackGame(players, cardDeck, dealer);
         showResult(players, dealer);
     }
 
-    private Players playersBetting(CardDeck cardDeck) {
+    private Players readyPlayers(CardDeck cardDeck) {
         List<Player> players = startBetting(inputView.inputPlayerNames(), cardDeck);
         return new Players(players);
     }
