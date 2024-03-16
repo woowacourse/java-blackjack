@@ -16,14 +16,6 @@ public class Card {
         this(new CardProperties(cardPattern, cardNumber));
     }
 
-    public CardPattern pattern() {
-        return cardProperties.getCardPattern();
-    }
-
-    public CardNumber number() {
-        return cardProperties.getCardNumber();
-    }
-
     public boolean isElevenAce() {
         return score.getScore() == 11 && cardProperties.getCardNumber() == CardNumber.ACE;
     }
@@ -49,6 +41,14 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(cardProperties, score.getScore());
+    }
+
+    public CardPattern getPattern() {
+        return cardProperties.getCardPattern();
+    }
+
+    public CardNumber getNumber() {
+        return cardProperties.getCardNumber();
     }
 
     public int getScore() {

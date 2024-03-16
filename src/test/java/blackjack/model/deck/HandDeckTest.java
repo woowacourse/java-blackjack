@@ -29,7 +29,7 @@ class HandDeckTest {
 
         //when
         handDeck.add(card);
-        List<Card> cards = handDeck.cards();
+        List<Card> cards = handDeck.getCards();
 
         //then
         assertThat(cards).containsExactly(card);

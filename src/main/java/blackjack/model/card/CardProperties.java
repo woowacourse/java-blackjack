@@ -12,14 +12,6 @@ public class CardProperties {
         this.cardNumber = cardNumber;
     }
 
-    public CardNumber getCardNumber() {
-        return cardNumber;
-    }
-
-    public CardPattern getCardPattern() {
-        return cardPattern;
-    }
-
     @Override
     public boolean equals(Object object) {
         if (this == object) {
@@ -35,5 +27,13 @@ public class CardProperties {
     @Override
     public int hashCode() {
         return Objects.hash(cardPattern, cardNumber);
+    }
+
+    public CardNumber getCardNumber() {
+        return cardNumber;
+    }
+
+    public CardPattern getCardPattern() {
+        return cardPattern;
     }
 }

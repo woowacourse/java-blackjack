@@ -20,8 +20,8 @@ class CardTest {
 
         //then
         assertAll(
-                () -> assertThat(card.pattern()).isEqualTo(cardPattern),
-                () -> assertThat(card.number()).isEqualTo(cardNumber)
+                () -> assertThat(card.getPattern()).isEqualTo(cardPattern),
+                () -> assertThat(card.getNumber()).isEqualTo(cardNumber)
         );
     }
 

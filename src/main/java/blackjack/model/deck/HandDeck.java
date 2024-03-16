@@ -13,6 +13,10 @@ public class HandDeck {
         cards.add(card);
     }
 
+    public int size() {
+        return cards.size();
+    }
+
     public int calculateCardScore() {
         return cards.stream()
                 .mapToInt(Card::getScore)
@@ -32,20 +36,16 @@ public class HandDeck {
                 .ifPresent(Card::switchAceValue);
     }
 
-    public int size() {
-        return cards.size();
-    }
-
-    public List<Card> cards() {
-        return new ArrayList<>(cards);
-    }
-
     private void validateDuplicatedCard(Card card) {
         if (cards.contains(card)) {
-            String cardNumber = card.number().getName();
-            String cardPattern = card.pattern().getName();
+            String cardNumber = card.getNumber().getName();
+            String cardPattern = card.getPattern().getName();
             String errorMessage = String.format("[ERROR] 중복된 카드는 받을 수 없습니다.(중복된 카드 : %s%s)", cardNumber, cardPattern);
             throw new IllegalArgumentException(errorMessage);
         }
+    }
+
+    public List<Card> getCards() {
+        return new ArrayList<>(cards);
     }
 }

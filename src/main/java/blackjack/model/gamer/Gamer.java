@@ -16,13 +16,13 @@ public abstract class Gamer {
         handDeck.add(card);
     }
 
+    public final int deckSize() {
+        return handDeck.size();
+    }
+
     public final Score calculateScore() {
         cardScoring();
         return new Score(handDeck.calculateCardScore());
-    }
-
-    public final int deckSize() {
-        return handDeck.size();
     }
 
     private void cardScoring() {
@@ -35,6 +35,6 @@ public abstract class Gamer {
     }
 
     public final List<Card> getCards() {
-        return handDeck.cards();
+        return handDeck.getCards();
     }
 }

@@ -60,8 +60,8 @@ public class DtoGenerator {
     }
 
     private static CardDto createCardDto(Card card) {
-        String cardNumber = card.number().getName();
-        String cardPattern = card.pattern().getName();
+        String cardNumber = card.getNumber().getName();
+        String cardPattern = card.getPattern().getName();
         return new CardDto(cardNumber, cardPattern);
     }
 
