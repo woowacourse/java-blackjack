@@ -4,10 +4,16 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 
 public enum GameResult {
-    WIN,
-    PUSH,
-    LOSE,
-    BLACKJACK;
+    WIN(1.0),
+    PUSH(0.0),
+    LOSE(-1.0),
+    BLACKJACK(1.5);
+
+    private final double profitRate;
+
+    GameResult(final double profitRate) {
+        this.profitRate = profitRate;
+    }
 
     public static GameResult doesPlayerWin(final Dealer dealer, final Player player) {
         if (player.isBlackjack() && dealer.isBlackjack()) {
@@ -29,5 +35,9 @@ public enum GameResult {
             return GameResult.WIN;
         }
         return GameResult.LOSE;
+    }
+
+    public double getProfitRate() {
+        return profitRate;
     }
 }

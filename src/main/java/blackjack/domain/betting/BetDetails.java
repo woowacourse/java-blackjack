@@ -19,7 +19,7 @@ public class BetDetails {
     public ProfitDetails calculateProfit(final Dealer dealer, final List<Player> players) {
         final Map<Name, Profit> profitDetails = new LinkedHashMap<>();
 
-        for (Player player : players) {
+        for (final Player player : players) {
             final Name name = player.name();
             final GameResult result = GameResult.doesPlayerWin(dealer, player);
             final Profit profit = Profit.of(findBettingMoney(name), result);
