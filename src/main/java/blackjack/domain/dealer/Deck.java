@@ -21,7 +21,7 @@ public class Deck {
         this.cards = new LinkedList<>(cards);
     }
 
-    public Deck generate() {
+    public static Deck create() {
         final List<CardNumber> numbers = Arrays.asList(CardNumber.values());
 
         Set<Card> cards = Arrays.stream(CardShape.values())
@@ -33,16 +33,6 @@ public class Deck {
 
     public static Deck empty() {
         return new Deck(new HashSet<>());
-    }
-
-    public static Deck create() {
-        final List<CardNumber> numbers = Arrays.asList(CardNumber.values());
-
-        Set<Card> cards = Arrays.stream(CardShape.values())
-                .flatMap(shape -> numbers.stream().map(number -> new Card(number, shape)))
-                .collect(toCollection(LinkedHashSet::new));
-
-        return new Deck(cards);
     }
 
     public void shuffle() {

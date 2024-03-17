@@ -61,10 +61,9 @@ public class BlackjackController {
     private BlackjackGame readyGame(final Players players) {
         try {
             final BlackjackGame blackjackGame = new BlackjackGame(players);
+            blackjackGame.initCard();
             blackjackGame.divideCard();
-            final List<ParticipantCardsDto> participantCardsDtos = blackjackGame.getStartCards();
-
-            outputView.printStartCards(participantCardsDtos);
+            outputView.printStartCards(blackjackGame.getStartCards());
             return blackjackGame;
         } catch (final IllegalArgumentException e) {
             outputView.printError(e.getMessage());

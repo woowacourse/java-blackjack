@@ -28,9 +28,12 @@ public class BlackjackGame {
         this.deck = deck;
     }
 
-    public void divideCard() {
-        deck = deck.generate();
+    public void initCard() {
+        deck = Deck.create();
         deck.shuffle();
+    }
+
+    public void divideCard() {
         participants.addStartCards(deck);
     }
 
