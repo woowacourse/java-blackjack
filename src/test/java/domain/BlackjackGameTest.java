@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import vo.BettingMoney;
 import vo.Profit;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,12 +64,13 @@ class BlackjackGameTest {
         Player tobi = Player.register(new Name("tobi"), new BettingMoney(3000));
         Player pobi = Player.register(new Name("pobi"), new BettingMoney(10000));
         Player zeus = Player.register(new Name("zeus"), new BettingMoney(7000));
-        Map<Participant, Profit> expected = Map.of(
-                dealer, new Profit(7500),
-                hotea, new Profit(-5000),
-                tobi, new Profit(4500),
-                pobi, new Profit(0),
-                zeus, new Profit(-7000));
+        Map<Participant, Profit> expected = new LinkedHashMap<>();
+        expected.put(dealer, new Profit(7500));
+        expected.put(hotea, new Profit(-5000));
+        expected.put(tobi, new Profit(4500));
+        expected.put(pobi, new Profit(0));
+        expected.put(zeus, new Profit(-7000));
+
         BlackjackGame blackjackGame = new BlackjackGame(dealer, new Players(List.of(hotea, tobi, pobi, zeus)));
         blackjackGame.prepare();
         assertThat(blackjackGame.resultsOfParticipants().getResult()).isEqualTo(expected);
