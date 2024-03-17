@@ -4,9 +4,7 @@ import domain.card.Card;
 import domain.deck.TotalDeck;
 import domain.game.Result;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static domain.game.Result.LOSE;
@@ -28,11 +26,11 @@ public class Users {
     }
 
     private void validateDuplicatedName(List<Player> players) {
-        long count = players.stream()
-                .map(User::getName)
-                .distinct()
-                .count();
-        if (players.size() != count) {
+        Set<String> distinctName = new HashSet<>();
+        for (Player player : players) {
+            distinctName.add(player.getName());
+        }
+        if (players.size() != distinctName.size()) {
             throw new IllegalArgumentException("중복된 이름은 허용하지 않습니다.");
         }
     }
