@@ -1,5 +1,7 @@
 package blackjack.model.cards;
 
+import java.util.Random;
+
 public enum CardNumber {
     ACE(1),
     TWO(2),
@@ -15,10 +17,17 @@ public enum CardNumber {
     QUEEN(10),
     KING(10);
 
+    private static final Random random = new Random();
+
     private final int score;
 
     CardNumber(int score) {
         this.score = score;
+    }
+
+    public static CardNumber generate() {
+        CardNumber[] cardNumbers = values();
+        return cardNumbers[random.nextInt(cardNumbers.length)];
     }
 
     public boolean isAce() {

@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.model.cards.Card;
+import blackjack.model.cards.CardNumber;
+import blackjack.model.cards.CardShape;
 import blackjack.model.cards.Cards;
-import blackjack.model.deck.DeckGenerator;
-import blackjack.model.deck.DeckManager;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
 import java.util.List;
@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 class BlackJackGameTest {
 
-    @DisplayName("카드 두장을 지급한다.")
+    @DisplayName("카드 두장을 지급한다")
     @Test
     void distributeCards() {
         Dealer dealer = new Dealer();
@@ -23,8 +23,7 @@ class BlackJackGameTest {
                 new Player("daon"),
                 new Player("ella")
         );
-        DeckGenerator deckGenerator = new DeckGenerator();
-        BlackJackGame blackJackGame = new BlackJackGame(dealer, players, new DeckManager(deckGenerator.generate()));
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, players);
 
         blackJackGame.distributeCards();
         List<Card> dealerCards = dealer.getCards().getCards();
@@ -44,19 +43,17 @@ class BlackJackGameTest {
     @Test
     void update() {
         Dealer dealer = new Dealer();
-        Player player = new Player("daon");
-        List<Player> players = List.of(
-                player,
-                new Player("ella")
-        );
-        DeckGenerator deckGenerator = new DeckGenerator();
-        BlackJackGame blackJackGame = new BlackJackGame(dealer, players, new DeckManager(deckGenerator.generate()));
+        List<Player> players = List.of(new Player("daon"));
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, players);
+
+        Player findPlayer = blackJackGame.getPlayers().get(0);
+        List<Card> initialCards = List.of(
+                new Card(CardNumber.TWO, CardShape.SPADE),
+                new Card(CardNumber.THREE, CardShape.CLOVER));
+        findPlayer.addCards(initialCards);
 
         blackJackGame.update(0);
-        Player findPlayer = blackJackGame.getPlayers().get(0);
 
-        assertThat(findPlayer.getCards().getCards()).hasSize(1);
+        assertThat(findPlayer.getCards().getCards()).hasSize(3);
     }
 }
-
-

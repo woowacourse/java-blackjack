@@ -1,11 +1,11 @@
 package blackjack.model.blackjackgame;
 
-import blackjack.model.deck.DeckManager;
+import blackjack.model.deck.CardDeck;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Player;
-import blackjack.model.results.DealerResult;
-import blackjack.model.results.PlayerResult;
+import blackjack.model.results.PlayerProfits;
 import blackjack.model.results.Result;
+import blackjack.vo.Money;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -14,22 +14,20 @@ import java.util.Map;
 public class BlackJackGame {
     private final Dealer dealer;
     private final List<Player> players;
-    private final DeckManager deckManager;
 
-    public BlackJackGame(Dealer dealer, List<Player> players, DeckManager deckManager) {
+    public BlackJackGame(Dealer dealer, List<Player> players) {
         this.dealer = dealer;
-        this.deckManager = deckManager;
         this.players = new ArrayList<>(players);
     }
 
     public void distributeCards() {
-        dealer.addCards(deckManager.drawCards());
-        players.forEach(player -> player.addCards(deckManager.drawCards()));
+        dealer.addCards(CardDeck.drawCards());
+        players.forEach(player -> player.addCards(CardDeck.drawCards()));
     }
 
     public void update(int index) {
         Player player = players.get(index);
-        player.addCard(deckManager.drawCard());
+        player.addCard(CardDeck.drawCard());
     }
 
     public boolean checkDealerState() {
@@ -37,17 +35,24 @@ public class BlackJackGame {
     }
 
     public void updateDealer() {
-        dealer.addCard(deckManager.drawCard());
+        dealer.addCard(CardDeck.drawCard());
     }
 
-    public PlayerResult calculatePlayerResults() {
-        Map<Player, Result> result = new LinkedHashMap<>();
-        players.forEach(player -> result.put(player, player.getResult(dealer.getCards())));
-        return new PlayerResult(result);
+    public PlayerProfits calculatePlayerProfits() {
+        Map<Player, Money> profits = new LinkedHashMap<>();
+        players.forEach(player -> {
+            Result result = player.evaluateResult(dealer.getState());
+            profits.put(player, player.calculateProfit(result));
+        });
+        return new PlayerProfits(profits);
     }
 
-    public DealerResult calculateDealerResults(PlayerResult playerResult) {
-        return new DealerResult(playerResult);
+    public Money calculateDealerProfit(PlayerProfits playerProfits) {
+        return dealer.calculateDealerProfit(playerProfits);
+    }
+
+    public void finishTurn(Player player) {
+        player.finishTurn();
     }
 
     public Dealer getDealer() {

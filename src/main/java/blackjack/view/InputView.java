@@ -1,12 +1,14 @@
 package blackjack.view;
 
 import blackjack.model.participants.Player;
+import blackjack.vo.Money;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.function.Supplier;
 
 public class InputView {
+    private static final int BET_AMOUNT_UNIT = 1000;
     private static final String MESSAGE_HEADER = "[ERROR] ";
     private static final String INPUT_DELIMITER = ",";
 
@@ -34,6 +36,26 @@ public class InputView {
         System.out.println(message);
         String input = scanner.nextLine();
         return Command.generate(input);
+    }
+
+    public Money readBetAmount(Player player) {
+        return repeatUntilSuccess(() -> getBetAmount(player));
+    }
+
+    private Money getBetAmount(Player player) {
+        String message = String.format("%s의 배팅 금액은?", player.getName());
+        System.out.println(message);
+        String input = scanner.nextLine();
+        int betAmount = convertToInteger(input);
+        return Money.fromInput(betAmount);
+    }
+
+    private int convertToInteger(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("베팅 금액은 숫자이어야한다");
+        }
     }
 
     private void validateMultipleInputs(String input) {

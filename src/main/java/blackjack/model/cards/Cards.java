@@ -1,35 +1,44 @@
 package blackjack.model.cards;
 
+import blackjack.vo.Score;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
-    private static final int BOUNDARY_SCORE = 11;
-    private static final int EXTRA_SCORE = 10;
-    private static final int WINNING_SCORE = 21;
+    public static final int INITIAL_CARD_SIZE = 2;
 
-    private final List<Card> cards = new ArrayList<>();
-    private int score = 0;
+    private final List<Card> cards;
+    private Score score = new Score();
+
+    public Cards() {
+        this(new ArrayList<>());
+    }
+
+    public Cards(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
+        updateCardsScore();
+    }
 
     public void add(Card card) {
         cards.add(card);
         updateCardsScore();
     }
 
-    public void add(List<Card> cardsToAdd) {
-        cards.addAll(cardsToAdd);
-        updateCardsScore();
+    public boolean isBust() {
+        return score.isBust();
     }
 
-    public boolean isBust() {
-        return score > WINNING_SCORE;
+    public boolean isBlackJack() {
+        return cards.size() == INITIAL_CARD_SIZE && score.isBlackJack();
     }
 
     private void updateCardsScore() {
-        score = calculate(cards);
-        if (hasAce() && score <= BOUNDARY_SCORE) {
-            score += EXTRA_SCORE;
+        int calculatedScore = calculateScore(cards);
+        Score updatedScore = new Score(calculatedScore);
+        if (hasAce() && updatedScore.lessThanWinningScoreWithExtraScore()) {
+            updatedScore = Score.withExtraScore(calculatedScore);
         }
+        score = updatedScore;
     }
 
     private boolean hasAce() {
@@ -37,17 +46,17 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
-    private int calculate(List<Card> cardsToAdd) {
-        return cardsToAdd.stream()
+    private int calculateScore(List<Card> cards) {
+        return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
     }
 
-    public int getScore() {
-        return score;
-    }
-
     public List<Card> getCards() {
         return cards;
+    }
+
+    public int getScoreValue() {
+        return score.value();
     }
 }

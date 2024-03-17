@@ -1,51 +1,36 @@
 package blackjack.model.participants;
 
-import blackjack.model.cards.Cards;
 import blackjack.model.results.Result;
+import blackjack.model.state.State;
+import blackjack.vo.Money;
+import blackjack.vo.Name;
 
 public class Player extends Participant {
-    private final String name;
+    private final Name name;
+    private Money betAmount = new Money();
 
     public Player(String name) {
-        validateName(name);
-        this.name = name;
+        this.name = new Name(name);
     }
 
     @Override
     public boolean canHit() {
-        return !cards.isBust();
+        return getState().isHit();
     }
 
-    public Result getResult(Cards otherCards) {
-        if (cards.isBust()) {
-            return Result.LOSE;
-        }
-        if (otherCards.isBust()) {
-            return Result.WIN;
-        }
-        return compareScore(otherCards);
+    public void betMoney(Money betMoney) {
+        betAmount = betMoney;
     }
 
-    private void validateName(String name) {
-        if (name.isBlank()) {
-            throw new IllegalArgumentException("이름은 공백일 수 없습니다.");
-        }
+    public Money calculateProfit(Result result) {
+        return result.calculateProfit(betAmount);
     }
 
-    private Result compareScore(Cards otherCards) {
-        int calculatedScore = cards.getScore();
-        int otherScore = otherCards.getScore();
-
-        if (calculatedScore > otherScore) {
-            return Result.WIN;
-        }
-        if (calculatedScore < otherScore) {
-            return Result.LOSE;
-        }
-        return Result.PUSH;
+    public Result evaluateResult(State otherState) {
+        return getState().determineResult(otherState);
     }
 
     public String getName() {
-        return name;
+        return name.value();
     }
 }

@@ -7,7 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class CardTest {
-    @DisplayName("카드가 Ace인지 판별한다.")
+    @DisplayName("카드가 Ace인지 판별한다")
     @ParameterizedTest
     @CsvSource(value = {"ACE,true", "TWO,false", "THREE,false"})
     void isAce(CardNumber given, boolean expected) {
