@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,8 +24,8 @@ public class CardDeck {
     }
 
     private static List<Card> createFullCardDeck() {
-        List<CardRank> cardRanks = CardRank.allCardRanks();
-        List<CardSuit> cardSuits = CardSuit.allCardSuits();
+        List<CardRank> cardRanks = Arrays.asList(CardRank.values());
+        List<CardSuit> cardSuits = Arrays.asList(CardSuit.values());
 
         return cardRanks.stream()
                 .flatMap(rank -> generateCards(rank, cardSuits))

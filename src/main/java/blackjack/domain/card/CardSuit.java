@@ -1,8 +1,5 @@
 package blackjack.domain.card;
 
-import java.util.Arrays;
-import java.util.List;
-
 public enum CardSuit {
 
     HEART,
@@ -12,9 +9,5 @@ public enum CardSuit {
     ;
 
     CardSuit() {
-    }
-
-    public static List<CardSuit> allCardSuits() {
-        return Arrays.asList(values());
     }
 }
