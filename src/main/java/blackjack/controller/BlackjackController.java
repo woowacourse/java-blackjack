@@ -123,7 +123,6 @@ public class BlackjackController {
 
         final PlayerBettings bettingResults = playerBettings.applyWinStatus(blackjackGame.getWinningResult());
         final DealerBetting dealerBetting = DealerBetting.of(bettingResults, blackjackGame.getDealer());
-//        final DealerBetting dealerBetting = playerBettings.getDealerResult(blackjackGame.getWinningResult());
         final BettingResultDtos bettingResultDtos = BettingResultDtos.of(bettingResults, dealerBetting);
 
         outputView.printFinalResult(participantScoresDto, bettingResultDtos);
