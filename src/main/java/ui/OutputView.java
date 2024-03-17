@@ -9,14 +9,16 @@ import domain.participant.Player;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    private static final int DEALER_INITIAL_CARD_PRINT_COUNT = 1;
+
     public void printInitialCards(Participants participants) {
         Dealer dealer = participants.getDealer();
         String playerNames = String.join(", ", participants.getPlayerNames());
         System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), playerNames);
 
-        System.out.println(formatCardsMessage(dealer, 1));
+        System.out.println(formatCardsMessage(dealer, DEALER_INITIAL_CARD_PRINT_COUNT));
         for (Player player : participants.getPlayers()) {
-            printAllCards(player);
+            System.out.println(formatCardsMessage(player));
         }
         System.out.println();
     }

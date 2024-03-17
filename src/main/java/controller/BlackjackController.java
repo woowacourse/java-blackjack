@@ -61,10 +61,14 @@ public class BlackjackController {
     }
 
     private void dealToPlayer(Player player, BlackjackGame blackjackGame) {
-        while (player.isNotFinished() && repeatUntilSuccess(() -> inputView.askForMoreCard(player.getName()))) {
+        while (player.isNotFinished() && isNecessaryMoreCard(player)) {
             blackjackGame.dealCardTo(player);
             outputView.printAllCards(player);
         }
+    }
+
+    private boolean isNecessaryMoreCard(Player player) {
+        return repeatUntilSuccess(() -> inputView.askForMoreCard(player.getName()));
     }
 
     private void dealToDealer(Dealer dealer, BlackjackGame blackjackGame) {
