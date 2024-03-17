@@ -3,7 +3,7 @@ package domain.card;
 import static domain.BlackjackGame.BLACKJACK_SCORE;
 
 public class Hand {
-    private static final int ACE_AS_ELEVEN = 10;
+    private static final int DIFFERENCE_SCORE_TREATING_ACE_ELEVEN = 10;
     private final Cards cards;
 
     public Hand() {
@@ -29,13 +29,13 @@ public class Hand {
     public int score() {
         int total = cards.sum();
         if (hasAceAsEleven(total)) {
-            return total + ACE_AS_ELEVEN;
+            return total + DIFFERENCE_SCORE_TREATING_ACE_ELEVEN;
         }
         return total;
     }
 
     private boolean hasAceAsEleven(final int total) {
-        return cards.hasAce() && total + ACE_AS_ELEVEN <= BLACKJACK_SCORE;
+        return cards.hasAce() && total + DIFFERENCE_SCORE_TREATING_ACE_ELEVEN <= BLACKJACK_SCORE;
     }
 
     public Cards getCards() {
