@@ -1,7 +1,7 @@
 package view;
 
 import card.Card;
-import card.Cards;
+import card.Hand;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -33,13 +33,13 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printPlayerCardStatus(Name playerName, Cards playerCards) {
-        System.out.println(makeCardsStatus(playerName, playerCards));
+    public void printPlayerCardStatus(Name playerName, Hand playerHand) {
+        System.out.println(makeCardsStatus(playerName, playerHand));
     }
 
-    public void printExtraCardInfo(Cards dealerCards, Name dealerName) {
+    public void printExtraCardInfo(Hand dealerHand, Name dealerName) {
         System.out.println();
-        for (int i = 2; i <= dealerCards.countCard(); i++) {
+        for (int i = 2; i <= dealerHand.countCard(); i++) {
             System.out.println(dealerName.getValue() + "가 " + MIN_DEALER_SCORE + "이하라 한장의 카드를 더 받았습니다.\n");
         }
     }
@@ -62,12 +62,12 @@ public class OutputView {
                 .sum();
     }
 
-    public String formatCardsStatus(Cards cards) {
-        return String.join(",", cards.getCardsFeatures());
+    public String formatCardsStatus(Hand hand) {
+        return String.join(",", hand.getCardsFeatures());
     }
 
-    private String makeCardsStatus(Name name, Cards cards) {
-        return name.getValue() + CARD_SYMBOL + cards.getCardsFeatures();
+    private String makeCardsStatus(Name name, Hand hand) {
+        return name.getValue() + CARD_SYMBOL + hand.getCardsFeatures();
     }
 
     private String changeNameFormat(List<Name> names) {

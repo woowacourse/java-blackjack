@@ -2,7 +2,7 @@ package card;
 
 import java.util.List;
 
-public class Cards {
+public class Hand {
 
     private static final int ADDITIONAL_ACE_CARD_SCORE = CardNumber.calculatePlusAceCardScore();
     private static final int MAX_BLACK_JACK_SCORE = 21;
@@ -11,7 +11,7 @@ public class Cards {
 
     private final List<Card> cards;
 
-    public Cards(List<Card> cards) {
+    public Hand(List<Card> cards) {
         this.cards = cards;
     }
 

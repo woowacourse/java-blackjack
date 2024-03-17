@@ -1,7 +1,7 @@
 package participant.player;
 
 import card.Card;
-import card.Cards;
+import card.Hand;
 import java.util.List;
 
 public class Player {
@@ -22,7 +22,7 @@ public class Player {
         return name;
     }
 
-    public Cards getCards() {
+    public Hand getCards() {
         return gameElements.getCards();
     }
 

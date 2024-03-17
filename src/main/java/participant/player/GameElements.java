@@ -1,40 +1,40 @@
 package participant.player;
 
 import card.Card;
-import card.Cards;
+import card.Hand;
 import java.util.List;
 
 public class GameElements {
 
     private final BetMoney betMoney;
-    private final Cards cards;
+    private final Hand hand;
 
     public GameElements(List<Card> initCards, BetMoney betMoney) {
         this.betMoney = betMoney;
-        this.cards = new Cards(initCards);
+        this.hand = new Hand(initCards);
     }
 
     public BetMoney getBetMoney() {
         return betMoney;
     }
 
-    public Cards getCards() {
-        return cards;
+    public Hand getCards() {
+        return hand;
     }
 
     public boolean isBustCard() {
-        return cards.isBust();
+        return hand.isBust();
     }
 
     public void hit(Card card) {
-        cards.addCard(card);
+        hand.addCard(card);
     }
 
     public int getCardsScore() {
-        return cards.countMaxScore();
+        return hand.countMaxScore();
     }
 
     public boolean isBlackJackCard() {
-        return cards.isBlackJack();
+        return hand.isBlackJack();
     }
 }
