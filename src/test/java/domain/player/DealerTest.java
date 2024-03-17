@@ -28,9 +28,9 @@ public class DealerTest {
     @DisplayName("딜러는 플레이어의 핸드를 보고 승패무를 결정할 수 있다")
     void compare() {
         final Dealer dealer = new Dealer();
-        final Player playerWin = new Player(new Name("win"));
-        final Player playerLose = new Player(new Name("lose"));
-        final Player playerTie = new Player(new Name("tie"));
+        final Player playerWin = new Player(new Name("win"), new BetAmount(100));
+        final Player playerLose = new Player(new Name("lose"), new BetAmount(100));
+        final Player playerTie = new Player(new Name("tie"), new BetAmount(100));
 
         dealer.init(new Card(THREE, CLUBS), new Card(THREE, CLUBS));
 

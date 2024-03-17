@@ -16,7 +16,7 @@ class PlayersTest {
         final List<Player> players = new ArrayList<>();
 
         for (int i = 0; i < 9; i++) {
-            players.add(new Player(new Name("teba" + i)));
+            players.add(new Player(new Name("teba" + i), new BetAmount(100)));
         }
 
         assertThatThrownBy(() -> new Players(players))
@@ -29,8 +29,8 @@ class PlayersTest {
     void duplicateName() {
         final List<Player> players = new ArrayList<>();
 
-        players.add(new Player(new Name("teba")));
-        players.add(new Player(new Name("teba")));
+        players.add(new Player(new Name("teba"), new BetAmount(100)));
+        players.add(new Player(new Name("teba"), new BetAmount(100)));
 
         assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)

@@ -26,7 +26,7 @@ public class Blackjack {
 
     public static void init(final Players players, final Dealer dealer) {
         dealer.init(dealer.draw(), dealer.draw());
-        players.stream().forEach(r -> r.init(dealer.draw(), dealer.draw()));
+        players.stream().forEach(player -> player.init(dealer.draw(), dealer.draw()));
     }
 
     public static Blackjack of(final List<String> names, final List<Integer> betAmounts) {
@@ -38,7 +38,6 @@ public class Blackjack {
 
     public void playersHit(final DecisionOfPlayer decisionOfPlayer, final ActionAfterPlayerHit actionAfterPlayerHit) {
         players.stream().forEach(player -> player.automaticHit(dealer, decisionOfPlayer, actionAfterPlayerHit));
-
     }
 
     public void dealerHit(final ActionAfterDealerHit actionAfterDealerHit) {
@@ -51,10 +50,7 @@ public class Blackjack {
                 .collect(Collectors.toMap(Player::getName, player -> player.calculateProfit(dealer), (a, b) -> a,
                         LinkedHashMap::new));
 
-        final double dealerProfit = -1.0 * players.stream()
-                .map(player -> player.calculateProfit(dealer))
-                .mapToDouble(profit -> profit)
-                .sum();
+//        final double dealerProfit = -1.0 * players.getSum();
 
         return new GameResult(dealerProfit, playerResult);
     }

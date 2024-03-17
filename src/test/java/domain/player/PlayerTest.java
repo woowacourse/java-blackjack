@@ -14,7 +14,7 @@ public class PlayerTest {
     @DisplayName("플레이어는 카드의 합이 21미만일 때만 히트할 수 있다")
     @Test
     void canHit() {
-        final Player player = new Player(new Name("종이"));
+        final Player player = new Player(new Name("상냥한 찰리"), new BetAmount(100));
         player.init(new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.TEN, Suit.CLUBS));
         Assertions.assertThat(player.getState().isRunning()).isTrue();
     }
@@ -22,15 +22,15 @@ public class PlayerTest {
     @DisplayName("플레이어는 카드의 합이 21이상이면 히트할 수 없다")
     @Test
     void canNotHit() {
-        final Player player = new Player(new Name("종이"));
+        final Player player = new Player(new Name("지쳐버린 종이"), new BetAmount(100));
         player.init(new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.ACE, Suit.CLUBS));
         Assertions.assertThat(player.getState().isRunning()).isFalse();
     }
 
-    @DisplayName("플레이어가 블랙잭이 아니면서 이기면 배팅 금액만큼 얻는ㄴ다")
+    @DisplayName("플레이어가 블랙잭이 아니면서 이기면 배팅 금액만큼 얻는다")
     @Test
     void playerWinProfit() {
-        final Player player = new Player(new Name("종이"), new BetAmount(100));
+        final Player player = new Player(new Name("친절한 테바"), new BetAmount(100));
         final Dealer dealer = new Dealer();
 
         player.init(new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.TEN, Suit.CLUBS));
@@ -70,7 +70,7 @@ public class PlayerTest {
     @DisplayName("무승부라면 수익이 0원이다")
     @Test
     void profit() {
-        final Player player = new Player(new Name("종이"));
+        final Player player = new Player(new Name("종이"), new BetAmount(100));
         final Dealer dealer = new Dealer();
 
         player.init(new Card(Rank.TEN, Suit.CLUBS), new Card(Rank.ACE, Suit.CLUBS));

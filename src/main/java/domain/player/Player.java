@@ -8,11 +8,6 @@ public final class Player extends Participant {
     private final Name name;
     private final BetAmount betAmount;
 
-    public Player(final Name name) {
-        this.name = name;
-        betAmount = BetAmount.LOWEST;
-    }
-
     public Player(final Name name, final BetAmount betAmount) {
         this.name = name;
         this.betAmount = betAmount;
