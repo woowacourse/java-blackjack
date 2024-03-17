@@ -26,11 +26,16 @@ public class GameAccount {
     }
 
     public Money calculateDealerIncome() {
-        int dealerIncome = 0;
-        for (Money money : store.values()) {
-            dealerIncome += money.value();
+        Money money = calculatePlayersTotalProfit();
+        return money.negate();
+    }
+
+    private Money calculatePlayersTotalProfit() {
+        Money playersProfit = new Money();
+        for (Money playerBetMoney : store.values()) {
+            playersProfit = playersProfit.add(playerBetMoney);
         }
-        return new Money(-dealerIncome);
+        return playersProfit;
     }
 
     public Map<Player, Money> getStore() {
