@@ -14,8 +14,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static domain.Command.YES;
-import static domain.game.Result.LOSE;
-import static domain.game.Result.WIN;
 import static domain.game.State.*;
 
 public class Game {
@@ -53,11 +51,11 @@ public class Game {
 
     private Result generatePlayerResult(Player player) {
         Dealer dealer = users.getDealer();
-        if (player.isBust()) {
-            return LOSE;
+        if (player.isBlackjack() || dealer.isBlackjack()) {
+            return Result.blackjackCompare(player.isBlackjack(), dealer.isBlackjack());
         }
-        if (dealer.isBust()) {
-            return WIN;
+        if (player.isBust() || dealer.isBust()) {
+            return Result.bustCompare(player.isBust(), dealer.isBust());
         }
         return Result.compare(player.sumUserDeck(), dealer.sumUserDeck());
     }
