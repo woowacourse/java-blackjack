@@ -61,4 +61,8 @@ public class BlackjackGame {
     public ParticipantProfits calculateProfit(Players players, PlayerBets bets) {
         return ParticipantProfits.of(players, dealer, bets);
     }
+
+    public int dealerCardSize() {
+        return dealer.cardSize();
+    }
 }

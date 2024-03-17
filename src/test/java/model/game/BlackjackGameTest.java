@@ -45,4 +45,20 @@ class BlackjackGameTest {
             () -> assertThat(playerCard.getCards()).hasSize(3)
         );
     }
+
+    @DisplayName("최초 딜러의 카드 합이 16점 이하이면 카드 1장을 지급")
+    @Test
+    void dealerHitTurn() {
+        Players players = Players.from(List.of("조조", "릴리"));
+        BlackjackGame blackjackGame = new BlackjackGame();
+        blackjackGame.dealInitialCards(players);
+
+        boolean isDealerHit = blackjackGame.dealerHitTurn();
+        if (isDealerHit) {
+            assertThat(blackjackGame.dealerCardSize()).isEqualTo(3);
+        }
+        if (!isDealerHit) {
+            assertThat(blackjackGame.dealerCardSize()).isEqualTo(2);
+        }
+    }
 }
