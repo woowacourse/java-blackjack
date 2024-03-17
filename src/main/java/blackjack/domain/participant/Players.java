@@ -1,7 +1,8 @@
 package blackjack.domain.participant;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Players {
 
@@ -10,19 +11,17 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<Player> players) {
+    Players(List<Player> players) {
         this.players = players;
     }
 
     static public Players from(List<String> playerNames, List<Integer> bettings) {
         validateSize(playerNames, bettings);
 
-        List<Player> players = new ArrayList<>();
-        for (int i = 0; i < playerNames.size(); i++) {
-            Betting betting = new Betting(bettings.get(i));
-            Player player = new Player(playerNames.get(i), betting);
-            players.add(player);
-        }
+        List<Player> players = IntStream.range(0, playerNames.size())
+                .mapToObj(i -> new Player(playerNames.get(i), new Betting(bettings.get(i))))
+                .collect(Collectors.toList());
+
         return new Players(players);
     }
 
