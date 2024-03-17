@@ -1,9 +1,9 @@
 package domain;
 
 public class Profit {
-    private final int value;
+    private final double value;
 
-    public Profit(int value) {
+    public Profit(double value) {
         this.value = value;
     }
 }

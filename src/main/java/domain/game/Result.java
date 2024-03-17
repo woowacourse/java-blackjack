@@ -28,6 +28,10 @@ public enum Result {
         return result;
     }
 
+    public double getProfitRate() {
+        return profitRate;
+    }
+
     public static Result compare(int current, int opponent) {
         if (current > opponent) {
             return WIN;

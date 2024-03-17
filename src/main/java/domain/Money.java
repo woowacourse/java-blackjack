@@ -1,5 +1,7 @@
 package domain;
 
+import domain.game.Result;
+
 public class Money {
     private final int value;
 
@@ -16,6 +18,10 @@ public class Money {
         if (value <= 0) {
             throw new NumberFormatException("양의 정수만 입력하세요.");
         }
+    }
+
+    public Profit makeProfit(Result result) {
+        return new Profit(value * result.getProfitRate());
     }
 
 }
