@@ -1,18 +1,19 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 import blackjack.domain.player.Player;
 import blackjack.domain.result.BettingBoard;
 import blackjack.domain.score.GameResult;
 import blackjack.domain.result.Money;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.api.TestFactory;
 
 class BettingBoardTest {
 
@@ -26,33 +27,39 @@ class BettingBoardTest {
         assertThat(money).isEqualTo(new Money(1000));
     }
 
-    @ParameterizedTest
-    @MethodSource("resultAndMoney")
+    @TestFactory
     @DisplayName("결과에 따른 돈을 계산할 수 있다.")
-    void calculateMoneyTest(GameResult gameResult, Money expected) {
+    Collection<DynamicTest> calculateMoneyTest() {
         Player player = new Player("loki");
         BettingBoard bettingBoard = new BettingBoard();
-        bettingBoard.bet(player, new Money(1000));
-        Map<Player, GameResult> resultBoard = Map.of(player, gameResult);
-        bettingBoard.calculateMoney(resultBoard);
-        Money money = bettingBoard.findByPlayer(player);
-        assertThat(money).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> resultAndMoney() {
-        return Stream.of(
-                Arguments.arguments(
-                        GameResult.WIN_BY_BLACK_JACK, new Money(1500)
-                ),
-                Arguments.arguments(
-                        GameResult.WIN, new Money(1000)
-                ),
-                Arguments.arguments(
-                        GameResult.DRAW, new Money(0)
-                ),
-                Arguments.arguments(
-                        GameResult.LOSE, new Money(-1000)
-                )
+        return List.of(dynamicTest("블랙잭으로 이기면", () -> {
+                    bettingBoard.bet(player, new Money(1000));
+                    Map<Player, GameResult> resultBoard = Map.of(player, GameResult.WIN_BY_BLACK_JACK);
+                    bettingBoard.calculateMoney(resultBoard);
+                    Money money = bettingBoard.findByPlayer(player);
+                    assertThat(money).isEqualTo(new Money(1500));
+                }),
+                dynamicTest("승리하면", () -> {
+                    bettingBoard.bet(player, new Money(1000));
+                    Map<Player, GameResult> resultBoard = Map.of(player, GameResult.WIN);
+                    bettingBoard.calculateMoney(resultBoard);
+                    Money money = bettingBoard.findByPlayer(player);
+                    assertThat(money).isEqualTo(new Money(1000));
+                }),
+                dynamicTest("비기면", () -> {
+                    bettingBoard.bet(player, new Money(1000));
+                    Map<Player, GameResult> resultBoard = Map.of(player, GameResult.DRAW);
+                    bettingBoard.calculateMoney(resultBoard);
+                    Money money = bettingBoard.findByPlayer(player);
+                    assertThat(money).isEqualTo(new Money(0));
+                }),
+                dynamicTest("지면", () -> {
+                    bettingBoard.bet(player, new Money(1000));
+                    Map<Player, GameResult> resultBoard = Map.of(player, GameResult.LOSE);
+                    bettingBoard.calculateMoney(resultBoard);
+                    Money money = bettingBoard.findByPlayer(player);
+                    assertThat(money).isEqualTo(new Money(-1000));
+                })
         );
     }
 
