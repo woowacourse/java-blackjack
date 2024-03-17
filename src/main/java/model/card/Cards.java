@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 
 public record Cards(List<Card> cards) {
-
     private final static int INITIAL_CARD_SIZE = 2;
     private final static int MAXIMUM_SUM = 21;
 

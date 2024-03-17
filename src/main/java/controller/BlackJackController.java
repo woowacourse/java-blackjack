@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class BlackJackController {
-
     private final InputView inputView;
     private final OutputView outputView;
 

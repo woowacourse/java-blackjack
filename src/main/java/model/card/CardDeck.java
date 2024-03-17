@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.stream.Stream;
 
 public class CardDeck {
-
     private final Set<Card> cards;
 
     public CardDeck(List<Card> cards) {
