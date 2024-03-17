@@ -16,7 +16,7 @@ public class Name {
     }
 
     public Name(final String value) {
-        validate(value.trim());
+        validate(value);
         this.value = value.trim();
     }
 
@@ -40,7 +40,7 @@ public class Name {
     }
 
     private void validateReserved(final String name) {
-        if (RESERVED_NAME.value.equals(name)) {
+        if (RESERVED_NAME.value.equals(name.trim())) {
             throw new ReservedPlayerNameException(ErrorCode.RESERVED_NAME);
         }
     }
