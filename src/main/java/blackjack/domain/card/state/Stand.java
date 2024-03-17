@@ -10,7 +10,7 @@ public class Stand extends AbstractState {
 
     @Override
     public State draw(final Card card) {
-        throw new IllegalArgumentException("스탠드 상태일때는 카드를 받을 수 없습니다.");
+        throw new IllegalStateException("스탠드 상태일때는 카드를 받을 수 없습니다.");
     }
 
     @Override

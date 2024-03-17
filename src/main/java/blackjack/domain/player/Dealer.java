@@ -5,9 +5,11 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.player.info.Name;
 
 public class Dealer extends Participant {
-    private final Name name;
     public static final Integer RECEIVE_SIZE = 16;
-    private static final String DEFAULT_DEALER_NAME = "딜러";
+    private static final Name DEFAULT_DEALER_NAME = new Name("딜러");
+
+    private final Name name;
+
 
     public Dealer(final Name name, final Cards cards) {
         super(cards);
@@ -19,7 +21,7 @@ public class Dealer extends Participant {
     }
 
     public static Dealer createDefaultNameDealer() {
-        return new Dealer(new Name(DEFAULT_DEALER_NAME));
+        return new Dealer(DEFAULT_DEALER_NAME);
     }
 
     @Override

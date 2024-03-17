@@ -46,7 +46,6 @@ public class BlackjackController {
     private PlayerInfo askBettingMoney(final Name name) {
         final BettingMoney bettingMoney = new BettingMoney(InputView.inputBettingMoney(name.asString()));
         return new PlayerInfo(name, bettingMoney);
-
     }
 
     private void joinPlayer(final List<PlayerInfo> playerInfos) {

@@ -15,7 +15,6 @@ public class CardPrinter {
     private static final String JOIN_SPLITTER = ", ";
 
     private CardPrinter() {
-
     }
 
     public static String printCards(final List<Card> cards) {

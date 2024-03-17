@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 public class PlayerView {
     private PlayerView() {
-
     }
 
     public static void printPlayers(final Dealer dealer, final List<GamePlayer> gamePlayers) {

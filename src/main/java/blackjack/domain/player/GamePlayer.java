@@ -9,8 +9,9 @@ import blackjack.domain.player.info.Name;
 import java.util.Objects;
 
 public class GamePlayer extends Participant {
-    private final PlayerInfo playerInfo;
     private static final BettingMoney DEFAULT_BETTING_MONEY = new BettingMoney(1000);
+
+    private final PlayerInfo playerInfo;
 
     public GamePlayer(final Name name, final Cards cards) {
         super(cards);

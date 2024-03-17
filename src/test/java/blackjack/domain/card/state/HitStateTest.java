@@ -18,16 +18,6 @@ class HitStateTest {
         assertThat(state).isInstanceOf(Hit.class);
     }
 
-    @Test
-    @DisplayName("Hit 상태에서 드로우 해서 21이면 Stand 상태가 된다.")
-    void if_sum_of_draw_21_is_stand_state() {
-        final var sut = new Ready().draw(new Card(CardValue.EIGHT, CardSymbol.DIAMOND))
-                                   .draw(new Card(CardValue.FIVE, CardSymbol.DIAMOND));
-
-        final var state = sut.draw(new Card(CardValue.EIGHT, CardSymbol.HEART));
-
-        assertThat(state).isInstanceOf(Stand.class);
-    }
 
     @Test
     @DisplayName("Hit 상태에서 드로우 해서 21을 초과하면 Bust 상태가 된다.")

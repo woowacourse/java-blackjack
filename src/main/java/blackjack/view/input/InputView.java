@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
+    private static final String SPLIT_DELIMITER = ",";
+    
     private InputView() {
     }
 
-    private static final String SPLIT_DELIMITER = ",";
 
     private static String input() {
         final Scanner scanner = new Scanner(System.in);
