@@ -20,7 +20,8 @@ public class Player extends BlackjackGamer {
         return getValue() < BLACKJACK_MAX_SCORE;
     }
 
-    public GameResult compete(Score dealerScore) {
+    public GameResult compete(Dealer dealer) {
+        Score dealerScore = dealer.getScore();
         Score playerScore = getScore();
         if (isOnlyPlayerBlackjack(playerScore, dealerScore)) {
             return GameResult.BLACKJACK_WIN;

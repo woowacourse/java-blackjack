@@ -10,6 +10,10 @@ public class Dealer extends BlackjackGamer {
         super();
     }
 
+    Dealer(Hand hand) {
+        super(hand);
+    }
+
     @Override
     public boolean canReceiveCard() {
         return getValue() <= DEALER_DRAW_THRESHOLD;
