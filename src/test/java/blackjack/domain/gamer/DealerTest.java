@@ -1,5 +1,6 @@
 package blackjack.domain.gamer;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -44,5 +45,25 @@ class DealerTest {
         ));
 
         assertFalse(dealer.canReceiveCard());
+    }
+
+    @Test
+    @DisplayName("모든 플레이어와, 딜러 자신에게 2장의 카드를 배분한다.")
+    void setUpInitialCardsTest() {
+        List<Player> players = List.of(
+                new Player("p1"),
+                new Player("p2"),
+                new Player("p3")
+        );
+        dealer = new Dealer();
+
+        dealer.setUpInitialCards(players);
+
+        List<Integer> actualCardCount = players.stream()
+                .map(player -> player.getCurrentCards().size())
+                .toList();
+        
+        assertThat(dealer.getCurrentCards().size()).isEqualTo(2);
+        assertThat(actualCardCount).containsExactly(2, 2, 2);
     }
 }
