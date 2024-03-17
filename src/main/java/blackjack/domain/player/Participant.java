@@ -1,7 +1,8 @@
 package blackjack.domain.player;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
-import blackjack.domain.rule.Score;
+import blackjack.domain.card.Hand;
 import java.util.Objects;
 
 public abstract class Participant {
@@ -14,6 +15,8 @@ public abstract class Participant {
         this.hand = hand;
     }
 
+    public abstract boolean canHit();
+
     public void appendCard(Card card) {
         hand.appendCard(card);
     }
@@ -22,11 +25,41 @@ public abstract class Participant {
         return hand.calculateScore();
     }
 
-    public int countPop() {
-        return hand.countPop();
+    public int countDraw() {
+        return hand.countDraw();
     }
 
-    public abstract boolean canHit();
+    public boolean isBusted() {
+        return hand.calculateScore().isBustScore();
+    }
+
+    public boolean isNotBusted() {
+        return !hand.calculateScore().isBustScore();
+    }
+
+    public boolean hasBlackJackHand() {
+        return hand.isBlackJack();
+    }
+
+    public boolean hasNoBlackJackHand() {
+        return !hand.isBlackJack();
+    }
+
+    public boolean hasScoreAbove(Participant other) {
+        return this.calculateHandScore().isAbove(other.calculateHandScore());
+    }
+
+    public boolean hasSameScore(Participant other) {
+        return this.calculateHandScore().equals(other.calculateHandScore());
+    }
+
+    public String getName() {
+        return name.getValue();
+    }
+
+    public Hand getHand() {
+        return hand;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -43,13 +76,5 @@ public abstract class Participant {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    public String getName() {
-        return name.getValue();
-    }
-
-    public Hand getHand() {
-        return hand;
     }
 }

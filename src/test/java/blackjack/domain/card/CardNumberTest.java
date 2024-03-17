@@ -11,7 +11,7 @@ class CardNumberTest {
 
     @DisplayName("Ace에 해당하는 지 확인할 수 있다")
     @Test
-    void testIsCardNumberAce() {
+    void isCardNumberAceTest() {
         assertAll(
                 () -> assertThat(CardNumber.ACE.isAce()).isTrue(),
                 () -> assertThat(CardNumber.TWO.isAce()).isFalse()

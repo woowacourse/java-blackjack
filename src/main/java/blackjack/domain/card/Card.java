@@ -16,6 +16,14 @@ public class Card {
         return cardNumber.isAce();
     }
 
+    public CardNumber getCardNumber() {
+        return cardNumber;
+    }
+
+    public CardShape getCardShape() {
+        return cardShape;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -31,13 +39,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(cardShape, cardNumber);
-    }
-
-    public CardNumber getCardNumber() {
-        return cardNumber;
-    }
-
-    public CardShape getCardShape() {
-        return cardShape;
     }
 }

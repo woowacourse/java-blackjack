@@ -12,7 +12,7 @@ class PlayersTest {
 
     @DisplayName("참가자들 중 이름이 중복되는 경우는 생성 검증에 실패한다")
     @Test
-    void testCreatePlayersWithDuplicateNames() {
+    void createPlayersWithDuplicateNamesTest() {
         Player player1 = TestPlayerCreator.of("리비", 1, 2);
         Player player2 = TestPlayerCreator.of("리비", 3, 4);
 
@@ -23,7 +23,7 @@ class PlayersTest {
 
     @DisplayName("플레이어가 없으면 생성에 실패한다")
     @Test
-    void testCreatePlayersWithEmptyEntry() {
+    void createPlayersWithEmptyEntryTest() {
         assertThatThrownBy(() -> new Players(List.of()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 플레이어가 없습니다");
@@ -31,7 +31,7 @@ class PlayersTest {
 
     @DisplayName("딜러를 제외한 게임 참여자가 3명을 넘는 경우는 생성 검증에 실패한다")
     @Test
-    void testCreatePlayersWithInvalidEntryCount() {
+    void createPlayersWithInvalidEntryCountTest() {
         Player player1 = TestPlayerCreator.of("리비", 1, 2);
         Player player2 = TestPlayerCreator.of("제리", 3, 4);
         Player player3 = TestPlayerCreator.of("잉크", 1, 2);
@@ -44,7 +44,7 @@ class PlayersTest {
 
     @DisplayName("생성 검증을 모두 통과하면 생성에 성공한다")
     @Test
-    void testCreateWithValidPlayers() {
+    void createWithValidPlayersTest() {
         Player player1 = TestPlayerCreator.of("리비", 1, 2);
         Player player2 = TestPlayerCreator.of("제리", 3, 4);
 

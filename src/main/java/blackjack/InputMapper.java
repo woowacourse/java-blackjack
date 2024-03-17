@@ -9,7 +9,7 @@ public class InputMapper {
 
     private static final String DELIMITER = ",";
 
-    public List<PlayerName> mapToPlayers(String target) {
+    public List<PlayerName> mapToPlayerNames(String target) {
         String[] split = target.split(DELIMITER);
         return Arrays.stream(split)
                 .map(PlayerName::new)

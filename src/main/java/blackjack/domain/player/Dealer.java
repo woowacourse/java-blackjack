@@ -1,5 +1,8 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Hand;
+
 public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
@@ -12,5 +15,11 @@ public class Dealer extends Participant {
     @Override
     public boolean canHit() {
         return hand.calculateCardSummation() <= HIT_THRESHOLD;
+    }
+
+    public void completeHand(CardDeck cardDeck) {
+        while (canHit()) {
+            appendCard(cardDeck.popCard());
+        }
     }
 }

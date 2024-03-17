@@ -10,7 +10,7 @@ class ParticipantNameTest {
 
     @DisplayName("이름은 빈 문자열일 수 없다")
     @Test
-    void testCreatePlayerNameWithEmpty() {
+    void createPlayerNameWithEmptyTest() {
         assertThatThrownBy(() -> new PlayerName(""))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이름이 빈 문자열입니다.");

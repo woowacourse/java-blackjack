@@ -1,5 +1,7 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card.Hand;
+
 public class Player extends Participant {
 
     public static final int HIT_THRESHOLD = 21;
