@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Hand;
-import blackjack.domain.card.TrumpCard;
+import blackjack.domain.card.Card;
 
 import java.util.List;
 
@@ -13,21 +13,21 @@ public abstract class Gamer {
         this.hand = new Hand();
     }
 
-    abstract boolean canReceiveCard();
-
-    public boolean isBust() {
+    public final boolean isBust() {
         return hand.isBust();
     }
 
-    public boolean isBlackjack() {
+    public final boolean isBlackjack() {
         return hand.isBlackjack();
     }
 
-    public long getScore() {
+    public final long getScore() {
         return hand.calculateScore();
     }
 
-    public List<TrumpCard> getHandCards() {
+    public final List<Card> getHandCards() {
         return hand.getCards();
     }
+
+    abstract boolean canReceiveCard();
 }

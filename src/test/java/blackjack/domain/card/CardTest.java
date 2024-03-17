@@ -7,22 +7,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("카드")
-public class TrumpCardTest {
+public class CardTest {
 
     @DisplayName("숫자와 기호를 가진 카드 조회에 성공한다.")
     @Test
     void createCard() {
-        //given
+        // given
         Rank rank = Rank.FOUR;
         Suit suit = Suit.CLOVER;
 
-        //when
-        TrumpCard trumpCard = new TrumpCard(rank, suit);
+        // when
+        Card card = new Card(rank, suit);
 
-        //then
+        // then
         assertAll(
-                () -> assertThat(trumpCard.getRank()).isEqualTo(rank),
-                () -> assertThat(trumpCard.getSuit()).isEqualTo(suit)
+                () -> assertThat(card.getRank()).isEqualTo(rank),
+                () -> assertThat(card.getSuit()).isEqualTo(suit)
         );
     }
 }

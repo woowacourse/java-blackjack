@@ -1,7 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Rank;
-import blackjack.domain.card.TrumpCard;
+import blackjack.domain.card.Card;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,18 +8,19 @@ import java.util.List;
 
 public class Hand {
 
-    public static final int BLACKJACK_BOUND = 21;
+    private static final int BLACKJACK_BOUND = 21;
     private static final int BLACKJACK_CARD_SIZE = 2;
     private static final int MAX_ACE_SCORE = 11;
+    private static final String NO_CARD_EXCEPTION = "손패에 카드가 부족하여 첫 번째 카드를 가져올 수 없습니다.";
 
-    private final List<TrumpCard> trumpCards;
+    private final List<Card> cards;
 
     public Hand() {
-        this.trumpCards = new ArrayList<>();
+        this.cards = new ArrayList<>();
     }
 
-    public void add(final TrumpCard... trumpCard) {
-        trumpCards.addAll(List.of(trumpCard));
+    public void add(final Card... card) {
+        cards.addAll(List.of(card));
     }
 
     public long calculateScore() {
@@ -36,15 +36,15 @@ public class Hand {
     }
 
     private long countAce() {
-        return trumpCards.stream()
-                .filter(card -> (card.getRank() == Rank.ACE))
+        return cards.stream()
+                .filter(Card::isAce)
                 .count();
     }
 
     private int calculateScoreWithoutAce() {
-        return trumpCards.stream()
-                .filter(card -> (card.getRank() != Rank.ACE))
-                .mapToInt(c -> c.getScore().get(0))
+        return cards.stream()
+                .filter(card -> !card.isAce())
+                .mapToInt(Card::getScore)
                 .sum();
     }
 
@@ -61,14 +61,18 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return calculateScore() == BLACKJACK_BOUND && trumpCards.size() == BLACKJACK_CARD_SIZE;
+        return calculateScore() == BLACKJACK_BOUND && cards.size() == BLACKJACK_CARD_SIZE;
     }
 
-    public TrumpCard getFirstCard() {
-        return trumpCards.get(0);
+    public Card getFirstCard() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException(NO_CARD_EXCEPTION);
+        }
+
+        return cards.get(0);
     }
 
-    public List<TrumpCard> getCards() {
-        return Collections.unmodifiableList(trumpCards);
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

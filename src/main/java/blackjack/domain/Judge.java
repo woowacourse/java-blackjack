@@ -2,97 +2,70 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.DealerResult;
-import blackjack.dto.PlayerResult;
 
 public class Judge {
 
-    private Judge() {
+    private final Dealer dealer;
+    private final Player player;
+
+    public Judge(Dealer dealer, Player player) {
+        this.dealer = dealer;
+        this.player = player;
     }
 
-    public static DealerResult judge(
-            final ResultStatus resultStatus, final Player player, final Dealer dealer,
-            final PlayerResult playerResult) {
+    public GameResult judge() {
         if (dealer.isBust()) {
-            return judgeWhenDealerBust(playerResult, player, resultStatus);
+            return judgeWhenDealerBust();
         }
 
         if (dealer.isBlackjack()) {
-            return judgeWhenDealerBlackjack(playerResult, player, resultStatus);
+            return judgeWhenDealerBlackjack();
         }
 
-        return judgeWhenDealerNormal(dealer, playerResult, player, resultStatus);
+        return judgeWhenDealerNormal();
     }
 
-    public static DealerResult judgeWhenDealerBust(
-            final PlayerResult playerResult, final Player player, final ResultStatus resultStatus) {
+    private GameResult judgeWhenDealerBust() {
         if (player.isBust()) {
-            return draw(playerResult, player, resultStatus);
+            return GameResult.DRAW;
         }
 
         if (player.isBlackjack()) {
-            return dealerLose(playerResult, player, resultStatus);
+            return GameResult.BLACKJACK;
         }
 
-        return dealerLose(playerResult, player, resultStatus);
+        return GameResult.WIN;
     }
 
-    public static DealerResult judgeWhenDealerBlackjack(
-            final PlayerResult playerResult, final Player player, final ResultStatus resultStatus) {
+    private GameResult judgeWhenDealerBlackjack() {
+        if (player.isBlackjack()) {
+            return GameResult.DRAW;
+        }
+
+        return GameResult.LOSE;
+    }
+
+    private GameResult judgeWhenDealerNormal() {
         if (player.isBust()) {
-            return dealerWins(playerResult, player, resultStatus);
+            return GameResult.LOSE;
         }
 
         if (player.isBlackjack()) {
-            return draw(playerResult, player, resultStatus);
+            return GameResult.BLACKJACK;
         }
 
-        return dealerWins(playerResult, player, resultStatus);
+        return judgeWhenNormalTogether();
     }
 
-    public static DealerResult judgeWhenDealerNormal(
-            final Dealer dealer, final PlayerResult playerResult, final Player player,
-            final ResultStatus resultStatus) {
-        if (player.isBust()) {
-            return dealerWins(playerResult, player, resultStatus);
-        }
-
-        if (player.isBlackjack()) {
-            return dealerLose(playerResult, player, resultStatus);
-        }
-
-        return judgeWhenNormalTogether(dealer, playerResult, player, resultStatus);
-    }
-
-    private static DealerResult judgeWhenNormalTogether(
-            final Dealer dealer, final PlayerResult playerResult, final Player player,
-            final ResultStatus resultStatus) {
+    private GameResult judgeWhenNormalTogether() {
         if (dealer.isSameScore(player.getScore())) {
-            return draw(playerResult, player, resultStatus);
+            return GameResult.DRAW;
         }
 
         if (dealer.getScore() > player.getScore()) {
-            return dealerWins(playerResult, player, resultStatus);
+            return GameResult.LOSE;
         }
 
-        return dealerLose(playerResult, player, resultStatus);
-    }
-
-    private static DealerResult dealerWins(
-            final PlayerResult playerResult, final Player player, final ResultStatus resultStatus) {
-        playerResult.addResult(player, GameResult.LOSE);
-        return DealerResult.createWinDealerResult(resultStatus);
-    }
-
-    private static DealerResult dealerLose(
-            final PlayerResult playerResult, final Player player, final ResultStatus resultStatus) {
-        playerResult.addResult(player, GameResult.WIN);
-        return DealerResult.createLoseDealerResult(resultStatus);
-    }
-
-    private static DealerResult draw(
-            final PlayerResult playerResult, final Player player, final ResultStatus resultStatus) {
-        playerResult.addResult(player, GameResult.DRAW);
-        return DealerResult.createDrawDealerResult(resultStatus);
+        return GameResult.WIN;
     }
 }

@@ -1,13 +1,15 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Deck;
-import blackjack.domain.card.TrumpCard;
+import blackjack.domain.card.Card;
+import blackjack.dto.ProfitResult;
 
-import java.util.stream.IntStream;
+import java.math.BigDecimal;
 
 public class Dealer extends Gamer {
 
     public static final int DEALER_BOUND = 16;
+    private static final int DEALER_PROFIT_WEIGHT = -1;
 
     private final Deck deck;
 
@@ -19,33 +21,35 @@ public class Dealer extends Gamer {
     }
 
     private void initialDraw() {
-        IntStream.range(0, 2)
-                .forEach(i -> hand.add(draw()));
+        for (int i = 0; i < 2; i++) {
+            hand.add(draw());
+        }
     }
 
-    public TrumpCard draw() {
+    public Card draw() {
         return deck.draw();
     }
 
-    public boolean drawExtraCard() {
+    public void drawExtraCard() {
         if (canReceiveCard()) {
             hand.add(draw());
-            return true;
         }
-
-        return false;
     }
 
     @Override
-    boolean canReceiveCard() {
+    public boolean canReceiveCard() {
         return hand.calculateScore() <= DEALER_BOUND;
     }
 
-    public TrumpCard showFirstCard() {
+    public Card showFirstCard() {
         return hand.getFirstCard();
     }
 
     public boolean isSameScore(final long score) {
         return hand.calculateScore() == score;
+    }
+
+    public BigDecimal calculateProfit(final ProfitResult profitResult) {
+        return profitResult.sumAllProfit().multiply(BigDecimal.valueOf(DEALER_PROFIT_WEIGHT));
     }
 }

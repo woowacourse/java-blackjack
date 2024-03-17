@@ -1,4 +1,4 @@
-package blackjack.strategy;
+package blackjack.strategy.shuffle;
 
 import java.util.List;
 

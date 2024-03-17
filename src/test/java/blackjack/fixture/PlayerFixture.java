@@ -1,15 +1,23 @@
 package blackjack.fixture;
 
+import blackjack.domain.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.domain.stategy.NoShuffleStrategy;
 
-public class PlayerFixture {
+public enum PlayerFixture {
 
-    public static Player playerChoco(final Dealer dealer) {
-        return new Player("choco", dealer);
+    CHOCO(new Player("choco", new Dealer(new Deck(new NoShuffleStrategy())))),
+    CLOVER(new Player("clover", new Dealer(new Deck(new NoShuffleStrategy())))),
+    ;
+
+    private final Player player;
+
+    PlayerFixture(Player player) {
+        this.player = player;
     }
 
-    public static Player playerClover(final Dealer dealer) {
-        return new Player("clover", dealer);
+    public Player getPlayer() {
+        return player;
     }
 }

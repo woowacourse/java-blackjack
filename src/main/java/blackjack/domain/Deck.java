@@ -1,8 +1,8 @@
 package blackjack.domain;
 
-import blackjack.domain.card.TrumpCard;
-import blackjack.domain.card.TrumpCardFactory;
-import blackjack.strategy.ShuffleStrategy;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardFactory;
+import blackjack.strategy.shuffle.ShuffleStrategy;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -12,24 +12,20 @@ public class Deck {
 
     private static final String NO_CARD_EXCEPTION = "카드가 부족하여 더 이상 뽑을 수 없습니다.";
 
-    private final Queue<TrumpCard> trumpCards;
+    private final Queue<Card> cards;
 
     public Deck(final ShuffleStrategy shuffleStrategy) {
-        List<TrumpCard> trumpCards = TrumpCardFactory.createCards();
-        shuffleStrategy.shuffle(trumpCards);
+        List<Card> cards = new CardFactory().createCards();
+        shuffleStrategy.shuffle(cards);
 
-        this.trumpCards = new LinkedList<>(trumpCards);
+        this.cards = new LinkedList<>(cards);
     }
 
-    public TrumpCard draw() {
-        if (trumpCards.isEmpty()) {
+    public Card draw() {
+        if (cards.isEmpty()) {
             throw new IllegalStateException(NO_CARD_EXCEPTION);
         }
 
-        return trumpCards.poll();
-    }
-
-    public Queue<TrumpCard> getCards() {
-        return trumpCards;
+        return cards.poll();
     }
 }
