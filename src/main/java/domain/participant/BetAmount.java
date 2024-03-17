@@ -5,6 +5,8 @@ import java.util.Objects;
 
 public class BetAmount {
 
+    private static final Profit LOSE_PROFIT = new Profit(0);
+
     private final int amount;
 
     public BetAmount(final int amount) {
@@ -26,7 +28,7 @@ public class BetAmount {
     }
 
     public Profit zero() {
-        return new Profit(0);
+        return LOSE_PROFIT;
     }
 
     private static void validatePositive(final int amount) {
