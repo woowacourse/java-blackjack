@@ -10,7 +10,9 @@ public enum GameResult {
     BLACKJACK;
 
     public static GameResult doesPlayerWin(final Dealer dealer, final Player player) {
-        // TODO: 딜러와 플레이어 모두 블랙잭인 경우를 고려하라
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return GameResult.PUSH;
+        }
         if (player.isBlackjack()) {
             return GameResult.BLACKJACK;
         }

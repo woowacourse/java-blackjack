@@ -23,6 +23,10 @@ public abstract class Participant {
         return hand.getScore() <= BUST_CONDITION;
     }
 
+    public boolean isBlackjack() {
+        return hand.hasExactlyTwoCards() && hand.getScore() == BUST_CONDITION;
+    }
+
     public final int score() {
         return hand.getScore();
     }

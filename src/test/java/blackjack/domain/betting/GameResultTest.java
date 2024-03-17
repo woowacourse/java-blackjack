@@ -41,7 +41,20 @@ public class GameResultTest {
         assertThat(result).isEqualTo(LOSE);
     }
 
-    // TODO: 딜러와 플레이어 둘다 블랙잭인 경우에 무승부이다.
+    @Test
+    void 딜러와_플레이어_둘다_블랙잭인_경우에_무승부다() {
+        Player player = player(
+                name,
+                new Card(KING, CLOVER),
+                new Card(ACE, CLOVER));
+        Dealer dealer = dealer(
+                new Card(KING, HEART),
+                new Card(ACE, HEART));
+
+        var result = GameResult.doesPlayerWin(dealer, player);
+
+        assertThat(result).isEqualTo(PUSH);
+    }
 
     @Test
     void 딜러와_여러_플레이어의_숫자가_21_이하인_경우_숫자가_큰_사람이_이긴다() {
