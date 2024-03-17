@@ -1,6 +1,9 @@
 package domain.game;
 
-import domain.participant.*;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Player;
+import domain.participant.PlayerName;
 import domain.playingcard.Deck;
 import domain.playingcard.PlayingCards;
 
@@ -11,7 +14,6 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static java.util.Collections.unmodifiableList;
-import static java.util.stream.Collectors.toMap;
 
 public class BlackjackGame {
     private static final int DEALER_INDEX = 0;
@@ -70,12 +72,6 @@ public class BlackjackGame {
         while (dealer.isDrawable()) {
             dealer.draw(deck);
         }
-    }
-
-    public Map<PlayerName, Integer> getPlayerRevenues() {
-        Dealer dealer = getDealer();
-        return getPlayers().stream()
-                .collect(toMap(Player::getPlayerName, player -> player.calculateRevenue(dealer)));
     }
 
     public Dealer getDealer() {

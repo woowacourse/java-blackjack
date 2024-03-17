@@ -65,30 +65,122 @@ public class PlayerTest {
         // Then
         assertThat(player.getHandCards().size()).isEqualTo(initHandCardsCount + 1);
     }
-    
-    @DisplayName("딜러와 플레이어의 승부 결과에 따른 수익을 반환한다.")
-    @MethodSource("calculateRevenueTestCase")
-    @ParameterizedTest        
-    void calculateRevenueTest(final List<PlayingCard> playingCards, final int expect) {
+
+    @DisplayName("플레이어가 블랙잭으로 승리하면 배팅 금액의 1.5배 수익을 반환한다.")
+    @Test
+    void calculateRevenueWithBlackjackWinTest() {
         // Given
         PlayerName playerName = new PlayerName("kelly");
         BettingMoney bettingMoney = new BettingMoney(10000);
-        Player kelly = new Player(playerName, bettingMoney, new Hand(playingCards));
+        Hand playerHand = new Hand(List.of(new PlayingCard(DIAMOND, ACE), new PlayingCard(HEART, QUEEN)));
+        Player kelly = new Player(playerName, bettingMoney, playerHand);
         Dealer dealer = new Dealer(new Hand(List.of(new PlayingCard(DIAMOND, TEN), new PlayingCard(CLOVER, FIVE))));
 
         // When
         int revenue = kelly.calculateRevenue(dealer);
 
         // Then
-        assertThat(revenue).isEqualTo(expect);
+        assertThat(revenue).isEqualTo(15000);
     }
 
-    private Stream<Arguments> calculateRevenueTestCase() {
+    @DisplayName("플레이어가 승리하면 배팅 금액 만큼 수익을 반환한다.")
+    @MethodSource("winTestCase")
+    @ParameterizedTest(name = "[{index}] {0}")
+    void calculateRevenueWithBlackjackWinTest(final String description, final List<PlayingCard> dealerPlayingCards, final List<PlayingCard> playerPlayingCards) {
+        // Given
+        PlayerName playerName = new PlayerName("kelly");
+        BettingMoney bettingMoney = new BettingMoney(10000);
+        Player kelly = new Player(playerName, bettingMoney, new Hand(playerPlayingCards));
+        Dealer dealer = new Dealer(new Hand(dealerPlayingCards));
+
+        // When
+        int revenue = kelly.calculateRevenue(dealer);
+
+        // Then
+        assertThat(revenue).isEqualTo(10000);
+    }
+
+    private Stream<Arguments> winTestCase() {
         return Stream.of(
-                Arguments.of(List.of(new PlayingCard(DIAMOND, ACE), new PlayingCard(HEART, TEN)), 15000),
-                Arguments.of(List.of(new PlayingCard(DIAMOND, NINE), new PlayingCard(HEART, TEN)), 10000),
-                Arguments.of(List.of(new PlayingCard(SPADE, FIVE), new PlayingCard(HEART, TEN)), 0),
-                Arguments.of(List.of(new PlayingCard(SPADE, TWO), new PlayingCard(HEART, THREE)), -10000)
+                Arguments.of(
+                        "딜러가 버스트",
+                        List.of(new PlayingCard(DIAMOND, TEN), new PlayingCard(HEART, TEN), new PlayingCard(CLOVER, NINE)),
+                        List.of(new PlayingCard(DIAMOND, TWO), new PlayingCard(HEART, THREE))
+                ),
+                Arguments.of(
+                        "플레이어의 손패합이 우위",
+                        List.of(new PlayingCard(DIAMOND, THREE), new PlayingCard(HEART, TEN)),
+                        List.of(new PlayingCard(DIAMOND, NINE), new PlayingCard(SPADE, TEN))
+                )
+        );
+    }
+
+    @DisplayName("플레이어가 딜러와 무승부면 0원의 수익을 반환한다.")
+    @MethodSource("drawTestCase")
+    @ParameterizedTest(name = "[{index}] {0}")
+    void calculateRevenueWithDrawTest(final String description, final List<PlayingCard> dealerPlayingCards, final List<PlayingCard> playerPlayingCards) {
+        // Given
+        PlayerName playerName = new PlayerName("kelly");
+        BettingMoney bettingMoney = new BettingMoney(10000);
+        Player kelly = new Player(playerName, bettingMoney, new Hand(playerPlayingCards));
+        Dealer dealer = new Dealer(new Hand(dealerPlayingCards));
+
+        // When
+        int revenue = kelly.calculateRevenue(dealer);
+
+        // Then
+        assertThat(revenue).isEqualTo(0);
+    }
+
+    private Stream<Arguments> drawTestCase() {
+        return Stream.of(
+                Arguments.of(
+                        "플레이어와 딜러가 모두 블랙잭",
+                        List.of(new PlayingCard(DIAMOND, ACE), new PlayingCard(HEART, TEN)),
+                        List.of(new PlayingCard(SPADE, ACE), new PlayingCard(HEART, KING))
+                ),
+                Arguments.of(
+                        "플레이어와 딜러의 손패합이 같음",
+                        List.of(new PlayingCard(DIAMOND, THREE), new PlayingCard(HEART, FIVE)),
+                        List.of(new PlayingCard(DIAMOND, FOUR), new PlayingCard(SPADE, FOUR))
+                )
+        );
+    }
+
+    @DisplayName("플레이어가 패배하면 배팅 금액 만큼 손실을 입는다.")
+    @MethodSource("loseTestCase")
+    @ParameterizedTest(name = "[{index}] {0}")
+    void calculateRevenueWithLoseTest(final String description, final List<PlayingCard> dealerPlayingCards, final List<PlayingCard> playerPlayingCards) {
+        // Given
+        PlayerName playerName = new PlayerName("kelly");
+        BettingMoney bettingMoney = new BettingMoney(10000);
+        Player kelly = new Player(playerName, bettingMoney, new Hand(playerPlayingCards));
+        Dealer dealer = new Dealer(new Hand(dealerPlayingCards));
+
+        // When
+        int revenue = kelly.calculateRevenue(dealer);
+
+        // Then
+        assertThat(revenue).isEqualTo(-10000);
+    }
+
+    private Stream<Arguments> loseTestCase() {
+        return Stream.of(
+                Arguments.of(
+                        "플레이어가 버스트",
+                        List.of(new PlayingCard(DIAMOND, TEN), new PlayingCard(HEART, FIVE)),
+                        List.of(new PlayingCard(SPADE, QUEEN), new PlayingCard(HEART, KING), new PlayingCard(CLOVER, EIGHT))
+                ),
+                Arguments.of(
+                        "딜러가 블랙잭이면서 플레이어가 블랙잭이 아님",
+                        List.of(new PlayingCard(DIAMOND, QUEEN), new PlayingCard(HEART, ACE)),
+                        List.of(new PlayingCard(DIAMOND, EIGHT), new PlayingCard(SPADE, EIGHT), new PlayingCard(CLOVER, FIVE))
+                ),
+                Arguments.of(
+                        "딜러의 손패합이 우위",
+                        List.of(new PlayingCard(DIAMOND, QUEEN), new PlayingCard(HEART, NINE)),
+                        List.of(new PlayingCard(DIAMOND, TWO), new PlayingCard(SPADE, FOUR))
+                )
         );
     }
 }
