@@ -21,7 +21,7 @@ public class Hand {
 
     public Score calculateScore() {
         int sum = calculateCardSummation();
-        if (hasAce() && (sum + ACE_WEIGHT) <= BUST_THRESHOLD) {
+        if (hasAce() && isWeightAppliedScoreBust(sum)) {
             sum += ACE_WEIGHT;
         }
         return new Score(sum);
@@ -32,11 +32,6 @@ public class Hand {
                 .map(Card::getCardNumber)
                 .mapToInt(CardNumber::getValue)
                 .sum();
-    }
-
-    private boolean hasAce() {
-        return cards.stream()
-                .anyMatch(Card::isAce);
     }
 
     public void appendCard(Card card) {
@@ -53,5 +48,14 @@ public class Hand {
 
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
+    }
+
+    private boolean isWeightAppliedScoreBust(int sum) {
+        return (sum + ACE_WEIGHT) <= BUST_THRESHOLD;
     }
 }
