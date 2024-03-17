@@ -17,25 +17,13 @@ public final class Card {
     }
 
     public static Card of(Rank rank, Symbol symbol) {
-        if (CACHE.isEmpty()) {
-            cache();
-        }
-        if (CACHE.containsKey(rank.name() + symbol.name())) {
-            return CACHE.get(rank.name() + symbol.name());
-        }
-        return new Card(rank, symbol);
-    }
+        String cardName = rank.name() + symbol.name();
 
-    private static void cache() {
-        for (Symbol symbol : Symbol.values()) {
-            cacheAllCardsWithSymbol(symbol);
+        if (CACHE.containsKey(cardName)) {
+            return CACHE.get(cardName);
         }
-    }
-
-    private static void cacheAllCardsWithSymbol(Symbol symbol) {
-        for (Rank rank : Rank.values()) {
-            CACHE.put(rank.name() + symbol.name(), new Card(rank, symbol));
-        }
+        CACHE.put(cardName, new Card(rank, symbol));
+        return CACHE.get(cardName);
     }
 
     public Score score() {
