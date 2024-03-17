@@ -1,21 +1,23 @@
 package domain.money;
 
-public class Profit {
-    private final double value;
+import java.math.BigDecimal;
 
-    public Profit(double value) {
+public class Profit {
+    private final BigDecimal value;
+
+    public Profit(BigDecimal value) {
         this.value = value;
     }
 
     public Profit sum(Profit profit) {
-        return new Profit(value + profit.getValue());
+        return new Profit(value.add(profit.getValue()));
     }
 
     public Profit reverse() {
-        return new Profit(-value);
+        return new Profit(value.multiply(new BigDecimal("-1")));
     }
 
-    public int getValue() {
-        return (int) value;
+    public BigDecimal getValue() {
+        return value;
     }
 }

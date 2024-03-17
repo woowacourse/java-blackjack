@@ -3,6 +3,7 @@ package domain.money;
 import domain.game.Result;
 import domain.user.Player;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class MoneyManager {
     }
 
     public Profit makeDealerProfit(Map<Player, Result> playerResults) {
-        Profit profit = new Profit(0);
+        Profit profit = new Profit(new BigDecimal("0"));
         for (Map.Entry<Player, Profit> entries : calculateProfit(playerResults).entrySet()) {
             profit = profit.sum(entries.getValue());
         }

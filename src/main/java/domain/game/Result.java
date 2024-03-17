@@ -1,19 +1,17 @@
 package domain.game;
 
+import java.math.BigDecimal;
+
 public enum Result {
-    WIN(1),
-    LOSE(-1),
-    DRAW(0),
-    BLACKJACK(1.5);
+    WIN("1"),
+    LOSE("-1"),
+    DRAW("0"),
+    BLACKJACK("1.5");
 
-    private final double profitRate;
+    private final BigDecimal profitRate;
 
-    Result(double profitRate) {
-        this.profitRate = profitRate;
-    }
-
-    public double getProfitRate() {
-        return profitRate;
+    Result(String profitRate) {
+        this.profitRate = new BigDecimal(profitRate);
     }
 
     public static Result compare(int current, int opponent) {
@@ -41,5 +39,9 @@ public enum Result {
             return LOSE;
         }
         return WIN;
+    }
+
+    public BigDecimal getProfitRate() {
+        return profitRate;
     }
 }
