@@ -34,8 +34,8 @@ public class BlackjackController {
 
     private ProfitDetails playBlackjack(List<Name> playerNames, BetRecord betRecord) {
         Deck deck = Deck.of(new BlackjackCardFactory(), new RandomShuffler());
-        Players players = createAndInitializePlayers(playerNames, deck);
-        Dealer dealer = createAndInitializeDealer(deck);
+        Players players = initializePlayersWithHand(playerNames, deck);
+        Dealer dealer = initializeDealerWithHand(deck);
         outputView.printPlayersInitialHand(players, dealer);
 
         players = proceedPlayersTurn(players, deck);
@@ -45,12 +45,12 @@ public class BlackjackController {
         return betRecord.calculateProfit(players, dealer);
     }
 
-    private Players createAndInitializePlayers(List<Name> playerNames, Deck deck) {
+    private Players initializePlayersWithHand(List<Name> playerNames, Deck deck) {
         Players players = Players.createInitialPlayers(playerNames);
         return players.initializePlayersHands(deck);
     }
 
-    private Dealer createAndInitializeDealer(Deck deck) {
+    private Dealer initializeDealerWithHand(Deck deck) {
         Dealer dealer = Dealer.createInitialStateDealer();
         return dealer.draw(deck);
     }
