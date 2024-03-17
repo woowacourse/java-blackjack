@@ -2,16 +2,22 @@ package blackjack.domain.card;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class CardDeck {
 
-    private final List<Card> cards;
+    private Queue<Card> cards;
+
+    CardDeck(Queue<Card> cards) {
+        this.cards = cards;
+    }
 
     CardDeck(List<Card> cards) {
-        this.cards = cards;
+        this((Queue<Card>) new LinkedList<>(cards));
     }
 
     public static CardDeck createShuffledDeck() {
@@ -27,7 +33,7 @@ public class CardDeck {
         if (cards.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 남아있는 카드가 부족하여 카드를 뽑을 수 없습니다");
         }
-        return cards.remove(cards.size() - 1);
+        return cards.poll();
     }
 
     public List<Card> popCards(int count) {

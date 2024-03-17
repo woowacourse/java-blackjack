@@ -33,7 +33,7 @@ class DealerTest {
     @Test
     void completeDealerHandTest() {
         Dealer dealer = new Dealer(TestHandCreator.of(4, 3));
-        CardDeck deck = TestCardDeckCreator.createFrom(9, 10, 5, 4, 3);
+        CardDeck deck = TestCardDeckCreator.createFrom(3, 4, 5, 10, 9);
         dealer.completeHand(deck);
         assertThat(dealer.calculateHandScore().getValue()).isEqualTo(19);
     }
