@@ -12,6 +12,7 @@ import blackjack.domain.result.WinningResult;
 import blackjack.dto.ParticipantCardsDto;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class BlackjackGame {
     private Deck deck;
@@ -45,12 +46,20 @@ public class BlackjackGame {
         return participants.giveDealerMoreCards(deck);
     }
 
-    public Map<ParticipantName, Hands> getHandResult() {
-        return participants.getHandResult();
+    public Map<ParticipantName, Hands> getPlayersHandResult() {
+        return participants.getPlayersHandResult();
     }
 
-    public Map<ParticipantName, Score> getScoreResult() {
-        return participants.getScoreResult();
+    public Map<ParticipantName, Score> getPlayersScoreResult() {
+        return participants.getPlayersScoreResult();
+    }
+
+    public Entry<ParticipantName, Hands> getDealerHandResult() {
+        return participants.getDealerHandResult();
+    }
+
+    public Score getDealerScore() {
+        return participants.getDealerScore();
     }
 
     public WinningResult getWinningResult() {

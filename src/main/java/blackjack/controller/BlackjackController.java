@@ -95,15 +95,6 @@ public class BlackjackController {
         }
     }
 
-    private boolean needMoreCard(final String name) {
-        try {
-            return inputView.readNeedMoreCard(name);
-        } catch (final IllegalArgumentException e) {
-            outputView.printError(e.getMessage());
-            return needMoreCard(name);
-        }
-    }
-
     private boolean needMoreCard(final Player player) {
         ParticipantName rawName = player.getName();
         String name = rawName.getName();
@@ -112,7 +103,7 @@ public class BlackjackController {
             return inputView.readNeedMoreCard(name);
         } catch (final IllegalArgumentException e) {
             outputView.printError(e.getMessage());
-            return needMoreCard(name);
+            return needMoreCard(player);
         }
     }
 
@@ -121,32 +112,39 @@ public class BlackjackController {
     }
 
     private void finishGame(final BlackjackGame blackjackGame, final PlayerBettings playerBettings) {
-        final List<ParticipantScoreDto> participantScoresDtos = convertToParticipantScoreDtos(
-                blackjackGame.getHandResult(),
-                blackjackGame.getScoreResult());
+        printCardScore(blackjackGame);
+        printBettingResult(blackjackGame, playerBettings);
+    }
 
-        final PlayerBettings bettingResults = playerBettings.applyWinStatus(blackjackGame.getWinningResult());
-        final DealerBetting dealerBetting = DealerBetting.of(bettingResults, blackjackGame.getDealer());
-        final List<BettingResultDto> bettingResultDtos = convertToBettingResultDtos(bettingResults, dealerBetting);
+    private void printCardScore(final BlackjackGame blackjackGame) {
+        final List<ParticipantScoreDto> playerScoreDtos = convertToParticipantScoreDtos(
+                blackjackGame.getPlayersHandResult(), blackjackGame.getPlayersScoreResult());
 
-        outputView.printFinalResult(participantScoresDtos, bettingResultDtos);
+        final ParticipantScoreDto dealerScoreDto = ParticipantScoreDto.of(blackjackGame.getDealerHandResult(),
+                blackjackGame.getDealerScore());
+
+        outputView.printCardScore(playerScoreDtos, dealerScoreDto);
+    }
+
+    private void printBettingResult(final BlackjackGame blackjackGame, final PlayerBettings playerBettings) {
+        final PlayerBettings playerBettingResults = playerBettings.applyWinStatus(blackjackGame.getWinningResult());
+
+        final List<BettingResultDto> playerBettingResultDtos = convertToBettingResultDtos(playerBettingResults);
+        final DealerBetting dealerBetting = DealerBetting.of(playerBettingResults, blackjackGame.getDealer());
+
+        outputView.printBettingResult(playerBettingResultDtos, BettingResultDto.from(dealerBetting));
     }
 
     private List<ParticipantScoreDto> convertToParticipantScoreDtos(final Map<ParticipantName, Hands> handResult,
                                                                     final Map<ParticipantName, Score> scoreResult) {
         return handResult.entrySet().stream()
-                .map(entry -> ParticipantScoreDto.of(entry, scoreResult))
+                .map(entry -> ParticipantScoreDto.of(entry, scoreResult.get(entry.getKey())))
                 .toList();
     }
 
-    private List<BettingResultDto> convertToBettingResultDtos(final PlayerBettings bettingResults,
-                                                              final DealerBetting dealerBetting) {
-        List<BettingResultDto> bettingResultDtos = bettingResults.getPlayerBettings().stream()
+    private List<BettingResultDto> convertToBettingResultDtos(final PlayerBettings bettingResults) {
+        return bettingResults.getPlayerBettings().stream()
                 .map(BettingResultDto::from)
                 .collect(Collectors.toList());
-
-        bettingResultDtos.add(BettingResultDto.from(dealerBetting));
-
-        return bettingResultDtos;
     }
 }

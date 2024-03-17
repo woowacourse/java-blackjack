@@ -8,6 +8,7 @@ import blackjack.domain.result.WinningResult;
 import blackjack.dto.ParticipantCardsDto;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Participants {
     public static final int INT_CARD_COUNT = 2;
@@ -50,22 +51,20 @@ public class Participants {
         return count;
     }
 
-    public Map<ParticipantName, Hands> getHandResult() {
-        final Map<ParticipantName, Hands> participantsHands = players.getPlayerHands();
-        final Hands dealerHands = dealer.getHands();
-
-        participantsHands.put(dealer.getName(), dealerHands);
-
-        return participantsHands;
+    public Map<ParticipantName, Hands> getPlayersHandResult() {
+        return players.getPlayerHands();
     }
 
-    public Map<ParticipantName, Score> getScoreResult() {
-        final Map<ParticipantName, Score> participantsScores = players.getPlayerScores();
-        final Score dealerScore = dealer.calculate();
+    public Map<ParticipantName, Score> getPlayersScoreResult() {
+        return players.getPlayerScores();
+    }
 
-        participantsScores.put(dealer.getName(), dealerScore);
+    public Entry<ParticipantName, Hands> getDealerHandResult() {
+        return Map.entry(dealer.getName(), dealer.getHands());
+    }
 
-        return participantsScores;
+    public Score getDealerScore() {
+        return dealer.calculate();
     }
 
     public WinningResult getWinningResult() {
