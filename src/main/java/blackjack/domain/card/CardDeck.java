@@ -18,21 +18,21 @@ public class CardDeck {
     }
 
     public static CardDeck createShuffledFullCardDeck() {
-        List<Card> cards = createFullCardDeck();
+        List<Card> cards = generateFullCards();
         Collections.shuffle(cards);
         return new CardDeck(cards);
     }
 
-    private static List<Card> createFullCardDeck() {
+    private static List<Card> generateFullCards() {
         List<CardRank> cardRanks = Arrays.asList(CardRank.values());
         List<CardSuit> cardSuits = Arrays.asList(CardSuit.values());
 
         return cardRanks.stream()
-                .flatMap(rank -> generateCards(rank, cardSuits))
+                .flatMap(rank -> generateCardsOfRank(rank, cardSuits))
                 .collect(Collectors.toList());
     }
 
-    private static Stream<Card> generateCards(CardRank rank, List<CardSuit> cardSuits) {
+    private static Stream<Card> generateCardsOfRank(CardRank rank, List<CardSuit> cardSuits) {
         return cardSuits.stream()
                 .map(suit -> new Card(rank, suit));
     }
