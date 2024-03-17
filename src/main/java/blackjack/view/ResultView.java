@@ -12,6 +12,6 @@ public class ResultView {
     }
 
     private static void printPlayerResult(Name name, Profit profit) {
-        System.out.println(String.format("%s: %s", name.asString(), profit.getValue()));
+        System.out.println(String.format("%s: %s", name.getValue(), profit.getValue()));
     }
 }

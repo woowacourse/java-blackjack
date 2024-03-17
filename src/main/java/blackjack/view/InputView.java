@@ -28,7 +28,7 @@ public class InputView {
         List<String> bettingAmounts = new ArrayList<>();
         for (Name name : names.getNames()) {
             System.out.println(
-                    System.lineSeparator() + String.format("%s의 배팅 금액은?", name.asString()));
+                    System.lineSeparator() + String.format("%s의 배팅 금액은?", name.getValue()));
             bettingAmounts.add(input());
         }
         return bettingAmounts;
@@ -36,7 +36,7 @@ public class InputView {
 
     public static BlackjackCommand inputBlackjackCommand(Name playerName) {
         System.out.println(
-                String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", playerName.asString()));
+                String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", playerName.getValue()));
 
         return BlackjackCommand.from(input());
     }

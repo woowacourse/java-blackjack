@@ -41,14 +41,6 @@ public class Names {
         return value.stream();
     }
 
-    public int size() {
-        return value.size();
-    }
-
-    public Name getName(int index) {
-        return value.get(index);
-    }
-
     public List<Name> getNames() {
         return new ArrayList<>(value);
     }

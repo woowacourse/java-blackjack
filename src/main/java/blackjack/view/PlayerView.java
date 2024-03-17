@@ -29,12 +29,12 @@ public class PlayerView {
     private static void printPlayersPreview(Dealer dealer, List<GamePlayer> gamePlayers) {
         String result = gamePlayers.stream()
                                    .map(GamePlayer::getName)
-                                   .map(Name::asString)
+                                   .map(Name::getValue)
                                    .collect(Collectors.joining(","));
         System.out.println(
                 System.lineSeparator() +
                         String.format("%s와 %s에게 2장을 나누었습니다.", dealer.getName()
-                                                                    .asString(), result));
+                                                                    .getValue(), result));
     }
 
     private static void printPlayersFirstOpenCard(List<Player> players) {
@@ -44,7 +44,7 @@ public class PlayerView {
     public static void printPlayerOpenCards(Player player) {
         String result = CardPrinter.printCards(player.getOpenCards());
         System.out.println(String.format("%s카드: %s", player.getName()
-                                                           .asString(), result));
+                                                           .getValue(), result));
     }
 
     public static void printPlayersWithScore(Players players) {
@@ -57,7 +57,7 @@ public class PlayerView {
     private static void printPlayerWithScore(Player player) {
         String result = CardPrinter.printCards(player.getCards());
         System.out.println(String.format("%s 카드: %s - 결과 : %d", player.getName()
-                                                                      .asString(), result,
+                                                                      .getValue(), result,
                 player.calculateScore()));
     }
 

@@ -14,7 +14,7 @@ public class NameTest {
     void Name_Instance_create_with_String() {
         assertThatCode(() -> {
             Name name = new Name("초롱");
-            Assertions.assertEquals(name.asString(), "초롱");
+            Assertions.assertEquals(name.getValue(), "초롱");
         }).doesNotThrowAnyException();
     }
 
