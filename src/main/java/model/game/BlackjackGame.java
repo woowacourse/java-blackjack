@@ -32,7 +32,7 @@ public class BlackjackGame {
     }
 
     private void dealCards(Participant participant) {
-        for (int count = 0; count < INITIAL_CARD_COUNT; count++) {
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
             Card card = cardDeck.drawCard();
             participant.hit(card);
         }

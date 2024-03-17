@@ -34,7 +34,7 @@ public class CardDeck {
 
     private static List<Card> generateDeck(int deckCount) {
         List<Card> deck = new ArrayList<>();
-        for (int count = 0; count < deckCount; count++) {
+        for (int i = 0; i < deckCount; i++) {
             deck.addAll(createCards());
         }
         return deck;
