@@ -29,7 +29,7 @@ class DealerTest {
         dealer.addCard(new Card(CardKind.SPADE, CardNumber.JACK));
         dealer.addCard(new Card(CardKind.HEART, CardNumber.SIX));
 
-        assertTrue(dealer::shouldDraw);
+        assertTrue(dealer::canAddCard);
     }
 
     @DisplayName("딜러는 자신의 패가 17이상이면 한장을 더 받을 수 없다")
@@ -39,7 +39,7 @@ class DealerTest {
         dealer.addCard(new Card(CardKind.SPADE, CardNumber.JACK));
         dealer.addCard(new Card(CardKind.HEART, CardNumber.SEVEN));
 
-        assertFalse(dealer::shouldDraw);
+        assertFalse(dealer::canAddCard);
     }
 
     @DisplayName("딜러는 첫번째 패의 첫장을 보여준다")

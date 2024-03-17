@@ -71,7 +71,7 @@ public class GameController {
     }
 
     private static void confirmDealerHands(Dealer dealer, Deck deck) {
-        while (dealer.shouldDraw()) {
+        while (dealer.canAddCard()) {
             dealer.addCard(deck.draw());
             OutputView.printDealerDrawMessage();
         }
