@@ -1,15 +1,17 @@
 package blackjack.domain.participant;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class Name {
     private static final int MAX_NAME_LENGTH = 5;
+    private static final Pattern NAME_REGEX = Pattern.compile("^[a-zA-Z가-힣]*$");
 
     private final String name;
 
     public Name(String name) {
         validateNameLength(name);
-        validateNameCharacter(name);
+        validateName(name);
         this.name = name;
     }
 
@@ -19,30 +21,14 @@ public class Name {
         }
     }
 
-    private void validateNameCharacter(String name) {
-        if (hasInvalidCharacter(name)) {
+    private void validateName(String name) {
+        if (isInvalidName(name)) {
             throw new IllegalArgumentException(String.format("이름은 한글 또는 영어만 가능합니다. 입력값: %s", name));
         }
     }
 
-    private boolean hasInvalidCharacter(String name) {
-        return name.chars().anyMatch(this::isInvalidCharacter);
-    }
-
-    private boolean isInvalidCharacter(int character) {
-        return !(isKorean(character) || isLowerAlphabet(character) || isUpperAlphabet(character));
-    }
-
-    private boolean isKorean(int character) {
-        return '가' <= character && character <= '힣';
-    }
-
-    private boolean isLowerAlphabet(int character) {
-        return 'a' <= character && character <= 'z';
-    }
-
-    private boolean isUpperAlphabet(int character) {
-        return 'A' <= character && character <= 'Z';
+    private boolean isInvalidName(String name) {
+        return !NAME_REGEX.matcher(name).matches();
     }
 
     public String getName() {
