@@ -1,6 +1,5 @@
 package model.player;
 
-import model.GameMoney;
 import model.Outcome;
 import model.card.Card;
 import model.card.Cards;
@@ -11,26 +10,23 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class Participant extends User {
+    private final ParticipantProfile profile;
 
-    private final Name name;
-    private final GameMoney gameMoney;
-
-    public Participant(Cards cards, Name name, GameMoney gameMoney) {
+    public Participant(Cards cards, ParticipantProfile profile) {
         super(cards);
-        this.name = name;
-        this.gameMoney = gameMoney;
+        this.profile = profile;
     }
 
     public void offerCard(Predicate<Name> inputForMoreCard,
                           BiConsumer<Name, Cards> printParticipantsCard, Supplier<Card> selectCard) {
-        while (isHit() && inputForMoreCard.test(getName())) {
+        while (isHit() && inputForMoreCard.test(profile.getName())) {
             addCard(selectCard.get());
-            printParticipantsCard.accept(getName(), getCards());
+            printParticipantsCard.accept(profile.getName(), getCards());
         }
     }
 
     public int calculateRevenue(Dealer dealer) {
-        return gameMoney.calculateRevenue(
+        return profile.calculateRevenue(
                 findOutcome(dealer),
                 cards.findBlackJackState());
     }
@@ -57,7 +53,7 @@ public class Participant extends User {
     }
 
     public Name getName() {
-        return name;
+        return profile.getName();
     }
 
     @Override
@@ -65,11 +61,11 @@ public class Participant extends User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Participant that = (Participant) o;
-        return Objects.equals(name, that.name);
+        return Objects.equals(profile, that.profile);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(profile);
     }
 }

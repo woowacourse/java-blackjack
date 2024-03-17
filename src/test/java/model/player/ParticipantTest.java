@@ -35,7 +35,7 @@ class ParticipantTest {
         Participant participant = new Participant(new Cards(List.of(
                 Card.of(Suit.SPACE, Denomination.TEN),
                 Card.of(Suit.SPACE, Denomination.KING))),
-                new Name("배키"), new GameMoney(1000));
+                new ParticipantProfile(new Name("배키"), new GameMoney(1000)));
 
         assertFalse(participant.isNotHit());
     }
@@ -46,7 +46,7 @@ class ParticipantTest {
         Participant participant = new Participant(new Cards(List.of(
                 Card.of(Suit.SPACE, Denomination.TEN),
                 Card.of(Suit.SPACE, Denomination.KING))),
-                new Name("배키"), new GameMoney(1000));
+                new ParticipantProfile(new Name("배키"), new GameMoney(1000)));
         participant.addCard(Card.of(Suit.CLOVER, Denomination.THREE));
 
         assertTrue(participant.isNotHit());
@@ -58,7 +58,7 @@ class ParticipantTest {
         Participant participant = new Participant(new Cards(List.of(
                 Card.of(Suit.SPACE, Denomination.NINE),
                 Card.of(Suit.SPACE, Denomination.FIVE))),
-                new Name("배키"), new GameMoney(1000));
+                new ParticipantProfile(new Name("배키"), new GameMoney(1000)));
         Dealer dealer = new Dealer(
                 new Cards(List.of(
                         Card.of(Suit.CLOVER, Denomination.NINE),
@@ -73,11 +73,11 @@ class ParticipantTest {
         Participant overThresholdParticipant = new Participant(new Cards(List.of(
                 Card.of(Suit.SPACE, Denomination.EIGHT),
                 Card.of(Suit.CLOVER, Denomination.NINE))),
-                new Name("켬미"), new GameMoney(1000));
+                new ParticipantProfile(new Name("켬미"), new GameMoney(1000)));
         Participant underThresholdParticipant = new Participant(new Cards(List.of(
                 Card.of(Suit.SPACE, Denomination.EIGHT),
                 Card.of(Suit.CLOVER, Denomination.NINE))),
-                new Name("켬미"), new GameMoney(1000));
+                new ParticipantProfile(new Name("켬미"), new GameMoney(1000)));
         overThresholdParticipant.addCard(Card.of(Suit.HEART, Denomination.NINE));
         return Stream.of(Arguments.of(
                 underThresholdParticipant,
@@ -123,7 +123,7 @@ class ParticipantTest {
         Participant participant = new Participant(new Cards(List.of(
                 Card.of(Suit.SPACE, Denomination.KING),
                 Card.of(Suit.SPACE, Denomination.JACK))),
-                new Name("켬미"), new GameMoney(1000));
+                new ParticipantProfile(new Name("켬미"), new GameMoney(1000)));
         Outcome playerOutcome = participant.findOutcome(dealer);
 
         Assertions.assertThat(playerOutcome).isEqualTo(Outcome.WIN);

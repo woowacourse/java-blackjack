@@ -22,11 +22,11 @@ class ParticipantsTest {
                                 new Participant(new Cards(List.of(
                                         Card.of(Suit.SPACE, Denomination.NINE),
                                         Card.of(Suit.SPACE, Denomination.FIVE))),
-                                        new Name("켬미"), new GameMoney(1000)),
+                                        new ParticipantProfile(new Name("켬미"), new GameMoney(1000))),
                                 new Participant(new Cards(List.of(
                                         Card.of(Suit.SPACE, Denomination.NINE),
                                         Card.of(Suit.SPACE, Denomination.FIVE))),
-                                        new Name("켬미"), new GameMoney(1000))
+                                        new ParticipantProfile(new Name("켬미"), new GameMoney(1000)))
 
                         )))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -37,17 +37,27 @@ class ParticipantsTest {
         CardDeck cardDeck = new CardDeck(Card.createCardDeck());
 
         return Stream.of(Arguments.of(
-                List.of(new Participant(cardDeck.selectRandomCards(CardSize.TWO), new Name("배키"), new GameMoney(1000))),
+                List.of(new Participant(cardDeck.selectRandomCards(CardSize.TWO),
+                                new ParticipantProfile(new Name("배키"), new GameMoney(1000)))),
                 List.of(
-                        new Participant(cardDeck.selectRandomCards(CardSize.TWO), new Name("도비"), new GameMoney(1000)),
-                        new Participant(cardDeck.selectRandomCards(CardSize.TWO), new Name("리사"), new GameMoney(1000)),
-                        new Participant(cardDeck.selectRandomCards(CardSize.TWO), new Name("명오"), new GameMoney(1000)),
-                        new Participant(cardDeck.selectRandomCards(CardSize.TWO), new Name("제우스"), new GameMoney(1000)),
-                        new Participant(cardDeck.selectRandomCards(CardSize.TWO), new Name("호티"), new GameMoney(1000)),
-                        new Participant(cardDeck.selectRandomCards(CardSize.TWO), new Name("초롱"), new GameMoney(1000)),
-                        new Participant(cardDeck.selectRandomCards(CardSize.TWO), new Name("조이썬"), new GameMoney(1000)),
-                        new Participant(cardDeck.selectRandomCards(CardSize.TWO), new Name("프람"), new GameMoney(1000)),
-                        new Participant(cardDeck.selectRandomCards(CardSize.TWO), new Name("폰드"), new GameMoney(1000))
+                        new Participant(cardDeck.selectRandomCards(CardSize.TWO),
+                                new ParticipantProfile(new Name("도비"), new GameMoney(1000))),
+                        new Participant(cardDeck.selectRandomCards(CardSize.TWO),
+                                new ParticipantProfile(new Name("리사"), new GameMoney(1000))),
+                        new Participant(cardDeck.selectRandomCards(CardSize.TWO),
+                                new ParticipantProfile(new Name("명오"), new GameMoney(1000))),
+                        new Participant(cardDeck.selectRandomCards(CardSize.TWO),
+                                new ParticipantProfile(new Name("제우스"), new GameMoney(1000))),
+                        new Participant(cardDeck.selectRandomCards(CardSize.TWO),
+                                new ParticipantProfile(new Name("호티"), new GameMoney(1000))),
+                        new Participant(cardDeck.selectRandomCards(CardSize.TWO),
+                                new ParticipantProfile(new Name("초롱"), new GameMoney(1000))),
+                        new Participant(cardDeck.selectRandomCards(CardSize.TWO),
+                                new ParticipantProfile(new Name("조이썬"), new GameMoney(1000))),
+                        new Participant(cardDeck.selectRandomCards(CardSize.TWO),
+                                new ParticipantProfile(new Name("프람"), new GameMoney(1000))),
+                        new Participant(cardDeck.selectRandomCards(CardSize.TWO),
+                                new ParticipantProfile(new Name("폰드"), new GameMoney(1000)))
                 )));
     }
 

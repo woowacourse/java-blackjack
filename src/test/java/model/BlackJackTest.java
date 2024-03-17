@@ -1,10 +1,7 @@
 package model;
 
 import model.card.*;
-import model.player.Dealer;
-import model.player.Name;
-import model.player.Participant;
-import model.player.Participants;
+import model.player.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -40,7 +37,8 @@ class BlackJackTest {
                 Card.of(Suit.SPACE, Denomination.FIVE)));
         Assertions.assertThatThrownBy(
                         () -> new BlackJack(new Participants(List.of(
-                                new Participant(participantCards, new Name("배키"), new GameMoney(1000))))
+                                new Participant(participantCards,
+                                        new ParticipantProfile(new Name("배키"), new GameMoney(1000)))))
                                 , null
                                 , cardDeck))
                 .isInstanceOf(IllegalArgumentException.class);

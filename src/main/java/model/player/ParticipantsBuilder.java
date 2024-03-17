@@ -76,8 +76,10 @@ public class ParticipantsBuilder {
 
     public Participants build() {
         validateInstance();
+
         List<Participant> participants = IntStream.range(0, names.size())
-                .mapToObj(i -> new Participant(cards.get(i), names.get(i), gameMoneys.get(i)))
+                .mapToObj(i -> new Participant(cards.get(i),
+                        new ParticipantProfile(names.get(i), gameMoneys.get(i))))
                 .toList();
 
         return new Participants(participants);
