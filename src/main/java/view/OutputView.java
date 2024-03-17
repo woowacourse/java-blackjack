@@ -5,6 +5,7 @@ import domain.Player;
 import domain.constant.GamerIdentifier;
 import domain.dto.GameStatus;
 import domain.dto.GamerDto;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -86,6 +87,7 @@ public class OutputView {
     }
 
     private static void printGamerProfit(String gamerName, double profit) {
-        System.out.printf("%s: %f%n", gamerName, profit);
+        DecimalFormat decimalFormat = new DecimalFormat("#");
+        System.out.printf("%s: %s%n", gamerName, decimalFormat.format(profit));
     }
 }
