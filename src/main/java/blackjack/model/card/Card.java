@@ -32,11 +32,8 @@ public final class Card {
         return denomination.getScore();
     }
 
-    public Suit getSuit() {
-        return suit;
-    }
-
-    public Denomination getDenomination() {
-        return denomination;
+    @Override
+    public String toString() {
+        return denomination.getName() + suit.getName();
     }
 }

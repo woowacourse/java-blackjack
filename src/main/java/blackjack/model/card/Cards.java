@@ -4,8 +4,7 @@ import blackjack.model.cardgenerator.CardGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.Collections.unmodifiableList;
+import java.util.stream.Collectors;
 
 public class Cards {
     private static final Score MAX_CARDS_TOTAL = Score.from(21);
@@ -70,7 +69,10 @@ public class Cards {
         return cards.get(index);
     }
 
-    public List<Card> getCards() {
-        return unmodifiableList(cards);
+    @Override
+    public String toString() {
+        return cards.stream()
+                .map(Card::toString)
+                .collect(Collectors.joining(", "));
     }
 }

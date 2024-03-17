@@ -15,7 +15,7 @@ public class CardsTest {
         Cards cards = Cards.deal(() -> new Card(Suit.HEART, Denomination.TWO));
 
         // then
-        assertThat(cards.getCards()).hasSize(2);
+        assertThat(cards.getSize()).isEqualTo(2);
     }
 
     @Test
@@ -86,6 +86,6 @@ public class CardsTest {
         cards.addCard(() -> new Card(Suit.HEART, Denomination.TWO));
 
         // then
-        assertThat(cards.getCards()).hasSize(3);
+        assertThat(cards.getSize()).isEqualTo(3);
     }
 }

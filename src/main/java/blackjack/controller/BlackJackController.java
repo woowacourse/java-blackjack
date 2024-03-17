@@ -3,12 +3,15 @@ package blackjack.controller;
 import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.cardgenerator.RandomCardGenerator;
 import blackjack.model.dealer.Dealer;
-import blackjack.model.player.*;
+import blackjack.model.player.Name;
+import blackjack.model.player.PlayerActionExecutor;
+import blackjack.model.player.Players;
 import blackjack.model.result.BettingBoard;
 import blackjack.model.result.BettingMoney;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.DealerFinalCardsOutcome;
+import blackjack.view.dto.ExecutingPlayer;
 import blackjack.view.dto.PlayerEarning;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
 
@@ -32,7 +35,7 @@ public class BlackJackController {
         Players players = retryOnException(() -> preparePlayers(cardGenerator));
         BettingBoard bettingBoard = prepareBettingBoard(players);
         Dealer dealer = new Dealer(cardGenerator);
-        outputView.printDealingResult(players, dealer);
+        printDealingResult(players, dealer);
 
         play(players, dealer, cardGenerator);
         end(players, dealer, bettingBoard);
@@ -45,37 +48,38 @@ public class BlackJackController {
 
     private BettingBoard prepareBettingBoard(final Players players) {
         Map<Name, BettingMoney> board = new HashMap<>();
-        for (Name playerName : players.getNames()) {
-            BettingMoney bettingMoney = retryOnException(() -> askBettingMoney(playerName));
-            board.put(playerName, bettingMoney);
+        for (Name name : players.getNames()) {
+            BettingMoney bettingMoney = retryOnException(() -> askBettingMoney(name));
+            board.put(name, bettingMoney);
         }
         return new BettingBoard(board);
     }
 
+    private void printDealingResult(final Players players, final Dealer dealer) {
+        List<ExecutingPlayer> executingPlayers = players.captureExecutingPlayer();
+        String dealerCards = dealer.getCards().toString();
+        outputView.printDealingResult(executingPlayers, dealerCards);
+    }
+
     private BettingMoney askBettingMoney(final Name playerName) {
-        int bettingMoney = inputView.askBettingMoney(playerName);
+        int bettingMoney = inputView.askBettingMoney(playerName.toString());
         return new BettingMoney(bettingMoney);
     }
 
     private void play(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
         doPlayerAction(players, cardGenerator);
         dealer.hitUntilEnd(cardGenerator);
-        outputView.printDealerActionResult(dealer);
+        outputView.printDealerActionResult(dealer.getActionCount());
     }
 
     private void doPlayerAction(final Players players, final CardGenerator cardGenerator) {
         PlayerActionExecutor playerActionExecutor = new PlayerActionExecutor(players, cardGenerator);
         while (!playerActionExecutor.isFinished()) {
-            Player player = playerActionExecutor.getExecutingPlayer();
-            PlayerAction playerAction = retryOnException(() -> askPlayerHitTry(player.getName()));
-            playerActionExecutor.execute(playerAction);
+            ExecutingPlayer player = playerActionExecutor.getExecutingPlayer();
+            boolean actionCommand = retryOnException(() -> inputView.askHitOrStandCommand(player.name()));
+            playerActionExecutor.execute(actionCommand);
             outputView.printPlayerActionResult(player);
         }
-    }
-
-    private PlayerAction askPlayerHitTry(final Name playerName) {
-        boolean askContinuance = inputView.askHitOrStandCommand(playerName.getValue());
-        return PlayerAction.from(askContinuance);
     }
 
     private void end(final Players players, final Dealer dealer, final BettingBoard bettingBoard) {

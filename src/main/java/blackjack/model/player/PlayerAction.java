@@ -4,8 +4,8 @@ public enum PlayerAction {
     HIT,
     STAND;
 
-    public static PlayerAction from(final boolean askContinuance) {
-        if (askContinuance) {
+    public static PlayerAction from(final boolean actionCommand) {
+        if (actionCommand) {
             return HIT;
         }
         return STAND;

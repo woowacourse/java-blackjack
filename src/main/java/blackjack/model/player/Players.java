@@ -4,6 +4,7 @@ import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.dealer.Dealer;
 import blackjack.model.result.BettingBoard;
 import blackjack.model.result.MatchResult;
+import blackjack.view.dto.ExecutingPlayer;
 import blackjack.view.dto.PlayerEarning;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
 
@@ -51,6 +52,12 @@ public class Players {
             playerEarnings.add(earning);
         }
         return playerEarnings;
+    }
+
+    public List<ExecutingPlayer> captureExecutingPlayer() {
+        return players.stream()
+                .map(ExecutingPlayer::from)
+                .toList();
     }
 
     public List<PlayerFinalCardsOutcome> captureFinalCardsOutcomes() {

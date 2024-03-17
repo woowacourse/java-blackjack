@@ -1,6 +1,7 @@
 package blackjack.model.player;
 
 import blackjack.model.cardgenerator.CardGenerator;
+import blackjack.view.dto.ExecutingPlayer;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
@@ -16,9 +17,10 @@ public class PlayerActionExecutor {
         this.cardGenerator = cardGenerator;
     }
 
-    public void execute(final PlayerAction playerAction) {
+    public void execute(final boolean actionCommand) {
         checkExecutionIsFinished();
 
+        PlayerAction playerAction = PlayerAction.from(actionCommand);
         Player player = waitingPlayers.peek();
         if (playerAction.canNotContinue(player)) {
             waitingPlayers.poll();
@@ -27,9 +29,10 @@ public class PlayerActionExecutor {
         player.hit(cardGenerator);
     }
 
-    public Player getExecutingPlayer() {
+    public ExecutingPlayer getExecutingPlayer() {
         checkExecutionIsFinished();
-        return waitingPlayers.peek();
+        Player player = waitingPlayers.peek();
+        return ExecutingPlayer.from(player);
     }
 
     public boolean isFinished() {

@@ -1,11 +1,7 @@
 package blackjack.view;
 
-import blackjack.model.card.Card;
-import blackjack.model.dealer.Dealer;
-import blackjack.model.player.Name;
-import blackjack.model.player.Player;
-import blackjack.model.player.Players;
 import blackjack.view.dto.DealerFinalCardsOutcome;
+import blackjack.view.dto.ExecutingPlayer;
 import blackjack.view.dto.PlayerEarning;
 import blackjack.view.dto.PlayerFinalCardsOutcome;
 
@@ -22,60 +18,47 @@ public class OutputView {
     public static final String DEALER_EARNING_PREFIX = "딜러: ";
     public static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
 
-    public void printDealingResult(final Players players, final Dealer dealer) {
-        String names = formatName(players);
+    public void printDealingResult(final List<ExecutingPlayer> executingPlayers, final String dealerCards) {
+        String names = formatNames(executingPlayers);
         System.out.printf(DEALING_RESULT_INTRO, names);
-        System.out.printf(DEALER_CARDS_FORM, formatCard(dealer.getFirstCard()));
+        System.out.printf(DEALER_CARDS_FORM, dealerCards);
         System.out.println();
-        for (Player player : players.getPlayers()) {
+        for (ExecutingPlayer player : executingPlayers) {
             System.out.println(formatPlayerCards(player));
         }
     }
 
-    private String formatName(final Players players) {
-        return players.getNames()
-                .stream()
-                .map(Name::getValue)
+    private String formatNames(final List<ExecutingPlayer> executingPlayers) {
+        return executingPlayers.stream()
+                .map(ExecutingPlayer::name)
                 .collect(Collectors.joining(", "));
     }
 
-    private String formatCard(final Card card) {
-        return card.getDenomination().getName() + card.getSuit().getName();
+    private String formatPlayerCards(final ExecutingPlayer player) {
+        return String.format(PLAYER_CARDS_FORM, player.name(), player.cards());
     }
 
-    private String formatPlayerCards(final Player player) {
-        List<Card> cards = player.getCards();
-        String joinedCards = formatCards(cards);
-        return String.format(PLAYER_CARDS_FORM, player.getName(), joinedCards);
-    }
-
-    private String formatCards(final List<Card> cards) {
-        return cards.stream()
-                .map(this::formatCard)
-                .collect(Collectors.joining(", "));
-    }
-
-    public void printPlayerActionResult(final Player player) {
+    public void printPlayerActionResult(final ExecutingPlayer player) {
         System.out.println(formatPlayerCards(player));
     }
 
-    public void printDealerActionResult(final Dealer dealer) {
-        System.out.printf(DEALER_ACTION_FORM, dealer.getActionCount());
+    public void printDealerActionResult(final int dealerActionCount) {
+        System.out.printf(DEALER_ACTION_FORM, dealerActionCount);
     }
 
     public void printDealerFinalCards(final DealerFinalCardsOutcome dealerFinalCardsOutcome) {
-        List<Card> dealerCards = dealerFinalCardsOutcome.cards();
+        String dealerCards = dealerFinalCardsOutcome.cards();
         int dealerTotalScore = dealerFinalCardsOutcome.totalScore();
-        System.out.printf(DEALER_CARDS_FORM, formatCards(dealerCards));
+        System.out.printf(DEALER_CARDS_FORM, dealerCards);
         System.out.printf(TOTAL_SCORE_FORM, dealerTotalScore);
     }
 
     public void printPlayersFinalCards(final List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes) {
         for (PlayerFinalCardsOutcome playerOutcome : playerFinalCardsOutcomes) {
             String playerName = playerOutcome.name();
-            List<Card> playerCards = playerOutcome.cards();
+            String playerCards = playerOutcome.cards();
             int playerTotalScore = playerOutcome.totalScore();
-            System.out.printf(PLAYER_CARDS_FORM, playerName, formatCards(playerCards));
+            System.out.printf(PLAYER_CARDS_FORM, playerName, playerCards);
             System.out.printf(TOTAL_SCORE_FORM, playerTotalScore);
         }
     }

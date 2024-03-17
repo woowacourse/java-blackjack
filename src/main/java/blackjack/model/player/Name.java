@@ -31,7 +31,8 @@ public class Name {
         return Objects.hash(value);
     }
 
-    public String getValue() {
+    @Override
+    public String toString() {
         return value;
     }
 }

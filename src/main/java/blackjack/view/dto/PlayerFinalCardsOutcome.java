@@ -1,12 +1,12 @@
 package blackjack.view.dto;
 
-import blackjack.model.card.Card;
 import blackjack.model.player.Player;
 
-import java.util.List;
-
-public record PlayerFinalCardsOutcome(String name, List<Card> cards, int totalScore) {
+public record PlayerFinalCardsOutcome(String name, String cards, int totalScore) {
     public static PlayerFinalCardsOutcome of(final Player player) {
-        return new PlayerFinalCardsOutcome(player.getName().getValue(), player.getCards(), player.calculateCardsTotalScore().getValue());
+        return new PlayerFinalCardsOutcome(
+                player.getName().toString(), player.getCards().toString(),
+                player.calculateCardsTotalScore().getValue()
+        );
     }
 }

@@ -18,7 +18,7 @@ public class BettingBoard {
     public PlayerEarning determineEarning(final Name playerName, final MatchResult matchResult) {
         BettingMoney bettingMoney = getBettingMoney(playerName);
         int earning = matchResult.calculateEarning(bettingMoney);
-        return new PlayerEarning(playerName.getValue(), earning);
+        return new PlayerEarning(playerName.toString(), earning);
     }
 
     private BettingMoney getBettingMoney(final Name playerName) {
