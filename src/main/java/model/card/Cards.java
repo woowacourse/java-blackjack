@@ -7,6 +7,7 @@ import java.util.List;
 public class Cards {
 
     private final static int MAXIMUM_SUM = 21;
+    private final static int INITIAL_CARD_COUNT = 2;
 
     private List<Card> cards;
 
@@ -23,10 +24,6 @@ public class Cards {
 
     public void addCards(List<Card> card) {
         cards.addAll(card);
-    }
-
-    public void addCard(Card card) {
-        cards.add(card);
     }
 
     public int calculateScore() {
@@ -53,12 +50,19 @@ public class Cards {
         return result;
     }
 
-    public boolean isNotHit() {
+    public boolean isBlackJack() {
+        if (calculateScore() == MAXIMUM_SUM && cards.size() == INITIAL_CARD_COUNT) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isBust() {
         return calculateScore() > MAXIMUM_SUM;
     }
 
-    public boolean isHit() {
-        return !isNotHit();
+    public boolean isNotBust() {
+        return !isBust();
     }
 
     public int findPlayerDifference() {

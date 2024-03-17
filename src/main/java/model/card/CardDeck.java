@@ -48,7 +48,7 @@ public class CardDeck {
         return card;
     }
 
-    void validateCardDeckNotEmpty() {
+    private void validateCardDeckNotEmpty() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("더 뽑을 카드가 없습니다.");
         }

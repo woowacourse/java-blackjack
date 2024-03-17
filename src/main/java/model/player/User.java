@@ -8,39 +8,40 @@ import model.card.Cards;
 
 public abstract class User {
 
-    protected final String name;
+    protected final Name name;
     protected Cards cards;
 
-    public User(String name, List<Card> cards) {
-        validateName(name);
+    public User(Name name, List<Card> cards) {
         this.name = name;
         this.cards = new Cards(cards);
     }
 
-    private void validateName(String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("참가자의 이름은 공백이거나 null일 수 없습니다.");
-        }
+    public void addCards(Card... card) {
+        this.cards.addCards(List.of(card));
     }
 
     public void addCards(List<Card> card) {
         cards.addCards(card);
     }
 
-    public void addCard(Card card) {
-        cards.addCard(card);
-    }
-
     public int calculateScore() {
         return cards.calculateScore();
     }
 
-    public boolean isNotHit() {
-        return cards.isNotHit();
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
     }
 
-    public boolean isHit() {
-        return cards.isHit();
+    public boolean isNotBlackJack() {
+        return !cards.isBlackJack();
+    }
+
+    public boolean isBust() {
+        return cards.isBust();
+    }
+
+    public boolean isNotBust() {
+        return cards.isNotBust();
     }
 
     public int findPlayerDifference() {
@@ -58,7 +59,7 @@ public abstract class User {
         return Outcome.DRAW;
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 

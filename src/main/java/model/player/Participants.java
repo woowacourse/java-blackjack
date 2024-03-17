@@ -1,8 +1,12 @@
 package model.player;
 
+import static java.util.stream.Collectors.toMap;
+
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -23,7 +27,7 @@ public class Participants {
 
         if (!duplicates.isEmpty()) {
             String duplicatedName = duplicates.stream()
-                    .map(User::getName)
+                    .map(user -> user.getName().getValue())
                     .collect(Collectors.joining(","));
             throw new IllegalArgumentException("중복된 이름(" + duplicatedName + ")가 있습니다, 참가자들의 이름은 중복되면 안됩니다.");
         }
@@ -37,12 +41,26 @@ public class Participants {
 
     public boolean isExistParticipant(Participant receiver) {
         return participants.stream()
-                .anyMatch(player -> player.equals(receiver));
+                .anyMatch(player -> player.getName().equals(receiver.getName()));
     }
 
-    public List<String> findParticipantsName() {
+    public List<Name> findParticipantsName() {
         return participants.stream()
-                .map(participant -> participant.name).toList();
+                .map(User::getName)
+                .toList();
+    }
+
+    public Double sumAllParticipantProfit(Dealer dealer) {
+        return participants.stream()
+                .mapToDouble(participant -> participant.calculateProfit(dealer))
+                .sum();
+    }
+
+    public Map<Participant, Double> calculateParticipantProfit(Dealer dealer) {
+        return participants.stream()
+                .collect(toMap(
+                        Function.identity(),
+                        participant -> participant.calculateProfit(dealer)));
     }
 
     public List<Participant> getParticipants() {

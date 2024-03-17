@@ -1,22 +1,33 @@
 package model.player;
 
 import java.util.List;
+import model.BettingMoney;
 import model.Outcome;
 import model.card.Card;
 
 public class Participant extends User {
 
-    public Participant(String name, List<Card> cards) {
+    private BettingMoney bettingMoney;
+
+    public Participant(Name name, List<Card> cards, BettingMoney bettingMoney) {
         super(name, cards);
+        this.bettingMoney = bettingMoney;
     }
 
-    public Outcome findOutcome(Dealer dealer) {
-        if (isNotHit()) {
-            return Outcome.LOSE;
+    public Double calculateProfit(Dealer dealer) {
+        if (dealer.isBust()) {
+            return Outcome.WIN.calculateProfit(bettingMoney);
         }
-        if (dealer.isNotHit()) {
-            return Outcome.WIN;
+        if (isBust()) {
+            return Outcome.LOSE.calculateProfit(bettingMoney);
         }
-        return findPlayerOutcome(dealer.findPlayerDifference());
+        if (isBlackJack() && dealer.isNotBlackJack()) {
+            return Outcome.BLACKJACK.calculateProfit(bettingMoney);
+        }
+        if (isBlackJack() && dealer.isBlackJack()) {
+            return Outcome.WIN.calculateProfit(bettingMoney);
+        }
+        return findPlayerOutcome(dealer.findPlayerDifference())
+                .calculateProfit(bettingMoney);
     }
 }

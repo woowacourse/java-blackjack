@@ -1,7 +1,5 @@
 package model;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
 
 import java.util.List;
@@ -11,6 +9,7 @@ import java.util.function.Function;
 import model.card.CardSize;
 import model.card.Cards;
 import model.player.Dealer;
+import model.player.Name;
 import model.player.Participant;
 import model.player.Participants;
 import model.player.User;
@@ -39,22 +38,22 @@ public class BlackJack {
         }
     }
 
-    public void decideParticipantsPlay(Function<String, Boolean> isMoreCard, BiConsumer<String, Cards> callback) {
+    public void decideParticipantsPlay(Function<Name, Boolean> isMoreCard, BiConsumer<Name, Cards> callback) {
         for (Participant participant : participants.getParticipants()) {
             decideParticipantPlay(participant, isMoreCard, callback);
         }
     }
 
     private void decideParticipantPlay(Participant participant,
-                                       Function<String, Boolean> isMoreCard, BiConsumer<String, Cards> callback) {
-        while (participant.isHit() && isMoreCard.apply(participant.getName())) {
+                                       Function<Name, Boolean> isMoreCard, BiConsumer<Name, Cards> callback) {
+        while (participant.isNotBust() && isMoreCard.apply(participant.getName())) {
             offerCardToParticipant(participant, CardSize.ONE);
             callback.accept(participant.getName(), participant.getCards());
         }
     }
 
     public void decideDealerPlay(Runnable runnable) {
-        while (dealer.isHit()) {
+        while (dealer.isNotBust()) {
             runnable.run();
             offerCardToDealer(CardSize.ONE);
         }
@@ -63,6 +62,7 @@ public class BlackJack {
     private void offerCardToParticipant(Participant participant, CardSize size) {
         if (participants.isExistParticipant(participant)) {
             dealer.offerCardToParticipant(participant, size);
+            return;
         }
         throw new IllegalArgumentException("참가자(" + participant.getName() + ")가 존재하지 않습니다.");
     }
@@ -71,22 +71,24 @@ public class BlackJack {
         dealer.addCards(dealer.takeCardFromDeck(size));
     }
 
-    public Map<Participant, Outcome> matchParticipantsOutcome() {
+    public Map<Participant, Double> matchParticipantProfit() {
         List<Participant> sumPlayers = participants.getParticipants();
         return sumPlayers.stream()
                 .collect(toMap(
                         participant -> participant,
-                        participant -> participant.findOutcome(dealer)
+                        participant -> participant.calculateProfit(dealer)
                 ));
     }
 
-    public Map<Outcome, Long> getDealerOutCome() {
-        Map<Participant, Outcome> participantOutcome = matchParticipantsOutcome();
-        return participantOutcome.values().stream()
-                .collect(groupingBy(Outcome::reverse, counting()));
+    public Double getDealerProfit() {
+        return participants.sumAllParticipantProfit(dealer) * -1.0;
     }
 
-    public Map<String, Cards> mapToUsersNameAndCards() {
+    public Map<Participant, Double> getParticipantProfits() {
+        return participants.calculateParticipantProfit(dealer);
+    }
+
+    public Map<Name, Cards> mapToUsersNameAndCards() {
         return participants.getParticipants().stream()
                 .collect(toMap(
                         User::getName,
@@ -94,11 +96,11 @@ public class BlackJack {
                 ));
     }
 
-    public List<String> findParticipantsName() {
+    public List<Name> findParticipantsName() {
         return participants.findParticipantsName();
     }
 
-    public Map<String, Cards> mapToDealerNameAndCards() {
+    public Map<Name, Cards> mapToDealerNameAndCards() {
         return Map.of(dealer.getName(), dealer.getCards());
     }
 }
