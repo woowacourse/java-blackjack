@@ -8,6 +8,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CardMapper {
+    private CardMapper() {
+    }
+
     public static CardDto cardToCardDto(final Card card) {
         return new CardDto(convertToPhrase(card.number()), card.shape()
                                                                .value());

@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParticipantMapper {
+    private ParticipantMapper() {
+    }
 
     public static ParticipantDto participantToParticipantDto(final Participant participant) {
         return new ParticipantDto(new NameDto(participant.name().value()), CardMapper.handToCardsDto(participant.hand(), participant.score()));
