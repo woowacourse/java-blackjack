@@ -18,20 +18,20 @@ public class BetAmount {
         this.value = value;
     }
 
-    public Amount loseAmount() {
-        return new Amount(-value);
+    public EarnAmount loseAmount() {
+        return new EarnAmount(-value);
     }
 
-    public Amount blackJackWinAmount() {
-        return new Amount(value + (value / 2));
+    public EarnAmount blackJackWinAmount() {
+        return new EarnAmount(value + (value / 2));
     }
 
-    public Amount winAmount() {
-        return new Amount(value);
+    public EarnAmount winAmount() {
+        return new EarnAmount(value);
     }
 
-    public Amount tieAmount() {
-        return new Amount(0);
+    public EarnAmount tieAmount() {
+        return new EarnAmount(0);
     }
 
     private void validate(final long value) {

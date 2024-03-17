@@ -1,7 +1,7 @@
 package controller;
 
 import domain.Game;
-import domain.amount.Amount;
+import domain.amount.EarnAmount;
 import domain.amount.BetAmount;
 import domain.participant.Dealer;
 import domain.participant.Name;
@@ -69,8 +69,8 @@ public class BlackJackController {
 
     private void printFinalResult(final Players players, final Dealer dealer) {
         outputView.printHandsResult(ParticipantsDto.of(dealer, players));
-        final Map<Player, Amount> finalResult = players.calculateResult(dealer);
-        final Amount dealerAmount = dealer.calculateRevenue(finalResult);
-        outputView.printGameResult(finalResult, dealerAmount);
+        final Map<Player, EarnAmount> finalResult = players.calculateResult(dealer);
+        final EarnAmount dealerEarnAmount = dealer.calculateRevenue(finalResult);
+        outputView.printGameResult(finalResult, dealerEarnAmount);
     }
 }

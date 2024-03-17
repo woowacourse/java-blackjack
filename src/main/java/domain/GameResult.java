@@ -1,6 +1,6 @@
 package domain;
 
-import domain.amount.Amount;
+import domain.amount.EarnAmount;
 import domain.amount.BetAmount;
 import domain.participant.Hands;
 import java.util.Arrays;
@@ -15,9 +15,9 @@ public enum GameResult {
     LOSE(GameResult::loseCondition, BetAmount::loseAmount);
 
     private final BiPredicate<Hands, Hands> condition;
-    private final Function<BetAmount, Amount> calculate;
+    private final Function<BetAmount, EarnAmount> calculate;
 
-    GameResult(final BiPredicate<Hands, Hands> condition, final Function<BetAmount, Amount> calculate) {
+    GameResult(final BiPredicate<Hands, Hands> condition, final Function<BetAmount, EarnAmount> calculate) {
         this.condition = condition;
         this.calculate = calculate;
     }
@@ -39,7 +39,7 @@ public enum GameResult {
                 .orElseThrow();
     }
 
-    public Amount apply(BetAmount betAmount) {
+    public EarnAmount apply(BetAmount betAmount) {
         return calculate.apply(betAmount);
     }
 

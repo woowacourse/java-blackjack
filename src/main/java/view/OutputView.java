@@ -4,7 +4,7 @@ import static domain.participant.Dealer.INIT_HANDS_SIZE;
 import static domain.participant.Dealer.THRESHOLD;
 
 import constants.ErrorCode;
-import domain.amount.Amount;
+import domain.amount.EarnAmount;
 import domain.participant.Player;
 import dto.DealerHandsDto;
 import dto.ParticipantDto;
@@ -52,11 +52,11 @@ public class OutputView {
         System.out.print(LINE);
     }
 
-    public void printGameResult(final Map<Player, Amount> playerAmountMap, final Amount amount) {
+    public void printGameResult(final Map<Player, EarnAmount> playerAmountMap, final EarnAmount earnAmount) {
         System.out.println("## 최종 수익");
-        System.out.printf("딜러: %,d%n", amount.getValue());
+        System.out.printf("딜러: %,d%n", earnAmount.getValue());
 
-        for (Entry<Player, Amount> entry : playerAmountMap.entrySet()) {
+        for (Entry<Player, EarnAmount> entry : playerAmountMap.entrySet()) {
             System.out.printf(RESULT_FORM, entry.getKey().getName(), entry.getValue().getValue());
         }
     }

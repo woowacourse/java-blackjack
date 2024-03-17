@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.GameResult;
-import domain.amount.Amount;
+import domain.amount.EarnAmount;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,8 +38,8 @@ public class Players {
         return result;
     }
 
-    public Map<Player, Amount> calculateResult(final Dealer dealer) {
-        final Map<Player, Amount> playerAmountMap = new LinkedHashMap<>();
+    public Map<Player, EarnAmount> calculateResult(final Dealer dealer) {
+        final Map<Player, EarnAmount> playerAmountMap = new LinkedHashMap<>();
 
         for (Player player : names) {
             GameResult gameResult = player.calculateResult(dealer);

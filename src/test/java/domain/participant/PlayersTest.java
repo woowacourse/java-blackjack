@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.GameResult;
-import domain.amount.Amount;
+import domain.amount.EarnAmount;
 import domain.amount.BetAmount;
 import java.util.List;
 import java.util.Map;
@@ -99,10 +99,10 @@ class PlayersTest {
         final Player winner1 = new Player(new Name("레디"), sum20Size3, new BetAmount(1_000));
         final Player winner2 = new Player(new Name("제제"), sum21Size3, new BetAmount(2_000));
         final Players players = new Players(List.of(winner1, winner2));
-        final Map<Player, Amount> expected = Map.of(winner1, new Amount(1_000), winner2, new Amount(2_000));
+        final Map<Player, EarnAmount> expected = Map.of(winner1, new EarnAmount(1_000), winner2, new EarnAmount(2_000));
 
         //when
-        final Map<Player, Amount> result = players.calculateResult(dealer);
+        final Map<Player, EarnAmount> result = players.calculateResult(dealer);
 
         //then
         assertThat(result).isEqualTo(expected);
@@ -116,10 +116,10 @@ class PlayersTest {
         final Player loser = new Player(new Name("레디"), sum10Size2, new BetAmount(2_000));
         final Players players = new Players(List.of(blackJackPlayer, loser));
 
-        final Map<Player, Amount> expected = Map.of(blackJackPlayer, new Amount(15_000), loser, new Amount(-2_000));
+        final Map<Player, EarnAmount> expected = Map.of(blackJackPlayer, new EarnAmount(15_000), loser, new EarnAmount(-2_000));
 
         //when
-        final Map<Player, Amount> result = players.calculateResult(dealer);
+        final Map<Player, EarnAmount> result = players.calculateResult(dealer);
 
         //then
         assertThat(result).isEqualTo(expected);
@@ -132,10 +132,10 @@ class PlayersTest {
         final Player blackJackPlayer = new Player(new Name("수달"), blackJack, new BetAmount(10_000));
         final Player loser = new Player(new Name("레디"), sum18Size2, new BetAmount(2_000));
         final Players players = new Players(List.of(blackJackPlayer, loser));
-        final Map<Player, Amount> expected = Map.of(blackJackPlayer, new Amount(0), loser, new Amount(-2_000));
+        final Map<Player, EarnAmount> expected = Map.of(blackJackPlayer, new EarnAmount(0), loser, new EarnAmount(-2_000));
 
         //when
-        final Map<Player, Amount> result = players.calculateResult(dealer);
+        final Map<Player, EarnAmount> result = players.calculateResult(dealer);
 
         //then
         assertThat(result).isEqualTo(expected);
@@ -152,11 +152,11 @@ class PlayersTest {
         final Players players = new Players(List.of(winner1, winner2, loser1));
 
         //when
-        final Map<Player, Amount> playerAmountMap = players.calculateResult(dealer);
-        final Amount amount = dealer.calculateRevenue(playerAmountMap);
-        final Amount expected = new Amount(460_000);
+        final Map<Player, EarnAmount> playerAmountMap = players.calculateResult(dealer);
+        final EarnAmount earnAmount = dealer.calculateRevenue(playerAmountMap);
+        final EarnAmount expected = new EarnAmount(460_000);
 
         //then
-        assertThat(amount).isEqualTo(expected);
+        assertThat(earnAmount).isEqualTo(expected);
     }
 }

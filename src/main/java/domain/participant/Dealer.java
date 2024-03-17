@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.amount.Amount;
+import domain.amount.EarnAmount;
 import domain.GameResult;
 import domain.card.Card;
 import domain.card.CardDeck;
@@ -72,13 +72,13 @@ public class Dealer extends Participant {
         return dealerResult;
     }
 
-    public Amount calculateRevenue(final Map<Player, Amount> finalResult) {
+    public EarnAmount calculateRevenue(final Map<Player, EarnAmount> finalResult) {
         long dealerAmount = finalResult.values()
                 .stream()
-                .map(Amount::getValue)
+                .map(EarnAmount::getValue)
                 .mapToLong(Long::longValue)
                 .sum();
-        return new Amount(-dealerAmount);
+        return new EarnAmount(-dealerAmount);
     }
 
     @Override

@@ -2,11 +2,11 @@ package domain.amount;
 
 import java.util.Objects;
 
-public class Amount {
+public class EarnAmount {
 
     private final long value;
 
-    public Amount(final long value) {
+    public EarnAmount(final long value) {
         this.value = value;
     }
 
@@ -19,10 +19,10 @@ public class Amount {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof Amount amount)) {
+        if (!(obj instanceof EarnAmount earnAmount)) {
             return false;
         }
-        return Objects.equals(value, amount.value);
+        return Objects.equals(value, earnAmount.value);
     }
 
     @Override
