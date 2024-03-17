@@ -5,7 +5,7 @@ import java.util.List;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-public class Dealer extends Gamer {
+public final class Dealer extends Gamer {
 	public static final int INIT_CARD_COUNT = 2;
 	public static final int MAX_HIT_SCORE = 16;
 
