@@ -3,7 +3,6 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.Cards;
 import java.util.List;
-import java.util.Objects;
 
 public abstract class Participant {
     private final Name name;
@@ -43,33 +42,5 @@ public abstract class Participant {
 
     public List<Card> getAllCards() {
         return cards.getCards();
-    }
-
-    public boolean isGreaterThan(int score) { // todo 삭제
-        return cards.isGreaterThan(score);
-    }
-
-    public boolean isLessThan(int score) { // todo 삭제
-        return cards.isLessThan(score);
-    }
-
-    public Cards getCards() {
-        return cards;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj instanceof Participant other) {
-            return this.name.equals(other.name);
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
     }
 }

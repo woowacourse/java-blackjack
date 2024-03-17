@@ -1,13 +1,11 @@
 package ui;
 
 import domain.blackjackgame.GameResult;
-import domain.blackjackgame.ResultStatus;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -60,20 +58,9 @@ public class OutputView {
     }
 
     public void printGameResult(GameResult gameResult) {
-        System.out.println(System.lineSeparator() + "## 최종 승패");
-        printDealerResult(gameResult.getDealerResult());
-        printPlayerResult(gameResult.getPlayerResult());
-    }
-
-    private void printDealerResult(Map<ResultStatus, Integer> dealerResult) {
-        String dealerResultMessage = dealerResult.entrySet()
-                .stream()
-                .map(entry -> String.format("%d%s", entry.getValue(), entry.getKey().getName()))
-                .collect(Collectors.joining(" "));
-        System.out.printf("딜러: %s%n", dealerResultMessage);
-    }
-
-    private void printPlayerResult(Map<Player, ResultStatus> playerResult) {
-        playerResult.forEach((key, value) -> System.out.printf("%s: %s%n", key.getName(), value.getName()));
+        System.out.println(System.lineSeparator() + "## 최종 수익");
+        System.out.println("딜러: " + gameResult.getDealerResult());
+        gameResult.getPlayerResult()
+                .forEach((key, value) -> System.out.printf("%s: %s%n", key.getName(), value));
     }
 }

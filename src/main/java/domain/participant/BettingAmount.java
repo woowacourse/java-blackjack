@@ -17,4 +17,8 @@ public class BettingAmount {
             );
         }
     }
+
+    public int getValue() {
+        return this.bettingAmount;
+    }
 }

@@ -10,6 +10,10 @@ public class Player extends Participant {
 
     @Override
     public boolean isNotFinished() {
-        return !getCards().isBust() && !getCards().isBlackjack();
+        return !isBust() && !isBlackjack();
+    }
+
+    public int getBettingAmount() {
+        return bettingAmount.getValue();
     }
 }

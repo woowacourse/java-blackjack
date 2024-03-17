@@ -2,33 +2,32 @@ package domain.blackjackgame;
 
 import domain.participant.Player;
 import java.util.Collections;
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameResult {
-    private final Map<Player, ResultStatus> results;
+    private final Map<Player, Integer> playerProfits;
 
     public GameResult() {
-        this.results = new LinkedHashMap<>();
+        this.playerProfits = new LinkedHashMap<>();
     }
 
-    public void record(Player player, ResultStatus status) {
-        results.put(player, status);
+    public void record(Player player, int profit) {
+        playerProfits.put(player, profit);
     }
 
-    public Map<ResultStatus, Integer> getDealerResult() {
-        Map<ResultStatus, Integer> dealerResults = new EnumMap<>(ResultStatus.class);
-
-        for (ResultStatus status : results.values()) {
-            ResultStatus reverseStatus = status.reverse();
-            dealerResults.put(reverseStatus, dealerResults.getOrDefault(reverseStatus, 0) + 1);
-        }
-
-        return dealerResults;
+    public int getDealerResult() {
+        int profitSum = playerProfits.values().stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+        return reverse(profitSum);
     }
 
-    public Map<Player, ResultStatus> getPlayerResult() {
-        return Collections.unmodifiableMap(this.results);
+    private int reverse(int value) {
+        return -value;
+    }
+
+    public Map<Player, Integer> getPlayerResult() {
+        return Collections.unmodifiableMap(this.playerProfits);
     }
 }

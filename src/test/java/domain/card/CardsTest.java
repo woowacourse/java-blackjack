@@ -4,8 +4,6 @@ import static fixture.CardFixture.카드;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 class CardsTest {
     @Test
@@ -101,25 +99,5 @@ class CardsTest {
         cards.addCard(카드(Denomination.TWO));
 
         assertThat(cards.isBust()).isTrue();
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"19:true", "21:false"}, delimiter = ':')
-    void 현재_점수가_다른_점수보다_큰지_확인한다(int otherScore, boolean expected) {
-        Cards cards = new Cards();
-        cards.addCard(카드(Denomination.TEN));
-        cards.addCard(카드(Denomination.KING));
-
-        assertThat(cards.isGreaterThan(otherScore)).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"19:false", "21:true"}, delimiter = ':')
-    void 현재_점수가_다른_점수보다_작은지_확인한다(int otherScore, boolean expected) {
-        Cards cards = new Cards();
-        cards.addCard(카드(Denomination.TEN));
-        cards.addCard(카드(Denomination.KING));
-
-        assertThat(cards.isLessThan(otherScore)).isEqualTo(expected);
     }
 }

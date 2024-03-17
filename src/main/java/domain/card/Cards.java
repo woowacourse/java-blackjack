@@ -54,14 +54,6 @@ public class Cards {
         return sumAllCards() > BLACKJACK_SCORE;
     }
 
-    public boolean isGreaterThan(int score) {
-        return sumAllCards() > score;
-    }
-
-    public boolean isLessThan(int score) {
-        return sumAllCards() < score;
-    }
-
     public List<Card> getCards() {
         return Collections.unmodifiableList(this.cards);
     }
