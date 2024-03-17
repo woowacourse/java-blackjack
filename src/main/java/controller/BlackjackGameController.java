@@ -27,7 +27,6 @@ public class BlackjackGameController {
 
     private static final int DEALER_COUNT = 1;
     private static final int CARD_COUNT_FOR_SETTING = 2;
-    private static final String NO_HIT_WORD = "n";
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -90,7 +89,7 @@ public class BlackjackGameController {
     }
 
     private void hitOrStay(Player player, BlackjackGame blackjackGame) {
-        Answer answer = repeatUntilSuccess(inputView::requestHitAnswer, player);
+        Answer answer = new Answer(repeatUntilSuccess(inputView::requestHitAnswer, player));
         while (answer.isHit()) {
             Player updatedPlayer = new UpdatedPlayer(blackjackGame, player).player();
             boolean continueHit = blackjackGame.hitForPlayer(updatedPlayer,
@@ -103,10 +102,10 @@ public class BlackjackGameController {
         if (continueHit) {
             outputView.printCardsStock(player.getName(),
                     captureCardType(new UpdatedPlayer(blackjackGame, player).player()));
-            return repeatUntilSuccess(inputView::requestHitAnswer, player);
+            return new Answer(repeatUntilSuccess(inputView::requestHitAnswer, player));
         }
         outputView.printBustInfo(player);
-        return new Answer(NO_HIT_WORD);
+        return new Answer(false);
     }
 
     private void turnHitDealer(BlackjackGame blackjackGame) {

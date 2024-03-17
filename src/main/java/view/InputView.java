@@ -2,11 +2,13 @@ package view;
 
 import java.util.List;
 import java.util.Scanner;
-import model.blackjackgame.Answer;
 import model.participants.player.Player;
 import model.participants.player.Players;
 
 public class InputView {
+
+    private static final String HIT_WORD = "y";
+    private static final String NO_HIT_WORD = "n";
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -25,9 +27,17 @@ public class InputView {
         return scanner.nextInt();
     }
 
-    public Answer requestHitAnswer(Player player) {
+    public boolean requestHitAnswer(Player player) {
         System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return new Answer(removeBlank(scanner.nextLine()));
+        String answer = removeBlank(scanner.nextLine());
+        hitAnswerValidate(answer);
+        return answer.equals(HIT_WORD);
+    }
+
+    private void hitAnswerValidate(String answer) {
+        if (!HIT_WORD.equals(answer) && !NO_HIT_WORD.equals(answer)) {
+            throw new IllegalArgumentException("y 와 n 이외의 문자를 입력할 수 없습니다");
+        }
     }
 
     private List<String> splitName(String input) {
