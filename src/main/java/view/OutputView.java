@@ -40,7 +40,7 @@ public class OutputView {
 
     private static String cardInfosToMessage(final List<CardInfo> cardInfos) {
         return cardInfos.stream()
-                .map(cardInfo -> denominationMessage(cardInfo.denomination()) + suitMessage(cardInfo.suit()))
+                .map(cardInfo -> Denomination.messageOf(cardInfo.denomination()) + Suit.messageOf(cardInfo.suit()))
                 .collect(Collectors.joining(", "));
     }
 
@@ -58,58 +58,5 @@ public class OutputView {
     public static void printDealerHitMessage() {
         System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-    }
-
-    private static String denominationMessage(final String denomination) {
-        if (denomination.equals("ACE")) {
-            return "A";
-        }
-        if (denomination.equals("JACK")) {
-            return "J";
-        }
-        if (denomination.equals("QUEEN")) {
-            return "Q";
-        }
-        if (denomination.equals("KING")) {
-            return "K";
-        }
-        if (denomination.equals("TWO")) {
-            return "2";
-        }
-        if (denomination.equals("THREE")) {
-            return "3";
-        }
-        if (denomination.equals("FOUR")) {
-            return "4";
-        }
-        if (denomination.equals("FIVE")) {
-            return "5";
-        }
-        if (denomination.equals("SIX")) {
-            return "6";
-        }
-        if (denomination.equals("SEVEN")) {
-            return "7";
-        }
-        if (denomination.equals("EIGHT")) {
-            return "8";
-        }
-        if (denomination.equals("NINE")) {
-            return "9";
-        }
-        return "10";
-    }
-
-    private static String suitMessage(final String suit) {
-        if (suit.equals("HEART")) {
-            return "하트";
-        }
-        if (suit.equals("CLUBS")) {
-            return "클로버";
-        }
-        if (suit.equals("SPADE")) {
-            return "스페이드";
-        }
-        return "다이아몬드";
     }
 }
