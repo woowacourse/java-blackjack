@@ -13,3 +13,4 @@ public record Score(int value) {
         return this.value > other.value;
     }
 }
+
