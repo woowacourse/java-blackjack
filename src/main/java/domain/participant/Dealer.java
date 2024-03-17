@@ -45,7 +45,7 @@ public class Dealer extends Participant {
     }
 
     public Profit calculateProfitBy(final Players players) {
-        long result = players.calculateProfits(this).values().stream()
+        final long result = players.calculateProfits(this).values().stream()
                 .map(value -> value.getProfit() * (-1))
                 .mapToLong(Long::longValue)
                 .sum();

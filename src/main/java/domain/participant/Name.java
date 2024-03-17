@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class Name {
 
-    private final String UNAVAILABLE_NAME = "딜러";
     private final String value;
 
     public Name(final String value) {

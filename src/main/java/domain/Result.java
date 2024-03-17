@@ -21,7 +21,7 @@ public enum Result {
         this.profitFunction = profitFunction;
     }
 
-    public static Result calculateProfit(Hands hands, Hands target) {
+    public static Result calculateProfit(final Hands hands, final Hands target) {
         return Arrays.stream(Result.values())
                 .filter(result -> result.condition.test(hands, target))
                 .findFirst()
