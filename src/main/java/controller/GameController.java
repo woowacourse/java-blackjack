@@ -1,9 +1,6 @@
 package controller;
 
-import domain.Command;
-import domain.ExceptionHandler;
-import domain.Money;
-import domain.MoneyManager;
+import domain.*;
 import domain.deck.TotalDeckGenerator;
 import domain.game.Game;
 import domain.game.State;
@@ -26,9 +23,8 @@ public class GameController {
         MoneyManager moneyManager = new MoneyManager(betting(users));
         Game game = new Game(TotalDeckGenerator.generate(), users);
         showStartStatus(users);
-
         hitOrStay(game, users);
-        showGameResult(users, game);
+        showResult(users, game, moneyManager);
     }
 
     private Map<Player, Money> betting(Users users) {
@@ -77,12 +73,22 @@ public class GameController {
         }
     }
 
-    private void showGameResult(Users users, Game game) {
+    private void showResult(Users users, Game game, MoneyManager moneyManager) {
+        showGameResultOfCards(users);
+        Map<Player, Profit> profitOfPlayers = moneyManager.calculateProfit(game.generatePlayerResults());
+        Profit profitOfDealer = moneyManager.makeDealerProfit(game.generatePlayerResults());
+        showGameResultOfProfit(profitOfPlayers, profitOfDealer);
+    }
+
+    private void showGameResultOfCards(Users users) {
         List<UserDto> userDtos = new ArrayList<>();
         for (User user : users.getUsers()) {
             userDtos.add(UserDto.from(user));
         }
         ResultView.showCardsAndSum(userDtos);
-        ResultView.showResult(game.generatePlayerResults(), game.generateDealerResult());
+    }
+
+    private void showGameResultOfProfit(Map<Player, Profit> profitManager, Profit profitOfDealer) {
+        ResultView.showProfit(profitManager, profitOfDealer);
     }
 }
