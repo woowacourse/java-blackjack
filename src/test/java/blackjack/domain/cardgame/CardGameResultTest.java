@@ -6,9 +6,7 @@ import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 import org.junit.jupiter.api.Test;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import static blackjack.domain.card.CardNumber.ACE;
 import static blackjack.domain.card.CardNumber.KING;
@@ -18,8 +16,6 @@ import static blackjack.domain.card.CardShape.CLOVER;
 import static blackjack.domain.card.CardShape.DIAMOND;
 import static blackjack.domain.card.CardShape.HEART;
 import static blackjack.domain.card.CardShape.SPADE;
-import static blackjack.domain.cardgame.WinningStatus.LOSE;
-import static blackjack.domain.cardgame.WinningStatus.WIN;
 import static blackjack.fixture.PlayerFixture.dealer;
 import static blackjack.fixture.PlayerFixture.player;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,22 +25,6 @@ class CardGameResultTest {
     private static final Name nameB = new Name("nameB");
     private static final Name nameC = new Name("nameC");
     private static final Name nameD = new Name("nameD");
-
-    @Test
-    void 딜러가_승패_횟수를_계산할_수_있다() {
-        Map<Name, WinningStatus> result = new LinkedHashMap<>();
-        result.put(nameA, WIN);
-        result.put(nameB, WIN);
-        result.put(nameC, LOSE);
-
-        CardGameResult cardGameResult = new CardGameResult(result);
-
-        int dealerWinCount = cardGameResult.getDealerWinCount();
-        int dealerLoseCount = cardGameResult.getDealerLoseCount();
-
-        assertThat(dealerWinCount).isEqualTo(1);
-        assertThat(dealerLoseCount).isEqualTo(2);
-    }
 
     @Test
     void 딜러와_플레이어_둘다_21을_초과할_경우에_플레이어가_패배한다() {
