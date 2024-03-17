@@ -124,7 +124,9 @@ class PrizeCheckerTest {
         final Cards cards = new Cards(cardValues.stream()
                                                 .map(cardValue -> new Card(cardValue, CardSymbol.CLOVER))
                                                 .toList());
-        final Dealer dealer = Dealer.createDefaultDealer(cards);
+        final Dealer dealer = Dealer.createDefaultNameDealer();
+        cardValues.stream()
+                  .forEach(cardValue -> dealer.drawCard(new Card(cardValue, CardSymbol.DIAMOND)));
         return dealer;
     }
 

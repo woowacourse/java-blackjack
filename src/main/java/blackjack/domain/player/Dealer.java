@@ -13,8 +13,12 @@ public class Dealer extends Participant {
         this.name = name;
     }
 
-    public static Dealer createDefaultDealer(final Cards cards) {
-        return new Dealer(new Name(DEFAULT_DEALER_NAME), cards);
+    public Dealer(final Name name) {
+        this.name = name;
+    }
+
+    public static Dealer createDefaultNameDealer() {
+        return new Dealer(new Name(DEFAULT_DEALER_NAME));
     }
 
     @Override
