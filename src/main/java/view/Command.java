@@ -5,7 +5,7 @@ public enum Command {
     NO("n"),
     ;
 
-    private String command;
+    private final String command;
 
     Command(String command) {
         this.command = command;

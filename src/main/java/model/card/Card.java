@@ -6,15 +6,15 @@ import java.util.stream.Collectors;
 public class Card {
     private static final Set<Card> cardDeck;
 
-    private final Suit suit;
-    private final Denomination denomination;
-
     static {
         cardDeck = Arrays.stream(Suit.values())
                 .flatMap(newSuit -> Arrays.stream(Denomination.values())
                         .map(newDenomination -> new Card(newSuit, newDenomination)))
                 .collect(Collectors.toUnmodifiableSet());
     }
+
+    private final Suit suit;
+    private final Denomination denomination;
 
     private Card(Suit suit, Denomination denomination) {
         this.suit = suit;

@@ -1,11 +1,9 @@
 package view;
 
-import model.Outcome;
 import model.card.Card;
 import model.card.Cards;
 import model.card.Denomination;
 import model.card.Suit;
-import model.player.Dealer;
 import model.player.Name;
 
 import java.util.List;

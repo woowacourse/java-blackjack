@@ -34,7 +34,7 @@ class ParticipantsTest {
 
         return Stream.of(Arguments.of(
                 List.of(new Participant(cardDeck.selectRandomCards(CardSize.TWO),
-                                new ParticipantProfile(new Name("배키"), new GameMoney(1000)))),
+                        new ParticipantProfile(new Name("배키"), new GameMoney(1000)))),
                 List.of(
                         new Participant(cardDeck.selectRandomCards(CardSize.TWO),
                                 new ParticipantProfile(new Name("도비"), new GameMoney(1000))),
@@ -84,7 +84,7 @@ class ParticipantsTest {
     void matchParticipantNameAndCards() {
         Cards firstCards = new Cards(
                 List.of(Card.of(Suit.SPACE, Denomination.TWO),
-                Card.of(Suit.SPACE, Denomination.THREE)));
+                        Card.of(Suit.SPACE, Denomination.THREE)));
         Cards secondCards = new Cards(
                 List.of(Card.of(Suit.SPACE, Denomination.FOUR),
                         Card.of(Suit.SPACE, Denomination.FIVE)));

@@ -20,7 +20,7 @@ class BlackJackTest {
                 Card.of(Suit.SPACE, Denomination.TWO))));
 
         Assertions.assertThatThrownBy(() ->
-                        new BlackJack(null, dealer,new CardDeck(Card.createCardDeck())))
+                        new BlackJack(null, dealer, new CardDeck(Card.createCardDeck())))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -40,7 +40,7 @@ class BlackJackTest {
         Assertions.assertThatThrownBy(
                         () -> new BlackJack(new Participants(List.of(firstParticipant, secondParticipant)),
                                 null
-                                ,new CardDeck(Card.createCardDeck())))
+                                , new CardDeck(Card.createCardDeck())))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

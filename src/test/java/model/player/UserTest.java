@@ -38,8 +38,8 @@ class UserTest {
     @Test
     void addCard() {
         User user = new User(new Cards(List.of(
-                        Card.of(Suit.SPACE, Denomination.NINE),
-                        Card.of(Suit.SPACE, Denomination.FIVE)))) {
+                Card.of(Suit.SPACE, Denomination.NINE),
+                Card.of(Suit.SPACE, Denomination.FIVE)))) {
         };
         Card card = Card.of(Suit.CLOVER, Denomination.EIGHT);
         user.addCard(card);
@@ -50,8 +50,8 @@ class UserTest {
     @Test
     void addCards() {
         User user = new User(new Cards(List.of(
-                        Card.of(Suit.SPACE, Denomination.NINE),
-                        Card.of(Suit.SPACE, Denomination.FIVE)))) {
+                Card.of(Suit.SPACE, Denomination.NINE),
+                Card.of(Suit.SPACE, Denomination.FIVE)))) {
         };
         user.addCard(Card.of(Suit.CLOVER, Denomination.EIGHT));
         user.addCard(Card.of(Suit.CLOVER, Denomination.FIVE));
@@ -63,8 +63,8 @@ class UserTest {
     @Test
     void calculateScore() {
         User user = new User(new Cards(List.of(
-                        Card.of(Suit.SPACE, Denomination.NINE),
-                        Card.of(Suit.SPACE, Denomination.FIVE)))) {
+                Card.of(Suit.SPACE, Denomination.NINE),
+                Card.of(Suit.SPACE, Denomination.FIVE)))) {
         };
 
         assertThat(user.calculateScore()).isEqualTo(14);
@@ -74,8 +74,8 @@ class UserTest {
     @Test
     void calculateScoreWithAce() {
         User user = new User(new Cards(List.of(
-                        Card.of(Suit.SPACE, Denomination.NINE),
-                        Card.of(Suit.SPACE, Denomination.FIVE)))) {
+                Card.of(Suit.SPACE, Denomination.NINE),
+                Card.of(Suit.SPACE, Denomination.FIVE)))) {
         };
         user.addCard(Card.of(Suit.SPACE, Denomination.ACE));
 
