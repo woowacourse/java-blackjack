@@ -3,11 +3,13 @@ package blackjack.controller;
 import blackjack.model.betting.Betting;
 import blackjack.model.betting.BettingMoney;
 import blackjack.model.betting.PlayerBettingProfitOutcome;
+import blackjack.model.card.Card;
 import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.cardgenerator.RandomCardGenerator;
 import blackjack.model.dealer.Dealer;
 import blackjack.model.dealer.DealerFinalCardsOutcome;
 import blackjack.model.player.Player;
+import blackjack.model.player.PlayerCardsOutcome;
 import blackjack.model.player.PlayerFinalCardsOutcome;
 import blackjack.model.player.Players;
 import blackjack.view.InputView;
@@ -33,7 +35,8 @@ public class BlackjackGame {
 
         dealCards(players, dealer, cardGenerator);
         drawCards(players, dealer, cardGenerator);
-        showResult(players, dealer, betting);
+        showFinalCards(players, dealer);
+        showBettingProfit(players, dealer, betting);
     }
 
     private Players createPlayers() {
@@ -53,7 +56,14 @@ public class BlackjackGame {
     private void dealCards(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
         players.dealCards(cardGenerator);
         dealer.dealCards(cardGenerator);
-        outputView.printDealingCards(players, dealer);
+        showDealingCards(players, dealer);
+    }
+
+    private void showDealingCards(final Players players, final Dealer dealer) {
+        List<String> playerNames = players.getNames();
+        List<PlayerCardsOutcome> playerCardsOutcomes = players.captureCardsOutcomes();
+        Card dealerFirstCard = dealer.getFirstCard();
+        outputView.printDealingCards(playerNames, playerCardsOutcomes, dealerFirstCard);
     }
 
     private void drawCards(final Players players, final Dealer dealer, final CardGenerator cardGenerator) {
@@ -81,29 +91,23 @@ public class BlackjackGame {
         Command command = retryOnException(() -> inputView.askDrawOrStandCommandToPlayer(player.getName()));
         if (command.isDraw()) {
             player.drawCard(cardGenerator);
-            outputView.printPlayerDrawingCards(player);
+            outputView.printPlayerDrawingCards(PlayerCardsOutcome.from(player));
         }
         return player.canDrawCard() && command.isDraw();
     }
 
     private void drawDealerCards(final Dealer dealer, final CardGenerator cardGenerator) {
         dealer.drawCards(cardGenerator);
-        outputView.printDealerDrawingCards(dealer);
+        outputView.printDealerDrawingCards(dealer.getDrawCount());
     }
 
-    private void showResult(final Players players, final Dealer dealer, final Betting betting) {
-        showFinalCardsOutcome(players, dealer);
-        showBettingProfitOutcome(players, dealer, betting);
-    }
-
-    private void showFinalCardsOutcome(final Players players, final Dealer dealer) {
+    private void showFinalCards(final Players players, final Dealer dealer) {
         DealerFinalCardsOutcome dealerFinalCardsOutcome = DealerFinalCardsOutcome.from(dealer);
         List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes = players.captureFinalCardsOutcomes();
-        outputView.printDealerFinalCards(dealerFinalCardsOutcome); // TODO: 합치기
-        outputView.printPlayersFinalCards(playerFinalCardsOutcomes);
+        outputView.printFinalCards(dealerFinalCardsOutcome, playerFinalCardsOutcomes);
     }
 
-    private void showBettingProfitOutcome(final Players players, final Dealer dealer, final Betting betting) {
+    private void showBettingProfit(final Players players, final Dealer dealer, final Betting betting) {
         List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes = players.calculateBettingProfits(betting, dealer);
         int dealerBettingProfit = dealer.calculateBettingProfit(playerBettingProfitOutcomes);
         outputView.printBettingProfit(dealerBettingProfit, playerBettingProfitOutcomes);

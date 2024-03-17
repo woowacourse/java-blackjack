@@ -2,11 +2,9 @@ package blackjack.view;
 
 import blackjack.model.betting.PlayerBettingProfitOutcome;
 import blackjack.model.card.Card;
-import blackjack.model.dealer.Dealer;
 import blackjack.model.dealer.DealerFinalCardsOutcome;
-import blackjack.model.player.Player;
+import blackjack.model.player.PlayerCardsOutcome;
 import blackjack.model.player.PlayerFinalCardsOutcome;
-import blackjack.model.player.Players;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,16 +17,18 @@ public class OutputView {
     private static final String DEALER_NAME = "딜러";
     private static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
 
-    public void printDealingCards(final Players players, final Dealer dealer) {
-        System.out.println(formatDealingResultIntro(players));
-        System.out.println(formatCards(List.of(dealer.getFirstCard()), DEALER_NAME));
-        for (Player player : players.getPlayers()) {
-            System.out.println(formatCards(player.getCards(), player.getName()));
+    public void printDealingCards(final List<String> playerNames,
+                                  final List<PlayerCardsOutcome> playerCardsOutcomes,
+                                  final Card dealerFirstCard) {
+        System.out.println(formatDealingResultIntro(playerNames));
+        System.out.println(formatCards(List.of(dealerFirstCard), DEALER_NAME));
+        for (PlayerCardsOutcome playerCardsOutcome : playerCardsOutcomes) {
+            System.out.println(formatCards(playerCardsOutcome.cards(), playerCardsOutcome.name()));
         }
     }
 
-    private String formatDealingResultIntro(final Players players) {
-        String names = String.join(", ", players.getNames());
+    private String formatDealingResultIntro(final List<String> playerNames) {
+        String names = String.join(", ", playerNames);
         return String.format(DEALING_RESULT_INTRO, names);
     }
 
@@ -43,28 +43,35 @@ public class OutputView {
         return card.getDenomination().getName() + card.getSuit().getName();
     }
 
-    public void printPlayerDrawingCards(final Player player) {
-        System.out.println(formatCards(player.getCards(), player.getName()));
+    public void printPlayerDrawingCards(final PlayerCardsOutcome playerCardsOutcome) {
+        System.out.println(formatCards(playerCardsOutcome.cards(), playerCardsOutcome.name()));
     }
 
-    public void printDealerDrawingCards(final Dealer dealer) {
-        int count = dealer.getDrawCount();
-        System.out.println(DEALER_DRAWING_FORM.repeat(count));
+    public void printDealerDrawingCards(final int drawCount) {
+        System.out.println(DEALER_DRAWING_FORM.repeat(drawCount));
     }
 
-    public void printDealerFinalCards(final DealerFinalCardsOutcome dealerFinalCardsOutcome) {
+    public void printFinalCards(final DealerFinalCardsOutcome dealerFinalCardsOutcome,
+                                final List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes) {
+        System.out.println(formatDealerFinalCards(dealerFinalCardsOutcome));
+        System.out.println(formatPlayersFinalCards(playerFinalCardsOutcomes));
+    }
+
+    public String formatDealerFinalCards(final DealerFinalCardsOutcome dealerFinalCardsOutcome) {
         List<Card> dealerCards = dealerFinalCardsOutcome.cards();
         int dealerTotalScore = dealerFinalCardsOutcome.totalScore();
-        System.out.println(formatFinalCards(dealerCards, DEALER_NAME, dealerTotalScore));
+        return formatFinalCards(dealerCards, DEALER_NAME, dealerTotalScore);
     }
 
-    public void printPlayersFinalCards(final List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes) {
+    public String formatPlayersFinalCards(final List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes) {
+        StringBuilder sb = new StringBuilder();
         for (PlayerFinalCardsOutcome playerFinalCardsOutcome : playerFinalCardsOutcomes) {
             List<Card> playerCards = playerFinalCardsOutcome.cards();
             String playerName = playerFinalCardsOutcome.name();
             int playerTotalScore = playerFinalCardsOutcome.totalScore();
-            System.out.println(formatFinalCards(playerCards, playerName, playerTotalScore));
+            sb.append(formatFinalCards(playerCards, playerName, playerTotalScore)).append("\n");
         }
+        return sb.toString();
     }
 
     private String formatFinalCards(final List<Card> cards, final String name, final int totalScore) {

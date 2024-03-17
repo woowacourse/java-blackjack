@@ -22,6 +22,11 @@ public class Betting {
         return new PlayerBettingProfitOutcome(playerName, matchResult.calculateProfit(bettingMoney));
     }
 
+    public int calculateBettingProfit(String playerName, MatchResult matchResult) {
+        BettingMoney bettingMoney = findBettingMoneyByPlayerName(playerName);
+        return matchResult.calculateProfit(bettingMoney);
+    }
+
     private BettingMoney findBettingMoneyByPlayerName(String playerName) {
         if (!playerBettingMoney.containsKey(playerName)) {
             throw new IllegalArgumentException(NOT_FOUND_BETTING_PLAYER);

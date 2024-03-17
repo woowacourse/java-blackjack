@@ -49,11 +49,17 @@ public class Players {
                 .toList();
     }
 
+    public List<PlayerCardsOutcome> captureCardsOutcomes() {
+        return players.stream()
+                .map(PlayerCardsOutcome::from)
+                .toList();
+    }
+
     public List<PlayerBettingProfitOutcome> calculateBettingProfits(final Betting betting, final Dealer dealer) {
         return players.stream()
                 .map(player -> betting.calculatePlayerBettingProfit(
-                        player.getName(),
-                        player.determineMatchResult(dealer)))
+                        player.getName(), player.determineMatchResult(dealer)
+                ))
                 .toList();
     }
 
