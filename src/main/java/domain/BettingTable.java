@@ -13,6 +13,7 @@ public class BettingTable {
     }
 
     public Map<String, Double> getTotalProfit(Map<String, GamerResult> totalResult) {
+        validateSize(totalResult);
         Map<String, Double> totalProfit = new HashMap<>();
         totalResult.forEach((key, value) ->
                 totalProfit.put(
@@ -21,6 +22,12 @@ public class BettingTable {
                 ));
         totalProfit.put(GamerIdentifier.DEALER_IDENTIFIER, getDealerProfit(totalProfit));
         return totalProfit;
+    }
+
+    private void validateSize(Map<String, GamerResult> totalResult) {
+        if (totalResult.size() != bettingAmounts.size()) {
+            throw new IllegalArgumentException("생성자로 입력받은 Map과 크기가 다릅니다");
+        }
     }
 
     private double getDealerProfit(Map<String, Double> totalProfit) {
