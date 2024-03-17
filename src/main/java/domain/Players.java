@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class Players {
+    public static final int MAX_PLAYER_COUNT = 8;
     private final List<Player> players;
 
     public Players(final List<Player> players) {
@@ -28,7 +29,7 @@ public class Players {
     }
 
     private boolean isInvalidPlayersNumber(final List<Player> players) {
-        return players.size() > 8;
+        return players.size() > MAX_PLAYER_COUNT;
     }
 
     public int totalProfit(final Dealer dealer) {
