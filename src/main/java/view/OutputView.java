@@ -43,7 +43,9 @@ public class OutputView {
     }
 
     public void printBlackJackScore(Cards dealerCards, Map<Name, Cards> usersNameAndCards) {
-        System.out.println(System.lineSeparator() + cardsToString(DEALER_NAME, dealerCards, 1));
+        String dealerCardsString = cardsToString(DEALER_NAME, dealerCards, dealerCards.cards().size());
+        String dealerScore = PLAYER_CARD_SUM_MESSAGE.formatted(dealerCards.calculateScore());
+        System.out.println(System.lineSeparator() + dealerCardsString + dealerScore);
         for (Entry<Name, Cards> participant : usersNameAndCards.entrySet()) {
             System.out.println(cardsToString(participant) + PLAYER_CARD_SUM_MESSAGE.formatted(
                     participant.getValue().calculateScore()));
