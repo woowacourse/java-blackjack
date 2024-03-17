@@ -7,7 +7,7 @@ import domain.blackjackgame.BlackjackGame;
 import domain.blackjackgame.GameResult;
 import domain.card.deck.CardDeck;
 import domain.card.deck.CardDeckFactory;
-import domain.participant.BettingAmount;
+import domain.participant.BetAmount;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Names;
@@ -44,9 +44,8 @@ public class BlackjackController {
     }
 
     private Player generatePlayer(Name name) {
-        BettingAmount bettingAmount = repeatUntilSuccess(
-                () -> new BettingAmount(inputView.readBetAmount(name.getValue())));
-        return new Player(name, bettingAmount);
+        BetAmount betAmount = repeatUntilSuccess(() -> new BetAmount(inputView.readBetAmount(name.getValue())));
+        return new Player(name, betAmount);
     }
 
     private GameResult playBlackjackGame(Participants participants, BlackjackGame blackjackGame) {

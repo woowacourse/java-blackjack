@@ -12,7 +12,7 @@ public class ProfitResultManager {
 
     protected int calculateProfit(Player player) {
         EarningRate earningRate = findEarningRate(player);
-        return earningRate.calculateProfit(player.getBettingAmount());
+        return earningRate.calculateProfit(player.getBetAmount());
     }
 
     private EarningRate findEarningRate(Player player) {

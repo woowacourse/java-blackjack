@@ -3,7 +3,7 @@ package fixture;
 import static fixture.CardFixture.카드;
 
 import domain.card.Denomination;
-import domain.participant.BettingAmount;
+import domain.participant.BetAmount;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Participants;
@@ -16,8 +16,8 @@ public class ParticipantFixture {
         return 플레이어(name, 10);
     }
 
-    public static Player 플레이어(String name, int bettingAmount) {
-        return new Player(new Name(name), new BettingAmount(bettingAmount));
+    public static Player 플레이어(String name, int betAmount) {
+        return new Player(new Name(name), new BetAmount(betAmount));
     }
 
     public static Participants 참가자들(String... playerNames) {

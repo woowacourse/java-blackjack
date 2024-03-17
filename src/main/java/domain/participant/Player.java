@@ -1,11 +1,11 @@
 package domain.participant;
 
 public class Player extends Participant {
-    private final BettingAmount bettingAmount;
+    private final BetAmount betAmount;
 
-    public Player(Name name, BettingAmount bettingAmount) {
+    public Player(Name name, BetAmount betAmount) {
         super(name);
-        this.bettingAmount = bettingAmount;
+        this.betAmount = betAmount;
     }
 
     @Override
@@ -13,7 +13,7 @@ public class Player extends Participant {
         return !isBust() && !isBlackjack();
     }
 
-    public int getBettingAmount() {
-        return bettingAmount.getValue();
+    public int getBetAmount() {
+        return betAmount.getValue();
     }
 }

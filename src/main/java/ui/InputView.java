@@ -47,11 +47,11 @@ public class InputView {
 
     public int readBetAmount(String name) {
         System.out.printf("%s의 배팅 금액은?%n", name);
-        String bettingAmount = scanner.nextLine().trim();
+        String betAmount = scanner.nextLine().trim();
         System.out.println();
-        validateInput(bettingAmount);
+        validateInput(betAmount);
         try {
-            return Integer.parseInt(bettingAmount);
+            return Integer.parseInt(betAmount);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("숫자를 입력해주세요.");
         }
