@@ -81,9 +81,9 @@ public class OutputView {
         Map<Name, Profit> playerProfit = profitDetails.getProfitDetails();
 
         System.out.println(LINE_SEPARATOR + "## 최종 수익");
-        System.out.println(String.format("딜러: %d", dealerProfit.getValue()));
+        System.out.println(String.format("%-4s:%7d", "딜러", dealerProfit.getValue()));
         playerProfit.forEach(
-                (name, profit) -> System.out.println(String.format("%s:  %d", name.getName(), profit.getValue())));
+                (name, profit) -> System.out.println(String.format("%-6s:%7d", name.getName(), profit.getValue())));
     }
 
     public void printError(String message) {
