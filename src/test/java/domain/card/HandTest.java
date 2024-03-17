@@ -14,6 +14,4 @@ class HandTest {
         Hand hand = new Hand(new Cards(List.of(new Card(CardShape.SPADE, CardNumber.ACE), new Card(CardShape.SPADE, CardNumber.KING))));
         assertThat(hand.score()).isEqualTo(21);
     }
-
-
 }
