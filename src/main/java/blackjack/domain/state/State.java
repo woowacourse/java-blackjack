@@ -1,8 +1,7 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Hand;
-import blackjack.domain.participant.Score;
+import blackjack.domain.card.Score;
 
 public abstract class State {
     private final Hand hand;

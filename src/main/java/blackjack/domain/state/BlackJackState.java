@@ -1,7 +1,5 @@
 package blackjack.domain.state;
 
-import blackjack.domain.participant.Hand;
-
 public class BlackJackState extends ClosedState {
 
     BlackJackState(Hand hand) {

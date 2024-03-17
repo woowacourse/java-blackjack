@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.participant.Score;
 import java.util.Objects;
 
 public class Card {

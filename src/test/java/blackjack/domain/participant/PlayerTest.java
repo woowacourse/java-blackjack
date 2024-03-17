@@ -6,6 +6,7 @@ import blackjack.domain.card.BlackjackCardFactory;
 import blackjack.domain.card.CardFixture;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Score;
 import blackjack.domain.state.HitState;
 import blackjack.domain.state.InitialState;
 import blackjack.domain.state.StandState;

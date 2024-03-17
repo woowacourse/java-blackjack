@@ -7,8 +7,7 @@ import blackjack.domain.card.BlackjackCardFactory;
 import blackjack.domain.card.CardFixture;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
-import blackjack.domain.participant.Hand;
-import blackjack.domain.participant.Score;
+import blackjack.domain.card.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,6 @@
 package blackjack.domain.state;
 
-import blackjack.domain.participant.Hand;
-import blackjack.domain.participant.Score;
+import blackjack.domain.card.Score;
 
 public class StandState extends ClosedState {
 
