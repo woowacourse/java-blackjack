@@ -12,7 +12,8 @@ class GameMoneyTest {
     @Test
     void validateGameMoneyOverZero() {
         assertThatThrownBy(() -> new GameMoney(999))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("게임 배팅 금액은 1000이상이어야 합니다.");
     }
 
     @DisplayName("카드 상태가 블랙잭이고 승리했을 경우, 1.5배의 수익을 얻는다.")

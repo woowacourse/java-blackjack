@@ -21,7 +21,8 @@ class BlackJackTest {
 
         Assertions.assertThatThrownBy(() ->
                         new BlackJack(null, dealer, new CardDeck(Card.createCardDeck())))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("참가자 없으면 게임이 진행되지 않습니다.");
     }
 
     @DisplayName("딜러가 null일 시 예외가 발생한다.")
@@ -41,7 +42,8 @@ class BlackJackTest {
                         () -> new BlackJack(new Participants(List.of(firstParticipant, secondParticipant)),
                                 null
                                 , new CardDeck(Card.createCardDeck())))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("딜러가 없으면 게임이 진행되지 않습니다.");
     }
 
     @DisplayName("딜러가 패했을 시, 딜러의 이익은 참가자들의 배팅금액의 -1배이다.")

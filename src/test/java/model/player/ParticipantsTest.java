@@ -26,7 +26,8 @@ class ParticipantsTest {
                                         new ParticipantProfile(new Name("켬미"), new GameMoney(1000))),
                                 new Participant(cards.selectRandomCards(CardSize.TWO),
                                         new ParticipantProfile(new Name("켬미"), new GameMoney(1000))))))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("중복된 이름(켬미)가 있습니다, 참가자들의 이름은 중복되면 안됩니다.");
     }
 
     static Stream<Arguments> createParticipants() {
@@ -61,7 +62,8 @@ class ParticipantsTest {
     @MethodSource("createParticipants")
     void offerCardToParticipant(List<Participant> participants) {
         Assertions.assertThatThrownBy(() -> new Participants(participants))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("참가자의 수는 2 ~ 8명이어야 합니다.");
     }
 
     @DisplayName("참가자들의 이름을 알 수 있다.")

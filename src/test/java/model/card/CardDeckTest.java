@@ -17,7 +17,8 @@ class CardDeckTest {
                 .forEach(i -> cardDeck.selectRandomCard());
 
         assertThatThrownBy(cardDeck::selectRandomCard)
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("더 뽑을 카드가 없습니다.");
 
     }
 }
