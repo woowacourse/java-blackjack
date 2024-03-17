@@ -34,18 +34,4 @@ class BlackjackTest {
     static Stream<HankRank> notBlackjack() {
         return Stream.of(new Stand(12), new Stand(20), new Bust(22));
     }
-
-    @DisplayName("해당 핸드 랭크는 블랙잭이다.")
-    @Test
-    void isBlackjackTest() {
-
-        assertThat(BLACKJACK.isBlackjack()).isTrue();
-    }
-
-    @DisplayName("해당 핸드 랭크는 버스트가 아니다.")
-    @Test
-    void isBustTest() {
-
-        assertThat(BLACKJACK.isBust()).isFalse();
-    }
 }

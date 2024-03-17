@@ -2,7 +2,7 @@ package blackjack.domain.handrank;
 
 import blackjack.domain.card.Hand;
 
-public final class Bust implements HankRank {
+final class Bust extends HankRank {
 
     private final int score;
 
@@ -29,17 +29,17 @@ public final class Bust implements HankRank {
     }
 
     @Override
-    public int getScore() {
+    protected int getScore() {
         return score;
     }
 
     @Override
-    public boolean isBlackjack() {
+    protected boolean isBlackjack() {
         return false;
     }
 
     @Override
-    public boolean isBust() {
+    protected boolean isBust() {
         return true;
     }
 }

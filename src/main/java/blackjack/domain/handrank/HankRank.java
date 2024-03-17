@@ -1,12 +1,12 @@
 package blackjack.domain.handrank;
 
-public interface HankRank {
+public abstract class HankRank {
 
-    SingleMatchResult competeWithPlayer(HankRank playerHandRank);
+    public abstract SingleMatchResult competeWithPlayer(HankRank playerHandRank);
 
-    int getScore();
+    protected abstract int getScore();
 
-    boolean isBlackjack();
+    protected abstract boolean isBlackjack();
 
-    boolean isBust();
+    protected abstract boolean isBust();
 }

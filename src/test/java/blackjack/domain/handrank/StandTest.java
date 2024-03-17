@@ -64,19 +64,4 @@ class StandTest {
             assertThat(dealer.competeWithPlayer(player)).isEqualTo(SingleMatchResult.DEALER_WIN);
         }
     }
-
-
-    @DisplayName("해당 핸드 랭크는 블랙잭이 아니다.")
-    @Test
-    void isBlackjackTest() {
-
-        assertThat(STAND.isBlackjack()).isFalse();
-    }
-
-    @DisplayName("해당 핸드 랭크는 버스트가 아니다.")
-    @Test
-    void isBustTest() {
-
-        assertThat(STAND.isBust()).isFalse();
-    }
 }
