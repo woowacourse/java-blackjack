@@ -26,13 +26,13 @@ public class BlackJack {
         this.cardDeck = cardDeck;
     }
 
-    public void validateParticipantIsNotNull(Participants participants) {
+    private void validateParticipantIsNotNull(Participants participants) {
         if (participants == null) {
             throw new IllegalArgumentException("참가자 없으면 게임이 진행되지 않습니다.");
         }
     }
 
-    public void validateDealerIsNotNull(Dealer dealer) {
+    private void validateDealerIsNotNull(Dealer dealer) {
         if (dealer == null) {
             throw new IllegalArgumentException("딜러가 없으면 게임이 진행되지 않습니다.");
         }
@@ -40,7 +40,8 @@ public class BlackJack {
 
     public void decideParticipantsPlay(Predicate<Name> inputForMoreCard,
                                        BiConsumer<Name, Cards> printParticipantsCard) {
-        participants.offerCardToParticipants(inputForMoreCard, printParticipantsCard, cardDeck::selectRandomCard);
+        participants.offerCardToParticipants
+                (inputForMoreCard, printParticipantsCard, cardDeck::selectRandomCard);
     }
 
     public void decideDealerPlay(Runnable runnable) {
