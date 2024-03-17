@@ -30,6 +30,13 @@ public class Dealer extends Participant {
         return new Dealer(getName(), standHand());
     }
 
+    public Dealer decideHitOrStand(Deck deck) {
+        if (canDraw()) {
+            return draw(deck);
+        }
+        return stand();
+    }
+
     @Override
     public boolean canDraw() {
         return !isFinished() && isDealerScoreUnderLimit(calculateHand());
@@ -42,12 +49,5 @@ public class Dealer extends Participant {
     public List<Card> getVisibleCards() {
         List<Card> cards = getCards();
         return new ArrayList<>(cards.subList(0, cards.size() - 1));
-    }
-
-    public Dealer decideHitOrStand(Deck deck) {
-        if (canDraw()) {
-            return draw(deck);
-        }
-        return stand();
     }
 }

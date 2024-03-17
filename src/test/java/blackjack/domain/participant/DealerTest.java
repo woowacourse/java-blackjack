@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.BlackjackCardFactory;
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFixture;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
@@ -100,5 +101,20 @@ public class DealerTest {
         Dealer newDealer = dealer.decideHitOrStand(deck);
 
         assertThat(newDealer.getState()).isInstanceOf(StandState.class);
+    }
+
+    @DisplayName("딜러가 가지고있는 카드 중 마지막 한 장만 제외하고 가져온다")
+    @Test
+    public void getVisibleCards() {
+        Dealer dealer = Dealer.createInitialStateDealer();
+        Deck deck = Deck.of(() -> List.of(CardFixture.fromSuitCloverWith(Denomination.JACK),
+                        CardFixture.fromSuitCloverWith(Denomination.SEVEN)),
+                cards -> cards);
+        dealer = dealer.draw(deck);
+
+        dealer = dealer.decideHitOrStand(deck);
+        List<Card> visibleCards = dealer.getVisibleCards();
+
+        assertThat(visibleCards).isEqualTo(List.of(CardFixture.fromSuitCloverWith(Denomination.SEVEN)));
     }
 }

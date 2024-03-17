@@ -24,4 +24,20 @@ class CardTest {
 
         assertThat(card.getScore()).isEqualTo(Score.from(2));
     }
+
+    @DisplayName("카드가 에이스면 true를 반환한다")
+    @Test
+    public void isAceTrue() {
+        Card card = CardFixture.fromSuitCloverWith(Denomination.ACE);
+
+        assertThat(card.isAce()).isTrue();
+    }
+
+    @DisplayName("카드가 에어스가 아니면 false를 반환한다")
+    @Test
+    public void isAceFalse() {
+        Card card = CardFixture.fromSuitCloverWith(Denomination.TWO);
+
+        assertThat(card.isAce()).isFalse();
+    }
 }

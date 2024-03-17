@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import blackjack.domain.participant.Score;
+import java.util.Objects;
 
 public class Card {
     private final Suit suit;
@@ -25,5 +26,21 @@ public class Card {
 
     public boolean isAce() {
         return denomination == Denomination.ACE;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Card card)) {
+            return false;
+        }
+        return suit == card.suit && denomination == card.denomination;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(suit, denomination);
     }
 }
