@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
+    private InputView() {
+    }
+
     private static final String SPLIT_DELIMITER = ",";
 
     private static String input() {
@@ -19,6 +22,12 @@ public class InputView {
         return Arrays.stream(initialInput.split(SPLIT_DELIMITER))
                      .map(String::trim)
                      .toList();
+    }
+
+    public static int inputBettingMoney(final String playerName) {
+        System.out.println(String.format("%s의 배팅 금액은?", playerName));
+        final String initialInput = input();
+        return Integer.valueOf(initialInput);
     }
 
     public static BlackjackCommand inputBlackjackCommand(final String playerName) {
