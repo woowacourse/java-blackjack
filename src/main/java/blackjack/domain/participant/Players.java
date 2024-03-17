@@ -50,14 +50,14 @@ public class Players {
         return new Players(players);
     }
 
-    public PlayersProfit bet(Function<Player, Integer> betByPlayer) {
-        Map<Player, BetAmount> profits = players.stream()
+    public PlayersProfit bet(Function<Player, Integer> receiveBetAmount) {
+        Map<Player, BetAmount> playersBetAmount = players.stream()
                 .collect(Collectors.toMap(
                         player -> player,
-                        player -> new BetAmount(betByPlayer.apply(player))
+                        player -> new BetAmount(receiveBetAmount.apply(player))
                 ));
 
-        return PlayersProfit.createInitial(profits);
+        return PlayersProfit.createInitial(playersBetAmount);
     }
 
     public void deal(CardDeck cardDeck) {
