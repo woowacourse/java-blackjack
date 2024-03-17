@@ -29,10 +29,6 @@ public abstract class Participant {
         return state.score();
     }
 
-    public boolean isBust() {
-        return state.score() > 21;
-    }
-
     public abstract boolean canHit();
 
     public String name() {

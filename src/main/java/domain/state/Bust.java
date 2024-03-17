@@ -5,6 +5,8 @@ import domain.Hand;
 
 public class Bust extends Finished {
 
+    public static final int BUST_RATE = -1;
+
     public Bust(final Hand hand) {
         super(hand);
     }
@@ -16,7 +18,7 @@ public class Bust extends Finished {
 
     @Override
     public double profitRate(final State state) {
-        return -1;
+        return BUST_RATE;
     }
 
     @Override

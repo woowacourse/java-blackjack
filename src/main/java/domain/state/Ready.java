@@ -7,6 +7,9 @@ import domain.Score;
 import java.util.List;
 
 public class Ready implements State {
+    public static final int INITIAL_CARD_SIZE = 2;
+    public static final Score BLACKJACK_SCORE = new Score(21);
+    
     protected final Hand hand;
 
     public Ready(final Hand hand) {
@@ -16,10 +19,10 @@ public class Ready implements State {
     @Override
     public State draw(final Card card) {
         hand.add(card);
-        if (hand.size() < 2) {
+        if (hand.size() < INITIAL_CARD_SIZE) {
             return new Ready(hand);
         }
-        if (hand.score().equals(new Score(21))) {
+        if (hand.score().equals(BLACKJACK_SCORE)) {
             return new Blackjack(hand);
         }
         return new Hit(hand);

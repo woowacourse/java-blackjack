@@ -37,18 +37,6 @@ class PlayerTest {
 
     @DisplayName("합계 점수가 21을 초과하면 버스트")
     @Test
-    void bust() {
-        final Player player = new Player(new Name("지쳐버린종이"), new BetAmount(100));
-
-        player.drawCard(new Card(Denomination.KING, Suit.CLUBS));
-        player.drawCard(new Card(Denomination.JACK, Suit.CLUBS));
-        player.drawCard(new Card(Denomination.QUEEN, Suit.CLUBS));
-
-        assertThat(player.isBust()).isEqualTo(true);
-    }
-
-    @DisplayName("합계 점수가 21을 초과하면 버스트")
-    @Test
     void bustState() {
         final Player player = new Player(new Name("지쳐버린종이"), new BetAmount(100));
 

@@ -6,6 +6,7 @@ import domain.Hand;
 import java.util.List;
 
 public class Finished implements State {
+    public static final int DEFAULT_RATE = 1;
     private final Hand hand;
 
     public Finished(final Hand hand) {
@@ -30,7 +31,7 @@ public class Finished implements State {
 
     @Override
     public double profitRate(final State state) {
-        return 0;
+        return DEFAULT_RATE;
     }
 
     @Override

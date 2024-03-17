@@ -4,6 +4,11 @@ import domain.Card;
 import domain.Hand;
 
 public class Stand extends Finished {
+
+    public static final int WIN_RATE = 1;
+    public static final int LOSE_RATE = -1;
+    public static final int EVEN_RATE = 0;
+
     public Stand(final Hand hand) {
         super(hand);
     }
@@ -16,15 +21,15 @@ public class Stand extends Finished {
     @Override
     public double profitRate(final State state) {
         if (state.isBust()) {
-            return 1;
+            return WIN_RATE;
         }
         if (state.isBlackjack() || state.score() > score()) {
-            return -1;
+            return LOSE_RATE;
         }
         if (state.score() == score()) {
-            return 0;
+            return EVEN_RATE;
         }
-        return 1;
+        return WIN_RATE;
     }
 
     @Override

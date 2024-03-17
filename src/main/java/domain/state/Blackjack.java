@@ -4,6 +4,9 @@ import domain.Card;
 import domain.Hand;
 
 public class Blackjack extends Finished {
+    public static final int LOSE_RATE = 0;
+    public static final double WIN_RATE = 1.5;
+
     public Blackjack(final Hand hand) {
         super(hand);
     }
@@ -16,9 +19,9 @@ public class Blackjack extends Finished {
     @Override
     public double profitRate(final State state) {
         if (state instanceof Blackjack) {
-            return 0;
+            return LOSE_RATE;
         }
-        return 1.5;
+        return WIN_RATE;
     }
 
     @Override
