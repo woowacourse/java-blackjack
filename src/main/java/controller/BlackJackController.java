@@ -1,8 +1,6 @@
 package controller;
 
 import card.CardDeck;
-import gameResult.GameResult;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import participant.dealer.Dealer;
@@ -10,7 +8,6 @@ import participant.player.BetMoney;
 import participant.player.Name;
 import participant.player.Player;
 import participant.player.Players;
-import referee.Referee;
 import view.InputView;
 import view.OutputView;
 
@@ -67,15 +64,8 @@ public class BlackJackController {
     }
 
     private void showResult(Players players, Dealer dealer) {
-        Map<Name, Integer> playerResult = new LinkedHashMap<>();
-        Referee referee = new Referee();
-
-        for (Player player : players.getPlayers()) {
-            GameResult gameResult = referee.judge(player, dealer);
-            playerResult.put(player.getName(), gameResult.profitMoney(player.getBetMoney()));
-        }
-
-        outputView.printBlackJackResult(playerResult);
+        Map<Name, Integer> playerResults = players.getPlayerResults(dealer);
+        outputView.printBlackJackResult(playerResults);
     }
 
     private boolean isHit(Player player) {

@@ -1,8 +1,13 @@
 package participant.player;
 
+import gameResult.GameResult;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import participant.dealer.Dealer;
+import referee.Referee;
 
 public class Players {
 
@@ -26,12 +31,24 @@ public class Players {
                 .toList();
     }
 
-    private static void validate(List<Player> players) {
+    public Map<Name, Integer> getPlayerResults(Dealer dealer) {
+        Map<Name, Integer> playerResult = new LinkedHashMap<>();
+        Referee referee = new Referee();
+
+        for (Player player : players) {
+            GameResult gameResult = referee.judge(player, dealer);
+            playerResult.put(player.getName(), gameResult.profitMoney(player.getBetMoney()));
+        }
+
+        return playerResult;
+    }
+
+    private void validate(List<Player> players) {
         validatePlayerCountRange(players);
         validateHasDuplicateName(players);
     }
 
-    private static void validateHasDuplicateName(List<Player> players) {
+    private void validateHasDuplicateName(List<Player> players) {
         int uniqueNameCount = countPlayerUniqueName(getPlayerNames(players));
 
         if (players.size() != uniqueNameCount) {
@@ -39,17 +56,17 @@ public class Players {
         }
     }
 
-    private static List<String> getPlayerNames(List<Player> players) {
+    private List<String> getPlayerNames(List<Player> players) {
         return players.stream()
                 .map(player -> player.getName().getValue())
                 .toList();
     }
 
-    private static int countPlayerUniqueName(List<String> players) {
+    private int countPlayerUniqueName(List<String> players) {
         return new HashSet<>(players).size();
     }
 
-    private static void validatePlayerCountRange(List<Player> players) {
+    private void validatePlayerCountRange(List<Player> players) {
         if (players.size() < MINIMUM_PLAYER_RANGE || MAXIMUM_PLAYER_RANGE < players.size()) {
             throw new IllegalArgumentException(
                     "참가자의 인원은 최소 " + MINIMUM_PLAYER_RANGE + "에서 최대 " + MAXIMUM_PLAYER_RANGE + "명 까지 가능합니다.");
