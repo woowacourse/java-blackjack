@@ -3,6 +3,7 @@ package domain.money;
 import java.util.Objects;
 
 public class Money {
+    private static final int MIN_MONEY = 1;
     private final int value;
 
     public Money(final int value) {
@@ -11,8 +12,8 @@ public class Money {
     }
 
     private void validate(final int value) {
-        if (value <= 0) {
-            throw new IllegalArgumentException("1 이상의 돈을 입력해주세요.");
+        if (value < MIN_MONEY) {
+            throw new IllegalArgumentException(MIN_MONEY + "이상의 숫자를 입력해주세요.");
         }
     }
 

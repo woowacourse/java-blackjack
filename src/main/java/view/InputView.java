@@ -12,9 +12,9 @@ public class InputView {
     private static final String REQUEST_BETTING_MONEY_MESSAGE = "%n%s의 배팅 금액은?%n";
     private static final String INVALID_DELIMITER_MESSAGE = "잘못된 구분자 입력입니다.";
     private static final String REQUEST_WHETHER_GET_MORE_CARD = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n";
-    public static final String DUPLICATED_NAME_MESSAGE = "중복된 플레이어 이름입니다.";
-    public static final String INVALID_NUMBER_MESSAGE = "숫자를 입력해주세요.";
-    public static final String INVALID_BLANK_INPUT_MESSAGE = "빈 문자열이 입력되었습니다.";
+    private static final String DUPLICATED_NAME_MESSAGE = "중복된 플레이어 이름입니다.";
+    private static final String INVALID_NUMBER_MESSAGE = "올바른 숫자를 입력해주세요.";
+    private static final String INVALID_BLANK_INPUT_MESSAGE = "빈 문자열이 입력되었습니다.";
 
     private final Scanner scanner = new Scanner(System.in);
 
