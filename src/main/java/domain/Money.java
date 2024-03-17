@@ -16,7 +16,7 @@ public class Money {
     }
 
     private void validateRange(final BigDecimal money) {
-        if(lessThanMinimum(money)|| moreThanMaximum(money)){
+        if (lessThanMinimum(money) || moreThanMaximum(money)) {
             throw new IllegalArgumentException(INVALID_MONEY_RANGE);
         }
     }

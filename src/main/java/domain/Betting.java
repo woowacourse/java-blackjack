@@ -12,7 +12,7 @@ public class Betting {
     public Betting(final Map<Player, String> betting) {
         this.betting = new LinkedHashMap<>();
         for (final Map.Entry<Player, String> entry : betting.entrySet()) {
-            this.betting.put(entry.getKey(),new Money(entry.getValue()));
+            this.betting.put(entry.getKey(), new Money(entry.getValue()));
         }
     }
 

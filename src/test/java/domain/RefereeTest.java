@@ -38,6 +38,33 @@ class RefereeTest {
         players = new Players(List.of("pobi", "neo"));
     }
 
+    private void prepareCards(final Dealer dealer, final Players players) {
+        dealer.receive(drawTwoCards(deck));
+        for (final Player player : players.getPlayers()) {
+            player.receive(drawTwoCards(deck));
+        }
+    }
+
+    private List<Card> drawTwoCards(final Deck deck) {
+        return Stream.generate(deck::draw)
+                .limit(2)
+                .toList();
+    }
+
+    private Player findPobi(final Players players) {
+        return players.getPlayers().stream()
+                .filter(player -> player.getName().equals(pobi))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 테스트용 이름"));
+    }
+
+    private Player findNeo(final Players players) {
+        return players.getPlayers().stream()
+                .filter(player -> player.getName().equals(neo))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 테스트용 이름"));
+    }
+
     @DisplayName("딜러가 버스트인 경우")
     @Nested
     class ifDealerBust {
@@ -265,32 +292,5 @@ class RefereeTest {
                     () -> assertThat(playerResult2).isEqualTo(PlayerResult.LOSE)
             );
         }
-    }
-
-    private void prepareCards(final Dealer dealer, final Players players) {
-        dealer.receive(drawTwoCards(deck));
-        for (final Player player : players.getPlayers()) {
-            player.receive(drawTwoCards(deck));
-        }
-    }
-
-    private List<Card> drawTwoCards(final Deck deck) {
-        return Stream.generate(deck::draw)
-                .limit(2)
-                .toList();
-    }
-
-    private Player findPobi(final Players players) {
-        return players.getPlayers().stream()
-                .filter(player -> player.getName().equals(pobi))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 테스트용 이름"));
-    }
-
-    private Player findNeo(final Players players) {
-        return players.getPlayers().stream()
-                .filter(player -> player.getName().equals(neo))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 테스트용 이름"));
     }
 }

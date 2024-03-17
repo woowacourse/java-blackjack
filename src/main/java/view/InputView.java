@@ -42,7 +42,7 @@ public class InputView {
     }
 
     public static String readBetting(final Player player) {
-        String message = String.format("%n%s의 배팅 금액은?",player.getName().getValue());
+        String message = String.format("%n%s의 배팅 금액은?", player.getName().getValue());
         System.out.println(message);
         String input = scanner.nextLine();
         validateNumberFormat(input);
@@ -50,9 +50,9 @@ public class InputView {
     }
 
     private static void validateNumberFormat(final String input) {
-        try{
+        try {
             new BigDecimal(input);
-        }catch (NumberFormatException NFE){
+        } catch (NumberFormatException NFE) {
             throw new IllegalArgumentException(NOT_NUMBER);
         }
     }

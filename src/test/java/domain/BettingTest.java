@@ -14,16 +14,16 @@ class BettingTest {
 
     @DisplayName("게임 결과가 주어지면, 플레이어의 수익을 구한다.")
     @Test
-    void calculateProfit(){
+    void calculateProfit() {
         //given
         Player player = new Player(new Name("pobi"));
         String money = "500000";
-        Betting betting = new Betting(Map.of(player,money));
+        Betting betting = new Betting(Map.of(player, money));
         PlayerResult playerResult = PlayerResult.BLACK_JACK_WIN;
         BigDecimal expectedProfit = new BigDecimal(money).multiply(new BigDecimal("1.5"));
 
         //when
-        BigDecimal result = betting.calculateProfit(player,playerResult);
+        BigDecimal result = betting.calculateProfit(player, playerResult);
 
         //then
         assertThat(result).isEqualByComparingTo(expectedProfit);

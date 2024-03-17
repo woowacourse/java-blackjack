@@ -9,7 +9,7 @@ public enum PlayerResult {
     LOSE(money -> money.multiply(new BigDecimal("-1"))),
     TIE(money -> money.multiply(new BigDecimal("0")));
 
-    private final Function<BigDecimal,BigDecimal> calculate;
+    private final Function<BigDecimal, BigDecimal> calculate;
 
     PlayerResult(final Function<BigDecimal, BigDecimal> calculate) {
         this.calculate = calculate;

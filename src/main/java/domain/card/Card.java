@@ -5,10 +5,9 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Card {
+    private static final Map<String, Card> CACHE = new ConcurrentHashMap<>();
     private final Symbol symbol;
     private final Rank rank;
-
-    private static final Map<String, Card> CACHE = new ConcurrentHashMap<>();
 
     private Card(final Symbol symbol, final Rank rank) {
         this.symbol = symbol;

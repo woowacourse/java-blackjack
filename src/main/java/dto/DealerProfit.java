@@ -6,7 +6,7 @@ public class DealerProfit {
 
     private final BigDecimal profit;
 
-    public DealerProfit(){
+    public DealerProfit() {
         this.profit = BigDecimal.ZERO;
     }
 
@@ -14,7 +14,7 @@ public class DealerProfit {
         this.profit = profit;
     }
 
-    public DealerProfit accumulate(final BigDecimal profit){
+    public DealerProfit accumulate(final BigDecimal profit) {
         return new DealerProfit(this.profit.add(profit));
     }
 
