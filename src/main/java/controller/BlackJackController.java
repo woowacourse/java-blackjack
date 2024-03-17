@@ -1,8 +1,7 @@
 package controller;
 
-import domain.betting.Bet;
 import domain.betting.Bets;
-import domain.betting.Profit;
+import domain.betting.Money;
 import domain.card.CardDeck;
 import domain.game.BlackJackGame;
 import domain.game.Command;
@@ -50,11 +49,11 @@ public class BlackJackController {
     }
 
     private Bets initBets(final PlayerNames playerNames) throws IOException {
-        Map<PlayerName, Bet> playerBets = new LinkedHashMap<>();
+        Map<PlayerName, Money> playerBets = new LinkedHashMap<>();
         Map<PlayerName, Integer> betsInput = inputView.readBettingMoney(playerNames.names());
 
         betsInput.forEach((playerName, bet) -> {
-            playerBets.put(playerName, new Bet(bet));
+            playerBets.put(playerName, new Money(bet));
         });
         return new Bets(playerBets);
     }
@@ -103,7 +102,7 @@ public class BlackJackController {
     }
 
     private void printGameProfits(final BlackJackGame blackJackGame, Bets bets) {
-        Map<Player, Profit> playerProfits = blackJackGame.getProfits(bets);
+        Map<Player, Money> playerProfits = blackJackGame.getProfits(bets);
         Entry<Player, Integer> dealerProfit = blackJackGame.getDealerProfit(bets);
         outputView.printProfits(ProfitDto.from(playerProfits, dealerProfit));
     }

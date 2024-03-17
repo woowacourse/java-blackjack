@@ -15,10 +15,10 @@ public class BetsTest {
     void create() {
         PlayerName playerName1 = new PlayerName("wiib");
         PlayerName playerName2 = new PlayerName("Bewhy");
-        Bet bet1 = new Bet(2000);
-        Bet bet2 = new Bet(5000);
+        Money money1 = new Money(2000);
+        Money money2 = new Money(5000);
 
-        assertThatCode(() -> new Bets(Map.of(playerName1, bet1, playerName2, bet2)))
+        assertThatCode(() -> new Bets(Map.of(playerName1, money1, playerName2, money2)))
                 .doesNotThrowAnyException();
     }
 
@@ -27,13 +27,13 @@ public class BetsTest {
     void get() {
         PlayerName playerName1 = new PlayerName("wiib");
         PlayerName playerName2 = new PlayerName("Bewhy");
-        Bet bet1 = new Bet(2000);
-        Bet bet2 = new Bet(5000);
+        Money money1 = new Money(2000);
+        Money money2 = new Money(5000);
 
-        Bets playerBets = new Bets(Map.of(playerName1, bet1, playerName2, bet2));
+        Bets playerBets = new Bets(Map.of(playerName1, money1, playerName2, money2));
 
-        assertThat(playerBets.get(playerName1)).isEqualTo(bet1);
-        assertThat(playerBets.get(playerName2)).isEqualTo(bet2);
+        assertThat(playerBets.get(playerName1)).isEqualTo(money1);
+        assertThat(playerBets.get(playerName2)).isEqualTo(money2);
     }
 
 }

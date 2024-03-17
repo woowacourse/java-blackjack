@@ -6,14 +6,14 @@ import java.util.Map;
 
 public class Bets {
 
-    private final Map<PlayerName, Bet> playerBets;
+    private final Map<PlayerName, Money> playerBets;
 
-    public Bets(final Map<PlayerName, Bet> playerBets) {
+    public Bets(final Map<PlayerName, Money> playerBets) {
         this.playerBets = new LinkedHashMap<>();
         this.playerBets.putAll(playerBets);
     }
 
-    public Bet get(final PlayerName playerName) {
+    public Money get(final PlayerName playerName) {
         return playerBets.get(playerName);
     }
 }
