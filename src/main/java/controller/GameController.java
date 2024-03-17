@@ -51,7 +51,7 @@ public class GameController {
 
     private void hitOrStay(Game game, Users users) {
         for (Player player : users.getPlayers()) {
-            hitOrStayOnce(game, player);
+            hitOrStay(game, player);
         }
         while (game.isDealerCardAddCondition()) {
             game.addDealerCard();
@@ -59,7 +59,7 @@ public class GameController {
         }
     }
 
-    private void hitOrStayOnce(Game game, Player player) {
+    private void hitOrStay(Game game, Player player) {
         Command command = ExceptionHandler.handle(() -> Command.get(InputView.inputAddCommand(player.getName())));
         State state = game.determineState(command, player);
         UserDto userDto = UserDto.from(player);
@@ -68,7 +68,7 @@ public class GameController {
             return;
         }
         ResultView.printPlayerAndDeck(userDto);
-        hitOrStayOnce(game, player);
+        hitOrStay(game, player);
     }
 
     private void notifyBust(State state, UserDto userDto) {
