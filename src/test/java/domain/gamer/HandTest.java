@@ -51,7 +51,7 @@ public class HandTest {
     @Test
     void sumScoreTest() {
         // given
-        Card aceCard = new Card(Symbol.CLOVER, Rank.BIG_ACE);
+        Card aceCard = new Card(Symbol.CLOVER, Rank.ACE);
         hand.add(aceCard);
         hand.add(cards.removeLast());
         hand.add(cards.removeLast());

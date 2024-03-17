@@ -28,12 +28,12 @@ public class Name {
         }
     }
 
-    public String getValue() {
-        return value;
-    }
-
     public boolean isSame(final String name) {
         return value.equals(name);
+    }
+
+    public String getValue() {
+        return value;
     }
 
     @Override

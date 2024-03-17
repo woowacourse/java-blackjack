@@ -75,10 +75,10 @@ public class DealerTest {
         dealer.hit(cards.removeLast());
 
         // when
-        boolean stay = dealer.isOverTurn();
+        boolean hit = dealer.canHit();
 
         // then
-        assertThat(stay).isFalse();
+        assertThat(hit).isTrue();
     }
 
     @DisplayName("딜러가 카드를 더 받지 않는다.")
@@ -90,9 +90,9 @@ public class DealerTest {
         dealer.hit(cards.removeLast());
 
         // when
-        boolean stay = dealer.isOverTurn();
+        boolean hit = dealer.canHit();
 
         // then
-        assertThat(stay).isTrue();
+        assertThat(hit).isFalse();
     }
 }

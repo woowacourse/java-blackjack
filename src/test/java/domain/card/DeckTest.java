@@ -13,16 +13,15 @@ public class DeckTest {
     void drawTest() {
         // given
         Card card1 = new Card(Symbol.DIAMOND, Rank.EIGHT);
-        Card card2 = new Card(Symbol.CLOVER, Rank.BIG_ACE);
-        Card card3 = new Card(Symbol.SPADE, Rank.KING);
+        Card card2 = new Card(Symbol.CLOVER, Rank.ACE);
 
-        List<Card> cards = List.of(card1, card2, card3);
-        Deck deck = Deck.from(cards);
+        List<Card> cards = List.of(card1, card2);
+        Deck deck = new Deck(cards);
 
         // when
         Card drawedCard = deck.draw();
 
         // then
-        assertThat(drawedCard).isEqualTo(card3);
+        assertThat(drawedCard).isEqualTo(card2);
     }
 }

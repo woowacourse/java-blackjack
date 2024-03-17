@@ -82,10 +82,10 @@ public class PlayerTest {
         player.hit(cards.removeLast());
 
         // when
-        boolean stay = player.isOverTurn();
+        boolean hit = player.canHit();
 
         // then
-        assertThat(stay).isTrue();
+        assertThat(hit).isFalse();
     }
 
     @DisplayName("플레이어가 카드를 더 빋는다.")
@@ -96,10 +96,10 @@ public class PlayerTest {
         player.hit(cards.removeLast());
 
         // when
-        boolean stay = player.isOverTurn();
+        boolean hit = player.canHit();
 
         // then
-        assertThat(stay).isFalse();
+        assertThat(hit).isTrue();
     }
 
     @DisplayName("플레이어는 '딜러'와 동일한 이름을 사용하면 예외를 던진다.")

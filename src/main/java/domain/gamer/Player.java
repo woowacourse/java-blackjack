@@ -4,6 +4,7 @@ import exception.NotAllowedNameException;
 
 public class Player extends Gamer {
     public static final String DEALER_NAME = "딜러";
+    private static final int STAY_CONDITION = 21;
 
     public Player(final Name name) {
         super(name);
@@ -17,17 +18,7 @@ public class Player extends Gamer {
     }
 
     @Override
-    public boolean isOverTurn() {
-        return getHand().isBust();
-    }
-
-    @Override
-    public boolean isDealer() {
-        return false;
-    }
-
-    @Override
-    public boolean isPlayer() {
-        return true;
+    int getStayCondition() {
+        return STAY_CONDITION;
     }
 }

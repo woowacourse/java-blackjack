@@ -1,7 +1,6 @@
 package domain.gamer;
 
 import domain.card.Card;
-import exception.CardReceiveException;
 import java.util.List;
 
 public abstract class Gamer {
@@ -13,20 +12,17 @@ public abstract class Gamer {
         this.hand = new Hand();
     }
 
-    public abstract boolean isOverTurn();
+    abstract int getStayCondition();
 
-    public abstract boolean isDealer();
-
-    public abstract boolean isPlayer();
+    public boolean canHit() {
+        return calculateTotalScore() < getStayCondition();
+    }
 
     public void receiveInitialCard(final Card card) {
         hand.add(card);
     }
 
     public void hit(final Card card) {
-        if (isOverTurn()) {
-            throw new CardReceiveException(CardReceiveException.CAN_NOT_RECEIVE_CARD);
-        }
         hand.add(card);
     }
 
@@ -48,9 +44,5 @@ public abstract class Gamer {
 
     public String getName() {
         return name.getValue();
-    }
-
-    protected Hand getHand() {
-        return this.hand;
     }
 }
