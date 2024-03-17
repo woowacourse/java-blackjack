@@ -1,32 +1,24 @@
 package dto;
 
-import domain.Result;
+import domain.Money;
 import domain.gamer.Player;
 
 import java.util.Map;
 
 public class TotalResult {
-    private final DealerResult dealerResult;
-    private final PlayerResults playerResult;
+    private final DealerProfit dealerProfit;
+    private final PlayerProfits playerResult;
 
-    public TotalResult(final DealerResult dealerResult, final PlayerResults playerResult) {
-        this.dealerResult = dealerResult;
+    public TotalResult(final DealerProfit dealerProfit, final PlayerProfits playerResult) {
+        this.dealerProfit = dealerProfit;
         this.playerResult = playerResult;
     }
 
-    public int getDealerWinCount() {
-        return dealerResult.getWinCount();
+    public String getDealerProfit() {
+        return dealerProfit.getProfit().toString();
     }
 
-    public int getDealerLoseCount() {
-        return dealerResult.getLoseCount();
-    }
-
-    public int getDealerTieCount() {
-        return dealerResult.getTieCount();
-    }
-
-    public Map<Player, Result> getPlayerResult() {
+    public Map<Player, Money> getPlayerResult() {
         return playerResult.getResults();
     }
 }

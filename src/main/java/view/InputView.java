@@ -2,6 +2,7 @@ package view;
 
 import domain.gamer.Player;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -14,6 +15,7 @@ public class InputView {
     private static final String YES = "y";
     private static final String NO = "n";
     private static final String INVALID_SELECTION = String.format("%s 또는 %s만 입력할 수 있습니다.", YES, NO);
+    private static final String NOT_NUMBER = "베팅 금액은 숫자만 입력할 수 있습니다.";
 
     private InputView() {
     }
@@ -39,8 +41,24 @@ public class InputView {
         }
     }
 
+    public static String readBetting(final Player player) {
+        String message = String.format("%n%s의 배팅 금액은?", player.getName().getValue());
+        System.out.println(message);
+        String input = scanner.nextLine();
+        validateNumberFormat(input);
+        return input.trim();
+    }
+
+    private static void validateNumberFormat(final String input) {
+        try {
+            new BigDecimal(input);
+        } catch (NumberFormatException NFE) {
+            throw new IllegalArgumentException(NOT_NUMBER);
+        }
+    }
+
     public static boolean readSelectionOf(final Player player) {
-        String message = String.format(System.lineSeparator() + "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)",
+        String message = String.format("%n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)",
                 player.getName().getValue());
         System.out.println(message);
         String input = scanner.nextLine().trim();

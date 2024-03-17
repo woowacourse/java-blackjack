@@ -1,11 +1,9 @@
 package domain.deck;
 
+import domain.card.CardFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import strategy.RandomShuffleStrategy;
-import strategy.SettedShuffleStrategy;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -16,13 +14,13 @@ public class DeckTest {
 
     @DisplayName("52 * 6개의 카드를 생성한다.")
     @Test
-    void createDecksTest() {
+    void createDeckTest() {
         // given
         int expectedSize = DECK_SIZE;
 
         // when
-        RandomShuffleStrategy shuffleStrategy = new RandomShuffleStrategy();
-        Deck deck = new Deck(shuffleStrategy);
+        CardFactory cardFactory = new CardFactory(new RandomShuffleStrategy());
+        Deck deck = new Deck(cardFactory);
 
         // then
         assertThat(deck.getCards()).hasSize(expectedSize);
@@ -30,10 +28,25 @@ public class DeckTest {
 
     @DisplayName("52 * 6개의 카드를 생성한다.")
     @Test
-    void emptyDecksTest() {
+    void drawDeckTest() {
         // given
-        SettedShuffleStrategy shuffleStrategy = new SettedShuffleStrategy(List.of());
-        Deck deck = new Deck(shuffleStrategy);
+        int expectedSize = DECK_SIZE - 1;
+        CardFactory cardFactory = new CardFactory(new RandomShuffleStrategy());
+        Deck deck = new Deck(cardFactory);
+
+        // when
+        deck.draw();
+
+        // then
+        assertThat(deck.getCards()).hasSize(expectedSize);
+    }
+
+    @DisplayName("52 * 6개 이상 뽑으면 예외를 던진다.")
+    @Test
+    void emptyDeckTest() {
+        // given
+        CardFactory cardFactory = new CardFactory(new RandomShuffleStrategy());
+        Deck deck = new Deck(cardFactory);
         for (int i = 0; i < DECK_SIZE; i++) {
             deck.draw();
         }

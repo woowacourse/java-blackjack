@@ -1,6 +1,6 @@
 package view;
 
-import domain.Result;
+import domain.Money;
 import domain.card.Card;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
@@ -96,19 +96,19 @@ public class OutputView {
         return rank + symbol;
     }
 
-    public static void printFinalGameResult(final TotalResult totalResult) {
-        System.out.println(System.lineSeparator() + "## 최종 승패");
-        String message = String.format("딜러: %d승 %d패 %d무", totalResult.getDealerWinCount(), totalResult.getDealerLoseCount(), totalResult.getDealerTieCount());
+    public static void printTotalResult(final TotalResult totalResult) {
+        System.out.println(System.lineSeparator() + "## 최종 수익");
+        String message = String.format("딜러: %s", totalResult.getDealerProfit());
         System.out.println(message);
         printPlayerResults(totalResult.getPlayerResult());
     }
 
-    private static void printPlayerResults(final Map<Player, Result> playerResults) {
+    private static void printPlayerResults(final Map<Player, Money> playerResults) {
         StringBuilder builder = new StringBuilder();
-        for (Entry<Player, Result> player : playerResults.entrySet()) {
-            String playerName = player.getKey().getName().getValue();
-            String result = ResultView.findName(player.getValue());
-            String message = String.format("%s: %s", playerName, result);
+        for (Entry<Player, Money> playerResult : playerResults.entrySet()) {
+            String playerName = playerResult.getKey().getName().getValue();
+            String profit = playerResult.getValue().money();
+            String message = String.format("%s: %s", playerName, profit);
             builder.append(message).append(System.lineSeparator());
         }
         System.out.println(builder);

@@ -1,14 +1,25 @@
 package domain.card;
 
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Card {
+    private static final Map<String, Card> CACHE = new ConcurrentHashMap<>();
     private final Symbol symbol;
     private final Rank rank;
 
-    public Card(final Symbol symbol, final Rank rank) {
+    private Card(final Symbol symbol, final Rank rank) {
         this.symbol = symbol;
         this.rank = rank;
+    }
+
+    public static Card of(final Symbol symbol, final Rank rank) {
+        return CACHE.computeIfAbsent(toKey(symbol, rank), key -> new Card(symbol, rank));
+    }
+
+    private static String toKey(final Symbol symbol, final Rank rank) {
+        return symbol.name() + rank.name();
     }
 
     public int getScore() {

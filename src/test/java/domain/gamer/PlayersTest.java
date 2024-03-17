@@ -17,14 +17,14 @@ class PlayersTest {
     @ValueSource(ints = {1, 9})
     void invalidPlayerCountTest(int count) {
         // given
-        List<Player> players = new ArrayList<>();
+        List<String> names = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             String name = "이름" + i;
-            players.add(new Player(new Name(name)));
+            names.add(name);
         }
 
         // then
-        assertThatThrownBy(() -> new Players(players))
+        assertThatThrownBy(() -> new Players(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어는 2명에서 8명까지만 참가 가능합니다.");
     }
@@ -33,14 +33,14 @@ class PlayersTest {
     @Test
     void duplicatedPlayerNameTest() {
         // given
-        List<Player> players = new ArrayList<>();
+        List<String> names = new ArrayList<>();
         for (int i = 0; i < 2; i++) {
             String name = "이름";
-            players.add(new Player(new Name(name)));
+            names.add(name);
         }
 
         // then
-        assertThatThrownBy(() -> new Players(players))
+        assertThatThrownBy(() -> new Players(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 이름은 중복될 수 없습니다.");
     }

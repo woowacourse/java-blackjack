@@ -15,7 +15,7 @@ public class CardTest {
         Rank expectedRank = Rank.QUEEN;
 
         // when
-        Card card = new Card(expectedSymbol, expectedRank);
+        Card card = Card.of(expectedSymbol, expectedRank);
         Symbol symbol = card.getSymbol();
         Rank rank = card.getRank();
 
