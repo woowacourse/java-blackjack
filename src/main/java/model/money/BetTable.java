@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import model.dto.FinalOddsResult;
+import model.dto.OddsResult;
 import model.participant.Name;
 
 public class BetTable {
@@ -46,16 +46,16 @@ public class BetTable {
         return table.keySet();
     }
 
-    public FinalOddsResult getDealerFinalOddsResult() {
+    public OddsResult getDealerFinalOddsResult() {
         Money dealerOdds = findMoneyByName(DEALER_NAME);
-        return new FinalOddsResult(DEALER_NAME, dealerOdds);
+        return new OddsResult(DEALER_NAME, dealerOdds);
     }
 
-    public List<FinalOddsResult> getPlayerFinalOddsResults() {
+    public List<OddsResult> getPlayerFinalOddsResults() {
         return table.keySet()
                 .stream()
                 .filter(name -> !name.equals(DEALER_NAME))
-                .map(name -> new FinalOddsResult(name, findMoneyByName(name)))
+                .map(name -> new OddsResult(name, findMoneyByName(name)))
                 .toList();
     }
 }

@@ -12,7 +12,7 @@ import model.Choice;
 import model.casino.CardDispenser;
 import model.casino.DividendPolicyFactory;
 import model.casino.RandomCardShuffleMachine;
-import model.dto.FinalOddsResult;
+import model.dto.OddsResult;
 import model.dto.GameCompletionResult;
 import model.money.BetTable;
 import model.money.DividendPolicy;
@@ -123,10 +123,10 @@ public class Casino {
     }
 
     private void showFinalOdds() {
-        FinalOddsResult dealerFinalOddsResult = BetTable.getInstance().getDealerFinalOddsResult();
-        List<FinalOddsResult> playerFinalOddsResults = getInstance().getPlayerFinalOddsResults();
+        OddsResult dealerOddsResult = BetTable.getInstance().getDealerFinalOddsResult();
+        List<OddsResult> playerOddsResults = getInstance().getPlayerFinalOddsResults();
 
-        OutputView.printFinalGameResult(dealerFinalOddsResult, playerFinalOddsResults);
+        OutputView.printFinalGameResult(dealerOddsResult, playerOddsResults);
     }
 
 }

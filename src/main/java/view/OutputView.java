@@ -1,7 +1,7 @@
 package view;
 
 import java.util.List;
-import model.dto.FinalOddsResult;
+import model.dto.OddsResult;
 import model.dto.GameCompletionResult;
 
 public class OutputView {
@@ -61,14 +61,14 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printFinalGameResult(FinalOddsResult dealerResult, List<FinalOddsResult> playerResults) {
+    public static void printFinalGameResult(OddsResult dealerResult, List<OddsResult> playerResults) {
         System.out.printf("%n##최종수익%n");
         printEachFinalGameResult(dealerResult);
         playerResults.forEach(OutputView::printEachFinalGameResult);
 
     }
 
-    private static void printEachFinalGameResult(FinalOddsResult result) {
+    private static void printEachFinalGameResult(OddsResult result) {
         System.out.println(result.getParticipantNameAsString() + ": " + result.getParticipantMoneyAsInteger());
     }
 
