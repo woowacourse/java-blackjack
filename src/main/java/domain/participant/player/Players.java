@@ -2,9 +2,7 @@ package domain.participant.player;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 public class Players {
 
@@ -29,7 +27,7 @@ public class Players {
         players.forEach(action);
     }
 
-    public Stream<Player> stream() {
-        return players.stream();
+    public List<Player> toList() {
+        return List.copyOf(players);
     }
 }

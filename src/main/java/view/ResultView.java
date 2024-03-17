@@ -3,16 +3,15 @@ package view;
 import static domain.participant.dealer.Dealer.DEALER_HIT_THRESHOLD;
 import static domain.participant.dealer.Dealer.INITIAL_CARD_COUNT;
 
-import java.util.EnumSet;
-
-import domain.result.BlackjackResult;
-import domain.result.BlackjackResultStatus;
 import domain.card.Hand;
 import domain.participant.Participant;
+import domain.participant.attributes.Name;
 import domain.participant.dealer.Dealer;
 import domain.participant.dealer.DealerResult;
 import domain.participant.player.PlayerResults;
 import domain.participant.player.Players;
+import domain.result.BlackjackResult;
+import domain.result.Profit;
 
 public class ResultView implements BlackjackViewParser {
 
@@ -80,26 +79,24 @@ public class ResultView implements BlackjackViewParser {
     }
 
     public void printResult(final BlackjackResult result) {
-        System.out.println("\n## 최종 승패");
+        System.out.println("\n## 최종 수익");
         printDealerResult(result.getDealerResult());
         printPlayerResults(result.getPlayerResults());
     }
 
     public void printDealerResult(final DealerResult result) {
-        String message = parseName(result.getDealerName()) + ": " +
-                EnumSet.allOf(BlackjackResultStatus.class)
-                        .stream()
-                        .filter(result::contains)
-                        .map(status -> result.countOf(status) + status.getValue())
-                        .reduce((status1, status2) -> status1 + " " + status2)
-                        .orElse("");
+        Name name = result.getDealerName();
+        Profit profit = result.getProfit();
+        String message = parseName(name) + ": " + profit.amount();
         System.out.println(message);
     }
 
     public void printPlayerResults(final PlayerResults result) {
-        String message = result.getPlayers()
+        Players players = result.getPlayers();
+        String message = players
+                .toList()
                 .stream()
-                .map(player -> parseName(player.name()) + ": " + parseResultStatus(result.statusOf(player)))
+                .map(player -> parseName(player.name()) + ": " + result.profitOf(player).amount())
                 .reduce((result1, result2) -> result1 + "\n" + result2)
                 .orElse("");
         System.out.println(message);

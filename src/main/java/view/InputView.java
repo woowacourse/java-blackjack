@@ -21,7 +21,7 @@ public class InputView implements BlackjackViewParser {
     }
 
     public Bet askPlayerBet(Name name) {
-        System.out.printf("%s의 의 배팅 금액은?", name.value());
+        System.out.printf("%s의 의 배팅 금액은?%n", name.value());
         String input = requireNotBlank(readLine());
         return new Bet(Integer.parseInt(input));
     }

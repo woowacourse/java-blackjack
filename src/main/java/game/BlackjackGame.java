@@ -1,11 +1,11 @@
 package game;
 
-import domain.result.BlackjackResult;
 import domain.card.CardMachine;
 import domain.participant.attributes.Names;
 import domain.participant.dealer.Dealer;
 import domain.participant.player.Player;
 import domain.participant.player.Players;
+import domain.result.BlackjackResult;
 import view.GameCommand;
 import view.InputView;
 import view.ResultView;
