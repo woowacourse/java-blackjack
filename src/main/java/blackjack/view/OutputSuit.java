@@ -16,15 +16,15 @@ enum OutputSuit {
         this.name = name;
     }
 
-    private String getName() {
-        return this.name;
-    }
-
     static String convertSuitToString(Suit suit) {
         return Arrays.stream(OutputSuit.values())
                 .filter(outputSuit -> outputSuit.name().equals(suit.name()))
                 .findAny()
                 .map(OutputSuit::getName)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 무늬입니다."));
+    }
+
+    private String getName() {
+        return this.name;
     }
 }

@@ -1,6 +1,5 @@
 package blackjack.domain.state;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -42,8 +41,7 @@ class InitialStateTest {
     public void standFail() {
         InitialState initialState = new InitialState();
 
-        assertThatCode(initialState::stand)
-                .isInstanceOf(UnsupportedOperationException.class)
+        assertThatCode(initialState::stand).isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("초기 상태에서는 할 수 없습니다.");
     }
 
@@ -52,8 +50,7 @@ class InitialStateTest {
     public void getHandFail() {
         InitialState initialState = new InitialState();
 
-        assertThatCode(initialState::getHand)
-                .isInstanceOf(UnsupportedOperationException.class)
+        assertThatCode(initialState::getHand).isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("초기 상태에서는 할 수 없습니다.");
     }
 
@@ -70,8 +67,7 @@ class InitialStateTest {
     public void getProfitRate() {
         InitialState initialState = new InitialState();
 
-        assertThatCode(() -> initialState.getProfitRate(Hand.of()))
-                .isInstanceOf(UnsupportedOperationException.class)
+        assertThatCode(() -> initialState.getProfitRate(Hand.of())).isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("초기 상태에서는 할 수 없습니다.");
     }
 }

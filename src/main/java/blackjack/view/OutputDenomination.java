@@ -25,15 +25,15 @@ enum OutputDenomination {
         this.value = value;
     }
 
-    public String getValue() {
-        return value;
-    }
-
     static String convertDenominationToString(Denomination denomination) {
         return Arrays.stream(OutputDenomination.values())
                 .filter(outputDenomination -> outputDenomination.name().equals(denomination.name()))
                 .findAny()
                 .map(OutputDenomination::getValue)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 숫자입니다."));
+    }
+
+    public String getValue() {
+        return value;
     }
 }
