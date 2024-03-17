@@ -7,7 +7,6 @@ import blackjack.domain.participant.Money;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Profit;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -88,8 +87,6 @@ class Controller {
     }
 
     private void showProfit(Participants participants) {
-        Profit profit = new Profit(participants);
-
-        outputView.printProfit(profit.createAllProfit());
+        outputView.printProfit(participants.createAllProfit());
     }
 }
