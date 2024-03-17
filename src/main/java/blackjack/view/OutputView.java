@@ -1,15 +1,15 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.participant.Profit;
 import blackjack.domain.participant.ProfitDetails;
-import blackjack.domain.card.Suit;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -84,6 +84,10 @@ public class OutputView {
         System.out.println(String.format("딜러: %d", dealerProfit.getValue()));
         playerProfit.forEach(
                 (name, profit) -> System.out.println(String.format("%s:  %d", name.getName(), profit.getValue())));
+    }
+
+    public void printError(String message) {
+        System.out.println("[ERROR] " + message);
     }
 
     private enum OutputSuit {

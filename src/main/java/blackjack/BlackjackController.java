@@ -1,17 +1,18 @@
 package blackjack;
 
-import blackjack.domain.participant.BetDetails;
 import blackjack.domain.card.CardFactory;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.RandomShuffler;
+import blackjack.domain.participant.BetDetails;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.participant.ProfitDetails;
-import blackjack.domain.card.RandomShuffler;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
@@ -23,9 +24,9 @@ public class BlackjackController {
         this.outputView = outputView;
     }
 
-    public void run() {
-        List<Name> playerNames = inputView.readPlayerNames();
-        BetDetails betDetails = inputView.readPlayersBetMoney(playerNames);
+    public void play() {
+        List<Name> playerNames = repeat(inputView::readPlayerNames);
+        BetDetails betDetails = repeat(() -> inputView.readPlayersBetMoney(playerNames));
 
         ProfitDetails profitDetails = playBlackjack(playerNames, betDetails);
         outputView.printProfitDetails(profitDetails);
@@ -69,7 +70,7 @@ public class BlackjackController {
     }
 
     private Player drawOrStand(Player player, Deck deck) {
-        if (inputView.readHitOrStand(player)) {
+        if (repeat(() -> inputView.readHitOrStand(player))) {
             return player.draw(deck);
         }
         return player.stand();
@@ -81,5 +82,15 @@ public class BlackjackController {
             dealer = dealer.draw(deck);
         }
         return dealer;
+    }
+
+    private <T> T repeat(Supplier<T> supplier) {
+        while (true) {
+            try {
+                return supplier.get();
+            } catch (IllegalArgumentException e) {
+                outputView.printError(e.getMessage());
+            }
+        }
     }
 }
