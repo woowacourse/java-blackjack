@@ -23,4 +23,12 @@ public class MoneyManager {
         );
         return Collections.unmodifiableMap(profitManager);
     }
+
+    public Profit makeDealerProfit(Map<Player, Result> playerResults) {
+        Profit profit = new Profit(0);
+        for (Map.Entry<Player, Profit> entries : calculateProfit(playerResults).entrySet()) {
+            profit = profit.sum(entries.getValue());
+        }
+        return profit.reverse();
+    }
 }

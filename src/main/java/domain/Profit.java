@@ -7,6 +7,14 @@ public class Profit {
         this.value = value;
     }
 
+    public Profit sum(Profit profit) {
+        return new Profit(value + profit.getValue());
+    }
+
+    public Profit reverse() {
+        return new Profit(-value);
+    }
+
     public int getValue() {
         return (int) value;
     }
