@@ -3,20 +3,18 @@ package blackjack.domain.game;
 import blackjack.domain.betting.OwnedMoney;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import java.util.function.Function;
 
 public enum GameResult {
 
-    PLAYER_BLACKJACK((OwnedMoney bet) -> bet.multiply(1.5)),
-    PLAYER_WIN((OwnedMoney bet) -> bet.multiply(1)),
-    PUSH((OwnedMoney bet) -> bet.multiply(0)),
-    PLAYER_LOSE((OwnedMoney bet) -> bet.multiply(-1)),
-    ;
+    PLAYER_BLACKJACK(1.5),
+    PLAYER_WIN(1),
+    PUSH(0),
+    PLAYER_LOSE(-1);
 
-    private final Function<OwnedMoney, OwnedMoney> calculatePrize;
+    private final double betPrizeRatio;
 
-    GameResult(Function<OwnedMoney, OwnedMoney> calculatePrize) {
-        this.calculatePrize = calculatePrize;
+    GameResult(double betPrizeRatio) {
+        this.betPrizeRatio = betPrizeRatio;
     }
 
     public static GameResult of(Dealer dealer, Player player) {
@@ -59,6 +57,6 @@ public enum GameResult {
     }
 
     public OwnedMoney calculatePrize(OwnedMoney bet) {
-        return calculatePrize.apply(bet);
+        return bet.multiply(betPrizeRatio);
     }
 }
