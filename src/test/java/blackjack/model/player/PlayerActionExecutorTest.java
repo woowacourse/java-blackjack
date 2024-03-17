@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerActionExecutorTest {
     @Test
@@ -58,5 +59,29 @@ class PlayerActionExecutorTest {
         // then
         ExecutingPlayer executingPlayer = playerActionExecutor.getExecutingPlayer();
         assertThat(executingPlayer.name()).isEqualTo("dora");
+    }
+
+    @Test
+    @DisplayName("모든 플레이어의 액션을 수행하고 난 후 PlayerActionExecutor를 실행하면 예외가 발생한다")
+    public void checkExecutionIsFinishedTest() {
+        // given
+        List<Card> cards = List.of(
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.HEART, Denomination.FIVE),
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.HEART, Denomination.FIVE),
+                new Card(Suit.HEART, Denomination.FIVE)
+        );
+        CardGenerator cardGenerator = new SequentialCardGenerator(cards);
+        Players players = new Players(List.of("mia", "dora"), cardGenerator);
+        
+        PlayerActionExecutor playerActionExecutor = new PlayerActionExecutor(players, cardGenerator);
+        playerActionExecutor.execute(PlayerAction.STAND);
+        playerActionExecutor.execute(PlayerAction.STAND);
+
+        // when & then
+        assertThatThrownBy(
+                () -> playerActionExecutor.execute(PlayerAction.HIT)
+        ).isInstanceOf(UnsupportedOperationException.class);
     }
 }
