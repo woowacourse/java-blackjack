@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 
-import static domain.Command.YES;
+import static domain.game.Command.YES;
 import static domain.game.Result.LOSE;
 import static domain.game.Result.WIN;
 import static org.assertj.core.api.Assertions.assertThat;

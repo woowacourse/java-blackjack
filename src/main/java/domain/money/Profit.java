@@ -1,4 +1,4 @@
-package domain;
+package domain.money;
 
 public class Profit {
     private final double value;

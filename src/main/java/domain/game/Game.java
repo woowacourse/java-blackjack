@@ -1,6 +1,5 @@
 package domain.game;
 
-import domain.Command;
 import domain.deck.TotalDeck;
 import domain.user.Dealer;
 import domain.user.Player;
@@ -13,7 +12,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static domain.Command.YES;
+import static domain.game.Command.YES;
 import static domain.game.State.*;
 
 public class Game {

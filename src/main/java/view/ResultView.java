@@ -1,6 +1,6 @@
 package view;
 
-import domain.Profit;
+import domain.money.Profit;
 import domain.user.Player;
 import dto.UserDto;
 
@@ -67,8 +67,6 @@ public class ResultView {
     public static void showProfit(Map<Player, Profit> profitManager, Profit profitOfDealer) {
         System.out.println("\n## 최종 수익");
         System.out.println("딜러: " + profitOfDealer.getValue());
-        profitManager.forEach((player, profit) -> {
-            System.out.println(player.getName() + ": " + profit.getValue());
-        });
+        profitManager.forEach((player, profit) -> System.out.println(player.getName() + ": " + profit.getValue()));
     }
 }
