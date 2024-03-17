@@ -1,7 +1,5 @@
 package blackjack.controller;
 
-import blackjack.domain.BlackjackConstants;
-import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.BlackjackGamer;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Money;
@@ -31,11 +29,9 @@ public class BlackjackController {
     public void run() {
         Players players = getPlayers();
         Dealer dealer = new Dealer();
-        Deck deck = new Deck();
-        deck.shuffle();
 
-        setUpInitialHands(players, deck, dealer);
-        distributeCardToPlayers(players, deck);
+        setUpInitialHands(dealer, players);
+        distributeCardToPlayers(dealer, players);
         distributeCardToDealer(dealer, deck);
         printAllGamerScores(dealer, players);
         printAllGamerRevenues(dealer, players);
@@ -60,9 +56,8 @@ public class BlackjackController {
         return playerBetAmountMap;
     }
 
-    private void setUpInitialHands(Players players, Deck deck, Dealer dealer) {
-        dealer.initCard(deck, BlackjackConstants.INITIAL_CARD_COUNT.getValue());
-        players.initAllPlayersCard(deck, BlackjackConstants.INITIAL_CARD_COUNT.getValue());
+    private void setUpInitialHands(Dealer dealer, Players players) {
+        dealer.setUpInitialCards(players);
         printInitialHands(players, dealer);
     }
 
@@ -76,15 +71,15 @@ public class BlackjackController {
         outputView.printBlankLine();
     }
 
-    private void distributeCardToPlayers(Players players, Deck deck) {
+    private void distributeCardToPlayers(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
-            distributeCardToPlayer(deck, player);
+            distributeCardToPlayer(dealer, player);
         }
     }
 
-    private void distributeCardToPlayer(Deck deck, Player player) {
+    private void distributeCardToPlayer(Dealer dealer, Player player) {
         while (canDistribute(player)) {
-            player.addCard(deck.draw());
+            dealer.giveCardToPlayer(player);
             outputView.printGamerNameAndHand(GamerHandDto.fromGamer(player));
         }
         outputView.printBlankLine();
@@ -95,14 +90,14 @@ public class BlackjackController {
     }
 
     private boolean isPlayerCommandHit(Player player) {
-        Command command = inputView.receiveCommand(player.getName().value());
+        Command command = inputView.receiveCommand(player.getName());
         return command.isHit();
     }
 
-    private void distributeCardToDealer(Dealer dealer, Deck deck) {
+    private void distributeCardToDealer(Dealer dealer) {
         while (dealer.canReceiveCard()) {
-            dealer.addCard(deck.draw());
-            outputView.printDealerMessage(dealer.getName().value());
+            dealer.addCard();
+            outputView.printDealerMessage(dealer.getName());
         }
         outputView.printBlankLine();
     }
