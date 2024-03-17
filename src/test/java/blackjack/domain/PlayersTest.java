@@ -42,7 +42,7 @@ public class PlayersTest {
         List<String> names = List.of("choco", "choco", "chip");
 
         // when & then
-        assertThatThrownBy(() -> Players.validate(names))
+        assertThatThrownBy(() -> Players.of(names, dealer))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

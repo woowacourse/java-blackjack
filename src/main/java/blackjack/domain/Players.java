@@ -5,18 +5,18 @@ import blackjack.domain.participant.Player;
 import blackjack.dto.ProfitResult;
 
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Players {
 
     private static final String NAME_DUPLICATED_EXCEPTION = "플레이어의 이름은 중복될 수 없습니다.";
 
     private final List<Player> players;
+    private final Map<Player, Betting> bettingTable;
 
     private Players(final List<Player> players) {
         this.players = players;
+        this.bettingTable = new HashMap<>();
     }
 
     public static Players of(final List<String> names, final Dealer dealer) {
@@ -29,7 +29,7 @@ public class Players {
         return new Players(players);
     }
 
-    public static void validate(final List<String> names) {
+    private static void validate(final List<String> names) {
         if (isDuplicated(names)) {
             throw new IllegalArgumentException(NAME_DUPLICATED_EXCEPTION);
         }
