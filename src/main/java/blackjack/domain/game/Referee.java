@@ -9,20 +9,17 @@ public class Referee {
         if (player.isBlackjack() && !dealer.isBlackjack()) {
             return PlayerResult.BLACKJACK_WIN;
         }
-        if (player.isBust() || dealer.isBlackjack()) {
+        if (playerLose(dealer, player)) {
             return PlayerResult.LOSE;
-        }
-        if (dealerLose(dealer, player)) {
-            return PlayerResult.WIN;
         }
         if (dealer.score() == player.score()) {
             return PlayerResult.PUSH;
         }
-        return PlayerResult.LOSE;
+        return PlayerResult.WIN;
     }
 
-    public boolean dealerLose(Dealer dealer, Player player) {
-        return player.score() > dealer.score() ||
-                dealer.isBust();
+    private boolean playerLose(Dealer dealer, Player player) {
+        return player.isBust() || (dealer.isBlackjack() && !player.isBlackjack())
+                || (player.score() < dealer.score() && !dealer.isBust());
     }
 }

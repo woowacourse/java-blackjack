@@ -18,9 +18,11 @@ import static blackjack.domain.card.Rank.KING;
 import static blackjack.domain.card.Rank.NINE;
 import static blackjack.domain.card.Rank.QUEEN;
 import static blackjack.domain.card.Rank.SEVEN;
+import static blackjack.domain.card.Rank.TEN;
 import static blackjack.domain.card.Rank.THREE;
 import static blackjack.domain.card.Rank.TWO;
 import static blackjack.domain.card.Suit.CLUB;
+import static blackjack.domain.card.Suit.DIAMOND;
 import static blackjack.domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -56,7 +58,7 @@ public class RefereeTest {
 
     @Test
     @DisplayName("딜러의 합과 플레이어의 합이 같으면 무승부이다.")
-    void playerDrawWhenSameBlackjackTest() {
+    void pushTest() {
         Player player = new Player(new Name("lemone"), new Chip(0));
         Dealer dealer = new Dealer(new Chip(0));
         Referee referee = new Referee();
@@ -69,7 +71,21 @@ public class RefereeTest {
     }
 
     @Test
-    @DisplayName("플레이어의 첫 두개의 카드의 합이 21이면 승리한다.")
+    @DisplayName("딜러의 합과 플레이어의 합이 블랙잭으로 같으면 무승부이다.")
+    void pushWhenSameBlackjackTest() {
+        Player player = new Player(new Name("lemone"), new Chip(0));
+        Dealer dealer = new Dealer(new Chip(0));
+        Referee referee = new Referee();
+
+        player.draw(List.of(Card.of(ACE, SPADE), Card.of(TEN, CLUB)));
+        dealer.draw(List.of(Card.of(ACE, DIAMOND), Card.of(TEN, SPADE)));
+
+        assertThat(referee.judgePlayerResult(dealer, player))
+                .isEqualTo(PlayerResult.PUSH);
+    }
+
+    @Test
+    @DisplayName("플레이어만 블랙잭이면 블랙잭 승리한다.")
     void playerDealCardsBlackjackTest() {
         Player player = new Player(new Name("lemone"), new Chip(0));
         Dealer dealer = new Dealer(new Chip(0));
