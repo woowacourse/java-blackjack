@@ -53,15 +53,15 @@ public class Participants {
     }
 
     private List<Player> createPlayers(List<String> playerNames, List<Money> playersMoney) {
-        List<Player> players = new ArrayList<>();
+        List<Player> returningPlayers = new ArrayList<>();
         int totalPlayerSize = playerNames.size();
 
         for (int index = 0; index < totalPlayerSize; index++) {
             Player player = new Player(playerNames.get(index), playersMoney.get(index));
-            players.add(player);
+            returningPlayers.add(player);
         }
 
-        return players;
+        return returningPlayers;
     }
 
     public List<Participant> getParticipants() {
