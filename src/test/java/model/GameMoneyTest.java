@@ -10,11 +10,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class GameMoneyTest {
 
-    @DisplayName("배팅 금액은 0보다 커야한다.")
-    @ParameterizedTest
-    @ValueSource(ints = {0, -1})
-    void validateGameMoneyOverZero(int gameMoney) {
-        assertThatThrownBy(() -> new GameMoney(gameMoney))
+    @DisplayName("배팅 금액은 1000보다 작을 경우 예외가 발생한다.")
+    @Test
+    void validateGameMoneyOverZero() {
+        assertThatThrownBy(() -> new GameMoney(999))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
