@@ -59,7 +59,7 @@ public class Players {
                 .toList();
     }
 
-    public List<String> getNames() {
+    public List<Name> getNames() {
         return players.stream()
                 .map(Player::getName)
                 .toList();

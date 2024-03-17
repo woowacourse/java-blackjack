@@ -3,10 +3,7 @@ package blackjack.controller;
 import blackjack.model.cardgenerator.CardGenerator;
 import blackjack.model.cardgenerator.RandomCardGenerator;
 import blackjack.model.dealer.Dealer;
-import blackjack.model.player.Player;
-import blackjack.model.player.PlayerAction;
-import blackjack.model.player.PlayerActionExecutor;
-import blackjack.model.player.Players;
+import blackjack.model.player.*;
 import blackjack.model.result.BettingBoard;
 import blackjack.model.result.BettingMoney;
 import blackjack.view.InputView;
@@ -47,15 +44,15 @@ public class BlackJackController {
     }
 
     private BettingBoard prepareBettingBoard(final Players players) {
-        Map<String, BettingMoney> board = new HashMap<>();
-        for (String playerName : players.getNames()) {
+        Map<Name, BettingMoney> board = new HashMap<>();
+        for (Name playerName : players.getNames()) {
             BettingMoney bettingMoney = retryOnException(() -> askBettingMoney(playerName));
             board.put(playerName, bettingMoney);
         }
         return new BettingBoard(board);
     }
 
-    private BettingMoney askBettingMoney(final String playerName) {
+    private BettingMoney askBettingMoney(final Name playerName) {
         int bettingMoney = inputView.askBettingMoney(playerName);
         return new BettingMoney(bettingMoney);
     }
@@ -76,8 +73,8 @@ public class BlackJackController {
         }
     }
 
-    private PlayerAction askPlayerHitTry(final String playerName) {
-        boolean askContinuance = inputView.askHitOrStandCommand(playerName);
+    private PlayerAction askPlayerHitTry(final Name playerName) {
+        boolean askContinuance = inputView.askHitOrStandCommand(playerName.getValue());
         return PlayerAction.from(askContinuance);
     }
 

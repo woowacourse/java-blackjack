@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import blackjack.model.player.Name;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -37,8 +39,8 @@ public class InputView {
                 .toList();
     }
 
-    public int askBettingMoney(final String playerName) {
-        System.out.println(playerName + ASK_BETTING_MONEY);
+    public int askBettingMoney(final Name playerName) {
+        System.out.println(playerName.getValue() + ASK_BETTING_MONEY);
         int bettingMoney = convertToNumber(scanner.nextLine());
         validateBettingMoney(bettingMoney);
         return bettingMoney;

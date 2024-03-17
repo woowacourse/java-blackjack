@@ -8,21 +8,12 @@ import blackjack.model.cardgenerator.CardGenerator;
 import java.util.List;
 
 public class Player {
-    private static final String INVALID_NAME_LENGTH = "참여자 이름은 한 글자 이상이다";
-
-    private final String name;
+    private final Name name;
     private final Cards cards;
 
     public Player(final String name, final CardGenerator cardGenerator) {
-        validateName(name);
-        this.name = name;
+        this.name = new Name(name);
         this.cards = Cards.deal(cardGenerator);
-    }
-
-    private void validateName(final String name) {
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException(INVALID_NAME_LENGTH);
-        }
     }
 
     public Score calculateCardsTotalScore() {
@@ -49,7 +40,7 @@ public class Player {
         return cards.getCards();
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 }

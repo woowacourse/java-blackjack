@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.model.card.Card;
 import blackjack.model.dealer.Dealer;
+import blackjack.model.player.Name;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
 import blackjack.view.dto.DealerFinalCardsOutcome;
@@ -22,13 +23,20 @@ public class OutputView {
     public static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
 
     public void printDealingResult(final Players players, final Dealer dealer) {
-        String names = String.join(", ", players.getNames());
+        String names = formatName(players);
         System.out.printf(DEALING_RESULT_INTRO, names);
         System.out.printf(DEALER_CARDS_FORM, formatCard(dealer.getFirstCard()));
         System.out.println();
         for (Player player : players.getPlayers()) {
             System.out.println(formatPlayerCards(player));
         }
+    }
+
+    private String formatName(final Players players) {
+        return players.getNames()
+                .stream()
+                .map(Name::getValue)
+                .collect(Collectors.joining(", "));
     }
 
     private String formatCard(final Card card) {

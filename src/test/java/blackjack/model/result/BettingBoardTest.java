@@ -1,5 +1,6 @@
 package blackjack.model.result;
 
+import blackjack.model.player.Name;
 import blackjack.view.dto.PlayerEarning;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,8 +18,8 @@ class BettingBoardTest {
     @DisplayName("플레이어의 게임 결과로 수익을 구한다")
     void determineEarningTest(MatchResult matchResult, int expectedEarning) {
         // given
-        String playerName = "mia";
-        Map<String, BettingMoney> bettingMoneys = Map.of(playerName, new BettingMoney(1000));
+        Name playerName = new Name("mia");
+        Map<Name, BettingMoney> bettingMoneys = Map.of(playerName, new BettingMoney(1000));
         BettingBoard bettingBoard = new BettingBoard(bettingMoneys);
 
         // when
