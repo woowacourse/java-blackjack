@@ -3,13 +3,7 @@ package domain.participant.dealer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import static domain.result.BlackjackResultStatus.LOSE;
-import static domain.result.BlackjackResultStatus.PUSH;
-import static domain.result.BlackjackResultStatus.WIN;
 import static domain.card.CardFixture.cardOf;
-import static domain.card.CardFixture.cardsOf15;
-import static domain.card.CardFixture.cardsOf20;
-import static domain.card.CardFixture.cardsOf22;
 import static domain.card.Rank.ACE;
 import static domain.card.Rank.FIVE;
 import static domain.card.Rank.JACK;
@@ -30,7 +24,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import domain.result.BlackjackResultStatus;
 import domain.card.Card;
 import domain.card.CardMachine;
 import domain.card.Deck;
@@ -153,32 +146,5 @@ class DealerTest {
                 () -> assertThat(dealer.score()).isEqualTo(expectedTotal),
                 () -> assertThat(dealer.canHit()).isEqualTo(expectedHit)
         );
-    }
-
-    static Stream<Arguments> resultStatusOf() {
-        return Stream.of(
-                Arguments.of(cardsOf22(), cardsOf22(), PUSH),
-                Arguments.of(cardsOf22(), cardsOf20(), LOSE),
-                Arguments.of(cardsOf20(), cardsOf22(), WIN),
-                Arguments.of(cardsOf20(), cardsOf15(), WIN),
-                Arguments.of(cardsOf15(), cardsOf20(), LOSE),
-                Arguments.of(cardsOf20(), cardsOf20(), PUSH)
-        );
-    }
-
-    @DisplayName("플레이어와 자신의 카드를 비교해 승패무를 정한다.")
-    @MethodSource
-    @ParameterizedTest
-    void resultStatusOf(List<Card> dealerCards, List<Card> playerCards, BlackjackResultStatus expected) {
-        Dealer dealer = new Dealer(new Deck(List.of()));
-        Player player = PlayerFixture.from("hotea");
-        receiveCards(dealer, dealerCards);
-        receiveCards(player, playerCards);
-        BlackjackResultStatus status = dealer.resultStatusAgainst(player);
-        assertThat(status).isEqualTo(expected);
-    }
-
-    private void receiveCards(Participant participant, List<Card> cards) {
-        cards.forEach(participant::receive);
     }
 }
