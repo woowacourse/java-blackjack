@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import exception.DuplicatePlayerNameException;
 import exception.InvalidPlayersSizeException;
+import exception.ReservedPlayerNameException;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -48,6 +49,14 @@ class NamesTest {
     void invalidPlayersSize(final List<String> names) {
         assertThatThrownBy(() -> Names.from(names))
                 .isInstanceOf(InvalidPlayersSizeException.class);
+    }
+
+    @Test
+    @DisplayName("참여자 이름에 딜러가 포함되어 있으면 예외가 발생한다.")
+    void useReservedName() {
+        List<String> values = List.of("딜러", "a");
+        assertThatThrownBy(() -> Names.from(values))
+                .isInstanceOf(ReservedPlayerNameException.class);
     }
 
     static Stream<Arguments> duplicateBlankNameParameterProvider() {

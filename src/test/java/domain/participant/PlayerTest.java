@@ -7,9 +7,7 @@ import static domain.HandsTestFixture.sum21Size3Ace11;
 import static domain.amount.BetAmount.defaultBetAmount;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import exception.ReservedPlayerNameException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,16 +22,6 @@ class PlayerTest {
     void createPlayerWithName() {
         assertThatCode(() -> new Player(new Name("pobi"), Hands.createEmptyHands(), defaultBetAmount))
                 .doesNotThrowAnyException();
-    }
-
-    @Test
-    @DisplayName("참여자 이름이 딜러이면 예외가 발생한다.")
-    void validateName() {
-        final Name name = new Name("딜러");
-        final Hands hands = Hands.createEmptyHands();
-
-        assertThatThrownBy(() -> new Player(name, hands, defaultBetAmount))
-                .isInstanceOf(ReservedPlayerNameException.class);
     }
 
     @ParameterizedTest
