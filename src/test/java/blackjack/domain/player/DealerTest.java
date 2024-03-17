@@ -10,7 +10,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
@@ -53,8 +52,6 @@ public class DealerTest {
     @Test
     void 플레이어가_버스트_된_경우_플레이어는_베팅_금액을_모두_잃는다() {
         // given
-        Map<Player, Integer> playerBetting = new HashMap<>();
-
         Dealer dealer = new Dealer();
         Player player = player(
                 new Card(CardNumber.JACK, CardShape.CLOVER),
@@ -63,8 +60,8 @@ public class DealerTest {
 
         // when
         int bettingAmount = 10000;
-        playerBetting.put(player, bettingAmount);
-        Map<Player, Integer> playerProfits = dealer.findPlayerProfits(playerBetting);
+        dealer.bet(player, bettingAmount);
+        Map<Player, Integer> playerProfits = dealer.findPlayerProfits();
 
         // then
         assertThat(playerProfits.get(player)).isEqualTo(-bettingAmount);
@@ -73,8 +70,6 @@ public class DealerTest {
     @Test
     void 플레이어가_버스트_되지_않았고_딜러가_버스트_된_경우_플레이어는_베팅_금액의_1배를_받는다() {
         // given
-        Map<Player, Integer> playerBetting = new HashMap<>();
-
         Dealer dealer = new Dealer();
         dealer.addCard(new Card(CardNumber.JACK, CardShape.CLOVER));
         dealer.addCard(new Card(CardNumber.QUEEN, CardShape.CLOVER));
@@ -84,8 +79,8 @@ public class DealerTest {
 
         // when
         int bettingAmount = 10000;
-        playerBetting.put(player, bettingAmount);
-        Map<Player, Integer> playerProfits = dealer.findPlayerProfits(playerBetting);
+        dealer.bet(player, bettingAmount);
+        Map<Player, Integer> playerProfits = dealer.findPlayerProfits();
 
         // then
         assertThat(playerProfits.get(player)).isEqualTo(bettingAmount);
@@ -94,8 +89,6 @@ public class DealerTest {
     @Test
     void 플레이어와_딜러_모두가_블랙잭인_경우_플레이어는_베팅한_금액을_돌려받는다() {
         // given
-        Map<Player, Integer> playerBetting = new HashMap<>();
-
         Dealer dealer = new Dealer();
         dealer.addCard(new Card(CardNumber.JACK, CardShape.CLOVER));
         dealer.addCard(new Card(CardNumber.ACE, CardShape.CLOVER));
@@ -106,8 +99,8 @@ public class DealerTest {
 
         // when
         int bettingAmount = 10000;
-        playerBetting.put(player, bettingAmount);
-        Map<Player, Integer> playerProfits = dealer.findPlayerProfits(playerBetting);
+        dealer.bet(player, bettingAmount);
+        Map<Player, Integer> playerProfits = dealer.findPlayerProfits();
 
         // then
         assertThat(playerProfits.get(player)).isEqualTo(0);
@@ -116,8 +109,6 @@ public class DealerTest {
     @Test
     void 플레이어가_블랙잭이고_딜러는_블랙잭이_아닌_경우_플레이어는_베팅한_금액의_150퍼센트를_받는다() {
         // given
-        Map<Player, Integer> playerBetting = new HashMap<>();
-
         Dealer dealer = new Dealer();
         dealer.addCard(new Card(CardNumber.JACK, CardShape.CLOVER));
 
@@ -127,8 +118,8 @@ public class DealerTest {
 
         // when
         int bettingAmount = 10000;
-        playerBetting.put(player, bettingAmount);
-        Map<Player, Integer> playerProfits = dealer.findPlayerProfits(playerBetting);
+        dealer.bet(player, bettingAmount);
+        Map<Player, Integer> playerProfits = dealer.findPlayerProfits();
 
         // then
         assertThat(playerProfits.get(player)).isEqualTo(15000);
@@ -137,8 +128,6 @@ public class DealerTest {
     @Test
     void 플레이어와_딜러가_모두_버스트_되지_않았고_모두_블랙잭이_아닐_때_플레이어의_숫자가_더_큰_경우_플레이어는_베팅_금액의_1배를_받는다() {
         // given
-        Map<Player, Integer> playerBetting = new HashMap<>();
-
         Dealer dealer = new Dealer();
         dealer.addCard(new Card(CardNumber.NINE, CardShape.CLOVER));
 
@@ -146,8 +135,8 @@ public class DealerTest {
 
         // when
         int bettingAmount = 10000;
-        playerBetting.put(player, bettingAmount);
-        Map<Player, Integer> playerProfits = dealer.findPlayerProfits(playerBetting);
+        dealer.bet(player, bettingAmount);
+        Map<Player, Integer> playerProfits = dealer.findPlayerProfits();
 
         // then
         assertThat(playerProfits.get(player)).isEqualTo(10000);
@@ -156,8 +145,6 @@ public class DealerTest {
     @Test
     void 플레이어와_딜러가_모두_버스트_되지_않았고_모두_블랙잭이_아닐_때_플레이어의_숫자가_더_작은_경우_플레이어는_베팅_금액을_모두_잃는다() {
         // given
-        Map<Player, Integer> playerBetting = new HashMap<>();
-
         Dealer dealer = new Dealer();
         dealer.addCard(new Card(CardNumber.TEN, CardShape.CLOVER));
 
@@ -165,8 +152,8 @@ public class DealerTest {
 
         // when
         int bettingAmount = 10000;
-        playerBetting.put(player, bettingAmount);
-        Map<Player, Integer> playerProfits = dealer.findPlayerProfits(playerBetting);
+        dealer.bet(player, bettingAmount);
+        Map<Player, Integer> playerProfits = dealer.findPlayerProfits();
 
         // then
         assertThat(playerProfits.get(player)).isEqualTo(-10000);
@@ -175,8 +162,6 @@ public class DealerTest {
     @Test
     void 플레이어와_딜러가_모두_버스트_되지_않았고_모두_블랙잭이_아닐_때_플레이어의_숫자가_딜러와_같은_경우_플레이어는_베팅_금액을_돌려받는다() {
         // given
-        Map<Player, Integer> playerBetting = new HashMap<>();
-
         Dealer dealer = new Dealer();
         dealer.addCard(new Card(CardNumber.TEN, CardShape.CLOVER));
 
@@ -184,8 +169,8 @@ public class DealerTest {
 
         // when
         int bettingAmount = 10000;
-        playerBetting.put(player, bettingAmount);
-        Map<Player, Integer> playerProfits = dealer.findPlayerProfits(playerBetting);
+        dealer.bet(player, bettingAmount);
+        Map<Player, Integer> playerProfits = dealer.findPlayerProfits();
 
         // then
         assertThat(playerProfits.get(player)).isEqualTo(0);

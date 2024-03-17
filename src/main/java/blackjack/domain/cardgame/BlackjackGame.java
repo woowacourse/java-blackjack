@@ -16,11 +16,11 @@ public class BlackjackGame {
     }
 
     public void initializeHand(final Dealer dealer, final List<Player> players) {
-        giveCard(dealer);
-        giveCard(dealer);
         for (final Player player : players) {
             giveCard(player);
             giveCard(player);
         }
+        giveCard(dealer);
+        giveCard(dealer);
     }
 }

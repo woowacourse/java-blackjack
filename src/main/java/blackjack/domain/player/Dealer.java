@@ -2,12 +2,15 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.cardgame.Status;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Dealer extends Player {
     private static final String NAME = "딜러";
     private static final int HIT_THRESHOLD = 16;
+
+    private final Map<Player, Integer> playerBetting = new HashMap<>();
 
     public Dealer() {
         super(NAME);
@@ -26,7 +29,19 @@ public class Dealer extends Player {
     }
 
     // TODO: Dealer가 너무 많은 책임을 갖지는 않는지?
-    public Map<Player, Integer> findPlayerProfits(final Map<Player, Integer> playerBetting) {
+    public void bet(final Player player, final int bettingAmount) {
+        playerBetting.put(player, bettingAmount);
+    }
+
+    /**
+     * TODO: 딜러의 수익은 어떻게 계산할지???
+     *      Dealder의 필드로 Map<Player, Integer> 를 가지도록 변경하고, 메서드로 제공?
+     */
+
+    /**
+     * TODO: 반드시 Dealer에게 먼저 bet()을 한 뒤에 호출해야 함. bet()을 하지 않는다면 비어있게 됨
+     */
+    public Map<Player, Integer> findPlayerProfits() {
         return playerBetting.entrySet()
                 .stream()
                 .collect(Collectors.toMap(

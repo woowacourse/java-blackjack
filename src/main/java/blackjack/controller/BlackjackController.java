@@ -19,6 +19,8 @@ public class BlackjackController {
         blackjackGame.initializeHand(dealer, players);
         OutputView.printInitialHandOfEachPlayer(dealer, players);
 
+        bet(dealer, players);
+
         givePlayersMoreCardsIfWanted(blackjackGame, players);
         giveDealerMoreCardsIfNeeded(blackjackGame, dealer);
 
@@ -57,6 +59,13 @@ public class BlackjackController {
         OutputView.printPlayerCardWithScore(dealer);
         for (final Player player : players) {
             OutputView.printPlayerCardWithScore(player);
+        }
+    }
+
+    private static void bet(final Dealer dealer, final List<Player> players) {
+        for (Player player : players) {
+            final int bettingAmount = InputView.askBettingAmount(player.getName());
+            dealer.bet(player, bettingAmount);
         }
     }
 
