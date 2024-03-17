@@ -10,6 +10,14 @@ public class Money {
         this.value = new BigDecimal(value);
     }
 
+    public Money(final int value) {
+        this.value = new BigDecimal(value);
+    }
+
+    public String money() {
+        return value.toString();
+    }
+
     public BigDecimal getValue() {
         return value;
     }

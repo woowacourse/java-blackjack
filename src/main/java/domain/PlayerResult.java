@@ -15,7 +15,8 @@ public enum PlayerResult {
         this.calculate = calculate;
     }
 
-    public BigDecimal earn(final Money money) {
-        return this.calculate.apply(money.getValue());
+    public Money earn(final Money money) {
+        int earnedMoney = this.calculate.apply(money.getValue()).intValue();
+        return new Money(earnedMoney);
     }
 }

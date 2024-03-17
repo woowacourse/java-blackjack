@@ -1,5 +1,6 @@
 package view;
 
+import domain.Money;
 import domain.card.Card;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
@@ -7,7 +8,6 @@ import domain.gamer.Player;
 import domain.gamer.Players;
 import dto.TotalResult;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -103,11 +103,11 @@ public class OutputView {
         printPlayerResults(totalResult.getPlayerResult());
     }
 
-    private static void printPlayerResults(final Map<Player, BigDecimal> playerResults) {
+    private static void printPlayerResults(final Map<Player, Money> playerResults) {
         StringBuilder builder = new StringBuilder();
-        for (Entry<Player, BigDecimal> playerResult : playerResults.entrySet()) {
+        for (Entry<Player, Money> playerResult : playerResults.entrySet()) {
             String playerName = playerResult.getKey().getName().getValue();
-            String profit = playerResult.getValue().toString();
+            String profit = playerResult.getValue().money();
             String message = String.format("%s: %s", playerName, profit);
             builder.append(message).append(System.lineSeparator());
         }

@@ -36,12 +36,12 @@ class BettingTest {
         String money = "500000";
         Betting betting = new Betting(Map.of(player, money));
         PlayerResult playerResult = PlayerResult.BLACK_JACK_WIN;
-        BigDecimal expectedProfit = new BigDecimal(money).multiply(new BigDecimal("1.5"));
+        Money expectedProfit = new Money(new BigDecimal(money).multiply(new BigDecimal("1.5")).intValue());
 
         //when
-        BigDecimal result = betting.calculateProfit(player, playerResult);
+        Money result = betting.calculateProfit(player, playerResult);
 
         //then
-        assertThat(result).isEqualByComparingTo(expectedProfit);
+        assertThat(result).isEqualTo(expectedProfit);
     }
 }

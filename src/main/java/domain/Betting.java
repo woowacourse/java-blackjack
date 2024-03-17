@@ -35,7 +35,7 @@ public class Betting {
         return money.compareTo(MAXIMUM_MONEY) > 0;
     }
 
-    public BigDecimal calculateProfit(final Player player, final PlayerResult playerResult) {
+    public Money calculateProfit(final Player player, final PlayerResult playerResult) {
         Money betMoney = betting.get(player);
         return playerResult.earn(betMoney);
     }

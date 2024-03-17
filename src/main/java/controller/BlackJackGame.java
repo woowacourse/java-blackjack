@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Betting;
+import domain.Money;
 import domain.PlayerResult;
 import domain.Referee;
 import domain.card.Card;
@@ -17,7 +18,6 @@ import strategy.RandomShuffleStrategy;
 import view.InputView;
 import view.OutputView;
 
-import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,8 +111,8 @@ public class BlackJackGame {
         DealerProfit dealerProfit = new DealerProfit();
         for (Player player : players.getPlayers()) {
             PlayerResult playerResult = Referee.judgePlayer(dealer, player);
-            BigDecimal playerProfit = betting.calculateProfit(player, playerResult);
-            dealerProfit = dealerProfit.accumulate(playerProfit.negate());
+            Money playerProfit = betting.calculateProfit(player, playerResult);
+            dealerProfit = dealerProfit.accumulate(playerProfit.getValue().negate());
             playerProfits.addResult(player, playerProfit);
         }
         return new TotalResult(dealerProfit, playerProfits);

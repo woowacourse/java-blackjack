@@ -1,8 +1,8 @@
 package dto;
 
+import domain.Money;
 import domain.gamer.Player;
 
-import java.math.BigDecimal;
 import java.util.Map;
 
 public class TotalResult {
@@ -18,7 +18,7 @@ public class TotalResult {
         return dealerProfit.getProfit().toString();
     }
 
-    public Map<Player, BigDecimal> getPlayerResult() {
+    public Map<Player, Money> getPlayerResult() {
         return playerResult.getResults();
     }
 }
