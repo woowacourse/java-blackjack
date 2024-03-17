@@ -4,12 +4,12 @@ import blackjack.domain.card.Hand;
 
 public final class HandRankFactory {
 
-    private static final HankRank BLACKJACK = new Blackjack();
+    private static final HandRank BLACKJACK = new Blackjack();
 
     private HandRankFactory() {
     }
 
-    public static HankRank from(Hand hand) {
+    public static HandRank from(Hand hand) {
         if (hand.isBlackjack()) {
             return BLACKJACK;
         }

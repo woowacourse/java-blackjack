@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.handrank.HankRank;
+import blackjack.domain.handrank.HandRank;
 import blackjack.domain.handrank.SingleMatchResult;
 import blackjack.domain.money.BetAmount;
 import blackjack.domain.money.Profit;
@@ -27,9 +27,9 @@ public class Player extends Participant {
     }
 
     public Profit calculateProfit(Dealer dealer) {
-        HankRank dealerRank = dealer.getHandRank();
-        HankRank playerRank = this.getHandRank();
-        SingleMatchResult result = dealerRank.competeWithPlayer(playerRank);
+        HandRank dealerRank = dealer.getHandRank();
+        HandRank playerRank = this.getHandRank();
+        SingleMatchResult result = dealerRank.matchWithPlayer(playerRank);
         return result.calculatePlayerProfit(betAmount);
     }
 

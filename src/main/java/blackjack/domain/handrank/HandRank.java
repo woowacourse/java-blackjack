@@ -1,8 +1,8 @@
 package blackjack.domain.handrank;
 
-public abstract class HankRank {
+public abstract class HandRank {
 
-    public abstract SingleMatchResult competeWithPlayer(HankRank playerHandRank);
+    public abstract SingleMatchResult matchWithPlayer(HandRank playerHandRank);
 
     protected abstract int getScore();
 

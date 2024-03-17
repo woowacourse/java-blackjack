@@ -2,7 +2,7 @@ package blackjack.domain.handrank;
 
 import blackjack.domain.card.Hand;
 
-final class Stand extends HankRank {
+final class Stand extends HandRank {
 
     private final int score;
 
@@ -18,7 +18,7 @@ final class Stand extends HankRank {
     }
 
     @Override
-    public SingleMatchResult competeWithPlayer(HankRank playerHandRank) {
+    public SingleMatchResult matchWithPlayer(HandRank playerHandRank) {
         if (playerHandRank.isBlackjack()) {
             return SingleMatchResult.PLAYER_BLACKJACK;
         }
@@ -28,7 +28,7 @@ final class Stand extends HankRank {
         return matchThroughScore(playerHandRank);
     }
 
-    private SingleMatchResult matchThroughScore(HankRank playerHandRank) {
+    private SingleMatchResult matchThroughScore(HandRank playerHandRank) {
         if (playerHandRank.getScore() > this.getScore()) {
             return SingleMatchResult.PLAYER_WIN;
         }

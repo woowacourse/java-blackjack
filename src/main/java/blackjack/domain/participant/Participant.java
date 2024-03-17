@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.handrank.HandRankFactory;
-import blackjack.domain.handrank.HankRank;
+import blackjack.domain.handrank.HandRank;
 import java.util.List;
 
 public abstract class Participant {
@@ -42,7 +42,7 @@ public abstract class Participant {
         hand = hand.add(card);
     }
 
-    protected final HankRank getHandRank() {
+    protected final HandRank getHandRank() {
         return HandRankFactory.from(hand);
     }
 

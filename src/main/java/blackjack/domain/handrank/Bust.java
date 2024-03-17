@@ -2,7 +2,7 @@ package blackjack.domain.handrank;
 
 import blackjack.domain.card.Hand;
 
-final class Bust extends HankRank {
+final class Bust extends HandRank {
 
     private final int score;
 
@@ -18,7 +18,7 @@ final class Bust extends HankRank {
     }
 
     @Override
-    public SingleMatchResult competeWithPlayer(HankRank playerHandRank) {
+    public SingleMatchResult matchWithPlayer(HandRank playerHandRank) {
         if (playerHandRank.isBust()) {
             return SingleMatchResult.DEALER_WIN;
         }

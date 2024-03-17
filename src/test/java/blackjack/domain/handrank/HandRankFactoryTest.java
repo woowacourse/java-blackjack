@@ -19,7 +19,7 @@ class HandRankFactoryTest {
     void fromTest_whenBlackjack() {
         Hand blackjack = new Hand(CardsFixture.BLACKJACK);
 
-        HankRank actual = HandRankFactory.from(blackjack);
+        HandRank actual = HandRankFactory.from(blackjack);
 
         assertThat(actual).isExactlyInstanceOf(Blackjack.class);
     }
@@ -30,7 +30,7 @@ class HandRankFactoryTest {
     void fromTest_whenBusted(List<Card> bust) {
         Hand blackjack = new Hand(bust);
 
-        HankRank actual = HandRankFactory.from(blackjack);
+        HandRank actual = HandRankFactory.from(blackjack);
 
         assertThat(actual).isExactlyInstanceOf(Bust.class);
     }
@@ -45,7 +45,7 @@ class HandRankFactoryTest {
     void fromTest_whenNotBlackjackAndNotBust(List<Card> cards) {
         Hand blackjack = new Hand(cards);
 
-        HankRank actual = HandRankFactory.from(blackjack);
+        HandRank actual = HandRankFactory.from(blackjack);
 
         assertThat(actual).isExactlyInstanceOf(Stand.class);
     }

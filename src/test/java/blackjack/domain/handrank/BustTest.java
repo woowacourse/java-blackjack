@@ -10,37 +10,37 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class BustTest {
 
-    private static final HankRank BUST = new Bust(22);
+    private static final HandRank BUST = new Bust(22);
 
     @DisplayName("플레이어, 딜러 모두 버스트인 경우 딜러가 이긴다.")
     @Test
     void matchTest_whenPlayerAndDealerBust_DealerWin() {
-        HankRank dealerRank = BUST;
-        HankRank playerRank = BUST;
+        HandRank dealerRank = BUST;
+        HandRank playerRank = BUST;
 
-        assertThat(dealerRank.competeWithPlayer(playerRank)).isEqualTo(SingleMatchResult.DEALER_WIN);
+        assertThat(dealerRank.matchWithPlayer(playerRank)).isEqualTo(SingleMatchResult.DEALER_WIN);
     }
 
     @DisplayName("딜러만 버스트인 경우, 플레이어가 이긴다.")
     @ParameterizedTest
     @MethodSource("normalRank")
-    void matchTest_whenOnlyDealerBlackjack_PlayerWin(HankRank hankRank) {
-        HankRank dealerRank = BUST;
-        HankRank playerRank = hankRank;
+    void matchTest_whenOnlyDealerBlackjack_PlayerWin(HandRank handRank) {
+        HandRank dealerRank = BUST;
+        HandRank playerRank = handRank;
 
-        assertThat(dealerRank.competeWithPlayer(playerRank)).isEqualTo(SingleMatchResult.PLAYER_WIN);
+        assertThat(dealerRank.matchWithPlayer(playerRank)).isEqualTo(SingleMatchResult.PLAYER_WIN);
     }
 
-    static Stream<HankRank> normalRank() {
+    static Stream<HandRank> normalRank() {
         return Stream.of(new Stand(12), new Stand(20), new Stand(21));
     }
 
     @DisplayName("딜러만 버스트이고 플레이어가 블랙잭인 경우, 플레이어 블랙잭으로 승리한다.")
     @Test
     void matchTest_whenOnlyDealerBlackjack_PlayerBlackjackWin() {
-        HankRank dealerRank = BUST;
-        HankRank playerRank = new Blackjack();
+        HandRank dealerRank = BUST;
+        HandRank playerRank = new Blackjack();
 
-        assertThat(dealerRank.competeWithPlayer(playerRank)).isEqualTo(SingleMatchResult.PLAYER_BLACKJACK);
+        assertThat(dealerRank.matchWithPlayer(playerRank)).isEqualTo(SingleMatchResult.PLAYER_BLACKJACK);
     }
 }

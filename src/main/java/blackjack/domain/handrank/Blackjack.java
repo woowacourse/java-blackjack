@@ -2,10 +2,10 @@ package blackjack.domain.handrank;
 
 import blackjack.domain.card.Hand;
 
-final class Blackjack extends HankRank {
+final class Blackjack extends HandRank {
 
     @Override
-    public SingleMatchResult competeWithPlayer(HankRank playerHandRank) {
+    public SingleMatchResult matchWithPlayer(HandRank playerHandRank) {
         if (playerHandRank.isBlackjack()) {
             return SingleMatchResult.DRAW;
         }
