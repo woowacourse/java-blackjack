@@ -1,6 +1,5 @@
 package blackjack.domain.betting;
 
-import blackjack.domain.cardgame.GameResult;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
@@ -16,6 +15,7 @@ public class BetDetails {
         this.playersBettingMoney = playersBettingMoney;
     }
 
+    // TODO: 테스트 추가
     public ProfitDetails calculateProfit(final Dealer dealer, final List<Player> players) {
         final Map<Name, Profit> profitDetails = new LinkedHashMap<>();
 

@@ -1,11 +1,9 @@
 package blackjack.domain.betting;
 
-import blackjack.domain.cardgame.GameResult;
-
-import static blackjack.domain.cardgame.GameResult.BLACKJACK;
-import static blackjack.domain.cardgame.GameResult.LOSE;
-import static blackjack.domain.cardgame.GameResult.PUSH;
-import static blackjack.domain.cardgame.GameResult.WIN;
+import static blackjack.domain.betting.GameResult.BLACKJACK;
+import static blackjack.domain.betting.GameResult.LOSE;
+import static blackjack.domain.betting.GameResult.PUSH;
+import static blackjack.domain.betting.GameResult.WIN;
 
 public record Profit(int value) {
     private static final double BLACKJACK_PROFIT_RATE = 1.5;

@@ -2,7 +2,7 @@ package blackjack;
 
 import blackjack.domain.betting.BetDetails;
 import blackjack.domain.betting.ProfitDetails;
-import blackjack.domain.cardgame.CardDeck;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Name;
 import blackjack.domain.player.Participant;

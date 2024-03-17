@@ -1,4 +1,4 @@
-package blackjack.domain.cardgame;
+package blackjack.domain.betting;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
@@ -6,6 +6,9 @@ import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 import org.junit.jupiter.api.Test;
 
+import static blackjack.domain.betting.GameResult.LOSE;
+import static blackjack.domain.betting.GameResult.PUSH;
+import static blackjack.domain.betting.GameResult.WIN;
 import static blackjack.domain.card.CardNumber.ACE;
 import static blackjack.domain.card.CardNumber.KING;
 import static blackjack.domain.card.CardNumber.QUEEN;
@@ -14,9 +17,6 @@ import static blackjack.domain.card.CardShape.CLOVER;
 import static blackjack.domain.card.CardShape.DIAMOND;
 import static blackjack.domain.card.CardShape.HEART;
 import static blackjack.domain.card.CardShape.SPADE;
-import static blackjack.domain.cardgame.GameResult.LOSE;
-import static blackjack.domain.cardgame.GameResult.PUSH;
-import static blackjack.domain.cardgame.GameResult.WIN;
 import static blackjack.fixture.PlayerFixture.dealer;
 import static blackjack.fixture.PlayerFixture.player;
 import static org.assertj.core.api.Assertions.assertThat;
