@@ -13,7 +13,6 @@ import domain.participant.Player;
 import domain.participant.betting.BetAmount;
 import domain.participant.name.Name;
 import domain.participant.name.Names;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.function.Supplier;
 import ui.InputView;
@@ -30,7 +29,7 @@ public class BlackjackController {
 
     public void start() {
         Participants participants = generateParticipants();
-        CardDeck cardDeck = CardDeckFactory.createCardDeck(Collections::shuffle);
+        CardDeck cardDeck = CardDeckFactory.createCardDeck();
         BlackjackGame blackjackGame = new BlackjackGame(cardDeck);
         GameResult gameResult = playBlackjackGame(participants, blackjackGame);
         outputView.printGameResult(gameResult);

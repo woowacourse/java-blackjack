@@ -6,18 +6,19 @@ import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Suit;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class CardDeckFactory {
     private CardDeckFactory() {
     }
 
-    public static CardDeck createCardDeck(CardShuffleStrategy cardShuffleStrategy) {
+    public static CardDeck createCardDeck() {
         List<Card> cards = Arrays.stream(Suit.values())
                 .map(CardDeckFactory::createCards)
                 .flatMap(List::stream)
                 .collect(toList());
-        cardShuffleStrategy.shuffle(cards);
+        Collections.shuffle(cards);
         return new CardDeck(cards);
     }
 
