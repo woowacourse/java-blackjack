@@ -10,7 +10,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 @DisplayName("이름들")
 public class NamesTest {
-
     @Test
     @DisplayName("여러명일 수 있다.")
     void playersCreateTest() {

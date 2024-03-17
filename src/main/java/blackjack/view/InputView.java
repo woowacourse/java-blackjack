@@ -16,7 +16,6 @@ public class InputView {
     private static final String IO_ERROR = "입력이 잘못되었습니다.";
     private static final String NO_CONVERT_INTEGER = "정수를 입력해 주세요.";
 
-
     public static List<String> readPlayersName() {
         System.out.println(ASK_PLAYER_NAMES);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));

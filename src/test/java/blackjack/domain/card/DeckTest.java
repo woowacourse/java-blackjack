@@ -21,5 +21,4 @@ public class DeckTest {
         // then
         assertThat(card.size()).isEqualTo(2);
     }
-
 }
