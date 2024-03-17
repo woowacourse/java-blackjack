@@ -28,8 +28,8 @@ public class BlackjackMachine {
     public void run() {
         Dealer dealer = Dealer.withNoCards();
         Deck deck = Deck.generatedBy(new RandomCardGenerator());
-        BetInfo betInfo = BetInfo.withNoEntry();
-        ProfitInfo profitInfo = ProfitInfo.withNoEntry();
+        BetInfo betInfo = BetInfo.createEmpty();
+        ProfitInfo profitInfo = ProfitInfo.createEmpty();
         PlayerResults playerResults = PlayerResults.withNoEntry();
         Players players = makePlayers();
 

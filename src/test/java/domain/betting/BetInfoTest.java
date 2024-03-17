@@ -11,7 +11,7 @@ class BetInfoTest {
     @Test
     @DisplayName("베팅 정보를 추가할 수 있다.")
     void add() {
-        BetInfo betInfo = BetInfo.withNoEntry();
+        BetInfo betInfo = BetInfo.createEmpty();
         Player player = Player.withName("user1");
         Money betAmount = Money.valueOf(1000);
 

@@ -12,7 +12,7 @@ public class ProfitInfo {
         this.profitMap = profitMap;
     }
 
-    public static ProfitInfo withNoEntry() {
+    public static ProfitInfo createEmpty() {
         return new ProfitInfo(new HashMap<>());
     }
 

@@ -12,7 +12,7 @@ public class BetInfo {
         this.betMap = betMap;
     }
 
-    public static BetInfo withNoEntry() {
+    public static BetInfo createEmpty() {
         return new BetInfo(new HashMap<>());
     }
 
