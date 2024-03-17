@@ -13,7 +13,7 @@ class PlayerTest {
     @DisplayName("플레이어는 21이 넘으면 히트할 수 없다")
     @ParameterizedTest
     @CsvSource(value = {"2, 10, 10", "3, 10, 10", "4, 10, 10"})
-    void testCannotHit(int card1, int card2, int card3) {
+    void cannotHitTest(int card1, int card2, int card3) {
         Player player = new Player(new PlayerName("썬"), TestHandCreator.of(card1, card2, card3));
         assertThat(player.canHit()).isFalse();
     }
@@ -21,7 +21,7 @@ class PlayerTest {
     @DisplayName("플레이어는 21이 넘으면 히트할 수 없다")
     @ParameterizedTest
     @CsvSource(value = {"1, 10, 10", "2, 8, 10", "2, 7, 10"})
-    void testCanHit(int card1, int card2, int card3) {
+    void canHitTest(int card1, int card2, int card3) {
         Player player = new Player(new PlayerName("썬"), TestHandCreator.of(card1, card2, card3));
         assertThat(player.canHit()).isTrue();
     }

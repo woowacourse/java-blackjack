@@ -18,7 +18,7 @@ class GameResultTest {
 
     @DisplayName("플레이어 블랙잭이고 딜러가 블랙잭이 아니면 플레이어가 블랙잭 승리를 한다.")
     @Test
-    void testPlayerBlackJackWin() {
+    void playerBlackJackWinTest() {
         Player player = TestPlayerCreator.of("리비", 1, 10);
         Dealer dealer = new Dealer(TestHandCreator.of(3, 4));
         assertThat(GameResult.judge(dealer, player)).isEqualTo(BLACKJACK_WIN);
@@ -26,7 +26,7 @@ class GameResultTest {
 
     @DisplayName("딜러와 플레이어 모두 21점이더라도 블랙잭 핸드가 있다면 블랙잭쪽이 이긴다.")
     @Test
-    void testPlayerBlackJackWinMaxScore() {
+    void playerBlackJackWinMaxScoreTest() {
         Player player = TestPlayerCreator.of("리비", 1, 10);
         Dealer dealer = new Dealer(TestHandCreator.of(9, 2, 10));
         assertThat(GameResult.judge(dealer, player)).isEqualTo(BLACKJACK_WIN);
@@ -34,7 +34,7 @@ class GameResultTest {
 
     @DisplayName("딜러와 플레이어 모두 블랙잭인 경우 결과는 PUSH이다.")
     @Test
-    void testPlayerAndDealerBlackJack() {
+    void playerAndDealerBlackJackTest() {
         Player player = TestPlayerCreator.of("리비", 1, 10);
         Dealer dealer = new Dealer(TestHandCreator.of(1, 10));
         assertThat(GameResult.judge(dealer, player)).isEqualTo(PUSH);
@@ -42,7 +42,7 @@ class GameResultTest {
 
     @DisplayName("딜러가 버스트 되고 플레이어가 살아있다면 플레이어가 승리한다")
     @Test
-    void testPlayerWin() {
+    void playerWinTest() {
         Player player = TestPlayerCreator.of("리비", 10, 10);
         Dealer dealer = new Dealer(TestHandCreator.of(2, 10));
         assertThat(GameResult.judge(dealer, player)).isEqualTo(PLAYER_WIN);
@@ -50,7 +50,7 @@ class GameResultTest {
 
     @DisplayName("딜러 플레이어 모두 버스트 되지 않은 경우 딜러의 점수보다 플레이어의 점수가 낮다면 플레이어가 패한다")
     @Test
-    void testPlayerLose() {
+    void playerLoseTest() {
         Player player = TestPlayerCreator.of("리비", 2, 10);
         Dealer dealer = new Dealer(TestHandCreator.of(10, 10));
         assertThat(GameResult.judge(dealer, player)).isEqualTo(PLAYER_LOSE);

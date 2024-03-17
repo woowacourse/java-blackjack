@@ -18,7 +18,7 @@ class PlayerBetsTest {
 
     @DisplayName("플레이어들의 통합 수익을 계산할 수 있다")
     @Test
-    void testCalculatePlayerProfit() {
+    void calculatePlayerProfitTest() {
         Player player1 = TestPlayerCreator.of("리비", 1, 10);
         Player player2 = TestPlayerCreator.of("썬", 3, 4);
         Dealer dealer = new Dealer(TestHandCreator.of(3, 4, 5));

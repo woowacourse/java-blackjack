@@ -19,7 +19,7 @@ class DrawDecisionTest {
     @DisplayName("존재하지 않는 코드명이면 예외가 발생한다")
     @ParameterizedTest
     @ValueSource(strings = {"1", "libi", "jerry"})
-    void testEnumFromInvalidCode(String code) {
+    void enumFromInvalidCodeTest(String code) {
         assertThatThrownBy(() -> from(code))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] y또는 n로 입력해주세요");
@@ -28,7 +28,7 @@ class DrawDecisionTest {
     @DisplayName("존재하는 코드명이면 적절한 상수를 반환받는다")
     @ParameterizedTest
     @CsvSource(value = {"y, YES", "n, NO",})
-    void testEnumFromValidCode(String code, DrawDecision drawDecision) {
+    void enumFromValidCodeTest(String code, DrawDecision drawDecision) {
         assertThat(from(code)).isEqualTo(drawDecision);
     }
 

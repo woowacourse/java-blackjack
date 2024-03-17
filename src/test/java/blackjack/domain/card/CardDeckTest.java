@@ -13,7 +13,7 @@ class CardDeckTest {
 
     @DisplayName("덱에서 카드를 뽑을 수 있다")
     @Test
-    void testPopCardFromDeck() {
+    void popCardFromDeckTest() {
         List<Card> cards = new ArrayList<>();
         Card card1 = new Card(CardShape.HEART, CardNumber.TWO);
         Card card2 = new Card(CardShape.CLUB, CardNumber.THREE);
@@ -30,7 +30,7 @@ class CardDeckTest {
 
     @DisplayName("덱에서 횟수만큼 카드를 뽑을 수 있다")
     @Test
-    void testPopCardsFromDeck() {
+    void popCardsFromDeckTest() {
         List<Card> cards = new ArrayList<>();
         Card card1 = new Card(CardShape.HEART, CardNumber.TWO);
         Card card2 = new Card(CardShape.CLUB, CardNumber.THREE);
@@ -48,7 +48,7 @@ class CardDeckTest {
 
     @DisplayName("덱에서 카드를 하나 뽑는 경우 카드가 부족하면 예외가 발생한다")
     @Test
-    void testInvalidPopInsufficientDeckCount() {
+    void invalidPopInsufficientDeckCountTest() {
         List<Card> cards = new ArrayList<>();
         CardDeck cardDeck = new CardDeck(cards);
 
@@ -59,7 +59,7 @@ class CardDeckTest {
 
     @DisplayName("덱에서 카드를 여러개 뽑는 경우 카드가 부족하면 예외가 발생한다")
     @Test
-    void testInvalidPopCardsInsufficientDeckCount() {
+    void invalidPopCardsInsufficientDeckCountTest() {
         List<Card> cards = new ArrayList<>();
         Card card1 = new Card(CardShape.HEART, CardNumber.TWO);
         Card card2 = new Card(CardShape.CLUB, CardNumber.THREE);

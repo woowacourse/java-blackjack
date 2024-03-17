@@ -15,7 +15,7 @@ class PlayerProfitsTest {
 
     @DisplayName("특정 플레이어의 수익을 조회할 수 있다")
     @Test
-    void testFindProfitOfPlayer() {
+    void findProfitOfPlayerTest() {
         Player player1 = TestPlayerCreator.of("썬", 1, 2, 3, 4);
         Player player2 = TestPlayerCreator.of("리비", 3, 4);
 
@@ -29,7 +29,7 @@ class PlayerProfitsTest {
 
     @DisplayName("전체 플레이어들의 수익을 총합계산할 수 있다")
     @Test
-    void testCalculateTotalProfit() {
+    void calculateTotalProfitTest() {
         Player player1 = TestPlayerCreator.of("썬", 1, 2, 3, 4);
         Player player2 = TestPlayerCreator.of("리비", 3, 4);
 
@@ -43,7 +43,7 @@ class PlayerProfitsTest {
 
     @DisplayName("딜러의 수익을 계산할 수 있다")
     @Test
-    void testCalculateDealerProfit() {
+    void calculateDealerProfitTest() {
         Player player1 = TestPlayerCreator.of("썬", 1, 2, 3, 4);
         Player player2 = TestPlayerCreator.of("리비", 3, 4);
 
