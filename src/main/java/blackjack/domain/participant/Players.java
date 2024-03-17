@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Deck;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +38,8 @@ public class Players {
     }
 
     private void validatePlayersDuplicated(List<Player> players) {
-        if (players.stream().distinct().count() != players.size()) {
+        int distinctSize = new HashSet<>(players).size();
+        if (distinctSize != players.size()) {
             throw new IllegalArgumentException("플레이어의 이름은 중복될 수 없습니다.");
         }
     }
