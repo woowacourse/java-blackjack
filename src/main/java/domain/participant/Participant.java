@@ -4,6 +4,8 @@ import domain.card.Card;
 import domain.card.Hand;
 import domain.name.Name;
 
+import java.util.Objects;
+
 import static domain.BlackjackGame.BLACKJACK_SCORE;
 import static domain.BlackjackGame.INITIAL_CARD_COUNT;
 
@@ -48,5 +50,18 @@ public abstract class Participant {
 
     public Hand hand() {
         return new Hand(hand);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Participant that = (Participant) o;
+        return Objects.equals(name, that.name) && Objects.equals(hand, that.hand);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, hand);
     }
 }
