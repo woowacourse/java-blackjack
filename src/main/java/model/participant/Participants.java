@@ -53,12 +53,12 @@ public class Participants {
     }
 
     public GameCompletionResult getDealerCompletionResult() {
-        return dealer.generateFaceUpResult();
+        return dealer.generateGameCompletionResult();
     }
 
     public List<GameCompletionResult> getPlayerCompletionResults() {
         return players.stream()
-                .map(Player::generateFaceUpResult)
+                .map(Player::generateGameCompletionResult)
                 .toList();
     }
 
@@ -69,7 +69,7 @@ public class Participants {
     public GameCompletionResult getNextAvailablePlayerName() {
         Player currentPlayer = players.peek();
         if (currentPlayer.canHit()) {
-            return currentPlayer.generateFaceUpResult();
+            return currentPlayer.generateGameCompletionResult();
         }
         moveToNextPlayer();
         return getNextAvailablePlayerName();

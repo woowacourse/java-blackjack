@@ -20,7 +20,7 @@ public abstract class Participant {
         cardDeck.addCard(card);
     }
 
-    public GameCompletionResult generateFaceUpResult() {
+    public GameCompletionResult generateGameCompletionResult() {
         return new GameCompletionResult(name, cardDeck.getCards(), cardDeck.calculateHand());
     }
 
