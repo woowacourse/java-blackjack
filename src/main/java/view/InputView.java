@@ -21,13 +21,14 @@ public class InputView {
     }
 
     public boolean inputPlayerCommand(Name name) {
-        String isDrawCard = name.getValue()
-                + "는 한장의 카드를 더 받겠습니까?(예는 "
-                + GameCommand.HIT.command
-                + ", 아니오는 "
-                + GameCommand.STAY.command
-                + ")";
-        System.out.println(isDrawCard);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(name.getValue())
+                .append("는 한장의 카드를 더 받겠습니까?(예는 ")
+                .append(GameCommand.HIT.command)
+                .append(", 아니오는 ")
+                .append(GameCommand.STAY.command)
+                .append(")");
+        System.out.println(stringBuilder.toString());
         String inputCommand = scanner.nextLine();
 
         return GameCommand.isGetCardCommand(inputCommand);
