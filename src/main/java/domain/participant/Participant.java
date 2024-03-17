@@ -1,11 +1,9 @@
 package domain.participant;
 
-import static domain.result.BlackjackResultStatus.LOSE;
-import static domain.result.BlackjackResultStatus.PUSH;
-import static domain.result.BlackjackResultStatus.WIN;
 import static domain.card.Hand.BLACKJACK_SCORE;
 
-import domain.result.BlackjackResultStatus;
+import java.util.Objects;
+
 import domain.card.Card;
 import domain.card.Hand;
 import domain.participant.attributes.Name;
@@ -32,31 +30,6 @@ public abstract class Participant {
         return score() == BLACKJACK_SCORE;
     }
 
-    public BlackjackResultStatus resultStatusAgainst(final Participant opponent) {
-        if (isPush(opponent)) {
-            return PUSH;
-        }
-        if (isLose(opponent)) {
-            return LOSE;
-        }
-        return WIN;
-    }
-
-    private boolean isPush(final Participant opponent) {
-        return isBothBust(opponent) || score() == opponent.score();
-    }
-
-    private boolean isLose(final Participant opponent) {
-        if (opponent.isBust()) {
-            return false;
-        }
-        return isBust() || (score() < opponent.score());
-    }
-
-    private boolean isBothBust(final Participant opponent) {
-        return isBust() && opponent.isBust();
-    }
-
     public Name name() {
         return name;
     }
@@ -66,4 +39,17 @@ public abstract class Participant {
     }
 
     public abstract int score();
+
+    @Override
+    public boolean equals(final Object object) {
+        if (this == object) {
+            return true;
+        }
+        return (object instanceof Participant other) && name.equals(other.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }
