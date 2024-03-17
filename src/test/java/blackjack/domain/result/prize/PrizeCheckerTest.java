@@ -1,10 +1,15 @@
-package blackjack.domain.result;
+package blackjack.domain.result.prize;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.*;
+import blackjack.domain.player.info.BettingMoney;
+import blackjack.domain.player.info.PlayerInfo;
+import blackjack.domain.player.info.Name;
+import blackjack.domain.result.prize.PrizeChecker;
+import blackjack.domain.result.prize.PrizeMoney;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

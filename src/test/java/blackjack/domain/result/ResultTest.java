@@ -2,10 +2,11 @@ package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.player.Name;
+import blackjack.domain.player.info.Name;
 
 import java.util.List;
 
+import blackjack.domain.result.prize.PrizeMoney;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

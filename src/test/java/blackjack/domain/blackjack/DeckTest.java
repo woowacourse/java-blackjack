@@ -1,9 +1,13 @@
-package blackjack.domain.card;
+package blackjack.domain.blackjack;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.stream.IntStream;
 
+import blackjack.domain.blackjack.Deck;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardSymbol;
+import blackjack.domain.card.CardValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

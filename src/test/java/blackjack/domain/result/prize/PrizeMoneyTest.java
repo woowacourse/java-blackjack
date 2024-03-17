@@ -1,5 +1,6 @@
-package blackjack.domain.result;
+package blackjack.domain.result.prize;
 
+import blackjack.domain.result.prize.PrizeMoney;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

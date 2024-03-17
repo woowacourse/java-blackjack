@@ -1,5 +1,5 @@
 import blackjack.controller.BlackjackController;
-import blackjack.domain.Blackjack;
+import blackjack.domain.blackjack.Blackjack;
 
 public class Application {
     public static void main(final String[] args) {

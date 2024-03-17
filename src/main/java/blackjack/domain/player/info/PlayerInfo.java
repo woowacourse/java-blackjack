@@ -1,4 +1,4 @@
-package blackjack.domain.player;
+package blackjack.domain.player.info;
 
 public record PlayerInfo(Name name, BettingMoney bettingMoney) {
 }

@@ -1,8 +1,7 @@
-package blackjack.domain.common;
+package blackjack.domain.player.info;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.player.Name;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

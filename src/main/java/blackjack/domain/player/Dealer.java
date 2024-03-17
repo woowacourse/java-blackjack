@@ -2,6 +2,7 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.player.info.Name;
 
 public class Dealer extends Participant {
     private final Name name;

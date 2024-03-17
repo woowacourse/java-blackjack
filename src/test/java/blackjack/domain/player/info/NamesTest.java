@@ -1,8 +1,6 @@
-package blackjack.domain.common;
+package blackjack.domain.player.info;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import blackjack.domain.player.Names;
 
 import java.util.List;
 

@@ -8,6 +8,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Cards;
+import blackjack.domain.player.info.Name;
 import blackjack.fixture.PlayerFixture;
 
 import java.util.List;

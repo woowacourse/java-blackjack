@@ -1,4 +1,8 @@
-package blackjack.domain.card;
+package blackjack.domain.blackjack;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardSymbol;
+import blackjack.domain.card.CardValue;
 
 import java.util.*;
 import java.util.stream.Collectors;

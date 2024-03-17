@@ -1,4 +1,4 @@
-package blackjack.domain.player;
+package blackjack.domain.player.info;
 
 public record BettingMoney(int value) {
     private static final int MINIMUM_VALUE = 0;

@@ -1,8 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.blackjack;
 
-import blackjack.domain.card.Deck;
 import blackjack.domain.player.*;
+import blackjack.domain.player.info.PlayerInfo;
 import blackjack.domain.result.*;
+import blackjack.domain.result.prize.PrizeChecker;
 
 import java.util.Collections;
 import java.util.List;

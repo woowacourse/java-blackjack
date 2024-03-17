@@ -1,8 +1,12 @@
-package blackjack.domain;
+package blackjack.domain.blackjack;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.blackjack.Blackjack;
 import blackjack.domain.player.*;
+import blackjack.domain.player.info.BettingMoney;
+import blackjack.domain.player.info.PlayerInfo;
+import blackjack.domain.player.info.Name;
 import blackjack.domain.result.GamePlayerResult;
 import blackjack.fixture.CardFixture;
 

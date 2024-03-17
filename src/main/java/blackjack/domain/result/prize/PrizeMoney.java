@@ -1,4 +1,4 @@
-package blackjack.domain.result;
+package blackjack.domain.result.prize;
 
 public record PrizeMoney(int value) {
     public PrizeMoney(final double value) {

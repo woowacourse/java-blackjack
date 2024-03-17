@@ -1,4 +1,4 @@
-package blackjack.view;
+package blackjack.view.output;
 
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.GamePlayer;

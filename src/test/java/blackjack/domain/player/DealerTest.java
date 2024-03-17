@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Cards;
+import blackjack.domain.player.info.Name;
 import blackjack.fixture.CardFixture;
 
 import java.util.List;
