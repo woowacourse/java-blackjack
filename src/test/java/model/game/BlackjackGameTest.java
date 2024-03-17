@@ -7,13 +7,19 @@ import static model.card.CardShape.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import model.betting.Bet;
+import model.betting.PlayerBets;
 import model.card.Card;
 import model.participant.Participant;
 import model.participant.Player;
 import model.participant.Players;
 import model.result.ParticipantCard;
 import model.result.ParticipantCards;
+import model.result.ParticipantProfit;
+import model.result.ParticipantProfits;
 import model.result.ParticipantScore;
 import model.result.ParticipantScores;
 import org.junit.jupiter.api.DisplayName;
@@ -82,5 +88,28 @@ class BlackjackGameTest {
         for (ParticipantScore playerScore : participantScores.getPlayerScores()) {
             assertThat(playerScore.getScore()).isEqualTo(scores.get(i++));
         }
+    }
+
+    @DisplayName("플레이어의 승무패 결과에 따라 딜러의 총 수익 계산")
+    @Test
+    void calculateProfit() {
+        Players players = Players.from(List.of("조조"));
+        PlayerBets bets = prepareBets();
+        BlackjackGame blackjackGame = new BlackjackGame();
+        blackjackGame.dealInitialCards(players);
+
+        ParticipantProfits participantProfits = blackjackGame.calculateProfit(players, bets);
+        int dealerScore = (-1) * participantProfits.getPlayerProfits()
+            .stream()
+            .mapToInt(ParticipantProfit::getProfit)
+            .sum();
+
+        assertThat(dealerScore).isEqualTo(participantProfits.getDealerProfit().getProfit());
+    }
+
+    private PlayerBets prepareBets() {
+        Map<String, Bet> bets = new HashMap<>();
+        bets.put("조조", new Bet(10000));
+        return new PlayerBets(bets);
     }
 }
