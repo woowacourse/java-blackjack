@@ -36,8 +36,8 @@ public enum Result {
         return LOSE;
     }
 
-    public static Result bustCompare(boolean current, boolean opponent) {
-        if (current) {
+    public static Result bustCompare(boolean isPlayerBust, boolean isDealerBust) {
+        if (isPlayerBust) {
             return LOSE;
         }
         return WIN;
