@@ -1,17 +1,18 @@
 package blackjack.domain;
 
 public enum ResultStatus {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    BLACKJACK(1.5),
+    WIN(1),
+    DRAW(0),
+    LOSE(-1);
 
-    private final String name;
+    private final double multiplier;
 
-    ResultStatus(String name) {
-        this.name = name;
+    ResultStatus(double multiplier) {
+        this.multiplier = multiplier;
     }
 
-    public String getName() {
-        return name;
+    public double getMultiplier() {
+        return multiplier;
     }
 }

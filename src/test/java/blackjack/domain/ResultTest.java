@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -13,24 +12,21 @@ class ResultTest {
     @DisplayName("결과를 생성한다")
     @Test
     void create() {
-        assertThatCode(() -> new Result(Map.of(new Player("mark"), ResultStatus.WIN)))
+        assertThatCode(() -> new Result(Map.of(new Player("mark", new Betting(1000)), 1500)))
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("딜러의 승패를 반환한다")
+    @DisplayName("딜러의 수익을 반환한다")
     @Test
     void dealerResult() {
         Result result = new Result(
-                Map.of(new Player("mark"), ResultStatus.DRAW,
-                        new Player("isang"), ResultStatus.WIN,
-                        new Player("isang"), ResultStatus.WIN));
+                Map.of(new Player("mark", new Betting(1000)), 0,
+                        new Player("isang", new Betting(1000)), 1000,
+                        new Player("isang", new Betting(1000)), 1000));
 
-        Map<ResultStatus, Long> results = result.calculateDealerResult();
+        int dealerEarning = result.calculateDealerEarning();
 
-        assertAll(
-                () -> assertThat(results.get(ResultStatus.DRAW)).isEqualTo(1),
-                () -> assertThat(results.get(ResultStatus.LOSE)).isEqualTo(2)
-        );
+        assertThat(dealerEarning).isEqualTo(-2000);
     }
 
 }

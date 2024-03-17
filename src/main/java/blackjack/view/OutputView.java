@@ -2,9 +2,9 @@ package blackjack.view;
 
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
+import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.domain.Result;
-import blackjack.domain.ResultStatus;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,11 +27,11 @@ public class OutputView {
     }
 
     public static void printResult(Result result, Dealer dealer) {
-        Map<Player, ResultStatus> playerResults = result.getResults();
-        Map<ResultStatus, Long> dealerResult = result.calculateDealerResult();
+        Map<Player, Integer> playerResults = result.getResults();
+        int dealerEarning = result.calculateDealerEarning();
 
         System.out.println("## 최종 승패");
-        System.out.println(dealerResultMessageBuilder(dealer, dealerResult));
+        System.out.println(dealerEarningMessageBuilder(dealer, dealerEarning));
         System.out.print(playerResultsMessageBuilder(playerResults));
     }
 
@@ -89,11 +89,11 @@ public class OutputView {
         return builder;
     }
 
-    private static String getHandWithScoreMessage(Player player) {
+    private static String getHandWithScoreMessage(Participant player) {
         return allCardInHand(player) + resultScore(player);
     }
 
-    private static String allCardInHand(Player player) {
+    private static String allCardInHand(Participant player) {
         List<Card> cards = player.getHand().getCards();
         String hand = cards.stream()
                 .map(OutputView::extractCardName)
@@ -102,7 +102,7 @@ public class OutputView {
         return String.format("%s: %s", player.getName(), hand);
     }
 
-    private static String resultScore(Player player) {
+    private static String resultScore(Participant player) {
         int score = player.calculate();
         return String.format(" - 결과: %d", score);
     }
@@ -111,20 +111,18 @@ public class OutputView {
         return card.getNumber().getName() + card.getSymbol().getName();
     }
 
-    private static StringBuilder dealerResultMessageBuilder(Dealer dealer, Map<ResultStatus, Long> dealerResult) {
+    private static StringBuilder dealerEarningMessageBuilder(Dealer dealer, int dealerEarning) {
         StringBuilder builder = new StringBuilder();
 
-        builder.append(String.format("%s: ", dealer.getName()));
-        dealerResult.forEach((key, value) ->
-                builder.append(String.format(value + key.getName() + " ")));
+        builder.append(String.format("%s: %d", dealer.getName(), dealerEarning));
         return builder;
     }
 
-    private static StringBuilder playerResultsMessageBuilder(Map<Player, ResultStatus> playerResults) {
+    private static StringBuilder playerResultsMessageBuilder(Map<Player, Integer> playerResults) {
         StringBuilder builder = new StringBuilder();
 
         playerResults.forEach(
-                ((player, status) -> builder.append(String.format("%s: %s%n", player.getName(), status.getName()))));
+                ((player, earning) -> builder.append(String.format("%s: %d%n", player.getName(), earning))));
         return builder;
     }
 }

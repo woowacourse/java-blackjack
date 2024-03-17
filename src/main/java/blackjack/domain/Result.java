@@ -1,33 +1,25 @@
 package blackjack.domain;
 
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Result {
 
-    private final Map<Player, ResultStatus> results;
+    private final Map<Player, Integer> results;
 
-    public Result(Map<Player, ResultStatus> results) {
+    public Result(Map<Player, Integer> results) {
         this.results = results;
     }
 
-    public Map<ResultStatus, Long> calculateDealerResult() {
-        return results.values().stream()
-                .collect(Collectors.groupingBy(this::convertResultDealerSide, Collectors.counting()));
+    public int calculateDealerEarning() {
+        int dealerEarning = 0;
+        for (int playerEarning : results.values()) {
+            dealerEarning -= playerEarning;
+        }
+
+        return dealerEarning;
     }
 
-    public Map<Player, ResultStatus> getResults() {
+    public Map<Player, Integer> getResults() {
         return results;
     }
-
-    private ResultStatus convertResultDealerSide(ResultStatus result) {
-        if (result == ResultStatus.WIN) {
-            return ResultStatus.LOSE;
-        }
-        if (result == ResultStatus.LOSE) {
-            return ResultStatus.WIN;
-        }
-        return ResultStatus.DRAW;
-    }
-
 }

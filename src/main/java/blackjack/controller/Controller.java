@@ -12,8 +12,8 @@ import java.util.List;
 public class Controller {
 
     public void play() {
-        Dealer dealer = createDealer();
         Players players = createPlayers();
+        Dealer dealer = createDealer();
 
         initializeHands(dealer, players.getPlayers());
         playerTurn(dealer, players);
@@ -29,7 +29,8 @@ public class Controller {
 
     private Players createPlayers() {
         List<String> playerNames = InputView.readName();
-        return Players.from(playerNames);
+        List<Integer> bettings = InputView.readBettings(playerNames);
+        return Players.from(playerNames, bettings);
     }
 
     private void initializeHands(Dealer dealer, List<Player> players) {

@@ -28,21 +28,22 @@ class DealerTest {
     @Test
     void testJudgePlayersResult1() {
         Dealer dealer = new Dealer(new Deck(List.of()));
-        Player player = new Player("pk");
+        Player player = new Player("mark", new Betting(1000));
+        Players players = new Players(List.of(player));
 
         dealer.putCard(CardFixture.diamond3());
         player.putCard(CardFixture.heartJack());
 
-        Result result = dealer.judgePlayersResult(new Players(List.of(player)));
+        Result result = dealer.judgePlayersResult(players);
 
-        assertThat(result.getResults().get(player)).isEqualTo(ResultStatus.WIN);
+        assertThat(result.getResults().get(player)).isEqualTo(1000);
     }
 
     @DisplayName("플레이어가 버스트 되면 항상 진다")
     @Test
     void testJudgePlayersResult2() {
         Dealer dealer = new Dealer(new Deck(List.of()));
-        Player player = new Player("pk");
+        Player player = new Player("pk", new Betting(1000));
 
         player.putCard(CardFixture.heartJack());
         player.putCard(CardFixture.heartJack());
@@ -50,20 +51,20 @@ class DealerTest {
 
         Result result = dealer.judgePlayersResult(new Players(List.of(player)));
 
-        assertThat(result.getResults().get(player)).isEqualTo(ResultStatus.LOSE);
+        assertThat(result.getResults().get(player)).isEqualTo(-1000);
     }
 
-    @DisplayName("플레이어의 점수가 딜러보다 낮으면 진다")
+    @DisplayName("플레이어의 점수가 딜러보다 낮으면 배팅 금액을 잃는다")
     @Test
     void testJudgePlayersResult3() {
         Dealer dealer = new Dealer(new Deck(List.of()));
-        Player player = new Player("pk");
+        Player player = new Player("pk", new Betting(1000));
 
         dealer.putCard(CardFixture.heartJack());
         player.putCard(CardFixture.diamond3());
 
         Result result = dealer.judgePlayersResult(new Players(List.of(player)));
 
-        assertThat(result.getResults().get(player)).isEqualTo(ResultStatus.LOSE);
+        assertThat(result.getResults().get(player)).isEqualTo(-1000);
     }
 }
