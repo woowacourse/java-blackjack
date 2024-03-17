@@ -3,6 +3,7 @@ package blackjack.domain.gamer;
 import blackjack.domain.BlackjackConstants;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.result.BlackjackEarningCalculator;
 import java.util.List;
 
 public class Dealer extends BlackjackGamer {
@@ -46,9 +47,9 @@ public class Dealer extends BlackjackGamer {
         }
     }
 
-    public void setUpInitialCards(Players players) {
+    public void setUpInitialCards(List<Player> players) {
         // 모든 플레이어에게 2장의 카드를 배분한다.
-        players.getPlayers().forEach(this::setUpPlayerInitialCards);
+        players.forEach(this::setUpPlayerInitialCards);
         // 딜러도 2장의 카드를 가진다.
         setUpOwnInitialCards();
     }
@@ -69,6 +70,17 @@ public class Dealer extends BlackjackGamer {
 
     public void addCard() {
         addCard(drawCardFromDeck());
+    }
+
+    public Money calculateOwnEarning(PlayerBetAmounts playerBetAmounts) {
+        BlackjackEarningCalculator calculator = BlackjackEarningCalculator.fromDealer(this);
+        return calculator.calculateDealerEarning(playerBetAmounts);
+    }
+
+    public Money informPlayerEarning(Player player, Money betAmount) {
+        BlackjackEarningCalculator calculator = BlackjackEarningCalculator.fromDealer(this);
+
+        return calculator.calculatePlayerEarning(player, betAmount);
     }
 
     public Card getFirstCard() {
