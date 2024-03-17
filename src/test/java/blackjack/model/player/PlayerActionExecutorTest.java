@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PlayerActionExecutorTest {
     @Test
     @DisplayName("대기열 가장 앞에 있는 플레이어의 HIT을 수행한다.")
-    public void dummy() {
+    public void executeHitTest() {
         // given
         List<Card> cards = List.of(
                 new Card(Suit.HEART, Denomination.TWO),
@@ -39,7 +39,7 @@ class PlayerActionExecutorTest {
 
     @Test
     @DisplayName("대기열 가장 앞에 있는 플레이어가 STAND라면 대기열에서 제거된다.")
-    public void dummy2() {
+    public void executeStandTest() {
         // given
         List<Card> cards = List.of(
                 new Card(Suit.HEART, Denomination.TWO),
