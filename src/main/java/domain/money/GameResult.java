@@ -1,5 +1,6 @@
 package domain.money;
 
+import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum GameResult {
@@ -9,18 +10,21 @@ public enum GameResult {
 
     private final BiPredicate<Integer, Integer> condition;
 
-    private final double benefitRatio;
+    private final int benefitRatio;
 
-    GameResult(BiPredicate<Integer, Integer> condition, double benefitRatio) {
+    GameResult(BiPredicate<Integer, Integer> condition, int benefitRatio) {
         this.condition = condition;
         this.benefitRatio = benefitRatio;
     }
 
-    public BiPredicate<Integer, Integer> getCondition() {
-        return condition;
+    public static GameResult compare(int current, int opponent) {
+        return Arrays.stream(values())
+                .filter(gameResult -> gameResult.condition.test(current, opponent))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("입력에 따른 결과가 존재하지 않습니다."));
     }
 
-    public double getBenefitRatio() {
-        return benefitRatio;
+    public int timesBenefitRatio(int value) {
+        return value * benefitRatio;
     }
 }

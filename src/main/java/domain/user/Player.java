@@ -5,11 +5,10 @@ import static domain.money.GameResult.WIN;
 
 import domain.card.Card;
 import domain.money.GameResult;
-import java.util.Arrays;
 import java.util.List;
 
 public class Player {
-    public static final int RECEIVABLE_THRESHOLD = 21;
+    private static final int RECEIVABLE_THRESHOLD = 21;
     private final Name name;
     private final Hand hand;
 
@@ -45,15 +44,7 @@ public class Player {
         if (dealer.isBusted() || isPlayerBlackjackOnly(dealer)) {
             return WIN;
         }
-        return compare(dealer.sumCard());
-    }
-
-    private GameResult compare(int opponent) {
-        return Arrays.stream(GameResult.values())
-                .filter(result -> result.getCondition().test(hand.sumCard(), opponent))
-                .findFirst()
-                .orElseThrow(() ->
-                        new IllegalStateException("입력에 따른 결과가 존재하지 않습니다."));
+        return GameResult.compare(sumHand(), dealer.sumCard());
     }
 
     private boolean isDealerBlackjackOnly(Dealer dealer) {
