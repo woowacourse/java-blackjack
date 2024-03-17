@@ -12,7 +12,7 @@ class ProfitTest {
     @ValueSource(ints = {1_001, 10_001, 9})
     void notMultiplesOfTen(int amount) {
         Assertions.assertThatThrownBy(() -> new Profit(amount))
-                .isInstanceOf(UnsupportedOperationException.class)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] 금액은 10의 배수만 가능합니다.");
     }
 }
