@@ -116,3 +116,9 @@
 - GameResult : 딜러 수익 결과 반환 로직 추가
 - Profit : 범위 검증 과정 삭제
 - rename: Value > CardNumber 
+
+
+## 3차 리뷰 개선사안
+- 상속관계인 Participant 추상 클래스 롤백
+- Game: makeGameResult 메서드에서 GameResult를 생성
+- GameResult : getDelaerProfit 메서드를 Profit.reverse()와의 협력으로 구현
