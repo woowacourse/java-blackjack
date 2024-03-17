@@ -18,16 +18,6 @@ public enum BlackjackStatus {
         return ALIVE;
     }
 
-    public static BlackjackStatus from(final Score score) {
-        if (score.isBiggerThan(BLACKJACK_SCORE)) {
-            return DEAD;
-        }
-        if (score.equals(BLACKJACK_SCORE)) {
-            return BLACKJACK;
-        }
-        return ALIVE;
-    }
-
     public static BlackjackStatus of(final Score score, final int count) {
         if (score.isBiggerThan(BLACKJACK_SCORE)) {
             return DEAD;

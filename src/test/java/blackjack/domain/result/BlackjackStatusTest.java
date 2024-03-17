@@ -12,7 +12,7 @@ class BlackjackStatusTest {
     @CsvSource(value = {"20, ALIVE", "21, BLACKJACK", "22, DEAD"})
     void from(int sum, BlackjackStatus expected) {
         // given & when
-        BlackjackStatus blackjackStatus = BlackjackStatus.from(new Score(sum));
+        BlackjackStatus blackjackStatus = BlackjackStatus.of(new Score(sum), 2);
 
         // then
         assertThat(blackjackStatus).isEqualTo(expected);

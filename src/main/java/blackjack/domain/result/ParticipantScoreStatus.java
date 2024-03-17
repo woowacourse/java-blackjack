@@ -8,6 +8,7 @@ public class ParticipantScoreStatus {
         this.isBlackjack = isBlackjack;
         this.score = score;
     }
+
     ParticipantScoreStatus(final boolean isBlackjack, final int score) {
         this(isBlackjack, new Score(score));
     }
@@ -16,13 +17,6 @@ public class ParticipantScoreStatus {
         return this.score.isBiggerThan(otherScore);
     }
 
-    public boolean isScoreEqaul(final ParticipantScoreStatus otherScoreStatus) {
-        return this.score.equals(otherScoreStatus.score);
-    }
-
-    public boolean isNotBlackjack() {
-        return !isBlackjack;
-    }
     public boolean isBlackjack() {
         return isBlackjack;
     }
