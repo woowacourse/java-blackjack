@@ -1,5 +1,14 @@
 package blackjack.view;
 
+import static blackjack.view.form.OutputFormatter.formatCardsWithName;
+import static blackjack.view.form.OutputFormatter.formatDealerBettingProfit;
+import static blackjack.view.form.OutputFormatter.formatDealerDrawingCards;
+import static blackjack.view.form.OutputFormatter.formatDealerFinalCards;
+import static blackjack.view.form.OutputFormatter.formatDealingResultIntro;
+import static blackjack.view.form.OutputFormatter.formatErrorMessage;
+import static blackjack.view.form.OutputFormatter.formatPlayerBettingProfits;
+import static blackjack.view.form.OutputFormatter.formatPlayersFinalCards;
+
 import blackjack.dto.DealerFinalCardsOutcome;
 import blackjack.dto.PlayerBettingProfitOutcome;
 import blackjack.dto.PlayerCardsOutcome;
@@ -7,116 +16,42 @@ import blackjack.dto.PlayerFinalCardsOutcome;
 import blackjack.model.card.Card;
 import blackjack.model.player.PlayerName;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OutputView {
-    private static final String DEALING_RESULT_INTRO = "\n딜러와 %s에게 2장을 나누었습니다.\n";
-    private static final String CARDS_FORM = "%s 카드: %s";
-    private static final String DEALER_DRAWING_FORM = "\n딜러는 16이하라 1장의 카드를 더 받았습니다.\n";
-    private static final String TOTAL_SCORE_FORM = " - 결과: ";
-    private static final String BETTING_PROFIT_INTRO = "## 최종 수익";
+    private static final String BETTING_PROFIT_INTRO = "\n## 최종 수익";
     private static final PlayerName DEALER_NAME = new PlayerName("딜러");
-    private static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
 
     public void printDealingCards(final List<PlayerName> playerNames,
                                   final List<PlayerCardsOutcome> playerCardsOutcomes,
                                   final Card dealerFirstCard) {
         System.out.println(formatDealingResultIntro(playerNames));
-        System.out.println(formatCards(List.of(dealerFirstCard), DEALER_NAME));
+        System.out.println(formatCardsWithName(List.of(dealerFirstCard), DEALER_NAME));
         for (PlayerCardsOutcome playerCardsOutcome : playerCardsOutcomes) {
-            System.out.println(formatCards(playerCardsOutcome.cards(), playerCardsOutcome.name()));
+            System.out.println(formatCardsWithName(playerCardsOutcome.cards(), playerCardsOutcome.name()));
         }
     }
 
-    private String formatDealingResultIntro(final List<PlayerName> playerNames) {
-        String names = playerNames.stream()
-                .map(PlayerName::name)
-                .collect(Collectors.joining(", "));
-        return String.format(DEALING_RESULT_INTRO, names);
-    }
-
-    private String formatCards(final List<Card> cards, PlayerName name) {
-        String joinedCards = cards.stream()
-                .map(this::formatCard)
-                .collect(Collectors.joining(", "));
-        return String.format(CARDS_FORM, name, joinedCards);
-    }
-
-    private String formatCard(final Card card) {
-        return card.denomination().getName() + card.suit().getName();
-    }
-
     public void printPlayerDrawingCards(final PlayerCardsOutcome playerCardsOutcome) {
-        System.out.println(formatCards(playerCardsOutcome.cards(), playerCardsOutcome.name()));
+        System.out.println(formatCardsWithName(playerCardsOutcome.cards(), playerCardsOutcome.name()));
     }
 
     public void printDealerDrawingCards(final int drawCount) {
-        System.out.println(DEALER_DRAWING_FORM.repeat(drawCount));
+        System.out.println(formatDealerDrawingCards(drawCount));
     }
 
     public void printFinalCards(final DealerFinalCardsOutcome dealerFinalCardsOutcome,
                                 final List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes) {
-        System.out.println(formatDealerFinalCards(dealerFinalCardsOutcome));
+        System.out.println(formatDealerFinalCards(dealerFinalCardsOutcome, DEALER_NAME));
         System.out.println(formatPlayersFinalCards(playerFinalCardsOutcomes));
-    }
-
-    public String formatDealerFinalCards(final DealerFinalCardsOutcome dealerFinalCardsOutcome) {
-        List<Card> dealerCards = dealerFinalCardsOutcome.cards();
-        int dealerTotalScore = dealerFinalCardsOutcome.totalScore();
-        return formatFinalCards(dealerCards, DEALER_NAME, dealerTotalScore);
-    }
-
-    public String formatPlayersFinalCards(final List<PlayerFinalCardsOutcome> playerFinalCardsOutcomes) {
-        StringBuilder sb = new StringBuilder();
-        for (PlayerFinalCardsOutcome playerFinalCardsOutcome : playerFinalCardsOutcomes) {
-            List<Card> playerCards = playerFinalCardsOutcome.cards();
-            PlayerName playerName = playerFinalCardsOutcome.name();
-            int playerTotalScore = playerFinalCardsOutcome.totalScore();
-            sb.append(formatFinalCards(playerCards, playerName, playerTotalScore)).append("\n");
-        }
-        return sb.toString();
-    }
-
-    private String formatFinalCards(final List<Card> cards, final PlayerName name, final int totalScore) {
-        return formatCards(cards, name) + formatTotalScore(totalScore);
-    }
-
-    private String formatTotalScore(final int totalScore) {
-        return TOTAL_SCORE_FORM + totalScore;
     }
 
     public void printBettingProfit(final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
         System.out.println(BETTING_PROFIT_INTRO);
-        System.out.println(formatDealerBettingProfit(playerBettingProfitOutcomes));
+        System.out.println(formatDealerBettingProfit(playerBettingProfitOutcomes, DEALER_NAME));
         System.out.println(formatPlayerBettingProfits(playerBettingProfitOutcomes));
     }
 
-    private String formatDealerBettingProfit(final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
-        int dealerBettingProfit = calculateDealerBettingProfit(playerBettingProfitOutcomes);
-        return formatBettingProfit(DEALER_NAME, dealerBettingProfit);
-    }
-
-    private int calculateDealerBettingProfit(final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
-        return playerBettingProfitOutcomes.stream()
-                .mapToInt(PlayerBettingProfitOutcome::profit)
-                .sum() * -1;
-    }
-
-    private String formatPlayerBettingProfits(final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
-        return playerBettingProfitOutcomes.stream()
-                .map(this::formatPlayerBettingProfit)
-                .collect(Collectors.joining("\n"));
-    }
-
-    private String formatPlayerBettingProfit(final PlayerBettingProfitOutcome playerBettingProfitOutcome) {
-        return formatBettingProfit(playerBettingProfitOutcome.name(), playerBettingProfitOutcome.profit());
-    }
-
-    private String formatBettingProfit(final PlayerName name, final int profit) {
-        return name + ": " + profit;
-    }
-
     public void printException(final String errorMessage) {
-        System.out.println(ERROR_MESSAGE_PREFIX + errorMessage);
+        System.out.println(formatErrorMessage(errorMessage));
     }
 }
