@@ -29,11 +29,11 @@ class DealerTest {
     @Test
     @DisplayName("딜러는 카드를 받는다.")
     void hitDealer() {
-        Dealer dealer = new Dealer(new Hand(List.of(new Card(CLOVER, ACE), new Card(CLOVER, THREE))));
-        dealer.receiveCard(new Card(HEART, TWO));
+        Dealer dealer = new Dealer(new Hand(List.of(Card.from(CLOVER, ACE), Card.from(CLOVER, THREE))));
+        dealer.receiveCard(Card.from(HEART, TWO));
 
         assertThat(dealer.openCards())
-                .isEqualTo(List.of(new Card(CLOVER, ACE), new Card(CLOVER, THREE), new Card(HEART, TWO)));
+                .isEqualTo(List.of(Card.from(CLOVER, ACE), Card.from(CLOVER, THREE), Card.from(HEART, TWO)));
     }
 
     @Test
@@ -53,8 +53,8 @@ class DealerTest {
     @Test
     @DisplayName("딜러는 2장의 카드를 받고 한 장의 카드만 공개한다.")
     void openCard() {
-        Hand hand = new Hand(List.of(new Card(CLOVER, TEN), new Card(CLOVER, FIVE)));
+        Hand hand = new Hand(List.of(Card.from(CLOVER, TEN), Card.from(CLOVER, FIVE)));
         Dealer dealer = new Dealer(hand);
-        assertThat(dealer.openCard()).containsExactly(new Card(CLOVER, TEN));
+        assertThat(dealer.openCard()).containsExactly(Card.from(CLOVER, TEN));
     }
 }

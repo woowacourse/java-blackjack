@@ -1,5 +1,9 @@
 package blackjack.model.result;
 
+import static blackjack.model.fixture.HandFixture.BLACKJACK_HAND;
+import static blackjack.model.fixture.HandFixture.BUST_HAND;
+import static blackjack.model.fixture.HandFixture.OVER_16_UNDER_21_HAND;
+import static blackjack.model.fixture.HandFixture.UNDER_16_HAND;
 import static blackjack.model.result.ResultCommand.DRAW;
 import static blackjack.model.result.ResultCommand.LOSE;
 import static blackjack.model.result.ResultCommand.WIN;
@@ -31,10 +35,9 @@ class RefereeTest {
         @DisplayName("플레이어의 합이 딜러보다 크면 플레이어가 승리한다.")
         void playerWinWhenBiggerThanDealer() {
             Deck deck = new Deck(
-                    new ArrayDeque<>(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN))));
+                    new ArrayDeque<>(List.of(Card.from(Shape.CLOVER, Score.TEN), Card.from(Shape.SPADE, Score.TEN))));
             Players players = Players.of(List.of("몰리"), deck);
-            Dealer dealer = new Dealer(
-                    new Hand(List.of(new Card(Shape.SPADE, Score.SEVEN), new Card(Shape.DIA, Score.TEN))));
+            Dealer dealer = new Dealer(UNDER_16_HAND.getHand());
 
             Referee referee = new Referee(new ResultRule(dealer), players);
             assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of(players.getPlayers().get(0), WIN));
@@ -44,11 +47,11 @@ class RefereeTest {
         @DisplayName("플레이어 결과가 딜러의 결과와 동일하지만 카드 수는 적은 경우 플레이어가 승리한다.")
         void playerWinWhenHasLittleCardsThanDealer() {
             Deck deck = new Deck(
-                    new ArrayDeque<>(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN))));
+                    new ArrayDeque<>(List.of(Card.from(Shape.CLOVER, Score.TEN), Card.from(Shape.SPADE, Score.TEN))));
             Players players = Players.of(List.of("몰리"), deck);
             Dealer dealer = new Dealer(new Hand(
-                    List.of(new Card(Shape.SPADE, Score.SEVEN), new Card(Shape.DIA, Score.TEN),
-                            new Card(Shape.DIA, Score.THREE))));
+                    List.of(Card.from(Shape.SPADE, Score.SEVEN), Card.from(Shape.DIA, Score.TEN),
+                            Card.from(Shape.DIA, Score.THREE))));
 
             Referee referee = new Referee(new ResultRule(dealer), players);
             assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of(players.getPlayers().get(0), WIN));
@@ -63,11 +66,9 @@ class RefereeTest {
         @DisplayName("플레이어 카드만 블랙잭인 경우 플레이어가 승리한다.")
         void playerWinWhenOnlyPlayerBlackJack() {
             Deck deck = new Deck(
-                    new ArrayDeque<>(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.ACE))));
+                    new ArrayDeque<>(List.of(Card.from(Shape.CLOVER, Score.TEN), Card.from(Shape.SPADE, Score.ACE))));
             Players players = Players.of(List.of("몰리"), deck);
-            Dealer dealer = new Dealer(new Hand(
-                    List.of(new Card(Shape.SPADE, Score.SEVEN), new Card(Shape.DIA, Score.TEN),
-                            new Card(Shape.DIA, Score.FOUR))));
+            Dealer dealer = new Dealer(OVER_16_UNDER_21_HAND.getHand());
 
             Referee referee = new Referee(new ResultRule(dealer), players);
             assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of(players.getPlayers().get(0), WIN));
@@ -77,13 +78,13 @@ class RefereeTest {
         @DisplayName("플레이어의 카드 수가 딜러의 카드 수보다 적은 경우 플레이어가 승리한다.")
         void playerWinWhenHasLittleCardsThanDealer() {
             Deck deck = new Deck(new ArrayDeque<>(
-                    List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.CLOVER, Score.NINE))));
+                    List.of(Card.from(Shape.CLOVER, Score.TEN), Card.from(Shape.CLOVER, Score.NINE))));
             Players players = Players.of(List.of("몰리"), deck);
-            players.getPlayers().get(0).receiveCard(new Card(Shape.SPADE, Score.TWO));
+            players.getPlayers().get(0).receiveCard(Card.from(Shape.SPADE, Score.TWO));
 
             Dealer dealer = new Dealer(new Hand(
-                    List.of(new Card(Shape.SPADE, Score.SEVEN), new Card(Shape.DIA, Score.FIVE),
-                            new Card(Shape.CLOVER, Score.FIVE), new Card(Shape.DIA, Score.FOUR))));
+                    List.of(Card.from(Shape.SPADE, Score.SEVEN), Card.from(Shape.DIA, Score.FIVE),
+                            Card.from(Shape.CLOVER, Score.FIVE), Card.from(Shape.DIA, Score.FOUR))));
 
             Referee referee = new Referee(new ResultRule(dealer), players);
             assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of(players.getPlayers().get(0), WIN));
@@ -98,11 +99,9 @@ class RefereeTest {
         @DisplayName("플레이어 결과가 21이하인 경우 플레이어가 승리한다.")
         void playerWinWhenOnlyPlayerNotBust() {
             Deck deck = new Deck(new ArrayDeque<>(
-                    List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.FOUR))));
+                    List.of(Card.from(Shape.CLOVER, Score.TEN), Card.from(Shape.SPADE, Score.FOUR))));
             Players players = Players.of(List.of("몰리"), deck);
-            Dealer dealer = new Dealer(new Hand(
-                    List.of(new Card(Shape.SPADE, Score.FOUR), new Card(Shape.DIA, Score.TEN),
-                            new Card(Shape.DIA, Score.TEN))));
+            Dealer dealer = new Dealer(BUST_HAND.getHand());
 
             Referee referee = new Referee(new ResultRule(dealer), players);
             assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of(players.getPlayers().get(0), WIN));
@@ -117,11 +116,10 @@ class RefereeTest {
         @DisplayName("플레이어와 딜러 모두 블랙잭인 경우")
         void bothBlackJack() {
             Deck deck = new Deck(new ArrayDeque<>(
-                    List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.ACE))));
+                    List.of(Card.from(Shape.CLOVER, Score.TEN), Card.from(Shape.SPADE, Score.ACE))));
 
             Players players = Players.of(List.of("몰리"), deck);
-            Dealer dealer = new Dealer(
-                    new Hand(List.of(new Card(Shape.HEART, Score.ACE), new Card(Shape.DIA, Score.TEN))));
+            Dealer dealer = new Dealer(BLACKJACK_HAND.getHand());
 
             Referee referee = new Referee(new ResultRule(dealer), players);
             assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of(players.getPlayers().get(0), DRAW));
@@ -131,11 +129,11 @@ class RefereeTest {
         @DisplayName("플레이어와 딜러의 결과, 카드 수가 모두 동일한 경우")
         void sameScoreAndCount() {
             Deck deck = new Deck(new ArrayDeque<>(
-                    List.of(new Card(Shape.CLOVER, Score.FIVE), new Card(Shape.SPADE, Score.FIVE))));
+                    List.of(Card.from(Shape.CLOVER, Score.FIVE), Card.from(Shape.SPADE, Score.FIVE))));
 
             Players players = Players.of(List.of("몰리"), deck);
             Dealer dealer = new Dealer(
-                    new Hand(List.of(new Card(Shape.HEART, Score.FIVE), new Card(Shape.DIA, Score.FIVE))));
+                    new Hand(List.of(Card.from(Shape.HEART, Score.FIVE), Card.from(Shape.DIA, Score.FIVE))));
 
             Referee referee = new Referee(new ResultRule(dealer), players);
             assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of(players.getPlayers().get(0), DRAW));
@@ -145,13 +143,11 @@ class RefereeTest {
         @DisplayName("플레이어와 딜러 모두 21 초과인 경우")
         void bothBust() {
             Deck deck = new Deck(new ArrayDeque<>(
-                    List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN))));
+                    List.of(Card.from(Shape.CLOVER, Score.TEN), Card.from(Shape.SPADE, Score.TEN))));
             Players players = Players.of(List.of("몰리"), deck);
-            players.getPlayers().get(0).receiveCard(new Card(Shape.SPADE, Score.NINE));
+            players.getPlayers().get(0).receiveCard(Card.from(Shape.SPADE, Score.NINE));
 
-            Dealer dealer = new Dealer(
-                    new Hand(List.of(new Card(Shape.HEART, Score.TEN), new Card(Shape.DIA, Score.TEN),
-                            new Card(Shape.DIA, Score.NINE))));
+            Dealer dealer = new Dealer(BUST_HAND.getHand());
 
             Referee referee = new Referee(new ResultRule(dealer), players);
             assertThat(referee.judgePlayerResult()).containsExactlyEntriesOf(Map.of(players.getPlayers().get(0), DRAW));
@@ -162,15 +158,15 @@ class RefereeTest {
     @DisplayName("플레이어들의 결과를 반환한다.")
     void getPlayerResult() {
         Deck deck = new Deck(new ArrayDeque<>(
-                List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN),
-                        new Card(Shape.DIA, Score.ACE), new Card(Shape.CLOVER, Score.TEN),
-                        new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN))));
+                List.of(Card.from(Shape.CLOVER, Score.TEN), Card.from(Shape.SPADE, Score.TEN),
+                        Card.from(Shape.DIA, Score.ACE), Card.from(Shape.CLOVER, Score.TEN),
+                        Card.from(Shape.CLOVER, Score.TEN), Card.from(Shape.SPADE, Score.TEN))));
 
         Players players = Players.of(List.of("몰리", "리브", "포비"), deck);
 
-        players.getPlayers().get(0).receiveCard(new Card(Shape.DIA, Score.FOUR));
+        players.getPlayers().get(0).receiveCard(Card.from(Shape.DIA, Score.FOUR));
         Dealer dealer = new Dealer(
-                new Hand(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN))));
+                new Hand(List.of(Card.from(Shape.CLOVER, Score.TEN), Card.from(Shape.SPADE, Score.TEN))));
 
         Referee referee = new Referee(new ResultRule(dealer), players);
         Map<Player, ResultCommand> expected = new LinkedHashMap<>();
@@ -184,14 +180,14 @@ class RefereeTest {
     @DisplayName("딜러의 결과를 반환한다.")
     void getDealerResult() {
         Deck deck = new Deck(new ArrayDeque<>(
-                List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TWO),
-                        new Card(Shape.DIA, Score.ACE), new Card(Shape.CLOVER, Score.TEN),
-                        new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN))));
+                List.of(Card.from(Shape.CLOVER, Score.TEN), Card.from(Shape.SPADE, Score.TWO),
+                        Card.from(Shape.DIA, Score.ACE), Card.from(Shape.CLOVER, Score.TEN),
+                        Card.from(Shape.CLOVER, Score.TEN), Card.from(Shape.SPADE, Score.TEN))));
 
         Players players = Players.of(List.of("몰리", "리브", "포비"), deck);
-        players.getPlayers().get(0).receiveCard(new Card(Shape.DIA, Score.FOUR));
+        players.getPlayers().get(0).receiveCard(Card.from(Shape.DIA, Score.FOUR));
         Dealer dealer = new Dealer(
-                new Hand(List.of(new Card(Shape.CLOVER, Score.TEN), new Card(Shape.SPADE, Score.TEN))));
+                new Hand(List.of(Card.from(Shape.CLOVER, Score.TEN), Card.from(Shape.SPADE, Score.TEN))));
 
         Referee referee = new Referee(new ResultRule(dealer), players);
         assertThat(referee.judgeDealerResult()).containsAllEntriesOf(Map.of(WIN, 1, LOSE, 1, DRAW, 1));

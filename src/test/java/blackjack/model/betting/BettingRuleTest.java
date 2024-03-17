@@ -1,12 +1,12 @@
 package blackjack.model.betting;
 
 
-import static blackjack.model.fixture.PlayerFixture.BLACKJACK_PLAYER;
-import static blackjack.model.fixture.PlayerFixture.NOT_BLACKJACK_21_PLAYER;
-import static blackjack.model.betting.ProfitRate.LOSE_RATE;
-import static blackjack.model.betting.ProfitRate.NOT_BLACKJACK_BUT_WIN_RATE;
 import static blackjack.model.betting.ProfitRate.BLACKJACK_RATE;
 import static blackjack.model.betting.ProfitRate.DRAW_RATE;
+import static blackjack.model.betting.ProfitRate.LOSE_RATE;
+import static blackjack.model.betting.ProfitRate.NOT_BLACKJACK_BUT_WIN_RATE;
+import static blackjack.model.fixture.PlayerFixture.BLACKJACK_PLAYER;
+import static blackjack.model.fixture.PlayerFixture.NOT_BLACKJACK_21_PLAYER;
 import static blackjack.model.result.ResultCommand.DRAW;
 import static blackjack.model.result.ResultCommand.LOSE;
 import static blackjack.model.result.ResultCommand.WIN;

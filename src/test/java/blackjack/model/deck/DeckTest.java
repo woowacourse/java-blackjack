@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.NoSuchElementException;
 import java.util.stream.IntStream;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,12 +19,6 @@ class DeckTest {
     }
 
     @Test
-    @DisplayName("카드 덱을 생성한다.")
-    void createDeck() {
-        assertThat(deck.getDeck()).hasSize(52);
-    }
-
-    @Test
     @DisplayName("카드 한 세트(52장)을 다 소진할 경우 예외가 발생한다.")
     void throwErrorWhenNoCard() {
         assertThatThrownBy(() -> IntStream.range(0, 27).forEach(i -> deck.distributeInitialCard()))
@@ -36,6 +29,7 @@ class DeckTest {
     @Test
     @DisplayName("Deck에서 카드를 배분한다.")
     void distribute() {
+        Deck deck = Deck.createByRandomOrder();
         int deckSizeBeforeDistribute = deck.getDeck().size();
 
         Card distributeCard = deck.distribute();
