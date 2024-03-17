@@ -17,10 +17,9 @@ public class PlayerActionExecutor {
         this.cardGenerator = cardGenerator;
     }
 
-    public void execute(final boolean actionCommand) {
+    public void execute(final PlayerAction playerAction) {
         checkExecutionIsFinished();
 
-        PlayerAction playerAction = PlayerAction.from(actionCommand);
         Player player = waitingPlayers.peek();
         if (playerAction.canNotContinue(player)) {
             waitingPlayers.poll();
