@@ -32,7 +32,7 @@ public class BlackJackController {
 
     public void run() {
         final Players players = createPlayers(readNames());
-        final Dealer dealer = createDealer();
+        final Dealer dealer = Dealer.from(CardDeck.generate());
 
         initHands(players, dealer);
         dealToPlayers(players, dealer);
@@ -52,10 +52,6 @@ public class BlackJackController {
         }
 
         return new Players(players);
-    }
-
-    private Dealer createDealer() {
-        return Dealer.from(CardDeck.generate());
     }
 
     private void initHands(final Players players, final Dealer dealer) {
