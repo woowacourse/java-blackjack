@@ -109,8 +109,7 @@ public class BlackjackGame {
 
     private void showBettingProfit(final Players players, final Dealer dealer, final Betting betting) {
         List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes = players.calculateBettingProfits(betting, dealer);
-        int dealerBettingProfit = dealer.calculateBettingProfit(playerBettingProfitOutcomes);
-        outputView.printBettingProfit(dealerBettingProfit, playerBettingProfitOutcomes);
+        outputView.printBettingProfit(playerBettingProfitOutcomes);
     }
 
     public <T> T retryOnException(final Supplier<T> retryOperation) {

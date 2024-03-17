@@ -1,6 +1,5 @@
 package blackjack.model.dealer;
 
-import blackjack.dto.PlayerBettingProfitOutcome;
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 import blackjack.model.cardgenerator.CardGenerator;
@@ -33,12 +32,6 @@ public class Dealer {
 
     public int calculateCardsTotalScore() {
         return cards.calculateScore();
-    }
-
-    public int calculateBettingProfit(final List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes) {
-        return playerBettingProfitOutcomes.stream()
-                .mapToInt(PlayerBettingProfitOutcome::profit)
-                .sum() * -1; // TODO: view 로 옮기기
     }
 
     public boolean isBlackjack() {

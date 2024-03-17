@@ -2,7 +2,6 @@ package blackjack.model.dealer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.dto.PlayerBettingProfitOutcome;
 import blackjack.model.card.Card;
 import blackjack.model.card.Denomination;
 import blackjack.model.card.Suit;
@@ -45,23 +44,5 @@ class DealerTest {
         // then
         int cardsTotal = dealer.calculateCardsTotalScore();
         assertThat(cardsTotal).isGreaterThan(17);
-    }
-
-    @Test
-    @DisplayName("플레이어들의 수익의 합을 이용해 딜러의 수익을 계산한다")
-    void calculateDealerBettingProfitTest() {
-        // given
-        Dealer dealer = new Dealer();
-        List<PlayerBettingProfitOutcome> playerBettingProfitOutcomes = List.of(
-                new PlayerBettingProfitOutcome("dora", 1000),
-                new PlayerBettingProfitOutcome("bora", -2000),
-                new PlayerBettingProfitOutcome("sora", -1000)
-        );
-
-        // when
-        int dealerProfit = dealer.calculateBettingProfit(playerBettingProfitOutcomes);
-
-        // then
-        assertThat(dealerProfit).isEqualTo(2000);
     }
 }
