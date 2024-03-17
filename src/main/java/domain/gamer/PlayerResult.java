@@ -1,7 +1,5 @@
 package domain.gamer;
 
-import java.util.Arrays;
-
 public enum PlayerResult {
     BLACKJACKWIN(1.5),
     WIN(1),
@@ -15,10 +13,6 @@ public enum PlayerResult {
     }
 
     public double getRatio() {
-        return Arrays.stream(PlayerResult.values())
-                .filter(value -> value == this)
-                .findFirst()
-                .map(result -> result.ratio)
-                .orElse(0.0);
+        return this.ratio;
     }
 }
