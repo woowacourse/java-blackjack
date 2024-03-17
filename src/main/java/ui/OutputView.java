@@ -63,4 +63,8 @@ public class OutputView {
         gameResult.getPlayerResult()
                 .forEach((key, value) -> System.out.printf("%s: %s%n", key.getName(), value));
     }
+
+    public void printErrorMessage(Exception e) {
+        System.out.println(e.getMessage());
+    }
 }

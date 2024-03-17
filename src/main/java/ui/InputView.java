@@ -45,9 +45,10 @@ public class InputView {
                 .anyMatch(INVALID_PLAYER_NAMES::contains);
     }
 
-    public int readBettingAmount(String name) {
+    public int readBetAmount(String name) {
         System.out.printf("%s의 배팅 금액은?%n", name);
         String bettingAmount = scanner.nextLine().trim();
+        System.out.println();
         validateInput(bettingAmount);
         try {
             return Integer.parseInt(bettingAmount);

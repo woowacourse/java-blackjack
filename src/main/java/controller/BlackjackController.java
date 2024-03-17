@@ -1,5 +1,8 @@
 package controller;
 
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
+
 import domain.blackjackgame.BlackjackGame;
 import domain.blackjackgame.GameResult;
 import domain.card.deck.CardDeck;
@@ -10,9 +13,9 @@ import domain.participant.Name;
 import domain.participant.Names;
 import domain.participant.Participants;
 import domain.participant.Player;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
 import ui.InputView;
 import ui.OutputView;
 
@@ -34,13 +37,16 @@ public class BlackjackController {
     }
 
     private Participants generateParticipants() {
-        Names names = new Names(inputView.readPlayerNames());
-        List<Player> players = new ArrayList<>();
-        for (Name name : names.getNames()) {
-            BettingAmount bettingAmount = new BettingAmount(inputView.readBettingAmount(name.getValue()));
-            players.add(new Player(name, bettingAmount));
-        }
-        return new Participants(players);
+        Names names = repeatUntilSuccess(() -> new Names(inputView.readPlayerNames()));
+        return names.getNames().stream()
+                .map(this::generatePlayer)
+                .collect(collectingAndThen(toList(), Participants::new));
+    }
+
+    private Player generatePlayer(Name name) {
+        BettingAmount bettingAmount = repeatUntilSuccess(
+                () -> new BettingAmount(inputView.readBetAmount(name.getValue())));
+        return new Player(name, bettingAmount);
     }
 
     private GameResult playBlackjackGame(Participants participants, BlackjackGame blackjackGame) {
@@ -56,7 +62,7 @@ public class BlackjackController {
     }
 
     private void dealToPlayer(Player player, BlackjackGame blackjackGame) {
-        while (player.isNotFinished() && inputView.askForMoreCard(player.getName())) {
+        while (player.isNotFinished() && repeatUntilSuccess(() -> inputView.askForMoreCard(player.getName()))) {
             blackjackGame.dealCardTo(player);
             outputView.printAllCards(player);
         }
@@ -66,6 +72,23 @@ public class BlackjackController {
         while (dealer.isNotFinished()) {
             blackjackGame.dealCardTo(dealer);
             outputView.printDealerReceiveCardMessage();
+        }
+    }
+
+    private <T> T repeatUntilSuccess(Supplier<T> supplier) {
+        Optional<T> result;
+        do {
+            result = request(supplier);
+        } while (result.isEmpty());
+        return result.get();
+    }
+
+    private <T> Optional<T> request(Supplier<T> supplier) {
+        try {
+            return Optional.of(supplier.get());
+        } catch (Exception e) {
+            outputView.printErrorMessage(e);
+            return Optional.empty();
         }
     }
 }
