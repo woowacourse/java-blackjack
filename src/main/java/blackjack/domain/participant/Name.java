@@ -29,8 +29,8 @@ public class Name {
         if (object == null || getClass() != object.getClass()) {
             return false;
         }
-        Name name1 = (Name) object;
-        return Objects.equals(name, name1.name);
+        Name otherName = (Name) object;
+        return Objects.equals(name, otherName.name);
     }
 
     @Override
