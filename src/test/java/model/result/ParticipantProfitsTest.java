@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import model.betting.Bet;
-import model.betting.PlayerBets;
+import model.betting.Bets;
 import model.card.Card;
 import model.participant.Dealer;
 import model.participant.Player;
@@ -27,7 +27,7 @@ class ParticipantProfitsTest {
     void createParticipantProfits() {
         Players players = preparePlayers();
         Dealer dealer = new Dealer(List.of(new Card(KING, HEART), new Card(JACK, SPADE)));
-        PlayerBets bets = prepareBets();
+        Bets bets = prepareBets();
 
         ParticipantProfits participantProfits = ParticipantProfits.of(players, dealer, bets);
 
@@ -47,9 +47,9 @@ class ParticipantProfitsTest {
         return players;
     }
 
-    private PlayerBets prepareBets() {
+    private Bets prepareBets() {
         Map<String, Bet> bets = new HashMap<>();
         bets.put("조조", new Bet(10000));
-        return new PlayerBets(bets);
+        return new Bets(bets);
     }
 }

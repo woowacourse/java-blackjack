@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import model.betting.Bet;
-import model.betting.PlayerBets;
+import model.betting.Bets;
 import model.card.Card;
 import model.participant.Participant;
 import model.participant.Player;
@@ -94,22 +94,22 @@ class BlackjackGameTest {
     @Test
     void calculateProfit() {
         Players players = Players.from(List.of("조조"));
-        PlayerBets bets = prepareBets();
+        Bets bets = prepareBets();
         BlackjackGame blackjackGame = new BlackjackGame();
         blackjackGame.dealInitialCards(players);
 
         ParticipantProfits participantProfits = blackjackGame.calculateProfit(players, bets);
-        int dealerScore = (-1) * participantProfits.getPlayerProfits()
+        int dealerScore = participantProfits.getPlayerProfits()
             .stream()
             .mapToInt(ParticipantProfit::getProfit)
-            .sum();
+            .sum() * -1;
 
         assertThat(dealerScore).isEqualTo(participantProfits.getDealerProfit().getProfit());
     }
 
-    private PlayerBets prepareBets() {
+    private Bets prepareBets() {
         Map<String, Bet> bets = new HashMap<>();
         bets.put("조조", new Bet(10000));
-        return new PlayerBets(bets);
+        return new Bets(bets);
     }
 }

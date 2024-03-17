@@ -4,7 +4,7 @@ import model.result.ParticipantCard;
 import model.result.ParticipantCards;
 import model.result.ParticipantProfits;
 import model.result.ParticipantScores;
-import model.betting.PlayerBets;
+import model.betting.Bets;
 import model.card.Card;
 import model.card.CardDeck;
 import model.participant.Dealer;
@@ -58,7 +58,7 @@ public class BlackjackGame {
         return ParticipantScores.of(dealer, players);
     }
 
-    public ParticipantProfits calculateProfit(Players players, PlayerBets bets) {
+    public ParticipantProfits calculateProfit(Players players, Bets bets) {
         return ParticipantProfits.of(players, dealer, bets);
     }
 

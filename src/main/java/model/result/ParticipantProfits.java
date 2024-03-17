@@ -2,7 +2,7 @@ package model.result;
 
 import java.util.List;
 import model.betting.Bet;
-import model.betting.PlayerBets;
+import model.betting.Bets;
 import model.game.GameResult;
 import model.participant.Dealer;
 import model.participant.Player;
@@ -19,32 +19,33 @@ public class ParticipantProfits {
         this.playerProfits = playerProfits;
     }
 
-    public static ParticipantProfits of(Players players, Dealer dealer, PlayerBets bets) {
+    public static ParticipantProfits of(Players players, Dealer dealer, Bets bets) {
         List<ParticipantProfit> playersProfits = calculateProfits(players, dealer, bets);
-        int dealerProfit = calculateDealerProfit(playersProfits);
-        return new ParticipantProfits(new ParticipantProfit(dealer.getName(), dealerProfit),
-            playersProfits);
+        ParticipantProfit dealerProfit = calculateDealerProfit(playersProfits, dealer);
+        return new ParticipantProfits(dealerProfit, playersProfits);
     }
 
-    private static List<ParticipantProfit> calculateProfits(Players players, Dealer dealer, PlayerBets bets) {
+    private static List<ParticipantProfit> calculateProfits(Players players, Dealer dealer,
+        Bets bets) {
         return players.getPlayers()
             .stream()
             .map(player -> calculateBetProfit(player, dealer, bets))
             .toList();
     }
 
-    private static ParticipantProfit calculateBetProfit(Player player, Dealer dealer,
-        PlayerBets bets) {
+    private static ParticipantProfit calculateBetProfit(Player player, Dealer dealer, Bets bets) {
         Bet bet = bets.findByPlayer(player);
         GameResult resultStatus = dealer.judge(player);
         int profit = resultStatus.calculateProfit(bet);
         return new ParticipantProfit(player.getName(), profit);
     }
 
-    private static int calculateDealerProfit(List<ParticipantProfit> playersBetProfits) {
-        return playersBetProfits.stream()
+    private static ParticipantProfit calculateDealerProfit(List<ParticipantProfit> playerProfits,
+        Dealer dealer) {
+        int profit = playerProfits.stream()
             .mapToInt(ParticipantProfit::getProfit)
             .sum() * -1;
+        return new ParticipantProfit(dealer.getName(), profit);
     }
 
     public ParticipantProfit getDealerProfit() {

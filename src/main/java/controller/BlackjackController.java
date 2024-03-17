@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 import model.betting.Bet;
-import model.betting.PlayerBets;
+import model.betting.Bets;
 import model.game.BlackjackGame;
 import model.game.HitChoice;
 import model.participant.Player;
@@ -22,7 +22,7 @@ public class BlackjackController {
 
     public void run() {
         Players players = preparePlayers();
-        PlayerBets bets = prepareBets(players);
+        Bets bets = prepareBets(players);
         BlackjackGame blackjackGame = new BlackjackGame();
 
         ParticipantCards participantCards = blackjackGame.dealInitialCards(players);
@@ -45,11 +45,11 @@ public class BlackjackController {
         });
     }
 
-    private PlayerBets prepareBets(Players players) {
+    private Bets prepareBets(Players players) {
         Map<String, Bet> betMoneys = players.getPlayers()
             .stream()
             .collect(toMap(Player::getName, this::prepareBet));
-        return new PlayerBets(betMoneys);
+        return new Bets(betMoneys);
     }
 
     private Bet prepareBet(Player player) {

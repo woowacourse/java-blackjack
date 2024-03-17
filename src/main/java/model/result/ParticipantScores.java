@@ -16,11 +16,15 @@ public class ParticipantScores {
 
     public static ParticipantScores of(Dealer dealer, Players players) {
         ParticipantScore dealerScore = ParticipantScore.from(dealer);
-        List<ParticipantScore> playerScores = players.getPlayers()
+        List<ParticipantScore> playerScores = createPlayerScores(players);
+        return new ParticipantScores(dealerScore, playerScores);
+    }
+
+    private static List<ParticipantScore> createPlayerScores(Players players) {
+        return players.getPlayers()
             .stream()
             .map(ParticipantScore::from)
             .toList();
-        return new ParticipantScores(dealerScore, playerScores);
     }
 
     public ParticipantScore getDealerScore() {
