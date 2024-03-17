@@ -1,24 +1,28 @@
 package blackjack.model.participants;
 
-import blackjack.view.PlayerResultStatus;
+import blackjack.model.blackjackgame.GameOutcomeStatus;
+import blackjack.model.blackjackgame.Profit;
 
-public class Player extends Participant {
-    private final String name;
+public final class Player extends Participant {
+    private final Name name;
+    private final Betting betting;
 
-    public Player(String name) {
+    public Player(Name name, Betting betting) {
         this.name = name;
+        this.betting = betting;
     }
 
     @Override
     public boolean checkCanGetMoreCard() {
-        return !cards.isGreaterThanWinningScore();
+        return cards.canAddMore();
     }
 
-    public PlayerResultStatus determineWinner(Dealer dealer) {
-        return dealer.getResultStatus(cards);
+    public Profit calculateGameOutcomeProfit(final Participant participant) {
+        GameOutcomeStatus gameOutcomeStatus = cards.compareCardsScore(participant.cards);
+        return gameOutcomeStatus.calculate(betting);
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 }

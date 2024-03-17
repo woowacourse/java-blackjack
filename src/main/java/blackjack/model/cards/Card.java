@@ -2,11 +2,11 @@ package blackjack.model.cards;
 
 import java.util.Objects;
 
-public class Card {
+public final class Card {
     private final CardNumber cardNumber;
     private final CardShape cardShape;
 
-    public Card(CardNumber cardNumber, CardShape cardShape) {
+    public Card(final CardNumber cardNumber, final CardShape cardShape) {
         this.cardNumber = cardNumber;
         this.cardShape = cardShape;
     }
@@ -15,7 +15,7 @@ public class Card {
         return cardNumber.isAce();
     }
 
-    public int getScore() {
+    public Score getScore() {
         return cardNumber.getScore();
     }
 

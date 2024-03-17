@@ -11,7 +11,7 @@ public class CardGenerator {
 
     private final IndexGenerator indexGenerator;
 
-    public CardGenerator(IndexGenerator indexGenerator) {
+    public CardGenerator(final IndexGenerator indexGenerator) {
         this.indexGenerator = indexGenerator;
     }
 

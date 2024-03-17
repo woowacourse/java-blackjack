@@ -1,94 +1,78 @@
 package blackjack.controller;
 
-import blackjack.model.blackjackgame.PlayersGameResults;
+import blackjack.model.blackjackgame.PlayersBlackjackResults;
 import blackjack.model.generator.CardGenerator;
 import blackjack.model.generator.RandomIndexGenerator;
 import blackjack.model.participants.Dealer;
-import blackjack.model.participants.Player;
+import blackjack.model.participants.Players;
 import blackjack.view.Command;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import blackjack.view.PlayerResultStatus;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.stream.IntStream;
 
 public class BlackJackController {
-
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackJackController(InputView inputView, OutputView outputView) {
+    public BlackJackController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
 
     public void run() {
         Dealer dealer = new Dealer();
-        List<Player> players = inputView.readPlayers();
+        Players players = inputView.readPlayers();
         CardGenerator cardGenerator = new CardGenerator(new RandomIndexGenerator());
         printDistributedInfo(dealer, players, cardGenerator);
-        printFinalScore(players, dealer, cardGenerator);
-        printWinningResults(players, dealer);
+        printParticipantsFinalScore(players, dealer, cardGenerator);
+        printParticipantsProfits(players, dealer);
     }
 
-    private void printDistributedInfo(Dealer dealer, List<Player> players, CardGenerator cardGenerator) {
+    private void printDistributedInfo(final Dealer dealer, final Players players, final CardGenerator cardGenerator) {
         distributeCards(dealer, players, cardGenerator);
         outputView.printDistributedCardsInfo(players, dealer);
     }
 
-    private void distributeCards(Dealer dealer, List<Player> players, CardGenerator cardGenerator) {
+    private void distributeCards(final Dealer dealer, final Players players, final CardGenerator cardGenerator) {
         dealer.addCards(cardGenerator.drawFirstCardsDealt());
-        players.forEach(player -> player.addCards(cardGenerator.drawFirstCardsDealt()));
+        players.distributeCards(cardGenerator);
     }
 
-    private void printFinalScore(List<Player> players, Dealer dealer, CardGenerator cardGenerator) {
+    private void printParticipantsFinalScore(final Players players, Dealer dealer, final CardGenerator cardGenerator) {
         executeMultipleTurns(players, cardGenerator);
         executeAdditionalDealerTurn(dealer, cardGenerator);
         outputView.printFinalScore(players, dealer);
     }
 
-    private void executeMultipleTurns(List<Player> players, CardGenerator cardGenerator) {
-        for (int index = 0; index < players.size(); index++) {
-            drawCardWithCommand(players, index, cardGenerator);
-        }
+    private void executeMultipleTurns(final Players players, final CardGenerator cardGenerator) {
+        IntStream.range(0, players.getSize())
+                .forEach(index -> drawCardWithCommand(players, index, cardGenerator));
     }
 
-    private void executeAdditionalDealerTurn(Dealer dealer, CardGenerator cardGenerator) {
-        if (dealer.checkCanGetMoreCard()) {
-            updateDealer(dealer, cardGenerator);
-            outputView.printDealerChange();
-        }
-    }
-
-    private void printWinningResults(List<Player> players, Dealer dealer) {
-        PlayersGameResults playersGameResults = calculatePlayersResults(players, dealer);
-        outputView.printGameResults(playersGameResults);
-    }
-
-    private void drawCardWithCommand(List<Player> players, int index, CardGenerator cardGenerator) {
-        Player player = players.get(index);
-        while (checkCanGetMoreCard(player) && inputView.readCommand(player) == Command.YES) {
-            Player findPlayer = players.get(index);
-            findPlayer.addCard(cardGenerator.drawCard());
+    private void drawCardWithCommand(final Players players, final int index, final CardGenerator cardGenerator) {
+        while (checkCanGetMoreCard(players, index) && inputView.readCommand(players.getPlayer(index)) == Command.YES) {
+            players.makePlayerDraw(index, cardGenerator);
             outputView.printPlayerCardsInfo(players, index);
         }
     }
 
-    private boolean checkCanGetMoreCard(Player player) {
-        if (!player.checkCanGetMoreCard()) {
+    private boolean checkCanGetMoreCard(final Players players, final int index) {
+        boolean result = players.canPlayerGetMoreCard(index);
+        if (!result) {
             outputView.printInvalidDrawCardState();
         }
-        return player.checkCanGetMoreCard();
+        return result;
     }
 
-    private void updateDealer(Dealer dealer, CardGenerator cardGenerator) {
-        dealer.addCard(cardGenerator.drawCard());
+    private void executeAdditionalDealerTurn(final Dealer dealer, final CardGenerator cardGenerator) {
+        if (dealer.checkCanGetMoreCard()) {
+            dealer.addCard(cardGenerator.drawCard());
+            outputView.printDealerChange();
+        }
     }
 
-    private PlayersGameResults calculatePlayersResults(List<Player> players, Dealer dealer) {
-        Map<Player, PlayerResultStatus> result = new LinkedHashMap<>();
-        players.forEach(player -> result.put(player, player.determineWinner(dealer)));
-        return new PlayersGameResults(result);
+    private void printParticipantsProfits(final Players players, final Dealer dealer) {
+        PlayersBlackjackResults playersBlackjackResults = players.calculatePlayersResults(dealer);
+        outputView.printGameResults(playersBlackjackResults);
     }
 }

@@ -1,35 +1,51 @@
 package blackjack.model.cards;
 
+import blackjack.model.blackjackgame.GameOutcomeStatus;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class Cards {
-    private static final int BOUNDARY_SCORE = 11;
-    private static final int EXTRA_SCORE = 10;
-    private static final int WINNING_SCORE = 21;
+public final class Cards {
+    private static final int SIZE_WHEN_BLACKJACK = 2;
 
-    private final List<Card> cards = new ArrayList<>();
-    private int score = 0;
+    private final List<Card> cards;
 
-    public void add(Card card) {
+    public Cards() {
+        this(List.of());
+    }
+
+    private Cards(final List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
+    }
+
+    public void add(final Card card) {
         cards.add(card);
-        score += card.getScore();
     }
 
-    public void add(List<Card> cardsToAdd) {
-        cards.addAll(cardsToAdd);
-        score += calculate(cardsToAdd);
+    public void add(final List<Card> cardsToAdd) {
+        cardsToAdd.forEach(this::add);
     }
 
-    public boolean isGreaterThanWinningScore() {
-        return score > WINNING_SCORE;
+    public boolean canAddMore() {
+        return !isBusted() && !isBlackJack();
     }
 
-    public int getCardsScore() {
-        if (hasAce() && score <= BOUNDARY_SCORE) {
-            return score + EXTRA_SCORE;
+    public Score getCardsScore() {
+        Score score = calculateScore();
+        if (hasAce()) {
+            return score.getScoreWhenHasAce();
         }
         return score;
+    }
+
+    public GameOutcomeStatus compareCardsScore(final Cards other) {
+        if (isBlackJack() && other.isBlackJack()) {
+            return GameOutcomeStatus.PUSH;
+        }
+        if (isBlackJack()) {
+            return GameOutcomeStatus.BLACKJACK;
+        }
+        return getCardsScore().getPlayerStatus(other.getCardsScore());
     }
 
     private boolean hasAce() {
@@ -37,13 +53,21 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
-    private int calculate(List<Card> cardsToAdd) {
-        return cardsToAdd.stream()
-                .mapToInt(Card::getScore)
-                .sum();
+    private boolean isBusted() {
+        return getCardsScore().isBusted();
+    }
+
+    private boolean isBlackJack() {
+        return cards.size() == SIZE_WHEN_BLACKJACK && getCardsScore().isBlackJack();
+    }
+
+    private Score calculateScore() {
+        return cards.stream()
+                .map(Card::getScore)
+                .reduce(Score.getDefaults(), Score::sum);
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 }

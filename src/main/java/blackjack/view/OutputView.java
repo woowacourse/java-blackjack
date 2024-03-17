@@ -1,10 +1,14 @@
 package blackjack.view;
 
-import blackjack.model.blackjackgame.PlayersGameResults;
+import blackjack.model.blackjackgame.PlayersBlackjackResults;
+import blackjack.model.blackjackgame.Profit;
 import blackjack.model.cards.Card;
-import blackjack.model.cards.Cards;
 import blackjack.model.participants.Dealer;
+import blackjack.model.participants.Name;
+import blackjack.model.participants.Participant;
 import blackjack.model.participants.Player;
+import blackjack.model.participants.Players;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,20 +16,21 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String DEALER_NAME = "딜러";
     private static final String MULTIPLE_OUTPUTS_DELIMITER = ", ";
+    private static final DecimalFormat DOUBLE_FORMAT = new DecimalFormat("#,###.#");
 
-    public void printDistributedCardsInfo(List<Player> players, Dealer dealer) {
+    public void printDistributedCardsInfo(final Players players, final Dealer dealer) {
         System.out.println();
-        System.out.printf(DEALER_NAME + "와 %s에게 2장을 나누었습니다.%n", getPlayersNames(players));
+        List<Player> allPlayers = players.getPlayers();
+        System.out.printf(DEALER_NAME + "와 %s에게 2장을 나누었습니다.%n", getPlayersNamesInOneLine(allPlayers));
 
-        System.out.print(getDealerCardFormat(getDealerCard(dealer)));
-        players.forEach(player ->
-                System.out.print(getParticipantCardsFormat(player.getName(), player.getCards())));
-        System.out.println();
+        Card dealerCard = getDealerCard(dealer);
+        System.out.println(getNameAndInformationFormat(DEALER_NAME, convertCardText(dealerCard)));
+        System.out.println(getPlayersCardsInOneLine(allPlayers));
     }
 
-    public void printPlayerCardsInfo(List<Player> players, int index) {
-        Player player = players.get(index);
-        System.out.print(getParticipantCardsFormat(player.getName(), player.getCards()));
+    public void printPlayerCardsInfo(final Players players, final int index) {
+        Player player = players.getPlayer(index);
+        System.out.println(getNameAndInformationFormat(getPlayerName(player), getCardsInOneLine(player)));
     }
 
     public void printDealerChange() {
@@ -33,80 +38,92 @@ public class OutputView {
         System.out.println(DEALER_NAME + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printFinalScore(List<Player> players, Dealer dealer) {
+    public void printFinalScore(final Players players, final Dealer dealer) {
         System.out.println();
-        System.out.print(getParticipantScoreFormat(DEALER_NAME, dealer.getCards(), dealer.getCards().getCardsScore()));
-        players.forEach(player -> System.out.printf(
-                getParticipantScoreFormat(player.getName(), player.getCards(),
-                        player.getCards().getCardsScore())));
+        System.out.println(getParticipantScoreFormat(DEALER_NAME, getCardsInOneLine(dealer), getScore(dealer)));
+        System.out.println(getParticipantsScoresInOneLine(players));
     }
 
-    public void printGameResults(PlayersGameResults playersGameResults) {
+    public void printGameResults(final PlayersBlackjackResults playersBlackjackResults) {
         System.out.println();
-        System.out.println("### 최종 승패");
-        Map<DealerResultStatus, Long> dealerResult = playersGameResults.getDealerResult();
-
-        System.out.printf("%s: %s%n", DEALER_NAME, getDealerResultFormat(dealerResult));
-        Map<Player, PlayerResultStatus> gameResult = playersGameResults.getResult();
-        printPlayerResultsFormat(gameResult);
+        System.out.println("### 최종 수익");
+        System.out.println(getNameAndInformationFormat(DEALER_NAME, playersBlackjackResults.calculateDealerProfit()));
+        System.out.println(getPlayerResultsInOneLine(playersBlackjackResults.getResults()));
     }
 
     public void printInvalidDrawCardState() {
         System.out.println("카드 합계가 21을 초과하였습니다. 턴을 종료합니다.");
     }
 
-    private String getDealerCardFormat(Card card) {
-        return String.format("%s: %s%n", DEALER_NAME, convertCardText(card));
-    }
-
-    private String getParticipantCardsFormat(String name, Cards cards) {
-        return String.format("%s: %s%n", name, getCardsText(cards));
-    }
-
-    private String getParticipantScoreFormat(String name, Cards cards, int score) {
-        return String.format("%s: %s - 결과: %d%n", name, getCardsText(cards), score);
-    }
-
-    private void printPlayerResultsFormat(Map<Player, PlayerResultStatus> gameResult) {
-        gameResult.entrySet()
-                .stream()
-                .map(entry -> getPlayerResultFormat(entry.getKey().getName(), entry.getValue().getResult()))
-                .forEach(System.out::print);
-    }
-
-    private String getPlayerResultFormat(String name, String result) {
-        return String.format("%s: %s%n", name, result);
-    }
-
-    private String getDealerResultFormat(Map<DealerResultStatus, Long> dealerResult) {
-        return dealerResult.entrySet()
-                .stream()
-                .map(entry -> String.format("%d%s", entry.getValue(), entry.getKey().getResult()))
-                .collect(Collectors.joining(" "));
-    }
-
-    private String getPlayersNames(List<Player> players) {
+    private String getPlayersNamesInOneLine(final List<Player> players) {
         return players.stream()
                 .map(Player::getName)
+                .map(Name::getValue)
                 .collect(Collectors.joining(MULTIPLE_OUTPUTS_DELIMITER));
     }
 
-    private Card getDealerCard(Dealer dealer) {
-        return dealer.getCards()
-                .getCards()
-                .get(0);
+    private String getPlayersCardsInOneLine(final List<Player> allPlayers) {
+        return allPlayers.stream()
+                .map(player -> getNameAndInformationFormat(getPlayerName(player), getCardsInOneLine(player)))
+                .collect(Collectors.joining(System.lineSeparator()));
     }
 
-    private String getCardsText(Cards cards) {
-        return cards.getCards()
+    private String getParticipantsScoresInOneLine(final Players players) {
+        return players.getPlayers()
+                .stream()
+                .map(player ->
+                        getParticipantScoreFormat(getPlayerName(player), getCardsInOneLine(player), getScore(player)))
+                .collect(Collectors.joining(System.lineSeparator()));
+    }
+
+    private String getPlayerResultsInOneLine(final Map<Player, Profit> results) {
+        return results.entrySet()
+                .stream()
+                .map(result -> getNameAndInformationFormat(getPlayerName(result.getKey()), result.getValue()))
+                .collect(Collectors.joining(System.lineSeparator()));
+    }
+
+    private String getCardsInOneLine(final Participant participant) {
+        return participant.getCards()
+                .getCards()
                 .stream()
                 .map(this::convertCardText)
                 .collect(Collectors.joining(MULTIPLE_OUTPUTS_DELIMITER));
     }
 
-    private String convertCardText(Card card) {
-        String cardNumberText = card.getCardNumber().getText();
-        String cardShapeText = card.getCardShape().getText();
-        return cardNumberText + cardShapeText;
+    private String getNameAndInformationFormat(final String name, final String information) {
+        return String.format("%s: %s", name, information);
+    }
+
+    private String getNameAndInformationFormat(final String name, final Profit profit) {
+        return String.format("%s: %s", name, getProfitFormat(profit));
+    }
+
+    private String getParticipantScoreFormat(final String name, final String cards, final int score) {
+        return String.format("%s: %s - 결과: %d", name, cards, score);
+    }
+
+    private String getProfitFormat(final Profit profit) {
+        return DOUBLE_FORMAT.format(profit.getValue());
+    }
+
+    private String getPlayerName(final Player player) {
+        return player.getName().getValue();
+    }
+
+    private Card getDealerCard(final Dealer dealer) {
+        return dealer.getCards()
+                .getCards()
+                .get(0);
+    }
+
+    private int getScore(final Participant participant) {
+        return participant.getCards().getCardsScore().getValue();
+    }
+
+    private String convertCardText(final Card card) {
+        CardNumberText cardNumberText = CardNumberText.from(card.getCardNumber());
+        CardShapeText cardShapeText = CardShapeText.from(card.getCardShape());
+        return cardNumberText.getText() + cardShapeText.getText();
     }
 }

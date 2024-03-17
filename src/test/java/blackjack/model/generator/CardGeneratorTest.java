@@ -17,8 +17,8 @@ class CardGeneratorTest {
         CardGenerator cardGenerator = new CardGenerator(indexGenerator);
 
         Card card = cardGenerator.drawCard();
-        assertThat(card.getCardNumber()).isEqualTo(CardNumber.ACE);
-        assertThat(card.getCardShape()).isEqualTo(CardShape.SPADE);
+        assertThat(card.getCardNumber()).isEqualTo(CardNumber.TWO);
+        assertThat(card.getCardShape()).isEqualTo(CardShape.DIAMOND);
     }
 
     @DisplayName("카드 여러장을 발급한다")

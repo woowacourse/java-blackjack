@@ -1,48 +1,39 @@
 package blackjack.model.cards;
 
-import java.util.Arrays;
-
 public enum CardNumber {
-    ACE(1, 1, "A"),
-    TWO(2, 2, "2"),
-    THREE(3, 3, "3"),
-    FOUR(4, 4, "4"),
-    FIVE(5, 5, "5"),
-    SIX(6, 6, "6"),
-    SEVEN(7, 7, "7"),
-    EIGHT(8, 8, "8"),
-    NINE(9, 9, "9"),
-    TEN(10, 10, "10"),
-    JACK(11, 10, "J"),
-    QUEEN(12, 10, "Q"),
-    KING(13, 10, "K");
+    ACE(1),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+    EIGHT(8),
+    NINE(9),
+    TEN(10),
+    JACK(10),
+    QUEEN(10),
+    KING(10);
 
-    private final int numberOfCard;
-    private final int score;
-    private final String text;
+    private final Score score;
 
-    CardNumber(int numberOfCard, int score, String text) {
-        this.numberOfCard = numberOfCard;
-        this.score = score;
-        this.text = text;
+    CardNumber(final int score) {
+        this(new Score(score));
     }
 
-    public static CardNumber generate(int number) {
-        return Arrays.stream(values())
-                .filter(cardNumber -> cardNumber.numberOfCard == number)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("카드숫자를 고르는 숫자가 올바르지 않습니다."));
+    CardNumber(final Score score) {
+        this.score = score;
+    }
+
+    public static CardNumber generate(final int index) {
+        return values()[index];
     }
 
     public boolean isAce() {
         return ACE.equals(this);
     }
 
-    public int getScore() {
+    public Score getScore() {
         return score;
-    }
-
-    public String getText() {
-        return text;
     }
 }
