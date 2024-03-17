@@ -19,7 +19,7 @@ public class PlayerBets {
         return new PlayerProfits(playerBets.keySet().stream()
                 .collect(Collectors.toMap(
                         player -> player,
-                        player -> (calculatePlayerProfit(player, dealer)))));
+                        player -> calculatePlayerProfit(player, dealer))));
     }
 
     private Profit calculatePlayerProfit(Player player, Dealer dealer) {
