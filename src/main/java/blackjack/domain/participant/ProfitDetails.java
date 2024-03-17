@@ -11,7 +11,7 @@ public class ProfitDetails {
 
     public Profit calculateDealerProfit() {
         return profitDetails.values().stream()
-                .reduce(Profit.from(0), Profit::add)
+                .reduce(new Profit(0), Profit::add)
                 .inverse();
     }
 
