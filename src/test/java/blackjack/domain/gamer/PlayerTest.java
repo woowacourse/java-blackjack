@@ -15,7 +15,7 @@ class PlayerTest {
     void checkIsEqualOrLessThanMaxValue() {
         final Card card1 = new Card(Number.ACE, Suit.DIAMOND);
         final Card card2 = new Card(Number.TEN, Suit.CLUB);
-        final Player player = Player.of("pobi", 10000);
+        final Player player = new Player("pobi", 10000);
         player.draw(card1);
         player.draw(card2);
 
@@ -30,7 +30,7 @@ class PlayerTest {
         final Card card1 = new Card(Number.TEN, Suit.DIAMOND);
         final Card card2 = new Card(Number.TEN, Suit.CLUB);
         final Card card3 = new Card(Number.TWO, Suit.CLUB);
-        final Player player = Player.of("pobi", 10000);
+        final Player player = new Player("pobi", 10000);
         player.draw(card1);
         player.draw(card2);
         player.draw(card3);

@@ -7,13 +7,9 @@ public class Player extends Gamer {
     private final Name name;
     private final BetAmount betAmount;
 
-    private Player(Name name, BetAmount betAmount) {
-        this.name = name;
-        this.betAmount = betAmount;
-    }
-
-    public static Player of(String name, long betAmount) {
-        return new Player(new Name(name), new BetAmount(betAmount));
+    public Player(final String name, final long betAmount) {
+        this.name = new Name(name);
+        this.betAmount = new BetAmount(betAmount);
     }
 
     @Override

@@ -38,9 +38,9 @@ class GameBoardTest {
         final Deck deck = new Deck(new TestDeckFactory(cards));
 
         final Players players = new Players(List.of(
-                Player.of("pobi", 10000),
-                Player.of("jason", 20000),
-                Player.of("nyangin", 30000))
+                new Player("pobi", 10000),
+                new Player("jason", 20000),
+                new Player("nyangin", 30000))
         );
         final Dealer dealer = new Dealer();
         final Gamers gamers = new Gamers(dealer, players);
@@ -75,9 +75,9 @@ class GameBoardTest {
         final Deck deck = new Deck(new TestDeckFactory(cards));
 
         final Players players = new Players(List.of(
-                Player.of("pobi", 10000),
-                Player.of("jason", 20000),
-                Player.of("nyangin", 30000))
+                new Player("pobi", 10000),
+                new Player("jason", 20000),
+                new Player("nyangin", 30000))
         );
         final Dealer dealer = new Dealer();
         final Gamers gamers = new Gamers(dealer, players);

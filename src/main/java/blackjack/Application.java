@@ -40,7 +40,7 @@ public class Application {
 
     private static List<Player> preparePlayers(List<String> playerNames) {
         return playerNames.stream()
-                .map(name -> Player.of(name, InputView.readPlayerBetAmount(name)))
+                .map(name -> new Player(name, InputView.readPlayerBetAmount(name)))
                 .toList();
     }
 

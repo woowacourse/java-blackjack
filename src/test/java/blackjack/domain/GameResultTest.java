@@ -32,7 +32,7 @@ class GameResultTest {
 
         final Dealer dealer = new Dealer();
         final Players players = new Players(List.of(
-                Player.of("pobi", 10000)
+                new Player("pobi", 10000)
         ));
         final Gamers gamers = new Gamers(dealer, players);
 
@@ -59,7 +59,7 @@ class GameResultTest {
 
         final Dealer dealer = new Dealer();
         final Players players = new Players(List.of(
-                Player.of("pobi", 10000)
+                new Player("pobi", 10000)
         ));
 
         final Gamers gamers = new Gamers(dealer, players);
@@ -87,7 +87,7 @@ class GameResultTest {
 
         final Dealer dealer = new Dealer();
         final Players players = new Players(List.of(
-                Player.of("pobi", 10000)
+                new Player("pobi", 10000)
         ));
         final Gamers gamers = new Gamers(dealer, players);
 
@@ -114,7 +114,7 @@ class GameResultTest {
 
         final Dealer dealer = new Dealer();
         final Players players = new Players(List.of(
-                Player.of("pobi", 10000)
+                new Player("pobi", 10000)
         ));
         final Gamers gamers = new Gamers(dealer, players);
 
@@ -141,7 +141,7 @@ class GameResultTest {
 
         final Dealer dealer = new Dealer();
         final Players players = new Players(List.of(
-                Player.of("pobi", 10000)
+                new Player("pobi", 10000)
         ));
         final Gamers gamers = new Gamers(dealer, players);
 
@@ -168,7 +168,7 @@ class GameResultTest {
 
         final Dealer dealer = new Dealer();
         final Players players = new Players(List.of(
-                Player.of("pobi", 10000)
+                new Player("pobi", 10000)
         ));
         final Gamers gamers = new Gamers(dealer, players);
 
@@ -195,7 +195,7 @@ class GameResultTest {
 
         final Dealer dealer = new Dealer();
         final Players players = new Players(List.of(
-                Player.of("pobi", 10000)
+                new Player("pobi", 10000)
         ));
         final Gamers gamers = new Gamers(dealer, players);
 
@@ -222,7 +222,7 @@ class GameResultTest {
 
         final Dealer dealer = new Dealer();
         final Players players = new Players(List.of(
-                Player.of("pobi", 10000)
+                new Player("pobi", 10000)
         ));
         final Gamers gamers = new Gamers(dealer, players);
 
@@ -249,7 +249,7 @@ class GameResultTest {
 
         final Dealer dealer = new Dealer();
         final Players players = new Players(List.of(
-                Player.of("pobi", 10000)
+                new Player("pobi", 10000)
         ));
         final Gamers gamers = new Gamers(dealer, players);
 
@@ -282,10 +282,10 @@ class GameResultTest {
 
         final Dealer dealer = new Dealer();
         final Players players = new Players(List.of(
-                Player.of("pobi", 10000),
-                Player.of("jason", 20000),
-                Player.of("nyang", 30000),
-                Player.of("in", 40000)
+                new Player("pobi", 10000),
+                new Player("jason", 20000),
+                new Player("nyang", 30000),
+                new Player("in", 40000)
                 ));
         final Gamers gamers = new Gamers(dealer, players);
 
@@ -320,7 +320,7 @@ class GameResultTest {
 
         final Dealer dealer = new Dealer();
         final Players players = new Players(List.of(
-                Player.of("pobi", 10000)));
+                new Player("pobi", 10000)));
         final Gamers gamers = new Gamers(dealer, players);
 
         final GameBoard gameBoard = new GameBoard(deck, gamers);

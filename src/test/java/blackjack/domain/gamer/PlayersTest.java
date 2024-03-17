@@ -13,9 +13,9 @@ class PlayersTest {
     @Test
     void occurExceptionIfPlayerNameIsDuplicated() {
         assertThatThrownBy(() -> new Players(List.of(
-                    Player.of("pobi", 10000),
-                    Player.of("pobi", 20000),
-                    Player.of("jason", 30000)
+                new Player("pobi", 10000),
+                new Player("pobi", 20000),
+                new Player("jason", 30000)
                 )))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(Players.ERROR_PLAYER_NAME_DUPLICATED);
@@ -33,8 +33,8 @@ class PlayersTest {
     @Test
     void findPlayerByName() {
         final Players players = new Players(List.of(
-                Player.of("pobi", 10000),
-                Player.of("jason", 20000)
+                new Player("pobi", 10000),
+                new Player("jason", 20000)
         ));
 
         final Player actual = players.findByName(new Name("pobi"));
