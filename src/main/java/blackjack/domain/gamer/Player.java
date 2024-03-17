@@ -1,8 +1,8 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.supplies.Card;
-import blackjack.domain.supplies.Chip;
-import blackjack.domain.supplies.Hand;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
+import blackjack.domain.money.Chip;
 
 import java.util.List;
 
@@ -38,22 +38,30 @@ public class Player {
     }
 
     public boolean isOnlyDeal() {
-        return gamer.getCards().size() == ONLY_DEAL_CARD_COUNT;
+        return gamer.cards().size() == ONLY_DEAL_CARD_COUNT;
     }
 
-    public String getName() {
+    public void addProfit(Long profit) {
+        gamer.addProfit(profit);
+    }
+
+    public String name() {
         return name.name();
     }
 
-    public List<Card> getCards() {
-        return gamer.getCards();
+    public List<Card> cards() {
+        return gamer.cards();
     }
 
-    public int getScore() {
-        return gamer.getScore();
+    public int score() {
+        return gamer.score();
     }
 
-    public int getChip() {
-        return gamer.getChip();
+    public int bettingMoney() {
+        return gamer.betting();
+    }
+
+    public Long profit() {
+        return gamer.profit();
     }
 }

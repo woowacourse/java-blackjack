@@ -1,14 +1,16 @@
 package blackjack.controller;
 
-import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.card.Deck;
+import blackjack.domain.game.DeckMachine;
+import blackjack.domain.game.PlayerResult;
 import blackjack.domain.game.Referee;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Names;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.domain.supplies.Chip;
-import blackjack.domain.supplies.Deck;
+import blackjack.domain.money.Chip;
+import blackjack.domain.money.ProfitCalculator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayerCommand;
@@ -20,7 +22,7 @@ import java.util.stream.IntStream;
 public class BlackjackController {
 
     public void run() {
-        BlackjackGame blackjackGame = new BlackjackGame(Deck.make());
+        DeckMachine deckMachine = new DeckMachine(Deck.make());
         Dealer dealer = new Dealer(new Chip(0));
         Names names = new Names(InputView.readPlayersName());
 
@@ -31,48 +33,56 @@ public class BlackjackController {
         }
         Players players = new Players(makePlayers);
 
-        dealAndPrintResult(blackjackGame, dealer, players);
+        dealAndPrintResult(deckMachine, dealer, players);
 
-        askToPlayersHit(players, blackjackGame);
-        drawToDealer(dealer, blackjackGame);
+        askToPlayersHit(players, deckMachine);
+        drawToDealer(dealer, deckMachine);
         printAllPlayersHandResult(dealer, players);
 
-        calculateGameResultAndPrint(dealer, players);
+        calculateGameResult(dealer, players);
+
+        // TODO: 점수계산
+        OutputView.printFinalProfitAnnounce();
+        OutputView.printDealerProfit(dealer.profit());
+
+        for (Player player : players.getPlayers()) {
+            OutputView.printPlayerProfit(player.name(), player.profit());
+        }
     }
 
-    private void dealAndPrintResult(BlackjackGame blackjackGame, Dealer dealer, Players players) {
-        blackjackGame.deal(dealer, players);
+    private void dealAndPrintResult(DeckMachine deckMachine, Dealer dealer, Players players) {
+        deckMachine.deal(dealer, players);
 
         OutputView.printDealAnnounce(players.getNames());
         OutputView.printDealerDealCard(dealer.findPublicDealCard());
 
         for (Player player : players.getPlayers()) {
-            OutputView.printDealCards(player.getName(), player.getCards());
+            OutputView.printDealCards(player.name(), player.cards());
         }
     }
 
-    private void askToPlayersHit(Players players, BlackjackGame blackjackGame) {
+    private void askToPlayersHit(Players players, DeckMachine deckMachine) {
         for (Player player : players.getPlayers()) {
-            processHitOrStand(player, blackjackGame);
+            processHitOrStand(player, deckMachine);
         }
     }
 
-    private void processHitOrStand(Player player, BlackjackGame blackjackGame) {
+    private void processHitOrStand(Player player, DeckMachine deckMachine) {
         if (player.isBlackjack()) {
             return;
         }
 
         boolean isRun = true;
         while (isRun) {
-            PlayerCommand command = PlayerCommand.from(InputView.readPlayerCommand(player.getName()));
-            hitOrStandAndPrint(blackjackGame, player, command);
-            isRun = isRun(blackjackGame, player, command);
+            PlayerCommand command = PlayerCommand.from(InputView.readPlayerCommand(player.name()));
+            hitOrStandAndPrint(deckMachine, player, command);
+            isRun = isRun(deckMachine, player, command);
         }
     }
 
-    private void hitOrStandAndPrint(BlackjackGame blackjackGame, Player player, PlayerCommand command) {
+    private void hitOrStandAndPrint(DeckMachine deckMachine, Player player, PlayerCommand command) {
         if (command == PlayerCommand.HIT) {
-            blackjackGame.hit(player);
+            deckMachine.hit(player);
             printCardsWhenHit(player);
         }
         if (command == PlayerCommand.STAND) {
@@ -81,37 +91,44 @@ public class BlackjackController {
     }
 
     private void printCardsWhenHit(Player player) {
-        OutputView.printDealCards(player.getName(), player.getCards());
+        OutputView.printDealCards(player.name(), player.cards());
     }
 
     private void printCardsWhenStand(Player player) {
         if (player.isOnlyDeal()) {
-            OutputView.printDealCards(player.getName(), player.getCards());
+            OutputView.printDealCards(player.name(), player.cards());
         }
     }
 
-    private boolean isRun(BlackjackGame blackjackGame, Player player, PlayerCommand command) {
+    private boolean isRun(DeckMachine deckMachine, Player player, PlayerCommand command) {
         if (command == PlayerCommand.STAND) {
             return false;
         }
-        return blackjackGame.isPlayerCanHit(player);
+        return deckMachine.isPlayerCanHit(player);
     }
 
-    private void drawToDealer(Dealer dealer, BlackjackGame blackjackGame) {
-        int count = blackjackGame.drawUntilOverBoundWithCount(dealer);
+    private void drawToDealer(Dealer dealer, DeckMachine deckMachine) {
+        int count = deckMachine.drawUntilOverBoundWithCount(dealer);
         IntStream.range(0, count).forEach(i -> OutputView.printDealerHitAnnounce());
     }
 
     private void printAllPlayersHandResult(Dealer dealer, Players players) {
-        OutputView.printDealerCards(dealer.getCards(), dealer.getScore());
+        OutputView.printDealerCards(dealer.cards(), dealer.score());
 
         for (Player player : players.getPlayers()) {
-            OutputView.printPlayerCards(player.getName(), player.getCards(), player.getScore());
+            OutputView.printPlayerCards(player.name(), player.cards(), player.score());
         }
     }
 
-    private void calculateGameResultAndPrint(Dealer dealer, Players players) {
+    private void calculateGameResult(Dealer dealer, Players players) {
         Referee referee = new Referee();
-        //referee.calculatePlayersResults(players, dealer);
+        ProfitCalculator calculator = new ProfitCalculator();
+
+        for (Player player : players.getPlayers()) {
+            PlayerResult result = referee.judgePlayerResult(dealer, player);
+            calculator.playerProfit(player, result);
+        }
+
+        calculator.dealerProfit(dealer, players);
     }
 }

@@ -1,13 +1,12 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.supplies.Card;
-import blackjack.domain.supplies.Chip;
-import blackjack.domain.supplies.Hand;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
+import blackjack.domain.money.Chip;
 
 import java.util.List;
 
 public class Gamer {
-    private static final int BLACKJACK_CARDS_COUNT = 2;
 
     private final Hand hand;
     private final Chip chip;
@@ -37,19 +36,27 @@ public class Gamer {
         return hand.isMaxScore();
     }
 
-    public int getScore() {
+    public void addProfit(Long profit) {
+        chip.addProfit(profit);
+    }
+
+    public int score() {
         return hand.score().toInt();
     }
 
-    public Card getCardAt(int index) {
-        return hand.getMyCardAt(index);
+    public Card cardAt(int index) {
+        return hand.myCardAt(index);
     }
 
-    public List<Card> getCards() {
-        return hand.getMyCards();
+    public List<Card> cards() {
+        return hand.myCards();
     }
 
-    public int getChip() {
-        return chip.getChip();
+    public int betting() {
+        return chip.betting();
+    }
+
+    public Long profit() {
+        return chip.profit();
     }
 }
