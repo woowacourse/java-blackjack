@@ -4,11 +4,18 @@ import java.util.Objects;
 
 public class Name {
     private static final String DEALER_NAME = "딜러";
-    
+
     private final String name;
 
     public Name(final String name) {
+        validate(name);
         this.name = name;
+    }
+
+    private void validate(final String name) {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("빈 이름은 사용할 수 없습니다.");
+        }
     }
 
     public boolean isDealerName() {
