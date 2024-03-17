@@ -46,7 +46,7 @@ public class BlackJackController {
     }
 
     private void runBlackJackGame(Players players, CardDeck cardDeck, Dealer dealer) {
-        outputView.printInitCardStatus(players, dealer.getFirstCard(), dealer.getName());
+        outputView.printInitCardStatus(players, dealer.getFirstCard());
 
         for (Player player : players.getPlayers()) {
             playGame(player, cardDeck);
@@ -54,7 +54,7 @@ public class BlackJackController {
 
         dealer.playGame(cardDeck);
 
-        outputView.printExtraCardInfo(dealer.getCards(), dealer.getName());
+        outputView.printExtraCardInfo(dealer.getCards());
         outputView.printDealerHand(dealer);
         outputView.printPlayerHand(players);
     }
@@ -75,7 +75,7 @@ public class BlackJackController {
             playerResult.put(player.getName(), gameResult.profitMoney(player.getBetMoney()));
         }
 
-        outputView.printBlackJackResult(playerResult, dealer.getName());
+        outputView.printBlackJackResult(playerResult);
     }
 
     private boolean isHit(Player player) {
