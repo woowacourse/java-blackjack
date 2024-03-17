@@ -16,7 +16,6 @@ public class NameTest {
     void validNameTest() {
         assertThatCode(() -> new Name("pond"))
                 .doesNotThrowAnyException();
-        ;
     }
 
     private static Stream<Arguments> invalidNamesAndReason() {
