@@ -35,21 +35,17 @@ public class MessageResolver {
                 .collect(Collectors.joining(SEPARATOR));
     }
 
-    public String resolveDealToDealerMessage(Dealer dealer) {
-        return String.format(HAND_FORMAT, DEALER_NAME, resolveHandMessage(dealer.revealHand()));
+    public String resolveDealerHandAfterDealMessage(Dealer dealer) {
+        return String.format(HAND_FORMAT, DEALER_NAME, resolveCardMessage(dealer.revealFirstCard()));
     }
 
-    public String resolveDealToPlayersMessage(Players players) {
+    public String resolvePlayersHandMessage(Players players) {
         return players.getPlayers().stream()
-                .map(this::resolveDealToPlayerMessage)
+                .map(this::resolvePlayerHandMessage)
                 .collect(Collectors.joining(LINE_SEPARATOR));
     }
 
-    private String resolveDealToPlayerMessage(Player player) {
-        return String.format(HAND_FORMAT, player.getName().value(), resolveHandMessage(player.revealHand()));
-    }
-
-    public String resolveDrawToPlayerMessage(Player player) {
+    public String resolvePlayerHandMessage(Player player) {
         return String.format(HAND_FORMAT, player.getName().value(), resolveHandMessage(player.getHand()));
     }
 
@@ -70,11 +66,11 @@ public class MessageResolver {
     }
 
     public String resolveDealerHandScoreMessage(Dealer dealer) {
-        String message = String.format(HAND_SCORE_FORMAT, resolveDrawToDealerMessage(dealer), dealer.handScore().getValue());
+        String message = String.format(HAND_SCORE_FORMAT, resolveDealerHandMessage(dealer), dealer.handScore().getValue());
         return String.join("", LINE_SEPARATOR, message);
     }
 
-    private String resolveDrawToDealerMessage(Dealer dealer) {
+    private String resolveDealerHandMessage(Dealer dealer) {
         return String.format(HAND_FORMAT, DEALER_NAME, resolveHandMessage(dealer.getHand()));
     }
 
@@ -85,7 +81,7 @@ public class MessageResolver {
     }
 
     private String resolvePlayerHandScoreMessage(Player player) {
-        return String.format(HAND_SCORE_FORMAT, resolveDrawToPlayerMessage(player), player.handScore().getValue());
+        return String.format(HAND_SCORE_FORMAT, resolvePlayerHandMessage(player), player.handScore().getValue());
     }
 
     public String resolveProfitDescriptionMessage() {

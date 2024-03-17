@@ -15,12 +15,12 @@ public class OutputView {
 
     public void printDealToAll(Dealer dealer, Players players) {
         System.out.println(messageResolver.resolveDealDescriptionMessage(players));
-        System.out.println(messageResolver.resolveDealToDealerMessage(dealer));
-        System.out.println(messageResolver.resolveDealToPlayersMessage(players));
+        System.out.println(messageResolver.resolveDealerHandAfterDealMessage(dealer));
+        System.out.println(messageResolver.resolvePlayersHandMessage(players));
     }
 
     public void printDrawToPlayer(Player player) {
-        System.out.println(messageResolver.resolveDrawToPlayerMessage(player));
+        System.out.println(messageResolver.resolvePlayerHandMessage(player));
     }
 
     public void printDrawToDealer() {

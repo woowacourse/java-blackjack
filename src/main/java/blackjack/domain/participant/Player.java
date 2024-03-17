@@ -23,10 +23,6 @@ public class Player {
         hand.appendInitial(cardDeck);
     }
 
-    public Hand revealHand() {
-        return hand.revealHand(REVEAL_COUNT);
-    }
-
     public void draw(CardDeck cardDeck) {
         if (canHit()) {
             hand.append(cardDeck.popCard());
