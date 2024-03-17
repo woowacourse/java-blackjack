@@ -7,12 +7,9 @@ import blackjack.domain.player.BettingAmount;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.GamePlayer;
 import blackjack.domain.player.Name;
+import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import blackjack.domain.player.Profit;
-import blackjack.domain.result.Result;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.IntStream;
 
 public class Blackjack {
@@ -30,12 +27,11 @@ public class Blackjack {
         return new Players(dealer, gamePlayers);
     }
 
+    public void drawCard(Player player) {
+        player.drawCard(deck.draw());
+    }
+
     private Cards drawTwo() {
         return new Cards(List.of(deck.draw(), deck.draw()));
     }
-
-    public Card draw() {
-        return deck.draw();
-    }
-
 }

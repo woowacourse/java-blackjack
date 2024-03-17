@@ -41,8 +41,7 @@ public class BlackjackController {
 
     private void processGamePlayer(GamePlayer gamePlayer) {
         while (gamePlayer.isReceivable() && isHit(gamePlayer)) {
-            Card card = blackjack.draw();
-            gamePlayer.drawCard(card);
+            blackjack.drawCard(gamePlayer);
             PlayerView.printPlayerOpenCards(gamePlayer);
         }
     }
@@ -54,9 +53,8 @@ public class BlackjackController {
 
     private void processDealer(Dealer dealer) {
         while (dealer.isReceivable()) {
+            blackjack.drawCard(dealer);
             PlayerView.printDealerDrawMessage();
-            Card card = blackjack.draw();
-            dealer.drawCard(card);
         }
         PlayerView.printDealerNotDrawMessage();
     }
