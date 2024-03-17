@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 public class CardDeck {
 
     private static final int DECK_TOP_POSITION = 0;
+    private static final int DECK_COUNT = 6;
     private final List<Card> deck;
 
     public CardDeck() {
@@ -18,7 +19,7 @@ public class CardDeck {
 
     private List<Card> readySixDeck() {
         List<Card> sixDeck = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < DECK_COUNT; i++) {
             sixDeck.addAll(readyCards());
         }
         return sixDeck;

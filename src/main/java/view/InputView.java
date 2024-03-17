@@ -1,6 +1,7 @@
 package view;
 
 import domain.gamer.Name;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,12 +21,27 @@ public class InputView {
     }
 
     public boolean inputPlayerCommand(Name name) {
-        System.out.println(
-                name.getValue() + "는 한장의 카드를 더 받겠습니까?(예는 " + GameCommand.GET_CARD.command + ", 아니오는 "
-                        + GameCommand.REFUSE_CARD.command
-                        + ")");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(name.getValue())
+                .append("는 한장의 카드를 더 받겠습니까?(예는 ")
+                .append(GameCommand.HIT.command)
+                .append(", 아니오는 ")
+                .append(GameCommand.STAY.command)
+                .append(")");
+        System.out.println(stringBuilder.toString());
         String inputCommand = scanner.nextLine();
 
         return GameCommand.isGetCardCommand(inputCommand);
+    }
+
+    public List<Integer> inputMoney(List<String> playersName) {
+        List<Integer> moneys = new ArrayList<>();
+        for (String playerName : playersName) {
+            System.out.println(playerName + "의 배팅 금액은?");
+            String inputMoney = scanner.nextLine();
+            moneys.add(Integer.parseInt(inputMoney));
+        }
+
+        return moneys;
     }
 }

@@ -4,10 +4,12 @@ import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.Players;
 import domain.gamer.PlayersCreator;
+import domain.gamer.Referee;
 import dto.AllPlayerResultDto;
 import dto.DealerResultDto;
 import dto.InitCardDto;
 import dto.PlayerCardStateDto;
+import java.util.List;
 import view.InputView;
 import view.OutputView;
 
@@ -22,7 +24,9 @@ public class BlackJackController {
     }
 
     public void run() {
-        Players players = new PlayersCreator().create(inputView.inputPlayerNames());
+        List<String> inputPlayerNames = inputView.inputPlayerNames();
+        List<Integer> inputMoneys = inputView.inputMoney(inputPlayerNames);
+        Players players = new PlayersCreator().create(inputPlayerNames, inputMoneys);
         Dealer dealer = new Dealer();
 
         players.initCard(dealer);
@@ -45,14 +49,15 @@ public class BlackJackController {
 
     private void playTurn(Player player, Dealer dealer) {
         while (player.isDrawable() && inputView.inputPlayerCommand(player.getName())) {
-            player.receiveCard(dealer.dealCard());
+            player.receiveCard();
             outputView.printCardsStatus(PlayerCardStateDto.makePlayerCardState(player));
         }
     }
 
     private void showResult(Players players, Dealer dealer) {
+        Referee referee = new Referee();
         outputView.printDealerScore(DealerResultDto.makeDealerResultDto(dealer));
         outputView.printPlayersScore(AllPlayerResultDto.makeAllPlayerResultDto(players));
-        outputView.printResult(players.getResult(dealer.getMaxGameScore()));
+        outputView.printResult(players.makeResult(dealer, referee));
     }
 }

@@ -15,8 +15,8 @@ public class PlayerTest {
     @BeforeEach
     void setUp() {
         Name name = new Name("pola");
-
-        player = new Player(name);
+        Money money = new Money(10000);
+        player = new Player(name, money);
     }
 
     @DisplayName("Player가 들고 있는 카드가 최고점을 넘을경우 0을 return한다.")
