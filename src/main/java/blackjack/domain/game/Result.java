@@ -43,8 +43,4 @@ public class Result {
     public PlayerState getPlayerState(Player player) {
         return resultMap.get(player);
     }
-
-    public double getMultiple(Player player) {
-        return getPlayerState(player).getMultiple();
-    }
 }
