@@ -17,7 +17,7 @@ class BettingTest {
 
     @DisplayName("베팅 금액이 5000원 미만, 500000원 초과면 예외를 던진다.")
     @ParameterizedTest
-    @ValueSource(strings = {"4999", "500001"})
+    @ValueSource(strings = {"4000", "501000"})
     void invalidMoneyRangeTest(String money) {
         //given
         Player player = new Player(new Name("pobi"));
@@ -26,6 +26,20 @@ class BettingTest {
         assertThatThrownBy(() -> new Betting(Map.of(player, money)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("베팅 금액은 5000원 이상, 500000원 이하만 가능합니다.");
+    }
+
+    @DisplayName("베팅 금액이 1000원 단위가 아니면 예외를 던진다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"10010", "5001.123"})
+    void invalidMoneyUnitTest() {
+        //given
+        Player player = new Player(new Name("pobi"));
+        String money = "10100";
+
+        //then
+        assertThatThrownBy(() -> new Betting(Map.of(player, money)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("베팅 금액은 1000원 단위로 베팅 가능합니다.");
     }
 
     @DisplayName("게임 결과가 주어지면, 플레이어의 수익을 구한다.")
