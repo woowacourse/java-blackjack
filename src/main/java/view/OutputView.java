@@ -76,8 +76,8 @@ public class OutputView {
     }
 
     private String cardToString(Card card) {
-        String denomination = denominationToString(card.getDenomination());
-        String suit = suitToString(card.getSuit());
+        String denomination = denominationToString(card.denomination());
+        String suit = suitToString(card.suit());
         return denomination + suit;
     }
 

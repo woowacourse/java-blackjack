@@ -33,7 +33,7 @@ public class Participants {
 
         if (!duplicates.isEmpty()) {
             String duplicatedName = duplicates.stream()
-                    .map(user -> user.getName().getName())
+                    .map(user -> user.name().getName())
                     .collect(Collectors.joining(","));
             throw new IllegalArgumentException
                     ("중복된 이름(" + duplicatedName + ")가 있습니다, 참가자들의 이름은 중복되면 안됩니다.");
@@ -56,22 +56,20 @@ public class Participants {
 
     public List<Name> findParticipantsName() {
         return participants.stream()
-                .map(Participant::getName).toList();
+                .map(Participant::name).toList();
     }
 
     public Map<Name, Cards> matchParticipantNameAndCards() {
         return participants.stream()
                 .collect(toMap(
-                        Participant::getName,
-                        User::getCards
-                ));
+                        Participant::name,
+                        User::cards));
     }
 
     public Map<Name, Integer> matchNameAndRevenues(Dealer dealer) {
         return participants.stream()
                 .collect(toMap(
-                        Participant::getName,
-                        participant -> participant.calculateRevenue(dealer)
-                ));
+                        Participant::name,
+                        participant -> participant.calculateRevenue(dealer)));
     }
 }

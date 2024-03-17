@@ -19,7 +19,7 @@ public class ParticipantProfile {
         return gameMoney.calculateRevenue(outcome, blackJackState);
     }
 
-    public Name getName() {
+    public Name name() {
         return name;
     }
 

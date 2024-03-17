@@ -19,9 +19,9 @@ public class Participant extends User {
 
     public void offerCard(Predicate<Name> inputForMoreCard,
                           BiConsumer<Name, Cards> printParticipantsCard, Supplier<Card> selectCard) {
-        while (isHit() && inputForMoreCard.test(profile.getName())) {
+        while (isHit() && inputForMoreCard.test(profile.name())) {
             addCard(selectCard.get());
-            printParticipantsCard.accept(profile.getName(), getCards());
+            printParticipantsCard.accept(profile.name(), cards());
         }
     }
 
@@ -50,8 +50,8 @@ public class Participant extends User {
         return Outcome.DRAW;
     }
 
-    public Name getName() {
-        return profile.getName();
+    public Name name() {
+        return profile.name();
     }
 
     @Override

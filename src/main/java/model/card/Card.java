@@ -40,11 +40,11 @@ public class Card {
         return denomination.maximumNumber() - denomination.minimumNumber();
     }
 
-    public Suit getSuit() {
+    public Suit suit() {
         return suit;
     }
 
-    public Denomination getDenomination() {
+    public Denomination denomination() {
         return denomination;
     }
 

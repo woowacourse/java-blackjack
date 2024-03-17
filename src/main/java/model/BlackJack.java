@@ -12,7 +12,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
 public class BlackJack {
-
     private final Participants participants;
     private final Dealer dealer;
     private final CardDeck cardDeck;
@@ -72,6 +71,6 @@ public class BlackJack {
     }
 
     public Cards findDealerCards() {
-        return dealer.getCards();
+        return dealer.cards();
     }
 }

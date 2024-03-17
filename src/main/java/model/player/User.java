@@ -31,7 +31,7 @@ public abstract class User {
         return cards.isHit();
     }
 
-    public Cards getCards() {
+    public Cards cards() {
         return cards;
     }
 }
