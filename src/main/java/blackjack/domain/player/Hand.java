@@ -46,4 +46,8 @@ public class Hand {
     public boolean hasExactlyTwoCards() {
         return cards.size() == 2;
     }
+
+    Card firstCard() {
+        return cards.get(0);
+    }
 }

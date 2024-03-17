@@ -46,4 +46,16 @@ public class HandTest {
 
         assertThat(sum).isEqualTo(21);
     }
+
+    @Test
+    void 첫_번째_카드를_반환한다() {
+        Hand hand = new Hand();
+        hand.add(new Card(ACE, SPADE));
+        hand.add(new Card(KING, SPADE));
+
+        Card firstCard = hand.firstCard();
+
+        assertThat(firstCard.getNumber()).isEqualTo(ACE);
+        assertThat(firstCard.getShape()).isEqualTo(SPADE);
+    }
 }

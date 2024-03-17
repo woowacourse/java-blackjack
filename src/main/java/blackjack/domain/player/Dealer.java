@@ -19,7 +19,7 @@ public class Dealer extends Participant {
 
     public Card getFirstCard() {
         try {
-            return hand.getAllCards().get(0);
+            return hand.firstCard();
         } catch (IndexOutOfBoundsException e) {
             throw new RuntimeException("[ERROR] 딜러가 카드를 갖고 있지 않습니다.");
         }
