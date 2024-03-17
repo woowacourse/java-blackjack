@@ -3,7 +3,6 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.Hand;
 import fixture.CardFixture;
 import fixture.HandFixture;
 import org.junit.jupiter.api.DisplayName;

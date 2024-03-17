@@ -1,6 +1,6 @@
 package blackjack.view.mapper;
 
-import blackjack.domain.game.Result;
+import blackjack.domain.profit.Result;
 import java.util.Arrays;
 
 public enum ResultStateMapper {

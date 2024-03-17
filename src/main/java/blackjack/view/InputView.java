@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.game.DrawDecision;
+import blackjack.domain.participant.DrawDecision;
 import blackjack.domain.participant.PlayerName;
 import blackjack.view.mapper.DrawDecisionMapper;
 import java.util.Arrays;
