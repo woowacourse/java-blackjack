@@ -62,13 +62,16 @@ public class Controller {
     }
 
     private void hitOrStand(Dealer dealer, Player player) {
+        if (player.isBlackjack()) {
+            OutputView.printPlayerBlackjack(player.getName());
+            return;
+        }
         while (player.canHit() && InputView.readHitOrStand(player)) {
             player.putCard(dealer.draw());
             OutputView.printTotalHand(player);
         }
-
-        if (!player.canHit()) {
-            OutputView.printBust();
+        if (player.isBust()) {
+            OutputView.printBust(player.getName());
         }
     }
 }

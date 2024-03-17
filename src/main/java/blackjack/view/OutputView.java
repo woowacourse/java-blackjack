@@ -35,8 +35,12 @@ public class OutputView {
         System.out.print(playerResultsMessageBuilder(playerResults));
     }
 
-    public static void printBust() {
-        System.out.println("버스트 되었습니다.");
+    public static void printPlayerBlackjack(String playerName) {
+        System.out.printf("%s는 블랙잭 입니다.%n", playerName);
+    }
+
+    public static void printBust(String playerName) {
+        System.out.printf("%s는 버스트 입니다.", playerName);
     }
 
     public static void printDealerDraw(Dealer dealer) {

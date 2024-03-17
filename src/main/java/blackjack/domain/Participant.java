@@ -37,5 +37,9 @@ public abstract class Participant {
         return hand.isBlackjack();
     }
 
+    public boolean isBust() {
+        return calculate() > BLACKJACK_SCORE;
+    }
+
     public abstract boolean canHit();
 }

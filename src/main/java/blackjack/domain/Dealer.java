@@ -40,9 +40,9 @@ public class Dealer extends Participant {
     }
 
     private int getPlayerResult(int dealerScore, Player player) {
-        int playerScore = player.calculate();
         int betting = player.getBetting();
-        if (isBustScore(playerScore)) {
+        int playerScore = player.calculate();
+        if (player.isBust()) {
             return getEarning(betting, ResultStatus.LOSE);
         }
         if (playerScore == dealerScore) {
@@ -51,7 +51,7 @@ public class Dealer extends Participant {
         if (player.isBlackjack()) {
             return getEarning(betting, ResultStatus.BLACKJACK);
         }
-        if (isBustScore(dealerScore) || playerScore > dealerScore) {
+        if (this.isBust() || playerScore > dealerScore) {
             return getEarning(betting, ResultStatus.WIN);
         }
         return getEarning(betting, ResultStatus.LOSE);
@@ -59,9 +59,5 @@ public class Dealer extends Participant {
 
     private int getEarning(int betting, ResultStatus status) {
         return (int) (betting * status.getMultiplier());
-    }
-
-    private boolean isBustScore(int score) {
-        return score > BLACKJACK_SCORE;
     }
 }
