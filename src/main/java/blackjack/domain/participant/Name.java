@@ -8,11 +8,11 @@ public class Name {
     private static final int MAX_NAME_LENGTH = 5;
     private static final Pattern HANGUL_ALPHABET_NUMBER = Pattern.compile("^[가-힣a-zA-Z0-9]*$");
 
-    private final String name;
+    private final String rawName;
 
     public Name(String rawName) {
         validate(rawName);
-        this.name = rawName;
+        this.rawName = rawName;
     }
 
     private void validate(String rawName) {
@@ -42,6 +42,6 @@ public class Name {
     }
 
     public String getName() {
-        return name;
+        return rawName;
     }
 }
